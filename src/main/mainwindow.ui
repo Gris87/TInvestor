@@ -74,10 +74,41 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionRefreshManually"/>
+   <addaction name="separator"/>
+   <addaction name="actionFilterStocks"/>
+   <addaction name="separator"/>
+   <addaction name="actionStocksPage"/>
+   <addaction name="actionSimulationPage"/>
+   <addaction name="actionAutoPilot"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
   </widget>
+  <action name="actionRefreshManually">
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/refresh.png</normaloff>:/assets/images/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Refresh manually</string>
+   </property>
+   <property name="toolTip">
+    <string>Manually refresh stock information</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
   <action name="actionFilterStocks">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/filter.png</normaloff>:/assets/images/filter.png</iconset>
    </property>
    <property name="text">
     <string>Filter stocks by price changes</string>
@@ -86,13 +117,99 @@
     <string>Apply filter based on price change during a day</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+Shift+F</string>
+    <string>Ctrl+Shift+F</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionStocksPage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/stocks.png</normaloff>:/assets/images/stocks.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stocks</string>
+   </property>
+   <property name="toolTip">
+    <string>Show page with list of stocks</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+1</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionSimulationPage">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/simulation.png</normaloff>:/assets/images/simulation.png</iconset>
+   </property>
+   <property name="text">
+    <string>Simulation</string>
+   </property>
+   <property name="toolTip">
+    <string>Show page with simulation mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+2</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionAutoPilot">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/auto_pilot.png</normaloff>:/assets/images/auto_pilot.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto-pilot</string>
+   </property>
+   <property name="toolTip">
+    <string>Show page with auto-pilot mode</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+3</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../../Resources.qrc">
+     <normaloff>:/assets/images/settings.png</normaloff>:/assets/images/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

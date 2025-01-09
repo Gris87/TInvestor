@@ -32,7 +32,7 @@ void TrayIcon::init(MainWindow *mainWindow)
     setContextMenu(trayIconMenu);
     setToolTip(tr("TInvestor"));
 
-    QObject::connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), mainWindow, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), mainWindow, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
 
     qDebug() << "Tray icon initialized";
 }

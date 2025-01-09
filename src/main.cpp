@@ -1,5 +1,6 @@
 #include <QApplication>
 
+#include <QDebug>
 #include <QMessageBox>
 #include <QSystemTrayIcon>
 #include <QTranslator>
@@ -14,6 +15,8 @@
 
 int main(int argc, char *argv[])
 {
+    qDebug() << "START";
+
     QApplication app(argc, argv);
 
     Q_INIT_RESOURCE(Resources);
@@ -26,12 +29,13 @@ int main(int argc, char *argv[])
             QObject::tr("Localization"),
             QObject::tr("Failed to apply localization"),
             QMessageBox::Close
-            );
+        );
 
         return 1;
     }
 
     app.installTranslator(&translator);
+    qDebug() << "Localization applied";
 
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -50,5 +54,9 @@ int main(int argc, char *argv[])
     MainWindow mainWindow;
     mainWindow.init();
 
-    return app.exec();
+    int res = app.exec();
+
+    qDebug() << "END";
+
+    return res;
 }

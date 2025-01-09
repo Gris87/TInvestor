@@ -1,7 +1,12 @@
 <RCC>
     <qresource prefix="/">
+        <file>assets/images/auto_pilot.png</file>
+        <file>assets/images/filter.png</file>
         <file>assets/images/icon.png</file>
         <file>assets/images/refresh.png</file>
+        <file>assets/images/settings.png</file>
+        <file>assets/images/simulation.png</file>
+        <file>assets/images/stocks.png</file>
         <file>assets/translations/language_en.qm</file>
         <file>assets/translations/language_ru.qm</file>
     </qresource>
