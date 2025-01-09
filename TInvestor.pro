@@ -1,34 +1,57 @@
 QT += core gui widgets
 
+CONFIG += c++20
+
 TARGET = TInvestor
 TEMPLATE = app
 
 
 
-CONFIG += c++20
-
 RC_FILE = Resources.rc
 RESOURCES += Resources.qrc
 
-CONFIG (debug, debug|release) {
-    DESTDIR = debug/
-    OBJECTS_DIR = debug/gen
-    MOC_DIR = debug/gen
-    RCC_DIR = debug/gen
+
+
+# Warnings as errors - BEGIN
+win32-msvc* {
+    QMAKE_CXXFLAGS += /WX
 } else {
-    DESTDIR = release/
-    OBJECTS_DIR = release/gen
-    MOC_DIR = release/gen
-    RCC_DIR = release/gen
+    QMAKE_CXXFLAGS += -Wall -Wextra -Werror
 }
+# Warnings as errors - END
+
+# Release optimization - BEGIN
+QMAKE_CFLAGS_RELEASE -= -O1
+QMAKE_CFLAGS_RELEASE -= -O2
+QMAKE_CFLAGS_RELEASE += -O3
+
+QMAKE_CXXFLAGS_RELEASE -= -O1
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE += -O3
+# Release optimization - END
+
+# Target dirs - BEGIN
+DESTDIR     = build/
+OBJECTS_DIR = build/gen/$$TARGET/objs
+MOC_DIR     = build/gen/$$TARGET/moc
+RCC_DIR     = build/gen/$$TARGET/rcc
+UI_DIR      = build/gen/$$TARGET/ui
+# Target dirs - END
 
 
 
-SOURCES +=  src/main.cpp\
-            src/main/mainwindow.cpp \
-            src/main/trayicon.cpp
+SOURCES += \
+    src/main.cpp\
+    src/main/mainwindow.cpp \
+    src/main/trayicon.cpp
 
-HEADERS  += src/main/mainwindow.h \
+HEADERS += \
+    src/main/mainwindow.h \
     src/main/trayicon.h
 
-FORMS    += src/main/mainwindow.ui
+FORMS += \
+    src/main/mainwindow.ui
+
+TRANSLATIONS += \
+    assets/translations/language_en.ts \
+    assets/translations/language_ru.ts

@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>TInvestor</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
      <number>4</number>
     </property>
@@ -31,36 +31,42 @@
      <number>4</number>
     </property>
     <item>
-     <widget class="QListWidget" name="listWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item>
      <widget class="QStackedWidget" name="stackedWidget">
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <widget class="QWidget" name="page"/>
-      <widget class="QWidget" name="page_2"/>
-      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="stocksPage">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QListWidget" name="stocksListWidget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="simulationPage"/>
+      <widget class="QWidget" name="autoPilotPage"/>
      </widget>
     </item>
    </layout>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string/>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -80,7 +86,7 @@
     <string>Apply filter based on price change during a day</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+F</string>
+    <string notr="true">Ctrl+Shift+F</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

@@ -28,7 +28,7 @@ void TrayIcon::init(MainWindow *mainWindow)
 
     trayIconMenu->setDefaultAction(defaultAction);
 
-    setIcon(QIcon(":/images/icon.png"));
+    setIcon(QIcon(":/assets/images/icon.png"));
     setContextMenu(trayIconMenu);
     setToolTip(tr("TInvestor"));
 
