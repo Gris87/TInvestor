@@ -25,8 +25,10 @@ CONFIG (debug, debug|release) {
 
 
 SOURCES +=  src/main.cpp\
-            src/main/mainwindow.cpp
+            src/main/mainwindow.cpp \
+            src/main/trayicon.cpp
 
-HEADERS  += src/main/mainwindow.h
+HEADERS  += src/main/mainwindow.h \
+    src/main/trayicon.h
 
 FORMS    += src/main/mainwindow.ui
