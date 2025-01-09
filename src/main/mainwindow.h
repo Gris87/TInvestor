@@ -31,6 +31,7 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
+    void updateStackWidgetToolbar();
     void saveWindowState();
     void loadWindowState();
 
@@ -42,6 +43,14 @@ public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
+
+private slots:
+    void on_actionRefreshManually_triggered();
+    void on_actionFilterStocks_toggled(bool checked);
+    void on_actionStocksPage_toggled(bool checked);
+    void on_actionSimulationPage_toggled(bool checked);
+    void on_actionAutoPilotPage_toggled(bool checked);
+    void on_actionSettings_toggled(bool checked);
 };
 
 

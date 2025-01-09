@@ -9,35 +9,81 @@
         <translation>ТИнвестор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="83"/>
+        <location filename="../../src/main/mainwindow.ui" line="93"/>
+        <source>Refresh manually</source>
+        <translation>Обновить вручную</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="96"/>
+        <source>Manually refresh stock information</source>
+        <translation>Обновить вручную информацию об акциях</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="114"/>
         <source>Filter stocks by price changes</source>
         <translation>Отфильтровать акции по изменению цены</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="86"/>
+        <location filename="../../src/main/mainwindow.ui" line="117"/>
         <source>Apply filter based on price change during a day</source>
         <translation>Применить фильтр на основании изменении цены за день</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="138"/>
+        <source>Stocks</source>
+        <translation>Акции</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="141"/>
+        <source>Show page with list of stocks</source>
+        <translation>Показать страницу с акциями</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="159"/>
+        <source>Simulation</source>
+        <translation>Симуляция</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="162"/>
+        <source>Show page with simulation mode</source>
+        <translation>Показать страницу с режимом симулаяции</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="180"/>
+        <source>Auto-pilot</source>
+        <translation>Авто-пилот</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="183"/>
+        <source>Show page with auto-pilot mode</source>
+        <translation>Показать страницу с режимом авто-пилота</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="198"/>
+        <location filename="../../src/main/mainwindow.ui" line="201"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="26"/>
+        <location filename="../../src/main.cpp" line="29"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="27"/>
+        <location filename="../../src/main.cpp" line="30"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="40"/>
+        <location filename="../../src/main.cpp" line="44"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="41"/>
+        <location filename="../../src/main.cpp" line="45"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>

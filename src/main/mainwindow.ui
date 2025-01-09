@@ -80,7 +80,7 @@
    <addaction name="separator"/>
    <addaction name="actionStocksPage"/>
    <addaction name="actionSimulationPage"/>
-   <addaction name="actionAutoPilot"/>
+   <addaction name="actionAutoPilotPage"/>
    <addaction name="separator"/>
    <addaction name="actionSettings"/>
   </widget>
@@ -96,7 +96,7 @@
     <string>Manually refresh stock information</string>
    </property>
    <property name="shortcut">
-    <string>F5</string>
+    <string notr="true">F5</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -117,7 +117,7 @@
     <string>Apply filter based on price change during a day</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+F</string>
+    <string notr="true">Ctrl+Shift+F</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -141,7 +141,7 @@
     <string>Show page with list of stocks</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+1</string>
+    <string notr="true">Ctrl+1</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -162,13 +162,13 @@
     <string>Show page with simulation mode</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+2</string>
+    <string notr="true">Ctrl+2</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
-  <action name="actionAutoPilot">
+  <action name="actionAutoPilotPage">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -183,7 +183,7 @@
     <string>Show page with auto-pilot mode</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+3</string>
+    <string notr="true">Ctrl+3</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -201,7 +201,7 @@
     <string>Settings</string>
    </property>
    <property name="shortcut">
-    <string>F6</string>
+    <string notr="true">F6</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

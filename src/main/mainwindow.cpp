@@ -89,9 +89,61 @@ void MainWindow::trayIconExitClicked()
     QCoreApplication::quit();
 }
 
+void MainWindow::on_actionRefreshManually_triggered()
+{
+
+}
+
+void MainWindow::on_actionFilterStocks_toggled(bool /*checked*/)
+{
+
+}
+
+void MainWindow::on_actionStocksPage_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->stocksPage);
+    }
+
+    updateStackWidgetToolbar();
+}
+
+void MainWindow::on_actionSimulationPage_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->simulationPage);
+    }
+
+    updateStackWidgetToolbar();
+}
+
+void MainWindow::on_actionAutoPilotPage_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->autoPilotPage);
+    }
+
+    updateStackWidgetToolbar();
+}
+
+void MainWindow::on_actionSettings_toggled(bool /*checked*/)
+{
+
+}
+
 void MainWindow::init()
 {
     qDebug() << "Start main initialization";
+}
+
+void MainWindow::updateStackWidgetToolbar()
+{
+    ui->actionStocksPage->setChecked(ui->stackedWidget->currentWidget() == ui->stocksPage);
+    ui->actionSimulationPage->setChecked(ui->stackedWidget->currentWidget() == ui->simulationPage);
+    ui->actionAutoPilotPage->setChecked(ui->stackedWidget->currentWidget() == ui->autoPilotPage);
 }
 
 void MainWindow::saveWindowState()
@@ -101,6 +153,7 @@ void MainWindow::saveWindowState()
     QSettings settings("GrisCom", "TInvestor");
     settings.setValue("MainWindow/geometry",    saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
+    settings.setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
 }
 
 void MainWindow::loadWindowState()
@@ -110,4 +163,7 @@ void MainWindow::loadWindowState()
     QSettings settings("GrisCom", "TInvestor");
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
+    ui->stackedWidget->setCurrentIndex(settings.value("MainWindow/pageIndex").toInt());
+
+    updateStackWidgetToolbar();
 }
