@@ -5,7 +5,8 @@
 
 #include <QCloseEvent>
 
-#include "trayicon.h"
+#include "src/config/config.h"
+#include "src/main/trayicon.h"
 
 
 
@@ -37,7 +38,8 @@ private:
 
     Ui::MainWindow *ui;
 
-    TrayIcon *trayIcon;
+    TrayIcon *mTrayIcon;
+    Config   mConfig;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

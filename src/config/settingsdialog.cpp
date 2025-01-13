@@ -4,9 +4,10 @@
 #include <QDebug>
 
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
+SettingsDialog::SettingsDialog(const Config &config, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SettingsDialog)
+    ui(new Ui::SettingsDialog),
+    mConfig(config)
 {
     qDebug() << "Create SettingsDialog";
 
@@ -18,4 +19,9 @@ SettingsDialog::~SettingsDialog()
     qDebug() << "Destroy SettingsDialog";
 
     delete ui;
+}
+
+const Config& SettingsDialog::getConfig()
+{
+    return mConfig;
 }

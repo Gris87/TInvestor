@@ -11,15 +11,18 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    mConfig(this)
 {
     qDebug() << "Create MainWindow";
 
     ui->setupUi(this);
 
-    trayIcon = new TrayIcon(this);
-    trayIcon->init(this);
-    trayIcon->show();
+    mTrayIcon = new TrayIcon(this);
+    mTrayIcon->init(this);
+    mTrayIcon->show();
+
+    mConfig.load();
 
     loadWindowState();
 }
@@ -132,11 +135,14 @@ void MainWindow::on_actionAutoPilotPage_toggled(bool checked)
 
 void MainWindow::on_actionSettings_triggered()
 {
-    SettingsDialog dialog(this);
+    SettingsDialog dialog(mConfig, this);
 
     if (dialog.exec())
     {
         qDebug() << "Settings applied";
+
+        mConfig = dialog.getConfig();
+        mConfig.save();
     }
 }
 

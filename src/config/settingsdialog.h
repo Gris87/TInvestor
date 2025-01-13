@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+#include "src/config/config.h"
 
 
 namespace Ui {
@@ -16,11 +17,15 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget *parent = nullptr);
+    explicit SettingsDialog(const Config &config, QWidget *parent = nullptr);
     ~SettingsDialog();
+
+    const Config& getConfig();
 
 private:
     Ui::SettingsDialog *ui;
+
+    Config mConfig;
 };
 
 
