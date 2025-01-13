@@ -41,15 +41,20 @@ UI_DIR      = build/gen/$$TARGET/ui
 
 
 SOURCES += \
+    src/config/config.cpp \
+    src/config/settingsdialog.cpp \
     src/main.cpp\
     src/main/mainwindow.cpp \
     src/main/trayicon.cpp
 
 HEADERS += \
+    src/config/config.h \
+    src/config/settingsdialog.h \
     src/main/mainwindow.h \
     src/main/trayicon.h
 
 FORMS += \
+    src/config/settingsdialog.ui \
     src/main/mainwindow.ui
 
 TRANSLATIONS += \

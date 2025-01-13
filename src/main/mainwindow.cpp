@@ -1,10 +1,11 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 
 #include <QDebug>
+#include <QEvent>
 #include <QSettings>
 
-#include "qevent.h"
-#include "ui_mainwindow.h"
+#include "src/config/settingsdialog.h"
 
 
 
@@ -129,9 +130,14 @@ void MainWindow::on_actionAutoPilotPage_toggled(bool checked)
     updateStackWidgetToolbar();
 }
 
-void MainWindow::on_actionSettings_toggled(bool /*checked*/)
+void MainWindow::on_actionSettings_triggered()
 {
+    SettingsDialog dialog(this);
 
+    if (dialog.exec())
+    {
+        qDebug() << "Settings applied";
+    }
 }
 
 void MainWindow::init()

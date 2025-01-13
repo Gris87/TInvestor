@@ -50,7 +50,7 @@ private slots:
     void on_actionStocksPage_toggled(bool checked);
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
-    void on_actionSettings_toggled(bool checked);
+    void on_actionSettings_triggered();
 };
 
 
