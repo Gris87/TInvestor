@@ -163,6 +163,7 @@ void MainWindow::saveWindowState()
     qDebug() << "Saving window state";
 
     QSettings settings("GrisCom", "TInvestor");
+
     settings.setValue("MainWindow/geometry",    saveGeometry());
     settings.setValue("MainWindow/windowState", saveState());
     settings.setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
@@ -173,6 +174,7 @@ void MainWindow::loadWindowState()
     qDebug() << "Loading window state";
 
     QSettings settings("GrisCom", "TInvestor");
+
     restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
     restoreState(settings.value("MainWindow/windowState").toByteArray());
     ui->stackedWidget->setCurrentIndex(settings.value("MainWindow/pageIndex").toInt());
