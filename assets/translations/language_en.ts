@@ -89,6 +89,49 @@
     </message>
 </context>
 <context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="14"/>
+        <source>Settings</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="39"/>
+        <source>General</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="65"/>
+        <source>Refresh stocks each</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="95"/>
+        <source>minutes</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="109"/>
+        <source>Trade stocks on weekdays in the interval</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="147"/>
+        <source>Use the same config for Simulator and Auto-pilot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="192"/>
+        <source>OK</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="215"/>
+        <source>Cancel</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>TrayIcon</name>
     <message>
         <location filename="../../src/main/trayicon.cpp" line="25"/>

@@ -106,7 +106,7 @@
          <item>
           <widget class="QCheckBox" name="useScheduleCheckBox">
            <property name="text">
-            <string>Sell stocks on a schedule</string>
+            <string>Trade stocks on weekdays in the interval</string>
            </property>
            <property name="checked">
             <bool>true</bool>

@@ -89,6 +89,53 @@
     </message>
 </context>
 <context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="14"/>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="39"/>
+        <source>General</source>
+        <translation>Основное</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="65"/>
+        <source>Refresh stocks each</source>
+        <translation>Обновлять акции каждые</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="95"/>
+        <source>minutes</source>
+        <translation>минут</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="109"/>
+        <source>Trade stocks on weekdays in the interval</source>
+        <translation>Торговать акциями в будни в интервале</translation>
+    </message>
+    <message>
+        <source>Sell stocks on a schedule</source>
+        <translation type="vanished">Торговать акциями в будни в интервале</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="147"/>
+        <source>Use the same config for Simulator and Auto-pilot</source>
+        <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="192"/>
+        <source>OK</source>
+        <translation>ОК</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="215"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+</context>
+<context>
     <name>TrayIcon</name>
     <message>
         <location filename="../../src/main/trayicon.cpp" line="25"/>

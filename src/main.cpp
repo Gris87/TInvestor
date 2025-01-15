@@ -5,6 +5,7 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
+#include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
@@ -15,6 +16,7 @@
 
 int main(int argc, char *argv[])
 {
+    Logger::init();
     qDebug() << "START";
 
     QApplication app(argc, argv);

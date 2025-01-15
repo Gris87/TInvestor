@@ -43,6 +43,7 @@ UI_DIR      = build/gen/$$TARGET/ui
 SOURCES += \
     src/config/config.cpp \
     src/config/settingsdialog.cpp \
+    src/logger/logger.cpp \
     src/main.cpp\
     src/main/mainwindow.cpp \
     src/main/trayicon.cpp
@@ -50,6 +51,7 @@ SOURCES += \
 HEADERS += \
     src/config/config.h \
     src/config/settingsdialog.h \
+    src/logger/logger.h \
     src/main/mainwindow.h \
     src/main/trayicon.h
 
