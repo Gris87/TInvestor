@@ -1,9 +1,9 @@
 #include "trayicon.h"
 
-#include <QMenu>
 #include <QDebug>
+#include <QMenu>
 
-#include "mainwindow.h"
+#include "src/main/mainwindow.h"
 
 
 

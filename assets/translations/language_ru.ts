@@ -68,22 +68,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="29"/>
+        <location filename="../../src/main.cpp" line="31"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="30"/>
+        <location filename="../../src/main.cpp" line="32"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="44"/>
+        <location filename="../../src/main.cpp" line="46"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="45"/>
+        <location filename="../../src/main.cpp" line="47"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -106,7 +106,7 @@
         <translation>Обновлять акции каждые</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="95"/>
+        <location filename="../../src/config/settingsdialog.ui" line="82"/>
         <source>minutes</source>
         <translation>минут</translation>
     </message>
@@ -116,8 +116,9 @@
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <source>Sell stocks on a schedule</source>
-        <translation type="vanished">Торговать акциями в будни в интервале</translation>
+        <location filename="../../src/config/settingsdialog.ui" line="235"/>
+        <source>Default</source>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="147"/>

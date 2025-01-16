@@ -96,3 +96,10 @@ void SettingsDialog::on_cancelButton_clicked()
 {
     reject();
 }
+
+void SettingsDialog::on_defaultButton_clicked()
+{
+    mConfig.makeDefault();
+    updateUiFromConfig();
+}
+

@@ -68,22 +68,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="29"/>
+        <location filename="../../src/main.cpp" line="31"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="30"/>
+        <location filename="../../src/main.cpp" line="32"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="44"/>
+        <location filename="../../src/main.cpp" line="46"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="45"/>
+        <location filename="../../src/main.cpp" line="47"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -106,7 +106,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="95"/>
+        <location filename="../../src/config/settingsdialog.ui" line="82"/>
         <source>minutes</source>
         <translation></translation>
     </message>
@@ -128,6 +128,11 @@
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="215"/>
         <source>Cancel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="235"/>
+        <source>Default</source>
         <translation></translation>
     </message>
 </context>
