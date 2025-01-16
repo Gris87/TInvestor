@@ -23,6 +23,9 @@ public:
     void save();
     void load();
 
+    void setAutorun(bool value);
+    bool isAutorun();
+
     void setRefreshTimeout(int value);
     int getRefreshTimeout();
 
@@ -41,6 +44,18 @@ public:
     void setScheduleEndMinute(int value);
     int getScheduleEndMinute();
 
+    void setLimitOperationsPerDay(bool value);
+    bool isLimitOperationsPerDay();
+
+    void setAmountOfOperationsPerDay(int value);
+    int getAmountOfOperationsPerDay();
+
+    void setLimitOperationsPerStock(bool value);
+    bool isLimitOperationsPerStock();
+
+    void setAmountOfOperationsPerStock(int value);
+    int getAmountOfOperationsPerStock();
+
     void setUseForSimulatorAndAutoPilot(bool value);
     bool isUseForSimulatorAndAutoPilot();
 
@@ -48,12 +63,17 @@ private:
     void assign(const Config &config);
 
     QMutex mMutex;
+    bool   mAutorun;
     int    mRefreshTimeout;
     bool   mUseSchedule;
     int    mScheduleStartHour;
     int    mScheduleStartMinute;
     int    mScheduleEndHour;
     int    mScheduleEndMinute;
+    bool   mLimitOperationsPerDay;
+    int    mAmountOfOperationsPerDay;
+    bool   mLimitOperationsPerStock;
+    int    mAmountOfOperationsPerStock;
     bool   mUseForSimulatorAndAutoPilot;
 };
 

@@ -31,16 +31,30 @@ const Config& SettingsDialog::getConfig()
 
 void SettingsDialog::updateUiFromConfig()
 {
-    int scheduleStartHour   = mConfig.getScheduleStartHour();
-    int scheduleStartMinute = mConfig.getScheduleStartMinute();
-    int scheduleEndHour     = mConfig.getScheduleEndHour();
-    int scheduleEndMinute   = mConfig.getScheduleEndMinute();
+    int scheduleStartHour          = mConfig.getScheduleStartHour();
+    int scheduleStartMinute        = mConfig.getScheduleStartMinute();
+    int scheduleEndHour            = mConfig.getScheduleEndHour();
+    int scheduleEndMinute          = mConfig.getScheduleEndMinute();
+    int amountOfOperationsPerDay   = mConfig.getAmountOfOperationsPerDay();
+    int amountOfOperationsPerStock = mConfig.getAmountOfOperationsPerStock();
 
+    ui->autorunCheckBox->setChecked(mConfig.isAutorun());
     ui->refreshTimeoutSpinBox->setValue(mConfig.getRefreshTimeout());
     ui->useScheduleCheckBox->setChecked(mConfig.isUseSchedule());
     ui->scheduleStartTimeEdit->setTime(QTime(scheduleStartHour, scheduleStartMinute));
     ui->scheduleEndTimeEdit->setTime(QTime(scheduleEndHour, scheduleEndMinute));
+    ui->limitOperationsPerDayCheckBox->setChecked(mConfig.isLimitOperationsPerDay());
+    ui->amountOfOperationsPerDaySpinBox->setValue(amountOfOperationsPerDay);
+    ui->limitOperationsPerStockCheckBox->setChecked(mConfig.isLimitOperationsPerStock());
+    ui->amountOfOperationsPerStockSpinBox->setValue(amountOfOperationsPerStock);
     ui->useForSimulatorAndAutoPilotCheckBox->setChecked(mConfig.isUseForSimulatorAndAutoPilot());
+}
+
+void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig.setAutorun(checked);
 }
 
 void SettingsDialog::on_refreshTimeoutSpinBox_valueChanged(int value)
@@ -80,6 +94,44 @@ void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime &time)
     mConfig.setScheduleEndMinute(time.minute());
 }
 
+void SettingsDialog::on_limitOperationsPerDayCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig.setLimitOperationsPerDay(checked);
+
+    ui->amountOfOperationsPerDaySpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_amountOfOperationsPerDaySpinBox_valueChanged(int value)
+{
+    if (value < ui->amountOfOperationsPerStockSpinBox->value())
+    {
+        ui->amountOfOperationsPerStockSpinBox->setValue(value);
+    }
+
+    mConfig.setAmountOfOperationsPerDay(value);
+}
+
+void SettingsDialog::on_limitOperationsPerStockCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig.setLimitOperationsPerStock(checked);
+
+    ui->amountOfOperationsPerStockSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_amountOfOperationsPerStockSpinBox_valueChanged(int value)
+{
+    if (value > ui->amountOfOperationsPerDaySpinBox->value())
+    {
+        ui->amountOfOperationsPerDaySpinBox->setValue(value);
+    }
+
+    mConfig.setAmountOfOperationsPerStock(value);
+}
+
 void SettingsDialog::on_useForSimulatorAndAutoPilotCheckBox_checkStateChanged(const Qt::CheckState &value)
 {
     bool checked = value == Qt::Checked;
@@ -102,4 +154,3 @@ void SettingsDialog::on_defaultButton_clicked()
     mConfig.makeDefault();
     updateUiFromConfig();
 }
-

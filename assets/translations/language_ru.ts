@@ -101,37 +101,52 @@
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="65"/>
+        <location filename="../../src/config/settingsdialog.ui" line="60"/>
+        <source>Autorun on Windows startup</source>
+        <translation>Автозапускать при запуске Windows</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="75"/>
         <source>Refresh stocks each</source>
         <translation>Обновлять акции каждые</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="82"/>
+        <location filename="../../src/config/settingsdialog.ui" line="92"/>
         <source>minutes</source>
         <translation>минут</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="109"/>
+        <location filename="../../src/config/settingsdialog.ui" line="119"/>
         <source>Trade stocks on weekdays in the interval</source>
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="235"/>
+        <location filename="../../src/config/settingsdialog.ui" line="162"/>
+        <source>Limit operations per day</source>
+        <translation>Ограничивать количество операций на день</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="202"/>
+        <source>Limit operations per stock</source>
+        <translation>Ограничивать количество операций на акцию</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="325"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="147"/>
+        <location filename="../../src/config/settingsdialog.ui" line="237"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="192"/>
+        <location filename="../../src/config/settingsdialog.ui" line="282"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="215"/>
+        <location filename="../../src/config/settingsdialog.ui" line="305"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

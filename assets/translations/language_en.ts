@@ -101,37 +101,52 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="65"/>
+        <location filename="../../src/config/settingsdialog.ui" line="60"/>
+        <source>Autorun on Windows startup</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="75"/>
         <source>Refresh stocks each</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="82"/>
+        <location filename="../../src/config/settingsdialog.ui" line="92"/>
         <source>minutes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="109"/>
+        <location filename="../../src/config/settingsdialog.ui" line="119"/>
         <source>Trade stocks on weekdays in the interval</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="147"/>
+        <location filename="../../src/config/settingsdialog.ui" line="162"/>
+        <source>Limit operations per day</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="202"/>
+        <source>Limit operations per stock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="237"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="192"/>
+        <location filename="../../src/config/settingsdialog.ui" line="282"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="215"/>
+        <location filename="../../src/config/settingsdialog.ui" line="305"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="235"/>
+        <location filename="../../src/config/settingsdialog.ui" line="325"/>
         <source>Default</source>
         <translation></translation>
     </message>
