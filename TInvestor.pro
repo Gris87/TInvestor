@@ -42,6 +42,8 @@ UI_DIR      = build/gen/$$TARGET/ui
 
 SOURCES += \
     src/config/config.cpp \
+    src/config/decisionmakerconfig.cpp \
+    src/config/decisionmakerconfigwidget.cpp \
     src/config/settingsdialog.cpp \
     src/logger/logger.cpp \
     src/main.cpp\
@@ -50,12 +52,15 @@ SOURCES += \
 
 HEADERS += \
     src/config/config.h \
+    src/config/decisionmakerconfig.h \
+    src/config/decisionmakerconfigwidget.h \
     src/config/settingsdialog.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
     src/main/trayicon.h
 
 FORMS += \
+    src/config/decisionmakerconfigwidget.ui \
     src/config/settingsdialog.ui \
     src/main/mainwindow.ui
 

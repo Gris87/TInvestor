@@ -38,7 +38,7 @@ void Config::makeDefault()
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Set config to default";
+    qDebug() << "Set Config to default";
 
     mAutorun                     = true;
     mRefreshTimeout              = 5;
@@ -58,7 +58,7 @@ void Config::assign(const Config &config)
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Assigning config to config";
+    qDebug() << "Assigning Config to Config";
 
     mAutorun                     = config.mAutorun;
     mRefreshTimeout              = config.mRefreshTimeout;
@@ -78,7 +78,7 @@ void Config::save()
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Save config";
+    qDebug() << "Save Config";
 
     QSettings settings("GrisCom", "TInvestor");
 
@@ -100,7 +100,7 @@ void Config::load()
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Load config";
+    qDebug() << "Load Config";
 
     QSettings settings("GrisCom", "TInvestor");
 
