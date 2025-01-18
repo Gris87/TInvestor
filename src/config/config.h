@@ -5,6 +5,8 @@
 
 #include <QMutex>
 
+#include "src/config/decisionmakerconfig.h"
+
 
 
 class Config : public QObject
@@ -15,6 +17,9 @@ public:
     explicit Config(QObject *parent = nullptr);
     explicit Config(const Config &config, QObject *parent = nullptr);
     ~Config();
+
+    DecisionMakerConfig simulatorConfig;
+    DecisionMakerConfig autoPilotConfig;
 
     Config& operator=(const Config &config);
 
@@ -56,8 +61,11 @@ public:
     void setAmountOfOperationsPerStock(int value);
     int getAmountOfOperationsPerStock();
 
-    void setUseForSimulatorAndAutoPilot(bool value);
-    bool isUseForSimulatorAndAutoPilot();
+    void setSimulatorConfigCommon(bool value);
+    bool isSimulatorConfigCommon();
+
+    void setAutoPilotConfigCommon(bool value);
+    bool isAutoPilotConfigCommon();
 
 private:
     void assign(const Config &config);
@@ -74,7 +82,8 @@ private:
     int    mAmountOfOperationsPerDay;
     bool   mLimitOperationsPerStock;
     int    mAmountOfOperationsPerStock;
-    bool   mUseForSimulatorAndAutoPilot;
+    bool   mSimulatorConfigCommon;
+    bool   mAutoPilotConfigCommon;
 };
 
 

@@ -131,22 +131,33 @@
         <translation>Ограничивать количество операций на акцию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="325"/>
+        <location filename="../../src/config/settingsdialog.ui" line="296"/>
+        <source>Auto-pilot</source>
+        <translation>Авто-пилот</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="405"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="237"/>
+        <location filename="../../src/config/settingsdialog.ui" line="272"/>
+        <location filename="../../src/config/settingsdialog.ui" line="317"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="282"/>
+        <location filename="../../src/config/settingsdialog.ui" line="251"/>
+        <source>Simulation</source>
+        <translation>Симуляция</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="362"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="305"/>
+        <location filename="../../src/config/settingsdialog.ui" line="385"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

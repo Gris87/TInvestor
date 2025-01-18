@@ -47,7 +47,8 @@ void SettingsDialog::updateUiFromConfig()
     ui->amountOfOperationsPerDaySpinBox->setValue(amountOfOperationsPerDay);
     ui->limitOperationsPerStockCheckBox->setChecked(mConfig.isLimitOperationsPerStock());
     ui->amountOfOperationsPerStockSpinBox->setValue(amountOfOperationsPerStock);
-    ui->useForSimulatorAndAutoPilotCheckBox->setChecked(mConfig.isUseForSimulatorAndAutoPilot());
+    ui->simulatorConfigCommonCheckBox->setChecked(mConfig.isSimulatorConfigCommon());
+    ui->autoPilotConfigCommonCheckBox->setChecked(mConfig.isAutoPilotConfigCommon());
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -132,11 +133,18 @@ void SettingsDialog::on_amountOfOperationsPerStockSpinBox_valueChanged(int value
     mConfig.setAmountOfOperationsPerStock(value);
 }
 
-void SettingsDialog::on_useForSimulatorAndAutoPilotCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
 {
     bool checked = value == Qt::Checked;
 
-    mConfig.setUseForSimulatorAndAutoPilot(checked);
+    mConfig.setSimulatorConfigCommon(checked);
+}
+
+void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig.setAutoPilotConfigCommon(checked);
 }
 
 void SettingsDialog::on_okButton_clicked()

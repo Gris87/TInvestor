@@ -9,8 +9,6 @@
 DecisionMakerConfig::DecisionMakerConfig()
 {
     qDebug() << "Create DecisionMakerConfig";
-
-    makeDefault();
 }
 
 DecisionMakerConfig::~DecisionMakerConfig()

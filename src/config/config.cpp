@@ -40,18 +40,22 @@ void Config::makeDefault()
 
     qDebug() << "Set Config to default";
 
-    mAutorun                     = true;
-    mRefreshTimeout              = 5;
-    mUseSchedule                 = true;
-    mScheduleStartHour           = 10;
-    mScheduleStartMinute         = 0;
-    mScheduleEndHour             = 18;
-    mScheduleEndMinute           = 0;
-    mLimitOperationsPerDay       = true;
-    mAmountOfOperationsPerDay    = 50;
-    mLimitOperationsPerStock     = true;
-    mAmountOfOperationsPerStock  = 10;
-    mUseForSimulatorAndAutoPilot = true;
+    simulatorConfig.makeDefault();
+    autoPilotConfig.makeDefault();
+
+    mAutorun                    = true;
+    mRefreshTimeout             = 5;
+    mUseSchedule                = true;
+    mScheduleStartHour          = 10;
+    mScheduleStartMinute        = 0;
+    mScheduleEndHour            = 18;
+    mScheduleEndMinute          = 0;
+    mLimitOperationsPerDay      = true;
+    mAmountOfOperationsPerDay   = 50;
+    mLimitOperationsPerStock    = true;
+    mAmountOfOperationsPerStock = 10;
+    mSimulatorConfigCommon      = true;
+    mAutoPilotConfigCommon      = false;
 }
 
 void Config::assign(const Config &config)
@@ -60,18 +64,22 @@ void Config::assign(const Config &config)
 
     qDebug() << "Assigning Config to Config";
 
-    mAutorun                     = config.mAutorun;
-    mRefreshTimeout              = config.mRefreshTimeout;
-    mUseSchedule                 = config.mUseSchedule;
-    mScheduleStartHour           = config.mScheduleStartHour;
-    mScheduleStartMinute         = config.mScheduleStartMinute;
-    mScheduleEndHour             = config.mScheduleEndHour;
-    mScheduleEndMinute           = config.mScheduleEndMinute;
-    mLimitOperationsPerDay       = config.mLimitOperationsPerDay;
-    mAmountOfOperationsPerDay    = config.mAmountOfOperationsPerDay;
-    mLimitOperationsPerStock     = config.mLimitOperationsPerStock;
-    mAmountOfOperationsPerStock  = config.mAmountOfOperationsPerStock;
-    mUseForSimulatorAndAutoPilot = config.mUseForSimulatorAndAutoPilot;
+    simulatorConfig = config.simulatorConfig;
+    autoPilotConfig = config.autoPilotConfig;
+
+    mAutorun                    = config.mAutorun;
+    mRefreshTimeout             = config.mRefreshTimeout;
+    mUseSchedule                = config.mUseSchedule;
+    mScheduleStartHour          = config.mScheduleStartHour;
+    mScheduleStartMinute        = config.mScheduleStartMinute;
+    mScheduleEndHour            = config.mScheduleEndHour;
+    mScheduleEndMinute          = config.mScheduleEndMinute;
+    mLimitOperationsPerDay      = config.mLimitOperationsPerDay;
+    mAmountOfOperationsPerDay   = config.mAmountOfOperationsPerDay;
+    mLimitOperationsPerStock    = config.mLimitOperationsPerStock;
+    mAmountOfOperationsPerStock = config.mAmountOfOperationsPerStock;
+    mSimulatorConfigCommon      = config.mSimulatorConfigCommon;
+    mAutoPilotConfigCommon      = config.mAutoPilotConfigCommon;
 }
 
 void Config::save()
@@ -80,20 +88,24 @@ void Config::save()
 
     qDebug() << "Save Config";
 
+    simulatorConfig.save("Simulator");
+    autoPilotConfig.save("AutoPilot");
+
     QSettings settings("GrisCom", "TInvestor");
 
-    settings.setValue("Config/Autorun",                     mAutorun);
-    settings.setValue("Config/RefreshTimeout",              mRefreshTimeout);
-    settings.setValue("Config/UseSchedule",                 mUseSchedule);
-    settings.setValue("Config/ScheduleStartHour",           mScheduleStartHour);
-    settings.setValue("Config/ScheduleStartMinute",         mScheduleStartMinute);
-    settings.setValue("Config/ScheduleEndHour",             mScheduleEndHour);
-    settings.setValue("Config/ScheduleEndMinute",           mScheduleEndMinute);
-    settings.setValue("Config/LimitOperationsPerDay",       mLimitOperationsPerDay);
-    settings.setValue("Config/AmountOfOperationsPerDay",    mAmountOfOperationsPerDay);
-    settings.setValue("Config/LimitOperationsPerStock",     mLimitOperationsPerStock);
-    settings.setValue("Config/AmountOfOperationsPerStock",  mAmountOfOperationsPerStock);
-    settings.setValue("Config/UseForSimulatorAndAutoPilot", mUseForSimulatorAndAutoPilot);
+    settings.setValue("Config/Autorun",                    mAutorun);
+    settings.setValue("Config/RefreshTimeout",             mRefreshTimeout);
+    settings.setValue("Config/UseSchedule",                mUseSchedule);
+    settings.setValue("Config/ScheduleStartHour",          mScheduleStartHour);
+    settings.setValue("Config/ScheduleStartMinute",        mScheduleStartMinute);
+    settings.setValue("Config/ScheduleEndHour",            mScheduleEndHour);
+    settings.setValue("Config/ScheduleEndMinute",          mScheduleEndMinute);
+    settings.setValue("Config/LimitOperationsPerDay",      mLimitOperationsPerDay);
+    settings.setValue("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay);
+    settings.setValue("Config/LimitOperationsPerStock",    mLimitOperationsPerStock);
+    settings.setValue("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock);
+    settings.setValue("Config/SimulatorConfigCommon",      mSimulatorConfigCommon);
+    settings.setValue("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon);
 }
 
 void Config::load()
@@ -102,20 +114,24 @@ void Config::load()
 
     qDebug() << "Load Config";
 
+    simulatorConfig.load("Simulator");
+    autoPilotConfig.load("AutoPilot");
+
     QSettings settings("GrisCom", "TInvestor");
 
-    mAutorun                     = settings.value("Config/Autorun",                     mAutorun).toBool();
-    mRefreshTimeout              = settings.value("Config/RefreshTimeout",              mRefreshTimeout).toInt();
-    mUseSchedule                 = settings.value("Config/UseSchedule",                 mUseSchedule).toBool();
-    mScheduleStartHour           = settings.value("Config/ScheduleStartHour",           mScheduleStartHour).toInt();
-    mScheduleStartMinute         = settings.value("Config/ScheduleStartMinute",         mScheduleStartMinute).toInt();
-    mScheduleEndHour             = settings.value("Config/ScheduleEndHour",             mScheduleEndHour).toInt();
-    mScheduleEndMinute           = settings.value("Config/ScheduleEndMinute",           mScheduleEndMinute).toInt();
-    mLimitOperationsPerDay       = settings.value("Config/LimitOperationsPerDay",       mLimitOperationsPerDay).toBool();
-    mAmountOfOperationsPerDay    = settings.value("Config/AmountOfOperationsPerDay",    mAmountOfOperationsPerDay).toInt();
-    mLimitOperationsPerStock     = settings.value("Config/LimitOperationsPerStock",     mLimitOperationsPerStock).toBool();
-    mAmountOfOperationsPerStock  = settings.value("Config/AmountOfOperationsPerStock",  mAmountOfOperationsPerStock).toInt();
-    mUseForSimulatorAndAutoPilot = settings.value("Config/UseForSimulatorAndAutoPilot", mUseForSimulatorAndAutoPilot).toBool();
+    mAutorun                    = settings.value("Config/Autorun",                    mAutorun).toBool();
+    mRefreshTimeout             = settings.value("Config/RefreshTimeout",             mRefreshTimeout).toInt();
+    mUseSchedule                = settings.value("Config/UseSchedule",                mUseSchedule).toBool();
+    mScheduleStartHour          = settings.value("Config/ScheduleStartHour",          mScheduleStartHour).toInt();
+    mScheduleStartMinute        = settings.value("Config/ScheduleStartMinute",        mScheduleStartMinute).toInt();
+    mScheduleEndHour            = settings.value("Config/ScheduleEndHour",            mScheduleEndHour).toInt();
+    mScheduleEndMinute          = settings.value("Config/ScheduleEndMinute",          mScheduleEndMinute).toInt();
+    mLimitOperationsPerDay      = settings.value("Config/LimitOperationsPerDay",      mLimitOperationsPerDay).toBool();
+    mAmountOfOperationsPerDay   = settings.value("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay).toInt();
+    mLimitOperationsPerStock    = settings.value("Config/LimitOperationsPerStock",    mLimitOperationsPerStock).toBool();
+    mAmountOfOperationsPerStock = settings.value("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock).toInt();
+    mSimulatorConfigCommon      = settings.value("Config/SimulatorConfigCommon",      mSimulatorConfigCommon).toBool();
+    mAutoPilotConfigCommon      = settings.value("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon).toBool();
 }
 
 void Config::setAutorun(bool value)
@@ -272,16 +288,30 @@ int Config::getAmountOfOperationsPerStock()
     return mAmountOfOperationsPerStock;
 }
 
-void Config::setUseForSimulatorAndAutoPilot(bool value)
+void Config::setSimulatorConfigCommon(bool value)
 {
     QMutexLocker lock(&mMutex);
 
-    mUseForSimulatorAndAutoPilot = value;
+    mSimulatorConfigCommon = value;
 }
 
-bool Config::isUseForSimulatorAndAutoPilot()
+bool Config::isSimulatorConfigCommon()
 {
     QMutexLocker lock(&mMutex);
 
-    return mUseForSimulatorAndAutoPilot;
+    return mSimulatorConfigCommon;
+}
+
+void Config::setAutoPilotConfigCommon(bool value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mAutoPilotConfigCommon = value;
+}
+
+bool Config::isAutoPilotConfigCommon()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mAutoPilotConfigCommon;
 }
