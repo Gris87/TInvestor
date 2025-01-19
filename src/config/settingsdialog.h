@@ -44,6 +44,9 @@ private slots:
     void on_amountOfOperationsPerStockSpinBox_valueChanged(int value);
     void on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value);
     void on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value);
+    void on_commissionDoubleSpinBox_valueChanged(double value);
+    void on_limitStockBuyingCheckBox_checkStateChanged(const Qt::CheckState &value);
+    void on_amountOfStockBuyingSpinBox_valueChanged(int value);
     void on_okButton_clicked();
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();

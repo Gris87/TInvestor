@@ -111,53 +111,68 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="92"/>
-        <source>minutes</source>
+        <location filename="../../src/config/settingsdialog.ui" line="82"/>
+        <source> minutes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="119"/>
+        <location filename="../../src/config/settingsdialog.ui" line="115"/>
         <source>Trade stocks on weekdays in the interval</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="162"/>
+        <location filename="../../src/config/settingsdialog.ui" line="158"/>
         <source>Limit operations per day</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="202"/>
+        <location filename="../../src/config/settingsdialog.ui" line="198"/>
         <source>Limit operations per stock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="251"/>
+        <location filename="../../src/config/settingsdialog.ui" line="238"/>
+        <source>Commission per operation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="278"/>
+        <source>Limit stock buying</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="288"/>
+        <source> rubles</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="333"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="272"/>
-        <location filename="../../src/config/settingsdialog.ui" line="317"/>
+        <location filename="../../src/config/settingsdialog.ui" line="354"/>
+        <location filename="../../src/config/settingsdialog.ui" line="399"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="296"/>
+        <location filename="../../src/config/settingsdialog.ui" line="378"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="362"/>
+        <location filename="../../src/config/settingsdialog.ui" line="444"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="385"/>
+        <location filename="../../src/config/settingsdialog.ui" line="467"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="405"/>
+        <location filename="../../src/config/settingsdialog.ui" line="487"/>
         <source>Default</source>
         <translation></translation>
     </message>

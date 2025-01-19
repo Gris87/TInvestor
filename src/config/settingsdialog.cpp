@@ -47,6 +47,9 @@ void SettingsDialog::updateUiFromConfig()
     ui->amountOfOperationsPerDaySpinBox->setValue(amountOfOperationsPerDay);
     ui->limitOperationsPerStockCheckBox->setChecked(mConfig.isLimitOperationsPerStock());
     ui->amountOfOperationsPerStockSpinBox->setValue(amountOfOperationsPerStock);
+    ui->commissionDoubleSpinBox->setValue(mConfig.getCommission());
+    ui->limitStockBuyingCheckBox->setChecked(mConfig.isLimitStockBuying());
+    ui->amountOfStockBuyingSpinBox->setValue(mConfig.getAmountOfStockBuying());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig.isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig.isAutoPilotConfigCommon());
 }
@@ -133,6 +136,25 @@ void SettingsDialog::on_amountOfOperationsPerStockSpinBox_valueChanged(int value
     mConfig.setAmountOfOperationsPerStock(value);
 }
 
+void SettingsDialog::on_commissionDoubleSpinBox_valueChanged(double value)
+{
+    mConfig.setCommission(value);
+}
+
+void SettingsDialog::on_limitStockBuyingCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig.setLimitStockBuying(checked);
+
+    ui->amountOfStockBuyingSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_amountOfStockBuyingSpinBox_valueChanged(int value)
+{
+    mConfig.setAmountOfStockBuying(value);
+}
+
 void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
 {
     bool checked = value == Qt::Checked;
@@ -162,3 +184,4 @@ void SettingsDialog::on_defaultButton_clicked()
     mConfig.makeDefault();
     updateUiFromConfig();
 }
+

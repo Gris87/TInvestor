@@ -61,6 +61,15 @@ public:
     void setAmountOfOperationsPerStock(int value);
     int getAmountOfOperationsPerStock();
 
+    void setCommission(float value);
+    float getCommission();
+
+    void setLimitStockBuying(bool value);
+    bool isLimitStockBuying();
+
+    void setAmountOfStockBuying(int value);
+    int getAmountOfStockBuying();
+
     void setSimulatorConfigCommon(bool value);
     bool isSimulatorConfigCommon();
 
@@ -82,6 +91,9 @@ private:
     int    mAmountOfOperationsPerDay;
     bool   mLimitOperationsPerStock;
     int    mAmountOfOperationsPerStock;
+    float  mCommission;
+    bool   mLimitStockBuying;
+    int    mAmountOfStockBuying;
     bool   mSimulatorConfigCommon;
     bool   mAutoPilotConfigCommon;
 };

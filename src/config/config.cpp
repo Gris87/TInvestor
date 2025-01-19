@@ -44,16 +44,19 @@ void Config::makeDefault()
     autoPilotConfig.makeDefault();
 
     mAutorun                    = true;
-    mRefreshTimeout             = 5;
+    mRefreshTimeout             = 1;
     mUseSchedule                = true;
     mScheduleStartHour          = 10;
     mScheduleStartMinute        = 0;
     mScheduleEndHour            = 18;
-    mScheduleEndMinute          = 0;
+    mScheduleEndMinute          = 40;
     mLimitOperationsPerDay      = true;
     mAmountOfOperationsPerDay   = 50;
     mLimitOperationsPerStock    = true;
     mAmountOfOperationsPerStock = 10;
+    mCommission                 = 0.3f;
+    mLimitStockBuying           = true;
+    mAmountOfStockBuying        = 10000;
     mSimulatorConfigCommon      = true;
     mAutoPilotConfigCommon      = false;
 }
@@ -78,6 +81,9 @@ void Config::assign(const Config &config)
     mAmountOfOperationsPerDay   = config.mAmountOfOperationsPerDay;
     mLimitOperationsPerStock    = config.mLimitOperationsPerStock;
     mAmountOfOperationsPerStock = config.mAmountOfOperationsPerStock;
+    mCommission                 = config.mCommission;
+    mLimitStockBuying           = config.mLimitStockBuying;
+    mAmountOfStockBuying        = config.mAmountOfStockBuying;
     mSimulatorConfigCommon      = config.mSimulatorConfigCommon;
     mAutoPilotConfigCommon      = config.mAutoPilotConfigCommon;
 }
@@ -104,6 +110,9 @@ void Config::save()
     settings.setValue("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay);
     settings.setValue("Config/LimitOperationsPerStock",    mLimitOperationsPerStock);
     settings.setValue("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock);
+    settings.setValue("Config/Commission",                 mCommission);
+    settings.setValue("Config/LimitStockBuying",           mLimitStockBuying);
+    settings.setValue("Config/AmountOfStockBuying",        mAmountOfStockBuying);
     settings.setValue("Config/SimulatorConfigCommon",      mSimulatorConfigCommon);
     settings.setValue("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon);
 }
@@ -130,6 +139,9 @@ void Config::load()
     mAmountOfOperationsPerDay   = settings.value("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay).toInt();
     mLimitOperationsPerStock    = settings.value("Config/LimitOperationsPerStock",    mLimitOperationsPerStock).toBool();
     mAmountOfOperationsPerStock = settings.value("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock).toInt();
+    mCommission                 = settings.value("Config/Commission",                 mCommission).toFloat();
+    mLimitStockBuying           = settings.value("Config/LimitStockBuying",           mLimitStockBuying).toBool();
+    mAmountOfStockBuying        = settings.value("Config/AmountOfStockBuying",        mAmountOfStockBuying).toInt();
     mSimulatorConfigCommon      = settings.value("Config/SimulatorConfigCommon",      mSimulatorConfigCommon).toBool();
     mAutoPilotConfigCommon      = settings.value("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon).toBool();
 }
@@ -286,6 +298,48 @@ int Config::getAmountOfOperationsPerStock()
     QMutexLocker lock(&mMutex);
 
     return mAmountOfOperationsPerStock;
+}
+
+void Config::setCommission(float value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mCommission = value;
+}
+
+float Config::getCommission()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mCommission;
+}
+
+void Config::setLimitStockBuying(bool value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mLimitStockBuying = value;
+}
+
+bool Config::isLimitStockBuying()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mLimitStockBuying;
+}
+
+void Config::setAmountOfStockBuying(int value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mAmountOfStockBuying = value;
+}
+
+int Config::getAmountOfStockBuying()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mAmountOfStockBuying;
 }
 
 void Config::setSimulatorConfigCommon(bool value)
