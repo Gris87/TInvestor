@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "src/config/decisionmakerconfig.h"
+
 
 
 namespace Ui {
@@ -19,8 +21,13 @@ public:
     explicit DecisionMakerConfigWidget(QWidget *parent = nullptr);
     ~DecisionMakerConfigWidget();
 
+    void setDecisionMakerConfig(DecisionMakerConfig *config);
+    void updateUiFromConfig();
+
 private:
     Ui::DecisionMakerConfigWidget *ui;
+
+    DecisionMakerConfig *mConfig;
 };
 
 

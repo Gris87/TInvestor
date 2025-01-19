@@ -6,7 +6,7 @@
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
         <source>TInvestor</source>
-        <translation>ТИнвестор</translation>
+        <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="93"/>
@@ -116,43 +116,45 @@
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="158"/>
+        <location filename="../../src/config/settingsdialog.ui" line="174"/>
         <source>Limit operations per day</source>
         <translation>Ограничивать количество операций на день</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="198"/>
+        <location filename="../../src/config/settingsdialog.ui" line="217"/>
         <source>Limit operations per stock</source>
         <translation>Ограничивать количество операций на акцию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="238"/>
+        <location filename="../../src/config/settingsdialog.ui" line="260"/>
         <source>Commission per operation</source>
         <translation>Комиссия за операцию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="278"/>
+        <location filename="../../src/config/settingsdialog.ui" line="300"/>
         <source>Limit stock buying</source>
         <translation>Не покупать акции на сумму больше</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="288"/>
+        <location filename="../../src/config/settingsdialog.ui" line="310"/>
         <source> rubles</source>
         <translation> рублей</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="378"/>
+        <location filename="../../src/config/settingsdialog.ui" line="400"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="182"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="201"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="487"/>
+        <location filename="../../src/config/settingsdialog.ui" line="509"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="354"/>
-        <location filename="../../src/config/settingsdialog.ui" line="399"/>
+        <location filename="../../src/config/settingsdialog.ui" line="376"/>
+        <location filename="../../src/config/settingsdialog.ui" line="421"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -162,19 +164,27 @@
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="333"/>
+        <location filename="../../src/config/settingsdialog.ui" line="355"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="183"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="200"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="444"/>
+        <location filename="../../src/config/settingsdialog.ui" line="466"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="467"/>
+        <location filename="../../src/config/settingsdialog.ui" line="489"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.cpp" line="177"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="195"/>
+        <source>Decision maker</source>
+        <translation>Принятие решений</translation>
     </message>
 </context>
 <context>
@@ -192,7 +202,7 @@
     <message>
         <location filename="../../src/main/trayicon.cpp" line="33"/>
         <source>TInvestor</source>
-        <translation>ТИнвестор</translation>
+        <translation>Ты ж инвестор</translation>
     </message>
 </context>
 </TS>

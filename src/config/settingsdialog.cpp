@@ -5,6 +5,11 @@
 
 
 
+const int simulationTabIndex = 1;
+const int autoPilotTabIndex = 2;
+
+
+
 SettingsDialog::SettingsDialog(const Config &config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog),
@@ -13,6 +18,9 @@ SettingsDialog::SettingsDialog(const Config &config, QWidget *parent) :
     qDebug() << "Create SettingsDialog";
 
     ui->setupUi(this);
+
+    ui->simulatorConfigWidget->setDecisionMakerConfig(&mConfig.simulatorConfig);
+    ui->autoPilotConfigWidget->setDecisionMakerConfig(&mConfig.autoPilotConfig);
 
     updateUiFromConfig();
 }
@@ -52,6 +60,9 @@ void SettingsDialog::updateUiFromConfig()
     ui->amountOfStockBuyingSpinBox->setValue(mConfig.getAmountOfStockBuying());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig.isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig.isAutoPilotConfigCommon());
+
+    ui->simulatorConfigWidget->updateUiFromConfig();
+    ui->autoPilotConfigWidget->updateUiFromConfig();
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -160,6 +171,17 @@ void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt
     bool checked = value == Qt::Checked;
 
     mConfig.setSimulatorConfigCommon(checked);
+
+    if (checked)
+    {
+        ui->mainTabWidget->setTabText(simulationTabIndex, tr("Decision maker"));
+        ui->mainTabWidget->removeTab(autoPilotTabIndex);
+    }
+    else
+    {
+        ui->mainTabWidget->insertTab(autoPilotTabIndex, ui->autoPilotTab, tr("Auto-pilot"));
+        ui->mainTabWidget->setTabText(simulationTabIndex, tr("Simulation"));
+    }
 }
 
 void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -167,6 +189,17 @@ void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt
     bool checked = value == Qt::Checked;
 
     mConfig.setAutoPilotConfigCommon(checked);
+
+    if (checked)
+    {
+        ui->mainTabWidget->setTabText(autoPilotTabIndex, tr("Decision maker"));
+        ui->mainTabWidget->removeTab(simulationTabIndex);
+    }
+    else
+    {
+        ui->mainTabWidget->insertTab(simulationTabIndex, ui->simulationTab, tr("Simulation"));
+        ui->mainTabWidget->setTabText(autoPilotTabIndex, tr("Auto-pilot"));
+    }
 }
 
 void SettingsDialog::on_okButton_clicked()

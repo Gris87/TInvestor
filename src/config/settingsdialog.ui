@@ -120,7 +120,15 @@
           </widget>
          </item>
          <item>
-          <widget class="QTimeEdit" name="scheduleStartTimeEdit"/>
+          <widget class="QTimeEdit" name="scheduleStartTimeEdit">
+           <property name="time">
+            <time>
+             <hour>10</hour>
+             <minute>0</minute>
+             <second>0</second>
+            </time>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="label_3">
@@ -130,7 +138,15 @@
           </widget>
          </item>
          <item>
-          <widget class="QTimeEdit" name="scheduleEndTimeEdit"/>
+          <widget class="QTimeEdit" name="scheduleEndTimeEdit">
+           <property name="time">
+            <time>
+             <hour>18</hour>
+             <minute>40</minute>
+             <second>0</second>
+            </time>
+           </property>
+          </widget>
          </item>
          <item>
           <spacer name="horizontalSpacer_5">
@@ -169,6 +185,9 @@
            </property>
            <property name="maximum">
             <number>1000</number>
+           </property>
+           <property name="value">
+            <number>50</number>
            </property>
           </widget>
          </item>
@@ -209,6 +228,9 @@
            </property>
            <property name="maximum">
             <number>100</number>
+           </property>
+           <property name="value">
+            <number>10</number>
            </property>
           </widget>
          </item>
@@ -353,10 +375,10 @@
          <property name="text">
           <string>Use the same config for Simulator and Auto-pilot</string>
          </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
         </widget>
+       </item>
+       <item>
+        <widget class="DecisionMakerConfigWidget" name="simulatorConfigWidget" native="true"/>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
@@ -398,10 +420,10 @@
          <property name="text">
           <string>Use the same config for Simulator and Auto-pilot</string>
          </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
         </widget>
+       </item>
+       <item>
+        <widget class="DecisionMakerConfigWidget" name="autoPilotConfigWidget" native="true"/>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
@@ -505,6 +527,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DecisionMakerConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisionmakerconfigwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

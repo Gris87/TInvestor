@@ -20,3 +20,13 @@ DecisionMakerConfigWidget::~DecisionMakerConfigWidget()
 
     delete ui;
 }
+
+void DecisionMakerConfigWidget::setDecisionMakerConfig(DecisionMakerConfig *config)
+{
+    mConfig = config;
+}
+
+void DecisionMakerConfigWidget::updateUiFromConfig()
+{
+
+}
