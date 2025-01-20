@@ -122,12 +122,12 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="174"/>
-        <source>Limit operations per day</source>
+        <source>Limit the number of purchases per day</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="217"/>
-        <source>Limit operations per stock</source>
+        <source>Limit the number of purchases per stock</source>
         <translation></translation>
     </message>
     <message>
@@ -137,7 +137,7 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="300"/>
-        <source>Limit stock buying</source>
+        <source>Limit stock purchase</source>
         <translation></translation>
     </message>
     <message>
@@ -146,37 +146,47 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="355"/>
+        <location filename="../../src/config/settingsdialog.ui" line="346"/>
+        <source>Store stocks data for</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="353"/>
+        <source> months</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="395"/>
         <location filename="../../src/config/settingsdialog.cpp" line="183"/>
         <location filename="../../src/config/settingsdialog.cpp" line="200"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="376"/>
-        <location filename="../../src/config/settingsdialog.ui" line="421"/>
+        <location filename="../../src/config/settingsdialog.ui" line="416"/>
+        <location filename="../../src/config/settingsdialog.ui" line="461"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="400"/>
+        <location filename="../../src/config/settingsdialog.ui" line="440"/>
         <location filename="../../src/config/settingsdialog.cpp" line="182"/>
         <location filename="../../src/config/settingsdialog.cpp" line="201"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="466"/>
+        <location filename="../../src/config/settingsdialog.ui" line="506"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="489"/>
+        <location filename="../../src/config/settingsdialog.ui" line="529"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="509"/>
+        <location filename="../../src/config/settingsdialog.ui" line="549"/>
         <source>Default</source>
         <translation></translation>
     </message>

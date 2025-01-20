@@ -43,22 +43,23 @@ void Config::makeDefault()
     simulatorConfig.makeDefault();
     autoPilotConfig.makeDefault();
 
-    mAutorun                    = true;
-    mRefreshTimeout             = 1;
-    mUseSchedule                = true;
-    mScheduleStartHour          = 10;
-    mScheduleStartMinute        = 0;
-    mScheduleEndHour            = 18;
-    mScheduleEndMinute          = 40;
-    mLimitOperationsPerDay      = true;
-    mAmountOfOperationsPerDay   = 50;
-    mLimitOperationsPerStock    = true;
-    mAmountOfOperationsPerStock = 10;
-    mCommission                 = 0.3f;
-    mLimitStockBuying           = true;
-    mAmountOfStockBuying        = 10000;
-    mSimulatorConfigCommon      = true;
-    mAutoPilotConfigCommon      = false;
+    mAutorun                   = true;
+    mRefreshTimeout            = 1;
+    mUseSchedule               = true;
+    mScheduleStartHour         = 10;
+    mScheduleStartMinute       = 0;
+    mScheduleEndHour           = 18;
+    mScheduleEndMinute         = 40;
+    mLimitPurchasesPerDay      = true;
+    mAmountOfPurchasesPerDay   = 50;
+    mLimitPurchasesPerStock    = true;
+    mAmountOfPurchasesPerStock = 10;
+    mCommission                = 0.3f;
+    mLimitStockPurchase        = true;
+    mAmountOfStockPurchase     = 10000;
+    mStorageMonthLimit         = 24;
+    mSimulatorConfigCommon     = true;
+    mAutoPilotConfigCommon     = false;
 }
 
 void Config::assign(const Config &config)
@@ -70,22 +71,23 @@ void Config::assign(const Config &config)
     simulatorConfig = config.simulatorConfig;
     autoPilotConfig = config.autoPilotConfig;
 
-    mAutorun                    = config.mAutorun;
-    mRefreshTimeout             = config.mRefreshTimeout;
-    mUseSchedule                = config.mUseSchedule;
-    mScheduleStartHour          = config.mScheduleStartHour;
-    mScheduleStartMinute        = config.mScheduleStartMinute;
-    mScheduleEndHour            = config.mScheduleEndHour;
-    mScheduleEndMinute          = config.mScheduleEndMinute;
-    mLimitOperationsPerDay      = config.mLimitOperationsPerDay;
-    mAmountOfOperationsPerDay   = config.mAmountOfOperationsPerDay;
-    mLimitOperationsPerStock    = config.mLimitOperationsPerStock;
-    mAmountOfOperationsPerStock = config.mAmountOfOperationsPerStock;
-    mCommission                 = config.mCommission;
-    mLimitStockBuying           = config.mLimitStockBuying;
-    mAmountOfStockBuying        = config.mAmountOfStockBuying;
-    mSimulatorConfigCommon      = config.mSimulatorConfigCommon;
-    mAutoPilotConfigCommon      = config.mAutoPilotConfigCommon;
+    mAutorun                   = config.mAutorun;
+    mRefreshTimeout            = config.mRefreshTimeout;
+    mUseSchedule               = config.mUseSchedule;
+    mScheduleStartHour         = config.mScheduleStartHour;
+    mScheduleStartMinute       = config.mScheduleStartMinute;
+    mScheduleEndHour           = config.mScheduleEndHour;
+    mScheduleEndMinute         = config.mScheduleEndMinute;
+    mLimitPurchasesPerDay      = config.mLimitPurchasesPerDay;
+    mAmountOfPurchasesPerDay   = config.mAmountOfPurchasesPerDay;
+    mLimitPurchasesPerStock    = config.mLimitPurchasesPerStock;
+    mAmountOfPurchasesPerStock = config.mAmountOfPurchasesPerStock;
+    mCommission                = config.mCommission;
+    mLimitStockPurchase        = config.mLimitStockPurchase;
+    mAmountOfStockPurchase     = config.mAmountOfStockPurchase;
+    mStorageMonthLimit         = config.mStorageMonthLimit;
+    mSimulatorConfigCommon     = config.mSimulatorConfigCommon;
+    mAutoPilotConfigCommon     = config.mAutoPilotConfigCommon;
 }
 
 void Config::save()
@@ -99,22 +101,23 @@ void Config::save()
 
     QSettings settings("GrisCom", "TInvestor");
 
-    settings.setValue("Config/Autorun",                    mAutorun);
-    settings.setValue("Config/RefreshTimeout",             mRefreshTimeout);
-    settings.setValue("Config/UseSchedule",                mUseSchedule);
-    settings.setValue("Config/ScheduleStartHour",          mScheduleStartHour);
-    settings.setValue("Config/ScheduleStartMinute",        mScheduleStartMinute);
-    settings.setValue("Config/ScheduleEndHour",            mScheduleEndHour);
-    settings.setValue("Config/ScheduleEndMinute",          mScheduleEndMinute);
-    settings.setValue("Config/LimitOperationsPerDay",      mLimitOperationsPerDay);
-    settings.setValue("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay);
-    settings.setValue("Config/LimitOperationsPerStock",    mLimitOperationsPerStock);
-    settings.setValue("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock);
-    settings.setValue("Config/Commission",                 mCommission);
-    settings.setValue("Config/LimitStockBuying",           mLimitStockBuying);
-    settings.setValue("Config/AmountOfStockBuying",        mAmountOfStockBuying);
-    settings.setValue("Config/SimulatorConfigCommon",      mSimulatorConfigCommon);
-    settings.setValue("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon);
+    settings.setValue("Config/Autorun",                   mAutorun);
+    settings.setValue("Config/RefreshTimeout",            mRefreshTimeout);
+    settings.setValue("Config/UseSchedule",               mUseSchedule);
+    settings.setValue("Config/ScheduleStartHour",         mScheduleStartHour);
+    settings.setValue("Config/ScheduleStartMinute",       mScheduleStartMinute);
+    settings.setValue("Config/ScheduleEndHour",           mScheduleEndHour);
+    settings.setValue("Config/ScheduleEndMinute",         mScheduleEndMinute);
+    settings.setValue("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay);
+    settings.setValue("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay);
+    settings.setValue("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock);
+    settings.setValue("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock);
+    settings.setValue("Config/Commission",                mCommission);
+    settings.setValue("Config/LimitStockPurchase",        mLimitStockPurchase);
+    settings.setValue("Config/AmountOfStockPurchase",     mAmountOfStockPurchase);
+    settings.setValue("Config/StorageMonthLimit",         mStorageMonthLimit);
+    settings.setValue("Config/SimulatorConfigCommon",     mSimulatorConfigCommon);
+    settings.setValue("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon);
 }
 
 void Config::load()
@@ -128,22 +131,23 @@ void Config::load()
 
     QSettings settings("GrisCom", "TInvestor");
 
-    mAutorun                    = settings.value("Config/Autorun",                    mAutorun).toBool();
-    mRefreshTimeout             = settings.value("Config/RefreshTimeout",             mRefreshTimeout).toInt();
-    mUseSchedule                = settings.value("Config/UseSchedule",                mUseSchedule).toBool();
-    mScheduleStartHour          = settings.value("Config/ScheduleStartHour",          mScheduleStartHour).toInt();
-    mScheduleStartMinute        = settings.value("Config/ScheduleStartMinute",        mScheduleStartMinute).toInt();
-    mScheduleEndHour            = settings.value("Config/ScheduleEndHour",            mScheduleEndHour).toInt();
-    mScheduleEndMinute          = settings.value("Config/ScheduleEndMinute",          mScheduleEndMinute).toInt();
-    mLimitOperationsPerDay      = settings.value("Config/LimitOperationsPerDay",      mLimitOperationsPerDay).toBool();
-    mAmountOfOperationsPerDay   = settings.value("Config/AmountOfOperationsPerDay",   mAmountOfOperationsPerDay).toInt();
-    mLimitOperationsPerStock    = settings.value("Config/LimitOperationsPerStock",    mLimitOperationsPerStock).toBool();
-    mAmountOfOperationsPerStock = settings.value("Config/AmountOfOperationsPerStock", mAmountOfOperationsPerStock).toInt();
-    mCommission                 = settings.value("Config/Commission",                 mCommission).toFloat();
-    mLimitStockBuying           = settings.value("Config/LimitStockBuying",           mLimitStockBuying).toBool();
-    mAmountOfStockBuying        = settings.value("Config/AmountOfStockBuying",        mAmountOfStockBuying).toInt();
-    mSimulatorConfigCommon      = settings.value("Config/SimulatorConfigCommon",      mSimulatorConfigCommon).toBool();
-    mAutoPilotConfigCommon      = settings.value("Config/AutoPilotConfigCommon",      mAutoPilotConfigCommon).toBool();
+    mAutorun                   = settings.value("Config/Autorun",                   mAutorun).toBool();
+    mRefreshTimeout            = settings.value("Config/RefreshTimeout",            mRefreshTimeout).toInt();
+    mUseSchedule               = settings.value("Config/UseSchedule",               mUseSchedule).toBool();
+    mScheduleStartHour         = settings.value("Config/ScheduleStartHour",         mScheduleStartHour).toInt();
+    mScheduleStartMinute       = settings.value("Config/ScheduleStartMinute",       mScheduleStartMinute).toInt();
+    mScheduleEndHour           = settings.value("Config/ScheduleEndHour",           mScheduleEndHour).toInt();
+    mScheduleEndMinute         = settings.value("Config/ScheduleEndMinute",         mScheduleEndMinute).toInt();
+    mLimitPurchasesPerDay      = settings.value("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay).toBool();
+    mAmountOfPurchasesPerDay   = settings.value("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay).toInt();
+    mLimitPurchasesPerStock    = settings.value("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock).toBool();
+    mAmountOfPurchasesPerStock = settings.value("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock).toInt();
+    mCommission                = settings.value("Config/Commission",                mCommission).toFloat();
+    mLimitStockPurchase        = settings.value("Config/LimitStockPurchase",        mLimitStockPurchase).toBool();
+    mAmountOfStockPurchase     = settings.value("Config/AmountOfStockPurchase",     mAmountOfStockPurchase).toInt();
+    mStorageMonthLimit         = settings.value("Config/StorageMonthLimit",         mStorageMonthLimit).toInt();
+    mSimulatorConfigCommon     = settings.value("Config/SimulatorConfigCommon",     mSimulatorConfigCommon).toBool();
+    mAutoPilotConfigCommon     = settings.value("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon).toBool();
 }
 
 void Config::setAutorun(bool value)
@@ -244,60 +248,60 @@ int Config::getScheduleEndMinute()
     return mScheduleEndMinute;
 }
 
-void Config::setLimitOperationsPerDay(bool value)
+void Config::setLimitPurchasesPerDay(bool value)
 {
     QMutexLocker lock(&mMutex);
 
-    mLimitOperationsPerDay = value;
+    mLimitPurchasesPerDay = value;
 }
 
-bool Config::isLimitOperationsPerDay()
+bool Config::isLimitPurchasesPerDay()
 {
     QMutexLocker lock(&mMutex);
 
-    return mLimitOperationsPerDay;
+    return mLimitPurchasesPerDay;
 }
 
-void Config::setAmountOfOperationsPerDay(int value)
+void Config::setAmountOfPurchasesPerDay(int value)
 {
     QMutexLocker lock(&mMutex);
 
-    mAmountOfOperationsPerDay = value;
+    mAmountOfPurchasesPerDay = value;
 }
 
-int Config::getAmountOfOperationsPerDay()
+int Config::getAmountOfPurchasesPerDay()
 {
     QMutexLocker lock(&mMutex);
 
-    return mAmountOfOperationsPerDay;
+    return mAmountOfPurchasesPerDay;
 }
 
-void Config::setLimitOperationsPerStock(bool value)
+void Config::setLimitPurchasesPerStock(bool value)
 {
     QMutexLocker lock(&mMutex);
 
-    mLimitOperationsPerStock = value;
+    mLimitPurchasesPerStock = value;
 }
 
-bool Config::isLimitOperationsPerStock()
+bool Config::isLimitPurchasesPerStock()
 {
     QMutexLocker lock(&mMutex);
 
-    return mLimitOperationsPerStock;
+    return mLimitPurchasesPerStock;
 }
 
-void Config::setAmountOfOperationsPerStock(int value)
+void Config::setAmountOfPurchasesPerStock(int value)
 {
     QMutexLocker lock(&mMutex);
 
-    mAmountOfOperationsPerStock = value;
+    mAmountOfPurchasesPerStock = value;
 }
 
-int Config::getAmountOfOperationsPerStock()
+int Config::getAmountOfPurchasesPerStock()
 {
     QMutexLocker lock(&mMutex);
 
-    return mAmountOfOperationsPerStock;
+    return mAmountOfPurchasesPerStock;
 }
 
 void Config::setCommission(float value)
@@ -314,32 +318,46 @@ float Config::getCommission()
     return mCommission;
 }
 
-void Config::setLimitStockBuying(bool value)
+void Config::setLimitStockPurchase(bool value)
 {
     QMutexLocker lock(&mMutex);
 
-    mLimitStockBuying = value;
+    mLimitStockPurchase = value;
 }
 
-bool Config::isLimitStockBuying()
+bool Config::isLimitStockPurchase()
 {
     QMutexLocker lock(&mMutex);
 
-    return mLimitStockBuying;
+    return mLimitStockPurchase;
 }
 
-void Config::setAmountOfStockBuying(int value)
+void Config::setAmountOfStockPurchase(int value)
 {
     QMutexLocker lock(&mMutex);
 
-    mAmountOfStockBuying = value;
+    mAmountOfStockPurchase = value;
 }
 
-int Config::getAmountOfStockBuying()
+int Config::getAmountOfStockPurchase()
 {
     QMutexLocker lock(&mMutex);
 
-    return mAmountOfStockBuying;
+    return mAmountOfStockPurchase;
+}
+
+void Config::setStorageMonthLimit(int value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mStorageMonthLimit = value;
+}
+
+int Config::getStorageMonthLimit()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mStorageMonthLimit;
 }
 
 void Config::setSimulatorConfigCommon(bool value)

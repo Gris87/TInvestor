@@ -49,26 +49,29 @@ public:
     void setScheduleEndMinute(int value);
     int getScheduleEndMinute();
 
-    void setLimitOperationsPerDay(bool value);
-    bool isLimitOperationsPerDay();
+    void setLimitPurchasesPerDay(bool value);
+    bool isLimitPurchasesPerDay();
 
-    void setAmountOfOperationsPerDay(int value);
-    int getAmountOfOperationsPerDay();
+    void setAmountOfPurchasesPerDay(int value);
+    int getAmountOfPurchasesPerDay();
 
-    void setLimitOperationsPerStock(bool value);
-    bool isLimitOperationsPerStock();
+    void setLimitPurchasesPerStock(bool value);
+    bool isLimitPurchasesPerStock();
 
-    void setAmountOfOperationsPerStock(int value);
-    int getAmountOfOperationsPerStock();
+    void setAmountOfPurchasesPerStock(int value);
+    int getAmountOfPurchasesPerStock();
 
     void setCommission(float value);
     float getCommission();
 
-    void setLimitStockBuying(bool value);
-    bool isLimitStockBuying();
+    void setLimitStockPurchase(bool value);
+    bool isLimitStockPurchase();
 
-    void setAmountOfStockBuying(int value);
-    int getAmountOfStockBuying();
+    void setAmountOfStockPurchase(int value);
+    int getAmountOfStockPurchase();
+
+    void setStorageMonthLimit(int value);
+    int getStorageMonthLimit();
 
     void setSimulatorConfigCommon(bool value);
     bool isSimulatorConfigCommon();
@@ -87,13 +90,14 @@ private:
     int    mScheduleStartMinute;
     int    mScheduleEndHour;
     int    mScheduleEndMinute;
-    bool   mLimitOperationsPerDay;
-    int    mAmountOfOperationsPerDay;
-    bool   mLimitOperationsPerStock;
-    int    mAmountOfOperationsPerStock;
+    bool   mLimitPurchasesPerDay;
+    int    mAmountOfPurchasesPerDay;
+    bool   mLimitPurchasesPerStock;
+    int    mAmountOfPurchasesPerStock;
     float  mCommission;
-    bool   mLimitStockBuying;
-    int    mAmountOfStockBuying;
+    bool   mLimitStockPurchase;
+    int    mAmountOfStockPurchase;
+    int    mStorageMonthLimit;
     bool   mSimulatorConfigCommon;
     bool   mAutoPilotConfigCommon;
 };

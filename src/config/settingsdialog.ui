@@ -169,9 +169,9 @@
           <number>4</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="limitOperationsPerDayCheckBox">
+          <widget class="QCheckBox" name="limitPurchasesPerDayCheckBox">
            <property name="text">
-            <string>Limit operations per day</string>
+            <string>Limit the number of purchases per day</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -179,7 +179,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="amountOfOperationsPerDaySpinBox">
+          <widget class="QSpinBox" name="amountOfPurchasesPerDaySpinBox">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -212,9 +212,9 @@
           <number>4</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="limitOperationsPerStockCheckBox">
+          <widget class="QCheckBox" name="limitPurchasesPerStockCheckBox">
            <property name="text">
-            <string>Limit operations per stock</string>
+            <string>Limit the number of purchases per stock</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -222,7 +222,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="amountOfOperationsPerStockSpinBox">
+          <widget class="QSpinBox" name="amountOfPurchasesPerStockSpinBox">
            <property name="minimum">
             <number>1</number>
            </property>
@@ -295,9 +295,9 @@
           <number>4</number>
          </property>
          <item>
-          <widget class="QCheckBox" name="limitStockBuyingCheckBox">
+          <widget class="QCheckBox" name="limitStockPurchaseCheckBox">
            <property name="text">
-            <string>Limit stock buying</string>
+            <string>Limit stock purchase</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -305,7 +305,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="amountOfStockBuyingSpinBox">
+          <widget class="QSpinBox" name="amountOfStockPurchaseSpinBox">
            <property name="suffix">
             <string> rubles</string>
            </property>
@@ -322,6 +322,46 @@
          </item>
          <item>
           <spacer name="horizontalSpacer_10">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Store stocks data for</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="storageMonthLimitSpinBox">
+           <property name="suffix">
+            <string> months</string>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>120</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_11">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
            </property>

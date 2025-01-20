@@ -117,13 +117,13 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="174"/>
-        <source>Limit operations per day</source>
-        <translation>Ограничивать количество операций на день</translation>
+        <source>Limit the number of purchases per day</source>
+        <translation>Ограничивать количество покупок на день</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="217"/>
-        <source>Limit operations per stock</source>
-        <translation>Ограничивать количество операций на акцию</translation>
+        <source>Limit the number of purchases per stock</source>
+        <translation>Ограничивать количество покупок на акцию</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="260"/>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="300"/>
-        <source>Limit stock buying</source>
+        <source>Limit stock purchase</source>
         <translation>Не покупать акции на сумму больше</translation>
     </message>
     <message>
@@ -141,20 +141,30 @@
         <translation> рублей</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="400"/>
+        <location filename="../../src/config/settingsdialog.ui" line="346"/>
+        <source>Store stocks data for</source>
+        <translation>Хранить данные об акциях</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="353"/>
+        <source> months</source>
+        <translation> месяца</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog.ui" line="440"/>
         <location filename="../../src/config/settingsdialog.cpp" line="182"/>
         <location filename="../../src/config/settingsdialog.cpp" line="201"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="509"/>
+        <location filename="../../src/config/settingsdialog.ui" line="549"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="376"/>
-        <location filename="../../src/config/settingsdialog.ui" line="421"/>
+        <location filename="../../src/config/settingsdialog.ui" line="416"/>
+        <location filename="../../src/config/settingsdialog.ui" line="461"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -164,19 +174,19 @@
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="355"/>
+        <location filename="../../src/config/settingsdialog.ui" line="395"/>
         <location filename="../../src/config/settingsdialog.cpp" line="183"/>
         <location filename="../../src/config/settingsdialog.cpp" line="200"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="466"/>
+        <location filename="../../src/config/settingsdialog.ui" line="506"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="489"/>
+        <location filename="../../src/config/settingsdialog.ui" line="529"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
