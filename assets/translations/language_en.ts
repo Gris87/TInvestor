@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>DecisionMakerConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisionmakerconfigwidget.ui" line="32"/>
+        <source>Buy</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisionmakerconfigwidget.ui" line="39"/>
+        <source>Sell</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
@@ -156,43 +169,43 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="395"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="183"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="200"/>
+        <location filename="../../src/config/settingsdialog.ui" line="398"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="184"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="201"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="416"/>
-        <location filename="../../src/config/settingsdialog.ui" line="461"/>
+        <location filename="../../src/config/settingsdialog.ui" line="419"/>
+        <location filename="../../src/config/settingsdialog.ui" line="464"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="440"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="182"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="201"/>
+        <location filename="../../src/config/settingsdialog.ui" line="443"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="183"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="506"/>
+        <location filename="../../src/config/settingsdialog.ui" line="509"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="529"/>
+        <location filename="../../src/config/settingsdialog.ui" line="532"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="549"/>
+        <location filename="../../src/config/settingsdialog.ui" line="552"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.cpp" line="177"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="195"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="178"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="196"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

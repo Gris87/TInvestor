@@ -44,6 +44,8 @@ SOURCES += \
     src/config/config.cpp \
     src/config/decisionmakerconfig.cpp \
     src/config/decisionmakerconfigwidget.cpp \
+    src/config/decisions/buy/buydecision1config.cpp \
+    src/config/decisions/sell/selldecision1config.cpp \
     src/config/settingsdialog.cpp \
     src/logger/logger.cpp \
     src/main.cpp\
@@ -54,6 +56,8 @@ HEADERS += \
     src/config/config.h \
     src/config/decisionmakerconfig.h \
     src/config/decisionmakerconfigwidget.h \
+    src/config/decisions/buy/buydecision1config.h \
+    src/config/decisions/sell/selldecision1config.h \
     src/config/settingsdialog.h \
     src/logger/logger.h \
     src/main/mainwindow.h \

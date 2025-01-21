@@ -58,6 +58,7 @@ void SettingsDialog::updateUiFromConfig()
     ui->commissionDoubleSpinBox->setValue(mConfig.getCommission());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig.isLimitStockPurchase());
     ui->amountOfStockPurchaseSpinBox->setValue(mConfig.getAmountOfStockPurchase());
+    ui->storageMonthLimitSpinBox->setValue(mConfig.getStorageMonthLimit());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig.isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig.isAutoPilotConfigCommon());
 

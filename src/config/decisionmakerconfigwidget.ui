@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>640</width>
+    <height>480</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
     <number>4</number>
    </property>
@@ -27,17 +27,18 @@
     <number>0</number>
    </property>
    <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+    <widget class="QGroupBox" name="butGroupBox">
+     <property name="title">
+      <string>Buy</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>277</height>
-      </size>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="sellGroupBox">
+     <property name="title">
+      <string>Sell</string>
      </property>
-    </spacer>
+    </widget>
    </item>
   </layout>
  </widget>
