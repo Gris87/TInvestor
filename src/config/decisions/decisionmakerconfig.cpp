@@ -25,54 +25,48 @@ DecisionMakerConfig& DecisionMakerConfig::operator=(const DecisionMakerConfig &c
 
 void DecisionMakerConfig::makeDefault()
 {
-    QMutexLocker lock(&mMutex);
-
     qDebug() << "Set DecisionMakerConfig to default";
 
-    mAutorun = true;
+    buyDecision1Config.makeDefault();
+    buyDecision2Config.makeDefault();
+    buyDecision3Config.makeDefault();
+    sellDecision1Config.makeDefault();
+    sellDecision2Config.makeDefault();
+    sellDecision3Config.makeDefault();
 }
 
 void DecisionMakerConfig::assign(const DecisionMakerConfig &config)
 {
-    QMutexLocker lock(&mMutex);
-
     qDebug() << "Assigning DecisionMakerConfig to DecisionMakerConfig";
 
-    mAutorun = config.mAutorun;
+    buyDecision1Config  = config.buyDecision1Config;
+    buyDecision2Config  = config.buyDecision2Config;
+    buyDecision3Config  = config.buyDecision3Config;
+    sellDecision1Config = config.sellDecision1Config;
+    sellDecision2Config = config.sellDecision2Config;
+    sellDecision3Config = config.sellDecision3Config;
 }
 
 void DecisionMakerConfig::save(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
-
     qDebug() << "Save DecisionMakerConfig";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue(type + "/Autorun", mAutorun);
+    buyDecision1Config.save(type + "/BuyDecision1Config");
+    buyDecision2Config.save(type + "/BuyDecision2Config");
+    buyDecision3Config.save(type + "/BuyDecision3Config");
+    sellDecision1Config.save(type + "/SellDecision1Config");
+    sellDecision2Config.save(type + "/SellDecision2Config");
+    sellDecision3Config.save(type + "/SellDecision3Config");
 }
 
 void DecisionMakerConfig::load(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
-
     qDebug() << "Load DecisionMakerConfig";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mAutorun = settings.value(type + "/Autorun", mAutorun).toBool();
-}
-
-void DecisionMakerConfig::setAutorun(bool value)
-{
-    QMutexLocker lock(&mMutex);
-
-    mAutorun = value;
-}
-
-bool DecisionMakerConfig::isAutorun()
-{
-    QMutexLocker lock(&mMutex);
-
-    return mAutorun;
+    buyDecision1Config.load(type + "/BuyDecision1Config");
+    buyDecision2Config.load(type + "/BuyDecision2Config");
+    buyDecision3Config.load(type + "/BuyDecision3Config");
+    sellDecision1Config.load(type + "/SellDecision1Config");
+    sellDecision2Config.load(type + "/SellDecision2Config");
+    sellDecision3Config.load(type + "/SellDecision3Config");
 }

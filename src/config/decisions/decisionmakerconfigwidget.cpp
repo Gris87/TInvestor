@@ -24,9 +24,21 @@ DecisionMakerConfigWidget::~DecisionMakerConfigWidget()
 void DecisionMakerConfigWidget::setDecisionMakerConfig(DecisionMakerConfig *config)
 {
     mConfig = config;
+
+    ui->buyDecision1ConfigWidget->setBuyDecision1Config(&mConfig->buyDecision1Config);
+    ui->buyDecision2ConfigWidget->setBuyDecision2Config(&mConfig->buyDecision2Config);
+    ui->buyDecision3ConfigWidget->setBuyDecision3Config(&mConfig->buyDecision3Config);
+    ui->sellDecision1ConfigWidget->setSellDecision1Config(&mConfig->sellDecision1Config);
+    ui->sellDecision2ConfigWidget->setSellDecision2Config(&mConfig->sellDecision2Config);
+    ui->sellDecision3ConfigWidget->setSellDecision3Config(&mConfig->sellDecision3Config);
 }
 
 void DecisionMakerConfigWidget::updateUiFromConfig()
 {
-
+    ui->buyDecision1ConfigWidget->updateUiFromConfig();
+    ui->buyDecision2ConfigWidget->updateUiFromConfig();
+    ui->buyDecision3ConfigWidget->updateUiFromConfig();
+    ui->sellDecision1ConfigWidget->updateUiFromConfig();
+    ui->sellDecision2ConfigWidget->updateUiFromConfig();
+    ui->sellDecision3ConfigWidget->updateUiFromConfig();
 }

@@ -31,6 +31,30 @@
      <property name="title">
       <string>Buy</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="BuyDecision1ConfigWidget" name="buyDecision1ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <widget class="BuyDecision2ConfigWidget" name="buyDecision2ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <widget class="BuyDecision3ConfigWidget" name="buyDecision3ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>386</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -38,10 +62,72 @@
      <property name="title">
       <string>Sell</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="SellDecision1ConfigWidget" name="sellDecision1ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <widget class="SellDecision2ConfigWidget" name="sellDecision2ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <widget class="SellDecision3ConfigWidget" name="sellDecision3ConfigWidget" native="true"/>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>386</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BuyDecision1ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/buy/buydecision1configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BuyDecision2ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/buy/buydecision2configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BuyDecision3ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/buy/buydecision3configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SellDecision1ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/sell/selldecision1configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SellDecision2ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/sell/selldecision2configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SellDecision3ConfigWidget</class>
+   <extends>QWidget</extends>
+   <header>src/config/decisions/sell/selldecision3configwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
