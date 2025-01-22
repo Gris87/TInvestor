@@ -21,11 +21,15 @@ public:
     void setEnabled(bool value);
     bool isEnabled();
 
+    void setIncomeAbove(float value);
+    float getIncomeAbove();
+
 private:
     void assign(const SellDecision1Config &config);
 
     QMutex mMutex;
     bool   mEnabled;
+    float  mIncomeAbove;
 };
 
 

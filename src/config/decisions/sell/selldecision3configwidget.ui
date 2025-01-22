@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SellDecision2ConfigWidget</class>
- <widget class="QWidget" name="SellDecision2ConfigWidget">
+ <class>SellDecision3ConfigWidget</class>
+ <widget class="QWidget" name="SellDecision3ConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -1,17 +1,17 @@
-#ifndef BUYDECISION1CONFIG_H
-#define BUYDECISION1CONFIG_H
+#ifndef BUYDECISION2CONFIG_H
+#define BUYDECISION2CONFIG_H
 
 #include <QMutex>
 
 
 
-class BuyDecision1Config
+class BuyDecision2Config
 {
 public:
-    BuyDecision1Config();
-    ~BuyDecision1Config();
+    BuyDecision2Config();
+    ~BuyDecision2Config();
 
-    BuyDecision1Config& operator=(const BuyDecision1Config &config);
+    BuyDecision2Config& operator=(const BuyDecision2Config &config);
 
     void makeDefault();
 
@@ -25,7 +25,7 @@ public:
     float getIncomeAbove();
 
 private:
-    void assign(const BuyDecision1Config &config);
+    void assign(const BuyDecision2Config &config);
 
     QMutex mMutex;
     bool   mEnabled;
@@ -34,4 +34,4 @@ private:
 
 
 
-#endif // BUYDECISION1CONFIG_H
+#endif // BUYDECISION2CONFIG_H

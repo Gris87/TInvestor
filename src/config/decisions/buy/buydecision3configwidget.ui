@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SellDecision2ConfigWidget</class>
- <widget class="QWidget" name="SellDecision2ConfigWidget">
+ <class>BuyDecision3ConfigWidget</class>
+ <widget class="QWidget" name="BuyDecision3ConfigWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell ​​stocks if income is above</string>
+        <string>Buy ​​stocks if income is above</string>
        </property>
        <property name="checked">
         <bool>true</bool>

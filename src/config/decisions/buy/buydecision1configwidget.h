@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "src/config/buydecision1config.h"
+#include "src/config/decisions/buy/buydecision1config.h"
 
 
 
@@ -28,6 +28,10 @@ private:
     Ui::BuyDecision1ConfigWidget *ui;
 
     BuyDecision1Config *mConfig;
+
+private slots:
+    void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);
+    void on_incomeAboveDoubleSpinBox_valueChanged(double value);
 };
 
 

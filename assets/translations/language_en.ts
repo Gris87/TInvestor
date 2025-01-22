@@ -4,12 +4,12 @@
 <context>
     <name>DecisionMakerConfigWidget</name>
     <message>
-        <location filename="../../src/config/decisionmakerconfigwidget.ui" line="32"/>
+        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="32"/>
         <source>Buy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisionmakerconfigwidget.ui" line="39"/>
+        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="39"/>
         <source>Sell</source>
         <translation></translation>
     </message>

@@ -29,7 +29,8 @@ void SellDecision1Config::makeDefault()
 
     qDebug() << "Set SellDecision1Config to default";
 
-    mEnabled = true;
+    mEnabled     = true;
+    mIncomeAbove = 1.0f;
 }
 
 void SellDecision1Config::assign(const SellDecision1Config &config)
@@ -38,7 +39,8 @@ void SellDecision1Config::assign(const SellDecision1Config &config)
 
     qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
 
-    mEnabled = config.mEnabled;
+    mEnabled     = config.mEnabled;
+    mIncomeAbove = config.mIncomeAbove;
 }
 
 void SellDecision1Config::save(const QString &type)
@@ -49,7 +51,8 @@ void SellDecision1Config::save(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    settings.setValue(type + "/Enabled", mEnabled);
+    settings.setValue(type + "/Enabled",     mEnabled);
+    settings.setValue(type + "/IncomeAbove", mIncomeAbove);
 }
 
 void SellDecision1Config::load(const QString &type)
@@ -60,7 +63,8 @@ void SellDecision1Config::load(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    mEnabled = settings.value(type + "/Enabled", mEnabled).toBool();
+    mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
+    mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
 }
 
 void SellDecision1Config::setEnabled(bool value)
@@ -75,4 +79,18 @@ bool SellDecision1Config::isEnabled()
     QMutexLocker lock(&mMutex);
 
     return mEnabled;
+}
+
+void SellDecision1Config::setIncomeAbove(float value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mIncomeAbove = value;
+}
+
+float SellDecision1Config::getIncomeAbove()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mIncomeAbove;
 }

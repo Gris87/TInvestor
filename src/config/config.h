@@ -5,7 +5,7 @@
 
 #include <QMutex>
 
-#include "src/config/decisionmakerconfig.h"
+#include "src/config/decisions/decisionmakerconfig.h"
 
 
 

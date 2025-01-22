@@ -1,35 +1,39 @@
-#ifndef SELLDECISION1CONFIGWIDGET_H
-#define SELLDECISION1CONFIGWIDGET_H
+#ifndef SELLDECISION2CONFIGWIDGET_H
+#define SELLDECISION2CONFIGWIDGET_H
 
 #include <QWidget>
 
-#include "src/config/selldecision1config.h"
+#include "src/config/decisions/sell/selldecision2config.h"
 
 
 
 namespace Ui {
-class SellDecision1ConfigWidget;
+class SellDecision2ConfigWidget;
 }
 
 
 
-class SellDecision1ConfigWidget : public QWidget
+class SellDecision2ConfigWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SellDecision1ConfigWidget(QWidget *parent = nullptr);
-    ~SellDecision1ConfigWidget();
+    explicit SellDecision2ConfigWidget(QWidget *parent = nullptr);
+    ~SellDecision2ConfigWidget();
 
-    void setSellDecision1Config(SellDecision1Config *config);
+    void setSellDecision2Config(SellDecision2Config *config);
     void updateUiFromConfig();
 
 private:
-    Ui::SellDecision1ConfigWidget *ui;
+    Ui::SellDecision2ConfigWidget *ui;
 
-    SellDecision1Config *mConfig;
+    SellDecision2Config *mConfig;
+
+private slots:
+    void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);
+    void on_incomeAboveDoubleSpinBox_valueChanged(double value);
 };
 
 
 
-#endif // SELLDECISION1CONFIGWIDGET_H
+#endif // SELLDECISION2CONFIGWIDGET_H

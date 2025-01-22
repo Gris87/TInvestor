@@ -574,7 +574,7 @@
   <customwidget>
    <class>DecisionMakerConfigWidget</class>
    <extends>QWidget</extends>
-   <header>src/config/decisionmakerconfigwidget.h</header>
+   <header>src/config/decisions/decisionmakerconfigwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -1,4 +1,4 @@
-#include "selldecision2config.h"
+#include "buydecision3config.h"
 
 #include <QDebug>
 #include <QMutexLocker>
@@ -6,48 +6,48 @@
 
 
 
-SellDecision2Config::SellDecision2Config()
+BuyDecision3Config::BuyDecision3Config()
 {
-    qDebug() << "Create SellDecision2Config";
+    qDebug() << "Create BuyDecision3Config";
 }
 
-SellDecision2Config::~SellDecision2Config()
+BuyDecision3Config::~BuyDecision3Config()
 {
-    qDebug() << "Destroy SellDecision2Config";
+    qDebug() << "Destroy BuyDecision3Config";
 }
 
-SellDecision2Config& SellDecision2Config::operator=(const SellDecision2Config &config)
+BuyDecision3Config& BuyDecision3Config::operator=(const BuyDecision3Config &config)
 {
     assign(config);
 
     return *this;
 }
 
-void SellDecision2Config::makeDefault()
+void BuyDecision3Config::makeDefault()
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Set SellDecision2Config to default";
+    qDebug() << "Set BuyDecision3Config to default";
 
     mEnabled     = true;
     mIncomeAbove = 1.0f;
 }
 
-void SellDecision2Config::assign(const SellDecision2Config &config)
+void BuyDecision3Config::assign(const BuyDecision3Config &config)
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Assigning SellDecision2Config to SellDecision2Config";
+    qDebug() << "Assigning BuyDecision3Config to BuyDecision3Config";
 
     mEnabled     = config.mEnabled;
     mIncomeAbove = config.mIncomeAbove;
 }
 
-void SellDecision2Config::save(const QString &type)
+void BuyDecision3Config::save(const QString &type)
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Save SellDecision2Config";
+    qDebug() << "Save BuyDecision3Config";
 
     QSettings settings("GrisCom", "TInvestor");
 
@@ -55,11 +55,11 @@ void SellDecision2Config::save(const QString &type)
     settings.setValue(type + "/IncomeAbove", mIncomeAbove);
 }
 
-void SellDecision2Config::load(const QString &type)
+void BuyDecision3Config::load(const QString &type)
 {
     QMutexLocker lock(&mMutex);
 
-    qDebug() << "Load SellDecision2Config";
+    qDebug() << "Load BuyDecision3Config";
 
     QSettings settings("GrisCom", "TInvestor");
 
@@ -67,28 +67,28 @@ void SellDecision2Config::load(const QString &type)
     mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
 }
 
-void SellDecision2Config::setEnabled(bool value)
+void BuyDecision3Config::setEnabled(bool value)
 {
     QMutexLocker lock(&mMutex);
 
     mEnabled = value;
 }
 
-bool SellDecision2Config::isEnabled()
+bool BuyDecision3Config::isEnabled()
 {
     QMutexLocker lock(&mMutex);
 
     return mEnabled;
 }
 
-void SellDecision2Config::setIncomeAbove(float value)
+void BuyDecision3Config::setIncomeAbove(float value)
 {
     QMutexLocker lock(&mMutex);
 
     mIncomeAbove = value;
 }
 
-float SellDecision2Config::getIncomeAbove()
+float BuyDecision3Config::getIncomeAbove()
 {
     QMutexLocker lock(&mMutex);
 

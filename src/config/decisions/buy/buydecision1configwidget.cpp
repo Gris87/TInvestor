@@ -28,5 +28,21 @@ void BuyDecision1ConfigWidget::setBuyDecision1Config(BuyDecision1Config *config)
 
 void BuyDecision1ConfigWidget::updateUiFromConfig()
 {
-
+    ui->enabledCheckBox->setChecked(mConfig->isEnabled());
+    ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
 }
+
+void BuyDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
+{
+    bool checked = value == Qt::Checked;
+
+    mConfig->setEnabled(checked);
+
+    ui->incomeAboveDoubleSpinBox->setEnabled(checked);
+}
+
+void BuyDecision1ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setIncomeAbove(value);
+}
+
