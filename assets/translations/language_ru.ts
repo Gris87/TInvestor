@@ -2,6 +2,70 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>BuyDecision1ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="37"/>
+        <source>Buy stocks if the price has dropped more than</source>
+        <translation>Покупать акции если цела упала больше чем на</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="60"/>
+        <source>in the last</source>
+        <translation>за последние</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="67"/>
+        <source> minutes</source>
+        <translation> минут</translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision2ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="37"/>
+        <source>Buy stocks if the price has fallen and risen by more than </source>
+        <translation>Покупать акции если цела упала и выросла больше чем на</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="60"/>
+        <source>and more than</source>
+        <translation>и больше чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="67"/>
+        <source> times</source>
+        <translation> раза</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
+        <source>in the last</source>
+        <translation>за последние</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
+        <source> minutes</source>
+        <translation> минут</translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision3ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="37"/>
+        <source>Buy stocks before day end if the price has risen more than</source>
+        <translation>Покупать акции в конце дня если цела возрастала на более чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="60"/>
+        <source>during non-working hours over the last</source>
+        <translation>в нерабочее время в течение</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="67"/>
+        <source> days</source>
+        <translation> дней</translation>
+    </message>
+</context>
+<context>
     <name>DecisionMakerConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="32"/>
@@ -9,7 +73,7 @@
         <translation>Покупка</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="39"/>
+        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="63"/>
         <source>Sell</source>
         <translation>Продажа</translation>
     </message>
@@ -102,6 +166,55 @@
     </message>
 </context>
 <context>
+    <name>SellDecision1ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="37"/>
+        <source>Sell ​​stocks if income is above</source>
+        <translation>Продавать акции если доход выше</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="60"/>
+        <source>without commission</source>
+        <translation>без учёта комиссии</translation>
+    </message>
+</context>
+<context>
+    <name>SellDecision2ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="37"/>
+        <source>Sell ​​stocks with income from</source>
+        <translation>Продавать акции с доходом от</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="60"/>
+        <source>(without commission) with leading stop request that will lose</source>
+        <translation>(без учёта комиссии) с помощью лидинг стоп заявки, которая может потерять</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="80"/>
+        <source>from latest maximum</source>
+        <translation>от последнего максимума</translation>
+    </message>
+</context>
+<context>
+    <name>SellDecision3ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="37"/>
+        <source>Sell ​​stocks if it fails to sell within</source>
+        <translation>Продавать акции если не получилось их продать за</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="47"/>
+        <source> days</source>
+        <translation> дня</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="60"/>
+        <source>and the loss is no more than</source>
+        <translation>и убыток не более</translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="14"/>
@@ -164,20 +277,20 @@
         <translation> месяца</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="443"/>
+        <location filename="../../src/config/settingsdialog.ui" line="430"/>
         <location filename="../../src/config/settingsdialog.cpp" line="183"/>
         <location filename="../../src/config/settingsdialog.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="552"/>
+        <location filename="../../src/config/settingsdialog.ui" line="526"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="419"/>
-        <location filename="../../src/config/settingsdialog.ui" line="464"/>
+        <location filename="../../src/config/settingsdialog.ui" line="451"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
@@ -194,12 +307,12 @@
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="509"/>
+        <location filename="../../src/config/settingsdialog.ui" line="483"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="532"/>
+        <location filename="../../src/config/settingsdialog.ui" line="506"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

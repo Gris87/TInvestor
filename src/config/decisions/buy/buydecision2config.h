@@ -21,15 +21,23 @@ public:
     void setEnabled(bool value);
     bool isEnabled();
 
-    void setIncomeAbove(float value);
-    float getIncomeAbove();
+    void setPriceDiff(float value);
+    float getPriceDiff();
+
+    void setAmountOfTimes(int value);
+    int getAmountOfTimes();
+
+    void setDuration(int value);
+    int getDuration();
 
 private:
     void assign(const BuyDecision2Config &config);
 
     QMutex mMutex;
     bool   mEnabled;
-    float  mIncomeAbove;
+    float  mPriceDiff;
+    int    mAmountOfTimes;
+    int    mDuration;
 };
 
 

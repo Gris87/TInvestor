@@ -30,6 +30,7 @@ void SellDecision2ConfigWidget::updateUiFromConfig()
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
     ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
+    ui->loseIncomeDoubleSpinBox->setValue(mConfig->getLoseIncome());
 }
 
 void SellDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -39,6 +40,7 @@ void SellDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::C
     mConfig->setEnabled(checked);
 
     ui->incomeAboveDoubleSpinBox->setEnabled(checked);
+    ui->loseIncomeDoubleSpinBox->setEnabled(checked);
 }
 
 void SellDecision2ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double value)
@@ -46,3 +48,7 @@ void SellDecision2ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double 
     mConfig->setIncomeAbove(value);
 }
 
+void SellDecision2ConfigWidget::on_loseIncomeDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLoseIncome(value);
+}

@@ -2,6 +2,70 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>BuyDecision1ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="37"/>
+        <source>Buy stocks if the price has dropped more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="60"/>
+        <source>in the last</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="67"/>
+        <source> minutes</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision2ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="37"/>
+        <source>Buy stocks if the price has fallen and risen by more than </source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="60"/>
+        <source>and more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="67"/>
+        <source> times</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
+        <source>in the last</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
+        <source> minutes</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision3ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="37"/>
+        <source>Buy stocks before day end if the price has risen more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="60"/>
+        <source>during non-working hours over the last</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="67"/>
+        <source> days</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>DecisionMakerConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="32"/>
@@ -9,7 +73,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="39"/>
+        <location filename="../../src/config/decisions/decisionmakerconfigwidget.ui" line="63"/>
         <source>Sell</source>
         <translation></translation>
     </message>
@@ -102,6 +166,55 @@
     </message>
 </context>
 <context>
+    <name>SellDecision1ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="37"/>
+        <source>Sell ​​stocks if income is above</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="60"/>
+        <source>without commission</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SellDecision2ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="37"/>
+        <source>Sell ​​stocks with income from</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="60"/>
+        <source>(without commission) with leading stop request that will lose</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="80"/>
+        <source>from latest maximum</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SellDecision3ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="37"/>
+        <source>Sell ​​stocks if it fails to sell within</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="47"/>
+        <source> days</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="60"/>
+        <source>and the loss is no more than</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="14"/>
@@ -177,29 +290,29 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="419"/>
-        <location filename="../../src/config/settingsdialog.ui" line="464"/>
+        <location filename="../../src/config/settingsdialog.ui" line="451"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="443"/>
+        <location filename="../../src/config/settingsdialog.ui" line="430"/>
         <location filename="../../src/config/settingsdialog.cpp" line="183"/>
         <location filename="../../src/config/settingsdialog.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="509"/>
+        <location filename="../../src/config/settingsdialog.ui" line="483"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="532"/>
+        <location filename="../../src/config/settingsdialog.ui" line="506"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.ui" line="552"/>
+        <location filename="../../src/config/settingsdialog.ui" line="526"/>
         <source>Default</source>
         <translation></translation>
     </message>

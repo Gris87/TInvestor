@@ -29,7 +29,8 @@ void SellDecision3ConfigWidget::setSellDecision3Config(SellDecision3Config *conf
 void SellDecision3ConfigWidget::updateUiFromConfig()
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
+    ui->durationSpinBox->setValue(mConfig->getDuration());
+    ui->loseIncomeDoubleSpinBox->setValue(mConfig->getLoseIncome());
 }
 
 void SellDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -38,11 +39,17 @@ void SellDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::C
 
     mConfig->setEnabled(checked);
 
-    ui->incomeAboveDoubleSpinBox->setEnabled(checked);
+    ui->durationSpinBox->setEnabled(checked);
+    ui->loseIncomeDoubleSpinBox->setEnabled(checked);
 }
 
-void SellDecision3ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double value)
+void SellDecision3ConfigWidget::on_durationSpinBox_valueChanged(int value)
 {
-    mConfig->setIncomeAbove(value);
+    mConfig->setDuration(value);
+}
+
+void SellDecision3ConfigWidget::on_loseIncomeDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLoseIncome(value);
 }
 

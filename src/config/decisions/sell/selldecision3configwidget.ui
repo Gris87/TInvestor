@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
+    <width>489</width>
     <height>27</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell ​​stocks if income is above</string>
+        <string>Sell ​​stocks if it fails to sell within</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,27 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="incomeAboveDoubleSpinBox">
+      <widget class="QSpinBox" name="durationSpinBox">
+       <property name="suffix">
+        <string> days</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>and the loss is no more than</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="loseIncomeDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -51,13 +71,6 @@
        </property>
        <property name="value">
         <double>1.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>without commission</string>
        </property>
       </widget>
      </item>

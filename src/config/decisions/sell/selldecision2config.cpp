@@ -31,6 +31,7 @@ void SellDecision2Config::makeDefault()
 
     mEnabled     = true;
     mIncomeAbove = 1.0f;
+    mLoseIncome  = 0.1f;
 }
 
 void SellDecision2Config::assign(const SellDecision2Config &config)
@@ -41,6 +42,7 @@ void SellDecision2Config::assign(const SellDecision2Config &config)
 
     mEnabled     = config.mEnabled;
     mIncomeAbove = config.mIncomeAbove;
+    mLoseIncome  = config.mLoseIncome;
 }
 
 void SellDecision2Config::save(const QString &type)
@@ -53,6 +55,7 @@ void SellDecision2Config::save(const QString &type)
 
     settings.setValue(type + "/Enabled",     mEnabled);
     settings.setValue(type + "/IncomeAbove", mIncomeAbove);
+    settings.setValue(type + "/LoseIncome",  mLoseIncome);
 }
 
 void SellDecision2Config::load(const QString &type)
@@ -65,6 +68,7 @@ void SellDecision2Config::load(const QString &type)
 
     mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
     mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mLoseIncome  = settings.value(type + "/LoseIncome",  mLoseIncome).toFloat();
 }
 
 void SellDecision2Config::setEnabled(bool value)
@@ -93,4 +97,18 @@ float SellDecision2Config::getIncomeAbove()
     QMutexLocker lock(&mMutex);
 
     return mIncomeAbove;
+}
+
+void SellDecision2Config::setLoseIncome(float value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mLoseIncome = value;
+}
+
+float SellDecision2Config::getLoseIncome()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mLoseIncome;
 }

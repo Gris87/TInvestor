@@ -29,8 +29,10 @@ void BuyDecision2Config::makeDefault()
 
     qDebug() << "Set BuyDecision2Config to default";
 
-    mEnabled     = true;
-    mIncomeAbove = 1.0f;
+    mEnabled       = true;
+    mPriceDiff     = 1.0f;
+    mAmountOfTimes = 2;
+    mDuration      = 15;
 }
 
 void BuyDecision2Config::assign(const BuyDecision2Config &config)
@@ -39,8 +41,10 @@ void BuyDecision2Config::assign(const BuyDecision2Config &config)
 
     qDebug() << "Assigning BuyDecision2Config to BuyDecision2Config";
 
-    mEnabled     = config.mEnabled;
-    mIncomeAbove = config.mIncomeAbove;
+    mEnabled       = config.mEnabled;
+    mPriceDiff     = config.mPriceDiff;
+    mAmountOfTimes = config.mAmountOfTimes;
+    mDuration      = config.mDuration;
 }
 
 void BuyDecision2Config::save(const QString &type)
@@ -51,8 +55,10 @@ void BuyDecision2Config::save(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    settings.setValue(type + "/Enabled",     mEnabled);
-    settings.setValue(type + "/IncomeAbove", mIncomeAbove);
+    settings.setValue(type + "/Enabled",       mEnabled);
+    settings.setValue(type + "/PriceDiff",     mPriceDiff);
+    settings.setValue(type + "/AmountOfTimes", mAmountOfTimes);
+    settings.setValue(type + "/Duration",      mDuration);
 }
 
 void BuyDecision2Config::load(const QString &type)
@@ -63,8 +69,10 @@ void BuyDecision2Config::load(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mEnabled       = settings.value(type + "/Enabled",       mEnabled).toBool();
+    mPriceDiff     = settings.value(type + "/PriceDiff",     mPriceDiff).toFloat();
+    mAmountOfTimes = settings.value(type + "/AmountOfTimes", mAmountOfTimes).toInt();
+    mDuration      = settings.value(type + "/Duration",      mDuration).toInt();
 }
 
 void BuyDecision2Config::setEnabled(bool value)
@@ -81,16 +89,44 @@ bool BuyDecision2Config::isEnabled()
     return mEnabled;
 }
 
-void BuyDecision2Config::setIncomeAbove(float value)
+void BuyDecision2Config::setPriceDiff(float value)
 {
     QMutexLocker lock(&mMutex);
 
-    mIncomeAbove = value;
+    mPriceDiff = value;
 }
 
-float BuyDecision2Config::getIncomeAbove()
+float BuyDecision2Config::getPriceDiff()
 {
     QMutexLocker lock(&mMutex);
 
-    return mIncomeAbove;
+    return mPriceDiff;
+}
+
+void BuyDecision2Config::setAmountOfTimes(int value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mAmountOfTimes = value;
+}
+
+int BuyDecision2Config::getAmountOfTimes()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mAmountOfTimes;
+}
+
+void BuyDecision2Config::setDuration(int value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mDuration = value;
+}
+
+int BuyDecision2Config::getDuration()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mDuration;
 }

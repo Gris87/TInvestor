@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>364</width>
+    <width>766</width>
     <height>27</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell ​​stocks if income is above</string>
+        <string>Sell ​​stocks with income from</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -57,7 +57,27 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>without commission</string>
+        <string>(without commission) with leading stop request that will lose</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="loseIncomeDoubleSpinBox">
+       <property name="suffix">
+        <string notr="true"> %</string>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.100000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>from latest maximum</string>
        </property>
       </widget>
      </item>

@@ -29,8 +29,9 @@ void BuyDecision1Config::makeDefault()
 
     qDebug() << "Set BuyDecision1Config to default";
 
-    mEnabled     = true;
-    mIncomeAbove = 1.0f;
+    mEnabled   = true;
+    mPriceFall = 1.0f;
+    mDuration  = 5;
 }
 
 void BuyDecision1Config::assign(const BuyDecision1Config &config)
@@ -39,8 +40,9 @@ void BuyDecision1Config::assign(const BuyDecision1Config &config)
 
     qDebug() << "Assigning BuyDecision1Config to BuyDecision1Config";
 
-    mEnabled     = config.mEnabled;
-    mIncomeAbove = config.mIncomeAbove;
+    mEnabled   = config.mEnabled;
+    mPriceFall = config.mPriceFall;
+    mDuration  = config.mDuration;
 }
 
 void BuyDecision1Config::save(const QString &type)
@@ -51,8 +53,9 @@ void BuyDecision1Config::save(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    settings.setValue(type + "/Enabled",     mEnabled);
-    settings.setValue(type + "/IncomeAbove", mIncomeAbove);
+    settings.setValue(type + "/Enabled",   mEnabled);
+    settings.setValue(type + "/PriceFall", mPriceFall);
+    settings.setValue(type + "/Duration",  mDuration);
 }
 
 void BuyDecision1Config::load(const QString &type)
@@ -63,8 +66,9 @@ void BuyDecision1Config::load(const QString &type)
 
     QSettings settings("GrisCom", "TInvestor");
 
-    mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mEnabled   = settings.value(type + "/Enabled",   mEnabled).toBool();
+    mPriceFall = settings.value(type + "/PriceFall", mPriceFall).toFloat();
+    mDuration  = settings.value(type + "/Duration",  mDuration).toInt();
 }
 
 void BuyDecision1Config::setEnabled(bool value)
@@ -81,16 +85,30 @@ bool BuyDecision1Config::isEnabled()
     return mEnabled;
 }
 
-void BuyDecision1Config::setIncomeAbove(float value)
+void BuyDecision1Config::setPriceFall(float value)
 {
     QMutexLocker lock(&mMutex);
 
-    mIncomeAbove = value;
+    mPriceFall = value;
 }
 
-float BuyDecision1Config::getIncomeAbove()
+float BuyDecision1Config::getPriceFall()
 {
     QMutexLocker lock(&mMutex);
 
-    return mIncomeAbove;
+    return mPriceFall;
+}
+
+void BuyDecision1Config::setDuration(int value)
+{
+    QMutexLocker lock(&mMutex);
+
+    mDuration = value;
+}
+
+int BuyDecision1Config::getDuration()
+{
+    QMutexLocker lock(&mMutex);
+
+    return mDuration;
 }

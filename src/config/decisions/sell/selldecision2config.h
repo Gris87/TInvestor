@@ -24,12 +24,16 @@ public:
     void setIncomeAbove(float value);
     float getIncomeAbove();
 
+    void setLoseIncome(float value);
+    float getLoseIncome();
+
 private:
     void assign(const SellDecision2Config &config);
 
     QMutex mMutex;
     bool   mEnabled;
     float  mIncomeAbove;
+    float  mLoseIncome;
 };
 
 

@@ -29,7 +29,8 @@ void BuyDecision1ConfigWidget::setBuyDecision1Config(BuyDecision1Config *config)
 void BuyDecision1ConfigWidget::updateUiFromConfig()
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
+    ui->priceFallDoubleSpinBox->setValue(mConfig->getPriceFall());
+    ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
 void BuyDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -38,11 +39,16 @@ void BuyDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->incomeAboveDoubleSpinBox->setEnabled(checked);
+    ui->priceFallDoubleSpinBox->setEnabled(checked);
+    ui->durationSpinBox->setEnabled(checked);
 }
 
-void BuyDecision1ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double value)
+void BuyDecision1ConfigWidget::on_priceFallDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setIncomeAbove(value);
+    mConfig->setPriceFall(value);
 }
 
+void BuyDecision1ConfigWidget::on_durationSpinBox_valueChanged(int value)
+{
+    mConfig->setDuration(value);
+}
