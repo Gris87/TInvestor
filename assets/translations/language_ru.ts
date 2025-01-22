@@ -6,7 +6,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="37"/>
         <source>Buy stocks if the price has dropped more than</source>
-        <translation>Покупать акции если цела упала больше чем на</translation>
+        <translation>Покупать акции если цена упала больше чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="60"/>
@@ -23,8 +23,8 @@
     <name>BuyDecision2ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has fallen and risen by more than </source>
-        <translation>Покупать акции если цела упала и выросла больше чем на</translation>
+        <source>Buy stocks if the price has fallen and risen by more than</source>
+        <translation>Покупать акции если цена упала и выросла больше чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="60"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="37"/>
         <source>Buy stocks before day end if the price has risen more than</source>
-        <translation>Покупать акции в конце дня если цела возрастала на более чем</translation>
+        <translation>Покупать акции в конце дня если цена возрастала на более чем</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="60"/>

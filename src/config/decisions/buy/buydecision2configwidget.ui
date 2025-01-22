@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks if the price has fallen and risen by more than </string>
+        <string>Buy stocks if the price has fallen and risen by more than</string>
        </property>
        <property name="checked">
         <bool>true</bool>

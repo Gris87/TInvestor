@@ -23,7 +23,7 @@
     <name>BuyDecision2ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has fallen and risen by more than </source>
+        <source>Buy stocks if the price has fallen and risen by more than</source>
         <translation></translation>
     </message>
     <message>
