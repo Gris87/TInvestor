@@ -7,7 +7,7 @@
 
 
 SellDecision3Config::SellDecision3Config() :
-    mMutex()
+    mMutex(new QMutex())
 {
     qDebug() << "Create SellDecision3Config";
 }
@@ -15,6 +15,8 @@ SellDecision3Config::SellDecision3Config() :
 SellDecision3Config::~SellDecision3Config()
 {
     qDebug() << "Destroy SellDecision3Config";
+
+    delete mMutex;
 }
 
 SellDecision3Config& SellDecision3Config::operator=(const SellDecision3Config &config)
@@ -26,7 +28,7 @@ SellDecision3Config& SellDecision3Config::operator=(const SellDecision3Config &c
 
 void SellDecision3Config::makeDefault()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Set SellDecision3Config to default";
 
@@ -37,7 +39,7 @@ void SellDecision3Config::makeDefault()
 
 void SellDecision3Config::assign(const SellDecision3Config &config)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision3Config to SellDecision3Config";
 
@@ -48,7 +50,7 @@ void SellDecision3Config::assign(const SellDecision3Config &config)
 
 void SellDecision3Config::save(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision3Config";
 
@@ -61,7 +63,7 @@ void SellDecision3Config::save(const QString &type)
 
 void SellDecision3Config::load(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision3Config";
 
@@ -74,42 +76,42 @@ void SellDecision3Config::load(const QString &type)
 
 void SellDecision3Config::setEnabled(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision3Config::isEnabled()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void SellDecision3Config::setLoseIncome(float value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mLoseIncome = value;
 }
 
 float SellDecision3Config::getLoseIncome()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mLoseIncome;
 }
 
 void SellDecision3Config::setDuration(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mDuration = value;
 }
 
 int SellDecision3Config::getDuration()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mDuration;
 }

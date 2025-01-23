@@ -7,7 +7,7 @@
 
 
 SellDecision2Config::SellDecision2Config() :
-    mMutex()
+    mMutex(new QMutex())
 {
     qDebug() << "Create SellDecision2Config";
 }
@@ -15,6 +15,8 @@ SellDecision2Config::SellDecision2Config() :
 SellDecision2Config::~SellDecision2Config()
 {
     qDebug() << "Destroy SellDecision2Config";
+
+    delete mMutex;
 }
 
 SellDecision2Config& SellDecision2Config::operator=(const SellDecision2Config &config)
@@ -26,7 +28,7 @@ SellDecision2Config& SellDecision2Config::operator=(const SellDecision2Config &c
 
 void SellDecision2Config::makeDefault()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Set SellDecision2Config to default";
 
@@ -37,7 +39,7 @@ void SellDecision2Config::makeDefault()
 
 void SellDecision2Config::assign(const SellDecision2Config &config)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision2Config to SellDecision2Config";
 
@@ -48,7 +50,7 @@ void SellDecision2Config::assign(const SellDecision2Config &config)
 
 void SellDecision2Config::save(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision2Config";
 
@@ -61,7 +63,7 @@ void SellDecision2Config::save(const QString &type)
 
 void SellDecision2Config::load(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision2Config";
 
@@ -74,42 +76,42 @@ void SellDecision2Config::load(const QString &type)
 
 void SellDecision2Config::setEnabled(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision2Config::isEnabled()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void SellDecision2Config::setIncomeAbove(float value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mIncomeAbove = value;
 }
 
 float SellDecision2Config::getIncomeAbove()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mIncomeAbove;
 }
 
 void SellDecision2Config::setLoseIncome(float value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mLoseIncome = value;
 }
 
 float SellDecision2Config::getLoseIncome()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mLoseIncome;
 }

@@ -10,7 +10,7 @@ Config::Config(QObject *parent) :
     QObject(parent),
     simulatorConfig(),
     autoPilotConfig(),
-    mMutex()
+    mMutex(new QMutex())
 {
     qDebug() << "Create Config";
 
@@ -21,7 +21,7 @@ Config::Config(const Config &config, QObject *parent) :
     QObject(parent),
     simulatorConfig(),
     autoPilotConfig(),
-    mMutex()
+    mMutex(new QMutex())
 {
     qDebug() << "Create Config";
 
@@ -31,6 +31,8 @@ Config::Config(const Config &config, QObject *parent) :
 Config::~Config()
 {
     qDebug() << "Destroy Config";
+
+    delete mMutex;
 }
 
 Config& Config::operator=(const Config &config)
@@ -42,7 +44,7 @@ Config& Config::operator=(const Config &config)
 
 void Config::makeDefault()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Set Config to default";
 
@@ -70,7 +72,7 @@ void Config::makeDefault()
 
 void Config::assign(const Config &config)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning Config to Config";
 
@@ -98,7 +100,7 @@ void Config::assign(const Config &config)
 
 void Config::save()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Save Config";
 
@@ -128,7 +130,7 @@ void Config::save()
 
 void Config::load()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Load Config";
 
@@ -158,238 +160,238 @@ void Config::load()
 
 void Config::setAutorun(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mAutorun = value;
 }
 
 bool Config::isAutorun()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mAutorun;
 }
 
 void Config::setRefreshTimeout(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mRefreshTimeout = value;
 }
 
 int Config::getRefreshTimeout()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mRefreshTimeout;
 }
 
 void Config::setUseSchedule(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mUseSchedule = value;
 }
 
 bool Config::isUseSchedule()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mUseSchedule;
 }
 
 void Config::setScheduleStartHour(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mScheduleStartHour = value;
 }
 
 int Config::getScheduleStartHour()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mScheduleStartHour;
 }
 
 void Config::setScheduleStartMinute(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mScheduleStartMinute = value;
 }
 
 int Config::getScheduleStartMinute()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mScheduleStartMinute;
 }
 
 void Config::setScheduleEndHour(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mScheduleEndHour = value;
 }
 
 int Config::getScheduleEndHour()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mScheduleEndHour;
 }
 
 void Config::setScheduleEndMinute(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mScheduleEndMinute = value;
 }
 
 int Config::getScheduleEndMinute()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mScheduleEndMinute;
 }
 
 void Config::setLimitPurchasesPerDay(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mLimitPurchasesPerDay = value;
 }
 
 bool Config::isLimitPurchasesPerDay()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mLimitPurchasesPerDay;
 }
 
 void Config::setAmountOfPurchasesPerDay(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mAmountOfPurchasesPerDay = value;
 }
 
 int Config::getAmountOfPurchasesPerDay()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mAmountOfPurchasesPerDay;
 }
 
 void Config::setLimitPurchasesPerStock(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mLimitPurchasesPerStock = value;
 }
 
 bool Config::isLimitPurchasesPerStock()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mLimitPurchasesPerStock;
 }
 
 void Config::setAmountOfPurchasesPerStock(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mAmountOfPurchasesPerStock = value;
 }
 
 int Config::getAmountOfPurchasesPerStock()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mAmountOfPurchasesPerStock;
 }
 
 void Config::setCommission(float value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mCommission = value;
 }
 
 float Config::getCommission()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mCommission;
 }
 
 void Config::setLimitStockPurchase(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mLimitStockPurchase = value;
 }
 
 bool Config::isLimitStockPurchase()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mLimitStockPurchase;
 }
 
 void Config::setAmountOfStockPurchase(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mAmountOfStockPurchase = value;
 }
 
 int Config::getAmountOfStockPurchase()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mAmountOfStockPurchase;
 }
 
 void Config::setStorageMonthLimit(int value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mStorageMonthLimit = value;
 }
 
 int Config::getStorageMonthLimit()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mStorageMonthLimit;
 }
 
 void Config::setSimulatorConfigCommon(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mSimulatorConfigCommon = value;
 }
 
 bool Config::isSimulatorConfigCommon()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mSimulatorConfigCommon;
 }
 
 void Config::setAutoPilotConfigCommon(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mAutoPilotConfigCommon = value;
 }
 
 bool Config::isAutoPilotConfigCommon()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mAutoPilotConfigCommon;
 }

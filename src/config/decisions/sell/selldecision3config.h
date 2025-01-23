@@ -30,7 +30,7 @@ public:
 private:
     void assign(const SellDecision3Config &config);
 
-    QMutex mMutex;
+    QMutex *mMutex;
     bool   mEnabled;
     float  mLoseIncome;
     int    mDuration;

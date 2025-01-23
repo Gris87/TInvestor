@@ -5,16 +5,21 @@
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has dropped more than</source>
-        <translation>Покупать акции если цена упала больше чем на</translation>
+        <source>Buy stocks if the price has dropped more</source>
+        <translation>Покупать акции, если цена упала больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="67"/>
+        <source>than</source>
+        <translation>на</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="87"/>
         <source>in the last</source>
         <translation>за последние</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="67"/>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="94"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
@@ -24,25 +29,25 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="37"/>
         <source>Buy stocks if the price has fallen and risen by more than</source>
-        <translation>Покупать акции если цена упала и выросла больше чем на</translation>
+        <translation>Покупать акции, если цена упала и выросла больше, чем на</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
         <source>and more than</source>
-        <translation>и больше чем</translation>
+        <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="67"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
         <source> times</source>
         <translation> раза</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="100"/>
         <source>in the last</source>
         <translation>за последние</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="107"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
@@ -52,15 +57,15 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="37"/>
         <source>Buy stocks before day end if the price has risen more than</source>
-        <translation>Покупать акции в конце дня если цена возрастала на более чем</translation>
+        <translation>Покупать акции в конце дня, если цена возрастала на более чем</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="80"/>
         <source>during non-working hours over the last</source>
         <translation>в нерабочее время в течение</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="67"/>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="87"/>
         <source> days</source>
         <translation> дней</translation>
     </message>
@@ -87,59 +92,59 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="93"/>
-        <source>Refresh manually</source>
-        <translation>Обновить вручную</translation>
+        <source>Refresh manually (F5)</source>
+        <translation>Обновить вручную (F5)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="96"/>
-        <source>Manually refresh stock information</source>
-        <translation>Обновить вручную информацию об акциях</translation>
+        <source>Manually refresh stock information (F5)</source>
+        <translation>Обновить вручную информацию об акциях (F5)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="114"/>
-        <source>Filter stocks by price changes</source>
-        <translation>Отфильтровать акции по изменению цены</translation>
+        <source>Filter stocks by price changes (Ctrl+Shift+F)</source>
+        <translation>Отфильтровать акции по изменению цены (Ctrl+Shift+F)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="117"/>
-        <source>Apply filter based on price change during a day</source>
-        <translation>Применить фильтр на основании изменении цены за день</translation>
+        <source>Apply filter based on price change during a day (Ctrl+Shift+F)</source>
+        <translation>Применить фильтр на основании изменении цены за день (Ctrl+Shift+F)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="138"/>
-        <source>Stocks</source>
-        <translation>Акции</translation>
+        <source>Stocks (Ctrl+1)</source>
+        <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="141"/>
-        <source>Show page with list of stocks</source>
-        <translation>Показать страницу с акциями</translation>
+        <source>Show page with list of stocks (Ctrl+1)</source>
+        <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="159"/>
-        <source>Simulation</source>
-        <translation>Симуляция</translation>
+        <source>Simulation (Ctrl+2)</source>
+        <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="162"/>
-        <source>Show page with simulation mode</source>
-        <translation>Показать страницу с режимом симулаяции</translation>
+        <source>Show page with simulation mode (Ctrl+2)</source>
+        <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="180"/>
-        <source>Auto-pilot</source>
-        <translation>Авто-пилот</translation>
+        <source>Auto-pilot (Ctrl+3)</source>
+        <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="183"/>
-        <source>Show page with auto-pilot mode</source>
-        <translation>Показать страницу с режимом авто-пилота</translation>
+        <source>Show page with auto-pilot mode (Ctrl+3)</source>
+        <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="198"/>
         <location filename="../../src/main/mainwindow.ui" line="201"/>
-        <source>Settings</source>
-        <translation>Настройки</translation>
+        <source>Settings (F6)</source>
+        <translation>Настройки (F6)</translation>
     </message>
 </context>
 <context>
@@ -170,7 +175,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="37"/>
         <source>Sell ​​stocks if income is above</source>
-        <translation>Продавать акции если доход выше</translation>
+        <translation>Продавать акции, если доход выше</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision1configwidget.ui" line="60"/>
@@ -187,11 +192,16 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="60"/>
-        <source>(without commission) with leading stop request that will lose</source>
-        <translation>(без учёта комиссии) с помощью лидинг стоп заявки, которая может потерять</translation>
+        <source>(without commission) with</source>
+        <translation>(без учёта комиссии) с помощью</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="87"/>
+        <source>leading stop request that will lose</source>
+        <translation>лидинг стоп заявки, которая может потерять</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="107"/>
         <source>from latest maximum</source>
         <translation>от последнего максимума</translation>
     </message>
@@ -201,7 +211,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="37"/>
         <source>Sell ​​stocks if it fails to sell within</source>
-        <translation>Продавать акции если не получилось их продать за</translation>
+        <translation>Продавать акции, если не получилось их продать за</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="47"/>
@@ -209,7 +219,7 @@
         <translation> дня</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="80"/>
         <source>and the loss is no more than</source>
         <translation>и убыток не более</translation>
     </message>
@@ -259,7 +269,7 @@
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="300"/>
         <source>Limit stock purchase</source>
-        <translation>Не покупать акции на сумму больше</translation>
+        <translation>Не покупать акции на сумму больше,</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="310"/>

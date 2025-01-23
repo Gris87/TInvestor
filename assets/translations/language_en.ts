@@ -5,16 +5,21 @@
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has dropped more than</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="60"/>
-        <source>in the last</source>
+        <source>Buy stocks if the price has dropped more</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="67"/>
+        <source>than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="87"/>
+        <source>in the last</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision1configwidget.ui" line="94"/>
         <source> minutes</source>
         <translation></translation>
     </message>
@@ -27,22 +32,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
         <source>and more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="67"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
         <source> times</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="100"/>
         <source>in the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="87"/>
+        <location filename="../../src/config/decisions/buy/buydecision2configwidget.ui" line="107"/>
         <source> minutes</source>
         <translation></translation>
     </message>
@@ -55,12 +60,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="80"/>
         <source>during non-working hours over the last</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="67"/>
+        <location filename="../../src/config/decisions/buy/buydecision3configwidget.ui" line="87"/>
         <source> days</source>
         <translation></translation>
     </message>
@@ -87,58 +92,58 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="93"/>
-        <source>Refresh manually</source>
+        <source>Refresh manually (F5)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="96"/>
-        <source>Manually refresh stock information</source>
+        <source>Manually refresh stock information (F5)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="114"/>
-        <source>Filter stocks by price changes</source>
+        <source>Filter stocks by price changes (Ctrl+Shift+F)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="117"/>
-        <source>Apply filter based on price change during a day</source>
+        <source>Apply filter based on price change during a day (Ctrl+Shift+F)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="138"/>
-        <source>Stocks</source>
+        <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="141"/>
-        <source>Show page with list of stocks</source>
+        <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="159"/>
-        <source>Simulation</source>
+        <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="162"/>
-        <source>Show page with simulation mode</source>
+        <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="180"/>
-        <source>Auto-pilot</source>
+        <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="183"/>
-        <source>Show page with auto-pilot mode</source>
+        <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="198"/>
         <location filename="../../src/main/mainwindow.ui" line="201"/>
-        <source>Settings</source>
+        <source>Settings (F6)</source>
         <translation></translation>
     </message>
 </context>
@@ -187,11 +192,16 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="60"/>
-        <source>(without commission) with leading stop request that will lose</source>
+        <source>(without commission) with</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="80"/>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="87"/>
+        <source>leading stop request that will lose</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision2configwidget.ui" line="107"/>
         <source>from latest maximum</source>
         <translation></translation>
     </message>
@@ -209,7 +219,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="60"/>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="80"/>
         <source>and the loss is no more than</source>
         <translation></translation>
     </message>

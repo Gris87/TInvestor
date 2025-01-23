@@ -27,7 +27,7 @@ public:
 private:
     void assign(const SellDecision1Config &config);
 
-    QMutex mMutex;
+    QMutex *mMutex;
     bool   mEnabled;
     float  mIncomeAbove;
 };

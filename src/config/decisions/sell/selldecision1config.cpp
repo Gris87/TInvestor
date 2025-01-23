@@ -7,7 +7,7 @@
 
 
 SellDecision1Config::SellDecision1Config() :
-    mMutex()
+    mMutex(new QMutex())
 {
     qDebug() << "Create SellDecision1Config";
 }
@@ -15,6 +15,8 @@ SellDecision1Config::SellDecision1Config() :
 SellDecision1Config::~SellDecision1Config()
 {
     qDebug() << "Destroy SellDecision1Config";
+
+    delete mMutex;
 }
 
 SellDecision1Config& SellDecision1Config::operator=(const SellDecision1Config &config)
@@ -26,7 +28,7 @@ SellDecision1Config& SellDecision1Config::operator=(const SellDecision1Config &c
 
 void SellDecision1Config::makeDefault()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Set SellDecision1Config to default";
 
@@ -36,7 +38,7 @@ void SellDecision1Config::makeDefault()
 
 void SellDecision1Config::assign(const SellDecision1Config &config)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
 
@@ -46,7 +48,7 @@ void SellDecision1Config::assign(const SellDecision1Config &config)
 
 void SellDecision1Config::save(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision1Config";
 
@@ -58,7 +60,7 @@ void SellDecision1Config::save(const QString &type)
 
 void SellDecision1Config::load(const QString &type)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision1Config";
 
@@ -70,28 +72,28 @@ void SellDecision1Config::load(const QString &type)
 
 void SellDecision1Config::setEnabled(bool value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision1Config::isEnabled()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void SellDecision1Config::setIncomeAbove(float value)
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     mIncomeAbove = value;
 }
 
 float SellDecision1Config::getIncomeAbove()
 {
-    QMutexLocker lock(&mMutex);
+    QMutexLocker lock(mMutex);
 
     return mIncomeAbove;
 }

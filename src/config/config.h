@@ -82,7 +82,7 @@ public:
 private:
     void assign(const Config &config);
 
-    QMutex mMutex;
+    QMutex *mMutex;
     bool   mAutorun;
     int    mRefreshTimeout;
     bool   mUseSchedule;

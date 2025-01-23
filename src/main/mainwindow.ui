@@ -76,8 +76,6 @@
    </attribute>
    <addaction name="actionRefreshManually"/>
    <addaction name="separator"/>
-   <addaction name="actionFilterStocks"/>
-   <addaction name="separator"/>
    <addaction name="actionStocksPage"/>
    <addaction name="actionSimulationPage"/>
    <addaction name="actionAutoPilotPage"/>
@@ -90,34 +88,13 @@
      <normaloff>:/assets/images/refresh.png</normaloff>:/assets/images/refresh.png</iconset>
    </property>
    <property name="text">
-    <string>Refresh manually</string>
+    <string>Refresh manually (F5)</string>
    </property>
    <property name="toolTip">
-    <string>Manually refresh stock information</string>
+    <string>Manually refresh stock information (F5)</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::MenuRole::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionFilterStocks">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset resource="../../Resources.qrc">
-     <normaloff>:/assets/images/filter.png</normaloff>:/assets/images/filter.png</iconset>
-   </property>
-   <property name="text">
-    <string>Filter stocks by price changes</string>
-   </property>
-   <property name="toolTip">
-    <string>Apply filter based on price change during a day</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Shift+F</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>
@@ -135,10 +112,10 @@
      <normaloff>:/assets/images/stocks.png</normaloff>:/assets/images/stocks.png</iconset>
    </property>
    <property name="text">
-    <string>Stocks</string>
+    <string>Stocks (Ctrl+1)</string>
    </property>
    <property name="toolTip">
-    <string>Show page with list of stocks</string>
+    <string>Show page with list of stocks (Ctrl+1)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+1</string>
@@ -156,10 +133,10 @@
      <normaloff>:/assets/images/simulation.png</normaloff>:/assets/images/simulation.png</iconset>
    </property>
    <property name="text">
-    <string>Simulation</string>
+    <string>Simulation (Ctrl+2)</string>
    </property>
    <property name="toolTip">
-    <string>Show page with simulation mode</string>
+    <string>Show page with simulation mode (Ctrl+2)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+2</string>
@@ -177,10 +154,10 @@
      <normaloff>:/assets/images/auto_pilot.png</normaloff>:/assets/images/auto_pilot.png</iconset>
    </property>
    <property name="text">
-    <string>Auto-pilot</string>
+    <string>Auto-pilot (Ctrl+3)</string>
    </property>
    <property name="toolTip">
-    <string>Show page with auto-pilot mode</string>
+    <string>Show page with auto-pilot mode (Ctrl+3)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+3</string>
@@ -195,10 +172,10 @@
      <normaloff>:/assets/images/settings.png</normaloff>:/assets/images/settings.png</iconset>
    </property>
    <property name="text">
-    <string>Settings</string>
+    <string>Settings (F6)</string>
    </property>
    <property name="toolTip">
-    <string>Settings</string>
+    <string>Settings (F6)</string>
    </property>
    <property name="shortcut">
     <string notr="true">F6</string>

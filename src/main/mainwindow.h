@@ -48,7 +48,6 @@ public slots:
 
 private slots:
     void on_actionRefreshManually_triggered();
-    void on_actionFilterStocks_toggled(bool checked);
     void on_actionStocksPage_toggled(bool checked);
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);

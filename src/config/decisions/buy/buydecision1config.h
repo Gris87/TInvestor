@@ -30,7 +30,7 @@ public:
 private:
     void assign(const BuyDecision1Config &config);
 
-    QMutex mMutex;
+    QMutex *mMutex;
     bool   mEnabled;
     float  mPriceFall;
     int    mDuration;

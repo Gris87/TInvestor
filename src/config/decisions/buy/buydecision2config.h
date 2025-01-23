@@ -33,7 +33,7 @@ public:
 private:
     void assign(const BuyDecision2Config &config);
 
-    QMutex mMutex;
+    QMutex *mMutex;
     bool   mEnabled;
     float  mPriceDiff;
     int    mAmountOfTimes;

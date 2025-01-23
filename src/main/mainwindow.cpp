@@ -98,11 +98,6 @@ void MainWindow::on_actionRefreshManually_triggered()
 
 }
 
-void MainWindow::on_actionFilterStocks_toggled(bool /*checked*/)
-{
-
-}
-
 void MainWindow::on_actionStocksPage_toggled(bool checked)
 {
     if (checked)

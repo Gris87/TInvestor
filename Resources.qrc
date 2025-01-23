@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>assets/images/auto_pilot.png</file>
-        <file>assets/images/filter.png</file>
         <file>assets/images/icon.png</file>
         <file>assets/images/refresh.png</file>
         <file>assets/images/settings.png</file>
