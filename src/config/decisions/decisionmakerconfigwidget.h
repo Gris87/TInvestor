@@ -26,8 +26,6 @@ public:
 
 private:
     Ui::DecisionMakerConfigWidget *ui;
-
-    DecisionMakerConfig *mConfig;
 };
 
 

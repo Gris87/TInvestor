@@ -6,7 +6,13 @@
 
 
 
-DecisionMakerConfig::DecisionMakerConfig()
+DecisionMakerConfig::DecisionMakerConfig() :
+    buyDecision1Config(),
+    buyDecision2Config(),
+    buyDecision3Config(),
+    sellDecision1Config(),
+    sellDecision2Config(),
+    sellDecision3Config()
 {
     qDebug() << "Create DecisionMakerConfig";
 }

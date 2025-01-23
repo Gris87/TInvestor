@@ -7,7 +7,10 @@
 
 
 Config::Config(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    simulatorConfig(),
+    autoPilotConfig(),
+    mMutex()
 {
     qDebug() << "Create Config";
 
@@ -15,7 +18,10 @@ Config::Config(QObject *parent) :
 }
 
 Config::Config(const Config &config, QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    simulatorConfig(),
+    autoPilotConfig(),
+    mMutex()
 {
     qDebug() << "Create Config";
 

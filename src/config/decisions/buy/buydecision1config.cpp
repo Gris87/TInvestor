@@ -6,7 +6,8 @@
 
 
 
-BuyDecision1Config::BuyDecision1Config()
+BuyDecision1Config::BuyDecision1Config() :
+    mMutex()
 {
     qDebug() << "Create BuyDecision1Config";
 }

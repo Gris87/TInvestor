@@ -6,7 +6,8 @@
 
 
 
-SellDecision2Config::SellDecision2Config()
+SellDecision2Config::SellDecision2Config() :
+    mMutex()
 {
     qDebug() << "Create SellDecision2Config";
 }
