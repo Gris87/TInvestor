@@ -91,58 +91,48 @@
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="93"/>
+        <location filename="../../src/main/mainwindow.ui" line="91"/>
         <source>Refresh manually (F5)</source>
         <translation>Обновить вручную (F5)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="96"/>
+        <location filename="../../src/main/mainwindow.ui" line="94"/>
         <source>Manually refresh stock information (F5)</source>
         <translation>Обновить вручную информацию об акциях (F5)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="114"/>
-        <source>Filter stocks by price changes (Ctrl+Shift+F)</source>
-        <translation>Отфильтровать акции по изменению цены (Ctrl+Shift+F)</translation>
-    </message>
-    <message>
-        <location filename="../../src/main/mainwindow.ui" line="117"/>
-        <source>Apply filter based on price change during a day (Ctrl+Shift+F)</source>
-        <translation>Применить фильтр на основании изменении цены за день (Ctrl+Shift+F)</translation>
-    </message>
-    <message>
-        <location filename="../../src/main/mainwindow.ui" line="138"/>
+        <location filename="../../src/main/mainwindow.ui" line="115"/>
         <source>Stocks (Ctrl+1)</source>
         <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="141"/>
+        <location filename="../../src/main/mainwindow.ui" line="118"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="159"/>
+        <location filename="../../src/main/mainwindow.ui" line="136"/>
         <source>Simulation (Ctrl+2)</source>
         <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="162"/>
+        <location filename="../../src/main/mainwindow.ui" line="139"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="180"/>
+        <location filename="../../src/main/mainwindow.ui" line="157"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="183"/>
+        <location filename="../../src/main/mainwindow.ui" line="160"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="198"/>
-        <location filename="../../src/main/mainwindow.ui" line="201"/>
+        <location filename="../../src/main/mainwindow.ui" line="175"/>
+        <location filename="../../src/main/mainwindow.ui" line="178"/>
         <source>Settings (F6)</source>
         <translation>Настройки (F6)</translation>
     </message>
