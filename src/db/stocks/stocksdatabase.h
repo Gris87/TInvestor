@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QtSql>
+
 
 
 class StocksDatabase : public QObject
@@ -12,6 +14,11 @@ class StocksDatabase : public QObject
 public:
     explicit StocksDatabase(QObject *parent = nullptr);
     ~StocksDatabase();
+
+private:
+    void createListTable();
+
+    QSqlDatabase mDB;
 };
 
 
