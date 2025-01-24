@@ -213,6 +213,11 @@
         <source>and the loss is no more than</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="100"/>
+        <source>without commission</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>

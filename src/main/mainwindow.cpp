@@ -12,7 +12,9 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mConfig(this)
+    mConfig(new Config(this)),
+    mCleanupTimer(new QTimer(this)),
+    mRefreshTimer(new QTimer(this))
 {
     qDebug() << "Create MainWindow";
 
@@ -22,7 +24,11 @@ MainWindow::MainWindow(QWidget *parent) :
     mTrayIcon->init(this);
     mTrayIcon->show();
 
-    mConfig.load();
+    connect(mCleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
+    connect(mRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
+
+    mConfig->load();
+    applyConfig();
 
     loadWindowState();
 }
@@ -95,7 +101,7 @@ void MainWindow::trayIconExitClicked()
 
 void MainWindow::on_actionRefreshManually_triggered()
 {
-
+    refreshTimerTicked();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -130,20 +136,48 @@ void MainWindow::on_actionAutoPilotPage_toggled(bool checked)
 
 void MainWindow::on_actionSettings_triggered()
 {
-    SettingsDialog dialog(mConfig, this);
+    SettingsDialog dialog(*mConfig, this);
 
     if (dialog.exec())
     {
         qDebug() << "Settings applied";
 
-        mConfig = dialog.getConfig();
-        mConfig.save();
+        *mConfig = dialog.getConfig();
+        mConfig->save();
+
+        applyConfig();
     }
+}
+
+void MainWindow::cleanupTimerTicked()
+{
+    qDebug() << "Cleanup timer ticked";
+
+    mCleanupTimer->stop();
+
+
+
+    mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
+}
+
+void MainWindow::refreshTimerTicked()
+{
+    qDebug() << "Refresh timer ticked";
+
+    mRefreshTimer->stop();
+
+
+
+    mRefreshTimer->start();
 }
 
 void MainWindow::init()
 {
     qDebug() << "Start main initialization";
+
+    cleanupTimerTicked();
+    // TODO: Need to wait for cleanup finish
+    refreshTimerTicked();
 }
 
 void MainWindow::updateStackWidgetToolbar()
@@ -151,6 +185,11 @@ void MainWindow::updateStackWidgetToolbar()
     ui->actionStocksPage->setChecked(ui->stackedWidget->currentWidget() == ui->stocksPage);
     ui->actionSimulationPage->setChecked(ui->stackedWidget->currentWidget() == ui->simulationPage);
     ui->actionAutoPilotPage->setChecked(ui->stackedWidget->currentWidget() == ui->autoPilotPage);
+}
+
+void MainWindow::applyConfig()
+{
+    mRefreshTimer->setInterval(mConfig->getRefreshTimeout() * 60 * 1000);
 }
 
 void MainWindow::saveWindowState()

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include <QCloseEvent>
+#include <QTimer>
 
 #include "src/config/config.h"
 #include "src/main/trayicon.h"
@@ -33,13 +34,16 @@ protected:
 
 private:
     void updateStackWidgetToolbar();
+    void applyConfig();
     void saveWindowState();
     void loadWindowState();
 
     Ui::MainWindow *ui;
 
     TrayIcon *mTrayIcon;
-    Config   mConfig;
+    Config   *mConfig;
+    QTimer   *mCleanupTimer;
+    QTimer   *mRefreshTimer;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
@@ -52,6 +56,8 @@ private slots:
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
+    void cleanupTimerTicked();
+    void refreshTimerTicked();
 };
 
 

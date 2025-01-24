@@ -30,7 +30,7 @@ private:
 
     Ui::SettingsDialog *ui;
 
-    Config mConfig;
+    Config *mConfig;
 
 private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value);

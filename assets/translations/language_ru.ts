@@ -206,12 +206,17 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="47"/>
         <source> days</source>
-        <translation> дня</translation>
+        <translation> дней</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="80"/>
         <source>and the loss is no more than</source>
         <translation>и убыток не более</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision3configwidget.ui" line="100"/>
+        <source>without commission</source>
+        <translation>без учёта комиссии</translation>
     </message>
 </context>
 <context>
