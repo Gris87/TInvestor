@@ -46,7 +46,7 @@ void Config::makeDefault()
 {
     QMutexLocker lock(mMutex);
 
-    qDebug() << "Set Config to default";
+    qInfo() << "Set Config to default";
 
     simulatorConfig.makeDefault();
     autoPilotConfig.makeDefault();
@@ -102,7 +102,7 @@ void Config::save()
 {
     QMutexLocker lock(mMutex);
 
-    qDebug() << "Save Config";
+    qInfo() << "Save Config";
 
     simulatorConfig.save("Simulator");
     autoPilotConfig.save("AutoPilot");
@@ -132,7 +132,7 @@ void Config::load()
 {
     QMutexLocker lock(mMutex);
 
-    qDebug() << "Load Config";
+    qInfo() << "Load Config";
 
     simulatorConfig.load("Simulator");
     autoPilotConfig.load("AutoPilot");

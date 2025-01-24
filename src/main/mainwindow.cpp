@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
     mCleanupThread(new CleanupThread(this)),
-    mRefreshThread(new RefreshThread(this))
+    mRefreshThread(new RefreshThread(this)),
+    mStocksDatabase(new StocksDatabase(this))
 {
     qDebug() << "Create MainWindow";
 
@@ -148,7 +149,7 @@ void MainWindow::on_actionSettings_triggered()
 
     if (dialog.exec())
     {
-        qDebug() << "Settings applied";
+        qInfo() << "Settings applied";
 
         *mConfig = dialog.getConfig();
         mConfig->save();
@@ -159,7 +160,7 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::cleanupTimerTicked()
 {
-    qDebug() << "Cleanup timer ticked";
+    qInfo() << "Cleanup timer ticked";
 
     mCleanupThread->start();
 }
@@ -179,7 +180,7 @@ void MainWindow::refreshTimerTicked()
 
 void MainWindow::init()
 {
-    qDebug() << "Start main initialization";
+    qInfo() << "Start main initialization";
 
     mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

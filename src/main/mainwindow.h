@@ -7,6 +7,7 @@
 #include <QTimer>
 
 #include "src/config/config.h"
+#include "src/db/stocks/stocksdatabase.h"
 #include "src/main/trayicon.h"
 #include "src/threads/cleanupthread.h"
 #include "src/threads/refreshthread.h"
@@ -42,12 +43,13 @@ private:
 
     Ui::MainWindow *ui;
 
-    TrayIcon      *mTrayIcon;
-    Config        *mConfig;
-    QTimer        *mCleanupTimer;
-    QTimer        *mRefreshTimer;
-    CleanupThread *mCleanupThread;
-    RefreshThread *mRefreshThread;
+    TrayIcon       *mTrayIcon;
+    Config         *mConfig;
+    QTimer         *mCleanupTimer;
+    QTimer         *mRefreshTimer;
+    CleanupThread  *mCleanupThread;
+    RefreshThread  *mRefreshThread;
+    StocksDatabase *mStocksDatabase;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

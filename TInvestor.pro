@@ -57,6 +57,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision2configwidget.cpp \
     src/config/decisions/sell/selldecision3configwidget.cpp \
     src/config/settingsdialog.cpp \
+    src/db/stocks/stocksdatabase.cpp \
     src/logger/logger.cpp \
     src/main.cpp\
     src/main/mainwindow.cpp \
@@ -81,6 +82,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision2configwidget.h \
     src/config/decisions/sell/selldecision3configwidget.h \
     src/config/settingsdialog.h \
+    src/db/stocks/stocksdatabase.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
     src/main/trayicon.h \

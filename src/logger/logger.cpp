@@ -5,10 +5,19 @@
 
 
 
+const QtMsgType logLevel = QtInfoMsg;
+
+
+
 QtMessageHandler oldMessageHandler;
 
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+    if (type < logLevel)
+    {
+        return;
+    }
+
     QString typeStr;
 
     switch (type)

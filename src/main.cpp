@@ -17,7 +17,7 @@
 int main(int argc, char *argv[])
 {
     Logger::init();
-    qDebug() << "START";
+    qInfo() << "START";
 
     QApplication app(argc, argv);
 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 
     int res = app.exec();
 
-    qDebug() << "END";
+    qInfo() << "END";
 
     return res;
 }
