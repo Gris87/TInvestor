@@ -168,6 +168,11 @@ void MainWindow::refreshTimerTicked()
 {
     qDebug() << "Refresh timer ticked";
 
+    if (mCleanupThread->isRunning() || mRefreshThread->isRunning())
+    {
+        return;
+    }
+
     mRefreshTimer->start();
     mRefreshThread->start();
 }

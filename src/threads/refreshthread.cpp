@@ -18,4 +18,6 @@ RefreshThread::~RefreshThread()
 void RefreshThread::run()
 {
     qDebug() << "Running RefreshThread";
+
+    qDebug() << "Finish RefreshThread";
 }

@@ -18,4 +18,6 @@ CleanupThread::~CleanupThread()
 void CleanupThread::run()
 {
     qDebug() << "Running CleanupThread";
+
+    qDebug() << "Finish CleanupThread";
 }
