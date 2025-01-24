@@ -14,7 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     mConfig(new Config(this)),
     mCleanupTimer(new QTimer(this)),
-    mRefreshTimer(new QTimer(this))
+    mRefreshTimer(new QTimer(this)),
+    mCleanupThread(new CleanupThread(this)),
+    mRefreshThread(new RefreshThread(this))
 {
     qDebug() << "Create MainWindow";
 
@@ -36,6 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
+
+    mCleanupThread->requestInterruption();
+    mRefreshThread->requestInterruption();
+
+    mCleanupThread->wait();
+    mRefreshThread->wait();
 
     saveWindowState();
 
@@ -153,30 +161,25 @@ void MainWindow::cleanupTimerTicked()
 {
     qDebug() << "Cleanup timer ticked";
 
-    mCleanupTimer->stop();
-
-
-
-    mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
+    mCleanupThread->start();
 }
 
 void MainWindow::refreshTimerTicked()
 {
     qDebug() << "Refresh timer ticked";
 
-    mRefreshTimer->stop();
-
-
-
     mRefreshTimer->start();
+    mRefreshThread->start();
 }
 
 void MainWindow::init()
 {
     qDebug() << "Start main initialization";
 
+    mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();
-    // TODO: Need to wait for cleanup finish
+    mCleanupThread->wait();
+
     refreshTimerTicked();
 }
 

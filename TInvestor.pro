@@ -60,7 +60,9 @@ SOURCES += \
     src/logger/logger.cpp \
     src/main.cpp\
     src/main/mainwindow.cpp \
-    src/main/trayicon.cpp
+    src/main/trayicon.cpp \
+    src/threads/cleanupthread.cpp \
+    src/threads/refreshthread.cpp
 
 HEADERS += \
     src/config/config.h \
@@ -81,7 +83,9 @@ HEADERS += \
     src/config/settingsdialog.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
-    src/main/trayicon.h
+    src/main/trayicon.h \
+    src/threads/cleanupthread.h \
+    src/threads/refreshthread.h
 
 FORMS += \
     src/config/decisions/decisionmakerconfigwidget.ui \
