@@ -15,8 +15,11 @@ public:
     explicit StocksDatabase(QObject *parent = nullptr);
     ~StocksDatabase();
 
+    void createStockTable(const QString &name);
+
 private:
     void createListTable();
+    void fillWithTestData();
 
     QSqlDatabase mDB;
 };
