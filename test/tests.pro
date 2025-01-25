@@ -40,4 +40,10 @@ include(../app/TInvestor.pri)
 
 
 SOURCES += \
-    ../app/src/config/test_config.cpp
+    main.cpp \
+    src/config/test_config.cpp \
+    src/config/test_settingsdialog.cpp
+
+HEADERS += \
+    src/config/test_config.h \
+    src/config/test_settingsdialog.h

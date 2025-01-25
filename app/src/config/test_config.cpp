@@ -1,40 +1,30 @@
-#include <QtTest>
+#include "test_config.h"
 
 
 
-class tests : public QObject
-{
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void test_case1();
-    void test_case2();
-};
-
-void tests::initTestCase()
+void Test_Config::initTestCase()
 {
     // Nothing
 }
 
-void tests::cleanupTestCase()
+void Test_Config::cleanupTestCase()
 {
     // Nothing
 }
 
-void tests::test_case1()
+void Test_Config::test_case1()
 {
 
 }
 
-void tests::test_case2()
+void Test_Config::test_case2()
 {
 
 }
 
+int runTest_Config(int argc, char *argv[])
+{
+    Test_Config t;
 
-
-QTEST_MAIN(tests)
-
-#include "test_config.moc"
+    return QTest::qExec(&t, argc, argv);
+}
