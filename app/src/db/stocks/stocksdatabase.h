@@ -19,7 +19,7 @@ public:
     ~StocksDatabase();
 
     void createStockTable(const QString &name);
-    void readStocks(QList<Stock> &stocks);
+    void readStocks(QList<Stock> *stocks);
     void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks);
 
 private:

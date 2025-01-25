@@ -183,7 +183,7 @@ void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
-    mStocksDatabase->readStocks(mStocks);
+    mStocksDatabase->readStocks(&mStocks);
 
     mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

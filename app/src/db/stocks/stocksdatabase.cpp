@@ -76,7 +76,7 @@ void StocksDatabase::createStockTable(const QString &name)
     }
 }
 
-void StocksDatabase::readStocks(QList<Stock> &stocks)
+void StocksDatabase::readStocks(QList<Stock> *stocks)
 {
     qDebug() << "Reading stocks from database";
 
@@ -101,7 +101,7 @@ void StocksDatabase::readStocks(QList<Stock> &stocks)
         stock.name     = query.value(nameIndex).toString();
         stock.fullname = query.value(fullnameIndex).toString();
 
-        stocks.append(stock);
+        stocks->append(stock);
 
         qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
     }
