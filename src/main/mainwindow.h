@@ -50,6 +50,7 @@ private:
     CleanupThread  *mCleanupThread;
     RefreshThread  *mRefreshThread;
     StocksDatabase *mStocksDatabase;
+    QList<Stock>   mStocks;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

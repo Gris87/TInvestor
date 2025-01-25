@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mRefreshTimer(new QTimer(this)),
     mCleanupThread(new CleanupThread(this)),
     mRefreshThread(new RefreshThread(this)),
-    mStocksDatabase(new StocksDatabase(this))
+    mStocksDatabase(new StocksDatabase(this)),
+    mStocks()
 {
     qDebug() << "Create MainWindow";
 
@@ -181,6 +182,8 @@ void MainWindow::refreshTimerTicked()
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
+
+    mStocksDatabase->readStocks(mStocks);
 
     mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

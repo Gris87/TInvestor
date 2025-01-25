@@ -58,6 +58,8 @@ void StocksDatabase::createListTable()
 
 void StocksDatabase::createStockTable(const QString &name)
 {
+    qDebug() << "Create table:" << name;
+
     QString str = "CREATE TABLE IF NOT EXISTS %1 ("
                   "    id        INTEGER PRIMARY KEY AUTOINCREMENT, "
                   "    timestamp INTEGER, "
@@ -71,6 +73,64 @@ void StocksDatabase::createStockTable(const QString &name)
     if (!query.exec(str))
     {
         qFatal() << "Failed to create" << name << "table:" << mDB.lastError().text();
+    }
+}
+
+void StocksDatabase::readStocks(QList<Stock> &stocks)
+{
+    qDebug() << "Reading stocks from database";
+
+    QString str = "SELECT name, fullname FROM stocks ORDER BY name;";
+
+    QSqlQuery query(mDB);
+
+    if (!query.exec(str))
+    {
+        qFatal() << "Failed to read stocks:" << mDB.lastError().text();
+    }
+
+    QSqlRecord rec = query.record();
+
+    int nameIndex     = rec.indexOf("name");
+    int fullnameIndex = rec.indexOf("fullname");
+
+    while (query.next())
+    {
+        Stock stock;
+
+        stock.name     = query.value(nameIndex).toString();
+        stock.fullname = query.value(fullnameIndex).toString();
+
+        stocks.append(stock);
+
+        qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
+    }
+}
+
+void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks)
+{
+    qDebug() << "Deleting obsolete stocks data";
+
+    if (!mDB.transaction())
+    {
+        qFatal() << "Failed to start transaction" << mDB.lastError().text();
+    }
+
+    for (int i = 0; i < stocks.size(); ++i)
+    {
+        QString str = QString("DELETE FROM %1 WHERE timestamp < %2;").arg(stocks.at(i).name).arg(obsoleteTimestamp);
+
+        QSqlQuery query(mDB);
+
+        if (!query.exec(str))
+        {
+            qFatal() << "Failed to read stocks:" << mDB.lastError().text();
+        }
+    }
+
+    if (!mDB.commit())
+    {
+        qFatal() << "Failed to commit transaction" << mDB.lastError().text();
     }
 }
 
@@ -130,6 +190,6 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
 
     if (!mDB.commit())
     {
-        qFatal() << "Failed to start commit" << mDB.lastError().text();
+        qFatal() << "Failed to commit transaction" << mDB.lastError().text();
     }
 }

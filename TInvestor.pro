@@ -83,6 +83,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision3configwidget.h \
     src/config/settingsdialog.h \
     src/db/stocks/stocksdatabase.h \
+    src/domain/stocks/stock.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
     src/main/trayicon.h \
