@@ -1,4 +1,4 @@
-QT += core gui widgets sql testlib
+QT += core gui widgets sql
 
 CONFIG += c++20
 
@@ -35,6 +35,7 @@ UI_DIR      = build/gen/$$TARGET/ui
 
 
 
+include(gtest_dependency.pri)
 include(../app/TInvestor.pri)
 
 
@@ -43,7 +44,3 @@ SOURCES += \
     main.cpp \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp
-
-HEADERS += \
-    src/config/test_config.h \
-    src/config/test_settingsdialog.h

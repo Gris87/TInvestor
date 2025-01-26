@@ -1,6 +1,8 @@
 #ifndef DECISIONMAKERCONFIG_H
 #define DECISIONMAKERCONFIG_H
 
+#include "src/config/decisions/idecisionmakerconfig.h"
+
 #include <QMutex>
 
 #include "src/config/decisions/buy/buydecision1config.h"
@@ -12,7 +14,7 @@
 
 
 
-class DecisionMakerConfig
+class DecisionMakerConfig : public IDecisionMakerConfig
 {
 public:
     DecisionMakerConfig();
@@ -27,10 +29,10 @@ public:
 
     DecisionMakerConfig& operator=(const DecisionMakerConfig &config);
 
-    void makeDefault();
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
 private:
     void assign(const DecisionMakerConfig &config);

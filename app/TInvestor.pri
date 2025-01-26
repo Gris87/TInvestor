@@ -31,6 +31,7 @@ HEADERS += \
     src/config/config.h \
     src/config/decisions/decisionmakerconfig.h \
     src/config/decisions/decisionmakerconfigwidget.h \
+    src/config/decisions/idecisionmakerconfig.h \
     src/config/decisions/buy/buydecision1config.h \
     src/config/decisions/buy/buydecision2config.h \
     src/config/decisions/buy/buydecision3config.h \
