@@ -1,5 +1,6 @@
-#ifndef BUYDECISION1CONFIG_H
-#define BUYDECISION1CONFIG_H
+#pragma once
+
+
 
 #include <QMutex>
 
@@ -35,7 +36,3 @@ private:
     float  mPriceFall;
     int    mDuration;
 };
-
-
-
-#endif // BUYDECISION1CONFIG_H

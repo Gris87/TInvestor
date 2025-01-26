@@ -44,3 +44,9 @@ SOURCES += \
     main.cpp \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp
+
+HEADERS += \
+    src/config/iconfig_mock.h \
+    src/config/iconfigfactory_mock.h \
+    src/config/decisions/idecisionmakerconfig_mock.h \
+    src/config/decisions/idecisionmakerconfigfactory_mock.h

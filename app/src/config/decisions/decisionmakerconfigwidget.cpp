@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include "src/config/decisions/decisionmakerconfig.h"
+
 
 
 DecisionMakerConfigWidget::DecisionMakerConfigWidget(QWidget *parent) :
@@ -21,14 +23,16 @@ DecisionMakerConfigWidget::~DecisionMakerConfigWidget()
     delete ui;
 }
 
-void DecisionMakerConfigWidget::setDecisionMakerConfig(DecisionMakerConfig *config)
+void DecisionMakerConfigWidget::setDecisionMakerConfig(IDecisionMakerConfig *config)
 {
-    ui->buyDecision1ConfigWidget->setBuyDecision1Config(&config->buyDecision1Config);
-    ui->buyDecision2ConfigWidget->setBuyDecision2Config(&config->buyDecision2Config);
-    ui->buyDecision3ConfigWidget->setBuyDecision3Config(&config->buyDecision3Config);
-    ui->sellDecision1ConfigWidget->setSellDecision1Config(&config->sellDecision1Config);
-    ui->sellDecision2ConfigWidget->setSellDecision2Config(&config->sellDecision2Config);
-    ui->sellDecision3ConfigWidget->setSellDecision3Config(&config->sellDecision3Config);
+    DecisionMakerConfig *cfg = dynamic_cast<DecisionMakerConfig *>(config);
+
+    ui->buyDecision1ConfigWidget->setBuyDecision1Config(&cfg->buyDecision1Config);
+    ui->buyDecision2ConfigWidget->setBuyDecision2Config(&cfg->buyDecision2Config);
+    ui->buyDecision3ConfigWidget->setBuyDecision3Config(&cfg->buyDecision3Config);
+    ui->sellDecision1ConfigWidget->setSellDecision1Config(&cfg->sellDecision1Config);
+    ui->sellDecision2ConfigWidget->setSellDecision2Config(&cfg->sellDecision2Config);
+    ui->sellDecision3ConfigWidget->setSellDecision3Config(&cfg->sellDecision3Config);
 }
 
 void DecisionMakerConfigWidget::updateUiFromConfig()

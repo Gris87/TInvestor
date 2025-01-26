@@ -1,9 +1,10 @@
-#ifndef DECISIONMAKERCONFIGWIDGET_H
-#define DECISIONMAKERCONFIGWIDGET_H
+#pragma once
+
+
 
 #include <QWidget>
 
-#include "src/config/decisions/decisionmakerconfig.h"
+#include "src/config/decisions/idecisionmakerconfig.h"
 
 
 
@@ -21,13 +22,9 @@ public:
     explicit DecisionMakerConfigWidget(QWidget *parent = nullptr);
     ~DecisionMakerConfigWidget();
 
-    void setDecisionMakerConfig(DecisionMakerConfig *config);
+    void setDecisionMakerConfig(IDecisionMakerConfig *config);
     void updateUiFromConfig();
 
 private:
     Ui::DecisionMakerConfigWidget *ui;
 };
-
-
-
-#endif // DECISIONMAKERCONFIGWIDGET_H

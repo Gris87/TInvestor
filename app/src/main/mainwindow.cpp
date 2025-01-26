@@ -9,10 +9,11 @@
 
 
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(IConfigFactory *configFactory, IDecisionMakerConfigFactory *decisionMakerConfigFactory, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mConfig(new Config(this)),
+    mConfig(configFactory->newInstance(decisionMakerConfigFactory, this)),
+    mConfigForSettingsDialog(configFactory->newInstance(decisionMakerConfigFactory, this)),
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
     mCleanupThread(new CleanupThread(this)),
@@ -146,13 +147,15 @@ void MainWindow::on_actionAutoPilotPage_toggled(bool checked)
 
 void MainWindow::on_actionSettings_triggered()
 {
-    SettingsDialog dialog(*mConfig, this);
+    mConfigForSettingsDialog->assign(mConfig);
+
+    SettingsDialog dialog(mConfigForSettingsDialog, this);
 
     if (dialog.exec())
     {
         qInfo() << "Settings applied";
 
-        *mConfig = dialog.getConfig();
+        mConfig->assign(mConfigForSettingsDialog);
         mConfig->save();
 
         applyConfig();

@@ -1,27 +1,30 @@
 #include <gtest/gtest.h>
 
-#include "config.h"
+#include "src/config/config.h"
+#include "src/config/decisions/decisionmakerconfigfactory.h"
 
 
 
 TEST(Test_Config, TestConstructor) {
-    Config cfg;
+    DecisionMakerConfigFactory decisionMakerConfigFactory;
 
-    EXPECT_EQ(cfg.isAutorun(),                    true);
-    EXPECT_EQ(cfg.getRefreshTimeout(),            1);
-    EXPECT_EQ(cfg.isUseSchedule(),                true);
-    EXPECT_EQ(cfg.getScheduleStartHour(),         10);
-    EXPECT_EQ(cfg.getScheduleStartMinute(),       0);
-    EXPECT_EQ(cfg.getScheduleEndHour(),           18);
-    EXPECT_EQ(cfg.getScheduleEndMinute(),         40);
-    EXPECT_EQ(cfg.isLimitPurchasesPerDay(),       true);
-    EXPECT_EQ(cfg.getAmountOfPurchasesPerDay(),   50);
-    EXPECT_EQ(cfg.isLimitPurchasesPerStock(),     true);
-    EXPECT_EQ(cfg.getAmountOfPurchasesPerStock(), 10);
-    EXPECT_EQ(cfg.getCommission(),                0.3f);
-    EXPECT_EQ(cfg.isLimitStockPurchase(),         true);
-    EXPECT_EQ(cfg.getAmountOfStockPurchase(),     10000);
-    EXPECT_EQ(cfg.getStorageMonthLimit(),         24);
-    EXPECT_EQ(cfg.isSimulatorConfigCommon(),      true);
-    EXPECT_EQ(cfg.isAutoPilotConfigCommon(),      false);
+    Config cfg(&decisionMakerConfigFactory);
+
+    ASSERT_EQ(cfg.isAutorun(),                    true);
+    ASSERT_EQ(cfg.getRefreshTimeout(),            1);
+    ASSERT_EQ(cfg.isUseSchedule(),                true);
+    ASSERT_EQ(cfg.getScheduleStartHour(),         10);
+    ASSERT_EQ(cfg.getScheduleStartMinute(),       0);
+    ASSERT_EQ(cfg.getScheduleEndHour(),           18);
+    ASSERT_EQ(cfg.getScheduleEndMinute(),         40);
+    ASSERT_EQ(cfg.isLimitPurchasesPerDay(),       true);
+    ASSERT_EQ(cfg.getAmountOfPurchasesPerDay(),   50);
+    ASSERT_EQ(cfg.isLimitPurchasesPerStock(),     true);
+    ASSERT_EQ(cfg.getAmountOfPurchasesPerStock(), 10);
+    ASSERT_EQ(cfg.getCommission(),                0.3f);
+    ASSERT_EQ(cfg.isLimitStockPurchase(),         true);
+    ASSERT_EQ(cfg.getAmountOfStockPurchase(),     10000);
+    ASSERT_EQ(cfg.getStorageMonthLimit(),         24);
+    ASSERT_EQ(cfg.isSimulatorConfigCommon(),      true);
+    ASSERT_EQ(cfg.isAutoPilotConfigCommon(),      false);
 }

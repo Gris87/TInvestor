@@ -1,5 +1,6 @@
-#ifndef DECISIONMAKERCONFIG_H
-#define DECISIONMAKERCONFIG_H
+#pragma once
+
+
 
 #include "src/config/decisions/idecisionmakerconfig.h"
 
@@ -27,17 +28,9 @@ public:
     SellDecision2Config sellDecision2Config;
     SellDecision3Config sellDecision3Config;
 
-    DecisionMakerConfig& operator=(const DecisionMakerConfig &config);
-
+    void assign(IDecisionMakerConfig *another) override;
     void makeDefault() override;
 
     void save(const QString &type) override;
     void load(const QString &type) override;
-
-private:
-    void assign(const DecisionMakerConfig &config);
 };
-
-
-
-#endif // DECISIONMAKERCONFIG_H

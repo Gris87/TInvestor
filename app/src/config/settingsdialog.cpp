@@ -6,21 +6,22 @@
 
 
 const int simulationTabIndex = 1;
-const int autoPilotTabIndex = 2;
+const int autoPilotTabIndex  = 2;
 
 
 
-SettingsDialog::SettingsDialog(const Config &config, QWidget *parent) :
+SettingsDialog::SettingsDialog(IConfig *config, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog),
-    mConfig(new Config(config, this))
+    mConfig(config)
 {
     qDebug() << "Create SettingsDialog";
 
     ui->setupUi(this);
 
-    ui->simulatorConfigWidget->setDecisionMakerConfig(&mConfig->simulatorConfig);
-    ui->autoPilotConfigWidget->setDecisionMakerConfig(&mConfig->autoPilotConfig);
+    mConfig->assign(config);
+    ui->simulatorConfigWidget->setDecisionMakerConfig(mConfig->getSimulatorConfig());
+    ui->autoPilotConfigWidget->setDecisionMakerConfig(mConfig->getAutoPilotConfig());
 
     updateUiFromConfig();
 }
@@ -30,11 +31,6 @@ SettingsDialog::~SettingsDialog()
     qDebug() << "Destroy SettingsDialog";
 
     delete ui;
-}
-
-const Config& SettingsDialog::getConfig()
-{
-    return *mConfig;
 }
 
 void SettingsDialog::updateUiFromConfig()

@@ -1,5 +1,6 @@
-#ifndef SELLDECISION3CONFIG_H
-#define SELLDECISION3CONFIG_H
+#pragma once
+
+
 
 #include <QMutex>
 
@@ -35,7 +36,3 @@ private:
     float  mLoseIncome;
     int    mDuration;
 };
-
-
-
-#endif // SELLDECISION3CONFIG_H

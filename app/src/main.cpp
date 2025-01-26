@@ -5,6 +5,8 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
+#include "src/config/configfactory.h"
+#include "src/config/decisions/decisionmakerconfigfactory.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 
@@ -53,7 +55,10 @@ int main(int argc, char *argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    MainWindow mainWindow;
+    ConfigFactory              configFactory;
+    DecisionMakerConfigFactory decisionMakerConfigFactory;
+
+    MainWindow mainWindow(&configFactory, &decisionMakerConfigFactory);
     mainWindow.init();
 
     int res = app.exec();

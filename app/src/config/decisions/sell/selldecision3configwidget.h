@@ -1,5 +1,6 @@
-#ifndef SELLDECISION3CONFIGWIDGET_H
-#define SELLDECISION3CONFIGWIDGET_H
+#pragma once
+
+
 
 #include <QWidget>
 
@@ -34,7 +35,3 @@ private slots:
     void on_durationSpinBox_valueChanged(int value);
     void on_loseIncomeDoubleSpinBox_valueChanged(double value);
 };
-
-
-
-#endif // SELLDECISION3CONFIGWIDGET_H

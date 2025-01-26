@@ -7,9 +7,9 @@
 
 
 Config::Config(IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject *parent) :
-    IConfig(parent),
-    mSimulatorConfig(decisionMakerConfigFactory->newInstance()),
-    mAutoPilotConfig(decisionMakerConfigFactory->newInstance()),
+    QObject(parent),
+    simulatorConfig(decisionMakerConfigFactory->newInstance()),
+    autoPilotConfig(decisionMakerConfigFactory->newInstance()),
     mMutex(new QMutex())
 {
     qDebug() << "Create Config";
@@ -17,43 +17,31 @@ Config::Config(IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject 
     makeDefault();
 }
 
+Config::Config(const Config &config, IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject *parent) :
+    QObject(parent),
+    simulatorConfig(decisionMakerConfigFactory->newInstance()),
+    autoPilotConfig(decisionMakerConfigFactory->newInstance()),
+    mMutex(new QMutex())
+{
+    qDebug() << "Create Config";
+
+    assign(config);
+}
+
 Config::~Config()
 {
     qDebug() << "Destroy Config";
 
-    delete mSimulatorConfig;
-    delete mAutoPilotConfig;
+    delete simulatorConfig;
+    delete autoPilotConfig;
     delete mMutex;
 }
 
-void Config::assign(IConfig *another)
+Config& Config::operator=(const Config &config)
 {
-    QMutexLocker lock(mMutex);
+    assign(config);
 
-    qDebug() << "Assigning Config to Config";
-
-    const Config &config = *dynamic_cast<Config *>(another);
-
-    mSimulatorConfig->assign(config.mSimulatorConfig);
-    mAutoPilotConfig->assign(config.mAutoPilotConfig);
-
-    mAutorun                   = config.mAutorun;
-    mRefreshTimeout            = config.mRefreshTimeout;
-    mUseSchedule               = config.mUseSchedule;
-    mScheduleStartHour         = config.mScheduleStartHour;
-    mScheduleStartMinute       = config.mScheduleStartMinute;
-    mScheduleEndHour           = config.mScheduleEndHour;
-    mScheduleEndMinute         = config.mScheduleEndMinute;
-    mLimitPurchasesPerDay      = config.mLimitPurchasesPerDay;
-    mAmountOfPurchasesPerDay   = config.mAmountOfPurchasesPerDay;
-    mLimitPurchasesPerStock    = config.mLimitPurchasesPerStock;
-    mAmountOfPurchasesPerStock = config.mAmountOfPurchasesPerStock;
-    mCommission                = config.mCommission;
-    mLimitStockPurchase        = config.mLimitStockPurchase;
-    mAmountOfStockPurchase     = config.mAmountOfStockPurchase;
-    mStorageMonthLimit         = config.mStorageMonthLimit;
-    mSimulatorConfigCommon     = config.mSimulatorConfigCommon;
-    mAutoPilotConfigCommon     = config.mAutoPilotConfigCommon;
+    return *this;
 }
 
 void Config::makeDefault()
@@ -62,8 +50,8 @@ void Config::makeDefault()
 
     qInfo() << "Set Config to default";
 
-    mSimulatorConfig->makeDefault();
-    mAutoPilotConfig->makeDefault();
+    simulatorConfig->makeDefault();
+    autoPilotConfig->makeDefault();
 
     mAutorun                   = true;
     mRefreshTimeout            = 1;
@@ -84,14 +72,42 @@ void Config::makeDefault()
     mAutoPilotConfigCommon     = false;
 }
 
+void Config::assign(const Config &config)
+{
+    QMutexLocker lock(mMutex);
+
+    qDebug() << "Assigning Config to Config";
+
+    simulatorConfig->assign(config.simulatorConfig);
+    autoPilotConfig->assign(config.autoPilotConfig);
+
+    mAutorun                   = config.mAutorun;
+    mRefreshTimeout            = config.mRefreshTimeout;
+    mUseSchedule               = config.mUseSchedule;
+    mScheduleStartHour         = config.mScheduleStartHour;
+    mScheduleStartMinute       = config.mScheduleStartMinute;
+    mScheduleEndHour           = config.mScheduleEndHour;
+    mScheduleEndMinute         = config.mScheduleEndMinute;
+    mLimitPurchasesPerDay      = config.mLimitPurchasesPerDay;
+    mAmountOfPurchasesPerDay   = config.mAmountOfPurchasesPerDay;
+    mLimitPurchasesPerStock    = config.mLimitPurchasesPerStock;
+    mAmountOfPurchasesPerStock = config.mAmountOfPurchasesPerStock;
+    mCommission                = config.mCommission;
+    mLimitStockPurchase        = config.mLimitStockPurchase;
+    mAmountOfStockPurchase     = config.mAmountOfStockPurchase;
+    mStorageMonthLimit         = config.mStorageMonthLimit;
+    mSimulatorConfigCommon     = config.mSimulatorConfigCommon;
+    mAutoPilotConfigCommon     = config.mAutoPilotConfigCommon;
+}
+
 void Config::save()
 {
     QMutexLocker lock(mMutex);
 
     qInfo() << "Save Config";
 
-    mSimulatorConfig->save("Simulator");
-    mAutoPilotConfig->save("AutoPilot");
+    simulatorConfig->save("Simulator");
+    autoPilotConfig->save("AutoPilot");
 
     QSettings settings("GrisCom", "TInvestor");
 
@@ -120,8 +136,8 @@ void Config::load()
 
     qInfo() << "Load Config";
 
-    mSimulatorConfig->load("Simulator");
-    mAutoPilotConfig->load("AutoPilot");
+    simulatorConfig->load("Simulator");
+    autoPilotConfig->load("AutoPilot");
 
     QSettings settings("GrisCom", "TInvestor");
 
@@ -146,12 +162,12 @@ void Config::load()
 
 IDecisionMakerConfig* Config::getSimulatorConfig()
 {
-    return mSimulatorConfig;
+    return simulatorConfig;
 }
 
 IDecisionMakerConfig* Config::getAutoPilotConfig()
 {
-    return mAutoPilotConfig;
+    return autoPilotConfig;
 }
 
 void Config::setAutorun(bool value)

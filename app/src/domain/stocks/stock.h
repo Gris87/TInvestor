@@ -1,5 +1,6 @@
-#ifndef STOCK_H
-#define STOCK_H
+#pragma once
+
+
 
 #include <QString>
 
@@ -17,7 +18,3 @@ struct Stock
     QString          fullname;
     QList<StockData> data;
 };
-
-
-
-#endif // STOCK_H

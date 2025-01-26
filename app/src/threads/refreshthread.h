@@ -1,5 +1,6 @@
-#ifndef REFRESHTHREAD_H
-#define REFRESHTHREAD_H
+#pragma once
+
+
 
 #include <QThread>
 
@@ -16,7 +17,3 @@ public:
 protected:
     void run() override;
 };
-
-
-
-#endif // REFRESHTHREAD_H

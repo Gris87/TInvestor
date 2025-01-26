@@ -1,5 +1,6 @@
-#ifndef SELLDECISION1CONFIG_H
-#define SELLDECISION1CONFIG_H
+#pragma once
+
+
 
 #include <QMutex>
 
@@ -31,7 +32,3 @@ private:
     bool   mEnabled;
     float  mIncomeAbove;
 };
-
-
-
-#endif // SELLDECISION1CONFIG_H

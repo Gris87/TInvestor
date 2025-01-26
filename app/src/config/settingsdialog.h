@@ -1,5 +1,6 @@
-#ifndef SETTINGSDIALOG_H
-#define SETTINGSDIALOG_H
+#pragma once
+
+
 
 #include <QDialog>
 
@@ -20,17 +21,15 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsDialog(const Config &config, QWidget *parent = nullptr);
+    explicit SettingsDialog(IConfig *config, QWidget *parent = nullptr);
     ~SettingsDialog();
-
-    const Config& getConfig();
 
 private:
     void updateUiFromConfig();
 
     Ui::SettingsDialog *ui;
 
-    Config *mConfig;
+    IConfig *mConfig;
 
 private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value);
@@ -52,7 +51,3 @@ private slots:
     void on_cancelButton_clicked();
     void on_defaultButton_clicked();
 };
-
-
-
-#endif // SETTINGSDIALOG_H

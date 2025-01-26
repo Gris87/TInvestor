@@ -1,5 +1,6 @@
-#ifndef BUYDECISION2CONFIGWIDGET_H
-#define BUYDECISION2CONFIGWIDGET_H
+#pragma once
+
+
 
 #include <QWidget>
 
@@ -35,7 +36,3 @@ private slots:
     void on_amountOfTimesSpinBox_valueChanged(int value);
     void on_durationSpinBox_valueChanged(int value);
 };
-
-
-
-#endif // BUYDECISION2CONFIGWIDGET_H

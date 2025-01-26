@@ -22,11 +22,18 @@ DecisionMakerConfig::~DecisionMakerConfig()
     qDebug() << "Destroy DecisionMakerConfig";
 }
 
-DecisionMakerConfig& DecisionMakerConfig::operator=(const DecisionMakerConfig &config)
+void DecisionMakerConfig::assign(IDecisionMakerConfig *another)
 {
-    assign(config);
+    qDebug() << "Assigning DecisionMakerConfig to DecisionMakerConfig";
 
-    return *this;
+    const DecisionMakerConfig &config = *dynamic_cast<DecisionMakerConfig *>(another);
+
+    buyDecision1Config  = config.buyDecision1Config;
+    buyDecision2Config  = config.buyDecision2Config;
+    buyDecision3Config  = config.buyDecision3Config;
+    sellDecision1Config = config.sellDecision1Config;
+    sellDecision2Config = config.sellDecision2Config;
+    sellDecision3Config = config.sellDecision3Config;
 }
 
 void DecisionMakerConfig::makeDefault()
@@ -39,18 +46,6 @@ void DecisionMakerConfig::makeDefault()
     sellDecision1Config.makeDefault();
     sellDecision2Config.makeDefault();
     sellDecision3Config.makeDefault();
-}
-
-void DecisionMakerConfig::assign(const DecisionMakerConfig &config)
-{
-    qDebug() << "Assigning DecisionMakerConfig to DecisionMakerConfig";
-
-    buyDecision1Config  = config.buyDecision1Config;
-    buyDecision2Config  = config.buyDecision2Config;
-    buyDecision3Config  = config.buyDecision3Config;
-    sellDecision1Config = config.sellDecision1Config;
-    sellDecision2Config = config.sellDecision2Config;
-    sellDecision3Config = config.sellDecision3Config;
 }
 
 void DecisionMakerConfig::save(const QString &type)

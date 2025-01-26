@@ -5,7 +5,9 @@ INCLUDEPATH += $$PWD
 
 SOURCES += \
     src/config/config.cpp \
+    src/config/configfactory.cpp \
     src/config/decisions/decisionmakerconfig.cpp \
+    src/config/decisions/decisionmakerconfigfactory.cpp \
     src/config/decisions/decisionmakerconfigwidget.cpp \
     src/config/decisions/buy/buydecision1config.cpp \
     src/config/decisions/buy/buydecision2config.cpp \
@@ -29,9 +31,14 @@ SOURCES += \
 
 HEADERS += \
     src/config/config.h \
+    src/config/configfactory.h \
+    src/config/iconfig.h \
+    src/config/iconfigfactory.h \
     src/config/decisions/decisionmakerconfig.h \
+    src/config/decisions/decisionmakerconfigfactory.h \
     src/config/decisions/decisionmakerconfigwidget.h \
     src/config/decisions/idecisionmakerconfig.h \
+    src/config/decisions/idecisionmakerconfigfactory.h \
     src/config/decisions/buy/buydecision1config.h \
     src/config/decisions/buy/buydecision2config.h \
     src/config/decisions/buy/buydecision3config.h \

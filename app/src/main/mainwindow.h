@@ -1,5 +1,6 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
+
+
 
 #include <QMainWindow>
 
@@ -7,6 +8,8 @@
 #include <QTimer>
 
 #include "src/config/config.h"
+#include "src/config/iconfigfactory.h"
+#include "src/config/decisions/idecisionmakerconfigfactory.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/main/trayicon.h"
 #include "src/threads/cleanupthread.h"
@@ -27,7 +30,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(IConfigFactory *configFactory, IDecisionMakerConfigFactory *decisionMakerConfigFactory, QWidget *parent = nullptr);
     ~MainWindow();
 
     void init();
@@ -44,7 +47,8 @@ private:
     Ui::MainWindow *ui;
 
     TrayIcon       *mTrayIcon;
-    Config         *mConfig;
+    IConfig        *mConfig;
+    IConfig        *mConfigForSettingsDialog;
     QTimer         *mCleanupTimer;
     QTimer         *mRefreshTimer;
     CleanupThread  *mCleanupThread;
@@ -66,7 +70,3 @@ private slots:
     void cleanupTimerTicked();
     void refreshTimerTicked();
 };
-
-
-
-#endif // MAINWINDOW_H

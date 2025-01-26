@@ -1,5 +1,6 @@
-#ifndef BUYDECISION3CONFIGWIDGET_H
-#define BUYDECISION3CONFIGWIDGET_H
+#pragma once
+
+
 
 #include <QWidget>
 
@@ -34,7 +35,3 @@ private slots:
     void on_priceRiseDoubleSpinBox_valueChanged(double value);
     void on_durationSpinBox_valueChanged(int value);
 };
-
-
-
-#endif // BUYDECISION3CONFIGWIDGET_H

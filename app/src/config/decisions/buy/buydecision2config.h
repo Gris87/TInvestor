@@ -1,5 +1,6 @@
-#ifndef BUYDECISION2CONFIG_H
-#define BUYDECISION2CONFIG_H
+#pragma once
+
+
 
 #include <QMutex>
 
@@ -39,7 +40,3 @@ private:
     int    mAmountOfTimes;
     int    mDuration;
 };
-
-
-
-#endif // BUYDECISION2CONFIG_H

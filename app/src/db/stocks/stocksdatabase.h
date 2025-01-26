@@ -1,5 +1,6 @@
-#ifndef STOCKSDATABASE_H
-#define STOCKSDATABASE_H
+#pragma once
+
+
 
 #include <QObject>
 
@@ -28,7 +29,3 @@ private:
 
     QSqlDatabase mDB;
 };
-
-
-
-#endif // STOCKSDATABASE_H

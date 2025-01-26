@@ -1,88 +1,90 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 
-#include <QObject>
+
+
+#include "src/config/iconfig.h"
 
 #include <QMutex>
 
-#include "src/config/decisions/decisionmakerconfig.h"
+#include "src/config/decisions/idecisionmakerconfig.h"
+#include "src/config/decisions/idecisionmakerconfigfactory.h"
 
 
 
-class Config : public QObject
+class Config : public IConfig
 {
     Q_OBJECT
 
 public:
-    explicit Config(QObject *parent = nullptr);
-    explicit Config(const Config &config, QObject *parent = nullptr);
+    explicit Config(IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject *parent = nullptr);
     ~Config();
 
-    DecisionMakerConfig simulatorConfig;
-    DecisionMakerConfig autoPilotConfig;
+    void assign(IConfig *another) override;
+    void makeDefault() override;
 
-    Config& operator=(const Config &config);
+    void save() override;
+    void load() override;
 
-    void makeDefault();
+    IDecisionMakerConfig* getSimulatorConfig() override;
+    IDecisionMakerConfig* getAutoPilotConfig() override;
 
-    void save();
-    void load();
+    void setAutorun(bool value) override;
+    bool isAutorun() override;
 
-    void setAutorun(bool value);
-    bool isAutorun();
+    void setRefreshTimeout(int value) override;
+    int getRefreshTimeout() override;
 
-    void setRefreshTimeout(int value);
-    int getRefreshTimeout();
+    void setUseSchedule(bool value) override;
+    bool isUseSchedule() override;
 
-    void setUseSchedule(bool value);
-    bool isUseSchedule();
+    void setScheduleStartHour(int value) override;
+    int getScheduleStartHour() override;
 
-    void setScheduleStartHour(int value);
-    int getScheduleStartHour();
+    void setScheduleStartMinute(int value) override;
+    int getScheduleStartMinute() override;
 
-    void setScheduleStartMinute(int value);
-    int getScheduleStartMinute();
+    void setScheduleEndHour(int value) override;
+    int getScheduleEndHour() override;
 
-    void setScheduleEndHour(int value);
-    int getScheduleEndHour();
+    void setScheduleEndMinute(int value) override;
+    int getScheduleEndMinute() override;
 
-    void setScheduleEndMinute(int value);
-    int getScheduleEndMinute();
+    void setLimitPurchasesPerDay(bool value) override;
+    bool isLimitPurchasesPerDay() override;
 
-    void setLimitPurchasesPerDay(bool value);
-    bool isLimitPurchasesPerDay();
+    void setAmountOfPurchasesPerDay(int value) override;
+    int getAmountOfPurchasesPerDay() override;
 
-    void setAmountOfPurchasesPerDay(int value);
-    int getAmountOfPurchasesPerDay();
+    void setLimitPurchasesPerStock(bool value) override;
+    bool isLimitPurchasesPerStock() override;
 
-    void setLimitPurchasesPerStock(bool value);
-    bool isLimitPurchasesPerStock();
+    void setAmountOfPurchasesPerStock(int value) override;
+    int getAmountOfPurchasesPerStock() override;
 
-    void setAmountOfPurchasesPerStock(int value);
-    int getAmountOfPurchasesPerStock();
+    void setCommission(float value) override;
+    float getCommission() override;
 
-    void setCommission(float value);
-    float getCommission();
+    void setLimitStockPurchase(bool value) override;
+    bool isLimitStockPurchase() override;
 
-    void setLimitStockPurchase(bool value);
-    bool isLimitStockPurchase();
+    void setAmountOfStockPurchase(int value) override;
+    int getAmountOfStockPurchase() override;
 
-    void setAmountOfStockPurchase(int value);
-    int getAmountOfStockPurchase();
+    void setStorageMonthLimit(int value) override;
+    int getStorageMonthLimit() override;
 
-    void setStorageMonthLimit(int value);
-    int getStorageMonthLimit();
+    void setSimulatorConfigCommon(bool value) override;
+    bool isSimulatorConfigCommon() override;
 
-    void setSimulatorConfigCommon(bool value);
-    bool isSimulatorConfigCommon();
-
-    void setAutoPilotConfigCommon(bool value);
-    bool isAutoPilotConfigCommon();
+    void setAutoPilotConfigCommon(bool value) override;
+    bool isAutoPilotConfigCommon() override;
 
 private:
-    void assign(const Config &config);
-
     QMutex *mMutex;
+
+    IDecisionMakerConfig *mSimulatorConfig;
+    IDecisionMakerConfig *mAutoPilotConfig;
+
     bool   mAutorun;
     int    mRefreshTimeout;
     bool   mUseSchedule;
@@ -101,7 +103,3 @@ private:
     bool   mSimulatorConfigCommon;
     bool   mAutoPilotConfigCommon;
 };
-
-
-
-#endif // CONFIG_H

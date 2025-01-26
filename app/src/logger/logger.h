@@ -1,5 +1,4 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#pragma once
 
 
 
@@ -8,7 +7,3 @@ class Logger
 public:
     static void init();
 };
-
-
-
-#endif // LOGGER_H

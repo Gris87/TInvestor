@@ -1,5 +1,6 @@
-#ifndef TRAYICON_H
-#define TRAYICON_H
+#pragma once
+
+
 
 #include <QSystemTrayIcon>
 
@@ -19,7 +20,3 @@ public:
 
     void init(MainWindow *mainWindow);
 };
-
-
-
-#endif // TRAYICON_H

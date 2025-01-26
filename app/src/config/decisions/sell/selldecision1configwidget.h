@@ -1,5 +1,6 @@
-#ifndef SELLDECISION1CONFIGWIDGET_H
-#define SELLDECISION1CONFIGWIDGET_H
+#pragma once
+
+
 
 #include <QWidget>
 
@@ -33,7 +34,3 @@ private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);
     void on_incomeAboveDoubleSpinBox_valueChanged(double value);
 };
-
-
-
-#endif // SELLDECISION1CONFIGWIDGET_H

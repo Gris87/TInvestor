@@ -1,5 +1,6 @@
-#ifndef CLEANUPTHREAD_H
-#define CLEANUPTHREAD_H
+#pragma once
+
+
 
 #include <QThread>
 
@@ -16,7 +17,3 @@ public:
 protected:
     void run() override;
 };
-
-
-
-#endif // CLEANUPTHREAD_H
