@@ -2,35 +2,37 @@
 
 
 
+#include "src/config/decisions/buy/ibuydecision3config.h"
+
 #include <QMutex>
 
 
 
-class BuyDecision3Config
+class BuyDecision3Config : public IBuyDecision3Config
 {
 public:
     BuyDecision3Config();
     ~BuyDecision3Config();
 
-    BuyDecision3Config& operator=(const BuyDecision3Config &config);
+    BuyDecision3Config(const BuyDecision3Config &another) = delete;
+    BuyDecision3Config& operator=(const BuyDecision3Config &another) = delete;
 
-    void makeDefault();
+    void assign(IBuyDecision3Config *another) override;
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
-    void setEnabled(bool value);
-    bool isEnabled();
+    void setEnabled(bool value) override;
+    bool isEnabled() override;
 
-    void setPriceRise(float value);
-    float getPriceRise();
+    void setPriceRise(float value) override;
+    float getPriceRise() override;
 
-    void setDuration(int value);
-    int getDuration();
+    void setDuration(int value) override;
+    int getDuration() override;
 
 private:
-    void assign(const BuyDecision3Config &config);
-
     QMutex *mMutex;
     bool   mEnabled;
     float  mPriceRise;

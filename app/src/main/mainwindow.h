@@ -7,9 +7,7 @@
 #include <QCloseEvent>
 #include <QTimer>
 
-#include "src/config/config.h"
-#include "src/config/iconfigfactory.h"
-#include "src/config/decisions/idecisionmakerconfigfactory.h"
+#include "src/config/iconfig.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/main/trayicon.h"
 #include "src/threads/cleanupthread.h"
@@ -30,8 +28,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(IConfigFactory *configFactory, IDecisionMakerConfigFactory *decisionMakerConfigFactory, QWidget *parent = nullptr);
+    MainWindow(IConfig *сonfig, IConfig *сonfigForSettingsDialog, QWidget *parent = nullptr);
     ~MainWindow();
+
+    MainWindow(const MainWindow &another) = delete;
+    MainWindow& operator=(const MainWindow &another) = delete;
 
     void init();
 

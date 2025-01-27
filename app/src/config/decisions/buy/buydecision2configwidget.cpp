@@ -21,7 +21,7 @@ BuyDecision2ConfigWidget::~BuyDecision2ConfigWidget()
     delete ui;
 }
 
-void BuyDecision2ConfigWidget::setBuyDecision2Config(BuyDecision2Config *config)
+void BuyDecision2ConfigWidget::setBuyDecision2Config(IBuyDecision2Config *config)
 {
     mConfig = config;
 }

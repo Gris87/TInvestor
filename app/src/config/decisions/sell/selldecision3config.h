@@ -2,35 +2,37 @@
 
 
 
+#include "src/config/decisions/sell/iselldecision3config.h"
+
 #include <QMutex>
 
 
 
-class SellDecision3Config
+class SellDecision3Config : public ISellDecision3Config
 {
 public:
     SellDecision3Config();
     ~SellDecision3Config();
 
-    SellDecision3Config& operator=(const SellDecision3Config &config);
+    SellDecision3Config(const SellDecision3Config &another) = delete;
+    SellDecision3Config& operator=(const SellDecision3Config &another) = delete;
 
-    void makeDefault();
+    void assign(ISellDecision3Config *another) override;
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
-    void setEnabled(bool value);
-    bool isEnabled();
+    void setEnabled(bool value) override;
+    bool isEnabled() override;
 
-    void setLoseIncome(float value);
-    float getLoseIncome();
+    void setLoseIncome(float value) override;
+    float getLoseIncome() override;
 
-    void setDuration(int value);
-    int getDuration();
+    void setDuration(int value) override;
+    int getDuration() override;
 
 private:
-    void assign(const SellDecision3Config &config);
-
     QMutex *mMutex;
     bool   mEnabled;
     float  mLoseIncome;

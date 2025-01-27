@@ -19,7 +19,6 @@ SettingsDialog::SettingsDialog(IConfig *config, QWidget *parent) :
 
     ui->setupUi(this);
 
-    mConfig->assign(config);
     ui->simulatorConfigWidget->setDecisionMakerConfig(mConfig->getSimulatorConfig());
     ui->autoPilotConfigWidget->setDecisionMakerConfig(mConfig->getAutoPilotConfig());
 

@@ -9,11 +9,11 @@
 
 
 
-MainWindow::MainWindow(IConfigFactory *configFactory, IDecisionMakerConfigFactory *decisionMakerConfigFactory, QWidget *parent) :
+MainWindow::MainWindow(IConfig *сonfig, IConfig *сonfigForSettingsDialog, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    mConfig(configFactory->newInstance(decisionMakerConfigFactory, this)),
-    mConfigForSettingsDialog(configFactory->newInstance(decisionMakerConfigFactory, this)),
+    mConfig(сonfig),
+    mConfigForSettingsDialog(сonfigForSettingsDialog),
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
     mCleanupThread(new CleanupThread(this)),
@@ -32,6 +32,7 @@ MainWindow::MainWindow(IConfigFactory *configFactory, IDecisionMakerConfigFactor
     connect(mCleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
     connect(mRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
 
+    mConfig->makeDefault();
     mConfig->load();
     applyConfig();
 

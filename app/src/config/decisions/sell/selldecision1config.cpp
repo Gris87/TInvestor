@@ -7,6 +7,7 @@
 
 
 SellDecision1Config::SellDecision1Config() :
+    ISellDecision1Config(),
     mMutex(new QMutex())
 {
     qDebug() << "Create SellDecision1Config";
@@ -19,11 +20,16 @@ SellDecision1Config::~SellDecision1Config()
     delete mMutex;
 }
 
-SellDecision1Config& SellDecision1Config::operator=(const SellDecision1Config &config)
+void SellDecision1Config::assign(ISellDecision1Config *another)
 {
-    assign(config);
+    QMutexLocker lock(mMutex);
 
-    return *this;
+    qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
+
+    const SellDecision1Config &config = *dynamic_cast<SellDecision1Config *>(another);
+
+    mEnabled     = config.mEnabled;
+    mIncomeAbove = config.mIncomeAbove;
 }
 
 void SellDecision1Config::makeDefault()
@@ -34,16 +40,6 @@ void SellDecision1Config::makeDefault()
 
     mEnabled     = true;
     mIncomeAbove = 1.0f;
-}
-
-void SellDecision1Config::assign(const SellDecision1Config &config)
-{
-    QMutexLocker lock(mMutex);
-
-    qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
-
-    mEnabled     = config.mEnabled;
-    mIncomeAbove = config.mIncomeAbove;
 }
 
 void SellDecision1Config::save(const QString &type)

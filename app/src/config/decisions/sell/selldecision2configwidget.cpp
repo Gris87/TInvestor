@@ -21,7 +21,7 @@ SellDecision2ConfigWidget::~SellDecision2ConfigWidget()
     delete ui;
 }
 
-void SellDecision2ConfigWidget::setSellDecision2Config(SellDecision2Config *config)
+void SellDecision2ConfigWidget::setSellDecision2Config(ISellDecision2Config *config)
 {
     mConfig = config;
 }

@@ -2,19 +2,18 @@
 
 
 
-#include <QObject>
-
 #include "src/config/decisions/idecisionmakerconfig.h"
 
 
 
-class IConfig : public QObject
+class IConfig
 {
-    Q_OBJECT
-
 public:
-    IConfig(QObject *parent = nullptr) : QObject(parent) {};
+    IConfig() {}
     virtual ~IConfig() = default;
+
+    IConfig(const IConfig &another) = delete;
+    IConfig& operator=(const IConfig &another) = delete;
 
     virtual void assign(IConfig *another) = 0;
     virtual void makeDefault() = 0;

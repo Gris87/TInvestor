@@ -22,6 +22,9 @@ public:
     explicit DecisionMakerConfigWidget(QWidget *parent = nullptr);
     ~DecisionMakerConfigWidget();
 
+    DecisionMakerConfigWidget(const DecisionMakerConfigWidget &another) = delete;
+    DecisionMakerConfigWidget& operator=(const DecisionMakerConfigWidget &another) = delete;
+
     void setDecisionMakerConfig(IDecisionMakerConfig *config);
     void updateUiFromConfig();
 

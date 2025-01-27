@@ -5,8 +5,14 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
-#include "src/config/configfactory.h"
-#include "src/config/decisions/decisionmakerconfigfactory.h"
+#include "src/config/config.h"
+#include "src/config/decisions/decisionmakerconfig.h"
+#include "src/config/decisions/buy/buydecision1config.h"
+#include "src/config/decisions/buy/buydecision2config.h"
+#include "src/config/decisions/buy/buydecision3config.h"
+#include "src/config/decisions/sell/selldecision1config.h"
+#include "src/config/decisions/sell/selldecision2config.h"
+#include "src/config/decisions/sell/selldecision3config.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 
@@ -55,10 +61,71 @@ int main(int argc, char *argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    ConfigFactory              configFactory;
-    DecisionMakerConfigFactory decisionMakerConfigFactory;
+    BuyDecision1Config simulatorBuyDecision1Config;
+    BuyDecision2Config simulatorBuyDecision2Config;
+    BuyDecision3Config simulatorBuyDecision3Config;
+    SellDecision1Config simulatorSellDecision1Config;
+    SellDecision2Config simulatorSellDecision2Config;
+    SellDecision3Config simulatorSellDecision3Config;
 
-    MainWindow mainWindow(&configFactory, &decisionMakerConfigFactory);
+    BuyDecision1Config autoPilotBuyDecision1Config;
+    BuyDecision2Config autoPilotBuyDecision2Config;
+    BuyDecision3Config autoPilotBuyDecision3Config;
+    SellDecision1Config autoPilotSellDecision1Config;
+    SellDecision2Config autoPilotSellDecision2Config;
+    SellDecision3Config autoPilotSellDecision3Config;
+
+    BuyDecision1Config simulatorBuyDecision1ConfigForSettingsDialog;
+    BuyDecision2Config simulatorBuyDecision2ConfigForSettingsDialog;
+    BuyDecision3Config simulatorBuyDecision3ConfigForSettingsDialog;
+    SellDecision1Config simulatorSellDecision1ConfigForSettingsDialog;
+    SellDecision2Config simulatorSellDecision2ConfigForSettingsDialog;
+    SellDecision3Config simulatorSellDecision3ConfigForSettingsDialog;
+
+    BuyDecision1Config autoPilotBuyDecision1ConfigForSettingsDialog;
+    BuyDecision2Config autoPilotBuyDecision2ConfigForSettingsDialog;
+    BuyDecision3Config autoPilotBuyDecision3ConfigForSettingsDialog;
+    SellDecision1Config autoPilotSellDecision1ConfigForSettingsDialog;
+    SellDecision2Config autoPilotSellDecision2ConfigForSettingsDialog;
+    SellDecision3Config autoPilotSellDecision3ConfigForSettingsDialog;
+
+    DecisionMakerConfig simulatorConfig(
+        &simulatorBuyDecision1Config,
+        &simulatorBuyDecision2Config,
+        &simulatorBuyDecision3Config,
+        &simulatorSellDecision1Config,
+        &simulatorSellDecision2Config,
+        &simulatorSellDecision3Config
+    );
+    DecisionMakerConfig autoPilotConfig(
+        &autoPilotBuyDecision1Config,
+        &autoPilotBuyDecision2Config,
+        &autoPilotBuyDecision3Config,
+        &autoPilotSellDecision1Config,
+        &autoPilotSellDecision2Config,
+        &autoPilotSellDecision3Config
+    );
+    DecisionMakerConfig simulatorConfigForSettingsDialog(
+        &simulatorBuyDecision1ConfigForSettingsDialog,
+        &simulatorBuyDecision2ConfigForSettingsDialog,
+        &simulatorBuyDecision3ConfigForSettingsDialog,
+        &simulatorSellDecision1ConfigForSettingsDialog,
+        &simulatorSellDecision2ConfigForSettingsDialog,
+        &simulatorSellDecision3ConfigForSettingsDialog
+    );
+    DecisionMakerConfig autoPilotConfigForSettingsDialog(
+        &autoPilotBuyDecision1ConfigForSettingsDialog,
+        &autoPilotBuyDecision2ConfigForSettingsDialog,
+        &autoPilotBuyDecision3ConfigForSettingsDialog,
+        &autoPilotSellDecision1ConfigForSettingsDialog,
+        &autoPilotSellDecision2ConfigForSettingsDialog,
+        &autoPilotSellDecision3ConfigForSettingsDialog
+    );
+
+    Config сonfig(&simulatorConfig, &autoPilotConfig);
+    Config сonfigForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
+
+    MainWindow mainWindow(&сonfig, &сonfigForSettingsDialog);
     mainWindow.init();
 
     int res = app.exec();

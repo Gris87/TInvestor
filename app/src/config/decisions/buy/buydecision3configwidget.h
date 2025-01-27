@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/config/decisions/buy/buydecision3config.h"
+#include "src/config/decisions/buy/ibuydecision3config.h"
 
 
 
@@ -22,13 +22,16 @@ public:
     explicit BuyDecision3ConfigWidget(QWidget *parent = nullptr);
     ~BuyDecision3ConfigWidget();
 
-    void setBuyDecision3Config(BuyDecision3Config *config);
+    BuyDecision3ConfigWidget(const BuyDecision3ConfigWidget &another) = delete;
+    BuyDecision3ConfigWidget& operator=(const BuyDecision3ConfigWidget &another) = delete;
+
+    void setBuyDecision3Config(IBuyDecision3Config *config);
     void updateUiFromConfig();
 
 private:
     Ui::BuyDecision3ConfigWidget *ui;
 
-    BuyDecision3Config *mConfig;
+    IBuyDecision3Config *mConfig;
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);

@@ -24,6 +24,9 @@ public:
     explicit SettingsDialog(IConfig *config, QWidget *parent = nullptr);
     ~SettingsDialog();
 
+    SettingsDialog(const SettingsDialog &another) = delete;
+    SettingsDialog& operator=(const SettingsDialog &another) = delete;
+
 private:
     void updateUiFromConfig();
 

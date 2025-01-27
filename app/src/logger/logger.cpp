@@ -33,7 +33,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
     oldMessageHandler(type, context, QString("%1 %2 %3:%4 %5: %6")
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
         .arg(typeStr)
-        .arg(QString(context.file).remove("..\\..\\"))
+        .arg(QString(context.file).remove("..\\..\\..\\app\\"))
         .arg(context.line)
         .arg(context.function)
         .arg(msg)

@@ -19,6 +19,9 @@ public:
     explicit StocksDatabase(QObject *parent = nullptr);
     ~StocksDatabase();
 
+    StocksDatabase(const StocksDatabase &another) = delete;
+    StocksDatabase& operator=(const StocksDatabase &another) = delete;
+
     void createStockTable(const QString &name);
     void readStocks(QList<Stock> *stocks);
     void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks);

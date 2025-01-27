@@ -2,35 +2,37 @@
 
 
 
+#include "src/config/decisions/buy/ibuydecision1config.h"
+
 #include <QMutex>
 
 
 
-class BuyDecision1Config
+class BuyDecision1Config : public IBuyDecision1Config
 {
 public:
     BuyDecision1Config();
     ~BuyDecision1Config();
 
-    BuyDecision1Config& operator=(const BuyDecision1Config &config);
+    BuyDecision1Config(const BuyDecision1Config &another) = delete;
+    BuyDecision1Config& operator=(const BuyDecision1Config &another) = delete;
 
-    void makeDefault();
+    void assign(IBuyDecision1Config *another) override;
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
-    void setEnabled(bool value);
-    bool isEnabled();
+    void setEnabled(bool value) override;
+    bool isEnabled() override;
 
-    void setPriceFall(float value);
-    float getPriceFall();
+    void setPriceFall(float value) override;
+    float getPriceFall() override;
 
-    void setDuration(int value);
-    int getDuration();
+    void setDuration(int value) override;
+    int getDuration() override;
 
 private:
-    void assign(const BuyDecision1Config &config);
-
     QMutex *mMutex;
     bool   mEnabled;
     float  mPriceFall;

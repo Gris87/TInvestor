@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/config/decisions/buy/buydecision2config.h"
+#include "src/config/decisions/buy/ibuydecision2config.h"
 
 
 
@@ -22,13 +22,16 @@ public:
     explicit BuyDecision2ConfigWidget(QWidget *parent = nullptr);
     ~BuyDecision2ConfigWidget();
 
-    void setBuyDecision2Config(BuyDecision2Config *config);
+    BuyDecision2ConfigWidget(const BuyDecision2ConfigWidget &another) = delete;
+    BuyDecision2ConfigWidget& operator=(const BuyDecision2ConfigWidget &another) = delete;
+
+    void setBuyDecision2Config(IBuyDecision2Config *config);
     void updateUiFromConfig();
 
 private:
     Ui::BuyDecision2ConfigWidget *ui;
 
-    BuyDecision2Config *mConfig;
+    IBuyDecision2Config *mConfig;
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);

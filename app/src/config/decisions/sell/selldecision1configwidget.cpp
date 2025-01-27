@@ -21,7 +21,7 @@ SellDecision1ConfigWidget::~SellDecision1ConfigWidget()
     delete ui;
 }
 
-void SellDecision1ConfigWidget::setSellDecision1Config(SellDecision1Config *config)
+void SellDecision1ConfigWidget::setSellDecision1Config(ISellDecision1Config *config)
 {
     mConfig = config;
 }

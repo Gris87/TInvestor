@@ -2,35 +2,37 @@
 
 
 
+#include "src/config/decisions/sell/iselldecision2config.h"
+
 #include <QMutex>
 
 
 
-class SellDecision2Config
+class SellDecision2Config : public ISellDecision2Config
 {
 public:
     SellDecision2Config();
     ~SellDecision2Config();
 
-    SellDecision2Config& operator=(const SellDecision2Config &config);
+    SellDecision2Config(const SellDecision2Config &another) = delete;
+    SellDecision2Config& operator=(const SellDecision2Config &another) = delete;
 
-    void makeDefault();
+    void assign(ISellDecision2Config *another) override;
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
-    void setEnabled(bool value);
-    bool isEnabled();
+    void setEnabled(bool value) override;
+    bool isEnabled() override;
 
-    void setIncomeAbove(float value);
-    float getIncomeAbove();
+    void setIncomeAbove(float value) override;
+    float getIncomeAbove() override;
 
-    void setLoseIncome(float value);
-    float getLoseIncome();
+    void setLoseIncome(float value) override;
+    float getLoseIncome() override;
 
 private:
-    void assign(const SellDecision2Config &config);
-
     QMutex *mMutex;
     bool   mEnabled;
     float  mIncomeAbove;

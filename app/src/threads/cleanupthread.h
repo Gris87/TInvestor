@@ -14,6 +14,9 @@ public:
     CleanupThread(QObject *parent = nullptr);
     ~CleanupThread();
 
+    CleanupThread(const CleanupThread &another) = delete;
+    CleanupThread& operator=(const CleanupThread &another) = delete;
+
 protected:
     void run() override;
 };

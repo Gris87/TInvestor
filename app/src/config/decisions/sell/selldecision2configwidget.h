@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/config/decisions/sell/selldecision2config.h"
+#include "src/config/decisions/sell/iselldecision2config.h"
 
 
 
@@ -22,13 +22,16 @@ public:
     explicit SellDecision2ConfigWidget(QWidget *parent = nullptr);
     ~SellDecision2ConfigWidget();
 
-    void setSellDecision2Config(SellDecision2Config *config);
+    SellDecision2ConfigWidget(const SellDecision2ConfigWidget &another) = delete;
+    SellDecision2ConfigWidget& operator=(const SellDecision2ConfigWidget &another) = delete;
+
+    void setSellDecision2Config(ISellDecision2Config *config);
     void updateUiFromConfig();
 
 private:
     Ui::SellDecision2ConfigWidget *ui;
 
-    SellDecision2Config *mConfig;
+    ISellDecision2Config *mConfig;
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value);

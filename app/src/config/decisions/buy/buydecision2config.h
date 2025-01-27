@@ -2,38 +2,40 @@
 
 
 
+#include "src/config/decisions/buy/ibuydecision2config.h"
+
 #include <QMutex>
 
 
 
-class BuyDecision2Config
+class BuyDecision2Config : public IBuyDecision2Config
 {
 public:
     BuyDecision2Config();
     ~BuyDecision2Config();
 
-    BuyDecision2Config& operator=(const BuyDecision2Config &config);
+    BuyDecision2Config(const BuyDecision2Config &another) = delete;
+    BuyDecision2Config& operator=(const BuyDecision2Config &another) = delete;
 
-    void makeDefault();
+    void assign(IBuyDecision2Config *another) override;
+    void makeDefault() override;
 
-    void save(const QString &type);
-    void load(const QString &type);
+    void save(const QString &type) override;
+    void load(const QString &type) override;
 
-    void setEnabled(bool value);
-    bool isEnabled();
+    void setEnabled(bool value) override;
+    bool isEnabled() override;
 
-    void setPriceDiff(float value);
-    float getPriceDiff();
+    void setPriceDiff(float value) override;
+    float getPriceDiff() override;
 
-    void setAmountOfTimes(int value);
-    int getAmountOfTimes();
+    void setAmountOfTimes(int value) override;
+    int getAmountOfTimes() override;
 
-    void setDuration(int value);
-    int getDuration();
+    void setDuration(int value) override;
+    int getDuration() override;
 
 private:
-    void assign(const BuyDecision2Config &config);
-
     QMutex *mMutex;
     bool   mEnabled;
     float  mPriceDiff;

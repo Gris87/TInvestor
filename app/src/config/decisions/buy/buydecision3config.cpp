@@ -7,6 +7,7 @@
 
 
 BuyDecision3Config::BuyDecision3Config() :
+    IBuyDecision3Config(),
     mMutex(new QMutex())
 {
     qDebug() << "Create BuyDecision3Config";
@@ -19,11 +20,17 @@ BuyDecision3Config::~BuyDecision3Config()
     delete mMutex;
 }
 
-BuyDecision3Config& BuyDecision3Config::operator=(const BuyDecision3Config &config)
+void BuyDecision3Config::assign(IBuyDecision3Config *another)
 {
-    assign(config);
+    QMutexLocker lock(mMutex);
 
-    return *this;
+    qDebug() << "Assigning BuyDecision3Config to BuyDecision3Config";
+
+    const BuyDecision3Config &config = *dynamic_cast<BuyDecision3Config *>(another);
+
+    mEnabled   = config.mEnabled;
+    mPriceRise = config.mPriceRise;
+    mDuration  = config.mDuration;
 }
 
 void BuyDecision3Config::makeDefault()
@@ -35,17 +42,6 @@ void BuyDecision3Config::makeDefault()
     mEnabled     = true;
     mPriceRise   = 2.0f;
     mDuration = 1.0f;
-}
-
-void BuyDecision3Config::assign(const BuyDecision3Config &config)
-{
-    QMutexLocker lock(mMutex);
-
-    qDebug() << "Assigning BuyDecision3Config to BuyDecision3Config";
-
-    mEnabled   = config.mEnabled;
-    mPriceRise = config.mPriceRise;
-    mDuration  = config.mDuration;
 }
 
 void BuyDecision3Config::save(const QString &type)

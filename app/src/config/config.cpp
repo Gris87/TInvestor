@@ -6,23 +6,19 @@
 
 
 
-Config::Config(IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject *parent) :
-    IConfig(parent),
-    mSimulatorConfig(decisionMakerConfigFactory->newInstance()),
-    mAutoPilotConfig(decisionMakerConfigFactory->newInstance()),
-    mMutex(new QMutex())
+Config::Config(IDecisionMakerConfig *simulatorConfig, IDecisionMakerConfig *autoPilotConfig) :
+    IConfig(),
+    mMutex(new QMutex()),
+    mSimulatorConfig(simulatorConfig),
+    mAutoPilotConfig(autoPilotConfig)
 {
     qDebug() << "Create Config";
-
-    makeDefault();
 }
 
 Config::~Config()
 {
     qDebug() << "Destroy Config";
 
-    delete mSimulatorConfig;
-    delete mAutoPilotConfig;
     delete mMutex;
 }
 

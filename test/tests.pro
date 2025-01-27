@@ -47,6 +47,10 @@ SOURCES += \
 
 HEADERS += \
     src/config/iconfig_mock.h \
-    src/config/iconfigfactory_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \
-    src/config/decisions/idecisionmakerconfigfactory_mock.h
+    src/config/decisions/buy/ibuydecision1config_mock.h \
+    src/config/decisions/buy/ibuydecision2config_mock.h \
+    src/config/decisions/buy/ibuydecision3config_mock.h \
+    src/config/decisions/sell/iselldecision1config_mock.h \
+    src/config/decisions/sell/iselldecision2config_mock.h \
+    src/config/decisions/sell/iselldecision3config_mock.h

@@ -1,14 +1,15 @@
 #include <gtest/gtest.h>
 
 #include "src/config/config.h"
-#include "src/config/decisions/decisionmakerconfigfactory.h"
+#include "src/config/decisions/idecisionmakerconfig_mock.h"
 
 
 
 TEST(Test_Config, TestConstructor) {
-    DecisionMakerConfigFactory decisionMakerConfigFactory;
+    DecisionMakerConfigMock simulatorConfigMock;
+    DecisionMakerConfigMock autoPilotConfigMock;
 
-    Config cfg(&decisionMakerConfigFactory);
+    Config cfg(&simulatorConfigMock, &autoPilotConfigMock);
 
     ASSERT_EQ(cfg.isAutorun(),                    true);
     ASSERT_EQ(cfg.getRefreshTimeout(),            1);

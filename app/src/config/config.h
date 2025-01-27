@@ -6,18 +6,16 @@
 
 #include <QMutex>
 
-#include "src/config/decisions/idecisionmakerconfig.h"
-#include "src/config/decisions/idecisionmakerconfigfactory.h"
-
 
 
 class Config : public IConfig
 {
-    Q_OBJECT
-
 public:
-    explicit Config(IDecisionMakerConfigFactory *decisionMakerConfigFactory, QObject *parent = nullptr);
+    explicit Config(IDecisionMakerConfig *simulatorConfig, IDecisionMakerConfig *autoPilotConfig);
     ~Config();
+
+    Config(const Config &another) = delete;
+    Config& operator=(const Config &another) = delete;
 
     void assign(IConfig *another) override;
     void makeDefault() override;

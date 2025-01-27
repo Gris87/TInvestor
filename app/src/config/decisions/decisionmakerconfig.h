@@ -6,31 +6,42 @@
 
 #include <QMutex>
 
-#include "src/config/decisions/buy/buydecision1config.h"
-#include "src/config/decisions/buy/buydecision2config.h"
-#include "src/config/decisions/buy/buydecision3config.h"
-#include "src/config/decisions/sell/selldecision1config.h"
-#include "src/config/decisions/sell/selldecision2config.h"
-#include "src/config/decisions/sell/selldecision3config.h"
-
 
 
 class DecisionMakerConfig : public IDecisionMakerConfig
 {
 public:
-    DecisionMakerConfig();
+    DecisionMakerConfig(
+        IBuyDecision1Config *buyDecision1Config,
+        IBuyDecision2Config *buyDecision2Config,
+        IBuyDecision3Config *buyDecision3Config,
+        ISellDecision1Config *sellDecision1Config,
+        ISellDecision2Config *sellDecision2Config,
+        ISellDecision3Config *sellDecision3Config
+    );
     ~DecisionMakerConfig();
 
-    BuyDecision1Config  buyDecision1Config;
-    BuyDecision2Config  buyDecision2Config;
-    BuyDecision3Config  buyDecision3Config;
-    SellDecision1Config sellDecision1Config;
-    SellDecision2Config sellDecision2Config;
-    SellDecision3Config sellDecision3Config;
+    DecisionMakerConfig(const DecisionMakerConfig &another) = delete;
+    DecisionMakerConfig& operator=(const DecisionMakerConfig &another) = delete;
 
     void assign(IDecisionMakerConfig *another) override;
     void makeDefault() override;
 
     void save(const QString &type) override;
     void load(const QString &type) override;
+
+    IBuyDecision1Config* getBuyDecision1Config();
+    IBuyDecision2Config* getBuyDecision2Config();
+    IBuyDecision3Config* getBuyDecision3Config();
+    ISellDecision1Config* getSellDecision1Config();
+    ISellDecision2Config* getSellDecision2Config();
+    ISellDecision3Config* getSellDecision3Config();
+
+private:
+    IBuyDecision1Config  *mBuyDecision1Config;
+    IBuyDecision2Config  *mBuyDecision2Config;
+    IBuyDecision3Config  *mBuyDecision3Config;
+    ISellDecision1Config *mSellDecision1Config;
+    ISellDecision2Config *mSellDecision2Config;
+    ISellDecision3Config *mSellDecision3Config;
 };
