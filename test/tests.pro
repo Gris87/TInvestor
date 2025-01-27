@@ -42,15 +42,29 @@ include(../app/TInvestor.pri)
 
 SOURCES += \
     main.cpp \
+    src/config/decisions/buy/test_buydecision1config.cpp \
+    src/config/decisions/buy/test_buydecision1configwidget.cpp \
+    src/config/decisions/buy/test_buydecision2config.cpp \
+    src/config/decisions/buy/test_buydecision2configwidget.cpp \
+    src/config/decisions/buy/test_buydecision3config.cpp \
+    src/config/decisions/buy/test_buydecision3configwidget.cpp \
+    src/config/decisions/sell/test_selldecision1config.cpp \
+    src/config/decisions/sell/test_selldecision1configwidget.cpp \
+    src/config/decisions/sell/test_selldecision2config.cpp \
+    src/config/decisions/sell/test_selldecision2configwidget.cpp \
+    src/config/decisions/sell/test_selldecision3config.cpp \
+    src/config/decisions/sell/test_selldecision3configwidget.cpp \
+    src/config/decisions/test_decisionmakerconfig.cpp \
+    src/config/decisions/test_decisionmakerconfigwidget.cpp \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp
 
 HEADERS += \
-    src/config/iconfig_mock.h \
-    src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/buy/ibuydecision1config_mock.h \
     src/config/decisions/buy/ibuydecision2config_mock.h \
     src/config/decisions/buy/ibuydecision3config_mock.h \
+    src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision2config_mock.h \
-    src/config/decisions/sell/iselldecision3config_mock.h
+    src/config/decisions/sell/iselldecision3config_mock.h \
+    src/config/iconfig_mock.h
