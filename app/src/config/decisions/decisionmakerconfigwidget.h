@@ -28,6 +28,5 @@ public:
     void setDecisionMakerConfig(IDecisionMakerConfig *config);
     void updateUiFromConfig();
 
-private:
     Ui::DecisionMakerConfigWidget *ui;
 };

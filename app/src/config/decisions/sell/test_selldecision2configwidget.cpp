@@ -34,23 +34,23 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig) {
 
     EXPECT_CALL(sellDecision2ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(sellDecision2ConfigMock, getIncomeAbove()).WillOnce(Return(2.1f));
-    EXPECT_CALL(sellDecision2ConfigMock, getLoseIncome()).WillOnce(Return(2.1f));
+    EXPECT_CALL(sellDecision2ConfigMock, getLoseIncome()).WillOnce(Return(3.1f));
 
     configWidget.updateUiFromConfig();
 
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        true);
     ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 2.1f, 0.01f);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  2.1f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  3.1f, 0.01f);
 
     EXPECT_CALL(sellDecision2ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(sellDecision2ConfigMock, getIncomeAbove()).WillOnce(Return(5.3f));
-    EXPECT_CALL(sellDecision2ConfigMock, getLoseIncome()).WillOnce(Return(5.3f));
+    EXPECT_CALL(sellDecision2ConfigMock, getLoseIncome()).WillOnce(Return(6.3f));
 
     configWidget.updateUiFromConfig();
 
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        false);
     ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.01f);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  5.3f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  6.3f, 0.01f);
 }
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
