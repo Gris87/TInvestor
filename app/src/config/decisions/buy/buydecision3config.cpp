@@ -38,9 +38,9 @@ void BuyDecision3Config::makeDefault()
 
     qDebug() << "Set BuyDecision3Config to default";
 
-    mEnabled     = true;
-    mPriceRise   = 2.0f;
-    mDuration = 1.0f;
+    mEnabled   = true;
+    mPriceRise = 2.0f;
+    mDuration  = 1;
 }
 
 void BuyDecision3Config::save(ISettingsEditor *settingsEditor, const QString &type)
@@ -62,7 +62,7 @@ void BuyDecision3Config::load(ISettingsEditor *settingsEditor, const QString &ty
 
     mEnabled   = settingsEditor->value(type + "/Enabled",   mEnabled).toBool();
     mPriceRise = settingsEditor->value(type + "/PriceRise", mPriceRise).toFloat();
-    mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toFloat();
+    mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toInt();
 }
 
 void BuyDecision3Config::setEnabled(bool value)
