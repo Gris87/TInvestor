@@ -28,9 +28,9 @@ public:
     void setSellDecision2Config(ISellDecision2Config *config);
     void updateUiFromConfig();
 
-private:
     Ui::SellDecision2ConfigWidget *ui;
 
+private:
     ISellDecision2Config *mConfig;
 
 private slots:
