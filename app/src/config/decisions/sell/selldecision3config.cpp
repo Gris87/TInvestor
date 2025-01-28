@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -44,30 +43,26 @@ void SellDecision3Config::makeDefault()
     mDuration   = 3;
 }
 
-void SellDecision3Config::save(const QString &type)
+void SellDecision3Config::save(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision3Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue(type + "/Enabled",    mEnabled);
-    settings.setValue(type + "/LoseIncome", mLoseIncome);
-    settings.setValue(type + "/Duration",   mDuration);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/LoseIncome", mLoseIncome);
+    settingsEditor->setValue(type + "/Duration",   mDuration);
 }
 
-void SellDecision3Config::load(const QString &type)
+void SellDecision3Config::load(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision3Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mEnabled    = settings.value(type + "/Enabled",    mEnabled).toBool();
-    mLoseIncome = settings.value(type + "/LoseIncome", mLoseIncome).toFloat();
-    mDuration   = settings.value(type + "/Duration",   mDuration).toInt();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mLoseIncome = settingsEditor->value(type + "/LoseIncome", mLoseIncome).toFloat();
+    mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
 }
 
 void SellDecision3Config::setEnabled(bool value)

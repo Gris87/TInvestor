@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -44,30 +43,26 @@ void SellDecision2Config::makeDefault()
     mLoseIncome  = 0.1f;
 }
 
-void SellDecision2Config::save(const QString &type)
+void SellDecision2Config::save(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision2Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue(type + "/Enabled",     mEnabled);
-    settings.setValue(type + "/IncomeAbove", mIncomeAbove);
-    settings.setValue(type + "/LoseIncome",  mLoseIncome);
+    settingsEditor->setValue(type + "/Enabled",     mEnabled);
+    settingsEditor->setValue(type + "/IncomeAbove", mIncomeAbove);
+    settingsEditor->setValue(type + "/LoseIncome",  mLoseIncome);
 }
 
-void SellDecision2Config::load(const QString &type)
+void SellDecision2Config::load(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision2Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
-    mLoseIncome  = settings.value(type + "/LoseIncome",  mLoseIncome).toFloat();
+    mEnabled     = settingsEditor->value(type + "/Enabled",     mEnabled).toBool();
+    mIncomeAbove = settingsEditor->value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mLoseIncome  = settingsEditor->value(type + "/LoseIncome",  mLoseIncome).toFloat();
 }
 
 void SellDecision2Config::setEnabled(bool value)

@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -42,28 +41,24 @@ void SellDecision1Config::makeDefault()
     mIncomeAbove = 1.0f;
 }
 
-void SellDecision1Config::save(const QString &type)
+void SellDecision1Config::save(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision1Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue(type + "/Enabled",     mEnabled);
-    settings.setValue(type + "/IncomeAbove", mIncomeAbove);
+    settingsEditor->setValue(type + "/Enabled",     mEnabled);
+    settingsEditor->setValue(type + "/IncomeAbove", mIncomeAbove);
 }
 
-void SellDecision1Config::load(const QString &type)
+void SellDecision1Config::load(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision1Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mEnabled     = settings.value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settings.value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mEnabled     = settingsEditor->value(type + "/Enabled",     mEnabled).toBool();
+    mIncomeAbove = settingsEditor->value(type + "/IncomeAbove", mIncomeAbove).toFloat();
 }
 
 void SellDecision1Config::setEnabled(bool value)

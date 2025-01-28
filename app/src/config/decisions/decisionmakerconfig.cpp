@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -56,28 +55,28 @@ void DecisionMakerConfig::makeDefault()
     mSellDecision3Config->makeDefault();
 }
 
-void DecisionMakerConfig::save(const QString &type)
+void DecisionMakerConfig::save(ISettingsEditor *settingsEditor, const QString &type)
 {
     qDebug() << "Save DecisionMakerConfig";
 
-    mBuyDecision1Config->save(type + "/BuyDecision1Config");
-    mBuyDecision2Config->save(type + "/BuyDecision2Config");
-    mBuyDecision3Config->save(type + "/BuyDecision3Config");
-    mSellDecision1Config->save(type + "/SellDecision1Config");
-    mSellDecision2Config->save(type + "/SellDecision2Config");
-    mSellDecision3Config->save(type + "/SellDecision3Config");
+    mBuyDecision1Config->save(settingsEditor, type + "/BuyDecision1Config");
+    mBuyDecision2Config->save(settingsEditor, type + "/BuyDecision2Config");
+    mBuyDecision3Config->save(settingsEditor, type + "/BuyDecision3Config");
+    mSellDecision1Config->save(settingsEditor, type + "/SellDecision1Config");
+    mSellDecision2Config->save(settingsEditor, type + "/SellDecision2Config");
+    mSellDecision3Config->save(settingsEditor, type + "/SellDecision3Config");
 }
 
-void DecisionMakerConfig::load(const QString &type)
+void DecisionMakerConfig::load(ISettingsEditor *settingsEditor, const QString &type)
 {
     qDebug() << "Load DecisionMakerConfig";
 
-    mBuyDecision1Config->load(type + "/BuyDecision1Config");
-    mBuyDecision2Config->load(type + "/BuyDecision2Config");
-    mBuyDecision3Config->load(type + "/BuyDecision3Config");
-    mSellDecision1Config->load(type + "/SellDecision1Config");
-    mSellDecision2Config->load(type + "/SellDecision2Config");
-    mSellDecision3Config->load(type + "/SellDecision3Config");
+    mBuyDecision1Config->load(settingsEditor, type + "/BuyDecision1Config");
+    mBuyDecision2Config->load(settingsEditor, type + "/BuyDecision2Config");
+    mBuyDecision3Config->load(settingsEditor, type + "/BuyDecision3Config");
+    mSellDecision1Config->load(settingsEditor, type + "/SellDecision1Config");
+    mSellDecision2Config->load(settingsEditor, type + "/SellDecision2Config");
+    mSellDecision3Config->load(settingsEditor, type + "/SellDecision3Config");
 }
 
 IBuyDecision1Config* DecisionMakerConfig::getBuyDecision1Config()

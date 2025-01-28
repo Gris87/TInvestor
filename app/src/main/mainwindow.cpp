@@ -3,17 +3,21 @@
 
 #include <QDebug>
 #include <QEvent>
-#include <QSettings>
 
 #include "src/config/settingsdialog.h"
 
 
 
-MainWindow::MainWindow(IConfig *сonfig, IConfig *сonfigForSettingsDialog, QWidget *parent) :
-    QMainWindow(parent),
+MainWindow::MainWindow(
+    IConfig *сonfig,
+    IConfig *сonfigForSettingsDialog,
+    ISettingsEditor *settingsEditor
+) :
+    QMainWindow(),
     ui(new Ui::MainWindow),
     mConfig(сonfig),
     mConfigForSettingsDialog(сonfigForSettingsDialog),
+    mSettingsEditor(settingsEditor),
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
     mCleanupThread(new CleanupThread(this)),
@@ -33,7 +37,7 @@ MainWindow::MainWindow(IConfig *сonfig, IConfig *сonfigForSettingsDialog, QWid
     connect(mRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
 
     mConfig->makeDefault();
-    mConfig->load();
+    mConfig->load(mSettingsEditor);
     applyConfig();
 
     loadWindowState();
@@ -157,7 +161,7 @@ void MainWindow::on_actionSettings_triggered()
         qInfo() << "Settings applied";
 
         mConfig->assign(mConfigForSettingsDialog);
-        mConfig->save();
+        mConfig->save(mSettingsEditor);
 
         applyConfig();
     }
@@ -212,22 +216,18 @@ void MainWindow::saveWindowState()
 {
     qDebug() << "Saving window state";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue("MainWindow/geometry",    saveGeometry());
-    settings.setValue("MainWindow/windowState", saveState());
-    settings.setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
+    mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
+    mSettingsEditor->setValue("MainWindow/windowState", saveState());
+    mSettingsEditor->setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
 }
 
 void MainWindow::loadWindowState()
 {
     qDebug() << "Loading window state";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    restoreGeometry(settings.value("MainWindow/geometry").toByteArray());
-    restoreState(settings.value("MainWindow/windowState").toByteArray());
-    ui->stackedWidget->setCurrentIndex(settings.value("MainWindow/pageIndex").toInt());
+    restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
+    restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
+    ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
 
     updateStackWidgetToolbar();
 }

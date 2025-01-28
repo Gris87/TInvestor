@@ -20,8 +20,8 @@ public:
     void assign(IConfig *another) override;
     void makeDefault() override;
 
-    void save() override;
-    void load() override;
+    void save(ISettingsEditor *settingsEditor) override;
+    void load(ISettingsEditor *settingsEditor) override;
 
     IDecisionMakerConfig* getSimulatorConfig() override;
     IDecisionMakerConfig* getAutoPilotConfig() override;

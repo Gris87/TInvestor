@@ -57,7 +57,8 @@ SOURCES += \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/decisions/test_decisionmakerconfigwidget.cpp \
     src/config/test_config.cpp \
-    src/config/test_settingsdialog.cpp
+    src/config/test_settingsdialog.cpp \
+    src/config/test_settingseditor.cpp
 
 HEADERS += \
     src/config/decisions/buy/ibuydecision1config_mock.h \
@@ -67,4 +68,5 @@ HEADERS += \
     src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision2config_mock.h \
     src/config/decisions/sell/iselldecision3config_mock.h \
-    src/config/iconfig_mock.h
+    src/config/iconfig_mock.h \
+    src/config/isettingseditor_mock.h

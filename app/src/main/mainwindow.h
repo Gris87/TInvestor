@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "src/config/iconfig.h"
+#include "src/config/isettingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/main/trayicon.h"
 #include "src/threads/cleanupthread.h"
@@ -28,7 +29,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(IConfig *сonfig, IConfig *сonfigForSettingsDialog, QWidget *parent = nullptr);
+    MainWindow(
+        IConfig *сonfig,
+        IConfig *сonfigForSettingsDialog,
+        ISettingsEditor *settingsEditor
+    );
     ~MainWindow();
 
     MainWindow(const MainWindow &another) = delete;
@@ -47,15 +52,16 @@ private:
 
     Ui::MainWindow *ui;
 
-    TrayIcon       *mTrayIcon;
-    IConfig        *mConfig;
-    IConfig        *mConfigForSettingsDialog;
-    QTimer         *mCleanupTimer;
-    QTimer         *mRefreshTimer;
-    CleanupThread  *mCleanupThread;
-    RefreshThread  *mRefreshThread;
-    StocksDatabase *mStocksDatabase;
-    QList<Stock>   mStocks;
+    TrayIcon        *mTrayIcon;
+    IConfig         *mConfig;
+    IConfig         *mConfigForSettingsDialog;
+    ISettingsEditor *mSettingsEditor;
+    QTimer          *mCleanupTimer;
+    QTimer          *mRefreshTimer;
+    CleanupThread   *mCleanupThread;
+    RefreshThread   *mRefreshThread;
+    StocksDatabase  *mStocksDatabase;
+    QList<Stock>    mStocks;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

@@ -20,8 +20,8 @@ public:
     MOCK_METHOD1(assign, void(IDecisionMakerConfig *another));
     MOCK_METHOD0(makeDefault, void());
 
-    MOCK_METHOD1(save, void(const QString &type));
-    MOCK_METHOD1(load, void(const QString &type));
+    MOCK_METHOD2(save, void(ISettingsEditor *settingsEditor, const QString &type));
+    MOCK_METHOD2(load, void(ISettingsEditor *settingsEditor, const QString &type));
 
     MOCK_METHOD0(getBuyDecision1Config, IBuyDecision1Config*());
     MOCK_METHOD0(getBuyDecision2Config, IBuyDecision2Config*());

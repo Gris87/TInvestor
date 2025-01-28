@@ -2,7 +2,7 @@
 
 
 
-#include <QString>
+#include "src/config/isettingseditor.h"
 
 
 
@@ -18,8 +18,8 @@ public:
     virtual void assign(IBuyDecision2Config *another) = 0;
     virtual void makeDefault() = 0;
 
-    virtual void save(const QString &type) = 0;
-    virtual void load(const QString &type) = 0;
+    virtual void save(ISettingsEditor *settingsEditor, const QString &type) = 0;
+    virtual void load(ISettingsEditor *settingsEditor, const QString &type) = 0;
 
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled() = 0;

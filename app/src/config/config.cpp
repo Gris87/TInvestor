@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -80,64 +79,60 @@ void Config::makeDefault()
     mAutoPilotConfigCommon     = false;
 }
 
-void Config::save()
+void Config::save(ISettingsEditor *settingsEditor)
 {
     QMutexLocker lock(mMutex);
 
     qInfo() << "Save Config";
 
-    mSimulatorConfig->save("Simulator");
-    mAutoPilotConfig->save("AutoPilot");
+    mSimulatorConfig->save(settingsEditor, "Simulator");
+    mAutoPilotConfig->save(settingsEditor, "AutoPilot");
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue("Config/Autorun",                   mAutorun);
-    settings.setValue("Config/RefreshTimeout",            mRefreshTimeout);
-    settings.setValue("Config/UseSchedule",               mUseSchedule);
-    settings.setValue("Config/ScheduleStartHour",         mScheduleStartHour);
-    settings.setValue("Config/ScheduleStartMinute",       mScheduleStartMinute);
-    settings.setValue("Config/ScheduleEndHour",           mScheduleEndHour);
-    settings.setValue("Config/ScheduleEndMinute",         mScheduleEndMinute);
-    settings.setValue("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay);
-    settings.setValue("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay);
-    settings.setValue("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock);
-    settings.setValue("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock);
-    settings.setValue("Config/Commission",                mCommission);
-    settings.setValue("Config/LimitStockPurchase",        mLimitStockPurchase);
-    settings.setValue("Config/AmountOfStockPurchase",     mAmountOfStockPurchase);
-    settings.setValue("Config/StorageMonthLimit",         mStorageMonthLimit);
-    settings.setValue("Config/SimulatorConfigCommon",     mSimulatorConfigCommon);
-    settings.setValue("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon);
+    settingsEditor->setValue("Config/Autorun",                   mAutorun);
+    settingsEditor->setValue("Config/RefreshTimeout",            mRefreshTimeout);
+    settingsEditor->setValue("Config/UseSchedule",               mUseSchedule);
+    settingsEditor->setValue("Config/ScheduleStartHour",         mScheduleStartHour);
+    settingsEditor->setValue("Config/ScheduleStartMinute",       mScheduleStartMinute);
+    settingsEditor->setValue("Config/ScheduleEndHour",           mScheduleEndHour);
+    settingsEditor->setValue("Config/ScheduleEndMinute",         mScheduleEndMinute);
+    settingsEditor->setValue("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay);
+    settingsEditor->setValue("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay);
+    settingsEditor->setValue("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock);
+    settingsEditor->setValue("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock);
+    settingsEditor->setValue("Config/Commission",                mCommission);
+    settingsEditor->setValue("Config/LimitStockPurchase",        mLimitStockPurchase);
+    settingsEditor->setValue("Config/AmountOfStockPurchase",     mAmountOfStockPurchase);
+    settingsEditor->setValue("Config/StorageMonthLimit",         mStorageMonthLimit);
+    settingsEditor->setValue("Config/SimulatorConfigCommon",     mSimulatorConfigCommon);
+    settingsEditor->setValue("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon);
 }
 
-void Config::load()
+void Config::load(ISettingsEditor *settingsEditor)
 {
     QMutexLocker lock(mMutex);
 
     qInfo() << "Load Config";
 
-    mSimulatorConfig->load("Simulator");
-    mAutoPilotConfig->load("AutoPilot");
+    mSimulatorConfig->load(settingsEditor, "Simulator");
+    mAutoPilotConfig->load(settingsEditor, "AutoPilot");
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mAutorun                   = settings.value("Config/Autorun",                   mAutorun).toBool();
-    mRefreshTimeout            = settings.value("Config/RefreshTimeout",            mRefreshTimeout).toInt();
-    mUseSchedule               = settings.value("Config/UseSchedule",               mUseSchedule).toBool();
-    mScheduleStartHour         = settings.value("Config/ScheduleStartHour",         mScheduleStartHour).toInt();
-    mScheduleStartMinute       = settings.value("Config/ScheduleStartMinute",       mScheduleStartMinute).toInt();
-    mScheduleEndHour           = settings.value("Config/ScheduleEndHour",           mScheduleEndHour).toInt();
-    mScheduleEndMinute         = settings.value("Config/ScheduleEndMinute",         mScheduleEndMinute).toInt();
-    mLimitPurchasesPerDay      = settings.value("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay).toBool();
-    mAmountOfPurchasesPerDay   = settings.value("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay).toInt();
-    mLimitPurchasesPerStock    = settings.value("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock).toBool();
-    mAmountOfPurchasesPerStock = settings.value("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock).toInt();
-    mCommission                = settings.value("Config/Commission",                mCommission).toFloat();
-    mLimitStockPurchase        = settings.value("Config/LimitStockPurchase",        mLimitStockPurchase).toBool();
-    mAmountOfStockPurchase     = settings.value("Config/AmountOfStockPurchase",     mAmountOfStockPurchase).toInt();
-    mStorageMonthLimit         = settings.value("Config/StorageMonthLimit",         mStorageMonthLimit).toInt();
-    mSimulatorConfigCommon     = settings.value("Config/SimulatorConfigCommon",     mSimulatorConfigCommon).toBool();
-    mAutoPilotConfigCommon     = settings.value("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon).toBool();
+    mAutorun                   = settingsEditor->value("Config/Autorun",                   mAutorun).toBool();
+    mRefreshTimeout            = settingsEditor->value("Config/RefreshTimeout",            mRefreshTimeout).toInt();
+    mUseSchedule               = settingsEditor->value("Config/UseSchedule",               mUseSchedule).toBool();
+    mScheduleStartHour         = settingsEditor->value("Config/ScheduleStartHour",         mScheduleStartHour).toInt();
+    mScheduleStartMinute       = settingsEditor->value("Config/ScheduleStartMinute",       mScheduleStartMinute).toInt();
+    mScheduleEndHour           = settingsEditor->value("Config/ScheduleEndHour",           mScheduleEndHour).toInt();
+    mScheduleEndMinute         = settingsEditor->value("Config/ScheduleEndMinute",         mScheduleEndMinute).toInt();
+    mLimitPurchasesPerDay      = settingsEditor->value("Config/LimitPurchasesPerDay",      mLimitPurchasesPerDay).toBool();
+    mAmountOfPurchasesPerDay   = settingsEditor->value("Config/AmountOfPurchasesPerDay",   mAmountOfPurchasesPerDay).toInt();
+    mLimitPurchasesPerStock    = settingsEditor->value("Config/LimitPurchasesPerStock",    mLimitPurchasesPerStock).toBool();
+    mAmountOfPurchasesPerStock = settingsEditor->value("Config/AmountOfPurchasesPerStock", mAmountOfPurchasesPerStock).toInt();
+    mCommission                = settingsEditor->value("Config/Commission",                mCommission).toFloat();
+    mLimitStockPurchase        = settingsEditor->value("Config/LimitStockPurchase",        mLimitStockPurchase).toBool();
+    mAmountOfStockPurchase     = settingsEditor->value("Config/AmountOfStockPurchase",     mAmountOfStockPurchase).toInt();
+    mStorageMonthLimit         = settingsEditor->value("Config/StorageMonthLimit",         mStorageMonthLimit).toInt();
+    mSimulatorConfigCommon     = settingsEditor->value("Config/SimulatorConfigCommon",     mSimulatorConfigCommon).toBool();
+    mAutoPilotConfigCommon     = settingsEditor->value("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon).toBool();
 }
 
 IDecisionMakerConfig* Config::getSimulatorConfig()

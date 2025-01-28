@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QMutexLocker>
-#include <QSettings>
 
 
 
@@ -44,30 +43,26 @@ void BuyDecision1Config::makeDefault()
     mDuration  = 5;
 }
 
-void BuyDecision1Config::save(const QString &type)
+void BuyDecision1Config::save(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Save BuyDecision1Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    settings.setValue(type + "/Enabled",   mEnabled);
-    settings.setValue(type + "/PriceFall", mPriceFall);
-    settings.setValue(type + "/Duration",  mDuration);
+    settingsEditor->setValue(type + "/Enabled",   mEnabled);
+    settingsEditor->setValue(type + "/PriceFall", mPriceFall);
+    settingsEditor->setValue(type + "/Duration",  mDuration);
 }
 
-void BuyDecision1Config::load(const QString &type)
+void BuyDecision1Config::load(ISettingsEditor *settingsEditor, const QString &type)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Load BuyDecision1Config";
 
-    QSettings settings("GrisCom", "TInvestor");
-
-    mEnabled   = settings.value(type + "/Enabled",   mEnabled).toBool();
-    mPriceFall = settings.value(type + "/PriceFall", mPriceFall).toFloat();
-    mDuration  = settings.value(type + "/Duration",  mDuration).toInt();
+    mEnabled   = settingsEditor->value(type + "/Enabled",   mEnabled).toBool();
+    mPriceFall = settingsEditor->value(type + "/PriceFall", mPriceFall).toFloat();
+    mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toInt();
 }
 
 void BuyDecision1Config::setEnabled(bool value)

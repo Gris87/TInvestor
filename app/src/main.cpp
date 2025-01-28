@@ -13,6 +13,7 @@
 #include "src/config/decisions/sell/selldecision1config.h"
 #include "src/config/decisions/sell/selldecision2config.h"
 #include "src/config/decisions/sell/selldecision3config.h"
+#include "src/config/settingseditor.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 
@@ -125,7 +126,9 @@ int main(int argc, char *argv[])
     Config сonfig(&simulatorConfig, &autoPilotConfig);
     Config сonfigForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
 
-    MainWindow mainWindow(&сonfig, &сonfigForSettingsDialog);
+    SettingsEditor settingsEditor("GrisCom", "TInvestor");
+
+    MainWindow mainWindow(&сonfig, &сonfigForSettingsDialog, &settingsEditor);
     mainWindow.init();
 
     int res = app.exec();

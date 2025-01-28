@@ -20,8 +20,8 @@ public:
     MOCK_METHOD1(assign, void(ISellDecision2Config *another));
     MOCK_METHOD0(makeDefault, void());
 
-    MOCK_METHOD1(save, void(const QString &type));
-    MOCK_METHOD1(load, void(const QString &type));
+    MOCK_METHOD2(save, void(ISettingsEditor *settingsEditor, const QString &type));
+    MOCK_METHOD2(load, void(ISettingsEditor *settingsEditor, const QString &type));
 
     MOCK_METHOD1(setEnabled, void(bool value));
     MOCK_METHOD0(isEnabled, bool());

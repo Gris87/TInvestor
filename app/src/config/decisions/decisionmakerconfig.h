@@ -27,8 +27,8 @@ public:
     void assign(IDecisionMakerConfig *another) override;
     void makeDefault() override;
 
-    void save(const QString &type) override;
-    void load(const QString &type) override;
+    void save(ISettingsEditor *settingsEditor, const QString &type) override;
+    void load(ISettingsEditor *settingsEditor, const QString &type) override;
 
     IBuyDecision1Config* getBuyDecision1Config();
     IBuyDecision2Config* getBuyDecision2Config();

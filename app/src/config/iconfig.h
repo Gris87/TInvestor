@@ -3,6 +3,7 @@
 
 
 #include "src/config/decisions/idecisionmakerconfig.h"
+#include "src/config/isettingseditor.h"
 
 
 
@@ -18,8 +19,8 @@ public:
     virtual void assign(IConfig *another) = 0;
     virtual void makeDefault() = 0;
 
-    virtual void save() = 0;
-    virtual void load() = 0;
+    virtual void save(ISettingsEditor *settingsEditor) = 0;
+    virtual void load(ISettingsEditor *settingsEditor) = 0;
 
     virtual IDecisionMakerConfig* getSimulatorConfig() = 0;
     virtual IDecisionMakerConfig* getAutoPilotConfig() = 0;
