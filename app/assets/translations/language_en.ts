@@ -140,22 +140,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="31"/>
+        <location filename="../../src/main.cpp" line="40"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="32"/>
+        <location filename="../../src/main.cpp" line="41"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="46"/>
+        <location filename="../../src/main.cpp" line="55"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="47"/>
+        <location filename="../../src/main.cpp" line="56"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -288,8 +288,8 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="398"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="184"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="201"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="179"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="196"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
@@ -301,8 +301,8 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog.ui" line="430"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="183"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="202"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="178"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="197"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
@@ -322,8 +322,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog.cpp" line="178"/>
-        <location filename="../../src/config/settingsdialog.cpp" line="196"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="173"/>
+        <location filename="../../src/config/settingsdialog.cpp" line="191"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>
