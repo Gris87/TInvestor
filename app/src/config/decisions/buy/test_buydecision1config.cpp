@@ -1,6 +1,12 @@
 #include <gtest/gtest.h>
 
 #include "src/config/decisions/buy/buydecision1config.h"
+#include "src/config/isettingseditor_mock.h"
+
+
+
+using ::testing::StrictMock;
+using ::testing::Return;
 
 
 
@@ -57,10 +63,46 @@ TEST(Test_BuyDecision1Config, Test_makeDefault) {
 
 TEST(Test_BuyDecision1Config, Test_save) {
     BuyDecision1Config config;
+
+    config.setEnabled(false);
+    config.setPriceFall(2.5f);
+    config.setDuration(123);
+
+    ASSERT_EQ(config.isEnabled(),    false);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
+    ASSERT_EQ(config.getDuration(),  123);
+
+    StrictMock<SettingsEditorMock> settingsEditorMock;
+
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),   QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/PriceFall"), QVariant(2.5f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Duration"),  QVariant(123)));
+
+    config.save(&settingsEditorMock, "BLAH");
 }
 
 TEST(Test_BuyDecision1Config, Test_load) {
     BuyDecision1Config config;
+
+    config.setEnabled(false);
+    config.setPriceFall(2.5f);
+    config.setDuration(123);
+
+    ASSERT_EQ(config.isEnabled(),    false);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
+    ASSERT_EQ(config.getDuration(),  123);
+
+    StrictMock<SettingsEditorMock> settingsEditorMock;
+
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),   QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/PriceFall"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Duration"),  QVariant(123))).WillOnce(Return(QVariant(321)));
+
+    config.load(&settingsEditorMock, "BLAH");
+
+    ASSERT_EQ(config.isEnabled(),    true);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
+    ASSERT_EQ(config.getDuration(),  321);
 }
 
 TEST(Test_BuyDecision1Config, Test_setEnabled_and_isEnabled) {
