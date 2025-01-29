@@ -2,9 +2,7 @@
 
 
 
-#include <QWidget>
-
-#include "src/config/decisions/buy/ibuydecision1config.h"
+#include "src/config/decisions/buy/ibuydecision1configwidget.h"
 
 
 
@@ -14,7 +12,7 @@ class BuyDecision1ConfigWidget;
 
 
 
-class BuyDecision1ConfigWidget : public QWidget
+class BuyDecision1ConfigWidget : public IBuyDecision1ConfigWidget
 {
     Q_OBJECT
 
@@ -25,8 +23,8 @@ public:
     BuyDecision1ConfigWidget(const BuyDecision1ConfigWidget &another) = delete;
     BuyDecision1ConfigWidget& operator=(const BuyDecision1ConfigWidget &another) = delete;
 
-    void setBuyDecision1Config(IBuyDecision1Config *config);
-    void updateUiFromConfig();
+    void setBuyDecision1Config(IBuyDecision1Config *config) override;
+    void updateUiFromConfig() override;
 
     Ui::BuyDecision1ConfigWidget *ui;
 

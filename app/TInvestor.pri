@@ -7,6 +7,7 @@ SOURCES += \
     src/config/config.cpp \
     src/config/decisions/buy/buydecision1config.cpp \
     src/config/decisions/buy/buydecision1configwidget.cpp \
+    src/config/decisions/buy/buydecision1configwidgetfactory.cpp \
     src/config/decisions/buy/buydecision2config.cpp \
     src/config/decisions/buy/buydecision2configwidget.cpp \
     src/config/decisions/buy/buydecision3config.cpp \
@@ -32,11 +33,14 @@ HEADERS += \
     src/config/config.h \
     src/config/decisions/buy/buydecision1config.h \
     src/config/decisions/buy/buydecision1configwidget.h \
+    src/config/decisions/buy/buydecision1configwidgetfactory.h \
     src/config/decisions/buy/buydecision2config.h \
     src/config/decisions/buy/buydecision2configwidget.h \
     src/config/decisions/buy/buydecision3config.h \
     src/config/decisions/buy/buydecision3configwidget.h \
     src/config/decisions/buy/ibuydecision1config.h \
+    src/config/decisions/buy/ibuydecision1configwidget.h \
+    src/config/decisions/buy/ibuydecision1configwidgetfactory.h \
     src/config/decisions/buy/ibuydecision2config.h \
     src/config/decisions/buy/ibuydecision3config.h \
     src/config/decisions/decisionmakerconfig.h \

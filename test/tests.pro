@@ -44,6 +44,7 @@ SOURCES += \
     main.cpp \
     src/config/decisions/buy/test_buydecision1config.cpp \
     src/config/decisions/buy/test_buydecision1configwidget.cpp \
+    src/config/decisions/buy/test_buydecision1configwidgetfactory.cpp \
     src/config/decisions/buy/test_buydecision2config.cpp \
     src/config/decisions/buy/test_buydecision2configwidget.cpp \
     src/config/decisions/buy/test_buydecision3config.cpp \
@@ -62,6 +63,8 @@ SOURCES += \
 
 HEADERS += \
     src/config/decisions/buy/ibuydecision1config_mock.h \
+    src/config/decisions/buy/ibuydecision1configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/ibuydecision2config_mock.h \
     src/config/decisions/buy/ibuydecision3config_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \

@@ -1,0 +1,21 @@
+#pragma once
+
+
+
+#include "src/config/decisions/buy/ibuydecision1configwidgetfactory.h"
+
+#include <gmock/gmock.h>
+
+
+
+class BuyDecision1ConfigWidgetFactoryMock : public IBuyDecision1ConfigWidgetFactory
+{
+public:
+    BuyDecision1ConfigWidgetFactoryMock() {}
+    ~BuyDecision1ConfigWidgetFactoryMock() override = default;
+
+    BuyDecision1ConfigWidgetFactoryMock(const BuyDecision1ConfigWidgetFactoryMock &another) = delete;
+    BuyDecision1ConfigWidgetFactoryMock& operator=(const BuyDecision1ConfigWidgetFactoryMock &another) = delete;
+
+    MOCK_METHOD1(newInstance, IBuyDecision1ConfigWidget*(QWidget *parent));
+};

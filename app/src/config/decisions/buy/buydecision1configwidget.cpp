@@ -6,7 +6,7 @@
 
 
 BuyDecision1ConfigWidget::BuyDecision1ConfigWidget(QWidget *parent) :
-    QWidget(parent),
+    IBuyDecision1ConfigWidget(parent),
     ui(new Ui::BuyDecision1ConfigWidget)
 {
     qDebug() << "Create BuyDecision1ConfigWidget";
