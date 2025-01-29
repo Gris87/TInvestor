@@ -20,8 +20,8 @@ public:
     MOCK_METHOD1(assign, void(IConfig *another));
     MOCK_METHOD0(makeDefault, void());
 
-    MOCK_METHOD0(save, void());
-    MOCK_METHOD0(load, void());
+    MOCK_METHOD1(save, void(ISettingsEditor *settingsEditor));
+    MOCK_METHOD1(load, void(ISettingsEditor *settingsEditor));
 
     MOCK_METHOD0(getSimulatorConfig, IDecisionMakerConfig*());
     MOCK_METHOD0(getAutoPilotConfig, IDecisionMakerConfig*());

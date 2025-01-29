@@ -27,10 +27,10 @@ public:
     SettingsDialog(const SettingsDialog &another) = delete;
     SettingsDialog& operator=(const SettingsDialog &another) = delete;
 
+    Ui::SettingsDialog *ui;
+
 private:
     void updateUiFromConfig();
-
-    Ui::SettingsDialog *ui;
 
     IConfig *mConfig;
 
