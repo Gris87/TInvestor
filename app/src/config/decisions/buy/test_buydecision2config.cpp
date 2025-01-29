@@ -10,11 +10,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_BuyDecision2Config, Test_constructor_and_destructor) {
+TEST(Test_BuyDecision2Config, Test_constructor_and_destructor)
+{
     BuyDecision2Config config;
 }
 
-TEST(Test_BuyDecision2Config, Test_assign) {
+TEST(Test_BuyDecision2Config, Test_assign)
+{
     BuyDecision2Config config;
     BuyDecision2Config config2;
 
@@ -49,7 +51,8 @@ TEST(Test_BuyDecision2Config, Test_assign) {
     ASSERT_EQ(config2.getDuration(),      321);
 }
 
-TEST(Test_BuyDecision2Config, Test_makeDefault) {
+TEST(Test_BuyDecision2Config, Test_makeDefault)
+{
     BuyDecision2Config config;
 
     config.setEnabled(false);
@@ -70,7 +73,8 @@ TEST(Test_BuyDecision2Config, Test_makeDefault) {
     ASSERT_EQ(config.getDuration(),      15);
 }
 
-TEST(Test_BuyDecision2Config, Test_save) {
+TEST(Test_BuyDecision2Config, Test_save)
+{
     BuyDecision2Config config;
 
     config.setEnabled(false);
@@ -93,7 +97,8 @@ TEST(Test_BuyDecision2Config, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_BuyDecision2Config, Test_load) {
+TEST(Test_BuyDecision2Config, Test_load)
+{
     BuyDecision2Config config;
 
     config.setEnabled(false);
@@ -121,7 +126,8 @@ TEST(Test_BuyDecision2Config, Test_load) {
     ASSERT_EQ(config.getDuration(),      321);
 }
 
-TEST(Test_BuyDecision2Config, Test_setEnabled_and_isEnabled) {
+TEST(Test_BuyDecision2Config, Test_setEnabled_and_isEnabled)
+{
     BuyDecision2Config config;
 
     config.setEnabled(false);
@@ -131,7 +137,8 @@ TEST(Test_BuyDecision2Config, Test_setEnabled_and_isEnabled) {
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_BuyDecision2Config, Test_setPriceDiff_and_getPriceDiff) {
+TEST(Test_BuyDecision2Config, Test_setPriceDiff_and_getPriceDiff)
+{
     BuyDecision2Config config;
 
     config.setPriceDiff(0.1f);
@@ -141,7 +148,8 @@ TEST(Test_BuyDecision2Config, Test_setPriceDiff_and_getPriceDiff) {
     ASSERT_EQ(config.getPriceDiff(), 0.5f);
 }
 
-TEST(Test_BuyDecision2Config, Test_setAmountOfTimes_and_getAmountOfTimes) {
+TEST(Test_BuyDecision2Config, Test_setAmountOfTimes_and_getAmountOfTimes)
+{
     BuyDecision2Config config;
 
     config.setAmountOfTimes(1);
@@ -151,7 +159,8 @@ TEST(Test_BuyDecision2Config, Test_setAmountOfTimes_and_getAmountOfTimes) {
     ASSERT_EQ(config.getAmountOfTimes(), 5);
 }
 
-TEST(Test_BuyDecision2Config, Test_setDuration_and_getDuration) {
+TEST(Test_BuyDecision2Config, Test_setDuration_and_getDuration)
+{
     BuyDecision2Config config;
 
     config.setDuration(100);

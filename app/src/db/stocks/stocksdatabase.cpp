@@ -144,7 +144,8 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
     QVariantList names;
     QVariantList fullnames;
 
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i)
+    {
         qInfo() << i;
 
         QString stockName = QString("AZAZ%1").arg(i);
@@ -165,13 +166,15 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
         qFatal() << "Failed to insert to stocks table:" << mDB.lastError().text();
     }
 
-    for (int i = 0; i < 100; ++i) {
+    for (int i = 0; i < 100; ++i)
+    {
         qInfo() << i;
 
         QVariantList timestamps;
         QVariantList values;
 
-        for (int j = 0; j < 2 * 365 * 24 * 60; ++j) {
+        for (int j = 0; j < 2 * 365 * 24 * 60; ++j)
+        {
             timestamps << 1672520400 + j * 60;
             values << i * j;
         }

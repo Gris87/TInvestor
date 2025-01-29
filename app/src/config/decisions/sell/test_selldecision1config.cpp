@@ -10,11 +10,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision1Config, Test_constructor_and_destructor) {
+TEST(Test_SellDecision1Config, Test_constructor_and_destructor)
+{
     SellDecision1Config config;
 }
 
-TEST(Test_SellDecision1Config, Test_assign) {
+TEST(Test_SellDecision1Config, Test_assign)
+{
     SellDecision1Config config;
     SellDecision1Config config2;
 
@@ -37,7 +39,8 @@ TEST(Test_SellDecision1Config, Test_assign) {
     ASSERT_EQ(config2.getIncomeAbove(), 1.6f);
 }
 
-TEST(Test_SellDecision1Config, Test_makeDefault) {
+TEST(Test_SellDecision1Config, Test_makeDefault)
+{
     SellDecision1Config config;
 
     config.setEnabled(false);
@@ -52,7 +55,8 @@ TEST(Test_SellDecision1Config, Test_makeDefault) {
     ASSERT_EQ(config.getIncomeAbove(), 1.0f);
 }
 
-TEST(Test_SellDecision1Config, Test_save) {
+TEST(Test_SellDecision1Config, Test_save)
+{
     SellDecision1Config config;
 
     config.setEnabled(false);
@@ -69,7 +73,8 @@ TEST(Test_SellDecision1Config, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_SellDecision1Config, Test_load) {
+TEST(Test_SellDecision1Config, Test_load)
+{
     SellDecision1Config config;
 
     config.setEnabled(false);
@@ -89,7 +94,8 @@ TEST(Test_SellDecision1Config, Test_load) {
     ASSERT_EQ(config.getIncomeAbove(), 1.7f);
 }
 
-TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled) {
+TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)
+{
     SellDecision1Config config;
 
     config.setEnabled(false);
@@ -99,7 +105,8 @@ TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled) {
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_SellDecision1Config, Test_setIncomeAbove_and_getIncomeAbove) {
+TEST(Test_SellDecision1Config, Test_setIncomeAbove_and_getIncomeAbove)
+{
     SellDecision1Config config;
 
     config.setIncomeAbove(0.1f);

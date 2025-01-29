@@ -23,11 +23,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor) {
+TEST(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor)
+{
     DecisionMakerConfigWidget configWidget;
 }
 
-TEST(Test_DecisionMakerConfigWidget, Test_setDecisionMakerConfig) {
+TEST(Test_DecisionMakerConfigWidget, Test_setDecisionMakerConfig)
+{
     DecisionMakerConfigWidget configWidget;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
@@ -48,7 +50,8 @@ TEST(Test_DecisionMakerConfigWidget, Test_setDecisionMakerConfig) {
     configWidget.setDecisionMakerConfig(&decisionMakerConfigMock);
 }
 
-TEST(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig) {
+TEST(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
+{
     DecisionMakerConfigWidget configWidget;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;

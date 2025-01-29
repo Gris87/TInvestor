@@ -10,11 +10,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision3Config, Test_constructor_and_destructor) {
+TEST(Test_SellDecision3Config, Test_constructor_and_destructor)
+{
     SellDecision3Config config;
 }
 
-TEST(Test_SellDecision3Config, Test_assign) {
+TEST(Test_SellDecision3Config, Test_assign)
+{
     SellDecision3Config config;
     SellDecision3Config config2;
 
@@ -43,7 +45,8 @@ TEST(Test_SellDecision3Config, Test_assign) {
     ASSERT_EQ(config2.getDuration(),   6);
 }
 
-TEST(Test_SellDecision3Config, Test_makeDefault) {
+TEST(Test_SellDecision3Config, Test_makeDefault)
+{
     SellDecision3Config config;
 
     config.setEnabled(false);
@@ -61,7 +64,8 @@ TEST(Test_SellDecision3Config, Test_makeDefault) {
     ASSERT_EQ(config.getDuration(),   3);
 }
 
-TEST(Test_SellDecision3Config, Test_save) {
+TEST(Test_SellDecision3Config, Test_save)
+{
     SellDecision3Config config;
 
     config.setEnabled(false);
@@ -81,7 +85,8 @@ TEST(Test_SellDecision3Config, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_SellDecision3Config, Test_load) {
+TEST(Test_SellDecision3Config, Test_load)
+{
     SellDecision3Config config;
 
     config.setEnabled(false);
@@ -105,7 +110,8 @@ TEST(Test_SellDecision3Config, Test_load) {
     ASSERT_EQ(config.getDuration(),   1);
 }
 
-TEST(Test_SellDecision3Config, Test_setEnabled_and_isEnabled) {
+TEST(Test_SellDecision3Config, Test_setEnabled_and_isEnabled)
+{
     SellDecision3Config config;
 
     config.setEnabled(false);
@@ -115,7 +121,8 @@ TEST(Test_SellDecision3Config, Test_setEnabled_and_isEnabled) {
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_SellDecision3Config, Test_setLoseIncome_and_getLoseIncome) {
+TEST(Test_SellDecision3Config, Test_setLoseIncome_and_getLoseIncome)
+{
     SellDecision3Config config;
 
     config.setLoseIncome(0.1f);
@@ -125,7 +132,8 @@ TEST(Test_SellDecision3Config, Test_setLoseIncome_and_getLoseIncome) {
     ASSERT_EQ(config.getLoseIncome(), 0.5f);
 }
 
-TEST(Test_SellDecision3Config, Test_setDuration_and_getDuration) {
+TEST(Test_SellDecision3Config, Test_setDuration_and_getDuration)
+{
     SellDecision3Config config;
 
     config.setDuration(1);

@@ -10,11 +10,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_BuyDecision1Config, Test_constructor_and_destructor) {
+TEST(Test_BuyDecision1Config, Test_constructor_and_destructor)
+{
     BuyDecision1Config config;
 }
 
-TEST(Test_BuyDecision1Config, Test_assign) {
+TEST(Test_BuyDecision1Config, Test_assign)
+{
     BuyDecision1Config config;
     BuyDecision1Config config2;
 
@@ -43,7 +45,8 @@ TEST(Test_BuyDecision1Config, Test_assign) {
     ASSERT_EQ(config2.getDuration(),  321);
 }
 
-TEST(Test_BuyDecision1Config, Test_makeDefault) {
+TEST(Test_BuyDecision1Config, Test_makeDefault)
+{
     BuyDecision1Config config;
 
     config.setEnabled(false);
@@ -61,7 +64,8 @@ TEST(Test_BuyDecision1Config, Test_makeDefault) {
     ASSERT_EQ(config.getDuration(),  5);
 }
 
-TEST(Test_BuyDecision1Config, Test_save) {
+TEST(Test_BuyDecision1Config, Test_save)
+{
     BuyDecision1Config config;
 
     config.setEnabled(false);
@@ -81,7 +85,8 @@ TEST(Test_BuyDecision1Config, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_BuyDecision1Config, Test_load) {
+TEST(Test_BuyDecision1Config, Test_load)
+{
     BuyDecision1Config config;
 
     config.setEnabled(false);
@@ -105,7 +110,8 @@ TEST(Test_BuyDecision1Config, Test_load) {
     ASSERT_EQ(config.getDuration(),  321);
 }
 
-TEST(Test_BuyDecision1Config, Test_setEnabled_and_isEnabled) {
+TEST(Test_BuyDecision1Config, Test_setEnabled_and_isEnabled)
+{
     BuyDecision1Config config;
 
     config.setEnabled(false);
@@ -115,7 +121,8 @@ TEST(Test_BuyDecision1Config, Test_setEnabled_and_isEnabled) {
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_BuyDecision1Config, Test_setPriceFall_and_getPriceFall) {
+TEST(Test_BuyDecision1Config, Test_setPriceFall_and_getPriceFall)
+{
     BuyDecision1Config config;
 
     config.setPriceFall(0.1f);
@@ -125,7 +132,8 @@ TEST(Test_BuyDecision1Config, Test_setPriceFall_and_getPriceFall) {
     ASSERT_EQ(config.getPriceFall(), 0.5f);
 }
 
-TEST(Test_BuyDecision1Config, Test_setDuration_and_getDuration) {
+TEST(Test_BuyDecision1Config, Test_setDuration_and_getDuration)
+{
     BuyDecision1Config config;
 
     config.setDuration(100);

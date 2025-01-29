@@ -11,18 +11,21 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor) {
+TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
+{
     SellDecision3ConfigWidget configWidget;
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_setSellDecision3Config) {
+TEST(Test_SellDecision3ConfigWidget, Test_setSellDecision3Config)
+{
     SellDecision3ConfigWidget configWidget;
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
     configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig) {
+TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
+{
     SellDecision3ConfigWidget configWidget;
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
@@ -53,7 +56,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig) {
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           7);
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
+TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+{
     SellDecision3ConfigWidget configWidget;
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
@@ -74,7 +78,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) 
     ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged) {
+TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
+{
     SellDecision3ConfigWidget configWidget;
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
@@ -91,7 +96,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
     configWidget.ui->loseIncomeDoubleSpinBox->setValue(3.0f);
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged) {
+TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
+{
     SellDecision3ConfigWidget configWidget;
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;

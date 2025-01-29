@@ -11,18 +11,21 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision2ConfigWidget, Test_constructor_and_destructor) {
+TEST(Test_SellDecision2ConfigWidget, Test_constructor_and_destructor)
+{
     SellDecision2ConfigWidget configWidget;
 }
 
-TEST(Test_SellDecision2ConfigWidget, Test_setSellDecision2Config) {
+TEST(Test_SellDecision2ConfigWidget, Test_setSellDecision2Config)
+{
     SellDecision2ConfigWidget configWidget;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
     configWidget.setSellDecision2Config(&sellDecision2ConfigMock);
 }
 
-TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig) {
+TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
+{
     SellDecision2ConfigWidget configWidget;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
@@ -53,7 +56,8 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig) {
     ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  6.3f, 0.01f);
 }
 
-TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
+TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+{
     SellDecision2ConfigWidget configWidget;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
@@ -74,7 +78,8 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) 
     ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(),  false);
 }
 
-TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged) {
+TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
+{
     SellDecision2ConfigWidget configWidget;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
@@ -91,7 +96,8 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
     configWidget.ui->incomeAboveDoubleSpinBox->setValue(3.0f);
 }
 
-TEST(Test_SellDecision2ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged) {
+TEST(Test_SellDecision2ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
+{
     SellDecision2ConfigWidget configWidget;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;

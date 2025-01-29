@@ -11,18 +11,21 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision1ConfigWidget, Test_constructor_and_destructor) {
+TEST(Test_SellDecision1ConfigWidget, Test_constructor_and_destructor)
+{
     SellDecision1ConfigWidget configWidget;
 }
 
-TEST(Test_SellDecision1ConfigWidget, Test_setSellDecision1Config) {
+TEST(Test_SellDecision1ConfigWidget, Test_setSellDecision1Config)
+{
     SellDecision1ConfigWidget configWidget;
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
     configWidget.setSellDecision1Config(&sellDecision1ConfigMock);
 }
 
-TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig) {
+TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
+{
     SellDecision1ConfigWidget configWidget;
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
@@ -48,7 +51,8 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig) {
     ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.01f);
 }
 
-TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
+TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+{
     SellDecision1ConfigWidget configWidget;
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
@@ -67,7 +71,8 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) 
     ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isEnabled(), false);
 }
 
-TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged) {
+TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
+{
     SellDecision1ConfigWidget configWidget;
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;

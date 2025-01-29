@@ -11,18 +11,21 @@ using ::testing::Return;
 
 
 
-TEST(Test_BuyDecision3ConfigWidget, Test_constructor_and_destructor) {
+TEST(Test_BuyDecision3ConfigWidget, Test_constructor_and_destructor)
+{
     BuyDecision3ConfigWidget configWidget;
 }
 
-TEST(Test_BuyDecision3ConfigWidget, Test_setBuyDecision3Config) {
+TEST(Test_BuyDecision3ConfigWidget, Test_setBuyDecision3Config)
+{
     BuyDecision3ConfigWidget configWidget;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
     configWidget.setBuyDecision3Config(&buyDecision3ConfigMock);
 }
 
-TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig) {
+TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
+{
     BuyDecision3ConfigWidget configWidget;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
@@ -53,7 +56,8 @@ TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig) {
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          2);
 }
 
-TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
+TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
+{
     BuyDecision3ConfigWidget configWidget;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
@@ -74,7 +78,8 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged) {
     ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
 }
 
-TEST(Test_BuyDecision3ConfigWidget, Test_on_priceRiseDoubleSpinBox_valueChanged) {
+TEST(Test_BuyDecision3ConfigWidget, Test_on_priceRiseDoubleSpinBox_valueChanged)
+{
     BuyDecision3ConfigWidget configWidget;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
@@ -91,7 +96,8 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_priceRiseDoubleSpinBox_valueChanged)
     configWidget.ui->priceRiseDoubleSpinBox->setValue(3.0f);
 }
 
-TEST(Test_BuyDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged) {
+TEST(Test_BuyDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
+{
     BuyDecision3ConfigWidget configWidget;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;

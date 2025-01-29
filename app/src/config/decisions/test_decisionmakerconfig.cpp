@@ -16,7 +16,8 @@ using ::testing::Return;
 
 
 
-TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor) {
+TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -34,7 +35,8 @@ TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor) {
     );
 }
 
-TEST(Test_DecisionMakerConfig, Test_assign) {
+TEST(Test_DecisionMakerConfig, Test_assign)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -77,7 +79,8 @@ TEST(Test_DecisionMakerConfig, Test_assign) {
     config.assign(&config2);
 }
 
-TEST(Test_DecisionMakerConfig, Test_makeDefault) {
+TEST(Test_DecisionMakerConfig, Test_makeDefault)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -104,7 +107,8 @@ TEST(Test_DecisionMakerConfig, Test_makeDefault) {
     config.makeDefault();
 }
 
-TEST(Test_DecisionMakerConfig, Test_save) {
+TEST(Test_DecisionMakerConfig, Test_save)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -133,7 +137,8 @@ TEST(Test_DecisionMakerConfig, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_DecisionMakerConfig, Test_load) {
+TEST(Test_DecisionMakerConfig, Test_load)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -162,7 +167,8 @@ TEST(Test_DecisionMakerConfig, Test_load) {
     config.load(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_DecisionMakerConfig, Test_getBuyDecision1Config) {
+TEST(Test_DecisionMakerConfig, Test_getBuyDecision1Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -182,7 +188,8 @@ TEST(Test_DecisionMakerConfig, Test_getBuyDecision1Config) {
     ASSERT_EQ(config.getBuyDecision1Config(), &buyDecision1ConfigMock);
 }
 
-TEST(Test_DecisionMakerConfig, Test_getBuyDecision2Config) {
+TEST(Test_DecisionMakerConfig, Test_getBuyDecision2Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -202,7 +209,8 @@ TEST(Test_DecisionMakerConfig, Test_getBuyDecision2Config) {
     ASSERT_EQ(config.getBuyDecision2Config(), &buyDecision2ConfigMock);
 }
 
-TEST(Test_DecisionMakerConfig, Test_getBuyDecision3Config) {
+TEST(Test_DecisionMakerConfig, Test_getBuyDecision3Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -222,7 +230,8 @@ TEST(Test_DecisionMakerConfig, Test_getBuyDecision3Config) {
     ASSERT_EQ(config.getBuyDecision3Config(), &buyDecision3ConfigMock);
 }
 
-TEST(Test_DecisionMakerConfig, Test_getSellDecision1Config) {
+TEST(Test_DecisionMakerConfig, Test_getSellDecision1Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -242,7 +251,8 @@ TEST(Test_DecisionMakerConfig, Test_getSellDecision1Config) {
     ASSERT_EQ(config.getSellDecision1Config(), &sellDecision1ConfigMock);
 }
 
-TEST(Test_DecisionMakerConfig, Test_getSellDecision2Config) {
+TEST(Test_DecisionMakerConfig, Test_getSellDecision2Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -262,7 +272,8 @@ TEST(Test_DecisionMakerConfig, Test_getSellDecision2Config) {
     ASSERT_EQ(config.getSellDecision2Config(), &sellDecision2ConfigMock);
 }
 
-TEST(Test_DecisionMakerConfig, Test_getSellDecision3Config) {
+TEST(Test_DecisionMakerConfig, Test_getSellDecision3Config)
+{
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;

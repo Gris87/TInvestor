@@ -2,6 +2,6 @@
 
 
 
-TEST(Test_SettingsDialog, TestName) {
-    ASSERT_EQ(1, 1);
+TEST(Test_SettingsDialog, Test_constructor_and_destructor)
+{
 }

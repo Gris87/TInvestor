@@ -10,11 +10,13 @@ using ::testing::Return;
 
 
 
-TEST(Test_SellDecision2Config, Test_constructor_and_destructor) {
+TEST(Test_SellDecision2Config, Test_constructor_and_destructor)
+{
     SellDecision2Config config;
 }
 
-TEST(Test_SellDecision2Config, Test_assign) {
+TEST(Test_SellDecision2Config, Test_assign)
+{
     SellDecision2Config config;
     SellDecision2Config config2;
 
@@ -43,7 +45,8 @@ TEST(Test_SellDecision2Config, Test_assign) {
     ASSERT_EQ(config2.getLoseIncome(),  4.2f);
 }
 
-TEST(Test_SellDecision2Config, Test_makeDefault) {
+TEST(Test_SellDecision2Config, Test_makeDefault)
+{
     SellDecision2Config config;
 
     config.setEnabled(false);
@@ -61,7 +64,8 @@ TEST(Test_SellDecision2Config, Test_makeDefault) {
     ASSERT_EQ(config.getLoseIncome(),  0.1f);
 }
 
-TEST(Test_SellDecision2Config, Test_save) {
+TEST(Test_SellDecision2Config, Test_save)
+{
     SellDecision2Config config;
 
     config.setEnabled(false);
@@ -81,7 +85,8 @@ TEST(Test_SellDecision2Config, Test_save) {
     config.save(&settingsEditorMock, "BLAH");
 }
 
-TEST(Test_SellDecision2Config, Test_load) {
+TEST(Test_SellDecision2Config, Test_load)
+{
     SellDecision2Config config;
 
     config.setEnabled(false);
@@ -105,7 +110,8 @@ TEST(Test_SellDecision2Config, Test_load) {
     ASSERT_EQ(config.getLoseIncome(),  8.9f);
 }
 
-TEST(Test_SellDecision2Config, Test_setEnabled_and_isEnabled) {
+TEST(Test_SellDecision2Config, Test_setEnabled_and_isEnabled)
+{
     SellDecision2Config config;
 
     config.setEnabled(false);
@@ -115,7 +121,8 @@ TEST(Test_SellDecision2Config, Test_setEnabled_and_isEnabled) {
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_SellDecision2Config, Test_setIncomeAbove_and_getIncomeAbove) {
+TEST(Test_SellDecision2Config, Test_setIncomeAbove_and_getIncomeAbove)
+{
     SellDecision2Config config;
 
     config.setIncomeAbove(0.1f);
@@ -125,7 +132,8 @@ TEST(Test_SellDecision2Config, Test_setIncomeAbove_and_getIncomeAbove) {
     ASSERT_EQ(config.getIncomeAbove(), 0.5f);
 }
 
-TEST(Test_SellDecision2Config, Test_setLoseIncome_and_getLoseIncome) {
+TEST(Test_SellDecision2Config, Test_setLoseIncome_and_getLoseIncome)
+{
     SellDecision2Config config;
 
     config.setLoseIncome(0.1f);
