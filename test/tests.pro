@@ -50,7 +50,7 @@ SOURCES += \
     src/config/decisions/buy/test_buydecision2configwidgetfactory.cpp \
     src/config/decisions/buy/test_buydecision3config.cpp \
     src/config/decisions/buy/test_buydecision3configwidget.cpp \
-    src/config/decisions/sell/test_selldecision3configwidgetfactory.cpp \
+    src/config/decisions/buy/test_buydecision3configwidgetfactory.cpp \
     src/config/decisions/sell/test_selldecision1config.cpp \
     src/config/decisions/sell/test_selldecision1configwidget.cpp \
     src/config/decisions/sell/test_selldecision1configwidgetfactory.cpp \
@@ -76,6 +76,7 @@ HEADERS += \
     src/config/decisions/buy/ibuydecision3config_mock.h \
     src/config/decisions/buy/ibuydecision3configwidget_mock.h \
     src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h \
+    src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision1configwidget_mock.h \
     src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h \
@@ -85,9 +86,5 @@ HEADERS += \
     src/config/decisions/sell/iselldecision3config_mock.h \
     src/config/decisions/sell/iselldecision3configwidget_mock.h \
     src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h \
-    src/config/decisions/idecisionmakerconfig_mock.h \
-    src/config/decisions/sell/iselldecision1config_mock.h \
-    src/config/decisions/sell/iselldecision2config_mock.h \
-    src/config/decisions/sell/iselldecision3config_mock.h \
     src/config/iconfig_mock.h \
     src/config/isettingseditor_mock.h
