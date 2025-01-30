@@ -2,9 +2,7 @@
 
 
 
-#include <QWidget>
-
-#include "src/config/decisions/sell/iselldecision2config.h"
+#include "src/config/decisions/sell/iselldecision2configwidget.h"
 
 
 
@@ -14,7 +12,7 @@ class SellDecision2ConfigWidget;
 
 
 
-class SellDecision2ConfigWidget : public QWidget
+class SellDecision2ConfigWidget : public ISellDecision2ConfigWidget
 {
     Q_OBJECT
 
@@ -25,8 +23,8 @@ public:
     SellDecision2ConfigWidget(const SellDecision2ConfigWidget &another) = delete;
     SellDecision2ConfigWidget& operator=(const SellDecision2ConfigWidget &another) = delete;
 
-    void setSellDecision2Config(ISellDecision2Config *config);
-    void updateUiFromConfig();
+    void setSellDecision2Config(ISellDecision2Config *config) override;
+    void updateUiFromConfig() override;
 
     Ui::SellDecision2ConfigWidget *ui;
 

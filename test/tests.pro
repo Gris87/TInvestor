@@ -47,14 +47,19 @@ SOURCES += \
     src/config/decisions/buy/test_buydecision1configwidgetfactory.cpp \
     src/config/decisions/buy/test_buydecision2config.cpp \
     src/config/decisions/buy/test_buydecision2configwidget.cpp \
+    src/config/decisions/buy/test_buydecision2configwidgetfactory.cpp \
     src/config/decisions/buy/test_buydecision3config.cpp \
     src/config/decisions/buy/test_buydecision3configwidget.cpp \
+    src/config/decisions/sell/test_selldecision3configwidgetfactory.cpp \
     src/config/decisions/sell/test_selldecision1config.cpp \
     src/config/decisions/sell/test_selldecision1configwidget.cpp \
+    src/config/decisions/sell/test_selldecision1configwidgetfactory.cpp \
     src/config/decisions/sell/test_selldecision2config.cpp \
     src/config/decisions/sell/test_selldecision2configwidget.cpp \
+    src/config/decisions/sell/test_selldecision2configwidgetfactory.cpp \
     src/config/decisions/sell/test_selldecision3config.cpp \
     src/config/decisions/sell/test_selldecision3configwidget.cpp \
+    src/config/decisions/sell/test_selldecision3configwidgetfactory.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/decisions/test_decisionmakerconfigwidget.cpp \
     src/config/test_config.cpp \
@@ -66,7 +71,20 @@ HEADERS += \
     src/config/decisions/buy/ibuydecision1configwidget_mock.h \
     src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/ibuydecision2config_mock.h \
+    src/config/decisions/buy/ibuydecision2configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h \
     src/config/decisions/buy/ibuydecision3config_mock.h \
+    src/config/decisions/buy/ibuydecision3configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h \
+    src/config/decisions/sell/iselldecision1config_mock.h \
+    src/config/decisions/sell/iselldecision1configwidget_mock.h \
+    src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h \
+    src/config/decisions/sell/iselldecision2config_mock.h \
+    src/config/decisions/sell/iselldecision2configwidget_mock.h \
+    src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h \
+    src/config/decisions/sell/iselldecision3config_mock.h \
+    src/config/decisions/sell/iselldecision3configwidget_mock.h \
+    src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision2config_mock.h \

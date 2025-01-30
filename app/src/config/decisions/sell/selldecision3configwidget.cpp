@@ -6,7 +6,7 @@
 
 
 SellDecision3ConfigWidget::SellDecision3ConfigWidget(QWidget *parent) :
-    QWidget(parent),
+    ISellDecision3ConfigWidget(parent),
     ui(new Ui::SellDecision3ConfigWidget)
 {
     qDebug() << "Create SellDecision3ConfigWidget";

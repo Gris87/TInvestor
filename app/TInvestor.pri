@@ -10,16 +10,21 @@ SOURCES += \
     src/config/decisions/buy/buydecision1configwidgetfactory.cpp \
     src/config/decisions/buy/buydecision2config.cpp \
     src/config/decisions/buy/buydecision2configwidget.cpp \
+    src/config/decisions/buy/buydecision2configwidgetfactory.cpp \
     src/config/decisions/buy/buydecision3config.cpp \
     src/config/decisions/buy/buydecision3configwidget.cpp \
+    src/config/decisions/buy/buydecision3configwidgetfactory.cpp \
     src/config/decisions/decisionmakerconfig.cpp \
     src/config/decisions/decisionmakerconfigwidget.cpp \
     src/config/decisions/sell/selldecision1config.cpp \
     src/config/decisions/sell/selldecision1configwidget.cpp \
+    src/config/decisions/sell/selldecision1configwidgetfactory.cpp \
     src/config/decisions/sell/selldecision2config.cpp \
     src/config/decisions/sell/selldecision2configwidget.cpp \
+    src/config/decisions/sell/selldecision2configwidgetfactory.cpp \
     src/config/decisions/sell/selldecision3config.cpp \
     src/config/decisions/sell/selldecision3configwidget.cpp \
+    src/config/decisions/sell/selldecision3configwidgetfactory.cpp \
     src/config/settingsdialog.cpp \
     src/config/settingseditor.cpp \
     src/db/stocks/stocksdatabase.cpp \
@@ -36,25 +41,40 @@ HEADERS += \
     src/config/decisions/buy/buydecision1configwidgetfactory.h \
     src/config/decisions/buy/buydecision2config.h \
     src/config/decisions/buy/buydecision2configwidget.h \
+    src/config/decisions/buy/buydecision2configwidgetfactory.h \
     src/config/decisions/buy/buydecision3config.h \
     src/config/decisions/buy/buydecision3configwidget.h \
+    src/config/decisions/buy/buydecision3configwidgetfactory.h \
     src/config/decisions/buy/ibuydecision1config.h \
     src/config/decisions/buy/ibuydecision1configwidget.h \
     src/config/decisions/buy/ibuydecision1configwidgetfactory.h \
     src/config/decisions/buy/ibuydecision2config.h \
+    src/config/decisions/buy/ibuydecision2configwidget.h \
+    src/config/decisions/buy/ibuydecision2configwidgetfactory.h \
     src/config/decisions/buy/ibuydecision3config.h \
+    src/config/decisions/buy/ibuydecision3configwidget.h \
+    src/config/decisions/buy/ibuydecision3configwidgetfactory.h \
     src/config/decisions/decisionmakerconfig.h \
     src/config/decisions/decisionmakerconfigwidget.h \
     src/config/decisions/idecisionmakerconfig.h \
     src/config/decisions/sell/iselldecision1config.h \
+    src/config/decisions/sell/iselldecision1configwidget.h \
+    src/config/decisions/sell/iselldecision1configwidgetfactory.h \
     src/config/decisions/sell/iselldecision2config.h \
+    src/config/decisions/sell/iselldecision2configwidget.h \
+    src/config/decisions/sell/iselldecision2configwidgetfactory.h \
     src/config/decisions/sell/iselldecision3config.h \
+    src/config/decisions/sell/iselldecision3configwidget.h \
+    src/config/decisions/sell/iselldecision3configwidgetfactory.h \
     src/config/decisions/sell/selldecision1config.h \
     src/config/decisions/sell/selldecision1configwidget.h \
+    src/config/decisions/sell/selldecision1configwidgetfactory.h \
     src/config/decisions/sell/selldecision2config.h \
     src/config/decisions/sell/selldecision2configwidget.h \
+    src/config/decisions/sell/selldecision2configwidgetfactory.h \
     src/config/decisions/sell/selldecision3config.h \
     src/config/decisions/sell/selldecision3configwidget.h \
+    src/config/decisions/sell/selldecision3configwidgetfactory.h \
     src/config/iconfig.h \
     src/config/isettingseditor.h \
     src/config/settingsdialog.h \
