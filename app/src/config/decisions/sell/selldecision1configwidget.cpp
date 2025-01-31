@@ -5,9 +5,10 @@
 
 
 
-SellDecision1ConfigWidget::SellDecision1ConfigWidget(QWidget *parent) :
+SellDecision1ConfigWidget::SellDecision1ConfigWidget(ISellDecision1Config *config, QWidget *parent) :
     ISellDecision1ConfigWidget(parent),
-    ui(new Ui::SellDecision1ConfigWidget)
+    ui(new Ui::SellDecision1ConfigWidget),
+    mConfig(config)
 {
     qDebug() << "Create SellDecision1ConfigWidget";
 
@@ -19,11 +20,6 @@ SellDecision1ConfigWidget::~SellDecision1ConfigWidget()
     qDebug() << "Destroy SellDecision1ConfigWidget";
 
     delete ui;
-}
-
-void SellDecision1ConfigWidget::setSellDecision1Config(ISellDecision1Config *config)
-{
-    mConfig = config;
 }
 
 void SellDecision1ConfigWidget::updateUiFromConfig()

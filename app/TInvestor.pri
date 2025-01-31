@@ -16,6 +16,7 @@ SOURCES += \
     src/config/decisions/buy/buydecision3configwidgetfactory.cpp \
     src/config/decisions/decisionmakerconfig.cpp \
     src/config/decisions/decisionmakerconfigwidget.cpp \
+    src/config/decisions/decisionmakerconfigwidgetfactory.cpp \
     src/config/decisions/sell/selldecision1config.cpp \
     src/config/decisions/sell/selldecision1configwidget.cpp \
     src/config/decisions/sell/selldecision1configwidgetfactory.cpp \
@@ -56,7 +57,10 @@ HEADERS += \
     src/config/decisions/buy/ibuydecision3configwidgetfactory.h \
     src/config/decisions/decisionmakerconfig.h \
     src/config/decisions/decisionmakerconfigwidget.h \
+    src/config/decisions/decisionmakerconfigwidgetfactory.h \
     src/config/decisions/idecisionmakerconfig.h \
+    src/config/decisions/idecisionmakerconfigwidget.h \
+    src/config/decisions/idecisionmakerconfigwidgetfactory.h \
     src/config/decisions/sell/iselldecision1config.h \
     src/config/decisions/sell/iselldecision1configwidget.h \
     src/config/decisions/sell/iselldecision1configwidgetfactory.h \

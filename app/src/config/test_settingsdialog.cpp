@@ -21,10 +21,11 @@
 
 
 using ::testing::StrictMock;
+using ::testing::NotNull;
 using ::testing::Return;
 
 
-
+/*
 class Test_SettingsDialog : public ::testing::Test
 {
 protected:
@@ -60,8 +61,6 @@ protected:
         EXPECT_CALL(*autoPilotConfigMock, getSellDecision1Config()).WillOnce(Return(autoPilotSellDecision1ConfigMock));
         EXPECT_CALL(*autoPilotConfigMock, getSellDecision2Config()).WillOnce(Return(autoPilotSellDecision2ConfigMock));
         EXPECT_CALL(*autoPilotConfigMock, getSellDecision3Config()).WillOnce(Return(autoPilotSellDecision3ConfigMock));
-
-        dialog = new SettingsDialog(configMock);
     }
 
     void TearDown()
@@ -101,6 +100,7 @@ protected:
     StrictMock<SellDecision2ConfigMock> *autoPilotSellDecision2ConfigMock;
     StrictMock<SellDecision3ConfigMock> *autoPilotSellDecision3ConfigMock;
 };
+*/
 
 
 /*

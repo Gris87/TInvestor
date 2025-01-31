@@ -7,29 +7,23 @@
 
 
 using ::testing::StrictMock;
+using ::testing::NotNull;
 using ::testing::Return;
 
 
 
 TEST(Test_SellDecision1ConfigWidget, Test_constructor_and_destructor)
 {
-    SellDecision1ConfigWidget configWidget;
-}
-
-TEST(Test_SellDecision1ConfigWidget, Test_setSellDecision1Config)
-{
-    SellDecision1ConfigWidget configWidget;
-
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    configWidget.setSellDecision1Config(&sellDecision1ConfigMock);
+
+    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 }
 
 TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 {
-    SellDecision1ConfigWidget configWidget;
-
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    configWidget.setSellDecision1Config(&sellDecision1ConfigMock);
+
+    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
@@ -53,10 +47,9 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    SellDecision1ConfigWidget configWidget;
-
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    configWidget.setSellDecision1Config(&sellDecision1ConfigMock);
+
+    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -73,10 +66,9 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
 {
-    SellDecision1ConfigWidget configWidget;
-
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    configWidget.setSellDecision1Config(&sellDecision1ConfigMock);
+
+    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->setValue(1.0f);

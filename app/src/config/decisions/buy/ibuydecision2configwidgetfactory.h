@@ -3,6 +3,7 @@
 
 
 #include "src/config/decisions/buy/ibuydecision2configwidget.h"
+#include "src/config/decisions/buy/ibuydecision2config.h"
 
 
 
@@ -15,5 +16,5 @@ public:
     IBuyDecision2ConfigWidgetFactory(const IBuyDecision2ConfigWidgetFactory &another) = delete;
     IBuyDecision2ConfigWidgetFactory& operator=(const IBuyDecision2ConfigWidgetFactory &another) = delete;
 
-    virtual IBuyDecision2ConfigWidget* newInstance(QWidget *parent) = 0;
+    virtual IBuyDecision2ConfigWidget* newInstance(IBuyDecision2Config *config, QWidget *parent) = 0;
 };

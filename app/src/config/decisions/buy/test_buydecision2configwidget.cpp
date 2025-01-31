@@ -7,29 +7,23 @@
 
 
 using ::testing::StrictMock;
+using ::testing::NotNull;
 using ::testing::Return;
 
 
 
 TEST(Test_BuyDecision2ConfigWidget, Test_constructor_and_destructor)
 {
-    BuyDecision2ConfigWidget configWidget;
-}
-
-TEST(Test_BuyDecision2ConfigWidget, Test_setBuyDecision2Config)
-{
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 }
 
 TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 {
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->priceDiffDoubleSpinBox->blockSignals(true);
@@ -63,10 +57,9 @@ TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -87,10 +80,9 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 {
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->priceDiffDoubleSpinBox->blockSignals(true);
     configWidget.ui->priceDiffDoubleSpinBox->setValue(1.0f);
@@ -105,10 +97,9 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 {
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->amountOfTimesSpinBox->blockSignals(true);
     configWidget.ui->amountOfTimesSpinBox->setValue(1);
@@ -123,10 +114,9 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
-    BuyDecision2ConfigWidget configWidget;
-
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
-    configWidget.setBuyDecision2Config(&buyDecision2ConfigMock);
+
+    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->durationSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->setValue(1);

@@ -10,7 +10,17 @@ const int autoPilotTabIndex  = 2;
 
 
 
-SettingsDialog::SettingsDialog(IConfig *config, QWidget *parent) :
+SettingsDialog::SettingsDialog(
+    IConfig *config,
+    IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory *buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
+    QWidget *parent
+) :
     QDialog(parent),
     ui(new Ui::SettingsDialog),
     mConfig(config)
@@ -19,8 +29,29 @@ SettingsDialog::SettingsDialog(IConfig *config, QWidget *parent) :
 
     ui->setupUi(this);
 
-    ui->simulatorConfigWidget->setDecisionMakerConfig(mConfig->getSimulatorConfig());
-    ui->autoPilotConfigWidget->setDecisionMakerConfig(mConfig->getAutoPilotConfig());
+    mSimulatorConfigWidget = decisionMakerConfigWidgetFactory->newInstance(
+        mConfig->getSimulatorConfig(),
+        buyDecision1ConfigWidgetFactory,
+        buyDecision2ConfigWidgetFactory,
+        buyDecision3ConfigWidgetFactory,
+        sellDecision1ConfigWidgetFactory,
+        sellDecision2ConfigWidgetFactory,
+        sellDecision3ConfigWidgetFactory,
+        ui->simulationTab
+    );
+    mAutoPilotConfigWidget = decisionMakerConfigWidgetFactory->newInstance(
+        mConfig->getAutoPilotConfig(),
+        buyDecision1ConfigWidgetFactory,
+        buyDecision2ConfigWidgetFactory,
+        buyDecision3ConfigWidgetFactory,
+        sellDecision1ConfigWidgetFactory,
+        sellDecision2ConfigWidgetFactory,
+        sellDecision3ConfigWidgetFactory,
+        ui->autoPilotTab
+    );
+
+    ui->layoutForSimulatorConfigWidget->addWidget(mSimulatorConfigWidget);
+    ui->layoutForAutoPilotConfigWidget->addWidget(mAutoPilotConfigWidget);
 
     updateUiFromConfig();
 }
@@ -57,8 +88,8 @@ void SettingsDialog::updateUiFromConfig()
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig->isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
 
-    ui->simulatorConfigWidget->updateUiFromConfig();
-    ui->autoPilotConfigWidget->updateUiFromConfig();
+    mSimulatorConfigWidget->updateUiFromConfig();
+    mAutoPilotConfigWidget->updateUiFromConfig();
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)

@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "src/config/iconfig.h"
+#include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/isettingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/main/trayicon.h"
@@ -32,6 +33,13 @@ public:
     MainWindow(
         IConfig *сonfig,
         IConfig *сonfigForSettingsDialog,
+        IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
+        IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
+        IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
+        IBuyDecision3ConfigWidgetFactory *buyDecision3ConfigWidgetFactory,
+        ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
+        ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
+        ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
         ISettingsEditor *settingsEditor
     );
     ~MainWindow();
@@ -52,16 +60,23 @@ private:
 
     Ui::MainWindow *ui;
 
-    TrayIcon        *mTrayIcon;
-    IConfig         *mConfig;
-    IConfig         *mConfigForSettingsDialog;
-    ISettingsEditor *mSettingsEditor;
-    QTimer          *mCleanupTimer;
-    QTimer          *mRefreshTimer;
-    CleanupThread   *mCleanupThread;
-    RefreshThread   *mRefreshThread;
-    StocksDatabase  *mStocksDatabase;
-    QList<Stock>    mStocks;
+    TrayIcon                          *mTrayIcon;
+    IConfig                           *mConfig;
+    IConfig                           *mConfigForSettingsDialog;
+    IDecisionMakerConfigWidgetFactory *mDecisionMakerConfigWidgetFactory;
+    IBuyDecision1ConfigWidgetFactory  *mBuyDecision1ConfigWidgetFactory;
+    IBuyDecision2ConfigWidgetFactory  *mBuyDecision2ConfigWidgetFactory;
+    IBuyDecision3ConfigWidgetFactory  *mBuyDecision3ConfigWidgetFactory;
+    ISellDecision1ConfigWidgetFactory *mSellDecision1ConfigWidgetFactory;
+    ISellDecision2ConfigWidgetFactory *mSellDecision2ConfigWidgetFactory;
+    ISellDecision3ConfigWidgetFactory *mSellDecision3ConfigWidgetFactory;
+    ISettingsEditor                   *mSettingsEditor;
+    QTimer                            *mCleanupTimer;
+    QTimer                            *mRefreshTimer;
+    CleanupThread                     *mCleanupThread;
+    RefreshThread                     *mRefreshThread;
+    StocksDatabase                    *mStocksDatabase;
+    QList<Stock>                      mStocks;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

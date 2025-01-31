@@ -7,12 +7,19 @@
 
 #include "src/config/config.h"
 #include "src/config/decisions/decisionmakerconfig.h"
+#include "src/config/decisions/decisionmakerconfigwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision1config.h"
+#include "src/config/decisions/buy/buydecision1configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision2config.h"
+#include "src/config/decisions/buy/buydecision2configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision3config.h"
+#include "src/config/decisions/buy/buydecision3configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision1config.h"
+#include "src/config/decisions/sell/selldecision1configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision2config.h"
+#include "src/config/decisions/sell/selldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config.h"
+#include "src/config/decisions/sell/selldecision3configwidgetfactory.h"
 #include "src/config/settingseditor.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
@@ -126,9 +133,28 @@ int main(int argc, char *argv[])
     Config сonfig(&simulatorConfig, &autoPilotConfig);
     Config сonfigForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
 
+    DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
+    BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
+    BuyDecision2ConfigWidgetFactory  buyDecision2ConfigWidgetFactory;
+    BuyDecision3ConfigWidgetFactory  buyDecision3ConfigWidgetFactory;
+    SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
+    SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
+    SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
+
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
-    MainWindow mainWindow(&сonfig, &сonfigForSettingsDialog, &settingsEditor);
+    MainWindow mainWindow(
+        &сonfig,
+        &сonfigForSettingsDialog,
+        &decisionMakerConfigWidgetFactory,
+        &buyDecision1ConfigWidgetFactory,
+        &buyDecision2ConfigWidgetFactory,
+        &buyDecision3ConfigWidgetFactory,
+        &sellDecision1ConfigWidgetFactory,
+        &sellDecision2ConfigWidgetFactory,
+        &sellDecision3ConfigWidgetFactory,
+        &settingsEditor
+    );
     mainWindow.init();
 
     int res = app.exec();

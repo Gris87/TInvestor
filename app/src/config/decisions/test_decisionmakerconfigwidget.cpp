@@ -2,122 +2,146 @@
 
 #include "src/config/decisions/decisionmakerconfigwidget.h"
 #include "src/config/decisions/buy/ibuydecision1config_mock.h"
+#include "src/config/decisions/buy/ibuydecision1configwidget_mock.h"
+#include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/ibuydecision2config_mock.h"
+#include "src/config/decisions/buy/ibuydecision2configwidget_mock.h"
+#include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/ibuydecision3config_mock.h"
+#include "src/config/decisions/buy/ibuydecision3configwidget_mock.h"
+#include "src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/iselldecision1config_mock.h"
+#include "src/config/decisions/sell/iselldecision1configwidget_mock.h"
+#include "src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/iselldecision2config_mock.h"
+#include "src/config/decisions/sell/iselldecision2configwidget_mock.h"
+#include "src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/iselldecision3config_mock.h"
+#include "src/config/decisions/sell/iselldecision3configwidget_mock.h"
+#include "src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
-#include "ui_buydecision1configwidget.h"
-#include "ui_buydecision2configwidget.h"
-#include "ui_buydecision3configwidget.h"
-#include "ui_decisionmakerconfigwidget.h"
-#include "ui_selldecision1configwidget.h"
-#include "ui_selldecision2configwidget.h"
-#include "ui_selldecision3configwidget.h"
 
 
 
 using ::testing::StrictMock;
+using ::testing::NotNull;
 using ::testing::Return;
 
 
 
-TEST(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor)
+class Test_DecisionMakerConfigWidget : public ::testing::Test
 {
-    DecisionMakerConfigWidget configWidget;
+protected:
+    void SetUp()
+    {
+        decisionMakerConfigMock              = new StrictMock<DecisionMakerConfigMock>();
+        buyDecision1ConfigMock               = new StrictMock<BuyDecision1ConfigMock>();
+        buyDecision2ConfigMock               = new StrictMock<BuyDecision2ConfigMock>();
+        buyDecision3ConfigMock               = new StrictMock<BuyDecision3ConfigMock>();
+        sellDecision1ConfigMock              = new StrictMock<SellDecision1ConfigMock>();
+        sellDecision2ConfigMock              = new StrictMock<SellDecision2ConfigMock>();
+        sellDecision3ConfigMock              = new StrictMock<SellDecision3ConfigMock>();
+        buyDecision1ConfigWidgetMock         = new StrictMock<BuyDecision1ConfigWidgetMock>();
+        buyDecision2ConfigWidgetMock         = new StrictMock<BuyDecision2ConfigWidgetMock>();
+        buyDecision3ConfigWidgetMock         = new StrictMock<BuyDecision3ConfigWidgetMock>();
+        sellDecision1ConfigWidgetMock        = new StrictMock<SellDecision1ConfigWidgetMock>();
+        sellDecision2ConfigWidgetMock        = new StrictMock<SellDecision2ConfigWidgetMock>();
+        sellDecision3ConfigWidgetMock        = new StrictMock<SellDecision3ConfigWidgetMock>();
+        buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
+        buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
+        buyDecision3ConfigWidgetFactoryMock  = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
+        sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
+        sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
+        sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision1Config()).WillOnce(Return(buyDecision1ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(buyDecision2ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision3Config()).WillOnce(Return(buyDecision3ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(sellDecision1ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision2Config()).WillOnce(Return(sellDecision2ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
+
+        EXPECT_CALL(*buyDecision1ConfigWidgetFactoryMock, newInstance(buyDecision1ConfigMock, NotNull())).WillOnce(Return(buyDecision1ConfigWidgetMock));
+        EXPECT_CALL(*buyDecision2ConfigWidgetFactoryMock, newInstance(buyDecision2ConfigMock, NotNull())).WillOnce(Return(buyDecision2ConfigWidgetMock));
+        EXPECT_CALL(*buyDecision3ConfigWidgetFactoryMock, newInstance(buyDecision3ConfigMock, NotNull())).WillOnce(Return(buyDecision3ConfigWidgetMock));
+        EXPECT_CALL(*sellDecision1ConfigWidgetFactoryMock, newInstance(sellDecision1ConfigMock, NotNull())).WillOnce(Return(sellDecision1ConfigWidgetMock));
+        EXPECT_CALL(*sellDecision2ConfigWidgetFactoryMock, newInstance(sellDecision2ConfigMock, NotNull())).WillOnce(Return(sellDecision2ConfigWidgetMock));
+        EXPECT_CALL(*sellDecision3ConfigWidgetFactoryMock, newInstance(sellDecision3ConfigMock, NotNull())).WillOnce(Return(sellDecision3ConfigWidgetMock));
+
+        configWidget = new DecisionMakerConfigWidget(
+            decisionMakerConfigMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock
+        );
+    }
+
+    void TearDown()
+    {
+        delete configWidget;
+        delete decisionMakerConfigMock;
+        delete buyDecision1ConfigMock;
+        delete buyDecision2ConfigMock;
+        delete buyDecision3ConfigMock;
+        delete sellDecision1ConfigMock;
+        delete sellDecision2ConfigMock;
+        delete sellDecision3ConfigMock;
+        // It will be deleted by `delete ui;`
+        /*
+        delete buyDecision1ConfigWidgetMock;
+        delete buyDecision2ConfigWidgetMock;
+        delete buyDecision3ConfigWidgetMock;
+        delete sellDecision1ConfigWidgetMock;
+        delete sellDecision2ConfigWidgetMock;
+        delete sellDecision3ConfigWidgetMock;
+        */
+        delete buyDecision1ConfigWidgetFactoryMock;
+        delete buyDecision2ConfigWidgetFactoryMock;
+        delete buyDecision3ConfigWidgetFactoryMock;
+        delete sellDecision1ConfigWidgetFactoryMock;
+        delete sellDecision2ConfigWidgetFactoryMock;
+        delete sellDecision3ConfigWidgetFactoryMock;
+    }
+
+    DecisionMakerConfigWidget                        *configWidget;
+    StrictMock<DecisionMakerConfigMock>              *decisionMakerConfigMock;
+    StrictMock<BuyDecision1ConfigMock>               *buyDecision1ConfigMock;
+    StrictMock<BuyDecision2ConfigMock>               *buyDecision2ConfigMock;
+    StrictMock<BuyDecision3ConfigMock>               *buyDecision3ConfigMock;
+    StrictMock<SellDecision1ConfigMock>              *sellDecision1ConfigMock;
+    StrictMock<SellDecision2ConfigMock>              *sellDecision2ConfigMock;
+    StrictMock<SellDecision3ConfigMock>              *sellDecision3ConfigMock;
+    StrictMock<BuyDecision1ConfigWidgetMock>         *buyDecision1ConfigWidgetMock;
+    StrictMock<BuyDecision2ConfigWidgetMock>         *buyDecision2ConfigWidgetMock;
+    StrictMock<BuyDecision3ConfigWidgetMock>         *buyDecision3ConfigWidgetMock;
+    StrictMock<SellDecision1ConfigWidgetMock>        *sellDecision1ConfigWidgetMock;
+    StrictMock<SellDecision2ConfigWidgetMock>        *sellDecision2ConfigWidgetMock;
+    StrictMock<SellDecision3ConfigWidgetMock>        *sellDecision3ConfigWidgetMock;
+    StrictMock<BuyDecision1ConfigWidgetFactoryMock>  *buyDecision1ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision2ConfigWidgetFactoryMock>  *buyDecision2ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision3ConfigWidgetFactoryMock>  *buyDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision1ConfigWidgetFactoryMock> *sellDecision1ConfigWidgetFactoryMock;
+    StrictMock<SellDecision2ConfigWidgetFactoryMock> *sellDecision2ConfigWidgetFactoryMock;
+    StrictMock<SellDecision3ConfigWidgetFactoryMock> *sellDecision3ConfigWidgetFactoryMock;
+};
+
+
+
+TEST_F(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_DecisionMakerConfigWidget, Test_setDecisionMakerConfig)
+TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
 {
-    DecisionMakerConfigWidget configWidget;
+    EXPECT_CALL(*buyDecision1ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*buyDecision2ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*buyDecision3ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*sellDecision1ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*sellDecision2ConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*sellDecision3ConfigWidgetMock, updateUiFromConfig());
 
-    StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
-    StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
-    StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
-    StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    StrictMock<DecisionMakerConfigMock> decisionMakerConfigMock;
-
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision1Config()).WillOnce(Return(&buyDecision1ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(&buyDecision2ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision3Config()).WillOnce(Return(&buyDecision3ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(&sellDecision1ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision2Config()).WillOnce(Return(&sellDecision2ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision3Config()).WillOnce(Return(&sellDecision3ConfigMock));
-
-    configWidget.setDecisionMakerConfig(&decisionMakerConfigMock);
-}
-
-TEST(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
-{
-    DecisionMakerConfigWidget configWidget;
-
-    StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
-    StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
-    StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
-    StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
-    StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
-    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    StrictMock<DecisionMakerConfigMock> decisionMakerConfigMock;
-
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision1Config()).WillOnce(Return(&buyDecision1ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(&buyDecision2ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getBuyDecision3Config()).WillOnce(Return(&buyDecision3ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(&sellDecision1ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision2Config()).WillOnce(Return(&sellDecision2ConfigMock));
-    EXPECT_CALL(decisionMakerConfigMock, getSellDecision3Config()).WillOnce(Return(&sellDecision3ConfigMock));
-
-    configWidget.setDecisionMakerConfig(&decisionMakerConfigMock);
-
-    configWidget.ui->buyDecision1ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->buyDecision1ConfigWidget->ui->priceFallDoubleSpinBox->blockSignals(true);
-    configWidget.ui->buyDecision1ConfigWidget->ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(buyDecision1ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(2.1f));
-    EXPECT_CALL(buyDecision1ConfigMock, getDuration()).WillOnce(Return(3));
-
-    configWidget.ui->buyDecision2ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->buyDecision2ConfigWidget->ui->priceDiffDoubleSpinBox->blockSignals(true);
-    configWidget.ui->buyDecision2ConfigWidget->ui->amountOfTimesSpinBox->blockSignals(true);
-    configWidget.ui->buyDecision2ConfigWidget->ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(buyDecision2ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(buyDecision2ConfigMock, getPriceDiff()).WillOnce(Return(2.1f));
-    EXPECT_CALL(buyDecision2ConfigMock, getAmountOfTimes()).WillOnce(Return(1));
-    EXPECT_CALL(buyDecision2ConfigMock, getDuration()).WillOnce(Return(3));
-
-    configWidget.ui->buyDecision3ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->buyDecision3ConfigWidget->ui->priceRiseDoubleSpinBox->blockSignals(true);
-    configWidget.ui->buyDecision3ConfigWidget->ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(buyDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(buyDecision3ConfigMock, getPriceRise()).WillOnce(Return(2.1f));
-    EXPECT_CALL(buyDecision3ConfigMock, getDuration()).WillOnce(Return(3));
-
-    configWidget.ui->sellDecision1ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->sellDecision1ConfigWidget->ui->incomeAboveDoubleSpinBox->blockSignals(true);
-
-    EXPECT_CALL(sellDecision1ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision1ConfigMock, getIncomeAbove()).WillOnce(Return(2.1f));
-
-    configWidget.ui->sellDecision2ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->sellDecision2ConfigWidget->ui->incomeAboveDoubleSpinBox->blockSignals(true);
-    configWidget.ui->sellDecision2ConfigWidget->ui->loseIncomeDoubleSpinBox->blockSignals(true);
-
-    EXPECT_CALL(sellDecision2ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision2ConfigMock, getIncomeAbove()).WillOnce(Return(2.1f));
-    EXPECT_CALL(sellDecision2ConfigMock, getLoseIncome()).WillOnce(Return(3.1f));
-
-    configWidget.ui->sellDecision3ConfigWidget->ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->sellDecision3ConfigWidget->ui->loseIncomeDoubleSpinBox->blockSignals(true);
-    configWidget.ui->sellDecision3ConfigWidget->ui->durationSpinBox->blockSignals(true);
-
-    EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(2.1f));
-    EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
-
-    configWidget.updateUiFromConfig();
+    configWidget->updateUiFromConfig();
 }

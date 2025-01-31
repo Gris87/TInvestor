@@ -1,6 +1,13 @@
 #include <gtest/gtest.h>
 
 #include "src/config/decisions/buy/buydecision1configwidgetfactory.h"
+#include "src/config/decisions/buy/ibuydecision1config_mock.h"
+
+
+
+using ::testing::StrictMock;
+using ::testing::NotNull;
+using ::testing::Return;
 
 
 
@@ -13,7 +20,9 @@ TEST(Test_BuyDecision1ConfigWidgetFactory, Test_newInstance)
 {
     BuyDecision1ConfigWidgetFactory factory;
 
-    IBuyDecision1ConfigWidget *widget = factory.newInstance(nullptr);
+    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+
+    IBuyDecision1ConfigWidget *widget = factory.newInstance(&buyDecision1ConfigMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

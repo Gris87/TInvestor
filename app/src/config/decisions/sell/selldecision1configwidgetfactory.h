@@ -15,5 +15,5 @@ public:
     SellDecision1ConfigWidgetFactory(const SellDecision1ConfigWidgetFactory &another) = delete;
     SellDecision1ConfigWidgetFactory& operator=(const SellDecision1ConfigWidgetFactory &another) = delete;
 
-    ISellDecision1ConfigWidget* newInstance(QWidget *parent) override;
+    ISellDecision1ConfigWidget* newInstance(ISellDecision1Config *config, QWidget *parent) override;
 };

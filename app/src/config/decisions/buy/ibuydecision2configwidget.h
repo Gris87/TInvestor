@@ -17,6 +17,5 @@ public:
     IBuyDecision2ConfigWidget(const IBuyDecision2ConfigWidget &another) = delete;
     IBuyDecision2ConfigWidget& operator=(const IBuyDecision2ConfigWidget &another) = delete;
 
-    virtual void setBuyDecision2Config(IBuyDecision2Config *config) = 0;
     virtual void updateUiFromConfig() = 0;
 };

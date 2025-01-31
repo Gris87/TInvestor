@@ -7,29 +7,23 @@
 
 
 using ::testing::StrictMock;
+using ::testing::NotNull;
 using ::testing::Return;
 
 
 
 TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
 {
-    SellDecision3ConfigWidget configWidget;
-}
-
-TEST(Test_SellDecision3ConfigWidget, Test_setSellDecision3Config)
-{
-    SellDecision3ConfigWidget configWidget;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
+
+    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 }
 
 TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 {
-    SellDecision3ConfigWidget configWidget;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
+
+    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
@@ -58,10 +52,9 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    SellDecision3ConfigWidget configWidget;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
+
+    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -80,10 +73,9 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
 {
-    SellDecision3ConfigWidget configWidget;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
+
+    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
     configWidget.ui->loseIncomeDoubleSpinBox->setValue(1.0f);
@@ -98,10 +90,9 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
-    SellDecision3ConfigWidget configWidget;
-
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
-    configWidget.setSellDecision3Config(&sellDecision3ConfigMock);
+
+    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->durationSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->setValue(1);

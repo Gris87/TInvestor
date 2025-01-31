@@ -62,6 +62,7 @@ SOURCES += \
     src/config/decisions/sell/test_selldecision3configwidgetfactory.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/decisions/test_decisionmakerconfigwidget.cpp \
+    src/config/decisions/test_decisionmakerconfigwidgetfactory.cpp \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp \
     src/config/test_settingseditor.cpp
@@ -77,6 +78,8 @@ HEADERS += \
     src/config/decisions/buy/ibuydecision3configwidget_mock.h \
     src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \
+    src/config/decisions/idecisionmakerconfigwidget_mock.h \
+    src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h \
     src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision1configwidget_mock.h \
     src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h \

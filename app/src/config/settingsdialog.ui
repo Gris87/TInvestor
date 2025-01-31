@@ -421,7 +421,11 @@
         </widget>
        </item>
        <item>
-        <widget class="DecisionMakerConfigWidget" name="simulatorConfigWidget" native="true"/>
+        <layout class="QVBoxLayout" name="layoutForSimulatorConfigWidget">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -453,7 +457,11 @@
         </widget>
        </item>
        <item>
-        <widget class="DecisionMakerConfigWidget" name="autoPilotConfigWidget" native="true"/>
+        <layout class="QVBoxLayout" name="layoutForAutoPilotConfigWidget">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -544,14 +552,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>DecisionMakerConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/decisionmakerconfigwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

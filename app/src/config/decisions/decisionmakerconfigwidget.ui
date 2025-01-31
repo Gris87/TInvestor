@@ -27,19 +27,17 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="butGroupBox">
+    <widget class="QGroupBox" name="buyGroupBox">
      <property name="title">
       <string>Buy</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="BuyDecision1ConfigWidget" name="buyDecision1ConfigWidget" native="true"/>
-      </item>
-      <item>
-       <widget class="BuyDecision2ConfigWidget" name="buyDecision2ConfigWidget" native="true"/>
-      </item>
-      <item>
-       <widget class="BuyDecision3ConfigWidget" name="buyDecision3ConfigWidget" native="true"/>
+       <layout class="QVBoxLayout" name="layoutForBuyDecisions">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+       </layout>
       </item>
       <item>
        <spacer name="verticalSpacer">
@@ -64,13 +62,11 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="SellDecision1ConfigWidget" name="sellDecision1ConfigWidget" native="true"/>
-      </item>
-      <item>
-       <widget class="SellDecision2ConfigWidget" name="sellDecision2ConfigWidget" native="true"/>
-      </item>
-      <item>
-       <widget class="SellDecision3ConfigWidget" name="sellDecision3ConfigWidget" native="true"/>
+       <layout class="QVBoxLayout" name="layoutForSellDecisions">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+       </layout>
       </item>
       <item>
        <spacer name="verticalSpacer_2">
@@ -90,44 +86,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>BuyDecision1ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/buy/buydecision1configwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BuyDecision2ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/buy/buydecision2configwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BuyDecision3ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/buy/buydecision3configwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SellDecision1ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/sell/selldecision1configwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SellDecision2ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/sell/selldecision2configwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>SellDecision3ConfigWidget</class>
-   <extends>QWidget</extends>
-   <header>src/config/decisions/sell/selldecision3configwidget.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

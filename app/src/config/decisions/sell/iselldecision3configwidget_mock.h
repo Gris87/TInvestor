@@ -17,6 +17,5 @@ public:
     SellDecision3ConfigWidgetMock(const SellDecision3ConfigWidgetMock &another) = delete;
     SellDecision3ConfigWidgetMock& operator=(const SellDecision3ConfigWidgetMock &another) = delete;
 
-    MOCK_METHOD1(setSellDecision3Config, void(ISellDecision3Config *config));
     MOCK_METHOD0(updateUiFromConfig, void());
 };

@@ -3,6 +3,7 @@
 
 
 #include "src/config/decisions/sell/iselldecision2configwidget.h"
+#include "src/config/decisions/sell/iselldecision2config.h"
 
 
 
@@ -15,5 +16,5 @@ public:
     ISellDecision2ConfigWidgetFactory(const ISellDecision2ConfigWidgetFactory &another) = delete;
     ISellDecision2ConfigWidgetFactory& operator=(const ISellDecision2ConfigWidgetFactory &another) = delete;
 
-    virtual ISellDecision2ConfigWidget* newInstance(QWidget *parent) = 0;
+    virtual ISellDecision2ConfigWidget* newInstance(ISellDecision2Config *config, QWidget *parent) = 0;
 };

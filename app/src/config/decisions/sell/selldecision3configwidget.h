@@ -17,13 +17,12 @@ class SellDecision3ConfigWidget : public ISellDecision3ConfigWidget
     Q_OBJECT
 
 public:
-    explicit SellDecision3ConfigWidget(QWidget *parent = nullptr);
+    explicit SellDecision3ConfigWidget(ISellDecision3Config *config, QWidget *parent = nullptr);
     ~SellDecision3ConfigWidget();
 
     SellDecision3ConfigWidget(const SellDecision3ConfigWidget &another) = delete;
     SellDecision3ConfigWidget& operator=(const SellDecision3ConfigWidget &another) = delete;
 
-    void setSellDecision3Config(ISellDecision3Config *config) override;
     void updateUiFromConfig() override;
 
     Ui::SellDecision3ConfigWidget *ui;

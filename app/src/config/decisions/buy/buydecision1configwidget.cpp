@@ -5,9 +5,10 @@
 
 
 
-BuyDecision1ConfigWidget::BuyDecision1ConfigWidget(QWidget *parent) :
+BuyDecision1ConfigWidget::BuyDecision1ConfigWidget(IBuyDecision1Config *config, QWidget *parent) :
     IBuyDecision1ConfigWidget(parent),
-    ui(new Ui::BuyDecision1ConfigWidget)
+    ui(new Ui::BuyDecision1ConfigWidget),
+    mConfig(config)
 {
     qDebug() << "Create BuyDecision1ConfigWidget";
 
@@ -19,11 +20,6 @@ BuyDecision1ConfigWidget::~BuyDecision1ConfigWidget()
     qDebug() << "Destroy BuyDecision1ConfigWidget";
 
     delete ui;
-}
-
-void BuyDecision1ConfigWidget::setBuyDecision1Config(IBuyDecision1Config *config)
-{
-    mConfig = config;
 }
 
 void BuyDecision1ConfigWidget::updateUiFromConfig()

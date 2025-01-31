@@ -11,12 +11,26 @@
 MainWindow::MainWindow(
     IConfig *сonfig,
     IConfig *сonfigForSettingsDialog,
+    IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory *buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
     ISettingsEditor *settingsEditor
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
     mConfig(сonfig),
     mConfigForSettingsDialog(сonfigForSettingsDialog),
+    mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
+    mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
+    mBuyDecision2ConfigWidgetFactory(buyDecision2ConfigWidgetFactory),
+    mBuyDecision3ConfigWidgetFactory(buyDecision3ConfigWidgetFactory),
+    mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
+    mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
+    mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
     mSettingsEditor(settingsEditor),
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
@@ -154,7 +168,17 @@ void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
 
-    SettingsDialog dialog(mConfigForSettingsDialog, this);
+    SettingsDialog dialog(
+        mConfigForSettingsDialog,
+        mDecisionMakerConfigWidgetFactory,
+        mBuyDecision1ConfigWidgetFactory,
+        mBuyDecision2ConfigWidgetFactory,
+        mBuyDecision3ConfigWidgetFactory,
+        mSellDecision1ConfigWidgetFactory,
+        mSellDecision2ConfigWidgetFactory,
+        mSellDecision3ConfigWidgetFactory,
+        this
+    );
 
     if (dialog.exec())
     {
