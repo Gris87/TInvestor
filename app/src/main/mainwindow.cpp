@@ -179,6 +179,7 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision3ConfigWidgetFactory,
         this
     );
+    dialog.updateUiFromConfig();
 
     if (dialog.exec())
     {

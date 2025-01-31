@@ -38,11 +38,11 @@ public:
     SettingsDialog(const SettingsDialog &another) = delete;
     SettingsDialog& operator=(const SettingsDialog &another) = delete;
 
+    void updateUiFromConfig();
+
     Ui::SettingsDialog *ui;
 
 private:
-    void updateUiFromConfig();
-
     IConfig                    *mConfig;
     IDecisionMakerConfigWidget *mSimulatorConfigWidget;
     IDecisionMakerConfigWidget *mAutoPilotConfigWidget;

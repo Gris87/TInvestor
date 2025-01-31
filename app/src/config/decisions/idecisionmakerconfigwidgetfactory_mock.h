@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/buy/idecisionmakerconfigwidgetfactory.h"
+#include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
 
 #include <gmock/gmock.h>
 

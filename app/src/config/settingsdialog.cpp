@@ -52,8 +52,6 @@ SettingsDialog::SettingsDialog(
 
     ui->layoutForSimulatorConfigWidget->addWidget(mSimulatorConfigWidget);
     ui->layoutForAutoPilotConfigWidget->addWidget(mAutoPilotConfigWidget);
-
-    updateUiFromConfig();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -72,6 +70,9 @@ void SettingsDialog::updateUiFromConfig()
     int amountOfPurchasesPerDay   = mConfig->getAmountOfPurchasesPerDay();
     int amountOfPurchasesPerStock = mConfig->getAmountOfPurchasesPerStock();
 
+    mSimulatorConfigWidget->updateUiFromConfig();
+    mAutoPilotConfigWidget->updateUiFromConfig();
+
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
     ui->refreshTimeoutSpinBox->setValue(mConfig->getRefreshTimeout());
     ui->useScheduleCheckBox->setChecked(mConfig->isUseSchedule());
@@ -87,9 +88,6 @@ void SettingsDialog::updateUiFromConfig()
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig->isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
-
-    mSimulatorConfigWidget->updateUiFromConfig();
-    mAutoPilotConfigWidget->updateUiFromConfig();
 }
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)
@@ -195,6 +193,11 @@ void SettingsDialog::on_amountOfStockPurchaseSpinBox_valueChanged(int value)
 
 void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
 {
+    if (ui->autoPilotConfigCommonCheckBox->isChecked())
+    {
+        return; // Unexpected behaviour
+    }
+
     bool checked = value == Qt::Checked;
 
     mConfig->setSimulatorConfigCommon(checked);
@@ -213,6 +216,11 @@ void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt
 
 void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
 {
+    if (ui->simulatorConfigCommonCheckBox->isChecked())
+    {
+        return; // Unexpected behaviour
+    }
+
     bool checked = value == Qt::Checked;
 
     mConfig->setAutoPilotConfigCommon(checked);

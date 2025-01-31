@@ -1,22 +1,17 @@
 #include <gtest/gtest.h>
 
 #include "src/config/settingsdialog.h"
-#include "src/config/decisions/decisionmakerconfigwidget.h"
-#include "src/config/decisions/buy/ibuydecision1config_mock.h"
-#include "src/config/decisions/buy/ibuydecision2config_mock.h"
-#include "src/config/decisions/buy/ibuydecision3config_mock.h"
-#include "src/config/decisions/sell/iselldecision1config_mock.h"
-#include "src/config/decisions/sell/iselldecision2config_mock.h"
-#include "src/config/decisions/sell/iselldecision3config_mock.h"
+#include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/config/decisions/idecisionmakerconfigwidget_mock.h"
+#include "src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
-#include "ui_buydecision1configwidget.h"
-#include "ui_buydecision2configwidget.h"
-#include "ui_buydecision3configwidget.h"
-#include "ui_decisionmakerconfigwidget.h"
-#include "ui_selldecision1configwidget.h"
-#include "ui_selldecision2configwidget.h"
-#include "ui_selldecision3configwidget.h"
+#include "ui_settingsdialog.h"
 
 
 
@@ -25,42 +20,58 @@ using ::testing::NotNull;
 using ::testing::Return;
 
 
-/*
+
 class Test_SettingsDialog : public ::testing::Test
 {
 protected:
     void SetUp()
     {
-        configMock                       = new StrictMock<ConfigMock>();
-        simulatorConfigMock              = new StrictMock<DecisionMakerConfigMock>();
-        autoPilotConfigMock              = new StrictMock<DecisionMakerConfigMock>();
-        simulatorBuyDecision1ConfigMock  = new StrictMock<BuyDecision1ConfigMock>();
-        simulatorBuyDecision2ConfigMock  = new StrictMock<BuyDecision2ConfigMock>();
-        simulatorBuyDecision3ConfigMock  = new StrictMock<BuyDecision3ConfigMock>();
-        simulatorSellDecision1ConfigMock = new StrictMock<SellDecision1ConfigMock>();
-        simulatorSellDecision2ConfigMock = new StrictMock<SellDecision2ConfigMock>();
-        simulatorSellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
-        autoPilotBuyDecision1ConfigMock  = new StrictMock<BuyDecision1ConfigMock>();
-        autoPilotBuyDecision2ConfigMock  = new StrictMock<BuyDecision2ConfigMock>();
-        autoPilotBuyDecision3ConfigMock  = new StrictMock<BuyDecision3ConfigMock>();
-        autoPilotSellDecision1ConfigMock = new StrictMock<SellDecision1ConfigMock>();
-        autoPilotSellDecision2ConfigMock = new StrictMock<SellDecision2ConfigMock>();
-        autoPilotSellDecision3ConfigMock = new StrictMock<SellDecision3ConfigMock>();
+        configMock                           = new StrictMock<ConfigMock>();
+        simulatorConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
+        autoPilotConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
+        simulatorConfigWidgetMock            = new StrictMock<DecisionMakerConfigWidgetMock>();
+        autoPilotConfigWidgetMock            = new StrictMock<DecisionMakerConfigWidgetMock>();
+        decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
+        buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
+        buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
+        buyDecision3ConfigWidgetFactoryMock  = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
+        sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
+        sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
+        sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
 
         EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
         EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getBuyDecision1Config()).WillOnce(Return(simulatorBuyDecision1ConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getBuyDecision2Config()).WillOnce(Return(simulatorBuyDecision2ConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getBuyDecision3Config()).WillOnce(Return(simulatorBuyDecision3ConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getSellDecision1Config()).WillOnce(Return(simulatorSellDecision1ConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getSellDecision2Config()).WillOnce(Return(simulatorSellDecision2ConfigMock));
-        EXPECT_CALL(*simulatorConfigMock, getSellDecision3Config()).WillOnce(Return(simulatorSellDecision3ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getBuyDecision1Config()).WillOnce(Return(autoPilotBuyDecision1ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getBuyDecision2Config()).WillOnce(Return(autoPilotBuyDecision2ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getBuyDecision3Config()).WillOnce(Return(autoPilotBuyDecision3ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getSellDecision1Config()).WillOnce(Return(autoPilotSellDecision1ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getSellDecision2Config()).WillOnce(Return(autoPilotSellDecision2ConfigMock));
-        EXPECT_CALL(*autoPilotConfigMock, getSellDecision3Config()).WillOnce(Return(autoPilotSellDecision3ConfigMock));
+        EXPECT_CALL(*decisionMakerConfigWidgetFactoryMock, newInstance(
+            simulatorConfigMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock,
+            NotNull()
+        )).WillOnce(Return(simulatorConfigWidgetMock));
+        EXPECT_CALL(*decisionMakerConfigWidgetFactoryMock, newInstance(
+            autoPilotConfigMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock,
+            NotNull()
+        )).WillOnce(Return(autoPilotConfigWidgetMock));
+
+        dialog = new SettingsDialog(
+            configMock,
+            decisionMakerConfigWidgetFactoryMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock
+        );
     }
 
     void TearDown()
@@ -69,46 +80,536 @@ protected:
         delete configMock;
         delete simulatorConfigMock;
         delete autoPilotConfigMock;
-        delete simulatorBuyDecision1ConfigMock;
-        delete simulatorBuyDecision2ConfigMock;
-        delete simulatorBuyDecision3ConfigMock;
-        delete simulatorSellDecision1ConfigMock;
-        delete simulatorSellDecision2ConfigMock;
-        delete simulatorSellDecision3ConfigMock;
-        delete autoPilotBuyDecision1ConfigMock;
-        delete autoPilotBuyDecision2ConfigMock;
-        delete autoPilotBuyDecision3ConfigMock;
-        delete autoPilotSellDecision1ConfigMock;
-        delete autoPilotSellDecision2ConfigMock;
-        delete autoPilotSellDecision3ConfigMock;
+        // It will be deleted by `delete ui;`
+        /*
+        delete simulatorConfigWidgetMock;
+        delete autoPilotConfigWidgetMock;
+        */
+        delete decisionMakerConfigWidgetFactoryMock;
+        delete buyDecision1ConfigWidgetFactoryMock;
+        delete buyDecision2ConfigWidgetFactoryMock;
+        delete buyDecision3ConfigWidgetFactoryMock;
+        delete sellDecision1ConfigWidgetFactoryMock;
+        delete sellDecision2ConfigWidgetFactoryMock;
+        delete sellDecision3ConfigWidgetFactoryMock;
     }
 
-    SettingsDialog                      *dialog;
-    StrictMock<ConfigMock>              *configMock;
-    StrictMock<DecisionMakerConfigMock> *simulatorConfigMock;
-    StrictMock<DecisionMakerConfigMock> *autoPilotConfigMock;
-    StrictMock<BuyDecision1ConfigMock>  *simulatorBuyDecision1ConfigMock;
-    StrictMock<BuyDecision2ConfigMock>  *simulatorBuyDecision2ConfigMock;
-    StrictMock<BuyDecision3ConfigMock>  *simulatorBuyDecision3ConfigMock;
-    StrictMock<SellDecision1ConfigMock> *simulatorSellDecision1ConfigMock;
-    StrictMock<SellDecision2ConfigMock> *simulatorSellDecision2ConfigMock;
-    StrictMock<SellDecision3ConfigMock> *simulatorSellDecision3ConfigMock;
-    StrictMock<BuyDecision1ConfigMock>  *autoPilotBuyDecision1ConfigMock;
-    StrictMock<BuyDecision2ConfigMock>  *autoPilotBuyDecision2ConfigMock;
-    StrictMock<BuyDecision3ConfigMock>  *autoPilotBuyDecision3ConfigMock;
-    StrictMock<SellDecision1ConfigMock> *autoPilotSellDecision1ConfigMock;
-    StrictMock<SellDecision2ConfigMock> *autoPilotSellDecision2ConfigMock;
-    StrictMock<SellDecision3ConfigMock> *autoPilotSellDecision3ConfigMock;
+    SettingsDialog                                   *dialog;
+    StrictMock<ConfigMock>                           *configMock;
+    StrictMock<DecisionMakerConfigMock>              *simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock>              *autoPilotConfigMock;
+    StrictMock<DecisionMakerConfigWidgetMock>        *simulatorConfigWidgetMock;
+    StrictMock<DecisionMakerConfigWidgetMock>        *autoPilotConfigWidgetMock;
+    StrictMock<DecisionMakerConfigWidgetFactoryMock> *decisionMakerConfigWidgetFactoryMock;
+    StrictMock<BuyDecision1ConfigWidgetFactoryMock>  *buyDecision1ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision2ConfigWidgetFactoryMock>  *buyDecision2ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision3ConfigWidgetFactoryMock>  *buyDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision1ConfigWidgetFactoryMock> *sellDecision1ConfigWidgetFactoryMock;
+    StrictMock<SellDecision2ConfigWidgetFactoryMock> *sellDecision2ConfigWidgetFactoryMock;
+    StrictMock<SellDecision3ConfigWidgetFactoryMock> *sellDecision3ConfigWidgetFactoryMock;
 };
-*/
 
 
-/*
+
 TEST_F(Test_SettingsDialog, Test_constructor_and_destructor)
 {
 }
 
 TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 {
+    dialog->ui->autorunCheckBox->blockSignals(true);
+    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
+    dialog->ui->useScheduleCheckBox->blockSignals(true);
+    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
+    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
+    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
+    dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
+    dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+
+    EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
+
+    EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(20));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(5));
+    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.2f));
+    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
+    EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
+
+    dialog->updateUiFromConfig();
+
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
+    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              2);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));
+    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     20);
+    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   5);
+    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.2f, 0.01f);
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     true);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       20000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           36);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  true);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  false);
+
+    EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
+
+    EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(5));
+    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(11));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(20));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(100));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(20));
+    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.1f));
+    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(50000));
+    EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(true));
+
+    dialog->updateUiFromConfig();
+
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                false);
+    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              5);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            false);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(11, 15));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(20, 40));
+    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   false);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     100);
+    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), false);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   20);
+    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.1f, 0.01f);
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     false);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       50000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           12);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  false);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  true);
 }
-*/
+
+TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
+{
+    dialog->ui->autorunCheckBox->blockSignals(true);
+    dialog->ui->autorunCheckBox->setChecked(false);
+    dialog->ui->autorunCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setAutorun(true));
+    dialog->ui->autorunCheckBox->setChecked(true);
+
+    EXPECT_CALL(*configMock, setAutorun(false));
+    dialog->ui->autorunCheckBox->setChecked(false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_refreshTimeoutSpinBox_valueChanged)
+{
+    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
+    dialog->ui->refreshTimeoutSpinBox->setValue(1);
+    dialog->ui->refreshTimeoutSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setRefreshTimeout(2));
+    dialog->ui->refreshTimeoutSpinBox->setValue(2);
+
+    EXPECT_CALL(*configMock, setRefreshTimeout(3));
+    dialog->ui->refreshTimeoutSpinBox->setValue(3);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
+{
+    dialog->ui->useScheduleCheckBox->blockSignals(true);
+    dialog->ui->useScheduleCheckBox->setChecked(false);
+    dialog->ui->useScheduleCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setUseSchedule(true));
+    dialog->ui->useScheduleCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->isEnabled(), true);
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setUseSchedule(false));
+    dialog->ui->useScheduleCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->isEnabled(), false);
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
+{
+    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
+    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 10));
+    dialog->ui->scheduleStartTimeEdit->blockSignals(false);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setScheduleStartHour(11));
+    EXPECT_CALL(*configMock, setScheduleStartMinute(15));
+    dialog->ui->scheduleStartTimeEdit->setTime(QTime(11, 15));
+
+    EXPECT_CALL(*configMock, setScheduleStartHour(10));
+    EXPECT_CALL(*configMock, setScheduleStartMinute(20));
+    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 20));
+
+    EXPECT_CALL(*configMock, setScheduleStartHour(12));
+    EXPECT_CALL(*configMock, setScheduleStartMinute(30));
+    EXPECT_CALL(*configMock, setScheduleEndHour(12));
+    EXPECT_CALL(*configMock, setScheduleEndMinute(30));
+    dialog->ui->scheduleStartTimeEdit->setTime(QTime(12, 30));
+
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(), QTime(12, 30));
+}
+
+TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
+{
+    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
+    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 10));
+    dialog->ui->scheduleStartTimeEdit->blockSignals(false);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setScheduleEndHour(11));
+    EXPECT_CALL(*configMock, setScheduleEndMinute(15));
+    dialog->ui->scheduleEndTimeEdit->setTime(QTime(11, 15));
+
+    EXPECT_CALL(*configMock, setScheduleEndHour(12));
+    EXPECT_CALL(*configMock, setScheduleEndMinute(20));
+    dialog->ui->scheduleEndTimeEdit->setTime(QTime(12, 20));
+
+    EXPECT_CALL(*configMock, setScheduleStartHour(10));
+    EXPECT_CALL(*configMock, setScheduleStartMinute(0));
+    EXPECT_CALL(*configMock, setScheduleEndHour(10));
+    EXPECT_CALL(*configMock, setScheduleEndMinute(0));
+    dialog->ui->scheduleEndTimeEdit->setTime(QTime(10, 0));
+
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(), QTime(10, 0));
+}
+
+TEST_F(Test_SettingsDialog, Test_on_limitPurchasesPerDayCheckBox_checkStateChanged)
+{
+    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
+    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(false);
+    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setLimitPurchasesPerDay(true));
+    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setLimitPurchasesPerDay(false));
+    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_amountOfPurchasesPerDaySpinBox_valueChanged)
+{
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(50);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(20);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(false);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(30));
+    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(30);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(40));
+    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(40);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(10));
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(10));
+    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(10);
+
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(), 10);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_limitPurchasesPerStockCheckBox_checkStateChanged)
+{
+    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
+    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(false);
+    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setLimitPurchasesPerStock(true));
+    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setLimitPurchasesPerStock(false));
+    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_amountOfPurchasesPerStockSpinBox_valueChanged)
+{
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(50);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(20);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(false);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(30));
+    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(30);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(40));
+    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(40);
+
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(60));
+    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(60));
+    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(60);
+
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(), 60);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_commissionDoubleSpinBox_valueChanged)
+{
+    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
+    dialog->ui->commissionDoubleSpinBox->setValue(1);
+    dialog->ui->commissionDoubleSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setCommission(0.2f));
+    dialog->ui->commissionDoubleSpinBox->setValue(0.2f);
+
+    EXPECT_CALL(*configMock, setCommission(0.3f));
+    dialog->ui->commissionDoubleSpinBox->setValue(0.3f);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)
+{
+    dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->limitStockPurchaseCheckBox->setChecked(false);
+    dialog->ui->limitStockPurchaseCheckBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setLimitStockPurchase(true));
+    dialog->ui->limitStockPurchaseCheckBox->setChecked(true);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->isEnabled(), true);
+
+    EXPECT_CALL(*configMock, setLimitStockPurchase(false));
+    dialog->ui->limitStockPurchaseCheckBox->setChecked(false);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->isEnabled(), false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
+{
+    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
+    dialog->ui->amountOfStockPurchaseSpinBox->setValue(1);
+    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setAmountOfStockPurchase(2));
+    dialog->ui->amountOfStockPurchaseSpinBox->setValue(2);
+
+    EXPECT_CALL(*configMock, setAmountOfStockPurchase(3));
+    dialog->ui->amountOfStockPurchaseSpinBox->setValue(3);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged)
+{
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(false));
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+}
+
+TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
+{
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+}
+
+TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged)
+{
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+}
+
+TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
+{
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
+    dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
+
+    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+}
+
+TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)
+{
+    dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
+    dialog->ui->storageMonthLimitSpinBox->setValue(1);
+    dialog->ui->storageMonthLimitSpinBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setStorageMonthLimit(2));
+    dialog->ui->storageMonthLimitSpinBox->setValue(2);
+
+    EXPECT_CALL(*configMock, setStorageMonthLimit(3));
+    dialog->ui->storageMonthLimitSpinBox->setValue(3);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_okButton_clicked)
+{
+    ASSERT_EQ(dialog->result(), 0);
+    dialog->ui->okButton->click();
+    ASSERT_EQ(dialog->result(), QDialog::Accepted);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_cancelButton_clicked)
+{
+    ASSERT_EQ(dialog->result(), 0);
+    dialog->ui->cancelButton->click();
+    ASSERT_EQ(dialog->result(), QDialog::Rejected);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
+{
+    dialog->ui->autorunCheckBox->blockSignals(true);
+    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
+    dialog->ui->useScheduleCheckBox->blockSignals(true);
+    dialog->ui->scheduleStartTimeEdit->blockSignals(true);
+    dialog->ui->scheduleEndTimeEdit->blockSignals(true);
+    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
+    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
+    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
+    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
+    dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
+    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
+    dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
+    dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
+    dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
+
+    EXPECT_CALL(*configMock, makeDefault());
+    EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
+    EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
+
+    EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(20));
+    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(5));
+    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.2f));
+    EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
+    EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
+    EXPECT_CALL(*configMock, isSimulatorConfigCommon()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, isAutoPilotConfigCommon()).WillOnce(Return(false));
+
+    dialog->ui->defaultButton->click();
+
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
+    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              2);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));
+    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     20);
+    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), true);
+    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   5);
+    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.2f, 0.01f);
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     true);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       20000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           36);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  true);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  false);
+}
