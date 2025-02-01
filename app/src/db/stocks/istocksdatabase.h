@@ -18,6 +18,7 @@ public:
     IStocksDatabase& operator=(const IStocksDatabase &another) = delete;
 
     virtual void createStockTable(const QString &name) = 0;
-    virtual void readStocks(QList<Stock> *stocks) = 0;
+    virtual QList<Stock> readStocks() = 0;
+    virtual void readStocksData(QList<Stock> &stocks) = 0;
     virtual void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks) = 0;
 };

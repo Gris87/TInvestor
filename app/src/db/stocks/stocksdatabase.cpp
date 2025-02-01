@@ -6,26 +6,26 @@
 
 
 
+const int amountOfDataPerDay = 24 * 60;
+
+
+
 StocksDatabase::StocksDatabase() :
     IStocksDatabase(),
-    mDB(QSqlDatabase::addDatabase("QSQLITE"))
+    db(QSqlDatabase::addDatabase("QSQLITE"))
 {
     qDebug() << "Create StocksDatabase";
 
     QString appDir = qApp->applicationDirPath();
 
-    if (!QDir().mkpath(appDir + "/data/db"))
-    {
-        qFatal() << "Failed to create dir";
-    }
+    bool ok = QDir().mkpath(appDir + "/data/db");
+    Q_ASSERT_X(ok, "StocksDatabase", "Failed to create dir");
 
     QString dbPath = appDir + "/data/db/stocks.db";
-    mDB.setDatabaseName(dbPath);
+    db.setDatabaseName(dbPath);
 
-    if (!mDB.open())
-    {
-        qFatal() << "Failed to open database";
-    }
+    ok = db.open();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
     qInfo() << "Stocks database" << dbPath << "created";
 
@@ -36,6 +36,8 @@ StocksDatabase::StocksDatabase() :
 StocksDatabase::~StocksDatabase()
 {
     qDebug() << "Destroy StocksDatabase";
+
+    db.close();
 }
 
 void StocksDatabase::createListTable()
@@ -48,12 +50,10 @@ void StocksDatabase::createListTable()
                   "    fullname VARCHAR(255)"
                   ");";
 
-    QSqlQuery query(mDB);
+    QSqlQuery query(db);
 
-    if (!query.exec(str))
-    {
-        qFatal() << "Failed to create stocks table:" << mDB.lastError().text();
-    }
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::createStockTable(const QString &name)
@@ -68,31 +68,29 @@ void StocksDatabase::createStockTable(const QString &name)
 
     str = str.arg(name);
 
-    QSqlQuery query(mDB);
+    QSqlQuery query(db);
 
-    if (!query.exec(str))
-    {
-        qFatal() << "Failed to create" << name << "table:" << mDB.lastError().text();
-    }
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 }
 
-void StocksDatabase::readStocks(QList<Stock> *stocks)
+QList<Stock> StocksDatabase::readStocks()
 {
     qDebug() << "Reading stocks from database";
 
     QString str = "SELECT name, fullname FROM stocks ORDER BY name;";
 
-    QSqlQuery query(mDB);
+    QSqlQuery query(db);
 
-    if (!query.exec(str))
-    {
-        qFatal() << "Failed to read stocks:" << mDB.lastError().text();
-    }
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
     QSqlRecord rec = query.record();
 
     int nameIndex     = rec.indexOf("name");
     int fullnameIndex = rec.indexOf("fullname");
+
+    QList<Stock> res;
 
     while (query.next())
     {
@@ -101,45 +99,86 @@ void StocksDatabase::readStocks(QList<Stock> *stocks)
         stock.name     = query.value(nameIndex).toString();
         stock.fullname = query.value(fullnameIndex).toString();
 
-        stocks->append(stock);
+        res.append(stock);
 
         qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
     }
+
+    return res;
+}
+
+void StocksDatabase::readStocksData(QList<Stock> &stocks)
+{
+    qDebug() << "Reading stocks dstatus from database";
+
+    bool ok = db.transaction();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+
+    for (int i = 0; i < stocks.size(); ++i)
+    {
+        Stock &stock = stocks[i];
+
+        QString str = QString("SELECT timestamp, value FROM %1;").arg(stock.name);
+
+        QSqlQuery query(db);
+
+        ok = query.exec(str);
+        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+
+        QSqlRecord rec = query.record();
+
+        int timestampIndex = rec.indexOf("timestamp");
+        int valueIndex     = rec.indexOf("value");
+
+        int dataSize = query.last() ? query.at() + 1 : 0;
+        int j = dataSize - 1;
+
+        stock.data.reserve(dataSize + amountOfDataPerDay);
+        stock.data.resize(dataSize);
+
+        while (j >= 0)
+        {
+            StockData &stockData = stock.data[j];
+
+            stockData.timestamp = query.value(timestampIndex).toLongLong();
+            stockData.value     = query.value(valueIndex).toFloat();
+
+            query.previous();
+            --j;
+        }
+
+        qDebug() << "Read stock data" << stock.name;
+    }
+
+    ok = db.commit();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks)
 {
     qDebug() << "Deleting obsolete stocks data";
 
-    if (!mDB.transaction())
-    {
-        qFatal() << "Failed to start transaction" << mDB.lastError().text();
-    }
+    bool ok = db.transaction();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
     for (int i = 0; i < stocks.size(); ++i)
     {
         QString str = QString("DELETE FROM %1 WHERE timestamp < %2;").arg(stocks.at(i).name).arg(obsoleteTimestamp);
 
-        QSqlQuery query(mDB);
+        QSqlQuery query(db);
 
-        if (!query.exec(str))
-        {
-            qFatal() << "Failed to read stocks:" << mDB.lastError().text();
-        }
+        ok = query.exec(str);
+        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
     }
 
-    if (!mDB.commit())
-    {
-        qFatal() << "Failed to commit transaction" << mDB.lastError().text();
-    }
+    ok = db.commit();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::fillWithTestData() // TODO: Remove me
 {
-    if (!mDB.transaction())
-    {
-        qFatal() << "Failed to start transaction" << mDB.lastError().text();
-    }
+    bool ok = db.transaction();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
     QVariantList names;
     QVariantList fullnames;
@@ -155,16 +194,14 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
         fullnames << "BLAH";
     }
 
-    QSqlQuery query(mDB);
+    QSqlQuery query(db);
 
     query.prepare("INSERT INTO stocks (name, fullname) VALUES (?, ?);");
     query.addBindValue(names);
     query.addBindValue(fullnames);
 
-    if (!query.execBatch())
-    {
-        qFatal() << "Failed to insert to stocks table:" << mDB.lastError().text();
-    }
+    ok = !query.execBatch();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
     for (int i = 0; i < 100; ++i)
     {
@@ -179,20 +216,16 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
             values << i * j;
         }
 
-        QSqlQuery query(mDB);
+        QSqlQuery query(db);
 
         query.prepare(QString("INSERT INTO AZAZ%1 (timestamp, value) VALUES (?, ?);").arg(i));
         query.addBindValue(timestamps);
         query.addBindValue(values);
 
-        if (!query.execBatch())
-        {
-            qFatal() << "Failed to insert stocks value:" << mDB.lastError().text();
-        }
+        ok = query.execBatch();
+        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
     }
 
-    if (!mDB.commit())
-    {
-        qFatal() << "Failed to commit transaction" << mDB.lastError().text();
-    }
+    ok = db.commit();
+    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 }

@@ -13,7 +13,7 @@ TEST(Test_TrayIcon, Test_constructor_and_destructor)
     ASSERT_TRUE(trayIconMenu != nullptr);
 
     QList<QAction *> actions = trayIconMenu->actions();
-    ASSERT_EQ(actions.length(), 3);
+    ASSERT_EQ(actions.size(), 3);
 
     ASSERT_EQ(actions.at(0)->isSeparator(), false);
     ASSERT_EQ(actions.at(1)->isSeparator(), true);

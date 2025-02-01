@@ -96,29 +96,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason)
+    if (reason == QSystemTrayIcon::DoubleClick)
     {
-        case QSystemTrayIcon::DoubleClick:
-        {
-            qDebug() << "Tray icon double clicked";
+        qDebug() << "Tray icon double clicked";
 
-            trayIconShowClicked();
-        }
-        break;
-
-        case QSystemTrayIcon::Context:
-        case QSystemTrayIcon::Trigger:
-        case QSystemTrayIcon::MiddleClick:
-        {
-            // Nothing
-        }
-        break;
-
-        default:
-        {
-            qFatal("Unknown activation reason %u", reason);
-        }
-        break;
+        trayIconShowClicked();
     }
 }
 
@@ -223,7 +205,7 @@ void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
-    mStocksDatabase->readStocks(&mStocks);
+    mStocks = mStocksDatabase->readStocks();
 
     mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

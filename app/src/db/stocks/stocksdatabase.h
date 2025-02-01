@@ -18,12 +18,13 @@ public:
     StocksDatabase& operator=(const StocksDatabase &another) = delete;
 
     void createStockTable(const QString &name) override;
-    void readStocks(QList<Stock> *stocks) override;
+    QList<Stock> readStocks() override;
+    void readStocksData(QList<Stock> &stocks) override;
     void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks) override;
+
+    QSqlDatabase db;
 
 private:
     void createListTable();
     void fillWithTestData();
-
-    QSqlDatabase mDB;
 };
