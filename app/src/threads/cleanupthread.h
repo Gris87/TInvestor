@@ -11,7 +11,7 @@ class CleanupThread : public QThread
     Q_OBJECT
 
 public:
-    CleanupThread(QObject *parent = nullptr);
+    explicit CleanupThread(QObject *parent = nullptr);
     ~CleanupThread();
 
     CleanupThread(const CleanupThread &another) = delete;

@@ -23,6 +23,7 @@
 #include "src/config/settingseditor.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
+#include "src/main/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -30,11 +31,25 @@
 
 
 
+int runApplication(int argc, char *argv[]);
+
+
+
 int main(int argc, char *argv[])
 {
     Logger::init();
+
     qInfo() << "START";
 
+    int res = runApplication(argc, argv);
+
+    qInfo() << "END";
+
+    return res;
+}
+
+int runApplication(int argc, char *argv[])
+{
     QApplication app(argc, argv);
 
     Q_INIT_RESOURCE(Resources);
@@ -141,6 +156,8 @@ int main(int argc, char *argv[])
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
 
+    TrayIconFactory trayIconFactory;
+
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
     MainWindow mainWindow(
@@ -153,13 +170,10 @@ int main(int argc, char *argv[])
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
+        &trayIconFactory,
         &settingsEditor
     );
     mainWindow.init();
 
-    int res = app.exec();
-
-    qInfo() << "END";
-
-    return res;
+    return app.exec();
 }

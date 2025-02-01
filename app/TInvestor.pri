@@ -32,6 +32,7 @@ SOURCES += \
     src/logger/logger.cpp \
     src/main/mainwindow.cpp \
     src/main/trayicon.cpp \
+    src/main/trayiconfactory.cpp \
     src/threads/cleanupthread.cpp \
     src/threads/refreshthread.cpp
 
@@ -87,7 +88,10 @@ HEADERS += \
     src/domain/stocks/stock.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
+    src/main/itrayicon.h \
+    src/main/itrayiconfactory.h \
     src/main/trayicon.h \
+    src/main/trayiconfactory.h \
     src/threads/cleanupthread.h \
     src/threads/refreshthread.h
 

@@ -1,6 +1,7 @@
+#include "src/config/config.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/config.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
 #include "src/config/isettingseditor_mock.h"
 

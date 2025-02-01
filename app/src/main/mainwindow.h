@@ -11,7 +11,7 @@
 #include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/isettingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
-#include "src/main/trayicon.h"
+#include "src/main/itrayiconfactory.h"
 #include "src/threads/cleanupthread.h"
 #include "src/threads/refreshthread.h"
 
@@ -40,6 +40,7 @@ public:
         ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
+        ITrayIconFactory *trayIconFactory,
         ISettingsEditor *settingsEditor
     );
     ~MainWindow();
@@ -60,7 +61,6 @@ private:
 
     Ui::MainWindow *ui;
 
-    TrayIcon                          *mTrayIcon;
     IConfig                           *mConfig;
     IConfig                           *mConfigForSettingsDialog;
     IDecisionMakerConfigWidgetFactory *mDecisionMakerConfigWidgetFactory;

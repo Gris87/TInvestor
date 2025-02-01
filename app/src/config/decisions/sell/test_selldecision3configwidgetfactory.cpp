@@ -1,6 +1,7 @@
+#include "src/config/decisions/sell/selldecision3configwidgetfactory.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/sell/selldecision3configwidgetfactory.h"
 #include "src/config/decisions/sell/iselldecision3config_mock.h"
 
 

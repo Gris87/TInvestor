@@ -11,7 +11,7 @@
 class BuyDecision3ConfigWidgetMock : public IBuyDecision3ConfigWidget
 {
 public:
-    BuyDecision3ConfigWidgetMock(QWidget *parent = nullptr) : IBuyDecision3ConfigWidget(parent) {}
+    explicit BuyDecision3ConfigWidgetMock(QWidget *parent = nullptr) : IBuyDecision3ConfigWidget(parent) {}
     ~BuyDecision3ConfigWidgetMock() override = default;
 
     BuyDecision3ConfigWidgetMock(const BuyDecision3ConfigWidgetMock &another) = delete;

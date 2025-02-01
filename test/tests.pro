@@ -65,7 +65,10 @@ SOURCES += \
     src/config/decisions/test_decisionmakerconfigwidgetfactory.cpp \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp \
-    src/config/test_settingseditor.cpp
+    src/config/test_settingseditor.cpp \
+    src/logger/test_logger.cpp \
+    src/main/test_trayicon.cpp \
+    src/main/test_trayiconfactory.cpp
 
 HEADERS += \
     src/config/decisions/buy/ibuydecision1config_mock.h \
@@ -90,4 +93,6 @@ HEADERS += \
     src/config/decisions/sell/iselldecision3configwidget_mock.h \
     src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
-    src/config/isettingseditor_mock.h
+    src/config/isettingseditor_mock.h \
+    src/config/itrayicon_mock.h \
+    src/config/itrayiconfactory_mock.h

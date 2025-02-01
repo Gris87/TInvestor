@@ -18,6 +18,7 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
+    ITrayIconFactory *trayIconFactory,
     ISettingsEditor *settingsEditor
 ) :
     QMainWindow(),
@@ -43,9 +44,12 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
-    mTrayIcon = new TrayIcon(this);
-    mTrayIcon->init(this);
-    mTrayIcon->show();
+    ITrayIcon *trayIcon = trayIconFactory->newInstance(this);
+    connect(trayIcon, SIGNAL(trayIconClicked(QSystemTrayIcon::ActivationReason reason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason reason)));
+    connect(trayIcon, SIGNAL(trayIconShowClicked()), this, SLOT(trayIconShowClicked()));
+    connect(trayIcon, SIGNAL(trayIconExitClicked()), this, SLOT(trayIconExitClicked()));
+
+    trayIcon->show();
 
     connect(mCleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
     connect(mRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));

@@ -11,7 +11,7 @@ class RefreshThread : public QThread
     Q_OBJECT
 
 public:
-    RefreshThread(QObject *parent = nullptr);
+    explicit RefreshThread(QObject *parent = nullptr);
     ~RefreshThread();
 
     RefreshThread(const RefreshThread &another) = delete;

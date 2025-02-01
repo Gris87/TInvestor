@@ -1,6 +1,7 @@
+#include "src/config/decisions/decisionmakerconfigwidget.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/decisionmakerconfigwidget.h"
 #include "src/config/decisions/buy/ibuydecision1config_mock.h"
 #include "src/config/decisions/buy/ibuydecision1configwidget_mock.h"
 #include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"

@@ -1,8 +1,9 @@
+#include "src/config/decisions/sell/selldecision3configwidget.h"
+#include "ui_selldecision3configwidget.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/sell/selldecision3configwidget.h"
 #include "src/config/decisions/sell/iselldecision3config_mock.h"
-#include "ui_selldecision3configwidget.h"
 
 
 

@@ -1,8 +1,9 @@
+#include "src/config/decisions/buy/buydecision2configwidget.h"
+#include "ui_buydecision2configwidget.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/buy/buydecision2configwidget.h"
 #include "src/config/decisions/buy/ibuydecision2config_mock.h"
-#include "ui_buydecision2configwidget.h"
 
 
 

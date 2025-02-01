@@ -1,6 +1,7 @@
+#include "src/config/decisions/decisionmakerconfigwidgetfactory.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/decisionmakerconfigwidgetfactory.h"
 #include "src/config/decisions/buy/ibuydecision1config_mock.h"
 #include "src/config/decisions/buy/ibuydecision1configwidget_mock.h"
 #include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
@@ -81,7 +82,7 @@ TEST(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
         &sellDecision2ConfigWidgetFactoryMock,
         &sellDecision3ConfigWidgetFactoryMock,
         nullptr
-        );
+    );
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

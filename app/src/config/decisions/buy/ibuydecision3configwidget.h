@@ -11,7 +11,7 @@
 class IBuyDecision3ConfigWidget : public QWidget
 {
 public:
-    IBuyDecision3ConfigWidget(QWidget *parent = nullptr) : QWidget(parent) {}
+    explicit IBuyDecision3ConfigWidget(QWidget *parent = nullptr) : QWidget(parent) {}
     virtual ~IBuyDecision3ConfigWidget() = default;
 
     IBuyDecision3ConfigWidget(const IBuyDecision3ConfigWidget &another) = delete;

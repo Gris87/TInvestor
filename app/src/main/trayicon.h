@@ -2,24 +2,18 @@
 
 
 
-#include <QSystemTrayIcon>
+#include "src/main/itrayicon.h"
 
 
 
-class MainWindow;
-
-
-
-class TrayIcon : public QSystemTrayIcon
+class TrayIcon : public ITrayIcon
 {
     Q_OBJECT
 
 public:
-    explicit TrayIcon(QObject *parent = nullptr);
+    explicit TrayIcon(QWidget *parent = nullptr);
     ~TrayIcon();
 
     TrayIcon(const TrayIcon &another) = delete;
     TrayIcon& operator=(const TrayIcon &another) = delete;
-
-    void init(MainWindow *mainWindow);
 };

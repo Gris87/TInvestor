@@ -9,7 +9,7 @@
 class IDecisionMakerConfigWidget : public QWidget
 {
 public:
-    IDecisionMakerConfigWidget(QWidget *parent = nullptr) : QWidget(parent) {}
+    explicit IDecisionMakerConfigWidget(QWidget *parent = nullptr) : QWidget(parent) {}
     virtual ~IDecisionMakerConfigWidget() = default;
 
     IDecisionMakerConfigWidget(const IDecisionMakerConfigWidget &another) = delete;

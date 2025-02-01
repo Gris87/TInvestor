@@ -7,6 +7,14 @@
 
 const QtMsgType logLevel = QtInfoMsg;
 
+QMap<QtMsgType, QString> logLevelToString{
+    {QtDebugMsg,    "DEBUG   "},
+    {QtInfoMsg,     "INFO    "},
+    {QtWarningMsg,  "WARNING "},
+    {QtCriticalMsg, "CRITICAL"},
+    {QtFatalMsg,    "FATAL   "}
+};
+
 
 
 QtMessageHandler oldMessageHandler;
@@ -18,17 +26,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
         return;
     }
 
-    QString typeStr;
-
-    switch (type)
-    {
-        case QtDebugMsg:    typeStr="DEBUG   "; break;
-        case QtInfoMsg:     typeStr="INFO    "; break;
-        case QtWarningMsg:  typeStr="WARNING "; break;
-        case QtCriticalMsg: typeStr="CRITICAL"; break;
-        case QtFatalMsg:    typeStr="FATAL   "; break;
-        default:            typeStr="UNKNOWN "; break;
-    }
+    QString typeStr = logLevelToString[type];
 
     oldMessageHandler(type, context, QString("%1 %2 %3:%4 %5: %6")
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
@@ -43,4 +41,9 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
 void Logger::init()
 {
     oldMessageHandler = qInstallMessageHandler(messageHandler);
+}
+
+void Logger::deinit()
+{
+    qInstallMessageHandler(oldMessageHandler);
 }

@@ -7,32 +7,25 @@
 
 
 
-TrayIcon::TrayIcon(QObject *parent) :
-    QSystemTrayIcon(parent)
+TrayIcon::TrayIcon(QWidget *parent) :
+    ITrayIcon(parent)
 {
     qDebug() << "Create TrayIcon";
-}
 
-TrayIcon::~TrayIcon()
-{
-    qDebug() << "Destroy TrayIcon";
-}
+    QMenu *trayIconMenu = new QMenu(parent);
 
-void TrayIcon::init(MainWindow *mainWindow)
-{
-    QMenu *trayIconMenu = new QMenu(mainWindow);
-
-    QAction *defaultAction = trayIconMenu->addAction(tr("Show"), mainWindow, SLOT(trayIconShowClicked()));
+    QAction *defaultAction = trayIconMenu->addAction(tr("Show"), this, SIGNAL(trayIconShowClicked()));
     trayIconMenu->addSeparator();
-    trayIconMenu->addAction(tr("Exit"), mainWindow, SLOT(trayIconExitClicked()));
+    trayIconMenu->addAction(tr("Exit"), this, SIGNAL(trayIconExitClicked()));
 
     trayIconMenu->setDefaultAction(defaultAction);
 
     setIcon(QIcon(":/assets/images/icon.png"));
     setContextMenu(trayIconMenu);
     setToolTip(tr("TInvestor"));
+}
 
-    connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), mainWindow, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-
-    qDebug() << "Tray icon initialized";
+TrayIcon::~TrayIcon()
+{
+    qDebug() << "Destroy TrayIcon";
 }

@@ -1,6 +1,8 @@
+#include "src/config/settingsdialog.h"
+#include "ui_settingsdialog.h"
+
 #include <gtest/gtest.h>
 
-#include "src/config/settingsdialog.h"
 #include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h"
@@ -11,7 +13,6 @@
 #include "src/config/decisions/idecisionmakerconfigwidget_mock.h"
 #include "src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
-#include "ui_settingsdialog.h"
 
 
 

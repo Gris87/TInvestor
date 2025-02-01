@@ -11,7 +11,7 @@
 class DecisionMakerConfigWidgetMock : public IDecisionMakerConfigWidget
 {
 public:
-    DecisionMakerConfigWidgetMock(QWidget *parent = nullptr) : IDecisionMakerConfigWidget(parent) {}
+    explicit DecisionMakerConfigWidgetMock(QWidget *parent = nullptr) : IDecisionMakerConfigWidget(parent) {}
     ~DecisionMakerConfigWidgetMock() override = default;
 
     DecisionMakerConfigWidgetMock(const DecisionMakerConfigWidgetMock &another) = delete;
