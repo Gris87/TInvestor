@@ -66,6 +66,7 @@ SOURCES += \
     src/config/test_config.cpp \
     src/config/test_settingsdialog.cpp \
     src/config/test_settingseditor.cpp \
+    src/db/stocks/test_stocksdatabase.cpp \
     src/logger/test_logger.cpp \
     src/main/test_trayicon.cpp \
     src/main/test_trayiconfactory.cpp \
@@ -73,31 +74,31 @@ SOURCES += \
     src/threads/test_refreshthread.cpp
 
 HEADERS += \
-    src/config/decisions/buy/ibuydecision1config_mock.h \
-    src/config/decisions/buy/ibuydecision1configwidget_mock.h \
     src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h \
-    src/config/decisions/buy/ibuydecision2config_mock.h \
-    src/config/decisions/buy/ibuydecision2configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision1configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision1config_mock.h \
     src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h \
-    src/config/decisions/buy/ibuydecision3config_mock.h \
-    src/config/decisions/buy/ibuydecision3configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision2configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision2config_mock.h \
     src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h \
-    src/config/decisions/idecisionmakerconfig_mock.h \
-    src/config/decisions/idecisionmakerconfigwidget_mock.h \
+    src/config/decisions/buy/ibuydecision3configwidget_mock.h \
+    src/config/decisions/buy/ibuydecision3config_mock.h \
     src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h \
-    src/config/decisions/sell/iselldecision1config_mock.h \
-    src/config/decisions/sell/iselldecision1configwidget_mock.h \
+    src/config/decisions/idecisionmakerconfigwidget_mock.h \
+    src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h \
-    src/config/decisions/sell/iselldecision2config_mock.h \
-    src/config/decisions/sell/iselldecision2configwidget_mock.h \
+    src/config/decisions/sell/iselldecision1configwidget_mock.h \
+    src/config/decisions/sell/iselldecision1config_mock.h \
     src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h \
-    src/config/decisions/sell/iselldecision3config_mock.h \
-    src/config/decisions/sell/iselldecision3configwidget_mock.h \
+    src/config/decisions/sell/iselldecision2configwidget_mock.h \
+    src/config/decisions/sell/iselldecision2config_mock.h \
     src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h \
+    src/config/decisions/sell/iselldecision3configwidget_mock.h \
+    src/config/decisions/sell/iselldecision3config_mock.h \
     src/config/iconfig_mock.h \
     src/config/isettingseditor_mock.h \
-    src/config/itrayicon_mock.h \
-    src/config/itrayiconfactory_mock.h \
+    src/db/stocks/istocksdatabase_mock.h \
     src/main/itrayiconfactory_mock.h \
+    src/main/itrayicon_mock.h \
     src/threads/icleanupthread_mock.h \
     src/threads/irefreshthread_mock.h

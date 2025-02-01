@@ -19,7 +19,10 @@ MainWindow::MainWindow(
     ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
     ITrayIconFactory *trayIconFactory,
-    ISettingsEditor *settingsEditor
+    ISettingsEditor *settingsEditor,
+    IStocksDatabase *stocksDatabase,
+    ICleanupThread *cleanupThread,
+    IRefreshThread *refreshThread
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
@@ -33,11 +36,11 @@ MainWindow::MainWindow(
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
     mSettingsEditor(settingsEditor),
+    mStocksDatabase(stocksDatabase),
+    mCleanupThread(cleanupThread),
+    mRefreshThread(refreshThread),
     mCleanupTimer(new QTimer(this)),
     mRefreshTimer(new QTimer(this)),
-    mCleanupThread(new CleanupThread(this)),
-    mRefreshThread(new RefreshThread(this)),
-    mStocksDatabase(new StocksDatabase(this)),
     mStocks()
 {
     qDebug() << "Create MainWindow";

@@ -2,29 +2,24 @@
 
 
 
-#include <QObject>
+#include "src/db/stocks/istocksdatabase.h"
 
-#include <QList>
 #include <QtSql>
 
-#include "src/domain/stocks/stock.h"
 
 
-
-class StocksDatabase : public QObject
+class StocksDatabase : public IStocksDatabase
 {
-    Q_OBJECT
-
 public:
-    explicit StocksDatabase(QObject *parent = nullptr);
+    explicit StocksDatabase();
     ~StocksDatabase();
 
     StocksDatabase(const StocksDatabase &another) = delete;
     StocksDatabase& operator=(const StocksDatabase &another) = delete;
 
-    void createStockTable(const QString &name);
-    void readStocks(QList<Stock> *stocks);
-    void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks);
+    void createStockTable(const QString &name) override;
+    void readStocks(QList<Stock> *stocks) override;
+    void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks) override;
 
 private:
     void createListTable();

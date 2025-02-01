@@ -6,8 +6,8 @@
 
 
 
-StocksDatabase::StocksDatabase(QObject *parent) :
-    QObject(parent),
+StocksDatabase::StocksDatabase() :
+    IStocksDatabase(),
     mDB(QSqlDatabase::addDatabase("QSQLITE"))
 {
     qDebug() << "Create StocksDatabase";

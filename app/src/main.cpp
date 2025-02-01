@@ -6,14 +6,14 @@
 #include <QTranslator>
 
 #include "src/config/config.h"
-#include "src/config/decisions/decisionmakerconfig.h"
-#include "src/config/decisions/decisionmakerconfigwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision1config.h"
 #include "src/config/decisions/buy/buydecision1configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision2config.h"
 #include "src/config/decisions/buy/buydecision2configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision3config.h"
 #include "src/config/decisions/buy/buydecision3configwidgetfactory.h"
+#include "src/config/decisions/decisionmakerconfig.h"
+#include "src/config/decisions/decisionmakerconfigwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision1config.h"
 #include "src/config/decisions/sell/selldecision1configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision2config.h"
@@ -21,9 +21,12 @@
 #include "src/config/decisions/sell/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3configwidgetfactory.h"
 #include "src/config/settingseditor.h"
+#include "src/db/stocks/stocksdatabase.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 #include "src/main/trayiconfactory.h"
+#include "src/threads/cleanupthread.h"
+#include "src/threads/refreshthread.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -160,6 +163,10 @@ int runApplication(int argc, char *argv[])
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
+    StocksDatabase stocksDatabase;
+    CleanupThread cleanupThread;
+    RefreshThread refreshThread;
+
     MainWindow mainWindow(
         &сonfig,
         &сonfigForSettingsDialog,
@@ -171,7 +178,10 @@ int runApplication(int argc, char *argv[])
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
         &trayIconFactory,
-        &settingsEditor
+        &settingsEditor,
+        &stocksDatabase,
+        &cleanupThread,
+        &refreshThread
     );
     mainWindow.init();
 

@@ -10,10 +10,10 @@
 #include "src/config/iconfig.h"
 #include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/isettingseditor.h"
-#include "src/db/stocks/stocksdatabase.h"
+#include "src/db/stocks/istocksdatabase.h"
 #include "src/main/itrayiconfactory.h"
-#include "src/threads/cleanupthread.h"
-#include "src/threads/refreshthread.h"
+#include "src/threads/icleanupthread.h"
+#include "src/threads/irefreshthread.h"
 
 
 
@@ -41,7 +41,10 @@ public:
         ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
         ITrayIconFactory *trayIconFactory,
-        ISettingsEditor *settingsEditor
+        ISettingsEditor *settingsEditor,
+        IStocksDatabase *stocksDatabase,
+        ICleanupThread *cleanupThread,
+        IRefreshThread *refreshThread
     );
     ~MainWindow();
 
@@ -71,11 +74,11 @@ private:
     ISellDecision2ConfigWidgetFactory *mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory *mSellDecision3ConfigWidgetFactory;
     ISettingsEditor                   *mSettingsEditor;
+    IStocksDatabase                   *mStocksDatabase;
+    ICleanupThread                    *mCleanupThread;
+    IRefreshThread                    *mRefreshThread;
     QTimer                            *mCleanupTimer;
     QTimer                            *mRefreshTimer;
-    CleanupThread                     *mCleanupThread;
-    RefreshThread                     *mRefreshThread;
-    StocksDatabase                    *mStocksDatabase;
     QList<Stock>                      mStocks;
 
 public slots:

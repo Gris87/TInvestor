@@ -84,12 +84,13 @@ HEADERS += \
     src/config/isettingseditor.h \
     src/config/settingsdialog.h \
     src/config/settingseditor.h \
+    src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/domain/stocks/stock.h \
     src/logger/logger.h \
-    src/main/mainwindow.h \
     src/main/itrayicon.h \
     src/main/itrayiconfactory.h \
+    src/main/mainwindow.h \
     src/main/trayicon.h \
     src/main/trayiconfactory.h \
     src/threads/cleanupthread.h \
@@ -98,10 +99,10 @@ HEADERS += \
     src/threads/refreshthread.h
 
 FORMS += \
-    src/config/decisions/decisionmakerconfigwidget.ui \
     src/config/decisions/buy/buydecision1configwidget.ui \
     src/config/decisions/buy/buydecision2configwidget.ui \
     src/config/decisions/buy/buydecision3configwidget.ui \
+    src/config/decisions/decisionmakerconfigwidget.ui \
     src/config/decisions/sell/selldecision1configwidget.ui \
     src/config/decisions/sell/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3configwidget.ui \
