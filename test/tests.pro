@@ -68,6 +68,7 @@ SOURCES += \
     src/config/test_settingseditor.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/logger/test_logger.cpp \
+    src/main/test_mainwindow.cpp \
     src/main/test_trayicon.cpp \
     src/main/test_trayiconfactory.cpp \
     src/threads/test_cleanupthread.cpp \
