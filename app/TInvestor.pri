@@ -93,6 +93,8 @@ HEADERS += \
     src/main/trayicon.h \
     src/main/trayiconfactory.h \
     src/threads/cleanupthread.h \
+    src/threads/icleanupthread.h \
+    src/threads/irefreshthread.h \
     src/threads/refreshthread.h
 
 FORMS += \

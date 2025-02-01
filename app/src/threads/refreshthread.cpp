@@ -5,7 +5,7 @@
 
 
 RefreshThread::RefreshThread(QObject *parent) :
-    QThread(parent)
+    IRefreshThread(parent)
 {
     qDebug() << "Create RefreshThread";
 }
@@ -15,7 +15,7 @@ RefreshThread::~RefreshThread()
     qDebug() << "Destroy RefreshThread";
 }
 
-void RefreshThread::run()
+void RefreshThread::process()
 {
     qDebug() << "Running RefreshThread";
 

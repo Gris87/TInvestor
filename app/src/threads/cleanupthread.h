@@ -2,11 +2,11 @@
 
 
 
-#include <QThread>
+#include "src/threads/icleanupthread.h"
 
 
 
-class CleanupThread : public QThread
+class CleanupThread : public ICleanupThread
 {
     Q_OBJECT
 
@@ -17,6 +17,5 @@ public:
     CleanupThread(const CleanupThread &another) = delete;
     CleanupThread& operator=(const CleanupThread &another) = delete;
 
-protected:
-    void run() override;
+    void process() override;
 };

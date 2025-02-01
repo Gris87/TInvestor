@@ -68,7 +68,9 @@ SOURCES += \
     src/config/test_settingseditor.cpp \
     src/logger/test_logger.cpp \
     src/main/test_trayicon.cpp \
-    src/main/test_trayiconfactory.cpp
+    src/main/test_trayiconfactory.cpp \
+    src/threads/test_cleanupthread.cpp \
+    src/threads/test_refreshthread.cpp
 
 HEADERS += \
     src/config/decisions/buy/ibuydecision1config_mock.h \
@@ -95,4 +97,7 @@ HEADERS += \
     src/config/iconfig_mock.h \
     src/config/isettingseditor_mock.h \
     src/config/itrayicon_mock.h \
-    src/config/itrayiconfactory_mock.h
+    src/config/itrayiconfactory_mock.h \
+    src/main/itrayiconfactory_mock.h \
+    src/threads/icleanupthread_mock.h \
+    src/threads/irefreshthread_mock.h

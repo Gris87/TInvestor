@@ -5,7 +5,7 @@
 
 
 CleanupThread::CleanupThread(QObject *parent) :
-    QThread(parent)
+    ICleanupThread(parent)
 {
     qDebug() << "Create CleanupThread";
 }
@@ -15,7 +15,7 @@ CleanupThread::~CleanupThread()
     qDebug() << "Destroy CleanupThread";
 }
 
-void CleanupThread::run()
+void CleanupThread::process()
 {
     qDebug() << "Running CleanupThread";
 

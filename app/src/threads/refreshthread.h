@@ -2,11 +2,11 @@
 
 
 
-#include <QThread>
+#include "src/threads/irefreshthread.h"
 
 
 
-class RefreshThread : public QThread
+class RefreshThread : public IRefreshThread
 {
     Q_OBJECT
 
@@ -17,6 +17,5 @@ public:
     RefreshThread(const RefreshThread &another) = delete;
     RefreshThread& operator=(const RefreshThread &another) = delete;
 
-protected:
-    void run() override;
+    void process() override;
 };

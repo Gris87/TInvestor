@@ -1,0 +1,21 @@
+#pragma once
+
+
+
+#include "src/threads/irefreshthread.h"
+
+#include <gmock/gmock.h>
+
+
+
+class RefreshThreadMock : public IRefreshThread
+{
+public:
+    RefreshThreadMock() {}
+    ~RefreshThreadMock() override = default;
+
+    RefreshThreadMock(const RefreshThreadMock &another) = delete;
+    RefreshThreadMock& operator=(const RefreshThreadMock &another) = delete;
+
+    MOCK_METHOD0(process, void());
+};
