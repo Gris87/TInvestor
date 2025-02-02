@@ -21,7 +21,7 @@ SettingsDialog::SettingsDialog(
     ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
     QWidget *parent
 ) :
-    QDialog(parent),
+    ISettingsDialog(parent),
     ui(new Ui::SettingsDialog),
     mConfig(config)
 {

@@ -2,7 +2,7 @@
 
 
 
-#include <QDialog>
+#include "src/config/isettingsdialog.h"
 
 #include <QTime>
 
@@ -17,7 +17,7 @@ class SettingsDialog;
 
 
 
-class SettingsDialog : public QDialog
+class SettingsDialog : public ISettingsDialog
 {
     Q_OBJECT
 
@@ -38,7 +38,7 @@ public:
     SettingsDialog(const SettingsDialog &another) = delete;
     SettingsDialog& operator=(const SettingsDialog &another) = delete;
 
-    void updateUiFromConfig();
+    void updateUiFromConfig() override;
 
     Ui::SettingsDialog *ui;
 
