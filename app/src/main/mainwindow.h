@@ -13,6 +13,7 @@
 #include "src/config/isettingseditor.h"
 #include "src/db/stocks/istocksdatabase.h"
 #include "src/main/itrayiconfactory.h"
+#include "src/storage/istocksstorage.h"
 #include "src/threads/icleanupthread.h"
 #include "src/threads/irefreshthread.h"
 
@@ -45,6 +46,7 @@ public:
         ITrayIconFactory *trayIconFactory,
         ISettingsEditor *settingsEditor,
         IStocksDatabase *stocksDatabase,
+        IStocksStorage *stocksStorage,
         ICleanupThread *cleanupThread,
         IRefreshThread *refreshThread
     );
@@ -79,9 +81,9 @@ private:
     ISellDecision3ConfigWidgetFactory *mSellDecision3ConfigWidgetFactory;
     ISettingsEditor                   *mSettingsEditor;
     IStocksDatabase                   *mStocksDatabase;
+    IStocksStorage                    *mStocksStorage;
     ICleanupThread                    *mCleanupThread;
     IRefreshThread                    *mRefreshThread;
-    QList<Stock>                      mStocks;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

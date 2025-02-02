@@ -18,6 +18,7 @@
 #include "src/db/stocks/istocksdatabase_mock.h"
 #include "src/main/itrayicon_mock.h"
 #include "src/main/itrayiconfactory_mock.h"
+#include "src/storage/istocksstorage_mock.h"
 #include "src/threads/icleanupthread_mock.h"
 #include "src/threads/irefreshthread_mock.h"
 
@@ -48,6 +49,7 @@ protected:
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
+        stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         refreshThreadMock                    = new StrictMock<RefreshThreadMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
@@ -76,6 +78,7 @@ protected:
             trayIconFactoryMock,
             settingsEditorMock,
             stocksDatabaseMock,
+            stocksStorageMock,
             cleanupThreadMock,
             refreshThreadMock
         );
@@ -101,6 +104,7 @@ protected:
         delete trayIconFactoryMock;
         delete settingsEditorMock;
         delete stocksDatabaseMock;
+        delete stocksStorageMock;
         delete cleanupThreadMock;
         delete refreshThreadMock;
         delete trayIconMock;
@@ -120,6 +124,7 @@ protected:
     StrictMock<TrayIconFactoryMock>                  *trayIconFactoryMock;
     StrictMock<SettingsEditorMock>                   *settingsEditorMock;
     StrictMock<StocksDatabaseMock>                   *stocksDatabaseMock;
+    StrictMock<StocksStorageMock>                    *stocksStorageMock;
     StrictMock<CleanupThreadMock>                    *cleanupThreadMock;
     StrictMock<RefreshThreadMock>                    *refreshThreadMock;
     StrictMock<TrayIconMock>                         *trayIconMock;
@@ -282,7 +287,7 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
     ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
 
-    EXPECT_CALL(*stocksDatabaseMock, readStocks()).WillOnce(Return(QList<Stock>()));
+    EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
 
     EXPECT_CALL(*cleanupThreadMock, process());
     EXPECT_CALL(*refreshThreadMock, process());

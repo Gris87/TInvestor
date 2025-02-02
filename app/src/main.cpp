@@ -26,6 +26,7 @@
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 #include "src/main/trayiconfactory.h"
+#include "src/storage/stocksstorage.h"
 #include "src/threads/cleanupthread.h"
 #include "src/threads/refreshthread.h"
 
@@ -167,8 +168,9 @@ int runApplication(int argc, char *argv[])
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
     StocksDatabase stocksDatabase;
-    CleanupThread cleanupThread(&stocksDatabase);
-    RefreshThread refreshThread;
+    StocksStorage stocksStorage;
+    CleanupThread cleanupThread(&stocksDatabase, &stocksStorage);
+    RefreshThread refreshThread(&stocksDatabase, &stocksStorage);
 
     MainWindow mainWindow(
         &config,
@@ -184,6 +186,7 @@ int runApplication(int argc, char *argv[])
         &trayIconFactory,
         &settingsEditor,
         &stocksDatabase,
+        &stocksStorage,
         &cleanupThread,
         &refreshThread
     );

@@ -22,6 +22,7 @@ MainWindow::MainWindow(
     ITrayIconFactory *trayIconFactory,
     ISettingsEditor *settingsEditor,
     IStocksDatabase *stocksDatabase,
+    IStocksStorage *stocksStorage,
     ICleanupThread *cleanupThread,
     IRefreshThread *refreshThread
 ) :
@@ -41,9 +42,9 @@ MainWindow::MainWindow(
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
     mSettingsEditor(settingsEditor),
     mStocksDatabase(stocksDatabase),
+    mStocksStorage(stocksStorage),
     mCleanupThread(cleanupThread),
-    mRefreshThread(refreshThread),
-    mStocks()
+    mRefreshThread(refreshThread)
 {
     qDebug() << "Create MainWindow";
 
@@ -215,7 +216,7 @@ void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
-    mStocks = mStocksDatabase->readStocks();
+    mStocksStorage->readFromDatabase(mStocksDatabase);
 
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

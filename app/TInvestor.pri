@@ -34,7 +34,7 @@ SOURCES += \
     src/main/mainwindow.cpp \
     src/main/trayicon.cpp \
     src/main/trayiconfactory.cpp \
-    src/storage/stockstorage.cpp \
+    src/storage/stocksstorage.cpp \
     src/threads/cleanupthread.cpp \
     src/threads/refreshthread.cpp
 
@@ -98,8 +98,8 @@ HEADERS += \
     src/main/mainwindow.h \
     src/main/trayicon.h \
     src/main/trayiconfactory.h \
-    src/storage/istockstorage.h \
-    src/storage/stockstorage.h \
+    src/storage/istocksstorage.h \
+    src/storage/stocksstorage.h \
     src/threads/cleanupthread.h \
     src/threads/icleanupthread.h \
     src/threads/irefreshthread.h \

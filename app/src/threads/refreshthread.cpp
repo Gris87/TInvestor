@@ -4,8 +4,10 @@
 
 
 
-RefreshThread::RefreshThread(QObject *parent) :
-    IRefreshThread(parent)
+RefreshThread::RefreshThread(IStocksDatabase *stocksDatabase, IStocksStorage *stocksStorage, QObject *parent) :
+    IRefreshThread(parent),
+    mStocksDatabase(stocksDatabase),
+    mStocksStorage(stocksStorage)
 {
     qDebug() << "Create RefreshThread";
 }
