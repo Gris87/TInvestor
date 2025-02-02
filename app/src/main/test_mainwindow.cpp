@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include <gtest/gtest.h>
+#include <QtCore/private/qcoreapplication_p.h>
 
 #include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
@@ -13,6 +14,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/config/isettingseditor_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
+#include "src/main/itrayicon_mock.h"
 #include "src/main/itrayiconfactory_mock.h"
 #include "src/threads/icleanupthread_mock.h"
 #include "src/threads/irefreshthread_mock.h"
@@ -21,6 +23,7 @@
 
 using ::testing::StrictMock;
 using ::testing::NotNull;
+using ::testing::_;
 using ::testing::Return;
 
 
@@ -44,6 +47,17 @@ protected:
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         refreshThreadMock                    = new StrictMock<RefreshThreadMock>();
+        trayIconMock                         = new StrictMock<TrayIconMock>();
+
+        EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
+
+        EXPECT_CALL(*configMock, makeDefault());
+        EXPECT_CALL(*configMock, load(settingsEditorMock));
+        EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(1));
+
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
 
         mainWindow = new MainWindow(
             configMock,
@@ -65,6 +79,10 @@ protected:
 
     void TearDown()
     {
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"), _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),   _));
+
         delete mainWindow;
         delete configMock;
         delete сonfigForSettingsDialogMock;
@@ -80,6 +98,7 @@ protected:
         delete stocksDatabaseMock;
         delete cleanupThreadMock;
         delete refreshThreadMock;
+        delete trayIconMock;
     }
 
     MainWindow                                       *mainWindow;
@@ -97,10 +116,121 @@ protected:
     StrictMock<StocksDatabaseMock>                   *stocksDatabaseMock;
     StrictMock<CleanupThreadMock>                    *cleanupThreadMock;
     StrictMock<RefreshThreadMock>                    *refreshThreadMock;
+    StrictMock<TrayIconMock>                         *trayIconMock;
 };
 
 
 
 TEST_F(Test_MainWindow, Test_constructor_and_destructor)
 {
+    ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->stocksPage);
+
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), true);
+    ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->refreshTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+}
+
+TEST_F(Test_MainWindow, Test_closeEvent)
+{
+    QCloseEvent event;
+
+    mainWindow->closeEvent(&event);
+
+    QCoreApplicationPrivate::setEventSpontaneous(&event, true);
+    mainWindow->show();
+
+    mainWindow->closeEvent(&event);
+}
+
+TEST_F(Test_MainWindow, Test_trayIconClicked)
+{
+    mainWindow->trayIconClicked(QSystemTrayIcon::DoubleClick);
+
+    ASSERT_EQ(mainWindow->isVisible(), true);
+}
+
+TEST_F(Test_MainWindow, Test_trayIconShowClicked)
+{
+    mainWindow->trayIconShowClicked();
+
+    ASSERT_EQ(mainWindow->isVisible(), true);
+}
+
+TEST_F(Test_MainWindow, Test_trayIconExitClicked)
+{
+    mainWindow->trayIconExitClicked();
+}
+
+TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
+{
+    EXPECT_CALL(*refreshThreadMock, process())
+    .WillOnce([] { QThread::msleep(200); });
+    EXPECT_CALL(*cleanupThreadMock, process());
+
+    mainWindow->refreshTimerTicked();
+    mainWindow->cleanupTimerTicked();
+}
+
+TEST_F(Test_MainWindow, Test_refreshTimerTicked)
+{
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+
+    EXPECT_CALL(*refreshThreadMock, process())
+        .WillOnce([] { QThread::msleep(200); });
+
+    mainWindow->refreshTimerTicked();
+    mainWindow->refreshTimerTicked();
+
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+}
+
+TEST_F(Test_MainWindow, Test_on_actionRefreshManually_triggered)
+{
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+
+    EXPECT_CALL(*refreshThreadMock, process())
+        .WillOnce([] { QThread::msleep(200); });
+
+    mainWindow->ui->actionRefreshManually->trigger();
+    mainWindow->ui->actionRefreshManually->trigger();
+
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+}
+
+TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
+{
+    mainWindow->ui->actionStocksPage->toggle();
+
+    ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->stocksPage);
+
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), true);
+    ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+}
+
+TEST_F(Test_MainWindow, Test_on_actionSimulationPage_toggled)
+{
+    mainWindow->ui->actionSimulationPage->toggle();
+
+    ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->simulationPage);
+
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), true);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+}
+
+TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
+{
+    mainWindow->ui->actionAutoPilotPage->toggle();
+
+    ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->autoPilotPage);
+
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), true);
 }

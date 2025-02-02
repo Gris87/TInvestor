@@ -39,8 +39,8 @@ MainWindow::MainWindow(
     mStocksDatabase(stocksDatabase),
     mCleanupThread(cleanupThread),
     mRefreshThread(refreshThread),
-    mCleanupTimer(new QTimer(this)),
-    mRefreshTimer(new QTimer(this)),
+    cleanupTimer(new QTimer(this)),
+    refreshTimer(new QTimer(this)),
     mStocks()
 {
     qDebug() << "Create MainWindow";
@@ -48,14 +48,15 @@ MainWindow::MainWindow(
     ui->setupUi(this);
 
     ITrayIcon *trayIcon = trayIconFactory->newInstance(this);
+
     connect(trayIcon, SIGNAL(trayIconClicked(QSystemTrayIcon::ActivationReason reason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason reason)));
     connect(trayIcon, SIGNAL(trayIconShowClicked()), this, SLOT(trayIconShowClicked()));
     connect(trayIcon, SIGNAL(trayIconExitClicked()), this, SLOT(trayIconExitClicked()));
 
     trayIcon->show();
 
-    connect(mCleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
-    connect(mRefreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
+    connect(cleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
+    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
 
     mConfig->makeDefault();
     mConfig->load(mSettingsEditor);
@@ -116,6 +117,31 @@ void MainWindow::trayIconShowClicked()
 void MainWindow::trayIconExitClicked()
 {
     QCoreApplication::quit();
+}
+
+void MainWindow::cleanupTimerTicked()
+{
+    qInfo() << "Cleanup timer ticked";
+
+    if (mRefreshThread->isRunning())
+    {
+        mRefreshThread->wait();
+    }
+
+    mCleanupThread->start();
+}
+
+void MainWindow::refreshTimerTicked()
+{
+    qDebug() << "Refresh timer ticked";
+
+    if (mCleanupThread->isRunning() || mRefreshThread->isRunning())
+    {
+        return;
+    }
+
+    refreshTimer->start();
+    mRefreshThread->start();
 }
 
 void MainWindow::on_actionRefreshManually_triggered()
@@ -181,33 +207,13 @@ void MainWindow::on_actionSettings_triggered()
     }
 }
 
-void MainWindow::cleanupTimerTicked()
-{
-    qInfo() << "Cleanup timer ticked";
-
-    mCleanupThread->start();
-}
-
-void MainWindow::refreshTimerTicked()
-{
-    qDebug() << "Refresh timer ticked";
-
-    if (mCleanupThread->isRunning() || mRefreshThread->isRunning())
-    {
-        return;
-    }
-
-    mRefreshTimer->start();
-    mRefreshThread->start();
-}
-
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
     mStocks = mStocksDatabase->readStocks();
 
-    mCleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
+    cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();
     mCleanupThread->wait();
 
@@ -223,7 +229,7 @@ void MainWindow::updateStackWidgetToolbar()
 
 void MainWindow::applyConfig()
 {
-    mRefreshTimer->setInterval(mConfig->getRefreshTimeout() * 60 * 1000);
+    refreshTimer->setInterval(mConfig->getRefreshTimeout() * 60 * 1000);
 }
 
 void MainWindow::saveWindowState()

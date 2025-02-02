@@ -51,18 +51,19 @@ public:
     MainWindow(const MainWindow &another) = delete;
     MainWindow& operator=(const MainWindow &another) = delete;
 
+    void closeEvent(QCloseEvent *event);
     void init();
 
-protected:
-    void closeEvent(QCloseEvent *event);
+    Ui::MainWindow *ui;
+
+    QTimer *cleanupTimer;
+    QTimer *refreshTimer;
 
 private:
     void updateStackWidgetToolbar();
     void applyConfig();
     void saveWindowState();
     void loadWindowState();
-
-    Ui::MainWindow *ui;
 
     IConfig                           *mConfig;
     IConfig                           *mConfigForSettingsDialog;
@@ -77,14 +78,14 @@ private:
     IStocksDatabase                   *mStocksDatabase;
     ICleanupThread                    *mCleanupThread;
     IRefreshThread                    *mRefreshThread;
-    QTimer                            *mCleanupTimer;
-    QTimer                            *mRefreshTimer;
     QList<Stock>                      mStocks;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
+    void cleanupTimerTicked();
+    void refreshTimerTicked();
 
 private slots:
     void on_actionRefreshManually_triggered();
@@ -92,6 +93,4 @@ private slots:
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
-    void cleanupTimerTicked();
-    void refreshTimerTicked();
 };
