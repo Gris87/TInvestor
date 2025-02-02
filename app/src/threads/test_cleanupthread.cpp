@@ -2,16 +2,22 @@
 
 #include <gtest/gtest.h>
 
+#include "src/db/stocks/istocksdatabase_mock.h"
+
 
 
 TEST(Test_CleanupThread, Test_constructor_and_destructor)
 {
-    CleanupThread thread;
+    StocksDatabaseMock stocksDatabaseMock;
+
+    CleanupThread thread(&stocksDatabaseMock);
 }
 
 TEST(Test_CleanupThread, Test_process)
 {
-    CleanupThread thread;
+    StocksDatabaseMock stocksDatabaseMock;
+
+    CleanupThread thread(&stocksDatabaseMock);
 
     thread.process();
 }

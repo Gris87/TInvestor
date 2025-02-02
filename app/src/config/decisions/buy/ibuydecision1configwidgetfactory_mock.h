@@ -11,7 +11,7 @@
 class BuyDecision1ConfigWidgetFactoryMock : public IBuyDecision1ConfigWidgetFactory
 {
 public:
-    BuyDecision1ConfigWidgetFactoryMock() {}
+    BuyDecision1ConfigWidgetFactoryMock() : IBuyDecision1ConfigWidgetFactory() {}
     ~BuyDecision1ConfigWidgetFactoryMock() override = default;
 
     BuyDecision1ConfigWidgetFactoryMock(const BuyDecision1ConfigWidgetFactoryMock &another) = delete;

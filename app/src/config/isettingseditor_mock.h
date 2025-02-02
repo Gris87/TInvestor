@@ -11,7 +11,7 @@
 class SettingsEditorMock : public ISettingsEditor
 {
 public:
-    SettingsEditorMock() {}
+    SettingsEditorMock() : ISettingsEditor() {}
     ~SettingsEditorMock() override = default;
 
     SettingsEditorMock(const SettingsEditorMock &another) = delete;

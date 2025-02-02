@@ -11,7 +11,7 @@
 class BuyDecision1ConfigMock : public IBuyDecision1Config
 {
 public:
-    BuyDecision1ConfigMock() {}
+    BuyDecision1ConfigMock() : IBuyDecision1Config() {}
     ~BuyDecision1ConfigMock() override = default;
 
     BuyDecision1ConfigMock(const BuyDecision1ConfigMock &another) = delete;

@@ -11,7 +11,7 @@
 class TrayIconFactoryMock : public ITrayIconFactory
 {
 public:
-    TrayIconFactoryMock() {}
+    TrayIconFactoryMock() : ITrayIconFactory() {}
     ~TrayIconFactoryMock() override = default;
 
     TrayIconFactoryMock(const TrayIconFactoryMock &another) = delete;

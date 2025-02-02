@@ -51,9 +51,9 @@ MainWindow::MainWindow(
 
     ITrayIcon *trayIcon = trayIconFactory->newInstance(this);
 
-    connect(trayIcon, SIGNAL(trayIconClicked(QSystemTrayIcon::ActivationReason reason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason reason)));
-    connect(trayIcon, SIGNAL(trayIconShowClicked()), this, SLOT(trayIconShowClicked()));
-    connect(trayIcon, SIGNAL(trayIconExitClicked()), this, SLOT(trayIconExitClicked()));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon, SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(trayIcon, SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
 
     trayIcon->show();
 

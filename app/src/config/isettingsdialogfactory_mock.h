@@ -11,7 +11,7 @@
 class SettingsDialogFactoryMock : public ISettingsDialogFactory
 {
 public:
-    SettingsDialogFactoryMock() {}
+    SettingsDialogFactoryMock() : ISettingsDialogFactory() {}
     ~SettingsDialogFactoryMock() override = default;
 
     SettingsDialogFactoryMock(const SettingsDialogFactoryMock &another) = delete;

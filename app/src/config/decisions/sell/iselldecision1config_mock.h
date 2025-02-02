@@ -11,7 +11,7 @@
 class SellDecision1ConfigMock : public ISellDecision1Config
 {
 public:
-    SellDecision1ConfigMock() {}
+    SellDecision1ConfigMock() : ISellDecision1Config() {}
     ~SellDecision1ConfigMock() override = default;
 
     SellDecision1ConfigMock(const SellDecision1ConfigMock &another) = delete;

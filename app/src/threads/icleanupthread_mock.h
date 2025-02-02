@@ -11,7 +11,7 @@
 class CleanupThreadMock : public ICleanupThread
 {
 public:
-    CleanupThreadMock() {}
+    CleanupThreadMock() : ICleanupThread() {}
     ~CleanupThreadMock() override = default;
 
     CleanupThreadMock(const CleanupThreadMock &another) = delete;

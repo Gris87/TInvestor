@@ -11,7 +11,7 @@
 class DecisionMakerConfigMock : public IDecisionMakerConfig
 {
 public:
-    DecisionMakerConfigMock() {}
+    DecisionMakerConfigMock() : IDecisionMakerConfig() {}
     ~DecisionMakerConfigMock() override = default;
 
     DecisionMakerConfigMock(const DecisionMakerConfigMock &another) = delete;

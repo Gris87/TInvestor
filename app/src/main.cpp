@@ -167,7 +167,7 @@ int runApplication(int argc, char *argv[])
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
     StocksDatabase stocksDatabase;
-    CleanupThread cleanupThread;
+    CleanupThread cleanupThread(&stocksDatabase);
     RefreshThread refreshThread;
 
     MainWindow mainWindow(

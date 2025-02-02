@@ -4,8 +4,9 @@
 
 
 
-CleanupThread::CleanupThread(QObject *parent) :
-    ICleanupThread(parent)
+CleanupThread::CleanupThread(IStocksDatabase *stocksDatabase, QObject *parent) :
+    ICleanupThread(parent),
+    mStocksDatabase(stocksDatabase)
 {
     qDebug() << "Create CleanupThread";
 }

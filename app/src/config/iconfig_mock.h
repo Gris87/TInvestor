@@ -11,7 +11,7 @@
 class ConfigMock : public IConfig
 {
 public:
-    ConfigMock() {}
+    ConfigMock() : IConfig() {}
     ~ConfigMock() override = default;
 
     ConfigMock(const ConfigMock &another) = delete;

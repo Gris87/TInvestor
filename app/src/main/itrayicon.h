@@ -8,6 +8,8 @@
 
 class ITrayIcon : public QSystemTrayIcon
 {
+    Q_OBJECT
+
 public:
     explicit ITrayIcon(QWidget *parent = nullptr) : QSystemTrayIcon(reinterpret_cast<QObject *>(parent)) {}
     virtual ~ITrayIcon() = default;
@@ -16,7 +18,6 @@ public:
     ITrayIcon& operator=(const ITrayIcon &another) = delete;
 
 signals:
-    void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
 };

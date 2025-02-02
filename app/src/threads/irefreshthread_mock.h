@@ -11,7 +11,7 @@
 class RefreshThreadMock : public IRefreshThread
 {
 public:
-    RefreshThreadMock() {}
+    RefreshThreadMock() : IRefreshThread() {}
     ~RefreshThreadMock() override = default;
 
     RefreshThreadMock(const RefreshThreadMock &another) = delete;
