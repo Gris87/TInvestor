@@ -9,8 +9,9 @@
 
 
 MainWindow::MainWindow(
-    IConfig *сonfig,
-    IConfig *сonfigForSettingsDialog,
+    IConfig *config,
+    IConfig *configForSettingsDialog,
+    ISettingsDialogFactory *settingsDialogFactory,
     IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
     IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
@@ -28,8 +29,9 @@ MainWindow::MainWindow(
     ui(new Ui::MainWindow),
     cleanupTimer(new QTimer(this)),
     refreshTimer(new QTimer(this)),
-    mConfig(сonfig),
-    mConfigForSettingsDialog(сonfigForSettingsDialog),
+    mConfig(config),
+    mConfigForSettingsDialog(configForSettingsDialog),
+    mSettingsDialogFactory(settingsDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
     mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
     mBuyDecision2ConfigWidgetFactory(buyDecision2ConfigWidgetFactory),
@@ -183,7 +185,7 @@ void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
 
-    SettingsDialog dialog(
+    ISettingsDialog *dialog = mSettingsDialogFactory->newInstance(
         mConfigForSettingsDialog,
         mDecisionMakerConfigWidgetFactory,
         mBuyDecision1ConfigWidgetFactory,
@@ -194,9 +196,9 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision3ConfigWidgetFactory,
         this
     );
-    dialog.updateUiFromConfig();
+    dialog->updateUiFromConfig();
 
-    if (dialog.exec())
+    if (dialog->exec())
     {
         qInfo() << "Settings applied";
 
@@ -205,6 +207,8 @@ void MainWindow::on_actionSettings_triggered()
 
         applyConfig();
     }
+
+    delete dialog;
 }
 
 void MainWindow::init()

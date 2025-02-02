@@ -18,4 +18,5 @@ public:
     SettingsDialogMock& operator=(const SettingsDialogMock &another) = delete;
 
     MOCK_METHOD0(updateUiFromConfig, void());
+    MOCK_METHOD0(exec, int());
 };

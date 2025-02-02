@@ -20,6 +20,7 @@
 #include "src/config/decisions/sell/selldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3configwidgetfactory.h"
+#include "src/config/settingsdialogfactory.h"
 #include "src/config/settingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/logger/logger.h"
@@ -148,8 +149,10 @@ int runApplication(int argc, char *argv[])
         &autoPilotSellDecision3ConfigForSettingsDialog
     );
 
-    Config сonfig(&simulatorConfig, &autoPilotConfig);
-    Config сonfigForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
+    Config config(&simulatorConfig, &autoPilotConfig);
+    Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
+
+    SettingsDialogFactory settingsDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
@@ -168,8 +171,9 @@ int runApplication(int argc, char *argv[])
     RefreshThread refreshThread;
 
     MainWindow mainWindow(
-        &сonfig,
-        &сonfigForSettingsDialog,
+        &config,
+        &configForSettingsDialog,
+        &settingsDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,
         &buyDecision2ConfigWidgetFactory,

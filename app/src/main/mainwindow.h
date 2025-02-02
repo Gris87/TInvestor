@@ -9,6 +9,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
+#include "src/config/isettingsdialogfactory.h"
 #include "src/config/isettingseditor.h"
 #include "src/db/stocks/istocksdatabase.h"
 #include "src/main/itrayiconfactory.h"
@@ -31,8 +32,9 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(
-        IConfig *сonfig,
-        IConfig *сonfigForSettingsDialog,
+        IConfig *config,
+        IConfig *configForSettingsDialog,
+        ISettingsDialogFactory *settingsDialogFactory,
         IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
@@ -67,6 +69,7 @@ private:
 
     IConfig                           *mConfig;
     IConfig                           *mConfigForSettingsDialog;
+    ISettingsDialogFactory            *mSettingsDialogFactory;
     IDecisionMakerConfigWidgetFactory *mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory  *mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory  *mBuyDecision2ConfigWidgetFactory;

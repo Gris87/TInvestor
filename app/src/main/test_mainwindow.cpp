@@ -12,6 +12,8 @@
 #include "src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
+#include "src/config/isettingsdialog_mock.h"
+#include "src/config/isettingsdialogfactory_mock.h"
 #include "src/config/isettingseditor_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
 #include "src/main/itrayicon_mock.h"
@@ -34,7 +36,8 @@ protected:
     void SetUp()
     {
         configMock                           = new StrictMock<ConfigMock>();
-        сonfigForSettingsDialogMock          = new StrictMock<ConfigMock>();
+        configForSettingsDialogMock          = new StrictMock<ConfigMock>();
+        settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
         buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
@@ -61,7 +64,8 @@ protected:
 
         mainWindow = new MainWindow(
             configMock,
-            сonfigForSettingsDialogMock,
+            configForSettingsDialogMock,
+            settingsDialogFactoryMock,
             decisionMakerConfigWidgetFactoryMock,
             buyDecision1ConfigWidgetFactoryMock,
             buyDecision2ConfigWidgetFactoryMock,
@@ -85,7 +89,8 @@ protected:
 
         delete mainWindow;
         delete configMock;
-        delete сonfigForSettingsDialogMock;
+        delete configForSettingsDialogMock;
+        delete settingsDialogFactoryMock;
         delete decisionMakerConfigWidgetFactoryMock;
         delete buyDecision1ConfigWidgetFactoryMock;
         delete buyDecision2ConfigWidgetFactoryMock;
@@ -103,7 +108,8 @@ protected:
 
     MainWindow                                       *mainWindow;
     StrictMock<ConfigMock>                           *configMock;
-    StrictMock<ConfigMock>                           *сonfigForSettingsDialogMock;
+    StrictMock<ConfigMock>                           *configForSettingsDialogMock;
+    StrictMock<SettingsDialogFactoryMock>            *settingsDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock> *decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>  *buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>  *buyDecision2ConfigWidgetFactoryMock;
@@ -243,6 +249,31 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
 
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
+    StrictMock<SettingsDialogMock> *settingsDialogMock = new StrictMock<SettingsDialogMock>();
+
+    EXPECT_CALL(*configForSettingsDialogMock, assign(configMock));
+    EXPECT_CALL(*settingsDialogFactoryMock, newInstance(
+        configForSettingsDialogMock,
+        decisionMakerConfigWidgetFactoryMock,
+        buyDecision1ConfigWidgetFactoryMock,
+        buyDecision2ConfigWidgetFactoryMock,
+        buyDecision3ConfigWidgetFactoryMock,
+        sellDecision1ConfigWidgetFactoryMock,
+        sellDecision2ConfigWidgetFactoryMock,
+        sellDecision3ConfigWidgetFactoryMock,
+        NotNull()
+    )).WillOnce(Return(settingsDialogMock));
+    EXPECT_CALL(*settingsDialogMock, updateUiFromConfig());
+
+    EXPECT_CALL(*settingsDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*configMock, assign(configForSettingsDialogMock));
+    EXPECT_CALL(*configMock, save(settingsEditorMock));
+
+    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+
+    mainWindow->ui->actionSettings->trigger();
+
+    ASSERT_EQ(mainWindow->refreshTimer->interval(), 120000);
 }
 
 TEST_F(Test_MainWindow, Test_init)
