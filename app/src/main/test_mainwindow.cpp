@@ -174,6 +174,8 @@ TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 
     mainWindow->refreshTimerTicked();
     mainWindow->cleanupTimerTicked();
+
+    cleanupThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_refreshTimerTicked)
@@ -187,6 +189,8 @@ TEST_F(Test_MainWindow, Test_refreshTimerTicked)
     mainWindow->refreshTimerTicked();
 
     ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+
+    refreshThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionRefreshManually_triggered)
@@ -200,6 +204,8 @@ TEST_F(Test_MainWindow, Test_on_actionRefreshManually_triggered)
     mainWindow->ui->actionRefreshManually->trigger();
 
     ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+
+    refreshThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -233,4 +239,28 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
     ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), false);
     ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
     ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), true);
+}
+
+TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
+{
+}
+
+TEST_F(Test_MainWindow, Test_init)
+{
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+
+    EXPECT_CALL(*stocksDatabaseMock, readStocks()).WillOnce(Return(QList<Stock>()));
+
+    EXPECT_CALL(*cleanupThreadMock, process());
+    EXPECT_CALL(*refreshThreadMock, process());
+
+    mainWindow->init();
+
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+
+    refreshThreadMock->wait();
 }

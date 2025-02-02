@@ -26,6 +26,8 @@ MainWindow::MainWindow(
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
+    cleanupTimer(new QTimer(this)),
+    refreshTimer(new QTimer(this)),
     mConfig(сonfig),
     mConfigForSettingsDialog(сonfigForSettingsDialog),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
@@ -39,8 +41,6 @@ MainWindow::MainWindow(
     mStocksDatabase(stocksDatabase),
     mCleanupThread(cleanupThread),
     mRefreshThread(refreshThread),
-    cleanupTimer(new QTimer(this)),
-    refreshTimer(new QTimer(this)),
     mStocks()
 {
     qDebug() << "Create MainWindow";
