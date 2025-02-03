@@ -15,7 +15,7 @@ public:
     StocksStorage(const StocksStorage &another) = delete;
     StocksStorage& operator=(const StocksStorage &another) = delete;
 
-    QList<Stock>& getStocks() override;
+    QList<Stock>* getStocks() override;
     void readFromDatabase(IStocksDatabase *stocksDatabase) override;
 
 private:

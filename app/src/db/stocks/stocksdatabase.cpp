@@ -107,16 +107,16 @@ QList<Stock> StocksDatabase::readStocks()
     return res;
 }
 
-void StocksDatabase::readStocksData(QList<Stock> &stocks)
+void StocksDatabase::readStocksData(QList<Stock> *stocks)
 {
     qDebug() << "Reading stocks dstatus from database";
 
     bool ok = db.transaction();
     Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
 
-    for (int i = 0; i < stocks.size(); ++i)
+    for (int i = 0; i < stocks->size(); ++i)
     {
-        Stock &stock = stocks[i];
+        Stock &stock = (*stocks)[i];
 
         QString str = QString("SELECT timestamp, value FROM %1;").arg(stock.name);
 

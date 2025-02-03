@@ -21,5 +21,8 @@ void CleanupThread::process()
 {
     qDebug() << "Running CleanupThread";
 
+    QList<Stock> *stocks = mStocksStorage->getStocks();
+    mStocksDatabase->readStocksData(stocks);
+
     qDebug() << "Finish CleanupThread";
 }

@@ -15,6 +15,6 @@ public:
     IStocksStorage(const IStocksStorage &another) = delete;
     IStocksStorage& operator=(const IStocksStorage &another) = delete;
 
-    virtual QList<Stock>& getStocks() = 0;
+    virtual QList<Stock>* getStocks() = 0;
     virtual void readFromDatabase(IStocksDatabase *stocksDatabase) = 0;
 };

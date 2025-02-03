@@ -19,7 +19,7 @@ public:
 
     void createStockTable(const QString &name) override;
     QList<Stock> readStocks() override;
-    void readStocksData(QList<Stock> &stocks) override;
+    void readStocksData(QList<Stock> *stocks) override;
     void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks) override;
 
     QSqlDatabase db;

@@ -44,5 +44,10 @@ TEST_F(Test_CleanupThread, Test_constructor_and_destructor)
 
 TEST_F(Test_CleanupThread, Test_process)
 {
+    QList<Stock> stocks;
+
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(Return(&stocks));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(&stocks));
+
     thread->process();
 }

@@ -15,9 +15,9 @@ StocksStorage::~StocksStorage()
     qDebug() << "Destroy StocksStorage";
 }
 
-QList<Stock>& StocksStorage::getStocks()
+QList<Stock>* StocksStorage::getStocks()
 {
-    return mStocks;
+    return &mStocks;
 }
 
 void StocksStorage::readFromDatabase(IStocksDatabase *stocksDatabase)

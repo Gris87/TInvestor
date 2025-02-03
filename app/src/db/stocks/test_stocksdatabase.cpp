@@ -151,7 +151,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
 
-    database->readStocksData(stocks);
+    database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
@@ -218,7 +218,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
 
-    database->readStocksData(stocks);
+    database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
@@ -265,7 +265,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
 
     database->deleteObsoleteData(200, stocks);
-    database->readStocksData(stocks);
+    database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
@@ -306,7 +306,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   100, 0.001f);
 
     database->deleteObsoleteData(400, stocks);
-    database->readStocksData(stocks);
+    database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
