@@ -19,13 +19,13 @@ StocksDatabase::StocksDatabase() :
     QString appDir = qApp->applicationDirPath();
 
     bool ok = QDir().mkpath(appDir + "/data/db");
-    Q_ASSERT_X(ok, "StocksDatabase", "Failed to create dir");
+    Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 
     QString dbPath = appDir + "/data/db/stocks.db";
     db.setDatabaseName(dbPath);
 
     ok = db.open();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", db.lastError().text().toLocal8Bit().constData());
 
     qInfo() << "Stocks database" << dbPath << "created";
 
@@ -53,7 +53,7 @@ void StocksDatabase::createListTable()
     QSqlQuery query(db);
 
     bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::createListTable()", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::createStockTable(const QString &name)
@@ -71,7 +71,7 @@ void StocksDatabase::createStockTable(const QString &name)
     QSqlQuery query(db);
 
     bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::createStockTable()", db.lastError().text().toLocal8Bit().constData());
 }
 
 QList<Stock> StocksDatabase::readStocks()
@@ -83,7 +83,7 @@ QList<Stock> StocksDatabase::readStocks()
     QSqlQuery query(db);
 
     bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::readStocks()", db.lastError().text().toLocal8Bit().constData());
 
     QSqlRecord rec = query.record();
 
@@ -112,7 +112,7 @@ void StocksDatabase::readStocksData(QList<Stock> *stocks)
     qDebug() << "Reading stocks dstatus from database";
 
     bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
 
     for (int i = 0; i < stocks->size(); ++i)
     {
@@ -123,7 +123,7 @@ void StocksDatabase::readStocksData(QList<Stock> *stocks)
         QSqlQuery query(db);
 
         ok = query.exec(str);
-        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+        Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
 
         QSqlRecord rec = query.record();
 
@@ -134,14 +134,16 @@ void StocksDatabase::readStocksData(QList<Stock> *stocks)
         int j = dataSize - 1;
 
         stock.data.reserve(dataSize + amountOfDataPerDay);
-        stock.data.resize(dataSize);
+        stock.data.resizeForOverwrite(dataSize);
+
+        StockData *stockDataArray = const_cast<StockData *>(stock.data.constData());
 
         while (j >= 0)
         {
-            StockData &stockData = stock.data[j];
+            StockData *stockData = &stockDataArray[j];
 
-            stockData.timestamp = query.value(timestampIndex).toLongLong();
-            stockData.value     = query.value(valueIndex).toFloat();
+            stockData->timestamp = query.value(timestampIndex).toLongLong();
+            stockData->value     = query.value(valueIndex).toFloat();
 
             query.previous();
             --j;
@@ -151,7 +153,7 @@ void StocksDatabase::readStocksData(QList<Stock> *stocks)
     }
 
     ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks)
@@ -159,7 +161,7 @@ void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<St
     qDebug() << "Deleting obsolete stocks data";
 
     bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
 
     for (int i = 0; i < stocks.size(); ++i)
     {
@@ -168,17 +170,17 @@ void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<St
         QSqlQuery query(db);
 
         ok = query.exec(str);
-        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+        Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
     }
 
     ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
 }
 
 void StocksDatabase::fillWithTestData() // TODO: Remove me
 {
     bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
 
     QVariantList names;
     QVariantList fullnames;
@@ -201,7 +203,7 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
     query.addBindValue(fullnames);
 
     ok = !query.execBatch();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
 
     for (int i = 0; i < 100; ++i)
     {
@@ -223,9 +225,9 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
         query.addBindValue(values);
 
         ok = query.execBatch();
-        Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+        Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
     }
 
     ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
 }

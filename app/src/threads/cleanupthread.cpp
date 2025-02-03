@@ -1,5 +1,6 @@
 #include "cleanupthread.h"
 
+#include <QDateTime>
 #include <QDebug>
 
 
@@ -21,8 +22,12 @@ void CleanupThread::process()
 {
     qDebug() << "Running CleanupThread";
 
+    qint64 startTime = QDateTime::currentMSecsSinceEpoch(); // TODO: Remove it
+
     QList<Stock> *stocks = mStocksStorage->getStocks();
     mStocksDatabase->readStocksData(stocks);
+
+    qInfo() << "AAAAAAAAA" << QDateTime::currentMSecsSinceEpoch() - startTime; // TODO: Remove it
 
     qDebug() << "Finish CleanupThread";
 }
