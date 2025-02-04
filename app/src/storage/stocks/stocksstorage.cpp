@@ -22,5 +22,5 @@ QList<Stock>* StocksStorage::getStocks()
 
 void StocksStorage::readFromDatabase(IStocksDatabase *stocksDatabase)
 {
-    mStocks = stocksDatabase->readStocks();
+    mStocks = stocksDatabase->readStocksMeta();
 }

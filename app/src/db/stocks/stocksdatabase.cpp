@@ -11,93 +11,43 @@ const int amountOfDataPerDay = 24 * 60;
 
 
 StocksDatabase::StocksDatabase() :
-    IStocksDatabase(),
-    db(QSqlDatabase::addDatabase("QSQLITE"))
+    IStocksDatabase()
 {
     qDebug() << "Create StocksDatabase";
 
-    QString appDir = qApp->applicationDirPath();
-
-    bool ok = QDir().mkpath(appDir + "/data/db");
+    bool ok = QDir().mkpath(qApp->applicationDirPath() + "/data/db/stocks");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 
-    QString dbPath = appDir + "/data/db/stocks.db";
-    db.setDatabaseName(dbPath);
-
-    ok = db.open();
-    Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", db.lastError().text().toLocal8Bit().constData());
-
-    qInfo() << "Stocks database" << dbPath << "created";
-
-    createListTable();
     // fillWithTestData();
 }
 
 StocksDatabase::~StocksDatabase()
 {
     qDebug() << "Destroy StocksDatabase";
-
-    db.close();
 }
 
-void StocksDatabase::createListTable()
-{
-    qDebug() << "Create table with list of stocks";
-
-    QString str = "CREATE TABLE IF NOT EXISTS stocks ("
-                  "    id       INTEGER PRIMARY KEY AUTOINCREMENT, "
-                  "    name     VARCHAR(255), "
-                  "    fullname VARCHAR(255)"
-                  ");";
-
-    QSqlQuery query(db);
-
-    bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase::createListTable()", db.lastError().text().toLocal8Bit().constData());
-}
-
-void StocksDatabase::createStockTable(const QString &name)
-{
-    qDebug() << "Create table:" << name;
-
-    QString str = "CREATE TABLE IF NOT EXISTS %1 ("
-                  "    id        INTEGER PRIMARY KEY AUTOINCREMENT, "
-                  "    timestamp INTEGER, "
-                  "    value     REAL"
-                  ");";
-
-    str = str.arg(name);
-
-    QSqlQuery query(db);
-
-    bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase::createStockTable()", db.lastError().text().toLocal8Bit().constData());
-}
-
-QList<Stock> StocksDatabase::readStocks()
+QList<Stock> StocksDatabase::readStocksMeta()
 {
     qDebug() << "Reading stocks from database";
 
-    QString str = "SELECT name, fullname FROM stocks ORDER BY name;";
-
-    QSqlQuery query(db);
-
-    bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "StocksDatabase::readStocks()", db.lastError().text().toLocal8Bit().constData());
-
-    QSqlRecord rec = query.record();
-
-    int nameIndex     = rec.indexOf("name");
-    int fullnameIndex = rec.indexOf("fullname");
-
     QList<Stock> res;
 
-    while (query.next())
+    QFile stocksFile(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+
+    bool ok = stocksFile.open(QIODevice::ReadOnly);
+    Q_ASSERT_X(ok, "StocksDatabase::readStocksMeta()", "Failed to open file");
+
+    QString stockStr = QString::fromUtf8(stocksFile.readAll());
+    stocksFile.close();
+
+    QStringList stockLines = stockStr.split('\n');
+
+    for (int i = 0 ; i < stockLines.size() - 1; i += 2)
     {
         Stock stock;
 
-        stock.name     = query.value(nameIndex).toString();
-        stock.fullname = query.value(fullnameIndex).toString();
+        stock.name     = stockLines.at(i);
+        stock.fullname = stockLines.at(i + 1);
 
         res.append(stock);
 
@@ -111,123 +61,142 @@ void StocksDatabase::readStocksData(QList<Stock> *stocks)
 {
     qDebug() << "Reading stocks dstatus from database";
 
-    bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
+    QString appDir = qApp->applicationDirPath();
 
     for (int i = 0; i < stocks->size(); ++i)
     {
         Stock &stock = (*stocks)[i];
 
-        QString str = QString("SELECT timestamp, value FROM %1;").arg(stock.name);
+        QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
 
-        QSqlQuery query(db);
+        bool ok = stockDataFile.open(QIODevice::ReadOnly);
+        Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", "Failed to open file");
 
-        ok = query.exec(str);
-        Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
-
-        QSqlRecord rec = query.record();
-
-        int timestampIndex = rec.indexOf("timestamp");
-        int valueIndex     = rec.indexOf("value");
-
-        int dataSize = query.last() ? query.at() + 1 : 0;
-        int j = dataSize - 1;
+        qsizetype dataSize = stockDataFile.size() / sizeof(StockData);
 
         stock.data.reserve(dataSize + amountOfDataPerDay);
         stock.data.resizeForOverwrite(dataSize);
 
-        StockData *stockDataArray = const_cast<StockData *>(stock.data.constData());
-
-        while (j >= 0)
-        {
-            StockData *stockData = &stockDataArray[j];
-
-            stockData->timestamp = query.value(timestampIndex).toLongLong();
-            stockData->value     = query.value(valueIndex).toFloat();
-
-            query.previous();
-            --j;
-        }
+        stockDataFile.read(reinterpret_cast<char *>(stock.data.data()), stockDataFile.size());
+        stockDataFile.close();
 
         qDebug() << "Read stock data" << stock.name;
     }
-
-    ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", db.lastError().text().toLocal8Bit().constData());
 }
 
-void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks)
+void StocksDatabase::writeStocksMeta(QList<Stock> *stocks)
+{
+    qDebug() << "Writing stocks to database";
+
+    QString stocksStr;
+
+    for (int i = 0; i < stocks->size(); ++i)
+    {
+        const Stock &stock = stocks->at(i);
+
+        stocksStr += stock.name + "\n";
+        stocksStr += stock.fullname + "\n";
+    }
+
+    QFile stocksFile(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+
+    bool ok = stocksFile.open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, "StocksDatabase::writeStocksMeta()", "Failed to open file");
+
+    stocksFile.write(stocksStr.toUtf8());
+    stocksFile.close();
+}
+
+void StocksDatabase::appendStockData(Stock *stock)
+{
+    QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name));
+
+    bool ok = stockDataFile.open(QIODevice::Append);
+    Q_ASSERT_X(ok, "StocksDatabase::appendStockData()", "Failed to open file");
+
+    stockDataFile.write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
+    stockDataFile.close();
+}
+
+void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock> *stocks)
 {
     qDebug() << "Deleting obsolete stocks data";
 
-    bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
-
-    for (int i = 0; i < stocks.size(); ++i)
+    for (int i = 0; i < stocks->size(); ++i)
     {
-        QString str = QString("DELETE FROM %1 WHERE timestamp < %2;").arg(stocks.at(i).name).arg(obsoleteTimestamp);
+        Stock *stock = &(*stocks)[i];
+        qint64 index = 0;
 
-        QSqlQuery query(db);
+        while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
+        {
+            ++index;
+        }
 
-        ok = query.exec(str);
-        Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
+        if (index > 0)
+        {
+            stock->data.remove(0, index);
+
+            writeStockData(stock);
+        }
     }
+}
 
-    ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase::deleteObsoleteData()", db.lastError().text().toLocal8Bit().constData());
+void StocksDatabase::writeStockData(Stock *stock)
+{
+    QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name));
+
+    bool ok = stockDataFile.open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, "StocksDatabase::writeStockData()", "Failed to open file");
+
+    stockDataFile.write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
+    stockDataFile.close();
 }
 
 void StocksDatabase::fillWithTestData() // TODO: Remove me
 {
-    bool ok = db.transaction();
-    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
-
-    QVariantList names;
-    QVariantList fullnames;
+    QString stocksStr;
 
     for (int i = 0; i < 100; ++i)
     {
-        qInfo() << i;
-
-        QString stockName = QString("AZAZ%1").arg(i);
-        createStockTable(stockName);
-
-        names << stockName;
-        fullnames << "BLAH";
+        stocksStr += QString("AZAZ%1\n").arg(i);
+        stocksStr += "BLAH\n";
     }
 
-    QSqlQuery query(db);
+    QString appDir = qApp->applicationDirPath();
 
-    query.prepare("INSERT INTO stocks (name, fullname) VALUES (?, ?);");
-    query.addBindValue(names);
-    query.addBindValue(fullnames);
+    QFile stocksFile(appDir + "/data/db/stocks/stocks.lst");
 
-    ok = !query.execBatch();
-    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
+    bool ok = stocksFile.open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
+
+    stocksFile.write(stocksStr.toUtf8());
+    stocksFile.close();
+
+
+
+    int dataSize = 2 * 365 * 24 * 60;
+    QList<StockData> stockDataList(dataSize);
+
+    StockData *stockDataArray = stockDataList.data();
 
     for (int i = 0; i < 100; ++i)
     {
         qInfo() << i;
 
-        QVariantList timestamps;
-        QVariantList values;
-
-        for (int j = 0; j < 2 * 365 * 24 * 60; ++j)
+        for (int j = 0; j < dataSize; ++j)
         {
-            timestamps << 1672520400 + j * 60;
-            values << i * j;
+            StockData *stockData = &stockDataArray[j];
+
+            stockData->timestamp = 1672520400 + j * 60;
+            stockData->value = i * j;
         }
 
-        QSqlQuery query(db);
+        QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
 
-        query.prepare(QString("INSERT INTO AZAZ%1 (timestamp, value) VALUES (?, ?);").arg(i));
-        query.addBindValue(timestamps);
-        query.addBindValue(values);
+        bool ok = stockDataFile.open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
 
-        ok = query.execBatch();
-        Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
+        stockDataFile.write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
+        stockDataFile.close();
     }
-
-    ok = db.commit();
-    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", db.lastError().text().toLocal8Bit().constData());
 }

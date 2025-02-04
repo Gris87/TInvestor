@@ -1,6 +1,8 @@
 #include "src/db/stocks/stocksdatabase.h"
 
 #include <gtest/gtest.h>
+#include <QCoreApplication>
+#include <QDir>
 
 
 
@@ -10,7 +12,7 @@ protected:
     void SetUp()
     {
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db").removeRecursively();
+        QDir(appDir + "/data/db/stocks").removeRecursively();
 
         database = new StocksDatabase();
 
@@ -22,34 +24,29 @@ protected:
         delete database;
 
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db").removeRecursively();
+        QDir(appDir + "/data/db/stocks").removeRecursively();
     }
 
     void fillWithData()
     {
-        ASSERT_TRUE(database->db.transaction());
-
-        QVariantList names;
-        QVariantList fullnames;
+        QString stocksStr;
 
         for (int i = 0; i < 3; ++i)
         {
-            qInfo() << i;
-
-            QString stockName = QString("AZAZ%1").arg(i);
-            database->createStockTable(stockName);
-
-            names << stockName;
-            fullnames << QString("BLAH %1").arg(i);
+            stocksStr += QString("AZAZ%1\n").arg(i);
+            stocksStr += QString("BLAH %1\n").arg(i);
         }
 
-        QSqlQuery query(database->db);
+        QString appDir = qApp->applicationDirPath();
 
-        query.prepare("INSERT INTO stocks (name, fullname) VALUES (?, ?);");
-        query.addBindValue(names);
-        query.addBindValue(fullnames);
+        QFile stocksFile(appDir + "/data/db/stocks/stocks.lst");
 
-        ASSERT_TRUE(query.execBatch());
+        ASSERT_TRUE(stocksFile.open(QIODevice::WriteOnly));
+
+        stocksFile.write(stocksStr.toUtf8());
+        stocksFile.close();
+
+
 
         QVariantList timestamps[3];
         QVariantList values[3];
@@ -65,16 +62,26 @@ protected:
 
         for (int i = 0; i < 3; ++i)
         {
-            QSqlQuery query(database->db);
+            int dataSize = timestamps[i].size();
+            QList<StockData> stockDataList(dataSize);
 
-            query.prepare(QString("INSERT INTO AZAZ%1 (timestamp, value) VALUES (?, ?);").arg(i));
-            query.addBindValue(timestamps[i]);
-            query.addBindValue(values[i]);
+            StockData *stockDataArray = stockDataList.data();
 
-            ASSERT_TRUE(query.execBatch());
+            for (int j = 0; j < dataSize; ++j)
+            {
+                StockData *stockData = &stockDataArray[j];
+
+                stockData->timestamp = timestamps[i][j].toLongLong();
+                stockData->value = values[i][j].toFloat();
+            }
+
+            QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
+
+            ASSERT_TRUE(stockDataFile.open(QIODevice::WriteOnly));
+
+            stockDataFile.write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
+            stockDataFile.close();
         }
-
-        ASSERT_TRUE(database->db.commit());
     }
 
     StocksDatabase *database;
@@ -86,33 +93,9 @@ TEST_F(Test_StocksDatabase, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_StocksDatabase, Test_createStockTable)
+TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
-    QStringList tables = database->db.tables();
-
-    ASSERT_EQ(tables.size(), 5);
-    ASSERT_EQ(tables.at(0),  "stocks");
-    ASSERT_EQ(tables.at(1),  "sqlite_sequence");
-    ASSERT_EQ(tables.at(2),  "AZAZ0");
-    ASSERT_EQ(tables.at(3),  "AZAZ1");
-    ASSERT_EQ(tables.at(4),  "AZAZ2");
-
-    database->createStockTable("TEST");
-
-    tables = database->db.tables();
-
-    ASSERT_EQ(tables.size(), 6);
-    ASSERT_EQ(tables.at(0),  "stocks");
-    ASSERT_EQ(tables.at(1),  "sqlite_sequence");
-    ASSERT_EQ(tables.at(2),  "AZAZ0");
-    ASSERT_EQ(tables.at(3),  "AZAZ1");
-    ASSERT_EQ(tables.at(4),  "AZAZ2");
-    ASSERT_EQ(tables.at(5),  "TEST");
-}
-
-TEST_F(Test_StocksDatabase, Test_readStocks)
-{
-    QList<Stock> stocks = database->readStocks();
+    QList<Stock> stocks = database->readStocksMeta();
 
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
@@ -133,7 +116,7 @@ TEST_F(Test_StocksDatabase, Test_readStocks)
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
-    QList<Stock> stocks = database->readStocks();
+    QList<Stock> stocks = database->readStocksMeta();
 
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
@@ -200,7 +183,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
 TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 {
-    QList<Stock> stocks = database->readStocks();
+    QList<Stock> stocks = database->readStocksMeta();
 
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
@@ -264,7 +247,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
 
-    database->deleteObsoleteData(200, stocks);
+    database->deleteObsoleteData(200, &stocks);
     database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                     3);
@@ -305,7 +288,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2).data.at(3).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   100, 0.001f);
 
-    database->deleteObsoleteData(400, stocks);
+    database->deleteObsoleteData(400, &stocks);
     database->readStocksData(&stocks);
 
     ASSERT_EQ(stocks.size(),                3);

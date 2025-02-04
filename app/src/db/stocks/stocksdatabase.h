@@ -4,8 +4,6 @@
 
 #include "src/db/stocks/istocksdatabase.h"
 
-#include <QtSql>
-
 
 
 class StocksDatabase : public IStocksDatabase
@@ -17,14 +15,13 @@ public:
     StocksDatabase(const StocksDatabase &another) = delete;
     StocksDatabase& operator=(const StocksDatabase &another) = delete;
 
-    void createStockTable(const QString &name) override;
-    QList<Stock> readStocks() override;
+    QList<Stock> readStocksMeta() override;
     void readStocksData(QList<Stock> *stocks) override;
-    void deleteObsoleteData(qint64 obsoleteTimestamp, const QList<Stock> &stocks) override;
-
-    QSqlDatabase db;
+    void writeStocksMeta(QList<Stock> *stocks) override;
+    void appendStockData(Stock *stock) override;
+    void deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock> *stocks) override;
 
 private:
-    void createListTable();
+    void writeStockData(Stock *stock);
     void fillWithTestData();
 };
