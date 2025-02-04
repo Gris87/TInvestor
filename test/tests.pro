@@ -40,7 +40,7 @@ include(../app/TInvestor.pri)
 
 
 
-# find app/ -name test_\*.cpp | sed "s/app\///g"
+# find app/ -name test_\*.cpp | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     main.cpp \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/test_buydecision1configwidget.cpp \
@@ -73,11 +73,12 @@ SOURCES += \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
+    src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/refresh/test_refreshthread.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp
 
-# find app/ -name \*_mock.h | sed "s/app\///g"
+# find app/ -name \*_mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidget_mock.h \

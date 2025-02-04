@@ -3,7 +3,7 @@ INCLUDEPATH += $$PWD
 
 
 
-# find app/ -name \*.cpp | grep -ve test_ -ve app/src/main.cpp | sed "s/app\///g"
+# find app/ -name \*.cpp | grep -ve test_ -ve app/src/main.cpp | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     src/config/config.cpp \
     src/config/decisions/buy/buydecision1config/buydecision1config.cpp \
@@ -35,11 +35,12 @@ SOURCES += \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
+    src/threads/parallelhelper/parallelhelperthread.cpp \
     src/threads/refresh/refreshthread.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp
 
-# find app/ -name \*.h | grep -ve _mock.h | sed "s/app\///g"
+# find app/ -name \*.h | grep -ve _mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
     src/config/config.h \
     src/config/decisions/buy/buydecision1config/buydecision1config.h \
@@ -100,6 +101,7 @@ HEADERS += \
     src/storage/stocks/stocksstorage.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
+    src/threads/parallelhelper/parallelhelperthread.h \
     src/threads/refresh/irefreshthread.h \
     src/threads/refresh/refreshthread.h \
     src/widgets/trayicon/itrayicon.h \
@@ -107,7 +109,7 @@ HEADERS += \
     src/widgets/trayicon/trayicon.h \
     src/widgets/trayicon/trayiconfactory.h
 
-# find app/ -name \*.ui | sed "s/app\///g"
+# find app/ -name \*.ui | sed "s/app\///g" | sed "s/\.ui/\.ui \\\/g"
 FORMS += \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui \
     src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui \
