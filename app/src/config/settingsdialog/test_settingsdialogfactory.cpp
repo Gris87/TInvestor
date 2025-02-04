@@ -1,16 +1,16 @@
-#include "src/config/settingsdialogfactory.h"
+#include "src/config/settingsdialog/settingsdialogfactory.h"
 
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
-#include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
-#include "src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/decisions/idecisionmakerconfig_mock.h"
-#include "src/config/decisions/idecisionmakerconfigwidget_mock.h"
-#include "src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 
 

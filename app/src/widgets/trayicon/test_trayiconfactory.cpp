@@ -1,4 +1,4 @@
-#include "src/main/trayiconfactory.h"
+#include "src/widgets/trayicon/trayiconfactory.h"
 
 #include <gtest/gtest.h>
 

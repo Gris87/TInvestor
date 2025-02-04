@@ -3,7 +3,7 @@
 
 
 #include "src/config/decisions/idecisionmakerconfig.h"
-#include "src/config/isettingseditor.h"
+#include "src/config/settingseditor/isettingseditor.h"
 
 
 

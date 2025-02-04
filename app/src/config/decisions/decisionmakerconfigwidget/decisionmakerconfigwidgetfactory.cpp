@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "src/config/decisions/decisionmakerconfigwidget.h"
+#include "src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.h"
 
 
 

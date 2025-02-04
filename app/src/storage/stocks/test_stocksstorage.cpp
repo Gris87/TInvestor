@@ -1,4 +1,4 @@
-#include "src/storage/stocksstorage.h"
+#include "src/storage/stocks/stocksstorage.h"
 
 #include <gtest/gtest.h>
 

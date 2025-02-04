@@ -2,12 +2,12 @@
 
 
 
-#include "src/config/decisions/buy/ibuydecision1config.h"
-#include "src/config/decisions/buy/ibuydecision2config.h"
-#include "src/config/decisions/buy/ibuydecision3config.h"
-#include "src/config/decisions/sell/iselldecision1config.h"
-#include "src/config/decisions/sell/iselldecision2config.h"
-#include "src/config/decisions/sell/iselldecision3config.h"
+#include "src/config/decisions/buy/buydecision1config/ibuydecision1config.h"
+#include "src/config/decisions/buy/buydecision2config/ibuydecision2config.h"
+#include "src/config/decisions/buy/buydecision3config/ibuydecision3config.h"
+#include "src/config/decisions/sell/selldecision1config/iselldecision1config.h"
+#include "src/config/decisions/sell/selldecision2config/iselldecision2config.h"
+#include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
 
 
 

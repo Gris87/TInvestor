@@ -1,4 +1,4 @@
-#include "src/config/settingseditor.h"
+#include "src/config/settingseditor/settingseditor.h"
 
 #include <gtest/gtest.h>
 

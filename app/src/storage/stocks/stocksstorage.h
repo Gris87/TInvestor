@@ -2,7 +2,7 @@
 
 
 
-#include "src/storage/istocksstorage.h"
+#include "src/storage/stocks/istocksstorage.h"
 
 
 

@@ -2,14 +2,14 @@
 
 
 
-#include "src/config/decisions/idecisionmakerconfigwidget.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget.h"
 #include "src/config/decisions/idecisionmakerconfig.h"
-#include "src/config/decisions/buy/ibuydecision1configwidgetfactory.h"
-#include "src/config/decisions/buy/ibuydecision2configwidgetfactory.h"
-#include "src/config/decisions/buy/ibuydecision3configwidgetfactory.h"
-#include "src/config/decisions/sell/iselldecision1configwidgetfactory.h"
-#include "src/config/decisions/sell/iselldecision2configwidgetfactory.h"
-#include "src/config/decisions/sell/iselldecision3configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory.h"
+#include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory.h"
 
 
 

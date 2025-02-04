@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/buy/ibuydecision3configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory.h"
 
 
 

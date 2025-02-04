@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/config/decisions/sell/iselldecision1config.h"
+#include "src/config/decisions/sell/selldecision1config/iselldecision1config.h"
 
 
 

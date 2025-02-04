@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/isettingseditor.h"
+#include "src/config/settingseditor/isettingseditor.h"
 
 #include <QSettings>
 

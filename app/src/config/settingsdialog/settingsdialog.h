@@ -2,11 +2,11 @@
 
 
 
-#include "src/config/isettingsdialog.h"
+#include "src/config/settingsdialog/isettingsdialog.h"
 
 #include <QTime>
 
-#include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/iconfig.h"
 
 

@@ -2,7 +2,7 @@
 
 
 
-#include "src/main/itrayiconfactory.h"
+#include "src/widgets/trayicon/itrayiconfactory.h"
 
 #include <gmock/gmock.h>
 

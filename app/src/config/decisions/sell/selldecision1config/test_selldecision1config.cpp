@@ -1,8 +1,8 @@
-#include "src/config/decisions/sell/selldecision1config.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1config.h"
 
 #include <gtest/gtest.h>
 
-#include "src/config/isettingseditor_mock.h"
+#include "src/config/settingseditor/isettingseditor_mock.h"
 
 
 

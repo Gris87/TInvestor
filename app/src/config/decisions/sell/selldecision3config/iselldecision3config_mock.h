@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/sell/iselldecision3config.h"
+#include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
 
 #include <gmock/gmock.h>
 

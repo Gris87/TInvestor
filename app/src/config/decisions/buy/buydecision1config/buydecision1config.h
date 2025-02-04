@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/buy/ibuydecision1config.h"
+#include "src/config/decisions/buy/buydecision1config/ibuydecision1config.h"
 
 #include <QMutex>
 

@@ -1,4 +1,4 @@
-#include "src/main/trayicon.h"
+#include "src/widgets/trayicon/trayicon.h"
 
 #include <gtest/gtest.h>
 #include <QMenu>

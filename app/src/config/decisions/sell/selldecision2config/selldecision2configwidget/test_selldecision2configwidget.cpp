@@ -1,9 +1,9 @@
-#include "src/config/decisions/sell/selldecision2configwidget.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.h"
 #include "ui_selldecision2configwidget.h"
 
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/sell/iselldecision2config_mock.h"
+#include "src/config/decisions/sell/selldecision2config/iselldecision2config_mock.h"
 
 
 

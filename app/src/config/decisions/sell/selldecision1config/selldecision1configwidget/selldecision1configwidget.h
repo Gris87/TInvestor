@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/sell/iselldecision1configwidget.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidget.h"
 
 
 

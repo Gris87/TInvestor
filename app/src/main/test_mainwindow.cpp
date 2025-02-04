@@ -4,23 +4,23 @@
 #include <gtest/gtest.h>
 #include <QtCore/private/qcoreapplication_p.h>
 
-#include "src/config/decisions/buy/ibuydecision1configwidgetfactory_mock.h"
-#include "src/config/decisions/buy/ibuydecision2configwidgetfactory_mock.h"
-#include "src/config/decisions/buy/ibuydecision3configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision1configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision2configwidgetfactory_mock.h"
-#include "src/config/decisions/sell/iselldecision3configwidgetfactory_mock.h"
-#include "src/config/decisions/idecisionmakerconfigwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
-#include "src/config/isettingsdialog_mock.h"
-#include "src/config/isettingsdialogfactory_mock.h"
-#include "src/config/isettingseditor_mock.h"
+#include "src/config/settingsdialog/isettingsdialog_mock.h"
+#include "src/config/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/config/settingseditor/isettingseditor_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
-#include "src/main/itrayicon_mock.h"
-#include "src/main/itrayiconfactory_mock.h"
-#include "src/storage/istocksstorage_mock.h"
-#include "src/threads/icleanupthread_mock.h"
-#include "src/threads/irefreshthread_mock.h"
+#include "src/widgets/trayicon/itrayicon_mock.h"
+#include "src/widgets/trayicon/itrayiconfactory_mock.h"
+#include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/threads/cleanup/icleanupthread_mock.h"
+#include "src/threads/refresh/irefreshthread_mock.h"
 
 
 

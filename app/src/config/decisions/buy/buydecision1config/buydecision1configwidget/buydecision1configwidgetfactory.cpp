@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "src/config/decisions/buy/buydecision1configwidget.h"
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.h"
 
 
 

@@ -8,14 +8,14 @@
 #include <QTimer>
 
 #include "src/config/iconfig.h"
-#include "src/config/decisions/idecisionmakerconfigwidgetfactory.h"
-#include "src/config/isettingsdialogfactory.h"
-#include "src/config/isettingseditor.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
+#include "src/config/settingsdialog/isettingsdialogfactory.h"
+#include "src/config/settingseditor/isettingseditor.h"
 #include "src/db/stocks/istocksdatabase.h"
-#include "src/main/itrayiconfactory.h"
-#include "src/storage/istocksstorage.h"
-#include "src/threads/icleanupthread.h"
-#include "src/threads/irefreshthread.h"
+#include "src/widgets/trayicon/itrayiconfactory.h"
+#include "src/storage/stocks/istocksstorage.h"
+#include "src/threads/cleanup/icleanupthread.h"
+#include "src/threads/refresh/irefreshthread.h"
 
 
 

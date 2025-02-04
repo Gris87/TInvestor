@@ -2,13 +2,13 @@
 
 #include <gtest/gtest.h>
 
-#include "src/config/decisions/buy/ibuydecision1config_mock.h"
-#include "src/config/decisions/buy/ibuydecision2config_mock.h"
-#include "src/config/decisions/buy/ibuydecision3config_mock.h"
-#include "src/config/decisions/sell/iselldecision1config_mock.h"
-#include "src/config/decisions/sell/iselldecision2config_mock.h"
-#include "src/config/decisions/sell/iselldecision3config_mock.h"
-#include "src/config/isettingseditor_mock.h"
+#include "src/config/decisions/buy/buydecision1config/ibuydecision1config_mock.h"
+#include "src/config/decisions/buy/buydecision2config/ibuydecision2config_mock.h"
+#include "src/config/decisions/buy/buydecision3config/ibuydecision3config_mock.h"
+#include "src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h"
+#include "src/config/decisions/sell/selldecision2config/iselldecision2config_mock.h"
+#include "src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h"
+#include "src/config/settingseditor/isettingseditor_mock.h"
 
 
 

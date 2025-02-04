@@ -1,9 +1,9 @@
-#include "src/threads/cleanupthread.h"
+#include "src/threads/cleanup/cleanupthread.h"
 
 #include <gtest/gtest.h>
 
 #include "src/db/stocks/istocksdatabase_mock.h"
-#include "src/storage/istocksstorage_mock.h"
+#include "src/storage/stocks/istocksstorage_mock.h"
 
 
 

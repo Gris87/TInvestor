@@ -2,10 +2,10 @@
 
 
 
-#include "src/threads/icleanupthread.h"
+#include "src/threads/cleanup/icleanupthread.h"
 
 #include "src/db/stocks/istocksdatabase.h"
-#include "src/storage/istocksstorage.h"
+#include "src/storage/stocks/istocksstorage.h"
 
 
 

@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "src/config/decisions/sell/selldecision3configwidget.h"
+#include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.h"
 
 
 

@@ -2,7 +2,7 @@
 
 
 
-#include "src/main/itrayicon.h"
+#include "src/widgets/trayicon/itrayicon.h"
 
 
 

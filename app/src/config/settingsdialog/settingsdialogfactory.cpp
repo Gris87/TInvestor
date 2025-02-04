@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#include "src/config/settingsdialog.h"
+#include "src/config/settingsdialog/settingsdialog.h"
 
 
 

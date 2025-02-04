@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/irefreshthread.h"
+#include "src/threads/refresh/irefreshthread.h"
 
 #include <gmock/gmock.h>
 

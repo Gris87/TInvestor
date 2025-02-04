@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/config/decisions/buy/ibuydecision3config.h"
+#include "src/config/decisions/buy/buydecision3config/ibuydecision3config.h"
 
 
 

@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/isettingsdialog.h"
+#include "src/config/settingsdialog/isettingsdialog.h"
 
 #include <gmock/gmock.h>
 

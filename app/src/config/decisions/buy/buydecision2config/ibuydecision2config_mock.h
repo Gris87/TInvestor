@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/decisions/buy/ibuydecision2config.h"
+#include "src/config/decisions/buy/buydecision2config/ibuydecision2config.h"
 
 #include <gmock/gmock.h>
 

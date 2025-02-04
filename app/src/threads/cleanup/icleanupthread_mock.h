@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/icleanupthread.h"
+#include "src/threads/cleanup/icleanupthread.h"
 
 #include <gmock/gmock.h>
 
