@@ -14,12 +14,4 @@ public:
 
     ICleanupThread(const ICleanupThread &another) = delete;
     ICleanupThread& operator=(const ICleanupThread &another) = delete;
-
-    virtual void process() = 0;
-
-protected:
-    void run() override
-    {
-        process();
-    }
 };

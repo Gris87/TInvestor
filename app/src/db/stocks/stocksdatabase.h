@@ -22,6 +22,5 @@ public:
     void deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock> *stocks) override;
 
 private:
-    void writeStockData(Stock *stock);
     void fillWithTestData();
 };

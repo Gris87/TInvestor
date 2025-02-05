@@ -179,9 +179,9 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
-    EXPECT_CALL(*refreshThreadMock, process())
+    EXPECT_CALL(*refreshThreadMock, run())
     .WillOnce([] { QThread::msleep(200); });
-    EXPECT_CALL(*cleanupThreadMock, process());
+    EXPECT_CALL(*cleanupThreadMock, run());
 
     mainWindow->refreshTimerTicked();
     mainWindow->cleanupTimerTicked();
@@ -193,7 +193,7 @@ TEST_F(Test_MainWindow, Test_refreshTimerTicked)
 {
     ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
 
-    EXPECT_CALL(*refreshThreadMock, process())
+    EXPECT_CALL(*refreshThreadMock, run())
         .WillOnce([] { QThread::msleep(200); });
 
     mainWindow->refreshTimerTicked();
@@ -208,7 +208,7 @@ TEST_F(Test_MainWindow, Test_on_actionRefreshManually_triggered)
 {
     ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
 
-    EXPECT_CALL(*refreshThreadMock, process())
+    EXPECT_CALL(*refreshThreadMock, run())
         .WillOnce([] { QThread::msleep(200); });
 
     mainWindow->ui->actionRefreshManually->trigger();
@@ -289,8 +289,8 @@ TEST_F(Test_MainWindow, Test_init)
 
     EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
 
-    EXPECT_CALL(*cleanupThreadMock, process());
-    EXPECT_CALL(*refreshThreadMock, process());
+    EXPECT_CALL(*cleanupThreadMock, run());
+    EXPECT_CALL(*refreshThreadMock, run());
 
     mainWindow->init();
 

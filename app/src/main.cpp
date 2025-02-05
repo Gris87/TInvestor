@@ -169,8 +169,8 @@ int runApplication(int argc, char *argv[])
 
     StocksDatabase stocksDatabase;
     StocksStorage stocksStorage;
-    CleanupThread cleanupThread(&stocksDatabase, &stocksStorage);
-    RefreshThread refreshThread(&stocksDatabase, &stocksStorage);
+    CleanupThread cleanupThread(&config, &stocksDatabase, &stocksStorage);
+    RefreshThread refreshThread(&config, &stocksDatabase, &stocksStorage);
 
     MainWindow mainWindow(
         &config,

@@ -5,8 +5,14 @@
 
 
 
-CleanupThread::CleanupThread(IStocksDatabase *stocksDatabase, IStocksStorage *stocksStorage, QObject *parent) :
+CleanupThread::CleanupThread(
+    IConfig *config,
+    IStocksDatabase *stocksDatabase,
+    IStocksStorage *stocksStorage,
+    QObject *parent
+) :
     ICleanupThread(parent),
+    mConfig(config),
     mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage)
 {
@@ -18,16 +24,14 @@ CleanupThread::~CleanupThread()
     qDebug() << "Destroy CleanupThread";
 }
 
-void CleanupThread::process()
+void CleanupThread::run()
 {
     qDebug() << "Running CleanupThread";
 
-    qint64 startTime = QDateTime::currentMSecsSinceEpoch(); // TODO: Remove it
+    qint64 obsoleteTimestamp = QDateTime::currentSecsSinceEpoch() - mConfig->getStorageMonthLimit() * 31 * 24 * 60 * 60;
 
     QList<Stock> *stocks = mStocksStorage->getStocks();
-    mStocksDatabase->readStocksData(stocks);
-
-    qInfo() << "AAAAAAAAA" << QDateTime::currentMSecsSinceEpoch() - startTime; // TODO: Remove it
+    mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
 
     qDebug() << "Finish CleanupThread";
 }

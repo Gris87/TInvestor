@@ -4,8 +4,14 @@
 
 
 
-RefreshThread::RefreshThread(IStocksDatabase *stocksDatabase, IStocksStorage *stocksStorage, QObject *parent) :
+RefreshThread::RefreshThread(
+    IConfig *config,
+    IStocksDatabase *stocksDatabase,
+    IStocksStorage *stocksStorage,
+    QObject *parent
+) :
     IRefreshThread(parent),
+    mConfig(config),
     mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage)
 {
@@ -17,7 +23,7 @@ RefreshThread::~RefreshThread()
     qDebug() << "Destroy RefreshThread";
 }
 
-void RefreshThread::process()
+void RefreshThread::run()
 {
     qDebug() << "Running RefreshThread";
 

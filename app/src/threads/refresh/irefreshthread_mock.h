@@ -17,5 +17,5 @@ public:
     RefreshThreadMock(const RefreshThreadMock &another) = delete;
     RefreshThreadMock& operator=(const RefreshThreadMock &another) = delete;
 
-    MOCK_METHOD0(process, void());
+    MOCK_METHOD0(run, void());
 };

@@ -61,6 +61,7 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
+    EXPECT_CALL(stocksDatabaseMock, readStocksData(NotNull()));
 
     storage.readFromDatabase(&stocksDatabaseMock);
     stocks = storage.getStocks();

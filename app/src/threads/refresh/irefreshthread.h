@@ -14,12 +14,4 @@ public:
 
     IRefreshThread(const IRefreshThread &another) = delete;
     IRefreshThread& operator=(const IRefreshThread &another) = delete;
-
-    virtual void process() = 0;
-
-protected:
-    void run() override
-    {
-        process();
-    }
 };

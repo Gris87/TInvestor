@@ -35,7 +35,6 @@ SOURCES += \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
-    src/threads/parallelhelper/parallelhelperthread.cpp \
     src/threads/refresh/refreshthread.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp
