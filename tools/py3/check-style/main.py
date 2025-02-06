@@ -1,5 +1,5 @@
 import os
-import pty
+import shlex
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -35,27 +35,25 @@ def _execute_commands(commands):
 
 
 def _execute_command(command):
-    master_fd, slave_fd = pty.openpty()
-    process = subprocess.Popen(command, shell=True, stdout=slave_fd, stdin=slave_fd, stderr=slave_fd, close_fds=True)
-    os.close(slave_fd)
+    argv = shlex.split(command, posix=False)
 
-    output = b""
-    while True:
-        try:
-            data = os.read(master_fd, 1024)
-        except OSError:
-            break
+    process = subprocess.Popen(
+        argv,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
 
-        if not data:
-            break
+    process.wait()
 
-        output += data
-
-    return_code = process.wait()
-    os.close(master_fd)
-
-    return return_code == 0, output
+    return process.returncode == 0, process.stdout.read() + process.stderr.read()
 
 
 def main():
-     sys.exit(0 if check_style() else 1)
+    if check_style():
+        print("SUCCESS")
+
+        sys.exit(0)
+
+    print("FAILURE")
+
+    sys.exit(1)

@@ -6,7 +6,7 @@ group_name = "common"
 files_pattern = "*"
 
 check_modules = [
-    "azaz09",
+    "ascii",
 ]
 
 
