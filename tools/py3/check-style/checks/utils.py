@@ -29,11 +29,13 @@ def validate_files(module, files):
     file_chunks = [files[i : i + max_files_for_linter] for i in range(0, len(files), max_files_for_linter)]
 
     for chunk in file_chunks:
-        file_args = " ".join([f'--file "{file}"' for file in chunk])
+        argv = ["python", f"{path_to_script}\\{module}"]
 
-        res.append(
-            f"python {path_to_script}\\{module} {file_args}"
-        )
+        for file in chunk:
+            argv.append("--file")
+            argv.append(file)
+
+        res.append(argv)
 
     return res
 

@@ -1,7 +1,7 @@
 import os
-import shlex
 import subprocess
 import sys
+from colorama import just_fix_windows_console
 from concurrent.futures import ThreadPoolExecutor
 
 from checks.common_checks import run_common_checkers
@@ -13,6 +13,8 @@ check_groups = [
 
 
 def check_style():
+    just_fix_windows_console()
+
     commands = []
 
     for check_group in check_groups:
@@ -25,27 +27,28 @@ def _execute_commands(commands):
     res = True
 
     with ThreadPoolExecutor(os.cpu_count()) as executor:
-        for result, bytes in executor.map(_execute_command, commands):
+        for result, lines in executor.map(_execute_command, commands):
             res &= result
 
-            sys.stdout.buffer.write(bytes)
-            sys.stdout.buffer.flush()
+            for line in lines:
+                print(line)
 
     return res
 
 
 def _execute_command(command):
-    argv = shlex.split(command, posix=False)
-
     process = subprocess.Popen(
-        argv,
+        command,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
     )
 
-    process.wait()
+    lines = []
 
-    return process.returncode == 0, process.stdout.read() + process.stderr.read()
+    for line in iter(process.stdout.readline, b''):
+        lines.append(line.rstrip().decode(os.device_encoding(1)))
+
+    return process.returncode == 0, lines
 
 
 def main():
