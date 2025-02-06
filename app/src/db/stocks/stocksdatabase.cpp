@@ -36,24 +36,24 @@ QList<Stock> StocksDatabase::readStocksMeta()
 
     QFile stocksFile(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
 
-    bool ok = stocksFile.open(QIODevice::ReadOnly);
-    Q_ASSERT_X(ok, "StocksDatabase::readStocksMeta()", "Failed to open file");
-
-    QString stockStr = QString::fromUtf8(stocksFile.readAll());
-    stocksFile.close();
-
-    QStringList stockLines = stockStr.split('\n');
-
-    for (int i = 0 ; i < stockLines.size() - 1; i += 2)
+    if (stocksFile.open(QIODevice::ReadOnly))
     {
-        Stock stock;
+        QString stockStr = QString::fromUtf8(stocksFile.readAll());
+        stocksFile.close();
 
-        stock.name     = stockLines.at(i);
-        stock.fullname = stockLines.at(i + 1);
+        QStringList stockLines = stockStr.split('\n');
 
-        res.append(stock);
+        for (int i = 0 ; i < stockLines.size() - 1; i += 2)
+        {
+            Stock stock;
 
-        qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
+            stock.name     = stockLines.at(i);
+            stock.fullname = stockLines.at(i + 1);
+
+            res.append(stock);
+
+            qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
+        }
     }
 
     return res;
@@ -71,18 +71,24 @@ void readStocksDataForParallel(QList<Stock> *stocks, int start, int end, void * 
 
         QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
 
-        bool ok = stockDataFile.open(QIODevice::ReadOnly);
-        Q_ASSERT_X(ok, "StocksDatabase::readStocksData()", "Failed to open file");
+        if (stockDataFile.open(QIODevice::ReadOnly))
+        {
+            qsizetype dataSize = stockDataFile.size() / sizeof(StockData);
 
-        qsizetype dataSize = stockDataFile.size() / sizeof(StockData);
+            stock.data.reserve(dataSize + amountOfDataPerDay);
+            stock.data.resizeForOverwrite(dataSize);
 
-        stock.data.reserve(dataSize + amountOfDataPerDay);
-        stock.data.resizeForOverwrite(dataSize);
+            stockDataFile.read(reinterpret_cast<char *>(stock.data.data()), stockDataFile.size());
+            stockDataFile.close();
 
-        stockDataFile.read(reinterpret_cast<char *>(stock.data.data()), stockDataFile.size());
-        stockDataFile.close();
+            qDebug() << "Read stock data" << stock.name;
+        }
+        else
+        {
+            stock.data.clear();
 
-        qDebug() << "Read stock data" << stock.name;
+            qWarning() << "Failed to read stock data" << stock.name;
+        }
     }
 }
 
