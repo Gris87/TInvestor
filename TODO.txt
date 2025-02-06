@@ -2,5 +2,4 @@ Autorun
 Big fall from 24h ago
 Calculate likvidity
 Buy on fall with high likvidity
-Check-style
 Emulator

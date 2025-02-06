@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell ​​stocks if income is above</string>
+        <string>Sell stocks if income is above</string>
        </property>
        <property name="checked">
         <bool>true</bool>

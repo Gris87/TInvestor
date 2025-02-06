@@ -48,4 +48,3 @@ void SellDecision3ConfigWidget::on_loseIncomeDoubleSpinBox_valueChanged(double v
 {
     mConfig->setLoseIncome(value);
 }
-

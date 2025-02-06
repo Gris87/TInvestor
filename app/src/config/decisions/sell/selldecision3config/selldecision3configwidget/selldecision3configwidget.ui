@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell ​​stocks if it fails to sell within</string>
+        <string>Sell stocks if it fails to sell within</string>
        </property>
        <property name="checked">
         <bool>true</bool>

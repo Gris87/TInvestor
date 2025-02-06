@@ -41,4 +41,3 @@ void SellDecision1ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double 
 {
     mConfig->setIncomeAbove(value);
 }
-

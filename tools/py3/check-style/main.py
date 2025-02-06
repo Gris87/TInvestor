@@ -48,6 +48,8 @@ def _execute_command(command):
     for line in iter(process.stdout.readline, b''):
         lines.append(line.rstrip().decode(os.device_encoding(1)))
 
+    process.wait()
+
     return process.returncode == 0, lines
 
 

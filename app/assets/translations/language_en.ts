@@ -164,7 +164,7 @@
     <name>SellDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui" line="37"/>
-        <source>Sell ​​stocks if income is above</source>
+        <source>Sell stocks if income is above</source>
         <translation></translation>
     </message>
     <message>
@@ -177,7 +177,7 @@
     <name>SellDecision2ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="37"/>
-        <source>Sell ​​stocks with income from</source>
+        <source>Sell stocks with income from</source>
         <translation></translation>
     </message>
     <message>
@@ -200,7 +200,7 @@
     <name>SellDecision3ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="37"/>
-        <source>Sell ​​stocks if it fails to sell within</source>
+        <source>Sell stocks if it fails to sell within</source>
         <translation></translation>
     </message>
     <message>

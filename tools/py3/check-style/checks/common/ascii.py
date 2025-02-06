@@ -108,6 +108,14 @@ def _check_for_mixing_whitespaces(file_path, lines):
 def _check_for_non_ascii(file_path, lines):
     res = True
 
+    skip_files = (
+        "TInvestor.pro.user" in file_path or
+        "app\\assets\\translations\\language_ru.ts" in file_path
+    )
+
+    if skip_files:
+        return res
+
     for i, line in enumerate(lines):
         positions = []
         line = line.replace("\t", "    ")
