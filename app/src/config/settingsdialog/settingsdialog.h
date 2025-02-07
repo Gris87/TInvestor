@@ -49,7 +49,7 @@ private:
 
 private slots:
     void on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value);
-    void on_refreshTimeoutSpinBox_valueChanged(int value);
+    void on_makeDecisionTimeoutSpinBox_valueChanged(int value);
     void on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState &value);
     void on_scheduleStartTimeEdit_timeChanged(const QTime &time);
     void on_scheduleEndTimeEdit_timeChanged(const QTime &time);

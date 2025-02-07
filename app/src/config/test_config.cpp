@@ -32,7 +32,7 @@ TEST(Test_Config, Test_assign)
     Config config2(&simulatorConfigMock2, &autoPilotConfigMock2);
 
     config.setAutorun(false);
-    config.setRefreshTimeout(5);
+    config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
     config.setScheduleStartMinute(15);
@@ -50,7 +50,7 @@ TEST(Test_Config, Test_assign)
     config.setAutoPilotConfigCommon(true);
 
     ASSERT_EQ(config.isAutorun(),                    false);
-    ASSERT_EQ(config.getRefreshTimeout(),            5);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
     ASSERT_EQ(config.getScheduleStartHour(),         8);
     ASSERT_EQ(config.getScheduleStartMinute(),       15);
@@ -68,7 +68,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      true);
 
     config2.setAutorun(true);
-    config2.setRefreshTimeout(30);
+    config2.setMakeDecisionTimeout(30);
     config2.setUseSchedule(true);
     config2.setScheduleStartHour(7);
     config2.setScheduleStartMinute(5);
@@ -86,7 +86,7 @@ TEST(Test_Config, Test_assign)
     config2.setAutoPilotConfigCommon(false);
 
     ASSERT_EQ(config2.isAutorun(),                    true);
-    ASSERT_EQ(config2.getRefreshTimeout(),            30);
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config2.isUseSchedule(),                true);
     ASSERT_EQ(config2.getScheduleStartHour(),         7);
     ASSERT_EQ(config2.getScheduleStartMinute(),       5);
@@ -109,7 +109,7 @@ TEST(Test_Config, Test_assign)
     config.assign(&config2);
 
     ASSERT_EQ(config.isAutorun(),                    true);
-    ASSERT_EQ(config.getRefreshTimeout(),            30);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config.isUseSchedule(),                true);
     ASSERT_EQ(config.getScheduleStartHour(),         7);
     ASSERT_EQ(config.getScheduleStartMinute(),       5);
@@ -127,7 +127,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      false);
 
     ASSERT_EQ(config2.isAutorun(),                    true);
-    ASSERT_EQ(config2.getRefreshTimeout(),            30);
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config2.isUseSchedule(),                true);
     ASSERT_EQ(config2.getScheduleStartHour(),         7);
     ASSERT_EQ(config2.getScheduleStartMinute(),       5);
@@ -153,7 +153,7 @@ TEST(Test_Config, Test_makeDefault)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
-    config.setRefreshTimeout(5);
+    config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
     config.setScheduleStartMinute(15);
@@ -171,7 +171,7 @@ TEST(Test_Config, Test_makeDefault)
     config.setAutoPilotConfigCommon(true);
 
     ASSERT_EQ(config.isAutorun(),                    false);
-    ASSERT_EQ(config.getRefreshTimeout(),            5);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
     ASSERT_EQ(config.getScheduleStartHour(),         8);
     ASSERT_EQ(config.getScheduleStartMinute(),       15);
@@ -194,7 +194,7 @@ TEST(Test_Config, Test_makeDefault)
     config.makeDefault();
 
     ASSERT_EQ(config.isAutorun(),                    true);
-    ASSERT_EQ(config.getRefreshTimeout(),            1);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       1);
     ASSERT_EQ(config.isUseSchedule(),                true);
     ASSERT_EQ(config.getScheduleStartHour(),         10);
     ASSERT_EQ(config.getScheduleStartMinute(),       0);
@@ -207,7 +207,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.getCommission(),                0.3f);
     ASSERT_EQ(config.isLimitStockPurchase(),         true);
     ASSERT_EQ(config.getAmountOfStockPurchase(),     10000);
-    ASSERT_EQ(config.getStorageMonthLimit(),         24);
+    ASSERT_EQ(config.getStorageMonthLimit(),         12);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      false);
 }
@@ -220,7 +220,7 @@ TEST(Test_Config, Test_save)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
-    config.setRefreshTimeout(5);
+    config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
     config.setScheduleStartMinute(15);
@@ -238,7 +238,7 @@ TEST(Test_Config, Test_save)
     config.setAutoPilotConfigCommon(true);
 
     ASSERT_EQ(config.isAutorun(),                    false);
-    ASSERT_EQ(config.getRefreshTimeout(),            5);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
     ASSERT_EQ(config.getScheduleStartHour(),         8);
     ASSERT_EQ(config.getScheduleStartMinute(),       15);
@@ -261,7 +261,7 @@ TEST(Test_Config, Test_save)
     EXPECT_CALL(autoPilotConfigMock, save(&settingsEditorMock, QString("AutoPilot")));
 
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                   QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/RefreshTimeout"),            QVariant(5)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),       QVariant(5)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),               QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartHour"),         QVariant(8)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartMinute"),       QVariant(15)));
@@ -289,7 +289,7 @@ TEST(Test_Config, Test_load)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
-    config.setRefreshTimeout(5);
+    config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
     config.setScheduleStartMinute(15);
@@ -307,7 +307,7 @@ TEST(Test_Config, Test_load)
     config.setAutoPilotConfigCommon(true);
 
     ASSERT_EQ(config.isAutorun(),                    false);
-    ASSERT_EQ(config.getRefreshTimeout(),            5);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
     ASSERT_EQ(config.getScheduleStartHour(),         8);
     ASSERT_EQ(config.getScheduleStartMinute(),       15);
@@ -330,7 +330,7 @@ TEST(Test_Config, Test_load)
     EXPECT_CALL(autoPilotConfigMock, load(&settingsEditorMock, QString("AutoPilot")));
 
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                   QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/RefreshTimeout"),            QVariant(5))).WillOnce(Return(QVariant(30)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),       QVariant(5))).WillOnce(Return(QVariant(30)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),               QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartHour"),         QVariant(8))).WillOnce(Return(QVariant(7)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartMinute"),       QVariant(15))).WillOnce(Return(QVariant(5)));
@@ -350,7 +350,7 @@ TEST(Test_Config, Test_load)
     config.load(&settingsEditorMock);
 
     ASSERT_EQ(config.isAutorun(),                    true);
-    ASSERT_EQ(config.getRefreshTimeout(),            30);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config.isUseSchedule(),                true);
     ASSERT_EQ(config.getScheduleStartHour(),         7);
     ASSERT_EQ(config.getScheduleStartMinute(),       5);
@@ -402,18 +402,18 @@ TEST(Test_Config, Test_setAutorun_and_isAutorun)
     ASSERT_EQ(config.isAutorun(), true);
 }
 
-TEST(Test_Config, Test_setRefreshTimeout_and_getRefreshTimeout)
+TEST(Test_Config, Test_setMakeDecisionTimeout_and_getMakeDecisionTimeout)
 {
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
-    config.setRefreshTimeout(1);
-    ASSERT_EQ(config.getRefreshTimeout(), 1);
+    config.setMakeDecisionTimeout(1);
+    ASSERT_EQ(config.getMakeDecisionTimeout(), 1);
 
-    config.setRefreshTimeout(2);
-    ASSERT_EQ(config.getRefreshTimeout(), 2);
+    config.setMakeDecisionTimeout(2);
+    ASSERT_EQ(config.getMakeDecisionTimeout(), 2);
 }
 
 TEST(Test_Config, Test_setUseSchedule_and_isUseSchedule)

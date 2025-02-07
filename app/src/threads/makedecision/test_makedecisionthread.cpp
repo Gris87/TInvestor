@@ -1,4 +1,4 @@
-#include "src/threads/refresh/refreshthread.h"
+#include "src/threads/makedecision/makedecisionthread.h"
 
 #include <gtest/gtest.h>
 
@@ -14,7 +14,7 @@ using ::testing::Return;
 
 
 
-class Test_RefreshThread : public ::testing::Test
+class Test_MakeDecisionThread : public ::testing::Test
 {
 protected:
     void SetUp()
@@ -23,7 +23,7 @@ protected:
         stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock  = new StrictMock<StocksStorageMock>();
 
-        thread = new RefreshThread(configMock, stocksDatabaseMock, stocksStorageMock);
+        thread = new MakeDecisionThread(configMock, stocksDatabaseMock, stocksStorageMock);
     }
 
     void TearDown()
@@ -34,7 +34,7 @@ protected:
         delete stocksStorageMock;
     }
 
-    RefreshThread                  *thread;
+    MakeDecisionThread                  *thread;
     StrictMock<ConfigMock>         *configMock;
     StrictMock<StocksDatabaseMock> *stocksDatabaseMock;
     StrictMock<StocksStorageMock>  *stocksStorageMock;
@@ -42,11 +42,11 @@ protected:
 
 
 
-TEST_F(Test_RefreshThread, Test_constructor_and_destructor)
+TEST_F(Test_MakeDecisionThread, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_RefreshThread, Test_run)
+TEST_F(Test_MakeDecisionThread, Test_run)
 {
     thread->run();
 }

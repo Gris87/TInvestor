@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/refresh/irefreshthread.h"
+#include "src/threads/makedecision/imakedecisionthread.h"
 
 #include "src/config/iconfig.h"
 #include "src/db/stocks/istocksdatabase.h"
@@ -10,21 +10,21 @@
 
 
 
-class RefreshThread : public IRefreshThread
+class MakeDecisionThread : public IMakeDecisionThread
 {
     Q_OBJECT
 
 public:
-    explicit RefreshThread(
+    explicit MakeDecisionThread(
         IConfig *config,
         IStocksDatabase *stocksDatabase,
         IStocksStorage *stocksStorage,
         QObject *parent = nullptr
     );
-    ~RefreshThread();
+    ~MakeDecisionThread();
 
-    RefreshThread(const RefreshThread &another) = delete;
-    RefreshThread& operator=(const RefreshThread &another) = delete;
+    MakeDecisionThread(const MakeDecisionThread &another) = delete;
+    MakeDecisionThread& operator=(const MakeDecisionThread &another) = delete;
 
     void run() override;
 

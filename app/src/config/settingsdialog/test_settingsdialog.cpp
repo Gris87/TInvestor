@@ -119,7 +119,7 @@ TEST_F(Test_SettingsDialog, Test_constructor_and_destructor)
 TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 {
     dialog->ui->autorunCheckBox->blockSignals(true);
-    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
+    dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
@@ -138,7 +138,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
@@ -158,7 +158,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->updateUiFromConfig();
 
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
-    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              2);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         2);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));
@@ -177,7 +177,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(5));
+    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(11));
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
@@ -197,7 +197,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->updateUiFromConfig();
 
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                false);
-    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              5);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         5);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            false);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(11, 15));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(20, 40));
@@ -226,17 +226,17 @@ TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
     dialog->ui->autorunCheckBox->setChecked(false);
 }
 
-TEST_F(Test_SettingsDialog, Test_on_refreshTimeoutSpinBox_valueChanged)
+TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
 {
-    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
-    dialog->ui->refreshTimeoutSpinBox->setValue(1);
-    dialog->ui->refreshTimeoutSpinBox->blockSignals(false);
+    dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
+    dialog->ui->makeDecisionTimeoutSpinBox->setValue(1);
+    dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setRefreshTimeout(2));
-    dialog->ui->refreshTimeoutSpinBox->setValue(2);
+    EXPECT_CALL(*configMock, setMakeDecisionTimeout(2));
+    dialog->ui->makeDecisionTimeoutSpinBox->setValue(2);
 
-    EXPECT_CALL(*configMock, setRefreshTimeout(3));
-    dialog->ui->refreshTimeoutSpinBox->setValue(3);
+    EXPECT_CALL(*configMock, setMakeDecisionTimeout(3));
+    dialog->ui->makeDecisionTimeoutSpinBox->setValue(3);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
@@ -559,7 +559,7 @@ TEST_F(Test_SettingsDialog, Test_on_cancelButton_clicked)
 TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
 {
     dialog->ui->autorunCheckBox->blockSignals(true);
-    dialog->ui->refreshTimeoutSpinBox->blockSignals(true);
+    dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
@@ -579,7 +579,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
@@ -599,7 +599,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->defaultButton->click();
 
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
-    ASSERT_EQ(dialog->ui->refreshTimeoutSpinBox->value(),              2);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         2);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));

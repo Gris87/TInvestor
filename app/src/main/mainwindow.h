@@ -15,7 +15,7 @@
 #include "src/widgets/trayicon/itrayiconfactory.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
-#include "src/threads/refresh/irefreshthread.h"
+#include "src/threads/makedecision/imakedecisionthread.h"
 
 
 
@@ -48,7 +48,7 @@ public:
         IStocksDatabase *stocksDatabase,
         IStocksStorage *stocksStorage,
         ICleanupThread *cleanupThread,
-        IRefreshThread *refreshThread
+        IMakeDecisionThread *makeDecisionThread
     );
     ~MainWindow();
 
@@ -61,7 +61,7 @@ public:
     Ui::MainWindow *ui;
 
     QTimer *cleanupTimer;
-    QTimer *refreshTimer;
+    QTimer *makeDecisionTimer;
 
 private:
     void updateStackWidgetToolbar();
@@ -83,17 +83,17 @@ private:
     IStocksDatabase                   *mStocksDatabase;
     IStocksStorage                    *mStocksStorage;
     ICleanupThread                    *mCleanupThread;
-    IRefreshThread                    *mRefreshThread;
+    IMakeDecisionThread               *mMakeDecisionThread;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
     void cleanupTimerTicked();
-    void refreshTimerTicked();
+    void makeDecisionTimerTicked();
 
 private slots:
-    void on_actionRefreshManually_triggered();
+    void on_actionAuth_triggered();
     void on_actionStocksPage_toggled(bool checked);
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);

@@ -28,8 +28,8 @@ public:
     virtual void setAutorun(bool value) = 0;
     virtual bool isAutorun() = 0;
 
-    virtual void setRefreshTimeout(int value) = 0;
-    virtual int getRefreshTimeout() = 0;
+    virtual void setMakeDecisionTimeout(int value) = 0;
+    virtual int getMakeDecisionTimeout() = 0;
 
     virtual void setUseSchedule(bool value) = 0;
     virtual bool isUseSchedule() = 0;

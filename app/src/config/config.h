@@ -29,8 +29,8 @@ public:
     void setAutorun(bool value) override;
     bool isAutorun() override;
 
-    void setRefreshTimeout(int value) override;
-    int getRefreshTimeout() override;
+    void setMakeDecisionTimeout(int value) override;
+    int getMakeDecisionTimeout() override;
 
     void setUseSchedule(bool value) override;
     bool isUseSchedule() override;
@@ -84,7 +84,7 @@ private:
     IDecisionMakerConfig *mAutoPilotConfig;
 
     bool   mAutorun;
-    int    mRefreshTimeout;
+    int    mMakeDecisionTimeout;
     bool   mUseSchedule;
     int    mScheduleStartHour;
     int    mScheduleStartMinute;

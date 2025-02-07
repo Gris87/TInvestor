@@ -35,7 +35,7 @@ SOURCES += \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
-    src/threads/refresh/refreshthread.cpp \
+    src/threads/makedecision/makedecisionthread.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp
 
@@ -101,8 +101,8 @@ HEADERS += \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
-    src/threads/refresh/irefreshthread.h \
-    src/threads/refresh/refreshthread.h \
+    src/threads/makedecision/imakedecisionthread.h \
+    src/threads/makedecision/makedecisionthread.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \

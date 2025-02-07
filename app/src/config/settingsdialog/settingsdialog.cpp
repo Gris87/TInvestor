@@ -74,7 +74,7 @@ void SettingsDialog::updateUiFromConfig()
     mAutoPilotConfigWidget->updateUiFromConfig();
 
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
-    ui->refreshTimeoutSpinBox->setValue(mConfig->getRefreshTimeout());
+    ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
     ui->useScheduleCheckBox->setChecked(mConfig->isUseSchedule());
     ui->scheduleStartTimeEdit->setTime(QTime(scheduleStartHour, scheduleStartMinute));
     ui->scheduleEndTimeEdit->setTime(QTime(scheduleEndHour, scheduleEndMinute));
@@ -97,9 +97,9 @@ void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &
     mConfig->setAutorun(checked);
 }
 
-void SettingsDialog::on_refreshTimeoutSpinBox_valueChanged(int value)
+void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)
 {
-    mConfig->setRefreshTimeout(value);
+    mConfig->setMakeDecisionTimeout(value);
 }
 
 void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState &value)

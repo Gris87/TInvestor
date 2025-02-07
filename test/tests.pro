@@ -74,7 +74,7 @@ SOURCES += \
     src/storage/stocks/test_stocksstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
-    src/threads/refresh/test_refreshthread.cpp \
+    src/threads/makedecision/test_makedecisionthread.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp
 
@@ -108,6 +108,6 @@ HEADERS += \
     src/db/stocks/istocksdatabase_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
-    src/threads/refresh/irefreshthread_mock.h \
+    src/threads/makedecision/imakedecisionthread_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h

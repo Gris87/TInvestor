@@ -29,8 +29,8 @@ public:
     MOCK_METHOD1(setAutorun, void(bool value));
     MOCK_METHOD0(isAutorun, bool());
 
-    MOCK_METHOD1(setRefreshTimeout, void(int value));
-    MOCK_METHOD0(getRefreshTimeout, int());
+    MOCK_METHOD1(setMakeDecisionTimeout, void(int value));
+    MOCK_METHOD0(getMakeDecisionTimeout, int());
 
     MOCK_METHOD1(setUseSchedule, void(bool value));
     MOCK_METHOD0(isUseSchedule, bool());

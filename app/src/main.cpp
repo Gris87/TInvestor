@@ -28,7 +28,7 @@
 #include "src/widgets/trayicon/trayiconfactory.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
-#include "src/threads/refresh/refreshthread.h"
+#include "src/threads/makedecision/makedecisionthread.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -170,7 +170,7 @@ int runApplication(int argc, char *argv[])
     StocksDatabase stocksDatabase;
     StocksStorage stocksStorage;
     CleanupThread cleanupThread(&config, &stocksDatabase, &stocksStorage);
-    RefreshThread refreshThread(&config, &stocksDatabase, &stocksStorage);
+    MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
     MainWindow mainWindow(
         &config,
@@ -188,7 +188,7 @@ int runApplication(int argc, char *argv[])
         &stocksDatabase,
         &stocksStorage,
         &cleanupThread,
-        &refreshThread
+        &makeDecisionThread
     );
     mainWindow.init();
 

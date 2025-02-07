@@ -20,7 +20,7 @@
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
-#include "src/threads/refresh/irefreshthread_mock.h"
+#include "src/threads/makedecision/imakedecisionthread_mock.h"
 
 
 
@@ -51,14 +51,14 @@ protected:
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
-        refreshThreadMock                    = new StrictMock<RefreshThreadMock>();
+        makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
         EXPECT_CALL(*configMock, load(settingsEditorMock));
-        EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(1));
+        EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
 
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -80,7 +80,7 @@ protected:
             stocksDatabaseMock,
             stocksStorageMock,
             cleanupThreadMock,
-            refreshThreadMock
+            makeDecisionThreadMock
         );
     }
 
@@ -106,7 +106,7 @@ protected:
         delete stocksDatabaseMock;
         delete stocksStorageMock;
         delete cleanupThreadMock;
-        delete refreshThreadMock;
+        delete makeDecisionThreadMock;
         delete trayIconMock;
     }
 
@@ -126,7 +126,7 @@ protected:
     StrictMock<StocksDatabaseMock>                   *stocksDatabaseMock;
     StrictMock<StocksStorageMock>                    *stocksStorageMock;
     StrictMock<CleanupThreadMock>                    *cleanupThreadMock;
-    StrictMock<RefreshThreadMock>                    *refreshThreadMock;
+    StrictMock<MakeDecisionThreadMock>               *makeDecisionThreadMock;
     StrictMock<TrayIconMock>                         *trayIconMock;
 };
 
@@ -142,8 +142,8 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
 
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->refreshTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 }
 
 TEST_F(Test_MainWindow, Test_closeEvent)
@@ -179,44 +179,44 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
-    EXPECT_CALL(*refreshThreadMock, run())
+    EXPECT_CALL(*makeDecisionThreadMock, run())
     .WillOnce([] { QThread::msleep(200); });
     EXPECT_CALL(*cleanupThreadMock, run());
 
-    mainWindow->refreshTimerTicked();
+    mainWindow->makeDecisionTimerTicked();
     mainWindow->cleanupTimerTicked();
 
     cleanupThreadMock->wait();
 }
 
-TEST_F(Test_MainWindow, Test_refreshTimerTicked)
+TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 
-    EXPECT_CALL(*refreshThreadMock, run())
+    EXPECT_CALL(*makeDecisionThreadMock, run())
         .WillOnce([] { QThread::msleep(200); });
 
-    mainWindow->refreshTimerTicked();
-    mainWindow->refreshTimerTicked();
+    mainWindow->makeDecisionTimerTicked();
+    mainWindow->makeDecisionTimerTicked();
 
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
 
-    refreshThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }
 
-TEST_F(Test_MainWindow, Test_on_actionRefreshManually_triggered)
+TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 
-    EXPECT_CALL(*refreshThreadMock, run())
+    EXPECT_CALL(*makeDecisionThreadMock, run())
         .WillOnce([] { QThread::msleep(200); });
 
-    mainWindow->ui->actionRefreshManually->trigger();
-    mainWindow->ui->actionRefreshManually->trigger();
+    mainWindow->ui->actionAuth->trigger();
+    mainWindow->ui->actionAuth->trigger();
 
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
 
-    refreshThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -274,29 +274,29 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, assign(configForSettingsDialogMock));
     EXPECT_CALL(*configMock, save(settingsEditorMock));
 
-    EXPECT_CALL(*configMock, getRefreshTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
 
     mainWindow->ui->actionSettings->trigger();
 
-    ASSERT_EQ(mainWindow->refreshTimer->interval(), 120000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 120000);
 }
 
 TEST_F(Test_MainWindow, Test_init)
 {
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 
     EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
 
     EXPECT_CALL(*cleanupThreadMock, run());
-    EXPECT_CALL(*refreshThreadMock, run());
+    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->init();
 
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->refreshTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
 
-    refreshThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }

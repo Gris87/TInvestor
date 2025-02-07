@@ -74,7 +74,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionRefreshManually"/>
+   <addaction name="actionAuth"/>
    <addaction name="separator"/>
    <addaction name="actionStocksPage"/>
    <addaction name="actionSimulationPage"/>
@@ -82,19 +82,19 @@
    <addaction name="separator"/>
    <addaction name="actionSettings"/>
   </widget>
-  <action name="actionRefreshManually">
+  <action name="actionAuth">
    <property name="icon">
     <iconset resource="../../Resources.qrc">
-     <normaloff>:/assets/images/refresh.png</normaloff>:/assets/images/refresh.png</iconset>
+     <normaloff>:/assets/images/auth.png</normaloff>:/assets/images/auth.png</iconset>
    </property>
    <property name="text">
-    <string>Refresh manually (F5)</string>
+    <string>Authorization</string>
    </property>
    <property name="toolTip">
-    <string>Manually refresh stock information (F5)</string>
+    <string>Authorize user (Ctrl+L)</string>
    </property>
    <property name="shortcut">
-    <string notr="true">F5</string>
+    <string notr="true">Ctrl+L</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

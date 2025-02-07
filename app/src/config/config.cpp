@@ -33,7 +33,7 @@ void Config::assign(IConfig *another)
     mAutoPilotConfig->assign(config.mAutoPilotConfig);
 
     mAutorun                   = config.mAutorun;
-    mRefreshTimeout            = config.mRefreshTimeout;
+    mMakeDecisionTimeout       = config.mMakeDecisionTimeout;
     mUseSchedule               = config.mUseSchedule;
     mScheduleStartHour         = config.mScheduleStartHour;
     mScheduleStartMinute       = config.mScheduleStartMinute;
@@ -61,7 +61,7 @@ void Config::makeDefault()
     mAutoPilotConfig->makeDefault();
 
     mAutorun                   = true;
-    mRefreshTimeout            = 1;
+    mMakeDecisionTimeout       = 1;
     mUseSchedule               = true;
     mScheduleStartHour         = 10;
     mScheduleStartMinute       = 0;
@@ -74,7 +74,7 @@ void Config::makeDefault()
     mCommission                = 0.3f;
     mLimitStockPurchase        = true;
     mAmountOfStockPurchase     = 10000;
-    mStorageMonthLimit         = 24;
+    mStorageMonthLimit         = 12;
     mSimulatorConfigCommon     = true;
     mAutoPilotConfigCommon     = false;
 }
@@ -89,7 +89,7 @@ void Config::save(ISettingsEditor *settingsEditor)
     mAutoPilotConfig->save(settingsEditor, "AutoPilot");
 
     settingsEditor->setValue("Config/Autorun",                   mAutorun);
-    settingsEditor->setValue("Config/RefreshTimeout",            mRefreshTimeout);
+    settingsEditor->setValue("Config/MakeDecisionTimeout",       mMakeDecisionTimeout);
     settingsEditor->setValue("Config/UseSchedule",               mUseSchedule);
     settingsEditor->setValue("Config/ScheduleStartHour",         mScheduleStartHour);
     settingsEditor->setValue("Config/ScheduleStartMinute",       mScheduleStartMinute);
@@ -117,7 +117,7 @@ void Config::load(ISettingsEditor *settingsEditor)
     mAutoPilotConfig->load(settingsEditor, "AutoPilot");
 
     mAutorun                   = settingsEditor->value("Config/Autorun",                   mAutorun).toBool();
-    mRefreshTimeout            = settingsEditor->value("Config/RefreshTimeout",            mRefreshTimeout).toInt();
+    mMakeDecisionTimeout       = settingsEditor->value("Config/MakeDecisionTimeout",       mMakeDecisionTimeout).toInt();
     mUseSchedule               = settingsEditor->value("Config/UseSchedule",               mUseSchedule).toBool();
     mScheduleStartHour         = settingsEditor->value("Config/ScheduleStartHour",         mScheduleStartHour).toInt();
     mScheduleStartMinute       = settingsEditor->value("Config/ScheduleStartMinute",       mScheduleStartMinute).toInt();
@@ -159,18 +159,18 @@ bool Config::isAutorun()
     return mAutorun;
 }
 
-void Config::setRefreshTimeout(int value)
+void Config::setMakeDecisionTimeout(int value)
 {
     QMutexLocker lock(mMutex);
 
-    mRefreshTimeout = value;
+    mMakeDecisionTimeout = value;
 }
 
-int Config::getRefreshTimeout()
+int Config::getMakeDecisionTimeout()
 {
     QMutexLocker lock(mMutex);
 
-    return mRefreshTimeout;
+    return mMakeDecisionTimeout;
 }
 
 void Config::setUseSchedule(bool value)

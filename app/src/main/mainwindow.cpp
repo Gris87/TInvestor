@@ -24,12 +24,12 @@ MainWindow::MainWindow(
     IStocksDatabase *stocksDatabase,
     IStocksStorage *stocksStorage,
     ICleanupThread *cleanupThread,
-    IRefreshThread *refreshThread
+    IMakeDecisionThread *makeDecisionThread
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
     cleanupTimer(new QTimer(this)),
-    refreshTimer(new QTimer(this)),
+    makeDecisionTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mSettingsDialogFactory(settingsDialogFactory),
@@ -44,7 +44,7 @@ MainWindow::MainWindow(
     mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage),
     mCleanupThread(cleanupThread),
-    mRefreshThread(refreshThread)
+    mMakeDecisionThread(makeDecisionThread)
 {
     qDebug() << "Create MainWindow";
 
@@ -58,8 +58,8 @@ MainWindow::MainWindow(
 
     trayIcon->show();
 
-    connect(cleanupTimer, SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
-    connect(refreshTimer, SIGNAL(timeout()), this, SLOT(refreshTimerTicked()));
+    connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer, SIGNAL(timeout()), this, SLOT(makeDecisionTimerTicked()));
 
     mConfig->makeDefault();
     mConfig->load(mSettingsEditor);
@@ -73,10 +73,10 @@ MainWindow::~MainWindow()
     qDebug() << "Destroy MainWindow";
 
     mCleanupThread->requestInterruption();
-    mRefreshThread->requestInterruption();
+    mMakeDecisionThread->requestInterruption();
 
     mCleanupThread->wait();
-    mRefreshThread->wait();
+    mMakeDecisionThread->wait();
 
     saveWindowState();
 
@@ -126,30 +126,30 @@ void MainWindow::cleanupTimerTicked()
 {
     qInfo() << "Cleanup timer ticked";
 
-    if (mRefreshThread->isRunning())
+    if (mMakeDecisionThread->isRunning())
     {
-        mRefreshThread->wait();
+        mMakeDecisionThread->wait();
     }
 
     mCleanupThread->start();
 }
 
-void MainWindow::refreshTimerTicked()
+void MainWindow::makeDecisionTimerTicked()
 {
-    qDebug() << "Refresh timer ticked";
+    qDebug() << "Make decision timer ticked";
 
-    if (mCleanupThread->isRunning() || mRefreshThread->isRunning())
+    if (mCleanupThread->isRunning() || mMakeDecisionThread->isRunning())
     {
         return;
     }
 
-    refreshTimer->start();
-    mRefreshThread->start();
+    makeDecisionTimer->start();
+    mMakeDecisionThread->start();
 }
 
-void MainWindow::on_actionRefreshManually_triggered()
+void MainWindow::on_actionAuth_triggered()
 {
-    refreshTimerTicked();
+    makeDecisionTimerTicked();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -222,7 +222,7 @@ void MainWindow::init()
     cleanupTimerTicked();
     mCleanupThread->wait();
 
-    refreshTimerTicked();
+    makeDecisionTimerTicked();
 }
 
 void MainWindow::updateStackWidgetToolbar()
@@ -234,7 +234,7 @@ void MainWindow::updateStackWidgetToolbar()
 
 void MainWindow::applyConfig()
 {
-    refreshTimer->setInterval(mConfig->getRefreshTimeout() * 60 * 1000);
+    makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * 60 * 1000);
 }
 
 void MainWindow::saveWindowState()

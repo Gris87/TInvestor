@@ -92,13 +92,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="91"/>
-        <source>Refresh manually (F5)</source>
-        <translation>Обновить вручную (F5)</translation>
+        <source>Authorization</source>
+        <translation>Авторизация</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="94"/>
-        <source>Manually refresh stock information (F5)</source>
-        <translation>Обновить вручную информацию об акциях (F5)</translation>
+        <source>Authorize user (Ctrl+L)</source>
+        <translation>Авторизовать пользователя (Ctrl+L)</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="115"/>
@@ -237,11 +237,6 @@
         <translation>Автозапускать при запуске Windows</translation>
     </message>
     <message>
-        <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="75"/>
-        <source>Refresh stocks each</source>
-        <translation>Обновлять акции каждые</translation>
-    </message>
-    <message>
         <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="115"/>
         <source>Trade stocks on weekdays in the interval</source>
         <translation>Торговать акциями в будни в интервале</translation>
@@ -298,6 +293,11 @@
         <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="455"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="75"/>
+        <source>Make decision each</source>
+        <translation>Принимать решение каждые</translation>
     </message>
     <message>
         <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="82"/>

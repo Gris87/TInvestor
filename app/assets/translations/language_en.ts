@@ -92,12 +92,12 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="91"/>
-        <source>Refresh manually (F5)</source>
+        <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="94"/>
-        <source>Manually refresh stock information (F5)</source>
+        <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
@@ -238,7 +238,7 @@
     </message>
     <message>
         <location filename="../../src/config/settingsdialog/settingsdialog.ui" line="75"/>
-        <source>Refresh stocks each</source>
+        <source>Make decision each</source>
         <translation></translation>
     </message>
     <message>
