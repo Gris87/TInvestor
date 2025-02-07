@@ -32,6 +32,7 @@ def _validate_file(file_path, content, lines):
     res &= _check_for_lf(file_path, content)
     res &= _check_for_newline_at_bof(file_path, lines)
     res &= _check_for_newline_at_eof(file_path, lines)
+    res &= _check_for_multiple_newlines(file_path, lines)
     res &= _check_for_trailing_whitespaces(file_path, lines)
     res &= _check_for_mixing_whitespaces(file_path, lines)
     res &= _check_for_non_ascii(file_path, lines)
@@ -49,7 +50,9 @@ def _check_for_lf(file_path, content):
 
 def _check_for_newline_at_bof(file_path, lines):
     if len(lines) > 1 and (lines[0] == "" or lines[0] == "\r"):
-        logger.warning(f"{file_path}: Newline found at the beginning of file")
+        logger.error(f"{file_path}: Newline found at the beginning of file")
+
+        return False
 
     return True
 
@@ -73,6 +76,30 @@ def _check_for_newline_at_eof(file_path, lines):
     return True
 
 
+def _check_for_multiple_newlines(file_path, lines):
+    res = True
+
+    allowed_newlines = [0, 1, 3]
+
+    if file_path.endswith(".py"):
+        allowed_newlines = [0, 1, 2]
+
+    amount_of_newlines = 0
+
+    for i, line in enumerate(lines):
+        if line == "" or line == "\r":
+            amount_of_newlines = amount_of_newlines + 1
+        else:
+            if amount_of_newlines not in allowed_newlines:
+                logger.error(f"{file_path}:{i + 1}: Multiple newlines found")
+
+                res = False
+
+            amount_of_newlines = 0
+
+    return res
+
+
 def _check_for_trailing_whitespaces(file_path, lines):
     res = True
 
@@ -91,6 +118,8 @@ def _check_for_trailing_whitespaces(file_path, lines):
 
 
 def _check_for_mixing_whitespaces(file_path, lines):
+    res = True
+
     for i, line in enumerate(lines):
         prev_ch = "_"
         mixing = False
@@ -100,9 +129,11 @@ def _check_for_mixing_whitespaces(file_path, lines):
                 break
             prev_ch = ch
         if mixing:
-            logger.warning(f"{file_path}:{i + 1}: Mixing whitespaces found")
+            logger.error(f"{file_path}:{i + 1}: Mixing whitespaces found")
 
-    return True
+            res = False
+
+    return res
 
 
 def _check_for_non_ascii(file_path, lines):

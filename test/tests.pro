@@ -1,4 +1,4 @@
-QT += core gui widgets sql gui-private
+QT += core gui widgets sql websockets gui-private
 
 CONFIG += c++20
 
@@ -73,8 +73,9 @@ SOURCES += \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
-    src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
+    src/threads/parallelhelper/test_parallelhelperthread.cpp \
+    src/websockets/test_websocketmanager.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp
 
@@ -109,5 +110,6 @@ HEADERS += \
     src/storage/stocks/istocksstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
+    src/websockets/iwebsocketmanager_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h

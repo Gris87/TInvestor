@@ -6,7 +6,8 @@ group_name = "common"
 files_pattern = "*"
 
 check_modules = [
-    "ascii",
+    "mrgtmp",
+    "text_file",
 ]
 
 

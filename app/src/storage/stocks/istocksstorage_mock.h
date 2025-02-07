@@ -8,7 +8,7 @@
 
 
 
-class StocksStorageMock: public IStocksStorage
+class StocksStorageMock : public IStocksStorage
 {
 public:
     StocksStorageMock() : IStocksStorage() {}

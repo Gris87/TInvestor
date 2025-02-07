@@ -1,3 +1,4 @@
+Interface on QFile and QDir
 Autorun
 Big fall from 24h ago
 Calculate likvidity

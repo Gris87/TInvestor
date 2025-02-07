@@ -36,6 +36,7 @@ SOURCES += \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/websockets/websocketmanager.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp
 
@@ -100,9 +101,11 @@ HEADERS += \
     src/storage/stocks/stocksstorage.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
-    src/threads/parallelhelper/parallelhelperthread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
+    src/threads/parallelhelper/parallelhelperthread.h \
+    src/websockets/iwebsocketmanager.h \
+    src/websockets/websocketmanager.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \
