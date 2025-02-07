@@ -117,6 +117,20 @@ int runApplication(int argc, char *argv[])
     SellDecision2Config autoPilotSellDecision2ConfigForSettingsDialog;
     SellDecision3Config autoPilotSellDecision3ConfigForSettingsDialog;
 
+    BuyDecision1Config simulatorBuyDecision1ConfigForSimulation;
+    BuyDecision2Config simulatorBuyDecision2ConfigForSimulation;
+    BuyDecision3Config simulatorBuyDecision3ConfigForSimulation;
+    SellDecision1Config simulatorSellDecision1ConfigForSimulation;
+    SellDecision2Config simulatorSellDecision2ConfigForSimulation;
+    SellDecision3Config simulatorSellDecision3ConfigForSimulation;
+
+    BuyDecision1Config autoPilotBuyDecision1ConfigForSimulation;
+    BuyDecision2Config autoPilotBuyDecision2ConfigForSimulation;
+    BuyDecision3Config autoPilotBuyDecision3ConfigForSimulation;
+    SellDecision1Config autoPilotSellDecision1ConfigForSimulation;
+    SellDecision2Config autoPilotSellDecision2ConfigForSimulation;
+    SellDecision3Config autoPilotSellDecision3ConfigForSimulation;
+
     DecisionMakerConfig simulatorConfig(
         &simulatorBuyDecision1Config,
         &simulatorBuyDecision2Config,
@@ -149,9 +163,26 @@ int runApplication(int argc, char *argv[])
         &autoPilotSellDecision2ConfigForSettingsDialog,
         &autoPilotSellDecision3ConfigForSettingsDialog
     );
+    DecisionMakerConfig simulatorConfigForSimulation(
+        &simulatorBuyDecision1ConfigForSimulation,
+        &simulatorBuyDecision2ConfigForSimulation,
+        &simulatorBuyDecision3ConfigForSimulation,
+        &simulatorSellDecision1ConfigForSimulation,
+        &simulatorSellDecision2ConfigForSimulation,
+        &simulatorSellDecision3ConfigForSimulation
+        );
+    DecisionMakerConfig autoPilotConfigForSimulation(
+        &autoPilotBuyDecision1ConfigForSimulation,
+        &autoPilotBuyDecision2ConfigForSimulation,
+        &autoPilotBuyDecision3ConfigForSimulation,
+        &autoPilotSellDecision1ConfigForSimulation,
+        &autoPilotSellDecision2ConfigForSimulation,
+        &autoPilotSellDecision3ConfigForSimulation
+        );
 
     Config config(&simulatorConfig, &autoPilotConfig);
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
+    Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
     SettingsDialogFactory settingsDialogFactory;
 
@@ -175,6 +206,7 @@ int runApplication(int argc, char *argv[])
     MainWindow mainWindow(
         &config,
         &configForSettingsDialog,
+        &configForSimulation,
         &settingsDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,

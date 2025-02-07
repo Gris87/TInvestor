@@ -17,6 +17,13 @@ TEST(Test_StocksStorage, Test_constructor_and_destructor)
     StocksStorage storage;
 }
 
+TEST(Test_StocksStorage, Test_getMutex)
+{
+    StocksStorage storage;
+
+    ASSERT_TRUE(storage.getMutex() != nullptr);
+}
+
 TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
 {
     StrictMock<StocksDatabaseMock> stocksDatabaseMock;

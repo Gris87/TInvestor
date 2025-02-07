@@ -38,6 +38,7 @@ protected:
     {
         configMock                           = new StrictMock<ConfigMock>();
         configForSettingsDialogMock          = new StrictMock<ConfigMock>();
+        configForSimulationMock              = new StrictMock<ConfigMock>();
         settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
@@ -67,6 +68,7 @@ protected:
         mainWindow = new MainWindow(
             configMock,
             configForSettingsDialogMock,
+            configForSimulationMock,
             settingsDialogFactoryMock,
             decisionMakerConfigWidgetFactoryMock,
             buyDecision1ConfigWidgetFactoryMock,
@@ -93,6 +95,7 @@ protected:
         delete mainWindow;
         delete configMock;
         delete configForSettingsDialogMock;
+        delete configForSimulationMock;
         delete settingsDialogFactoryMock;
         delete decisionMakerConfigWidgetFactoryMock;
         delete buyDecision1ConfigWidgetFactoryMock;
@@ -113,6 +116,7 @@ protected:
     MainWindow                                       *mainWindow;
     StrictMock<ConfigMock>                           *configMock;
     StrictMock<ConfigMock>                           *configForSettingsDialogMock;
+    StrictMock<ConfigMock>                           *configForSimulationMock;
     StrictMock<SettingsDialogFactoryMock>            *settingsDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock> *decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>  *buyDecision1ConfigWidgetFactoryMock;
@@ -179,11 +183,8 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
-    EXPECT_CALL(*makeDecisionThreadMock, run())
-    .WillOnce([] { QThread::msleep(200); });
     EXPECT_CALL(*cleanupThreadMock, run());
 
-    mainWindow->makeDecisionTimerTicked();
     mainWindow->cleanupTimerTicked();
 
     cleanupThreadMock->wait();
@@ -191,32 +192,20 @@ TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 
 TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
-
-    EXPECT_CALL(*makeDecisionThreadMock, run())
-        .WillOnce([] { QThread::msleep(200); });
+    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->makeDecisionTimerTicked();
-    mainWindow->makeDecisionTimerTicked();
-
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
 
     makeDecisionThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
-
-    EXPECT_CALL(*makeDecisionThreadMock, run())
-        .WillOnce([] { QThread::msleep(200); });
+    ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
     mainWindow->ui->actionAuth->trigger();
-    mainWindow->ui->actionAuth->trigger();
 
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
-
-    makeDecisionThreadMock->wait();
+    ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), false);
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -285,18 +274,12 @@ TEST_F(Test_MainWindow, Test_init)
 {
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 
     EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
-
     EXPECT_CALL(*cleanupThreadMock, run());
-    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->init();
 
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
-
-    makeDecisionThreadMock->wait();
 }

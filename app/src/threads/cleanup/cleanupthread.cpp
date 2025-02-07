@@ -2,6 +2,7 @@
 
 #include <QDateTime>
 #include <QDebug>
+#include <QMutexLocker>
 
 
 
@@ -29,6 +30,8 @@ void CleanupThread::run()
     qDebug() << "Running CleanupThread";
 
     qint64 obsoleteTimestamp = QDateTime::currentSecsSinceEpoch() - mConfig->getStorageMonthLimit() * 31 * 24 * 60 * 60;
+
+    QMutexLocker lock(mStocksStorage->getMutex());
 
     QList<Stock> *stocks = mStocksStorage->getStocks();
     mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);

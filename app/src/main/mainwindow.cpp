@@ -11,6 +11,7 @@
 MainWindow::MainWindow(
     IConfig *config,
     IConfig *configForSettingsDialog,
+    IConfig *configForSimulation,
     ISettingsDialogFactory *settingsDialogFactory,
     IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
@@ -32,6 +33,7 @@ MainWindow::MainWindow(
     makeDecisionTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
+    mConfigForSimulation(configForSimulation),
     mSettingsDialogFactory(settingsDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
     mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
@@ -126,11 +128,6 @@ void MainWindow::cleanupTimerTicked()
 {
     qInfo() << "Cleanup timer ticked";
 
-    if (mMakeDecisionThread->isRunning())
-    {
-        mMakeDecisionThread->wait();
-    }
-
     mCleanupThread->start();
 }
 
@@ -138,18 +135,12 @@ void MainWindow::makeDecisionTimerTicked()
 {
     qDebug() << "Make decision timer ticked";
 
-    if (mCleanupThread->isRunning() || mMakeDecisionThread->isRunning())
-    {
-        return;
-    }
-
-    makeDecisionTimer->start();
     mMakeDecisionThread->start();
 }
 
 void MainWindow::on_actionAuth_triggered()
 {
-    makeDecisionTimerTicked();
+    ui->actionAuth->setEnabled(false);
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -222,7 +213,7 @@ void MainWindow::init()
     cleanupTimerTicked();
     mCleanupThread->wait();
 
-    makeDecisionTimerTicked();
+    on_actionAuth_triggered();
 }
 
 void MainWindow::updateStackWidgetToolbar()

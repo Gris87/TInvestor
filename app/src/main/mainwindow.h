@@ -35,6 +35,7 @@ public:
     MainWindow(
         IConfig *config,
         IConfig *configForSettingsDialog,
+        IConfig *configForSimulation,
         ISettingsDialogFactory *settingsDialogFactory,
         IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
@@ -71,6 +72,7 @@ private:
 
     IConfig                           *mConfig;
     IConfig                           *mConfigForSettingsDialog;
+    IConfig                           *mConfigForSimulation;
     ISettingsDialogFactory            *mSettingsDialogFactory;
     IDecisionMakerConfigWidgetFactory *mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory  *mBuyDecision1ConfigWidgetFactory;

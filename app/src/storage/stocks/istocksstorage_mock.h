@@ -17,6 +17,7 @@ public:
     StocksStorageMock(const StocksStorageMock &another) = delete;
     StocksStorageMock& operator=(const StocksStorageMock &another) = delete;
 
+    MOCK_METHOD0(getMutex, QMutex*());
     MOCK_METHOD0(getStocks, QList<Stock>*());
     MOCK_METHOD1(readFromDatabase, void(IStocksDatabase *stocksDatabase));
 };
