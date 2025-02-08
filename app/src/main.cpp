@@ -25,10 +25,10 @@
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
-#include "src/widgets/trayicon/trayiconfactory.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
+#include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
