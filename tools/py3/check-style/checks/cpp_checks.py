@@ -2,16 +2,15 @@ from pathlib import Path
 
 from checks.utils import run_checkers
 
-group_name = "common"
-files_pattern = ["*"]
+group_name = "cpp"
+files_pattern = ["*.h", "*.cpp"]
 
 check_modules = [
-    "mrgtmp",
-    "text_file",
+    "clang_format",
 ]
 
 
-def run_common_checkers():
+def run_cpp_checkers():
     paths = []
     for pattern in files_pattern:
         paths.extend(Path(".").rglob(pattern))

@@ -5,10 +5,12 @@ from colorama import just_fix_windows_console
 from concurrent.futures import ThreadPoolExecutor
 
 from checks.common_checks import run_common_checkers
+from checks.cpp_checks import run_cpp_checkers
 
 
 check_groups = [
     run_common_checkers,
+    run_cpp_checkers,
 ]
 
 
