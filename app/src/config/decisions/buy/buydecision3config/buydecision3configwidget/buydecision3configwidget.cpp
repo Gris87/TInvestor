@@ -5,7 +5,7 @@
 
 
 
-BuyDecision3ConfigWidget::BuyDecision3ConfigWidget(IBuyDecision3Config *config, QWidget *parent) :
+BuyDecision3ConfigWidget::BuyDecision3ConfigWidget(IBuyDecision3Config* config, QWidget* parent) :
     IBuyDecision3ConfigWidget(parent),
     ui(new Ui::BuyDecision3ConfigWidget),
     mConfig(config)
@@ -29,7 +29,7 @@ void BuyDecision3ConfigWidget::updateUiFromConfig()
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
-void BuyDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
+void BuyDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 

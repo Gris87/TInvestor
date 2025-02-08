@@ -12,9 +12,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -129,12 +129,14 @@ TEST(Test_DecisionMakerConfig, Test_save)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(buyDecision1ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision1Config")));
     EXPECT_CALL(buyDecision2ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision2Config")));
     EXPECT_CALL(buyDecision3ConfigMock, save(&settingsEditorMock,  QString("BLAH/BuyDecision3Config")));
     EXPECT_CALL(sellDecision1ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision1Config")));
     EXPECT_CALL(sellDecision2ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision2Config")));
     EXPECT_CALL(sellDecision3ConfigMock, save(&settingsEditorMock, QString("BLAH/SellDecision3Config")));
+    // clang-format on
 
     config.save(&settingsEditorMock, "BLAH");
 }
@@ -159,12 +161,14 @@ TEST(Test_DecisionMakerConfig, Test_load)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(buyDecision1ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision1Config")));
     EXPECT_CALL(buyDecision2ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision2Config")));
     EXPECT_CALL(buyDecision3ConfigMock, load(&settingsEditorMock,  QString("BLAH/BuyDecision3Config")));
     EXPECT_CALL(sellDecision1ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision1Config")));
     EXPECT_CALL(sellDecision2ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision2Config")));
     EXPECT_CALL(sellDecision3ConfigMock, load(&settingsEditorMock, QString("BLAH/SellDecision3Config")));
+    // clang-format on
 
     config.load(&settingsEditorMock, "BLAH");
 }

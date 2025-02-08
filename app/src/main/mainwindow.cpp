@@ -9,23 +9,23 @@
 
 
 MainWindow::MainWindow(
-    IConfig *config,
-    IConfig *configForSettingsDialog,
-    IConfig *configForSimulation,
-    ISettingsDialogFactory *settingsDialogFactory,
-    IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
-    IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
-    IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
-    IBuyDecision3ConfigWidgetFactory *buyDecision3ConfigWidgetFactory,
-    ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
-    ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
-    ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
-    ITrayIconFactory *trayIconFactory,
-    ISettingsEditor *settingsEditor,
-    IStocksDatabase *stocksDatabase,
-    IStocksStorage *stocksStorage,
-    ICleanupThread *cleanupThread,
-    IMakeDecisionThread *makeDecisionThread
+    IConfig*                           config,
+    IConfig*                           configForSettingsDialog,
+    IConfig*                           configForSimulation,
+    ISettingsDialogFactory*            settingsDialogFactory,
+    IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    ITrayIconFactory*                  trayIconFactory,
+    ISettingsEditor*                   settingsEditor,
+    IStocksDatabase*                   stocksDatabase,
+    IStocksStorage*                    stocksStorage,
+    ICleanupThread*                    cleanupThread,
+    IMakeDecisionThread*               makeDecisionThread
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
@@ -52,7 +52,7 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
-    ITrayIcon *trayIcon = trayIconFactory->newInstance(this);
+    ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
     connect(trayIcon, SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
@@ -85,7 +85,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent* event)
 {
     if (!event->spontaneous() || !isVisible())
     {
@@ -177,7 +177,7 @@ void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
 
-    ISettingsDialog *dialog = mSettingsDialogFactory->newInstance(
+    ISettingsDialog* dialog = mSettingsDialogFactory->newInstance(
         mConfigForSettingsDialog,
         mDecisionMakerConfigWidgetFactory,
         mBuyDecision1ConfigWidgetFactory,

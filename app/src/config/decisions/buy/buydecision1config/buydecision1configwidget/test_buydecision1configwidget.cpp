@@ -7,9 +7,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -36,9 +36,11 @@ TEST(Test_BuyDecision1ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
     ASSERT_NEAR(configWidget.ui->priceFallDoubleSpinBox->value(), 2.1f, 0.01f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          3);
+    // clang-format on
 
     EXPECT_CALL(buyDecision1ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(buyDecision1ConfigMock, getPriceFall()).WillOnce(Return(5.3f));
@@ -46,9 +48,11 @@ TEST(Test_BuyDecision1ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
     ASSERT_NEAR(configWidget.ui->priceFallDoubleSpinBox->value(), 5.3f, 0.01f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          2);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)

@@ -11,11 +11,14 @@
 class CleanupThreadMock : public ICleanupThread
 {
 public:
-    CleanupThreadMock() : ICleanupThread() {}
+    CleanupThreadMock() :
+        ICleanupThread()
+    {
+    }
     ~CleanupThreadMock() override = default;
 
-    CleanupThreadMock(const CleanupThreadMock &another) = delete;
-    CleanupThreadMock& operator=(const CleanupThreadMock &another) = delete;
+    CleanupThreadMock(const CleanupThreadMock& another)            = delete;
+    CleanupThreadMock& operator=(const CleanupThreadMock& another) = delete;
 
     MOCK_METHOD0(run, void());
 };

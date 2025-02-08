@@ -1,8 +1,8 @@
 #include "src/db/stocks/stocksdatabase.h"
 
-#include <gtest/gtest.h>
 #include <QCoreApplication>
 #include <QDir>
+#include <gtest/gtest.h>
 
 
 
@@ -62,17 +62,17 @@ protected:
 
         for (int i = 0; i < 3; ++i)
         {
-            int dataSize = timestamps[i].size();
+            int              dataSize = timestamps[i].size();
             QList<StockData> stockDataList(dataSize);
 
-            StockData *stockDataArray = stockDataList.data();
+            StockData* stockDataArray = stockDataList.data();
 
             for (int j = 0; j < dataSize; ++j)
             {
-                StockData *stockData = &stockDataArray[j];
+                StockData* stockData = &stockDataArray[j];
 
                 stockData->timestamp = timestamps[i][j].toLongLong();
-                stockData->value = values[i][j].toFloat();
+                stockData->value     = values[i][j].toFloat();
             }
 
             QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
@@ -84,7 +84,7 @@ protected:
         }
     }
 
-    StocksDatabase *database;
+    StocksDatabase* database;
 };
 
 
@@ -97,45 +97,58 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
     QList<Stock> stocks = database->readStocksMeta();
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,            "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,        "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
     QList<Stock> stocks = database->readStocksMeta();
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,            "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,        "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
+    // clang-format on
 
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
@@ -147,7 +160,9 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
     ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
     ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
@@ -164,7 +179,9 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
@@ -179,6 +196,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
@@ -220,45 +238,58 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
     database->writeStocksMeta(&stocks);
     stocks = database->readStocksMeta();
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "TEST");
     ASSERT_EQ(stocks.at(0).fullname,        "abc");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,            "MAGA");
     ASSERT_EQ(stocks.at(1).fullname,        "def");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,            "HNYA");
     ASSERT_EQ(stocks.at(2).fullname,        "aaaa");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_appendStockData)
 {
     QList<Stock> stocks = database->readStocksMeta();
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,            "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,        "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
+    // clang-format on
 
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
@@ -270,7 +301,9 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
     ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
     ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
@@ -287,7 +320,9 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
@@ -302,6 +337,7 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
+    // clang-format on
 
 
 
@@ -331,6 +367,7 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
@@ -350,7 +387,9 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(0).data.at(5).value,   0.3f, 0.001f);
     ASSERT_EQ(stocks.at(0).data.at(6).timestamp, 400);
     ASSERT_NEAR(stocks.at(0).data.at(6).value,   0.4f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
@@ -367,7 +406,9 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
@@ -382,30 +423,38 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 {
     QList<Stock> stocks = database->readStocksMeta();
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,            "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,        "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
+    // clang-format on
 
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
@@ -417,7 +466,9 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
     ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
     ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
@@ -434,7 +485,9 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
@@ -449,10 +502,12 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
+    // clang-format on
 
     database->deleteObsoleteData(200, &stocks);
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
     ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
@@ -462,7 +517,9 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(0).data.at(0).value,   1000, 0.001f);
     ASSERT_EQ(stocks.at(0).data.at(1).timestamp, 300);
     ASSERT_NEAR(stocks.at(0).data.at(1).value,   500, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          5);
@@ -477,7 +534,9 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(1).data.at(3).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(4).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(4).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          4);
@@ -490,16 +549,20 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(2).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(3).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   100, 0.001f);
+    // clang-format on
 
     database->deleteObsoleteData(400, &stocks);
     database->readStocksData(&stocks);
 
+    // clang-format off
     ASSERT_EQ(stocks.size(),                3);
     ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
     ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 1443);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
     ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          3);
@@ -510,7 +573,9 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(1).data.at(1).value,   1550.75f, 0.001f);
     ASSERT_EQ(stocks.at(1).data.at(2).timestamp, 650);
     ASSERT_NEAR(stocks.at(1).data.at(2).value,   650.15f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
     ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          2);
@@ -519,4 +584,5 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(0).value,   600, 0.001f);
     ASSERT_EQ(stocks.at(2).data.at(1).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(1).value,   100, 0.001f);
+    // clang-format on
 }

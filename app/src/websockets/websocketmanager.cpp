@@ -4,7 +4,7 @@
 
 
 
-WebSocketManager::WebSocketManager(QObject *parent) :
+WebSocketManager::WebSocketManager(QObject* parent) :
     IWebSocketManager(parent)
 {
     qDebug() << "Create WebSocketManager";

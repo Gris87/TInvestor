@@ -20,9 +20,7 @@ def do_validation(args):
 
 def _validate_file(args, file_path):
     if args.fix:
-        argv = ["clang-format", "--dry-run", "--Werror", f"{file_path}"]
-
-        return True
+        argv = ["clang-format", "-i", f"{file_path}"]
     else:
         argv = ["clang-format", "--dry-run", "--Werror", f"{file_path}"]
 

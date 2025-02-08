@@ -1,7 +1,7 @@
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
-#include <gtest/gtest.h>
 #include <QMutex>
+#include <gtest/gtest.h>
 
 
 
@@ -19,13 +19,13 @@ struct SumResult
 
 
 
-void action(QList<int> *array, int start, int end, void *additionalArgs)
+void action(QList<int>* array, int start, int end, void* additionalArgs)
 {
-    SumResult *sumResult = reinterpret_cast<SumResult *>(additionalArgs);
+    SumResult* sumResult = reinterpret_cast<SumResult*>(additionalArgs);
 
     int res = 0;
 
-    const int *arrayData = array->constData();
+    const int* arrayData = array->constData();
 
     for (int i = start; i < end; ++i)
     {
@@ -52,7 +52,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     int datasize = 1000;
     array.resize(datasize);
 
-    int *arrayData = array.data();
+    int* arrayData = array.data();
 
     for (int i = 0; i < datasize; ++i)
     {

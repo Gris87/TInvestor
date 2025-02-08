@@ -11,11 +11,14 @@
 class BuyDecision1ConfigWidgetMock : public IBuyDecision1ConfigWidget
 {
 public:
-    explicit BuyDecision1ConfigWidgetMock(QWidget *parent = nullptr) : IBuyDecision1ConfigWidget(parent) {}
+    explicit BuyDecision1ConfigWidgetMock(QWidget* parent = nullptr) :
+        IBuyDecision1ConfigWidget(parent)
+    {
+    }
     ~BuyDecision1ConfigWidgetMock() override = default;
 
-    BuyDecision1ConfigWidgetMock(const BuyDecision1ConfigWidgetMock &another) = delete;
-    BuyDecision1ConfigWidgetMock& operator=(const BuyDecision1ConfigWidgetMock &another) = delete;
+    BuyDecision1ConfigWidgetMock(const BuyDecision1ConfigWidgetMock& another)            = delete;
+    BuyDecision1ConfigWidgetMock& operator=(const BuyDecision1ConfigWidgetMock& another) = delete;
 
     MOCK_METHOD0(updateUiFromConfig, void());
 };

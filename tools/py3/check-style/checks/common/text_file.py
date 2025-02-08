@@ -11,17 +11,20 @@ from utils import prepare_linter
 def do_validation(args):
     res = True
 
-    for file_path in args.files:
-        with open(file_path, "rb") as f:
-            content = f.read()
+    try:
+        for file_path in args.files:
+            with open(file_path, "rb") as f:
+                content = f.read()
 
-        if _is_text_file(content):
-            try:
-                lines = content.decode("utf-8").split("\n")
-            except UnicodeDecodeError:
-                continue
+            if _is_text_file(content):
+                try:
+                    lines = content.decode("utf-8").split("\n")
+                except UnicodeDecodeError:
+                    continue
 
-            res &= _validate_file(args, file_path, content, lines)
+                res &= _validate_file(args, file_path, content, lines)
+    except Exception as e:
+        pass
 
     return res
 
@@ -32,10 +35,11 @@ def _validate_file(args, file_path, content, lines):
     if args.fix:
         lines = _fix_file(lines)
 
-        content = "\n".join(lines).encode("utf-8")
+        new_content = "\n".join(lines).encode("utf-8")
 
-        with open(file_path, "wb") as f:
-            f.write(content)
+        if new_content != content:
+            with open(file_path, "wb") as f:
+                f.write(new_content)
     else:
         res &= _check_for_lf(file_path, content)
         res &= _check_for_newline_at_bof(file_path, lines)

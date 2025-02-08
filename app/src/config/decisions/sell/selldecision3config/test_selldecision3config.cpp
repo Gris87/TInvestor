@@ -6,9 +6,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -30,21 +30,25 @@ TEST(Test_SellDecision3Config, Test_assign)
     config2.setLoseIncome(4.2f);
     config2.setDuration(6);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      false);
     ASSERT_EQ(config.getLoseIncome(),  3.7f);
     ASSERT_EQ(config.getDuration(),    2);
     ASSERT_EQ(config2.isEnabled(),     true);
     ASSERT_EQ(config2.getLoseIncome(), 4.2f);
     ASSERT_EQ(config2.getDuration(),   6);
+    // clang-format on
 
     config.assign(&config2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      true);
     ASSERT_EQ(config.getLoseIncome(),  4.2f);
     ASSERT_EQ(config.getDuration(),    6);
     ASSERT_EQ(config2.isEnabled(),     true);
     ASSERT_EQ(config2.getLoseIncome(), 4.2f);
     ASSERT_EQ(config2.getDuration(),   6);
+    // clang-format on
 }
 
 TEST(Test_SellDecision3Config, Test_makeDefault)
@@ -55,15 +59,19 @@ TEST(Test_SellDecision3Config, Test_makeDefault)
     config.setLoseIncome(4.2f);
     config.setDuration(2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),     false);
     ASSERT_EQ(config.getLoseIncome(), 4.2f);
     ASSERT_EQ(config.getDuration(),   2);
+    // clang-format on
 
     config.makeDefault();
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),     true);
     ASSERT_EQ(config.getLoseIncome(), 5.0f);
     ASSERT_EQ(config.getDuration(),   3);
+    // clang-format on
 }
 
 TEST(Test_SellDecision3Config, Test_save)
@@ -74,15 +82,19 @@ TEST(Test_SellDecision3Config, Test_save)
     config.setLoseIncome(4.2f);
     config.setDuration(2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),     false);
     ASSERT_EQ(config.getLoseIncome(), 4.2f);
     ASSERT_EQ(config.getDuration(),   2);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),    QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/LoseIncome"), QVariant(4.2f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Duration"),   QVariant(2)));
+    // clang-format on
 
     config.save(&settingsEditorMock, "BLAH");
 }
@@ -95,21 +107,27 @@ TEST(Test_SellDecision3Config, Test_load)
     config.setLoseIncome(4.2f);
     config.setDuration(2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),     false);
     ASSERT_EQ(config.getLoseIncome(), 4.2f);
     ASSERT_EQ(config.getDuration(),   2);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),    QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/LoseIncome"), QVariant(4.2f))).WillOnce(Return(QVariant(8.9f)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Duration"),   QVariant(2))).WillOnce(Return(QVariant(1)));
+    // clang-format on
 
     config.load(&settingsEditorMock, "BLAH");
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),     true);
     ASSERT_EQ(config.getLoseIncome(), 8.9f);
     ASSERT_EQ(config.getDuration(),   1);
+    // clang-format on
 }
 
 TEST(Test_SellDecision3Config, Test_setEnabled_and_isEnabled)

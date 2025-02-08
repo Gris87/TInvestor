@@ -19,7 +19,7 @@ QMap<QtMsgType, QString> logLevelToString{
 
 QtMessageHandler oldMessageHandler;
 
-void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
     if (type < logLevel)
     {
@@ -28,13 +28,16 @@ void messageHandler(QtMsgType type, const QMessageLogContext &context, const QSt
 
     QString typeStr = logLevelToString[type];
 
-    oldMessageHandler(type, context, QString("%1 %2 %3:%4 %5: %6")
-        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
-        .arg(typeStr)
-        .arg(QString(context.file).remove("..\\..\\..\\app\\"))
-        .arg(context.line)
-        .arg(context.function)
-        .arg(msg)
+    oldMessageHandler(
+        type,
+        context,
+        QString("%1 %2 %3:%4 %5: %6")
+            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
+            .arg(typeStr)
+            .arg(QString(context.file).remove("..\\..\\..\\app\\"))
+            .arg(context.line)
+            .arg(context.function)
+            .arg(msg)
     );
 }
 

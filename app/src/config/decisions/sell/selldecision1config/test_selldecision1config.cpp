@@ -6,9 +6,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -28,17 +28,21 @@ TEST(Test_SellDecision1Config, Test_assign)
     config2.setEnabled(true);
     config2.setIncomeAbove(1.6f);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),       false);
     ASSERT_EQ(config.getIncomeAbove(),  2.5f);
     ASSERT_EQ(config2.isEnabled(),      true);
     ASSERT_EQ(config2.getIncomeAbove(), 1.6f);
+    // clang-format on
 
     config.assign(&config2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),       true);
     ASSERT_EQ(config.getIncomeAbove(),  1.6f);
     ASSERT_EQ(config2.isEnabled(),      true);
     ASSERT_EQ(config2.getIncomeAbove(), 1.6f);
+    // clang-format on
 }
 
 TEST(Test_SellDecision1Config, Test_makeDefault)
@@ -48,13 +52,17 @@ TEST(Test_SellDecision1Config, Test_makeDefault)
     config.setEnabled(false);
     config.setIncomeAbove(2.5f);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      false);
     ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    // clang-format on
 
     config.makeDefault();
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      true);
     ASSERT_EQ(config.getIncomeAbove(), 1.0f);
+    // clang-format on
 }
 
 TEST(Test_SellDecision1Config, Test_save)
@@ -64,8 +72,10 @@ TEST(Test_SellDecision1Config, Test_save)
     config.setEnabled(false);
     config.setIncomeAbove(2.5f);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      false);
     ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
@@ -82,8 +92,10 @@ TEST(Test_SellDecision1Config, Test_load)
     config.setEnabled(false);
     config.setIncomeAbove(2.5f);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      false);
     ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
@@ -92,8 +104,10 @@ TEST(Test_SellDecision1Config, Test_load)
 
     config.load(&settingsEditorMock, "BLAH");
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),      true);
     ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    // clang-format on
 }
 
 TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)

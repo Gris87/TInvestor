@@ -5,7 +5,7 @@
 
 
 
-SellDecision1ConfigWidget::SellDecision1ConfigWidget(ISellDecision1Config *config, QWidget *parent) :
+SellDecision1ConfigWidget::SellDecision1ConfigWidget(ISellDecision1Config* config, QWidget* parent) :
     ISellDecision1ConfigWidget(parent),
     ui(new Ui::SellDecision1ConfigWidget),
     mConfig(config)
@@ -28,7 +28,7 @@ void SellDecision1ConfigWidget::updateUiFromConfig()
     ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
 }
 
-void SellDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SellDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 

@@ -12,8 +12,8 @@ public:
     BuyDecision3ConfigWidgetFactory();
     ~BuyDecision3ConfigWidgetFactory();
 
-    BuyDecision3ConfigWidgetFactory(const BuyDecision3ConfigWidgetFactory &another) = delete;
-    BuyDecision3ConfigWidgetFactory& operator=(const BuyDecision3ConfigWidgetFactory &another) = delete;
+    BuyDecision3ConfigWidgetFactory(const BuyDecision3ConfigWidgetFactory& another)            = delete;
+    BuyDecision3ConfigWidgetFactory& operator=(const BuyDecision3ConfigWidgetFactory& another) = delete;
 
-    IBuyDecision3ConfigWidget* newInstance(IBuyDecision3Config *config, QWidget *parent) override;
+    IBuyDecision3ConfigWidget* newInstance(IBuyDecision3Config* config, QWidget* parent) override;
 };

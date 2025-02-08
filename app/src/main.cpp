@@ -36,11 +36,11 @@
 
 
 
-int runApplication(int argc, char *argv[]);
+int runApplication(int argc, char* argv[]);
 
 
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     Logger::init();
 
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     return res;
 }
 
-int runApplication(int argc, char *argv[])
+int runApplication(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
@@ -63,10 +63,7 @@ int runApplication(int argc, char *argv[])
     if (!translator.load(":/assets/translations/language_ru.qm"))
     {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Localization"),
-            QObject::tr("Failed to apply localization"),
-            QMessageBox::Close
+            nullptr, QObject::tr("Localization"), QObject::tr("Failed to apply localization"), QMessageBox::Close
         );
 
         return 1;
@@ -78,10 +75,7 @@ int runApplication(int argc, char *argv[])
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         QMessageBox::critical(
-            nullptr,
-            QObject::tr("Systray"),
-            QObject::tr("Failed to detect any system tray on this system"),
-            QMessageBox::Close
+            nullptr, QObject::tr("Systray"), QObject::tr("Failed to detect any system tray on this system"), QMessageBox::Close
         );
 
         return 1;

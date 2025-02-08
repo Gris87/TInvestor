@@ -6,9 +6,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -23,7 +23,7 @@ TEST(Test_BuyDecision3ConfigWidgetFactory, Test_newInstance)
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    IBuyDecision3ConfigWidget *widget = factory.newInstance(&buyDecision3ConfigMock, nullptr);
+    IBuyDecision3ConfigWidget* widget = factory.newInstance(&buyDecision3ConfigMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

@@ -11,15 +11,15 @@ const int autoPilotTabIndex  = 2;
 
 
 SettingsDialog::SettingsDialog(
-    IConfig *config,
-    IDecisionMakerConfigWidgetFactory *decisionMakerConfigWidgetFactory,
-    IBuyDecision1ConfigWidgetFactory *buyDecision1ConfigWidgetFactory,
-    IBuyDecision2ConfigWidgetFactory *buyDecision2ConfigWidgetFactory,
-    IBuyDecision3ConfigWidgetFactory *buyDecision3ConfigWidgetFactory,
-    ISellDecision1ConfigWidgetFactory *sellDecision1ConfigWidgetFactory,
-    ISellDecision2ConfigWidgetFactory *sellDecision2ConfigWidgetFactory,
-    ISellDecision3ConfigWidgetFactory *sellDecision3ConfigWidgetFactory,
-    QWidget *parent
+    IConfig*                           config,
+    IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    QWidget*                           parent
 ) :
     ISettingsDialog(parent),
     ui(new Ui::SettingsDialog),
@@ -90,7 +90,7 @@ void SettingsDialog::updateUiFromConfig()
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
 }
 
-void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -102,7 +102,7 @@ void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)
     mConfig->setMakeDecisionTimeout(value);
 }
 
-void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -112,7 +112,7 @@ void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckSta
     ui->scheduleEndTimeEdit->setEnabled(checked);
 }
 
-void SettingsDialog::on_scheduleStartTimeEdit_timeChanged(const QTime &time)
+void SettingsDialog::on_scheduleStartTimeEdit_timeChanged(const QTime& time)
 {
     if (time > ui->scheduleEndTimeEdit->time())
     {
@@ -123,7 +123,7 @@ void SettingsDialog::on_scheduleStartTimeEdit_timeChanged(const QTime &time)
     mConfig->setScheduleStartMinute(time.minute());
 }
 
-void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime &time)
+void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime& time)
 {
     if (time < ui->scheduleStartTimeEdit->time())
     {
@@ -134,7 +134,7 @@ void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime &time)
     mConfig->setScheduleEndMinute(time.minute());
 }
 
-void SettingsDialog::on_limitPurchasesPerDayCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_limitPurchasesPerDayCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -153,7 +153,7 @@ void SettingsDialog::on_amountOfPurchasesPerDaySpinBox_valueChanged(int value)
     mConfig->setAmountOfPurchasesPerDay(value);
 }
 
-void SettingsDialog::on_limitPurchasesPerStockCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_limitPurchasesPerStockCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -177,7 +177,7 @@ void SettingsDialog::on_commissionDoubleSpinBox_valueChanged(double value)
     mConfig->setCommission(value);
 }
 
-void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -191,7 +191,7 @@ void SettingsDialog::on_amountOfStockPurchaseSpinBox_valueChanged(int value)
     mConfig->setAmountOfStockPurchase(value);
 }
 
-void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     if (ui->autoPilotConfigCommonCheckBox->isChecked())
     {
@@ -214,7 +214,7 @@ void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt
     }
 }
 
-void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     if (ui->simulatorConfigCommonCheckBox->isChecked())
     {

@@ -6,9 +6,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -32,6 +32,7 @@ TEST(Test_BuyDecision2Config, Test_assign)
     config2.setAmountOfTimes(6);
     config2.setDuration(321);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),         false);
     ASSERT_EQ(config.getPriceDiff(),      2.5f);
     ASSERT_EQ(config.getAmountOfTimes(),  2);
@@ -40,9 +41,11 @@ TEST(Test_BuyDecision2Config, Test_assign)
     ASSERT_EQ(config2.getPriceDiff(),     1.6f);
     ASSERT_EQ(config2.getAmountOfTimes(), 6);
     ASSERT_EQ(config2.getDuration(),      321);
+    // clang-format on
 
     config.assign(&config2);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),         true);
     ASSERT_EQ(config.getPriceDiff(),      1.6f);
     ASSERT_EQ(config.getAmountOfTimes(),  6);
@@ -51,6 +54,7 @@ TEST(Test_BuyDecision2Config, Test_assign)
     ASSERT_EQ(config2.getPriceDiff(),     1.6f);
     ASSERT_EQ(config2.getAmountOfTimes(), 6);
     ASSERT_EQ(config2.getDuration(),      321);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision2Config, Test_makeDefault)
@@ -62,17 +66,21 @@ TEST(Test_BuyDecision2Config, Test_makeDefault)
     config.setAmountOfTimes(5);
     config.setDuration(123);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),        false);
     ASSERT_EQ(config.getPriceDiff(),     2.5f);
     ASSERT_EQ(config.getAmountOfTimes(), 5);
     ASSERT_EQ(config.getDuration(),      123);
+    // clang-format on
 
     config.makeDefault();
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),        true);
     ASSERT_EQ(config.getPriceDiff(),     1.0f);
     ASSERT_EQ(config.getAmountOfTimes(), 2);
     ASSERT_EQ(config.getDuration(),      15);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision2Config, Test_save)
@@ -84,17 +92,21 @@ TEST(Test_BuyDecision2Config, Test_save)
     config.setAmountOfTimes(2);
     config.setDuration(123);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),        false);
     ASSERT_EQ(config.getPriceDiff(),     2.5f);
     ASSERT_EQ(config.getAmountOfTimes(), 2);
     ASSERT_EQ(config.getDuration(),      123);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),       QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/PriceDiff"),     QVariant(2.5f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/AmountOfTimes"), QVariant(2)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Duration"),      QVariant(123)));
+    // clang-format on
 
     config.save(&settingsEditorMock, "BLAH");
 }
@@ -108,24 +120,30 @@ TEST(Test_BuyDecision2Config, Test_load)
     config.setAmountOfTimes(2);
     config.setDuration(123);
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),        false);
     ASSERT_EQ(config.getPriceDiff(),     2.5f);
     ASSERT_EQ(config.getAmountOfTimes(), 2);
     ASSERT_EQ(config.getDuration(),      123);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),       QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/PriceDiff"),     QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/AmountOfTimes"), QVariant(2))).WillOnce(Return(QVariant(7)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Duration"),      QVariant(123))).WillOnce(Return(QVariant(321)));
+    // clang-format on
 
     config.load(&settingsEditorMock, "BLAH");
 
+    // clang-format off
     ASSERT_EQ(config.isEnabled(),        true);
     ASSERT_EQ(config.getPriceDiff(),     1.7f);
     ASSERT_EQ(config.getAmountOfTimes(), 7);
     ASSERT_EQ(config.getDuration(),      321);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision2Config, Test_setEnabled_and_isEnabled)

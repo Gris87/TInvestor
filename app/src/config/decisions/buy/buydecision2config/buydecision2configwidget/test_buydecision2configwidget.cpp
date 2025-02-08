@@ -7,9 +7,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -38,10 +38,12 @@ TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
     ASSERT_NEAR(configWidget.ui->priceDiffDoubleSpinBox->value(), 2.1f, 0.01f);
     ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->value(),     1);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          3);
+    // clang-format on
 
     EXPECT_CALL(buyDecision2ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(buyDecision2ConfigMock, getPriceDiff()).WillOnce(Return(5.3f));
@@ -50,10 +52,12 @@ TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
     ASSERT_NEAR(configWidget.ui->priceDiffDoubleSpinBox->value(), 5.3f, 0.01f);
     ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->value(),     3);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          2);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
@@ -68,15 +72,21 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     EXPECT_CALL(buyDecision2ConfigMock, setEnabled(true));
     configWidget.ui->enabledCheckBox->setChecked(true);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->priceDiffDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->isEnabled(),   true);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        true);
+    // clang-format on
 
     EXPECT_CALL(buyDecision2ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->priceDiffDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->amountOfTimesSpinBox->isEnabled(),   false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)

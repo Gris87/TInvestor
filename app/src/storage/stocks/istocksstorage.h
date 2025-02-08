@@ -11,13 +11,15 @@
 class IStocksStorage
 {
 public:
-    IStocksStorage() {}
+    IStocksStorage()
+    {
+    }
     virtual ~IStocksStorage() = default;
 
-    IStocksStorage(const IStocksStorage &another) = delete;
-    IStocksStorage& operator=(const IStocksStorage &another) = delete;
+    IStocksStorage(const IStocksStorage& another)            = delete;
+    IStocksStorage& operator=(const IStocksStorage& another) = delete;
 
-    virtual QMutex* getMutex() = 0;
-    virtual QList<Stock>* getStocks() = 0;
-    virtual void readFromDatabase(IStocksDatabase *stocksDatabase) = 0;
+    virtual QMutex*       getMutex()                                        = 0;
+    virtual QList<Stock>* getStocks()                                       = 0;
+    virtual void          readFromDatabase(IStocksDatabase* stocksDatabase) = 0;
 };

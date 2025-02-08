@@ -11,17 +11,20 @@
 class BuyDecision1ConfigMock : public IBuyDecision1Config
 {
 public:
-    BuyDecision1ConfigMock() : IBuyDecision1Config() {}
+    BuyDecision1ConfigMock() :
+        IBuyDecision1Config()
+    {
+    }
     ~BuyDecision1ConfigMock() override = default;
 
-    BuyDecision1ConfigMock(const BuyDecision1ConfigMock &another) = delete;
-    BuyDecision1ConfigMock& operator=(const BuyDecision1ConfigMock &another) = delete;
+    BuyDecision1ConfigMock(const BuyDecision1ConfigMock& another)            = delete;
+    BuyDecision1ConfigMock& operator=(const BuyDecision1ConfigMock& another) = delete;
 
-    MOCK_METHOD1(assign, void(IBuyDecision1Config *another));
+    MOCK_METHOD1(assign, void(IBuyDecision1Config* another));
     MOCK_METHOD0(makeDefault, void());
 
-    MOCK_METHOD2(save, void(ISettingsEditor *settingsEditor, const QString &type));
-    MOCK_METHOD2(load, void(ISettingsEditor *settingsEditor, const QString &type));
+    MOCK_METHOD2(save, void(ISettingsEditor* settingsEditor, const QString& type));
+    MOCK_METHOD2(load, void(ISettingsEditor* settingsEditor, const QString& type));
 
     MOCK_METHOD1(setEnabled, void(bool value));
     MOCK_METHOD0(isEnabled, bool());

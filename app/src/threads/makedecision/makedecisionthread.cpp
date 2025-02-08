@@ -5,10 +5,7 @@
 
 
 MakeDecisionThread::MakeDecisionThread(
-    IConfig *config,
-    IStocksDatabase *stocksDatabase,
-    IStocksStorage *stocksStorage,
-    QObject *parent
+    IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent
 ) :
     IMakeDecisionThread(parent),
     mConfig(config),

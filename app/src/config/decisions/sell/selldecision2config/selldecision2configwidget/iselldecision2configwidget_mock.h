@@ -11,11 +11,14 @@
 class SellDecision2ConfigWidgetMock : public ISellDecision2ConfigWidget
 {
 public:
-    explicit SellDecision2ConfigWidgetMock(QWidget *parent = nullptr) : ISellDecision2ConfigWidget(parent) {}
+    explicit SellDecision2ConfigWidgetMock(QWidget* parent = nullptr) :
+        ISellDecision2ConfigWidget(parent)
+    {
+    }
     ~SellDecision2ConfigWidgetMock() override = default;
 
-    SellDecision2ConfigWidgetMock(const SellDecision2ConfigWidgetMock &another) = delete;
-    SellDecision2ConfigWidgetMock& operator=(const SellDecision2ConfigWidgetMock &another) = delete;
+    SellDecision2ConfigWidgetMock(const SellDecision2ConfigWidgetMock& another)            = delete;
+    SellDecision2ConfigWidgetMock& operator=(const SellDecision2ConfigWidgetMock& another) = delete;
 
     MOCK_METHOD0(updateUiFromConfig, void());
 };

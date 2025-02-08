@@ -1,7 +1,7 @@
 #include "src/widgets/trayicon/trayicon.h"
 
-#include <gtest/gtest.h>
 #include <QMenu>
+#include <gtest/gtest.h>
 
 
 
@@ -9,10 +9,10 @@ TEST(Test_TrayIcon, Test_constructor_and_destructor)
 {
     TrayIcon trayIcon;
 
-    QMenu *trayIconMenu = trayIcon.contextMenu();
+    QMenu* trayIconMenu = trayIcon.contextMenu();
     ASSERT_TRUE(trayIconMenu != nullptr);
 
-    QList<QAction *> actions = trayIconMenu->actions();
+    QList<QAction*> actions = trayIconMenu->actions();
     ASSERT_EQ(actions.size(), 3);
 
     ASSERT_EQ(actions.at(0)->isSeparator(), false);

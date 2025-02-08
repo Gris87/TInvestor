@@ -10,11 +10,13 @@
 class IBuyDecision3ConfigWidgetFactory
 {
 public:
-    IBuyDecision3ConfigWidgetFactory() {}
+    IBuyDecision3ConfigWidgetFactory()
+    {
+    }
     virtual ~IBuyDecision3ConfigWidgetFactory() = default;
 
-    IBuyDecision3ConfigWidgetFactory(const IBuyDecision3ConfigWidgetFactory &another) = delete;
-    IBuyDecision3ConfigWidgetFactory& operator=(const IBuyDecision3ConfigWidgetFactory &another) = delete;
+    IBuyDecision3ConfigWidgetFactory(const IBuyDecision3ConfigWidgetFactory& another)            = delete;
+    IBuyDecision3ConfigWidgetFactory& operator=(const IBuyDecision3ConfigWidgetFactory& another) = delete;
 
-    virtual IBuyDecision3ConfigWidget* newInstance(IBuyDecision3Config *config, QWidget *parent) = 0;
+    virtual IBuyDecision3ConfigWidget* newInstance(IBuyDecision3Config* config, QWidget* parent) = 0;
 };

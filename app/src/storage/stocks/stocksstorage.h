@@ -12,14 +12,14 @@ public:
     explicit StocksStorage();
     ~StocksStorage();
 
-    StocksStorage(const StocksStorage &another) = delete;
-    StocksStorage& operator=(const StocksStorage &another) = delete;
+    StocksStorage(const StocksStorage& another)            = delete;
+    StocksStorage& operator=(const StocksStorage& another) = delete;
 
-    QMutex* getMutex() override;
+    QMutex*       getMutex() override;
     QList<Stock>* getStocks() override;
-    void readFromDatabase(IStocksDatabase *stocksDatabase) override;
+    void          readFromDatabase(IStocksDatabase* stocksDatabase) override;
 
 private:
-    QMutex       *mMutex;
-    QList<Stock> *mStocks;
+    QMutex*       mMutex;
+    QList<Stock>* mStocks;
 };

@@ -5,7 +5,7 @@
 
 
 
-SellDecision2ConfigWidget::SellDecision2ConfigWidget(ISellDecision2Config *config, QWidget *parent) :
+SellDecision2ConfigWidget::SellDecision2ConfigWidget(ISellDecision2Config* config, QWidget* parent) :
     ISellDecision2ConfigWidget(parent),
     ui(new Ui::SellDecision2ConfigWidget),
     mConfig(config)
@@ -29,7 +29,7 @@ void SellDecision2ConfigWidget::updateUiFromConfig()
     ui->loseIncomeDoubleSpinBox->setValue(mConfig->getLoseIncome());
 }
 
-void SellDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState &value)
+void SellDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 

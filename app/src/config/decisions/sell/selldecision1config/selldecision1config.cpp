@@ -19,13 +19,13 @@ SellDecision1Config::~SellDecision1Config()
     delete mMutex;
 }
 
-void SellDecision1Config::assign(ISellDecision1Config *another)
+void SellDecision1Config::assign(ISellDecision1Config* another)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
 
-    const SellDecision1Config &config = *dynamic_cast<SellDecision1Config *>(another);
+    const SellDecision1Config& config = *dynamic_cast<SellDecision1Config*>(another);
 
     mEnabled     = config.mEnabled;
     mIncomeAbove = config.mIncomeAbove;
@@ -41,7 +41,7 @@ void SellDecision1Config::makeDefault()
     mIncomeAbove = 1.0f;
 }
 
-void SellDecision1Config::save(ISettingsEditor *settingsEditor, const QString &type)
+void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 
@@ -51,7 +51,7 @@ void SellDecision1Config::save(ISettingsEditor *settingsEditor, const QString &t
     settingsEditor->setValue(type + "/IncomeAbove", mIncomeAbove);
 }
 
-void SellDecision1Config::load(ISettingsEditor *settingsEditor, const QString &type)
+void SellDecision1Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 

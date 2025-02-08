@@ -11,11 +11,14 @@
 class BuyDecision2ConfigWidgetFactoryMock : public IBuyDecision2ConfigWidgetFactory
 {
 public:
-    BuyDecision2ConfigWidgetFactoryMock() : IBuyDecision2ConfigWidgetFactory() {}
+    BuyDecision2ConfigWidgetFactoryMock() :
+        IBuyDecision2ConfigWidgetFactory()
+    {
+    }
     ~BuyDecision2ConfigWidgetFactoryMock() override = default;
 
-    BuyDecision2ConfigWidgetFactoryMock(const BuyDecision2ConfigWidgetFactoryMock &another) = delete;
-    BuyDecision2ConfigWidgetFactoryMock& operator=(const BuyDecision2ConfigWidgetFactoryMock &another) = delete;
+    BuyDecision2ConfigWidgetFactoryMock(const BuyDecision2ConfigWidgetFactoryMock& another)            = delete;
+    BuyDecision2ConfigWidgetFactoryMock& operator=(const BuyDecision2ConfigWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD2(newInstance, IBuyDecision2ConfigWidget*(IBuyDecision2Config *config, QWidget *parent));
+    MOCK_METHOD2(newInstance, IBuyDecision2ConfigWidget*(IBuyDecision2Config* config, QWidget* parent));
 };

@@ -7,9 +7,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -36,9 +36,11 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        true);
     ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 2.1f, 0.01f);
     ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  3.1f, 0.01f);
+    // clang-format on
 
     EXPECT_CALL(sellDecision2ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(sellDecision2ConfigMock, getIncomeAbove()).WillOnce(Return(5.3f));
@@ -46,9 +48,11 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        false);
     ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.01f);
     ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(),  6.3f, 0.01f);
+    // clang-format on
 }
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
@@ -63,13 +67,19 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     EXPECT_CALL(sellDecision2ConfigMock, setEnabled(true));
     configWidget.ui->enabledCheckBox->setChecked(true);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isEnabled(), true);
     ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(),  true);
+    // clang-format on
 
     EXPECT_CALL(sellDecision2ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isEnabled(), false);
     ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(),  false);
+    // clang-format on
 }
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)

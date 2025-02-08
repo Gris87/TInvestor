@@ -6,12 +6,12 @@
 
 
 DecisionMakerConfig::DecisionMakerConfig(
-    IBuyDecision1Config *buyDecision1Config,
-    IBuyDecision2Config *buyDecision2Config,
-    IBuyDecision3Config *buyDecision3Config,
-    ISellDecision1Config *sellDecision1Config,
-    ISellDecision2Config *sellDecision2Config,
-    ISellDecision3Config *sellDecision3Config
+    IBuyDecision1Config*  buyDecision1Config,
+    IBuyDecision2Config*  buyDecision2Config,
+    IBuyDecision3Config*  buyDecision3Config,
+    ISellDecision1Config* sellDecision1Config,
+    ISellDecision2Config* sellDecision2Config,
+    ISellDecision3Config* sellDecision3Config
 ) :
     IDecisionMakerConfig(),
     mBuyDecision1Config(buyDecision1Config),
@@ -29,11 +29,11 @@ DecisionMakerConfig::~DecisionMakerConfig()
     qDebug() << "Destroy DecisionMakerConfig";
 }
 
-void DecisionMakerConfig::assign(IDecisionMakerConfig *another)
+void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
 {
     qDebug() << "Assigning DecisionMakerConfig to DecisionMakerConfig";
 
-    const DecisionMakerConfig &config = *dynamic_cast<DecisionMakerConfig *>(another);
+    const DecisionMakerConfig& config = *dynamic_cast<DecisionMakerConfig*>(another);
 
     mBuyDecision1Config->assign(config.mBuyDecision1Config);
     mBuyDecision2Config->assign(config.mBuyDecision2Config);
@@ -55,7 +55,7 @@ void DecisionMakerConfig::makeDefault()
     mSellDecision3Config->makeDefault();
 }
 
-void DecisionMakerConfig::save(ISettingsEditor *settingsEditor, const QString &type)
+void DecisionMakerConfig::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     qDebug() << "Save DecisionMakerConfig";
 
@@ -67,7 +67,7 @@ void DecisionMakerConfig::save(ISettingsEditor *settingsEditor, const QString &t
     mSellDecision3Config->save(settingsEditor, type + "/SellDecision3Config");
 }
 
-void DecisionMakerConfig::load(ISettingsEditor *settingsEditor, const QString &type)
+void DecisionMakerConfig::load(ISettingsEditor* settingsEditor, const QString& type)
 {
     qDebug() << "Load DecisionMakerConfig";
 

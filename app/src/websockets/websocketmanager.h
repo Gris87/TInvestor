@@ -11,9 +11,9 @@ class WebSocketManager : public IWebSocketManager
     Q_OBJECT
 
 public:
-    explicit WebSocketManager(QObject *parent = nullptr);
+    explicit WebSocketManager(QObject* parent = nullptr);
     ~WebSocketManager();
 
-    WebSocketManager(const WebSocketManager &another) = delete;
-    WebSocketManager& operator=(const WebSocketManager &another) = delete;
+    WebSocketManager(const WebSocketManager& another)            = delete;
+    WebSocketManager& operator=(const WebSocketManager& another) = delete;
 };

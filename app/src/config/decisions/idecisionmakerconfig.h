@@ -14,17 +14,19 @@
 class IDecisionMakerConfig
 {
 public:
-    IDecisionMakerConfig() {}
+    IDecisionMakerConfig()
+    {
+    }
     virtual ~IDecisionMakerConfig() = default;
 
-    IDecisionMakerConfig(const IDecisionMakerConfig &another) = delete;
-    IDecisionMakerConfig& operator=(const IDecisionMakerConfig &another) = delete;
+    IDecisionMakerConfig(const IDecisionMakerConfig& another)            = delete;
+    IDecisionMakerConfig& operator=(const IDecisionMakerConfig& another) = delete;
 
-    virtual void assign(IDecisionMakerConfig *another) = 0;
-    virtual void makeDefault() = 0;
+    virtual void assign(IDecisionMakerConfig* another) = 0;
+    virtual void makeDefault()                         = 0;
 
-    virtual void save(ISettingsEditor *settingsEditor, const QString &type) = 0;
-    virtual void load(ISettingsEditor *settingsEditor, const QString &type) = 0;
+    virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
+    virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;
 
     virtual IBuyDecision1Config* getBuyDecision1Config() = 0;
     virtual IBuyDecision2Config* getBuyDecision2Config() = 0;

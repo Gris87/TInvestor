@@ -4,7 +4,7 @@
 
 
 
-SettingsEditor::SettingsEditor(const QString &organization, const QString &application) :
+SettingsEditor::SettingsEditor(const QString& organization, const QString& application) :
     ISettingsEditor(),
     mSettings(new QSettings(organization, application))
 {
@@ -18,12 +18,12 @@ SettingsEditor::~SettingsEditor()
     delete mSettings;
 }
 
-void SettingsEditor::setValue(const QString &key, const QVariant &value)
+void SettingsEditor::setValue(const QString& key, const QVariant& value)
 {
     mSettings->setValue(key, value);
 }
 
-QVariant SettingsEditor::value(const QString &key, const QVariant &defaultValue)
+QVariant SettingsEditor::value(const QString& key, const QVariant& defaultValue)
 {
     return mSettings->value(key, defaultValue);
 }

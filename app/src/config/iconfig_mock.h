@@ -11,17 +11,20 @@
 class ConfigMock : public IConfig
 {
 public:
-    ConfigMock() : IConfig() {}
+    ConfigMock() :
+        IConfig()
+    {
+    }
     ~ConfigMock() override = default;
 
-    ConfigMock(const ConfigMock &another) = delete;
-    ConfigMock& operator=(const ConfigMock &another) = delete;
+    ConfigMock(const ConfigMock& another)            = delete;
+    ConfigMock& operator=(const ConfigMock& another) = delete;
 
-    MOCK_METHOD1(assign, void(IConfig *another));
+    MOCK_METHOD1(assign, void(IConfig* another));
     MOCK_METHOD0(makeDefault, void());
 
-    MOCK_METHOD1(save, void(ISettingsEditor *settingsEditor));
-    MOCK_METHOD1(load, void(ISettingsEditor *settingsEditor));
+    MOCK_METHOD1(save, void(ISettingsEditor* settingsEditor));
+    MOCK_METHOD1(load, void(ISettingsEditor* settingsEditor));
 
     MOCK_METHOD0(getSimulatorConfig, IDecisionMakerConfig*());
     MOCK_METHOD0(getAutoPilotConfig, IDecisionMakerConfig*());

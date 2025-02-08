@@ -19,13 +19,13 @@ SellDecision3Config::~SellDecision3Config()
     delete mMutex;
 }
 
-void SellDecision3Config::assign(ISellDecision3Config *another)
+void SellDecision3Config::assign(ISellDecision3Config* another)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision3Config to SellDecision3Config";
 
-    const SellDecision3Config &config = *dynamic_cast<SellDecision3Config *>(another);
+    const SellDecision3Config& config = *dynamic_cast<SellDecision3Config*>(another);
 
     mEnabled    = config.mEnabled;
     mLoseIncome = config.mLoseIncome;
@@ -43,7 +43,7 @@ void SellDecision3Config::makeDefault()
     mDuration   = 3;
 }
 
-void SellDecision3Config::save(ISettingsEditor *settingsEditor, const QString &type)
+void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 
@@ -54,7 +54,7 @@ void SellDecision3Config::save(ISettingsEditor *settingsEditor, const QString &t
     settingsEditor->setValue(type + "/Duration",   mDuration);
 }
 
-void SellDecision3Config::load(ISettingsEditor *settingsEditor, const QString &type)
+void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 

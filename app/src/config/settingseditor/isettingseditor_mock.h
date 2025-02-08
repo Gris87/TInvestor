@@ -11,12 +11,15 @@
 class SettingsEditorMock : public ISettingsEditor
 {
 public:
-    SettingsEditorMock() : ISettingsEditor() {}
+    SettingsEditorMock() :
+        ISettingsEditor()
+    {
+    }
     ~SettingsEditorMock() override = default;
 
-    SettingsEditorMock(const SettingsEditorMock &another) = delete;
-    SettingsEditorMock& operator=(const SettingsEditorMock &another) = delete;
+    SettingsEditorMock(const SettingsEditorMock& another)            = delete;
+    SettingsEditorMock& operator=(const SettingsEditorMock& another) = delete;
 
-    MOCK_METHOD2(setValue, void(const QString &key, const QVariant &value));
-    MOCK_METHOD2(value, QVariant(const QString &key, const QVariant &defaultValue));
+    MOCK_METHOD2(setValue, void(const QString& key, const QVariant& value));
+    MOCK_METHOD2(value, QVariant(const QString& key, const QVariant& defaultValue));
 };

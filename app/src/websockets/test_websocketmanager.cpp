@@ -17,7 +17,7 @@ protected:
         delete manager;
     }
 
-    WebSocketManager *manager;
+    WebSocketManager* manager;
 };
 
 

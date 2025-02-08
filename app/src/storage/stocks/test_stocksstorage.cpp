@@ -6,9 +6,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -30,7 +30,7 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
 
     StocksStorage storage;
 
-    QList<Stock> *stocks = storage.getStocks();
+    QList<Stock>* stocks = storage.getStocks();
     ASSERT_EQ(stocks->size(), 0);
 
     QList<Stock> stocksDB;
@@ -73,7 +73,8 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     storage.readFromDatabase(&stocksDatabaseMock);
     stocks = storage.getStocks();
 
-    ASSERT_EQ(stocks->size(), 3);
+    // clang-format off
+    ASSERT_EQ(stocks->size(),                     3);
     ASSERT_EQ(stocks->at(0).name,                 "TEST");
     ASSERT_EQ(stocks->at(0).fullname,             "abc");
     ASSERT_EQ(stocks->at(0).data.size(),          2);
@@ -81,7 +82,9 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     ASSERT_NEAR(stocks->at(0).data.at(0).value,   0.1f, 0.001f);
     ASSERT_EQ(stocks->at(0).data.at(1).timestamp, 200);
     ASSERT_NEAR(stocks->at(0).data.at(1).value,   0.2f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks->at(1).name,                 "MAGA");
     ASSERT_EQ(stocks->at(1).fullname,             "def");
     ASSERT_EQ(stocks->at(1).data.size(),          2);
@@ -89,7 +92,9 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     ASSERT_NEAR(stocks->at(1).data.at(0).value,   0.2f, 0.001f);
     ASSERT_EQ(stocks->at(1).data.at(1).timestamp, 300);
     ASSERT_NEAR(stocks->at(1).data.at(1).value,   0.3f, 0.001f);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(stocks->at(2).name,                 "HNYA");
     ASSERT_EQ(stocks->at(2).fullname,             "aaaa");
     ASSERT_EQ(stocks->at(2).data.size(),          3);
@@ -99,4 +104,5 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     ASSERT_NEAR(stocks->at(2).data.at(1).value,   0.3f, 0.001f);
     ASSERT_EQ(stocks->at(2).data.at(2).timestamp, 400);
     ASSERT_NEAR(stocks->at(2).data.at(2).value,   0.4f, 0.001f);
+    // clang-format on
 }

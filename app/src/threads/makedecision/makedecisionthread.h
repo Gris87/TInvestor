@@ -16,20 +16,17 @@ class MakeDecisionThread : public IMakeDecisionThread
 
 public:
     explicit MakeDecisionThread(
-        IConfig *config,
-        IStocksDatabase *stocksDatabase,
-        IStocksStorage *stocksStorage,
-        QObject *parent = nullptr
+        IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent = nullptr
     );
     ~MakeDecisionThread();
 
-    MakeDecisionThread(const MakeDecisionThread &another) = delete;
-    MakeDecisionThread& operator=(const MakeDecisionThread &another) = delete;
+    MakeDecisionThread(const MakeDecisionThread& another)            = delete;
+    MakeDecisionThread& operator=(const MakeDecisionThread& another) = delete;
 
     void run() override;
 
 private:
-    IConfig         *mConfig;
-    IStocksDatabase *mStocksDatabase;
-    IStocksStorage  *mStocksStorage;
+    IConfig*         mConfig;
+    IStocksDatabase* mStocksDatabase;
+    IStocksStorage*  mStocksStorage;
 };

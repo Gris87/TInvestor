@@ -7,9 +7,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -49,6 +49,7 @@ TEST(Test_Config, Test_assign)
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    false);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
@@ -66,6 +67,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.getStorageMonthLimit(),         36);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      false);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      true);
+    // clang-format on
 
     config2.setAutorun(true);
     config2.setMakeDecisionTimeout(30);
@@ -85,6 +87,7 @@ TEST(Test_Config, Test_assign)
     config2.setSimulatorConfigCommon(true);
     config2.setAutoPilotConfigCommon(false);
 
+    // clang-format off
     ASSERT_EQ(config2.isAutorun(),                    true);
     ASSERT_EQ(config2.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config2.isUseSchedule(),                true);
@@ -102,12 +105,14 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config2.getStorageMonthLimit(),         12);
     ASSERT_EQ(config2.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config2.isAutoPilotConfigCommon(),      false);
+    // clang-format on
 
     EXPECT_CALL(simulatorConfigMock, assign(&simulatorConfigMock2));
     EXPECT_CALL(autoPilotConfigMock, assign(&autoPilotConfigMock2));
 
     config.assign(&config2);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    true);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config.isUseSchedule(),                true);
@@ -125,7 +130,9 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.getStorageMonthLimit(),         12);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      false);
+    // clang-format on
 
+    // clang-format off
     ASSERT_EQ(config2.isAutorun(),                    true);
     ASSERT_EQ(config2.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config2.isUseSchedule(),                true);
@@ -143,6 +150,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config2.getStorageMonthLimit(),         12);
     ASSERT_EQ(config2.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config2.isAutoPilotConfigCommon(),      false);
+    // clang-format on
 }
 
 TEST(Test_Config, Test_makeDefault)
@@ -170,6 +178,7 @@ TEST(Test_Config, Test_makeDefault)
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    false);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
@@ -187,12 +196,14 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.getStorageMonthLimit(),         36);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      false);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      true);
+    // clang-format on
 
     EXPECT_CALL(simulatorConfigMock, makeDefault());
     EXPECT_CALL(autoPilotConfigMock, makeDefault());
 
     config.makeDefault();
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    true);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       1);
     ASSERT_EQ(config.isUseSchedule(),                true);
@@ -210,6 +221,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.getStorageMonthLimit(),         12);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      false);
+    // clang-format on
 }
 
 TEST(Test_Config, Test_save)
@@ -237,6 +249,7 @@ TEST(Test_Config, Test_save)
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    false);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
@@ -254,12 +267,14 @@ TEST(Test_Config, Test_save)
     ASSERT_EQ(config.getStorageMonthLimit(),         36);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      false);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      true);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     EXPECT_CALL(simulatorConfigMock, save(&settingsEditorMock, QString("Simulator")));
     EXPECT_CALL(autoPilotConfigMock, save(&settingsEditorMock, QString("AutoPilot")));
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                   QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),       QVariant(5)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),               QVariant(false)));
@@ -277,6 +292,7 @@ TEST(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),         QVariant(36)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"),     QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"),     QVariant(true)));
+    // clang-format on
 
     config.save(&settingsEditorMock);
 }
@@ -306,6 +322,7 @@ TEST(Test_Config, Test_load)
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    false);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       5);
     ASSERT_EQ(config.isUseSchedule(),                false);
@@ -323,12 +340,14 @@ TEST(Test_Config, Test_load)
     ASSERT_EQ(config.getStorageMonthLimit(),         36);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      false);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      true);
+    // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     EXPECT_CALL(simulatorConfigMock, load(&settingsEditorMock, QString("Simulator")));
     EXPECT_CALL(autoPilotConfigMock, load(&settingsEditorMock, QString("AutoPilot")));
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                   QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),       QVariant(5))).WillOnce(Return(QVariant(30)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),               QVariant(false))).WillOnce(Return(QVariant(true)));
@@ -346,9 +365,11 @@ TEST(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),         QVariant(36))).WillOnce(Return(QVariant(12)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"),     QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"),     QVariant(true))).WillOnce(Return(QVariant(false)));
+    // clang-format on
 
     config.load(&settingsEditorMock);
 
+    // clang-format off
     ASSERT_EQ(config.isAutorun(),                    true);
     ASSERT_EQ(config.getMakeDecisionTimeout(),       30);
     ASSERT_EQ(config.isUseSchedule(),                true);
@@ -366,6 +387,7 @@ TEST(Test_Config, Test_load)
     ASSERT_EQ(config.getStorageMonthLimit(),         12);
     ASSERT_EQ(config.isSimulatorConfigCommon(),      true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(),      false);
+    // clang-format on
 }
 
 TEST(Test_Config, Test_getSimulatorConfig)

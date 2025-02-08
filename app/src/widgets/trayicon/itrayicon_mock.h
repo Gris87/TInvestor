@@ -11,9 +11,12 @@
 class TrayIconMock : public ITrayIcon
 {
 public:
-    explicit TrayIconMock(QWidget *parent = nullptr) : ITrayIcon(parent) {}
+    explicit TrayIconMock(QWidget* parent = nullptr) :
+        ITrayIcon(parent)
+    {
+    }
     ~TrayIconMock() override = default;
 
-    TrayIconMock(const TrayIconMock &another) = delete;
-    TrayIconMock& operator=(const TrayIconMock &another) = delete;
+    TrayIconMock(const TrayIconMock& another)            = delete;
+    TrayIconMock& operator=(const TrayIconMock& another) = delete;
 };

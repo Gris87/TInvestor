@@ -11,11 +11,14 @@
 class TrayIconFactoryMock : public ITrayIconFactory
 {
 public:
-    TrayIconFactoryMock() : ITrayIconFactory() {}
+    TrayIconFactoryMock() :
+        ITrayIconFactory()
+    {
+    }
     ~TrayIconFactoryMock() override = default;
 
-    TrayIconFactoryMock(const TrayIconFactoryMock &another) = delete;
-    TrayIconFactoryMock& operator=(const TrayIconFactoryMock &another) = delete;
+    TrayIconFactoryMock(const TrayIconFactoryMock& another)            = delete;
+    TrayIconFactoryMock& operator=(const TrayIconFactoryMock& another) = delete;
 
-    MOCK_METHOD1(newInstance, ITrayIcon*(QWidget *parent));
+    MOCK_METHOD1(newInstance, ITrayIcon*(QWidget* parent));
 };

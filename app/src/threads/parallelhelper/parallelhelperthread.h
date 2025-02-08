@@ -10,15 +10,10 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    typedef void (*ActionType)(QList<T> *array, int start, int end, void *additionalArgs);
+    typedef void (*ActionType)(QList<T>* array, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
-        ActionType action,
-        QList<T> *array,
-        int start,
-        int end,
-        void *additionalArgs,
-        QObject *parent = nullptr
+        ActionType action, QList<T>* array, int start, int end, void* additionalArgs, QObject* parent = nullptr
     ) :
         QThread(parent),
         mAction(action),
@@ -33,8 +28,8 @@ public:
     {
     }
 
-    ParallelHelperThread(const ParallelHelperThread &another) = delete;
-    ParallelHelperThread& operator=(const ParallelHelperThread &another) = delete;
+    ParallelHelperThread(const ParallelHelperThread& another)            = delete;
+    ParallelHelperThread& operator=(const ParallelHelperThread& another) = delete;
 
     void run() override
     {
@@ -43,19 +38,17 @@ public:
 
 private:
     ActionType mAction;
-    QList<T>   *mArray;
+    QList<T>*  mArray;
     int        mStart;
     int        mEnd;
-    void       *mAdditionalArgs;
+    void*      mAdditionalArgs;
 };
 
 
 
 template<typename T>
 void processInParallel(
-    QList<T> *array,
-    void action(QList<T> *array, int start, int end, void *additionalArgs),
-    void *additionalArgs = nullptr
+    QList<T>* array, void action(QList<T>* array, int start, int end, void* additionalArgs), void* additionalArgs = nullptr
 )
 {
     int cpuCount = QThread::idealThreadCount();
@@ -64,9 +57,9 @@ void processInParallel(
     int partTail = array->size() % cpuCount;
 
     int start = 0;
-    int end = 0;
+    int end   = 0;
 
-    QList<ParallelHelperThread<T> *> threads(cpuCount);
+    QList<ParallelHelperThread<T>*> threads(cpuCount);
 
     for (int i = 0; i < cpuCount; ++i)
     {
@@ -77,7 +70,7 @@ void processInParallel(
             ++end;
         }
 
-        ParallelHelperThread<T> *thread = new ParallelHelperThread<T>(action, array, start, end, additionalArgs);
+        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, array, start, end, additionalArgs);
         thread->start();
 
         threads[i] = thread;
@@ -87,7 +80,7 @@ void processInParallel(
 
     for (int i = 0; i < cpuCount; ++i)
     {
-        ParallelHelperThread<T> *thread = threads.at(i);
+        ParallelHelperThread<T>* thread = threads.at(i);
 
         thread->wait();
         delete thread;

@@ -19,13 +19,13 @@ BuyDecision2Config::~BuyDecision2Config()
     delete mMutex;
 }
 
-void BuyDecision2Config::assign(IBuyDecision2Config *another)
+void BuyDecision2Config::assign(IBuyDecision2Config* another)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning BuyDecision2Config to BuyDecision2Config";
 
-    const BuyDecision2Config &config = *dynamic_cast<BuyDecision2Config *>(another);
+    const BuyDecision2Config& config = *dynamic_cast<BuyDecision2Config*>(another);
 
     mEnabled       = config.mEnabled;
     mPriceDiff     = config.mPriceDiff;
@@ -45,7 +45,7 @@ void BuyDecision2Config::makeDefault()
     mDuration      = 15;
 }
 
-void BuyDecision2Config::save(ISettingsEditor *settingsEditor, const QString &type)
+void BuyDecision2Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 
@@ -57,7 +57,7 @@ void BuyDecision2Config::save(ISettingsEditor *settingsEditor, const QString &ty
     settingsEditor->setValue(type + "/Duration",      mDuration);
 }
 
-void BuyDecision2Config::load(ISettingsEditor *settingsEditor, const QString &type)
+void BuyDecision2Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
     QMutexLocker lock(mMutex);
 

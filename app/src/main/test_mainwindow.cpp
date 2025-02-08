@@ -1,33 +1,33 @@
 #include "src/main/mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <gtest/gtest.h>
 #include <QtCore/private/qcoreapplication_p.h>
+#include <gtest/gtest.h>
 
 #include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
-#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/config/settingsdialog/isettingsdialog_mock.h"
 #include "src/config/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/config/settingseditor/isettingseditor_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
-#include "src/widgets/trayicon/itrayicon_mock.h"
-#include "src/widgets/trayicon/itrayiconfactory_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/widgets/trayicon/itrayicon_mock.h"
+#include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
 
 
-using ::testing::StrictMock;
-using ::testing::NotNull;
 using ::testing::_;
+using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -113,25 +113,25 @@ protected:
         delete trayIconMock;
     }
 
-    MainWindow                                       *mainWindow;
-    StrictMock<ConfigMock>                           *configMock;
-    StrictMock<ConfigMock>                           *configForSettingsDialogMock;
-    StrictMock<ConfigMock>                           *configForSimulationMock;
-    StrictMock<SettingsDialogFactoryMock>            *settingsDialogFactoryMock;
-    StrictMock<DecisionMakerConfigWidgetFactoryMock> *decisionMakerConfigWidgetFactoryMock;
-    StrictMock<BuyDecision1ConfigWidgetFactoryMock>  *buyDecision1ConfigWidgetFactoryMock;
-    StrictMock<BuyDecision2ConfigWidgetFactoryMock>  *buyDecision2ConfigWidgetFactoryMock;
-    StrictMock<BuyDecision3ConfigWidgetFactoryMock>  *buyDecision3ConfigWidgetFactoryMock;
-    StrictMock<SellDecision1ConfigWidgetFactoryMock> *sellDecision1ConfigWidgetFactoryMock;
-    StrictMock<SellDecision2ConfigWidgetFactoryMock> *sellDecision2ConfigWidgetFactoryMock;
-    StrictMock<SellDecision3ConfigWidgetFactoryMock> *sellDecision3ConfigWidgetFactoryMock;
-    StrictMock<TrayIconFactoryMock>                  *trayIconFactoryMock;
-    StrictMock<SettingsEditorMock>                   *settingsEditorMock;
-    StrictMock<StocksDatabaseMock>                   *stocksDatabaseMock;
-    StrictMock<StocksStorageMock>                    *stocksStorageMock;
-    StrictMock<CleanupThreadMock>                    *cleanupThreadMock;
-    StrictMock<MakeDecisionThreadMock>               *makeDecisionThreadMock;
-    StrictMock<TrayIconMock>                         *trayIconMock;
+    MainWindow*                                       mainWindow;
+    StrictMock<ConfigMock>*                           configMock;
+    StrictMock<ConfigMock>*                           configForSettingsDialogMock;
+    StrictMock<ConfigMock>*                           configForSimulationMock;
+    StrictMock<SettingsDialogFactoryMock>*            settingsDialogFactoryMock;
+    StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
+    StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision2ConfigWidgetFactoryMock>*  buyDecision2ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision3ConfigWidgetFactoryMock>*  buyDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
+    StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
+    StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
+    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
+    StrictMock<StocksDatabaseMock>*                   stocksDatabaseMock;
+    StrictMock<StocksStorageMock>*                    stocksStorageMock;
+    StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
+    StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
+    StrictMock<TrayIconMock>*                         trayIconMock;
 };
 
 
@@ -140,14 +140,18 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
 {
     ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->stocksPage);
 
-    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), true);
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(),     true);
     ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
-    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(),  false);
+    // clang-format on
 
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
+    // clang-format on
 }
 
 TEST_F(Test_MainWindow, Test_closeEvent)
@@ -214,9 +218,11 @@ TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
 
     ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->stocksPage);
 
-    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), true);
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(),     true);
     ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
-    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(),  false);
+    // clang-format on
 }
 
 TEST_F(Test_MainWindow, Test_on_actionSimulationPage_toggled)
@@ -225,9 +231,11 @@ TEST_F(Test_MainWindow, Test_on_actionSimulationPage_toggled)
 
     ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->simulationPage);
 
-    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), false);
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(),     false);
     ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), true);
-    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), false);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(),  false);
+    // clang-format on
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
@@ -236,27 +244,32 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
 
     ASSERT_EQ(mainWindow->ui->stackedWidget->currentWidget(), mainWindow->ui->autoPilotPage);
 
-    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(), false);
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->actionStocksPage->isChecked(),     false);
     ASSERT_EQ(mainWindow->ui->actionSimulationPage->isChecked(), false);
-    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(), true);
+    ASSERT_EQ(mainWindow->ui->actionAutoPilotPage->isChecked(),  true);
+    // clang-format on
 }
 
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
-    StrictMock<SettingsDialogMock> *settingsDialogMock = new StrictMock<SettingsDialogMock>();
+    StrictMock<SettingsDialogMock>* settingsDialogMock = new StrictMock<SettingsDialogMock>();
 
     EXPECT_CALL(*configForSettingsDialogMock, assign(configMock));
-    EXPECT_CALL(*settingsDialogFactoryMock, newInstance(
-        configForSettingsDialogMock,
-        decisionMakerConfigWidgetFactoryMock,
-        buyDecision1ConfigWidgetFactoryMock,
-        buyDecision2ConfigWidgetFactoryMock,
-        buyDecision3ConfigWidgetFactoryMock,
-        sellDecision1ConfigWidgetFactoryMock,
-        sellDecision2ConfigWidgetFactoryMock,
-        sellDecision3ConfigWidgetFactoryMock,
-        NotNull()
-    )).WillOnce(Return(settingsDialogMock));
+    EXPECT_CALL(
+        *settingsDialogFactoryMock,
+        newInstance(
+            configForSettingsDialogMock,
+            decisionMakerConfigWidgetFactoryMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock,
+            NotNull()
+        )
+    ).WillOnce(Return(settingsDialogMock));
     EXPECT_CALL(*settingsDialogMock, updateUiFromConfig());
 
     EXPECT_CALL(*settingsDialogMock, exec()).WillOnce(Return(QDialog::Accepted));

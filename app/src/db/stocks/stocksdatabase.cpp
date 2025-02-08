@@ -43,7 +43,7 @@ QList<Stock> StocksDatabase::readStocksMeta()
 
         QStringList stockLines = stockStr.split('\n');
 
-        for (int i = 0 ; i < stockLines.size() - 1; i += 2)
+        for (int i = 0; i < stockLines.size() - 1; i += 2)
         {
             Stock stock;
 
@@ -59,15 +59,15 @@ QList<Stock> StocksDatabase::readStocksMeta()
     return res;
 }
 
-void readStocksDataForParallel(QList<Stock> *stocks, int start, int end, void * /*additionalArgs*/)
+void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* /*additionalArgs*/)
 {
     QString appDir = qApp->applicationDirPath();
 
-    Stock *stockArray = stocks->data();
+    Stock* stockArray = stocks->data();
 
     for (int i = start; i < end; ++i)
     {
-        Stock &stock = stockArray[i];
+        Stock& stock = stockArray[i];
 
         QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
 
@@ -78,7 +78,7 @@ void readStocksDataForParallel(QList<Stock> *stocks, int start, int end, void * 
             stock.data.reserve(dataSize + amountOfDataPerDay);
             stock.data.resizeForOverwrite(dataSize);
 
-            stockDataFile.read(reinterpret_cast<char *>(stock.data.data()), stockDataFile.size());
+            stockDataFile.read(reinterpret_cast<char*>(stock.data.data()), stockDataFile.size());
             stockDataFile.close();
 
             qDebug() << "Read stock data" << stock.name;
@@ -92,14 +92,14 @@ void readStocksDataForParallel(QList<Stock> *stocks, int start, int end, void * 
     }
 }
 
-void StocksDatabase::readStocksData(QList<Stock> *stocks)
+void StocksDatabase::readStocksData(QList<Stock>* stocks)
 {
     qDebug() << "Reading stocks data from database";
 
     processInParallel(stocks, readStocksDataForParallel);
 }
 
-void StocksDatabase::writeStocksMeta(QList<Stock> *stocks)
+void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 {
     qDebug() << "Writing stocks to database";
 
@@ -107,7 +107,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock> *stocks)
 
     for (int i = 0; i < stocks->size(); ++i)
     {
-        const Stock &stock = stocks->at(i);
+        const Stock& stock = stocks->at(i);
 
         stocksStr += stock.name + "\n";
         stocksStr += stock.fullname + "\n";
@@ -122,7 +122,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock> *stocks)
     stocksFile.close();
 }
 
-void StocksDatabase::appendStockData(Stock *stock)
+void StocksDatabase::appendStockData(Stock* stock)
 {
     QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name));
 
@@ -133,7 +133,7 @@ void StocksDatabase::appendStockData(Stock *stock)
     stockDataFile.close();
 }
 
-void writeStockData(const Stock &stock)
+void writeStockData(const Stock& stock)
 {
     QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock.name));
 
@@ -149,16 +149,16 @@ struct DeleteObsoleteDataInfo
     qint64 obsoleteTimestamp;
 };
 
-void deleteObsoleteDataForParallel(QList<Stock> *stocks, int start, int end, void *additionalArgs)
+void deleteObsoleteDataForParallel(QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
-    DeleteObsoleteDataInfo *deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo *>(additionalArgs);
-    qint64 obsoleteTimestamp = deleteObsoleteDataInfo->obsoleteTimestamp;
+    DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
+    qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
-    Stock *stockArray = stocks->data();
+    Stock* stockArray = stocks->data();
 
     for (int i = start; i < end; ++i)
     {
-        Stock &stock = stockArray[i];
+        Stock& stock = stockArray[i];
         qint64 index = 0;
 
         while (index < stock.data.size() && stock.data.at(index).timestamp < obsoleteTimestamp)
@@ -175,7 +175,7 @@ void deleteObsoleteDataForParallel(QList<Stock> *stocks, int start, int end, voi
     }
 }
 
-void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock> *stocks)
+void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks)
 {
     qDebug() << "Deleting obsolete stocks data";
 
@@ -207,10 +207,10 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
 
 
 
-    int dataSize = 2 * 365 * 24 * 60;
+    int              dataSize = 2 * 365 * 24 * 60;
     QList<StockData> stockDataList(dataSize);
 
-    StockData *stockDataArray = stockDataList.data();
+    StockData* stockDataArray = stockDataList.data();
 
     for (int i = 0; i < 100; ++i)
     {
@@ -218,10 +218,10 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
 
         for (int j = 0; j < dataSize; ++j)
         {
-            StockData *stockData = &stockDataArray[j];
+            StockData* stockData = &stockDataArray[j];
 
             stockData->timestamp = 1672520400 + j * 60;
-            stockData->value = i * j;
+            stockData->value     = i * j;
         }
 
         QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));

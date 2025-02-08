@@ -17,7 +17,7 @@ SellDecision1ConfigWidgetFactory::~SellDecision1ConfigWidgetFactory()
     qDebug() << "Destroy SellDecision1ConfigWidgetFactory";
 }
 
-ISellDecision1ConfigWidget* SellDecision1ConfigWidgetFactory::newInstance(ISellDecision1Config *config, QWidget *parent)
+ISellDecision1ConfigWidget* SellDecision1ConfigWidgetFactory::newInstance(ISellDecision1Config* config, QWidget* parent)
 {
     return new SellDecision1ConfigWidget(config, parent);
 }

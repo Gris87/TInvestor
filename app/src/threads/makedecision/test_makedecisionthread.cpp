@@ -8,9 +8,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -34,10 +34,10 @@ protected:
         delete stocksStorageMock;
     }
 
-    MakeDecisionThread                  *thread;
-    StrictMock<ConfigMock>         *configMock;
-    StrictMock<StocksDatabaseMock> *stocksDatabaseMock;
-    StrictMock<StocksStorageMock>  *stocksStorageMock;
+    MakeDecisionThread*             thread;
+    StrictMock<ConfigMock>*         configMock;
+    StrictMock<StocksDatabaseMock>* stocksDatabaseMock;
+    StrictMock<StocksStorageMock>*  stocksStorageMock;
 };
 
 

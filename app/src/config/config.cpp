@@ -5,7 +5,7 @@
 
 
 
-Config::Config(IDecisionMakerConfig *simulatorConfig, IDecisionMakerConfig *autoPilotConfig) :
+Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* autoPilotConfig) :
     IConfig(),
     mMutex(new QMutex()),
     mSimulatorConfig(simulatorConfig),
@@ -21,13 +21,13 @@ Config::~Config()
     delete mMutex;
 }
 
-void Config::assign(IConfig *another)
+void Config::assign(IConfig* another)
 {
     QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning Config to Config";
 
-    const Config &config = *dynamic_cast<Config *>(another);
+    const Config& config = *dynamic_cast<Config*>(another);
 
     mSimulatorConfig->assign(config.mSimulatorConfig);
     mAutoPilotConfig->assign(config.mAutoPilotConfig);
@@ -79,7 +79,7 @@ void Config::makeDefault()
     mAutoPilotConfigCommon     = false;
 }
 
-void Config::save(ISettingsEditor *settingsEditor)
+void Config::save(ISettingsEditor* settingsEditor)
 {
     QMutexLocker lock(mMutex);
 
@@ -107,7 +107,7 @@ void Config::save(ISettingsEditor *settingsEditor)
     settingsEditor->setValue("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon);
 }
 
-void Config::load(ISettingsEditor *settingsEditor)
+void Config::load(ISettingsEditor* settingsEditor)
 {
     QMutexLocker lock(mMutex);
 

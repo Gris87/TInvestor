@@ -7,9 +7,9 @@
 
 
 
-using ::testing::StrictMock;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -36,9 +36,11 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       true);
     ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 2.1f, 0.01f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           4);
+    // clang-format on
 
     EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(5.3f));
@@ -46,9 +48,11 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
     configWidget.updateUiFromConfig();
 
+    // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       false);
     ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 5.3f, 0.01f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           7);
+    // clang-format on
 }
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
@@ -63,13 +67,19 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     EXPECT_CALL(sellDecision3ConfigMock, setEnabled(true));
     configWidget.ui->enabledCheckBox->setChecked(true);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),         true);
+    // clang-format on
 
     EXPECT_CALL(sellDecision3ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),         false);
+    // clang-format on
 }
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)

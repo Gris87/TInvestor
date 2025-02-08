@@ -17,7 +17,7 @@ BuyDecision3ConfigWidgetFactory::~BuyDecision3ConfigWidgetFactory()
     qDebug() << "Destroy BuyDecision3ConfigWidgetFactory";
 }
 
-IBuyDecision3ConfigWidget* BuyDecision3ConfigWidgetFactory::newInstance(IBuyDecision3Config *config, QWidget *parent)
+IBuyDecision3ConfigWidget* BuyDecision3ConfigWidgetFactory::newInstance(IBuyDecision3Config* config, QWidget* parent)
 {
     return new BuyDecision3ConfigWidget(config, parent);
 }

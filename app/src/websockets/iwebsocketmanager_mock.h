@@ -11,9 +11,12 @@
 class WebSocketManagerMock : public IWebSocketManager
 {
 public:
-    WebSocketManagerMock() : IWebSocketManager() {}
+    WebSocketManagerMock() :
+        IWebSocketManager()
+    {
+    }
     ~WebSocketManagerMock() override = default;
 
-    WebSocketManagerMock(const WebSocketManagerMock &another) = delete;
-    WebSocketManagerMock& operator=(const WebSocketManagerMock &another) = delete;
+    WebSocketManagerMock(const WebSocketManagerMock& another)            = delete;
+    WebSocketManagerMock& operator=(const WebSocketManagerMock& another) = delete;
 };

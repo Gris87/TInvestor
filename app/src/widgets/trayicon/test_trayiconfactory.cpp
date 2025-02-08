@@ -13,7 +13,7 @@ TEST(Test_TrayIconFactory, Test_newInstance)
 {
     TrayIconFactory factory;
 
-    ITrayIcon *trayIcon = factory.newInstance(nullptr);
+    ITrayIcon* trayIcon = factory.newInstance(nullptr);
     ASSERT_TRUE(trayIcon != nullptr);
 
     delete trayIcon;

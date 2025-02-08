@@ -7,14 +7,14 @@
 
 
 
-TrayIcon::TrayIcon(QWidget *parent) :
+TrayIcon::TrayIcon(QWidget* parent) :
     ITrayIcon(parent)
 {
     qDebug() << "Create TrayIcon";
 
-    QMenu *trayIconMenu = new QMenu(parent);
+    QMenu* trayIconMenu = new QMenu(parent);
 
-    QAction *defaultAction = trayIconMenu->addAction(tr("Show"), this, SIGNAL(trayIconShowClicked()));
+    QAction* defaultAction = trayIconMenu->addAction(tr("Show"), this, SIGNAL(trayIconShowClicked()));
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(tr("Exit"), this, SIGNAL(trayIconExitClicked()));
 

@@ -1,7 +1,7 @@
 #include "src/logger/logger.h"
 
-#include <gtest/gtest.h>
 #include <QDebug>
+#include <gtest/gtest.h>
 
 
 

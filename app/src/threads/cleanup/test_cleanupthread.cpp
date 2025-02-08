@@ -8,10 +8,10 @@
 
 
 
-using ::testing::StrictMock;
+using ::testing::Gt;
 using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::Gt;
+using ::testing::StrictMock;
 
 
 
@@ -35,10 +35,10 @@ protected:
         delete stocksStorageMock;
     }
 
-    CleanupThread                  *thread;
-    StrictMock<ConfigMock>         *configMock;
-    StrictMock<StocksDatabaseMock> *stocksDatabaseMock;
-    StrictMock<StocksStorageMock>  *stocksStorageMock;
+    CleanupThread*                  thread;
+    StrictMock<ConfigMock>*         configMock;
+    StrictMock<StocksDatabaseMock>* stocksDatabaseMock;
+    StrictMock<StocksStorageMock>*  stocksStorageMock;
 };
 
 
@@ -49,7 +49,7 @@ TEST_F(Test_CleanupThread, Test_constructor_and_destructor)
 
 TEST_F(Test_CleanupThread, Test_run)
 {
-    QMutex mutex;
+    QMutex       mutex;
     QList<Stock> stocks;
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
