@@ -21,21 +21,29 @@ def do_validation(args):
             except UnicodeDecodeError:
                 continue
 
-            res &= _validate_file(file_path, content, lines)
+            res &= _validate_file(args, file_path, content, lines)
 
     return res
 
 
-def _validate_file(file_path, content, lines):
+def _validate_file(args, file_path, content, lines):
     res = True
 
-    res &= _check_for_lf(file_path, content)
-    res &= _check_for_newline_at_bof(file_path, lines)
-    res &= _check_for_newline_at_eof(file_path, lines)
-    res &= _check_for_multiple_newlines(file_path, lines)
-    res &= _check_for_trailing_whitespaces(file_path, lines)
-    res &= _check_for_mixing_whitespaces(file_path, lines)
-    res &= _check_for_non_ascii(file_path, lines)
+    if args.fix:
+        lines = _fix_file(lines)
+
+        content = "\n".join(lines).encode("utf-8")
+
+        with open(file_path, "wb") as f:
+            f.write(content)
+    else:
+        res &= _check_for_lf(file_path, content)
+        res &= _check_for_newline_at_bof(file_path, lines)
+        res &= _check_for_newline_at_eof(file_path, lines)
+        res &= _check_for_multiple_newlines(file_path, lines)
+        res &= _check_for_trailing_whitespaces(file_path, lines)
+        res &= _check_for_mixing_whitespaces(file_path, lines)
+        res &= _check_for_non_ascii(file_path, lines)
 
     return res
 
@@ -169,6 +177,54 @@ def _check_for_non_ascii(file_path, lines):
             res = False
 
     return res
+
+
+def _fix_file(lines):
+    new_lines = []
+
+    skip_newlines_at_bof = True
+
+    for i, line in enumerate(lines):
+        line = _fix_line(line)
+
+        if skip_newlines_at_bof:
+            if line == "":
+                continue
+
+            skip_newlines_at_bof = False
+
+        new_lines.append(line)
+
+    while len(new_lines) > 0 and new_lines[-1] == "":
+        del new_lines[-1]
+
+    new_lines.append("")
+
+    return new_lines
+
+
+def _fix_line(line):
+    line = line.rstrip()
+
+    new_line = []
+
+    skip_tabs_at_bol = True
+    index_for_tab = -1
+
+    for i, ch in enumerate(line):
+        if skip_tabs_at_bol:
+            if ch != "\t":
+                skip_tabs_at_bol = False
+                index_for_tab = i
+        else:
+            if ch == "\t":
+                new_line.append(" " * (4 - (i - index_for_tab) % 4))
+                index_for_tab = i + 1
+                continue
+
+        new_line.append(ch)
+
+    return "".join(new_line)
 
 
 def _is_text_file(content):

@@ -12,12 +12,17 @@ def do_validation(args):
     res = True
 
     for file_path in args.files:
-        res &= _validate_file(file_path)
+        res &= _validate_file(args, file_path)
 
     return res
 
 
-def _validate_file(file_path):
+def _validate_file(args, file_path):
+    if args.fix:
+        os.remove(file_path)
+
+        return True
+
     logger.error(f"{file_path}: Bad file found")
 
     return False

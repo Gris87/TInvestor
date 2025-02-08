@@ -1,3 +1,4 @@
+import argparse
 import os
 import subprocess
 import sys
@@ -14,13 +15,13 @@ check_groups = [
 ]
 
 
-def check_style():
+def check_style(args):
     just_fix_windows_console()
 
     commands = []
 
     for check_group in check_groups:
-        commands.extend(check_group())
+        commands.extend(check_group(args))
 
     return _execute_commands(commands)
 
@@ -56,7 +57,16 @@ def _execute_command(command):
 
 
 def main():
-    if check_style():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--fix",
+        default=False,
+        action="store_true",
+        help="Fix issues",
+    )
+    args = parser.parse_args()
+
+    if check_style(args):
         print("SUCCESS")
 
         sys.exit(0)

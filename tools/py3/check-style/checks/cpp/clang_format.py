@@ -13,13 +13,18 @@ def do_validation(args):
     res = True
 
     for file_path in args.files:
-        res &= _validate_file(file_path)
+        res &= _validate_file(args, file_path)
 
     return res
 
 
-def _validate_file(file_path):
-    argv = ["clang-format", "--dry-run", "--Werror", f"{file_path}"]
+def _validate_file(args, file_path):
+    if args.fix:
+        argv = ["clang-format", "--dry-run", "--Werror", f"{file_path}"]
+
+        return True
+    else:
+        argv = ["clang-format", "--dry-run", "--Werror", f"{file_path}"]
 
     rc = subprocess.run(argv, capture_output=True)
     if rc.returncode != 0:
