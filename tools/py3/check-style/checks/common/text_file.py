@@ -11,8 +11,8 @@ from utils import prepare_linter
 def do_validation(args):
     res = True
 
-    try:
-        for file_path in args.files:
+    for file_path in args.files:
+        try:
             with open(file_path, "rb") as f:
                 content = f.read()
 
@@ -23,8 +23,8 @@ def do_validation(args):
                     continue
 
                 res &= _validate_file(args, file_path, content, lines)
-    except Exception as e:
-        pass
+        except Exception as e:
+            pass
 
     return res
 

@@ -78,7 +78,7 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->priceRiseDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
     // clang-format on
 }
 
