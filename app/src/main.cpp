@@ -89,44 +89,44 @@ int runApplication(int argc, char *argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    BuyDecision1Config simulatorBuyDecision1Config;
-    BuyDecision2Config simulatorBuyDecision2Config;
-    BuyDecision3Config simulatorBuyDecision3Config;
+    BuyDecision1Config  simulatorBuyDecision1Config;
+    BuyDecision2Config  simulatorBuyDecision2Config;
+    BuyDecision3Config  simulatorBuyDecision3Config;
     SellDecision1Config simulatorSellDecision1Config;
     SellDecision2Config simulatorSellDecision2Config;
     SellDecision3Config simulatorSellDecision3Config;
 
-    BuyDecision1Config autoPilotBuyDecision1Config;
-    BuyDecision2Config autoPilotBuyDecision2Config;
-    BuyDecision3Config autoPilotBuyDecision3Config;
+    BuyDecision1Config  autoPilotBuyDecision1Config;
+    BuyDecision2Config  autoPilotBuyDecision2Config;
+    BuyDecision3Config  autoPilotBuyDecision3Config;
     SellDecision1Config autoPilotSellDecision1Config;
     SellDecision2Config autoPilotSellDecision2Config;
     SellDecision3Config autoPilotSellDecision3Config;
 
-    BuyDecision1Config simulatorBuyDecision1ConfigForSettingsDialog;
-    BuyDecision2Config simulatorBuyDecision2ConfigForSettingsDialog;
-    BuyDecision3Config simulatorBuyDecision3ConfigForSettingsDialog;
+    BuyDecision1Config  simulatorBuyDecision1ConfigForSettingsDialog;
+    BuyDecision2Config  simulatorBuyDecision2ConfigForSettingsDialog;
+    BuyDecision3Config  simulatorBuyDecision3ConfigForSettingsDialog;
     SellDecision1Config simulatorSellDecision1ConfigForSettingsDialog;
     SellDecision2Config simulatorSellDecision2ConfigForSettingsDialog;
     SellDecision3Config simulatorSellDecision3ConfigForSettingsDialog;
 
-    BuyDecision1Config autoPilotBuyDecision1ConfigForSettingsDialog;
-    BuyDecision2Config autoPilotBuyDecision2ConfigForSettingsDialog;
-    BuyDecision3Config autoPilotBuyDecision3ConfigForSettingsDialog;
+    BuyDecision1Config  autoPilotBuyDecision1ConfigForSettingsDialog;
+    BuyDecision2Config  autoPilotBuyDecision2ConfigForSettingsDialog;
+    BuyDecision3Config  autoPilotBuyDecision3ConfigForSettingsDialog;
     SellDecision1Config autoPilotSellDecision1ConfigForSettingsDialog;
     SellDecision2Config autoPilotSellDecision2ConfigForSettingsDialog;
     SellDecision3Config autoPilotSellDecision3ConfigForSettingsDialog;
 
-    BuyDecision1Config simulatorBuyDecision1ConfigForSimulation;
-    BuyDecision2Config simulatorBuyDecision2ConfigForSimulation;
-    BuyDecision3Config simulatorBuyDecision3ConfigForSimulation;
+    BuyDecision1Config  simulatorBuyDecision1ConfigForSimulation;
+    BuyDecision2Config  simulatorBuyDecision2ConfigForSimulation;
+    BuyDecision3Config  simulatorBuyDecision3ConfigForSimulation;
     SellDecision1Config simulatorSellDecision1ConfigForSimulation;
     SellDecision2Config simulatorSellDecision2ConfigForSimulation;
     SellDecision3Config simulatorSellDecision3ConfigForSimulation;
 
-    BuyDecision1Config autoPilotBuyDecision1ConfigForSimulation;
-    BuyDecision2Config autoPilotBuyDecision2ConfigForSimulation;
-    BuyDecision3Config autoPilotBuyDecision3ConfigForSimulation;
+    BuyDecision1Config  autoPilotBuyDecision1ConfigForSimulation;
+    BuyDecision2Config  autoPilotBuyDecision2ConfigForSimulation;
+    BuyDecision3Config  autoPilotBuyDecision3ConfigForSimulation;
     SellDecision1Config autoPilotSellDecision1ConfigForSimulation;
     SellDecision2Config autoPilotSellDecision2ConfigForSimulation;
     SellDecision3Config autoPilotSellDecision3ConfigForSimulation;
@@ -170,7 +170,7 @@ int runApplication(int argc, char *argv[])
         &simulatorSellDecision1ConfigForSimulation,
         &simulatorSellDecision2ConfigForSimulation,
         &simulatorSellDecision3ConfigForSimulation
-        );
+    );
     DecisionMakerConfig autoPilotConfigForSimulation(
         &autoPilotBuyDecision1ConfigForSimulation,
         &autoPilotBuyDecision2ConfigForSimulation,
@@ -178,7 +178,7 @@ int runApplication(int argc, char *argv[])
         &autoPilotSellDecision1ConfigForSimulation,
         &autoPilotSellDecision2ConfigForSimulation,
         &autoPilotSellDecision3ConfigForSimulation
-        );
+    );
 
     Config config(&simulatorConfig, &autoPilotConfig);
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
@@ -198,9 +198,9 @@ int runApplication(int argc, char *argv[])
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
-    StocksDatabase stocksDatabase;
-    StocksStorage stocksStorage;
-    CleanupThread cleanupThread(&config, &stocksDatabase, &stocksStorage);
+    StocksDatabase     stocksDatabase;
+    StocksStorage      stocksStorage;
+    CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
     MainWindow mainWindow(
