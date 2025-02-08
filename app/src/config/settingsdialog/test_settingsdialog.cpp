@@ -54,7 +54,8 @@ protected:
                 sellDecision3ConfigWidgetFactoryMock,
                 NotNull()
             )
-        ).WillOnce(Return(simulatorConfigWidgetMock));
+        )
+            .WillOnce(Return(simulatorConfigWidgetMock));
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
@@ -67,7 +68,8 @@ protected:
                 sellDecision3ConfigWidgetFactoryMock,
                 NotNull()
             )
-        ).WillOnce(Return(autoPilotConfigWidgetMock));
+        )
+            .WillOnce(Return(autoPilotConfigWidgetMock));
 
         dialog = new SettingsDialog(
             configMock,

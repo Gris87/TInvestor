@@ -88,6 +88,7 @@ void Config::save(ISettingsEditor* settingsEditor)
     mSimulatorConfig->save(settingsEditor, "Simulator");
     mAutoPilotConfig->save(settingsEditor, "AutoPilot");
 
+    // clang-format off
     settingsEditor->setValue("Config/Autorun",                   mAutorun);
     settingsEditor->setValue("Config/MakeDecisionTimeout",       mMakeDecisionTimeout);
     settingsEditor->setValue("Config/UseSchedule",               mUseSchedule);
@@ -105,6 +106,7 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/StorageMonthLimit",         mStorageMonthLimit);
     settingsEditor->setValue("Config/SimulatorConfigCommon",     mSimulatorConfigCommon);
     settingsEditor->setValue("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon);
+    // clang-format on
 }
 
 void Config::load(ISettingsEditor* settingsEditor)
@@ -116,6 +118,7 @@ void Config::load(ISettingsEditor* settingsEditor)
     mSimulatorConfig->load(settingsEditor, "Simulator");
     mAutoPilotConfig->load(settingsEditor, "AutoPilot");
 
+    // clang-format off
     mAutorun                   = settingsEditor->value("Config/Autorun",                   mAutorun).toBool();
     mMakeDecisionTimeout       = settingsEditor->value("Config/MakeDecisionTimeout",       mMakeDecisionTimeout).toInt();
     mUseSchedule               = settingsEditor->value("Config/UseSchedule",               mUseSchedule).toBool();
@@ -133,6 +136,7 @@ void Config::load(ISettingsEditor* settingsEditor)
     mStorageMonthLimit         = settingsEditor->value("Config/StorageMonthLimit",         mStorageMonthLimit).toInt();
     mSimulatorConfigCommon     = settingsEditor->value("Config/SimulatorConfigCommon",     mSimulatorConfigCommon).toBool();
     mAutoPilotConfigCommon     = settingsEditor->value("Config/AutoPilotConfigCommon",     mAutoPilotConfigCommon).toBool();
+    // clang-format on
 }
 
 IDecisionMakerConfig* Config::getSimulatorConfig()

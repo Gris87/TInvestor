@@ -61,9 +61,11 @@ protected:
         EXPECT_CALL(*configMock, load(settingsEditorMock));
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
 
+        // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
+        // clang-format on
 
         mainWindow = new MainWindow(
             configMock,
@@ -88,9 +90,11 @@ protected:
 
     void TearDown()
     {
+        // clang-format off
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"), _));
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),   _));
+        // clang-format on
 
         delete mainWindow;
         delete configMock;
@@ -269,7 +273,8 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             sellDecision3ConfigWidgetFactoryMock,
             NotNull()
         )
-    ).WillOnce(Return(settingsDialogMock));
+    )
+        .WillOnce(Return(settingsDialogMock));
     EXPECT_CALL(*settingsDialogMock, updateUiFromConfig());
 
     EXPECT_CALL(*settingsDialogMock, exec()).WillOnce(Return(QDialog::Accepted));

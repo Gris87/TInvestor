@@ -54,14 +54,18 @@ MainWindow::MainWindow(
 
     ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 
+    // clang-format off
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
     connect(trayIcon, SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
     connect(trayIcon, SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    // clang-format on
 
     trayIcon->show();
 
+    // clang-format off
     connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
     connect(makeDecisionTimer, SIGNAL(timeout()), this, SLOT(makeDecisionTimerTicked()));
+    // clang-format on
 
     mConfig->makeDefault();
     mConfig->load(mSettingsEditor);
@@ -232,9 +236,11 @@ void MainWindow::saveWindowState()
 {
     qDebug() << "Saving window state";
 
+    // clang-format off
     mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
     mSettingsEditor->setValue("MainWindow/windowState", saveState());
     mSettingsEditor->setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
+    // clang-format on
 }
 
 void MainWindow::loadWindowState()

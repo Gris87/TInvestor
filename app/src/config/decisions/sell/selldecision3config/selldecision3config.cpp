@@ -49,9 +49,11 @@ void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& t
 
     qDebug() << "Save SellDecision3Config";
 
+    // clang-format off
     settingsEditor->setValue(type + "/Enabled",    mEnabled);
     settingsEditor->setValue(type + "/LoseIncome", mLoseIncome);
     settingsEditor->setValue(type + "/Duration",   mDuration);
+    // clang-format on
 }
 
 void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
@@ -60,9 +62,11 @@ void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& t
 
     qDebug() << "Load SellDecision3Config";
 
+    // clang-format off
     mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
     mLoseIncome = settingsEditor->value(type + "/LoseIncome", mLoseIncome).toFloat();
     mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
+    // clang-format on
 }
 
 void SellDecision3Config::setEnabled(bool value)

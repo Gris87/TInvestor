@@ -57,7 +57,8 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
             &sellDecision3ConfigWidgetFactoryMock,
             NotNull()
         )
-    ).WillOnce(Return(simulatorConfigWidgetMock));
+    )
+        .WillOnce(Return(simulatorConfigWidgetMock));
     EXPECT_CALL(
         decisionMakerConfigWidgetFactoryMock,
         newInstance(
@@ -70,7 +71,8 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
             &sellDecision3ConfigWidgetFactoryMock,
             NotNull()
         )
-    ).WillOnce(Return(autoPilotConfigWidgetMock));
+    )
+        .WillOnce(Return(autoPilotConfigWidgetMock));
 
     ISettingsDialog* dialog = factory.newInstance(
         &configMock,

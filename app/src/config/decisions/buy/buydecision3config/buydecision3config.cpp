@@ -49,9 +49,11 @@ void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& ty
 
     qDebug() << "Save BuyDecision3Config";
 
+    // clang-format off
     settingsEditor->setValue(type + "/Enabled",   mEnabled);
     settingsEditor->setValue(type + "/PriceRise", mPriceRise);
     settingsEditor->setValue(type + "/Duration",  mDuration);
+    // clang-format on
 }
 
 void BuyDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
@@ -60,9 +62,11 @@ void BuyDecision3Config::load(ISettingsEditor* settingsEditor, const QString& ty
 
     qDebug() << "Load BuyDecision3Config";
 
+    // clang-format off
     mEnabled   = settingsEditor->value(type + "/Enabled",   mEnabled).toBool();
     mPriceRise = settingsEditor->value(type + "/PriceRise", mPriceRise).toFloat();
     mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toInt();
+    // clang-format on
 }
 
 void BuyDecision3Config::setEnabled(bool value)

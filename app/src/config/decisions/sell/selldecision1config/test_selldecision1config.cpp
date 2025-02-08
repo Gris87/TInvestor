@@ -79,8 +79,10 @@ TEST(Test_SellDecision1Config, Test_save)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),     QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/IncomeAbove"), QVariant(2.5f)));
+    // clang-format on
 
     config.save(&settingsEditorMock, "BLAH");
 }
@@ -99,8 +101,10 @@ TEST(Test_SellDecision1Config, Test_load)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
+    // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),     QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/IncomeAbove"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
+    // clang-format on
 
     config.load(&settingsEditorMock, "BLAH");
 
