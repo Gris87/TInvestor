@@ -1,4 +1,4 @@
-#include "decisionmakerconfig.h"
+#include "src/config/decisions/decisionmakerconfig.h"
 
 #include <QDebug>
 #include <QMutexLocker>

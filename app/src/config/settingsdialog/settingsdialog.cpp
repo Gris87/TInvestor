@@ -1,4 +1,4 @@
-#include "settingsdialog.h"
+#include "src/config/settingsdialog/settingsdialog.h"
 #include "ui_settingsdialog.h"
 
 #include <QDebug>

@@ -1,4 +1,4 @@
-#include "settingseditor.h"
+#include "src/config/settingseditor/settingseditor.h"
 
 #include <QDebug>
 

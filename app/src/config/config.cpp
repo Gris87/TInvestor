@@ -1,4 +1,4 @@
-#include "config.h"
+#include "src/config/config.h"
 
 #include <QDebug>
 #include <QMutexLocker>

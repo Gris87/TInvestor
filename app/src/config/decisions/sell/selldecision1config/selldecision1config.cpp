@@ -1,4 +1,4 @@
-#include "selldecision1config.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1config.h"
 
 #include <QDebug>
 #include <QMutexLocker>

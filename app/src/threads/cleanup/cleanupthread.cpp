@@ -1,4 +1,4 @@
-#include "cleanupthread.h"
+#include "src/threads/cleanup/cleanupthread.h"
 
 #include <QDateTime>
 #include <QDebug>

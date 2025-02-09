@@ -1,4 +1,4 @@
-#include "websocketmanager.h"
+#include "src/websockets/websocketmanager.h"
 
 #include <QDebug>
 

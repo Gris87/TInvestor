@@ -1,4 +1,4 @@
-#include "stocksstorage.h"
+#include "src/storage/stocks/stocksstorage.h"
 
 #include <QDebug>
 

@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "src/main/mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <QDebug>

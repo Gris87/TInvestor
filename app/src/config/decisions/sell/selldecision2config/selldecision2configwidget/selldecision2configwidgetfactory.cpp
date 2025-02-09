@@ -1,4 +1,4 @@
-#include "selldecision2configwidgetfactory.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidgetfactory.h"
 
 #include <QDebug>
 

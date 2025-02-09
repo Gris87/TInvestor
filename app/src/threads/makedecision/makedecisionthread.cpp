@@ -1,4 +1,4 @@
-#include "makedecisionthread.h"
+#include "src/threads/makedecision/makedecisionthread.h"
 
 #include <QDebug>
 

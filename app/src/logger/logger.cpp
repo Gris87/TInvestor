@@ -1,4 +1,4 @@
-#include "logger.h"
+#include "src/logger/logger.h"
 
 #include <QDateTime>
 #include <QtLogging>

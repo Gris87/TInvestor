@@ -1,4 +1,4 @@
-#include "trayiconfactory.h"
+#include "src/widgets/trayicon/trayiconfactory.h"
 
 #include <QDebug>
 

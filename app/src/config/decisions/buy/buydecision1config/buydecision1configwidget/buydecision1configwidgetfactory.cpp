@@ -1,4 +1,4 @@
-#include "buydecision1configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidgetfactory.h"
 
 #include <QDebug>
 

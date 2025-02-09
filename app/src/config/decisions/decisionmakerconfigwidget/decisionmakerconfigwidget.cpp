@@ -1,4 +1,4 @@
-#include "decisionmakerconfigwidget.h"
+#include "src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidget.h"
 #include "ui_decisionmakerconfigwidget.h"
 
 #include <QDebug>

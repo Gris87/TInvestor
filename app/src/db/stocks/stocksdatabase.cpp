@@ -1,4 +1,4 @@
-#include "stocksdatabase.h"
+#include "src/db/stocks/stocksdatabase.h"
 
 #include <QCoreApplication>
 #include <QDebug>

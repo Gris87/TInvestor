@@ -8,6 +8,7 @@ files_pattern = ["*.h", "*.cpp"]
 check_modules = [
     "clang_format",
     "clang_format_off_on",
+    "include_headers",
 ]
 
 
