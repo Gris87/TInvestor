@@ -31,6 +31,10 @@ SOURCES += \
     src/config/settingsdialog/settingsdialogfactory.cpp \
     src/config/settingseditor/settingseditor.cpp \
     src/db/stocks/stocksdatabase.cpp \
+    src/fs/dir/dir.cpp \
+    src/fs/dir/dirfactory.cpp \
+    src/fs/file/file.cpp \
+    src/fs/file/filefactory.cpp \
     src/logger/logger.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
@@ -95,6 +99,14 @@ HEADERS += \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/domain/stocks/stock.h \
+    src/fs/dir/dir.h \
+    src/fs/dir/dirfactory.h \
+    src/fs/dir/idir.h \
+    src/fs/dir/idirfactory.h \
+    src/fs/file/file.h \
+    src/fs/file/filefactory.h \
+    src/fs/file/ifile.h \
+    src/fs/file/ifilefactory.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \

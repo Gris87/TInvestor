@@ -69,6 +69,10 @@ SOURCES += \
     src/config/settingseditor/test_settingseditor.cpp \
     src/config/test_config.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
+    src/fs/dir/test_dir.cpp \
+    src/fs/dir/test_dirfactory.cpp \
+    src/fs/file/test_file.cpp \
+    src/fs/file/test_filefactory.cpp \
     src/logger/test_logger.cpp \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
@@ -107,6 +111,10 @@ HEADERS += \
     src/config/settingsdialog/isettingsdialog_mock.h \
     src/config/settingseditor/isettingseditor_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
+    src/fs/dir/idirfactory_mock.h \
+    src/fs/dir/idir_mock.h \
+    src/fs/file/ifilefactory_mock.h \
+    src/fs/file/ifile_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
