@@ -17,7 +17,7 @@ FileFactory::~FileFactory()
     qDebug() << "Destroy FileFactory";
 }
 
-IFile* FileFactory::newInstance()
+IFile* FileFactory::newInstance(const QString& name)
 {
-    return new File();
+    return new File(name);
 }

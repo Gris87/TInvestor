@@ -4,24 +4,6 @@
 
 
 
-class Test_File : public ::testing::Test
-{
-protected:
-    void SetUp()
-    {
-        file = new File();
-    }
-
-    void TearDown()
-    {
-        delete file;
-    }
-
-    File* file;
-};
-
-
-
-TEST_F(Test_File, Test_constructor_and_destructor)
+TEST(Test_File, Test_constructor_and_destructor)
 {
 }

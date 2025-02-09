@@ -17,7 +17,7 @@ DirFactory::~DirFactory()
     qDebug() << "Destroy DirFactory";
 }
 
-IDir* DirFactory::newInstance()
+IDir* DirFactory::newInstance(const QString& path)
 {
-    return new Dir();
+    return new Dir(path);
 }

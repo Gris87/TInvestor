@@ -23,6 +23,8 @@
 #include "src/config/settingsdialog/settingsdialogfactory.h"
 #include "src/config/settingseditor/settingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
+#include "src/fs/dir/dirfactory.h"
+#include "src/fs/file/filefactory.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/stocks/stocksstorage.h"
@@ -192,7 +194,9 @@ int runApplication(int argc, char* argv[])
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
-    StocksDatabase     stocksDatabase;
+    DirFactory         dirFactory;
+    FileFactory        fileFactory;
+    StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage;
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);

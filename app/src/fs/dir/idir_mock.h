@@ -19,4 +19,6 @@ public:
 
     DirMock(const DirMock& another)            = delete;
     DirMock& operator=(const DirMock& another) = delete;
+
+    MOCK_METHOD1(mkpath, bool(const QString& dirPath));
 };

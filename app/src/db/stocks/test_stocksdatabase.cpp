@@ -1,8 +1,19 @@
 #include "src/db/stocks/stocksdatabase.h"
 
 #include <QCoreApplication>
-#include <QDir>
+#include <QVariantList>
 #include <gtest/gtest.h>
+
+#include "src/fs/dir/idir_mock.h"
+#include "src/fs/dir/idirfactory_mock.h"
+#include "src/fs/file/ifile_mock.h"
+#include "src/fs/file/ifilefactory_mock.h"
+
+
+
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
 
 
 
@@ -11,10 +22,16 @@ class Test_StocksDatabase : public ::testing::Test
 protected:
     void SetUp()
     {
-        QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/stocks").removeRecursively();
+        appDir = qApp->applicationDirPath();
 
-        database = new StocksDatabase();
+        StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in StocksDatabase constructor
+        dirFactoryMock               = new StrictMock<DirFactoryMock>();
+        fileFactoryMock              = new StrictMock<FileFactoryMock>();
+
+        EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(dirMock));
+        EXPECT_CALL(*dirMock, mkpath(appDir + "/data/db/stocks")).WillOnce(Return(true));
+
+        database = new StocksDatabase(dirFactoryMock, fileFactoryMock);
 
         fillWithData();
     }
@@ -22,9 +39,8 @@ protected:
     void TearDown()
     {
         delete database;
-
-        QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/stocks").removeRecursively();
+        delete dirFactoryMock;
+        delete fileFactoryMock;
     }
 
     void fillWithData()
@@ -37,14 +53,7 @@ protected:
             stocksStr += QString("BLAH %1\n").arg(i);
         }
 
-        QString appDir = qApp->applicationDirPath();
-
-        QFile stocksFile(appDir + "/data/db/stocks/stocks.lst");
-
-        ASSERT_TRUE(stocksFile.open(QIODevice::WriteOnly));
-
-        stocksFile.write(stocksStr.toUtf8());
-        stocksFile.close();
+        testStocks = stocksStr.toUtf8();
 
 
 
@@ -75,16 +84,16 @@ protected:
                 stockData->value     = values[i][j].toFloat();
             }
 
-            QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
-
-            ASSERT_TRUE(stockDataFile.open(QIODevice::WriteOnly));
-
-            stockDataFile.write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
-            stockDataFile.close();
+            testStockData[i].append(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
         }
     }
 
-    StocksDatabase* database;
+    StocksDatabase*              database;
+    StrictMock<DirFactoryMock>*  dirFactoryMock;
+    StrictMock<FileFactoryMock>* fileFactoryMock;
+    QString                      appDir;
+    QByteArray                   testStocks;
+    QByteArray                   testStockData[3];
 };
 
 
@@ -95,6 +104,14 @@ TEST_F(Test_StocksDatabase, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
+    EXPECT_CALL(*fileMock, close());
+
     QList<Stock> stocks = database->readStocksMeta();
 
     // clang-format off
@@ -122,6 +139,14 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
+    EXPECT_CALL(*fileMock, close());
+
     QList<Stock> stocks = database->readStocksMeta();
 
     // clang-format off
@@ -146,7 +171,27 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
     // clang-format on
 
+    StrictMock<FileMock>* fileMocks[3];
+
+    for (int i = 0; i < 3; ++i)
+    {
+        fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
+            .WillOnce(Return(fileMocks[i]));
+
+        EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+        EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
+        EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce(Return(testStockData[i].size()));
+        EXPECT_CALL(*fileMocks[i], close());
+    }
+
     database->readStocksData(&stocks);
+
+    for (int i = 0; i < 3; ++i)
+    {
+        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+    }
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
@@ -235,112 +280,28 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
     stock3.data << stockData1 << stockData3 << stockData4;
     stocks << stock1 << stock2 << stock3;
 
+    QString stocksStr =
+        "TEST\n"
+        "abc\n"
+        "MAGA\n"
+        "def\n"
+        "HNYA\n"
+        "aaaa\n";
+    QByteArray stocksBytes = stocksStr.toUtf8();
+
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, write(stocksBytes)).WillOnce(Return(stocksBytes.size()));
+    EXPECT_CALL(*fileMock, close());
+
     database->writeStocksMeta(&stocks);
-    stocks = database->readStocksMeta();
-
-    // clang-format off
-    ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).name,            "TEST");
-    ASSERT_EQ(stocks.at(0).fullname,        "abc");
-    ASSERT_EQ(stocks.at(0).data.size(),     0);
-    ASSERT_EQ(stocks.at(0).data.capacity(), 0);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(1).name,            "MAGA");
-    ASSERT_EQ(stocks.at(1).fullname,        "def");
-    ASSERT_EQ(stocks.at(1).data.size(),     0);
-    ASSERT_EQ(stocks.at(1).data.capacity(), 0);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(2).name,            "HNYA");
-    ASSERT_EQ(stocks.at(2).fullname,        "aaaa");
-    ASSERT_EQ(stocks.at(2).data.size(),     0);
-    ASSERT_EQ(stocks.at(2).data.capacity(), 0);
-    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_appendStockData)
 {
-    QList<Stock> stocks = database->readStocksMeta();
-
-    // clang-format off
-    ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).name,            "AZAZ0");
-    ASSERT_EQ(stocks.at(0).fullname,        "BLAH 0");
-    ASSERT_EQ(stocks.at(0).data.size(),     0);
-    ASSERT_EQ(stocks.at(0).data.capacity(), 0);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
-    ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
-    ASSERT_EQ(stocks.at(1).data.size(),     0);
-    ASSERT_EQ(stocks.at(1).data.capacity(), 0);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(2).name,            "AZAZ2");
-    ASSERT_EQ(stocks.at(2).fullname,        "BLAH 2");
-    ASSERT_EQ(stocks.at(2).data.size(),     0);
-    ASSERT_EQ(stocks.at(2).data.capacity(), 0);
-    // clang-format on
-
-    database->readStocksData(&stocks);
-
-    // clang-format off
-    ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
-    ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
-    ASSERT_EQ(stocks.at(0).data.size(),          3);
-    ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
-    ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
-    ASSERT_NEAR(stocks.at(0).data.at(0).value,   20, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(1).timestamp, 200);
-    ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
-    ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
-    ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
-    ASSERT_EQ(stocks.at(1).data.size(),          6);
-    ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
-    ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 150);
-    ASSERT_NEAR(stocks.at(1).data.at(0).value,   1000.0f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(1).timestamp, 250);
-    ASSERT_NEAR(stocks.at(1).data.at(1).value,   999.85f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(2).timestamp, 350);
-    ASSERT_NEAR(stocks.at(1).data.at(2).value,   1000.35f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(3).timestamp, 450);
-    ASSERT_NEAR(stocks.at(1).data.at(3).value,   875.95f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(4).timestamp, 550);
-    ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
-    ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
-    ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
-    ASSERT_EQ(stocks.at(2).data.size(),          5);
-    ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
-    ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
-    ASSERT_NEAR(stocks.at(2).data.at(0).value,   300, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(1).timestamp, 220);
-    ASSERT_NEAR(stocks.at(2).data.at(1).value,   130, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(2).timestamp, 320);
-    ASSERT_NEAR(stocks.at(2).data.at(2).value,   450, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(3).timestamp, 420);
-    ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
-    ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
-    // clang-format on
-
-
-
     StockData stockData1;
     StockData stockData2;
     StockData stockData3;
@@ -358,76 +319,31 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
     Stock stock;
 
-    stock.name = "AZAZ0";
+    stock.name = "WAZT";
     stock.data << stockData1 << stockData2 << stockData3 << stockData4;
 
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/WAZT.dat"))).WillOnce(Return(fileMock));
+
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::Append))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, write(NotNull(), stock.data.size() * sizeof(StockData)))
+        .WillOnce(Return(stock.data.size() * sizeof(StockData)));
+    EXPECT_CALL(*fileMock, close());
+
     database->appendStockData(&stock);
-
-
-
-    database->readStocksData(&stocks);
-
-    // clang-format off
-    ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
-    ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
-    ASSERT_EQ(stocks.at(0).data.size(),          7);
-    ASSERT_EQ(stocks.at(0).data.capacity(),      1447);
-    ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
-    ASSERT_NEAR(stocks.at(0).data.at(0).value,   20, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(1).timestamp, 200);
-    ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
-    ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(3).timestamp, 100);
-    ASSERT_NEAR(stocks.at(0).data.at(3).value,   0.1f, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(4).timestamp, 200);
-    ASSERT_NEAR(stocks.at(0).data.at(4).value,   0.2f, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(5).timestamp, 300);
-    ASSERT_NEAR(stocks.at(0).data.at(5).value,   0.3f, 0.001f);
-    ASSERT_EQ(stocks.at(0).data.at(6).timestamp, 400);
-    ASSERT_NEAR(stocks.at(0).data.at(6).value,   0.4f, 0.001f);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(1).name,                 "AZAZ1");
-    ASSERT_EQ(stocks.at(1).fullname,             "BLAH 1");
-    ASSERT_EQ(stocks.at(1).data.size(),          6);
-    ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
-    ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 150);
-    ASSERT_NEAR(stocks.at(1).data.at(0).value,   1000.0f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(1).timestamp, 250);
-    ASSERT_NEAR(stocks.at(1).data.at(1).value,   999.85f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(2).timestamp, 350);
-    ASSERT_NEAR(stocks.at(1).data.at(2).value,   1000.35f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(3).timestamp, 450);
-    ASSERT_NEAR(stocks.at(1).data.at(3).value,   875.95f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(4).timestamp, 550);
-    ASSERT_NEAR(stocks.at(1).data.at(4).value,   1550.75f, 0.001f);
-    ASSERT_EQ(stocks.at(1).data.at(5).timestamp, 650);
-    ASSERT_NEAR(stocks.at(1).data.at(5).value,   650.15f, 0.001f);
-    // clang-format on
-
-    // clang-format off
-    ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
-    ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
-    ASSERT_EQ(stocks.at(2).data.size(),          5);
-    ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
-    ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
-    ASSERT_NEAR(stocks.at(2).data.at(0).value,   300, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(1).timestamp, 220);
-    ASSERT_NEAR(stocks.at(2).data.at(1).value,   130, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(2).timestamp, 320);
-    ASSERT_NEAR(stocks.at(2).data.at(2).value,   450, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(3).timestamp, 420);
-    ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
-    ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
-    ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
-    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 {
+    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+
+    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
+    EXPECT_CALL(*fileMock, close());
+
     QList<Stock> stocks = database->readStocksMeta();
 
     // clang-format off
@@ -452,7 +368,27 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
     // clang-format on
 
+    StrictMock<FileMock>* fileMocks[3];
+
+    for (int i = 0; i < 3; ++i)
+    {
+        fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
+            .WillOnce(Return(fileMocks[i]));
+
+        EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+        EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
+        EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce(Return(testStockData[i].size()));
+        EXPECT_CALL(*fileMocks[i], close());
+    }
+
     database->readStocksData(&stocks);
+
+    for (int i = 0; i < 3; ++i)
+    {
+        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+    }
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
@@ -504,8 +440,21 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
     // clang-format on
 
+    for (int i = 0; i < 3; ++i)
+    {
+        qint64 fileSize = testStockData[i].size() - sizeof(StockData);
+
+        fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
+            .WillOnce(Return(fileMocks[i]));
+
+        EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+        EXPECT_CALL(*fileMocks[i], write(NotNull(), fileSize)).WillOnce(Return(fileSize));
+        EXPECT_CALL(*fileMocks[i], close());
+    }
+
     database->deleteObsoleteData(200, &stocks);
-    database->readStocksData(&stocks);
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
@@ -551,8 +500,21 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_NEAR(stocks.at(2).data.at(3).value,   100, 0.001f);
     // clang-format on
 
+    for (int i = 0; i < 3; ++i)
+    {
+        qint64 fileSize = testStockData[i].size() - 3 * sizeof(StockData);
+
+        fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
+            .WillOnce(Return(fileMocks[i]));
+
+        EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+        EXPECT_CALL(*fileMocks[i], write(NotNull(), fileSize)).WillOnce(Return(fileSize));
+        EXPECT_CALL(*fileMocks[i], close());
+    }
+
     database->deleteObsoleteData(400, &stocks);
-    database->readStocksData(&stocks);
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                3);

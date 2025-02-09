@@ -4,14 +4,27 @@
 
 #include "src/fs/file/ifile.h"
 
+#include <QFile>
+
 
 
 class File : public IFile
 {
 public:
-    File();
+    File(const QString& name);
     ~File();
 
     File(const File& another)            = delete;
     File& operator=(const File& another) = delete;
+
+    bool       open(QIODevice::OpenMode flags) override;
+    qint64     read(char* data, qint64 maxlen) override;
+    QByteArray readAll() override;
+    qint64     write(const char* data, qint64 len) override;
+    qint64     write(const QByteArray& data) override;
+    qint64     size() override;
+    void       close() override;
+
+private:
+    QFile mFile;
 };

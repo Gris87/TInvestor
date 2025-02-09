@@ -12,15 +12,20 @@ const int amountOfDataPerDay = 24 * 60;
 
 
 
-StocksDatabase::StocksDatabase() :
-    IStocksDatabase()
+StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory) :
+    IStocksDatabase(),
+    mFileFactory(fileFactory)
 {
     qDebug() << "Create StocksDatabase";
 
-    bool ok = QDir().mkpath(qApp->applicationDirPath() + "/data/db/stocks");
+    IDir* dir = dirFactory->newInstance();
+
+    bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/db/stocks");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 
     // fillWithTestData();
+
+    delete dir;
 }
 
 StocksDatabase::~StocksDatabase()
@@ -34,12 +39,12 @@ QList<Stock> StocksDatabase::readStocksMeta()
 
     QList<Stock> res;
 
-    QFile stocksFile(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
 
-    if (stocksFile.open(QIODevice::ReadOnly))
+    if (stocksFile->open(QIODevice::ReadOnly))
     {
-        QString stockStr = QString::fromUtf8(stocksFile.readAll());
-        stocksFile.close();
+        QString stockStr = QString::fromUtf8(stocksFile->readAll());
+        stocksFile->close();
 
         QStringList stockLines = stockStr.split('\n');
 
@@ -56,11 +61,21 @@ QList<Stock> StocksDatabase::readStocksMeta()
         }
     }
 
+    delete stocksFile;
+
     return res;
 }
 
-void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* /*additionalArgs*/)
+struct ReadStocksDataInfo
 {
+    IFileFactory* fileFactory;
+};
+
+void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* additionalArgs)
+{
+    ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
+    IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;
+
     QString appDir = qApp->applicationDirPath();
 
     Stock* stockArray = stocks->data();
@@ -69,17 +84,18 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* /
     {
         Stock& stock = stockArray[i];
 
-        QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
+        IFile* stockDataFile = fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
 
-        if (stockDataFile.open(QIODevice::ReadOnly))
+        if (stockDataFile->open(QIODevice::ReadOnly))
         {
-            qsizetype dataSize = stockDataFile.size() / sizeof(StockData);
+            qint64    fileSize = stockDataFile->size();
+            qsizetype dataSize = fileSize / sizeof(StockData);
 
             stock.data.reserve(dataSize + amountOfDataPerDay);
             stock.data.resizeForOverwrite(dataSize);
 
-            stockDataFile.read(reinterpret_cast<char*>(stock.data.data()), stockDataFile.size());
-            stockDataFile.close();
+            stockDataFile->read(reinterpret_cast<char*>(stock.data.data()), fileSize);
+            stockDataFile->close();
 
             qDebug() << "Read stock data" << stock.name;
         }
@@ -89,6 +105,8 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* /
 
             qWarning() << "Failed to read stock data" << stock.name;
         }
+
+        delete stockDataFile;
     }
 }
 
@@ -96,7 +114,10 @@ void StocksDatabase::readStocksData(QList<Stock>* stocks)
 {
     qDebug() << "Reading stocks data from database";
 
-    processInParallel(stocks, readStocksDataForParallel);
+    ReadStocksDataInfo readStocksDataInfo;
+    readStocksDataInfo.fileFactory = mFileFactory;
+
+    processInParallel(stocks, readStocksDataForParallel, &readStocksDataInfo);
 }
 
 void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
@@ -113,45 +134,55 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
         stocksStr += stock.fullname + "\n";
     }
 
-    QFile stocksFile(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
 
-    bool ok = stocksFile.open(QIODevice::WriteOnly);
+    bool ok = stocksFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStocksMeta()", "Failed to open file");
 
-    stocksFile.write(stocksStr.toUtf8());
-    stocksFile.close();
+    stocksFile->write(stocksStr.toUtf8());
+    stocksFile->close();
+
+    delete stocksFile;
 }
 
 void StocksDatabase::appendStockData(Stock* stock)
 {
-    QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name));
+    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name);
+    IFile*  stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
 
-    bool ok = stockDataFile.open(QIODevice::Append);
+    bool ok = stockDataFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, "StocksDatabase::appendStockData()", "Failed to open file");
 
-    stockDataFile.write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
-    stockDataFile.close();
+    stockDataFile->write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
+    stockDataFile->close();
+
+    delete stockDataFile;
 }
 
-void writeStockData(const Stock& stock)
+void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
-    QFile stockDataFile(QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock.name));
+    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock.name);
+    IFile*  stockDataFile     = fileFactory->newInstance(stockDataFilePath);
 
-    bool ok = stockDataFile.open(QIODevice::WriteOnly);
+    bool ok = stockDataFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStockData()", "Failed to open file");
 
-    stockDataFile.write(reinterpret_cast<const char*>(stock.data.constData()), stock.data.size() * sizeof(StockData));
-    stockDataFile.close();
+    stockDataFile->write(reinterpret_cast<const char*>(stock.data.constData()), stock.data.size() * sizeof(StockData));
+    stockDataFile->close();
+
+    delete stockDataFile;
 }
 
 struct DeleteObsoleteDataInfo
 {
-    qint64 obsoleteTimestamp;
+    IFileFactory* fileFactory;
+    qint64        obsoleteTimestamp;
 };
 
 void deleteObsoleteDataForParallel(QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
+    IFileFactory*           fileFactory            = deleteObsoleteDataInfo->fileFactory;
     qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
     Stock* stockArray = stocks->data();
@@ -170,7 +201,7 @@ void deleteObsoleteDataForParallel(QList<Stock>* stocks, int start, int end, voi
         {
             stock.data.remove(0, index);
 
-            writeStockData(stock);
+            writeStockData(fileFactory, stock);
         }
     }
 }
@@ -180,6 +211,7 @@ void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* 
     qDebug() << "Deleting obsolete stocks data";
 
     DeleteObsoleteDataInfo deleteObsoleteDataInfo;
+    deleteObsoleteDataInfo.fileFactory       = mFileFactory;
     deleteObsoleteDataInfo.obsoleteTimestamp = obsoleteTimestamp;
 
     processInParallel(stocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
@@ -197,13 +229,15 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
 
     QString appDir = qApp->applicationDirPath();
 
-    QFile stocksFile(appDir + "/data/db/stocks/stocks.lst");
+    IFile* stocksFile = mFileFactory->newInstance(appDir + "/data/db/stocks/stocks.lst");
 
-    bool ok = stocksFile.open(QIODevice::WriteOnly);
+    bool ok = stocksFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
 
-    stocksFile.write(stocksStr.toUtf8());
-    stocksFile.close();
+    stocksFile->write(stocksStr.toUtf8());
+    stocksFile->close();
+
+    delete stocksFile;
 
 
 
@@ -224,12 +258,14 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
             stockData->value     = i * j;
         }
 
-        QFile stockDataFile(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
+        IFile* stockDataFile = mFileFactory->newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
 
-        bool ok = stockDataFile.open(QIODevice::WriteOnly);
+        bool ok = stockDataFile->open(QIODevice::WriteOnly);
         Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
 
-        stockDataFile.write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
-        stockDataFile.close();
+        stockDataFile->write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
+        stockDataFile->close();
+
+        delete stockDataFile;
     }
 }

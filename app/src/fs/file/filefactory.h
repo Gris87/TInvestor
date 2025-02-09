@@ -15,5 +15,5 @@ public:
     FileFactory(const FileFactory& another)            = delete;
     FileFactory& operator=(const FileFactory& another) = delete;
 
-    IFile* newInstance() override;
+    IFile* newInstance(const QString& name) override;
 };

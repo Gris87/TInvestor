@@ -15,5 +15,5 @@ public:
     DirFactory(const DirFactory& another)            = delete;
     DirFactory& operator=(const DirFactory& another) = delete;
 
-    IDir* newInstance() override;
+    IDir* newInstance(const QString& path = QString()) override;
 };
