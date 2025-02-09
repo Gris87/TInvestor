@@ -140,7 +140,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="67"/>
+        <location filename="../../src/main.cpp" line="68"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
@@ -150,12 +150,12 @@
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="82"/>
+        <location filename="../../src/main.cpp" line="80"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="83"/>
+        <location filename="../../src/main.cpp" line="80"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
