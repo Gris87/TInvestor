@@ -1,27 +1,26 @@
 #include "src/fs/dir/dir.h"
 
+#include <QCoreApplication>
 #include <gtest/gtest.h>
 
 
 
-class Test_Dir : public ::testing::Test
+TEST(Test_Dir, Test_constructor_and_destructor)
 {
-protected:
-    void SetUp()
-    {
-        dir = new Dir();
-    }
+    Dir dir;
+}
 
-    void TearDown()
-    {
-        delete dir;
-    }
-
-    Dir* dir;
-};
-
-
-
-TEST_F(Test_Dir, Test_constructor_and_destructor)
+TEST(Test_Dir, Test_mkpath)
 {
+    Dir dir;
+
+    QString appDir = qApp->applicationDirPath();
+
+    QDir qDir(appDir + "/test/some/path");
+    ASSERT_TRUE(!qDir.exists());
+
+    ASSERT_TRUE(dir.mkpath(appDir + "/test/some/path"));
+    ASSERT_TRUE(qDir.exists());
+
+    ASSERT_TRUE(qDir.removeRecursively());
 }

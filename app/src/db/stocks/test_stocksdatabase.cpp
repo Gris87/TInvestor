@@ -17,6 +17,13 @@ using ::testing::StrictMock;
 
 
 
+MATCHER_P2(IsMemEqual, m, size, "")
+{
+    return memcmp(arg, m, size) == 0;
+}
+
+
+
 class Test_StocksDatabase : public ::testing::Test
 {
 protected:
@@ -322,13 +329,14 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     stock.name = "WAZT";
     stock.data << stockData1 << stockData2 << stockData3 << stockData4;
 
+    qint64 fileSize = stock.data.size() * sizeof(StockData);
+
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/WAZT.dat"))).WillOnce(Return(fileMock));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::Append))).WillOnce(Return(true));
-    EXPECT_CALL(*fileMock, write(NotNull(), stock.data.size() * sizeof(StockData)))
-        .WillOnce(Return(stock.data.size() * sizeof(StockData)));
+    EXPECT_CALL(*fileMock, write(IsMemEqual(stock.data.constData(), fileSize), fileSize)).WillOnce(Return(fileSize));
     EXPECT_CALL(*fileMock, close());
 
     database->appendStockData(&stock);
@@ -450,7 +458,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
             .WillOnce(Return(fileMocks[i]));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-        EXPECT_CALL(*fileMocks[i], write(NotNull(), fileSize)).WillOnce(Return(fileSize));
+        EXPECT_CALL(*fileMocks[i], write(IsMemEqual(stocks.at(i).data.constData() + 1, fileSize), fileSize))
+            .WillOnce(Return(fileSize));
         EXPECT_CALL(*fileMocks[i], close());
     }
 
@@ -510,7 +519,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
             .WillOnce(Return(fileMocks[i]));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-        EXPECT_CALL(*fileMocks[i], write(NotNull(), fileSize)).WillOnce(Return(fileSize));
+        EXPECT_CALL(*fileMocks[i], write(IsMemEqual(stocks.at(i).data.constData() + 2, fileSize), fileSize))
+            .WillOnce(Return(fileSize));
         EXPECT_CALL(*fileMocks[i], close());
     }
 
