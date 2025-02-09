@@ -1,4 +1,4 @@
-#include "src/config/decisions/buy/buydecision2config/buydecision2config.h"
+#include "src/config/decisions/buy/buydecision2config//buydecision2config.h"
 
 #include <QDebug>
 #include <QMutexLocker>
