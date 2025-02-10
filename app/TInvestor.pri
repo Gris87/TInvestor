@@ -42,7 +42,7 @@ SOURCES += \
     src/utils/fs/file/filefactory.cpp \
     src/websockets/websocketmanager.cpp \
     src/widgets/trayicon/trayicon.cpp \
-    src/widgets/trayicon/trayiconfactory.cpp
+    src/widgets/trayicon/trayiconfactory.cpp \
 
 # find app/ -name \*.h | grep -ve _mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
@@ -116,12 +116,13 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
+    src/utils/objectholder/objectholder.h \
     src/websockets/iwebsocketmanager.h \
     src/websockets/websocketmanager.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \
-    src/widgets/trayicon/trayiconfactory.h
+    src/widgets/trayicon/trayiconfactory.h \
 
 # find app/ -name \*.ui | sed "s/app\///g" | sed "s/\.ui/\.ui \\\/g"
 FORMS += \
@@ -133,4 +134,4 @@ FORMS += \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
     src/config/settingsdialog/settingsdialog.ui \
-    src/main/mainwindow.ui
+    src/main/mainwindow.ui \
