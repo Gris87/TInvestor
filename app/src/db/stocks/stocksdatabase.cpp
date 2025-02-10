@@ -5,6 +5,7 @@
 #include <QDir>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
+#include "src/utils/objectholder/objectholder.h"
 
 
 
@@ -19,13 +20,12 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
     qDebug() << "Create StocksDatabase";
 
     IDir* dir = dirFactory->newInstance();
+    ObjectHolder objectHolder(dir);
 
     bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/db/stocks");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 
     // fillWithTestData();
-
-    delete dir;
 }
 
 StocksDatabase::~StocksDatabase()
@@ -40,6 +40,7 @@ QList<Stock> StocksDatabase::readStocksMeta()
     QList<Stock> res;
 
     IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    ObjectHolder objectHolder(stocksFile);
 
     if (stocksFile->open(QIODevice::ReadOnly))
     {
@@ -60,8 +61,6 @@ QList<Stock> StocksDatabase::readStocksMeta()
             qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
         }
     }
-
-    delete stocksFile;
 
     return res;
 }
@@ -85,6 +84,7 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* a
         Stock& stock = stockArray[i];
 
         IFile* stockDataFile = fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
+        ObjectHolder objectHolder(stockDataFile);
 
         if (stockDataFile->open(QIODevice::ReadOnly))
         {
@@ -105,8 +105,6 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* a
 
             qWarning() << "Failed to read stock data" << stock.name;
         }
-
-        delete stockDataFile;
     }
 }
 
@@ -135,42 +133,39 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
     }
 
     IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    ObjectHolder objectHolder(stocksFile);
 
     bool ok = stocksFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStocksMeta()", "Failed to open file");
 
     stocksFile->write(stocksStr.toUtf8());
     stocksFile->close();
-
-    delete stocksFile;
 }
 
 void StocksDatabase::appendStockData(Stock* stock)
 {
     QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name);
     IFile*  stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
+    ObjectHolder objectHolder(stockDataFile);
 
     bool ok = stockDataFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, "StocksDatabase::appendStockData()", "Failed to open file");
 
     stockDataFile->write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
     stockDataFile->close();
-
-    delete stockDataFile;
 }
 
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
     QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock.name);
     IFile*  stockDataFile     = fileFactory->newInstance(stockDataFilePath);
+    ObjectHolder objectHolder(stockDataFile);
 
     bool ok = stockDataFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStockData()", "Failed to open file");
 
     stockDataFile->write(reinterpret_cast<const char*>(stock.data.constData()), stock.data.size() * sizeof(StockData));
     stockDataFile->close();
-
-    delete stockDataFile;
 }
 
 struct DeleteObsoleteDataInfo
@@ -230,14 +225,13 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
     QString appDir = qApp->applicationDirPath();
 
     IFile* stocksFile = mFileFactory->newInstance(appDir + "/data/db/stocks/stocks.lst");
+    ObjectHolder objectHolder(stocksFile);
 
     bool ok = stocksFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
 
     stocksFile->write(stocksStr.toUtf8());
     stocksFile->close();
-
-    delete stocksFile;
 
 
 
@@ -259,13 +253,12 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
         }
 
         IFile* stockDataFile = mFileFactory->newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
+        ObjectHolder objectHolder(stockDataFile);
 
         bool ok = stockDataFile->open(QIODevice::WriteOnly);
         Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
 
         stockDataFile->write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
         stockDataFile->close();
-
-        delete stockDataFile;
     }
 }

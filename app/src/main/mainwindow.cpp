@@ -5,6 +5,7 @@
 #include <QEvent>
 
 #include "src/config/settingsdialog/settingsdialog.h"
+#include "src/utils/objectholder/objectholder.h"
 
 
 
@@ -192,6 +193,8 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision3ConfigWidgetFactory,
         this
     );
+    ObjectHolder objectHolder(dialog);
+
     dialog->updateUiFromConfig();
 
     if (dialog->exec())
@@ -203,8 +206,6 @@ void MainWindow::on_actionSettings_triggered()
 
         applyConfig();
     }
-
-    delete dialog;
 }
 
 void MainWindow::init()
