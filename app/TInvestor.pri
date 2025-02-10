@@ -31,15 +31,15 @@ SOURCES += \
     src/config/settingsdialog/settingsdialogfactory.cpp \
     src/config/settingseditor/settingseditor.cpp \
     src/db/stocks/stocksdatabase.cpp \
-    src/fs/dir/dir.cpp \
-    src/fs/dir/dirfactory.cpp \
-    src/fs/file/file.cpp \
-    src/fs/file/filefactory.cpp \
     src/logger/logger.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/utils/fs/dir/dir.cpp \
+    src/utils/fs/dir/dirfactory.cpp \
+    src/utils/fs/file/file.cpp \
+    src/utils/fs/file/filefactory.cpp \
     src/websockets/websocketmanager.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp
@@ -99,14 +99,6 @@ HEADERS += \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/domain/stocks/stock.h \
-    src/fs/dir/dir.h \
-    src/fs/dir/dirfactory.h \
-    src/fs/dir/idir.h \
-    src/fs/dir/idirfactory.h \
-    src/fs/file/file.h \
-    src/fs/file/filefactory.h \
-    src/fs/file/ifile.h \
-    src/fs/file/ifilefactory.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \
@@ -116,6 +108,14 @@ HEADERS += \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
+    src/utils/fs/dir/dir.h \
+    src/utils/fs/dir/dirfactory.h \
+    src/utils/fs/dir/idir.h \
+    src/utils/fs/dir/idirfactory.h \
+    src/utils/fs/file/file.h \
+    src/utils/fs/file/filefactory.h \
+    src/utils/fs/file/ifile.h \
+    src/utils/fs/file/ifilefactory.h \
     src/websockets/iwebsocketmanager.h \
     src/websockets/websocketmanager.h \
     src/widgets/trayicon/itrayicon.h \

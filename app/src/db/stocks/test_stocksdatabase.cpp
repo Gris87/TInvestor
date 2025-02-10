@@ -4,10 +4,10 @@
 #include <QVariantList>
 #include <gtest/gtest.h>
 
-#include "src/fs/dir/idir_mock.h"
-#include "src/fs/dir/idirfactory_mock.h"
-#include "src/fs/file/ifile_mock.h"
-#include "src/fs/file/ifilefactory_mock.h"
+#include "src/utils/fs/dir/idir_mock.h"
+#include "src/utils/fs/dir/idirfactory_mock.h"
+#include "src/utils/fs/file/ifile_mock.h"
+#include "src/utils/fs/file/ifilefactory_mock.h"
 
 
 

@@ -4,8 +4,8 @@
 
 #include "src/db/stocks/istocksdatabase.h"
 
-#include "src/fs/dir/idirfactory.h"
-#include "src/fs/file/ifilefactory.h"
+#include "src/utils/fs/dir/idirfactory.h"
+#include "src/utils/fs/file/ifilefactory.h"
 
 
 

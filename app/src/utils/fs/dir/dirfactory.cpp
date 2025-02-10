@@ -1,8 +1,8 @@
-#include "src/fs/dir/dirfactory.h"
+#include "src/utils/fs/dir/dirfactory.h"
 
 #include <QDebug>
 
-#include "src/fs/dir/dir.h"
+#include "src/utils/fs/dir/dir.h"
 
 
 
