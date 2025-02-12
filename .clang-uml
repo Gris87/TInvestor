@@ -1,0 +1,25 @@
+# Change to directory where compile_commands.json is
+compilation_database_dir: build/Desktop-Debug/.qtc_clangd
+# Change to directory where diagram should be written
+output_directory: build/clang_uml
+diagrams:
+  class_inheritance:
+    type: include
+    title: Class inheritance
+    glob:
+      include:
+        - app/src/*.cpp
+    generate_system_headers: true
+    include:
+      paths:
+        - app/src
+  imports_map:
+    type: include
+    title: Imports map
+    glob:
+      include:
+        - app/src/*.cpp
+    generate_system_headers: true
+    include:
+      paths:
+        - app/src

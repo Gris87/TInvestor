@@ -30,12 +30,12 @@ public:
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;
 
-    IBuyDecision1Config*  getBuyDecision1Config();
-    IBuyDecision2Config*  getBuyDecision2Config();
-    IBuyDecision3Config*  getBuyDecision3Config();
-    ISellDecision1Config* getSellDecision1Config();
-    ISellDecision2Config* getSellDecision2Config();
-    ISellDecision3Config* getSellDecision3Config();
+    IBuyDecision1Config*  getBuyDecision1Config() override;
+    IBuyDecision2Config*  getBuyDecision2Config() override;
+    IBuyDecision3Config*  getBuyDecision3Config() override;
+    ISellDecision1Config* getSellDecision1Config() override;
+    ISellDecision2Config* getSellDecision2Config() override;
+    ISellDecision3Config* getSellDecision3Config() override;
 
 private:
     IBuyDecision1Config*  mBuyDecision1Config;
