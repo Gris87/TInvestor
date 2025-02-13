@@ -19,7 +19,7 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
 {
     qDebug() << "Create StocksDatabase";
 
-    IDir* dir = dirFactory->newInstance();
+    IDir*        dir = dirFactory->newInstance();
     ObjectHolder objectHolder(dir);
 
     bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/db/stocks");
@@ -39,7 +39,7 @@ QList<Stock> StocksDatabase::readStocksMeta()
 
     QList<Stock> res;
 
-    IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    IFile*       stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
     ObjectHolder objectHolder(stocksFile);
 
     if (stocksFile->open(QIODevice::ReadOnly))
@@ -132,7 +132,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
         stocksStr += stock.fullname + "\n";
     }
 
-    IFile* stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
+    IFile*       stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");
     ObjectHolder objectHolder(stocksFile);
 
     bool ok = stocksFile->open(QIODevice::WriteOnly);
@@ -145,7 +145,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 void StocksDatabase::appendStockData(Stock* stock)
 {
     QString      stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->name);
-    IFile*  stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
+    IFile*       stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
     ObjectHolder objectHolder(stockDataFile);
 
     bool ok = stockDataFile->open(QIODevice::Append);
@@ -158,7 +158,7 @@ void StocksDatabase::appendStockData(Stock* stock)
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
     QString      stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.name);
-    IFile*  stockDataFile     = fileFactory->newInstance(stockDataFilePath);
+    IFile*       stockDataFile     = fileFactory->newInstance(stockDataFilePath);
     ObjectHolder objectHolder(stockDataFile);
 
     bool ok = stockDataFile->open(QIODevice::WriteOnly);
@@ -224,7 +224,7 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
 
     QString appDir = qApp->applicationDirPath();
 
-    IFile* stocksFile = mFileFactory->newInstance(appDir + "/data/db/stocks/stocks.lst");
+    IFile*       stocksFile = mFileFactory->newInstance(appDir + "/data/db/stocks/stocks.lst");
     ObjectHolder objectHolder(stocksFile);
 
     bool ok = stocksFile->open(QIODevice::WriteOnly);
@@ -252,7 +252,7 @@ void StocksDatabase::fillWithTestData() // TODO: Remove me
             stockData->value     = i * j;
         }
 
-        IFile* stockDataFile = mFileFactory->newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
+        IFile*       stockDataFile = mFileFactory->newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
         ObjectHolder objectHolder(stockDataFile);
 
         bool ok = stockDataFile->open(QIODevice::WriteOnly);
