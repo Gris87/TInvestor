@@ -30,9 +30,11 @@ SOURCES += \
     src/config/settingsdialog/settingsdialog.cpp \
     src/config/settingsdialog/settingsdialogfactory.cpp \
     src/config/settingseditor/settingseditor.cpp \
+    src/db/account/accountdatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/logger/logger.cpp \
     src/main/mainwindow.cpp \
+    src/storage/account/accountstorage.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
@@ -40,7 +42,6 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
-    src/websockets/websocketmanager.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
 
@@ -96,11 +97,16 @@ HEADERS += \
     src/config/settingsdialog/settingsdialogfactory.h \
     src/config/settingseditor/isettingseditor.h \
     src/config/settingseditor/settingseditor.h \
+    src/db/account/accountdatabase.h \
+    src/db/account/iaccountdatabase.h \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
+    src/domain/account/account.h \
     src/domain/stocks/stock.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
+    src/storage/account/accountstorage.h \
+    src/storage/account/iaccountstorage.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \
     src/threads/cleanup/cleanupthread.h \
@@ -117,8 +123,6 @@ HEADERS += \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
     src/utils/objectholder/objectholder.h \
-    src/websockets/iwebsocketmanager.h \
-    src/websockets/websocketmanager.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \

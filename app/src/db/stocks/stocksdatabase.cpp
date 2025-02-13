@@ -2,7 +2,6 @@
 
 #include <QCoreApplication>
 #include <QDebug>
-#include <QDir>
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/utils/objectholder/objectholder.h"
