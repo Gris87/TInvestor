@@ -1,8 +1,4 @@
-Interface on QFile and QDir
 Autorun
 Big fall from 24h ago
 Calculate likvidity
 Buy on fall with high likvidity
-Emulator
-Do not take interface parameter, constructor only
-ObjectHolder
