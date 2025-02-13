@@ -4,15 +4,14 @@ compilation_database_dir: build/Desktop-Debug/.qtc_clangd
 output_directory: build/clang_uml
 diagrams:
   class_inheritance:
-    type: include
+    type: class
     title: Class inheritance
     glob:
       include:
         - app/src/*.cpp
-    generate_system_headers: true
     include:
       paths:
-        - app/src
+        - .
   imports_map:
     type: include
     title: Imports map
@@ -22,4 +21,4 @@ diagrams:
     generate_system_headers: true
     include:
       paths:
-        - app/src
+        - .
