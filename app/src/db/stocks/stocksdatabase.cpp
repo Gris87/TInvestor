@@ -83,7 +83,7 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* a
     {
         Stock& stock = stockArray[i];
 
-        IFile* stockDataFile = fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir).arg(stock.name));
+        IFile*       stockDataFile = fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir, stock.name));
         ObjectHolder objectHolder(stockDataFile);
 
         if (stockDataFile->open(QIODevice::ReadOnly))
@@ -144,7 +144,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 
 void StocksDatabase::appendStockData(Stock* stock)
 {
-    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock->name);
+    QString      stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->name);
     IFile*  stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
     ObjectHolder objectHolder(stockDataFile);
 
@@ -157,7 +157,7 @@ void StocksDatabase::appendStockData(Stock* stock)
 
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
-    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath()).arg(stock.name);
+    QString      stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.name);
     IFile*  stockDataFile     = fileFactory->newInstance(stockDataFilePath);
     ObjectHolder objectHolder(stockDataFile);
 

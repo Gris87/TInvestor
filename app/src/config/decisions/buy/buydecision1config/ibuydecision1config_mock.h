@@ -20,18 +20,18 @@ public:
     BuyDecision1ConfigMock(const BuyDecision1ConfigMock& another)            = delete;
     BuyDecision1ConfigMock& operator=(const BuyDecision1ConfigMock& another) = delete;
 
-    MOCK_METHOD1(assign, void(IBuyDecision1Config* another));
-    MOCK_METHOD0(makeDefault, void());
+    MOCK_METHOD(void, assign, (IBuyDecision1Config * another), (override));
+    MOCK_METHOD(void, makeDefault, (), (override));
 
-    MOCK_METHOD2(save, void(ISettingsEditor* settingsEditor, const QString& type));
-    MOCK_METHOD2(load, void(ISettingsEditor* settingsEditor, const QString& type));
+    MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor, const QString& type), (override));
+    MOCK_METHOD(void, load, (ISettingsEditor * settingsEditor, const QString& type), (override));
 
-    MOCK_METHOD1(setEnabled, void(bool value));
-    MOCK_METHOD0(isEnabled, bool());
+    MOCK_METHOD(void, setEnabled, (bool value), (override));
+    MOCK_METHOD(bool, isEnabled, (), (override));
 
-    MOCK_METHOD1(setPriceFall, void(float value));
-    MOCK_METHOD0(getPriceFall, float());
+    MOCK_METHOD(void, setPriceFall, (float value), (override));
+    MOCK_METHOD(float, getPriceFall, (), (override));
 
-    MOCK_METHOD1(setDuration, void(int value));
-    MOCK_METHOD0(getDuration, int());
+    MOCK_METHOD(void, setDuration, (int value), (override));
+    MOCK_METHOD(int, getDuration, (), (override));
 };

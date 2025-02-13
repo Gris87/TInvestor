@@ -20,5 +20,5 @@ public:
     CleanupThreadMock(const CleanupThreadMock& another)            = delete;
     CleanupThreadMock& operator=(const CleanupThreadMock& another) = delete;
 
-    MOCK_METHOD0(run, void());
+    MOCK_METHOD(void, run, (), (override));
 };

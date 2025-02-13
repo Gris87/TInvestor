@@ -20,9 +20,9 @@ public:
     StocksDatabaseMock(const StocksDatabaseMock& another)            = delete;
     StocksDatabaseMock& operator=(const StocksDatabaseMock& another) = delete;
 
-    MOCK_METHOD0(readStocksMeta, QList<Stock>());
-    MOCK_METHOD1(readStocksData, void(QList<Stock>* stocks));
-    MOCK_METHOD1(writeStocksMeta, void(QList<Stock>* stocks));
-    MOCK_METHOD1(appendStockData, void(Stock* stock));
-    MOCK_METHOD2(deleteObsoleteData, void(qint64 obsoleteTimestamp, QList<Stock>* stocks));
+    MOCK_METHOD(QList<Stock>, readStocksMeta, (), (override));
+    MOCK_METHOD(void, readStocksData, (QList<Stock> * stocks), (override));
+    MOCK_METHOD(void, writeStocksMeta, (QList<Stock> * stocks), (override));
+    MOCK_METHOD(void, appendStockData, (Stock * stock), (override));
+    MOCK_METHOD(void, deleteObsoleteData, (qint64 obsoleteTimestamp, QList<Stock>* stocks), (override));
 };

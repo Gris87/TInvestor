@@ -20,5 +20,5 @@ public:
     MakeDecisionThreadMock(const MakeDecisionThreadMock& another)            = delete;
     MakeDecisionThreadMock& operator=(const MakeDecisionThreadMock& another) = delete;
 
-    MOCK_METHOD0(run, void());
+    MOCK_METHOD(void, run, (), (override));
 };

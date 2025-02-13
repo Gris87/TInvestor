@@ -20,5 +20,5 @@ public:
     BuyDecision1ConfigWidgetMock(const BuyDecision1ConfigWidgetMock& another)            = delete;
     BuyDecision1ConfigWidgetMock& operator=(const BuyDecision1ConfigWidgetMock& another) = delete;
 
-    MOCK_METHOD0(updateUiFromConfig, void());
+    MOCK_METHOD(void, updateUiFromConfig, (), (override));
 };

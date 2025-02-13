@@ -20,5 +20,5 @@ public:
     FileFactoryMock(const FileFactoryMock& another)            = delete;
     FileFactoryMock& operator=(const FileFactoryMock& another) = delete;
 
-    MOCK_METHOD1(newInstance, IFile*(const QString& name));
+    MOCK_METHOD(IFile*, newInstance, (const QString& name), (override));
 };

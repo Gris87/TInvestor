@@ -20,5 +20,5 @@ public:
     DirFactoryMock(const DirFactoryMock& another)            = delete;
     DirFactoryMock& operator=(const DirFactoryMock& another) = delete;
 
-    MOCK_METHOD1(newInstance, IDir*(const QString& path));
+    MOCK_METHOD(IDir*, newInstance, (const QString& path), (override));
 };

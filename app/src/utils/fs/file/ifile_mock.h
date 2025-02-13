@@ -20,11 +20,11 @@ public:
     FileMock(const FileMock& another)            = delete;
     FileMock& operator=(const FileMock& another) = delete;
 
-    MOCK_METHOD1(open, bool(QIODevice::OpenMode flags));
-    MOCK_METHOD2(read, qint64(char* data, qint64 maxlen));
-    MOCK_METHOD0(readAll, QByteArray());
-    MOCK_METHOD2(write, qint64(const char* data, qint64 len));
-    MOCK_METHOD1(write, qint64(const QByteArray& data));
-    MOCK_METHOD0(size, qint64());
-    MOCK_METHOD0(close, void());
+    MOCK_METHOD(bool, open, (QIODevice::OpenMode flags), (override));
+    MOCK_METHOD(qint64, read, (char* data, qint64 maxlen), (override));
+    MOCK_METHOD(QByteArray, readAll, (), (override));
+    MOCK_METHOD(qint64, write, (const char* data, qint64 len), (override));
+    MOCK_METHOD(qint64, write, (const QByteArray& data), (override));
+    MOCK_METHOD(qint64, size, (), (override));
+    MOCK_METHOD(void, close, (), (override));
 };

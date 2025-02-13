@@ -20,63 +20,63 @@ public:
     ConfigMock(const ConfigMock& another)            = delete;
     ConfigMock& operator=(const ConfigMock& another) = delete;
 
-    MOCK_METHOD1(assign, void(IConfig* another));
-    MOCK_METHOD0(makeDefault, void());
+    MOCK_METHOD(void, assign, (IConfig * another), (override));
+    MOCK_METHOD(void, makeDefault, (), (override));
 
-    MOCK_METHOD1(save, void(ISettingsEditor* settingsEditor));
-    MOCK_METHOD1(load, void(ISettingsEditor* settingsEditor));
+    MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor), (override));
+    MOCK_METHOD(void, load, (ISettingsEditor * settingsEditor), (override));
 
-    MOCK_METHOD0(getSimulatorConfig, IDecisionMakerConfig*());
-    MOCK_METHOD0(getAutoPilotConfig, IDecisionMakerConfig*());
+    MOCK_METHOD(IDecisionMakerConfig*, getSimulatorConfig, (), (override));
+    MOCK_METHOD(IDecisionMakerConfig*, getAutoPilotConfig, (), (override));
 
-    MOCK_METHOD1(setAutorun, void(bool value));
-    MOCK_METHOD0(isAutorun, bool());
+    MOCK_METHOD(void, setAutorun, (bool value), (override));
+    MOCK_METHOD(bool, isAutorun, (), (override));
 
-    MOCK_METHOD1(setMakeDecisionTimeout, void(int value));
-    MOCK_METHOD0(getMakeDecisionTimeout, int());
+    MOCK_METHOD(void, setMakeDecisionTimeout, (int value), (override));
+    MOCK_METHOD(int, getMakeDecisionTimeout, (), (override));
 
-    MOCK_METHOD1(setUseSchedule, void(bool value));
-    MOCK_METHOD0(isUseSchedule, bool());
+    MOCK_METHOD(void, setUseSchedule, (bool value), (override));
+    MOCK_METHOD(bool, isUseSchedule, (), (override));
 
-    MOCK_METHOD1(setScheduleStartHour, void(int value));
-    MOCK_METHOD0(getScheduleStartHour, int());
+    MOCK_METHOD(void, setScheduleStartHour, (int value), (override));
+    MOCK_METHOD(int, getScheduleStartHour, (), (override));
 
-    MOCK_METHOD1(setScheduleStartMinute, void(int value));
-    MOCK_METHOD0(getScheduleStartMinute, int());
+    MOCK_METHOD(void, setScheduleStartMinute, (int value), (override));
+    MOCK_METHOD(int, getScheduleStartMinute, (), (override));
 
-    MOCK_METHOD1(setScheduleEndHour, void(int value));
-    MOCK_METHOD0(getScheduleEndHour, int());
+    MOCK_METHOD(void, setScheduleEndHour, (int value), (override));
+    MOCK_METHOD(int, getScheduleEndHour, (), (override));
 
-    MOCK_METHOD1(setScheduleEndMinute, void(int value));
-    MOCK_METHOD0(getScheduleEndMinute, int());
+    MOCK_METHOD(void, setScheduleEndMinute, (int value), (override));
+    MOCK_METHOD(int, getScheduleEndMinute, (), (override));
 
-    MOCK_METHOD1(setLimitPurchasesPerDay, void(bool value));
-    MOCK_METHOD0(isLimitPurchasesPerDay, bool());
+    MOCK_METHOD(void, setLimitPurchasesPerDay, (bool value), (override));
+    MOCK_METHOD(bool, isLimitPurchasesPerDay, (), (override));
 
-    MOCK_METHOD1(setAmountOfPurchasesPerDay, void(int value));
-    MOCK_METHOD0(getAmountOfPurchasesPerDay, int());
+    MOCK_METHOD(void, setAmountOfPurchasesPerDay, (int value), (override));
+    MOCK_METHOD(int, getAmountOfPurchasesPerDay, (), (override));
 
-    MOCK_METHOD1(setLimitPurchasesPerStock, void(bool value));
-    MOCK_METHOD0(isLimitPurchasesPerStock, bool());
+    MOCK_METHOD(void, setLimitPurchasesPerStock, (bool value), (override));
+    MOCK_METHOD(bool, isLimitPurchasesPerStock, (), (override));
 
-    MOCK_METHOD1(setAmountOfPurchasesPerStock, void(int value));
-    MOCK_METHOD0(getAmountOfPurchasesPerStock, int());
+    MOCK_METHOD(void, setAmountOfPurchasesPerStock, (int value), (override));
+    MOCK_METHOD(int, getAmountOfPurchasesPerStock, (), (override));
 
-    MOCK_METHOD1(setCommission, void(float value));
-    MOCK_METHOD0(getCommission, float());
+    MOCK_METHOD(void, setCommission, (float value), (override));
+    MOCK_METHOD(float, getCommission, (), (override));
 
-    MOCK_METHOD1(setLimitStockPurchase, void(bool value));
-    MOCK_METHOD0(isLimitStockPurchase, bool());
+    MOCK_METHOD(void, setLimitStockPurchase, (bool value), (override));
+    MOCK_METHOD(bool, isLimitStockPurchase, (), (override));
 
-    MOCK_METHOD1(setAmountOfStockPurchase, void(int value));
-    MOCK_METHOD0(getAmountOfStockPurchase, int());
+    MOCK_METHOD(void, setAmountOfStockPurchase, (int value), (override));
+    MOCK_METHOD(int, getAmountOfStockPurchase, (), (override));
 
-    MOCK_METHOD1(setStorageMonthLimit, void(int value));
-    MOCK_METHOD0(getStorageMonthLimit, int());
+    MOCK_METHOD(void, setStorageMonthLimit, (int value), (override));
+    MOCK_METHOD(int, getStorageMonthLimit, (), (override));
 
-    MOCK_METHOD1(setSimulatorConfigCommon, void(bool value));
-    MOCK_METHOD0(isSimulatorConfigCommon, bool());
+    MOCK_METHOD(void, setSimulatorConfigCommon, (bool value), (override));
+    MOCK_METHOD(bool, isSimulatorConfigCommon, (), (override));
 
-    MOCK_METHOD1(setAutoPilotConfigCommon, void(bool value));
-    MOCK_METHOD0(isAutoPilotConfigCommon, bool());
+    MOCK_METHOD(void, setAutoPilotConfigCommon, (bool value), (override));
+    MOCK_METHOD(bool, isAutoPilotConfigCommon, (), (override));
 };

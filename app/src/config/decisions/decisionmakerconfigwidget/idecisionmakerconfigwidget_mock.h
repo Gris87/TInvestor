@@ -20,5 +20,5 @@ public:
     DecisionMakerConfigWidgetMock(const DecisionMakerConfigWidgetMock& another)            = delete;
     DecisionMakerConfigWidgetMock& operator=(const DecisionMakerConfigWidgetMock& another) = delete;
 
-    MOCK_METHOD0(updateUiFromConfig, void());
+    MOCK_METHOD(void, updateUiFromConfig, (), (override));
 };

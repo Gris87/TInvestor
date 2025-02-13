@@ -32,12 +32,14 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
         type,
         context,
         QString("%1 %2 %3:%4 %5: %6")
-            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"))
-            .arg(typeStr)
-            .arg(QString(context.file).remove("..\\..\\..\\app\\"))
-            .arg(context.line)
-            .arg(context.function)
-            .arg(msg)
+            .arg(
+                QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
+                typeStr,
+                QString(context.file).remove("..\\..\\..\\app\\"),
+                QString::number(context.line),
+                QString(context.function),
+                msg
+            )
     );
 }
 

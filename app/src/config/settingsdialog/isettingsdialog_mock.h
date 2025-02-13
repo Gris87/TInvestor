@@ -20,6 +20,6 @@ public:
     SettingsDialogMock(const SettingsDialogMock& another)            = delete;
     SettingsDialogMock& operator=(const SettingsDialogMock& another) = delete;
 
-    MOCK_METHOD0(updateUiFromConfig, void());
-    MOCK_METHOD0(exec, int());
+    MOCK_METHOD(void, updateUiFromConfig, (), (override));
+    MOCK_METHOD(int, exec, (), (override));
 };
