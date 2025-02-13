@@ -55,3 +55,48 @@ void AccountDatabase::createAccountTable()
     bool ok = query.exec(str);
     Q_ASSERT_X(ok, "AccountDatabase::createAccountTable()", db.lastError().text().toLocal8Bit().constData());
 }
+
+Account AccountDatabase::readAccountInfo()
+{
+    qDebug() << "Reading account info";
+
+    Account res;
+
+    QString str = "SELECT token FROM account WHERE id = 1;";
+
+    QSqlQuery query(db);
+
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "AccountDatabase::readAccountInfo()", db.lastError().text().toLocal8Bit().constData());
+
+    QSqlRecord rec = query.record();
+
+    int tokenIndex = rec.indexOf("token");
+
+    if (query.first())
+    {
+        res.token = query.value(tokenIndex).toString();
+    }
+    else
+    {
+        QSqlQuery query(db);
+        query.prepare("INSERT INTO account (id, token) VALUES (?, ?);");
+        query.bindValue(0, 1);
+        query.bindValue(1, res.token);
+
+        bool ok = !query.exec();
+        Q_ASSERT_X(ok, "AccountDatabase::readAccountInfo()", db.lastError().text().toLocal8Bit().constData());
+    }
+
+    return res;
+}
+
+void AccountDatabase::AccountDatabase::writeToken(const QString token)
+{
+    QSqlQuery query(db);
+    query.prepare("UPDATE account SET token = ? WHERE id = 1;");
+    query.bindValue(0, token);
+
+    bool ok = !query.exec();
+    Q_ASSERT_X(ok, "AccountDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());
+}

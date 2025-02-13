@@ -17,5 +17,6 @@ public:
     IAccountStorage(const IAccountStorage& another)            = delete;
     IAccountStorage& operator=(const IAccountStorage& another) = delete;
 
-    virtual void readFromDatabase(IAccountDatabase* accountDatabase) = 0;
+    virtual void           readFromDatabase(IAccountDatabase* accountDatabase) = 0;
+    virtual const QString& getToken()                                          = 0;
 };

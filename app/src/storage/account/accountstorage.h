@@ -15,5 +15,9 @@ public:
     AccountStorage(const AccountStorage& another)            = delete;
     AccountStorage& operator=(const AccountStorage& another) = delete;
 
-    void readFromDatabase(IAccountDatabase* accountDatabase) override;
+    void           readFromDatabase(IAccountDatabase* accountDatabase) override;
+    const QString& getToken() override;
+
+private:
+    Account mAccount;
 };

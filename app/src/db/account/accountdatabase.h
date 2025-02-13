@@ -17,6 +17,9 @@ public:
     AccountDatabase(const AccountDatabase& another)            = delete;
     AccountDatabase& operator=(const AccountDatabase& another) = delete;
 
+    Account readAccountInfo() override;
+    void    writeToken(const QString token) override;
+
     QSqlDatabase db;
 
 private:

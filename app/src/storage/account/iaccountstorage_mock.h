@@ -21,4 +21,5 @@ public:
     AccountStorageMock& operator=(const AccountStorageMock& another) = delete;
 
     MOCK_METHOD(void, readFromDatabase, (IAccountDatabase * accountDatabase), (override));
+    MOCK_METHOD(const QString&, getToken, (), (override));
 };

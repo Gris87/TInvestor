@@ -19,4 +19,7 @@ public:
 
     AccountDatabaseMock(const AccountDatabaseMock& another)            = delete;
     AccountDatabaseMock& operator=(const AccountDatabaseMock& another) = delete;
+
+    MOCK_METHOD(Account, readAccountInfo, (), (override));
+    MOCK_METHOD(void, writeToken, (const QString token), (override));
 };
