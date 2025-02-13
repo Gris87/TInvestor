@@ -3,7 +3,6 @@
 
 
 #include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidget.h"
-#include "src/config/decisions/buy/buydecision1config/ibuydecision1config.h"
 
 
 

@@ -7,11 +7,7 @@
 #include <QCloseEvent>
 #include <QTimer>
 
-#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
-#include "src/config/iconfig.h"
 #include "src/config/settingsdialog/isettingsdialogfactory.h"
-#include "src/config/settingseditor/isettingseditor.h"
-#include "src/db/stocks/istocksdatabase.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
