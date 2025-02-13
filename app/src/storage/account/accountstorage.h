@@ -14,4 +14,6 @@ public:
 
     AccountStorage(const AccountStorage& another)            = delete;
     AccountStorage& operator=(const AccountStorage& another) = delete;
+
+    void readFromDatabase(IAccountDatabase* accountDatabase) override;
 };

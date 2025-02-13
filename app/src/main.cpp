@@ -22,9 +22,11 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/config/settingsdialog/settingsdialogfactory.h"
 #include "src/config/settingseditor/settingseditor.h"
+#include "src/db/account/accountdatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/logger/logger.h"
 #include "src/main/mainwindow.h"
+#include "src/storage/account/accountstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
@@ -196,6 +198,8 @@ int runApplication(int argc, char* argv[])
 
     DirFactory         dirFactory;
     FileFactory        fileFactory;
+    AccountDatabase    accountDatabase;
+    AccountStorage     accountStorage;
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage;
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
@@ -215,6 +219,8 @@ int runApplication(int argc, char* argv[])
         &sellDecision3ConfigWidgetFactory,
         &trayIconFactory,
         &settingsEditor,
+        &accountDatabase,
+        &accountStorage,
         &stocksDatabase,
         &stocksStorage,
         &cleanupThread,
