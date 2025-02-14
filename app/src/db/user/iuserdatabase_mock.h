@@ -21,5 +21,6 @@ public:
     UserDatabaseMock& operator=(const UserDatabaseMock& another) = delete;
 
     MOCK_METHOD(User, readUserInfo, (), (override));
-    MOCK_METHOD(void, writeToken, (const QString token), (override));
+    MOCK_METHOD(void, writeToken, (const QString& token), (override));
+    MOCK_METHOD(void, writeUserInfo, (const User& user), (override));
 };

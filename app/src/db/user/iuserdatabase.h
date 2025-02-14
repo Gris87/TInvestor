@@ -17,6 +17,7 @@ public:
     IUserDatabase(const IUserDatabase& another)            = delete;
     IUserDatabase& operator=(const IUserDatabase& another) = delete;
 
-    virtual User    readUserInfo()                  = 0;
-    virtual void    writeToken(const QString token) = 0;
+    virtual User readUserInfo()                   = 0;
+    virtual void writeToken(const QString& token) = 0;
+    virtual void writeUserInfo(const User& user)  = 0;
 };

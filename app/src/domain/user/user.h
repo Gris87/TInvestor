@@ -9,4 +9,6 @@
 struct User
 {
     QString token;
+    bool    qualified;
+    float   commission;
 };

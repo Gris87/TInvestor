@@ -31,3 +31,57 @@ protected:
 TEST_F(Test_UserDatabase, Test_constructor_and_destructor)
 {
 }
+
+TEST_F(Test_UserDatabase, Test_readUserInfo)
+{
+    User user = database->readUserInfo();
+
+    // clang-format off
+    ASSERT_EQ(user.token,        "");
+    ASSERT_EQ(user.qualified,    false);
+    ASSERT_NEAR(user.commission, 0.3f, 0.001f);
+    // clang-format on
+}
+
+TEST_F(Test_UserDatabase, Test_writeToken)
+{
+    User user = database->readUserInfo();
+
+    // clang-format off
+    ASSERT_EQ(user.token,        "");
+    ASSERT_EQ(user.qualified,    false);
+    ASSERT_NEAR(user.commission, 0.3f, 0.001f);
+    // clang-format on
+
+    database->writeToken("SomeToken");
+    user = database->readUserInfo();
+
+    // clang-format off
+    ASSERT_EQ(user.token,        "SomeToken");
+    ASSERT_EQ(user.qualified,    false);
+    ASSERT_NEAR(user.commission, 0.3f, 0.001f);
+    // clang-format on
+}
+
+TEST_F(Test_UserDatabase, Test_writeUserInfo)
+{
+    User user = database->readUserInfo();
+
+    // clang-format off
+    ASSERT_EQ(user.token,        "");
+    ASSERT_EQ(user.qualified,    false);
+    ASSERT_NEAR(user.commission, 0.3f, 0.001f);
+    // clang-format on
+
+    user.qualified  = true;
+    user.commission = 0.04f;
+
+    database->writeUserInfo(user);
+    user = database->readUserInfo();
+
+    // clang-format off
+    ASSERT_EQ(user.token,        "");
+    ASSERT_EQ(user.qualified,    true);
+    ASSERT_NEAR(user.commission, 0.04f, 0.001f);
+    // clang-format on
+}

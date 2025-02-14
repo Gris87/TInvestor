@@ -46,8 +46,10 @@ void UserDatabase::createUserTable()
 
     QString str =
         "CREATE TABLE IF NOT EXISTS user ("
-        "    id       INTEGER PRIMARY KEY, "
-        "    token    VARCHAR(255)"
+        "    id         INTEGER PRIMARY KEY, "
+        "    token      VARCHAR(255) NOT NULL, "
+        "    qualified  BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
+        "    commission REAL NOT NULL"
         ");";
 
     QSqlQuery query(db);
@@ -62,7 +64,7 @@ User UserDatabase::readUserInfo()
 
     User res;
 
-    QString str = "SELECT token FROM user WHERE id = 1;";
+    QString str = "SELECT token, qualified, commission FROM user WHERE id = 1;";
 
     QSqlQuery query(db);
 
@@ -71,32 +73,53 @@ User UserDatabase::readUserInfo()
 
     QSqlRecord rec = query.record();
 
-    int tokenIndex = rec.indexOf("token");
+    int tokenIndex      = rec.indexOf("token");
+    int qualifiedIndex  = rec.indexOf("qualified");
+    int commissionIndex = rec.indexOf("commission");
 
     if (query.first())
     {
-        res.token = query.value(tokenIndex).toString();
+        res.token      = query.value(tokenIndex).toString();
+        res.qualified  = query.value(qualifiedIndex).toLongLong() != 0;
+        res.commission = query.value(commissionIndex).toFloat();
     }
     else
     {
+        res.token      = "";
+        res.qualified  = false;
+        res.commission = 0.3f;
+
         QSqlQuery query(db);
-        query.prepare("INSERT INTO user (id, token) VALUES (?, ?);");
+        query.prepare("INSERT INTO user (id, token, qualified, commission) VALUES (?, ?, ?, ?);");
         query.bindValue(0, 1);
         query.bindValue(1, res.token);
+        query.bindValue(2, res.qualified ? 1 : 0);
+        query.bindValue(3, res.commission);
 
-        bool ok = !query.exec();
+        bool ok = query.exec();
         Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", db.lastError().text().toLocal8Bit().constData());
     }
 
     return res;
 }
 
-void UserDatabase::UserDatabase::writeToken(const QString token)
+void UserDatabase::UserDatabase::writeToken(const QString& token)
 {
     QSqlQuery query(db);
     query.prepare("UPDATE user SET token = ? WHERE id = 1;");
     query.bindValue(0, token);
 
-    bool ok = !query.exec();
+    bool ok = query.exec();
+    Q_ASSERT_X(ok, "UserDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());
+}
+
+void UserDatabase::writeUserInfo(const User& user)
+{
+    QSqlQuery query(db);
+    query.prepare("UPDATE user SET qualified = ?, commission = ? WHERE id = 1;");
+    query.bindValue(0, user.qualified ? 1 : 0);
+    query.bindValue(1, user.commission);
+
+    bool ok = query.exec();
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());
 }

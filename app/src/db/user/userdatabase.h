@@ -17,8 +17,9 @@ public:
     UserDatabase(const UserDatabase& another)            = delete;
     UserDatabase& operator=(const UserDatabase& another) = delete;
 
-    User    readUserInfo() override;
-    void    writeToken(const QString token) override;
+    User readUserInfo() override;
+    void writeToken(const QString& token) override;
+    void writeUserInfo(const User& user) override;
 
     QSqlDatabase db;
 
