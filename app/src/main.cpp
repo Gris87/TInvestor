@@ -20,11 +20,9 @@
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
-#include "src/dialogs/settingsdialog/settingsdialogfactory.h"
-#include "src/utils/settingseditor/settingseditor.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
-#include "src/utils/logger/logger.h"
+#include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
@@ -32,6 +30,8 @@
 #include "src/threads/makedecision/makedecisionthread.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
+#include "src/utils/logger/logger.h"
+#include "src/utils/settingseditor/settingseditor.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
