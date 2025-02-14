@@ -30,12 +30,12 @@ SOURCES += \
     src/config/settingsdialog/settingsdialog.cpp \
     src/config/settingsdialog/settingsdialogfactory.cpp \
     src/config/settingseditor/settingseditor.cpp \
-    src/db/account/accountdatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
+    src/db/user/userdatabase.cpp \
     src/logger/logger.cpp \
     src/main/mainwindow.cpp \
-    src/storage/account/accountstorage.cpp \
     src/storage/stocks/stocksstorage.cpp \
+    src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
     src/utils/fs/dir/dir.cpp \
@@ -97,18 +97,18 @@ HEADERS += \
     src/config/settingsdialog/settingsdialogfactory.h \
     src/config/settingseditor/isettingseditor.h \
     src/config/settingseditor/settingseditor.h \
-    src/db/account/accountdatabase.h \
-    src/db/account/iaccountdatabase.h \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
-    src/domain/account/account.h \
+    src/db/user/iuserdatabase.h \
+    src/db/user/userdatabase.h \
     src/domain/stocks/stock.h \
+    src/domain/user/user.h \
     src/logger/logger.h \
     src/main/mainwindow.h \
-    src/storage/account/accountstorage.h \
-    src/storage/account/iaccountstorage.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \
+    src/storage/user/iuserstorage.h \
+    src/storage/user/userstorage.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
     src/threads/makedecision/imakedecisionthread.h \

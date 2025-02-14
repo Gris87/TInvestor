@@ -25,12 +25,12 @@ SOURCES += \
     src/config/settingsdialog/test_settingsdialogfactory.cpp \
     src/config/settingseditor/test_settingseditor.cpp \
     src/config/test_config.cpp \
-    src/db/account/test_accountdatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
+    src/db/user/test_userdatabase.cpp \
     src/logger/test_logger.cpp \
     src/main/test_mainwindow.cpp \
-    src/storage/account/test_accountstorage.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
+    src/storage/user/test_userstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
@@ -69,10 +69,10 @@ HEADERS += \
     src/config/settingsdialog/isettingsdialogfactory_mock.h \
     src/config/settingsdialog/isettingsdialog_mock.h \
     src/config/settingseditor/isettingseditor_mock.h \
-    src/db/account/iaccountdatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
-    src/storage/account/iaccountstorage_mock.h \
+    src/db/user/iuserdatabase_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
+    src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
     src/utils/fs/dir/idirfactory_mock.h \
