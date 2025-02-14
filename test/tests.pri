@@ -24,6 +24,8 @@ SOURCES += \
     src/config/test_config.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
+    src/dialogs/authdialog/test_authdialog.cpp \
+    src/dialogs/authdialog/test_authdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/main/test_mainwindow.cpp \
@@ -68,6 +70,8 @@ HEADERS += \
     src/config/iconfig_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
+    src/dialogs/authdialog/iauthdialogfactory_mock.h \
+    src/dialogs/authdialog/iauthdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
