@@ -2,24 +2,24 @@
 
 
 
-#include "src/storage/account/iAccountstorage.h"
+#include "src/storage/user/iUserstorage.h"
 
 #include <gmock/gmock.h>
 
 
 
-class AccountStorageMock : public IAccountStorage
+class UserStorageMock : public IUserStorage
 {
 public:
-    explicit AccountStorageMock() :
-        IAccountStorage()
+    explicit UserStorageMock() :
+        IUserStorage()
     {
     }
-    ~AccountStorageMock() override = default;
+    ~UserStorageMock() override = default;
 
-    AccountStorageMock(const AccountStorageMock& another)            = delete;
-    AccountStorageMock& operator=(const AccountStorageMock& another) = delete;
+    UserStorageMock(const UserStorageMock& another)            = delete;
+    UserStorageMock& operator=(const UserStorageMock& another) = delete;
 
-    MOCK_METHOD(void, readFromDatabase, (IAccountDatabase * accountDatabase), (override));
+    MOCK_METHOD(void, readFromDatabase, (IUserDatabase * userDatabase), (override));
     MOCK_METHOD(const QString&, getToken, (), (override));
 };

@@ -1,18 +1,18 @@
-#include "src/db/account/accountdatabase.h"
+#include "src/db/user/userdatabase.h"
 
 #include <gtest/gtest.h>
 
 
 
-class Test_AccountDatabase : public ::testing::Test
+class Test_UserDatabase : public ::testing::Test
 {
 protected:
     void SetUp()
     {
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/account").removeRecursively();
+        QDir(appDir + "/data/db/user").removeRecursively();
 
-        database = new AccountDatabase();
+        database = new UserDatabase();
     }
 
     void TearDown()
@@ -20,14 +20,14 @@ protected:
         delete database;
 
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/account").removeRecursively();
+        QDir(appDir + "/data/db/user").removeRecursively();
     }
 
-    AccountDatabase* database;
+    UserDatabase* database;
 };
 
 
 
-TEST_F(Test_AccountDatabase, Test_constructor_and_destructor)
+TEST_F(Test_UserDatabase, Test_constructor_and_destructor)
 {
 }

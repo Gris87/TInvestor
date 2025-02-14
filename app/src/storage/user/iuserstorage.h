@@ -2,21 +2,21 @@
 
 
 
-#include "src/db/account/iaccountdatabase.h"
+#include "src/db/user/iuserdatabase.h"
 
 
 
-class IAccountStorage
+class IUserStorage
 {
 public:
-    explicit IAccountStorage()
+    explicit IUserStorage()
     {
     }
-    virtual ~IAccountStorage() = default;
+    virtual ~IUserStorage() = default;
 
-    IAccountStorage(const IAccountStorage& another)            = delete;
-    IAccountStorage& operator=(const IAccountStorage& another) = delete;
+    IUserStorage(const IUserStorage& another)            = delete;
+    IUserStorage& operator=(const IUserStorage& another) = delete;
 
-    virtual void           readFromDatabase(IAccountDatabase* accountDatabase) = 0;
+    virtual void           readFromDatabase(IUserDatabase* userDatabase)       = 0;
     virtual const QString& getToken()                                          = 0;
 };

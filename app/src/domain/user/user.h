@@ -6,7 +6,7 @@
 
 
 
-struct Account
+struct User
 {
     QString token;
 };

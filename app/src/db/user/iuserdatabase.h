@@ -2,21 +2,21 @@
 
 
 
-#include "src/domain/account/account.h"
+#include "src/domain/user/user.h"
 
 
 
-class IAccountDatabase
+class IUserDatabase
 {
 public:
-    explicit IAccountDatabase()
+    explicit IUserDatabase()
     {
     }
-    virtual ~IAccountDatabase() = default;
+    virtual ~IUserDatabase() = default;
 
-    IAccountDatabase(const IAccountDatabase& another)            = delete;
-    IAccountDatabase& operator=(const IAccountDatabase& another) = delete;
+    IUserDatabase(const IUserDatabase& another)            = delete;
+    IUserDatabase& operator=(const IUserDatabase& another) = delete;
 
-    virtual Account readAccountInfo()               = 0;
+    virtual User    readUserInfo()                  = 0;
     virtual void    writeToken(const QString token) = 0;
 };

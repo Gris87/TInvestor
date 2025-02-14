@@ -1,29 +1,29 @@
-#include "src/storage/account/accountstorage.h"
+#include "src/storage/user/userstorage.h"
 
 #include <QDebug>
 
 
 
-AccountStorage::AccountStorage() :
-    IAccountStorage(),
-    mAccount()
+UserStorage::UserStorage() :
+    IUserStorage(),
+    mUser()
 {
-    qDebug() << "Create AccountStorage";
+    qDebug() << "Create UserStorage";
 }
 
-AccountStorage::~AccountStorage()
+UserStorage::~UserStorage()
 {
-    qDebug() << "Destroy AccountStorage";
+    qDebug() << "Destroy UserStorage";
 }
 
-void AccountStorage::readFromDatabase(IAccountDatabase* accountDatabase)
+void UserStorage::readFromDatabase(IUserDatabase* userDatabase)
 {
-    qDebug() << "Reading account data from database";
+    qDebug() << "Reading user data from database";
 
-    mAccount = accountDatabase->readAccountInfo();
+    mUser = userDatabase->readUserInfo();
 }
 
-const QString& AccountStorage::getToken()
+const QString& UserStorage::getToken()
 {
-    return mAccount.token;
+    return mUser.token;
 }

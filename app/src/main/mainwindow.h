@@ -8,8 +8,8 @@
 #include <QTimer>
 
 #include "src/config/settingsdialog/isettingsdialogfactory.h"
-#include "src/storage/account/iaccountstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -44,8 +44,8 @@ public:
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         ISettingsEditor*                   settingsEditor,
-        IAccountDatabase*                  accountDatabase,
-        IAccountStorage*                   accountStorage,
+        IUserDatabase*                     userDatabase,
+        IUserStorage*                      userStorage,
         IStocksDatabase*                   stocksDatabase,
         IStocksStorage*                    stocksStorage,
         ICleanupThread*                    cleanupThread,
@@ -82,8 +82,8 @@ private:
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
     ISettingsEditor*                   mSettingsEditor;
-    IAccountDatabase*                  mAccountDatabase;
-    IAccountStorage*                   mAccountStorage;
+    IUserDatabase*                     mUserDatabase;
+    IUserStorage*                      mUserStorage;
     IStocksDatabase*                   mStocksDatabase;
     IStocksStorage*                    mStocksStorage;
     ICleanupThread*                    mCleanupThread;

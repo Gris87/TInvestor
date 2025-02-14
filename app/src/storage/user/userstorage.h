@@ -2,22 +2,22 @@
 
 
 
-#include "src/storage/account/iaccountstorage.h"
+#include "src/storage/user/iuserstorage.h"
 
 
 
-class AccountStorage : public IAccountStorage
+class UserStorage : public IUserStorage
 {
 public:
-    explicit AccountStorage();
-    ~AccountStorage();
+    explicit UserStorage();
+    ~UserStorage();
 
-    AccountStorage(const AccountStorage& another)            = delete;
-    AccountStorage& operator=(const AccountStorage& another) = delete;
+    UserStorage(const UserStorage& another)            = delete;
+    UserStorage& operator=(const UserStorage& another) = delete;
 
-    void           readFromDatabase(IAccountDatabase* accountDatabase) override;
+    void           readFromDatabase(IUserDatabase* userDatabase) override;
     const QString& getToken() override;
 
 private:
-    Account mAccount;
+    User mUser;
 };

@@ -15,10 +15,10 @@
 #include "src/config/settingsdialog/isettingsdialog_mock.h"
 #include "src/config/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/config/settingseditor/isettingseditor_mock.h"
-#include "src/db/account/iaccountdatabase_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
-#include "src/storage/account/iaccountstorage_mock.h"
+#include "src/db/user/iuserdatabase_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -51,8 +51,8 @@ protected:
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
-        accountDatabaseMock                  = new StrictMock<AccountDatabaseMock>();
-        accountStorageMock                   = new StrictMock<AccountStorageMock>();
+        userDatabaseMock                     = new StrictMock<UserDatabaseMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
@@ -85,8 +85,8 @@ protected:
             sellDecision3ConfigWidgetFactoryMock,
             trayIconFactoryMock,
             settingsEditorMock,
-            accountDatabaseMock,
-            accountStorageMock,
+            userDatabaseMock,
+            userStorageMock,
             stocksDatabaseMock,
             stocksStorageMock,
             cleanupThreadMock,
@@ -116,8 +116,8 @@ protected:
         delete sellDecision3ConfigWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete settingsEditorMock;
-        delete accountDatabaseMock;
-        delete accountStorageMock;
+        delete userDatabaseMock;
+        delete userStorageMock;
         delete stocksDatabaseMock;
         delete stocksStorageMock;
         delete cleanupThreadMock;
@@ -139,8 +139,8 @@ protected:
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
-    StrictMock<AccountDatabaseMock>*                  accountDatabaseMock;
-    StrictMock<AccountStorageMock>*                   accountStorageMock;
+    StrictMock<UserDatabaseMock>*                     userDatabaseMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksDatabaseMock>*                   stocksDatabaseMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
@@ -303,7 +303,7 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
 
-    EXPECT_CALL(*accountStorageMock, readFromDatabase(accountDatabaseMock));
+    EXPECT_CALL(*userStorageMock, readFromDatabase(userDatabaseMock));
     EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
     EXPECT_CALL(*cleanupThreadMock, run());
 

@@ -1,8 +1,8 @@
-#include "src/storage/account/accountstorage.h"
+#include "src/storage/user/userstorage.h"
 
 #include <gtest/gtest.h>
 
-#include "src/db/account/iaccountdatabase_mock.h"
+#include "src/db/user/iuserdatabase_mock.h"
 
 
 
@@ -12,23 +12,23 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_AccountStorage, Test_constructor_and_destructor)
+TEST(Test_UserStorage, Test_constructor_and_destructor)
 {
-    AccountStorage storage;
+    UserStorage storage;
 }
 
-TEST(Test_AccountStorage, Test_readFromDatabase_and_getToken)
+TEST(Test_UserStorage, Test_readFromDatabase_and_getToken)
 {
-    StrictMock<AccountDatabaseMock> accountDatabaseMock;
+    StrictMock<UserDatabaseMock> userDatabaseMock;
 
-    AccountStorage storage;
+    UserStorage storage;
 
-    Account account;
-    account.token = "someToken";
+    User user;
+    user.token = "someToken";
 
-    EXPECT_CALL(accountDatabaseMock, readAccountInfo()).WillOnce(Return(account));
+    EXPECT_CALL(userDatabaseMock, readUserInfo()).WillOnce(Return(user));
 
-    storage.readFromDatabase(&accountDatabaseMock);
+    storage.readFromDatabase(&userDatabaseMock);
 
     ASSERT_EQ(storage.getToken(), "someToken");
 }

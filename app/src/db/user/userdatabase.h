@@ -2,26 +2,26 @@
 
 
 
-#include "src/db/account/iaccountdatabase.h"
+#include "src/db/user/iuserdatabase.h"
 
 #include <QtSql>
 
 
 
-class AccountDatabase : public IAccountDatabase
+class UserDatabase : public IUserDatabase
 {
 public:
-    explicit AccountDatabase();
-    ~AccountDatabase();
+    explicit UserDatabase();
+    ~UserDatabase();
 
-    AccountDatabase(const AccountDatabase& another)            = delete;
-    AccountDatabase& operator=(const AccountDatabase& another) = delete;
+    UserDatabase(const UserDatabase& another)            = delete;
+    UserDatabase& operator=(const UserDatabase& another) = delete;
 
-    Account readAccountInfo() override;
+    User    readUserInfo() override;
     void    writeToken(const QString token) override;
 
     QSqlDatabase db;
 
 private:
-    void createAccountTable();
+    void createUserTable();
 };

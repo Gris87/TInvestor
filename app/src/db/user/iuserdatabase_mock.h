@@ -2,24 +2,24 @@
 
 
 
-#include "src/db/account/iaccountdatabase.h"
+#include "src/db/user/iuserdatabase.h"
 
 #include <gmock/gmock.h>
 
 
 
-class AccountDatabaseMock : public IAccountDatabase
+class UserDatabaseMock : public IUserDatabase
 {
 public:
-    explicit AccountDatabaseMock() :
-        IAccountDatabase()
+    explicit UserDatabaseMock() :
+        IUserDatabase()
     {
     }
-    ~AccountDatabaseMock() override = default;
+    ~UserDatabaseMock() override = default;
 
-    AccountDatabaseMock(const AccountDatabaseMock& another)            = delete;
-    AccountDatabaseMock& operator=(const AccountDatabaseMock& another) = delete;
+    UserDatabaseMock(const UserDatabaseMock& another)            = delete;
+    UserDatabaseMock& operator=(const UserDatabaseMock& another) = delete;
 
-    MOCK_METHOD(Account, readAccountInfo, (), (override));
+    MOCK_METHOD(User, readUserInfo, (), (override));
     MOCK_METHOD(void, writeToken, (const QString token), (override));
 };
