@@ -1,4 +1,4 @@
-#include "src/logger/logger.h"
+#include "src/utils/logger/logger.h"
 
 #include <QDebug>
 #include <gtest/gtest.h>

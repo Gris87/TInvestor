@@ -1,8 +1,8 @@
-#include "src/config/settingsdialog/settingsdialogfactory.h"
+#include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 
 #include <QDebug>
 
-#include "src/config/settingsdialog/settingsdialog.h"
+#include "src/dialogs/settingsdialog/settingsdialog.h"
 
 
 

@@ -21,13 +21,11 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/test_selldecision3configwidgetfactory.cpp \
     src/config/decisions/sell/selldecision3config/test_selldecision3config.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
-    src/config/settingsdialog/test_settingsdialog.cpp \
-    src/config/settingsdialog/test_settingsdialogfactory.cpp \
-    src/config/settingseditor/test_settingseditor.cpp \
     src/config/test_config.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
-    src/logger/test_logger.cpp \
+    src/dialogs/settingsdialog/test_settingsdialog.cpp \
+    src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
@@ -38,7 +36,9 @@ SOURCES += \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
+    src/utils/logger/test_logger.cpp \
     src/utils/objectholder/test_objectholder.cpp \
+    src/utils/settingseditor/test_settingseditor.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
 
@@ -66,11 +66,10 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidget_mock.h \
     src/config/iconfig_mock.h \
-    src/config/settingsdialog/isettingsdialogfactory_mock.h \
-    src/config/settingsdialog/isettingsdialog_mock.h \
-    src/config/settingseditor/isettingseditor_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
+    src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
+    src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
@@ -79,5 +78,6 @@ HEADERS += \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
+    src/utils/settingseditor/isettingseditor_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \

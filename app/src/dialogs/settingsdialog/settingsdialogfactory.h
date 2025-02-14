@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/settingsdialog/isettingsdialogfactory.h"
+#include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 
 
 

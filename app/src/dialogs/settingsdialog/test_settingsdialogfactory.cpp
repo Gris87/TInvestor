@@ -1,4 +1,4 @@
-#include "src/config/settingsdialog/settingsdialogfactory.h"
+#include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 
 #include <gtest/gtest.h>
 

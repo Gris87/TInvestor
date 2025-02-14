@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QEvent>
 
-#include "src/config/settingsdialog/settingsdialog.h"
+#include "src/dialogs/settingsdialog/settingsdialog.h"
 #include "src/utils/objectholder/objectholder.h"
 
 

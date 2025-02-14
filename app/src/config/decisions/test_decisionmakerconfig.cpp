@@ -8,7 +8,7 @@
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h"
 #include "src/config/decisions/sell/selldecision2config/iselldecision2config_mock.h"
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h"
-#include "src/config/settingseditor/isettingseditor_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 

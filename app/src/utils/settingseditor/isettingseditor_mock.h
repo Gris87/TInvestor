@@ -2,7 +2,7 @@
 
 
 
-#include "src/config/settingseditor/isettingseditor.h"
+#include "src/utils/settingseditor/isettingseditor.h"
 
 #include <gmock/gmock.h>
 

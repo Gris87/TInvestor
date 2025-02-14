@@ -7,7 +7,7 @@
 #include <QCloseEvent>
 #include <QTimer>
 
-#include "src/config/settingsdialog/isettingsdialogfactory.h"
+#include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"

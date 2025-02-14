@@ -4,7 +4,7 @@
 
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/config/iconfig.h"
-#include "src/config/settingsdialog/isettingsdialog.h"
+#include "src/dialogs/settingsdialog/isettingsdialog.h"
 
 
 

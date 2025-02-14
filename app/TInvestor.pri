@@ -27,12 +27,10 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3config.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.cpp \
-    src/config/settingsdialog/settingsdialog.cpp \
-    src/config/settingsdialog/settingsdialogfactory.cpp \
-    src/config/settingseditor/settingseditor.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/db/user/userdatabase.cpp \
-    src/logger/logger.cpp \
+    src/dialogs/settingsdialog/settingsdialog.cpp \
+    src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
@@ -42,6 +40,8 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
+    src/utils/logger/logger.cpp \
+    src/utils/settingseditor/settingseditor.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
 
@@ -91,19 +91,16 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h \
     src/config/iconfig.h \
-    src/config/settingsdialog/isettingsdialog.h \
-    src/config/settingsdialog/isettingsdialogfactory.h \
-    src/config/settingsdialog/settingsdialog.h \
-    src/config/settingsdialog/settingsdialogfactory.h \
-    src/config/settingseditor/isettingseditor.h \
-    src/config/settingseditor/settingseditor.h \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/db/user/iuserdatabase.h \
     src/db/user/userdatabase.h \
-    src/domain/stocks/stock.h \
+    src/dialogs/settingsdialog/isettingsdialog.h \
+    src/dialogs/settingsdialog/isettingsdialogfactory.h \
+    src/dialogs/settingsdialog/settingsdialog.h \
+    src/dialogs/settingsdialog/settingsdialogfactory.h \
+    src/domain/stocks/stocks.h \
     src/domain/user/user.h \
-    src/logger/logger.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \
@@ -122,7 +119,10 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
+    src/utils/logger/logger.h \
     src/utils/objectholder/objectholder.h \
+    src/utils/settingseditor/isettingseditor.h \
+    src/utils/settingseditor/settingseditor.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \
@@ -137,5 +137,5 @@ FORMS += \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
-    src/config/settingsdialog/settingsdialog.ui \
+    src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
