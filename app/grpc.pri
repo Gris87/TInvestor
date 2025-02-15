@@ -1,12 +1,14 @@
+VCPKG_PATH = E:/Qt/vcpkg
+
 VPATH += $$PWD/messages/generated
 
 INCLUDEPATH += $$PWD/messages/generated
-INCLUDEPATH += E:/Qt/vcpkg/installed/x64-windows/include
+INCLUDEPATH += $${VCPKG_PATH}/installed/x64-windows/include
 
 DEFINES += ABSL_CONSUME_DLL
 DEFINES += PROTOBUF_USE_DLLS
 
-LIBS += -LE:/Qt/vcpkg/installed/x64-windows/debug/lib
+LIBS += -L$${VCPKG_PATH}/installed/x64-windows/debug/lib
 LIBS += -labseil_dll
 LIBS += -labsl_flags_commandlineflag
 LIBS += -labsl_flags_commandlineflag_internal
