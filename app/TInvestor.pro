@@ -12,16 +12,6 @@ RESOURCES += Resources.qrc
 
 
 
-# Release optimization - BEGIN
-QMAKE_CFLAGS_RELEASE -= -O1
-QMAKE_CFLAGS_RELEASE -= -O2
-QMAKE_CFLAGS_RELEASE += -O3
-
-QMAKE_CXXFLAGS_RELEASE -= -O1
-QMAKE_CXXFLAGS_RELEASE -= -O2
-QMAKE_CXXFLAGS_RELEASE += -O3
-# Release optimization - END
-
 # Target dirs - BEGIN
 DESTDIR     = build/
 OBJECTS_DIR = build/gen/$$TARGET/objs

@@ -8,8 +8,18 @@ DEFINES += \
     ABSL_CONSUME_DLL \
     PROTOBUF_USE_DLLS
 
+CONFIG (debug, debug|release) {
+    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/debug/lib
+    VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/debug/bin
+    DEBUG_SUFFIX = d
+} else {
+    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/lib
+    VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/bin
+    DEBUG_SUFFIX =
+}
+
 LIBS += \
-    -L$${VCPKG_PATH}/installed/x64-windows/debug/lib \
+    -L$${VCPKG_LIBS} \
     -labseil_dll \
     -labsl_flags_commandlineflag \
     -labsl_flags_commandlineflag_internal \
@@ -26,7 +36,7 @@ LIBS += \
     -lgrpc++ \
     -lgrpc++_reflection \
     -llibcrypto \
-    -llibprotobufd \
+    -llibprotobuf$${DEBUG_SUFFIX} \
     -llibssl \
     -lre2 \
     -lupb_base_lib \
@@ -37,11 +47,11 @@ LIBS += \
     -lupb_textformat_lib \
     -lupb_wire_lib \
     -lutf8_range \
-    -lzlibd
+    -lzlib$${DEBUG_SUFFIX}
 
 
 
-copyfiles.commands = $(COPY_FILE) "$$shell_path($${VCPKG_PATH}/installed/x64-windows/debug/bin/*.dll)" "$$shell_path($${OUT_PWD}/build)"
+copyfiles.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
 first.depends = $(first) copyfiles
 
 export(first.depends)
