@@ -7,6 +7,14 @@ TEMPLATE = app
 
 
 
+# Warnings as errors - BEGIN
+win32-msvc* {
+    QMAKE_CXXFLAGS += /WX
+} else {
+    QMAKE_CXXFLAGS += -Wall -Wextra -Werror
+}
+# Warnings as errors - END
+
 # Target dirs - BEGIN
 DESTDIR     = build/
 OBJECTS_DIR = build/gen/$${TARGET}/objs

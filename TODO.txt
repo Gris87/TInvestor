@@ -1,5 +1,3 @@
-Static library for grpc
-Restore errors on warning
 Autorun
 Big fall from 24h ago
 Calculate likvidity
