@@ -7,14 +7,14 @@ git clone git@github.com:RussianInvestments/investAPI.git /tmp/investAPI
 
 
 
-rm -rf app/messages
-cp -r /tmp/investAPI/src/docs/contracts app/messages
+rm -rf libs/investapi/messages
+cp -r /tmp/investAPI/src/docs/contracts libs/investapi/messages
 rm -rf /tmp/investAPI
 
 
 
-mkdir -p app/messages/generated
-cd app/messages
+mkdir -p libs/investapi/messages/generated
+cd libs/investapi/messages
 
 for file in `find -name \*.proto`
 do
@@ -28,12 +28,5 @@ done
 
 
 
-for file in `find generated -name \*.cc`
-do
-    mv ${file} ${file}.cpp
-done
-
-
-
-cd ../..
+cd ../../..
 ./generate_sources.sh

@@ -1,30 +1,10 @@
-VPATH += $$PWD
-INCLUDEPATH += $$PWD
+VPATH += $${PWD}
+INCLUDEPATH += $${PWD}
 
 
 
 # find app/ -name \*.cpp | grep -ve test_ -ve app/src/main.cpp | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
-    messages/generated/common.grpc.pb.cc.cpp \
-    messages/generated/common.pb.cc.cpp \
-    messages/generated/google/api/field_behavior.grpc.pb.cc.cpp \
-    messages/generated/google/api/field_behavior.pb.cc.cpp \
-    messages/generated/instruments.grpc.pb.cc.cpp \
-    messages/generated/instruments.pb.cc.cpp \
-    messages/generated/marketdata.grpc.pb.cc.cpp \
-    messages/generated/marketdata.pb.cc.cpp \
-    messages/generated/operations.grpc.pb.cc.cpp \
-    messages/generated/operations.pb.cc.cpp \
-    messages/generated/orders.grpc.pb.cc.cpp \
-    messages/generated/orders.pb.cc.cpp \
-    messages/generated/sandbox.grpc.pb.cc.cpp \
-    messages/generated/sandbox.pb.cc.cpp \
-    messages/generated/signals.grpc.pb.cc.cpp \
-    messages/generated/signals.pb.cc.cpp \
-    messages/generated/stoporders.grpc.pb.cc.cpp \
-    messages/generated/stoporders.pb.cc.cpp \
-    messages/generated/users.grpc.pb.cc.cpp \
-    messages/generated/users.pb.cc.cpp \
     src/config/config.cpp \
     src/config/decisions/buy/buydecision1config/buydecision1config.cpp \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.cpp \
@@ -69,26 +49,6 @@ SOURCES += \
 
 # find app/ -name \*.h | grep -ve _mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
-    messages/generated/common.grpc.pb.h \
-    messages/generated/common.pb.h \
-    messages/generated/google/api/field_behavior.grpc.pb.h \
-    messages/generated/google/api/field_behavior.pb.h \
-    messages/generated/instruments.grpc.pb.h \
-    messages/generated/instruments.pb.h \
-    messages/generated/marketdata.grpc.pb.h \
-    messages/generated/marketdata.pb.h \
-    messages/generated/operations.grpc.pb.h \
-    messages/generated/operations.pb.h \
-    messages/generated/orders.grpc.pb.h \
-    messages/generated/orders.pb.h \
-    messages/generated/sandbox.grpc.pb.h \
-    messages/generated/sandbox.pb.h \
-    messages/generated/signals.grpc.pb.h \
-    messages/generated/signals.pb.h \
-    messages/generated/stoporders.grpc.pb.h \
-    messages/generated/stoporders.pb.h \
-    messages/generated/users.grpc.pb.h \
-    messages/generated/users.pb.h \
     src/config/config.h \
     src/config/decisions/buy/buydecision1config/buydecision1config.h \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.h \

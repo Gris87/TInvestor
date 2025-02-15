@@ -1,12 +1,27 @@
+CONFIG -= qt
+CONFIG += c++20
+CONFIG += staticlib
+
+TARGET = investapi
+TEMPLATE = lib
+
+
+
+# Target dirs - BEGIN
+DESTDIR     = build/
+OBJECTS_DIR = build/gen/$${TARGET}/objs
+MOC_DIR     = build/gen/$${TARGET}/moc
+RCC_DIR     = build/gen/$${TARGET}/rcc
+UI_DIR      = build/gen/$${TARGET}/ui
+# Target dirs - END
+
+
+
 VCPKG_PATH = E:/Qt/vcpkg
 
 INCLUDEPATH += \
-    $$PWD/messages/generated \
+    $${PWD}/messages/generated \
     $${VCPKG_PATH}/installed/x64-windows/include
-
-DEFINES += \
-    ABSL_CONSUME_DLL \
-    PROTOBUF_USE_DLLS
 
 CONFIG (debug, debug|release) {
     VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/debug/lib
@@ -51,10 +66,4 @@ LIBS += \
 
 
 
-copyfiles.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
-first.depends = $(first) copyfiles
-
-export(first.depends)
-export(copyfiles.commands)
-
-QMAKE_EXTRA_TARGETS += first copyfiles
+include(../../libs/investapi/investapi.pri)
