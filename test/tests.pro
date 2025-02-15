@@ -7,14 +7,6 @@ TEMPLATE = app
 
 
 
-# Warnings as errors - BEGIN
-win32-msvc* {
-    QMAKE_CXXFLAGS += /WX
-} else {
-    QMAKE_CXXFLAGS += -Wall -Wextra -Werror
-}
-# Warnings as errors - END
-
 # Release optimization - BEGIN
 QMAKE_CFLAGS_RELEASE -= -O1
 QMAKE_CFLAGS_RELEASE -= -O2
@@ -35,8 +27,9 @@ UI_DIR      = build/gen/$$TARGET/ui
 
 
 
-include(gtest_dependency.pri)
+include(../app/grpc.pri)
 include(../app/TInvestor.pri)
+include(../test/gtest_dependency.pri)
 include(../test/tests.pri)
 
 
