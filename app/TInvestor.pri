@@ -33,6 +33,7 @@ SOURCES += \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/grpc/grpcclient.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
@@ -107,6 +108,8 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/domain/stocks/stocks.h \
     src/domain/user/user.h \
+    src/grpc/grpcclient.h \
+    src/grpc/igrpcclient.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \

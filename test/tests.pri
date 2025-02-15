@@ -28,6 +28,7 @@ SOURCES += \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
+    src/grpc/test_grpcclient.cpp \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
@@ -74,6 +75,7 @@ HEADERS += \
     src/dialogs/authdialog/iauthdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
+    src/grpc/igrpcclient_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
