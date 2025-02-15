@@ -7,7 +7,7 @@ PATH_TO_TESTS_PRI="test/tests.pri"
 
 
 
-echo "VPATH = \$\$PWD"        >  ${PATH_TO_TINVESTOR_PRI}
+echo "VPATH += \$\$PWD"       >  ${PATH_TO_TINVESTOR_PRI}
 echo "INCLUDEPATH += \$\$PWD" >> ${PATH_TO_TINVESTOR_PRI}
 echo ""                       >> ${PATH_TO_TINVESTOR_PRI}
 echo ""                       >> ${PATH_TO_TINVESTOR_PRI}

@@ -23,8 +23,7 @@ done
 
 for file in `find -name \*.proto`
 do
-    protoc -I=. --cpp_out=generated ${file}
-    protoc -I=. --grpc_out=generated --plugin=protoc-gen-grpc="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe" ${file}
+    protoc -I=. --cpp_out=generated --grpc_out=generated --plugin=protoc-gen-grpc="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe" ${file}
 done
 
 

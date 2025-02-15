@@ -2,8 +2,8 @@
 // If you make any local change, they will be lost.
 // source: google/api/field_behavior.proto
 
-#include <google/api/field_behavior.grpc.pb.h>
-#include <google/api/field_behavior.pb.h>
+#include "google/api/field_behavior.pb.h"
+#include "google/api/field_behavior.grpc.pb.h"
 
 #include <functional>
 #include <grpcpp/support/async_stream.h>

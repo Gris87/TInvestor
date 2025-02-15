@@ -19,7 +19,7 @@
 #ifndef GRPC_google_2fapi_2ffield_5fbehavior_2eproto__INCLUDED
 #define GRPC_google_2fapi_2ffield_5fbehavior_2eproto__INCLUDED
 
-#include <google/api/field_behavior.pb.h>
+#include "google/api/field_behavior.pb.h"
 
 #include <functional>
 #include <grpcpp/generic/async_generic_service.h>

@@ -3,7 +3,7 @@
 // source: google/api/field_behavior.proto
 // Protobuf C++ Version: 5.29.3
 
-#include <google/api/field_behavior.pb.h>
+#include "google/api/field_behavior.pb.h"
 
 #include <algorithm>
 #include <type_traits>

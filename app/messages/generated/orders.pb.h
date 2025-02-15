@@ -32,7 +32,7 @@
 #include "google/protobuf/unknown_field_set.h"
 #include "common.pb.h"
 #include "google/protobuf/timestamp.pb.h"
-#include <google/api/field_behavior.pb.h>
+#include "google/api/field_behavior.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
