@@ -8,8 +8,10 @@
 
 class GrpcClient : public IGrpcClient
 {
+    Q_OBJECT
+
 public:
-    explicit GrpcClient();
+    explicit GrpcClient(QObject* parent = nullptr);
     ~GrpcClient();
 
     GrpcClient(const GrpcClient& another)            = delete;

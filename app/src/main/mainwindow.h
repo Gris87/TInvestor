@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
+#include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
@@ -48,6 +49,7 @@ public:
         IUserStorage*                      userStorage,
         IStocksDatabase*                   stocksDatabase,
         IStocksStorage*                    stocksStorage,
+        IGrpcClient*                       grpcClient,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread
     );
@@ -86,6 +88,7 @@ private:
     IUserStorage*                      mUserStorage;
     IStocksDatabase*                   mStocksDatabase;
     IStocksStorage*                    mStocksStorage;
+    IGrpcClient*                       mGrpcClient;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
 
@@ -93,6 +96,7 @@ public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
+    void authFailed();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
 

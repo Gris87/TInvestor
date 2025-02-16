@@ -27,6 +27,7 @@ MainWindow::MainWindow(
     IUserStorage*                      userStorage,
     IStocksDatabase*                   stocksDatabase,
     IStocksStorage*                    stocksStorage,
+    IGrpcClient*                       grpcClient,
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread
 ) :
@@ -50,6 +51,7 @@ MainWindow::MainWindow(
     mUserStorage(userStorage),
     mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage),
+    mGrpcClient(grpcClient),
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread)
 {
@@ -66,6 +68,8 @@ MainWindow::MainWindow(
     // clang-format on
 
     trayIcon->show();
+
+    connect(mGrpcClient, SIGNAL(authFailed()), this, SLOT(authFailed()));
 
     // clang-format off
     connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
@@ -133,6 +137,11 @@ void MainWindow::trayIconExitClicked()
     QCoreApplication::quit();
 }
 
+void MainWindow::authFailed()
+{
+    qWarning() << "Authorization failed";
+}
+
 void MainWindow::cleanupTimerTicked()
 {
     qInfo() << "Cleanup timer ticked";
@@ -150,6 +159,8 @@ void MainWindow::makeDecisionTimerTicked()
 void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
+
+    mGrpcClient->connect();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)

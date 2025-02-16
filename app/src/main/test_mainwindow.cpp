@@ -16,6 +16,7 @@
 #include "src/db/user/iuserdatabase_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
@@ -55,6 +56,7 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
+        grpcClientMock                       = new StrictMock<GrpcClientMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
@@ -89,6 +91,7 @@ protected:
             userStorageMock,
             stocksDatabaseMock,
             stocksStorageMock,
+            grpcClientMock,
             cleanupThreadMock,
             makeDecisionThreadMock
         );
@@ -120,6 +123,7 @@ protected:
         delete userStorageMock;
         delete stocksDatabaseMock;
         delete stocksStorageMock;
+        delete grpcClientMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
         delete trayIconMock;
@@ -143,6 +147,7 @@ protected:
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksDatabaseMock>*                   stocksDatabaseMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
+    StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
@@ -220,6 +225,8 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
+
+    EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->ui->actionAuth->trigger();
 
@@ -306,6 +313,7 @@ TEST_F(Test_MainWindow, Test_init)
     EXPECT_CALL(*userStorageMock, readFromDatabase(userDatabaseMock));
     EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
     EXPECT_CALL(*cleanupThreadMock, run());
+    EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->init();
 

@@ -15,18 +15,27 @@ QMap<QtMsgType, QString> logLevelToString{
     {QtFatalMsg,    "FATAL   "}
 };
 
+// HACK for bad QtInfoMsg
+QMap<QtMsgType, int> logLevelToInteger{
+    {QtDebugMsg,    0},
+    {QtInfoMsg,     1},
+    {QtWarningMsg,  2},
+    {QtCriticalMsg, 3},
+    {QtFatalMsg,    4}
+};
+
 
 
 QtMessageHandler oldMessageHandler;
 
 void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-    if (type < logLevel)
+    Q_ASSERT_X(QtInfoMsg != 1, "messageHandler()", "It's time to remove hack");
+
+    if (logLevelToInteger[type] < logLevelToInteger[logLevel])
     {
         return;
     }
-
-    QString typeStr = logLevelToString[type];
 
     oldMessageHandler(
         type,
@@ -34,7 +43,7 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
         QString("%1 %2 %3:%4 %5: %6")
             .arg(
                 QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
-                typeStr,
+                logLevelToString[type],
                 QString(context.file).remove("..\\..\\..\\app\\"),
                 QString::number(context.line),
                 QString(context.function),

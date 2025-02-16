@@ -23,6 +23,7 @@
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
+#include "src/grpc/grpcclient.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
@@ -202,6 +203,7 @@ int runApplication(int argc, char* argv[])
     UserStorage        userStorage;
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage;
+    GrpcClient         grpcClient;
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
@@ -223,6 +225,7 @@ int runApplication(int argc, char* argv[])
         &userStorage,
         &stocksDatabase,
         &stocksStorage,
+        &grpcClient,
         &cleanupThread,
         &makeDecisionThread
     );

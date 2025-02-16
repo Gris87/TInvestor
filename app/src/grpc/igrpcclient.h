@@ -2,10 +2,17 @@
 
 
 
-class IGrpcClient
+#include <QObject>
+
+
+
+class IGrpcClient : public QObject
 {
+    Q_OBJECT
+
 public:
-    IGrpcClient()
+    explicit IGrpcClient(QObject* parent = nullptr) :
+        QObject(parent)
     {
     }
     virtual ~IGrpcClient() = default;
@@ -14,4 +21,7 @@ public:
     IGrpcClient& operator=(const IGrpcClient& another) = delete;
 
     virtual void connect() = 0;
+
+signals:
+    void authFailed();
 };

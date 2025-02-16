@@ -4,8 +4,8 @@
 
 
 
-GrpcClient::GrpcClient() :
-    IGrpcClient()
+GrpcClient::GrpcClient(QObject* parent) :
+    IGrpcClient(parent)
 {
     qDebug() << "Create GrpcClient";
 }
@@ -17,4 +17,5 @@ GrpcClient::~GrpcClient()
 
 void GrpcClient::connect()
 {
+    emit authFailed();
 }

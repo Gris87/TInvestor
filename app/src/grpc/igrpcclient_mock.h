@@ -11,8 +11,8 @@
 class GrpcClientMock : public IGrpcClient
 {
 public:
-    GrpcClientMock() :
-        IGrpcClient()
+    explicit GrpcClientMock(QObject* parent = nullptr) :
+        IGrpcClient(parent)
     {
     }
     ~GrpcClientMock() override = default;
