@@ -4,6 +4,8 @@
 
 #include "src/dialogs/authdialog/iauthdialog.h"
 
+#include "src/storage/user/iuserstorage.h"
+
 
 
 class IAuthDialogFactory
@@ -17,5 +19,5 @@ public:
     IAuthDialogFactory(const IAuthDialogFactory& another)            = delete;
     IAuthDialogFactory& operator=(const IAuthDialogFactory& another) = delete;
 
-    virtual IAuthDialog* newInstance(QWidget* parent) = 0;
+    virtual IAuthDialog* newInstance(IUserStorage* userStorage, QWidget* parent) = 0;
 };

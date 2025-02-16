@@ -143,11 +143,14 @@ void MainWindow::authFailed()
 {
     qWarning() << "Authorization failed";
 
-    IAuthDialog* dialog = mAuthDialogFactory->newInstance(this);
+    ui->actionAuth->setEnabled(true);
+
+    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, this);
     ObjectHolder objectHolder(dialog);
 
     if (dialog->exec())
     {
+        on_actionAuth_triggered();
     }
 }
 

@@ -214,8 +214,9 @@ TEST_F(Test_MainWindow, Test_authFailed)
 {
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>();
 
-    EXPECT_CALL(*authDialogFactoryMock, newInstance(NotNull())).WillOnce(Return(authDialogMock));
+    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, NotNull())).WillOnce(Return(authDialogMock));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->authFailed();
 }

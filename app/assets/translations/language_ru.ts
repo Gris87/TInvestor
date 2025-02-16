@@ -2,6 +2,39 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AuthDialog</name>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="26"/>
+        <source>Authorization</source>
+        <translation>Авторизация</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="47"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You have to provide full access token (for a single account or all accounts). Please check &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;for more information&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ты должен предоставить токен с полным доступом (для отдельного счёта или для всех счетов). Почитай &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;для получения информации&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="59"/>
+        <source>Token:</source>
+        <translation>Токен:</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="89"/>
+        <source>Login</source>
+        <translation>Войти</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="34"/>
+        <source>Token is empty</source>
+        <translation>Токен пустой</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="34"/>
+        <source>You should provide token</source>
+        <translation>Ты должен предоставить токен</translation>
+    </message>
+</context>
+<context>
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
@@ -140,22 +173,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="68"/>
+        <location filename="../../src/main.cpp" line="72"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="68"/>
+        <location filename="../../src/main.cpp" line="72"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="80"/>
+        <location filename="../../src/main.cpp" line="84"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="80"/>
+        <location filename="../../src/main.cpp" line="84"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>

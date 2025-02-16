@@ -2,6 +2,15 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
+
 
 
 TEST(Test_AuthDialogFactory, Test_constructor_and_destructor)
@@ -13,7 +22,12 @@ TEST(Test_AuthDialogFactory, Test_newInstance)
 {
     AuthDialogFactory factory;
 
-    IAuthDialog* dialog = factory.newInstance(nullptr);
+    StrictMock<UserStorageMock> userStorageMock;
+
+    QString testToken = "TestToken";
+    EXPECT_CALL(userStorageMock, getToken()).WillOnce(ReturnRef(testToken));
+
+    IAuthDialog* dialog = factory.newInstance(&userStorageMock, nullptr);
 
     ASSERT_TRUE(dialog != nullptr);
 

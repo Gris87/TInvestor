@@ -15,5 +15,5 @@ public:
     AuthDialogFactory(const AuthDialogFactory& another)            = delete;
     AuthDialogFactory& operator=(const AuthDialogFactory& another) = delete;
 
-    IAuthDialog* newInstance(QWidget* parent) override;
+    IAuthDialog* newInstance(IUserStorage* userStorage, QWidget* parent) override;
 };
