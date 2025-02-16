@@ -55,9 +55,7 @@ protected:
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
-        userDatabaseMock                     = new StrictMock<UserDatabaseMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
-        stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
@@ -92,9 +90,7 @@ protected:
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
             trayIconFactoryMock,
-            userDatabaseMock,
             userStorageMock,
-            stocksDatabaseMock,
             stocksStorageMock,
             grpcClientMock,
             cleanupThreadMock,
@@ -126,9 +122,7 @@ protected:
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
         delete trayIconFactoryMock;
-        delete userDatabaseMock;
         delete userStorageMock;
-        delete stocksDatabaseMock;
         delete stocksStorageMock;
         delete grpcClientMock;
         delete cleanupThreadMock;
@@ -152,9 +146,7 @@ protected:
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
-    StrictMock<UserDatabaseMock>*                     userDatabaseMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
-    StrictMock<StocksDatabaseMock>*                   stocksDatabaseMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
@@ -221,6 +213,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxMock, NotNull())).WillOnce(Return(authDialogMock));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
+    EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
     EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->authFailed();
@@ -332,8 +326,8 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
 
-    EXPECT_CALL(*userStorageMock, readFromDatabase(userDatabaseMock));
-    EXPECT_CALL(*stocksStorageMock, readFromDatabase(stocksDatabaseMock));
+    EXPECT_CALL(*userStorageMock, readFromDatabase());
+    EXPECT_CALL(*stocksStorageMock, readFromDatabase());
     EXPECT_CALL(*cleanupThreadMock, run());
     EXPECT_CALL(*grpcClientMock, connect());
 

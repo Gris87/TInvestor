@@ -12,23 +12,57 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_UserStorage, Test_constructor_and_destructor)
+class Test_UserStorage : public ::testing::Test
 {
-    UserStorage storage;
+protected:
+    void SetUp()
+    {
+        userDatabaseMock = new StrictMock<UserDatabaseMock>();
+
+        storage = new UserStorage(userDatabaseMock);
+    }
+
+    void TearDown()
+    {
+        delete storage;
+        delete userDatabaseMock;
+    }
+
+    UserStorage*                  storage;
+    StrictMock<UserDatabaseMock>* userDatabaseMock;
+};
+
+
+
+TEST_F(Test_UserStorage, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_UserStorage, Test_readFromDatabase_and_getToken)
+TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken)
 {
-    StrictMock<UserDatabaseMock> userDatabaseMock;
-
-    UserStorage storage;
-
     User user;
     user.token = "someToken";
 
-    EXPECT_CALL(userDatabaseMock, readUserInfo()).WillOnce(Return(user));
+    EXPECT_CALL(*userDatabaseMock, readUserInfo()).WillOnce(Return(user));
 
-    storage.readFromDatabase(&userDatabaseMock);
+    storage->readFromDatabase();
 
-    ASSERT_EQ(storage.getToken(), "someToken");
+    ASSERT_EQ(storage->getToken(), "someToken");
+}
+
+TEST_F(Test_UserStorage, Test_setToken)
+{
+    User user;
+    user.token = "someToken";
+
+    EXPECT_CALL(*userDatabaseMock, readUserInfo()).WillOnce(Return(user));
+
+    storage->readFromDatabase();
+
+    ASSERT_EQ(storage->getToken(), "someToken");
+
+    EXPECT_CALL(*userDatabaseMock, writeToken(QString("BlahToken")));
+
+    storage->setToken("BlahToken");
+    ASSERT_EQ(storage->getToken(), "BlahToken");
 }

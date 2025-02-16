@@ -27,6 +27,8 @@ public:
     AuthDialog(const AuthDialog& another)            = delete;
     AuthDialog& operator=(const AuthDialog& another) = delete;
 
+    QString getToken() override;
+
     Ui::AuthDialog* ui;
 
 private:

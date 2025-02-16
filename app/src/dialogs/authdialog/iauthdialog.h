@@ -17,4 +17,6 @@ public:
 
     IAuthDialog(const IAuthDialog& another)            = delete;
     IAuthDialog& operator=(const IAuthDialog& another) = delete;
+
+    virtual QString getToken() = 0;
 };

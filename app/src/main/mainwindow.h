@@ -46,9 +46,7 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
-        IUserDatabase*                     userDatabase,
         IUserStorage*                      userStorage,
-        IStocksDatabase*                   stocksDatabase,
         IStocksStorage*                    stocksStorage,
         IGrpcClient*                       grpcClient,
         ICleanupThread*                    cleanupThread,
@@ -87,9 +85,7 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
-    IUserDatabase*                     mUserDatabase;
     IUserStorage*                      mUserStorage;
-    IStocksDatabase*                   mStocksDatabase;
     IStocksStorage*                    mStocksStorage;
     IGrpcClient*                       mGrpcClient;
     ICleanupThread*                    mCleanupThread;

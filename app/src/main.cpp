@@ -201,9 +201,9 @@ int runApplication(int argc, char* argv[])
     DirFactory         dirFactory;
     FileFactory        fileFactory;
     UserDatabase       userDatabase;
-    UserStorage        userStorage;
+    UserStorage        userStorage(&userDatabase);
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
-    StocksStorage      stocksStorage;
+    StocksStorage      stocksStorage(&stocksDatabase);
     GrpcClient         grpcClient;
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
@@ -225,9 +225,7 @@ int runApplication(int argc, char* argv[])
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
         &trayIconFactory,
-        &userDatabase,
         &userStorage,
-        &stocksDatabase,
         &stocksStorage,
         &grpcClient,
         &cleanupThread,

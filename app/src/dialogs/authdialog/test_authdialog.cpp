@@ -49,6 +49,11 @@ TEST_F(Test_AuthDialog, Test_constructor_and_destructor)
     ASSERT_EQ(dialog->ui->tokenLineEdit->text(), "TestToken");
 }
 
+TEST_F(Test_AuthDialog, Test_getToken)
+{
+    ASSERT_EQ(dialog->getToken(), "TestToken");
+}
+
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
     EXPECT_CALL(*messageBoxMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))

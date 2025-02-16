@@ -2,7 +2,7 @@
 
 
 
-#include "src/db/user/iuserdatabase.h"
+#include <QString>
 
 
 
@@ -17,6 +17,7 @@ public:
     IUserStorage(const IUserStorage& another)            = delete;
     IUserStorage& operator=(const IUserStorage& another) = delete;
 
-    virtual void           readFromDatabase(IUserDatabase* userDatabase) = 0;
-    virtual const QString& getToken()                                    = 0;
+    virtual void           readFromDatabase()             = 0;
+    virtual const QString& getToken()                     = 0;
+    virtual void           setToken(const QString& token) = 0;
 };

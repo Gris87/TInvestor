@@ -12,25 +12,40 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StocksStorage, Test_constructor_and_destructor)
+class Test_StocksStorage : public ::testing::Test
 {
-    StocksStorage storage;
+protected:
+    void SetUp()
+    {
+        stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
+
+        storage = new StocksStorage(stocksDatabaseMock);
+    }
+
+    void TearDown()
+    {
+        delete storage;
+        delete stocksDatabaseMock;
+    }
+
+    StocksStorage*                  storage;
+    StrictMock<StocksDatabaseMock>* stocksDatabaseMock;
+};
+
+
+
+TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_StocksStorage, Test_getMutex)
+TEST_F(Test_StocksStorage, Test_getMutex)
 {
-    StocksStorage storage;
-
-    ASSERT_TRUE(storage.getMutex() != nullptr);
+    ASSERT_TRUE(storage->getMutex() != nullptr);
 }
 
-TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
+TEST_F(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
 {
-    StrictMock<StocksDatabaseMock> stocksDatabaseMock;
-
-    StocksStorage storage;
-
-    QList<Stock>* stocks = storage.getStocks();
+    QList<Stock>* stocks = storage->getStocks();
     ASSERT_EQ(stocks->size(), 0);
 
     QList<Stock> stocksDB;
@@ -67,11 +82,11 @@ TEST(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     stock3.data << stockData1 << stockData3 << stockData4;
     stocksDB << stock1 << stock2 << stock3;
 
-    EXPECT_CALL(stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(stocksDatabaseMock, readStocksData(NotNull()));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(NotNull()));
 
-    storage.readFromDatabase(&stocksDatabaseMock);
-    stocks = storage.getStocks();
+    storage->readFromDatabase();
+    stocks = storage->getStocks();
 
     // clang-format off
     ASSERT_EQ(stocks->size(),                     3);

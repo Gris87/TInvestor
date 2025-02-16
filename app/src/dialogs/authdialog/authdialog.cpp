@@ -28,6 +28,11 @@ AuthDialog::~AuthDialog()
     delete ui;
 }
 
+QString AuthDialog::getToken()
+{
+    return ui->tokenLineEdit->text();
+}
+
 void AuthDialog::on_loginButton_clicked()
 {
     if (ui->tokenLineEdit->text() == "")

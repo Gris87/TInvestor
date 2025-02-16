@@ -23,9 +23,7 @@ MainWindow::MainWindow(
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
-    IUserDatabase*                     userDatabase,
     IUserStorage*                      userStorage,
-    IStocksDatabase*                   stocksDatabase,
     IStocksStorage*                    stocksStorage,
     IGrpcClient*                       grpcClient,
     ICleanupThread*                    cleanupThread,
@@ -49,9 +47,7 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
-    mUserDatabase(userDatabase),
     mUserStorage(userStorage),
-    mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage),
     mGrpcClient(grpcClient),
     mCleanupThread(cleanupThread),
@@ -152,6 +148,8 @@ void MainWindow::authFailed()
 
     if (dialog->exec())
     {
+        mUserStorage->setToken(dialog->getToken());
+
         on_actionAuth_triggered();
     }
 }
@@ -241,8 +239,8 @@ void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
-    mUserStorage->readFromDatabase(mUserDatabase);
-    mStocksStorage->readFromDatabase(mStocksDatabase);
+    mUserStorage->readFromDatabase();
+    mStocksStorage->readFromDatabase();
 
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

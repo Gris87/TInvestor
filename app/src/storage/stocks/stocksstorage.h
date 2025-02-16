@@ -9,7 +9,7 @@
 class StocksStorage : public IStocksStorage
 {
 public:
-    explicit StocksStorage();
+    explicit StocksStorage(IStocksDatabase* stocksDatabase);
     ~StocksStorage();
 
     StocksStorage(const StocksStorage& another)            = delete;
@@ -17,9 +17,10 @@ public:
 
     QMutex*       getMutex() override;
     QList<Stock>* getStocks() override;
-    void          readFromDatabase(IStocksDatabase* stocksDatabase) override;
+    void          readFromDatabase() override;
 
 private:
-    QMutex*       mMutex;
-    QList<Stock>* mStocks;
+    IStocksDatabase* mStocksDatabase;
+    QMutex*          mMutex;
+    QList<Stock>*    mStocks;
 };

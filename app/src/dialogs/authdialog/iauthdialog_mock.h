@@ -20,5 +20,6 @@ public:
     AuthDialogMock(const AuthDialogMock& another)            = delete;
     AuthDialogMock& operator=(const AuthDialogMock& another) = delete;
 
+    MOCK_METHOD(QString, getToken, (), (override));
     MOCK_METHOD(int, exec, (), (override));
 };

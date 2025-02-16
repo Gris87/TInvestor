@@ -4,8 +4,9 @@
 
 
 
-StocksStorage::StocksStorage() :
+StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase) :
     IStocksStorage(),
+    mStocksDatabase(stocksDatabase),
     mMutex(new QMutex()),
     mStocks(new QList<Stock>())
 {
@@ -30,8 +31,8 @@ QList<Stock>* StocksStorage::getStocks()
     return mStocks;
 }
 
-void StocksStorage::readFromDatabase(IStocksDatabase* stocksDatabase)
+void StocksStorage::readFromDatabase()
 {
-    *mStocks = stocksDatabase->readStocksMeta();
-    stocksDatabase->readStocksData(mStocks);
+    *mStocks = mStocksDatabase->readStocksMeta();
+    mStocksDatabase->readStocksData(mStocks);
 }

@@ -4,9 +4,10 @@
 
 
 
-UserStorage::UserStorage() :
+UserStorage::UserStorage(IUserDatabase* userDatabase) :
     IUserStorage(),
-    mUser()
+    mUser(),
+    mUserDatabase(userDatabase)
 {
     qDebug() << "Create UserStorage";
 }
@@ -16,14 +17,21 @@ UserStorage::~UserStorage()
     qDebug() << "Destroy UserStorage";
 }
 
-void UserStorage::readFromDatabase(IUserDatabase* userDatabase)
+void UserStorage::readFromDatabase()
 {
     qDebug() << "Reading user data from database";
 
-    mUser = userDatabase->readUserInfo();
+    mUser = mUserDatabase->readUserInfo();
 }
 
 const QString& UserStorage::getToken()
 {
     return mUser.token;
+}
+
+void UserStorage::setToken(const QString& token)
+{
+    mUser.token = token;
+
+    mUserDatabase->writeToken(token);
 }

@@ -22,5 +22,5 @@ public:
 
     MOCK_METHOD(QMutex*, getMutex, (), (override));
     MOCK_METHOD(QList<Stock>*, getStocks, (), (override));
-    MOCK_METHOD(void, readFromDatabase, (IStocksDatabase * stocksDatabase), (override));
+    MOCK_METHOD(void, readFromDatabase, (), (override));
 };
