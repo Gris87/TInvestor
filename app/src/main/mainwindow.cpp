@@ -13,6 +13,7 @@ MainWindow::MainWindow(
     IConfig*                           config,
     IConfig*                           configForSettingsDialog,
     IConfig*                           configForSimulation,
+    IAuthDialogFactory*                authDialogFactory,
     ISettingsDialogFactory*            settingsDialogFactory,
     IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
@@ -38,6 +39,7 @@ MainWindow::MainWindow(
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
+    mAuthDialogFactory(authDialogFactory),
     mSettingsDialogFactory(settingsDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
     mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
@@ -140,6 +142,13 @@ void MainWindow::trayIconExitClicked()
 void MainWindow::authFailed()
 {
     qWarning() << "Authorization failed";
+
+    IAuthDialog* dialog = mAuthDialogFactory->newInstance(this);
+    ObjectHolder objectHolder(dialog);
+
+    if (dialog->exec())
+    {
+    }
 }
 
 void MainWindow::cleanupTimerTicked()

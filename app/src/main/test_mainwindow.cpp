@@ -14,6 +14,8 @@
 #include "src/config/iconfig_mock.h"
 #include "src/db/stocks/istocksdatabase_mock.h"
 #include "src/db/user/iuserdatabase_mock.h"
+#include "src/dialogs/authdialog/iauthdialog_mock.h"
+#include "src/dialogs/authdialog/iauthdialogfactory_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
@@ -42,6 +44,7 @@ protected:
         configMock                           = new StrictMock<ConfigMock>();
         configForSettingsDialogMock          = new StrictMock<ConfigMock>();
         configForSimulationMock              = new StrictMock<ConfigMock>();
+        authDialogFactoryMock                = new StrictMock<AuthDialogFactoryMock>();
         settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
@@ -77,6 +80,7 @@ protected:
             configMock,
             configForSettingsDialogMock,
             configForSimulationMock,
+            authDialogFactoryMock,
             settingsDialogFactoryMock,
             decisionMakerConfigWidgetFactoryMock,
             buyDecision1ConfigWidgetFactoryMock,
@@ -109,6 +113,7 @@ protected:
         delete configMock;
         delete configForSettingsDialogMock;
         delete configForSimulationMock;
+        delete authDialogFactoryMock;
         delete settingsDialogFactoryMock;
         delete decisionMakerConfigWidgetFactoryMock;
         delete buyDecision1ConfigWidgetFactoryMock;
@@ -133,6 +138,7 @@ protected:
     StrictMock<ConfigMock>*                           configMock;
     StrictMock<ConfigMock>*                           configForSettingsDialogMock;
     StrictMock<ConfigMock>*                           configForSimulationMock;
+    StrictMock<AuthDialogFactoryMock>*                authDialogFactoryMock;
     StrictMock<SettingsDialogFactoryMock>*            settingsDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
@@ -202,6 +208,16 @@ TEST_F(Test_MainWindow, Test_trayIconShowClicked)
 TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 {
     mainWindow->trayIconExitClicked();
+}
+
+TEST_F(Test_MainWindow, Test_authFailed)
+{
+    StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>();
+
+    EXPECT_CALL(*authDialogFactoryMock, newInstance(NotNull())).WillOnce(Return(authDialogMock));
+    EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+
+    mainWindow->authFailed();
 }
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)

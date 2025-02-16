@@ -7,6 +7,7 @@
 #include <QCloseEvent>
 #include <QTimer>
 
+#include "src/dialogs/authdialog/iauthdialogfactory.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -35,6 +36,7 @@ public:
         IConfig*                           config,
         IConfig*                           configForSettingsDialog,
         IConfig*                           configForSimulation,
+        IAuthDialogFactory*                authDialogFactory,
         ISettingsDialogFactory*            settingsDialogFactory,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
@@ -75,6 +77,7 @@ private:
     IConfig*                           mConfig;
     IConfig*                           mConfigForSettingsDialog;
     IConfig*                           mConfigForSimulation;
+    IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;

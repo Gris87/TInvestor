@@ -23,8 +23,6 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
 
     bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/db/stocks");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
-
-    // fillWithTestData();
 }
 
 StocksDatabase::~StocksDatabase()
@@ -209,55 +207,4 @@ void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* 
     deleteObsoleteDataInfo.obsoleteTimestamp = obsoleteTimestamp;
 
     processInParallel(stocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
-}
-
-void StocksDatabase::fillWithTestData() // TODO: Remove me
-{
-    QString stocksStr;
-
-    for (int i = 0; i < 100; ++i)
-    {
-        stocksStr += QString("AZAZ%1\n").arg(i);
-        stocksStr += "BLAH\n";
-    }
-
-    QString appDir = qApp->applicationDirPath();
-
-    IFile*       stocksFile = mFileFactory->newInstance(appDir + "/data/db/stocks/stocks.lst");
-    ObjectHolder objectHolder(stocksFile);
-
-    bool ok = stocksFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
-
-    stocksFile->write(stocksStr.toUtf8());
-    stocksFile->close();
-
-
-
-    int              dataSize = 2 * 365 * 24 * 60;
-    QList<StockData> stockDataList(dataSize);
-
-    StockData* stockDataArray = stockDataList.data();
-
-    for (int i = 0; i < 100; ++i)
-    {
-        qInfo() << i;
-
-        for (int j = 0; j < dataSize; ++j)
-        {
-            StockData* stockData = &stockDataArray[j];
-
-            stockData->timestamp = 1672520400 + j * 60;
-            stockData->value     = i * j;
-        }
-
-        IFile*       stockDataFile = mFileFactory->newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i));
-        ObjectHolder objectHolder(stockDataFile);
-
-        bool ok = stockDataFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, "StocksDatabase::fillWithTestData()", "Failed to open file");
-
-        stockDataFile->write(reinterpret_cast<const char*>(stockDataArray), dataSize * sizeof(StockData));
-        stockDataFile->close();
-    }
 }

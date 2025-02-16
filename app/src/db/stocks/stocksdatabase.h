@@ -25,7 +25,5 @@ public:
     void         deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks) override;
 
 private:
-    void fillWithTestData();
-
     IFileFactory* mFileFactory;
 };

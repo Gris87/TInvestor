@@ -22,6 +22,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
+#include "src/dialogs/authdialog/authdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/grpc/grpcclient.h"
 #include "src/main/mainwindow.h"
@@ -183,6 +184,7 @@ int runApplication(int argc, char* argv[])
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
     Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
+    AuthDialogFactory     authDialogFactory;
     SettingsDialogFactory settingsDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
@@ -211,6 +213,7 @@ int runApplication(int argc, char* argv[])
         &config,
         &configForSettingsDialog,
         &configForSimulation,
+        &authDialogFactory,
         &settingsDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,
