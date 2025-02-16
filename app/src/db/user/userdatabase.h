@@ -6,6 +6,8 @@
 
 #include <QtSql>
 
+#include "src/simplecrypt/simplecrypt.h"
+
 
 
 class UserDatabase : public IUserDatabase
@@ -25,4 +27,6 @@ public:
 
 private:
     void createUserTable();
+
+    SimpleCrypt mSimpleCrypt;
 };

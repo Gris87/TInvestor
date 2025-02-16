@@ -6,13 +6,14 @@
 
 
 
-const char* password = "M4&T7>nA60Bu}^JZ>9k7qTuQ1}Vj£t+f";
+#define CRYPT_KEY 0x5EBEB228C0D4D48F
 
 
 
 UserDatabase::UserDatabase() :
     IUserDatabase(),
-    db(QSqlDatabase::addDatabase("QSQLITE"))
+    db(QSqlDatabase::addDatabase("QSQLITE")),
+    mSimpleCrypt(CRYPT_KEY)
 {
     qDebug() << "Create UserDatabase";
 
@@ -23,7 +24,6 @@ UserDatabase::UserDatabase() :
 
     QString dbPath = appDir + "/data/db/user/user.db";
     db.setDatabaseName(dbPath);
-    db.setPassword(password);
 
     ok = db.open();
     Q_ASSERT_X(ok, "UserDatabase::UserDatabase()", db.lastError().text().toLocal8Bit().constData());
@@ -79,7 +79,7 @@ User UserDatabase::readUserInfo()
 
     if (query.first())
     {
-        res.token      = query.value(tokenIndex).toString();
+        res.token      = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
         res.qualified  = query.value(qualifiedIndex).toLongLong() != 0;
         res.commission = query.value(commissionIndex).toFloat();
     }
@@ -92,7 +92,7 @@ User UserDatabase::readUserInfo()
         QSqlQuery query(db);
         query.prepare("INSERT INTO user (id, token, qualified, commission) VALUES (?, ?, ?, ?);");
         query.bindValue(0, 1);
-        query.bindValue(1, res.token);
+        query.bindValue(1, mSimpleCrypt.encryptToString(res.token));
         query.bindValue(2, res.qualified ? 1 : 0);
         query.bindValue(3, res.commission);
 
@@ -107,7 +107,7 @@ void UserDatabase::UserDatabase::writeToken(const QString& token)
 {
     QSqlQuery query(db);
     query.prepare("UPDATE user SET token = ? WHERE id = 1;");
-    query.bindValue(0, token);
+    query.bindValue(0, mSimpleCrypt.encryptToString(token));
 
     bool ok = query.exec();
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());

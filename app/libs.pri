@@ -1,3 +1,7 @@
+DEPENDPATH += \
+    $${PWD}/../libs/investapi \
+    $${PWD}/../libs/simplecrypt
+
 INCLUDEPATH += \
     $${PWD}/../libs/investapi \
     $${PWD}/../libs/investapi/messages/generated \
