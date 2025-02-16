@@ -57,7 +57,8 @@ def _validate_file(args, file_path, lines):
 def is_file_skipped(file_path):
     skip_files = (
         "\\.git\\" in file_path or
-        "\\build\\" in file_path
+        "\\build\\" in file_path or
+        "\\libs\\investapi\\messages\\" in file_path
     )
 
     return skip_files

@@ -21,6 +21,12 @@ StocksStorage::~StocksStorage()
     delete mStocks;
 }
 
+void StocksStorage::readFromDatabase()
+{
+    *mStocks = mStocksDatabase->readStocksMeta();
+    mStocksDatabase->readStocksData(mStocks);
+}
+
 QMutex* StocksStorage::getMutex()
 {
     return mMutex;
@@ -29,10 +35,4 @@ QMutex* StocksStorage::getMutex()
 QList<Stock>* StocksStorage::getStocks()
 {
     return mStocks;
-}
-
-void StocksStorage::readFromDatabase()
-{
-    *mStocks = mStocksDatabase->readStocksMeta();
-    mStocksDatabase->readStocksData(mStocks);
 }

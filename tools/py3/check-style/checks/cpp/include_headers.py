@@ -27,8 +27,8 @@ def _validate_file(args, file_path, lines):
     res = True
 
     for i, line in enumerate(lines):
-        if line.startswith("#include \"") and not line.startswith("#include \"src/") and not line.startswith("#include \"ui_"):
-            logger.error(f"{file_path}:{i + 1}: include should start with src/")
+        if line.startswith("#include \"") and not line.startswith("#include \"src/") and not line.startswith("#include \"messages/generated/") and not line.startswith("#include \"ui_"):
+            logger.error(f"{file_path}:{i + 1}: include should start with src/ or messages/generated/")
 
             res = False
 
@@ -38,7 +38,8 @@ def _validate_file(args, file_path, lines):
 def is_file_skipped(file_path):
     skip_files = (
         "\\.git\\" in file_path or
-        "\\build\\" in file_path
+        "\\build\\" in file_path or
+        "\\libs\\investapi\\messages\\" in file_path
     )
 
     return skip_files

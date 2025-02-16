@@ -38,12 +38,7 @@ TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_StocksStorage, Test_getMutex)
-{
-    ASSERT_TRUE(storage->getMutex() != nullptr);
-}
-
-TEST_F(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
+TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 {
     QList<Stock>* stocks = storage->getStocks();
     ASSERT_EQ(stocks->size(), 0);
@@ -120,4 +115,9 @@ TEST_F(Test_StocksStorage, Test_getStocks_and_readFromDatabase)
     ASSERT_EQ(stocks->at(2).data.at(2).timestamp, 400);
     ASSERT_NEAR(stocks->at(2).data.at(2).value,   0.4f, 0.001f);
     // clang-format on
+}
+
+TEST_F(Test_StocksStorage, Test_getMutex)
+{
+    ASSERT_TRUE(storage->getMutex() != nullptr);
 }

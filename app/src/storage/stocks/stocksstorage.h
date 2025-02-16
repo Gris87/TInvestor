@@ -15,9 +15,9 @@ public:
     StocksStorage(const StocksStorage& another)            = delete;
     StocksStorage& operator=(const StocksStorage& another) = delete;
 
+    void          readFromDatabase() override;
     QMutex*       getMutex() override;
     QList<Stock>* getStocks() override;
-    void          readFromDatabase() override;
 
 private:
     IStocksDatabase* mStocksDatabase;

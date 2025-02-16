@@ -243,6 +243,7 @@ def is_file_skipped(file_path):
     skip_files = (
         "\\.git\\" in file_path or
         "\\build\\" in file_path or
+        "\\libs\\investapi\\messages\\" in file_path or
         "\\TInvestor.pro.user" in file_path
     )
 

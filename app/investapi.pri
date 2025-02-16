@@ -5,4 +5,3 @@ INCLUDEPATH += \
 LIBS += \
     -L$${OUT_PWD}/../libs/investapi/build \
     -linvestapi
-
