@@ -1,3 +1,5 @@
+QT += core
+
 CONFIG += c++20
 CONFIG += staticlib
 
@@ -24,7 +26,7 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 SOURCES += \
-    simplecrypt.cpp
+    src/simplecrypt/simplecrypt.cpp
 
 HEADERS += \
-    simplecrypt.h
+    src/simplecrypt/simplecrypt.h

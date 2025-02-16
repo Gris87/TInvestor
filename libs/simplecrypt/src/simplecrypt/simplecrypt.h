@@ -28,6 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SIMPLECRYPT_H
 #define SIMPLECRYPT_H
 #include <QFlags>
+#include <QRandomGenerator>
 #include <QString>
 #include <QVector>
 
@@ -242,6 +243,7 @@ private:
     CompressionMode         m_compressionMode;
     IntegrityProtectionMode m_protectionMode;
     Error                   m_lastError;
+    QRandomGenerator        m_randomGenerator;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCrypt::CryptoFlags)
 
