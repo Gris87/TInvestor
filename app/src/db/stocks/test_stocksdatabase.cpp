@@ -249,6 +249,73 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
     ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
     // clang-format on
+
+
+
+    for (int i = 0; i < 3; ++i)
+    {
+        fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
+
+        EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
+            .WillOnce(Return(fileMocks[i]));
+
+        if (i != 1)
+        {
+            EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+            EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
+            EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce(Return(testStockData[i].size()));
+            EXPECT_CALL(*fileMocks[i], close());
+        }
+        else
+        {
+            EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(false));
+        }
+    }
+
+    database->readStocksData(&stocks);
+
+    for (int i = 0; i < 3; ++i)
+    {
+        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+    }
+
+    // clang-format off
+    ASSERT_EQ(stocks.size(),                     3);
+    ASSERT_EQ(stocks.at(0).name,                 "AZAZ0");
+    ASSERT_EQ(stocks.at(0).fullname,             "BLAH 0");
+    ASSERT_EQ(stocks.at(0).data.size(),          3);
+    ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
+    ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
+    ASSERT_NEAR(stocks.at(0).data.at(0).value,   20, 0.001f);
+    ASSERT_EQ(stocks.at(0).data.at(1).timestamp, 200);
+    ASSERT_NEAR(stocks.at(0).data.at(1).value,   1000, 0.001f);
+    ASSERT_EQ(stocks.at(0).data.at(2).timestamp, 300);
+    ASSERT_NEAR(stocks.at(0).data.at(2).value,   500, 0.001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(1).name,            "AZAZ1");
+    ASSERT_EQ(stocks.at(1).fullname,        "BLAH 1");
+    ASSERT_EQ(stocks.at(1).data.size(),     0);
+    ASSERT_EQ(stocks.at(1).data.capacity(), 1446);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(2).name,                 "AZAZ2");
+    ASSERT_EQ(stocks.at(2).fullname,             "BLAH 2");
+    ASSERT_EQ(stocks.at(2).data.size(),          5);
+    ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
+    ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
+    ASSERT_NEAR(stocks.at(2).data.at(0).value,   300, 0.001f);
+    ASSERT_EQ(stocks.at(2).data.at(1).timestamp, 220);
+    ASSERT_NEAR(stocks.at(2).data.at(1).value,   130, 0.001f);
+    ASSERT_EQ(stocks.at(2).data.at(2).timestamp, 320);
+    ASSERT_NEAR(stocks.at(2).data.at(2).value,   450, 0.001f);
+    ASSERT_EQ(stocks.at(2).data.at(3).timestamp, 420);
+    ASSERT_NEAR(stocks.at(2).data.at(3).value,   600, 0.001f);
+    ASSERT_EQ(stocks.at(2).data.at(4).timestamp, 520);
+    ASSERT_NEAR(stocks.at(2).data.at(4).value,   100, 0.001f);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
