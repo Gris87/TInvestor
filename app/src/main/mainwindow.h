@@ -46,14 +46,15 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
-        ISettingsEditor*                   settingsEditor,
         IUserDatabase*                     userDatabase,
         IUserStorage*                      userStorage,
         IStocksDatabase*                   stocksDatabase,
         IStocksStorage*                    stocksStorage,
         IGrpcClient*                       grpcClient,
         ICleanupThread*                    cleanupThread,
-        IMakeDecisionThread*               makeDecisionThread
+        IMakeDecisionThread*               makeDecisionThread,
+        IMessageBox*                       messageBox,
+        ISettingsEditor*                   settingsEditor
     );
     ~MainWindow();
 
@@ -86,7 +87,6 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
-    ISettingsEditor*                   mSettingsEditor;
     IUserDatabase*                     mUserDatabase;
     IUserStorage*                      mUserStorage;
     IStocksDatabase*                   mStocksDatabase;
@@ -94,6 +94,8 @@ private:
     IGrpcClient*                       mGrpcClient;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
+    IMessageBox*                       mMessageBox;
+    ISettingsEditor*                   mSettingsEditor;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

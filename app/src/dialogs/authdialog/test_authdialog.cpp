@@ -4,9 +4,11 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/messagebox/imessagebox_mock.h"
 
 
 
+using ::testing::_;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -20,21 +22,24 @@ protected:
     void SetUp()
     {
         userStorageMock = new StrictMock<UserStorageMock>();
+        messageBoxMock  = new StrictMock<MessageBoxMock>();
 
         QString testToken = "TestToken";
         EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(testToken));
 
-        dialog = new AuthDialog(userStorageMock);
+        dialog = new AuthDialog(userStorageMock, messageBoxMock);
     }
 
     void TearDown()
     {
         delete dialog;
         delete userStorageMock;
+        delete messageBoxMock;
     }
 
     AuthDialog*                  dialog;
     StrictMock<UserStorageMock>* userStorageMock;
+    StrictMock<MessageBoxMock>*  messageBoxMock;
 };
 
 
@@ -46,6 +51,9 @@ TEST_F(Test_AuthDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
+    EXPECT_CALL(*messageBoxMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
+        .WillOnce(Return(QMessageBox::Ok));
+
     dialog->ui->tokenLineEdit->setText("");
     dialog->ui->loginButton->click();
 

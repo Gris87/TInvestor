@@ -20,5 +20,5 @@ public:
     AuthDialogFactoryMock(const AuthDialogFactoryMock& another)            = delete;
     AuthDialogFactoryMock& operator=(const AuthDialogFactoryMock& another) = delete;
 
-    MOCK_METHOD(IAuthDialog*, newInstance, (IUserStorage * userStorage, QWidget* parent), (override));
+    MOCK_METHOD(IAuthDialog*, newInstance, (IUserStorage * userStorage, IMessageBox* messageBox, QWidget* parent), (override));
 };

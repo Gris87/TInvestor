@@ -40,6 +40,7 @@ SOURCES += \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
     src/utils/logger/test_logger.cpp \
+    src/utils/messagebox/test_messagebox.cpp \
     src/utils/objectholder/test_objectholder.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
@@ -84,6 +85,7 @@ HEADERS += \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
+    src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \

@@ -24,12 +24,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="34"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
         <source>Token is empty</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="34"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
         <source>You should provide token</source>
         <translation></translation>
     </message>
@@ -173,22 +173,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="72"/>
+        <location filename="../../src/main.cpp" line="73"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="72"/>
+        <location filename="../../src/main.cpp" line="73"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="84"/>
+        <location filename="../../src/main.cpp" line="85"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="84"/>
+        <location filename="../../src/main.cpp" line="85"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>

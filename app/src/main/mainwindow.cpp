@@ -23,14 +23,15 @@ MainWindow::MainWindow(
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
-    ISettingsEditor*                   settingsEditor,
     IUserDatabase*                     userDatabase,
     IUserStorage*                      userStorage,
     IStocksDatabase*                   stocksDatabase,
     IStocksStorage*                    stocksStorage,
     IGrpcClient*                       grpcClient,
     ICleanupThread*                    cleanupThread,
-    IMakeDecisionThread*               makeDecisionThread
+    IMakeDecisionThread*               makeDecisionThread,
+    IMessageBox*                       messageBox,
+    ISettingsEditor*                   settingsEditor
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
@@ -48,14 +49,15 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
-    mSettingsEditor(settingsEditor),
     mUserDatabase(userDatabase),
     mUserStorage(userStorage),
     mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage),
     mGrpcClient(grpcClient),
     mCleanupThread(cleanupThread),
-    mMakeDecisionThread(makeDecisionThread)
+    mMakeDecisionThread(makeDecisionThread),
+    mMessageBox(messageBox),
+    mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create MainWindow";
 
@@ -145,7 +147,7 @@ void MainWindow::authFailed()
 
     ui->actionAuth->setEnabled(true);
 
-    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, this);
+    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBox, this);
     ObjectHolder objectHolder(dialog);
 
     if (dialog->exec())

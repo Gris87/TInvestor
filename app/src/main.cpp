@@ -33,6 +33,7 @@
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
 #include "src/utils/logger/logger.h"
+#include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -197,8 +198,6 @@ int runApplication(int argc, char* argv[])
 
     TrayIconFactory trayIconFactory;
 
-    SettingsEditor settingsEditor("GrisCom", "TInvestor");
-
     DirFactory         dirFactory;
     FileFactory        fileFactory;
     UserDatabase       userDatabase;
@@ -208,6 +207,9 @@ int runApplication(int argc, char* argv[])
     GrpcClient         grpcClient;
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
+
+    MessageBox     messageBox;
+    SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
     MainWindow mainWindow(
         &config,
@@ -223,14 +225,15 @@ int runApplication(int argc, char* argv[])
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
         &trayIconFactory,
-        &settingsEditor,
         &userDatabase,
         &userStorage,
         &stocksDatabase,
         &stocksStorage,
         &grpcClient,
         &cleanupThread,
-        &makeDecisionThread
+        &makeDecisionThread,
+        &messageBox,
+        &settingsEditor
     );
     mainWindow.init();
 

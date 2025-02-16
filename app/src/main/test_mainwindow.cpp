@@ -23,6 +23,7 @@
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
@@ -54,7 +55,6 @@ protected:
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
-        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         userDatabaseMock                     = new StrictMock<UserDatabaseMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksDatabaseMock                   = new StrictMock<StocksDatabaseMock>();
@@ -62,6 +62,8 @@ protected:
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
+        messageBoxMock                       = new StrictMock<MessageBoxMock>();
+        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
@@ -90,14 +92,15 @@ protected:
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
             trayIconFactoryMock,
-            settingsEditorMock,
             userDatabaseMock,
             userStorageMock,
             stocksDatabaseMock,
             stocksStorageMock,
             grpcClientMock,
             cleanupThreadMock,
-            makeDecisionThreadMock
+            makeDecisionThreadMock,
+            messageBoxMock,
+            settingsEditorMock
         );
     }
 
@@ -123,7 +126,6 @@ protected:
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
         delete trayIconFactoryMock;
-        delete settingsEditorMock;
         delete userDatabaseMock;
         delete userStorageMock;
         delete stocksDatabaseMock;
@@ -131,6 +133,8 @@ protected:
         delete grpcClientMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
+        delete messageBoxMock;
+        delete settingsEditorMock;
         delete trayIconMock;
     }
 
@@ -148,7 +152,6 @@ protected:
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
-    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<UserDatabaseMock>*                     userDatabaseMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksDatabaseMock>*                   stocksDatabaseMock;
@@ -156,6 +159,8 @@ protected:
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
+    StrictMock<MessageBoxMock>*                       messageBoxMock;
+    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
 
@@ -214,7 +219,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
 {
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>();
 
-    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, NotNull())).WillOnce(Return(authDialogMock));
+    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxMock, NotNull())).WillOnce(Return(authDialogMock));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*grpcClientMock, connect());
 

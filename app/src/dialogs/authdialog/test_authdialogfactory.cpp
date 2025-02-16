@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/messagebox/imessagebox_mock.h"
 
 
 
@@ -23,11 +24,12 @@ TEST(Test_AuthDialogFactory, Test_newInstance)
     AuthDialogFactory factory;
 
     StrictMock<UserStorageMock> userStorageMock;
+    StrictMock<MessageBoxMock>  messageBoxMock;
 
     QString testToken = "TestToken";
     EXPECT_CALL(userStorageMock, getToken()).WillOnce(ReturnRef(testToken));
 
-    IAuthDialog* dialog = factory.newInstance(&userStorageMock, nullptr);
+    IAuthDialog* dialog = factory.newInstance(&userStorageMock, &messageBoxMock, nullptr);
 
     ASSERT_TRUE(dialog != nullptr);
 

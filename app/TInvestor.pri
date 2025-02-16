@@ -44,6 +44,7 @@ SOURCES += \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
     src/utils/logger/logger.cpp \
+    src/utils/messagebox/messagebox.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
@@ -129,6 +130,8 @@ HEADERS += \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
     src/utils/logger/logger.h \
+    src/utils/messagebox/imessagebox.h \
+    src/utils/messagebox/messagebox.h \
     src/utils/objectholder/objectholder.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \

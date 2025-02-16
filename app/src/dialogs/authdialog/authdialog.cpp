@@ -7,9 +7,10 @@
 
 
 
-AuthDialog::AuthDialog(IUserStorage* userStorage, QWidget* parent) :
+AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent) :
     IAuthDialog(parent),
-    ui(new Ui::AuthDialog)
+    ui(new Ui::AuthDialog),
+    mMessageBox(messageBox)
 {
     qDebug() << "Create AuthDialog";
 
@@ -31,7 +32,7 @@ void AuthDialog::on_loginButton_clicked()
 {
     if (ui->tokenLineEdit->text() == "")
     {
-        QMessageBox::warning(this, tr("Token is empty"), tr("You should provide token"), QMessageBox::Ok);
+        mMessageBox->warning(this, tr("Token is empty"), tr("You should provide token"), QMessageBox::Ok);
 
         return;
     }
