@@ -7,16 +7,26 @@
 
 
 
+#define SANDBOX_TOKEN "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ"
+
+
+
 AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent) :
     IAuthDialog(parent),
     ui(new Ui::AuthDialog),
-    mMessageBox(messageBox)
+    mMessageBox(messageBox),
+    mTokenRegexp("t\\.\\w{64}\\-\\w{21}")
 {
     qDebug() << "Create AuthDialog";
 
     ui->setupUi(this);
 
+#ifdef USE_SANDBOX
+    Q_UNUSED(userStorage);
+    ui->tokenLineEdit->setText(SANDBOX_TOKEN);
+#else
     ui->tokenLineEdit->setText(userStorage->getToken());
+#endif
 
     move(screen()->availableGeometry().center() - frameGeometry().center());
 }
@@ -35,9 +45,11 @@ QString AuthDialog::getToken()
 
 void AuthDialog::on_loginButton_clicked()
 {
-    if (ui->tokenLineEdit->text() == "")
+    QRegularExpressionMatch match = mTokenRegexp.match(getToken());
+
+    if (!match.hasMatch())
     {
-        mMessageBox->warning(this, tr("Token is empty"), tr("You should provide token"), QMessageBox::Ok);
+        mMessageBox->warning(this, tr("Token is invalid"), tr("You should provide correct token"), QMessageBox::Ok);
 
         return;
     }

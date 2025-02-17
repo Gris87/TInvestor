@@ -142,6 +142,7 @@ void MainWindow::authFailed()
     qWarning() << "Authorization failed";
 
     ui->actionAuth->setEnabled(true);
+    trayIconShowClicked();
 
     IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBox, this);
     ObjectHolder objectHolder(dialog);

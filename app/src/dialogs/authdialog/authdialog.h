@@ -4,6 +4,8 @@
 
 #include "src/dialogs/authdialog/iauthdialog.h"
 
+#include <QRegularExpression>
+
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/messagebox/imessagebox.h"
 
@@ -32,7 +34,8 @@ public:
     Ui::AuthDialog* ui;
 
 private:
-    IMessageBox* mMessageBox;
+    IMessageBox*       mMessageBox;
+    QRegularExpression mTokenRegexp;
 
 private slots:
     void on_loginButton_clicked();
