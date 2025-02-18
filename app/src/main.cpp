@@ -208,7 +208,7 @@ int runApplication(int argc, char* argv[])
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
-    MessageBox     messageBox;
+    MessageBoxUtils messageBoxUtils;
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
 
     MainWindow mainWindow(
@@ -230,7 +230,7 @@ int runApplication(int argc, char* argv[])
         &grpcClient,
         &cleanupThread,
         &makeDecisionThread,
-        &messageBox,
+        &messageBoxUtils,
         &settingsEditor
     );
     mainWindow.init();

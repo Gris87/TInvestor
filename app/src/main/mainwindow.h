@@ -51,7 +51,7 @@ public:
         IGrpcClient*                       grpcClient,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
-        IMessageBox*                       messageBox,
+        IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor
     );
     ~MainWindow();
@@ -90,7 +90,7 @@ private:
     IGrpcClient*                       mGrpcClient;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
-    IMessageBox*                       mMessageBox;
+    IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
 
 public slots:

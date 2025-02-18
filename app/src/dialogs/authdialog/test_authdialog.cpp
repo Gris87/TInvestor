@@ -22,21 +22,21 @@ protected:
     void SetUp()
     {
         userStorageMock = new StrictMock<UserStorageMock>();
-        messageBoxMock  = new StrictMock<MessageBoxMock>();
+        messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
 
-        dialog = new AuthDialog(userStorageMock, messageBoxMock);
+        dialog = new AuthDialog(userStorageMock, messageBoxUtilsMock);
     }
 
     void TearDown()
     {
         delete dialog;
         delete userStorageMock;
-        delete messageBoxMock;
+        delete messageBoxUtilsMock;
     }
 
     AuthDialog*                  dialog;
     StrictMock<UserStorageMock>* userStorageMock;
-    StrictMock<MessageBoxMock>*  messageBoxMock;
+    StrictMock<MessageBoxUtilsMock>* messageBoxUtilsMock;
 };
 
 
@@ -53,7 +53,7 @@ TEST_F(Test_AuthDialog, Test_getToken)
 
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
-    EXPECT_CALL(*messageBoxMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
+    EXPECT_CALL(*messageBoxUtilsMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
         .WillOnce(Return(QMessageBox::Ok));
 
     dialog->ui->tokenLineEdit->setText("BadRegexpToken");

@@ -17,7 +17,7 @@ AuthDialogFactory::~AuthDialogFactory()
     qDebug() << "Destroy AuthDialogFactory";
 }
 
-IAuthDialog* AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent)
+IAuthDialog* AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent)
 {
-    return new AuthDialog(userStorage, messageBox, parent);
+    return new AuthDialog(userStorage, messageBoxUtils, parent);
 }

@@ -6,16 +6,16 @@
 
 
 
-class IMessageBox
+class IMessageBoxUtils
 {
 public:
-    IMessageBox()
+    IMessageBoxUtils()
     {
     }
-    virtual ~IMessageBox() = default;
+    virtual ~IMessageBoxUtils() = default;
 
-    IMessageBox(const IMessageBox& another)            = delete;
-    IMessageBox& operator=(const IMessageBox& another) = delete;
+    IMessageBoxUtils(const IMessageBoxUtils& another)            = delete;
+    IMessageBoxUtils& operator=(const IMessageBoxUtils& another) = delete;
 
     virtual QMessageBox::StandardButton warning(
         QWidget*                     parent,

@@ -6,14 +6,14 @@
 
 
 
-class MessageBox : public IMessageBox
+class MessageBoxUtils : public IMessageBoxUtils
 {
 public:
-    explicit MessageBox();
-    ~MessageBox();
+    explicit MessageBoxUtils();
+    ~MessageBoxUtils();
 
-    MessageBox(const MessageBox& another)            = delete;
-    MessageBox& operator=(const MessageBox& another) = delete;
+    MessageBoxUtils(const MessageBoxUtils& another)            = delete;
+    MessageBoxUtils& operator=(const MessageBoxUtils& another) = delete;
 
     QMessageBox::StandardButton warning(
         QWidget*                     parent,

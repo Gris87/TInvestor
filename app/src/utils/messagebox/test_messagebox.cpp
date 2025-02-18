@@ -4,12 +4,12 @@
 
 
 
-TEST(Test_MessageBox, Test_constructor_and_destructor)
+TEST(Test_MessageBoxUtils, Test_constructor_and_destructor)
 {
-    MessageBox messageBox;
+    MessageBoxUtils messageBoxUtils;
 }
 
-TEST(Test_MessageBox, Test_warning)
+TEST(Test_MessageBoxUtils, Test_warning)
 {
     // Nothing
 }

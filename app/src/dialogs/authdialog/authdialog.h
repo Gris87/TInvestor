@@ -27,7 +27,7 @@ class AuthDialog : public IAuthDialog
     Q_OBJECT
 
 public:
-    explicit AuthDialog(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent = nullptr);
+    explicit AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent = nullptr);
     ~AuthDialog();
 
     AuthDialog(const AuthDialog& another)            = delete;
@@ -38,7 +38,7 @@ public:
     Ui::AuthDialog* ui;
 
 private:
-    IMessageBox*       mMessageBox;
+    IMessageBoxUtils*  mMessageBoxUtils;
     QRegularExpression mTokenRegexp;
 
 private slots:

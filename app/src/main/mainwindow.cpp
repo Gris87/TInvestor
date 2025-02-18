@@ -28,7 +28,7 @@ MainWindow::MainWindow(
     IGrpcClient*                       grpcClient,
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
-    IMessageBox*                       messageBox,
+    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor
 ) :
     QMainWindow(),
@@ -52,7 +52,7 @@ MainWindow::MainWindow(
     mGrpcClient(grpcClient),
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
-    mMessageBox(messageBox),
+    mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create MainWindow";
@@ -144,7 +144,7 @@ void MainWindow::authFailed()
     ui->actionAuth->setEnabled(true);
     trayIconShowClicked();
 
-    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBox, this);
+    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
     ObjectHolder objectHolder(dialog);
 
     if (dialog->exec())

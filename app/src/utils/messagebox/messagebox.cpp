@@ -4,18 +4,18 @@
 
 
 
-MessageBox::MessageBox() :
-    IMessageBox()
+MessageBoxUtils::MessageBoxUtils() :
+    IMessageBoxUtils()
 {
-    qDebug() << "Create MessageBox";
+    qDebug() << "Create MessageBoxUtils";
 }
 
-MessageBox::~MessageBox()
+MessageBoxUtils::~MessageBoxUtils()
 {
-    qDebug() << "Destroy MessageBox";
+    qDebug() << "Destroy MessageBoxUtils";
 }
 
-QMessageBox::StandardButton MessageBox::warning(
+QMessageBox::StandardButton MessageBoxUtils::warning(
     QWidget*                     parent,
     const QString&               title,
     const QString&               text,

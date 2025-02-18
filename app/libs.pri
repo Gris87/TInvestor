@@ -12,3 +12,5 @@ LIBS += \
     -L$${OUT_PWD}/../libs/simplecrypt/build \
     -linvestapi \
     -lsimplecrypt
+
+include(../libs/investapi/grpc.pri)

@@ -7,10 +7,10 @@
 
 
 
-AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent) :
+AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) :
     IAuthDialog(parent),
     ui(new Ui::AuthDialog),
-    mMessageBox(messageBox),
+    mMessageBoxUtils(messageBoxUtils),
     mTokenRegexp("t\\.[\\w_]{64}\\-[\\w_]{21}")
 {
     qDebug() << "Create AuthDialog";
@@ -45,7 +45,7 @@ void AuthDialog::on_loginButton_clicked()
 
     if (!match.hasMatch())
     {
-        mMessageBox->warning(this, tr("Token is invalid"), tr("You should provide correct token"), QMessageBox::Ok);
+        mMessageBoxUtils->warning(this, tr("Token is invalid"), tr("You should provide correct token"), QMessageBox::Ok);
 
         return;
     }

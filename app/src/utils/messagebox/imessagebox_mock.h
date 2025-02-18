@@ -8,17 +8,17 @@
 
 
 
-class MessageBoxMock : public IMessageBox
+class MessageBoxUtilsMock : public IMessageBoxUtils
 {
 public:
-    MessageBoxMock() :
-        IMessageBox()
+    MessageBoxUtilsMock() :
+        IMessageBoxUtils()
     {
     }
-    ~MessageBoxMock() override = default;
+    ~MessageBoxUtilsMock() override = default;
 
-    MessageBoxMock(const MessageBoxMock& another)            = delete;
-    MessageBoxMock& operator=(const MessageBoxMock& another) = delete;
+    MessageBoxUtilsMock(const MessageBoxUtilsMock& another)            = delete;
+    MessageBoxUtilsMock& operator=(const MessageBoxUtilsMock& another) = delete;
 
     MOCK_METHOD(
         QMessageBox::StandardButton,

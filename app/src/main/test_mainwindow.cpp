@@ -12,8 +12,6 @@
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
-#include "src/db/stocks/istocksdatabase_mock.h"
-#include "src/db/user/iuserdatabase_mock.h"
 #include "src/dialogs/authdialog/iauthdialog_mock.h"
 #include "src/dialogs/authdialog/iauthdialogfactory_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
@@ -60,7 +58,7 @@ protected:
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
-        messageBoxMock                       = new StrictMock<MessageBoxMock>();
+        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
@@ -95,7 +93,7 @@ protected:
             grpcClientMock,
             cleanupThreadMock,
             makeDecisionThreadMock,
-            messageBoxMock,
+            messageBoxUtilsMock,
             settingsEditorMock
         );
     }
@@ -127,7 +125,7 @@ protected:
         delete grpcClientMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
-        delete messageBoxMock;
+        delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete trayIconMock;
     }
@@ -151,7 +149,7 @@ protected:
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
-    StrictMock<MessageBoxMock>*                       messageBoxMock;
+    StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
@@ -211,7 +209,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
 {
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>();
 
-    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxMock, NotNull())).WillOnce(Return(authDialogMock));
+    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, NotNull()))
+        .WillOnce(Return(authDialogMock));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
