@@ -14,23 +14,23 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="59"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="62"/>
         <source>Token:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="89"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="96"/>
         <source>Login</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
-        <source>Token is empty</source>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <source>Token is invalid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
-        <source>You should provide token</source>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <source>You should provide correct token</source>
         <translation></translation>
     </message>
 </context>

@@ -7,25 +7,21 @@
 
 
 
-#define SANDBOX_TOKEN "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ"
-
-
-
 AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBox* messageBox, QWidget* parent) :
     IAuthDialog(parent),
     ui(new Ui::AuthDialog),
     mMessageBox(messageBox),
-    mTokenRegexp("t\\.\\w{64}\\-\\w{21}")
+    mTokenRegexp("t\\.[\\w_]{64}\\-[\\w_]{21}")
 {
     qDebug() << "Create AuthDialog";
 
     ui->setupUi(this);
 
-#ifdef USE_SANDBOX
+#ifndef USE_SANDBOX
+    ui->tokenLineEdit->setText(userStorage->getToken());
+#else
     Q_UNUSED(userStorage);
     ui->tokenLineEdit->setText(SANDBOX_TOKEN);
-#else
-    ui->tokenLineEdit->setText(userStorage->getToken());
 #endif
 
     move(screen()->availableGeometry().center() - frameGeometry().center());

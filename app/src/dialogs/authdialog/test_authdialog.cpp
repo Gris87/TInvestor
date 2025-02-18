@@ -24,9 +24,6 @@ protected:
         userStorageMock = new StrictMock<UserStorageMock>();
         messageBoxMock  = new StrictMock<MessageBoxMock>();
 
-        QString testToken = "TestToken";
-        EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(testToken));
-
         dialog = new AuthDialog(userStorageMock, messageBoxMock);
     }
 
@@ -46,12 +43,12 @@ protected:
 
 TEST_F(Test_AuthDialog, Test_constructor_and_destructor)
 {
-    ASSERT_EQ(dialog->ui->tokenLineEdit->text(), "TestToken");
+    ASSERT_EQ(dialog->ui->tokenLineEdit->text(), SANDBOX_TOKEN);
 }
 
 TEST_F(Test_AuthDialog, Test_getToken)
 {
-    ASSERT_EQ(dialog->getToken(), "TestToken");
+    ASSERT_EQ(dialog->getToken(), SANDBOX_TOKEN);
 }
 
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
@@ -59,9 +56,14 @@ TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
     EXPECT_CALL(*messageBoxMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
         .WillOnce(Return(QMessageBox::Ok));
 
-    dialog->ui->tokenLineEdit->setText("");
+    dialog->ui->tokenLineEdit->setText("BadRegexpToken");
     dialog->ui->loginButton->click();
 
-    dialog->ui->tokenLineEdit->setText("NiceToken");
+    dialog->ui->tokenLineEdit->setText(SANDBOX_TOKEN);
+    dialog->ui->loginButton->click();
+
+    const QString niceToken = "t.aaaaaaaaaaaaaaaaaaaaa0000000000000AAAAAAAAAAAAAAAAAAA_AAAAAAAAAA-aaaa0000AAAAAAAAAAAAA";
+
+    dialog->ui->tokenLineEdit->setText(niceToken);
     dialog->ui->loginButton->click();
 }

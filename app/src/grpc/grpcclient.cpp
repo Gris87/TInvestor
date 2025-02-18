@@ -4,6 +4,14 @@
 
 
 
+#ifndef USE_SANDBOX
+#define ADDRESS "invest-public-api.tinkoff.ru"
+#else
+#define ADDRESS "sandbox-invest-public-api.tinkoff.ru"
+#endif
+
+
+
 GrpcClient::GrpcClient(QObject* parent) :
     IGrpcClient(parent)
 {

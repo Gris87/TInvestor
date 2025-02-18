@@ -14,24 +14,24 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ты должен предоставить токен с полным доступом (для отдельного счёта или для всех счетов). Почитай &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;для получения информации&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="59"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="62"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="89"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="96"/>
         <source>Login</source>
         <translation>Войти</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
-        <source>Token is empty</source>
-        <translation>Токен пустой</translation>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <source>Token is invalid</source>
+        <translation>Токен неправильный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="35"/>
-        <source>You should provide token</source>
-        <translation>Ты должен предоставить токен</translation>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <source>You should provide correct token</source>
+        <translation>Ты должен предоставить корректный токен</translation>
     </message>
 </context>
 <context>
