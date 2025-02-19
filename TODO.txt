@@ -1,3 +1,5 @@
+ObjectHolder to shared_ptr
+shared_ptr for grpc
 Autorun
 Big fall from 24h ago
 Calculate likvidity
