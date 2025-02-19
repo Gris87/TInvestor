@@ -2,6 +2,15 @@
 
 #include <gtest/gtest.h>
 
+#include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 class Test_UserUpdateThread : public ::testing::Test
@@ -9,15 +18,22 @@ class Test_UserUpdateThread : public ::testing::Test
 protected:
     void SetUp()
     {
-        thread = new UserUpdateThread();
+        userStorageMock = new StrictMock<UserStorageMock>();
+        grpcClientMock  = new StrictMock<GrpcClientMock>();
+
+        thread = new UserUpdateThread(userStorageMock, grpcClientMock);
     }
 
     void TearDown()
     {
         delete thread;
+        delete userStorageMock;
+        delete grpcClientMock;
     }
 
-    UserUpdateThread* thread;
+    UserUpdateThread*            thread;
+    StrictMock<UserStorageMock>* userStorageMock;
+    StrictMock<GrpcClientMock>*  grpcClientMock;
 };
 
 

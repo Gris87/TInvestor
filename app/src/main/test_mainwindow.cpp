@@ -221,9 +221,11 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
-    EXPECT_CALL(*grpcClientMock, connect());
+    EXPECT_CALL(*userUpdateThreadMock, run());
 
     mainWindow->authFailed();
+
+    userUpdateThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
@@ -257,11 +259,13 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
-    EXPECT_CALL(*grpcClientMock, connect());
+    EXPECT_CALL(*userUpdateThreadMock, run());
 
     mainWindow->ui->actionAuth->trigger();
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), false);
+
+    userUpdateThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -345,9 +349,8 @@ TEST_F(Test_MainWindow, Test_init)
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
-    EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*cleanupThreadMock, run());
-    EXPECT_CALL(*grpcClientMock, connect());
+    EXPECT_CALL(*userUpdateThreadMock, run());
 
     mainWindow->init();
 

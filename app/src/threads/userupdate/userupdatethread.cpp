@@ -6,8 +6,10 @@
 
 
 
-UserUpdateThread::UserUpdateThread(QObject* parent) :
-    IUserUpdateThread(parent)
+UserUpdateThread::UserUpdateThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
+    IUserUpdateThread(parent),
+    mUserStorage(userStorage),
+    mGrpcClient(grpcClient)
 {
     qDebug() << "Create UserUpdateThread";
 }
