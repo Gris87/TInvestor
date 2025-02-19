@@ -23,9 +23,11 @@ public:
         std::multimap<grpc::string, grpc::string>* metadata
     ) override
     {
-        metadata->insert(std::make_pair(
-            "authorization", "Bearer t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ"
-        ));
+        metadata->insert(
+            std::make_pair(
+                "authorization", "Bearer t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ"
+            )
+        );
 
         return grpc::Status::OK;
     }

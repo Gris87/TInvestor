@@ -45,7 +45,7 @@ void GrpcClient::getUserInfo()
 {
     tinkoff::public_::invest::api::contract::v1::GetInfoRequest  req;
     tinkoff::public_::invest::api::contract::v1::GetInfoResponse resp;
-    grpc::ClientContext                                      context;
+    grpc::ClientContext                                          context;
     context.set_credentials(mCreds);
 
     grpc::Status status = mUsersService->GetInfo(&context, req, &resp);

@@ -211,7 +211,7 @@ int runApplication(int argc, char* argv[])
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
     MessageBoxUtils messageBoxUtils;
-    SettingsEditor settingsEditor("GrisCom", "TInvestor");
+    SettingsEditor  settingsEditor("GrisCom", "TInvestor");
 
     MainWindow mainWindow(
         &config,

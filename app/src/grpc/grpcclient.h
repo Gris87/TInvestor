@@ -27,7 +27,7 @@ public:
     void connect() override;
 
 private:
-    std::shared_ptr<grpc::CallCredentials>                                       mCreds;
+    std::shared_ptr<grpc::CallCredentials>                                           mCreds;
     std::unique_ptr<tinkoff::public_::invest::api::contract::v1::UsersService::Stub> mUsersService;
 
     void getUserInfo();

@@ -23,7 +23,7 @@ TEST(Test_AuthDialogFactory, Test_newInstance)
 {
     AuthDialogFactory factory;
 
-    StrictMock<UserStorageMock> userStorageMock;
+    StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
 
     IAuthDialog* dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);

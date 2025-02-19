@@ -21,7 +21,7 @@ class Test_AuthDialog : public ::testing::Test
 protected:
     void SetUp()
     {
-        userStorageMock = new StrictMock<UserStorageMock>();
+        userStorageMock     = new StrictMock<UserStorageMock>();
         messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
 
         dialog = new AuthDialog(userStorageMock, messageBoxUtilsMock);
@@ -34,8 +34,8 @@ protected:
         delete messageBoxUtilsMock;
     }
 
-    AuthDialog*                  dialog;
-    StrictMock<UserStorageMock>* userStorageMock;
+    AuthDialog*                      dialog;
+    StrictMock<UserStorageMock>*     userStorageMock;
     StrictMock<MessageBoxUtilsMock>* messageBoxUtilsMock;
 };
 
