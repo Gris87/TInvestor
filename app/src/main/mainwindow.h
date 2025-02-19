@@ -14,6 +14,7 @@
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
+#include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
 
@@ -49,6 +50,7 @@ public:
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
         IGrpcClient*                       grpcClient,
+        IUserUpdateThread*                 userUpdateThread,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
         IMessageBoxUtils*                  messageBoxUtils,
@@ -64,6 +66,7 @@ public:
 
     Ui::MainWindow* ui;
 
+    QTimer* userUpdateTimer;
     QTimer* cleanupTimer;
     QTimer* makeDecisionTimer;
 
@@ -88,6 +91,7 @@ private:
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
     IGrpcClient*                       mGrpcClient;
+    IUserUpdateThread*                 mUserUpdateThread;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
@@ -98,6 +102,7 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void authFailed();
+    void userUpdateTimerTicked();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
 

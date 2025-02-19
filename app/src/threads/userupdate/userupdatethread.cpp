@@ -6,13 +6,8 @@
 
 
 
-UserUpdateThread::UserUpdateThread(
-    IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent
-) :
-    IUserUpdateThread(parent),
-    mConfig(config),
-    mStocksDatabase(stocksDatabase),
-    mStocksStorage(stocksStorage)
+UserUpdateThread::UserUpdateThread(QObject* parent) :
+    IUserUpdateThread(parent)
 {
     qDebug() << "Create UserUpdateThread";
 }
@@ -25,13 +20,6 @@ UserUpdateThread::~UserUpdateThread()
 void UserUpdateThread::run()
 {
     qDebug() << "Running UserUpdateThread";
-
-    qint64 obsoleteTimestamp = QDateTime::currentSecsSinceEpoch() - mConfig->getStorageMonthLimit() * 31 * 24 * 60 * 60;
-
-    QMutexLocker lock(mStocksStorage->getMutex());
-
-    QList<Stock>* stocks = mStocksStorage->getStocks();
-    mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
 
     qDebug() << "Finish UserUpdateThread";
 }

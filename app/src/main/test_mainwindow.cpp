@@ -21,6 +21,7 @@
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -56,6 +57,7 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
+        userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
@@ -91,6 +93,7 @@ protected:
             userStorageMock,
             stocksStorageMock,
             grpcClientMock,
+            userUpdateThreadMock,
             cleanupThreadMock,
             makeDecisionThreadMock,
             messageBoxUtilsMock,
@@ -123,6 +126,7 @@ protected:
         delete userStorageMock;
         delete stocksStorageMock;
         delete grpcClientMock;
+        delete userUpdateThreadMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
         delete messageBoxUtilsMock;
@@ -147,6 +151,7 @@ protected:
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
+    StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
@@ -167,6 +172,8 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
     // clang-format on
 
     // clang-format off
+    ASSERT_EQ(mainWindow->userUpdateTimer->interval(),   0);
+    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(),   false);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(),      0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
@@ -217,6 +224,15 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->authFailed();
+}
+
+TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
+{
+    EXPECT_CALL(*userUpdateThreadMock, run());
+
+    mainWindow->userUpdateTimerTicked();
+
+    userUpdateThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
@@ -322,16 +338,24 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_init)
 {
+    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
+    EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*cleanupThreadMock, run());
     EXPECT_CALL(*grpcClientMock, connect());
 
     mainWindow->init();
 
+    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 15 * 60 * 1000);
+    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), true);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
+
+    userUpdateThreadMock->wait();
+    cleanupThreadMock->wait();
 }

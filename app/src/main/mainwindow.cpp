@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QEvent>
 
-#include "src/dialogs/settingsdialog/settingsdialog.h"
 #include "src/utils/objectholder/objectholder.h"
 
 
@@ -26,6 +25,7 @@ MainWindow::MainWindow(
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
     IGrpcClient*                       grpcClient,
+    IUserUpdateThread*                 userUpdateThread,
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
     IMessageBoxUtils*                  messageBoxUtils,
@@ -33,6 +33,7 @@ MainWindow::MainWindow(
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
+    userUpdateTimer(new QTimer(this)),
     cleanupTimer(new QTimer(this)),
     makeDecisionTimer(new QTimer(this)),
     mConfig(config),
@@ -50,6 +51,7 @@ MainWindow::MainWindow(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mGrpcClient(grpcClient),
+    mUserUpdateThread(userUpdateThread),
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
     mMessageBoxUtils(messageBoxUtils),
@@ -72,6 +74,7 @@ MainWindow::MainWindow(
     connect(mGrpcClient, SIGNAL(authFailed()), this, SLOT(authFailed()));
 
     // clang-format off
+    connect(userUpdateTimer,   SIGNAL(timeout()), this, SLOT(userUpdateTimerTicked()));
     connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
     connect(makeDecisionTimer, SIGNAL(timeout()), this, SLOT(makeDecisionTimerTicked()));
     // clang-format on
@@ -87,9 +90,11 @@ MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
 
+    mUserUpdateThread->requestInterruption();
     mCleanupThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
+    mUserUpdateThread->wait();
     mCleanupThread->wait();
     mMakeDecisionThread->wait();
 
@@ -155,6 +160,13 @@ void MainWindow::authFailed()
     }
 }
 
+void MainWindow::userUpdateTimerTicked()
+{
+    qInfo() << "User update timer ticked";
+
+    mUserUpdateThread->start();
+}
+
 void MainWindow::cleanupTimerTicked()
 {
     qInfo() << "Cleanup timer ticked";
@@ -173,7 +185,7 @@ void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
 
-    mGrpcClient->connect();
+    userUpdateTimerTicked();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -243,9 +255,9 @@ void MainWindow::init()
     mUserStorage->readFromDatabase();
     mStocksStorage->readFromDatabase();
 
+    userUpdateTimer->start(15 * 60 * 1000);   // 15 minutes
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();
-    mCleanupThread->wait();
 
     on_actionAuth_triggered();
 }
