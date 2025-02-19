@@ -25,7 +25,7 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -77,7 +77,7 @@ inline constexpr Strategy::Impl_::Impl_(
         average_signal_yield_year_{nullptr},
         yield_{nullptr},
         yield_year_{nullptr},
-        strategy_type_{static_cast< ::tinkoff::pub::invest::api::contract::v1::StrategyType >(0)},
+        strategy_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::StrategyType >(0)},
         active_signals_{0},
         time_in_position_{::int64_t{0}},
         total_signals_{0} {}
@@ -130,7 +130,7 @@ inline constexpr Signal::Impl_::Impl_(
         stoploss_{nullptr},
         close_price_{nullptr},
         close_dt_{nullptr},
-        direction_{static_cast< ::tinkoff::pub::invest::api::contract::v1::SignalDirection >(0)},
+        direction_{static_cast< ::tinkoff::public_::invest::api::contract::v1::SignalDirection >(0)},
         probability_{0} {}
 
 template <typename>
@@ -168,9 +168,9 @@ inline constexpr GetSignalsRequest::Impl_::Impl_(
         from_{nullptr},
         to_{nullptr},
         paging_{nullptr},
-        strategy_type_{static_cast< ::tinkoff::pub::invest::api::contract::v1::StrategyType >(0)},
-        direction_{static_cast< ::tinkoff::pub::invest::api::contract::v1::SignalDirection >(0)},
-        active_{static_cast< ::tinkoff::pub::invest::api::contract::v1::SignalState >(0)} {}
+        strategy_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::StrategyType >(0)},
+        direction_{static_cast< ::tinkoff::public_::invest::api::contract::v1::SignalDirection >(0)},
+        active_{static_cast< ::tinkoff::public_::invest::api::contract::v1::SignalState >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR GetSignalsRequest::GetSignalsRequest(::_pbi::ConstantInitialized)
@@ -246,7 +246,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_signals_2eproto[3];
 static constexpr const ::_pb::ServiceDescriptor**
@@ -254,45 +254,45 @@ static constexpr const ::_pb::ServiceDescriptor**
 const ::uint32_t
     TableStruct_signals_2eproto::offsets[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
         protodesc_cold) = {
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, _impl_.strategy_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, _impl_.strategy_id_),
         0,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, _impl_.strategies_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, _impl_.strategies_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.strategy_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.strategy_name_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.strategy_description_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.strategy_url_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.strategy_type_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.active_signals_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.total_signals_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.time_in_position_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.average_signal_yield_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.average_signal_yield_year_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.yield_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Strategy, _impl_.yield_year_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.strategy_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.strategy_name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.strategy_description_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.strategy_url_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.strategy_type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.active_signals_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.total_signals_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.time_in_position_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.average_signal_yield_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.average_signal_yield_year_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.yield_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Strategy, _impl_.yield_year_),
         ~0u,
         ~0u,
         0,
@@ -305,23 +305,23 @@ const ::uint32_t
         3,
         4,
         5,
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.signal_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.strategy_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.strategy_type_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.instrument_uid_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.from_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.to_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.direction_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.active_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, _impl_.paging_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.signal_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.strategy_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.strategy_type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.instrument_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.from_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.to_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.direction_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.active_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, _impl_.paging_),
         0,
         1,
         6,
@@ -331,41 +331,41 @@ const ::uint32_t
         7,
         8,
         5,
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, _impl_.signals_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, _impl_.paging_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, _impl_.signals_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, _impl_.paging_),
         ~0u,
         0,
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.signal_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.strategy_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.strategy_name_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.instrument_uid_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.create_dt_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.direction_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.initial_price_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.info_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.name_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.target_price_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.end_dt_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.probability_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.stoploss_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.close_price_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Signal, _impl_.close_dt_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.signal_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.strategy_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.strategy_name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.instrument_uid_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.create_dt_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.direction_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.initial_price_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.info_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.target_price_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.end_dt_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.probability_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.stoploss_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.close_price_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Signal, _impl_.close_dt_),
         ~0u,
         ~0u,
         ~0u,
@@ -385,103 +385,105 @@ const ::uint32_t
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-        {0, 9, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest)},
-        {10, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse)},
-        {19, 39, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::Strategy)},
-        {51, 68, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest)},
-        {77, 87, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse)},
-        {89, 112, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::Signal)},
+        {0, 9, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest)},
+        {10, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse)},
+        {19, 39, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::Strategy)},
+        {51, 68, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest)},
+        {77, 87, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse)},
+        {89, 112, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::Signal)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
-    &::tinkoff::pub::invest::api::contract::v1::_GetStrategiesRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetStrategiesResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_Strategy_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetSignalsRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetSignalsResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_Signal_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetStrategiesRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetStrategiesResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_Strategy_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetSignalsRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetSignalsResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_Signal_default_instance_._instance,
 };
 const char descriptor_table_protodef_signals_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\rsignals.proto\022\"tinkoff.pub.invest.api."
-    "contract.v1\032\037google/protobuf/timestamp.p"
-    "roto\032\037google/api/field_behavior.proto\032\014c"
-    "ommon.proto\"@\n\024GetStrategiesRequest\022\030\n\013s"
-    "trategy_id\030\001 \001(\tH\000\210\001\001B\016\n\014_strategy_id\"Y\n"
-    "\025GetStrategiesResponse\022@\n\nstrategies\030\001 \003"
-    "(\0132,.tinkoff.pub.invest.api.contract.v1."
-    "Strategy\"\214\005\n\010Strategy\022\031\n\013strategy_id\030\001 \001"
-    "(\tB\004\342A\001\002\022\033\n\rstrategy_name\030\002 \001(\tB\004\342A\001\002\022!\n"
-    "\024strategy_description\030\003 \001(\tH\000\210\001\001\022\031\n\014stra"
-    "tegy_url\030\004 \001(\tH\001\210\001\001\022M\n\rstrategy_type\030\005 \001"
-    "(\01620.tinkoff.pub.invest.api.contract.v1."
-    "StrategyTypeB\004\342A\001\002\022\034\n\016active_signals\030\006 \001"
-    "(\005B\004\342A\001\002\022\033\n\rtotal_signals\030\007 \001(\005B\004\342A\001\002\022\036\n"
-    "\020time_in_position\030\010 \001(\003B\004\342A\001\002\022Q\n\024average"
-    "_signal_yield\030\t \001(\0132-.tinkoff.pub.invest"
-    ".api.contract.v1.QuotationB\004\342A\001\002\022V\n\031aver"
-    "age_signal_yield_year\030\n \001(\0132-.tinkoff.pu"
-    "b.invest.api.contract.v1.QuotationB\004\342A\001\002"
-    "\022B\n\005yield\030\013 \001(\0132-.tinkoff.pub.invest.api"
-    ".contract.v1.QuotationB\004\342A\001\002\022G\n\nyield_ye"
-    "ar\030\014 \001(\0132-.tinkoff.pub.invest.api.contra"
-    "ct.v1.QuotationB\004\342A\001\002B\027\n\025_strategy_descr"
-    "iptionB\017\n\r_strategy_url\"\325\004\n\021GetSignalsRe"
-    "quest\022\026\n\tsignal_id\030\001 \001(\tH\000\210\001\001\022\030\n\013strateg"
-    "y_id\030\002 \001(\tH\001\210\001\001\022L\n\rstrategy_type\030\003 \001(\01620"
-    ".tinkoff.pub.invest.api.contract.v1.Stra"
-    "tegyTypeH\002\210\001\001\022\033\n\016instrument_uid\030\004 \001(\tH\003\210"
-    "\001\001\022-\n\004from\030\005 \001(\0132\032.google.protobuf.Times"
-    "tampH\004\210\001\001\022+\n\002to\030\006 \001(\0132\032.google.protobuf."
-    "TimestampH\005\210\001\001\022K\n\tdirection\030\007 \001(\01623.tink"
-    "off.pub.invest.api.contract.v1.SignalDir"
-    "ectionH\006\210\001\001\022D\n\006active\030\010 \001(\0162/.tinkoff.pu"
-    "b.invest.api.contract.v1.SignalStateH\007\210\001"
-    "\001\022=\n\006paging\030\t \001(\0132(.tinkoff.pub.invest.a"
-    "pi.contract.v1.PageH\010\210\001\001B\014\n\n_signal_idB\016"
-    "\n\014_strategy_idB\020\n\016_strategy_typeB\021\n\017_ins"
-    "trument_uidB\007\n\005_fromB\005\n\003_toB\014\n\n_directio"
-    "nB\t\n\007_activeB\t\n\007_paging\"\223\001\n\022GetSignalsRe"
-    "sponse\022;\n\007signals\030\001 \003(\0132*.tinkoff.pub.in"
-    "vest.api.contract.v1.Signal\022@\n\006paging\030\002 "
-    "\001(\01320.tinkoff.pub.invest.api.contract.v1"
-    ".PageResponse\"\211\006\n\006Signal\022\027\n\tsignal_id\030\001 "
-    "\001(\tB\004\342A\001\002\022\031\n\013strategy_id\030\002 \001(\tB\004\342A\001\002\022\033\n\r"
-    "strategy_name\030\003 \001(\tB\004\342A\001\002\022\034\n\016instrument_"
-    "uid\030\004 \001(\tB\004\342A\001\002\0223\n\tcreate_dt\030\005 \001(\0132\032.goo"
-    "gle.protobuf.TimestampB\004\342A\001\002\022L\n\tdirectio"
-    "n\030\006 \001(\01623.tinkoff.pub.invest.api.contrac"
-    "t.v1.SignalDirectionB\004\342A\001\002\022J\n\rinitial_pr"
-    "ice\030\007 \001(\0132-.tinkoff.pub.invest.api.contr"
-    "act.v1.QuotationB\004\342A\001\002\022\021\n\004info\030\010 \001(\tH\000\210\001"
-    "\001\022\022\n\004name\030\t \001(\tB\004\342A\001\002\022I\n\014target_price\030\n "
-    "\001(\0132-.tinkoff.pub.invest.api.contract.v1"
-    ".QuotationB\004\342A\001\002\0220\n\006end_dt\030\013 \001(\0132\032.googl"
-    "e.protobuf.TimestampB\004\342A\001\002\022\030\n\013probabilit"
-    "y\030\014 \001(\005H\001\210\001\001\022D\n\010stoploss\030\r \001(\0132-.tinkoff"
-    ".pub.invest.api.contract.v1.QuotationH\002\210"
-    "\001\001\022G\n\013close_price\030\016 \001(\0132-.tinkoff.pub.in"
-    "vest.api.contract.v1.QuotationH\003\210\001\001\0221\n\010c"
-    "lose_dt\030\017 \001(\0132\032.google.protobuf.Timestam"
-    "pH\004\210\001\001B\007\n\005_infoB\016\n\014_probabilityB\013\n\t_stop"
-    "lossB\016\n\014_close_priceB\013\n\t_close_dt*i\n\014Str"
-    "ategyType\022\035\n\031STRATEGY_TYPE_UNSPECIFIED\020\000"
-    "\022\033\n\027STRATEGY_TYPE_TECHNICAL\020\001\022\035\n\031STRATEG"
-    "Y_TYPE_FUNDAMENTAL\020\002*h\n\017SignalDirection\022"
-    " \n\034SIGNAL_DIRECTION_UNSPECIFIED\020\000\022\030\n\024SIG"
-    "NAL_DIRECTION_BUY\020\001\022\031\n\025SIGNAL_DIRECTION_"
-    "SELL\020\002*s\n\013SignalState\022\034\n\030SIGNAL_STATE_UN"
-    "SPECIFIED\020\000\022\027\n\023SIGNAL_STATE_ACTIVE\020\001\022\027\n\023"
-    "SIGNAL_STATE_CLOSED\020\002\022\024\n\020SIGNAL_STATE_AL"
-    "L\020\0032\223\002\n\rSignalService\022\204\001\n\rGetStrategies\022"
-    "8.tinkoff.pub.invest.api.contract.v1.Get"
-    "StrategiesRequest\0329.tinkoff.pub.invest.a"
-    "pi.contract.v1.GetStrategiesResponse\022{\n\n"
-    "GetSignals\0225.tinkoff.pub.invest.api.cont"
-    "ract.v1.GetSignalsRequest\0326.tinkoff.pub."
-    "invest.api.contract.v1.GetSignalsRespons"
-    "eBa\n\034ru.tinkoff.piapi.contract.v1P\001Z\014./;"
-    "investapi\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1"
-    "\312\002\021Tinkoff\\Invest\\V1b\006proto3"
+    "\n\rsignals.proto\022%tinkoff.public.invest.a"
+    "pi.contract.v1\032\037google/protobuf/timestam"
+    "p.proto\032\037google/api/field_behavior.proto"
+    "\032\014common.proto\"@\n\024GetStrategiesRequest\022\030"
+    "\n\013strategy_id\030\001 \001(\tH\000\210\001\001B\016\n\014_strategy_id"
+    "\"\\\n\025GetStrategiesResponse\022C\n\nstrategies\030"
+    "\001 \003(\0132/.tinkoff.public.invest.api.contra"
+    "ct.v1.Strategy\"\233\005\n\010Strategy\022\031\n\013strategy_"
+    "id\030\001 \001(\tB\004\342A\001\002\022\033\n\rstrategy_name\030\002 \001(\tB\004\342"
+    "A\001\002\022!\n\024strategy_description\030\003 \001(\tH\000\210\001\001\022\031"
+    "\n\014strategy_url\030\004 \001(\tH\001\210\001\001\022P\n\rstrategy_ty"
+    "pe\030\005 \001(\01623.tinkoff.public.invest.api.con"
+    "tract.v1.StrategyTypeB\004\342A\001\002\022\034\n\016active_si"
+    "gnals\030\006 \001(\005B\004\342A\001\002\022\033\n\rtotal_signals\030\007 \001(\005"
+    "B\004\342A\001\002\022\036\n\020time_in_position\030\010 \001(\003B\004\342A\001\002\022T"
+    "\n\024average_signal_yield\030\t \001(\01320.tinkoff.p"
+    "ublic.invest.api.contract.v1.QuotationB\004"
+    "\342A\001\002\022Y\n\031average_signal_yield_year\030\n \001(\0132"
+    "0.tinkoff.public.invest.api.contract.v1."
+    "QuotationB\004\342A\001\002\022E\n\005yield\030\013 \001(\01320.tinkoff"
+    ".public.invest.api.contract.v1.Quotation"
+    "B\004\342A\001\002\022J\n\nyield_year\030\014 \001(\01320.tinkoff.pub"
+    "lic.invest.api.contract.v1.QuotationB\004\342A"
+    "\001\002B\027\n\025_strategy_descriptionB\017\n\r_strategy"
+    "_url\"\341\004\n\021GetSignalsRequest\022\026\n\tsignal_id\030"
+    "\001 \001(\tH\000\210\001\001\022\030\n\013strategy_id\030\002 \001(\tH\001\210\001\001\022O\n\r"
+    "strategy_type\030\003 \001(\01623.tinkoff.public.inv"
+    "est.api.contract.v1.StrategyTypeH\002\210\001\001\022\033\n"
+    "\016instrument_uid\030\004 \001(\tH\003\210\001\001\022-\n\004from\030\005 \001(\013"
+    "2\032.google.protobuf.TimestampH\004\210\001\001\022+\n\002to\030"
+    "\006 \001(\0132\032.google.protobuf.TimestampH\005\210\001\001\022N"
+    "\n\tdirection\030\007 \001(\01626.tinkoff.public.inves"
+    "t.api.contract.v1.SignalDirectionH\006\210\001\001\022G"
+    "\n\006active\030\010 \001(\01622.tinkoff.public.invest.a"
+    "pi.contract.v1.SignalStateH\007\210\001\001\022@\n\006pagin"
+    "g\030\t \001(\0132+.tinkoff.public.invest.api.cont"
+    "ract.v1.PageH\010\210\001\001B\014\n\n_signal_idB\016\n\014_stra"
+    "tegy_idB\020\n\016_strategy_typeB\021\n\017_instrument"
+    "_uidB\007\n\005_fromB\005\n\003_toB\014\n\n_directionB\t\n\007_a"
+    "ctiveB\t\n\007_paging\"\231\001\n\022GetSignalsResponse\022"
+    ">\n\007signals\030\001 \003(\0132-.tinkoff.public.invest"
+    ".api.contract.v1.Signal\022C\n\006paging\030\002 \001(\0132"
+    "3.tinkoff.public.invest.api.contract.v1."
+    "PageResponse\"\230\006\n\006Signal\022\027\n\tsignal_id\030\001 \001"
+    "(\tB\004\342A\001\002\022\031\n\013strategy_id\030\002 \001(\tB\004\342A\001\002\022\033\n\rs"
+    "trategy_name\030\003 \001(\tB\004\342A\001\002\022\034\n\016instrument_u"
+    "id\030\004 \001(\tB\004\342A\001\002\0223\n\tcreate_dt\030\005 \001(\0132\032.goog"
+    "le.protobuf.TimestampB\004\342A\001\002\022O\n\tdirection"
+    "\030\006 \001(\01626.tinkoff.public.invest.api.contr"
+    "act.v1.SignalDirectionB\004\342A\001\002\022M\n\rinitial_"
+    "price\030\007 \001(\01320.tinkoff.public.invest.api."
+    "contract.v1.QuotationB\004\342A\001\002\022\021\n\004info\030\010 \001("
+    "\tH\000\210\001\001\022\022\n\004name\030\t \001(\tB\004\342A\001\002\022L\n\014target_pri"
+    "ce\030\n \001(\01320.tinkoff.public.invest.api.con"
+    "tract.v1.QuotationB\004\342A\001\002\0220\n\006end_dt\030\013 \001(\013"
+    "2\032.google.protobuf.TimestampB\004\342A\001\002\022\030\n\013pr"
+    "obability\030\014 \001(\005H\001\210\001\001\022G\n\010stoploss\030\r \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotationH\002\210\001\001\022J\n\013close_price\030\016 \001(\01320.tin"
+    "koff.public.invest.api.contract.v1.Quota"
+    "tionH\003\210\001\001\0221\n\010close_dt\030\017 \001(\0132\032.google.pro"
+    "tobuf.TimestampH\004\210\001\001B\007\n\005_infoB\016\n\014_probab"
+    "ilityB\013\n\t_stoplossB\016\n\014_close_priceB\013\n\t_c"
+    "lose_dt*i\n\014StrategyType\022\035\n\031STRATEGY_TYPE"
+    "_UNSPECIFIED\020\000\022\033\n\027STRATEGY_TYPE_TECHNICA"
+    "L\020\001\022\035\n\031STRATEGY_TYPE_FUNDAMENTAL\020\002*h\n\017Si"
+    "gnalDirection\022 \n\034SIGNAL_DIRECTION_UNSPEC"
+    "IFIED\020\000\022\030\n\024SIGNAL_DIRECTION_BUY\020\001\022\031\n\025SIG"
+    "NAL_DIRECTION_SELL\020\002*s\n\013SignalState\022\034\n\030S"
+    "IGNAL_STATE_UNSPECIFIED\020\000\022\027\n\023SIGNAL_STAT"
+    "E_ACTIVE\020\001\022\027\n\023SIGNAL_STATE_CLOSED\020\002\022\024\n\020S"
+    "IGNAL_STATE_ALL\020\0032\240\002\n\rSignalService\022\212\001\n\r"
+    "GetStrategies\022;.tinkoff.public.invest.ap"
+    "i.contract.v1.GetStrategiesRequest\032<.tin"
+    "koff.public.invest.api.contract.v1.GetSt"
+    "rategiesResponse\022\201\001\n\nGetSignals\0228.tinkof"
+    "f.public.invest.api.contract.v1.GetSigna"
+    "lsRequest\0329.tinkoff.public.invest.api.co"
+    "ntract.v1.GetSignalsResponseBa\n\034ru.tinko"
+    "ff.piapi.contract.v1P\001Z\014./;investapi\242\002\005T"
+    "IAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\In"
+    "vest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_signals_2eproto_deps[3] =
     {
@@ -493,7 +495,7 @@ static ::absl::once_flag descriptor_table_signals_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_signals_2eproto = {
     false,
     false,
-    3188,
+    3255,
     descriptor_table_protodef_signals_2eproto,
     "signals.proto",
     &descriptor_table_signals_2eproto_once,
@@ -507,7 +509,7 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_signals_2eprot
     file_level_service_descriptors_signals_2eproto,
 };
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -556,11 +558,11 @@ GetStrategiesRequest::GetStrategiesRequest(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetStrategiesRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         strategy_id_(arena, from.strategy_id_) {}
@@ -579,7 +581,7 @@ GetStrategiesRequest::GetStrategiesRequest(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetStrategiesRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -591,7 +593,7 @@ inline void GetStrategiesRequest::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 GetStrategiesRequest::~GetStrategiesRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
   SharedDtor(*this);
 }
 inline void GetStrategiesRequest::SharedDtor(MessageLite& self) {
@@ -638,7 +640,7 @@ const ::google::protobuf::internal::ClassData* GetStrategiesRequest::GetClassDat
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 75, 2> GetStrategiesRequest::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 0, 78, 2> GetStrategiesRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(GetStrategiesRequest, _impl_._has_bits_),
     0, // no _extensions_
@@ -653,7 +655,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 75, 2> GetStrategiesRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // optional string strategy_id = 1;
@@ -668,14 +670,14 @@ const ::_pbi::TcParseTable<0, 1, 0, 75, 2> GetStrategiesRequest::_table_ = {
   }},
   // no aux_entries
   {{
-    "\67\13\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest"
+    "\72\13\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.GetStrategiesRequest"
     "strategy_id"
   }},
 };
 
 PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -700,7 +702,7 @@ PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetStrategiesRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -709,7 +711,7 @@ PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
           if (cached_has_bits & 0x00000001u) {
             const std::string& _s = this_._internal_strategy_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -718,7 +720,7 @@ PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
           return target;
         }
 
@@ -729,7 +731,7 @@ PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
         ::size_t GetStrategiesRequest::ByteSizeLong() const {
           const GetStrategiesRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -751,7 +753,7 @@ PROTOBUF_NOINLINE void GetStrategiesRequest::Clear() {
 void GetStrategiesRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetStrategiesRequest*>(&to_msg);
   auto& from = static_cast<const GetStrategiesRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -765,7 +767,7 @@ void GetStrategiesRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, co
 }
 
 void GetStrategiesRequest::CopyFrom(const GetStrategiesRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -797,11 +799,11 @@ GetStrategiesResponse::GetStrategiesResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetStrategiesResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse& from_msg)
       : strategies_{visibility, arena, from.strategies_},
         _cached_size_{0} {}
 
@@ -819,7 +821,7 @@ GetStrategiesResponse::GetStrategiesResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetStrategiesResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -831,7 +833,7 @@ inline void GetStrategiesResponse::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 GetStrategiesResponse::~GetStrategiesResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
   SharedDtor(*this);
 }
 inline void GetStrategiesResponse::SharedDtor(MessageLite& self) {
@@ -904,26 +906,26 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetStrategiesResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
     {::_pbi::TcParser::FastMtR1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetStrategiesResponse, _impl_.strategies_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
     {PROTOBUF_FIELD_OFFSET(GetStrategiesResponse, _impl_.strategies_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Strategy>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Strategy>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -944,11 +946,11 @@ PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetStrategiesResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
-          // repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+          // repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
           for (unsigned i = 0, n = static_cast<unsigned>(
                                    this_._internal_strategies_size());
                i < n; i++) {
@@ -964,7 +966,7 @@ PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
           return target;
         }
 
@@ -975,7 +977,7 @@ PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
         ::size_t GetStrategiesResponse::ByteSizeLong() const {
           const GetStrategiesResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -984,7 +986,7 @@ PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
 
           ::_pbi::Prefetch5LinesFrom7Lines(&this_);
            {
-            // repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+            // repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
             {
               total_size += 1UL * this_._internal_strategies_size();
               for (const auto& msg : this_._internal_strategies()) {
@@ -999,7 +1001,7 @@ PROTOBUF_NOINLINE void GetStrategiesResponse::Clear() {
 void GetStrategiesResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetStrategiesResponse*>(&to_msg);
   auto& from = static_cast<const GetStrategiesResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1010,7 +1012,7 @@ void GetStrategiesResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, c
 }
 
 void GetStrategiesResponse::CopyFrom(const GetStrategiesResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1063,11 +1065,11 @@ Strategy::Strategy(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.Strategy)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.Strategy)
 }
 inline PROTOBUF_NDEBUG_INLINE Strategy::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::Strategy& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::Strategy& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         strategy_id_(arena, from.strategy_id_),
@@ -1089,16 +1091,16 @@ Strategy::Strategy(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.average_signal_yield_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.average_signal_yield_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.average_signal_yield_)
                         : nullptr;
-  _impl_.average_signal_yield_year_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.average_signal_yield_year_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.average_signal_yield_year_)
                         : nullptr;
-  _impl_.yield_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.yield_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.yield_)
                         : nullptr;
-  _impl_.yield_year_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.yield_year_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.yield_year_)
                         : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
@@ -1109,7 +1111,7 @@ Strategy::Strategy(
                offsetof(Impl_, strategy_type_) +
                sizeof(Impl_::total_signals_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.Strategy)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.Strategy)
 }
 inline PROTOBUF_NDEBUG_INLINE Strategy::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1130,7 +1132,7 @@ inline void Strategy::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::total_signals_));
 }
 Strategy::~Strategy() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.Strategy)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.Strategy)
   SharedDtor(*this);
 }
 inline void Strategy::SharedDtor(MessageLite& self) {
@@ -1184,7 +1186,7 @@ const ::google::protobuf::internal::ClassData* Strategy::GetClassData() const {
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
+const ::_pbi::TcParseTable<4, 12, 4, 119, 2> Strategy::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(Strategy, _impl_._has_bits_),
     0, // no _extensions_
@@ -1199,7 +1201,7 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Strategy>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Strategy>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -1215,7 +1217,7 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
     // optional string strategy_url = 4;
     {::_pbi::TcParser::FastUS1,
      {34, 1, 0, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.strategy_url_)}},
-    // .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Strategy, _impl_.strategy_type_), 63>(),
      {40, 63, 0, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.strategy_type_)}},
     // int32 active_signals = 6 [(.google.api.field_behavior) = REQUIRED];
@@ -1227,16 +1229,16 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
     // int64 time_in_position = 8 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(Strategy, _impl_.time_in_position_), 63>(),
      {64, 63, 0, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.time_in_position_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {74, 2, 0, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.average_signal_yield_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {82, 3, 1, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.average_signal_yield_year_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {90, 4, 2, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.yield_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {98, 5, 3, PROTOBUF_FIELD_OFFSET(Strategy, _impl_.yield_year_)}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -1257,7 +1259,7 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
     // optional string strategy_url = 4;
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.strategy_url_), _Internal::kHasBitsOffset + 1, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.strategy_type_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
     // int32 active_signals = 6 [(.google.api.field_behavior) = REQUIRED];
@@ -1269,26 +1271,26 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
     // int64 time_in_position = 8 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.time_in_position_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kInt64)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.average_signal_yield_), _Internal::kHasBitsOffset + 2, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.average_signal_yield_year_), _Internal::kHasBitsOffset + 3, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.yield_), _Internal::kHasBitsOffset + 4, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Strategy, _impl_.yield_year_), _Internal::kHasBitsOffset + 5, 3,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
   }}, {{
-    "\53\13\15\24\14\0\0\0\0\0\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.Strategy"
+    "\56\13\15\24\14\0\0\0\0\0\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.Strategy"
     "strategy_id"
     "strategy_name"
     "strategy_description"
@@ -1297,7 +1299,7 @@ const ::_pbi::TcParseTable<4, 12, 4, 116, 2> Strategy::_table_ = {
 };
 
 PROTOBUF_NOINLINE void Strategy::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.Strategy)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.Strategy)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1348,7 +1350,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const Strategy& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.Strategy)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.Strategy)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1356,7 +1358,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
           if (!this_._internal_strategy_id().empty()) {
             const std::string& _s = this_._internal_strategy_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Strategy.strategy_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -1364,7 +1366,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
           if (!this_._internal_strategy_name().empty()) {
             const std::string& _s = this_._internal_strategy_name();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Strategy.strategy_name");
             target = stream->WriteStringMaybeAliased(2, _s, target);
           }
 
@@ -1373,7 +1375,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
           if (cached_has_bits & 0x00000001u) {
             const std::string& _s = this_._internal_strategy_description();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Strategy.strategy_description");
             target = stream->WriteStringMaybeAliased(3, _s, target);
           }
 
@@ -1381,11 +1383,11 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
           if (cached_has_bits & 0x00000002u) {
             const std::string& _s = this_._internal_strategy_url();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Strategy.strategy_url");
             target = stream->WriteStringMaybeAliased(4, _s, target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
           if (this_._internal_strategy_type() != 0) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -1413,28 +1415,28 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
                     stream, this_._internal_time_in_position(), target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000004u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 9, *this_._impl_.average_signal_yield_, this_._impl_.average_signal_yield_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000008u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 10, *this_._impl_.average_signal_yield_year_, this_._impl_.average_signal_yield_year_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000010u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 11, *this_._impl_.yield_, this_._impl_.yield_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000020u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 12, *this_._impl_.yield_year_, this_._impl_.yield_year_->GetCachedSize(), target,
@@ -1446,7 +1448,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.Strategy)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.Strategy)
           return target;
         }
 
@@ -1457,7 +1459,7 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
         ::size_t Strategy::ByteSizeLong() const {
           const Strategy& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.Strategy)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.Strategy)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1489,29 +1491,29 @@ PROTOBUF_NOINLINE void Strategy::Clear() {
               total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                               this_._internal_strategy_url());
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000004u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.average_signal_yield_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000008u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.average_signal_yield_year_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000010u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.yield_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000020u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.yield_year_);
             }
           }
            {
-            // .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
             if (this_._internal_strategy_type() != 0) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_strategy_type());
@@ -1540,7 +1542,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
   auto* const _this = static_cast<Strategy*>(&to_msg);
   auto& from = static_cast<const Strategy&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.Strategy)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.Strategy)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1563,7 +1565,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
       ABSL_DCHECK(from._impl_.average_signal_yield_ != nullptr);
       if (_this->_impl_.average_signal_yield_ == nullptr) {
         _this->_impl_.average_signal_yield_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.average_signal_yield_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.average_signal_yield_);
       } else {
         _this->_impl_.average_signal_yield_->MergeFrom(*from._impl_.average_signal_yield_);
       }
@@ -1572,7 +1574,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
       ABSL_DCHECK(from._impl_.average_signal_yield_year_ != nullptr);
       if (_this->_impl_.average_signal_yield_year_ == nullptr) {
         _this->_impl_.average_signal_yield_year_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.average_signal_yield_year_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.average_signal_yield_year_);
       } else {
         _this->_impl_.average_signal_yield_year_->MergeFrom(*from._impl_.average_signal_yield_year_);
       }
@@ -1581,7 +1583,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
       ABSL_DCHECK(from._impl_.yield_ != nullptr);
       if (_this->_impl_.yield_ == nullptr) {
         _this->_impl_.yield_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.yield_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.yield_);
       } else {
         _this->_impl_.yield_->MergeFrom(*from._impl_.yield_);
       }
@@ -1590,7 +1592,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
       ABSL_DCHECK(from._impl_.yield_year_ != nullptr);
       if (_this->_impl_.yield_year_ == nullptr) {
         _this->_impl_.yield_year_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.yield_year_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.yield_year_);
       } else {
         _this->_impl_.yield_year_->MergeFrom(*from._impl_.yield_year_);
       }
@@ -1613,7 +1615,7 @@ void Strategy::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google
 }
 
 void Strategy::CopyFrom(const Strategy& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.Strategy)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.Strategy)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1673,11 +1675,11 @@ GetSignalsRequest::GetSignalsRequest(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetSignalsRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         signal_id_(arena, from.signal_id_),
@@ -1704,7 +1706,7 @@ GetSignalsRequest::GetSignalsRequest(
   _impl_.to_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Timestamp>(
                               arena, *from._impl_.to_)
                         : nullptr;
-  _impl_.paging_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Page>(
+  _impl_.paging_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Page>(
                               arena, *from._impl_.paging_)
                         : nullptr;
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
@@ -1715,7 +1717,7 @@ GetSignalsRequest::GetSignalsRequest(
                offsetof(Impl_, strategy_type_) +
                sizeof(Impl_::active_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetSignalsRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1735,7 +1737,7 @@ inline void GetSignalsRequest::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::active_));
 }
 GetSignalsRequest::~GetSignalsRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
   SharedDtor(*this);
 }
 inline void GetSignalsRequest::SharedDtor(MessageLite& self) {
@@ -1787,7 +1789,7 @@ const ::google::protobuf::internal::ClassData* GetSignalsRequest::GetClassData()
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
+const ::_pbi::TcParseTable<4, 9, 3, 106, 2> GetSignalsRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_._has_bits_),
     0, // no _extensions_
@@ -1802,7 +1804,7 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -1812,7 +1814,7 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
     // optional string strategy_id = 2;
     {::_pbi::TcParser::FastUS1,
      {18, 1, 0, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.strategy_id_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+    // optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetSignalsRequest, _impl_.strategy_type_), 6>(),
      {24, 6, 0, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.strategy_type_)}},
     // optional string instrument_uid = 4;
@@ -1824,13 +1826,13 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
     // optional .google.protobuf.Timestamp to = 6;
     {::_pbi::TcParser::FastMtS1,
      {50, 4, 1, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.to_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+    // optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetSignalsRequest, _impl_.direction_), 7>(),
      {56, 7, 0, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.direction_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+    // optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetSignalsRequest, _impl_.active_), 8>(),
      {64, 8, 0, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.active_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+    // optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
     {::_pbi::TcParser::FastMtS1,
      {74, 5, 2, PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.paging_)}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -1848,7 +1850,7 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
     // optional string strategy_id = 2;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.strategy_id_), _Internal::kHasBitsOffset + 1, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+    // optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.strategy_type_), _Internal::kHasBitsOffset + 6, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
     // optional string instrument_uid = 4;
@@ -1860,22 +1862,22 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
     // optional .google.protobuf.Timestamp to = 6;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.to_), _Internal::kHasBitsOffset + 4, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+    // optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.direction_), _Internal::kHasBitsOffset + 7, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
-    // optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+    // optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.active_), _Internal::kHasBitsOffset + 8, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
-    // optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+    // optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
     {PROTOBUF_FIELD_OFFSET(GetSignalsRequest, _impl_.paging_), _Internal::kHasBitsOffset + 5, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Page>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Page>()},
   }}, {{
-    "\64\11\13\0\16\0\0\0\0\0\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.GetSignalsRequest"
+    "\67\11\13\0\16\0\0\0\0\0\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.GetSignalsRequest"
     "signal_id"
     "strategy_id"
     "instrument_uid"
@@ -1883,7 +1885,7 @@ const ::_pbi::TcParseTable<4, 9, 3, 103, 2> GetSignalsRequest::_table_ = {
 };
 
 PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1934,7 +1936,7 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetSignalsRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1943,7 +1945,7 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
           if (cached_has_bits & 0x00000001u) {
             const std::string& _s = this_._internal_signal_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -1951,11 +1953,11 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
           if (cached_has_bits & 0x00000002u) {
             const std::string& _s = this_._internal_strategy_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id");
             target = stream->WriteStringMaybeAliased(2, _s, target);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+          // optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
           if (cached_has_bits & 0x00000040u) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -1966,7 +1968,7 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
           if (cached_has_bits & 0x00000004u) {
             const std::string& _s = this_._internal_instrument_uid();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid");
             target = stream->WriteStringMaybeAliased(4, _s, target);
           }
 
@@ -1984,21 +1986,21 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
                 stream);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+          // optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
           if (cached_has_bits & 0x00000080u) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
                 7, this_._internal_direction(), target);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+          // optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
           if (cached_has_bits & 0x00000100u) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
                 8, this_._internal_active(), target);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+          // optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
           if (cached_has_bits & 0x00000020u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 9, *this_._impl_.paging_, this_._impl_.paging_->GetCachedSize(), target,
@@ -2010,7 +2012,7 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
           return target;
         }
 
@@ -2021,7 +2023,7 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
         ::size_t GetSignalsRequest::ByteSizeLong() const {
           const GetSignalsRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -2056,24 +2058,24 @@ PROTOBUF_NOINLINE void GetSignalsRequest::Clear() {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.to_);
             }
-            // optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+            // optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
             if (cached_has_bits & 0x00000020u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.paging_);
             }
-            // optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+            // optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
             if (cached_has_bits & 0x00000040u) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_strategy_type());
             }
-            // optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+            // optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
             if (cached_has_bits & 0x00000080u) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_direction());
             }
           }
            {
-            // optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+            // optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
             if (cached_has_bits & 0x00000100u) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_active());
@@ -2087,7 +2089,7 @@ void GetSignalsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const
   auto* const _this = static_cast<GetSignalsRequest*>(&to_msg);
   auto& from = static_cast<const GetSignalsRequest&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2125,7 +2127,7 @@ void GetSignalsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const
       ABSL_DCHECK(from._impl_.paging_ != nullptr);
       if (_this->_impl_.paging_ == nullptr) {
         _this->_impl_.paging_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Page>(arena, *from._impl_.paging_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Page>(arena, *from._impl_.paging_);
       } else {
         _this->_impl_.paging_->MergeFrom(*from._impl_.paging_);
       }
@@ -2145,7 +2147,7 @@ void GetSignalsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const
 }
 
 void GetSignalsRequest::CopyFrom(const GetSignalsRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2194,11 +2196,11 @@ GetSignalsResponse::GetSignalsResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetSignalsResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         signals_{visibility, arena, from.signals_} {}
@@ -2217,11 +2219,11 @@ GetSignalsResponse::GetSignalsResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.paging_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::PageResponse>(
+  _impl_.paging_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::PageResponse>(
                               arena, *from._impl_.paging_)
                         : nullptr;
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetSignalsResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -2234,7 +2236,7 @@ inline void GetSignalsResponse::SharedCtor(::_pb::Arena* arena) {
   _impl_.paging_ = {};
 }
 GetSignalsResponse::~GetSignalsResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
   SharedDtor(*this);
 }
 inline void GetSignalsResponse::SharedDtor(MessageLite& self) {
@@ -2308,33 +2310,33 @@ const ::_pbi::TcParseTable<1, 2, 2, 0, 2> GetSignalsResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+    // .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
     {::_pbi::TcParser::FastMtS1,
      {18, 0, 1, PROTOBUF_FIELD_OFFSET(GetSignalsResponse, _impl_.paging_)}},
-    // repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
     {::_pbi::TcParser::FastMtR1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetSignalsResponse, _impl_.signals_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
     {PROTOBUF_FIELD_OFFSET(GetSignalsResponse, _impl_.signals_), -1, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+    // .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
     {PROTOBUF_FIELD_OFFSET(GetSignalsResponse, _impl_.paging_), _Internal::kHasBitsOffset + 0, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Signal>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::PageResponse>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Signal>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::PageResponse>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2361,11 +2363,11 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetSignalsResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
-          // repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+          // repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
           for (unsigned i = 0, n = static_cast<unsigned>(
                                    this_._internal_signals_size());
                i < n; i++) {
@@ -2377,7 +2379,7 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
           }
 
           cached_has_bits = this_._impl_._has_bits_[0];
-          // .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+          // .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
           if (cached_has_bits & 0x00000001u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 2, *this_._impl_.paging_, this_._impl_.paging_->GetCachedSize(), target,
@@ -2389,7 +2391,7 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
           return target;
         }
 
@@ -2400,7 +2402,7 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
         ::size_t GetSignalsResponse::ByteSizeLong() const {
           const GetSignalsResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -2409,7 +2411,7 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
 
           ::_pbi::Prefetch5LinesFrom7Lines(&this_);
            {
-            // repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+            // repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
             {
               total_size += 1UL * this_._internal_signals_size();
               for (const auto& msg : this_._internal_signals()) {
@@ -2418,7 +2420,7 @@ PROTOBUF_NOINLINE void GetSignalsResponse::Clear() {
             }
           }
            {
-            // .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+            // .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
             cached_has_bits = this_._impl_._has_bits_[0];
             if (cached_has_bits & 0x00000001u) {
               total_size += 1 +
@@ -2433,7 +2435,7 @@ void GetSignalsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, cons
   auto* const _this = static_cast<GetSignalsResponse*>(&to_msg);
   auto& from = static_cast<const GetSignalsResponse&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2445,7 +2447,7 @@ void GetSignalsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, cons
     ABSL_DCHECK(from._impl_.paging_ != nullptr);
     if (_this->_impl_.paging_ == nullptr) {
       _this->_impl_.paging_ =
-          ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::PageResponse>(arena, *from._impl_.paging_);
+          ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::PageResponse>(arena, *from._impl_.paging_);
     } else {
       _this->_impl_.paging_->MergeFrom(*from._impl_.paging_);
     }
@@ -2455,7 +2457,7 @@ void GetSignalsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, cons
 }
 
 void GetSignalsResponse::CopyFrom(const GetSignalsResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2525,11 +2527,11 @@ Signal::Signal(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.Signal)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.Signal)
 }
 inline PROTOBUF_NDEBUG_INLINE Signal::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::Signal& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::Signal& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         signal_id_(arena, from.signal_id_),
@@ -2556,19 +2558,19 @@ Signal::Signal(
   _impl_.create_dt_ = (cached_has_bits & 0x00000002u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Timestamp>(
                               arena, *from._impl_.create_dt_)
                         : nullptr;
-  _impl_.initial_price_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.initial_price_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.initial_price_)
                         : nullptr;
-  _impl_.target_price_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.target_price_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.target_price_)
                         : nullptr;
   _impl_.end_dt_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Timestamp>(
                               arena, *from._impl_.end_dt_)
                         : nullptr;
-  _impl_.stoploss_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.stoploss_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.stoploss_)
                         : nullptr;
-  _impl_.close_price_ = (cached_has_bits & 0x00000040u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.close_price_ = (cached_has_bits & 0x00000040u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.close_price_)
                         : nullptr;
   _impl_.close_dt_ = (cached_has_bits & 0x00000080u) ? ::google::protobuf::Message::CopyConstruct<::google::protobuf::Timestamp>(
@@ -2582,7 +2584,7 @@ Signal::Signal(
                offsetof(Impl_, direction_) +
                sizeof(Impl_::probability_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.Signal)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.Signal)
 }
 inline PROTOBUF_NDEBUG_INLINE Signal::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -2605,7 +2607,7 @@ inline void Signal::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::probability_));
 }
 Signal::~Signal() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.Signal)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.Signal)
   SharedDtor(*this);
 }
 inline void Signal::SharedDtor(MessageLite& self) {
@@ -2664,7 +2666,7 @@ const ::google::protobuf::internal::ClassData* Signal::GetClassData() const {
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
+const ::_pbi::TcParseTable<4, 15, 7, 116, 2> Signal::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(Signal, _impl_._has_bits_),
     0, // no _extensions_
@@ -2679,7 +2681,7 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Signal>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Signal>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -2698,10 +2700,10 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // .google.protobuf.Timestamp create_dt = 5 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {42, 1, 0, PROTOBUF_FIELD_OFFSET(Signal, _impl_.create_dt_)}},
-    // .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Signal, _impl_.direction_), 63>(),
      {48, 63, 0, PROTOBUF_FIELD_OFFSET(Signal, _impl_.direction_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {58, 2, 1, PROTOBUF_FIELD_OFFSET(Signal, _impl_.initial_price_)}},
     // optional string info = 8;
@@ -2710,7 +2712,7 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // string name = 9 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastUS1,
      {74, 63, 0, PROTOBUF_FIELD_OFFSET(Signal, _impl_.name_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {82, 3, 2, PROTOBUF_FIELD_OFFSET(Signal, _impl_.target_price_)}},
     // .google.protobuf.Timestamp end_dt = 11 [(.google.api.field_behavior) = REQUIRED];
@@ -2719,10 +2721,10 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // optional int32 probability = 12;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Signal, _impl_.probability_), 8>(),
      {96, 8, 0, PROTOBUF_FIELD_OFFSET(Signal, _impl_.probability_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+    // optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
     {::_pbi::TcParser::FastMtS1,
      {106, 5, 4, PROTOBUF_FIELD_OFFSET(Signal, _impl_.stoploss_)}},
-    // optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+    // optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
     {::_pbi::TcParser::FastMtS1,
      {114, 6, 5, PROTOBUF_FIELD_OFFSET(Signal, _impl_.close_price_)}},
     // optional .google.protobuf.Timestamp close_dt = 15;
@@ -2746,10 +2748,10 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // .google.protobuf.Timestamp create_dt = 5 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.create_dt_), _Internal::kHasBitsOffset + 1, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.direction_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.initial_price_), _Internal::kHasBitsOffset + 2, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional string info = 8;
@@ -2758,7 +2760,7 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // string name = 9 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.name_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.target_price_), _Internal::kHasBitsOffset + 3, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // .google.protobuf.Timestamp end_dt = 11 [(.google.api.field_behavior) = REQUIRED];
@@ -2767,10 +2769,10 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     // optional int32 probability = 12;
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.probability_), _Internal::kHasBitsOffset + 8, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-    // optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+    // optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.stoploss_), _Internal::kHasBitsOffset + 5, 4,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+    // optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
     {PROTOBUF_FIELD_OFFSET(Signal, _impl_.close_price_), _Internal::kHasBitsOffset + 6, 5,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
     // optional .google.protobuf.Timestamp close_dt = 15;
@@ -2778,15 +2780,15 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
   }}, {{
-    "\51\11\13\15\16\0\0\0\4\4\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.Signal"
+    "\54\11\13\15\16\0\0\0\4\4\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.Signal"
     "signal_id"
     "strategy_id"
     "strategy_name"
@@ -2797,7 +2799,7 @@ const ::_pbi::TcParseTable<4, 15, 7, 113, 2> Signal::_table_ = {
 };
 
 PROTOBUF_NOINLINE void Signal::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.Signal)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.Signal)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2859,7 +2861,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const Signal& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.Signal)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.Signal)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -2867,7 +2869,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (!this_._internal_signal_id().empty()) {
             const std::string& _s = this_._internal_signal_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.signal_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.signal_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -2875,7 +2877,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (!this_._internal_strategy_id().empty()) {
             const std::string& _s = this_._internal_strategy_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.strategy_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.strategy_id");
             target = stream->WriteStringMaybeAliased(2, _s, target);
           }
 
@@ -2883,7 +2885,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (!this_._internal_strategy_name().empty()) {
             const std::string& _s = this_._internal_strategy_name();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.strategy_name");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.strategy_name");
             target = stream->WriteStringMaybeAliased(3, _s, target);
           }
 
@@ -2891,7 +2893,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (!this_._internal_instrument_uid().empty()) {
             const std::string& _s = this_._internal_instrument_uid();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.instrument_uid");
             target = stream->WriteStringMaybeAliased(4, _s, target);
           }
 
@@ -2903,14 +2905,14 @@ PROTOBUF_NOINLINE void Signal::Clear() {
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
           if (this_._internal_direction() != 0) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
                 6, this_._internal_direction(), target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000004u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 7, *this_._impl_.initial_price_, this_._impl_.initial_price_->GetCachedSize(), target,
@@ -2921,7 +2923,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (cached_has_bits & 0x00000001u) {
             const std::string& _s = this_._internal_info();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.info");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.info");
             target = stream->WriteStringMaybeAliased(8, _s, target);
           }
 
@@ -2929,11 +2931,11 @@ PROTOBUF_NOINLINE void Signal::Clear() {
           if (!this_._internal_name().empty()) {
             const std::string& _s = this_._internal_name();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Signal.name");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Signal.name");
             target = stream->WriteStringMaybeAliased(9, _s, target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000008u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 10, *this_._impl_.target_price_, this_._impl_.target_price_->GetCachedSize(), target,
@@ -2954,14 +2956,14 @@ PROTOBUF_NOINLINE void Signal::Clear() {
                     stream, this_._internal_probability(), target);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+          // optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
           if (cached_has_bits & 0x00000020u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 13, *this_._impl_.stoploss_, this_._impl_.stoploss_->GetCachedSize(), target,
                 stream);
           }
 
-          // optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+          // optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
           if (cached_has_bits & 0x00000040u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 14, *this_._impl_.close_price_, this_._impl_.close_price_->GetCachedSize(), target,
@@ -2980,7 +2982,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.Signal)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.Signal)
           return target;
         }
 
@@ -2991,7 +2993,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
         ::size_t Signal::ByteSizeLong() const {
           const Signal& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.Signal)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.Signal)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -3042,12 +3044,12 @@ PROTOBUF_NOINLINE void Signal::Clear() {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.create_dt_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000004u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.initial_price_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
             if (cached_has_bits & 0x00000008u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.target_price_);
@@ -3057,12 +3059,12 @@ PROTOBUF_NOINLINE void Signal::Clear() {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.end_dt_);
             }
-            // optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+            // optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
             if (cached_has_bits & 0x00000020u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.stoploss_);
             }
-            // optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+            // optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
             if (cached_has_bits & 0x00000040u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.close_price_);
@@ -3074,7 +3076,7 @@ PROTOBUF_NOINLINE void Signal::Clear() {
             }
           }
            {
-            // .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
             if (this_._internal_direction() != 0) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_direction());
@@ -3095,7 +3097,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
   auto* const _this = static_cast<Signal*>(&to_msg);
   auto& from = static_cast<const Signal&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.Signal)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.Signal)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -3133,7 +3135,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
       ABSL_DCHECK(from._impl_.initial_price_ != nullptr);
       if (_this->_impl_.initial_price_ == nullptr) {
         _this->_impl_.initial_price_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.initial_price_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.initial_price_);
       } else {
         _this->_impl_.initial_price_->MergeFrom(*from._impl_.initial_price_);
       }
@@ -3142,7 +3144,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
       ABSL_DCHECK(from._impl_.target_price_ != nullptr);
       if (_this->_impl_.target_price_ == nullptr) {
         _this->_impl_.target_price_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.target_price_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.target_price_);
       } else {
         _this->_impl_.target_price_->MergeFrom(*from._impl_.target_price_);
       }
@@ -3160,7 +3162,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
       ABSL_DCHECK(from._impl_.stoploss_ != nullptr);
       if (_this->_impl_.stoploss_ == nullptr) {
         _this->_impl_.stoploss_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.stoploss_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.stoploss_);
       } else {
         _this->_impl_.stoploss_->MergeFrom(*from._impl_.stoploss_);
       }
@@ -3169,7 +3171,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
       ABSL_DCHECK(from._impl_.close_price_ != nullptr);
       if (_this->_impl_.close_price_ == nullptr) {
         _this->_impl_.close_price_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.close_price_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.close_price_);
       } else {
         _this->_impl_.close_price_->MergeFrom(*from._impl_.close_price_);
       }
@@ -3195,7 +3197,7 @@ void Signal::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::
 }
 
 void Signal::CopyFrom(const Signal& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.Signal)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.Signal)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3230,7 +3232,7 @@ void Signal::InternalSwap(Signal* PROTOBUF_RESTRICT other) {
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 namespace google {
 namespace protobuf {

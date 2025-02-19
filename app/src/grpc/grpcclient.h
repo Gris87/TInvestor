@@ -9,6 +9,8 @@
 #include "messages/generated/users.grpc.pb.h"
 #pragma warning(pop)
 
+#include "src/storage/user/iuserstorage.h"
+
 
 
 class GrpcClient : public IGrpcClient
@@ -16,7 +18,7 @@ class GrpcClient : public IGrpcClient
     Q_OBJECT
 
 public:
-    explicit GrpcClient(QObject* parent = nullptr);
+    explicit GrpcClient(IUserStorage* userStorage, QObject* parent = nullptr);
     ~GrpcClient();
 
     GrpcClient(const GrpcClient& another)            = delete;
@@ -25,5 +27,8 @@ public:
     void connect() override;
 
 private:
-    std::unique_ptr<tinkoff::pub::invest::api::contract::v1::UsersService::Stub> mUsersService;
+    std::shared_ptr<grpc::CallCredentials>                                       mCreds;
+    std::unique_ptr<tinkoff::public_::invest::api::contract::v1::UsersService::Stub> mUsersService;
+
+    void getUserInfo();
 };

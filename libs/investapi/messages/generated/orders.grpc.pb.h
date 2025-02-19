@@ -26,7 +26,7 @@
 #include <grpcpp/support/sync_stream.h>
 
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -35,76 +35,76 @@ namespace v1 {
 class OrdersStreamService final {
  public:
   static constexpr char const* service_full_name() {
-    return "tinkoff.pub.invest.api.contract.v1.OrdersStreamService";
+    return "tinkoff.public.invest.api.contract.v1.OrdersStreamService";
   }
   class StubInterface {
    public:
     virtual ~StubInterface() {}
     // Stream сделок пользователя
-    std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> TradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(TradesStreamRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(TradesStreamRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> AsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(AsyncTradesStreamRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> AsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(AsyncTradesStreamRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> PrepareAsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(PrepareAsyncTradesStreamRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> PrepareAsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(PrepareAsyncTradesStreamRaw(context, request, cq));
     }
     // Stream поручений пользователя. Перед работой прочитайте [статью](./orders_state_stream/).
-    std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(OrderStateStreamRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(OrderStateStreamRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> AsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(AsyncOrderStateStreamRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> AsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(AsyncOrderStateStreamRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> PrepareAsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(PrepareAsyncOrderStateStreamRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> PrepareAsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(PrepareAsyncOrderStateStreamRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
       // Stream сделок пользователя
-      virtual void TradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* reactor) = 0;
+      virtual void TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* reactor) = 0;
       // Stream поручений пользователя. Перед работой прочитайте [статью](./orders_state_stream/).
-      virtual void OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* reactor) = 0;
+      virtual void OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* TradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* AsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* PrepareAsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* AsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* PrepareAsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* TradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* AsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* PrepareAsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* AsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* PrepareAsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    std::unique_ptr< ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> TradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(TradesStreamRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(TradesStreamRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> AsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(AsyncTradesStreamRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> AsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(AsyncTradesStreamRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>> PrepareAsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>>(PrepareAsyncTradesStreamRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> PrepareAsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(PrepareAsyncTradesStreamRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(OrderStateStreamRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(OrderStateStreamRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> AsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(AsyncOrderStateStreamRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> AsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(AsyncOrderStateStreamRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>> PrepareAsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>>(PrepareAsyncOrderStateStreamRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> PrepareAsyncOrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(PrepareAsyncOrderStateStreamRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void TradesStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* reactor) override;
-      void OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* reactor) override;
+      void TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* reactor) override;
+      void OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -116,12 +116,12 @@ class OrdersStreamService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* TradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request) override;
-    ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* AsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* PrepareAsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request) override;
-    ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* AsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* PrepareAsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* TradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* AsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* PrepareAsyncTradesStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* AsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* PrepareAsyncOrderStateStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_TradesStream_;
     const ::grpc::internal::RpcMethod rpcmethod_OrderStateStream_;
   };
@@ -132,9 +132,9 @@ class OrdersStreamService final {
     Service();
     virtual ~Service();
     // Stream сделок пользователя
-    virtual ::grpc::Status TradesStream(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* writer);
+    virtual ::grpc::Status TradesStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* writer);
     // Stream поручений пользователя. Перед работой прочитайте [статью](./orders_state_stream/).
-    virtual ::grpc::Status OrderStateStream(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* writer);
+    virtual ::grpc::Status OrderStateStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* writer);
   };
   template <class BaseClass>
   class WithAsyncMethod_TradesStream : public BaseClass {
@@ -148,11 +148,11 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestTradesStream(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ServerAsyncWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestTradesStream(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ServerAsyncWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -168,11 +168,11 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestOrderStateStream(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ServerAsyncWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestOrderStateStream(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ServerAsyncWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -184,20 +184,20 @@ class OrdersStreamService final {
    public:
     WithCallbackMethod_TradesStream() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackServerStreamingHandler< ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>(
+          new ::grpc::internal::CallbackServerStreamingHandler< ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* request) { return this->TradesStream(context, request); }));
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request) { return this->TradesStream(context, request); }));
     }
     ~WithCallbackMethod_TradesStream() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerWriteReactor< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* TradesStream(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/)  { return nullptr; }
+    virtual ::grpc::ServerWriteReactor< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* TradesStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_OrderStateStream : public BaseClass {
@@ -206,20 +206,20 @@ class OrdersStreamService final {
    public:
     WithCallbackMethod_OrderStateStream() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackServerStreamingHandler< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>(
+          new ::grpc::internal::CallbackServerStreamingHandler< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* request) { return this->OrderStateStream(context, request); }));
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request) { return this->OrderStateStream(context, request); }));
     }
     ~WithCallbackMethod_OrderStateStream() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerWriteReactor< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStream(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/)  { return nullptr; }
+    virtual ::grpc::ServerWriteReactor< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* OrderStateStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/)  { return nullptr; }
   };
   typedef WithCallbackMethod_TradesStream<WithCallbackMethod_OrderStateStream<Service > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
@@ -235,7 +235,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -252,7 +252,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -269,7 +269,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -289,7 +289,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -312,7 +312,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -334,7 +334,7 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -350,10 +350,10 @@ class OrdersStreamService final {
     WithSplitStreamingMethod_TradesStream() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::SplitServerStreamingHandler<
-          ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerSplitStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest, ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* streamer) {
                        return this->StreamedTradesStream(context,
                          streamer);
                   }));
@@ -362,12 +362,12 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
+    ::grpc::Status TradesStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with split streamed
-    virtual ::grpc::Status StreamedTradesStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::pub::invest::api::contract::v1::TradesStreamRequest,::tinkoff::pub::invest::api::contract::v1::TradesStreamResponse>* server_split_streamer) = 0;
+    virtual ::grpc::Status StreamedTradesStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest,::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* server_split_streamer) = 0;
   };
   template <class BaseClass>
   class WithSplitStreamingMethod_OrderStateStream : public BaseClass {
@@ -377,10 +377,10 @@ class OrdersStreamService final {
     WithSplitStreamingMethod_OrderStateStream() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::SplitServerStreamingHandler<
-          ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerSplitStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest, ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* streamer) {
                        return this->StreamedOrderStateStream(context,
                          streamer);
                   }));
@@ -389,12 +389,12 @@ class OrdersStreamService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
+    ::grpc::Status OrderStateStream(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* /*request*/, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with split streamed
-    virtual ::grpc::Status StreamedOrderStateStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::pub::invest::api::contract::v1::OrderStateStreamRequest,::tinkoff::pub::invest::api::contract::v1::OrderStateStreamResponse>* server_split_streamer) = 0;
+    virtual ::grpc::Status StreamedOrderStateStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest,::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_TradesStream<WithSplitStreamingMethod_OrderStateStream<Service > > SplitStreamedService;
   typedef WithSplitStreamingMethod_TradesStream<WithSplitStreamingMethod_OrderStateStream<Service > > StreamedService;
@@ -403,202 +403,202 @@ class OrdersStreamService final {
 class OrdersService final {
  public:
   static constexpr char const* service_full_name() {
-    return "tinkoff.pub.invest.api.contract.v1.OrdersService";
+    return "tinkoff.public.invest.api.contract.v1.OrdersService";
   }
   class StubInterface {
    public:
     virtual ~StubInterface() {}
     // Метод выставления заявки.
-    virtual ::grpc::Status PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> AsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(AsyncPostOrderRaw(context, request, cq));
+    virtual ::grpc::Status PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncPostOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncPostOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncPostOrderRaw(context, request, cq));
     }
     // Асинхронный метод выставления заявки.
-    virtual ::grpc::Status PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>> AsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>>(AsyncPostOrderAsyncRaw(context, request, cq));
+    virtual ::grpc::Status PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> AsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(AsyncPostOrderAsyncRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>> PrepareAsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>>(PrepareAsyncPostOrderAsyncRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> PrepareAsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(PrepareAsyncPostOrderAsyncRaw(context, request, cq));
     }
     // Метод отмены биржевой заявки.
-    virtual ::grpc::Status CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>> AsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>>(AsyncCancelOrderRaw(context, request, cq));
+    virtual ::grpc::Status CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> AsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(AsyncCancelOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>> PrepareAsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>>(PrepareAsyncCancelOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> PrepareAsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(PrepareAsyncCancelOrderRaw(context, request, cq));
     }
     // Метод получения статуса торгового поручения.
-    virtual ::grpc::Status GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>> AsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>>(AsyncGetOrderStateRaw(context, request, cq));
+    virtual ::grpc::Status GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>> AsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(AsyncGetOrderStateRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>> PrepareAsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>>(PrepareAsyncGetOrderStateRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>> PrepareAsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(PrepareAsyncGetOrderStateRaw(context, request, cq));
     }
     // Метод получения списка активных заявок по счету.
-    virtual ::grpc::Status GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>> AsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>>(AsyncGetOrdersRaw(context, request, cq));
+    virtual ::grpc::Status GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> AsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(AsyncGetOrdersRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>> PrepareAsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>>(PrepareAsyncGetOrdersRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> PrepareAsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(PrepareAsyncGetOrdersRaw(context, request, cq));
     }
     // Метод изменения выставленной заявки.
-    virtual ::grpc::Status ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> AsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(AsyncReplaceOrderRaw(context, request, cq));
+    virtual ::grpc::Status ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncReplaceOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncReplaceOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncReplaceOrderRaw(context, request, cq));
     }
     // расчет количества доступных для покупки/продажи лотов
-    virtual ::grpc::Status GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>> AsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>>(AsyncGetMaxLotsRaw(context, request, cq));
+    virtual ::grpc::Status GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> AsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(AsyncGetMaxLotsRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetMaxLotsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetMaxLotsRaw(context, request, cq));
     }
     // Метод получения предварительной стоимости для лимитной заявки
-    virtual ::grpc::Status GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>> AsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>>(AsyncGetOrderPriceRaw(context, request, cq));
+    virtual ::grpc::Status GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>> AsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>>(AsyncGetOrderPriceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>> PrepareAsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>>(PrepareAsyncGetOrderPriceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>> PrepareAsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>>(PrepareAsyncGetOrderPriceRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
       // Метод выставления заявки.
-      virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Асинхронный метод выставления заявки.
-      virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Метод отмены биржевой заявки.
-      virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Метод получения статуса торгового поручения.
-      virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Метод получения списка активных заявок по счету.
-      virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Метод изменения выставленной заявки.
-      virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // расчет количества доступных для покупки/продажи лотов
-      virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Метод получения предварительной стоимости для лимитной заявки
-      virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* AsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* AsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* PrepareAsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* AsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* PrepareAsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>* AsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::OrderState>* PrepareAsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* AsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* PrepareAsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* AsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* AsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* PrepareAsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* AsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* AsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* PrepareAsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* AsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* PrepareAsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>* AsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>* PrepareAsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* AsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* PrepareAsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* AsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* AsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* PrepareAsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> AsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(AsyncPostOrderRaw(context, request, cq));
+    ::grpc::Status PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncPostOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncPostOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncPostOrderRaw(context, request, cq));
     }
-    ::grpc::Status PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>> AsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>>(AsyncPostOrderAsyncRaw(context, request, cq));
+    ::grpc::Status PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> AsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(AsyncPostOrderAsyncRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>> PrepareAsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>>(PrepareAsyncPostOrderAsyncRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> PrepareAsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(PrepareAsyncPostOrderAsyncRaw(context, request, cq));
     }
-    ::grpc::Status CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>> AsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>>(AsyncCancelOrderRaw(context, request, cq));
+    ::grpc::Status CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> AsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(AsyncCancelOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>> PrepareAsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>>(PrepareAsyncCancelOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> PrepareAsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(PrepareAsyncCancelOrderRaw(context, request, cq));
     }
-    ::grpc::Status GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>> AsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>>(AsyncGetOrderStateRaw(context, request, cq));
+    ::grpc::Status GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>> AsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(AsyncGetOrderStateRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>> PrepareAsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>>(PrepareAsyncGetOrderStateRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>> PrepareAsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(PrepareAsyncGetOrderStateRaw(context, request, cq));
     }
-    ::grpc::Status GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>> AsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>>(AsyncGetOrdersRaw(context, request, cq));
+    ::grpc::Status GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> AsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(AsyncGetOrdersRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>> PrepareAsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>>(PrepareAsyncGetOrdersRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> PrepareAsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(PrepareAsyncGetOrdersRaw(context, request, cq));
     }
-    ::grpc::Status ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> AsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(AsyncReplaceOrderRaw(context, request, cq));
+    ::grpc::Status ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncReplaceOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncReplaceOrderRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncReplaceOrderRaw(context, request, cq));
     }
-    ::grpc::Status GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>> AsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>>(AsyncGetMaxLotsRaw(context, request, cq));
+    ::grpc::Status GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> AsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(AsyncGetMaxLotsRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetMaxLotsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetMaxLotsRaw(context, request, cq));
     }
-    ::grpc::Status GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>> AsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>>(AsyncGetOrderPriceRaw(context, request, cq));
+    ::grpc::Status GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>> AsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>>(AsyncGetOrderPriceRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>> PrepareAsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>>(PrepareAsyncGetOrderPriceRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>> PrepareAsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>>(PrepareAsyncGetOrderPriceRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) override;
-      void PostOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response, std::function<void(::grpc::Status)>) override;
-      void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response, std::function<void(::grpc::Status)>) override;
-      void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response, std::function<void(::grpc::Status)>) override;
-      void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) override;
-      void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, std::function<void(::grpc::Status)>) override;
+      void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, std::function<void(::grpc::Status)>) override;
+      void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -610,22 +610,22 @@ class OrdersService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* AsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* AsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* PrepareAsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* AsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* PrepareAsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>* AsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OrderState>* PrepareAsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* AsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* PrepareAsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* AsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* AsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* PrepareAsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* AsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncPostOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* AsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* PrepareAsyncPostOrderAsyncRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* AsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* PrepareAsyncCancelOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>* AsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OrderState>* PrepareAsyncGetOrderStateRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* AsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* PrepareAsyncGetOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* AsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* PrepareAsyncReplaceOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* AsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* PrepareAsyncGetMaxLotsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* AsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* PrepareAsyncGetOrderPriceRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_PostOrder_;
     const ::grpc::internal::RpcMethod rpcmethod_PostOrderAsync_;
     const ::grpc::internal::RpcMethod rpcmethod_CancelOrder_;
@@ -642,21 +642,21 @@ class OrdersService final {
     Service();
     virtual ~Service();
     // Метод выставления заявки.
-    virtual ::grpc::Status PostOrder(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response);
+    virtual ::grpc::Status PostOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response);
     // Асинхронный метод выставления заявки.
-    virtual ::grpc::Status PostOrderAsync(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response);
+    virtual ::grpc::Status PostOrderAsync(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response);
     // Метод отмены биржевой заявки.
-    virtual ::grpc::Status CancelOrder(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response);
+    virtual ::grpc::Status CancelOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response);
     // Метод получения статуса торгового поручения.
-    virtual ::grpc::Status GetOrderState(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response);
+    virtual ::grpc::Status GetOrderState(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response);
     // Метод получения списка активных заявок по счету.
-    virtual ::grpc::Status GetOrders(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response);
+    virtual ::grpc::Status GetOrders(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response);
     // Метод изменения выставленной заявки.
-    virtual ::grpc::Status ReplaceOrder(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response);
+    virtual ::grpc::Status ReplaceOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response);
     // расчет количества доступных для покупки/продажи лотов
-    virtual ::grpc::Status GetMaxLots(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response);
+    virtual ::grpc::Status GetMaxLots(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response);
     // Метод получения предварительной стоимости для лимитной заявки
-    virtual ::grpc::Status GetOrderPrice(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response);
+    virtual ::grpc::Status GetOrderPrice(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_PostOrder : public BaseClass {
@@ -670,11 +670,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPostOrder(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestPostOrder(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -690,11 +690,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPostOrderAsync(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestPostOrderAsync(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -710,11 +710,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestCancelOrder(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestCancelOrder(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -730,11 +730,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetOrderState(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::OrderState>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetOrderState(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::OrderState>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -750,11 +750,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetOrders(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetOrders(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -770,11 +770,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestReplaceOrder(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestReplaceOrder(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -790,11 +790,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetMaxLots(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetMaxLots(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -810,11 +810,11 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestGetOrderPrice(::grpc::ServerContext* context, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestGetOrderPrice(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -826,25 +826,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_PostOrder() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) { return this->PostOrder(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) { return this->PostOrder(context, request, response); }));}
     void SetMessageAllocatorFor_PostOrder(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_PostOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* PostOrder(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_PostOrderAsync : public BaseClass {
@@ -853,25 +853,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_PostOrderAsync() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* response) { return this->PostOrderAsync(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response) { return this->PostOrderAsync(context, request, response); }));}
     void SetMessageAllocatorFor_PostOrderAsync(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_PostOrderAsync() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* PostOrderAsync(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_CancelOrder : public BaseClass {
@@ -880,25 +880,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_CancelOrder() {
       ::grpc::Service::MarkMethodCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* response) { return this->CancelOrder(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response) { return this->CancelOrder(context, request, response); }));}
     void SetMessageAllocatorFor_CancelOrder(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_CancelOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* CancelOrder(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetOrderState : public BaseClass {
@@ -907,25 +907,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_GetOrderState() {
       ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::pub::invest::api::contract::v1::OrderState>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::public_::invest::api::contract::v1::OrderState>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::pub::invest::api::contract::v1::OrderState* response) { return this->GetOrderState(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response) { return this->GetOrderState(context, request, response); }));}
     void SetMessageAllocatorFor_GetOrderState(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::pub::invest::api::contract::v1::OrderState>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::public_::invest::api::contract::v1::OrderState>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::pub::invest::api::contract::v1::OrderState>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::public_::invest::api::contract::v1::OrderState>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetOrderState() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetOrderState(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetOrders : public BaseClass {
@@ -934,25 +934,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_GetOrders() {
       ::grpc::Service::MarkMethodCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* response) { return this->GetOrders(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response) { return this->GetOrders(context, request, response); }));}
     void SetMessageAllocatorFor_GetOrders(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetOrders() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetOrders(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_ReplaceOrder : public BaseClass {
@@ -961,25 +961,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_ReplaceOrder() {
       ::grpc::Service::MarkMethodCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* response) { return this->ReplaceOrder(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) { return this->ReplaceOrder(context, request, response); }));}
     void SetMessageAllocatorFor_ReplaceOrder(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_ReplaceOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* ReplaceOrder(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetMaxLots : public BaseClass {
@@ -988,25 +988,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_GetMaxLots() {
       ::grpc::Service::MarkMethodCallback(6,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* response) { return this->GetMaxLots(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response) { return this->GetMaxLots(context, request, response); }));}
     void SetMessageAllocatorFor_GetMaxLots(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetMaxLots() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetMaxLots(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_GetOrderPrice : public BaseClass {
@@ -1015,25 +1015,25 @@ class OrdersService final {
    public:
     WithCallbackMethod_GetOrderPrice() {
       ::grpc::Service::MarkMethodCallback(7,
-          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* response) { return this->GetOrderPrice(context, request, response); }));}
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) { return this->GetOrderPrice(context, request, response); }));}
     void SetMessageAllocatorFor_GetOrderPrice(
-        ::grpc::MessageAllocator< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* allocator) {
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~WithCallbackMethod_GetOrderPrice() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetOrderPrice(
-      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/)  { return nullptr; }
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/)  { return nullptr; }
   };
   typedef WithCallbackMethod_PostOrder<WithCallbackMethod_PostOrderAsync<WithCallbackMethod_CancelOrder<WithCallbackMethod_GetOrderState<WithCallbackMethod_GetOrders<WithCallbackMethod_ReplaceOrder<WithCallbackMethod_GetMaxLots<WithCallbackMethod_GetOrderPrice<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
@@ -1049,7 +1049,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1066,7 +1066,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1083,7 +1083,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1100,7 +1100,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1117,7 +1117,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1134,7 +1134,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1151,7 +1151,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1168,7 +1168,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1185,7 +1185,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1205,7 +1205,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1225,7 +1225,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1245,7 +1245,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1265,7 +1265,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1285,7 +1285,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1305,7 +1305,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1325,7 +1325,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1348,7 +1348,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1370,7 +1370,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1392,7 +1392,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1414,7 +1414,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1436,7 +1436,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1458,7 +1458,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1480,7 +1480,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1502,7 +1502,7 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1517,10 +1517,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_PostOrder() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* streamer) {
                        return this->StreamedPostOrder(context,
                          streamer);
                   }));
@@ -1529,12 +1529,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status PostOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPostOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::PostOrderRequest,::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedPostOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest,::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_PostOrderAsync : public BaseClass {
@@ -1544,10 +1544,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_PostOrderAsync() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* streamer) {
                        return this->StreamedPostOrderAsync(context,
                          streamer);
                   }));
@@ -1556,12 +1556,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
+    ::grpc::Status PostOrderAsync(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPostOrderAsync(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncRequest,::tinkoff::pub::invest::api::contract::v1::PostOrderAsyncResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedPostOrderAsync(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest,::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_CancelOrder : public BaseClass {
@@ -1571,10 +1571,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_CancelOrder() {
       ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* streamer) {
                        return this->StreamedCancelOrder(context,
                          streamer);
                   }));
@@ -1583,12 +1583,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
+    ::grpc::Status CancelOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedCancelOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::CancelOrderRequest,::tinkoff::pub::invest::api::contract::v1::CancelOrderResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedCancelOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest,::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetOrderState : public BaseClass {
@@ -1598,10 +1598,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_GetOrderState() {
       ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::pub::invest::api::contract::v1::OrderState>(
+          ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::public_::invest::api::contract::v1::OrderState>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::pub::invest::api::contract::v1::OrderState>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest, ::tinkoff::public_::invest::api::contract::v1::OrderState>* streamer) {
                        return this->StreamedGetOrderState(context,
                          streamer);
                   }));
@@ -1610,12 +1610,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::OrderState* /*response*/) override {
+    ::grpc::Status GetOrderState(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::OrderState* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetOrderState(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::GetOrderStateRequest,::tinkoff::pub::invest::api::contract::v1::OrderState>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetOrderState(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest,::tinkoff::public_::invest::api::contract::v1::OrderState>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetOrders : public BaseClass {
@@ -1625,10 +1625,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_GetOrders() {
       ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* streamer) {
                        return this->StreamedGetOrders(context,
                          streamer);
                   }));
@@ -1637,12 +1637,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
+    ::grpc::Status GetOrders(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetOrders(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::GetOrdersRequest,::tinkoff::pub::invest::api::contract::v1::GetOrdersResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetOrders(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest,::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_ReplaceOrder : public BaseClass {
@@ -1652,10 +1652,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_ReplaceOrder() {
       ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* streamer) {
                        return this->StreamedReplaceOrder(context,
                          streamer);
                   }));
@@ -1664,12 +1664,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
+    ::grpc::Status ReplaceOrder(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedReplaceOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::ReplaceOrderRequest,::tinkoff::pub::invest::api::contract::v1::PostOrderResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedReplaceOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest,::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetMaxLots : public BaseClass {
@@ -1679,10 +1679,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_GetMaxLots() {
       ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* streamer) {
                        return this->StreamedGetMaxLots(context,
                          streamer);
                   }));
@@ -1691,12 +1691,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
+    ::grpc::Status GetMaxLots(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetMaxLots(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::GetMaxLotsRequest,::tinkoff::pub::invest::api::contract::v1::GetMaxLotsResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetMaxLots(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest,::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetOrderPrice : public BaseClass {
@@ -1706,10 +1706,10 @@ class OrdersService final {
     WithStreamedUnaryMethod_GetOrderPrice() {
       ::grpc::Service::MarkMethodStreamed(7,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>(
+          ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* streamer) {
+                     ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* streamer) {
                        return this->StreamedGetOrderPrice(context,
                          streamer);
                   }));
@@ -1718,12 +1718,12 @@ class OrdersService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
+    ::grpc::Status GetOrderPrice(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedGetOrderPrice(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::pub::invest::api::contract::v1::GetOrderPriceRequest,::tinkoff::pub::invest::api::contract::v1::GetOrderPriceResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedGetOrderPrice(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest,::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>* server_unary_streamer) = 0;
   };
   typedef WithStreamedUnaryMethod_PostOrder<WithStreamedUnaryMethod_PostOrderAsync<WithStreamedUnaryMethod_CancelOrder<WithStreamedUnaryMethod_GetOrderState<WithStreamedUnaryMethod_GetOrders<WithStreamedUnaryMethod_ReplaceOrder<WithStreamedUnaryMethod_GetMaxLots<WithStreamedUnaryMethod_GetOrderPrice<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
@@ -1737,7 +1737,7 @@ class OrdersService final {
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 
 

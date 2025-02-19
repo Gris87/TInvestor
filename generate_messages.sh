@@ -18,12 +18,13 @@ cd libs/investapi/messages
 
 for file in `find -name \*.proto`
 do
-    sed -i "s/package tinkoff.public.invest.api.contract/package tinkoff.pub.invest.api.contract/g" ${file}
+    protoc -I=. --cpp_out=generated --grpc_out=generated --plugin=protoc-gen-grpc="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe" ${file}
 done
 
-for file in `find -name \*.proto`
+for file in `find -name \*.grpc.pb.\*`
 do
-    protoc -I=. --cpp_out=generated --grpc_out=generated --plugin=protoc-gen-grpc="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe" ${file}
+    sed -i "s/namespace public/namespace public_/g" ${file}
+    sed -i "s/tinkoff::public::/tinkoff::public_::/g"   ${file}
 done
 
 

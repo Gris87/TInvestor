@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package tinkoff.pub.invest.api.contract.v1;
+package tinkoff.public.invest.api.contract.v1;
 
 option go_package = "./;investapi";
 option java_package = "ru.tinkoff.piapi.contract.v1";

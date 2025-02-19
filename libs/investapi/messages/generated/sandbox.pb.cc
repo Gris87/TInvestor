@@ -25,7 +25,7 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -186,7 +186,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 static constexpr const ::_pb::EnumDescriptor**
     file_level_enum_descriptors_sandbox_2eproto = nullptr;
@@ -195,154 +195,157 @@ static constexpr const ::_pb::ServiceDescriptor**
 const ::uint32_t
     TableStruct_sandbox_2eproto::offsets[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
         protodesc_cold) = {
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest, _impl_.name_),
         0,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountResponse, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse, _impl_.account_id_),
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountRequest, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountRequest, _impl_.account_id_),
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest, _impl_.account_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest, _impl_.amount_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest, _impl_.amount_),
         ~0u,
         0,
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse, _impl_.balance_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse, _impl_.balance_),
         0,
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-        {0, 9, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest)},
-        {10, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountResponse)},
-        {19, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountRequest)},
-        {28, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountResponse)},
-        {36, 46, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest)},
-        {48, 57, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse)},
+        {0, 9, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest)},
+        {10, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse)},
+        {19, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountRequest)},
+        {28, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountResponse)},
+        {36, 46, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest)},
+        {48, 57, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
-    &::tinkoff::pub::invest::api::contract::v1::_OpenSandboxAccountRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_OpenSandboxAccountResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_CloseSandboxAccountRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_CloseSandboxAccountResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_SandboxPayInRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_SandboxPayInResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_OpenSandboxAccountRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_OpenSandboxAccountResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_CloseSandboxAccountRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_CloseSandboxAccountResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_SandboxPayInRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_SandboxPayInResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_sandbox_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\rsandbox.proto\022\"tinkoff.pub.invest.api."
-    "contract.v1\032\014common.proto\032\014orders.proto\032"
-    "\020operations.proto\032\013users.proto\032\037google/a"
-    "pi/field_behavior.proto\"7\n\031OpenSandboxAc"
-    "countRequest\022\021\n\004name\030\001 \001(\tH\000\210\001\001B\007\n\005_name"
-    "\"0\n\032OpenSandboxAccountResponse\022\022\n\naccoun"
-    "t_id\030\001 \001(\t\"6\n\032CloseSandboxAccountRequest"
-    "\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\"\035\n\033CloseSandb"
-    "oxAccountResponse\"u\n\023SandboxPayInRequest"
-    "\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022D\n\006amount\030\002 \001"
-    "(\0132..tinkoff.pub.invest.api.contract.v1."
-    "MoneyValueB\004\342A\001\002\"W\n\024SandboxPayInResponse"
-    "\022\?\n\007balance\030\001 \001(\0132..tinkoff.pub.invest.a"
-    "pi.contract.v1.MoneyValue2\261\020\n\016SandboxSer"
-    "vice\022\223\001\n\022OpenSandboxAccount\022=.tinkoff.pu"
-    "b.invest.api.contract.v1.OpenSandboxAcco"
-    "untRequest\032>.tinkoff.pub.invest.api.cont"
-    "ract.v1.OpenSandboxAccountResponse\022\205\001\n\022G"
-    "etSandboxAccounts\0226.tinkoff.pub.invest.a"
-    "pi.contract.v1.GetAccountsRequest\0327.tink"
-    "off.pub.invest.api.contract.v1.GetAccoun"
-    "tsResponse\022\226\001\n\023CloseSandboxAccount\022>.tin"
-    "koff.pub.invest.api.contract.v1.CloseSan"
-    "dboxAccountRequest\032\?.tinkoff.pub.invest."
-    "api.contract.v1.CloseSandboxAccountRespo"
-    "nse\022\177\n\020PostSandboxOrder\0224.tinkoff.pub.in"
-    "vest.api.contract.v1.PostOrderRequest\0325."
-    "tinkoff.pub.invest.api.contract.v1.PostO"
-    "rderResponse\022\205\001\n\023ReplaceSandboxOrder\0227.t"
-    "inkoff.pub.invest.api.contract.v1.Replac"
-    "eOrderRequest\0325.tinkoff.pub.invest.api.c"
-    "ontract.v1.PostOrderResponse\022\177\n\020GetSandb"
-    "oxOrders\0224.tinkoff.pub.invest.api.contra"
-    "ct.v1.GetOrdersRequest\0325.tinkoff.pub.inv"
-    "est.api.contract.v1.GetOrdersResponse\022\205\001"
-    "\n\022CancelSandboxOrder\0226.tinkoff.pub.inves"
-    "t.api.contract.v1.CancelOrderRequest\0327.t"
-    "inkoff.pub.invest.api.contract.v1.Cancel"
-    "OrderResponse\022\200\001\n\024GetSandboxOrderState\0228"
-    ".tinkoff.pub.invest.api.contract.v1.GetO"
-    "rderStateRequest\032..tinkoff.pub.invest.ap"
-    "i.contract.v1.OrderState\022\202\001\n\023GetSandboxP"
-    "ositions\0224.tinkoff.pub.invest.api.contra"
-    "ct.v1.PositionsRequest\0325.tinkoff.pub.inv"
-    "est.api.contract.v1.PositionsResponse\022\205\001"
-    "\n\024GetSandboxOperations\0225.tinkoff.pub.inv"
-    "est.api.contract.v1.OperationsRequest\0326."
-    "tinkoff.pub.invest.api.contract.v1.Opera"
-    "tionsResponse\022\243\001\n\034GetSandboxOperationsBy"
-    "Cursor\022@.tinkoff.pub.invest.api.contract"
-    ".v1.GetOperationsByCursorRequest\032A.tinko"
-    "ff.pub.invest.api.contract.v1.GetOperati"
-    "onsByCursorResponse\022\202\001\n\023GetSandboxPortfo"
-    "lio\0224.tinkoff.pub.invest.api.contract.v1"
-    ".PortfolioRequest\0325.tinkoff.pub.invest.a"
-    "pi.contract.v1.PortfolioResponse\022\201\001\n\014San"
-    "dboxPayIn\0227.tinkoff.pub.invest.api.contr"
-    "act.v1.SandboxPayInRequest\0328.tinkoff.pub"
-    ".invest.api.contract.v1.SandboxPayInResp"
-    "onse\022\221\001\n\030GetSandboxWithdrawLimits\0229.tink"
-    "off.pub.invest.api.contract.v1.WithdrawL"
-    "imitsRequest\032:.tinkoff.pub.invest.api.co"
-    "ntract.v1.WithdrawLimitsResponse\022\202\001\n\021Get"
-    "SandboxMaxLots\0225.tinkoff.pub.invest.api."
-    "contract.v1.GetMaxLotsRequest\0326.tinkoff."
-    "pub.invest.api.contract.v1.GetMaxLotsRes"
-    "ponseBa\n\034ru.tinkoff.piapi.contract.v1P\001Z"
-    "\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.InvestAp"
-    "i.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
+    "\n\rsandbox.proto\022%tinkoff.public.invest.a"
+    "pi.contract.v1\032\014common.proto\032\014orders.pro"
+    "to\032\020operations.proto\032\013users.proto\032\037googl"
+    "e/api/field_behavior.proto\"7\n\031OpenSandbo"
+    "xAccountRequest\022\021\n\004name\030\001 \001(\tH\000\210\001\001B\007\n\005_n"
+    "ame\"0\n\032OpenSandboxAccountResponse\022\022\n\nacc"
+    "ount_id\030\001 \001(\t\"6\n\032CloseSandboxAccountRequ"
+    "est\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\"\035\n\033CloseSa"
+    "ndboxAccountResponse\"x\n\023SandboxPayInRequ"
+    "est\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022G\n\006amount\030"
+    "\002 \001(\01321.tinkoff.public.invest.api.contra"
+    "ct.v1.MoneyValueB\004\342A\001\002\"Z\n\024SandboxPayInRe"
+    "sponse\022B\n\007balance\030\001 \001(\01321.tinkoff.public"
+    ".invest.api.contract.v1.MoneyValue2\215\021\n\016S"
+    "andboxService\022\231\001\n\022OpenSandboxAccount\022@.t"
+    "inkoff.public.invest.api.contract.v1.Ope"
+    "nSandboxAccountRequest\032A.tinkoff.public."
+    "invest.api.contract.v1.OpenSandboxAccoun"
+    "tResponse\022\213\001\n\022GetSandboxAccounts\0229.tinko"
+    "ff.public.invest.api.contract.v1.GetAcco"
+    "untsRequest\032:.tinkoff.public.invest.api."
+    "contract.v1.GetAccountsResponse\022\234\001\n\023Clos"
+    "eSandboxAccount\022A.tinkoff.public.invest."
+    "api.contract.v1.CloseSandboxAccountReque"
+    "st\032B.tinkoff.public.invest.api.contract."
+    "v1.CloseSandboxAccountResponse\022\205\001\n\020PostS"
+    "andboxOrder\0227.tinkoff.public.invest.api."
+    "contract.v1.PostOrderRequest\0328.tinkoff.p"
+    "ublic.invest.api.contract.v1.PostOrderRe"
+    "sponse\022\213\001\n\023ReplaceSandboxOrder\022:.tinkoff"
+    ".public.invest.api.contract.v1.ReplaceOr"
+    "derRequest\0328.tinkoff.public.invest.api.c"
+    "ontract.v1.PostOrderResponse\022\205\001\n\020GetSand"
+    "boxOrders\0227.tinkoff.public.invest.api.co"
+    "ntract.v1.GetOrdersRequest\0328.tinkoff.pub"
+    "lic.invest.api.contract.v1.GetOrdersResp"
+    "onse\022\213\001\n\022CancelSandboxOrder\0229.tinkoff.pu"
+    "blic.invest.api.contract.v1.CancelOrderR"
+    "equest\032:.tinkoff.public.invest.api.contr"
+    "act.v1.CancelOrderResponse\022\206\001\n\024GetSandbo"
+    "xOrderState\022;.tinkoff.public.invest.api."
+    "contract.v1.GetOrderStateRequest\0321.tinko"
+    "ff.public.invest.api.contract.v1.OrderSt"
+    "ate\022\210\001\n\023GetSandboxPositions\0227.tinkoff.pu"
+    "blic.invest.api.contract.v1.PositionsReq"
+    "uest\0328.tinkoff.public.invest.api.contrac"
+    "t.v1.PositionsResponse\022\213\001\n\024GetSandboxOpe"
+    "rations\0228.tinkoff.public.invest.api.cont"
+    "ract.v1.OperationsRequest\0329.tinkoff.publ"
+    "ic.invest.api.contract.v1.OperationsResp"
+    "onse\022\251\001\n\034GetSandboxOperationsByCursor\022C."
+    "tinkoff.public.invest.api.contract.v1.Ge"
+    "tOperationsByCursorRequest\032D.tinkoff.pub"
+    "lic.invest.api.contract.v1.GetOperations"
+    "ByCursorResponse\022\210\001\n\023GetSandboxPortfolio"
+    "\0227.tinkoff.public.invest.api.contract.v1"
+    ".PortfolioRequest\0328.tinkoff.public.inves"
+    "t.api.contract.v1.PortfolioResponse\022\207\001\n\014"
+    "SandboxPayIn\022:.tinkoff.public.invest.api"
+    ".contract.v1.SandboxPayInRequest\032;.tinko"
+    "ff.public.invest.api.contract.v1.Sandbox"
+    "PayInResponse\022\227\001\n\030GetSandboxWithdrawLimi"
+    "ts\022<.tinkoff.public.invest.api.contract."
+    "v1.WithdrawLimitsRequest\032=.tinkoff.publi"
+    "c.invest.api.contract.v1.WithdrawLimitsR"
+    "esponse\022\210\001\n\021GetSandboxMaxLots\0228.tinkoff."
+    "public.invest.api.contract.v1.GetMaxLots"
+    "Request\0329.tinkoff.public.invest.api.cont"
+    "ract.v1.GetMaxLotsResponseBa\n\034ru.tinkoff"
+    ".piapi.contract.v1P\001Z\014./;investapi\242\002\005TIA"
+    "PI\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inve"
+    "st\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_sandbox_2eproto_deps[5] =
     {
@@ -356,7 +359,7 @@ static ::absl::once_flag descriptor_table_sandbox_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_sandbox_2eproto = {
     false,
     false,
-    2752,
+    2853,
     descriptor_table_protodef_sandbox_2eproto,
     "sandbox.proto",
     &descriptor_table_sandbox_2eproto_once,
@@ -370,7 +373,7 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_sandbox_2eprot
     file_level_service_descriptors_sandbox_2eproto,
 };
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -392,11 +395,11 @@ OpenSandboxAccountRequest::OpenSandboxAccountRequest(::google::protobuf::Arena* 
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE OpenSandboxAccountRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         name_(arena, from.name_) {}
@@ -415,7 +418,7 @@ OpenSandboxAccountRequest::OpenSandboxAccountRequest(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE OpenSandboxAccountRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -427,7 +430,7 @@ inline void OpenSandboxAccountRequest::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 OpenSandboxAccountRequest::~OpenSandboxAccountRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
   SharedDtor(*this);
 }
 inline void OpenSandboxAccountRequest::SharedDtor(MessageLite& self) {
@@ -474,7 +477,7 @@ const ::google::protobuf::internal::ClassData* OpenSandboxAccountRequest::GetCla
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 73, 2> OpenSandboxAccountRequest::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 0, 76, 2> OpenSandboxAccountRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(OpenSandboxAccountRequest, _impl_._has_bits_),
     0, // no _extensions_
@@ -489,7 +492,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 73, 2> OpenSandboxAccountRequest::_table_ = 
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // optional string name = 1;
@@ -504,14 +507,14 @@ const ::_pbi::TcParseTable<0, 1, 0, 73, 2> OpenSandboxAccountRequest::_table_ = 
   }},
   // no aux_entries
   {{
-    "\74\4\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest"
+    "\77\4\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest"
     "name"
   }},
 };
 
 PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -536,7 +539,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const OpenSandboxAccountRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -545,7 +548,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
           if (cached_has_bits & 0x00000001u) {
             const std::string& _s = this_._internal_name();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest.name");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest.name");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -554,7 +557,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
           return target;
         }
 
@@ -565,7 +568,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
         ::size_t OpenSandboxAccountRequest::ByteSizeLong() const {
           const OpenSandboxAccountRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -587,7 +590,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountRequest::Clear() {
 void OpenSandboxAccountRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<OpenSandboxAccountRequest*>(&to_msg);
   auto& from = static_cast<const OpenSandboxAccountRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -601,7 +604,7 @@ void OpenSandboxAccountRequest::MergeImpl(::google::protobuf::MessageLite& to_ms
 }
 
 void OpenSandboxAccountRequest::CopyFrom(const OpenSandboxAccountRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -633,11 +636,11 @@ OpenSandboxAccountResponse::OpenSandboxAccountResponse(::google::protobuf::Arena
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE OpenSandboxAccountResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse& from_msg)
       : account_id_(arena, from.account_id_),
         _cached_size_{0} {}
 
@@ -655,7 +658,7 @@ OpenSandboxAccountResponse::OpenSandboxAccountResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE OpenSandboxAccountResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -667,7 +670,7 @@ inline void OpenSandboxAccountResponse::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 OpenSandboxAccountResponse::~OpenSandboxAccountResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
   SharedDtor(*this);
 }
 inline void OpenSandboxAccountResponse::SharedDtor(MessageLite& self) {
@@ -714,7 +717,7 @@ const ::google::protobuf::internal::ClassData* OpenSandboxAccountResponse::GetCl
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 80, 2> OpenSandboxAccountResponse::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 0, 83, 2> OpenSandboxAccountResponse::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -729,7 +732,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> OpenSandboxAccountResponse::_table_ =
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::OpenSandboxAccountResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::OpenSandboxAccountResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // string account_id = 1;
@@ -744,14 +747,14 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> OpenSandboxAccountResponse::_table_ =
   }},
   // no aux_entries
   {{
-    "\75\12\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse"
+    "\100\12\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse"
     "account_id"
   }},
 };
 
 PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -772,7 +775,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const OpenSandboxAccountResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -780,7 +783,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
           if (!this_._internal_account_id().empty()) {
             const std::string& _s = this_._internal_account_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse.account_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse.account_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -789,7 +792,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
           return target;
         }
 
@@ -800,7 +803,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
         ::size_t OpenSandboxAccountResponse::ByteSizeLong() const {
           const OpenSandboxAccountResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -821,7 +824,7 @@ PROTOBUF_NOINLINE void OpenSandboxAccountResponse::Clear() {
 void OpenSandboxAccountResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<OpenSandboxAccountResponse*>(&to_msg);
   auto& from = static_cast<const OpenSandboxAccountResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -833,7 +836,7 @@ void OpenSandboxAccountResponse::MergeImpl(::google::protobuf::MessageLite& to_m
 }
 
 void OpenSandboxAccountResponse::CopyFrom(const OpenSandboxAccountResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.OpenSandboxAccountResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.OpenSandboxAccountResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -864,11 +867,11 @@ CloseSandboxAccountRequest::CloseSandboxAccountRequest(::google::protobuf::Arena
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE CloseSandboxAccountRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountRequest& from_msg)
       : account_id_(arena, from.account_id_),
         _cached_size_{0} {}
 
@@ -886,7 +889,7 @@ CloseSandboxAccountRequest::CloseSandboxAccountRequest(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE CloseSandboxAccountRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -898,7 +901,7 @@ inline void CloseSandboxAccountRequest::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 CloseSandboxAccountRequest::~CloseSandboxAccountRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
   SharedDtor(*this);
 }
 inline void CloseSandboxAccountRequest::SharedDtor(MessageLite& self) {
@@ -945,7 +948,7 @@ const ::google::protobuf::internal::ClassData* CloseSandboxAccountRequest::GetCl
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 80, 2> CloseSandboxAccountRequest::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 0, 83, 2> CloseSandboxAccountRequest::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -960,7 +963,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> CloseSandboxAccountRequest::_table_ =
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
@@ -975,14 +978,14 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> CloseSandboxAccountRequest::_table_ =
   }},
   // no aux_entries
   {{
-    "\75\12\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest"
+    "\100\12\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest"
     "account_id"
   }},
 };
 
 PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1003,7 +1006,7 @@ PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const CloseSandboxAccountRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1011,7 +1014,7 @@ PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
           if (!this_._internal_account_id().empty()) {
             const std::string& _s = this_._internal_account_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest.account_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest.account_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -1020,7 +1023,7 @@ PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
           return target;
         }
 
@@ -1031,7 +1034,7 @@ PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
         ::size_t CloseSandboxAccountRequest::ByteSizeLong() const {
           const CloseSandboxAccountRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1052,7 +1055,7 @@ PROTOBUF_NOINLINE void CloseSandboxAccountRequest::Clear() {
 void CloseSandboxAccountRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<CloseSandboxAccountRequest*>(&to_msg);
   auto& from = static_cast<const CloseSandboxAccountRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1064,7 +1067,7 @@ void CloseSandboxAccountRequest::MergeImpl(::google::protobuf::MessageLite& to_m
 }
 
 void CloseSandboxAccountRequest::CopyFrom(const CloseSandboxAccountRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1094,7 +1097,7 @@ CloseSandboxAccountResponse::CloseSandboxAccountResponse(::google::protobuf::Are
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::internal::ZeroFieldsBase(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountResponse)
 }
 CloseSandboxAccountResponse::CloseSandboxAccountResponse(
     ::google::protobuf::Arena* arena,
@@ -1109,7 +1112,7 @@ CloseSandboxAccountResponse::CloseSandboxAccountResponse(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.CloseSandboxAccountResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.CloseSandboxAccountResponse)
 }
 
 inline void* CloseSandboxAccountResponse::PlacementNew_(const void*, void* mem,
@@ -1163,7 +1166,7 @@ const ::_pbi::TcParseTable<0, 0, 0, 0, 2> CloseSandboxAccountResponse::_table_ =
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::CloseSandboxAccountResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::CloseSandboxAccountResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -1207,11 +1210,11 @@ SandboxPayInRequest::SandboxPayInRequest(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE SandboxPayInRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         account_id_(arena, from.account_id_) {}
@@ -1230,11 +1233,11 @@ SandboxPayInRequest::SandboxPayInRequest(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.amount_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.amount_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.amount_)
                         : nullptr;
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE SandboxPayInRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1247,7 +1250,7 @@ inline void SandboxPayInRequest::SharedCtor(::_pb::Arena* arena) {
   _impl_.amount_ = {};
 }
 SandboxPayInRequest::~SandboxPayInRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
   SharedDtor(*this);
 }
 inline void SandboxPayInRequest::SharedDtor(MessageLite& self) {
@@ -1295,7 +1298,7 @@ const ::google::protobuf::internal::ClassData* SandboxPayInRequest::GetClassData
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 73, 2> SandboxPayInRequest::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 1, 76, 2> SandboxPayInRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(SandboxPayInRequest, _impl_._has_bits_),
     0, // no _extensions_
@@ -1310,10 +1313,10 @@ const ::_pbi::TcParseTable<1, 2, 1, 73, 2> SandboxPayInRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::SandboxPayInRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::SandboxPayInRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
     {::_pbi::TcParser::FastMtS1,
      {18, 0, 0, PROTOBUF_FIELD_OFFSET(SandboxPayInRequest, _impl_.amount_)}},
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
@@ -1325,20 +1328,20 @@ const ::_pbi::TcParseTable<1, 2, 1, 73, 2> SandboxPayInRequest::_table_ = {
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(SandboxPayInRequest, _impl_.account_id_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(SandboxPayInRequest, _impl_.amount_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
   }}, {{
-    "\66\12\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest"
+    "\71\12\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.SandboxPayInRequest"
     "account_id"
   }},
 };
 
 PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1365,7 +1368,7 @@ PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const SandboxPayInRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1373,12 +1376,12 @@ PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
           if (!this_._internal_account_id().empty()) {
             const std::string& _s = this_._internal_account_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest.account_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.SandboxPayInRequest.account_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
           cached_has_bits = this_._impl_._has_bits_[0];
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
           if (cached_has_bits & 0x00000001u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 2, *this_._impl_.amount_, this_._impl_.amount_->GetCachedSize(), target,
@@ -1390,7 +1393,7 @@ PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
           return target;
         }
 
@@ -1401,7 +1404,7 @@ PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
         ::size_t SandboxPayInRequest::ByteSizeLong() const {
           const SandboxPayInRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1417,7 +1420,7 @@ PROTOBUF_NOINLINE void SandboxPayInRequest::Clear() {
             }
           }
            {
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue amount = 2 [(.google.api.field_behavior) = REQUIRED];
             cached_has_bits = this_._impl_._has_bits_[0];
             if (cached_has_bits & 0x00000001u) {
               total_size += 1 +
@@ -1432,7 +1435,7 @@ void SandboxPayInRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, con
   auto* const _this = static_cast<SandboxPayInRequest*>(&to_msg);
   auto& from = static_cast<const SandboxPayInRequest&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1445,7 +1448,7 @@ void SandboxPayInRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, con
     ABSL_DCHECK(from._impl_.amount_ != nullptr);
     if (_this->_impl_.amount_ == nullptr) {
       _this->_impl_.amount_ =
-          ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.amount_);
+          ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.amount_);
     } else {
       _this->_impl_.amount_->MergeFrom(*from._impl_.amount_);
     }
@@ -1455,7 +1458,7 @@ void SandboxPayInRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, con
 }
 
 void SandboxPayInRequest::CopyFrom(const SandboxPayInRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.SandboxPayInRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1497,11 +1500,11 @@ SandboxPayInResponse::SandboxPayInResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE SandboxPayInResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0} {}
 
@@ -1519,11 +1522,11 @@ SandboxPayInResponse::SandboxPayInResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.balance_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.balance_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.balance_)
                         : nullptr;
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE SandboxPayInResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1535,7 +1538,7 @@ inline void SandboxPayInResponse::SharedCtor(::_pb::Arena* arena) {
   _impl_.balance_ = {};
 }
 SandboxPayInResponse::~SandboxPayInResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
   SharedDtor(*this);
 }
 inline void SandboxPayInResponse::SharedDtor(MessageLite& self) {
@@ -1597,26 +1600,26 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> SandboxPayInResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::SandboxPayInResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::SandboxPayInResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue balance = 1;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue balance = 1;
     {::_pbi::TcParser::FastMtS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(SandboxPayInResponse, _impl_.balance_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue balance = 1;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue balance = 1;
     {PROTOBUF_FIELD_OFFSET(SandboxPayInResponse, _impl_.balance_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void SandboxPayInResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1642,12 +1645,12 @@ PROTOBUF_NOINLINE void SandboxPayInResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const SandboxPayInResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
           cached_has_bits = this_._impl_._has_bits_[0];
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue balance = 1;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue balance = 1;
           if (cached_has_bits & 0x00000001u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 1, *this_._impl_.balance_, this_._impl_.balance_->GetCachedSize(), target,
@@ -1659,7 +1662,7 @@ PROTOBUF_NOINLINE void SandboxPayInResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
           return target;
         }
 
@@ -1670,7 +1673,7 @@ PROTOBUF_NOINLINE void SandboxPayInResponse::Clear() {
         ::size_t SandboxPayInResponse::ByteSizeLong() const {
           const SandboxPayInResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1678,7 +1681,7 @@ PROTOBUF_NOINLINE void SandboxPayInResponse::Clear() {
           (void)cached_has_bits;
 
            {
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue balance = 1;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue balance = 1;
             cached_has_bits = this_._impl_._has_bits_[0];
             if (cached_has_bits & 0x00000001u) {
               total_size += 1 +
@@ -1693,7 +1696,7 @@ void SandboxPayInResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, co
   auto* const _this = static_cast<SandboxPayInResponse*>(&to_msg);
   auto& from = static_cast<const SandboxPayInResponse&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1703,7 +1706,7 @@ void SandboxPayInResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, co
     ABSL_DCHECK(from._impl_.balance_ != nullptr);
     if (_this->_impl_.balance_ == nullptr) {
       _this->_impl_.balance_ =
-          ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.balance_);
+          ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.balance_);
     } else {
       _this->_impl_.balance_->MergeFrom(*from._impl_.balance_);
     }
@@ -1713,7 +1716,7 @@ void SandboxPayInResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, co
 }
 
 void SandboxPayInResponse::CopyFrom(const SandboxPayInResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.SandboxPayInResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.SandboxPayInResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1735,7 +1738,7 @@ void SandboxPayInResponse::InternalSwap(SandboxPayInResponse* PROTOBUF_RESTRICT 
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 namespace google {
 namespace protobuf {

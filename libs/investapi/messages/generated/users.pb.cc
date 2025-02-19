@@ -25,7 +25,7 @@ namespace _pb = ::google::protobuf;
 namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -183,7 +183,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 inline constexpr GetAccountsRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        status_{static_cast< ::tinkoff::pub::invest::api::contract::v1::AccountStatus >(0)} {}
+        status_{static_cast< ::tinkoff::public_::invest::api::contract::v1::AccountStatus >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR GetAccountsRequest::GetAccountsRequest(::_pbi::ConstantInitialized)
@@ -272,9 +272,9 @@ inline constexpr Account::Impl_::Impl_(
             ::_pbi::ConstantInitialized()),
         opened_date_{nullptr},
         closed_date_{nullptr},
-        type_{static_cast< ::tinkoff::pub::invest::api::contract::v1::AccountType >(0)},
-        status_{static_cast< ::tinkoff::pub::invest::api::contract::v1::AccountStatus >(0)},
-        access_level_{static_cast< ::tinkoff::pub::invest::api::contract::v1::AccessLevel >(0)} {}
+        type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::AccountType >(0)},
+        status_{static_cast< ::tinkoff::public_::invest::api::contract::v1::AccountStatus >(0)},
+        access_level_{static_cast< ::tinkoff::public_::invest::api::contract::v1::AccessLevel >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR Account::Account(::_pbi::ConstantInitialized)
@@ -324,7 +324,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_users_2eproto[3];
 static constexpr const ::_pb::ServiceDescriptor**
@@ -332,40 +332,40 @@ static constexpr const ::_pb::ServiceDescriptor**
 const ::uint32_t
     TableStruct_users_2eproto::offsets[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
         protodesc_cold) = {
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, _impl_.status_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, _impl_.status_),
         0,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, _impl_.accounts_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, _impl_.accounts_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.type_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.name_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.status_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.opened_date_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.closed_date_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::Account, _impl_.access_level_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.type_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.status_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.opened_date_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.closed_date_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::Account, _impl_.access_level_),
         ~0u,
         ~0u,
         ~0u,
@@ -374,28 +374,28 @@ const ::uint32_t
         1,
         ~0u,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, _impl_.account_id_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_._has_bits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, _impl_.account_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.liquid_portfolio_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.starting_margin_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.minimal_margin_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.funds_sufficiency_level_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.amount_of_missing_funds_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.corrected_margin_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.liquid_portfolio_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.starting_margin_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.minimal_margin_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.funds_sufficiency_level_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.amount_of_missing_funds_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, _impl_.corrected_margin_),
         0,
         1,
         2,
@@ -403,7 +403,7 @@ const ::uint32_t
         4,
         5,
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
@@ -411,38 +411,38 @@ const ::uint32_t
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, _impl_.unary_limits_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, _impl_.stream_limits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, _impl_.unary_limits_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, _impl_.stream_limits_),
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::UnaryLimit, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::UnaryLimit, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::UnaryLimit, _impl_.limit_per_minute_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::UnaryLimit, _impl_.methods_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::UnaryLimit, _impl_.limit_per_minute_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::UnaryLimit, _impl_.methods_),
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::StreamLimit, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::StreamLimit, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::StreamLimit, _impl_.limit_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::StreamLimit, _impl_.streams_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::StreamLimit, _impl_.open_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::StreamLimit, _impl_.limit_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::StreamLimit, _impl_.streams_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::StreamLimit, _impl_.open_),
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoRequest, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoRequest, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
@@ -450,119 +450,121 @@ const ::uint32_t
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
         ~0u,  // no _has_bits_
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _internal_metadata_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _internal_metadata_),
         ~0u,  // no _extensions_
         ~0u,  // no _oneof_case_
         ~0u,  // no _weak_field_map_
         ~0u,  // no _inlined_string_donated_
         ~0u,  // no _split_
         ~0u,  // no sizeof(Split)
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _impl_.prem_status_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _impl_.qual_status_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _impl_.qualified_for_work_with_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _impl_.tariff_),
-        PROTOBUF_FIELD_OFFSET(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, _impl_.user_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.prem_status_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.qual_status_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.qualified_for_work_with_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.tariff_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.user_id_),
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-        {0, 9, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest)},
-        {10, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse)},
-        {19, 34, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::Account)},
-        {41, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest)},
-        {50, 64, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse)},
-        {70, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest)},
-        {78, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse)},
-        {88, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::UnaryLimit)},
-        {98, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::StreamLimit)},
-        {109, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetInfoRequest)},
-        {117, -1, -1, sizeof(::tinkoff::pub::invest::api::contract::v1::GetInfoResponse)},
+        {0, 9, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest)},
+        {10, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse)},
+        {19, 34, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::Account)},
+        {41, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest)},
+        {50, 64, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse)},
+        {70, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest)},
+        {78, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse)},
+        {88, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::UnaryLimit)},
+        {98, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::StreamLimit)},
+        {109, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInfoRequest)},
+        {117, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
-    &::tinkoff::pub::invest::api::contract::v1::_GetAccountsRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetAccountsResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_Account_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetMarginAttributesRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetMarginAttributesResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetUserTariffRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetUserTariffResponse_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_UnaryLimit_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_StreamLimit_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetInfoRequest_default_instance_._instance,
-    &::tinkoff::pub::invest::api::contract::v1::_GetInfoResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetAccountsRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetAccountsResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_Account_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetMarginAttributesRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetMarginAttributesResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetUserTariffRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetUserTariffResponse_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_UnaryLimit_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_StreamLimit_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetInfoRequest_default_instance_._instance,
+    &::tinkoff::public_::invest::api::contract::v1::_GetInfoResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_users_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\013users.proto\022\"tinkoff.pub.invest.api.co"
-    "ntract.v1\032\037google/protobuf/timestamp.pro"
-    "to\032\037google/api/field_behavior.proto\032\014com"
-    "mon.proto\"g\n\022GetAccountsRequest\022F\n\006statu"
-    "s\030\001 \001(\01621.tinkoff.pub.invest.api.contrac"
-    "t.v1.AccountStatusH\000\210\001\001B\t\n\007_status\"T\n\023Ge"
-    "tAccountsResponse\022=\n\010accounts\030\001 \003(\0132+.ti"
-    "nkoff.pub.invest.api.contract.v1.Account"
-    "\"\316\002\n\007Account\022\n\n\002id\030\001 \001(\t\022=\n\004type\030\002 \001(\0162/"
-    ".tinkoff.pub.invest.api.contract.v1.Acco"
-    "untType\022\014\n\004name\030\003 \001(\t\022A\n\006status\030\004 \001(\01621."
-    "tinkoff.pub.invest.api.contract.v1.Accou"
-    "ntStatus\022/\n\013opened_date\030\005 \001(\0132\032.google.p"
-    "rotobuf.Timestamp\022/\n\013closed_date\030\006 \001(\0132\032"
-    ".google.protobuf.Timestamp\022E\n\014access_lev"
-    "el\030\007 \001(\0162/.tinkoff.pub.invest.api.contra"
-    "ct.v1.AccessLevel\"6\n\032GetMarginAttributes"
-    "Request\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\"\343\003\n\033Ge"
-    "tMarginAttributesResponse\022H\n\020liquid_port"
-    "folio\030\001 \001(\0132..tinkoff.pub.invest.api.con"
-    "tract.v1.MoneyValue\022G\n\017starting_margin\030\002"
-    " \001(\0132..tinkoff.pub.invest.api.contract.v"
-    "1.MoneyValue\022F\n\016minimal_margin\030\003 \001(\0132..t"
-    "inkoff.pub.invest.api.contract.v1.MoneyV"
-    "alue\022N\n\027funds_sufficiency_level\030\004 \001(\0132-."
-    "tinkoff.pub.invest.api.contract.v1.Quota"
-    "tion\022O\n\027amount_of_missing_funds\030\005 \001(\0132.."
-    "tinkoff.pub.invest.api.contract.v1.Money"
-    "Value\022H\n\020corrected_margin\030\006 \001(\0132..tinkof"
-    "f.pub.invest.api.contract.v1.MoneyValue\""
-    "\026\n\024GetUserTariffRequest\"\245\001\n\025GetUserTarif"
-    "fResponse\022D\n\014unary_limits\030\001 \003(\0132..tinkof"
-    "f.pub.invest.api.contract.v1.UnaryLimit\022"
-    "F\n\rstream_limits\030\002 \003(\0132/.tinkoff.pub.inv"
-    "est.api.contract.v1.StreamLimit\"7\n\nUnary"
-    "Limit\022\030\n\020limit_per_minute\030\001 \001(\005\022\017\n\007metho"
-    "ds\030\002 \003(\t\";\n\013StreamLimit\022\r\n\005limit\030\001 \001(\005\022\017"
-    "\n\007streams\030\002 \003(\t\022\014\n\004open\030\003 \001(\005\"\020\n\016GetInfo"
-    "Request\"}\n\017GetInfoResponse\022\023\n\013prem_statu"
-    "s\030\001 \001(\010\022\023\n\013qual_status\030\002 \001(\010\022\037\n\027qualifie"
-    "d_for_work_with\030\003 \003(\t\022\016\n\006tariff\030\004 \001(\t\022\017\n"
-    "\007user_id\030\t \001(\t*\236\001\n\013AccountType\022\034\n\030ACCOUN"
-    "T_TYPE_UNSPECIFIED\020\000\022\030\n\024ACCOUNT_TYPE_TIN"
-    "KOFF\020\001\022\034\n\030ACCOUNT_TYPE_TINKOFF_IIS\020\002\022\033\n\027"
-    "ACCOUNT_TYPE_INVEST_BOX\020\003\022\034\n\030ACCOUNT_TYP"
-    "E_INVEST_FUND\020\004*\223\001\n\rAccountStatus\022\036\n\032ACC"
-    "OUNT_STATUS_UNSPECIFIED\020\000\022\026\n\022ACCOUNT_STA"
-    "TUS_NEW\020\001\022\027\n\023ACCOUNT_STATUS_OPEN\020\002\022\031\n\025AC"
-    "COUNT_STATUS_CLOSED\020\003\022\026\n\022ACCOUNT_STATUS_"
-    "ALL\020\004*\241\001\n\013AccessLevel\022$\n ACCOUNT_ACCESS_"
-    "LEVEL_UNSPECIFIED\020\000\022$\n ACCOUNT_ACCESS_LE"
-    "VEL_FULL_ACCESS\020\001\022\"\n\036ACCOUNT_ACCESS_LEVE"
-    "L_READ_ONLY\020\002\022\"\n\036ACCOUNT_ACCESS_LEVEL_NO"
-    "_ACCESS\020\0032\242\004\n\014UsersService\022~\n\013GetAccount"
-    "s\0226.tinkoff.pub.invest.api.contract.v1.G"
-    "etAccountsRequest\0327.tinkoff.pub.invest.a"
-    "pi.contract.v1.GetAccountsResponse\022\226\001\n\023G"
-    "etMarginAttributes\022>.tinkoff.pub.invest."
-    "api.contract.v1.GetMarginAttributesReque"
-    "st\032\?.tinkoff.pub.invest.api.contract.v1."
-    "GetMarginAttributesResponse\022\204\001\n\rGetUserT"
-    "ariff\0228.tinkoff.pub.invest.api.contract."
-    "v1.GetUserTariffRequest\0329.tinkoff.pub.in"
-    "vest.api.contract.v1.GetUserTariffRespon"
-    "se\022r\n\007GetInfo\0222.tinkoff.pub.invest.api.c"
-    "ontract.v1.GetInfoRequest\0323.tinkoff.pub."
-    "invest.api.contract.v1.GetInfoResponseBa"
-    "\n\034ru.tinkoff.piapi.contract.v1P\001Z\014./;inv"
-    "estapi\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021"
-    "Tinkoff\\Invest\\V1b\006proto3"
+    "\n\013users.proto\022%tinkoff.public.invest.api"
+    ".contract.v1\032\037google/protobuf/timestamp."
+    "proto\032\037google/api/field_behavior.proto\032\014"
+    "common.proto\"j\n\022GetAccountsRequest\022I\n\006st"
+    "atus\030\001 \001(\01624.tinkoff.public.invest.api.c"
+    "ontract.v1.AccountStatusH\000\210\001\001B\t\n\007_status"
+    "\"W\n\023GetAccountsResponse\022@\n\010accounts\030\001 \003("
+    "\0132..tinkoff.public.invest.api.contract.v"
+    "1.Account\"\327\002\n\007Account\022\n\n\002id\030\001 \001(\t\022@\n\004typ"
+    "e\030\002 \001(\01622.tinkoff.public.invest.api.cont"
+    "ract.v1.AccountType\022\014\n\004name\030\003 \001(\t\022D\n\006sta"
+    "tus\030\004 \001(\01624.tinkoff.public.invest.api.co"
+    "ntract.v1.AccountStatus\022/\n\013opened_date\030\005"
+    " \001(\0132\032.google.protobuf.Timestamp\022/\n\013clos"
+    "ed_date\030\006 \001(\0132\032.google.protobuf.Timestam"
+    "p\022H\n\014access_level\030\007 \001(\01622.tinkoff.public"
+    ".invest.api.contract.v1.AccessLevel\"6\n\032G"
+    "etMarginAttributesRequest\022\030\n\naccount_id\030"
+    "\001 \001(\tB\004\342A\001\002\"\365\003\n\033GetMarginAttributesRespo"
+    "nse\022K\n\020liquid_portfolio\030\001 \001(\01321.tinkoff."
+    "public.invest.api.contract.v1.MoneyValue"
+    "\022J\n\017starting_margin\030\002 \001(\01321.tinkoff.publ"
+    "ic.invest.api.contract.v1.MoneyValue\022I\n\016"
+    "minimal_margin\030\003 \001(\01321.tinkoff.public.in"
+    "vest.api.contract.v1.MoneyValue\022Q\n\027funds"
+    "_sufficiency_level\030\004 \001(\01320.tinkoff.publi"
+    "c.invest.api.contract.v1.Quotation\022R\n\027am"
+    "ount_of_missing_funds\030\005 \001(\01321.tinkoff.pu"
+    "blic.invest.api.contract.v1.MoneyValue\022K"
+    "\n\020corrected_margin\030\006 \001(\01321.tinkoff.publi"
+    "c.invest.api.contract.v1.MoneyValue\"\026\n\024G"
+    "etUserTariffRequest\"\253\001\n\025GetUserTariffRes"
+    "ponse\022G\n\014unary_limits\030\001 \003(\01321.tinkoff.pu"
+    "blic.invest.api.contract.v1.UnaryLimit\022I"
+    "\n\rstream_limits\030\002 \003(\01322.tinkoff.public.i"
+    "nvest.api.contract.v1.StreamLimit\"7\n\nUna"
+    "ryLimit\022\030\n\020limit_per_minute\030\001 \001(\005\022\017\n\007met"
+    "hods\030\002 \003(\t\";\n\013StreamLimit\022\r\n\005limit\030\001 \001(\005"
+    "\022\017\n\007streams\030\002 \003(\t\022\014\n\004open\030\003 \001(\005\"\020\n\016GetIn"
+    "foRequest\"}\n\017GetInfoResponse\022\023\n\013prem_sta"
+    "tus\030\001 \001(\010\022\023\n\013qual_status\030\002 \001(\010\022\037\n\027qualif"
+    "ied_for_work_with\030\003 \003(\t\022\016\n\006tariff\030\004 \001(\t\022"
+    "\017\n\007user_id\030\t \001(\t*\236\001\n\013AccountType\022\034\n\030ACCO"
+    "UNT_TYPE_UNSPECIFIED\020\000\022\030\n\024ACCOUNT_TYPE_T"
+    "INKOFF\020\001\022\034\n\030ACCOUNT_TYPE_TINKOFF_IIS\020\002\022\033"
+    "\n\027ACCOUNT_TYPE_INVEST_BOX\020\003\022\034\n\030ACCOUNT_T"
+    "YPE_INVEST_FUND\020\004*\223\001\n\rAccountStatus\022\036\n\032A"
+    "CCOUNT_STATUS_UNSPECIFIED\020\000\022\026\n\022ACCOUNT_S"
+    "TATUS_NEW\020\001\022\027\n\023ACCOUNT_STATUS_OPEN\020\002\022\031\n\025"
+    "ACCOUNT_STATUS_CLOSED\020\003\022\026\n\022ACCOUNT_STATU"
+    "S_ALL\020\004*\241\001\n\013AccessLevel\022$\n ACCOUNT_ACCES"
+    "S_LEVEL_UNSPECIFIED\020\000\022$\n ACCOUNT_ACCESS_"
+    "LEVEL_FULL_ACCESS\020\001\022\"\n\036ACCOUNT_ACCESS_LE"
+    "VEL_READ_ONLY\020\002\022\"\n\036ACCOUNT_ACCESS_LEVEL_"
+    "NO_ACCESS\020\0032\273\004\n\014UsersService\022\204\001\n\013GetAcco"
+    "unts\0229.tinkoff.public.invest.api.contrac"
+    "t.v1.GetAccountsRequest\032:.tinkoff.public"
+    ".invest.api.contract.v1.GetAccountsRespo"
+    "nse\022\234\001\n\023GetMarginAttributes\022A.tinkoff.pu"
+    "blic.invest.api.contract.v1.GetMarginAtt"
+    "ributesRequest\032B.tinkoff.public.invest.a"
+    "pi.contract.v1.GetMarginAttributesRespon"
+    "se\022\212\001\n\rGetUserTariff\022;.tinkoff.public.in"
+    "vest.api.contract.v1.GetUserTariffReques"
+    "t\032<.tinkoff.public.invest.api.contract.v"
+    "1.GetUserTariffResponse\022x\n\007GetInfo\0225.tin"
+    "koff.public.invest.api.contract.v1.GetIn"
+    "foRequest\0326.tinkoff.public.invest.api.co"
+    "ntract.v1.GetInfoResponseBa\n\034ru.tinkoff."
+    "piapi.contract.v1P\001Z\014./;investapi\242\002\005TIAP"
+    "I\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inves"
+    "t\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_users_2eproto_deps[3] =
     {
@@ -574,7 +576,7 @@ static ::absl::once_flag descriptor_table_users_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_users_2eproto = {
     false,
     false,
-    2785,
+    2852,
     descriptor_table_protodef_users_2eproto,
     "users.proto",
     &descriptor_table_users_2eproto_once,
@@ -588,7 +590,7 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_users_2eproto 
     file_level_service_descriptors_users_2eproto,
 };
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -637,7 +639,7 @@ GetAccountsRequest::GetAccountsRequest(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
 }
 GetAccountsRequest::GetAccountsRequest(
     ::google::protobuf::Arena* arena, const GetAccountsRequest& from)
@@ -654,7 +656,7 @@ inline void GetAccountsRequest::SharedCtor(::_pb::Arena* arena) {
   _impl_.status_ = {};
 }
 GetAccountsRequest::~GetAccountsRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
   SharedDtor(*this);
 }
 inline void GetAccountsRequest::SharedDtor(MessageLite& self) {
@@ -715,16 +717,16 @@ const ::_pbi::TcParseTable<0, 1, 0, 0, 2> GetAccountsRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // optional .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 1;
+    // optional .tinkoff.public.invest.api.contract.v1.AccountStatus status = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(GetAccountsRequest, _impl_.status_), 0>(),
      {8, 0, 0, PROTOBUF_FIELD_OFFSET(GetAccountsRequest, _impl_.status_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // optional .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 1;
+    // optional .tinkoff.public.invest.api.contract.v1.AccountStatus status = 1;
     {PROTOBUF_FIELD_OFFSET(GetAccountsRequest, _impl_.status_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
   }},
@@ -734,7 +736,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 0, 2> GetAccountsRequest::_table_ = {
 };
 
 PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -756,12 +758,12 @@ PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetAccountsRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
           cached_has_bits = this_._impl_._has_bits_[0];
-          // optional .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 1;
+          // optional .tinkoff.public.invest.api.contract.v1.AccountStatus status = 1;
           if (cached_has_bits & 0x00000001u) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -773,7 +775,7 @@ PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
           return target;
         }
 
@@ -784,7 +786,7 @@ PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
         ::size_t GetAccountsRequest::ByteSizeLong() const {
           const GetAccountsRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -792,7 +794,7 @@ PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
           (void)cached_has_bits;
 
            {
-            // optional .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 1;
+            // optional .tinkoff.public.invest.api.contract.v1.AccountStatus status = 1;
             cached_has_bits = this_._impl_._has_bits_[0];
             if (cached_has_bits & 0x00000001u) {
               total_size += 1 +
@@ -806,7 +808,7 @@ PROTOBUF_NOINLINE void GetAccountsRequest::Clear() {
 void GetAccountsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetAccountsRequest*>(&to_msg);
   auto& from = static_cast<const GetAccountsRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -820,7 +822,7 @@ void GetAccountsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, cons
 }
 
 void GetAccountsRequest::CopyFrom(const GetAccountsRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetAccountsRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetAccountsRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -850,11 +852,11 @@ GetAccountsResponse::GetAccountsResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetAccountsResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse& from_msg)
       : accounts_{visibility, arena, from.accounts_},
         _cached_size_{0} {}
 
@@ -872,7 +874,7 @@ GetAccountsResponse::GetAccountsResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetAccountsResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -884,7 +886,7 @@ inline void GetAccountsResponse::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 GetAccountsResponse::~GetAccountsResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
   SharedDtor(*this);
 }
 inline void GetAccountsResponse::SharedDtor(MessageLite& self) {
@@ -957,26 +959,26 @@ const ::_pbi::TcParseTable<0, 1, 1, 0, 2> GetAccountsResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.Account accounts = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Account accounts = 1;
     {::_pbi::TcParser::FastMtR1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetAccountsResponse, _impl_.accounts_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.Account accounts = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.Account accounts = 1;
     {PROTOBUF_FIELD_OFFSET(GetAccountsResponse, _impl_.accounts_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Account>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Account>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -997,11 +999,11 @@ PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetAccountsResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
-          // repeated .tinkoff.pub.invest.api.contract.v1.Account accounts = 1;
+          // repeated .tinkoff.public.invest.api.contract.v1.Account accounts = 1;
           for (unsigned i = 0, n = static_cast<unsigned>(
                                    this_._internal_accounts_size());
                i < n; i++) {
@@ -1017,7 +1019,7 @@ PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
           return target;
         }
 
@@ -1028,7 +1030,7 @@ PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
         ::size_t GetAccountsResponse::ByteSizeLong() const {
           const GetAccountsResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1037,7 +1039,7 @@ PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
 
           ::_pbi::Prefetch5LinesFrom7Lines(&this_);
            {
-            // repeated .tinkoff.pub.invest.api.contract.v1.Account accounts = 1;
+            // repeated .tinkoff.public.invest.api.contract.v1.Account accounts = 1;
             {
               total_size += 1UL * this_._internal_accounts_size();
               for (const auto& msg : this_._internal_accounts()) {
@@ -1052,7 +1054,7 @@ PROTOBUF_NOINLINE void GetAccountsResponse::Clear() {
 void GetAccountsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetAccountsResponse*>(&to_msg);
   auto& from = static_cast<const GetAccountsResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1063,7 +1065,7 @@ void GetAccountsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, con
 }
 
 void GetAccountsResponse::CopyFrom(const GetAccountsResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetAccountsResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetAccountsResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1106,11 +1108,11 @@ Account::Account(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.Account)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.Account)
 }
 inline PROTOBUF_NDEBUG_INLINE Account::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::Account& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::Account& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         id_(arena, from.id_),
@@ -1144,7 +1146,7 @@ Account::Account(
                offsetof(Impl_, type_) +
                sizeof(Impl_::access_level_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.Account)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.Account)
 }
 inline PROTOBUF_NDEBUG_INLINE Account::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1163,7 +1165,7 @@ inline void Account::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::access_level_));
 }
 Account::~Account() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.Account)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.Account)
   SharedDtor(*this);
 }
 inline void Account::SharedDtor(MessageLite& self) {
@@ -1213,7 +1215,7 @@ const ::google::protobuf::internal::ClassData* Account::GetClassData() const {
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 7, 2, 57, 2> Account::_table_ = {
+const ::_pbi::TcParseTable<3, 7, 2, 60, 2> Account::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(Account, _impl_._has_bits_),
     0, // no _extensions_
@@ -1228,20 +1230,20 @@ const ::_pbi::TcParseTable<3, 7, 2, 57, 2> Account::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Account>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Account>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
     // string id = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(Account, _impl_.id_)}},
-    // .tinkoff.pub.invest.api.contract.v1.AccountType type = 2;
+    // .tinkoff.public.invest.api.contract.v1.AccountType type = 2;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Account, _impl_.type_), 63>(),
      {16, 63, 0, PROTOBUF_FIELD_OFFSET(Account, _impl_.type_)}},
     // string name = 3;
     {::_pbi::TcParser::FastUS1,
      {26, 63, 0, PROTOBUF_FIELD_OFFSET(Account, _impl_.name_)}},
-    // .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 4;
+    // .tinkoff.public.invest.api.contract.v1.AccountStatus status = 4;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Account, _impl_.status_), 63>(),
      {32, 63, 0, PROTOBUF_FIELD_OFFSET(Account, _impl_.status_)}},
     // .google.protobuf.Timestamp opened_date = 5;
@@ -1250,7 +1252,7 @@ const ::_pbi::TcParseTable<3, 7, 2, 57, 2> Account::_table_ = {
     // .google.protobuf.Timestamp closed_date = 6;
     {::_pbi::TcParser::FastMtS1,
      {50, 1, 1, PROTOBUF_FIELD_OFFSET(Account, _impl_.closed_date_)}},
-    // .tinkoff.pub.invest.api.contract.v1.AccessLevel access_level = 7;
+    // .tinkoff.public.invest.api.contract.v1.AccessLevel access_level = 7;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(Account, _impl_.access_level_), 63>(),
      {56, 63, 0, PROTOBUF_FIELD_OFFSET(Account, _impl_.access_level_)}},
   }}, {{
@@ -1259,13 +1261,13 @@ const ::_pbi::TcParseTable<3, 7, 2, 57, 2> Account::_table_ = {
     // string id = 1;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.id_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .tinkoff.pub.invest.api.contract.v1.AccountType type = 2;
+    // .tinkoff.public.invest.api.contract.v1.AccountType type = 2;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.type_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
     // string name = 3;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.name_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 4;
+    // .tinkoff.public.invest.api.contract.v1.AccountStatus status = 4;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.status_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
     // .google.protobuf.Timestamp opened_date = 5;
@@ -1274,22 +1276,22 @@ const ::_pbi::TcParseTable<3, 7, 2, 57, 2> Account::_table_ = {
     // .google.protobuf.Timestamp closed_date = 6;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.closed_date_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.AccessLevel access_level = 7;
+    // .tinkoff.public.invest.api.contract.v1.AccessLevel access_level = 7;
     {PROTOBUF_FIELD_OFFSET(Account, _impl_.access_level_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kOpenEnum)},
   }}, {{
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
   }}, {{
-    "\52\2\0\4\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.Account"
+    "\55\2\0\4\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.Account"
     "id"
     "name"
   }},
 };
 
 PROTOBUF_NOINLINE void Account::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.Account)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.Account)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1326,7 +1328,7 @@ PROTOBUF_NOINLINE void Account::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const Account& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.Account)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.Account)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1334,11 +1336,11 @@ PROTOBUF_NOINLINE void Account::Clear() {
           if (!this_._internal_id().empty()) {
             const std::string& _s = this_._internal_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Account.id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Account.id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.AccountType type = 2;
+          // .tinkoff.public.invest.api.contract.v1.AccountType type = 2;
           if (this_._internal_type() != 0) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -1349,11 +1351,11 @@ PROTOBUF_NOINLINE void Account::Clear() {
           if (!this_._internal_name().empty()) {
             const std::string& _s = this_._internal_name();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.Account.name");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.Account.name");
             target = stream->WriteStringMaybeAliased(3, _s, target);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 4;
+          // .tinkoff.public.invest.api.contract.v1.AccountStatus status = 4;
           if (this_._internal_status() != 0) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -1375,7 +1377,7 @@ PROTOBUF_NOINLINE void Account::Clear() {
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.AccessLevel access_level = 7;
+          // .tinkoff.public.invest.api.contract.v1.AccessLevel access_level = 7;
           if (this_._internal_access_level() != 0) {
             target = stream->EnsureSpace(target);
             target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -1387,7 +1389,7 @@ PROTOBUF_NOINLINE void Account::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.Account)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.Account)
           return target;
         }
 
@@ -1398,7 +1400,7 @@ PROTOBUF_NOINLINE void Account::Clear() {
         ::size_t Account::ByteSizeLong() const {
           const Account& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.Account)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.Account)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1432,17 +1434,17 @@ PROTOBUF_NOINLINE void Account::Clear() {
             }
           }
            {
-            // .tinkoff.pub.invest.api.contract.v1.AccountType type = 2;
+            // .tinkoff.public.invest.api.contract.v1.AccountType type = 2;
             if (this_._internal_type() != 0) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_type());
             }
-            // .tinkoff.pub.invest.api.contract.v1.AccountStatus status = 4;
+            // .tinkoff.public.invest.api.contract.v1.AccountStatus status = 4;
             if (this_._internal_status() != 0) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_status());
             }
-            // .tinkoff.pub.invest.api.contract.v1.AccessLevel access_level = 7;
+            // .tinkoff.public.invest.api.contract.v1.AccessLevel access_level = 7;
             if (this_._internal_access_level() != 0) {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_access_level());
@@ -1456,7 +1458,7 @@ void Account::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google:
   auto* const _this = static_cast<Account*>(&to_msg);
   auto& from = static_cast<const Account&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.Account)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.Account)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1502,7 +1504,7 @@ void Account::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google:
 }
 
 void Account::CopyFrom(const Account& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.Account)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.Account)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1541,11 +1543,11 @@ GetMarginAttributesRequest::GetMarginAttributesRequest(::google::protobuf::Arena
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetMarginAttributesRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& from_msg)
       : account_id_(arena, from.account_id_),
         _cached_size_{0} {}
 
@@ -1563,7 +1565,7 @@ GetMarginAttributesRequest::GetMarginAttributesRequest(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
 }
 inline PROTOBUF_NDEBUG_INLINE GetMarginAttributesRequest::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1575,7 +1577,7 @@ inline void GetMarginAttributesRequest::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 GetMarginAttributesRequest::~GetMarginAttributesRequest() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
   SharedDtor(*this);
 }
 inline void GetMarginAttributesRequest::SharedDtor(MessageLite& self) {
@@ -1622,7 +1624,7 @@ const ::google::protobuf::internal::ClassData* GetMarginAttributesRequest::GetCl
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 80, 2> GetMarginAttributesRequest::_table_ = {
+const ::_pbi::TcParseTable<0, 1, 0, 83, 2> GetMarginAttributesRequest::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -1637,7 +1639,7 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> GetMarginAttributesRequest::_table_ =
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
@@ -1652,14 +1654,14 @@ const ::_pbi::TcParseTable<0, 1, 0, 80, 2> GetMarginAttributesRequest::_table_ =
   }},
   // no aux_entries
   {{
-    "\75\12\0\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest"
+    "\100\12\0\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest"
     "account_id"
   }},
 };
 
 PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1680,7 +1682,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetMarginAttributesRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -1688,7 +1690,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
           if (!this_._internal_account_id().empty()) {
             const std::string& _s = this_._internal_account_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest.account_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest.account_id");
             target = stream->WriteStringMaybeAliased(1, _s, target);
           }
 
@@ -1697,7 +1699,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
           return target;
         }
 
@@ -1708,7 +1710,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
         ::size_t GetMarginAttributesRequest::ByteSizeLong() const {
           const GetMarginAttributesRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -1729,7 +1731,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesRequest::Clear() {
 void GetMarginAttributesRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetMarginAttributesRequest*>(&to_msg);
   auto& from = static_cast<const GetMarginAttributesRequest&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1741,7 +1743,7 @@ void GetMarginAttributesRequest::MergeImpl(::google::protobuf::MessageLite& to_m
 }
 
 void GetMarginAttributesRequest::CopyFrom(const GetMarginAttributesRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesRequest)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -1806,11 +1808,11 @@ GetMarginAttributesResponse::GetMarginAttributesResponse(::google::protobuf::Are
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetMarginAttributesResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0} {}
 
@@ -1828,26 +1830,26 @@ GetMarginAttributesResponse::GetMarginAttributesResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::uint32_t cached_has_bits = _impl_._has_bits_[0];
-  _impl_.liquid_portfolio_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.liquid_portfolio_ = (cached_has_bits & 0x00000001u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.liquid_portfolio_)
                         : nullptr;
-  _impl_.starting_margin_ = (cached_has_bits & 0x00000002u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.starting_margin_ = (cached_has_bits & 0x00000002u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.starting_margin_)
                         : nullptr;
-  _impl_.minimal_margin_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.minimal_margin_ = (cached_has_bits & 0x00000004u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.minimal_margin_)
                         : nullptr;
-  _impl_.funds_sufficiency_level_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(
+  _impl_.funds_sufficiency_level_ = (cached_has_bits & 0x00000008u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(
                               arena, *from._impl_.funds_sufficiency_level_)
                         : nullptr;
-  _impl_.amount_of_missing_funds_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.amount_of_missing_funds_ = (cached_has_bits & 0x00000010u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.amount_of_missing_funds_)
                         : nullptr;
-  _impl_.corrected_margin_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(
+  _impl_.corrected_margin_ = (cached_has_bits & 0x00000020u) ? ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(
                               arena, *from._impl_.corrected_margin_)
                         : nullptr;
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetMarginAttributesResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -1864,7 +1866,7 @@ inline void GetMarginAttributesResponse::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::corrected_margin_));
 }
 GetMarginAttributesResponse::~GetMarginAttributesResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
   SharedDtor(*this);
 }
 inline void GetMarginAttributesResponse::SharedDtor(MessageLite& self) {
@@ -1931,63 +1933,63 @@ const ::_pbi::TcParseTable<3, 6, 6, 0, 2> GetMarginAttributesResponse::_table_ =
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
     {::_pbi::TcParser::FastMtS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.liquid_portfolio_)}},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue starting_margin = 2;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue starting_margin = 2;
     {::_pbi::TcParser::FastMtS1,
      {18, 1, 1, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.starting_margin_)}},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue minimal_margin = 3;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue minimal_margin = 3;
     {::_pbi::TcParser::FastMtS1,
      {26, 2, 2, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.minimal_margin_)}},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
+    // .tinkoff.public.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
     {::_pbi::TcParser::FastMtS1,
      {34, 3, 3, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.funds_sufficiency_level_)}},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
     {::_pbi::TcParser::FastMtS1,
      {42, 4, 4, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.amount_of_missing_funds_)}},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue corrected_margin = 6;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue corrected_margin = 6;
     {::_pbi::TcParser::FastMtS1,
      {50, 5, 5, PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.corrected_margin_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.liquid_portfolio_), _Internal::kHasBitsOffset + 0, 0,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue starting_margin = 2;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue starting_margin = 2;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.starting_margin_), _Internal::kHasBitsOffset + 1, 1,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue minimal_margin = 3;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue minimal_margin = 3;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.minimal_margin_), _Internal::kHasBitsOffset + 2, 2,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
+    // .tinkoff.public.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.funds_sufficiency_level_), _Internal::kHasBitsOffset + 3, 3,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.amount_of_missing_funds_), _Internal::kHasBitsOffset + 4, 4,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
-    // .tinkoff.pub.invest.api.contract.v1.MoneyValue corrected_margin = 6;
+    // .tinkoff.public.invest.api.contract.v1.MoneyValue corrected_margin = 6;
     {PROTOBUF_FIELD_OFFSET(GetMarginAttributesResponse, _impl_.corrected_margin_), _Internal::kHasBitsOffset + 5, 5,
     (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::Quotation>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::MoneyValue>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void GetMarginAttributesResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2035,47 +2037,47 @@ PROTOBUF_NOINLINE void GetMarginAttributesResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetMarginAttributesResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
           cached_has_bits = this_._impl_._has_bits_[0];
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
           if (cached_has_bits & 0x00000001u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 1, *this_._impl_.liquid_portfolio_, this_._impl_.liquid_portfolio_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue starting_margin = 2;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue starting_margin = 2;
           if (cached_has_bits & 0x00000002u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 2, *this_._impl_.starting_margin_, this_._impl_.starting_margin_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue minimal_margin = 3;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue minimal_margin = 3;
           if (cached_has_bits & 0x00000004u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 3, *this_._impl_.minimal_margin_, this_._impl_.minimal_margin_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
+          // .tinkoff.public.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
           if (cached_has_bits & 0x00000008u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 4, *this_._impl_.funds_sufficiency_level_, this_._impl_.funds_sufficiency_level_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
           if (cached_has_bits & 0x00000010u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 5, *this_._impl_.amount_of_missing_funds_, this_._impl_.amount_of_missing_funds_->GetCachedSize(), target,
                 stream);
           }
 
-          // .tinkoff.pub.invest.api.contract.v1.MoneyValue corrected_margin = 6;
+          // .tinkoff.public.invest.api.contract.v1.MoneyValue corrected_margin = 6;
           if (cached_has_bits & 0x00000020u) {
             target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
                 6, *this_._impl_.corrected_margin_, this_._impl_.corrected_margin_->GetCachedSize(), target,
@@ -2087,7 +2089,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
           return target;
         }
 
@@ -2098,7 +2100,7 @@ PROTOBUF_NOINLINE void GetMarginAttributesResponse::Clear() {
         ::size_t GetMarginAttributesResponse::ByteSizeLong() const {
           const GetMarginAttributesResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -2108,32 +2110,32 @@ PROTOBUF_NOINLINE void GetMarginAttributesResponse::Clear() {
           ::_pbi::Prefetch5LinesFrom7Lines(&this_);
           cached_has_bits = this_._impl_._has_bits_[0];
           if (cached_has_bits & 0x0000003fu) {
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue liquid_portfolio = 1;
             if (cached_has_bits & 0x00000001u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.liquid_portfolio_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue starting_margin = 2;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue starting_margin = 2;
             if (cached_has_bits & 0x00000002u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.starting_margin_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue minimal_margin = 3;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue minimal_margin = 3;
             if (cached_has_bits & 0x00000004u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.minimal_margin_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
+            // .tinkoff.public.invest.api.contract.v1.Quotation funds_sufficiency_level = 4;
             if (cached_has_bits & 0x00000008u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.funds_sufficiency_level_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue amount_of_missing_funds = 5;
             if (cached_has_bits & 0x00000010u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.amount_of_missing_funds_);
             }
-            // .tinkoff.pub.invest.api.contract.v1.MoneyValue corrected_margin = 6;
+            // .tinkoff.public.invest.api.contract.v1.MoneyValue corrected_margin = 6;
             if (cached_has_bits & 0x00000020u) {
               total_size += 1 +
                             ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.corrected_margin_);
@@ -2147,7 +2149,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
   auto* const _this = static_cast<GetMarginAttributesResponse*>(&to_msg);
   auto& from = static_cast<const GetMarginAttributesResponse&>(from_msg);
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2158,7 +2160,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.liquid_portfolio_ != nullptr);
       if (_this->_impl_.liquid_portfolio_ == nullptr) {
         _this->_impl_.liquid_portfolio_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.liquid_portfolio_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.liquid_portfolio_);
       } else {
         _this->_impl_.liquid_portfolio_->MergeFrom(*from._impl_.liquid_portfolio_);
       }
@@ -2167,7 +2169,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.starting_margin_ != nullptr);
       if (_this->_impl_.starting_margin_ == nullptr) {
         _this->_impl_.starting_margin_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.starting_margin_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.starting_margin_);
       } else {
         _this->_impl_.starting_margin_->MergeFrom(*from._impl_.starting_margin_);
       }
@@ -2176,7 +2178,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.minimal_margin_ != nullptr);
       if (_this->_impl_.minimal_margin_ == nullptr) {
         _this->_impl_.minimal_margin_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.minimal_margin_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.minimal_margin_);
       } else {
         _this->_impl_.minimal_margin_->MergeFrom(*from._impl_.minimal_margin_);
       }
@@ -2185,7 +2187,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.funds_sufficiency_level_ != nullptr);
       if (_this->_impl_.funds_sufficiency_level_ == nullptr) {
         _this->_impl_.funds_sufficiency_level_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(arena, *from._impl_.funds_sufficiency_level_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(arena, *from._impl_.funds_sufficiency_level_);
       } else {
         _this->_impl_.funds_sufficiency_level_->MergeFrom(*from._impl_.funds_sufficiency_level_);
       }
@@ -2194,7 +2196,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.amount_of_missing_funds_ != nullptr);
       if (_this->_impl_.amount_of_missing_funds_ == nullptr) {
         _this->_impl_.amount_of_missing_funds_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.amount_of_missing_funds_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.amount_of_missing_funds_);
       } else {
         _this->_impl_.amount_of_missing_funds_->MergeFrom(*from._impl_.amount_of_missing_funds_);
       }
@@ -2203,7 +2205,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
       ABSL_DCHECK(from._impl_.corrected_margin_ != nullptr);
       if (_this->_impl_.corrected_margin_ == nullptr) {
         _this->_impl_.corrected_margin_ =
-            ::google::protobuf::Message::CopyConstruct<::tinkoff::pub::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.corrected_margin_);
+            ::google::protobuf::Message::CopyConstruct<::tinkoff::public_::invest::api::contract::v1::MoneyValue>(arena, *from._impl_.corrected_margin_);
       } else {
         _this->_impl_.corrected_margin_->MergeFrom(*from._impl_.corrected_margin_);
       }
@@ -2214,7 +2216,7 @@ void GetMarginAttributesResponse::MergeImpl(::google::protobuf::MessageLite& to_
 }
 
 void GetMarginAttributesResponse::CopyFrom(const GetMarginAttributesResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetMarginAttributesResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetMarginAttributesResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2248,7 +2250,7 @@ GetUserTariffRequest::GetUserTariffRequest(::google::protobuf::Arena* arena)
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::internal::ZeroFieldsBase(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetUserTariffRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetUserTariffRequest)
 }
 GetUserTariffRequest::GetUserTariffRequest(
     ::google::protobuf::Arena* arena,
@@ -2263,7 +2265,7 @@ GetUserTariffRequest::GetUserTariffRequest(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetUserTariffRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetUserTariffRequest)
 }
 
 inline void* GetUserTariffRequest::PlacementNew_(const void*, void* mem,
@@ -2317,7 +2319,7 @@ const ::_pbi::TcParseTable<0, 0, 0, 0, 2> GetUserTariffRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -2352,11 +2354,11 @@ GetUserTariffResponse::GetUserTariffResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetUserTariffResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse& from_msg)
       : unary_limits_{visibility, arena, from.unary_limits_},
         stream_limits_{visibility, arena, from.stream_limits_},
         _cached_size_{0} {}
@@ -2375,7 +2377,7 @@ GetUserTariffResponse::GetUserTariffResponse(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetUserTariffResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -2388,7 +2390,7 @@ inline void GetUserTariffResponse::SharedCtor(::_pb::Arena* arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
 }
 GetUserTariffResponse::~GetUserTariffResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
   SharedDtor(*this);
 }
 inline void GetUserTariffResponse::SharedDtor(MessageLite& self) {
@@ -2465,33 +2467,33 @@ const ::_pbi::TcParseTable<1, 2, 2, 0, 2> GetUserTariffResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.StreamLimit stream_limits = 2;
+    // repeated .tinkoff.public.invest.api.contract.v1.StreamLimit stream_limits = 2;
     {::_pbi::TcParser::FastMtR1,
      {18, 63, 1, PROTOBUF_FIELD_OFFSET(GetUserTariffResponse, _impl_.stream_limits_)}},
-    // repeated .tinkoff.pub.invest.api.contract.v1.UnaryLimit unary_limits = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.UnaryLimit unary_limits = 1;
     {::_pbi::TcParser::FastMtR1,
      {10, 63, 0, PROTOBUF_FIELD_OFFSET(GetUserTariffResponse, _impl_.unary_limits_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // repeated .tinkoff.pub.invest.api.contract.v1.UnaryLimit unary_limits = 1;
+    // repeated .tinkoff.public.invest.api.contract.v1.UnaryLimit unary_limits = 1;
     {PROTOBUF_FIELD_OFFSET(GetUserTariffResponse, _impl_.unary_limits_), 0, 0,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
-    // repeated .tinkoff.pub.invest.api.contract.v1.StreamLimit stream_limits = 2;
+    // repeated .tinkoff.public.invest.api.contract.v1.StreamLimit stream_limits = 2;
     {PROTOBUF_FIELD_OFFSET(GetUserTariffResponse, _impl_.stream_limits_), 0, 1,
     (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }}, {{
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::UnaryLimit>()},
-    {::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::StreamLimit>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::UnaryLimit>()},
+    {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::StreamLimit>()},
   }}, {{
   }},
 };
 
 PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2513,11 +2515,11 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetUserTariffResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
-          // repeated .tinkoff.pub.invest.api.contract.v1.UnaryLimit unary_limits = 1;
+          // repeated .tinkoff.public.invest.api.contract.v1.UnaryLimit unary_limits = 1;
           for (unsigned i = 0, n = static_cast<unsigned>(
                                    this_._internal_unary_limits_size());
                i < n; i++) {
@@ -2528,7 +2530,7 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
                     target, stream);
           }
 
-          // repeated .tinkoff.pub.invest.api.contract.v1.StreamLimit stream_limits = 2;
+          // repeated .tinkoff.public.invest.api.contract.v1.StreamLimit stream_limits = 2;
           for (unsigned i = 0, n = static_cast<unsigned>(
                                    this_._internal_stream_limits_size());
                i < n; i++) {
@@ -2544,7 +2546,7 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
           return target;
         }
 
@@ -2555,7 +2557,7 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
         ::size_t GetUserTariffResponse::ByteSizeLong() const {
           const GetUserTariffResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -2564,14 +2566,14 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
 
           ::_pbi::Prefetch5LinesFrom7Lines(&this_);
            {
-            // repeated .tinkoff.pub.invest.api.contract.v1.UnaryLimit unary_limits = 1;
+            // repeated .tinkoff.public.invest.api.contract.v1.UnaryLimit unary_limits = 1;
             {
               total_size += 1UL * this_._internal_unary_limits_size();
               for (const auto& msg : this_._internal_unary_limits()) {
                 total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
               }
             }
-            // repeated .tinkoff.pub.invest.api.contract.v1.StreamLimit stream_limits = 2;
+            // repeated .tinkoff.public.invest.api.contract.v1.StreamLimit stream_limits = 2;
             {
               total_size += 1UL * this_._internal_stream_limits_size();
               for (const auto& msg : this_._internal_stream_limits()) {
@@ -2586,7 +2588,7 @@ PROTOBUF_NOINLINE void GetUserTariffResponse::Clear() {
 void GetUserTariffResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetUserTariffResponse*>(&to_msg);
   auto& from = static_cast<const GetUserTariffResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2599,7 +2601,7 @@ void GetUserTariffResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, c
 }
 
 void GetUserTariffResponse::CopyFrom(const GetUserTariffResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetUserTariffResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetUserTariffResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2629,11 +2631,11 @@ UnaryLimit::UnaryLimit(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.UnaryLimit)
 }
 inline PROTOBUF_NDEBUG_INLINE UnaryLimit::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::UnaryLimit& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::UnaryLimit& from_msg)
       : methods_{visibility, arena, from.methods_},
         _cached_size_{0} {}
 
@@ -2652,7 +2654,7 @@ UnaryLimit::UnaryLimit(
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   _impl_.limit_per_minute_ = from._impl_.limit_per_minute_;
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.UnaryLimit)
 }
 inline PROTOBUF_NDEBUG_INLINE UnaryLimit::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -2665,7 +2667,7 @@ inline void UnaryLimit::SharedCtor(::_pb::Arena* arena) {
   _impl_.limit_per_minute_ = {};
 }
 UnaryLimit::~UnaryLimit() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.UnaryLimit)
   SharedDtor(*this);
 }
 inline void UnaryLimit::SharedDtor(MessageLite& self) {
@@ -2723,7 +2725,7 @@ const ::google::protobuf::internal::ClassData* UnaryLimit::GetClassData() const 
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 61, 2> UnaryLimit::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 0, 64, 2> UnaryLimit::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -2738,7 +2740,7 @@ const ::_pbi::TcParseTable<1, 2, 0, 61, 2> UnaryLimit::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::UnaryLimit>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::UnaryLimit>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // repeated string methods = 2;
@@ -2759,14 +2761,14 @@ const ::_pbi::TcParseTable<1, 2, 0, 61, 2> UnaryLimit::_table_ = {
   }},
   // no aux_entries
   {{
-    "\55\0\7\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.UnaryLimit"
+    "\60\0\7\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.UnaryLimit"
     "methods"
   }},
 };
 
 PROTOBUF_NOINLINE void UnaryLimit::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.UnaryLimit)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2788,7 +2790,7 @@ PROTOBUF_NOINLINE void UnaryLimit::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const UnaryLimit& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.UnaryLimit)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -2803,7 +2805,7 @@ PROTOBUF_NOINLINE void UnaryLimit::Clear() {
           for (int i = 0, n = this_._internal_methods_size(); i < n; ++i) {
             const auto& s = this_._internal_methods().Get(i);
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.UnaryLimit.methods");
+                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.UnaryLimit.methods");
             target = stream->WriteString(2, s, target);
           }
 
@@ -2812,7 +2814,7 @@ PROTOBUF_NOINLINE void UnaryLimit::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.UnaryLimit)
           return target;
         }
 
@@ -2823,7 +2825,7 @@ PROTOBUF_NOINLINE void UnaryLimit::Clear() {
         ::size_t UnaryLimit::ByteSizeLong() const {
           const UnaryLimit& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.UnaryLimit)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -2856,7 +2858,7 @@ PROTOBUF_NOINLINE void UnaryLimit::Clear() {
 void UnaryLimit::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<UnaryLimit*>(&to_msg);
   auto& from = static_cast<const UnaryLimit&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.UnaryLimit)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -2869,7 +2871,7 @@ void UnaryLimit::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goog
 }
 
 void UnaryLimit::CopyFrom(const UnaryLimit& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.UnaryLimit)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.UnaryLimit)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -2899,11 +2901,11 @@ StreamLimit::StreamLimit(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.StreamLimit)
 }
 inline PROTOBUF_NDEBUG_INLINE StreamLimit::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::StreamLimit& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::StreamLimit& from_msg)
       : streams_{visibility, arena, from.streams_},
         _cached_size_{0} {}
 
@@ -2928,7 +2930,7 @@ StreamLimit::StreamLimit(
                offsetof(Impl_, limit_) +
                sizeof(Impl_::open_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.StreamLimit)
 }
 inline PROTOBUF_NDEBUG_INLINE StreamLimit::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -2946,7 +2948,7 @@ inline void StreamLimit::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::open_));
 }
 StreamLimit::~StreamLimit() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.StreamLimit)
   SharedDtor(*this);
 }
 inline void StreamLimit::SharedDtor(MessageLite& self) {
@@ -3004,7 +3006,7 @@ const ::google::protobuf::internal::ClassData* StreamLimit::GetClassData() const
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 62, 2> StreamLimit::_table_ = {
+const ::_pbi::TcParseTable<2, 3, 0, 65, 2> StreamLimit::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -3019,7 +3021,7 @@ const ::_pbi::TcParseTable<2, 3, 0, 62, 2> StreamLimit::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::StreamLimit>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::StreamLimit>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -3047,14 +3049,14 @@ const ::_pbi::TcParseTable<2, 3, 0, 62, 2> StreamLimit::_table_ = {
   }},
   // no aux_entries
   {{
-    "\56\0\7\0\0\0\0\0"
-    "tinkoff.pub.invest.api.contract.v1.StreamLimit"
+    "\61\0\7\0\0\0\0\0"
+    "tinkoff.public.invest.api.contract.v1.StreamLimit"
     "streams"
   }},
 };
 
 PROTOBUF_NOINLINE void StreamLimit::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.StreamLimit)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -3078,7 +3080,7 @@ PROTOBUF_NOINLINE void StreamLimit::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const StreamLimit& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.StreamLimit)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -3093,7 +3095,7 @@ PROTOBUF_NOINLINE void StreamLimit::Clear() {
           for (int i = 0, n = this_._internal_streams_size(); i < n; ++i) {
             const auto& s = this_._internal_streams().Get(i);
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.StreamLimit.streams");
+                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.StreamLimit.streams");
             target = stream->WriteString(2, s, target);
           }
 
@@ -3109,7 +3111,7 @@ PROTOBUF_NOINLINE void StreamLimit::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.StreamLimit)
           return target;
         }
 
@@ -3120,7 +3122,7 @@ PROTOBUF_NOINLINE void StreamLimit::Clear() {
         ::size_t StreamLimit::ByteSizeLong() const {
           const StreamLimit& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.StreamLimit)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -3158,7 +3160,7 @@ PROTOBUF_NOINLINE void StreamLimit::Clear() {
 void StreamLimit::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<StreamLimit*>(&to_msg);
   auto& from = static_cast<const StreamLimit&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.StreamLimit)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -3174,7 +3176,7 @@ void StreamLimit::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
 }
 
 void StreamLimit::CopyFrom(const StreamLimit& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.StreamLimit)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.StreamLimit)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3208,7 +3210,7 @@ GetInfoRequest::GetInfoRequest(::google::protobuf::Arena* arena)
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::internal::ZeroFieldsBase(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetInfoRequest)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetInfoRequest)
 }
 GetInfoRequest::GetInfoRequest(
     ::google::protobuf::Arena* arena,
@@ -3223,7 +3225,7 @@ GetInfoRequest::GetInfoRequest(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetInfoRequest)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetInfoRequest)
 }
 
 inline void* GetInfoRequest::PlacementNew_(const void*, void* mem,
@@ -3277,7 +3279,7 @@ const ::_pbi::TcParseTable<0, 0, 0, 0, 2> GetInfoRequest::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetInfoRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetInfoRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
@@ -3312,11 +3314,11 @@ GetInfoResponse::GetInfoResponse(::google::protobuf::Arena* arena)
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+  // @@protoc_insertion_point(arena_constructor:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetInfoResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility, ::google::protobuf::Arena* arena,
-    const Impl_& from, const ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse& from_msg)
+    const Impl_& from, const ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse& from_msg)
       : qualified_for_work_with_{visibility, arena, from.qualified_for_work_with_},
         tariff_(arena, from.tariff_),
         user_id_(arena, from.user_id_),
@@ -3343,7 +3345,7 @@ GetInfoResponse::GetInfoResponse(
                offsetof(Impl_, prem_status_) +
                sizeof(Impl_::qual_status_));
 
-  // @@protoc_insertion_point(copy_constructor:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+  // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
 }
 inline PROTOBUF_NDEBUG_INLINE GetInfoResponse::Impl_::Impl_(
     ::google::protobuf::internal::InternalVisibility visibility,
@@ -3363,7 +3365,7 @@ inline void GetInfoResponse::SharedCtor(::_pb::Arena* arena) {
                sizeof(Impl_::qual_status_));
 }
 GetInfoResponse::~GetInfoResponse() {
-  // @@protoc_insertion_point(destructor:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+  // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
   SharedDtor(*this);
 }
 inline void GetInfoResponse::SharedDtor(MessageLite& self) {
@@ -3423,7 +3425,7 @@ const ::google::protobuf::internal::ClassData* GetInfoResponse::GetClassData() c
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 5, 0, 95, 2> GetInfoResponse::_table_ = {
+const ::_pbi::TcParseTable<2, 5, 0, 98, 2> GetInfoResponse::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
@@ -3438,7 +3440,7 @@ const ::_pbi::TcParseTable<2, 5, 0, 95, 2> GetInfoResponse::_table_ = {
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::tinkoff::pub::invest::api::contract::v1::GetInfoResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::GetInfoResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // string tariff = 4;
@@ -3474,8 +3476,8 @@ const ::_pbi::TcParseTable<2, 5, 0, 95, 2> GetInfoResponse::_table_ = {
   }},
   // no aux_entries
   {{
-    "\62\0\0\27\6\7\0\0"
-    "tinkoff.pub.invest.api.contract.v1.GetInfoResponse"
+    "\65\0\0\27\6\7\0\0"
+    "tinkoff.public.invest.api.contract.v1.GetInfoResponse"
     "qualified_for_work_with"
     "tariff"
     "user_id"
@@ -3483,7 +3485,7 @@ const ::_pbi::TcParseTable<2, 5, 0, 95, 2> GetInfoResponse::_table_ = {
 };
 
 PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+// @@protoc_insertion_point(message_clear_start:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -3509,7 +3511,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
             ::google::protobuf::io::EpsCopyOutputStream* stream) const {
           const GetInfoResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+          // @@protoc_insertion_point(serialize_to_array_start:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
           ::uint32_t cached_has_bits = 0;
           (void)cached_has_bits;
 
@@ -3531,7 +3533,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
           for (int i = 0, n = this_._internal_qualified_for_work_with_size(); i < n; ++i) {
             const auto& s = this_._internal_qualified_for_work_with().Get(i);
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetInfoResponse.qualified_for_work_with");
+                s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetInfoResponse.qualified_for_work_with");
             target = stream->WriteString(3, s, target);
           }
 
@@ -3539,7 +3541,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
           if (!this_._internal_tariff().empty()) {
             const std::string& _s = this_._internal_tariff();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetInfoResponse.tariff");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetInfoResponse.tariff");
             target = stream->WriteStringMaybeAliased(4, _s, target);
           }
 
@@ -3547,7 +3549,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
           if (!this_._internal_user_id().empty()) {
             const std::string& _s = this_._internal_user_id();
             ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.pub.invest.api.contract.v1.GetInfoResponse.user_id");
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetInfoResponse.user_id");
             target = stream->WriteStringMaybeAliased(9, _s, target);
           }
 
@@ -3556,7 +3558,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
                     this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
           }
-          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+          // @@protoc_insertion_point(serialize_to_array_end:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
           return target;
         }
 
@@ -3567,7 +3569,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
         ::size_t GetInfoResponse::ByteSizeLong() const {
           const GetInfoResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          // @@protoc_insertion_point(message_byte_size_start:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+          // @@protoc_insertion_point(message_byte_size_start:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
           ::size_t total_size = 0;
 
           ::uint32_t cached_has_bits = 0;
@@ -3613,7 +3615,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
 void GetInfoResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
   auto* const _this = static_cast<GetInfoResponse*>(&to_msg);
   auto& from = static_cast<const GetInfoResponse&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -3635,7 +3637,7 @@ void GetInfoResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const :
 }
 
 void GetInfoResponse::CopyFrom(const GetInfoResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.pub.invest.api.contract.v1.GetInfoResponse)
+// @@protoc_insertion_point(class_specific_copy_from_start:tinkoff.public.invest.api.contract.v1.GetInfoResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -3666,7 +3668,7 @@ void GetInfoResponse::InternalSwap(GetInfoResponse* PROTOBUF_RESTRICT other) {
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 namespace google {
 namespace protobuf {

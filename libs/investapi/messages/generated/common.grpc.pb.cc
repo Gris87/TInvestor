@@ -20,14 +20,14 @@
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
 namespace v1 {
 
 }  // namespace tinkoff
-}  // namespace pub
+}  // namespace public_
 }  // namespace invest
 }  // namespace api
 }  // namespace contract

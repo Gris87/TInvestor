@@ -35,6 +35,7 @@ SOURCES += \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
+    src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/fs/dir/test_dir.cpp \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
@@ -81,6 +82,7 @@ HEADERS += \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
+    src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/fs/dir/idirfactory_mock.h \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \

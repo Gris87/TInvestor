@@ -39,6 +39,7 @@ SOURCES += \
     src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/threads/userupdate/userupdatethread.cpp \
     src/utils/fs/dir/dir.cpp \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
@@ -111,6 +112,7 @@ HEADERS += \
     src/domain/user/user.h \
     src/grpc/grpcclient.h \
     src/grpc/igrpcclient.h \
+    src/grpc/investapiuthenticator.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \
@@ -121,6 +123,8 @@ HEADERS += \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
+    src/threads/userupdate/iuserupdatethread.h \
+    src/threads/userupdate/userupdatethread.h \
     src/utils/fs/dir/dir.h \
     src/utils/fs/dir/dirfactory.h \
     src/utils/fs/dir/idir.h \

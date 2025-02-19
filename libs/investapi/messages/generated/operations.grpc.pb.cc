@@ -20,20 +20,20 @@
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
 namespace v1 {
 
 static const char* OperationsService_method_names[] = {
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetOperations",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetPortfolio",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetPositions",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetWithdrawLimits",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetBrokerReport",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetDividendsForeignIssuer",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsService/GetOperationsByCursor",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetOperations",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetPortfolio",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetPositions",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetWithdrawLimits",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetBrokerReport",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetDividendsForeignIssuer",
+  "/tinkoff.public.invest.api.contract.v1.OperationsService/GetOperationsByCursor",
 };
 
 std::unique_ptr< OperationsService::Stub> OperationsService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -52,161 +52,161 @@ OperationsService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& 
   , rpcmethod_GetOperationsByCursor_(OperationsService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status OperationsService::Stub::GetOperations(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest& request, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::OperationsRequest, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetOperations_, context, request, response);
+::grpc::Status OperationsService::Stub::GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::OperationsRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetOperations_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetOperations(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::OperationsRequest, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperations_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::OperationsRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperations_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetOperations(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperations_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OperationsResponse>* OperationsService::Stub::PrepareAsyncGetOperationsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::OperationsResponse, ::tinkoff::pub::invest::api::contract::v1::OperationsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetOperations_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>* OperationsService::Stub::PrepareAsyncGetOperationsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse, ::tinkoff::public_::invest::api::contract::v1::OperationsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetOperations_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::OperationsResponse>* OperationsService::Stub::AsyncGetOperationsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>* OperationsService::Stub::AsyncGetOperationsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetOperationsRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest& request, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPortfolio_, context, request, response);
+::grpc::Status OperationsService::Stub::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPortfolio_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPortfolio_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPortfolio_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPortfolio_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse>* OperationsService::Stub::PrepareAsyncGetPortfolioRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse, ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPortfolio_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>* OperationsService::Stub::PrepareAsyncGetPortfolioRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPortfolio_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse>* OperationsService::Stub::AsyncGetPortfolioRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>* OperationsService::Stub::AsyncGetPortfolioRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetPortfolioRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetPositions(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest& request, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PositionsRequest, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPositions_, context, request, response);
+::grpc::Status OperationsService::Stub::GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PositionsRequest, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetPositions_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetPositions(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PositionsRequest, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPositions_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PositionsRequest, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPositions_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetPositions(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetPositions_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PositionsResponse>* OperationsService::Stub::PrepareAsyncGetPositionsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::PositionsResponse, ::tinkoff::pub::invest::api::contract::v1::PositionsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPositions_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>* OperationsService::Stub::PrepareAsyncGetPositionsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse, ::tinkoff::public_::invest::api::contract::v1::PositionsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetPositions_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PositionsResponse>* OperationsService::Stub::AsyncGetPositionsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>* OperationsService::Stub::AsyncGetPositionsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetPositionsRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest& request, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetWithdrawLimits_, context, request, response);
+::grpc::Status OperationsService::Stub::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetWithdrawLimits_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetWithdrawLimits_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetWithdrawLimits_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetWithdrawLimits_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse>* OperationsService::Stub::PrepareAsyncGetWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetWithdrawLimits_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>* OperationsService::Stub::PrepareAsyncGetWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetWithdrawLimits_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse>* OperationsService::Stub::AsyncGetWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>* OperationsService::Stub::AsyncGetWithdrawLimitsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetWithdrawLimitsRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest& request, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBrokerReport_, context, request, response);
+::grpc::Status OperationsService::Stub::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBrokerReport_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBrokerReport_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBrokerReport_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBrokerReport_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse>* OperationsService::Stub::PrepareAsyncGetBrokerReportRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse, ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBrokerReport_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>* OperationsService::Stub::PrepareAsyncGetBrokerReportRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse, ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBrokerReport_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse>* OperationsService::Stub::AsyncGetBrokerReportRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>* OperationsService::Stub::AsyncGetBrokerReportRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetBrokerReportRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetDividendsForeignIssuer_, context, request, response);
+::grpc::Status OperationsService::Stub::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetDividendsForeignIssuer_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetDividendsForeignIssuer_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetDividendsForeignIssuer_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetDividendsForeignIssuer_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse>* OperationsService::Stub::PrepareAsyncGetDividendsForeignIssuerRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetDividendsForeignIssuer_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>* OperationsService::Stub::PrepareAsyncGetDividendsForeignIssuerRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetDividendsForeignIssuer_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse>* OperationsService::Stub::AsyncGetDividendsForeignIssuerRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>* OperationsService::Stub::AsyncGetDividendsForeignIssuerRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetDividendsForeignIssuerRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status OperationsService::Stub::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetOperationsByCursor_, context, request, response);
+::grpc::Status OperationsService::Stub::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetOperationsByCursor_, context, request, response);
 }
 
-void OperationsService::Stub::async::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperationsByCursor_, context, request, response, std::move(f));
+void OperationsService::Stub::async::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperationsByCursor_, context, request, response, std::move(f));
 }
 
-void OperationsService::Stub::async::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void OperationsService::Stub::async::GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetOperationsByCursor_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse>* OperationsService::Stub::PrepareAsyncGetOperationsByCursorRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetOperationsByCursor_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse>* OperationsService::Stub::PrepareAsyncGetOperationsByCursorRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetOperationsByCursor_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse>* OperationsService::Stub::AsyncGetOperationsByCursorRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse>* OperationsService::Stub::AsyncGetOperationsByCursorRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetOperationsByCursorRaw(context, request, cq);
   result->StartCall();
@@ -217,71 +217,71 @@ OperationsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::OperationsRequest, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::OperationsRequest, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::OperationsResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* resp) {
                return service->GetOperations(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* resp) {
                return service->GetPortfolio(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::PositionsRequest, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::PositionsRequest, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::PositionsResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* resp) {
                return service->GetPositions(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* resp) {
                return service->GetWithdrawLimits(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* resp) {
                return service->GetBrokerReport(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* resp) {
                return service->GetDividendsForeignIssuer(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< OperationsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](OperationsService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* resp) {
                return service->GetOperationsByCursor(ctx, req, resp);
              }, this)));
 }
@@ -289,49 +289,49 @@ OperationsService::Service::Service() {
 OperationsService::Service::~Service() {
 }
 
-::grpc::Status OperationsService::Service::GetOperations(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::pub::invest::api::contract::v1::OperationsResponse* response) {
+::grpc::Status OperationsService::Service::GetOperations(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetPortfolio(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::pub::invest::api::contract::v1::PortfolioResponse* response) {
+::grpc::Status OperationsService::Service::GetPortfolio(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetPositions(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::pub::invest::api::contract::v1::PositionsResponse* response) {
+::grpc::Status OperationsService::Service::GetPositions(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetWithdrawLimits(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::pub::invest::api::contract::v1::WithdrawLimitsResponse* response) {
+::grpc::Status OperationsService::Service::GetWithdrawLimits(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetBrokerReport(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::pub::invest::api::contract::v1::BrokerReportResponse* response) {
+::grpc::Status OperationsService::Service::GetBrokerReport(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetDividendsForeignIssuer(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response) {
+::grpc::Status OperationsService::Service::GetDividendsForeignIssuer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsService::Service::GetOperationsByCursor(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetOperationsByCursorResponse* response) {
+::grpc::Status OperationsService::Service::GetOperationsByCursor(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -340,8 +340,8 @@ OperationsService::Service::~Service() {
 
 
 static const char* OperationsStreamService_method_names[] = {
-  "/tinkoff.pub.invest.api.contract.v1.OperationsStreamService/PortfolioStream",
-  "/tinkoff.pub.invest.api.contract.v1.OperationsStreamService/PositionsStream",
+  "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PortfolioStream",
+  "/tinkoff.public.invest.api.contract.v1.OperationsStreamService/PositionsStream",
 };
 
 std::unique_ptr< OperationsStreamService::Stub> OperationsStreamService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -355,57 +355,57 @@ OperationsStreamService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterf
   , rpcmethod_PositionsStream_(OperationsStreamService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
-::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::PortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest& request) {
-  return ::grpc::internal::ClientReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), rpcmethod_PortfolioStream_, context, request);
+::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::PortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), rpcmethod_PortfolioStream_, context, request);
 }
 
-void OperationsStreamService::Stub::async::PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_PortfolioStream_, context, request, reactor);
+void OperationsStreamService::Stub::async::PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_PortfolioStream_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::AsyncPortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), cq, rpcmethod_PortfolioStream_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::AsyncPortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), cq, rpcmethod_PortfolioStream_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::PrepareAsyncPortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), cq, rpcmethod_PortfolioStream_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* OperationsStreamService::Stub::PrepareAsyncPortfolioStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>::Create(channel_.get(), cq, rpcmethod_PortfolioStream_, context, request, false, nullptr);
 }
 
-::grpc::ClientReader< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::PositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest& request) {
-  return ::grpc::internal::ClientReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), rpcmethod_PositionsStream_, context, request);
+::grpc::ClientReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::PositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), rpcmethod_PositionsStream_, context, request);
 }
 
-void OperationsStreamService::Stub::async::PositionsStream(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_PositionsStream_, context, request, reactor);
+void OperationsStreamService::Stub::async::PositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_PositionsStream_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::AsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), cq, rpcmethod_PositionsStream_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::AsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), cq, rpcmethod_PositionsStream_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::PrepareAsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), cq, rpcmethod_PositionsStream_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* OperationsStreamService::Stub::PrepareAsyncPositionsStreamRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>::Create(channel_.get(), cq, rpcmethod_PositionsStream_, context, request, false, nullptr);
 }
 
 OperationsStreamService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsStreamService_method_names[0],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< OperationsStreamService::Service, ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest, ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>(
+      new ::grpc::internal::ServerStreamingHandler< OperationsStreamService::Service, ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest, ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>(
           [](OperationsStreamService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest* req,
-             ::grpc::ServerWriter<::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* writer) {
+             const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* req,
+             ::grpc::ServerWriter<::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* writer) {
                return service->PortfolioStream(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OperationsStreamService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< OperationsStreamService::Service, ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest, ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>(
+      new ::grpc::internal::ServerStreamingHandler< OperationsStreamService::Service, ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest, ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>(
           [](OperationsStreamService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest* req,
-             ::grpc::ServerWriter<::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* writer) {
+             const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* req,
+             ::grpc::ServerWriter<::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer) {
                return service->PositionsStream(ctx, req, writer);
              }, this)));
 }
@@ -413,14 +413,14 @@ OperationsStreamService::Service::Service() {
 OperationsStreamService::Service::~Service() {
 }
 
-::grpc::Status OperationsStreamService::Service::PortfolioStream(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::PortfolioStreamResponse>* writer) {
+::grpc::Status OperationsStreamService::Service::PortfolioStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status OperationsStreamService::Service::PositionsStream(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::pub::invest::api::contract::v1::PositionsStreamResponse>* writer) {
+::grpc::Status OperationsStreamService::Service::PositionsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;
@@ -429,7 +429,7 @@ OperationsStreamService::Service::~Service() {
 
 
 }  // namespace tinkoff
-}  // namespace pub
+}  // namespace public_
 }  // namespace invest
 }  // namespace api
 }  // namespace contract

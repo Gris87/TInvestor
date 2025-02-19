@@ -20,16 +20,16 @@
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
 namespace v1 {
 
 static const char* StopOrdersService_method_names[] = {
-  "/tinkoff.pub.invest.api.contract.v1.StopOrdersService/PostStopOrder",
-  "/tinkoff.pub.invest.api.contract.v1.StopOrdersService/GetStopOrders",
-  "/tinkoff.pub.invest.api.contract.v1.StopOrdersService/CancelStopOrder",
+  "/tinkoff.public.invest.api.contract.v1.StopOrdersService/PostStopOrder",
+  "/tinkoff.public.invest.api.contract.v1.StopOrdersService/GetStopOrders",
+  "/tinkoff.public.invest.api.contract.v1.StopOrdersService/CancelStopOrder",
 };
 
 std::unique_ptr< StopOrdersService::Stub> StopOrdersService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -44,69 +44,69 @@ StopOrdersService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& 
   , rpcmethod_CancelStopOrder_(StopOrdersService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status StopOrdersService::Stub::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PostStopOrder_, context, request, response);
+::grpc::Status StopOrdersService::Stub::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_PostStopOrder_, context, request, response);
 }
 
-void StopOrdersService::Stub::async::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PostStopOrder_, context, request, response, std::move(f));
+void StopOrdersService::Stub::async::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PostStopOrder_, context, request, response, std::move(f));
 }
 
-void StopOrdersService::Stub::async::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void StopOrdersService::Stub::async::PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_PostStopOrder_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse>* StopOrdersService::Stub::PrepareAsyncPostStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PostStopOrder_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* StopOrdersService::Stub::PrepareAsyncPostStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_PostStopOrder_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse>* StopOrdersService::Stub::AsyncPostStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>* StopOrdersService::Stub::AsyncPostStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncPostStopOrderRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status StopOrdersService::Stub::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStopOrders_, context, request, response);
+::grpc::Status StopOrdersService::Stub::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStopOrders_, context, request, response);
 }
 
-void StopOrdersService::Stub::async::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStopOrders_, context, request, response, std::move(f));
+void StopOrdersService::Stub::async::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStopOrders_, context, request, response, std::move(f));
 }
 
-void StopOrdersService::Stub::async::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void StopOrdersService::Stub::async::GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStopOrders_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse>* StopOrdersService::Stub::PrepareAsyncGetStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStopOrders_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* StopOrdersService::Stub::PrepareAsyncGetStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStopOrders_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse>* StopOrdersService::Stub::AsyncGetStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>* StopOrdersService::Stub::AsyncGetStopOrdersRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetStopOrdersRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status StopOrdersService::Stub::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest& request, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CancelStopOrder_, context, request, response);
+::grpc::Status StopOrdersService::Stub::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CancelStopOrder_, context, request, response);
 }
 
-void StopOrdersService::Stub::async::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelStopOrder_, context, request, response, std::move(f));
+void StopOrdersService::Stub::async::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelStopOrder_, context, request, response, std::move(f));
 }
 
-void StopOrdersService::Stub::async::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void StopOrdersService::Stub::async::CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CancelStopOrder_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse>* StopOrdersService::Stub::PrepareAsyncCancelStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CancelStopOrder_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* StopOrdersService::Stub::PrepareAsyncCancelStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CancelStopOrder_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse>* StopOrdersService::Stub::AsyncCancelStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>* StopOrdersService::Stub::AsyncCancelStopOrderRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncCancelStopOrderRaw(context, request, cq);
   result->StartCall();
@@ -117,31 +117,31 @@ StopOrdersService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StopOrdersService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StopOrdersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* resp) {
                return service->PostStopOrder(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StopOrdersService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StopOrdersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* resp) {
                return service->GetStopOrders(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       StopOrdersService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< StopOrdersService::Service, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](StopOrdersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* resp) {
                return service->CancelStopOrder(ctx, req, resp);
              }, this)));
 }
@@ -149,21 +149,21 @@ StopOrdersService::Service::Service() {
 StopOrdersService::Service::~Service() {
 }
 
-::grpc::Status StopOrdersService::Service::PostStopOrder(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::PostStopOrderResponse* response) {
+::grpc::Status StopOrdersService::Service::PostStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StopOrdersService::Service::GetStopOrders(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStopOrdersResponse* response) {
+::grpc::Status StopOrdersService::Service::GetStopOrders(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status StopOrdersService::Service::CancelStopOrder(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::pub::invest::api::contract::v1::CancelStopOrderResponse* response) {
+::grpc::Status StopOrdersService::Service::CancelStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -172,7 +172,7 @@ StopOrdersService::Service::~Service() {
 
 
 }  // namespace tinkoff
-}  // namespace pub
+}  // namespace public_
 }  // namespace invest
 }  // namespace api
 }  // namespace contract

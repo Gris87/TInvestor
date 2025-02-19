@@ -56,7 +56,7 @@ struct TableStruct_signals_2eproto {
 extern const ::google::protobuf::internal::DescriptorTable
     descriptor_table_signals_2eproto;
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -83,7 +83,7 @@ extern StrategyDefaultTypeInternal _Strategy_default_instance_;
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 namespace google {
 namespace protobuf {
@@ -91,7 +91,7 @@ namespace protobuf {
 }  // namespace google
 
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
@@ -206,7 +206,7 @@ inline bool SignalState_Parse(absl::string_view name, SignalState* value) {
 // -------------------------------------------------------------------
 
 class GetStrategiesRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest) */ {
  public:
   inline GetStrategiesRequest() : GetStrategiesRequest(nullptr) {}
   ~GetStrategiesRequest() PROTOBUF_FINAL;
@@ -330,7 +330,7 @@ class GetStrategiesRequest final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetStrategiesRequest"; }
 
  protected:
   explicit GetStrategiesRequest(::google::protobuf::Arena* arena);
@@ -370,13 +370,13 @@ class GetStrategiesRequest final : public ::google::protobuf::Message
   std::string* _internal_mutable_strategy_id();
 
   public:
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest)
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       0, 1, 0,
-      75, 2>
+      78, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -404,7 +404,7 @@ class GetStrategiesRequest final : public ::google::protobuf::Message
 // -------------------------------------------------------------------
 
 class Strategy final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.Strategy) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.Strategy) */ {
  public:
   inline Strategy() : Strategy(nullptr) {}
   ~Strategy() PROTOBUF_FINAL;
@@ -528,7 +528,7 @@ class Strategy final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.Strategy"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.Strategy"; }
 
  protected:
   explicit Strategy(::google::protobuf::Arena* arena);
@@ -628,74 +628,74 @@ class Strategy final : public ::google::protobuf::Message
   std::string* _internal_mutable_strategy_url();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
   bool has_average_signal_yield() const;
   void clear_average_signal_yield() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& average_signal_yield() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_average_signal_yield();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_average_signal_yield();
-  void set_allocated_average_signal_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_average_signal_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_average_signal_yield();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& average_signal_yield() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_average_signal_yield();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_average_signal_yield();
+  void set_allocated_average_signal_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_average_signal_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_average_signal_yield();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_average_signal_yield() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_average_signal_yield();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_average_signal_yield() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_average_signal_yield();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
   bool has_average_signal_yield_year() const;
   void clear_average_signal_yield_year() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& average_signal_yield_year() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_average_signal_yield_year();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_average_signal_yield_year();
-  void set_allocated_average_signal_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_average_signal_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_average_signal_yield_year();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& average_signal_yield_year() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_average_signal_yield_year();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_average_signal_yield_year();
+  void set_allocated_average_signal_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_average_signal_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_average_signal_yield_year();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_average_signal_yield_year() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_average_signal_yield_year();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_average_signal_yield_year() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_average_signal_yield_year();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
   bool has_yield() const;
   void clear_yield() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& yield() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_yield();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_yield();
-  void set_allocated_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_yield();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& yield() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_yield();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_yield();
+  void set_allocated_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_yield();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_yield() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_yield();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_yield() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_yield();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
   bool has_yield_year() const;
   void clear_yield_year() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& yield_year() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_yield_year();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_yield_year();
-  void set_allocated_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_yield_year();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& yield_year() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_yield_year();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_yield_year();
+  void set_allocated_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_yield_year();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_yield_year() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_yield_year();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_yield_year() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_yield_year();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
   void clear_strategy_type() ;
-  ::tinkoff::pub::invest::api::contract::v1::StrategyType strategy_type() const;
-  void set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value);
+  ::tinkoff::public_::invest::api::contract::v1::StrategyType strategy_type() const;
+  void set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value);
 
   private:
-  ::tinkoff::pub::invest::api::contract::v1::StrategyType _internal_strategy_type() const;
-  void _internal_set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value);
+  ::tinkoff::public_::invest::api::contract::v1::StrategyType _internal_strategy_type() const;
+  void _internal_set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value);
 
   public:
   // int32 active_signals = 6 [(.google.api.field_behavior) = REQUIRED];
@@ -728,13 +728,13 @@ class Strategy final : public ::google::protobuf::Message
   void _internal_set_total_signals(::int32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.Strategy)
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.Strategy)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       4, 12, 4,
-      116, 2>
+      119, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -757,10 +757,10 @@ class Strategy final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr strategy_name_;
     ::google::protobuf::internal::ArenaStringPtr strategy_description_;
     ::google::protobuf::internal::ArenaStringPtr strategy_url_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* average_signal_yield_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* average_signal_yield_year_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* yield_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* yield_year_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* average_signal_yield_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* average_signal_yield_year_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* yield_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* yield_year_;
     int strategy_type_;
     ::int32_t active_signals_;
     ::int64_t time_in_position_;
@@ -773,7 +773,7 @@ class Strategy final : public ::google::protobuf::Message
 // -------------------------------------------------------------------
 
 class Signal final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.Signal) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.Signal) */ {
  public:
   inline Signal() : Signal(nullptr) {}
   ~Signal() PROTOBUF_FINAL;
@@ -897,7 +897,7 @@ class Signal final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.Signal"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.Signal"; }
 
  protected:
   explicit Signal(::google::protobuf::Arena* arena);
@@ -1046,34 +1046,34 @@ class Signal final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_create_dt();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
   bool has_initial_price() const;
   void clear_initial_price() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& initial_price() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_initial_price();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_initial_price();
-  void set_allocated_initial_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_initial_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_initial_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& initial_price() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_initial_price();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_initial_price();
+  void set_allocated_initial_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_initial_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_initial_price();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_initial_price() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_initial_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_initial_price() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_initial_price();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
   bool has_target_price() const;
   void clear_target_price() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& target_price() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_target_price();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_target_price();
-  void set_allocated_target_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_target_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_target_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& target_price() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_target_price();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_target_price();
+  void set_allocated_target_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_target_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_target_price();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_target_price() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_target_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_target_price() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_target_price();
 
   public:
   // .google.protobuf.Timestamp end_dt = 11 [(.google.api.field_behavior) = REQUIRED];
@@ -1091,34 +1091,34 @@ class Signal final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_end_dt();
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+  // optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
   bool has_stoploss() const;
   void clear_stoploss() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& stoploss() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_stoploss();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_stoploss();
-  void set_allocated_stoploss(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_stoploss(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_stoploss();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& stoploss() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_stoploss();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_stoploss();
+  void set_allocated_stoploss(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_stoploss(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_stoploss();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_stoploss() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_stoploss();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_stoploss() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_stoploss();
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+  // optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
   bool has_close_price() const;
   void clear_close_price() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& close_price() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Quotation* release_close_price();
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* mutable_close_price();
-  void set_allocated_close_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  void unsafe_arena_set_allocated_close_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value);
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* unsafe_arena_release_close_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& close_price() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_close_price();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_close_price();
+  void set_allocated_close_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_close_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_close_price();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation& _internal_close_price() const;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _internal_mutable_close_price();
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_close_price() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_close_price();
 
   public:
   // optional .google.protobuf.Timestamp close_dt = 15;
@@ -1136,14 +1136,14 @@ class Signal final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_close_dt();
 
   public:
-  // .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+  // .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
   void clear_direction() ;
-  ::tinkoff::pub::invest::api::contract::v1::SignalDirection direction() const;
-  void set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalDirection direction() const;
+  void set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value);
 
   private:
-  ::tinkoff::pub::invest::api::contract::v1::SignalDirection _internal_direction() const;
-  void _internal_set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalDirection _internal_direction() const;
+  void _internal_set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value);
 
   public:
   // optional int32 probability = 12;
@@ -1157,13 +1157,13 @@ class Signal final : public ::google::protobuf::Message
   void _internal_set_probability(::int32_t value);
 
   public:
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.Signal)
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.Signal)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       4, 15, 7,
-      113, 2>
+      116, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1189,11 +1189,11 @@ class Signal final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr info_;
     ::google::protobuf::internal::ArenaStringPtr name_;
     ::google::protobuf::Timestamp* create_dt_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* initial_price_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* target_price_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* initial_price_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* target_price_;
     ::google::protobuf::Timestamp* end_dt_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* stoploss_;
-    ::tinkoff::pub::invest::api::contract::v1::Quotation* close_price_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* stoploss_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* close_price_;
     ::google::protobuf::Timestamp* close_dt_;
     int direction_;
     ::int32_t probability_;
@@ -1205,7 +1205,7 @@ class Signal final : public ::google::protobuf::Message
 // -------------------------------------------------------------------
 
 class GetSignalsRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetSignalsRequest) */ {
  public:
   inline GetSignalsRequest() : GetSignalsRequest(nullptr) {}
   ~GetSignalsRequest() PROTOBUF_FINAL;
@@ -1329,7 +1329,7 @@ class GetSignalsRequest final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.GetSignalsRequest"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetSignalsRequest"; }
 
  protected:
   explicit GetSignalsRequest(::google::protobuf::Arena* arena);
@@ -1441,61 +1441,61 @@ class GetSignalsRequest final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_to();
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+  // optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
   bool has_paging() const;
   void clear_paging() ;
-  const ::tinkoff::pub::invest::api::contract::v1::Page& paging() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::Page* release_paging();
-  ::tinkoff::pub::invest::api::contract::v1::Page* mutable_paging();
-  void set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::Page* value);
-  void unsafe_arena_set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::Page* value);
-  ::tinkoff::pub::invest::api::contract::v1::Page* unsafe_arena_release_paging();
+  const ::tinkoff::public_::invest::api::contract::v1::Page& paging() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Page* release_paging();
+  ::tinkoff::public_::invest::api::contract::v1::Page* mutable_paging();
+  void set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::Page* value);
+  void unsafe_arena_set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::Page* value);
+  ::tinkoff::public_::invest::api::contract::v1::Page* unsafe_arena_release_paging();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::Page& _internal_paging() const;
-  ::tinkoff::pub::invest::api::contract::v1::Page* _internal_mutable_paging();
+  const ::tinkoff::public_::invest::api::contract::v1::Page& _internal_paging() const;
+  ::tinkoff::public_::invest::api::contract::v1::Page* _internal_mutable_paging();
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+  // optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
   bool has_strategy_type() const;
   void clear_strategy_type() ;
-  ::tinkoff::pub::invest::api::contract::v1::StrategyType strategy_type() const;
-  void set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value);
+  ::tinkoff::public_::invest::api::contract::v1::StrategyType strategy_type() const;
+  void set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value);
 
   private:
-  ::tinkoff::pub::invest::api::contract::v1::StrategyType _internal_strategy_type() const;
-  void _internal_set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value);
+  ::tinkoff::public_::invest::api::contract::v1::StrategyType _internal_strategy_type() const;
+  void _internal_set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value);
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+  // optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
   bool has_direction() const;
   void clear_direction() ;
-  ::tinkoff::pub::invest::api::contract::v1::SignalDirection direction() const;
-  void set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalDirection direction() const;
+  void set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value);
 
   private:
-  ::tinkoff::pub::invest::api::contract::v1::SignalDirection _internal_direction() const;
-  void _internal_set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalDirection _internal_direction() const;
+  void _internal_set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value);
 
   public:
-  // optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+  // optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
   bool has_active() const;
   void clear_active() ;
-  ::tinkoff::pub::invest::api::contract::v1::SignalState active() const;
-  void set_active(::tinkoff::pub::invest::api::contract::v1::SignalState value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalState active() const;
+  void set_active(::tinkoff::public_::invest::api::contract::v1::SignalState value);
 
   private:
-  ::tinkoff::pub::invest::api::contract::v1::SignalState _internal_active() const;
-  void _internal_set_active(::tinkoff::pub::invest::api::contract::v1::SignalState value);
+  ::tinkoff::public_::invest::api::contract::v1::SignalState _internal_active() const;
+  void _internal_set_active(::tinkoff::public_::invest::api::contract::v1::SignalState value);
 
   public:
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest)
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetSignalsRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
       4, 9, 3,
-      103, 2>
+      106, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1519,7 +1519,7 @@ class GetSignalsRequest final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
     ::google::protobuf::Timestamp* from_;
     ::google::protobuf::Timestamp* to_;
-    ::tinkoff::pub::invest::api::contract::v1::Page* paging_;
+    ::tinkoff::public_::invest::api::contract::v1::Page* paging_;
     int strategy_type_;
     int direction_;
     int active_;
@@ -1531,7 +1531,7 @@ class GetSignalsRequest final : public ::google::protobuf::Message
 // -------------------------------------------------------------------
 
 class GetStrategiesResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse) */ {
  public:
   inline GetStrategiesResponse() : GetStrategiesResponse(nullptr) {}
   ~GetStrategiesResponse() PROTOBUF_FINAL;
@@ -1655,7 +1655,7 @@ class GetStrategiesResponse final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetStrategiesResponse"; }
 
  protected:
   explicit GetStrategiesResponse(::google::protobuf::Arena* arena);
@@ -1678,24 +1678,24 @@ class GetStrategiesResponse final : public ::google::protobuf::Message
   enum : int {
     kStrategiesFieldNumber = 1,
   };
-  // repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+  // repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
   int strategies_size() const;
   private:
   int _internal_strategies_size() const;
 
   public:
   void clear_strategies() ;
-  ::tinkoff::pub::invest::api::contract::v1::Strategy* mutable_strategies(int index);
-  ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>* mutable_strategies();
+  ::tinkoff::public_::invest::api::contract::v1::Strategy* mutable_strategies(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>* mutable_strategies();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>& _internal_strategies() const;
-  ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>* _internal_mutable_strategies();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>& _internal_strategies() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>* _internal_mutable_strategies();
   public:
-  const ::tinkoff::pub::invest::api::contract::v1::Strategy& strategies(int index) const;
-  ::tinkoff::pub::invest::api::contract::v1::Strategy* add_strategies();
-  const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>& strategies() const;
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse)
+  const ::tinkoff::public_::invest::api::contract::v1::Strategy& strategies(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::Strategy* add_strategies();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>& strategies() const;
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -1718,7 +1718,7 @@ class GetStrategiesResponse final : public ::google::protobuf::Message
     inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
                           ::google::protobuf::Arena* arena, const Impl_& from,
                           const GetStrategiesResponse& from_msg);
-    ::google::protobuf::RepeatedPtrField< ::tinkoff::pub::invest::api::contract::v1::Strategy > strategies_;
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::Strategy > strategies_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1728,7 +1728,7 @@ class GetStrategiesResponse final : public ::google::protobuf::Message
 // -------------------------------------------------------------------
 
 class GetSignalsResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse) */ {
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetSignalsResponse) */ {
  public:
   inline GetSignalsResponse() : GetSignalsResponse(nullptr) {}
   ~GetSignalsResponse() PROTOBUF_FINAL;
@@ -1852,7 +1852,7 @@ class GetSignalsResponse final : public ::google::protobuf::Message
   template <typename T>
   friend ::absl::string_view(
       ::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "tinkoff.pub.invest.api.contract.v1.GetSignalsResponse"; }
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetSignalsResponse"; }
 
  protected:
   explicit GetSignalsResponse(::google::protobuf::Arena* arena);
@@ -1876,39 +1876,39 @@ class GetSignalsResponse final : public ::google::protobuf::Message
     kSignalsFieldNumber = 1,
     kPagingFieldNumber = 2,
   };
-  // repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+  // repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
   int signals_size() const;
   private:
   int _internal_signals_size() const;
 
   public:
   void clear_signals() ;
-  ::tinkoff::pub::invest::api::contract::v1::Signal* mutable_signals(int index);
-  ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>* mutable_signals();
+  ::tinkoff::public_::invest::api::contract::v1::Signal* mutable_signals(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>* mutable_signals();
 
   private:
-  const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>& _internal_signals() const;
-  ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>* _internal_mutable_signals();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>& _internal_signals() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>* _internal_mutable_signals();
   public:
-  const ::tinkoff::pub::invest::api::contract::v1::Signal& signals(int index) const;
-  ::tinkoff::pub::invest::api::contract::v1::Signal* add_signals();
-  const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>& signals() const;
-  // .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+  const ::tinkoff::public_::invest::api::contract::v1::Signal& signals(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::Signal* add_signals();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>& signals() const;
+  // .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
   bool has_paging() const;
   void clear_paging() ;
-  const ::tinkoff::pub::invest::api::contract::v1::PageResponse& paging() const;
-  PROTOBUF_NODISCARD ::tinkoff::pub::invest::api::contract::v1::PageResponse* release_paging();
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* mutable_paging();
-  void set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::PageResponse* value);
-  void unsafe_arena_set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::PageResponse* value);
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* unsafe_arena_release_paging();
+  const ::tinkoff::public_::invest::api::contract::v1::PageResponse& paging() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::PageResponse* release_paging();
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* mutable_paging();
+  void set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::PageResponse* value);
+  void unsafe_arena_set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::PageResponse* value);
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* unsafe_arena_release_paging();
 
   private:
-  const ::tinkoff::pub::invest::api::contract::v1::PageResponse& _internal_paging() const;
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* _internal_mutable_paging();
+  const ::tinkoff::public_::invest::api::contract::v1::PageResponse& _internal_paging() const;
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* _internal_mutable_paging();
 
   public:
-  // @@protoc_insertion_point(class_scope:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse)
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetSignalsResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
@@ -1933,8 +1933,8 @@ class GetSignalsResponse final : public ::google::protobuf::Message
                           const GetSignalsResponse& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::RepeatedPtrField< ::tinkoff::pub::invest::api::contract::v1::Signal > signals_;
-    ::tinkoff::pub::invest::api::contract::v1::PageResponse* paging_;
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::Signal > signals_;
+    ::tinkoff::public_::invest::api::contract::v1::PageResponse* paging_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -1969,7 +1969,7 @@ inline void GetStrategiesRequest::clear_strategy_id() {
 }
 inline const std::string& GetStrategiesRequest::strategy_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
   return _internal_strategy_id();
 }
 template <typename Arg_, typename... Args_>
@@ -1978,11 +1978,11 @@ inline PROTOBUF_ALWAYS_INLINE void GetStrategiesRequest::set_strategy_id(Arg_&& 
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.strategy_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
 }
 inline std::string* GetStrategiesRequest::mutable_strategy_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
   return _s;
 }
 inline const std::string& GetStrategiesRequest::_internal_strategy_id() const {
@@ -2001,7 +2001,7 @@ inline std::string* GetStrategiesRequest::_internal_mutable_strategy_id() {
 }
 inline std::string* GetStrategiesRequest::release_strategy_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -2023,14 +2023,14 @@ inline void GetStrategiesRequest::set_allocated_strategy_id(std::string* value) 
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_id_.IsDefault()) {
     _impl_.strategy_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetStrategiesRequest.strategy_id)
 }
 
 // -------------------------------------------------------------------
 
 // GetStrategiesResponse
 
-// repeated .tinkoff.pub.invest.api.contract.v1.Strategy strategies = 1;
+// repeated .tinkoff.public.invest.api.contract.v1.Strategy strategies = 1;
 inline int GetStrategiesResponse::_internal_strategies_size() const {
   return _internal_strategies().size();
 }
@@ -2041,39 +2041,39 @@ inline void GetStrategiesResponse::clear_strategies() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategies_.Clear();
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Strategy* GetStrategiesResponse::mutable_strategies(int index)
+inline ::tinkoff::public_::invest::api::contract::v1::Strategy* GetStrategiesResponse::mutable_strategies(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse.strategies)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse.strategies)
   return _internal_mutable_strategies()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>* GetStrategiesResponse::mutable_strategies()
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>* GetStrategiesResponse::mutable_strategies()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse.strategies)
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse.strategies)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _internal_mutable_strategies();
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Strategy& GetStrategiesResponse::strategies(int index) const
+inline const ::tinkoff::public_::invest::api::contract::v1::Strategy& GetStrategiesResponse::strategies(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse.strategies)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse.strategies)
   return _internal_strategies().Get(index);
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Strategy* GetStrategiesResponse::add_strategies() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Strategy* GetStrategiesResponse::add_strategies() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::tinkoff::pub::invest::api::contract::v1::Strategy* _add = _internal_mutable_strategies()->Add();
-  // @@protoc_insertion_point(field_add:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse.strategies)
+  ::tinkoff::public_::invest::api::contract::v1::Strategy* _add = _internal_mutable_strategies()->Add();
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse.strategies)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>& GetStrategiesResponse::strategies() const
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>& GetStrategiesResponse::strategies() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:tinkoff.pub.invest.api.contract.v1.GetStrategiesResponse.strategies)
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetStrategiesResponse.strategies)
   return _internal_strategies();
 }
-inline const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>&
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>&
 GetStrategiesResponse::_internal_strategies() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.strategies_;
 }
-inline ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Strategy>*
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Strategy>*
 GetStrategiesResponse::_internal_mutable_strategies() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.strategies_;
@@ -2090,7 +2090,7 @@ inline void Strategy::clear_strategy_id() {
 }
 inline const std::string& Strategy::strategy_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.strategy_id)
   return _internal_strategy_id();
 }
 template <typename Arg_, typename... Args_>
@@ -2098,11 +2098,11 @@ inline PROTOBUF_ALWAYS_INLINE void Strategy::set_strategy_id(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.strategy_id)
 }
 inline std::string* Strategy::mutable_strategy_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.strategy_id)
   return _s;
 }
 inline const std::string& Strategy::_internal_strategy_id() const {
@@ -2119,7 +2119,7 @@ inline std::string* Strategy::_internal_mutable_strategy_id() {
 }
 inline std::string* Strategy::release_strategy_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.strategy_id)
   return _impl_.strategy_id_.Release();
 }
 inline void Strategy::set_allocated_strategy_id(std::string* value) {
@@ -2128,7 +2128,7 @@ inline void Strategy::set_allocated_strategy_id(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_id_.IsDefault()) {
     _impl_.strategy_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.strategy_id)
 }
 
 // string strategy_name = 2 [(.google.api.field_behavior) = REQUIRED];
@@ -2138,7 +2138,7 @@ inline void Strategy::clear_strategy_name() {
 }
 inline const std::string& Strategy::strategy_name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.strategy_name)
   return _internal_strategy_name();
 }
 template <typename Arg_, typename... Args_>
@@ -2146,11 +2146,11 @@ inline PROTOBUF_ALWAYS_INLINE void Strategy::set_strategy_name(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.strategy_name)
 }
 inline std::string* Strategy::mutable_strategy_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_name();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.strategy_name)
   return _s;
 }
 inline const std::string& Strategy::_internal_strategy_name() const {
@@ -2167,7 +2167,7 @@ inline std::string* Strategy::_internal_mutable_strategy_name() {
 }
 inline std::string* Strategy::release_strategy_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.strategy_name)
   return _impl_.strategy_name_.Release();
 }
 inline void Strategy::set_allocated_strategy_name(std::string* value) {
@@ -2176,7 +2176,7 @@ inline void Strategy::set_allocated_strategy_name(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_name_.IsDefault()) {
     _impl_.strategy_name_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_name)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.strategy_name)
 }
 
 // optional string strategy_description = 3;
@@ -2191,7 +2191,7 @@ inline void Strategy::clear_strategy_description() {
 }
 inline const std::string& Strategy::strategy_description() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.strategy_description)
   return _internal_strategy_description();
 }
 template <typename Arg_, typename... Args_>
@@ -2200,11 +2200,11 @@ inline PROTOBUF_ALWAYS_INLINE void Strategy::set_strategy_description(Arg_&& arg
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.strategy_description_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.strategy_description)
 }
 inline std::string* Strategy::mutable_strategy_description() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_description();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.strategy_description)
   return _s;
 }
 inline const std::string& Strategy::_internal_strategy_description() const {
@@ -2223,7 +2223,7 @@ inline std::string* Strategy::_internal_mutable_strategy_description() {
 }
 inline std::string* Strategy::release_strategy_description() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.strategy_description)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -2245,7 +2245,7 @@ inline void Strategy::set_allocated_strategy_description(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_description_.IsDefault()) {
     _impl_.strategy_description_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_description)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.strategy_description)
 }
 
 // optional string strategy_url = 4;
@@ -2260,7 +2260,7 @@ inline void Strategy::clear_strategy_url() {
 }
 inline const std::string& Strategy::strategy_url() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.strategy_url)
   return _internal_strategy_url();
 }
 template <typename Arg_, typename... Args_>
@@ -2269,11 +2269,11 @@ inline PROTOBUF_ALWAYS_INLINE void Strategy::set_strategy_url(Arg_&& arg,
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000002u;
   _impl_.strategy_url_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.strategy_url)
 }
 inline std::string* Strategy::mutable_strategy_url() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_url();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.strategy_url)
   return _s;
 }
 inline const std::string& Strategy::_internal_strategy_url() const {
@@ -2292,7 +2292,7 @@ inline std::string* Strategy::_internal_mutable_strategy_url() {
 }
 inline std::string* Strategy::release_strategy_url() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.strategy_url)
   if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
     return nullptr;
   }
@@ -2314,27 +2314,27 @@ inline void Strategy::set_allocated_strategy_url(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_url_.IsDefault()) {
     _impl_.strategy_url_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_url)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.strategy_url)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 5 [(.google.api.field_behavior) = REQUIRED];
 inline void Strategy::clear_strategy_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_type_ = 0;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::StrategyType Strategy::strategy_type() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_type)
+inline ::tinkoff::public_::invest::api::contract::v1::StrategyType Strategy::strategy_type() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.strategy_type)
   return _internal_strategy_type();
 }
-inline void Strategy::set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value) {
+inline void Strategy::set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value) {
   _internal_set_strategy_type(value);
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.strategy_type)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.strategy_type)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::StrategyType Strategy::_internal_strategy_type() const {
+inline ::tinkoff::public_::invest::api::contract::v1::StrategyType Strategy::_internal_strategy_type() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return static_cast<::tinkoff::pub::invest::api::contract::v1::StrategyType>(_impl_.strategy_type_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::StrategyType>(_impl_.strategy_type_);
 }
-inline void Strategy::_internal_set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value) {
+inline void Strategy::_internal_set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_type_ = value;
 }
@@ -2345,12 +2345,12 @@ inline void Strategy::clear_active_signals() {
   _impl_.active_signals_ = 0;
 }
 inline ::int32_t Strategy::active_signals() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.active_signals)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.active_signals)
   return _internal_active_signals();
 }
 inline void Strategy::set_active_signals(::int32_t value) {
   _internal_set_active_signals(value);
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.active_signals)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.active_signals)
 }
 inline ::int32_t Strategy::_internal_active_signals() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -2367,12 +2367,12 @@ inline void Strategy::clear_total_signals() {
   _impl_.total_signals_ = 0;
 }
 inline ::int32_t Strategy::total_signals() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.total_signals)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.total_signals)
   return _internal_total_signals();
 }
 inline void Strategy::set_total_signals(::int32_t value) {
   _internal_set_total_signals(value);
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.total_signals)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.total_signals)
 }
 inline ::int32_t Strategy::_internal_total_signals() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -2389,12 +2389,12 @@ inline void Strategy::clear_time_in_position() {
   _impl_.time_in_position_ = ::int64_t{0};
 }
 inline ::int64_t Strategy::time_in_position() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.time_in_position)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.time_in_position)
   return _internal_time_in_position();
 }
 inline void Strategy::set_time_in_position(::int64_t value) {
   _internal_set_time_in_position(value);
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Strategy.time_in_position)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Strategy.time_in_position)
 }
 inline ::int64_t Strategy::_internal_time_in_position() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -2405,39 +2405,39 @@ inline void Strategy::_internal_set_time_in_position(::int64_t value) {
   _impl_.time_in_position_ = value;
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield = 9 [(.google.api.field_behavior) = REQUIRED];
 inline bool Strategy::has_average_signal_yield() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.average_signal_yield_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::_internal_average_signal_yield() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::_internal_average_signal_yield() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.average_signal_yield_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.average_signal_yield_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::average_signal_yield() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::average_signal_yield() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield)
   return _internal_average_signal_yield();
 }
-inline void Strategy::unsafe_arena_set_allocated_average_signal_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::unsafe_arena_set_allocated_average_signal_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.average_signal_yield_);
   }
-  _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000004u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_average_signal_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::release_average_signal_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.average_signal_yield_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.average_signal_yield_;
   _impl_.average_signal_yield_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -2452,30 +2452,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_a
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_average_signal_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_average_signal_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.average_signal_yield_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.average_signal_yield_;
   _impl_.average_signal_yield_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_average_signal_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_average_signal_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.average_signal_yield_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.average_signal_yield_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::mutable_average_signal_yield() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::mutable_average_signal_yield() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_average_signal_yield();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_average_signal_yield();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield)
   return _msg;
 }
-inline void Strategy::set_allocated_average_signal_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::set_allocated_average_signal_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -2492,43 +2492,43 @@ inline void Strategy::set_allocated_average_signal_yield(::tinkoff::pub::invest:
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
-  _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield)
+  _impl_.average_signal_yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation average_signal_yield_year = 10 [(.google.api.field_behavior) = REQUIRED];
 inline bool Strategy::has_average_signal_yield_year() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.average_signal_yield_year_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::_internal_average_signal_yield_year() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::_internal_average_signal_yield_year() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.average_signal_yield_year_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.average_signal_yield_year_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::average_signal_yield_year() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield_year)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::average_signal_yield_year() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield_year)
   return _internal_average_signal_yield_year();
 }
-inline void Strategy::unsafe_arena_set_allocated_average_signal_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::unsafe_arena_set_allocated_average_signal_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.average_signal_yield_year_);
   }
-  _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000008u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield_year)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield_year)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_average_signal_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::release_average_signal_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.average_signal_yield_year_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.average_signal_yield_year_;
   _impl_.average_signal_yield_year_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -2543,30 +2543,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_a
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_average_signal_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_average_signal_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield_year)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield_year)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.average_signal_yield_year_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.average_signal_yield_year_;
   _impl_.average_signal_yield_year_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_average_signal_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_average_signal_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.average_signal_yield_year_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.average_signal_yield_year_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::mutable_average_signal_yield_year() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::mutable_average_signal_yield_year() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_average_signal_yield_year();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield_year)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_average_signal_yield_year();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield_year)
   return _msg;
 }
-inline void Strategy::set_allocated_average_signal_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::set_allocated_average_signal_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -2583,43 +2583,43 @@ inline void Strategy::set_allocated_average_signal_yield_year(::tinkoff::pub::in
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
-  _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.average_signal_yield_year)
+  _impl_.average_signal_yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.average_signal_yield_year)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation yield = 11 [(.google.api.field_behavior) = REQUIRED];
 inline bool Strategy::has_yield() const {
   bool value = (_impl_._has_bits_[0] & 0x00000010u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.yield_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::_internal_yield() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::_internal_yield() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.yield_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.yield_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::yield() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.yield)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::yield() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.yield)
   return _internal_yield();
 }
-inline void Strategy::unsafe_arena_set_allocated_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::unsafe_arena_set_allocated_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.yield_);
   }
-  _impl_.yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000010u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000010u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.yield)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.yield)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::release_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000010u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.yield_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.yield_;
   _impl_.yield_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -2634,30 +2634,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_y
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.yield)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.yield)
 
   _impl_._has_bits_[0] &= ~0x00000010u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.yield_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.yield_;
   _impl_.yield_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_yield() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_yield() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.yield_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.yield_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::mutable_yield() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::mutable_yield() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000010u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_yield();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.yield)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_yield();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.yield)
   return _msg;
 }
-inline void Strategy::set_allocated_yield(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::set_allocated_yield(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -2674,43 +2674,43 @@ inline void Strategy::set_allocated_yield(::tinkoff::pub::invest::api::contract:
     _impl_._has_bits_[0] &= ~0x00000010u;
   }
 
-  _impl_.yield_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.yield)
+  _impl_.yield_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.yield)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation yield_year = 12 [(.google.api.field_behavior) = REQUIRED];
 inline bool Strategy::has_yield_year() const {
   bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.yield_year_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::_internal_yield_year() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::_internal_yield_year() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.yield_year_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.yield_year_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Strategy::yield_year() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Strategy.yield_year)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Strategy::yield_year() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Strategy.yield_year)
   return _internal_yield_year();
 }
-inline void Strategy::unsafe_arena_set_allocated_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::unsafe_arena_set_allocated_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.yield_year_);
   }
-  _impl_.yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000020u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.yield_year)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.yield_year)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::release_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.yield_year_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.yield_year_;
   _impl_.yield_year_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -2725,30 +2725,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::release_y
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::unsafe_arena_release_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Strategy.yield_year)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Strategy.yield_year)
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.yield_year_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.yield_year_;
   _impl_.yield_year_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_yield_year() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::_internal_mutable_yield_year() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.yield_year_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.yield_year_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Strategy::mutable_yield_year() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Strategy::mutable_yield_year() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_yield_year();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Strategy.yield_year)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_yield_year();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Strategy.yield_year)
   return _msg;
 }
-inline void Strategy::set_allocated_yield_year(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Strategy::set_allocated_yield_year(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -2765,8 +2765,8 @@ inline void Strategy::set_allocated_yield_year(::tinkoff::pub::invest::api::cont
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
 
-  _impl_.yield_year_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Strategy.yield_year)
+  _impl_.yield_year_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Strategy.yield_year)
 }
 
 // -------------------------------------------------------------------
@@ -2785,7 +2785,7 @@ inline void GetSignalsRequest::clear_signal_id() {
 }
 inline const std::string& GetSignalsRequest::signal_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id)
   return _internal_signal_id();
 }
 template <typename Arg_, typename... Args_>
@@ -2794,11 +2794,11 @@ inline PROTOBUF_ALWAYS_INLINE void GetSignalsRequest::set_signal_id(Arg_&& arg,
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.signal_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id)
 }
 inline std::string* GetSignalsRequest::mutable_signal_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_signal_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id)
   return _s;
 }
 inline const std::string& GetSignalsRequest::_internal_signal_id() const {
@@ -2817,7 +2817,7 @@ inline std::string* GetSignalsRequest::_internal_mutable_signal_id() {
 }
 inline std::string* GetSignalsRequest::release_signal_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -2839,7 +2839,7 @@ inline void GetSignalsRequest::set_allocated_signal_id(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.signal_id_.IsDefault()) {
     _impl_.signal_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.signal_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.signal_id)
 }
 
 // optional string strategy_id = 2;
@@ -2854,7 +2854,7 @@ inline void GetSignalsRequest::clear_strategy_id() {
 }
 inline const std::string& GetSignalsRequest::strategy_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id)
   return _internal_strategy_id();
 }
 template <typename Arg_, typename... Args_>
@@ -2863,11 +2863,11 @@ inline PROTOBUF_ALWAYS_INLINE void GetSignalsRequest::set_strategy_id(Arg_&& arg
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000002u;
   _impl_.strategy_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id)
 }
 inline std::string* GetSignalsRequest::mutable_strategy_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id)
   return _s;
 }
 inline const std::string& GetSignalsRequest::_internal_strategy_id() const {
@@ -2886,7 +2886,7 @@ inline std::string* GetSignalsRequest::_internal_mutable_strategy_id() {
 }
 inline std::string* GetSignalsRequest::release_strategy_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id)
   if ((_impl_._has_bits_[0] & 0x00000002u) == 0) {
     return nullptr;
   }
@@ -2908,10 +2908,10 @@ inline void GetSignalsRequest::set_allocated_strategy_id(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_id_.IsDefault()) {
     _impl_.strategy_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_id)
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.StrategyType strategy_type = 3;
+// optional .tinkoff.public.invest.api.contract.v1.StrategyType strategy_type = 3;
 inline bool GetSignalsRequest::has_strategy_type() const {
   bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   return value;
@@ -2921,20 +2921,20 @@ inline void GetSignalsRequest::clear_strategy_type() {
   _impl_.strategy_type_ = 0;
   _impl_._has_bits_[0] &= ~0x00000040u;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::StrategyType GetSignalsRequest::strategy_type() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_type)
+inline ::tinkoff::public_::invest::api::contract::v1::StrategyType GetSignalsRequest::strategy_type() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_type)
   return _internal_strategy_type();
 }
-inline void GetSignalsRequest::set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value) {
+inline void GetSignalsRequest::set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value) {
   _internal_set_strategy_type(value);
   _impl_._has_bits_[0] |= 0x00000040u;
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.strategy_type)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.strategy_type)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::StrategyType GetSignalsRequest::_internal_strategy_type() const {
+inline ::tinkoff::public_::invest::api::contract::v1::StrategyType GetSignalsRequest::_internal_strategy_type() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return static_cast<::tinkoff::pub::invest::api::contract::v1::StrategyType>(_impl_.strategy_type_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::StrategyType>(_impl_.strategy_type_);
 }
-inline void GetSignalsRequest::_internal_set_strategy_type(::tinkoff::pub::invest::api::contract::v1::StrategyType value) {
+inline void GetSignalsRequest::_internal_set_strategy_type(::tinkoff::public_::invest::api::contract::v1::StrategyType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_type_ = value;
 }
@@ -2951,7 +2951,7 @@ inline void GetSignalsRequest::clear_instrument_uid() {
 }
 inline const std::string& GetSignalsRequest::instrument_uid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
   return _internal_instrument_uid();
 }
 template <typename Arg_, typename... Args_>
@@ -2960,11 +2960,11 @@ inline PROTOBUF_ALWAYS_INLINE void GetSignalsRequest::set_instrument_uid(Arg_&& 
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000004u;
   _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
 }
 inline std::string* GetSignalsRequest::mutable_instrument_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_instrument_uid();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
   return _s;
 }
 inline const std::string& GetSignalsRequest::_internal_instrument_uid() const {
@@ -2983,7 +2983,7 @@ inline std::string* GetSignalsRequest::_internal_mutable_instrument_uid() {
 }
 inline std::string* GetSignalsRequest::release_instrument_uid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
   if ((_impl_._has_bits_[0] & 0x00000004u) == 0) {
     return nullptr;
   }
@@ -3005,7 +3005,7 @@ inline void GetSignalsRequest::set_allocated_instrument_uid(std::string* value) 
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
     _impl_.instrument_uid_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.instrument_uid)
 }
 
 // optional .google.protobuf.Timestamp from = 5;
@@ -3020,7 +3020,7 @@ inline const ::google::protobuf::Timestamp& GetSignalsRequest::_internal_from() 
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
 inline const ::google::protobuf::Timestamp& GetSignalsRequest::from() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.from)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.from)
   return _internal_from();
 }
 inline void GetSignalsRequest::unsafe_arena_set_allocated_from(::google::protobuf::Timestamp* value) {
@@ -3034,7 +3034,7 @@ inline void GetSignalsRequest::unsafe_arena_set_allocated_from(::google::protobu
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.from)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.from)
 }
 inline ::google::protobuf::Timestamp* GetSignalsRequest::release_from() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -3057,7 +3057,7 @@ inline ::google::protobuf::Timestamp* GetSignalsRequest::release_from() {
 }
 inline ::google::protobuf::Timestamp* GetSignalsRequest::unsafe_arena_release_from() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.from)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.from)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
   ::google::protobuf::Timestamp* temp = _impl_.from_;
@@ -3075,7 +3075,7 @@ inline ::google::protobuf::Timestamp* GetSignalsRequest::_internal_mutable_from(
 inline ::google::protobuf::Timestamp* GetSignalsRequest::mutable_from() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_from();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.from)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.from)
   return _msg;
 }
 inline void GetSignalsRequest::set_allocated_from(::google::protobuf::Timestamp* value) {
@@ -3096,7 +3096,7 @@ inline void GetSignalsRequest::set_allocated_from(::google::protobuf::Timestamp*
   }
 
   _impl_.from_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.from)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.from)
 }
 
 // optional .google.protobuf.Timestamp to = 6;
@@ -3111,7 +3111,7 @@ inline const ::google::protobuf::Timestamp& GetSignalsRequest::_internal_to() co
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
 inline const ::google::protobuf::Timestamp& GetSignalsRequest::to() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.to)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.to)
   return _internal_to();
 }
 inline void GetSignalsRequest::unsafe_arena_set_allocated_to(::google::protobuf::Timestamp* value) {
@@ -3125,7 +3125,7 @@ inline void GetSignalsRequest::unsafe_arena_set_allocated_to(::google::protobuf:
   } else {
     _impl_._has_bits_[0] &= ~0x00000010u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.to)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.to)
 }
 inline ::google::protobuf::Timestamp* GetSignalsRequest::release_to() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -3148,7 +3148,7 @@ inline ::google::protobuf::Timestamp* GetSignalsRequest::release_to() {
 }
 inline ::google::protobuf::Timestamp* GetSignalsRequest::unsafe_arena_release_to() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.to)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.to)
 
   _impl_._has_bits_[0] &= ~0x00000010u;
   ::google::protobuf::Timestamp* temp = _impl_.to_;
@@ -3166,7 +3166,7 @@ inline ::google::protobuf::Timestamp* GetSignalsRequest::_internal_mutable_to() 
 inline ::google::protobuf::Timestamp* GetSignalsRequest::mutable_to() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000010u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_to();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.to)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.to)
   return _msg;
 }
 inline void GetSignalsRequest::set_allocated_to(::google::protobuf::Timestamp* value) {
@@ -3187,10 +3187,10 @@ inline void GetSignalsRequest::set_allocated_to(::google::protobuf::Timestamp* v
   }
 
   _impl_.to_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.to)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.to)
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 7;
+// optional .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 7;
 inline bool GetSignalsRequest::has_direction() const {
   bool value = (_impl_._has_bits_[0] & 0x00000080u) != 0;
   return value;
@@ -3200,25 +3200,25 @@ inline void GetSignalsRequest::clear_direction() {
   _impl_.direction_ = 0;
   _impl_._has_bits_[0] &= ~0x00000080u;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalDirection GetSignalsRequest::direction() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.direction)
+inline ::tinkoff::public_::invest::api::contract::v1::SignalDirection GetSignalsRequest::direction() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.direction)
   return _internal_direction();
 }
-inline void GetSignalsRequest::set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value) {
+inline void GetSignalsRequest::set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value) {
   _internal_set_direction(value);
   _impl_._has_bits_[0] |= 0x00000080u;
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.direction)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.direction)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalDirection GetSignalsRequest::_internal_direction() const {
+inline ::tinkoff::public_::invest::api::contract::v1::SignalDirection GetSignalsRequest::_internal_direction() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return static_cast<::tinkoff::pub::invest::api::contract::v1::SignalDirection>(_impl_.direction_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SignalDirection>(_impl_.direction_);
 }
-inline void GetSignalsRequest::_internal_set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value) {
+inline void GetSignalsRequest::_internal_set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.direction_ = value;
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.SignalState active = 8;
+// optional .tinkoff.public.invest.api.contract.v1.SignalState active = 8;
 inline bool GetSignalsRequest::has_active() const {
   bool value = (_impl_._has_bits_[0] & 0x00000100u) != 0;
   return value;
@@ -3228,57 +3228,57 @@ inline void GetSignalsRequest::clear_active() {
   _impl_.active_ = 0;
   _impl_._has_bits_[0] &= ~0x00000100u;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalState GetSignalsRequest::active() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.active)
+inline ::tinkoff::public_::invest::api::contract::v1::SignalState GetSignalsRequest::active() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.active)
   return _internal_active();
 }
-inline void GetSignalsRequest::set_active(::tinkoff::pub::invest::api::contract::v1::SignalState value) {
+inline void GetSignalsRequest::set_active(::tinkoff::public_::invest::api::contract::v1::SignalState value) {
   _internal_set_active(value);
   _impl_._has_bits_[0] |= 0x00000100u;
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.active)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.active)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalState GetSignalsRequest::_internal_active() const {
+inline ::tinkoff::public_::invest::api::contract::v1::SignalState GetSignalsRequest::_internal_active() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return static_cast<::tinkoff::pub::invest::api::contract::v1::SignalState>(_impl_.active_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SignalState>(_impl_.active_);
 }
-inline void GetSignalsRequest::_internal_set_active(::tinkoff::pub::invest::api::contract::v1::SignalState value) {
+inline void GetSignalsRequest::_internal_set_active(::tinkoff::public_::invest::api::contract::v1::SignalState value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.active_ = value;
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.Page paging = 9;
+// optional .tinkoff.public.invest.api.contract.v1.Page paging = 9;
 inline bool GetSignalsRequest::has_paging() const {
   bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.paging_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Page& GetSignalsRequest::_internal_paging() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Page& GetSignalsRequest::_internal_paging() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Page* p = _impl_.paging_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Page&>(::tinkoff::pub::invest::api::contract::v1::_Page_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Page* p = _impl_.paging_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Page&>(::tinkoff::public_::invest::api::contract::v1::_Page_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Page& GetSignalsRequest::paging() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.paging)
+inline const ::tinkoff::public_::invest::api::contract::v1::Page& GetSignalsRequest::paging() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.paging)
   return _internal_paging();
 }
-inline void GetSignalsRequest::unsafe_arena_set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::Page* value) {
+inline void GetSignalsRequest::unsafe_arena_set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::Page* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.paging_);
   }
-  _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Page*>(value);
+  _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Page*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000020u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.paging)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.paging)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Page* GetSignalsRequest::release_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::Page* GetSignalsRequest::release_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Page* released = _impl_.paging_;
+  ::tinkoff::public_::invest::api::contract::v1::Page* released = _impl_.paging_;
   _impl_.paging_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -3293,30 +3293,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Page* GetSignalsRequest::relea
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Page* GetSignalsRequest::unsafe_arena_release_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::Page* GetSignalsRequest::unsafe_arena_release_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.paging)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.paging)
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Page* temp = _impl_.paging_;
+  ::tinkoff::public_::invest::api::contract::v1::Page* temp = _impl_.paging_;
   _impl_.paging_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Page* GetSignalsRequest::_internal_mutable_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::Page* GetSignalsRequest::_internal_mutable_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.paging_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Page>(GetArena());
-    _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Page*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Page>(GetArena());
+    _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Page*>(p);
   }
   return _impl_.paging_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Page* GetSignalsRequest::mutable_paging() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Page* GetSignalsRequest::mutable_paging() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Page* _msg = _internal_mutable_paging();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.paging)
+  ::tinkoff::public_::invest::api::contract::v1::Page* _msg = _internal_mutable_paging();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.paging)
   return _msg;
 }
-inline void GetSignalsRequest::set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::Page* value) {
+inline void GetSignalsRequest::set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::Page* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -3333,15 +3333,15 @@ inline void GetSignalsRequest::set_allocated_paging(::tinkoff::pub::invest::api:
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
 
-  _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Page*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsRequest.paging)
+  _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Page*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsRequest.paging)
 }
 
 // -------------------------------------------------------------------
 
 // GetSignalsResponse
 
-// repeated .tinkoff.pub.invest.api.contract.v1.Signal signals = 1;
+// repeated .tinkoff.public.invest.api.contract.v1.Signal signals = 1;
 inline int GetSignalsResponse::_internal_signals_size() const {
   return _internal_signals().size();
 }
@@ -3352,77 +3352,77 @@ inline void GetSignalsResponse::clear_signals() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.signals_.Clear();
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Signal* GetSignalsResponse::mutable_signals(int index)
+inline ::tinkoff::public_::invest::api::contract::v1::Signal* GetSignalsResponse::mutable_signals(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.signals)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.signals)
   return _internal_mutable_signals()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>* GetSignalsResponse::mutable_signals()
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>* GetSignalsResponse::mutable_signals()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable_list:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.signals)
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.signals)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _internal_mutable_signals();
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Signal& GetSignalsResponse::signals(int index) const
+inline const ::tinkoff::public_::invest::api::contract::v1::Signal& GetSignalsResponse::signals(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.signals)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.signals)
   return _internal_signals().Get(index);
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Signal* GetSignalsResponse::add_signals() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Signal* GetSignalsResponse::add_signals() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::tinkoff::pub::invest::api::contract::v1::Signal* _add = _internal_mutable_signals()->Add();
-  // @@protoc_insertion_point(field_add:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.signals)
+  ::tinkoff::public_::invest::api::contract::v1::Signal* _add = _internal_mutable_signals()->Add();
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.signals)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>& GetSignalsResponse::signals() const
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>& GetSignalsResponse::signals() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.signals)
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.signals)
   return _internal_signals();
 }
-inline const ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>&
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>&
 GetSignalsResponse::_internal_signals() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.signals_;
 }
-inline ::google::protobuf::RepeatedPtrField<::tinkoff::pub::invest::api::contract::v1::Signal>*
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::Signal>*
 GetSignalsResponse::_internal_mutable_signals() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.signals_;
 }
 
-// .tinkoff.pub.invest.api.contract.v1.PageResponse paging = 2;
+// .tinkoff.public.invest.api.contract.v1.PageResponse paging = 2;
 inline bool GetSignalsResponse::has_paging() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.paging_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::PageResponse& GetSignalsResponse::_internal_paging() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::PageResponse& GetSignalsResponse::_internal_paging() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::PageResponse* p = _impl_.paging_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::PageResponse&>(::tinkoff::pub::invest::api::contract::v1::_PageResponse_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::PageResponse* p = _impl_.paging_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::PageResponse&>(::tinkoff::public_::invest::api::contract::v1::_PageResponse_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::PageResponse& GetSignalsResponse::paging() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.paging)
+inline const ::tinkoff::public_::invest::api::contract::v1::PageResponse& GetSignalsResponse::paging() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.paging)
   return _internal_paging();
 }
-inline void GetSignalsResponse::unsafe_arena_set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::PageResponse* value) {
+inline void GetSignalsResponse::unsafe_arena_set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::PageResponse* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.paging_);
   }
-  _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::PageResponse*>(value);
+  _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::PageResponse*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000001u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.paging)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.paging)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::PageResponse* GetSignalsResponse::release_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::PageResponse* GetSignalsResponse::release_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* released = _impl_.paging_;
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* released = _impl_.paging_;
   _impl_.paging_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -3437,30 +3437,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::PageResponse* GetSignalsRespon
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::PageResponse* GetSignalsResponse::unsafe_arena_release_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::PageResponse* GetSignalsResponse::unsafe_arena_release_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.paging)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.paging)
 
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* temp = _impl_.paging_;
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* temp = _impl_.paging_;
   _impl_.paging_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::PageResponse* GetSignalsResponse::_internal_mutable_paging() {
+inline ::tinkoff::public_::invest::api::contract::v1::PageResponse* GetSignalsResponse::_internal_mutable_paging() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.paging_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::PageResponse>(GetArena());
-    _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::PageResponse*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::PageResponse>(GetArena());
+    _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::PageResponse*>(p);
   }
   return _impl_.paging_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::PageResponse* GetSignalsResponse::mutable_paging() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::PageResponse* GetSignalsResponse::mutable_paging() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000001u;
-  ::tinkoff::pub::invest::api::contract::v1::PageResponse* _msg = _internal_mutable_paging();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.paging)
+  ::tinkoff::public_::invest::api::contract::v1::PageResponse* _msg = _internal_mutable_paging();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.paging)
   return _msg;
 }
-inline void GetSignalsResponse::set_allocated_paging(::tinkoff::pub::invest::api::contract::v1::PageResponse* value) {
+inline void GetSignalsResponse::set_allocated_paging(::tinkoff::public_::invest::api::contract::v1::PageResponse* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -3477,8 +3477,8 @@ inline void GetSignalsResponse::set_allocated_paging(::tinkoff::pub::invest::api
     _impl_._has_bits_[0] &= ~0x00000001u;
   }
 
-  _impl_.paging_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::PageResponse*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.GetSignalsResponse.paging)
+  _impl_.paging_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::PageResponse*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetSignalsResponse.paging)
 }
 
 // -------------------------------------------------------------------
@@ -3492,7 +3492,7 @@ inline void Signal::clear_signal_id() {
 }
 inline const std::string& Signal::signal_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.signal_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.signal_id)
   return _internal_signal_id();
 }
 template <typename Arg_, typename... Args_>
@@ -3500,11 +3500,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_signal_id(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.signal_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.signal_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.signal_id)
 }
 inline std::string* Signal::mutable_signal_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_signal_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.signal_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.signal_id)
   return _s;
 }
 inline const std::string& Signal::_internal_signal_id() const {
@@ -3521,7 +3521,7 @@ inline std::string* Signal::_internal_mutable_signal_id() {
 }
 inline std::string* Signal::release_signal_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.signal_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.signal_id)
   return _impl_.signal_id_.Release();
 }
 inline void Signal::set_allocated_signal_id(std::string* value) {
@@ -3530,7 +3530,7 @@ inline void Signal::set_allocated_signal_id(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.signal_id_.IsDefault()) {
     _impl_.signal_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.signal_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.signal_id)
 }
 
 // string strategy_id = 2 [(.google.api.field_behavior) = REQUIRED];
@@ -3540,7 +3540,7 @@ inline void Signal::clear_strategy_id() {
 }
 inline const std::string& Signal::strategy_id() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.strategy_id)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.strategy_id)
   return _internal_strategy_id();
 }
 template <typename Arg_, typename... Args_>
@@ -3548,11 +3548,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_strategy_id(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.strategy_id)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.strategy_id)
 }
 inline std::string* Signal::mutable_strategy_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_id();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.strategy_id)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.strategy_id)
   return _s;
 }
 inline const std::string& Signal::_internal_strategy_id() const {
@@ -3569,7 +3569,7 @@ inline std::string* Signal::_internal_mutable_strategy_id() {
 }
 inline std::string* Signal::release_strategy_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.strategy_id)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.strategy_id)
   return _impl_.strategy_id_.Release();
 }
 inline void Signal::set_allocated_strategy_id(std::string* value) {
@@ -3578,7 +3578,7 @@ inline void Signal::set_allocated_strategy_id(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_id_.IsDefault()) {
     _impl_.strategy_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.strategy_id)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.strategy_id)
 }
 
 // string strategy_name = 3 [(.google.api.field_behavior) = REQUIRED];
@@ -3588,7 +3588,7 @@ inline void Signal::clear_strategy_name() {
 }
 inline const std::string& Signal::strategy_name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.strategy_name)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.strategy_name)
   return _internal_strategy_name();
 }
 template <typename Arg_, typename... Args_>
@@ -3596,11 +3596,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_strategy_name(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.strategy_name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.strategy_name)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.strategy_name)
 }
 inline std::string* Signal::mutable_strategy_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_strategy_name();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.strategy_name)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.strategy_name)
   return _s;
 }
 inline const std::string& Signal::_internal_strategy_name() const {
@@ -3617,7 +3617,7 @@ inline std::string* Signal::_internal_mutable_strategy_name() {
 }
 inline std::string* Signal::release_strategy_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.strategy_name)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.strategy_name)
   return _impl_.strategy_name_.Release();
 }
 inline void Signal::set_allocated_strategy_name(std::string* value) {
@@ -3626,7 +3626,7 @@ inline void Signal::set_allocated_strategy_name(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.strategy_name_.IsDefault()) {
     _impl_.strategy_name_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.strategy_name)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.strategy_name)
 }
 
 // string instrument_uid = 4 [(.google.api.field_behavior) = REQUIRED];
@@ -3636,7 +3636,7 @@ inline void Signal::clear_instrument_uid() {
 }
 inline const std::string& Signal::instrument_uid() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.instrument_uid)
   return _internal_instrument_uid();
 }
 template <typename Arg_, typename... Args_>
@@ -3644,11 +3644,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_instrument_uid(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.instrument_uid)
 }
 inline std::string* Signal::mutable_instrument_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_instrument_uid();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.instrument_uid)
   return _s;
 }
 inline const std::string& Signal::_internal_instrument_uid() const {
@@ -3665,7 +3665,7 @@ inline std::string* Signal::_internal_mutable_instrument_uid() {
 }
 inline std::string* Signal::release_instrument_uid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.instrument_uid)
   return _impl_.instrument_uid_.Release();
 }
 inline void Signal::set_allocated_instrument_uid(std::string* value) {
@@ -3674,7 +3674,7 @@ inline void Signal::set_allocated_instrument_uid(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
     _impl_.instrument_uid_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.instrument_uid)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.instrument_uid)
 }
 
 // .google.protobuf.Timestamp create_dt = 5 [(.google.api.field_behavior) = REQUIRED];
@@ -3689,7 +3689,7 @@ inline const ::google::protobuf::Timestamp& Signal::_internal_create_dt() const 
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
 inline const ::google::protobuf::Timestamp& Signal::create_dt() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.create_dt)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.create_dt)
   return _internal_create_dt();
 }
 inline void Signal::unsafe_arena_set_allocated_create_dt(::google::protobuf::Timestamp* value) {
@@ -3703,7 +3703,7 @@ inline void Signal::unsafe_arena_set_allocated_create_dt(::google::protobuf::Tim
   } else {
     _impl_._has_bits_[0] &= ~0x00000002u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.create_dt)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.create_dt)
 }
 inline ::google::protobuf::Timestamp* Signal::release_create_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -3726,7 +3726,7 @@ inline ::google::protobuf::Timestamp* Signal::release_create_dt() {
 }
 inline ::google::protobuf::Timestamp* Signal::unsafe_arena_release_create_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.create_dt)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.create_dt)
 
   _impl_._has_bits_[0] &= ~0x00000002u;
   ::google::protobuf::Timestamp* temp = _impl_.create_dt_;
@@ -3744,7 +3744,7 @@ inline ::google::protobuf::Timestamp* Signal::_internal_mutable_create_dt() {
 inline ::google::protobuf::Timestamp* Signal::mutable_create_dt() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000002u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_create_dt();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.create_dt)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.create_dt)
   return _msg;
 }
 inline void Signal::set_allocated_create_dt(::google::protobuf::Timestamp* value) {
@@ -3765,64 +3765,64 @@ inline void Signal::set_allocated_create_dt(::google::protobuf::Timestamp* value
   }
 
   _impl_.create_dt_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.create_dt)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.create_dt)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.SignalDirection direction = 6 [(.google.api.field_behavior) = REQUIRED];
 inline void Signal::clear_direction() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.direction_ = 0;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalDirection Signal::direction() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.direction)
+inline ::tinkoff::public_::invest::api::contract::v1::SignalDirection Signal::direction() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.direction)
   return _internal_direction();
 }
-inline void Signal::set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value) {
+inline void Signal::set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value) {
   _internal_set_direction(value);
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.direction)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.direction)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::SignalDirection Signal::_internal_direction() const {
+inline ::tinkoff::public_::invest::api::contract::v1::SignalDirection Signal::_internal_direction() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return static_cast<::tinkoff::pub::invest::api::contract::v1::SignalDirection>(_impl_.direction_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SignalDirection>(_impl_.direction_);
 }
-inline void Signal::_internal_set_direction(::tinkoff::pub::invest::api::contract::v1::SignalDirection value) {
+inline void Signal::_internal_set_direction(::tinkoff::public_::invest::api::contract::v1::SignalDirection value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.direction_ = value;
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation initial_price = 7 [(.google.api.field_behavior) = REQUIRED];
 inline bool Signal::has_initial_price() const {
   bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.initial_price_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::_internal_initial_price() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::_internal_initial_price() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.initial_price_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.initial_price_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::initial_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.initial_price)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::initial_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.initial_price)
   return _internal_initial_price();
 }
-inline void Signal::unsafe_arena_set_allocated_initial_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::unsafe_arena_set_allocated_initial_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.initial_price_);
   }
-  _impl_.initial_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.initial_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000004u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.initial_price)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.initial_price)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_initial_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::release_initial_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.initial_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.initial_price_;
   _impl_.initial_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -3837,30 +3837,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_ini
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_initial_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_initial_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.initial_price)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.initial_price)
 
   _impl_._has_bits_[0] &= ~0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.initial_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.initial_price_;
   _impl_.initial_price_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::_internal_mutable_initial_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::_internal_mutable_initial_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.initial_price_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.initial_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.initial_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.initial_price_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::mutable_initial_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::mutable_initial_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000004u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_initial_price();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.initial_price)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_initial_price();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.initial_price)
   return _msg;
 }
-inline void Signal::set_allocated_initial_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::set_allocated_initial_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -3877,8 +3877,8 @@ inline void Signal::set_allocated_initial_price(::tinkoff::pub::invest::api::con
     _impl_._has_bits_[0] &= ~0x00000004u;
   }
 
-  _impl_.initial_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.initial_price)
+  _impl_.initial_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.initial_price)
 }
 
 // optional string info = 8;
@@ -3893,7 +3893,7 @@ inline void Signal::clear_info() {
 }
 inline const std::string& Signal::info() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.info)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.info)
   return _internal_info();
 }
 template <typename Arg_, typename... Args_>
@@ -3902,11 +3902,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_info(Arg_&& arg,
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_._has_bits_[0] |= 0x00000001u;
   _impl_.info_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.info)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.info)
 }
 inline std::string* Signal::mutable_info() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_info();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.info)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.info)
   return _s;
 }
 inline const std::string& Signal::_internal_info() const {
@@ -3925,7 +3925,7 @@ inline std::string* Signal::_internal_mutable_info() {
 }
 inline std::string* Signal::release_info() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.info)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.info)
   if ((_impl_._has_bits_[0] & 0x00000001u) == 0) {
     return nullptr;
   }
@@ -3947,7 +3947,7 @@ inline void Signal::set_allocated_info(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.info_.IsDefault()) {
     _impl_.info_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.info)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.info)
 }
 
 // string name = 9 [(.google.api.field_behavior) = REQUIRED];
@@ -3957,7 +3957,7 @@ inline void Signal::clear_name() {
 }
 inline const std::string& Signal::name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.name)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.name)
   return _internal_name();
 }
 template <typename Arg_, typename... Args_>
@@ -3965,11 +3965,11 @@ inline PROTOBUF_ALWAYS_INLINE void Signal::set_name(Arg_&& arg,
                                                      Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.name)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.name)
 }
 inline std::string* Signal::mutable_name() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.name)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.name)
   return _s;
 }
 inline const std::string& Signal::_internal_name() const {
@@ -3986,7 +3986,7 @@ inline std::string* Signal::_internal_mutable_name() {
 }
 inline std::string* Signal::release_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.name)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.name)
   return _impl_.name_.Release();
 }
 inline void Signal::set_allocated_name(std::string* value) {
@@ -3995,42 +3995,42 @@ inline void Signal::set_allocated_name(std::string* value) {
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.name_.IsDefault()) {
     _impl_.name_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.name)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.name)
 }
 
-// .tinkoff.pub.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
+// .tinkoff.public.invest.api.contract.v1.Quotation target_price = 10 [(.google.api.field_behavior) = REQUIRED];
 inline bool Signal::has_target_price() const {
   bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.target_price_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::_internal_target_price() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::_internal_target_price() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.target_price_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.target_price_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::target_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.target_price)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::target_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.target_price)
   return _internal_target_price();
 }
-inline void Signal::unsafe_arena_set_allocated_target_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::unsafe_arena_set_allocated_target_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.target_price_);
   }
-  _impl_.target_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.target_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000008u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.target_price)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.target_price)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_target_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::release_target_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.target_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.target_price_;
   _impl_.target_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -4045,30 +4045,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_tar
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_target_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_target_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.target_price)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.target_price)
 
   _impl_._has_bits_[0] &= ~0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.target_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.target_price_;
   _impl_.target_price_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::_internal_mutable_target_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::_internal_mutable_target_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.target_price_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.target_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.target_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.target_price_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::mutable_target_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::mutable_target_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000008u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_target_price();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.target_price)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_target_price();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.target_price)
   return _msg;
 }
-inline void Signal::set_allocated_target_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::set_allocated_target_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -4085,8 +4085,8 @@ inline void Signal::set_allocated_target_price(::tinkoff::pub::invest::api::cont
     _impl_._has_bits_[0] &= ~0x00000008u;
   }
 
-  _impl_.target_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.target_price)
+  _impl_.target_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.target_price)
 }
 
 // .google.protobuf.Timestamp end_dt = 11 [(.google.api.field_behavior) = REQUIRED];
@@ -4101,7 +4101,7 @@ inline const ::google::protobuf::Timestamp& Signal::_internal_end_dt() const {
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
 inline const ::google::protobuf::Timestamp& Signal::end_dt() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.end_dt)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.end_dt)
   return _internal_end_dt();
 }
 inline void Signal::unsafe_arena_set_allocated_end_dt(::google::protobuf::Timestamp* value) {
@@ -4115,7 +4115,7 @@ inline void Signal::unsafe_arena_set_allocated_end_dt(::google::protobuf::Timest
   } else {
     _impl_._has_bits_[0] &= ~0x00000010u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.end_dt)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.end_dt)
 }
 inline ::google::protobuf::Timestamp* Signal::release_end_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -4138,7 +4138,7 @@ inline ::google::protobuf::Timestamp* Signal::release_end_dt() {
 }
 inline ::google::protobuf::Timestamp* Signal::unsafe_arena_release_end_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.end_dt)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.end_dt)
 
   _impl_._has_bits_[0] &= ~0x00000010u;
   ::google::protobuf::Timestamp* temp = _impl_.end_dt_;
@@ -4156,7 +4156,7 @@ inline ::google::protobuf::Timestamp* Signal::_internal_mutable_end_dt() {
 inline ::google::protobuf::Timestamp* Signal::mutable_end_dt() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000010u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_end_dt();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.end_dt)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.end_dt)
   return _msg;
 }
 inline void Signal::set_allocated_end_dt(::google::protobuf::Timestamp* value) {
@@ -4177,7 +4177,7 @@ inline void Signal::set_allocated_end_dt(::google::protobuf::Timestamp* value) {
   }
 
   _impl_.end_dt_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.end_dt)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.end_dt)
 }
 
 // optional int32 probability = 12;
@@ -4191,13 +4191,13 @@ inline void Signal::clear_probability() {
   _impl_._has_bits_[0] &= ~0x00000100u;
 }
 inline ::int32_t Signal::probability() const {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.probability)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.probability)
   return _internal_probability();
 }
 inline void Signal::set_probability(::int32_t value) {
   _internal_set_probability(value);
   _impl_._has_bits_[0] |= 0x00000100u;
-  // @@protoc_insertion_point(field_set:tinkoff.pub.invest.api.contract.v1.Signal.probability)
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Signal.probability)
 }
 inline ::int32_t Signal::_internal_probability() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
@@ -4208,39 +4208,39 @@ inline void Signal::_internal_set_probability(::int32_t value) {
   _impl_.probability_ = value;
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.Quotation stoploss = 13;
+// optional .tinkoff.public.invest.api.contract.v1.Quotation stoploss = 13;
 inline bool Signal::has_stoploss() const {
   bool value = (_impl_._has_bits_[0] & 0x00000020u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.stoploss_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::_internal_stoploss() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::_internal_stoploss() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.stoploss_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.stoploss_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::stoploss() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.stoploss)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::stoploss() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.stoploss)
   return _internal_stoploss();
 }
-inline void Signal::unsafe_arena_set_allocated_stoploss(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::unsafe_arena_set_allocated_stoploss(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.stoploss_);
   }
-  _impl_.stoploss_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.stoploss_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000020u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.stoploss)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.stoploss)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_stoploss() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::release_stoploss() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.stoploss_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.stoploss_;
   _impl_.stoploss_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -4255,30 +4255,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_sto
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_stoploss() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_stoploss() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.stoploss)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.stoploss)
 
   _impl_._has_bits_[0] &= ~0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.stoploss_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.stoploss_;
   _impl_.stoploss_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::_internal_mutable_stoploss() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::_internal_mutable_stoploss() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.stoploss_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.stoploss_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.stoploss_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.stoploss_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::mutable_stoploss() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::mutable_stoploss() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000020u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_stoploss();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.stoploss)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_stoploss();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.stoploss)
   return _msg;
 }
-inline void Signal::set_allocated_stoploss(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::set_allocated_stoploss(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -4295,43 +4295,43 @@ inline void Signal::set_allocated_stoploss(::tinkoff::pub::invest::api::contract
     _impl_._has_bits_[0] &= ~0x00000020u;
   }
 
-  _impl_.stoploss_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.stoploss)
+  _impl_.stoploss_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.stoploss)
 }
 
-// optional .tinkoff.pub.invest.api.contract.v1.Quotation close_price = 14;
+// optional .tinkoff.public.invest.api.contract.v1.Quotation close_price = 14;
 inline bool Signal::has_close_price() const {
   bool value = (_impl_._has_bits_[0] & 0x00000040u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.close_price_ != nullptr);
   return value;
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::_internal_close_price() const {
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::_internal_close_price() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  const ::tinkoff::pub::invest::api::contract::v1::Quotation* p = _impl_.close_price_;
-  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::pub::invest::api::contract::v1::Quotation&>(::tinkoff::pub::invest::api::contract::v1::_Quotation_default_instance_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.close_price_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
 }
-inline const ::tinkoff::pub::invest::api::contract::v1::Quotation& Signal::close_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.close_price)
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& Signal::close_price() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.close_price)
   return _internal_close_price();
 }
-inline void Signal::unsafe_arena_set_allocated_close_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::unsafe_arena_set_allocated_close_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (GetArena() == nullptr) {
     delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.close_price_);
   }
-  _impl_.close_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
+  _impl_.close_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
   if (value != nullptr) {
     _impl_._has_bits_[0] |= 0x00000040u;
   } else {
     _impl_._has_bits_[0] &= ~0x00000040u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.close_price)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.close_price)
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_close_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::release_close_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
 
   _impl_._has_bits_[0] &= ~0x00000040u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* released = _impl_.close_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.close_price_;
   _impl_.close_price_ = nullptr;
   if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
     auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
@@ -4346,30 +4346,30 @@ inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::release_clo
   }
   return released;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_close_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::unsafe_arena_release_close_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.close_price)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.close_price)
 
   _impl_._has_bits_[0] &= ~0x00000040u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* temp = _impl_.close_price_;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.close_price_;
   _impl_.close_price_ = nullptr;
   return temp;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::_internal_mutable_close_price() {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::_internal_mutable_close_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (_impl_.close_price_ == nullptr) {
-    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::pub::invest::api::contract::v1::Quotation>(GetArena());
-    _impl_.close_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(p);
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.close_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
   }
   return _impl_.close_price_;
 }
-inline ::tinkoff::pub::invest::api::contract::v1::Quotation* Signal::mutable_close_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* Signal::mutable_close_price() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000040u;
-  ::tinkoff::pub::invest::api::contract::v1::Quotation* _msg = _internal_mutable_close_price();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.close_price)
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_close_price();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.close_price)
   return _msg;
 }
-inline void Signal::set_allocated_close_price(::tinkoff::pub::invest::api::contract::v1::Quotation* value) {
+inline void Signal::set_allocated_close_price(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
   ::google::protobuf::Arena* message_arena = GetArena();
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (message_arena == nullptr) {
@@ -4386,8 +4386,8 @@ inline void Signal::set_allocated_close_price(::tinkoff::pub::invest::api::contr
     _impl_._has_bits_[0] &= ~0x00000040u;
   }
 
-  _impl_.close_price_ = reinterpret_cast<::tinkoff::pub::invest::api::contract::v1::Quotation*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.close_price)
+  _impl_.close_price_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.close_price)
 }
 
 // optional .google.protobuf.Timestamp close_dt = 15;
@@ -4402,7 +4402,7 @@ inline const ::google::protobuf::Timestamp& Signal::_internal_close_dt() const {
   return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
 }
 inline const ::google::protobuf::Timestamp& Signal::close_dt() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:tinkoff.pub.invest.api.contract.v1.Signal.close_dt)
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Signal.close_dt)
   return _internal_close_dt();
 }
 inline void Signal::unsafe_arena_set_allocated_close_dt(::google::protobuf::Timestamp* value) {
@@ -4416,7 +4416,7 @@ inline void Signal::unsafe_arena_set_allocated_close_dt(::google::protobuf::Time
   } else {
     _impl_._has_bits_[0] &= ~0x00000080u;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.close_dt)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.close_dt)
 }
 inline ::google::protobuf::Timestamp* Signal::release_close_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -4439,7 +4439,7 @@ inline ::google::protobuf::Timestamp* Signal::release_close_dt() {
 }
 inline ::google::protobuf::Timestamp* Signal::unsafe_arena_release_close_dt() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:tinkoff.pub.invest.api.contract.v1.Signal.close_dt)
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.Signal.close_dt)
 
   _impl_._has_bits_[0] &= ~0x00000080u;
   ::google::protobuf::Timestamp* temp = _impl_.close_dt_;
@@ -4457,7 +4457,7 @@ inline ::google::protobuf::Timestamp* Signal::_internal_mutable_close_dt() {
 inline ::google::protobuf::Timestamp* Signal::mutable_close_dt() ABSL_ATTRIBUTE_LIFETIME_BOUND {
   _impl_._has_bits_[0] |= 0x00000080u;
   ::google::protobuf::Timestamp* _msg = _internal_mutable_close_dt();
-  // @@protoc_insertion_point(field_mutable:tinkoff.pub.invest.api.contract.v1.Signal.close_dt)
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Signal.close_dt)
   return _msg;
 }
 inline void Signal::set_allocated_close_dt(::google::protobuf::Timestamp* value) {
@@ -4478,7 +4478,7 @@ inline void Signal::set_allocated_close_dt(::google::protobuf::Timestamp* value)
   }
 
   _impl_.close_dt_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
-  // @@protoc_insertion_point(field_set_allocated:tinkoff.pub.invest.api.contract.v1.Signal.close_dt)
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Signal.close_dt)
 }
 
 #ifdef __GNUC__
@@ -4490,7 +4490,7 @@ inline void Signal::set_allocated_close_dt(::google::protobuf::Timestamp* value)
 }  // namespace contract
 }  // namespace api
 }  // namespace invest
-}  // namespace pub
+}  // namespace public_
 }  // namespace tinkoff
 
 
@@ -4498,22 +4498,22 @@ namespace google {
 namespace protobuf {
 
 template <>
-struct is_proto_enum<::tinkoff::pub::invest::api::contract::v1::StrategyType> : std::true_type {};
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::StrategyType> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::pub::invest::api::contract::v1::StrategyType>() {
-  return ::tinkoff::pub::invest::api::contract::v1::StrategyType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::StrategyType>() {
+  return ::tinkoff::public_::invest::api::contract::v1::StrategyType_descriptor();
 }
 template <>
-struct is_proto_enum<::tinkoff::pub::invest::api::contract::v1::SignalDirection> : std::true_type {};
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::SignalDirection> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::pub::invest::api::contract::v1::SignalDirection>() {
-  return ::tinkoff::pub::invest::api::contract::v1::SignalDirection_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::SignalDirection>() {
+  return ::tinkoff::public_::invest::api::contract::v1::SignalDirection_descriptor();
 }
 template <>
-struct is_proto_enum<::tinkoff::pub::invest::api::contract::v1::SignalState> : std::true_type {};
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::SignalState> : std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::pub::invest::api::contract::v1::SignalState>() {
-  return ::tinkoff::pub::invest::api::contract::v1::SignalState_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::SignalState>() {
+  return ::tinkoff::public_::invest::api::contract::v1::SignalState_descriptor();
 }
 
 }  // namespace protobuf

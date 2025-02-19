@@ -2,16 +2,43 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
 
 
-TEST(Test_GrpcClient, Test_constructor_and_destructor)
+
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
+
+
+class Test_GrpcClient : public ::testing::Test
 {
-    GrpcClient client;
+protected:
+    void SetUp()
+    {
+        userStorageMock = new StrictMock<UserStorageMock>();
+
+        client = new GrpcClient(userStorageMock);
+    }
+
+    void TearDown()
+    {
+        delete client;
+        delete userStorageMock;
+    }
+
+    GrpcClient*                  client;
+    StrictMock<UserStorageMock>* userStorageMock;
+};
+
+
+
+TEST_F(Test_GrpcClient, Test_constructor_and_destructor)
+{
 }
 
-TEST(Test_GrpcClient, Test_connect)
+TEST_F(Test_GrpcClient, Test_connect)
 {
-    GrpcClient client;
-
-    client.connect();
+    client->connect();
 }

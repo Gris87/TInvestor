@@ -20,17 +20,17 @@
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
 namespace v1 {
 
 static const char* UsersService_method_names[] = {
-  "/tinkoff.pub.invest.api.contract.v1.UsersService/GetAccounts",
-  "/tinkoff.pub.invest.api.contract.v1.UsersService/GetMarginAttributes",
-  "/tinkoff.pub.invest.api.contract.v1.UsersService/GetUserTariff",
-  "/tinkoff.pub.invest.api.contract.v1.UsersService/GetInfo",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetAccounts",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetMarginAttributes",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetUserTariff",
+  "/tinkoff.public.invest.api.contract.v1.UsersService/GetInfo",
 };
 
 std::unique_ptr< UsersService::Stub> UsersService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -46,92 +46,92 @@ UsersService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_GetInfo_(UsersService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status UsersService::Stub::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetAccounts_, context, request, response);
+::grpc::Status UsersService::Stub::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetAccounts_, context, request, response);
 }
 
-void UsersService::Stub::async::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAccounts_, context, request, response, std::move(f));
+void UsersService::Stub::async::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAccounts_, context, request, response, std::move(f));
 }
 
-void UsersService::Stub::async::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void UsersService::Stub::async::GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetAccounts_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse>* UsersService::Stub::PrepareAsyncGetAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetAccounts_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>* UsersService::Stub::PrepareAsyncGetAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetAccounts_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse>* UsersService::Stub::AsyncGetAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>* UsersService::Stub::AsyncGetAccountsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetAccountsRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status UsersService::Stub::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarginAttributes_, context, request, response);
+::grpc::Status UsersService::Stub::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetMarginAttributes_, context, request, response);
 }
 
-void UsersService::Stub::async::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarginAttributes_, context, request, response, std::move(f));
+void UsersService::Stub::async::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarginAttributes_, context, request, response, std::move(f));
 }
 
-void UsersService::Stub::async::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void UsersService::Stub::async::GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetMarginAttributes_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse>* UsersService::Stub::PrepareAsyncGetMarginAttributesRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarginAttributes_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>* UsersService::Stub::PrepareAsyncGetMarginAttributesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetMarginAttributes_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse>* UsersService::Stub::AsyncGetMarginAttributesRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>* UsersService::Stub::AsyncGetMarginAttributesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetMarginAttributesRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status UsersService::Stub::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetUserTariff_, context, request, response);
+::grpc::Status UsersService::Stub::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetUserTariff_, context, request, response);
 }
 
-void UsersService::Stub::async::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserTariff_, context, request, response, std::move(f));
+void UsersService::Stub::async::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserTariff_, context, request, response, std::move(f));
 }
 
-void UsersService::Stub::async::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void UsersService::Stub::async::GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetUserTariff_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse>* UsersService::Stub::PrepareAsyncGetUserTariffRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetUserTariff_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>* UsersService::Stub::PrepareAsyncGetUserTariffRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetUserTariff_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse>* UsersService::Stub::AsyncGetUserTariffRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>* UsersService::Stub::AsyncGetUserTariffRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetUserTariffRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status UsersService::Stub::GetInfo(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetInfo_, context, request, response);
+::grpc::Status UsersService::Stub::GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetInfo_, context, request, response);
 }
 
-void UsersService::Stub::async::GetInfo(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetInfo_, context, request, response, std::move(f));
+void UsersService::Stub::async::GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetInfo_, context, request, response, std::move(f));
 }
 
-void UsersService::Stub::async::GetInfo(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void UsersService::Stub::async::GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetInfo_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse>* UsersService::Stub::PrepareAsyncGetInfoRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetInfo_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse>* UsersService::Stub::PrepareAsyncGetInfoRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetInfo_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse>* UsersService::Stub::AsyncGetInfoRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse>* UsersService::Stub::AsyncGetInfoRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetInfoRaw(context, request, cq);
   result->StartCall();
@@ -142,41 +142,41 @@ UsersService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UsersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* resp) {
                return service->GetAccounts(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UsersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* resp) {
                return service->GetMarginAttributes(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UsersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* resp) {
                return service->GetUserTariff(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       UsersService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< UsersService::Service, ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](UsersService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* resp) {
                return service->GetInfo(ctx, req, resp);
              }, this)));
 }
@@ -184,28 +184,28 @@ UsersService::Service::Service() {
 UsersService::Service::~Service() {
 }
 
-::grpc::Status UsersService::Service::GetAccounts(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetAccountsResponse* response) {
+::grpc::Status UsersService::Service::GetAccounts(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UsersService::Service::GetMarginAttributes(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetMarginAttributesResponse* response) {
+::grpc::Status UsersService::Service::GetMarginAttributes(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UsersService::Service::GetUserTariff(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetUserTariffResponse* response) {
+::grpc::Status UsersService::Service::GetUserTariff(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status UsersService::Service::GetInfo(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetInfoResponse* response) {
+::grpc::Status UsersService::Service::GetInfo(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -214,7 +214,7 @@ UsersService::Service::~Service() {
 
 
 }  // namespace tinkoff
-}  // namespace pub
+}  // namespace public_
 }  // namespace invest
 }  // namespace api
 }  // namespace contract

@@ -20,15 +20,15 @@
 #include <grpcpp/impl/service_type.h>
 #include <grpcpp/support/sync_stream.h>
 namespace tinkoff {
-namespace pub {
+namespace public_ {
 namespace invest {
 namespace api {
 namespace contract {
 namespace v1 {
 
 static const char* SignalService_method_names[] = {
-  "/tinkoff.pub.invest.api.contract.v1.SignalService/GetStrategies",
-  "/tinkoff.pub.invest.api.contract.v1.SignalService/GetSignals",
+  "/tinkoff.public.invest.api.contract.v1.SignalService/GetStrategies",
+  "/tinkoff.public.invest.api.contract.v1.SignalService/GetSignals",
 };
 
 std::unique_ptr< SignalService::Stub> SignalService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -42,46 +42,46 @@ SignalService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_GetSignals_(SignalService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status SignalService::Stub::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStrategies_, context, request, response);
+::grpc::Status SignalService::Stub::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetStrategies_, context, request, response);
 }
 
-void SignalService::Stub::async::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStrategies_, context, request, response, std::move(f));
+void SignalService::Stub::async::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStrategies_, context, request, response, std::move(f));
 }
 
-void SignalService::Stub::async::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void SignalService::Stub::async::GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetStrategies_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse>* SignalService::Stub::PrepareAsyncGetStrategiesRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStrategies_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>* SignalService::Stub::PrepareAsyncGetStrategiesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetStrategies_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse>* SignalService::Stub::AsyncGetStrategiesRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>* SignalService::Stub::AsyncGetStrategiesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetStrategiesRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status SignalService::Stub::GetSignals(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest& request, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSignals_, context, request, response);
+::grpc::Status SignalService::Stub::GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSignals_, context, request, response);
 }
 
-void SignalService::Stub::async::GetSignals(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSignals_, context, request, response, std::move(f));
+void SignalService::Stub::async::GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSignals_, context, request, response, std::move(f));
 }
 
-void SignalService::Stub::async::GetSignals(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void SignalService::Stub::async::GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSignals_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse>* SignalService::Stub::PrepareAsyncGetSignalsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSignals_, context, request);
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse>* SignalService::Stub::PrepareAsyncGetSignalsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSignals_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse>* SignalService::Stub::AsyncGetSignalsRaw(::grpc::ClientContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse>* SignalService::Stub::AsyncGetSignalsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetSignalsRaw(context, request, cq);
   result->StartCall();
@@ -92,21 +92,21 @@ SignalService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SignalService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< SignalService::Service, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< SignalService::Service, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SignalService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* resp) {
                return service->GetStrategies(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       SignalService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< SignalService::Service, ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< SignalService::Service, ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](SignalService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest* req,
-             ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse* resp) {
+             const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* resp) {
                return service->GetSignals(ctx, req, resp);
              }, this)));
 }
@@ -114,14 +114,14 @@ SignalService::Service::Service() {
 SignalService::Service::~Service() {
 }
 
-::grpc::Status SignalService::Service::GetStrategies(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetStrategiesResponse* response) {
+::grpc::Status SignalService::Service::GetStrategies(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status SignalService::Service::GetSignals(::grpc::ServerContext* context, const ::tinkoff::pub::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::pub::invest::api::contract::v1::GetSignalsResponse* response) {
+::grpc::Status SignalService::Service::GetSignals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -130,7 +130,7 @@ SignalService::Service::~Service() {
 
 
 }  // namespace tinkoff
-}  // namespace pub
+}  // namespace public_
 }  // namespace invest
 }  // namespace api
 }  // namespace contract
