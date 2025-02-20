@@ -20,6 +20,7 @@ public:
     GrpcClient& operator=(const GrpcClient& another) = delete;
 
     std::shared_ptr<GetInfoResponse> getUserInfo() override;
+    std::shared_ptr<GetAccountsResponse> getAccounts() override;
 
 private:
     std::shared_ptr<grpc::CallCredentials> mCreds;

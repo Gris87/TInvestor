@@ -53,3 +53,25 @@ std::shared_ptr<GetInfoResponse> GrpcClient::getUserInfo()
 
     return resp;
 }
+
+std::shared_ptr<GetAccountsResponse> GrpcClient::getAccounts()
+{
+    grpc::ClientContext                  context;
+    GetAccountsRequest                   req;
+    std::shared_ptr<GetAccountsResponse> resp = std::shared_ptr<GetAccountsResponse>(new GetAccountsResponse());
+
+    context.set_credentials(mCreds);
+
+    req.set_status(ACCOUNT_STATUS_OPEN);
+
+    grpc::Status status = mUsersService->GetAccounts(&context, req, resp.get());
+
+    if (!status.ok())
+    {
+        emit authFailed();
+
+        return nullptr;
+    }
+
+    return resp;
+}

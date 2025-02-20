@@ -30,6 +30,7 @@ public:
     IGrpcClient& operator=(const IGrpcClient& another) = delete;
 
     virtual std::shared_ptr<GetInfoResponse> getUserInfo() = 0;
+    virtual std::shared_ptr<GetAccountsResponse> getAccounts() = 0;
 
 signals:
     void authFailed();

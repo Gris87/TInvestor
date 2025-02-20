@@ -21,4 +21,5 @@ public:
     GrpcClientMock& operator=(const GrpcClientMock& another) = delete;
 
     MOCK_METHOD(std::shared_ptr<GetInfoResponse>, getUserInfo, (), (override));
+    MOCK_METHOD(std::shared_ptr<GetAccountsResponse>, getAccounts, (), (override));
 };

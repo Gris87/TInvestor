@@ -31,6 +31,26 @@ void UserUpdateThread::run()
         qInfo() << userInfo->qual_status();
         qInfo() << userInfo->qualified_for_work_with().size();
         qInfo() << userInfo->tariff();
+
+        std::shared_ptr<GetAccountsResponse> accounts = mGrpcClient->getAccounts();
+
+        if (accounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
+        {
+            qInfo() << accounts->accounts_size();
+
+            for (int i = 0; i < accounts->accounts_size(); ++i)
+            {
+                const Account& account = accounts->accounts(i);
+
+                qInfo() << account.id();
+                qInfo() << account.type();
+                qInfo() << account.name();
+                qInfo() << account.status();
+                qInfo() << account.opened_date().seconds();
+                qInfo() << account.closed_date().seconds();
+                qInfo() << account.access_level();
+            }
+        }
     }
 
     qDebug() << "Finish UserUpdateThread";
