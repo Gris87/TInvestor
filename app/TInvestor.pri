@@ -33,6 +33,7 @@ SOURCES += \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \

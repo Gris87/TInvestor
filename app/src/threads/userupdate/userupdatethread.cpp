@@ -44,7 +44,7 @@ void UserUpdateThread::run()
 
                 qInfo() << account.id();
                 qInfo() << account.type();
-                qInfo() << account.name();
+                qInfo() << QString::fromStdString(account.name());
                 qInfo() << account.status();
                 qInfo() << account.opened_date().seconds();
                 qInfo() << account.closed_date().seconds();

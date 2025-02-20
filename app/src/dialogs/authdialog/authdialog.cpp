@@ -5,13 +5,15 @@
 #include <QMessageBox>
 #include <QScreen>
 
+#include "src/domain/user/user.h"
+
 
 
 AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) :
     IAuthDialog(parent),
     ui(new Ui::AuthDialog),
     mMessageBoxUtils(messageBoxUtils),
-    mTokenRegexp("t\\.[\\w_]{64}\\-[\\w_]{21}")
+    mTokenRegexp("t\\.[\\w_-]+")
 {
     qDebug() << "Create AuthDialog";
 

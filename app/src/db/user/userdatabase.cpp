@@ -46,16 +46,17 @@ void UserDatabase::createUserTable()
 
     QString str =
         "CREATE TABLE IF NOT EXISTS user ("
-        "    id         INTEGER PRIMARY KEY, "
-        "    token      VARCHAR(255) NOT NULL, "
-        "    qualified  BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
-        "    commission REAL NOT NULL"
+        "    id                      INTEGER PRIMARY KEY, "
+        "    token                   TEXT NOT NULL, "
+        "    qualified               BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
+        "    qualified_for_work_with TEXT NOT NULL, "
+        "    tariff                  TEXT NOT NULL"
         ");";
 
     QSqlQuery query(db);
 
     bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::createUserTable()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "UserDatabase::createUserTable()", query.lastError().text().toLocal8Bit().constData());
 }
 
 User UserDatabase::readUserInfo()
@@ -64,40 +65,56 @@ User UserDatabase::readUserInfo()
 
     User res;
 
-    QString str = "SELECT token, qualified, commission FROM user WHERE id = 1;";
+    QString str =
+        "SELECT token, qualified, qualified_for_work_with, tariff "
+        "FROM user "
+        "WHERE id = 1;";
 
     QSqlQuery query(db);
 
     bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
 
     QSqlRecord rec = query.record();
 
-    int tokenIndex      = rec.indexOf("token");
-    int qualifiedIndex  = rec.indexOf("qualified");
-    int commissionIndex = rec.indexOf("commission");
+    int tokenIndex                = rec.indexOf("token");
+    int qualifiedIndex            = rec.indexOf("qualified");
+    int qualifiedForWorkWithIndex = rec.indexOf("qualified_for_work_with");
+    int tariffIndex               = rec.indexOf("tariff");
 
     if (query.first())
     {
-        res.token      = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
-        res.qualified  = query.value(qualifiedIndex).toLongLong() != 0;
-        res.commission = query.value(commissionIndex).toFloat();
+        res.token                = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
+        res.qualified            = query.value(qualifiedIndex).toLongLong() != 0;
+        res.qualifiedForWorkWith = query.value(qualifiedForWorkWithIndex).toString().split(',');
+        res.tariff               = query.value(tariffIndex).toString();
+        res.commission           = tariffToCommission[res.tariff];
+
+        res.qualifiedForWorkWith.removeAll("");
     }
     else
     {
-        res.token      = "";
-        res.qualified  = false;
-        res.commission = 0.3f;
+        res.token                = "";
+        res.qualified            = false;
+        res.qualifiedForWorkWith = QStringList();
+        res.tariff               = "fees";
+        res.commission           = tariffToCommission[res.tariff];
 
         QSqlQuery query(db);
-        query.prepare("INSERT INTO user (id, token, qualified, commission) VALUES (?, ?, ?, ?);");
-        query.bindValue(0, 1);
-        query.bindValue(1, mSimpleCrypt.encryptToString(res.token));
-        query.bindValue(2, res.qualified ? 1 : 0);
-        query.bindValue(3, res.commission);
+        query.prepare(
+            "INSERT INTO user "
+            "(id, token, qualified, qualified_for_work_with, tariff) "
+            "VALUES "
+            "(:id, :token, :qualified, :qualified_for_work_with, :tariff);"
+        );
+        query.bindValue(":id", 1);
+        query.bindValue(":token", mSimpleCrypt.encryptToString(res.token));
+        query.bindValue(":qualified", res.qualified ? 1 : 0);
+        query.bindValue(":qualified_for_work_with", res.qualifiedForWorkWith.isEmpty() ? "" : res.qualifiedForWorkWith.join(','));
+        query.bindValue(":tariff", res.tariff);
 
         bool ok = query.exec();
-        Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", db.lastError().text().toLocal8Bit().constData());
+        Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
     }
 
     return res;
@@ -106,20 +123,32 @@ User UserDatabase::readUserInfo()
 void UserDatabase::UserDatabase::writeToken(const QString& token)
 {
     QSqlQuery query(db);
-    query.prepare("UPDATE user SET token = ? WHERE id = 1;");
-    query.bindValue(0, mSimpleCrypt.encryptToString(token));
+    query.prepare(
+        "UPDATE user "
+        "SET token = :token "
+        "WHERE id = 1;"
+    );
+    query.bindValue(":token", mSimpleCrypt.encryptToString(token));
 
     bool ok = query.exec();
-    Q_ASSERT_X(ok, "UserDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
 }
 
 void UserDatabase::writeUserInfo(const User& user)
 {
     QSqlQuery query(db);
-    query.prepare("UPDATE user SET qualified = ?, commission = ? WHERE id = 1;");
-    query.bindValue(0, user.qualified ? 1 : 0);
-    query.bindValue(1, user.commission);
+    query.prepare(
+        "UPDATE user "
+        "SET "
+        "qualified = :qualified, "
+        "qualified_for_work_with = :qualified_for_work_with, "
+        "tariff = :tariff "
+        "WHERE id = 1;"
+    );
+    query.bindValue(":qualified", user.qualified ? 1 : 0);
+    query.bindValue(":qualified_for_work_with", user.qualifiedForWorkWith.isEmpty() ? "" : user.qualifiedForWorkWith.join(','));
+    query.bindValue(":tariff", user.tariff);
 
     bool ok = query.exec();
-    Q_ASSERT_X(ok, "UserDatabase::writeToken()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
 }
