@@ -144,6 +144,10 @@ void MainWindow::authFailed()
 {
     qWarning() << "Authorization failed";
 
+    userUpdateTimer->stop();
+    mUserUpdateThread->requestInterruption();
+    mUserUpdateThread->wait();
+
     ui->actionAuth->setEnabled(true);
     trayIconShowClicked();
 
@@ -182,6 +186,7 @@ void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
 
+    userUpdateTimer->start();
     userUpdateTimerTicked();
 }
 
@@ -251,7 +256,8 @@ void MainWindow::init()
     mUserStorage->readFromDatabase();
     mStocksStorage->readFromDatabase();
 
-    userUpdateTimer->start(15 * 60 * 1000);   // 15 minutes
+    userUpdateTimer->setInterval(15 * 60 * 1000); // 15 minutes
+
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();
 

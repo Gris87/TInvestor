@@ -64,7 +64,7 @@ struct ReadStocksDataInfo
     IFileFactory* fileFactory;
 };
 
-void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* additionalArgs)
+void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
     ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
     IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;
@@ -73,7 +73,7 @@ void readStocksDataForParallel(QList<Stock>* stocks, int start, int end, void* a
 
     Stock* stockArray = stocks->data();
 
-    for (int i = start; i < end; ++i)
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock& stock = stockArray[i];
 
@@ -165,7 +165,7 @@ struct DeleteObsoleteDataInfo
     qint64        obsoleteTimestamp;
 };
 
-void deleteObsoleteDataForParallel(QList<Stock>* stocks, int start, int end, void* additionalArgs)
+void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
     IFileFactory*           fileFactory            = deleteObsoleteDataInfo->fileFactory;
@@ -173,7 +173,7 @@ void deleteObsoleteDataForParallel(QList<Stock>* stocks, int start, int end, voi
 
     Stock* stockArray = stocks->data();
 
-    for (int i = start; i < end; ++i)
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock& stock = stockArray[i];
         qint64 index = 0;

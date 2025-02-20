@@ -26,7 +26,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
 
     std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
-    mUsersService = tinkoff::public_::invest::api::contract::v1::UsersService::NewStub(channel);
+    mUsersService = UsersService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -34,28 +34,22 @@ GrpcClient::~GrpcClient()
     qDebug() << "Destroy GrpcClient";
 }
 
-void GrpcClient::connect()
+std::shared_ptr<GetInfoResponse> GrpcClient::getUserInfo()
 {
-    getUserInfo();
+    grpc::ClientContext              context;
+    GetInfoRequest                   req;
+    std::shared_ptr<GetInfoResponse> resp = std::shared_ptr<GetInfoResponse>(new GetInfoResponse());
 
-    emit authFailed();
-}
-
-void GrpcClient::getUserInfo()
-{
-    tinkoff::public_::invest::api::contract::v1::GetInfoRequest  req;
-    tinkoff::public_::invest::api::contract::v1::GetInfoResponse resp;
-    grpc::ClientContext                                          context;
     context.set_credentials(mCreds);
 
-    grpc::Status status = mUsersService->GetInfo(&context, req, &resp);
+    grpc::Status status = mUsersService->GetInfo(&context, req, resp.get());
 
-    qInfo() << status.ok();
-    qInfo() << status.error_code();
-    qInfo() << status.error_message();
-    qInfo() << status.error_details();
-    qInfo() << resp.prem_status();
-    qInfo() << resp.qual_status();
-    qInfo() << resp.qualified_for_work_with().size();
-    qInfo() << resp.tariff();
+    if (!status.ok())
+    {
+        emit authFailed();
+
+        return nullptr;
+    }
+
+    return resp;
 }

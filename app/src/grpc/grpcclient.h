@@ -4,11 +4,6 @@
 
 #include "src/grpc/igrpcclient.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4100 4189 4267)
-#include "messages/generated/users.grpc.pb.h"
-#pragma warning(pop)
-
 #include "src/storage/user/iuserstorage.h"
 
 
@@ -24,11 +19,9 @@ public:
     GrpcClient(const GrpcClient& another)            = delete;
     GrpcClient& operator=(const GrpcClient& another) = delete;
 
-    void connect() override;
+    std::shared_ptr<GetInfoResponse> getUserInfo() override;
 
 private:
-    std::shared_ptr<grpc::CallCredentials>                                           mCreds;
-    std::unique_ptr<tinkoff::public_::invest::api::contract::v1::UsersService::Stub> mUsersService;
-
-    void getUserInfo();
+    std::shared_ptr<grpc::CallCredentials> mCreds;
+    std::unique_ptr<UsersService::Stub>    mUsersService;
 };

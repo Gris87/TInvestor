@@ -10,13 +10,20 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    typedef void (*ActionType)(QList<T>* array, int start, int end, void* additionalArgs);
+    typedef void (*ActionType)(QThread* parentThread, QList<T>* array, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
-        ActionType action, QList<T>* array, int start, int end, void* additionalArgs, QObject* parent = nullptr
+        ActionType action,
+        QThread*   parentThread,
+        QList<T>*  array,
+        int        start,
+        int        end,
+        void*      additionalArgs,
+        QObject*   parent = nullptr
     ) :
         QThread(parent),
         mAction(action),
+        mParentThread(parentThread),
         mArray(array),
         mStart(start),
         mEnd(end),
@@ -33,11 +40,12 @@ public:
 
     void run() override
     {
-        mAction(mArray, mStart, mEnd, mAdditionalArgs);
+        mAction(mParentThread, mArray, mStart, mEnd, mAdditionalArgs);
     }
 
 private:
     ActionType mAction;
+    QThread*   mParentThread;
     QList<T>*  mArray;
     int        mStart;
     int        mEnd;
@@ -48,9 +56,13 @@ private:
 
 template<typename T>
 void processInParallel(
-    QList<T>* array, void action(QList<T>* array, int start, int end, void* additionalArgs), void* additionalArgs = nullptr
+    QList<T>* array,
+    void      action(QThread* parentThread, QList<T>* array, int start, int end, void* additionalArgs),
+    void*     additionalArgs = nullptr
 )
 {
+    QThread* parentThread = QThread::currentThread();
+
     int cpuCount = QThread::idealThreadCount();
 
     int partSize = array->size() / cpuCount;
@@ -70,7 +82,7 @@ void processInParallel(
             ++end;
         }
 
-        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, array, start, end, additionalArgs);
+        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, parentThread, array, start, end, additionalArgs);
         thread->start();
 
         threads[i] = thread;

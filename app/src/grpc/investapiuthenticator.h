@@ -23,11 +23,9 @@ public:
         std::multimap<grpc::string, grpc::string>* metadata
     ) override
     {
-        metadata->insert(
-            std::make_pair(
-                "authorization", "Bearer t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ"
-            )
-        );
+        QString bearer = QString("Bearer %1").arg(mUserStorage->getToken());
+
+        metadata->insert(std::make_pair("authorization", bearer.toUtf8().constData()));
 
         return grpc::Status::OK;
     }

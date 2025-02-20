@@ -23,5 +23,15 @@ void UserUpdateThread::run()
 {
     qDebug() << "Running UserUpdateThread";
 
+    std::shared_ptr<GetInfoResponse> userInfo = mGrpcClient->getUserInfo();
+
+    if (userInfo != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    {
+        qInfo() << userInfo->prem_status();
+        qInfo() << userInfo->qual_status();
+        qInfo() << userInfo->qualified_for_work_with().size();
+        qInfo() << userInfo->tariff();
+    }
+
     qDebug() << "Finish UserUpdateThread";
 }

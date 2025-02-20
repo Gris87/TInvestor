@@ -19,7 +19,7 @@ struct SumResult
 
 
 
-void action(QList<int>* array, int start, int end, void* additionalArgs)
+void action(QThread* /*parentThread*/, QList<int>* array, int start, int end, void* additionalArgs)
 {
     SumResult* sumResult = reinterpret_cast<SumResult*>(additionalArgs);
 

@@ -37,8 +37,3 @@ protected:
 TEST_F(Test_GrpcClient, Test_constructor_and_destructor)
 {
 }
-
-TEST_F(Test_GrpcClient, Test_connect)
-{
-    client->connect();
-}
