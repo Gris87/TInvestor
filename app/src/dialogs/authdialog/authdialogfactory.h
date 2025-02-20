@@ -15,5 +15,6 @@ public:
     AuthDialogFactory(const AuthDialogFactory& another)            = delete;
     AuthDialogFactory& operator=(const AuthDialogFactory& another) = delete;
 
-    IAuthDialog* newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) override;
+    std::shared_ptr<IAuthDialog>
+    newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) override;
 };

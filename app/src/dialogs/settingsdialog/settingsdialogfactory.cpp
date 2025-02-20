@@ -17,7 +17,7 @@ SettingsDialogFactory::~SettingsDialogFactory()
     qDebug() << "Destroy SettingsDialogFactory";
 }
 
-ISettingsDialog* SettingsDialogFactory::newInstance(
+std::shared_ptr<ISettingsDialog> SettingsDialogFactory::newInstance(
     IConfig*                           config,
     IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
@@ -29,7 +29,7 @@ ISettingsDialog* SettingsDialogFactory::newInstance(
     QWidget*                           parent
 )
 {
-    return new SettingsDialog(
+    return std::shared_ptr<ISettingsDialog>(new SettingsDialog(
         config,
         decisionMakerConfigWidgetFactory,
         buyDecision1ConfigWidgetFactory,
@@ -39,5 +39,5 @@ ISettingsDialog* SettingsDialogFactory::newInstance(
         sellDecision2ConfigWidgetFactory,
         sellDecision3ConfigWidgetFactory,
         parent
-    );
+    ));
 }

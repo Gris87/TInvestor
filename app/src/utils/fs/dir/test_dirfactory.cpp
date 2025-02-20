@@ -13,8 +13,6 @@ TEST(Test_DirFactory, Test_newInstance)
 {
     DirFactory factory;
 
-    IDir* dir = factory.newInstance();
+    std::shared_ptr<IDir> dir = factory.newInstance();
     ASSERT_TRUE(dir != nullptr);
-
-    delete dir;
 }

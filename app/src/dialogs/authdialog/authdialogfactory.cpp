@@ -17,7 +17,8 @@ AuthDialogFactory::~AuthDialogFactory()
     qDebug() << "Destroy AuthDialogFactory";
 }
 
-IAuthDialog* AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent)
+std::shared_ptr<IAuthDialog>
+AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent)
 {
-    return new AuthDialog(userStorage, messageBoxUtils, parent);
+    return std::shared_ptr<IAuthDialog>(new AuthDialog(userStorage, messageBoxUtils, parent));
 }

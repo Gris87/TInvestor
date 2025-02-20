@@ -17,5 +17,5 @@ public:
     IFileFactory(const IFileFactory& another)            = delete;
     IFileFactory& operator=(const IFileFactory& another) = delete;
 
-    virtual IFile* newInstance(const QString& name) = 0;
+    virtual std::shared_ptr<IFile> newInstance(const QString& name) = 0;
 };

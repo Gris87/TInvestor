@@ -4,8 +4,6 @@
 #include <QDebug>
 #include <QEvent>
 
-#include "src/utils/objectholder/objectholder.h"
-
 
 
 MainWindow::MainWindow(
@@ -149,8 +147,7 @@ void MainWindow::authFailed()
     ui->actionAuth->setEnabled(true);
     trayIconShowClicked();
 
-    IAuthDialog* dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
-    ObjectHolder objectHolder(dialog);
+    std::shared_ptr<IAuthDialog> dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
 
     if (dialog->exec())
     {
@@ -162,7 +159,7 @@ void MainWindow::authFailed()
 
 void MainWindow::userUpdateTimerTicked()
 {
-    qInfo() << "User update timer ticked";
+    qDebug() << "User update timer ticked";
 
     mUserUpdateThread->start();
 }
@@ -222,7 +219,7 @@ void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
 
-    ISettingsDialog* dialog = mSettingsDialogFactory->newInstance(
+    std::shared_ptr<ISettingsDialog> dialog = mSettingsDialogFactory->newInstance(
         mConfigForSettingsDialog,
         mDecisionMakerConfigWidgetFactory,
         mBuyDecision1ConfigWidgetFactory,
@@ -233,7 +230,6 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision3ConfigWidgetFactory,
         this
     );
-    ObjectHolder objectHolder(dialog);
 
     dialog->updateUiFromConfig();
 

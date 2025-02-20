@@ -39,25 +39,27 @@ TEST(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
 {
     DecisionMakerConfigWidgetFactory factory;
 
-    StrictMock<DecisionMakerConfigMock>        decisionMakerConfigMock;
-    StrictMock<BuyDecision1ConfigMock>         buyDecision1ConfigMock;
-    StrictMock<BuyDecision2ConfigMock>         buyDecision2ConfigMock;
-    StrictMock<BuyDecision3ConfigMock>         buyDecision3ConfigMock;
-    StrictMock<SellDecision1ConfigMock>        sellDecision1ConfigMock;
-    StrictMock<SellDecision2ConfigMock>        sellDecision2ConfigMock;
-    StrictMock<SellDecision3ConfigMock>        sellDecision3ConfigMock;
-    StrictMock<BuyDecision1ConfigWidgetMock>*  buyDecision1ConfigWidgetMock  = new StrictMock<BuyDecision1ConfigWidgetMock>();
-    StrictMock<BuyDecision2ConfigWidgetMock>*  buyDecision2ConfigWidgetMock  = new StrictMock<BuyDecision2ConfigWidgetMock>();
-    StrictMock<BuyDecision3ConfigWidgetMock>*  buyDecision3ConfigWidgetMock  = new StrictMock<BuyDecision3ConfigWidgetMock>();
-    StrictMock<SellDecision1ConfigWidgetMock>* sellDecision1ConfigWidgetMock = new StrictMock<SellDecision1ConfigWidgetMock>();
-    StrictMock<SellDecision2ConfigWidgetMock>* sellDecision2ConfigWidgetMock = new StrictMock<SellDecision2ConfigWidgetMock>();
-    StrictMock<SellDecision3ConfigWidgetMock>* sellDecision3ConfigWidgetMock = new StrictMock<SellDecision3ConfigWidgetMock>();
+    StrictMock<DecisionMakerConfigMock>              decisionMakerConfigMock;
+    StrictMock<BuyDecision1ConfigMock>               buyDecision1ConfigMock;
+    StrictMock<BuyDecision2ConfigMock>               buyDecision2ConfigMock;
+    StrictMock<BuyDecision3ConfigMock>               buyDecision3ConfigMock;
+    StrictMock<SellDecision1ConfigMock>              sellDecision1ConfigMock;
+    StrictMock<SellDecision2ConfigMock>              sellDecision2ConfigMock;
+    StrictMock<SellDecision3ConfigMock>              sellDecision3ConfigMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>  buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>  buyDecision2ConfigWidgetFactoryMock;
     StrictMock<BuyDecision3ConfigWidgetFactoryMock>  buyDecision3ConfigWidgetFactoryMock;
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
+
+    // It will be deleted by `delete ui;`
+    StrictMock<BuyDecision1ConfigWidgetMock>*  buyDecision1ConfigWidgetMock  = new StrictMock<BuyDecision1ConfigWidgetMock>();
+    StrictMock<BuyDecision2ConfigWidgetMock>*  buyDecision2ConfigWidgetMock  = new StrictMock<BuyDecision2ConfigWidgetMock>();
+    StrictMock<BuyDecision3ConfigWidgetMock>*  buyDecision3ConfigWidgetMock  = new StrictMock<BuyDecision3ConfigWidgetMock>();
+    StrictMock<SellDecision1ConfigWidgetMock>* sellDecision1ConfigWidgetMock = new StrictMock<SellDecision1ConfigWidgetMock>();
+    StrictMock<SellDecision2ConfigWidgetMock>* sellDecision2ConfigWidgetMock = new StrictMock<SellDecision2ConfigWidgetMock>();
+    StrictMock<SellDecision3ConfigWidgetMock>* sellDecision3ConfigWidgetMock = new StrictMock<SellDecision3ConfigWidgetMock>();
 
     EXPECT_CALL(decisionMakerConfigMock, getBuyDecision1Config()).WillOnce(Return(&buyDecision1ConfigMock));
     EXPECT_CALL(decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(&buyDecision2ConfigMock));

@@ -19,7 +19,7 @@ public:
     ISettingsDialogFactory(const ISettingsDialogFactory& another)            = delete;
     ISettingsDialogFactory& operator=(const ISettingsDialogFactory& another) = delete;
 
-    virtual ISettingsDialog* newInstance(
+    virtual std::shared_ptr<ISettingsDialog> newInstance(
         IConfig*                           config,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,

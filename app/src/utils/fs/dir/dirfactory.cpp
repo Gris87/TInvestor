@@ -17,7 +17,7 @@ DirFactory::~DirFactory()
     qDebug() << "Destroy DirFactory";
 }
 
-IDir* DirFactory::newInstance(const QString& path)
+std::shared_ptr<IDir> DirFactory::newInstance(const QString& path)
 {
-    return new Dir(path);
+    return std::shared_ptr<IDir>(new Dir(path));
 }

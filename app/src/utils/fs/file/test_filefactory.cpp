@@ -13,8 +13,6 @@ TEST(Test_FileFactory, Test_newInstance)
 {
     FileFactory factory;
 
-    IFile* file = factory.newInstance("test.txt");
+    std::shared_ptr<IFile> file = factory.newInstance("test.txt");
     ASSERT_TRUE(file != nullptr);
-
-    delete file;
 }

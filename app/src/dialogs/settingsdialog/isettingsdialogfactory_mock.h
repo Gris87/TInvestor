@@ -21,7 +21,7 @@ public:
     SettingsDialogFactoryMock& operator=(const SettingsDialogFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        ISettingsDialog*,
+        std::shared_ptr<ISettingsDialog>,
         newInstance,
         (IConfig * config,
          IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,

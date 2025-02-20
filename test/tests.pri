@@ -42,7 +42,6 @@ SOURCES += \
     src/utils/fs/file/test_filefactory.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
-    src/utils/objectholder/test_objectholder.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \

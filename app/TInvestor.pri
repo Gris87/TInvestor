@@ -136,7 +136,6 @@ HEADERS += \
     src/utils/logger/logger.h \
     src/utils/messagebox/imessagebox.h \
     src/utils/messagebox/messagebox.h \
-    src/utils/objectholder/objectholder.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/widgets/trayicon/itrayicon.h \

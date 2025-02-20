@@ -26,9 +26,7 @@ TEST(Test_AuthDialogFactory, Test_newInstance)
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
 
-    IAuthDialog* dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
+    std::shared_ptr<IAuthDialog> dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
 
     ASSERT_TRUE(dialog != nullptr);
-
-    delete dialog;
 }

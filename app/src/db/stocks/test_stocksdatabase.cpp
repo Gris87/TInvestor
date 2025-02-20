@@ -35,7 +35,7 @@ protected:
         dirFactoryMock               = new StrictMock<DirFactoryMock>();
         fileFactoryMock              = new StrictMock<FileFactoryMock>();
 
-        EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(dirMock));
+        EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
         EXPECT_CALL(*dirMock, mkpath(appDir + "/data/db/stocks")).WillOnce(Return(true));
 
         database = new StocksDatabase(dirFactoryMock, fileFactoryMock);
@@ -113,7 +113,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
@@ -148,7 +149,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
@@ -185,7 +187,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
         fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
 
         EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
-            .WillOnce(Return(fileMocks[i]));
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMocks[i])));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
         EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
@@ -257,7 +259,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
         fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
 
         EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
-            .WillOnce(Return(fileMocks[i]));
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMocks[i])));
 
         if (i != 1)
         {
@@ -365,7 +367,8 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock, write(stocksBytes)).WillOnce(Return(stocksBytes.size()));
@@ -400,7 +403,8 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/WAZT.dat"))).WillOnce(Return(fileMock));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/WAZT.dat")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::Append))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock, write(IsMemEqual(stock.data.constData(), fileSize), fileSize)).WillOnce(Return(fileSize));
@@ -413,7 +417,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 {
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst"))).WillOnce(Return(fileMock));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/db/stocks/stocks.lst")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
@@ -450,7 +455,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
         fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
 
         EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
-            .WillOnce(Return(fileMocks[i]));
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMocks[i])));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
         EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
@@ -522,7 +527,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
         fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
 
         EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
-            .WillOnce(Return(fileMocks[i]));
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMocks[i])));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
         EXPECT_CALL(*fileMocks[i], write(IsMemEqual(stocks.at(i).data.constData() + 1, fileSize), fileSize))
@@ -583,7 +588,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
         fileMocks[i] = new StrictMock<FileMock>(); // Will be deleted in readStocksData
 
         EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/db/stocks/AZAZ%2.dat").arg(appDir).arg(i)))
-            .WillOnce(Return(fileMocks[i]));
+            .WillOnce(Return(std::shared_ptr<IFile>(fileMocks[i])));
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
         EXPECT_CALL(*fileMocks[i], write(IsMemEqual(stocks.at(i).data.constData() + 2, fileSize), fileSize))

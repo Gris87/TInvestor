@@ -20,5 +20,6 @@ public:
     IAuthDialogFactory(const IAuthDialogFactory& another)            = delete;
     IAuthDialogFactory& operator=(const IAuthDialogFactory& another) = delete;
 
-    virtual IAuthDialog* newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) = 0;
+    virtual std::shared_ptr<IAuthDialog>
+    newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) = 0;
 };

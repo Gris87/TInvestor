@@ -214,10 +214,10 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_authFailed)
 {
-    StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>();
+    StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, NotNull()))
-        .WillOnce(Return(authDialogMock));
+        .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
@@ -309,6 +309,7 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
 
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
+    // Will be deleted in on_actionSettings_triggered
     StrictMock<SettingsDialogMock>* settingsDialogMock = new StrictMock<SettingsDialogMock>();
 
     EXPECT_CALL(*configForSettingsDialogMock, assign(configMock));
@@ -326,7 +327,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             NotNull()
         )
     )
-        .WillOnce(Return(settingsDialogMock));
+        .WillOnce(Return(std::shared_ptr<ISettingsDialog>(settingsDialogMock)));
     EXPECT_CALL(*settingsDialogMock, updateUiFromConfig());
 
     EXPECT_CALL(*settingsDialogMock, exec()).WillOnce(Return(QDialog::Accepted));

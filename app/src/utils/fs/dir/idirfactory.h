@@ -17,5 +17,5 @@ public:
     IDirFactory(const IDirFactory& another)            = delete;
     IDirFactory& operator=(const IDirFactory& another) = delete;
 
-    virtual IDir* newInstance(const QString& path = QString()) = 0;
+    virtual std::shared_ptr<IDir> newInstance(const QString& path = QString()) = 0;
 };

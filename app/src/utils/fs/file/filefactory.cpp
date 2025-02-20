@@ -17,7 +17,7 @@ FileFactory::~FileFactory()
     qDebug() << "Destroy FileFactory";
 }
 
-IFile* FileFactory::newInstance(const QString& name)
+std::shared_ptr<IFile> FileFactory::newInstance(const QString& name)
 {
-    return new File(name);
+    return std::shared_ptr<IFile>(new File(name));
 }

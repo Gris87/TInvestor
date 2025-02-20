@@ -74,7 +74,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     )
         .WillOnce(Return(autoPilotConfigWidgetMock));
 
-    ISettingsDialog* dialog = factory.newInstance(
+    std::shared_ptr<ISettingsDialog> dialog = factory.newInstance(
         &configMock,
         &decisionMakerConfigWidgetFactoryMock,
         &buyDecision1ConfigWidgetFactoryMock,
@@ -87,6 +87,4 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     );
 
     ASSERT_TRUE(dialog != nullptr);
-
-    delete dialog;
 }
