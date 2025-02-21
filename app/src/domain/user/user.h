@@ -20,6 +20,17 @@ struct User
     float       commission;
 };
 
+struct Account
+{
+    QString id;
+    QString idHash;
+    QString name;
+};
+
+
+
+bool operator==(const Account& lhs, const Account& rhs);
+
 
 
 extern QMap<QString, float> tariffToCommission;

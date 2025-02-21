@@ -8,7 +8,8 @@ UserStorage::UserStorage(IUserDatabase* userDatabase) :
     IUserStorage(),
     mUserDatabase(userDatabase),
     mMutex(new QMutex()),
-    mUser()
+    mUser(),
+    mAccounts()
 {
     qDebug() << "Create UserStorage";
 }
@@ -25,6 +26,7 @@ void UserStorage::readFromDatabase()
     qDebug() << "Reading user data from database";
 
     mUser = mUserDatabase->readUserInfo();
+    mAccounts = mUserDatabase->readAccounts();
 }
 
 QMutex* UserStorage::getMutex()
@@ -58,5 +60,20 @@ void UserStorage::setUserInfo(const User& user)
         mUser.commission           = tariffToCommission[mUser.tariff];
 
         mUserDatabase->writeUserInfo(mUser);
+    }
+}
+
+const QList<Account>& UserStorage::getAccounts()
+{
+    return mAccounts;
+}
+
+void UserStorage::setAccounts(const QList<Account>& accounts)
+{
+    if (mAccounts != accounts)
+    {
+        mAccounts = accounts;
+
+        mUserDatabase->writeAccounts(mAccounts);
     }
 }

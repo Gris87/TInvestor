@@ -11,7 +11,10 @@
 
 
 
+namespace tinkoff
+{
 using namespace tinkoff::public_::invest::api::contract::v1;
+}
 
 
 
@@ -29,8 +32,8 @@ public:
     IGrpcClient(const IGrpcClient& another)            = delete;
     IGrpcClient& operator=(const IGrpcClient& another) = delete;
 
-    virtual std::shared_ptr<GetInfoResponse>     getUserInfo() = 0;
-    virtual std::shared_ptr<GetAccountsResponse> getAccounts() = 0;
+    virtual std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() = 0;
+    virtual std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() = 0;
 
 signals:
     void authFailed();

@@ -20,6 +20,6 @@ public:
     GrpcClientMock(const GrpcClientMock& another)            = delete;
     GrpcClientMock& operator=(const GrpcClientMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<GetInfoResponse>, getUserInfo, (), (override));
-    MOCK_METHOD(std::shared_ptr<GetAccountsResponse>, getAccounts, (), (override));
+    MOCK_METHOD(std::shared_ptr<tinkoff::GetInfoResponse>, getUserInfo, (), (override));
+    MOCK_METHOD(std::shared_ptr<tinkoff::GetAccountsResponse>, getAccounts, (), (override));
 };

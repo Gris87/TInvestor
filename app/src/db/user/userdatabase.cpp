@@ -31,6 +31,7 @@ UserDatabase::UserDatabase() :
     qInfo() << "User database" << dbPath << "created";
 
     createUserTable();
+    createAccountsTable();
 }
 
 UserDatabase::~UserDatabase()
@@ -46,7 +47,7 @@ void UserDatabase::createUserTable()
 
     QString str =
         "CREATE TABLE IF NOT EXISTS user ("
-        "    id                      INTEGER PRIMARY KEY, "
+        "    id                      INTEGER NOT NULL PRIMARY KEY, "
         "    token                   TEXT NOT NULL, "
         "    qualified               BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
         "    qualified_for_work_with TEXT NOT NULL, "
@@ -57,6 +58,22 @@ void UserDatabase::createUserTable()
 
     bool ok = query.exec(str);
     Q_ASSERT_X(ok, "UserDatabase::createUserTable()", query.lastError().text().toLocal8Bit().constData());
+}
+
+void UserDatabase::createAccountsTable()
+{
+    qDebug() << "Create table with accounts";
+
+    QString str =
+        "CREATE TABLE IF NOT EXISTS accounts ("
+        "    id   TEXT NOT NULL PRIMARY KEY, "
+        "    name TEXT NOT NULL"
+        ");";
+
+    QSqlQuery query(db);
+
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "UserDatabase::createAccountsTable()", query.lastError().text().toLocal8Bit().constData());
 }
 
 User UserDatabase::readUserInfo()
@@ -120,7 +137,40 @@ User UserDatabase::readUserInfo()
     return res;
 }
 
-void UserDatabase::UserDatabase::writeToken(const QString& token)
+QList<Account> UserDatabase::readAccounts()
+{
+    qDebug() << "Reading account";
+
+    QList<Account> res;
+
+    QString str =
+        "SELECT id, name "
+        "FROM accounts;";
+
+    QSqlQuery query(db);
+
+    bool ok = query.exec(str);
+    Q_ASSERT_X(ok, "UserDatabase::readAccounts()", query.lastError().text().toLocal8Bit().constData());
+
+    QSqlRecord rec = query.record();
+
+    int idIndex   = rec.indexOf("id");
+    int nameIndex = rec.indexOf("name");
+
+    while (query.next())
+    {
+        Account account;
+
+        account.id   = mSimpleCrypt.decryptToString(query.value(idIndex).toString());
+        account.name = query.value(nameIndex).toString();
+
+        res.append(account);
+    }
+
+    return res;
+}
+
+void UserDatabase::writeToken(const QString& token)
 {
     QSqlQuery query(db);
     query.prepare(
@@ -151,4 +201,47 @@ void UserDatabase::writeUserInfo(const User& user)
 
     bool ok = query.exec();
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
+}
+
+void UserDatabase::writeAccounts(const QList<Account>& accounts)
+{
+    bool ok = db.transaction();
+    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
+
+    QString str =
+        "DELETE "
+        "FROM accounts;";
+
+    QSqlQuery query1(db);
+
+    ok = query1.exec(str);
+    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", query1.lastError().text().toLocal8Bit().constData());
+
+    QVariantList ids;
+    QVariantList names;
+
+    for (int i = 0; i < accounts.size(); ++i)
+    {
+        const Account& account = accounts.at(i);
+
+        ids << mSimpleCrypt.encryptToString(account.id);
+        names << account.name;
+    }
+
+    QSqlQuery query2(db);
+
+    query2.prepare(
+        "INSERT INTO accounts "
+        "(id, name) "
+        "VALUES "
+        "(:id, :name);"
+    );
+    query2.bindValue(":id", ids);
+    query2.bindValue(":name", names);
+
+    ok = query2.execBatch();
+    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", query2.lastError().text().toLocal8Bit().constData());
+
+    ok = db.commit();
+    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
 }

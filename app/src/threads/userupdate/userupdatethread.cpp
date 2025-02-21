@@ -23,7 +23,7 @@ void UserUpdateThread::run()
 {
     qDebug() << "Running UserUpdateThread";
 
-    std::shared_ptr<GetInfoResponse> userInfo = mGrpcClient->getUserInfo();
+    std::shared_ptr<tinkoff::GetInfoResponse> userInfo = mGrpcClient->getUserInfo();
 
     if (userInfo != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
@@ -37,28 +37,33 @@ void UserUpdateThread::run()
             user.qualifiedForWorkWith.append(QString::fromStdString(userInfo->qualified_for_work_with(i)));
         }
 
-        std::shared_ptr<GetAccountsResponse> accounts = mGrpcClient->getAccounts();
+        std::shared_ptr<tinkoff::GetAccountsResponse> tinkoffAccounts = mGrpcClient->getAccounts();
 
-        if (accounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
+        if (tinkoffAccounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
         {
-            qInfo() << accounts->accounts_size();
+            QList<Account> accounts;
 
-            for (int i = 0; i < accounts->accounts_size(); ++i)
+            for (int i = 0; i < tinkoffAccounts->accounts_size(); ++i)
             {
-                const Account& account = accounts->accounts(i);
+                const tinkoff::Account& tinkoffAccount = tinkoffAccounts->accounts(i);
 
-                qInfo() << account.id();
-                qInfo() << account.type();
-                qInfo() << QString::fromStdString(account.name());
-                qInfo() << account.status();
-                qInfo() << account.opened_date().seconds();
-                qInfo() << account.closed_date().seconds();
-                qInfo() << account.access_level();
+                if (tinkoffAccount.type() == tinkoff::ACCOUNT_TYPE_TINKOFF &&
+                    tinkoffAccount.status() == tinkoff::ACCOUNT_STATUS_OPEN &&
+                    tinkoffAccount.access_level() == tinkoff::ACCOUNT_ACCESS_LEVEL_FULL_ACCESS)
+                {
+                    Account account;
+
+                    account.id   = QString::fromStdString(tinkoffAccount.id());
+                    account.name = QString::fromStdString(tinkoffAccount.name());
+
+                    accounts.append(account);
+                }
             }
 
             QMutexLocker locker(mUserStorage->getMutex());
 
             mUserStorage->setUserInfo(user);
+            mUserStorage->setAccounts(accounts);
         }
     }
 

@@ -26,7 +26,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
 
     std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
-    mUsersService = UsersService::NewStub(channel);
+    mUsersService = tinkoff::UsersService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -34,11 +34,11 @@ GrpcClient::~GrpcClient()
     qDebug() << "Destroy GrpcClient";
 }
 
-std::shared_ptr<GetInfoResponse> GrpcClient::getUserInfo()
+std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo()
 {
-    grpc::ClientContext              context;
-    GetInfoRequest                   req;
-    std::shared_ptr<GetInfoResponse> resp = std::shared_ptr<GetInfoResponse>(new GetInfoResponse());
+    grpc::ClientContext                       context;
+    tinkoff::GetInfoRequest                   req;
+    std::shared_ptr<tinkoff::GetInfoResponse> resp = std::shared_ptr<tinkoff::GetInfoResponse>(new tinkoff::GetInfoResponse());
 
     context.set_credentials(mCreds);
 
@@ -54,15 +54,16 @@ std::shared_ptr<GetInfoResponse> GrpcClient::getUserInfo()
     return resp;
 }
 
-std::shared_ptr<GetAccountsResponse> GrpcClient::getAccounts()
+std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts()
 {
-    grpc::ClientContext                  context;
-    GetAccountsRequest                   req;
-    std::shared_ptr<GetAccountsResponse> resp = std::shared_ptr<GetAccountsResponse>(new GetAccountsResponse());
+    grpc::ClientContext                           context;
+    tinkoff::GetAccountsRequest                   req;
+    std::shared_ptr<tinkoff::GetAccountsResponse> resp =
+        std::shared_ptr<tinkoff::GetAccountsResponse>(new tinkoff::GetAccountsResponse());
 
     context.set_credentials(mCreds);
 
-    req.set_status(ACCOUNT_STATUS_OPEN);
+    req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
     grpc::Status status = mUsersService->GetAccounts(&context, req, resp.get());
 

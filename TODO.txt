@@ -1,4 +1,6 @@
-shared_ptr for grpc
+Account id hash
+Thread for getting all stocks and combining by minute duration
+Thread for stock streaming
 Autorun
 Big fall from 24h ago
 Calculate likvidity

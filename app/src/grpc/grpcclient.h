@@ -19,10 +19,10 @@ public:
     GrpcClient(const GrpcClient& another)            = delete;
     GrpcClient& operator=(const GrpcClient& another) = delete;
 
-    std::shared_ptr<GetInfoResponse>     getUserInfo() override;
-    std::shared_ptr<GetAccountsResponse> getAccounts() override;
+    std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() override;
+    std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() override;
 
 private:
-    std::shared_ptr<grpc::CallCredentials> mCreds;
-    std::unique_ptr<UsersService::Stub>    mUsersService;
+    std::shared_ptr<grpc::CallCredentials>       mCreds;
+    std::unique_ptr<tinkoff::UsersService::Stub> mUsersService;
 };

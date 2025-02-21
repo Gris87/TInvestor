@@ -8,3 +8,10 @@ QMap<QString, float> tariffToCommission{
     {"premium", 0.04f},
     {"sandbox", 0.04f}
 };
+
+
+
+bool operator==(const Account& lhs, const Account& rhs)
+{
+    return lhs.id == rhs.id && lhs.name == rhs.name;
+}

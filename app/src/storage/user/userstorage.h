@@ -22,9 +22,12 @@ public:
     const QString& getToken() override;
     void           setToken(const QString& token) override;
     void           setUserInfo(const User& user) override;
+    const QList<Account>& getAccounts() override;
+    void                  setAccounts(const QList<Account>& accounts) override;
 
 private:
     IUserDatabase* mUserDatabase;
     QMutex*        mMutex;
     User           mUser;
+    QList<Account> mAccounts;
 };
