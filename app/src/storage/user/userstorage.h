@@ -18,10 +18,13 @@ public:
     UserStorage& operator=(const UserStorage& another) = delete;
 
     void           readFromDatabase() override;
+    QMutex*        getMutex() override;
     const QString& getToken() override;
     void           setToken(const QString& token) override;
+    void           setUserInfo(const User& user) override;
 
 private:
     IUserDatabase* mUserDatabase;
+    QMutex*        mMutex;
     User           mUser;
 };

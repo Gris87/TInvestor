@@ -21,6 +21,8 @@ public:
     UserStorageMock& operator=(const UserStorageMock& another) = delete;
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
+    MOCK_METHOD(QMutex*, getMutex, (), (override));
     MOCK_METHOD(const QString&, getToken, (), (override));
     MOCK_METHOD(void, setToken, (const QString& token), (override));
+    MOCK_METHOD(void, setUserInfo, (const User& user), (override));
 };

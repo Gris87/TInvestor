@@ -5,6 +5,7 @@
 #include "src/threads/cleanup/icleanupthread.h"
 
 #include "src/config/iconfig.h"
+#include "src/db/stocks/istocksdatabase.h"
 #include "src/storage/stocks/istocksstorage.h"
 
 

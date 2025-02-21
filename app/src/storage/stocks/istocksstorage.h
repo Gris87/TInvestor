@@ -2,7 +2,7 @@
 
 
 
-#include "src/db/stocks/istocksdatabase.h"
+#include "src/domain/stocks/stocks.h"
 
 #include <QMutex>
 

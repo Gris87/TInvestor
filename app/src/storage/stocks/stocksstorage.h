@@ -4,6 +4,8 @@
 
 #include "src/storage/stocks/istocksstorage.h"
 
+#include "src/db/stocks/istocksdatabase.h"
+
 
 
 class StocksStorage : public IStocksStorage

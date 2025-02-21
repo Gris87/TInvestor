@@ -27,10 +27,15 @@ void UserUpdateThread::run()
 
     if (userInfo != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
-        qInfo() << userInfo->prem_status();
-        qInfo() << userInfo->qual_status();
-        qInfo() << userInfo->qualified_for_work_with().size();
-        qInfo() << userInfo->tariff();
+        User user;
+
+        user.qualified = userInfo->qual_status();
+        user.tariff    = QString::fromStdString(userInfo->tariff());
+
+        for (int i = 0; i < userInfo->qualified_for_work_with_size(); ++i)
+        {
+            user.qualifiedForWorkWith.append(QString::fromStdString(userInfo->qualified_for_work_with(i)));
+        }
 
         std::shared_ptr<GetAccountsResponse> accounts = mGrpcClient->getAccounts();
 
@@ -50,6 +55,10 @@ void UserUpdateThread::run()
                 qInfo() << account.closed_date().seconds();
                 qInfo() << account.access_level();
             }
+
+            QMutexLocker locker(mUserStorage->getMutex());
+
+            mUserStorage->setUserInfo(user);
         }
     }
 
