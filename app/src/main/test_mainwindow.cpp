@@ -20,7 +20,9 @@
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
+#include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -58,6 +60,8 @@ protected:
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
+        priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
+        lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
@@ -94,6 +98,8 @@ protected:
             stocksStorageMock,
             grpcClientMock,
             userUpdateThreadMock,
+            priceCollectThreadMock,
+            lastPriceThreadMock,
             cleanupThreadMock,
             makeDecisionThreadMock,
             messageBoxUtilsMock,
@@ -127,6 +133,8 @@ protected:
         delete stocksStorageMock;
         delete grpcClientMock;
         delete userUpdateThreadMock;
+        delete priceCollectThreadMock;
+        delete lastPriceThreadMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
         delete messageBoxUtilsMock;
@@ -152,6 +160,8 @@ protected:
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
+    StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
+    StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
@@ -174,6 +184,8 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
     // clang-format off
     ASSERT_EQ(mainWindow->userUpdateTimer->interval(),   0);
     ASSERT_EQ(mainWindow->userUpdateTimer->isActive(),   false);
+    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(),      0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
@@ -222,10 +234,16 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
     EXPECT_CALL(*userUpdateThreadMock, run());
+    EXPECT_CALL(*priceCollectThreadMock, run());
+    EXPECT_CALL(*lastPriceThreadMock, run());
+    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->authFailed();
 
     userUpdateThreadMock->wait();
+    priceCollectThreadMock->wait();
+    lastPriceThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
@@ -235,6 +253,15 @@ TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
     mainWindow->userUpdateTimerTicked();
 
     userUpdateThreadMock->wait();
+}
+
+TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
+{
+    EXPECT_CALL(*priceCollectThreadMock, run());
+
+    mainWindow->priceCollectTimerTicked();
+
+    priceCollectThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
@@ -259,13 +286,37 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
+    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
+
     EXPECT_CALL(*userUpdateThreadMock, run());
+    EXPECT_CALL(*priceCollectThreadMock, run());
+    EXPECT_CALL(*lastPriceThreadMock, run());
+    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->ui->actionAuth->trigger();
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), false);
 
+    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
+
     userUpdateThreadMock->wait();
+    priceCollectThreadMock->wait();
+    lastPriceThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -345,21 +396,35 @@ TEST_F(Test_MainWindow, Test_init)
 {
     ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
     ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
     EXPECT_CALL(*cleanupThreadMock, run());
     EXPECT_CALL(*userUpdateThreadMock, run());
+    EXPECT_CALL(*priceCollectThreadMock, run());
+    EXPECT_CALL(*lastPriceThreadMock, run());
+    EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->init();
 
     ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 15 * 60 * 1000);
     ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 1 * 60 * 60 * 1000);
+    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), true);
     ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
     ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
 
     userUpdateThreadMock->wait();
+    priceCollectThreadMock->wait();
+    lastPriceThreadMock->wait();
     cleanupThreadMock->wait();
+    makeDecisionThreadMock->wait();
 }

@@ -29,7 +29,9 @@
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
+#include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
+#include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
@@ -207,6 +209,8 @@ int runApplication(int argc, char* argv[])
     StocksStorage      stocksStorage(&stocksDatabase);
     GrpcClient         grpcClient(&userStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
+    PriceCollectThread priceCollectThread(&grpcClient);
+    LastPriceThread    lastPriceThread(&grpcClient);
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 
@@ -231,6 +235,8 @@ int runApplication(int argc, char* argv[])
         &stocksStorage,
         &grpcClient,
         &userUpdateThread,
+        &priceCollectThread,
+        &lastPriceThread,
         &cleanupThread,
         &makeDecisionThread,
         &messageBoxUtils,

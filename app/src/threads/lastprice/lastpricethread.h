@@ -22,5 +22,5 @@ public:
     void run() override;
 
 private:
-    IGrpcClient*  mGrpcClient;
+    IGrpcClient* mGrpcClient;
 };

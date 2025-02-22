@@ -17,7 +17,7 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp()
     {
-        grpcClientMock  = new StrictMock<GrpcClientMock>();
+        grpcClientMock = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(grpcClientMock);
     }
@@ -28,8 +28,8 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*          thread;
-    StrictMock<GrpcClientMock>*  grpcClientMock;
+    PriceCollectThread*         thread;
+    StrictMock<GrpcClientMock>* grpcClientMock;
 };
 
 

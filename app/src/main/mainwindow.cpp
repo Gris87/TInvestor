@@ -24,6 +24,8 @@ MainWindow::MainWindow(
     IStocksStorage*                    stocksStorage,
     IGrpcClient*                       grpcClient,
     IUserUpdateThread*                 userUpdateThread,
+    IPriceCollectThread*               priceCollectThread,
+    ILastPriceThread*                  lastPriceThread,
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
     IMessageBoxUtils*                  messageBoxUtils,
@@ -32,6 +34,7 @@ MainWindow::MainWindow(
     QMainWindow(),
     ui(new Ui::MainWindow),
     userUpdateTimer(new QTimer(this)),
+    priceCollectTimer(new QTimer(this)),
     cleanupTimer(new QTimer(this)),
     makeDecisionTimer(new QTimer(this)),
     mConfig(config),
@@ -50,6 +53,8 @@ MainWindow::MainWindow(
     mStocksStorage(stocksStorage),
     mGrpcClient(grpcClient),
     mUserUpdateThread(userUpdateThread),
+    mPriceCollectThread(priceCollectThread),
+    mLastPriceThread(lastPriceThread),
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
     mMessageBoxUtils(messageBoxUtils),
@@ -73,6 +78,7 @@ MainWindow::MainWindow(
 
     // clang-format off
     connect(userUpdateTimer,   SIGNAL(timeout()), this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer, SIGNAL(timeout()), this, SLOT(priceCollectTimerTicked()));
     connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
     connect(makeDecisionTimer, SIGNAL(timeout()), this, SLOT(makeDecisionTimerTicked()));
     // clang-format on
@@ -89,10 +95,14 @@ MainWindow::~MainWindow()
     qDebug() << "Destroy MainWindow";
 
     mUserUpdateThread->requestInterruption();
+    mPriceCollectThread->requestInterruption();
+    mLastPriceThread->requestInterruption();
     mCleanupThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
     mUserUpdateThread->wait();
+    mPriceCollectThread->wait();
+    mLastPriceThread->wait();
     mCleanupThread->wait();
     mMakeDecisionThread->wait();
 
@@ -148,6 +158,17 @@ void MainWindow::authFailed()
     mUserUpdateThread->requestInterruption();
     mUserUpdateThread->wait();
 
+    priceCollectTimer->stop();
+    mPriceCollectThread->requestInterruption();
+    mPriceCollectThread->wait();
+
+    mLastPriceThread->requestInterruption();
+    mLastPriceThread->wait();
+
+    makeDecisionTimer->stop();
+    mMakeDecisionThread->requestInterruption();
+    mMakeDecisionThread->wait();
+
     ui->actionAuth->setEnabled(true);
     trayIconShowClicked();
 
@@ -166,6 +187,13 @@ void MainWindow::userUpdateTimerTicked()
     qDebug() << "User update timer ticked";
 
     mUserUpdateThread->start();
+}
+
+void MainWindow::priceCollectTimerTicked()
+{
+    qDebug() << "Price collect timer ticked";
+
+    mPriceCollectThread->start();
 }
 
 void MainWindow::cleanupTimerTicked()
@@ -188,6 +216,14 @@ void MainWindow::on_actionAuth_triggered()
 
     userUpdateTimer->start();
     userUpdateTimerTicked();
+
+    priceCollectTimer->start();
+    priceCollectTimerTicked();
+
+    mLastPriceThread->start();
+
+    makeDecisionTimer->start();
+    makeDecisionTimerTicked();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -256,7 +292,8 @@ void MainWindow::init()
     mUserStorage->readFromDatabase();
     mStocksStorage->readFromDatabase();
 
-    userUpdateTimer->setInterval(15 * 60 * 1000); // 15 minutes
+    userUpdateTimer->setInterval(15 * 60 * 1000);       // 15 minutes
+    priceCollectTimer->setInterval(1 * 60 * 60 * 1000); // 1 hour
 
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();

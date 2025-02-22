@@ -25,7 +25,7 @@ void UserStorage::readFromDatabase()
 {
     qDebug() << "Reading user data from database";
 
-    mUser = mUserDatabase->readUserInfo();
+    mUser     = mUserDatabase->readUserInfo();
     mAccounts = mUserDatabase->readAccounts();
 }
 

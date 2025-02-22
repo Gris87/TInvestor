@@ -13,7 +13,9 @@
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
+#include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
+#include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -51,6 +53,8 @@ public:
         IStocksStorage*                    stocksStorage,
         IGrpcClient*                       grpcClient,
         IUserUpdateThread*                 userUpdateThread,
+        IPriceCollectThread*               priceCollectThread,
+        ILastPriceThread*                  lastPriceThread,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
         IMessageBoxUtils*                  messageBoxUtils,
@@ -67,6 +71,7 @@ public:
     Ui::MainWindow* ui;
 
     QTimer* userUpdateTimer;
+    QTimer* priceCollectTimer;
     QTimer* cleanupTimer;
     QTimer* makeDecisionTimer;
 
@@ -92,6 +97,8 @@ private:
     IStocksStorage*                    mStocksStorage;
     IGrpcClient*                       mGrpcClient;
     IUserUpdateThread*                 mUserUpdateThread;
+    IPriceCollectThread*               mPriceCollectThread;
+    ILastPriceThread*                  mLastPriceThread;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
@@ -103,6 +110,7 @@ public slots:
     void trayIconExitClicked();
     void authFailed();
     void userUpdateTimerTicked();
+    void priceCollectTimerTicked();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
 
