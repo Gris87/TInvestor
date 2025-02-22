@@ -1155,6 +1155,7 @@ class GetInfoResponse final : public ::google::protobuf::Message
     kQualifiedForWorkWithFieldNumber = 3,
     kTariffFieldNumber = 4,
     kUserIdFieldNumber = 9,
+    kRiskLevelCodeFieldNumber = 12,
     kPremStatusFieldNumber = 1,
     kQualStatusFieldNumber = 2,
   };
@@ -1212,6 +1213,22 @@ class GetInfoResponse final : public ::google::protobuf::Message
   std::string* _internal_mutable_user_id();
 
   public:
+  // string risk_level_code = 12;
+  void clear_risk_level_code() ;
+  const std::string& risk_level_code() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_risk_level_code(Arg_&& arg, Args_... args);
+  std::string* mutable_risk_level_code();
+  PROTOBUF_NODISCARD std::string* release_risk_level_code();
+  void set_allocated_risk_level_code(std::string* value);
+
+  private:
+  const std::string& _internal_risk_level_code() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_risk_level_code(
+      const std::string& value);
+  std::string* _internal_mutable_risk_level_code();
+
+  public:
   // bool prem_status = 1;
   void clear_prem_status() ;
   bool prem_status() const;
@@ -1237,8 +1254,8 @@ class GetInfoResponse final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      2, 5, 0,
-      98, 2>
+      2, 6, 0,
+      113, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1258,6 +1275,7 @@ class GetInfoResponse final : public ::google::protobuf::Message
     ::google::protobuf::RepeatedPtrField<std::string> qualified_for_work_with_;
     ::google::protobuf::internal::ArenaStringPtr tariff_;
     ::google::protobuf::internal::ArenaStringPtr user_id_;
+    ::google::protobuf::internal::ArenaStringPtr risk_level_code_;
     bool prem_status_;
     bool qual_status_;
     ::google::protobuf::internal::CachedSize _cached_size_;
@@ -4148,6 +4166,54 @@ inline void GetInfoResponse::set_allocated_user_id(std::string* value) {
     _impl_.user_id_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetInfoResponse.user_id)
+}
+
+// string risk_level_code = 12;
+inline void GetInfoResponse::clear_risk_level_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.risk_level_code_.ClearToEmpty();
+}
+inline const std::string& GetInfoResponse::risk_level_code() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code)
+  return _internal_risk_level_code();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void GetInfoResponse::set_risk_level_code(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.risk_level_code_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code)
+}
+inline std::string* GetInfoResponse::mutable_risk_level_code() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_risk_level_code();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code)
+  return _s;
+}
+inline const std::string& GetInfoResponse::_internal_risk_level_code() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.risk_level_code_.Get();
+}
+inline void GetInfoResponse::_internal_set_risk_level_code(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.risk_level_code_.Set(value, GetArena());
+}
+inline std::string* GetInfoResponse::_internal_mutable_risk_level_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.risk_level_code_.Mutable( GetArena());
+}
+inline std::string* GetInfoResponse::release_risk_level_code() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code)
+  return _impl_.risk_level_code_.Release();
+}
+inline void GetInfoResponse::set_allocated_risk_level_code(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.risk_level_code_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.risk_level_code_.IsDefault()) {
+    _impl_.risk_level_code_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code)
 }
 
 #ifdef __GNUC__

@@ -1,0 +1,24 @@
+#pragma once
+
+
+
+#include "src/threads/lastprice/ilastpricethread.h"
+
+#include <gmock/gmock.h>
+
+
+
+class LastPriceThreadMock : public ILastPriceThread
+{
+public:
+    LastPriceThreadMock() :
+        ILastPriceThread()
+    {
+    }
+    ~LastPriceThreadMock() override = default;
+
+    LastPriceThreadMock(const LastPriceThreadMock& another)            = delete;
+    LastPriceThreadMock& operator=(const LastPriceThreadMock& another) = delete;
+
+    MOCK_METHOD(void, run, (), (override));
+};

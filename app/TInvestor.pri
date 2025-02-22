@@ -39,7 +39,9 @@ SOURCES += \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
+    src/threads/lastprice/lastpricethread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/threads/pricecollect/pricecollectthread.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/fs/dir/dir.cpp \
     src/utils/fs/dir/dirfactory.cpp \
@@ -121,9 +123,13 @@ HEADERS += \
     src/storage/user/userstorage.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
+    src/threads/lastprice/ilastpricethread.h \
+    src/threads/lastprice/lastpricethread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
+    src/threads/pricecollect/ipricecollectthread.h \
+    src/threads/pricecollect/pricecollectthread.h \
     src/threads/userupdate/iuserupdatethread.h \
     src/threads/userupdate/userupdatethread.h \
     src/utils/fs/dir/dir.h \

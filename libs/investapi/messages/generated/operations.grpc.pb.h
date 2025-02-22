@@ -40,8 +40,8 @@ class OperationsService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Получить список операций по счету. При работе с методом учитывайте
-    // [особенности взаимодействия](/investAPI/operations_problems).
+    // Получить список операций по счету.
+    // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>> AsyncGetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>>(AsyncGetOperationsRaw(context, request, cq));
@@ -89,8 +89,8 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>> PrepareAsyncGetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>>(PrepareAsyncGetDividendsForeignIssuerRaw(context, request, cq));
     }
-    // Получить список операций по счету с пагинацией. При работе с методом учитывайте
-    // [особенности взаимодействия](/investAPI/operations_problems).
+    // Получить список операций по счету с пагинацией.
+    // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse>> AsyncGetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse>>(AsyncGetOperationsByCursorRaw(context, request, cq));
@@ -101,8 +101,8 @@ class OperationsService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Получить список операций по счету. При работе с методом учитывайте
-      // [особенности взаимодействия](/investAPI/operations_problems).
+      // Получить список операций по счету.
+      // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       // Получить портфель по счету.
@@ -120,8 +120,8 @@ class OperationsService final {
       // Получить отчет «Справка о доходах за пределами РФ».
       virtual void GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список операций по счету с пагинацией. При работе с методом учитывайте
-      // [особенности взаимодействия](/investAPI/operations_problems).
+      // Получить список операций по счету с пагинацией.
+      // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
       virtual void GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -252,8 +252,8 @@ class OperationsService final {
    public:
     Service();
     virtual ~Service();
-    // Получить список операций по счету. При работе с методом учитывайте
-    // [особенности взаимодействия](/investAPI/operations_problems).
+    // Получить список операций по счету.
+    // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response);
     // Получить портфель по счету.
     virtual ::grpc::Status GetPortfolio(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response);
@@ -265,8 +265,8 @@ class OperationsService final {
     virtual ::grpc::Status GetBrokerReport(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response);
     // Получить отчет «Справка о доходах за пределами РФ».
     virtual ::grpc::Status GetDividendsForeignIssuer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response);
-    // Получить список операций по счету с пагинацией. При работе с методом учитывайте
-    // [особенности взаимодействия](/investAPI/operations_problems).
+    // Получить список операций по счету с пагинацией.
+    // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperationsByCursor(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response);
   };
   template <class BaseClass>

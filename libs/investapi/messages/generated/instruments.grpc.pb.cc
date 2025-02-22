@@ -52,6 +52,9 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetAssets",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetFavorites",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/EditFavorites",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/CreateFavoriteGroup",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/DeleteFavoriteGroup",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetFavoriteGroups",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetCountries",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/FindInstrument",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetBrands",
@@ -60,6 +63,7 @@ static const char* InstrumentsService_method_names[] = {
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetAssetReports",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetConsensusForecasts",
   "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetForecastBy",
+  "/tinkoff.public.invest.api.contract.v1.InstrumentsService/GetRiskRates",
 };
 
 std::unique_ptr< InstrumentsService::Stub> InstrumentsService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -94,14 +98,18 @@ InstrumentsService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_GetAssets_(InstrumentsService_method_names[22], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetFavorites_(InstrumentsService_method_names[23], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_EditFavorites_(InstrumentsService_method_names[24], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetCountries_(InstrumentsService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FindInstrument_(InstrumentsService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBrands_(InstrumentsService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBrandBy_(InstrumentsService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetFundamentals_(InstrumentsService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetAssetReports_(InstrumentsService_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetConsensusForecasts_(InstrumentsService_method_names[31], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetForecastBy_(InstrumentsService_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CreateFavoriteGroup_(InstrumentsService_method_names[25], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DeleteFavoriteGroup_(InstrumentsService_method_names[26], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetFavoriteGroups_(InstrumentsService_method_names[27], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetCountries_(InstrumentsService_method_names[28], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FindInstrument_(InstrumentsService_method_names[29], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBrands_(InstrumentsService_method_names[30], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBrandBy_(InstrumentsService_method_names[31], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetFundamentals_(InstrumentsService_method_names[32], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetAssetReports_(InstrumentsService_method_names[33], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetConsensusForecasts_(InstrumentsService_method_names[34], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetForecastBy_(InstrumentsService_method_names[35], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetRiskRates_(InstrumentsService_method_names[36], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InstrumentsService::Stub::TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response) {
@@ -679,6 +687,75 @@ void InstrumentsService::Stub::async::EditFavorites(::grpc::ClientContext* conte
   return result;
 }
 
+::grpc::Status InstrumentsService::Stub::CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_CreateFavoriteGroup_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CreateFavoriteGroup_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_CreateFavoriteGroup_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>* InstrumentsService::Stub::PrepareAsyncCreateFavoriteGroupRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_CreateFavoriteGroup_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>* InstrumentsService::Stub::AsyncCreateFavoriteGroupRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncCreateFavoriteGroupRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_DeleteFavoriteGroup_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeleteFavoriteGroup_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_DeleteFavoriteGroup_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>* InstrumentsService::Stub::PrepareAsyncDeleteFavoriteGroupRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_DeleteFavoriteGroup_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>* InstrumentsService::Stub::AsyncDeleteFavoriteGroupRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncDeleteFavoriteGroupRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetFavoriteGroups_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetFavoriteGroups_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetFavoriteGroups_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>* InstrumentsService::Stub::PrepareAsyncGetFavoriteGroupsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetFavoriteGroups_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>* InstrumentsService::Stub::AsyncGetFavoriteGroupsRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetFavoriteGroupsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ::grpc::Status InstrumentsService::Stub::GetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response) {
   return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetCountries_, context, request, response);
 }
@@ -859,6 +936,29 @@ void InstrumentsService::Stub::async::GetForecastBy(::grpc::ClientContext* conte
 ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>* InstrumentsService::Stub::AsyncGetForecastByRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncGetForecastByRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InstrumentsService::Stub::GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetRiskRates_, context, request, response);
+}
+
+void InstrumentsService::Stub::async::GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRiskRates_, context, request, response, std::move(f));
+}
+
+void InstrumentsService::Stub::async::GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetRiskRates_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* InstrumentsService::Stub::PrepareAsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse, ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetRiskRates_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>* InstrumentsService::Stub::AsyncGetRiskRatesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetRiskRatesRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -1117,6 +1217,36 @@ InstrumentsService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InstrumentsService_method_names[25],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* resp) {
+               return service->CreateFavoriteGroup(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[26],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* resp) {
+               return service->DeleteFavoriteGroup(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[27],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* resp) {
+               return service->GetFavoriteGroups(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[28],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -1125,7 +1255,7 @@ InstrumentsService::Service::Service() {
                return service->GetCountries(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[26],
+      InstrumentsService_method_names[29],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1135,7 +1265,7 @@ InstrumentsService::Service::Service() {
                return service->FindInstrument(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[27],
+      InstrumentsService_method_names[30],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1145,7 +1275,7 @@ InstrumentsService::Service::Service() {
                return service->GetBrands(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[28],
+      InstrumentsService_method_names[31],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest, ::tinkoff::public_::invest::api::contract::v1::Brand, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1155,7 +1285,7 @@ InstrumentsService::Service::Service() {
                return service->GetBrandBy(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[29],
+      InstrumentsService_method_names[32],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1165,7 +1295,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssetFundamentals(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[30],
+      InstrumentsService_method_names[33],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1175,7 +1305,7 @@ InstrumentsService::Service::Service() {
                return service->GetAssetReports(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[31],
+      InstrumentsService_method_names[34],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1185,7 +1315,7 @@ InstrumentsService::Service::Service() {
                return service->GetConsensusForecasts(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InstrumentsService_method_names[32],
+      InstrumentsService_method_names[35],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InstrumentsService::Service* service,
@@ -1193,6 +1323,16 @@ InstrumentsService::Service::Service() {
              const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* req,
              ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* resp) {
                return service->GetForecastBy(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InstrumentsService_method_names[36],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InstrumentsService::Service, ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InstrumentsService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* req,
+             ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* resp) {
+               return service->GetRiskRates(ctx, req, resp);
              }, this)));
 }
 
@@ -1374,6 +1514,27 @@ InstrumentsService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
+::grpc::Status InstrumentsService::Service::CreateFavoriteGroup(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::DeleteFavoriteGroup(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::GetFavoriteGroups(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
 ::grpc::Status InstrumentsService::Service::GetCountries(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response) {
   (void) context;
   (void) request;
@@ -1424,6 +1585,13 @@ InstrumentsService::Service::~Service() {
 }
 
 ::grpc::Status InstrumentsService::Service::GetForecastBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InstrumentsService::Service::GetRiskRates(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response) {
   (void) context;
   (void) request;
   (void) response;

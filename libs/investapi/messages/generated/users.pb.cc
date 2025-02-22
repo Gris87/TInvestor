@@ -138,6 +138,9 @@ inline constexpr GetInfoResponse::Impl_::Impl_(
         user_id_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
+        risk_level_code_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
         prem_status_{false},
         qual_status_{false},
         _cached_size_{0} {}
@@ -462,6 +465,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.qualified_for_work_with_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.tariff_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.user_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::GetInfoResponse, _impl_.risk_level_code_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -532,39 +536,39 @@ const char descriptor_table_protodef_users_2eproto[] ABSL_ATTRIBUTE_SECTION_VARI
     "ryLimit\022\030\n\020limit_per_minute\030\001 \001(\005\022\017\n\007met"
     "hods\030\002 \003(\t\";\n\013StreamLimit\022\r\n\005limit\030\001 \001(\005"
     "\022\017\n\007streams\030\002 \003(\t\022\014\n\004open\030\003 \001(\005\"\020\n\016GetIn"
-    "foRequest\"}\n\017GetInfoResponse\022\023\n\013prem_sta"
-    "tus\030\001 \001(\010\022\023\n\013qual_status\030\002 \001(\010\022\037\n\027qualif"
-    "ied_for_work_with\030\003 \003(\t\022\016\n\006tariff\030\004 \001(\t\022"
-    "\017\n\007user_id\030\t \001(\t*\236\001\n\013AccountType\022\034\n\030ACCO"
-    "UNT_TYPE_UNSPECIFIED\020\000\022\030\n\024ACCOUNT_TYPE_T"
-    "INKOFF\020\001\022\034\n\030ACCOUNT_TYPE_TINKOFF_IIS\020\002\022\033"
-    "\n\027ACCOUNT_TYPE_INVEST_BOX\020\003\022\034\n\030ACCOUNT_T"
-    "YPE_INVEST_FUND\020\004*\223\001\n\rAccountStatus\022\036\n\032A"
-    "CCOUNT_STATUS_UNSPECIFIED\020\000\022\026\n\022ACCOUNT_S"
-    "TATUS_NEW\020\001\022\027\n\023ACCOUNT_STATUS_OPEN\020\002\022\031\n\025"
-    "ACCOUNT_STATUS_CLOSED\020\003\022\026\n\022ACCOUNT_STATU"
-    "S_ALL\020\004*\241\001\n\013AccessLevel\022$\n ACCOUNT_ACCES"
-    "S_LEVEL_UNSPECIFIED\020\000\022$\n ACCOUNT_ACCESS_"
-    "LEVEL_FULL_ACCESS\020\001\022\"\n\036ACCOUNT_ACCESS_LE"
-    "VEL_READ_ONLY\020\002\022\"\n\036ACCOUNT_ACCESS_LEVEL_"
-    "NO_ACCESS\020\0032\273\004\n\014UsersService\022\204\001\n\013GetAcco"
-    "unts\0229.tinkoff.public.invest.api.contrac"
-    "t.v1.GetAccountsRequest\032:.tinkoff.public"
-    ".invest.api.contract.v1.GetAccountsRespo"
-    "nse\022\234\001\n\023GetMarginAttributes\022A.tinkoff.pu"
-    "blic.invest.api.contract.v1.GetMarginAtt"
-    "ributesRequest\032B.tinkoff.public.invest.a"
-    "pi.contract.v1.GetMarginAttributesRespon"
-    "se\022\212\001\n\rGetUserTariff\022;.tinkoff.public.in"
-    "vest.api.contract.v1.GetUserTariffReques"
-    "t\032<.tinkoff.public.invest.api.contract.v"
-    "1.GetUserTariffResponse\022x\n\007GetInfo\0225.tin"
-    "koff.public.invest.api.contract.v1.GetIn"
-    "foRequest\0326.tinkoff.public.invest.api.co"
-    "ntract.v1.GetInfoResponseBa\n\034ru.tinkoff."
-    "piapi.contract.v1P\001Z\014./;investapi\242\002\005TIAP"
-    "I\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inves"
-    "t\\V1b\006proto3"
+    "foRequest\"\226\001\n\017GetInfoResponse\022\023\n\013prem_st"
+    "atus\030\001 \001(\010\022\023\n\013qual_status\030\002 \001(\010\022\037\n\027quali"
+    "fied_for_work_with\030\003 \003(\t\022\016\n\006tariff\030\004 \001(\t"
+    "\022\017\n\007user_id\030\t \001(\t\022\027\n\017risk_level_code\030\014 \001"
+    "(\t*\236\001\n\013AccountType\022\034\n\030ACCOUNT_TYPE_UNSPE"
+    "CIFIED\020\000\022\030\n\024ACCOUNT_TYPE_TINKOFF\020\001\022\034\n\030AC"
+    "COUNT_TYPE_TINKOFF_IIS\020\002\022\033\n\027ACCOUNT_TYPE"
+    "_INVEST_BOX\020\003\022\034\n\030ACCOUNT_TYPE_INVEST_FUN"
+    "D\020\004*\223\001\n\rAccountStatus\022\036\n\032ACCOUNT_STATUS_"
+    "UNSPECIFIED\020\000\022\026\n\022ACCOUNT_STATUS_NEW\020\001\022\027\n"
+    "\023ACCOUNT_STATUS_OPEN\020\002\022\031\n\025ACCOUNT_STATUS"
+    "_CLOSED\020\003\022\026\n\022ACCOUNT_STATUS_ALL\020\004*\241\001\n\013Ac"
+    "cessLevel\022$\n ACCOUNT_ACCESS_LEVEL_UNSPEC"
+    "IFIED\020\000\022$\n ACCOUNT_ACCESS_LEVEL_FULL_ACC"
+    "ESS\020\001\022\"\n\036ACCOUNT_ACCESS_LEVEL_READ_ONLY\020"
+    "\002\022\"\n\036ACCOUNT_ACCESS_LEVEL_NO_ACCESS\020\0032\273\004"
+    "\n\014UsersService\022\204\001\n\013GetAccounts\0229.tinkoff"
+    ".public.invest.api.contract.v1.GetAccoun"
+    "tsRequest\032:.tinkoff.public.invest.api.co"
+    "ntract.v1.GetAccountsResponse\022\234\001\n\023GetMar"
+    "ginAttributes\022A.tinkoff.public.invest.ap"
+    "i.contract.v1.GetMarginAttributesRequest"
+    "\032B.tinkoff.public.invest.api.contract.v1"
+    ".GetMarginAttributesResponse\022\212\001\n\rGetUser"
+    "Tariff\022;.tinkoff.public.invest.api.contr"
+    "act.v1.GetUserTariffRequest\032<.tinkoff.pu"
+    "blic.invest.api.contract.v1.GetUserTarif"
+    "fResponse\022x\n\007GetInfo\0225.tinkoff.public.in"
+    "vest.api.contract.v1.GetInfoRequest\0326.ti"
+    "nkoff.public.invest.api.contract.v1.GetI"
+    "nfoResponseBa\n\034ru.tinkoff.piapi.contract"
+    ".v1P\001Z\014./;investapi\242\002\005TIAPI\252\002\024Tinkoff.In"
+    "vestApi.V1\312\002\021Tinkoff\\Invest\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_users_2eproto_deps[3] =
     {
@@ -576,7 +580,7 @@ static ::absl::once_flag descriptor_table_users_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_users_2eproto = {
     false,
     false,
-    2852,
+    2878,
     descriptor_table_protodef_users_2eproto,
     "users.proto",
     &descriptor_table_users_2eproto_once,
@@ -3322,6 +3326,7 @@ inline PROTOBUF_NDEBUG_INLINE GetInfoResponse::Impl_::Impl_(
       : qualified_for_work_with_{visibility, arena, from.qualified_for_work_with_},
         tariff_(arena, from.tariff_),
         user_id_(arena, from.user_id_),
+        risk_level_code_(arena, from.risk_level_code_),
         _cached_size_{0} {}
 
 GetInfoResponse::GetInfoResponse(
@@ -3353,6 +3358,7 @@ inline PROTOBUF_NDEBUG_INLINE GetInfoResponse::Impl_::Impl_(
       : qualified_for_work_with_{visibility, arena},
         tariff_(arena),
         user_id_(arena),
+        risk_level_code_(arena),
         _cached_size_{0} {}
 
 inline void GetInfoResponse::SharedCtor(::_pb::Arena* arena) {
@@ -3374,6 +3380,7 @@ inline void GetInfoResponse::SharedDtor(MessageLite& self) {
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.tariff_.Destroy();
   this_._impl_.user_id_.Destroy();
+  this_._impl_.risk_level_code_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -3425,15 +3432,15 @@ const ::google::protobuf::internal::ClassData* GetInfoResponse::GetClassData() c
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 5, 0, 98, 2> GetInfoResponse::_table_ = {
+const ::_pbi::TcParseTable<2, 6, 0, 113, 2> GetInfoResponse::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    9, 24,  // max_field_number, fast_idx_mask
+    12, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967024,  // skipmap
+    4294964976,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    6,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     _class_data_.base(),
@@ -3473,14 +3480,18 @@ const ::_pbi::TcParseTable<2, 5, 0, 98, 2> GetInfoResponse::_table_ = {
     // string user_id = 9;
     {PROTOBUF_FIELD_OFFSET(GetInfoResponse, _impl_.user_id_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string risk_level_code = 12;
+    {PROTOBUF_FIELD_OFFSET(GetInfoResponse, _impl_.risk_level_code_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\65\0\0\27\6\7\0\0"
+    "\65\0\0\27\6\7\17\0"
     "tinkoff.public.invest.api.contract.v1.GetInfoResponse"
     "qualified_for_work_with"
     "tariff"
     "user_id"
+    "risk_level_code"
   }},
 };
 
@@ -3494,6 +3505,7 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
   _impl_.qualified_for_work_with_.Clear();
   _impl_.tariff_.ClearToEmpty();
   _impl_.user_id_.ClearToEmpty();
+  _impl_.risk_level_code_.ClearToEmpty();
   ::memset(&_impl_.prem_status_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.qual_status_) -
       reinterpret_cast<char*>(&_impl_.prem_status_)) + sizeof(_impl_.qual_status_));
@@ -3553,6 +3565,14 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
             target = stream->WriteStringMaybeAliased(9, _s, target);
           }
 
+          // string risk_level_code = 12;
+          if (!this_._internal_risk_level_code().empty()) {
+            const std::string& _s = this_._internal_risk_level_code();
+            ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+                _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "tinkoff.public.invest.api.contract.v1.GetInfoResponse.risk_level_code");
+            target = stream->WriteStringMaybeAliased(12, _s, target);
+          }
+
           if (PROTOBUF_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
             target =
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -3599,6 +3619,11 @@ PROTOBUF_NOINLINE void GetInfoResponse::Clear() {
               total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                               this_._internal_user_id());
             }
+            // string risk_level_code = 12;
+            if (!this_._internal_risk_level_code().empty()) {
+              total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                              this_._internal_risk_level_code());
+            }
             // bool prem_status = 1;
             if (this_._internal_prem_status() != 0) {
               total_size += 2;
@@ -3627,6 +3652,9 @@ void GetInfoResponse::MergeImpl(::google::protobuf::MessageLite& to_msg, const :
   if (!from._internal_user_id().empty()) {
     _this->_internal_set_user_id(from._internal_user_id());
   }
+  if (!from._internal_risk_level_code().empty()) {
+    _this->_internal_set_risk_level_code(from._internal_risk_level_code());
+  }
   if (from._internal_prem_status() != 0) {
     _this->_impl_.prem_status_ = from._impl_.prem_status_;
   }
@@ -3652,6 +3680,7 @@ void GetInfoResponse::InternalSwap(GetInfoResponse* PROTOBUF_RESTRICT other) {
   _impl_.qualified_for_work_with_.InternalSwap(&other->_impl_.qualified_for_work_with_);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.tariff_, &other->_impl_.tariff_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.user_id_, &other->_impl_.user_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.risk_level_code_, &other->_impl_.risk_level_code_, arena);
   ::google::protobuf::internal::memswap<
       PROTOBUF_FIELD_OFFSET(GetInfoResponse, _impl_.qual_status_)
       + sizeof(GetInfoResponse::_impl_.qual_status_)

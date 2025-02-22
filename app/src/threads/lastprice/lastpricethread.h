@@ -1,0 +1,26 @@
+#pragma once
+
+
+
+#include "src/threads/lastprice/ilastpricethread.h"
+
+#include "src/grpc/igrpcclient.h"
+
+
+
+class LastPriceThread : public ILastPriceThread
+{
+    Q_OBJECT
+
+public:
+    explicit LastPriceThread(IGrpcClient* grpcClient, QObject* parent = nullptr);
+    ~LastPriceThread();
+
+    LastPriceThread(const LastPriceThread& another)            = delete;
+    LastPriceThread& operator=(const LastPriceThread& another) = delete;
+
+    void run() override;
+
+private:
+    IGrpcClient*  mGrpcClient;
+};
