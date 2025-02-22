@@ -19,7 +19,7 @@ protected:
     void SetUp()
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
-        grpcClientMock = new StrictMock<GrpcClientMock>();
+        grpcClientMock    = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(stocksStorageMock, grpcClientMock);
     }
@@ -31,9 +31,9 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*         thread;
+    PriceCollectThread*            thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
-    StrictMock<GrpcClientMock>* grpcClientMock;
+    StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
 

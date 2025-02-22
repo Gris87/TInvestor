@@ -78,7 +78,7 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int 
         Stock& stock = stockArray[i];
 
         std::shared_ptr<IFile> stockDataFile =
-            fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir, stock.name));
+            fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir, stock.ticker));
 
         if (stockDataFile->open(QIODevice::ReadOnly))
         {
@@ -91,13 +91,13 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int 
             stockDataFile->read(reinterpret_cast<char*>(stock.data.data()), fileSize);
             stockDataFile->close();
 
-            qDebug() << "Read stock data" << stock.name;
+            qDebug() << "Read stock data" << stock.ticker;
         }
         else
         {
             stock.data.clear();
 
-            qWarning() << "Failed to read stock data" << stock.name;
+            qWarning() << "Failed to read stock data" << stock.ticker;
         }
     }
 }
@@ -137,7 +137,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 
 void StocksDatabase::appendStockData(Stock* stock)
 {
-    QString                stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->name);
+    QString                stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->ticker);
     std::shared_ptr<IFile> stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
 
     bool ok = stockDataFile->open(QIODevice::Append);
@@ -149,7 +149,7 @@ void StocksDatabase::appendStockData(Stock* stock)
 
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
-    QString                stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.name);
+    QString                stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.ticker);
     std::shared_ptr<IFile> stockDataFile     = fileFactory->newInstance(stockDataFilePath);
 
     bool ok = stockDataFile->open(QIODevice::WriteOnly);
