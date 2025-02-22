@@ -21,8 +21,10 @@ public:
 
     std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() override;
     std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() override;
+    std::shared_ptr<tinkoff::SharesResponse>      findStocks() override;
 
 private:
-    std::shared_ptr<grpc::CallCredentials>       mCreds;
-    std::unique_ptr<tinkoff::UsersService::Stub> mUsersService;
+    std::shared_ptr<grpc::CallCredentials>             mCreds;
+    std::unique_ptr<tinkoff::UsersService::Stub>       mUsersService;
+    std::unique_ptr<tinkoff::InstrumentsService::Stub> mInstrumentsService;
 };

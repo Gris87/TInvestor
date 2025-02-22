@@ -6,6 +6,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4100 4189 4267)
+#include "messages/generated/instruments.grpc.pb.h"
 #include "messages/generated/users.grpc.pb.h"
 #pragma warning(pop)
 
@@ -34,6 +35,7 @@ public:
 
     virtual std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() = 0;
     virtual std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() = 0;
+    virtual std::shared_ptr<tinkoff::SharesResponse>      findStocks()  = 0;
 
 signals:
     void authFailed();

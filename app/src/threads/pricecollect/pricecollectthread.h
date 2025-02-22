@@ -5,6 +5,7 @@
 #include "src/threads/pricecollect/ipricecollectthread.h"
 
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/stocks/istocksstorage.h"
 
 
 
@@ -13,7 +14,7 @@ class PriceCollectThread : public IPriceCollectThread
     Q_OBJECT
 
 public:
-    explicit PriceCollectThread(IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit PriceCollectThread(IStocksStorage* stocksStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~PriceCollectThread();
 
     PriceCollectThread(const PriceCollectThread& another)            = delete;
@@ -22,5 +23,6 @@ public:
     void run() override;
 
 private:
-    IGrpcClient* mGrpcClient;
+    IStocksStorage* mStocksStorage;
+    IGrpcClient*    mGrpcClient;
 };

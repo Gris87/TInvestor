@@ -29,6 +29,7 @@ SOURCES += \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/grpc/test_grpcclient.cpp \
+    src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \

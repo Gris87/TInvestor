@@ -26,7 +26,8 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
 
     std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
-    mUsersService = tinkoff::UsersService::NewStub(channel);
+    mUsersService       = tinkoff::UsersService::NewStub(channel);
+    mInstrumentsService = tinkoff::InstrumentsService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -66,6 +67,26 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts()
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
     grpc::Status status = mUsersService->GetAccounts(&context, req, resp.get());
+
+    if (!status.ok())
+    {
+        emit authFailed();
+
+        return nullptr;
+    }
+
+    return resp;
+}
+
+std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks()
+{
+    grpc::ClientContext                      context;
+    tinkoff::InstrumentsRequest              req;
+    std::shared_ptr<tinkoff::SharesResponse> resp = std::shared_ptr<tinkoff::SharesResponse>(new tinkoff::SharesResponse());
+
+    context.set_credentials(mCreds);
+
+    grpc::Status status = mInstrumentsService->Shares(&context, req, resp.get());
 
     if (!status.ok())
     {

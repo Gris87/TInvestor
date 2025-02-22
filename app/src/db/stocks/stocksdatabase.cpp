@@ -47,12 +47,12 @@ QList<Stock> StocksDatabase::readStocksMeta()
         {
             Stock stock;
 
-            stock.name     = stockLines.at(i);
-            stock.fullname = stockLines.at(i + 1);
+            stock.ticker = stockLines.at(i);
+            stock.name   = stockLines.at(i + 1);
 
             res.append(stock);
 
-            qDebug() << "Read stock" << stock.name << ":" << stock.fullname;
+            qDebug() << "Read stock" << stock.ticker << ":" << stock.name;
         }
     }
 
@@ -122,8 +122,8 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
     {
         const Stock& stock = stocks->at(i);
 
+        stocksStr += stock.ticker + "\n";
         stocksStr += stock.name + "\n";
-        stocksStr += stock.fullname + "\n";
     }
 
     std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.lst");

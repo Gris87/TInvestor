@@ -5,8 +5,9 @@
 
 
 
-LastPriceThread::LastPriceThread(IGrpcClient* grpcClient, QObject* parent) :
+LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, IGrpcClient* grpcClient, QObject* parent) :
     ILastPriceThread(parent),
+    mStocksStorage(stocksStorage),
     mGrpcClient(grpcClient)
 {
     qDebug() << "Create LastPriceThread";
