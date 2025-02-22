@@ -104,8 +104,7 @@ User UserDatabase::readUserInfo()
         res.token                = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
         res.qualified            = query.value(qualifiedIndex).toLongLong() != 0;
         res.qualifiedForWorkWith = query.value(qualifiedForWorkWithIndex).toString().split(',');
-        res.tariff               = query.value(tariffIndex).toString();
-        res.commission           = tariffToCommission[res.tariff];
+        res.setTariff(query.value(tariffIndex).toString());
 
         res.qualifiedForWorkWith.removeAll("");
     }
@@ -114,8 +113,7 @@ User UserDatabase::readUserInfo()
         res.token                = "";
         res.qualified            = false;
         res.qualifiedForWorkWith = QStringList();
-        res.tariff               = "fees";
-        res.commission           = tariffToCommission[res.tariff];
+        res.setTariff("fees");
 
         QSqlQuery query(db);
         query.prepare(
@@ -161,7 +159,7 @@ QList<Account> UserDatabase::readAccounts()
     {
         Account account;
 
-        account.id   = mSimpleCrypt.decryptToString(query.value(idIndex).toString());
+        account.setId(mSimpleCrypt.decryptToString(query.value(idIndex).toString()));
         account.name = query.value(nameIndex).toString();
 
         res.append(account);

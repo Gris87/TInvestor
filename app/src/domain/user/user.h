@@ -18,6 +18,8 @@ struct User
     QStringList qualifiedForWorkWith;
     QString     tariff;
     float       commission;
+
+    void setTariff(const QString& value);
 };
 
 struct Account
@@ -25,12 +27,10 @@ struct Account
     QString id;
     QString idHash;
     QString name;
+
+    void setId(const QString& value);
 };
 
 
 
 bool operator==(const Account& lhs, const Account& rhs);
-
-
-
-extern QMap<QString, float> tariffToCommission;

@@ -56,8 +56,7 @@ void UserStorage::setUserInfo(const User& user)
     {
         mUser.qualified            = user.qualified;
         mUser.qualifiedForWorkWith = user.qualifiedForWorkWith;
-        mUser.tariff               = user.tariff;
-        mUser.commission           = tariffToCommission[mUser.tariff];
+        mUser.setTariff(user.tariff);
 
         mUserDatabase->writeUserInfo(mUser);
     }
@@ -73,6 +72,13 @@ void UserStorage::setAccounts(const QList<Account>& accounts)
     if (mAccounts != accounts)
     {
         mAccounts = accounts;
+
+        for (int i = 0; i < mAccounts.size(); ++i)
+        {
+            Account& account = mAccounts[i];
+
+            account.setId(account.id);
+        }
 
         mUserDatabase->writeAccounts(mAccounts);
     }
