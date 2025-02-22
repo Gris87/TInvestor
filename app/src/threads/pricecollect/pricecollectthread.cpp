@@ -4,6 +4,7 @@
 #include <QMutexLocker>
 
 #include "src/grpc/utils.h"
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
 
@@ -20,6 +21,18 @@ PriceCollectThread::~PriceCollectThread()
     qDebug() << "Destroy PriceCollectThread";
 }
 
+void downloadLogosForParallel(QThread* parentThread, QList<tinkoff::Share*>* stocks, int start, int end, void* /*additionalArgs*/)
+{
+    tinkoff::Share** stockArray = stocks->data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        tinkoff::Share* stock = stockArray[i];
+
+        qInfo() << stock->isin();
+    }
+}
+
 void PriceCollectThread::run()
 {
     qDebug() << "Running PriceCollectThread";
@@ -28,7 +41,8 @@ void PriceCollectThread::run()
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
-        QList<Stock> stocks;
+        QList<tinkoff::Share*> qtTinkoffStocks;
+        QList<Stock>           stocks;
 
         for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
         {
@@ -46,11 +60,12 @@ void PriceCollectThread::run()
                 stock.lot                 = tinkoffStock.lot();
                 stock.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
 
+                qtTinkoffStocks.append(const_cast<tinkoff::Share*>(&tinkoffStock));
                 stocks.append(stock);
             }
         }
 
-        qInfo() << stocks.size();
+        processInParallel(&qtTinkoffStocks, downloadLogosForParallel);
     }
 
     qDebug() << "Finish PriceCollectThread";
