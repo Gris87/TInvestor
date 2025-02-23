@@ -24,6 +24,7 @@ public:
     qint64     write(const QByteArray& data) override;
     qint64     size() override;
     void       close() override;
+    bool       exists() override;
 
 private:
     QFile mFile;

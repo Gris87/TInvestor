@@ -35,6 +35,7 @@
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
+#include "src/utils/http/httpclientfactory.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
@@ -92,6 +93,25 @@ int runApplication(int argc, char* argv[])
     }
 
     QApplication::setQuitOnLastWindowClosed(false);
+
+    AuthDialogFactory     authDialogFactory;
+    SettingsDialogFactory settingsDialogFactory;
+
+    DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
+    BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
+    BuyDecision2ConfigWidgetFactory  buyDecision2ConfigWidgetFactory;
+    BuyDecision3ConfigWidgetFactory  buyDecision3ConfigWidgetFactory;
+    SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
+    SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
+    SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
+
+    TrayIconFactory   trayIconFactory;
+    DirFactory        dirFactory;
+    FileFactory       fileFactory;
+    HttpClientFactory httpClientFactory;
+
+    MessageBoxUtils messageBoxUtils;
+    SettingsEditor  settingsEditor("GrisCom", "TInvestor");
 
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
@@ -188,34 +208,16 @@ int runApplication(int argc, char* argv[])
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
     Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
-    AuthDialogFactory     authDialogFactory;
-    SettingsDialogFactory settingsDialogFactory;
-
-    DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
-    BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
-    BuyDecision2ConfigWidgetFactory  buyDecision2ConfigWidgetFactory;
-    BuyDecision3ConfigWidgetFactory  buyDecision3ConfigWidgetFactory;
-    SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
-    SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
-    SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
-
-    TrayIconFactory trayIconFactory;
-
-    DirFactory         dirFactory;
-    FileFactory        fileFactory;
     UserDatabase       userDatabase;
     UserStorage        userStorage(&userDatabase);
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage(&stocksDatabase);
     GrpcClient         grpcClient(&userStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
-    PriceCollectThread priceCollectThread(&stocksStorage, &grpcClient);
+    PriceCollectThread priceCollectThread(&stocksStorage, &fileFactory, &httpClientFactory, &grpcClient);
     LastPriceThread    lastPriceThread(&stocksStorage, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
-
-    MessageBoxUtils messageBoxUtils;
-    SettingsEditor  settingsEditor("GrisCom", "TInvestor");
 
     MainWindow mainWindow(
         &config,

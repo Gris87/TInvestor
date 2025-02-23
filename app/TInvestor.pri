@@ -48,6 +48,8 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
+    src/utils/http/httpclient.cpp \
+    src/utils/http/httpclientfactory.cpp \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
     src/utils/settingseditor/settingseditor.cpp \
@@ -142,6 +144,10 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
+    src/utils/http/httpclient.h \
+    src/utils/http/httpclientfactory.h \
+    src/utils/http/ihttpclient.h \
+    src/utils/http/ihttpclientfactory.h \
     src/utils/logger/logger.h \
     src/utils/messagebox/imessagebox.h \
     src/utils/messagebox/messagebox.h \

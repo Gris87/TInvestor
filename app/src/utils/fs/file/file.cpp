@@ -50,3 +50,8 @@ void File::close()
 {
     mFile.close();
 }
+
+bool File::exists()
+{
+    return mFile.exists();
+}

@@ -25,4 +25,5 @@ public:
     virtual qint64     write(const QByteArray& data)       = 0;
     virtual qint64     size()                              = 0;
     virtual void       close()                             = 0;
+    virtual bool       exists()                            = 0;
 };
