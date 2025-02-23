@@ -7,7 +7,7 @@
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/fs/file/ifilefactory.h"
-#include "src/utils/http/ihttpclientfactory.h"
+#include "src/utils/http/ihttpclient.h"
 
 
 
@@ -17,11 +17,11 @@ class PriceCollectThread : public IPriceCollectThread
 
 public:
     explicit PriceCollectThread(
-        IStocksStorage*     stocksStorage,
-        IFileFactory*       fileFactory,
-        IHttpClientFactory* httpClientFactory,
-        IGrpcClient*        grpcClient,
-        QObject*            parent = nullptr
+        IStocksStorage* stocksStorage,
+        IFileFactory*   fileFactory,
+        IHttpClient*    httpClient,
+        IGrpcClient*    grpcClient,
+        QObject*        parent = nullptr
     );
     ~PriceCollectThread();
 
@@ -33,6 +33,6 @@ public:
 private:
     IStocksStorage*     mStocksStorage;
     IFileFactory*       mFileFactory;
-    IHttpClientFactory* mHttpClientFactory;
+    IHttpClient*        mHttpClient;
     IGrpcClient*        mGrpcClient;
 };

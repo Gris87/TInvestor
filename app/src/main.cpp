@@ -35,7 +35,7 @@
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
-#include "src/utils/http/httpclientfactory.h"
+#include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
@@ -108,7 +108,7 @@ int runApplication(int argc, char* argv[])
     TrayIconFactory   trayIconFactory;
     DirFactory        dirFactory;
     FileFactory       fileFactory;
-    HttpClientFactory httpClientFactory;
+    HttpClient        httpClient;
 
     MessageBoxUtils messageBoxUtils;
     SettingsEditor  settingsEditor("GrisCom", "TInvestor");
@@ -214,7 +214,7 @@ int runApplication(int argc, char* argv[])
     StocksStorage      stocksStorage(&stocksDatabase);
     GrpcClient         grpcClient(&userStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
-    PriceCollectThread priceCollectThread(&stocksStorage, &fileFactory, &httpClientFactory, &grpcClient);
+    PriceCollectThread priceCollectThread(&stocksStorage, &fileFactory, &httpClient, &grpcClient);
     LastPriceThread    lastPriceThread(&stocksStorage, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);

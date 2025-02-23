@@ -67,21 +67,17 @@ MainWindow::MainWindow(
     ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(trayIcon, SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(trayIcon, SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(trayIcon,          SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon,          SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(trayIcon,          SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,       SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
+    connect(userUpdateTimer,   SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer, SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
+    connect(cleanupTimer,      SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer, SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
     // clang-format on
 
     trayIcon->show();
-
-    connect(mGrpcClient, SIGNAL(authFailed()), this, SLOT(authFailed()));
-
-    // clang-format off
-    connect(userUpdateTimer,   SIGNAL(timeout()), this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer, SIGNAL(timeout()), this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,      SIGNAL(timeout()), this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer, SIGNAL(timeout()), this, SLOT(makeDecisionTimerTicked()));
-    // clang-format on
 
     mConfig->makeDefault();
     mConfig->load(mSettingsEditor);

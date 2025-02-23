@@ -5,7 +5,7 @@
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
-#include "src/utils/http/ihttpclientfactory_mock.h"
+#include "src/utils/http/ihttpclient_mock.h"
 
 
 
@@ -22,10 +22,10 @@ protected:
     {
         stocksStorageMock     = new StrictMock<StocksStorageMock>();
         fileFactoryMock       = new StrictMock<FileFactoryMock>();
-        httpClientFactoryMock = new StrictMock<HttpClientFactoryMock>();
+        httpClientMock        = new StrictMock<HttpClientMock>();
         grpcClientMock        = new StrictMock<GrpcClientMock>();
 
-        thread = new PriceCollectThread(stocksStorageMock, fileFactoryMock, httpClientFactoryMock, grpcClientMock);
+        thread = new PriceCollectThread(stocksStorageMock, fileFactoryMock, httpClientMock, grpcClientMock);
     }
 
     void TearDown()
@@ -33,14 +33,14 @@ protected:
         delete thread;
         delete stocksStorageMock;
         delete fileFactoryMock;
-        delete httpClientFactoryMock;
+        delete httpClientMock;
         delete grpcClientMock;
     }
 
     PriceCollectThread*                thread;
     StrictMock<StocksStorageMock>*     stocksStorageMock;
     StrictMock<FileFactoryMock>*       fileFactoryMock;
-    StrictMock<HttpClientFactoryMock>* httpClientFactoryMock;
+    StrictMock<HttpClientMock>*        httpClientMock;
     StrictMock<GrpcClientMock>*        grpcClientMock;
 };
 

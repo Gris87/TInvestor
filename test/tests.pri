@@ -44,7 +44,6 @@ SOURCES += \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
     src/utils/http/test_httpclient.cpp \
-    src/utils/http/test_httpclientfactory.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
@@ -93,7 +92,6 @@ HEADERS += \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
-    src/utils/http/ihttpclientfactory_mock.h \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \

@@ -10,16 +10,12 @@
 
 
 PriceCollectThread::PriceCollectThread(
-    IStocksStorage*     stocksStorage,
-    IFileFactory*       fileFactory,
-    IHttpClientFactory* httpClientFactory,
-    IGrpcClient*        grpcClient,
-    QObject*            parent
+    IStocksStorage* stocksStorage, IFileFactory* fileFactory, IHttpClient* httpClient, IGrpcClient* grpcClient, QObject* parent
 ) :
     IPriceCollectThread(parent),
     mStocksStorage(stocksStorage),
     mFileFactory(fileFactory),
-    mHttpClientFactory(httpClientFactory),
+    mHttpClient(httpClient),
     mGrpcClient(grpcClient)
 {
     qDebug() << "Create PriceCollectThread";
@@ -32,16 +28,16 @@ PriceCollectThread::~PriceCollectThread()
 
 struct DownloadLogosInfo
 {
-    IFileFactory*       fileFactory;
-    IHttpClientFactory* httpClientFactory;
+    IFileFactory* fileFactory;
+    IHttpClient*  httpClient;
 };
 
 void
 downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* stocks, int start, int end, void* additionalArgs)
 {
-    DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
-    IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
-    IHttpClientFactory* httpClientFactory = downloadLogosInfo->httpClientFactory;
+    DownloadLogosInfo* downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
+    IFileFactory*      fileFactory       = downloadLogosInfo->fileFactory;
+    IHttpClient*       httpClient        = downloadLogosInfo->httpClient;
 
     QString appDir = qApp->applicationDirPath();
 
@@ -51,17 +47,17 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
     {
         const tinkoff::Share* stock = stockArray[i];
 
-        QString isin = QString::fromStdString(stock->isin());
+        QString uid = QString::fromStdString(stock->uid());
 
         std::shared_ptr<IFile> stockLogoFile =
-            fileFactory->newInstance(QString("%1/data/db/stocks/logos/%2.png").arg(appDir, isin));
+            fileFactory->newInstance(QString("%1/data/db/stocks/logos/%2.png").arg(appDir, uid));
 
         if (!stockLogoFile->exists())
         {
-            QString url = QString("https://invest-brands.cdn-tinkoff.ru/%1x160.png").arg(isin); // 160 pixels
+            QString isin = QString::fromStdString(stock->isin());
+            QString url  = QString("https://invest-brands.cdn-tinkoff.ru/%1x160.png").arg(isin); // 160 pixels
 
-            std::shared_ptr<IHttpClient> httpClient = httpClientFactory->newInstance();
-            std::shared_ptr<QByteArray>  data       = httpClient->download(url);
+            std::shared_ptr<QByteArray> data = httpClient->download(url);
 
             if (data)
             {
@@ -106,8 +102,8 @@ void PriceCollectThread::run()
         }
 
         DownloadLogosInfo downloadLogosInfo;
-        downloadLogosInfo.fileFactory       = mFileFactory;
-        downloadLogosInfo.httpClientFactory = mHttpClientFactory;
+        downloadLogosInfo.fileFactory = mFileFactory;
+        downloadLogosInfo.httpClient  = mHttpClient;
 
         processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
     }
