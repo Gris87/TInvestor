@@ -29,8 +29,6 @@ std::shared_ptr<QByteArray> HttpClient::download(const QString& url)
     QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
     eventLoop.exec();
 
-    qInfo() << reply->error() << reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-
     if (reply->error() != QNetworkReply::NoError || reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200)
     {
         return nullptr;

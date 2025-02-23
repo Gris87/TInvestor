@@ -54,8 +54,8 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
 
         if (!stockLogoFile->exists())
         {
-            QString isin = QString::fromStdString(stock->isin());
-            QString url  = QString("https://invest-brands.cdn-tinkoff.ru/%1x160.png").arg(isin); // 160 pixels
+            QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
+            QString url      = QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName);
 
             std::shared_ptr<QByteArray> data = httpClient->download(url);
 
