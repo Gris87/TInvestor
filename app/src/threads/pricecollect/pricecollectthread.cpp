@@ -49,7 +49,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
         QString uid = QString::fromStdString(stock->uid());
 
         std::shared_ptr<IFile> stockLogoFile =
-            fileFactory->newInstance(QString("%1/data/db/stocks/logos/%2.png").arg(appDir, uid));
+            fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
 
         if (!stockLogoFile->exists())
         {

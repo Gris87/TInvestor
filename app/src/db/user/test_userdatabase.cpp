@@ -10,7 +10,7 @@ protected:
     void SetUp()
     {
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/user").removeRecursively();
+        QDir(appDir + "/data/user").removeRecursively();
 
         database = new UserDatabase();
     }
@@ -20,7 +20,7 @@ protected:
         delete database;
 
         QString appDir = qApp->applicationDirPath();
-        QDir(appDir + "/data/db/user").removeRecursively();
+        QDir(appDir + "/data/user").removeRecursively();
     }
 
     UserDatabase* database;

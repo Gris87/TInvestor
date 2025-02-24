@@ -19,10 +19,10 @@ UserDatabase::UserDatabase() :
 
     QString appDir = qApp->applicationDirPath();
 
-    bool ok = QDir().mkpath(appDir + "/data/db/user");
+    bool ok = QDir().mkpath(appDir + "/data/user");
     Q_ASSERT_X(ok, "UserDatabase::UserDatabase()", "Failed to create dir");
 
-    QString dbPath = appDir + "/data/db/user/user.db";
+    QString dbPath = appDir + "/data/user/user.db";
     db.setDatabaseName(dbPath);
 
     ok = db.open();

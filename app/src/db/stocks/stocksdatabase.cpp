@@ -22,7 +22,7 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
 
     std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
-    bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/db/stocks/logos");
+    bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/stocks/logos");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 }
 
@@ -37,7 +37,7 @@ QList<Stock> StocksDatabase::readStocksMeta()
 
     QList<Stock> res;
 
-    std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.json");
+    std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/stocks/stocks.json");
 
     if (stocksFile->open(QIODevice::ReadOnly))
     {
@@ -84,7 +84,7 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int 
         Stock& stock = stockArray[i];
 
         std::shared_ptr<IFile> stockDataFile =
-            fileFactory->newInstance(QString("%1/data/db/stocks/%2.dat").arg(appDir, stock.meta.ticker));
+            fileFactory->newInstance(QString("%1/data/stocks/%2.dat").arg(appDir, stock.meta.uid));
 
         if (stockDataFile->open(QIODevice::ReadOnly))
         {
@@ -131,7 +131,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 
     QJsonDocument jsonDoc(jsonStocks);
 
-    std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/db/stocks/stocks.json");
+    std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/stocks/stocks.json");
 
     bool ok = stocksFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStocksMeta()", "Failed to open file");
@@ -142,7 +142,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
 
 void StocksDatabase::appendStockData(Stock* stock)
 {
-    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->meta.ticker);
+    QString                stockDataFilePath = QString("%1/data/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->meta.uid);
     std::shared_ptr<IFile> stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
 
     bool ok = stockDataFile->open(QIODevice::Append);
@@ -154,7 +154,7 @@ void StocksDatabase::appendStockData(Stock* stock)
 
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
 {
-    QString stockDataFilePath = QString("%1/data/db/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.meta.ticker);
+    QString                stockDataFilePath = QString("%1/data/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.meta.uid);
     std::shared_ptr<IFile> stockDataFile     = fileFactory->newInstance(stockDataFilePath);
 
     bool ok = stockDataFile->open(QIODevice::WriteOnly);

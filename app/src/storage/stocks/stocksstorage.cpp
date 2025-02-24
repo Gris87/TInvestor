@@ -42,7 +42,7 @@ void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     bool changed = false;
 
     QMap<QString, StockMeta*> existingMetas; // uid => meta
-    QList<const StockMeta*>   newMetas;      // uid => meta
+    QList<const StockMeta*>   newMetas;
 
     for (int i = 0; i < mStocks->size(); ++i)
     {
