@@ -20,6 +20,7 @@ public:
     void          readFromDatabase() override;
     QMutex*       getMutex() override;
     QList<Stock>* getStocks() override;
+    void          mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
 
 private:
     IStocksDatabase* mStocksDatabase;

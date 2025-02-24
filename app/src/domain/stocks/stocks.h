@@ -6,6 +6,8 @@
 #include <QMutex>
 #include <QString>
 
+#include "src/domain/quotation/quotation.h"
+
 
 
 #pragma pack(push, 1)
@@ -16,56 +18,38 @@ struct StockData
 };
 #pragma pack(pop)
 
+struct StockMeta
+{
+    StockMeta();
+    StockMeta(const StockMeta& another);
+    ~StockMeta();
+
+    StockMeta& operator=(const StockMeta& another);
+
+    void        fromJsonObject(const QJsonObject& jsonObject);
+    QJsonObject toJsonObject() const;
+
+    QString uid;
+    QString ticker;
+    QString name;
+    bool    forQualInvestorFlag;
+    qint32  lot;
+    Quotation minPriceIncrement;
+};
+
 struct Stock
 {
-    Stock() :
-        mutex(new QMutex()),
-        uid(),
-        ticker(),
-        name(),
-        forQualInvestorFlag(),
-        lot(),
-        minPriceIncrement(),
-        data()
-    {
-    }
+    Stock();
+    Stock(const Stock& another);
+    ~Stock();
 
-    Stock(const Stock& another) :
-        mutex(new QMutex()),
-        uid(another.uid),
-        ticker(another.ticker),
-        name(another.name),
-        forQualInvestorFlag(another.forQualInvestorFlag),
-        lot(another.lot),
-        minPriceIncrement(another.minPriceIncrement),
-        data(another.data)
-    {
-    }
-
-    ~Stock()
-    {
-        delete mutex;
-    }
-
-    Stock& operator=(const Stock& another)
-    {
-        uid                 = another.uid;
-        ticker              = another.ticker;
-        name                = another.name;
-        forQualInvestorFlag = another.forQualInvestorFlag;
-        lot                 = another.lot;
-        minPriceIncrement   = another.minPriceIncrement;
-        data                = another.data;
-
-        return *this;
-    }
+    Stock& operator=(const Stock& another);
 
     QMutex*          mutex;
-    QString          uid;
-    QString          ticker;
-    QString          name;
-    bool             forQualInvestorFlag;
-    int              lot;
-    float            minPriceIncrement;
+    StockMeta        meta;
     QList<StockData> data;
 };
+
+
+
+bool operator==(const StockMeta& lhs, const StockMeta& rhs);

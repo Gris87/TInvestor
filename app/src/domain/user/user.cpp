@@ -13,10 +13,70 @@ QMap<QString, float> tariffToCommission{
 
 
 
+User::User() :
+    token(),
+    qualified(),
+    qualifiedForWorkWith(),
+    tariff(),
+    commission()
+{
+}
+
+User::User(const User& another) :
+    token(another.token),
+    qualified(another.qualified),
+    qualifiedForWorkWith(another.qualifiedForWorkWith),
+    tariff(another.tariff),
+    commission(another.commission)
+{
+}
+
+User::~User()
+{
+}
+
+User& User::operator=(const User& another)
+{
+    token                = another.token;
+    qualified            = another.qualified;
+    qualifiedForWorkWith = another.qualifiedForWorkWith;
+    tariff               = another.tariff;
+    commission           = another.commission;
+
+    return *this;
+}
+
 void User::setTariff(const QString& value)
 {
     tariff     = value;
     commission = tariffToCommission[tariff];
+}
+
+Account::Account() :
+    id(),
+    idHash(),
+    name()
+{
+}
+
+Account::Account(const Account& another) :
+    id(another.id),
+    idHash(another.idHash),
+    name(another.name)
+{
+}
+
+Account::~Account()
+{
+}
+
+Account& Account::operator=(const Account& another)
+{
+    id     = another.id;
+    idHash = another.idHash;
+    name   = another.name;
+
+    return *this;
 }
 
 void Account::setId(const QString& value)

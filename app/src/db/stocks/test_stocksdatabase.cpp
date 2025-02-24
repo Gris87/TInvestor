@@ -124,22 +124,22 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).ticker,          "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,            "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,          "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,            "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,          "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,            "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,          "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,            "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,          "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,            "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,          "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,            "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
     // clang-format on
@@ -160,22 +160,22 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).ticker,          "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,            "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,          "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,            "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,          "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,            "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,          "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,            "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,          "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,            "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,          "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,            "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
     // clang-format on
@@ -204,8 +204,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).ticker,               "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,                 "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,               "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,                 "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),          3);
     ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
     ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
@@ -217,8 +217,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,               "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,                 "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,               "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,                 "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
     ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
     ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 150);
@@ -236,8 +236,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,               "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,                 "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,               "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,                 "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
     ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
     ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
@@ -283,8 +283,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).ticker,               "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,                 "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,               "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,                 "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),          3);
     ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
     ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
@@ -296,15 +296,15 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,          "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,            "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,          "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,            "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 1446);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,               "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,                 "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,               "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,                 "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
     ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
     ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
@@ -333,13 +333,13 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
     StockData stockData3;
     StockData stockData4;
 
-    stock1.ticker = "TEST";
-    stock2.ticker = "MAGA";
-    stock3.ticker = "HNYA";
+    stock1.meta.ticker = "TEST";
+    stock2.meta.ticker = "MAGA";
+    stock3.meta.ticker = "HNYA";
 
-    stock1.name = "abc";
-    stock2.name = "def";
-    stock3.name = "aaaa";
+    stock1.meta.name = "abc";
+    stock2.meta.name = "def";
+    stock3.meta.name = "aaaa";
 
     stockData1.timestamp = 100;
     stockData2.timestamp = 200;
@@ -396,7 +396,7 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
     Stock stock;
 
-    stock.ticker = "WAZT";
+    stock.meta.ticker = "WAZT";
     stock.data << stockData1 << stockData2 << stockData3 << stockData4;
 
     qint64 fileSize = stock.data.size() * sizeof(StockData);
@@ -428,22 +428,22 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).ticker,          "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,            "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,          "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,            "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,          "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,            "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,          "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,            "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),     0);
     ASSERT_EQ(stocks.at(1).data.capacity(), 0);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,          "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,            "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,          "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,            "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),     0);
     ASSERT_EQ(stocks.at(2).data.capacity(), 0);
     // clang-format on
@@ -472,8 +472,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).ticker,               "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,                 "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,               "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,                 "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),          3);
     ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
     ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 100);
@@ -485,8 +485,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,               "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,                 "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,               "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,                 "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          6);
     ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
     ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 150);
@@ -504,8 +504,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,               "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,                 "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,               "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,                 "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          5);
     ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
     ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 120);
@@ -539,8 +539,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                     3);
-    ASSERT_EQ(stocks.at(0).ticker,               "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,                 "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,               "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,                 "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),          2);
     ASSERT_EQ(stocks.at(0).data.capacity(),      1443);
     ASSERT_EQ(stocks.at(0).data.at(0).timestamp, 200);
@@ -550,8 +550,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,               "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,                 "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,               "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,                 "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          5);
     ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
     ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 250);
@@ -567,8 +567,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,               "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,                 "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,               "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,                 "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          4);
     ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
     ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 220);
@@ -600,15 +600,15 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                3);
-    ASSERT_EQ(stocks.at(0).ticker,          "AZAZ0");
-    ASSERT_EQ(stocks.at(0).name,            "BLAH 0");
+    ASSERT_EQ(stocks.at(0).meta.ticker,          "AZAZ0");
+    ASSERT_EQ(stocks.at(0).meta.name,            "BLAH 0");
     ASSERT_EQ(stocks.at(0).data.size(),     0);
     ASSERT_EQ(stocks.at(0).data.capacity(), 1443);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(1).ticker,               "AZAZ1");
-    ASSERT_EQ(stocks.at(1).name,                 "BLAH 1");
+    ASSERT_EQ(stocks.at(1).meta.ticker,               "AZAZ1");
+    ASSERT_EQ(stocks.at(1).meta.name,                 "BLAH 1");
     ASSERT_EQ(stocks.at(1).data.size(),          3);
     ASSERT_EQ(stocks.at(1).data.capacity(),      1446);
     ASSERT_EQ(stocks.at(1).data.at(0).timestamp, 450);
@@ -620,8 +620,8 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks.at(2).ticker,               "AZAZ2");
-    ASSERT_EQ(stocks.at(2).name,                 "BLAH 2");
+    ASSERT_EQ(stocks.at(2).meta.ticker,               "AZAZ2");
+    ASSERT_EQ(stocks.at(2).meta.name,                 "BLAH 2");
     ASSERT_EQ(stocks.at(2).data.size(),          2);
     ASSERT_EQ(stocks.at(2).data.capacity(),      1445);
     ASSERT_EQ(stocks.at(2).data.at(0).timestamp, 420);

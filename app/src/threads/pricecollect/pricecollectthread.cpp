@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QMutexLocker>
 
-#include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
@@ -78,7 +77,7 @@ void PriceCollectThread::run()
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
         QList<const tinkoff::Share*> qtTinkoffStocks;
-        QList<Stock>                 stocks;
+        QList<StockMeta>             stocksMeta;
 
         for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
         {
@@ -87,17 +86,18 @@ void PriceCollectThread::run()
             if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
                 QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
             {
-                Stock stock;
+                StockMeta stockMeta;
 
-                stock.uid                 = QString::fromStdString(tinkoffStock.uid());
-                stock.ticker              = QString::fromStdString(tinkoffStock.ticker());
-                stock.name                = QString::fromStdString(tinkoffStock.name());
-                stock.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
-                stock.lot                 = tinkoffStock.lot();
-                stock.minPriceIncrement   = quotationToFloat(tinkoffStock.min_price_increment());
+                stockMeta.uid                    = QString::fromStdString(tinkoffStock.uid());
+                stockMeta.ticker                 = QString::fromStdString(tinkoffStock.ticker());
+                stockMeta.name                   = QString::fromStdString(tinkoffStock.name());
+                stockMeta.forQualInvestorFlag    = tinkoffStock.for_qual_investor_flag();
+                stockMeta.lot                    = tinkoffStock.lot();
+                stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
+                stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
 
                 qtTinkoffStocks.append(&tinkoffStock);
-                stocks.append(stock);
+                stocksMeta.append(stockMeta);
             }
         }
 
@@ -106,6 +106,9 @@ void PriceCollectThread::run()
         downloadLogosInfo.httpClient  = mHttpClient;
 
         processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
+
+        QMutexLocker locker(mStocksStorage->getMutex());
+        mStocksStorage->mergeStocksMeta(stocksMeta);
     }
 
     qDebug() << "Finish PriceCollectThread";

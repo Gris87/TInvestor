@@ -54,13 +54,13 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     StockData stockData3;
     StockData stockData4;
 
-    stock1.ticker = "TEST";
-    stock2.ticker = "MAGA";
-    stock3.ticker = "HNYA";
+    stock1.meta.ticker = "TEST";
+    stock2.meta.ticker = "MAGA";
+    stock3.meta.ticker = "HNYA";
 
-    stock1.name = "abc";
-    stock2.name = "def";
-    stock3.name = "aaaa";
+    stock1.meta.name = "abc";
+    stock2.meta.name = "def";
+    stock3.meta.name = "aaaa";
 
     stockData1.timestamp = 100;
     stockData2.timestamp = 200;
@@ -85,8 +85,8 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 
     // clang-format off
     ASSERT_EQ(stocks->size(),                     3);
-    ASSERT_EQ(stocks->at(0).ticker,               "TEST");
-    ASSERT_EQ(stocks->at(0).name,                 "abc");
+    ASSERT_EQ(stocks->at(0).meta.ticker,               "TEST");
+    ASSERT_EQ(stocks->at(0).meta.name,                 "abc");
     ASSERT_EQ(stocks->at(0).data.size(),          2);
     ASSERT_EQ(stocks->at(0).data.at(0).timestamp, 100);
     ASSERT_NEAR(stocks->at(0).data.at(0).value,   0.1f, 0.001f);
@@ -95,8 +95,8 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks->at(1).ticker,               "MAGA");
-    ASSERT_EQ(stocks->at(1).name,                 "def");
+    ASSERT_EQ(stocks->at(1).meta.ticker,               "MAGA");
+    ASSERT_EQ(stocks->at(1).meta.name,                 "def");
     ASSERT_EQ(stocks->at(1).data.size(),          2);
     ASSERT_EQ(stocks->at(1).data.at(0).timestamp, 200);
     ASSERT_NEAR(stocks->at(1).data.at(0).value,   0.2f, 0.001f);
@@ -105,8 +105,8 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks->at(2).ticker,               "HNYA");
-    ASSERT_EQ(stocks->at(2).name,                 "aaaa");
+    ASSERT_EQ(stocks->at(2).meta.ticker,               "HNYA");
+    ASSERT_EQ(stocks->at(2).meta.name,                 "aaaa");
     ASSERT_EQ(stocks->at(2).data.size(),          3);
     ASSERT_EQ(stocks->at(2).data.at(0).timestamp, 100);
     ASSERT_NEAR(stocks->at(2).data.at(0).value,   0.1f, 0.001f);
