@@ -48,8 +48,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
 
         QString uid = QString::fromStdString(stock->uid());
 
-        std::shared_ptr<IFile> stockLogoFile =
-            fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
+        std::shared_ptr<IFile> stockLogoFile = fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
 
         if (!stockLogoFile->exists())
         {
@@ -88,11 +87,11 @@ void PriceCollectThread::run()
             {
                 StockMeta stockMeta;
 
-                stockMeta.uid                    = QString::fromStdString(tinkoffStock.uid());
-                stockMeta.ticker                 = QString::fromStdString(tinkoffStock.ticker());
-                stockMeta.name                   = QString::fromStdString(tinkoffStock.name());
-                stockMeta.forQualInvestorFlag    = tinkoffStock.for_qual_investor_flag();
-                stockMeta.lot                    = tinkoffStock.lot();
+                stockMeta.uid                     = QString::fromStdString(tinkoffStock.uid());
+                stockMeta.ticker                  = QString::fromStdString(tinkoffStock.ticker());
+                stockMeta.name                    = QString::fromStdString(tinkoffStock.name());
+                stockMeta.forQualInvestorFlag     = tinkoffStock.for_qual_investor_flag();
+                stockMeta.lot                     = tinkoffStock.lot();
                 stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
                 stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
 

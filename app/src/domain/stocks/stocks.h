@@ -29,11 +29,11 @@ struct StockMeta
     void        fromJsonObject(const QJsonObject& jsonObject);
     QJsonObject toJsonObject() const;
 
-    QString uid;
-    QString ticker;
-    QString name;
-    bool    forQualInvestorFlag;
-    qint32  lot;
+    QString   uid;
+    QString   ticker;
+    QString   name;
+    bool      forQualInvestorFlag;
+    qint32    lot;
     Quotation minPriceIncrement;
 };
 

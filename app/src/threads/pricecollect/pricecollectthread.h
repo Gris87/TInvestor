@@ -31,8 +31,8 @@ public:
     void run() override;
 
 private:
-    IStocksStorage*     mStocksStorage;
-    IFileFactory*       mFileFactory;
-    IHttpClient*        mHttpClient;
-    IGrpcClient*        mGrpcClient;
+    IStocksStorage* mStocksStorage;
+    IFileFactory*   mFileFactory;
+    IHttpClient*    mHttpClient;
+    IGrpcClient*    mGrpcClient;
 };

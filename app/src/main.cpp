@@ -105,10 +105,10 @@ int runApplication(int argc, char* argv[])
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
 
-    TrayIconFactory   trayIconFactory;
-    DirFactory        dirFactory;
-    FileFactory       fileFactory;
-    HttpClient        httpClient;
+    TrayIconFactory trayIconFactory;
+    DirFactory      dirFactory;
+    FileFactory     fileFactory;
+    HttpClient      httpClient;
 
     MessageBoxUtils messageBoxUtils;
     SettingsEditor  settingsEditor("GrisCom", "TInvestor");

@@ -20,10 +20,10 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp()
     {
-        stocksStorageMock     = new StrictMock<StocksStorageMock>();
-        fileFactoryMock       = new StrictMock<FileFactoryMock>();
-        httpClientMock        = new StrictMock<HttpClientMock>();
-        grpcClientMock        = new StrictMock<GrpcClientMock>();
+        stocksStorageMock = new StrictMock<StocksStorageMock>();
+        fileFactoryMock   = new StrictMock<FileFactoryMock>();
+        httpClientMock    = new StrictMock<HttpClientMock>();
+        grpcClientMock    = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(stocksStorageMock, fileFactoryMock, httpClientMock, grpcClientMock);
     }
@@ -37,11 +37,11 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*                thread;
-    StrictMock<StocksStorageMock>*     stocksStorageMock;
-    StrictMock<FileFactoryMock>*       fileFactoryMock;
-    StrictMock<HttpClientMock>*        httpClientMock;
-    StrictMock<GrpcClientMock>*        grpcClientMock;
+    PriceCollectThread*            thread;
+    StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<FileFactoryMock>*   fileFactoryMock;
+    StrictMock<HttpClientMock>*    httpClientMock;
+    StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
 
