@@ -22,9 +22,11 @@ public:
     std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() override;
     std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() override;
     std::shared_ptr<tinkoff::SharesResponse>      findStocks() override;
+    std::shared_ptr<tinkoff::GetCandlesResponse>  getCandles(const QString& uid, qint64 from, qint64 to) override;
 
 private:
     std::shared_ptr<grpc::CallCredentials>             mCreds;
     std::unique_ptr<tinkoff::UsersService::Stub>       mUsersService;
     std::unique_ptr<tinkoff::InstrumentsService::Stub> mInstrumentsService;
+    std::unique_ptr<tinkoff::MarketDataService::Stub>  mMarketDataService;
 };

@@ -37,6 +37,17 @@ struct StockMeta
     Quotation minPriceIncrement;
 };
 
+struct StockOperational
+{
+    StockOperational();
+    StockOperational(const StockOperational& another);
+    ~StockOperational();
+
+    StockOperational& operator=(const StockOperational& another);
+
+    qint64 lastStoredTimestamp;
+};
+
 struct Stock
 {
     Stock();
@@ -47,6 +58,7 @@ struct Stock
 
     QMutex*          mutex;
     StockMeta        meta;
+    StockOperational operational;
     QList<StockData> data;
 };
 

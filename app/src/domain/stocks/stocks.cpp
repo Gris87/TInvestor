@@ -62,9 +62,31 @@ QJsonObject StockMeta::toJsonObject() const
     return res;
 }
 
+StockOperational::StockOperational() :
+    lastStoredTimestamp()
+{
+}
+
+StockOperational::StockOperational(const StockOperational& another) :
+    lastStoredTimestamp(another.lastStoredTimestamp)
+{
+}
+
+StockOperational::~StockOperational()
+{
+}
+
+StockOperational& StockOperational::operator=(const StockOperational& another)
+{
+    lastStoredTimestamp = another.lastStoredTimestamp;
+
+    return *this;
+}
+
 Stock::Stock() :
     mutex(new QMutex()),
     meta(),
+    operational(),
     data()
 {
 }
@@ -72,6 +94,7 @@ Stock::Stock() :
 Stock::Stock(const Stock& another) :
     mutex(new QMutex()),
     meta(another.meta),
+    operational(another.operational),
     data(another.data)
 {
 }
@@ -84,6 +107,7 @@ Stock::~Stock()
 Stock& Stock::operator=(const Stock& another)
 {
     meta = another.meta;
+    operational = another.operational;
     data = another.data;
 
     return *this;

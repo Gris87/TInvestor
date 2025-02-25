@@ -31,6 +31,9 @@ public:
     void run() override;
 
 private:
+    void storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
+    void obtainStocksData();
+
     IStocksStorage* mStocksStorage;
     IFileFactory*   mFileFactory;
     IHttpClient*    mHttpClient;

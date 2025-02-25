@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMutexLocker>
 
+#include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
@@ -23,6 +24,21 @@ PriceCollectThread::PriceCollectThread(
 PriceCollectThread::~PriceCollectThread()
 {
     qDebug() << "Destroy PriceCollectThread";
+}
+
+void PriceCollectThread::run()
+{
+    qDebug() << "Running PriceCollectThread";
+
+    std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks();
+
+    if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    {
+        storeNewStocksInfo(tinkoffStocks);
+        obtainStocksData();
+    }
+
+    qDebug() << "Finish PriceCollectThread";
 }
 
 struct DownloadLogosInfo
@@ -67,48 +83,93 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
     }
 }
 
-void PriceCollectThread::run()
+void PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks)
 {
-    qDebug() << "Running PriceCollectThread";
+    QList<const tinkoff::Share*> qtTinkoffStocks;
+    QList<StockMeta>             stocksMeta;
 
-    std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks();
-
-    if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {
-        QList<const tinkoff::Share*> qtTinkoffStocks;
-        QList<StockMeta>             stocksMeta;
+        const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
+        if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
+            QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
         {
-            const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
+            StockMeta stockMeta;
 
-            if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
-                QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
-            {
-                StockMeta stockMeta;
+            stockMeta.uid                     = QString::fromStdString(tinkoffStock.uid());
+            stockMeta.ticker                  = QString::fromStdString(tinkoffStock.ticker());
+            stockMeta.name                    = QString::fromStdString(tinkoffStock.name());
+            stockMeta.forQualInvestorFlag     = tinkoffStock.for_qual_investor_flag();
+            stockMeta.lot                     = tinkoffStock.lot();
+            stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
+            stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
 
-                stockMeta.uid                     = QString::fromStdString(tinkoffStock.uid());
-                stockMeta.ticker                  = QString::fromStdString(tinkoffStock.ticker());
-                stockMeta.name                    = QString::fromStdString(tinkoffStock.name());
-                stockMeta.forQualInvestorFlag     = tinkoffStock.for_qual_investor_flag();
-                stockMeta.lot                     = tinkoffStock.lot();
-                stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
-                stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
-
-                qtTinkoffStocks.append(&tinkoffStock);
-                stocksMeta.append(stockMeta);
-            }
+            qtTinkoffStocks.append(&tinkoffStock);
+            stocksMeta.append(stockMeta);
         }
-
-        DownloadLogosInfo downloadLogosInfo;
-        downloadLogosInfo.fileFactory = mFileFactory;
-        downloadLogosInfo.httpClient  = mHttpClient;
-
-        processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
-
-        QMutexLocker locker(mStocksStorage->getMutex());
-        mStocksStorage->mergeStocksMeta(stocksMeta);
     }
 
-    qDebug() << "Finish PriceCollectThread";
+    DownloadLogosInfo downloadLogosInfo;
+    downloadLogosInfo.fileFactory = mFileFactory;
+    downloadLogosInfo.httpClient  = mHttpClient;
+
+    processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
+
+    QMutexLocker locker(mStocksStorage->getMutex());
+    mStocksStorage->mergeStocksMeta(stocksMeta);
+}
+
+struct GetCandlesInfo
+{
+    IHttpClient* httpClient;
+    IGrpcClient* grpcClient;
+    qint64       currentTimestamp;
+};
+
+void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
+{
+    GetCandlesInfo* getCandlesInfo = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
+    // IHttpClient*    httpClient     = getCandlesInfo->httpClient;
+    IGrpcClient* grpcClient = getCandlesInfo->grpcClient;
+
+    const Stock* stockArray = stocks->data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        const Stock& stock = stockArray[i];
+
+        if (stock.meta.ticker == "SPBE")
+        {
+            qInfo() << stock.meta.ticker;
+
+            std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
+                grpcClient->getCandles(stock.meta.uid, 1708856547, 1718856547);
+
+            if (tinkoffCandles != nullptr && !parentThread->isInterruptionRequested())
+            {
+                for (int j = 0; j < tinkoffCandles->candles_size(); ++j)
+                {
+                    const tinkoff::HistoricCandle& candle = tinkoffCandles->candles(j);
+
+                    if (candle.is_complete())
+                    {
+                        qInfo() << candle.time().seconds();
+                        qInfo() << quotationToFloat(candle.close());
+                    }
+                }
+            }
+        }
+    }
+}
+
+void PriceCollectThread::obtainStocksData()
+{
+    GetCandlesInfo getCandlesInfo;
+    getCandlesInfo.httpClient = mHttpClient;
+    getCandlesInfo.grpcClient = mGrpcClient;
+    getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
+
+    QList<Stock>* stocks = mStocksStorage->getStocks();
+    processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
 }

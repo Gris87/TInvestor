@@ -23,4 +23,7 @@ public:
     MOCK_METHOD(std::shared_ptr<tinkoff::GetInfoResponse>, getUserInfo, (), (override));
     MOCK_METHOD(std::shared_ptr<tinkoff::GetAccountsResponse>, getAccounts, (), (override));
     MOCK_METHOD(std::shared_ptr<tinkoff::SharesResponse>, findStocks, (), (override));
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::GetCandlesResponse>, getCandles, (const QString& uid, qint64 from, qint64 to), (override)
+    );
 };
