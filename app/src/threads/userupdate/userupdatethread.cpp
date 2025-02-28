@@ -59,7 +59,7 @@ void UserUpdateThread::run()
                 }
             }
 
-            QMutexLocker locker(mUserStorage->getMutex());
+            QMutexLocker lock(mUserStorage->getMutex());
 
             mUserStorage->setUserInfo(user);
             mUserStorage->setAccounts(accounts);

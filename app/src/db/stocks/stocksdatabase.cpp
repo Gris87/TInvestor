@@ -105,6 +105,8 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int 
 
             qWarning() << "Failed to read stock data" << stock.meta.ticker;
         }
+
+        stock.operational.lastStoredTimestamp = !stock.data.isEmpty() ? stock.data.last().timestamp : 0;
     }
 }
 
@@ -140,7 +142,7 @@ void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
     stocksFile->close();
 }
 
-void StocksDatabase::appendStockData(Stock* stock)
+void StocksDatabase::appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize)
 {
     QString                stockDataFilePath = QString("%1/data/stocks/%2.dat").arg(qApp->applicationDirPath(), stock->meta.uid);
     std::shared_ptr<IFile> stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
@@ -148,8 +150,15 @@ void StocksDatabase::appendStockData(Stock* stock)
     bool ok = stockDataFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, "StocksDatabase::appendStockData()", "Failed to open file");
 
-    stockDataFile->write(reinterpret_cast<const char*>(stock->data.constData()), stock->data.size() * sizeof(StockData));
+    stockDataFile->write(reinterpret_cast<const char*>(dataArray), dataArraySize * sizeof(StockData));
     stockDataFile->close();
+
+    for (int i = 0; i < dataArraySize; ++i)
+    {
+        stock->data.append(dataArray[i]);
+    }
+
+    stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.last().timestamp : 0;
 }
 
 void writeStockData(IFileFactory* fileFactory, const Stock& stock)
@@ -180,7 +189,9 @@ void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock>* stocks, 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock& stock = stockArray[i];
+        Stock&       stock = stockArray[i];
+        QMutexLocker lock(stock.mutex);
+
         qint64 index = 0;
 
         while (index < stock.data.size() && stock.data.at(index).timestamp < obsoleteTimestamp)

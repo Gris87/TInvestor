@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
@@ -20,17 +21,19 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp()
     {
+        configMock        = new StrictMock<ConfigMock>();
         stocksStorageMock = new StrictMock<StocksStorageMock>();
         fileFactoryMock   = new StrictMock<FileFactoryMock>();
         httpClientMock    = new StrictMock<HttpClientMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new PriceCollectThread(stocksStorageMock, fileFactoryMock, httpClientMock, grpcClientMock);
+        thread = new PriceCollectThread(configMock, stocksStorageMock, fileFactoryMock, httpClientMock, grpcClientMock);
     }
 
     void TearDown()
     {
         delete thread;
+        delete configMock;
         delete stocksStorageMock;
         delete fileFactoryMock;
         delete httpClientMock;
@@ -38,6 +41,7 @@ protected:
     }
 
     PriceCollectThread*            thread;
+    StrictMock<ConfigMock>*        configMock;
     StrictMock<StocksStorageMock>* stocksStorageMock;
     StrictMock<FileFactoryMock>*   fileFactoryMock;
     StrictMock<HttpClientMock>*    httpClientMock;

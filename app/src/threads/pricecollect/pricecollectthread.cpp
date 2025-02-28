@@ -9,10 +9,20 @@
 
 
 
+#define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
+
+
+
 PriceCollectThread::PriceCollectThread(
-    IStocksStorage* stocksStorage, IFileFactory* fileFactory, IHttpClient* httpClient, IGrpcClient* grpcClient, QObject* parent
+    IConfig*        config,
+    IStocksStorage* stocksStorage,
+    IFileFactory*   fileFactory,
+    IHttpClient*    httpClient,
+    IGrpcClient*    grpcClient,
+    QObject*        parent
 ) :
     IPriceCollectThread(parent),
+    mConfig(config),
     mStocksStorage(stocksStorage),
     mFileFactory(fileFactory),
     mHttpClient(httpClient),
@@ -116,48 +126,121 @@ void PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
 
     processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
-    QMutexLocker locker(mStocksStorage->getMutex());
+    QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->mergeStocksMeta(stocksMeta);
+}
+
+void getCandlesWithGrpc(
+    QThread*        parentThread,
+    IStocksStorage* stocksStorage,
+    IGrpcClient*    grpcClient,
+    Stock*          stock,
+    qint64          startTimestamp,
+    qint64          endTimestamp
+)
+{
+    QMutexLocker lock(stock->mutex);
+
+    // Round to 1 minute
+    startTimestamp = (startTimestamp / 60000) * 60000;
+    endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
+
+    QList<StockData> data;
+    data.resize((endTimestamp - startTimestamp) / 60000);
+    StockData* dataArray = data.data();
+
+    int lastIndex = data.size() - 1;
+
+    while (true)
+    {
+        std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
+            grpcClient->getCandles(stock->meta.uid, startTimestamp / 1000, endTimestamp / 1000);
+
+        if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
+        {
+            break;
+        }
+
+        for (int i = tinkoffCandles->candles_size() - 1; i >= 0; --i)
+        {
+            const tinkoff::HistoricCandle& candle = tinkoffCandles->candles(i);
+
+            if (candle.is_complete())
+            {
+                StockData* stockData = &dataArray[lastIndex];
+
+                stockData->timestamp = candle.time().seconds() * 1000;
+                stockData->value     = quotationToFloat(candle.close());
+
+                --lastIndex;
+            }
+        }
+
+        endTimestamp = dataArray[lastIndex + 1].timestamp;
+    }
+
+    stocksStorage->appendStockData(stock, &dataArray[lastIndex + 1], data.size() - lastIndex - 1);
+}
+
+void getCandlesWithHttp(
+    QThread*        parentThread,
+    IStocksStorage* stocksStorage,
+    IHttpClient*    httpClient,
+    Stock*          stock,
+    qint64          startTimestamp,
+    qint64          endTimestamp
+)
+{
+    Q_UNUSED(parentThread);
+    Q_UNUSED(stocksStorage);
+    Q_UNUSED(httpClient);
+    Q_UNUSED(stock);
+    Q_UNUSED(startTimestamp);
+    Q_UNUSED(endTimestamp);
 }
 
 struct GetCandlesInfo
 {
-    IHttpClient* httpClient;
-    IGrpcClient* grpcClient;
-    qint64       currentTimestamp;
+    IConfig*        config;
+    IStocksStorage* stocksStorage;
+    IHttpClient*    httpClient;
+    IGrpcClient*    grpcClient;
+    qint64          currentTimestamp;
 };
 
 void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
-    GetCandlesInfo* getCandlesInfo = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
-    // IHttpClient*    httpClient     = getCandlesInfo->httpClient;
-    IGrpcClient* grpcClient = getCandlesInfo->grpcClient;
+    GetCandlesInfo* getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
+    //IConfig*        config           = getCandlesInfo->config;
+    IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
+    IHttpClient*    httpClient       = getCandlesInfo->httpClient;
+    IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
+    qint64          currentTimestamp = getCandlesInfo->currentTimestamp;
 
-    const Stock* stockArray = stocks->data();
+    qint64 storageMonthLimit = config->getStorageMonthLimit() * 31 * 24 * 60 * 60 * 1000; // 31 days
+
+    Stock* stockArray = stocks->data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        const Stock& stock = stockArray[i];
+        Stock* stock = &stockArray[i];
 
-        if (stock.meta.ticker == "SPBE")
+        if (stock->meta.ticker == "SPBE")
         {
-            qInfo() << stock.meta.ticker;
+            qint64 startTimestamp = stock->operational.lastStoredTimestamp;
 
-            std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
-                grpcClient->getCandles(stock.meta.uid, 1708856547, 1718856547);
-
-            if (tinkoffCandles != nullptr && !parentThread->isInterruptionRequested())
+            if (startTimestamp < currentTimestamp - storageMonthLimit)
             {
-                for (int j = 0; j < tinkoffCandles->candles_size(); ++j)
-                {
-                    const tinkoff::HistoricCandle& candle = tinkoffCandles->candles(j);
+                startTimestamp = currentTimestamp - storageMonthLimit;
+            }
 
-                    if (candle.is_complete())
-                    {
-                        qInfo() << candle.time().seconds();
-                        qInfo() << quotationToFloat(candle.close());
-                    }
-                }
+            if (currentTimestamp - startTimestamp < MAX_GRPC_TIME_LIMIT)
+            {
+                getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
+            }
+            else
+            {
+                getCandlesWithHttp(parentThread, stocksStorage, httpClient, stock, startTimestamp, currentTimestamp);
             }
         }
     }
@@ -166,8 +249,10 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
 void PriceCollectThread::obtainStocksData()
 {
     GetCandlesInfo getCandlesInfo;
-    getCandlesInfo.httpClient = mHttpClient;
-    getCandlesInfo.grpcClient = mGrpcClient;
+    getCandlesInfo.config           = mConfig;
+    getCandlesInfo.stocksStorage    = mStocksStorage;
+    getCandlesInfo.httpClient       = mHttpClient;
+    getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
 
     QList<Stock>* stocks = mStocksStorage->getStocks();

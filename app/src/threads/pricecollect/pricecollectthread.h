@@ -4,6 +4,7 @@
 
 #include "src/threads/pricecollect/ipricecollectthread.h"
 
+#include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/fs/file/ifilefactory.h"
@@ -17,6 +18,7 @@ class PriceCollectThread : public IPriceCollectThread
 
 public:
     explicit PriceCollectThread(
+        IConfig*        config,
         IStocksStorage* stocksStorage,
         IFileFactory*   fileFactory,
         IHttpClient*    httpClient,
@@ -34,6 +36,7 @@ private:
     void storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
 
+    IConfig*        mConfig;
     IStocksStorage* mStocksStorage;
     IFileFactory*   mFileFactory;
     IHttpClient*    mHttpClient;

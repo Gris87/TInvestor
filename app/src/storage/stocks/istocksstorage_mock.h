@@ -24,4 +24,6 @@ public:
     MOCK_METHOD(QMutex*, getMutex, (), (override));
     MOCK_METHOD(QList<Stock>*, getStocks, (), (override));
     MOCK_METHOD(void, mergeStocksMeta, (const QList<StockMeta>& stocksMeta), (override));
+    MOCK_METHOD(void, appendStockData, (Stock * stock, const StockData* dataArray, int dataArraySize), (override));
+    MOCK_METHOD(void, deleteObsoleteData, (qint64 obsoleteTimestamp, QList<Stock>* stocks), (override));
 };

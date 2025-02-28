@@ -21,7 +21,7 @@ public:
     QList<Stock> readStocksMeta() override;
     void         readStocksData(QList<Stock>* stocks) override;
     void         writeStocksMeta(QList<Stock>* stocks) override;
-    void         appendStockData(Stock* stock) override;
+    void         appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
     void         deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks) override;
 
 private:

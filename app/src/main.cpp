@@ -214,7 +214,7 @@ int runApplication(int argc, char* argv[])
     StocksStorage      stocksStorage(&stocksDatabase);
     GrpcClient         grpcClient(&userStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
-    PriceCollectThread priceCollectThread(&stocksStorage, &fileFactory, &httpClient, &grpcClient);
+    PriceCollectThread priceCollectThread(&config, &stocksStorage, &fileFactory, &httpClient, &grpcClient);
     LastPriceThread    lastPriceThread(&stocksStorage, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksDatabase, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);

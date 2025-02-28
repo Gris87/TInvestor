@@ -269,7 +269,13 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
     for (int i = 0; i < 3; ++i)
     {
-        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+        Stock& stock = stocks[i];
+
+        if (!stock.data.isEmpty())
+        {
+            memcpy(stock.data.data(), testStockData[i].constData(), testStockData[i].size());
+            stock.operational.lastStoredTimestamp = stock.data.last().timestamp;
+        }
     }
 
     // clang-format off
@@ -368,7 +374,13 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
     for (int i = 0; i < 3; ++i)
     {
-        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+        Stock& stock = stocks[i];
+
+        if (!stock.data.isEmpty())
+        {
+            memcpy(stock.data.data(), testStockData[i].constData(), testStockData[i].size());
+            stock.operational.lastStoredTimestamp = stock.data.last().timestamp;
+        }
     }
 
     // clang-format off
@@ -497,12 +509,14 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     stockData3.value = 0.3f;
     stockData4.value = 0.4f;
 
-    Stock stock;
+    Stock            stock;
+    QList<StockData> data;
 
     stock.meta.uid = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
-    stock.data << stockData1 << stockData2 << stockData3 << stockData4;
+    stock.data << stockData1;
+    data << stockData2 << stockData3 << stockData4;
 
-    qint64 fileSize = stock.data.size() * sizeof(StockData);
+    qint64 fileSize = data.size() * sizeof(StockData);
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
@@ -510,10 +524,22 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
         .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
 
     EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::Append))).WillOnce(Return(true));
-    EXPECT_CALL(*fileMock, write(IsMemEqual(stock.data.constData(), fileSize), fileSize)).WillOnce(Return(fileSize));
+    EXPECT_CALL(*fileMock, write(IsMemEqual(data.constData(), fileSize), fileSize)).WillOnce(Return(fileSize));
     EXPECT_CALL(*fileMock, close());
 
-    database->appendStockData(&stock);
+    database->appendStockData(&stock, data.constData(), data.size());
+
+    // clang-format off
+    ASSERT_EQ(stock.data.size(),          4);
+    ASSERT_EQ(stock.data.at(0).timestamp, 100);
+    ASSERT_NEAR(stock.data.at(0).value,   0.1f, 0.001f);
+    ASSERT_EQ(stock.data.at(1).timestamp, 200);
+    ASSERT_NEAR(stock.data.at(1).value,   0.2f, 0.001f);
+    ASSERT_EQ(stock.data.at(2).timestamp, 300);
+    ASSERT_NEAR(stock.data.at(2).value,   0.3f, 0.001f);
+    ASSERT_EQ(stock.data.at(3).timestamp, 400);
+    ASSERT_NEAR(stock.data.at(3).value,   0.4f, 0.001f);
+    // clang-format on
 }
 
 TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
@@ -590,7 +616,13 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 
     for (int i = 0; i < 3; ++i)
     {
-        memcpy(stocks[i].data.data(), testStockData[i].constData(), testStockData[i].size());
+        Stock& stock = stocks[i];
+
+        if (!stock.data.isEmpty())
+        {
+            memcpy(stock.data.data(), testStockData[i].constData(), testStockData[i].size());
+            stock.operational.lastStoredTimestamp = stock.data.last().timestamp;
+        }
     }
 
     // clang-format off
@@ -770,7 +802,7 @@ TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0).meta.lot,                        1);
     ASSERT_EQ(stocks.at(0).meta.minPriceIncrement.units,    0);
     ASSERT_EQ(stocks.at(0).meta.minPriceIncrement.nano,     100000000);
-    ASSERT_EQ(stocks.at(0).operational.lastStoredTimestamp, 0);
+    ASSERT_EQ(stocks.at(0).operational.lastStoredTimestamp, 300);
     ASSERT_EQ(stocks.at(0).data.size(),                     0);
     ASSERT_EQ(stocks.at(0).data.capacity(),                 1443);
     // clang-format on

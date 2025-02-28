@@ -87,3 +87,13 @@ void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
         mStocksDatabase->writeStocksMeta(mStocks);
     }
 }
+
+void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize)
+{
+    mStocksDatabase->appendStockData(stock, dataArray, dataArraySize);
+}
+
+void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks)
+{
+    mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
+}
