@@ -139,8 +139,6 @@ void getCandlesWithGrpc(
     qint64          endTimestamp
 )
 {
-    QMutexLocker lock(stock->mutex);
-
     // Round to 1 minute
     startTimestamp = (startTimestamp / 60000) * 60000;
     endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
@@ -224,6 +222,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock* stock = &stockArray[i];
+        QMutexLocker lock(stock->mutex);
 
         if (stock->meta.ticker == "SPBE")
         {
