@@ -211,7 +211,7 @@ struct GetCandlesInfo
 void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo* getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
-    //IConfig*        config           = getCandlesInfo->config;
+    IConfig*        config           = getCandlesInfo->config;
     IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
     IHttpClient*    httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
