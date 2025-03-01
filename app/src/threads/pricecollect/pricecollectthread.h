@@ -8,6 +8,7 @@
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/http/ihttpclient.h"
 
@@ -22,6 +23,7 @@ public:
         IConfig*        config,
         IUserStorage*   userStorage,
         IStocksStorage* stocksStorage,
+        IDirFactory*    dirFactory,
         IFileFactory*   fileFactory,
         IHttpClient*    httpClient,
         IGrpcClient*    grpcClient,

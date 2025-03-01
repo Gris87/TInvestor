@@ -20,5 +20,5 @@ public:
     HttpClientMock(const HttpClientMock& another)            = delete;
     HttpClientMock& operator=(const HttpClientMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<QByteArray>, download, (const QString& url, const Headers& headers), (override));
+    MOCK_METHOD(HttpResult, download, (const QUrl& url, const Headers& headers), (override));
 };

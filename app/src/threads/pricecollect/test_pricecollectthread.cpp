@@ -6,6 +6,7 @@
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
@@ -25,12 +26,13 @@ protected:
         configMock        = new StrictMock<ConfigMock>();
         userStorageMock   = new StrictMock<UserStorageMock>();
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        dirFactoryMock    = new StrictMock<DirFactoryMock>();
         fileFactoryMock   = new StrictMock<FileFactoryMock>();
         httpClientMock    = new StrictMock<HttpClientMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(
-            configMock, userStorageMock, stocksStorageMock, fileFactoryMock, httpClientMock, grpcClientMock
+            configMock, userStorageMock, stocksStorageMock, dirFactoryMock, fileFactoryMock, httpClientMock, grpcClientMock
         );
     }
 
@@ -40,6 +42,7 @@ protected:
         delete configMock;
         delete userStorageMock;
         delete stocksStorageMock;
+        delete dirFactoryMock;
         delete fileFactoryMock;
         delete httpClientMock;
         delete grpcClientMock;
@@ -49,6 +52,7 @@ protected:
     StrictMock<ConfigMock>*        configMock;
     StrictMock<UserStorageMock>*   userStorageMock;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<DirFactoryMock>*    dirFactoryMock;
     StrictMock<FileFactoryMock>*   fileFactoryMock;
     StrictMock<HttpClientMock>*    httpClientMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;

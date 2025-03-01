@@ -19,7 +19,7 @@ HttpClient::~HttpClient()
     qDebug() << "Destroy HttpClient";
 }
 
-std::shared_ptr<QByteArray> HttpClient::download(const QString& url, const Headers& headers)
+HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
 {
     QNetworkAccessManager manager;
     QNetworkRequest       request(url);
@@ -35,10 +35,14 @@ std::shared_ptr<QByteArray> HttpClient::download(const QString& url, const Heade
     QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));
     eventLoop.exec();
 
-    if (reply->error() != QNetworkReply::NoError || reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200)
+    HttpResult res;
+
+    res.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    if (reply->error() == QNetworkReply::NoError && res.statusCode == 200)
     {
-        return nullptr;
+        res.body = reply->readAll();
     }
 
-    return std::shared_ptr<QByteArray>(new QByteArray(reply->readAll()));
+    return res;
 }

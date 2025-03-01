@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QMutexLocker>
+#include <QUrlQuery>
 
 #include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
@@ -17,6 +18,7 @@ PriceCollectThread::PriceCollectThread(
     IConfig*        config,
     IUserStorage*   userStorage,
     IStocksStorage* stocksStorage,
+    IDirFactory*    dirFactory,
     IFileFactory*   fileFactory,
     IHttpClient*    httpClient,
     IGrpcClient*    grpcClient,
@@ -31,6 +33,11 @@ PriceCollectThread::PriceCollectThread(
     mGrpcClient(grpcClient)
 {
     qDebug() << "Create PriceCollectThread";
+
+    std::shared_ptr<IDir> dir = dirFactory->newInstance();
+
+    bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
+    Q_ASSERT_X(ok, "PriceCollectThread::obtainStocksData()", "Failed to create dir");
 }
 
 PriceCollectThread::~PriceCollectThread()
@@ -81,16 +88,16 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
         if (!stockLogoFile->exists())
         {
             QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
-            QString url      = QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName);
+            QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
 
             IHttpClient::Headers headers;
 
-            std::shared_ptr<QByteArray> data = httpClient->download(url, headers);
+            HttpResult httpResult = httpClient->download(url, headers);
 
-            if (data)
+            if (httpResult.statusCode == 200)
             {
                 stockLogoFile->open(QIODevice::WriteOnly);
-                stockLogoFile->write(*data);
+                stockLogoFile->write(httpResult.body);
                 stockLogoFile->close();
             }
         }
@@ -191,12 +198,15 @@ void getCandlesWithHttp(
     QThread*        parentThread,
     IUserStorage*   userStorage,
     IStocksStorage* stocksStorage,
+    IFileFactory*   fileFactory,
     IHttpClient*    httpClient,
     Stock*          stock,
     qint64          startTimestamp,
     qint64          endTimestamp
 )
 {
+    QString appDir = qApp->applicationDirPath();
+
     // Round to 1 minute
     startTimestamp = (startTimestamp / 60000) * 60000;
     endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
@@ -208,15 +218,56 @@ void getCandlesWithHttp(
     int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
     int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
 
-    for (int year = startYear; year <= endYear; ++year)
+    for (int year = startYear; year <= endYear && !parentThread->isInterruptionRequested(); ++year)
     {
-        qInfo() << year;
+        std::shared_ptr<IFile> stockDataFile =
+            fileFactory->newInstance(QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year)));
+
+        if (year == endYear || !stockDataFile->exists())
+        {
+            QUrl url = QUrl("https://invest-public-api.tinkoff.ru/history-data");
+
+            QUrlQuery query;
+
+            query.addQueryItem("instrument_id", stock->meta.uid);
+            query.addQueryItem("year", QString::number(year));
+
+            url.setQuery(query.query());
+
+            IHttpClient::Headers headers;
+            headers["Authorization"] = QString("Bearer %1").arg(userStorage->getToken());
+
+            while (true)
+            {
+                HttpResult httpResult = httpClient->download(url, headers);
+
+                if (parentThread->isInterruptionRequested() || (httpResult.statusCode != 200 && httpResult.statusCode != 429))
+                {
+                    break;
+                }
+
+                if (httpResult.statusCode == 200)
+                {
+                    stockDataFile->open(QIODevice::WriteOnly);
+                    stockDataFile->write(httpResult.body);
+                    stockDataFile->close();
+
+                    break;
+                }
+
+                for (int t = 0; t < 10 && !parentThread->isInterruptionRequested(); ++t)
+                {
+                    QThread::msleep(500);
+                }
+            }
+        }
     }
 
     Q_UNUSED(dataArray);
     Q_UNUSED(parentThread);
     Q_UNUSED(userStorage);
     Q_UNUSED(stocksStorage);
+    Q_UNUSED(fileFactory);
     Q_UNUSED(httpClient);
     Q_UNUSED(stock);
     Q_UNUSED(startTimestamp);
@@ -228,6 +279,7 @@ struct GetCandlesInfo
     IConfig*        config;
     IUserStorage*   userStorage;
     IStocksStorage* stocksStorage;
+    IFileFactory*   fileFactory;
     IHttpClient*    httpClient;
     IGrpcClient*    grpcClient;
     qint64          currentTimestamp;
@@ -239,6 +291,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
     IConfig*        config           = getCandlesInfo->config;
     IUserStorage*   userStorage      = getCandlesInfo->userStorage;
     IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
+    IFileFactory*   fileFactory      = getCandlesInfo->fileFactory;
     IHttpClient*    httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
     qint64          currentTimestamp = getCandlesInfo->currentTimestamp;
@@ -267,7 +320,9 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
             }
             else
             {
-                getCandlesWithHttp(parentThread, userStorage, stocksStorage, httpClient, stock, startTimestamp, currentTimestamp);
+                getCandlesWithHttp(
+                    parentThread, userStorage, stocksStorage, fileFactory, httpClient, stock, startTimestamp, currentTimestamp
+                );
             }
         }
     }
@@ -279,6 +334,7 @@ void PriceCollectThread::obtainStocksData()
     getCandlesInfo.config           = mConfig;
     getCandlesInfo.userStorage      = mUserStorage;
     getCandlesInfo.stocksStorage    = mStocksStorage;
+    getCandlesInfo.fileFactory      = mFileFactory;
     getCandlesInfo.httpClient       = mHttpClient;
     getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
