@@ -6,10 +6,9 @@
 
 
 
-CleanupThread::CleanupThread(IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent) :
+CleanupThread::CleanupThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent) :
     ICleanupThread(parent),
     mConfig(config),
-    mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage)
 {
     qDebug() << "Create CleanupThread";
@@ -29,7 +28,7 @@ void CleanupThread::run()
     QMutexLocker lock(mStocksStorage->getMutex());
 
     QList<Stock>* stocks = mStocksStorage->getStocks();
-    mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
+    mStocksStorage->deleteObsoleteData(obsoleteTimestamp, stocks);
 
     qDebug() << "Finish CleanupThread";
 }

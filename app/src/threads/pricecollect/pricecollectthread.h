@@ -7,6 +7,7 @@
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/http/ihttpclient.h"
 
@@ -19,6 +20,7 @@ class PriceCollectThread : public IPriceCollectThread
 public:
     explicit PriceCollectThread(
         IConfig*        config,
+        IUserStorage*   userStorage,
         IStocksStorage* stocksStorage,
         IFileFactory*   fileFactory,
         IHttpClient*    httpClient,
@@ -37,6 +39,7 @@ private:
     void obtainStocksData();
 
     IConfig*        mConfig;
+    IUserStorage*   mUserStorage;
     IStocksStorage* mStocksStorage;
     IFileFactory*   mFileFactory;
     IHttpClient*    mHttpClient;

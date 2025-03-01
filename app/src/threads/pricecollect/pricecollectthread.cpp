@@ -15,6 +15,7 @@
 
 PriceCollectThread::PriceCollectThread(
     IConfig*        config,
+    IUserStorage*   userStorage,
     IStocksStorage* stocksStorage,
     IFileFactory*   fileFactory,
     IHttpClient*    httpClient,
@@ -23,6 +24,7 @@ PriceCollectThread::PriceCollectThread(
 ) :
     IPriceCollectThread(parent),
     mConfig(config),
+    mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mFileFactory(fileFactory),
     mHttpClient(httpClient),
@@ -185,6 +187,7 @@ void getCandlesWithGrpc(
 
 void getCandlesWithHttp(
     QThread*        parentThread,
+    IUserStorage*   userStorage,
     IStocksStorage* stocksStorage,
     IHttpClient*    httpClient,
     Stock*          stock,
@@ -192,7 +195,23 @@ void getCandlesWithHttp(
     qint64          endTimestamp
 )
 {
+    // Round to 1 minute
+    startTimestamp = (startTimestamp / 60000) * 60000;
+    endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
+
+    QList<StockData> data;
+    data.resize((endTimestamp - startTimestamp) / 60000);
+    StockData* dataArray = data.data();
+
+    int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
+    int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
+
+    qInfo() << startYear;
+    qInfo() << endYear;
+
+    Q_UNUSED(dataArray);
     Q_UNUSED(parentThread);
+    Q_UNUSED(userStorage);
     Q_UNUSED(stocksStorage);
     Q_UNUSED(httpClient);
     Q_UNUSED(stock);
@@ -203,6 +222,7 @@ void getCandlesWithHttp(
 struct GetCandlesInfo
 {
     IConfig*        config;
+    IUserStorage*   userStorage;
     IStocksStorage* stocksStorage;
     IHttpClient*    httpClient;
     IGrpcClient*    grpcClient;
@@ -213,6 +233,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
 {
     GetCandlesInfo* getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     IConfig*        config           = getCandlesInfo->config;
+    IUserStorage*   userStorage      = getCandlesInfo->userStorage;
     IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
     IHttpClient*    httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
@@ -242,7 +263,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
             }
             else
             {
-                getCandlesWithHttp(parentThread, stocksStorage, httpClient, stock, startTimestamp, currentTimestamp);
+                getCandlesWithHttp(parentThread, userStorage, stocksStorage, httpClient, stock, startTimestamp, currentTimestamp);
             }
         }
     }
@@ -252,6 +273,7 @@ void PriceCollectThread::obtainStocksData()
 {
     GetCandlesInfo getCandlesInfo;
     getCandlesInfo.config           = mConfig;
+    getCandlesInfo.userStorage      = mUserStorage;
     getCandlesInfo.stocksStorage    = mStocksStorage;
     getCandlesInfo.httpClient       = mHttpClient;
     getCandlesInfo.grpcClient       = mGrpcClient;

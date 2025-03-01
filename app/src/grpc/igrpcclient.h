@@ -4,6 +4,8 @@
 
 #include <QObject>
 
+#include <QThread>
+
 #pragma warning(push)
 #pragma warning(disable : 4100 4189 4267)
 #include "messages/generated/instruments.grpc.pb.h"

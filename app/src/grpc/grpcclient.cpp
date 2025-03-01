@@ -17,27 +17,31 @@
 
 
 
-#define REPEAT_REQUEST(parentThread, mutex, service, action, context, req, resp) \
-    while (true)                                                                 \
-    {                                                                            \
-        QMutexLocker lock(mutex);                                                \
-        grpc::Status status = service->action(&context, req, resp.get());        \
-                                                                                 \
-        if (!parentThread->isInterruptionRequested() && !status.ok())            \
-        {                                                                        \
-            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)     \
-            {                                                                    \
-                QThread::msleep(5000);                                           \
-                                                                                 \
-                continue;                                                        \
-            }                                                                    \
-                                                                                 \
-            emit authFailed();                                                   \
-                                                                                 \
-            return nullptr;                                                      \
-        }                                                                        \
-                                                                                 \
-        return resp;                                                             \
+#define REPEAT_REQUEST(parentThread, mutex, service, action, context, req, resp)         \
+    while (true)                                                                         \
+    {                                                                                    \
+        mutex->lock();                                                                   \
+        grpc::Status status = service->action(&context, req, resp.get());                \
+        mutex->unlock();                                                                 \
+                                                                                         \
+        if (!parentThread->isInterruptionRequested() && !status.ok())                    \
+        {                                                                                \
+            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)             \
+            {                                                                            \
+                for (int t = 0; t < 10 && !parentThread->isInterruptionRequested(); ++t) \
+                {                                                                        \
+                    QThread::msleep(500);                                                \
+                }                                                                        \
+                                                                                         \
+                continue;                                                                \
+            }                                                                            \
+                                                                                         \
+            emit authFailed();                                                           \
+                                                                                         \
+            return nullptr;                                                              \
+        }                                                                                \
+                                                                                         \
+        return resp;                                                                     \
     }
 
 
