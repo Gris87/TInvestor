@@ -40,7 +40,7 @@ void PriceCollectThread::run()
 {
     qDebug() << "Running PriceCollectThread";
 
-    std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks();
+    std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
@@ -152,11 +152,16 @@ void getCandlesWithGrpc(
     while (true)
     {
         std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
-            grpcClient->getCandles(stock->meta.uid, startTimestamp / 1000, endTimestamp / 1000);
+            grpcClient->getCandles(parentThread, stock->meta.uid, startTimestamp / 1000, endTimestamp / 1000);
 
         if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
         {
-            break;
+            if (tinkoffCandles->candles_size() == 0)
+            {
+                stocksStorage->appendStockData(stock, &dataArray[lastIndex + 1], data.size() - lastIndex - 1);
+            }
+
+            return;
         }
 
         for (int i = tinkoffCandles->candles_size() - 1; i >= 0; --i)
@@ -176,8 +181,6 @@ void getCandlesWithGrpc(
 
         endTimestamp = dataArray[lastIndex + 1].timestamp;
     }
-
-    stocksStorage->appendStockData(stock, &dataArray[lastIndex + 1], data.size() - lastIndex - 1);
 }
 
 void getCandlesWithHttp(
@@ -215,7 +218,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
     IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
     qint64          currentTimestamp = getCandlesInfo->currentTimestamp;
 
-    qint64 storageMonthLimit = config->getStorageMonthLimit() * 31 * 24 * 60 * 60 * 1000; // 31 days
+    qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * 2678400000LL; // 31 * 24 * 60 * 60 * 1000 // 31 days
 
     Stock* stockArray = stocks->data();
 

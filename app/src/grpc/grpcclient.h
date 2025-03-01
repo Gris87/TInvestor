@@ -19,12 +19,14 @@ public:
     GrpcClient(const GrpcClient& another)            = delete;
     GrpcClient& operator=(const GrpcClient& another) = delete;
 
-    std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo() override;
-    std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts() override;
-    std::shared_ptr<tinkoff::SharesResponse>      findStocks() override;
-    std::shared_ptr<tinkoff::GetCandlesResponse>  getCandles(const QString& uid, qint64 from, qint64 to) override;
+    std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo(QThread* parentThread) override;
+    std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts(QThread* parentThread) override;
+    std::shared_ptr<tinkoff::SharesResponse>      findStocks(QThread* parentThread) override;
+    std::shared_ptr<tinkoff::GetCandlesResponse>
+    getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to) override;
 
 private:
+    QMutex*                                            mMutex;
     std::shared_ptr<grpc::CallCredentials>             mCreds;
     std::unique_ptr<tinkoff::UsersService::Stub>       mUsersService;
     std::unique_ptr<tinkoff::InstrumentsService::Stub> mInstrumentsService;

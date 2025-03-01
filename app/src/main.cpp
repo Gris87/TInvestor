@@ -246,5 +246,7 @@ int runApplication(int argc, char* argv[])
     );
     mainWindow.init();
 
+    qInfo() << "UP and Running";
+
     return app.exec();
 }

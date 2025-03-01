@@ -22,7 +22,7 @@ void UserUpdateThread::run()
 {
     qDebug() << "Running UserUpdateThread";
 
-    std::shared_ptr<tinkoff::GetInfoResponse> userInfo = mGrpcClient->getUserInfo();
+    std::shared_ptr<tinkoff::GetInfoResponse> userInfo = mGrpcClient->getUserInfo(QThread::currentThread());
 
     if (userInfo != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
@@ -36,7 +36,7 @@ void UserUpdateThread::run()
             user.qualifiedForWorkWith.append(QString::fromStdString(userInfo->qualified_for_work_with(i)));
         }
 
-        std::shared_ptr<tinkoff::GetAccountsResponse> tinkoffAccounts = mGrpcClient->getAccounts();
+        std::shared_ptr<tinkoff::GetAccountsResponse> tinkoffAccounts = mGrpcClient->getAccounts(QThread::currentThread());
 
         if (tinkoffAccounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
         {

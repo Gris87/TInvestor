@@ -20,10 +20,13 @@ public:
     GrpcClientMock(const GrpcClientMock& another)            = delete;
     GrpcClientMock& operator=(const GrpcClientMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<tinkoff::GetInfoResponse>, getUserInfo, (), (override));
-    MOCK_METHOD(std::shared_ptr<tinkoff::GetAccountsResponse>, getAccounts, (), (override));
-    MOCK_METHOD(std::shared_ptr<tinkoff::SharesResponse>, findStocks, (), (override));
+    MOCK_METHOD(std::shared_ptr<tinkoff::GetInfoResponse>, getUserInfo, (QThread * parentThread), (override));
+    MOCK_METHOD(std::shared_ptr<tinkoff::GetAccountsResponse>, getAccounts, (QThread * parentThread), (override));
+    MOCK_METHOD(std::shared_ptr<tinkoff::SharesResponse>, findStocks, (QThread * parentThread), (override));
     MOCK_METHOD(
-        std::shared_ptr<tinkoff::GetCandlesResponse>, getCandles, (const QString& uid, qint64 from, qint64 to), (override)
+        std::shared_ptr<tinkoff::GetCandlesResponse>,
+        getCandles,
+        (QThread * parentThread, const QString& uid, qint64 from, qint64 to),
+        (override)
     );
 };

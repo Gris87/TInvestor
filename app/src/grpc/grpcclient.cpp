@@ -17,8 +17,34 @@
 
 
 
+#define REPEAT_REQUEST(parentThread, mutex, service, action, context, req, resp) \
+    while (true)                                                                 \
+    {                                                                            \
+        QMutexLocker lock(mutex);                                                \
+        grpc::Status status = service->action(&context, req, resp.get());        \
+                                                                                 \
+        if (!parentThread->isInterruptionRequested() && !status.ok())            \
+        {                                                                        \
+            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)     \
+            {                                                                    \
+                QThread::msleep(5000);                                           \
+                                                                                 \
+                continue;                                                        \
+            }                                                                    \
+                                                                                 \
+            emit authFailed();                                                   \
+                                                                                 \
+            return nullptr;                                                      \
+        }                                                                        \
+                                                                                 \
+        return resp;                                                             \
+    }
+
+
+
 GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
-    IGrpcClient(parent)
+    IGrpcClient(parent),
+    mMutex(new QMutex())
 {
     qDebug() << "Create GrpcClient";
 
@@ -36,9 +62,11 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
 GrpcClient::~GrpcClient()
 {
     qDebug() << "Destroy GrpcClient";
+
+    delete mMutex;
 }
 
-std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo()
+std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* parentThread)
 {
     grpc::ClientContext                       context;
     tinkoff::GetInfoRequest                   req;
@@ -46,19 +74,10 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo()
 
     context.set_credentials(mCreds);
 
-    grpc::Status status = mUsersService->GetInfo(&context, req, resp.get());
-
-    if (!status.ok())
-    {
-        emit authFailed();
-
-        return nullptr;
-    }
-
-    return resp;
+    REPEAT_REQUEST(parentThread, mMutex, mUsersService, GetInfo, context, req, resp);
 }
 
-std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts()
+std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* parentThread)
 {
     grpc::ClientContext                           context;
     tinkoff::GetAccountsRequest                   req;
@@ -69,19 +88,10 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts()
 
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
-    grpc::Status status = mUsersService->GetAccounts(&context, req, resp.get());
-
-    if (!status.ok())
-    {
-        emit authFailed();
-
-        return nullptr;
-    }
-
-    return resp;
+    REPEAT_REQUEST(parentThread, mMutex, mUsersService, GetAccounts, context, req, resp);
 }
 
-std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks()
+std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread)
 {
     grpc::ClientContext                      context;
     tinkoff::InstrumentsRequest              req;
@@ -89,19 +99,11 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks()
 
     context.set_credentials(mCreds);
 
-    grpc::Status status = mInstrumentsService->Shares(&context, req, resp.get());
-
-    if (!status.ok())
-    {
-        emit authFailed();
-
-        return nullptr;
-    }
-
-    return resp;
+    REPEAT_REQUEST(parentThread, mMutex, mInstrumentsService, Shares, context, req, resp);
 }
 
-std::shared_ptr<tinkoff::GetCandlesResponse> GrpcClient::getCandles(const QString& uid, qint64 from, qint64 to)
+std::shared_ptr<tinkoff::GetCandlesResponse>
+GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to)
 {
     grpc::ClientContext                          context;
     tinkoff::GetCandlesRequest                   req;
@@ -124,14 +126,5 @@ std::shared_ptr<tinkoff::GetCandlesResponse> GrpcClient::getCandles(const QStrin
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
-    grpc::Status status = mMarketDataService->GetCandles(&context, req, resp.get());
-
-    if (!status.ok())
-    {
-        emit authFailed();
-
-        return nullptr;
-    }
-
-    return resp;
+    REPEAT_REQUEST(parentThread, mMutex, mMarketDataService, GetCandles, context, req, resp);
 }
