@@ -83,7 +83,9 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
             QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
             QString url      = QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName);
 
-            std::shared_ptr<QByteArray> data = httpClient->download(url);
+            IHttpClient::Headers headers;
+
+            std::shared_ptr<QByteArray> data = httpClient->download(url, headers);
 
             if (data)
             {
@@ -206,8 +208,10 @@ void getCandlesWithHttp(
     int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
     int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
 
-    qInfo() << startYear;
-    qInfo() << endYear;
+    for (int year = startYear; year <= endYear; ++year)
+    {
+        qInfo() << year;
+    }
 
     Q_UNUSED(dataArray);
     Q_UNUSED(parentThread);

@@ -19,11 +19,17 @@ HttpClient::~HttpClient()
     qDebug() << "Destroy HttpClient";
 }
 
-std::shared_ptr<QByteArray> HttpClient::download(const QString& url)
+std::shared_ptr<QByteArray> HttpClient::download(const QString& url, const Headers& headers)
 {
     QNetworkAccessManager manager;
     QNetworkRequest       request(url);
-    QNetworkReply*        reply = manager.get(request);
+
+    for (auto i = headers.cbegin(), end = headers.cend(); i != end; ++i)
+    {
+        request.setRawHeader(i.key().toUtf8(), i.value().toUtf8());
+    }
+
+    QNetworkReply* reply = manager.get(request);
 
     QEventLoop eventLoop;
     QObject::connect(reply, SIGNAL(finished()), &eventLoop, SLOT(quit()));

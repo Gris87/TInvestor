@@ -15,5 +15,5 @@ public:
     HttpClient(const HttpClient& another)            = delete;
     HttpClient& operator=(const HttpClient& another) = delete;
 
-    std::shared_ptr<QByteArray> download(const QString& url) override;
+    std::shared_ptr<QByteArray> download(const QString& url, const Headers& headers) override;
 };

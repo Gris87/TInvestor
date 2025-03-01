@@ -3,13 +3,15 @@
 
 
 #include <QByteArray>
-#include <QThread>
+#include <QMap>
 
 
 
 class IHttpClient
 {
 public:
+    typedef QMap<QString, QString> Headers;
+
     IHttpClient()
     {
     }
@@ -18,5 +20,5 @@ public:
     IHttpClient(const IHttpClient& another)            = delete;
     IHttpClient& operator=(const IHttpClient& another) = delete;
 
-    virtual std::shared_ptr<QByteArray> download(const QString& url) = 0;
+    virtual std::shared_ptr<QByteArray> download(const QString& url, const Headers& headers) = 0;
 };
