@@ -1,3 +1,4 @@
 include(../libs/grpc.pri)
 include(../libs/investapi.pri)
+include(../libs/quazip.pri)
 include(../libs/simplecrypt.pri)
