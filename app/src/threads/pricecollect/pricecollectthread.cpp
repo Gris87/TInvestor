@@ -12,6 +12,9 @@
 
 #define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
 
+#define CSV_FIELD_TIMESTAMP   1
+#define CSV_FIELD_CLOSE_PRICE 3
+
 
 
 PriceCollectThread::PriceCollectThread(
@@ -188,7 +191,7 @@ void getCandlesWithGrpc(
                 StockData* stockData = &dataArray[lastIndex];
 
                 stockData->timestamp = candle.time().seconds() * 1000;
-                stockData->value     = quotationToFloat(candle.close());
+                stockData->price     = quotationToFloat(candle.close());
 
                 --lastIndex;
             }
@@ -198,20 +201,18 @@ void getCandlesWithGrpc(
     }
 }
 
-void getCandlesFromZipFile(
+int getCandlesFromZipFile(
     QThread*          parentThread,
-    IUserStorage*     userStorage,
-    IStocksStorage*   stocksStorage,
-    IFileFactory*     fileFactory,
     IQZipFactory*     qZipFactory,
     IQZipFileFactory* qZipFileFactory,
-    IHttpClient*      httpClient,
-    Stock*            stock,
     qint64            startTimestamp,
     qint64            endTimestamp,
-    const QString&    zipFilePath
+    const QString&    zipFilePath,
+    StockData*        dataArray
 )
 {
+    int indexOffset = 0;
+
     std::shared_ptr<IQZip> stockDataFile = qZipFactory->newInstance(zipFilePath);
 
     if (stockDataFile->open(QuaZip::mdUnzip))
@@ -235,25 +236,27 @@ void getCandlesFromZipFile(
             {
                 QStringList csvFields = csvLines.at(j).split(';');
 
-                qInfo() << csvFields;
+                if (csvFields.size() > CSV_FIELD_CLOSE_PRICE)
+                {
+                    qint64 timestamp = QDateTime::fromString(csvFields.at(CSV_FIELD_TIMESTAMP), Qt::ISODate).toMSecsSinceEpoch();
+
+                    if (timestamp >= startTimestamp && timestamp < endTimestamp)
+                    {
+                        StockData* stockData = &dataArray[indexOffset];
+
+                        stockData->timestamp = timestamp;
+                        stockData->price     = csvFields.at(CSV_FIELD_CLOSE_PRICE).toFloat();
+
+                        ++indexOffset;
+                    }
+                }
             }
         }
 
         stockDataFile->close();
     }
 
-    Q_UNUSED(stockDataFile);
-    Q_UNUSED(parentThread);
-    Q_UNUSED(userStorage);
-    Q_UNUSED(stocksStorage);
-    Q_UNUSED(fileFactory);
-    Q_UNUSED(qZipFactory);
-    Q_UNUSED(qZipFileFactory);
-    Q_UNUSED(httpClient);
-    Q_UNUSED(stock);
-    Q_UNUSED(startTimestamp);
-    Q_UNUSED(endTimestamp);
-    Q_UNUSED(zipFilePath);
+    return indexOffset;
 }
 
 void getCandlesWithHttp(
@@ -278,6 +281,8 @@ void getCandlesWithHttp(
     QList<StockData> data;
     data.resize((endTimestamp - startTimestamp) / 60000);
     StockData* dataArray = data.data();
+
+    int indexOffset = 0;
 
     int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
     int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
@@ -327,32 +332,12 @@ void getCandlesWithHttp(
             }
         }
 
-        getCandlesFromZipFile(
-            parentThread,
-            userStorage,
-            stocksStorage,
-            fileFactory,
-            qZipFactory,
-            qZipFileFactory,
-            httpClient,
-            stock,
-            startTimestamp,
-            endTimestamp,
-            zipFilePath
+        indexOffset += getCandlesFromZipFile(
+            parentThread, qZipFactory, qZipFileFactory, startTimestamp, endTimestamp, zipFilePath, &dataArray[indexOffset]
         );
     }
 
-    Q_UNUSED(dataArray);
-    Q_UNUSED(parentThread);
-    Q_UNUSED(userStorage);
-    Q_UNUSED(stocksStorage);
-    Q_UNUSED(fileFactory);
-    Q_UNUSED(qZipFactory);
-    Q_UNUSED(qZipFileFactory);
-    Q_UNUSED(httpClient);
-    Q_UNUSED(stock);
-    Q_UNUSED(startTimestamp);
-    Q_UNUSED(endTimestamp);
+    stocksStorage->appendStockData(stock, dataArray, indexOffset);
 }
 
 struct GetCandlesInfo
@@ -390,9 +375,9 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
         Stock* stock = &stockArray[i];
         QMutexLocker lock(stock->mutex);
 
-        if (stock->meta.ticker == "SPBE")
+        if (stock->meta.ticker != "SPBE")
         {
-            qint64 startTimestamp = stock->operational.lastStoredTimestamp;
+            qint64 startTimestamp = stock->operational.lastStoredTimestamp + 60000;
 
             if (startTimestamp < currentTimestamp - storageMonthLimit)
             {
@@ -415,6 +400,14 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
                     httpClient,
                     stock,
                     startTimestamp,
+                    currentTimestamp
+                );
+                getCandlesWithGrpc(
+                    parentThread,
+                    stocksStorage,
+                    grpcClient,
+                    stock,
+                    stock->operational.lastStoredTimestamp + 60000,
                     currentTimestamp
                 );
             }

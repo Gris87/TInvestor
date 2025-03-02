@@ -14,7 +14,7 @@
 struct StockData
 {
     qint64 timestamp;
-    float  value;
+    float  price;
 };
 #pragma pack(pop)
 
