@@ -23,6 +23,6 @@ public:
     void run() override;
 
 private:
-    IConfig*         mConfig;
-    IStocksStorage*  mStocksStorage;
+    IConfig*        mConfig;
+    IStocksStorage* mStocksStorage;
 };

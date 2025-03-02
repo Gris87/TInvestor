@@ -25,15 +25,15 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp()
     {
-        configMock        = new StrictMock<ConfigMock>();
-        userStorageMock   = new StrictMock<UserStorageMock>();
-        stocksStorageMock = new StrictMock<StocksStorageMock>();
-        dirFactoryMock    = new StrictMock<DirFactoryMock>();
-        fileFactoryMock   = new StrictMock<FileFactoryMock>();
-        qZipFactoryMock   = new StrictMock<QZipFactoryMock>();
+        configMock          = new StrictMock<ConfigMock>();
+        userStorageMock     = new StrictMock<UserStorageMock>();
+        stocksStorageMock   = new StrictMock<StocksStorageMock>();
+        dirFactoryMock      = new StrictMock<DirFactoryMock>();
+        fileFactoryMock     = new StrictMock<FileFactoryMock>();
+        qZipFactoryMock     = new StrictMock<QZipFactoryMock>();
         qZipFileFactoryMock = new StrictMock<QZipFileFactoryMock>();
-        httpClientMock    = new StrictMock<HttpClientMock>();
-        grpcClientMock    = new StrictMock<GrpcClientMock>();
+        httpClientMock      = new StrictMock<HttpClientMock>();
+        grpcClientMock      = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(
             configMock,
@@ -62,16 +62,16 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*            thread;
-    StrictMock<ConfigMock>*        configMock;
-    StrictMock<UserStorageMock>*   userStorageMock;
-    StrictMock<StocksStorageMock>* stocksStorageMock;
-    StrictMock<DirFactoryMock>*    dirFactoryMock;
-    StrictMock<FileFactoryMock>*   fileFactoryMock;
-    StrictMock<QZipFactoryMock>*   qZipFactoryMock;
+    PriceCollectThread*              thread;
+    StrictMock<ConfigMock>*          configMock;
+    StrictMock<UserStorageMock>*     userStorageMock;
+    StrictMock<StocksStorageMock>*   stocksStorageMock;
+    StrictMock<DirFactoryMock>*      dirFactoryMock;
+    StrictMock<FileFactoryMock>*     fileFactoryMock;
+    StrictMock<QZipFactoryMock>*     qZipFactoryMock;
     StrictMock<QZipFileFactoryMock>* qZipFileFactoryMock;
-    StrictMock<HttpClientMock>*    httpClientMock;
-    StrictMock<GrpcClientMock>*    grpcClientMock;
+    StrictMock<HttpClientMock>*      httpClientMock;
+    StrictMock<GrpcClientMock>*      grpcClientMock;
 };
 
 

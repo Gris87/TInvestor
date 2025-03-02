@@ -44,12 +44,12 @@ private:
     void storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
 
-    IConfig*        mConfig;
-    IUserStorage*   mUserStorage;
-    IStocksStorage* mStocksStorage;
-    IFileFactory*   mFileFactory;
-    IQZipFactory*   mQZipFactory;
+    IConfig*          mConfig;
+    IUserStorage*     mUserStorage;
+    IStocksStorage*   mStocksStorage;
+    IFileFactory*     mFileFactory;
+    IQZipFactory*     mQZipFactory;
     IQZipFileFactory* mQZipFileFactory;
-    IHttpClient*    mHttpClient;
-    IGrpcClient*    mGrpcClient;
+    IHttpClient*      mHttpClient;
+    IGrpcClient*      mGrpcClient;
 };

@@ -19,8 +19,8 @@ class Test_CleanupThread : public ::testing::Test
 protected:
     void SetUp()
     {
-        configMock         = new StrictMock<ConfigMock>();
-        stocksStorageMock  = new StrictMock<StocksStorageMock>();
+        configMock        = new StrictMock<ConfigMock>();
+        stocksStorageMock = new StrictMock<StocksStorageMock>();
 
         thread = new CleanupThread(configMock, stocksStorageMock);
     }
@@ -32,9 +32,9 @@ protected:
         delete stocksStorageMock;
     }
 
-    CleanupThread*                  thread;
-    StrictMock<ConfigMock>*         configMock;
-    StrictMock<StocksStorageMock>*  stocksStorageMock;
+    CleanupThread*                 thread;
+    StrictMock<ConfigMock>*        configMock;
+    StrictMock<StocksStorageMock>* stocksStorageMock;
 };
 
 

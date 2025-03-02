@@ -342,29 +342,29 @@ void getCandlesWithHttp(
 
 struct GetCandlesInfo
 {
-    IConfig*        config;
-    IUserStorage*   userStorage;
-    IStocksStorage* stocksStorage;
-    IFileFactory*   fileFactory;
-    IQZipFactory*   qZipFactory;
+    IConfig*          config;
+    IUserStorage*     userStorage;
+    IStocksStorage*   stocksStorage;
+    IFileFactory*     fileFactory;
+    IQZipFactory*     qZipFactory;
     IQZipFileFactory* qZipFileFactory;
-    IHttpClient*    httpClient;
-    IGrpcClient*    grpcClient;
-    qint64          currentTimestamp;
+    IHttpClient*      httpClient;
+    IGrpcClient*      grpcClient;
+    qint64            currentTimestamp;
 };
 
 void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
 {
-    GetCandlesInfo* getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
-    IConfig*        config           = getCandlesInfo->config;
-    IUserStorage*   userStorage      = getCandlesInfo->userStorage;
-    IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
-    IFileFactory*   fileFactory      = getCandlesInfo->fileFactory;
-    IQZipFactory*   qZipFactory      = getCandlesInfo->qZipFactory;
+    GetCandlesInfo*   getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
+    IConfig*          config           = getCandlesInfo->config;
+    IUserStorage*     userStorage      = getCandlesInfo->userStorage;
+    IStocksStorage*   stocksStorage    = getCandlesInfo->stocksStorage;
+    IFileFactory*     fileFactory      = getCandlesInfo->fileFactory;
+    IQZipFactory*     qZipFactory      = getCandlesInfo->qZipFactory;
     IQZipFileFactory* qZipFileFactory  = getCandlesInfo->qZipFileFactory;
-    IHttpClient*    httpClient       = getCandlesInfo->httpClient;
-    IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
-    qint64          currentTimestamp = getCandlesInfo->currentTimestamp;
+    IHttpClient*      httpClient       = getCandlesInfo->httpClient;
+    IGrpcClient*      grpcClient       = getCandlesInfo->grpcClient;
+    qint64            currentTimestamp = getCandlesInfo->currentTimestamp;
 
     qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * 2678400000LL; // 31 * 24 * 60 * 60 * 1000 // 31 days
 
@@ -372,45 +372,37 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = &stockArray[i];
+        Stock*       stock = &stockArray[i];
         QMutexLocker lock(stock->mutex);
 
-        if (stock->meta.ticker != "SPBE")
+        qint64 startTimestamp = stock->operational.lastStoredTimestamp + 60000;
+
+        if (startTimestamp < currentTimestamp - storageMonthLimit)
         {
-            qint64 startTimestamp = stock->operational.lastStoredTimestamp + 60000;
+            startTimestamp = currentTimestamp - storageMonthLimit;
+        }
 
-            if (startTimestamp < currentTimestamp - storageMonthLimit)
-            {
-                startTimestamp = currentTimestamp - storageMonthLimit;
-            }
-
-            if (currentTimestamp - startTimestamp < MAX_GRPC_TIME_LIMIT)
-            {
-                getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
-            }
-            else
-            {
-                getCandlesWithHttp(
-                    parentThread,
-                    userStorage,
-                    stocksStorage,
-                    fileFactory,
-                    qZipFactory,
-                    qZipFileFactory,
-                    httpClient,
-                    stock,
-                    startTimestamp,
-                    currentTimestamp
-                );
-                getCandlesWithGrpc(
-                    parentThread,
-                    stocksStorage,
-                    grpcClient,
-                    stock,
-                    stock->operational.lastStoredTimestamp + 60000,
-                    currentTimestamp
-                );
-            }
+        if (currentTimestamp - startTimestamp < MAX_GRPC_TIME_LIMIT)
+        {
+            getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
+        }
+        else
+        {
+            getCandlesWithHttp(
+                parentThread,
+                userStorage,
+                stocksStorage,
+                fileFactory,
+                qZipFactory,
+                qZipFileFactory,
+                httpClient,
+                stock,
+                startTimestamp,
+                currentTimestamp
+            );
+            getCandlesWithGrpc(
+                parentThread, stocksStorage, grpcClient, stock, stock->operational.lastStoredTimestamp + 60000, currentTimestamp
+            );
         }
     }
 }

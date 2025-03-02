@@ -15,9 +15,9 @@ public:
     QZipFile(const QZipFile& another)            = delete;
     QZipFile& operator=(const QZipFile& another) = delete;
 
-    bool open(QIODevice::OpenMode mode) override;
+    bool       open(QIODevice::OpenMode mode) override;
     QByteArray readAll() override;
-    void close() override;
+    void       close() override;
 
 private:
     QuaZipFile mQuaZipFile;
