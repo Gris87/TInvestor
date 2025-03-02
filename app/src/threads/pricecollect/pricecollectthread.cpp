@@ -229,7 +229,7 @@ void getCandlesWithHttp(
 
             QUrlQuery query;
 
-            query.addQueryItem("instrument_id", stock->meta.uid);
+            query.addQueryItem("instrumentId", stock->meta.uid);
             query.addQueryItem("year", QString::number(year));
 
             url.setQuery(query.query());

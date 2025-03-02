@@ -1,3 +1,4 @@
+# Generated with generate_sources.sh
 # find app/ -name test_\*.cpp | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/test_buydecision1configwidget.cpp \

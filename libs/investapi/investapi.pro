@@ -30,5 +30,5 @@ INCLUDEPATH += \
 
 
 
-include(../../libs/investapi/grpc.pri)
+include(../../libs/grpc.pri)
 include(../../libs/investapi/investapi.pri)

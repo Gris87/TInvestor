@@ -1,3 +1,4 @@
+# Generated with generate_sources.sh
 # find libs/investapi/ -name \*.cc | sed "s/libs\/investapi\///g" | sed "s/\.cc/\.cc \\\/g"
 SOURCES += \
     messages/generated/common.grpc.pb.cc \

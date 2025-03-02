@@ -1,3 +1,4 @@
+# Generated with generate_sources.sh
 VPATH += $${PWD}
 INCLUDEPATH += $${PWD}
 

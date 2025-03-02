@@ -46,10 +46,10 @@ LIBS += \
 
 
 
-copyfiles.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
-first.depends = $(first) copyfiles
+copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
+first.depends = $(first) copy_grpc_files
 
 export(first.depends)
-export(copyfiles.commands)
+export(copy_grpc_files.commands)
 
-QMAKE_EXTRA_TARGETS += first copyfiles
+QMAKE_EXTRA_TARGETS += first copy_grpc_files

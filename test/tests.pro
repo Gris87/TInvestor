@@ -30,9 +30,9 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-include(../app/libs.pri)
 include(../app/TInvestor.pri)
-include(../test/gtest_dependency.pri)
+include(../libs/gtest.pri)
+include(../libs/libs.pri)
 include(../test/tests.pri)
 
 

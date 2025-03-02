@@ -36,8 +36,8 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-include(../app/libs.pri)
 include(../app/TInvestor.pri)
+include(../libs/libs.pri)
 
 
 
