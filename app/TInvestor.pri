@@ -51,6 +51,8 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
+    src/utils/fs/qzip/qzip.cpp \
+    src/utils/fs/qzip/qzipfactory.cpp \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
@@ -147,6 +149,10 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
+    src/utils/fs/qzip/iqzip.h \
+    src/utils/fs/qzip/iqzipfactory.h \
+    src/utils/fs/qzip/qzip.h \
+    src/utils/fs/qzip/qzipfactory.h \
     src/utils/http/httpclient.h \
     src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \
