@@ -20,6 +20,7 @@ PriceCollectThread::PriceCollectThread(
     IStocksStorage* stocksStorage,
     IDirFactory*    dirFactory,
     IFileFactory*   fileFactory,
+    IQZipFactory*   qZipFactory,
     IHttpClient*    httpClient,
     IGrpcClient*    grpcClient,
     QObject*        parent
@@ -29,6 +30,7 @@ PriceCollectThread::PriceCollectThread(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mFileFactory(fileFactory),
+    mQZipFactory(qZipFactory),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient)
 {
@@ -194,11 +196,46 @@ void getCandlesWithGrpc(
     }
 }
 
+void getCandlesFromZipFile(
+    QThread*        parentThread,
+    IUserStorage*   userStorage,
+    IStocksStorage* stocksStorage,
+    IFileFactory*   fileFactory,
+    IQZipFactory*   qZipFactory,
+    IHttpClient*    httpClient,
+    Stock*          stock,
+    qint64          startTimestamp,
+    qint64          endTimestamp,
+    const QString&  zipFilePath
+)
+{
+    std::shared_ptr<IQZip> stockDataFile = qZipFactory->newInstance(zipFilePath);
+
+    if (stockDataFile->open(QuaZip::mdUnzip))
+    {
+        qInfo() << zipFilePath;
+
+        stockDataFile->close();
+    }
+
+    Q_UNUSED(stockDataFile);
+    Q_UNUSED(parentThread);
+    Q_UNUSED(userStorage);
+    Q_UNUSED(stocksStorage);
+    Q_UNUSED(fileFactory);
+    Q_UNUSED(qZipFactory);
+    Q_UNUSED(httpClient);
+    Q_UNUSED(stock);
+    Q_UNUSED(startTimestamp);
+    Q_UNUSED(endTimestamp);
+}
+
 void getCandlesWithHttp(
     QThread*        parentThread,
     IUserStorage*   userStorage,
     IStocksStorage* stocksStorage,
     IFileFactory*   fileFactory,
+    IQZipFactory*   qZipFactory,
     IHttpClient*    httpClient,
     Stock*          stock,
     qint64          startTimestamp,
@@ -220,8 +257,9 @@ void getCandlesWithHttp(
 
     for (int year = startYear; year <= endYear && !parentThread->isInterruptionRequested(); ++year)
     {
-        std::shared_ptr<IFile> stockDataFile =
-            fileFactory->newInstance(QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year)));
+        QString zipFilePath = QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year));
+
+        std::shared_ptr<IFile> stockDataFile = fileFactory->newInstance(zipFilePath);
 
         if (year == endYear || !stockDataFile->exists())
         {
@@ -261,6 +299,19 @@ void getCandlesWithHttp(
                 }
             }
         }
+
+        getCandlesFromZipFile(
+            parentThread,
+            userStorage,
+            stocksStorage,
+            fileFactory,
+            qZipFactory,
+            httpClient,
+            stock,
+            startTimestamp,
+            endTimestamp,
+            zipFilePath
+        );
     }
 
     Q_UNUSED(dataArray);
@@ -268,6 +319,7 @@ void getCandlesWithHttp(
     Q_UNUSED(userStorage);
     Q_UNUSED(stocksStorage);
     Q_UNUSED(fileFactory);
+    Q_UNUSED(qZipFactory);
     Q_UNUSED(httpClient);
     Q_UNUSED(stock);
     Q_UNUSED(startTimestamp);
@@ -280,6 +332,7 @@ struct GetCandlesInfo
     IUserStorage*   userStorage;
     IStocksStorage* stocksStorage;
     IFileFactory*   fileFactory;
+    IQZipFactory*   qZipFactory;
     IHttpClient*    httpClient;
     IGrpcClient*    grpcClient;
     qint64          currentTimestamp;
@@ -292,6 +345,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
     IUserStorage*   userStorage      = getCandlesInfo->userStorage;
     IStocksStorage* stocksStorage    = getCandlesInfo->stocksStorage;
     IFileFactory*   fileFactory      = getCandlesInfo->fileFactory;
+    IQZipFactory*   qZipFactory      = getCandlesInfo->qZipFactory;
     IHttpClient*    httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*    grpcClient       = getCandlesInfo->grpcClient;
     qint64          currentTimestamp = getCandlesInfo->currentTimestamp;
@@ -321,7 +375,15 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
             else
             {
                 getCandlesWithHttp(
-                    parentThread, userStorage, stocksStorage, fileFactory, httpClient, stock, startTimestamp, currentTimestamp
+                    parentThread,
+                    userStorage,
+                    stocksStorage,
+                    fileFactory,
+                    qZipFactory,
+                    httpClient,
+                    stock,
+                    startTimestamp,
+                    currentTimestamp
                 );
             }
         }
@@ -335,6 +397,7 @@ void PriceCollectThread::obtainStocksData()
     getCandlesInfo.userStorage      = mUserStorage;
     getCandlesInfo.stocksStorage    = mStocksStorage;
     getCandlesInfo.fileFactory      = mFileFactory;
+    getCandlesInfo.qZipFactory      = mQZipFactory;
     getCandlesInfo.httpClient       = mHttpClient;
     getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();

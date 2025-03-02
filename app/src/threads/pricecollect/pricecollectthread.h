@@ -10,6 +10,7 @@
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
+#include "src/utils/fs/qzip/iqzipfactory.h"
 #include "src/utils/http/ihttpclient.h"
 
 
@@ -25,6 +26,7 @@ public:
         IStocksStorage* stocksStorage,
         IDirFactory*    dirFactory,
         IFileFactory*   fileFactory,
+        IQZipFactory*   qZipFactory,
         IHttpClient*    httpClient,
         IGrpcClient*    grpcClient,
         QObject*        parent = nullptr
@@ -44,6 +46,7 @@ private:
     IUserStorage*   mUserStorage;
     IStocksStorage* mStocksStorage;
     IFileFactory*   mFileFactory;
+    IQZipFactory*   mQZipFactory;
     IHttpClient*    mHttpClient;
     IGrpcClient*    mGrpcClient;
 };
