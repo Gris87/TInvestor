@@ -1,4 +1,4 @@
-#include "src/utils/fs/qzip/qzip.h"
+#include "src/utils/fs/zip/qzip/qzip.h"
 
 #include <QCoreApplication>
 #include <QDir>

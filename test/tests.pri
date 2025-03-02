@@ -44,8 +44,10 @@ SOURCES += \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
-    src/utils/fs/qzip/test_qzip.cpp \
-    src/utils/fs/qzip/test_qzipfactory.cpp \
+    src/utils/fs/zip/qzip/test_qzip.cpp \
+    src/utils/fs/zip/qzip/test_qzipfactory.cpp \
+    src/utils/fs/zip/qzipfile/test_qzipfile.cpp \
+    src/utils/fs/zip/qzipfile/test_qzipfilefactory.cpp \
     src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
@@ -95,8 +97,10 @@ HEADERS += \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
-    src/utils/fs/qzip/iqzipfactory_mock.h \
-    src/utils/fs/qzip/iqzip_mock.h \
+    src/utils/fs/zip/qzip/iqzipfactory_mock.h \
+    src/utils/fs/zip/qzip/iqzip_mock.h \
+    src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
+    src/utils/fs/zip/qzipfile/iqzipfile_mock.h \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \

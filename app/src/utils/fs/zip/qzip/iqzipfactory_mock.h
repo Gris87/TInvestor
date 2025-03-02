@@ -2,7 +2,7 @@
 
 
 
-#include "src/utils/fs/qzip/iqzipfactory.h"
+#include "src/utils/fs/zip/qzip/iqzipfactory.h"
 
 #include <gmock/gmock.h>
 

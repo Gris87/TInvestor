@@ -1,8 +1,8 @@
-#include "src/utils/fs/qzip/qzipfactory.h"
+#include "src/utils/fs/zip/qzip/qzipfactory.h"
 
 #include <QDebug>
 
-#include "src/utils/fs/qzip/qzip.h"
+#include "src/utils/fs/zip/qzip/qzip.h"
 
 
 

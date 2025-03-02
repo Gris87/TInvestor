@@ -8,7 +8,8 @@
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
-#include "src/utils/fs/qzip/iqzipfactory_mock.h"
+#include "src/utils/fs/zip/qzip/iqzipfactory_mock.h"
+#include "src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
 
@@ -30,6 +31,7 @@ protected:
         dirFactoryMock    = new StrictMock<DirFactoryMock>();
         fileFactoryMock   = new StrictMock<FileFactoryMock>();
         qZipFactoryMock   = new StrictMock<QZipFactoryMock>();
+        qZipFileFactoryMock = new StrictMock<QZipFileFactoryMock>();
         httpClientMock    = new StrictMock<HttpClientMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
@@ -40,6 +42,7 @@ protected:
             dirFactoryMock,
             fileFactoryMock,
             qZipFactoryMock,
+            qZipFileFactoryMock,
             httpClientMock,
             grpcClientMock
         );
@@ -54,6 +57,7 @@ protected:
         delete dirFactoryMock;
         delete fileFactoryMock;
         delete qZipFactoryMock;
+        delete qZipFileFactoryMock;
         delete httpClientMock;
         delete grpcClientMock;
     }
@@ -65,6 +69,7 @@ protected:
     StrictMock<DirFactoryMock>*    dirFactoryMock;
     StrictMock<FileFactoryMock>*   fileFactoryMock;
     StrictMock<QZipFactoryMock>*   qZipFactoryMock;
+    StrictMock<QZipFileFactoryMock>* qZipFileFactoryMock;
     StrictMock<HttpClientMock>*    httpClientMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;
 };

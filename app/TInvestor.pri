@@ -51,8 +51,10 @@ SOURCES += \
     src/utils/fs/dir/dirfactory.cpp \
     src/utils/fs/file/file.cpp \
     src/utils/fs/file/filefactory.cpp \
-    src/utils/fs/qzip/qzip.cpp \
-    src/utils/fs/qzip/qzipfactory.cpp \
+    src/utils/fs/zip/qzip/qzip.cpp \
+    src/utils/fs/zip/qzip/qzipfactory.cpp \
+    src/utils/fs/zip/qzipfile/qzipfile.cpp \
+    src/utils/fs/zip/qzipfile/qzipfilefactory.cpp \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
@@ -149,10 +151,14 @@ HEADERS += \
     src/utils/fs/file/filefactory.h \
     src/utils/fs/file/ifile.h \
     src/utils/fs/file/ifilefactory.h \
-    src/utils/fs/qzip/iqzip.h \
-    src/utils/fs/qzip/iqzipfactory.h \
-    src/utils/fs/qzip/qzip.h \
-    src/utils/fs/qzip/qzipfactory.h \
+    src/utils/fs/zip/qzip/iqzip.h \
+    src/utils/fs/zip/qzip/iqzipfactory.h \
+    src/utils/fs/zip/qzip/qzip.h \
+    src/utils/fs/zip/qzip/qzipfactory.h \
+    src/utils/fs/zip/qzipfile/iqzipfile.h \
+    src/utils/fs/zip/qzipfile/iqzipfilefactory.h \
+    src/utils/fs/zip/qzipfile/qzipfile.h \
+    src/utils/fs/zip/qzipfile/qzipfilefactory.h \
     src/utils/http/httpclient.h \
     src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \

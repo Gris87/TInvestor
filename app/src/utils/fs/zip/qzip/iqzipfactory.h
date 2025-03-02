@@ -2,7 +2,7 @@
 
 
 
-#include "src/utils/fs/qzip/iqzip.h"
+#include "src/utils/fs/zip/qzip/iqzip.h"
 
 #include <QString>
 

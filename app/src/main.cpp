@@ -35,7 +35,8 @@
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
-#include "src/utils/fs/qzip/qzipfactory.h"
+#include "src/utils/fs/zip/qzip/qzipfactory.h"
+#include "src/utils/fs/zip/qzipfile/qzipfilefactory.h"
 #include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
@@ -110,6 +111,7 @@ int runApplication(int argc, char* argv[])
     DirFactory      dirFactory;
     FileFactory     fileFactory;
     QZipFactory     qZipFactory;
+    QZipFileFactory qZipFileFactory;
     HttpClient      httpClient;
 
     MessageBoxUtils messageBoxUtils;
@@ -217,7 +219,7 @@ int runApplication(int argc, char* argv[])
     GrpcClient         grpcClient(&userStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     PriceCollectThread priceCollectThread(
-        &config, &userStorage, &stocksStorage, &dirFactory, &fileFactory, &qZipFactory, &httpClient, &grpcClient
+        &config, &userStorage, &stocksStorage, &dirFactory, &fileFactory, &qZipFactory, &qZipFileFactory, &httpClient, &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);

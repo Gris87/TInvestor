@@ -2,7 +2,7 @@
 
 
 
-#include "src/utils/fs/qzip/iqzip.h"
+#include "src/utils/fs/zip/qzip/iqzip.h"
 
 
 
@@ -15,8 +15,13 @@ public:
     QZip(const QZip& another)            = delete;
     QZip& operator=(const QZip& another) = delete;
 
+    QuaZip* getZip() override;
+
     bool open(QuaZip::Mode mode) override;
     void close() override;
+
+    QStringList getFileNameList() override;
+    bool        setCurrentFile(const QString& fileName) override;
 
 private:
     QuaZip mQuaZip;
