@@ -61,6 +61,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
     mUsersService       = tinkoff::UsersService::NewStub(channel);
     mInstrumentsService = tinkoff::InstrumentsService::NewStub(channel);
     mMarketDataService  = tinkoff::MarketDataService::NewStub(channel);
+    mMarketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -131,4 +132,73 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
     REPEAT_REQUEST(parentThread, mMutex, mMarketDataService, GetCandles, context, req, resp);
+}
+
+std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
+{
+    std::shared_ptr<MarketDataStream> res(new MarketDataStream());
+
+    res->context.set_credentials(mCreds);
+    res->stream = mMarketDataStreamService->MarketDataStream(&res->context);
+
+    return res;
+}
+
+void GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids)
+{
+    tinkoff::MarketDataRequest          req;
+    tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
+        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+
+    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+
+    for (int i = 0; i < uids.size(); ++i)
+    {
+        subscribeLastPriceRequest->add_instruments()->set_instrument_id(uids.at(i).toStdString());
+    }
+
+    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+
+    marketDataStream->stream->Write(req);
+}
+
+void GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    tinkoff::MarketDataRequest          req;
+    tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
+        new tinkoff::SubscribeLastPriceRequest(); // req will take ownership
+
+    subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_UNSUBSCRIBE);
+
+    req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+
+    marketDataStream->stream->Write(req);
+}
+
+std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    std::shared_ptr<tinkoff::MarketDataResponse> resp =
+        std::shared_ptr<tinkoff::MarketDataResponse>(new tinkoff::MarketDataResponse());
+
+    if (!marketDataStream->stream->Read(resp.get()))
+    {
+        return nullptr;
+    }
+
+    return resp;
+}
+
+void GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    marketDataStream->stream->WritesDone();
+}
+
+void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    grpc::Status status = marketDataStream->stream->Finish();
+
+    if (!status.ok())
+    {
+        emit authFailed();
+    }
 }

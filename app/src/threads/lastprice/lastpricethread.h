@@ -23,6 +23,8 @@ public:
     void run() override;
 
 private:
+    QStringList getStockUIDs();
+
     IStocksStorage* mStocksStorage;
     IGrpcClient*    mGrpcClient;
 };
