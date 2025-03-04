@@ -19,13 +19,13 @@ struct SumResult
 
 
 
-void action(QThread* /*parentThread*/, QList<int>* array, int start, int end, void* additionalArgs)
+void action(QThread* /*parentThread*/, QList<int>& array, int start, int end, void* additionalArgs)
 {
     SumResult* sumResult = reinterpret_cast<SumResult*>(additionalArgs);
 
     int res = 0;
 
-    const int* arrayData = array->constData();
+    const int* arrayData = array.constData();
 
     for (int i = start; i < end; ++i)
     {
@@ -45,7 +45,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     array << 1 << 2 << 3;
 
     SumResult sumResult;
-    processInParallel(&array, action, &sumResult);
+    processInParallel(array, action, &sumResult);
 
     ASSERT_EQ(sumResult.result, 6);
 
@@ -60,7 +60,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     }
 
     sumResult.result = 0;
-    processInParallel(&array, action, &sumResult);
+    processInParallel(array, action, &sumResult);
 
     ASSERT_EQ(sumResult.result, 499500);
 }

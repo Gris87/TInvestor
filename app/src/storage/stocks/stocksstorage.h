@@ -17,15 +17,15 @@ public:
     StocksStorage(const StocksStorage& another)            = delete;
     StocksStorage& operator=(const StocksStorage& another) = delete;
 
-    void          readFromDatabase() override;
-    QMutex*       getMutex() override;
-    QList<Stock>* getStocks() override;
-    void          mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
-    void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
-    void          deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks) override;
+    void           readFromDatabase() override;
+    QMutex*        getMutex() override;
+    QList<Stock*>& getStocks() override;
+    void           mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
+    void           appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
+    void           deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks) override;
 
 private:
     IStocksDatabase* mStocksDatabase;
     QMutex*          mMutex;
-    QList<Stock>*    mStocks;
+    QList<Stock*>    mStocks;
 };

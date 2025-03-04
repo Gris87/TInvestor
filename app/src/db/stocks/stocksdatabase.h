@@ -18,11 +18,11 @@ public:
     StocksDatabase(const StocksDatabase& another)            = delete;
     StocksDatabase& operator=(const StocksDatabase& another) = delete;
 
-    QList<Stock> readStocksMeta() override;
-    void         readStocksData(QList<Stock>* stocks) override;
-    void         writeStocksMeta(QList<Stock>* stocks) override;
-    void         appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
-    void         deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks) override;
+    QList<Stock*> readStocksMeta() override;
+    void          readStocksData(QList<Stock*>& stocks) override;
+    void          writeStocksMeta(const QList<Stock*>& stocks) override;
+    void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
+    void          deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks) override;
 
 private:
     IFileFactory* mFileFactory;

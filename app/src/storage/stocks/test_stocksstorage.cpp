@@ -40,10 +40,10 @@ TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 {
-    QList<Stock>* stocks = storage->getStocks();
-    ASSERT_EQ(stocks->size(), 0);
+    QList<Stock*>& stocks = storage->getStocks();
+    ASSERT_EQ(stocks.size(), 0);
 
-    QList<Stock> stocksDB;
+    QList<Stock*> stocksDB;
 
     Stock stock1;
     Stock stock2;
@@ -94,63 +94,63 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     stock2.operational.lastStoredTimestamp = stock2.data.last().timestamp;
     stock3.operational.lastStoredTimestamp = stock3.data.last().timestamp;
 
-    stocksDB << stock1 << stock2 << stock3;
+    stocksDB << &stock1 << &stock2 << &stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(NotNull()));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(stocks));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
 
     // clang-format off
-    ASSERT_EQ(stocks->size(),                                3);
-    ASSERT_EQ(stocks->at(0).meta.uid,                        "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
-    ASSERT_EQ(stocks->at(0).meta.ticker,                     "TEST");
-    ASSERT_EQ(stocks->at(0).meta.name,                       "abc");
-    ASSERT_EQ(stocks->at(0).meta.forQualInvestorFlag,        true);
-    ASSERT_EQ(stocks->at(0).meta.lot,                        1);
-    ASSERT_EQ(stocks->at(0).meta.minPriceIncrement.units,    0);
-    ASSERT_EQ(stocks->at(0).meta.minPriceIncrement.nano,     100000000);
-    ASSERT_EQ(stocks->at(0).operational.lastStoredTimestamp, 200);
-    ASSERT_EQ(stocks->at(0).data.size(),                     2);
-    ASSERT_EQ(stocks->at(0).data.at(0).timestamp,            100);
-    ASSERT_NEAR(stocks->at(0).data.at(0).price,              0.1f, 0.001f);
-    ASSERT_EQ(stocks->at(0).data.at(1).timestamp,            200);
-    ASSERT_NEAR(stocks->at(0).data.at(1).price,              0.2f, 0.001f);
+    ASSERT_EQ(stocks.size(),                                 3);
+    ASSERT_EQ(stocks.at(0)->meta.uid,                        "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.ticker,                     "TEST");
+    ASSERT_EQ(stocks.at(0)->meta.name,                       "abc");
+    ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,        true);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                        1);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.units,    0);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.nano,     100000000);
+    ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp, 200);
+    ASSERT_EQ(stocks.at(0)->data.size(),                     2);
+    ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,            100);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,              0.1f, 0.001f);
+    ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,            200);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,              0.2f, 0.001f);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks->at(1).meta.uid,                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
-    ASSERT_EQ(stocks->at(1).meta.ticker,                     "MAGA");
-    ASSERT_EQ(stocks->at(1).meta.name,                       "def");
-    ASSERT_EQ(stocks->at(1).meta.forQualInvestorFlag,        false);
-    ASSERT_EQ(stocks->at(1).meta.lot,                        10);
-    ASSERT_EQ(stocks->at(1).meta.minPriceIncrement.units,    0);
-    ASSERT_EQ(stocks->at(1).meta.minPriceIncrement.nano,     500000000);
-    ASSERT_EQ(stocks->at(1).operational.lastStoredTimestamp, 300);
-    ASSERT_EQ(stocks->at(1).data.size(),                     2);
-    ASSERT_EQ(stocks->at(1).data.at(0).timestamp,            200);
-    ASSERT_NEAR(stocks->at(1).data.at(0).price,              0.2f, 0.001f);
-    ASSERT_EQ(stocks->at(1).data.at(1).timestamp,            300);
-    ASSERT_NEAR(stocks->at(1).data.at(1).price,              0.3f, 0.001f);
+    ASSERT_EQ(stocks.at(1)->meta.uid,                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.ticker,                     "MAGA");
+    ASSERT_EQ(stocks.at(1)->meta.name,                       "def");
+    ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,        false);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                        10);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.units,    0);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.nano,     500000000);
+    ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp, 300);
+    ASSERT_EQ(stocks.at(1)->data.size(),                     2);
+    ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,            200);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,              0.2f, 0.001f);
+    ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,            300);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,              0.3f, 0.001f);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(stocks->at(2).meta.uid,                        "cccccccc-cccc-cccc-cccc-cccccccccccc");
-    ASSERT_EQ(stocks->at(2).meta.ticker,                     "HNYA");
-    ASSERT_EQ(stocks->at(2).meta.name,                       "aaaa");
-    ASSERT_EQ(stocks->at(2).meta.forQualInvestorFlag,        true);
-    ASSERT_EQ(stocks->at(2).meta.lot,                        100);
-    ASSERT_EQ(stocks->at(2).meta.minPriceIncrement.units,    1);
-    ASSERT_EQ(stocks->at(2).meta.minPriceIncrement.nano,     500000000);
-    ASSERT_EQ(stocks->at(2).operational.lastStoredTimestamp, 400);
-    ASSERT_EQ(stocks->at(2).data.size(),                     3);
-    ASSERT_EQ(stocks->at(2).data.at(0).timestamp,            100);
-    ASSERT_NEAR(stocks->at(2).data.at(0).price,              0.1f, 0.001f);
-    ASSERT_EQ(stocks->at(2).data.at(1).timestamp,            300);
-    ASSERT_NEAR(stocks->at(2).data.at(1).price,              0.3f, 0.001f);
-    ASSERT_EQ(stocks->at(2).data.at(2).timestamp,            400);
-    ASSERT_NEAR(stocks->at(2).data.at(2).price,              0.4f, 0.001f);
+    ASSERT_EQ(stocks.at(2)->meta.uid,                        "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.ticker,                     "HNYA");
+    ASSERT_EQ(stocks.at(2)->meta.name,                       "aaaa");
+    ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,        true);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                        100);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.units,    1);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.nano,     500000000);
+    ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp, 400);
+    ASSERT_EQ(stocks.at(2)->data.size(),                     3);
+    ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,            100);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,              0.1f, 0.001f);
+    ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,            300);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,              0.3f, 0.001f);
+    ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,            400);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,              0.4f, 0.001f);
     // clang-format on
 }
 

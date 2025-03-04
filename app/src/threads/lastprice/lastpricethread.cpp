@@ -59,12 +59,12 @@ QStringList LastPriceThread::getStockUIDs()
 {
     QStringList res;
 
-    QMutexLocker  lock(mStocksStorage->getMutex());
-    QList<Stock>* stocks = mStocksStorage->getStocks();
+    QMutexLocker   lock(mStocksStorage->getMutex());
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
 
-    for (int i = 0; i < stocks->size(); ++i)
+    for (int i = 0; i < stocks.size(); ++i)
     {
-        res.append(stocks->at(i).meta.uid);
+        res.append(stocks.at(i)->meta.uid);
     }
 
     return res;

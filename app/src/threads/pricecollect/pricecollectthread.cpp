@@ -74,7 +74,7 @@ struct DownloadLogosInfo
 };
 
 void
-downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* stocks, int start, int end, void* additionalArgs)
+downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& stocks, int start, int end, void* additionalArgs)
 {
     DownloadLogosInfo* downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
     IFileFactory*      fileFactory       = downloadLogosInfo->fileFactory;
@@ -82,7 +82,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>* st
 
     QString appDir = qApp->applicationDirPath();
 
-    const tinkoff::Share** stockArray = stocks->data();
+    const tinkoff::Share** stockArray = stocks.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -142,7 +142,7 @@ void PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
     downloadLogosInfo.fileFactory = mFileFactory;
     downloadLogosInfo.httpClient  = mHttpClient;
 
-    processInParallel(&qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
+    processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
     QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->mergeStocksMeta(stocksMeta);
@@ -353,7 +353,7 @@ struct GetCandlesInfo
     qint64            currentTimestamp;
 };
 
-void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
+void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo*   getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     IConfig*          config           = getCandlesInfo->config;
@@ -368,11 +368,11 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock>* stocks, int star
 
     qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * 2678400000LL; // 31 * 24 * 60 * 60 * 1000 // 31 days
 
-    Stock* stockArray = stocks->data();
+    Stock** stockArray = stocks.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = &stockArray[i];
+        Stock*       stock = stockArray[i];
         QMutexLocker lock(stock->mutex);
 
         qint64 startTimestamp = stock->operational.lastStoredTimestamp + 60000;
@@ -420,6 +420,6 @@ void PriceCollectThread::obtainStocksData()
     getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
 
-    QList<Stock>* stocks = mStocksStorage->getStocks();
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
 }

@@ -27,7 +27,7 @@ void CleanupThread::run()
 
     QMutexLocker lock(mStocksStorage->getMutex());
 
-    QList<Stock>* stocks = mStocksStorage->getStocks();
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
     mStocksStorage->deleteObsoleteData(obsoleteTimestamp, stocks);
 
     qDebug() << "Finish CleanupThread";

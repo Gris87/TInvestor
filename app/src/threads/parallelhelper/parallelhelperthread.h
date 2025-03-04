@@ -10,12 +10,12 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    typedef void (*ActionType)(QThread* parentThread, QList<T>* array, int start, int end, void* additionalArgs);
+    typedef void (*ActionType)(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
         ActionType action,
         QThread*   parentThread,
-        QList<T>*  array,
+        QList<T>&  array,
         int        start,
         int        end,
         void*      additionalArgs,
@@ -46,7 +46,7 @@ public:
 private:
     ActionType mAction;
     QThread*   mParentThread;
-    QList<T>*  mArray;
+    QList<T>&  mArray;
     int        mStart;
     int        mEnd;
     void*      mAdditionalArgs;
@@ -56,8 +56,8 @@ private:
 
 template<typename T>
 void processInParallel(
-    QList<T>* array,
-    void      action(QThread* parentThread, QList<T>* array, int start, int end, void* additionalArgs),
+    QList<T>& array,
+    void      action(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs),
     void*     additionalArgs = nullptr
 )
 {
@@ -65,8 +65,8 @@ void processInParallel(
 
     int cpuCount = QThread::idealThreadCount();
 
-    int partSize = array->size() / cpuCount;
-    int partTail = array->size() % cpuCount;
+    int partSize = array.size() / cpuCount;
+    int partTail = array.size() % cpuCount;
 
     int start = 0;
     int end   = 0;

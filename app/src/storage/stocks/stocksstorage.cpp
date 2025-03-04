@@ -8,7 +8,7 @@ StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase) :
     IStocksStorage(),
     mStocksDatabase(stocksDatabase),
     mMutex(new QMutex()),
-    mStocks(new QList<Stock>())
+    mStocks()
 {
     qDebug() << "Create StocksStorage";
 }
@@ -18,12 +18,16 @@ StocksStorage::~StocksStorage()
     qDebug() << "Destroy StocksStorage";
 
     delete mMutex;
-    delete mStocks;
+
+    for (int i = 0; i < mStocks.size(); ++i)
+    {
+        delete mStocks.at(i);
+    }
 }
 
 void StocksStorage::readFromDatabase()
 {
-    *mStocks = mStocksDatabase->readStocksMeta();
+    mStocks = mStocksDatabase->readStocksMeta();
     mStocksDatabase->readStocksData(mStocks);
 }
 
@@ -32,7 +36,7 @@ QMutex* StocksStorage::getMutex()
     return mMutex;
 }
 
-QList<Stock>* StocksStorage::getStocks()
+QList<Stock*>& StocksStorage::getStocks()
 {
     return mStocks;
 }
@@ -44,9 +48,9 @@ void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     QMap<QString, StockMeta*> existingMetas; // uid => meta
     QList<const StockMeta*>   newMetas;
 
-    for (int i = 0; i < mStocks->size(); ++i)
+    for (int i = 0; i < mStocks.size(); ++i)
     {
-        StockMeta* existingMeta          = &(*mStocks)[i].meta;
+        StockMeta* existingMeta          = &mStocks[i]->meta;
         existingMetas[existingMeta->uid] = existingMeta;
     }
 
@@ -75,11 +79,11 @@ void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 
     for (int i = 0; i < newMetas.size(); ++i)
     {
-        Stock stock;
+        Stock* stock = new Stock();
 
-        stock.meta = *newMetas.at(i);
+        stock->meta = *newMetas.at(i);
 
-        mStocks->append(stock);
+        mStocks.append(stock);
     }
 
     if (changed)
@@ -93,7 +97,7 @@ void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, in
     mStocksDatabase->appendStockData(stock, dataArray, dataArraySize);
 }
 
-void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks)
+void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)
 {
     mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
 }

@@ -58,9 +58,9 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, QObject* parent) :
 
     std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
-    mUsersService       = tinkoff::UsersService::NewStub(channel);
-    mInstrumentsService = tinkoff::InstrumentsService::NewStub(channel);
-    mMarketDataService  = tinkoff::MarketDataService::NewStub(channel);
+    mUsersService            = tinkoff::UsersService::NewStub(channel);
+    mInstrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
+    mMarketDataService       = tinkoff::MarketDataService::NewStub(channel);
     mMarketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
 }
 

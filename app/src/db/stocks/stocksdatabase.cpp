@@ -31,11 +31,11 @@ StocksDatabase::~StocksDatabase()
     qDebug() << "Destroy StocksDatabase";
 }
 
-QList<Stock> StocksDatabase::readStocksMeta()
+QList<Stock*> StocksDatabase::readStocksMeta()
 {
     qDebug() << "Reading stocks from database";
 
-    QList<Stock> res;
+    QList<Stock*> res;
 
     std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/stocks/stocks.json");
 
@@ -51,13 +51,16 @@ QList<Stock> StocksDatabase::readStocksMeta()
         {
             QJsonArray jsonStocks = jsonDoc.array();
 
+            res.reserve(jsonStocks.size());
+            res.resizeForOverwrite(jsonStocks.size());
+
             for (int i = 0; i < jsonStocks.size(); ++i)
             {
-                Stock stock;
-                stock.meta.fromJsonObject(jsonStocks.at(i).toObject());
-                res.append(stock);
+                Stock* stock = new Stock();
+                stock->meta.fromJsonObject(jsonStocks.at(i).toObject());
+                res[i] = stock;
 
-                qDebug() << "Read stock" << stock.meta.ticker << ":" << stock.meta.name;
+                qDebug() << "Read stock" << stock->meta.ticker << ":" << stock->meta.name;
             }
         }
     }
@@ -70,47 +73,47 @@ struct ReadStocksDataInfo
     IFileFactory* fileFactory;
 };
 
-void readStocksDataForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
+void readStocksDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
     IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;
 
     QString appDir = qApp->applicationDirPath();
 
-    Stock* stockArray = stocks->data();
+    Stock** stockArray = stocks.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock& stock = stockArray[i];
+        Stock* stock = stockArray[i];
 
         std::shared_ptr<IFile> stockDataFile =
-            fileFactory->newInstance(QString("%1/data/stocks/%2.dat").arg(appDir, stock.meta.uid));
+            fileFactory->newInstance(QString("%1/data/stocks/%2.dat").arg(appDir, stock->meta.uid));
 
         if (stockDataFile->open(QIODevice::ReadOnly))
         {
             qint64    fileSize = stockDataFile->size();
             qsizetype dataSize = fileSize / sizeof(StockData);
 
-            stock.data.reserve(dataSize + amountOfDataPerDay);
-            stock.data.resizeForOverwrite(dataSize);
+            stock->data.reserve(dataSize + amountOfDataPerDay);
+            stock->data.resizeForOverwrite(dataSize);
 
-            stockDataFile->read(reinterpret_cast<char*>(stock.data.data()), fileSize);
+            stockDataFile->read(reinterpret_cast<char*>(stock->data.data()), fileSize);
             stockDataFile->close();
 
-            qDebug() << "Read stock data" << stock.meta.ticker;
+            qDebug() << "Read stock data" << stock->meta.ticker;
         }
         else
         {
-            stock.data.clear();
+            stock->data.clear();
 
-            qWarning() << "Failed to read stock data" << stock.meta.ticker;
+            qWarning() << "Failed to read stock data" << stock->meta.ticker;
         }
 
-        stock.operational.lastStoredTimestamp = !stock.data.isEmpty() ? stock.data.last().timestamp : 0;
+        stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.last().timestamp : 0;
     }
 }
 
-void StocksDatabase::readStocksData(QList<Stock>* stocks)
+void StocksDatabase::readStocksData(QList<Stock*>& stocks)
 {
     qDebug() << "Reading stocks data from database";
 
@@ -120,15 +123,15 @@ void StocksDatabase::readStocksData(QList<Stock>* stocks)
     processInParallel(stocks, readStocksDataForParallel, &readStocksDataInfo);
 }
 
-void StocksDatabase::writeStocksMeta(QList<Stock>* stocks)
+void StocksDatabase::writeStocksMeta(const QList<Stock*>& stocks)
 {
     qDebug() << "Writing stocks to database";
 
     QJsonArray jsonStocks;
 
-    for (int i = 0; i < stocks->size(); ++i)
+    for (int i = 0; i < stocks.size(); ++i)
     {
-        jsonStocks.append(stocks->at(i).meta.toJsonObject());
+        jsonStocks.append(stocks.at(i)->meta.toJsonObject());
     }
 
     QJsonDocument jsonDoc(jsonStocks);
@@ -179,36 +182,36 @@ struct DeleteObsoleteDataInfo
     qint64        obsoleteTimestamp;
 };
 
-void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock>* stocks, int start, int end, void* additionalArgs)
+void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
     IFileFactory*           fileFactory            = deleteObsoleteDataInfo->fileFactory;
     qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
-    Stock* stockArray = stocks->data();
+    Stock** stockArray = stocks.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock&       stock = stockArray[i];
-        QMutexLocker lock(stock.mutex);
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
 
         qint64 index = 0;
 
-        while (index < stock.data.size() && stock.data.at(index).timestamp < obsoleteTimestamp)
+        while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
         {
             ++index;
         }
 
         if (index > 0)
         {
-            stock.data.remove(0, index);
+            stock->data.remove(0, index);
 
-            writeStockData(fileFactory, stock);
+            writeStockData(fileFactory, *stock);
         }
     }
 }
 
-void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks)
+void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)
 {
     qDebug() << "Deleting obsolete stocks data";
 

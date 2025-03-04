@@ -52,10 +52,10 @@ public:
     virtual std::shared_ptr<MarketDataStream> createMarketDataStream()                                                      = 0;
     virtual void subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids)          = 0;
     virtual void unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)                                 = 0;
-    virtual std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
-    )                                                                                                                       = 0;
-    virtual void closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                            = 0;
-    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                                = 0;
+    virtual std::shared_ptr<tinkoff::MarketDataResponse>
+                 readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)       = 0;
+    virtual void closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
+    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
 
 signals:
     void authFailed();

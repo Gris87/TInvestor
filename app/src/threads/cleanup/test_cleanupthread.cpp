@@ -10,6 +10,7 @@
 using ::testing::Gt;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -45,13 +46,13 @@ TEST_F(Test_CleanupThread, Test_constructor_and_destructor)
 
 TEST_F(Test_CleanupThread, Test_run)
 {
-    QMutex       mutex;
-    QList<Stock> stocks;
+    QMutex        mutex;
+    QList<Stock*> stocks;
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(Return(&stocks));
-    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(0), &stocks));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(0), stocks));
 
     thread->run();
 }

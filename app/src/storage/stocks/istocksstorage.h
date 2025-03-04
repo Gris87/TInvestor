@@ -19,10 +19,10 @@ public:
     IStocksStorage(const IStocksStorage& another)            = delete;
     IStocksStorage& operator=(const IStocksStorage& another) = delete;
 
-    virtual void          readFromDatabase()                                                           = 0;
-    virtual QMutex*       getMutex()                                                                   = 0;
-    virtual QList<Stock>* getStocks()                                                                  = 0;
-    virtual void          mergeStocksMeta(const QList<StockMeta>& stocksMeta)                          = 0;
-    virtual void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
-    virtual void          deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock>* stocks)           = 0;
+    virtual void           readFromDatabase()                                                           = 0;
+    virtual QMutex*        getMutex()                                                                   = 0;
+    virtual QList<Stock*>& getStocks()                                                                  = 0;
+    virtual void           mergeStocksMeta(const QList<StockMeta>& stocksMeta)                          = 0;
+    virtual void           appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
+    virtual void           deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)          = 0;
 };
