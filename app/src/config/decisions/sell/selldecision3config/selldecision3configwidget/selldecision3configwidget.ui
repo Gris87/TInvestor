@@ -97,7 +97,7 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>without commission</string>
+        <string>with commission</string>
        </property>
       </widget>
      </item>

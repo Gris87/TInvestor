@@ -26,11 +26,11 @@ public:
     void terminateThread() override;
 
 private:
-    QStringList getStockUIDs();
+    QStringList               getStockUIDs();
     QMap<std::string, Stock*> buildStocksMap();
 
-    IStocksStorage* mStocksStorage;
-    IGrpcClient*    mGrpcClient;
+    IStocksStorage*                   mStocksStorage;
+    IGrpcClient*                      mGrpcClient;
     std::shared_ptr<MarketDataStream> mMarketDataStream;
     bool                              mNeedToRebuildStocksMap;
 };

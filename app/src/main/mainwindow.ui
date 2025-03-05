@@ -85,7 +85,7 @@
             <string>Payback</string>
            </property>
            <property name="toolTip">
-            <string>Opportunity to get money back (including commission) based on the last 24 hours</string>
+            <string>Opportunity to get money back (with commission) based on the last 24 hours</string>
            </property>
            <property name="icon">
             <iconset resource="../../Resources.qrc">

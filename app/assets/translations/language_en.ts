@@ -150,7 +150,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="88"/>
-        <source>Opportunity to get money back (including commission) based on the last 24 hours</source>
+        <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation></translation>
     </message>
     <message>
@@ -237,7 +237,7 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui" line="60"/>
-        <source>without commission</source>
+        <source>with commission</source>
         <translation></translation>
     </message>
 </context>
@@ -250,7 +250,7 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="60"/>
-        <source>(without commission) with</source>
+        <source>(with commission) with</source>
         <translation></translation>
     </message>
     <message>
@@ -283,7 +283,7 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="100"/>
-        <source>without commission</source>
+        <source>with commission</source>
         <translation></translation>
     </message>
 </context>
@@ -321,77 +321,62 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
-        <source>Limit the number of purchases per day</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="217"/>
-        <source>Limit the number of purchases per stock</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="260"/>
-        <source>Commission per operation</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="300"/>
         <source>Limit stock purchase</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="310"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="184"/>
         <source> rubles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="346"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="220"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="353"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="227"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="213"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="235"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="272"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="163"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="185"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="419"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="455"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="293"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="329"/>
         <source>Use the same config for Simulator and Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="434"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="212"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="236"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="308"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="162"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="186"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="491"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="365"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="514"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="388"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="534"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="408"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="207"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="230"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="157"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="180"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

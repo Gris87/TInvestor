@@ -131,11 +131,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
-    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
-    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
-    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
@@ -152,11 +147,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
     EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
     EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(20));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(5));
-    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.2f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
@@ -166,21 +156,16 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
-    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         2);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));
-    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     20);
-    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   5);
-    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.2f, 0.01f);
-    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     true);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       20000);
-    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           36);
-    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  true);
-    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  false);
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),               true);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),        2);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),           true);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),              QTime(10, 30));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                QTime(19, 15));
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),    true);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),      20000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),          36);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(), true);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(), false);
     // clang-format on
 
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
@@ -193,11 +178,6 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
     EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(20));
     EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(100));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(20));
-    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.1f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(50000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
@@ -207,21 +187,16 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                false);
-    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         5);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            false);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(11, 15));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(20, 40));
-    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   false);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     100);
-    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), false);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   20);
-    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.1f, 0.01f);
-    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     false);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       50000);
-    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           12);
-    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  false);
-    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  true);
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),               false);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),        5);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),           false);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),              QTime(11, 15));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                QTime(20, 40));
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),    false);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),      50000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),          12);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(), false);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(), true);
     // clang-format on
 }
 
@@ -324,93 +299,6 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
     dialog->ui->scheduleEndTimeEdit->setTime(QTime(10, 0));
 
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(), QTime(10, 0));
-}
-
-TEST_F(Test_SettingsDialog, Test_on_limitPurchasesPerDayCheckBox_checkStateChanged)
-{
-    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
-    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(false);
-    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setLimitPurchasesPerDay(true));
-    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->isEnabled(), true);
-
-    EXPECT_CALL(*configMock, setLimitPurchasesPerDay(false));
-    dialog->ui->limitPurchasesPerDayCheckBox->setChecked(false);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->isEnabled(), false);
-}
-
-TEST_F(Test_SettingsDialog, Test_on_amountOfPurchasesPerDaySpinBox_valueChanged)
-{
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(50);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(20);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(false);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(30));
-    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(30);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(40));
-    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(40);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(10));
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(10));
-    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(10);
-
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(), 10);
-}
-
-TEST_F(Test_SettingsDialog, Test_on_limitPurchasesPerStockCheckBox_checkStateChanged)
-{
-    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
-    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(false);
-    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setLimitPurchasesPerStock(true));
-    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->isEnabled(), true);
-
-    EXPECT_CALL(*configMock, setLimitPurchasesPerStock(false));
-    dialog->ui->limitPurchasesPerStockCheckBox->setChecked(false);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->isEnabled(), false);
-}
-
-TEST_F(Test_SettingsDialog, Test_on_amountOfPurchasesPerStockSpinBox_valueChanged)
-{
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->setValue(50);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(20);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(false);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(30));
-    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(30);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(40));
-    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(40);
-
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerDay(60));
-    EXPECT_CALL(*configMock, setAmountOfPurchasesPerStock(60));
-    dialog->ui->amountOfPurchasesPerStockSpinBox->setValue(60);
-
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(), 60);
-}
-
-TEST_F(Test_SettingsDialog, Test_on_commissionDoubleSpinBox_valueChanged)
-{
-    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
-    dialog->ui->commissionDoubleSpinBox->setValue(1);
-    dialog->ui->commissionDoubleSpinBox->blockSignals(false);
-
-    EXPECT_CALL(*configMock, setCommission(0.2f));
-    dialog->ui->commissionDoubleSpinBox->setValue(0.2f);
-
-    EXPECT_CALL(*configMock, setCommission(0.3f));
-    dialog->ui->commissionDoubleSpinBox->setValue(0.3f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)
@@ -581,11 +469,6 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
-    dialog->ui->limitPurchasesPerDayCheckBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerDaySpinBox->blockSignals(true);
-    dialog->ui->limitPurchasesPerStockCheckBox->blockSignals(true);
-    dialog->ui->amountOfPurchasesPerStockSpinBox->blockSignals(true);
-    dialog->ui->commissionDoubleSpinBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
@@ -603,11 +486,6 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
     EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
     EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerDay()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerDay()).WillOnce(Return(20));
-    EXPECT_CALL(*configMock, isLimitPurchasesPerStock()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfPurchasesPerStock()).WillOnce(Return(5));
-    EXPECT_CALL(*configMock, getCommission()).WillOnce(Return(0.2f));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
@@ -617,20 +495,15 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->defaultButton->click();
 
     // clang-format off
-    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                true);
-    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),         2);
-    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),            true);
-    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),               QTime(10, 30));
-    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                 QTime(19, 15));
-    ASSERT_EQ(dialog->ui->limitPurchasesPerDayCheckBox->isChecked(),   true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerDaySpinBox->value(),     20);
-    ASSERT_EQ(dialog->ui->limitPurchasesPerStockCheckBox->isChecked(), true);
-    ASSERT_EQ(dialog->ui->amountOfPurchasesPerStockSpinBox->value(),   5);
-    ASSERT_NEAR(dialog->ui->commissionDoubleSpinBox->value(),          0.2f, 0.01f);
-    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),     true);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),       20000);
-    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),           36);
-    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(),  true);
-    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(),  false);
+    ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),               true);
+    ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),        2);
+    ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),           true);
+    ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),              QTime(10, 30));
+    ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                QTime(19, 15));
+    ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),    true);
+    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),      20000);
+    ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),          36);
+    ASSERT_EQ(dialog->ui->simulatorConfigCommonCheckBox->isChecked(), true);
+    ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(), false);
     // clang-format on
 }

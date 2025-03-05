@@ -50,21 +50,6 @@ public:
     MOCK_METHOD(void, setScheduleEndMinute, (int value), (override));
     MOCK_METHOD(int, getScheduleEndMinute, (), (override));
 
-    MOCK_METHOD(void, setLimitPurchasesPerDay, (bool value), (override));
-    MOCK_METHOD(bool, isLimitPurchasesPerDay, (), (override));
-
-    MOCK_METHOD(void, setAmountOfPurchasesPerDay, (int value), (override));
-    MOCK_METHOD(int, getAmountOfPurchasesPerDay, (), (override));
-
-    MOCK_METHOD(void, setLimitPurchasesPerStock, (bool value), (override));
-    MOCK_METHOD(bool, isLimitPurchasesPerStock, (), (override));
-
-    MOCK_METHOD(void, setAmountOfPurchasesPerStock, (int value), (override));
-    MOCK_METHOD(int, getAmountOfPurchasesPerStock, (), (override));
-
-    MOCK_METHOD(void, setCommission, (float value), (override));
-    MOCK_METHOD(float, getCommission, (), (override));
-
     MOCK_METHOD(void, setLimitStockPurchase, (bool value), (override));
     MOCK_METHOD(bool, isLimitStockPurchase, (), (override));
 

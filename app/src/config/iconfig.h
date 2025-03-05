@@ -48,21 +48,6 @@ public:
     virtual void setScheduleEndMinute(int value) = 0;
     virtual int  getScheduleEndMinute()          = 0;
 
-    virtual void setLimitPurchasesPerDay(bool value) = 0;
-    virtual bool isLimitPurchasesPerDay()            = 0;
-
-    virtual void setAmountOfPurchasesPerDay(int value) = 0;
-    virtual int  getAmountOfPurchasesPerDay()          = 0;
-
-    virtual void setLimitPurchasesPerStock(bool value) = 0;
-    virtual bool isLimitPurchasesPerStock()            = 0;
-
-    virtual void setAmountOfPurchasesPerStock(int value) = 0;
-    virtual int  getAmountOfPurchasesPerStock()          = 0;
-
-    virtual void  setCommission(float value) = 0;
-    virtual float getCommission()            = 0;
-
     virtual void setLimitStockPurchase(bool value) = 0;
     virtual bool isLimitStockPurchase()            = 0;
 

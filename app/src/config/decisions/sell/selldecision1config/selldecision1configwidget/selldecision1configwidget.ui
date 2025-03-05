@@ -57,7 +57,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>without commission</string>
+        <string>with commission</string>
        </property>
       </widget>
      </item>

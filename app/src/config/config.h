@@ -47,21 +47,6 @@ public:
     void setScheduleEndMinute(int value) override;
     int  getScheduleEndMinute() override;
 
-    void setLimitPurchasesPerDay(bool value) override;
-    bool isLimitPurchasesPerDay() override;
-
-    void setAmountOfPurchasesPerDay(int value) override;
-    int  getAmountOfPurchasesPerDay() override;
-
-    void setLimitPurchasesPerStock(bool value) override;
-    bool isLimitPurchasesPerStock() override;
-
-    void setAmountOfPurchasesPerStock(int value) override;
-    int  getAmountOfPurchasesPerStock() override;
-
-    void  setCommission(float value) override;
-    float getCommission() override;
-
     void setLimitStockPurchase(bool value) override;
     bool isLimitStockPurchase() override;
 
@@ -83,21 +68,16 @@ private:
     IDecisionMakerConfig* mSimulatorConfig;
     IDecisionMakerConfig* mAutoPilotConfig;
 
-    bool  mAutorun;
-    int   mMakeDecisionTimeout;
-    bool  mUseSchedule;
-    int   mScheduleStartHour;
-    int   mScheduleStartMinute;
-    int   mScheduleEndHour;
-    int   mScheduleEndMinute;
-    bool  mLimitPurchasesPerDay;
-    int   mAmountOfPurchasesPerDay;
-    bool  mLimitPurchasesPerStock;
-    int   mAmountOfPurchasesPerStock;
-    float mCommission;
-    bool  mLimitStockPurchase;
-    int   mAmountOfStockPurchase;
-    int   mStorageMonthLimit;
-    bool  mSimulatorConfigCommon;
-    bool  mAutoPilotConfigCommon;
+    bool mAutorun;
+    int  mMakeDecisionTimeout;
+    bool mUseSchedule;
+    int  mScheduleStartHour;
+    int  mScheduleStartMinute;
+    int  mScheduleEndHour;
+    int  mScheduleEndMinute;
+    bool mLimitStockPurchase;
+    int  mAmountOfStockPurchase;
+    int  mStorageMonthLimit;
+    bool mSimulatorConfigCommon;
+    bool mAutoPilotConfigCommon;
 };

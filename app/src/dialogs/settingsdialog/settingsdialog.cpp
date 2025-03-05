@@ -63,12 +63,10 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::updateUiFromConfig()
 {
-    int scheduleStartHour         = mConfig->getScheduleStartHour();
-    int scheduleStartMinute       = mConfig->getScheduleStartMinute();
-    int scheduleEndHour           = mConfig->getScheduleEndHour();
-    int scheduleEndMinute         = mConfig->getScheduleEndMinute();
-    int amountOfPurchasesPerDay   = mConfig->getAmountOfPurchasesPerDay();
-    int amountOfPurchasesPerStock = mConfig->getAmountOfPurchasesPerStock();
+    int scheduleStartHour   = mConfig->getScheduleStartHour();
+    int scheduleStartMinute = mConfig->getScheduleStartMinute();
+    int scheduleEndHour     = mConfig->getScheduleEndHour();
+    int scheduleEndMinute   = mConfig->getScheduleEndMinute();
 
     mSimulatorConfigWidget->updateUiFromConfig();
     mAutoPilotConfigWidget->updateUiFromConfig();
@@ -78,11 +76,6 @@ void SettingsDialog::updateUiFromConfig()
     ui->useScheduleCheckBox->setChecked(mConfig->isUseSchedule());
     ui->scheduleStartTimeEdit->setTime(QTime(scheduleStartHour, scheduleStartMinute));
     ui->scheduleEndTimeEdit->setTime(QTime(scheduleEndHour, scheduleEndMinute));
-    ui->limitPurchasesPerDayCheckBox->setChecked(mConfig->isLimitPurchasesPerDay());
-    ui->amountOfPurchasesPerDaySpinBox->setValue(amountOfPurchasesPerDay);
-    ui->limitPurchasesPerStockCheckBox->setChecked(mConfig->isLimitPurchasesPerStock());
-    ui->amountOfPurchasesPerStockSpinBox->setValue(amountOfPurchasesPerStock);
-    ui->commissionDoubleSpinBox->setValue(mConfig->getCommission());
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
     ui->amountOfStockPurchaseSpinBox->setValue(mConfig->getAmountOfStockPurchase());
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
@@ -132,49 +125,6 @@ void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime& time)
 
     mConfig->setScheduleEndHour(time.hour());
     mConfig->setScheduleEndMinute(time.minute());
-}
-
-void SettingsDialog::on_limitPurchasesPerDayCheckBox_checkStateChanged(const Qt::CheckState& value)
-{
-    bool checked = value == Qt::Checked;
-
-    mConfig->setLimitPurchasesPerDay(checked);
-
-    ui->amountOfPurchasesPerDaySpinBox->setEnabled(checked);
-}
-
-void SettingsDialog::on_amountOfPurchasesPerDaySpinBox_valueChanged(int value)
-{
-    if (value < ui->amountOfPurchasesPerStockSpinBox->value())
-    {
-        ui->amountOfPurchasesPerStockSpinBox->setValue(value);
-    }
-
-    mConfig->setAmountOfPurchasesPerDay(value);
-}
-
-void SettingsDialog::on_limitPurchasesPerStockCheckBox_checkStateChanged(const Qt::CheckState& value)
-{
-    bool checked = value == Qt::Checked;
-
-    mConfig->setLimitPurchasesPerStock(checked);
-
-    ui->amountOfPurchasesPerStockSpinBox->setEnabled(checked);
-}
-
-void SettingsDialog::on_amountOfPurchasesPerStockSpinBox_valueChanged(int value)
-{
-    if (value > ui->amountOfPurchasesPerDaySpinBox->value())
-    {
-        ui->amountOfPurchasesPerDaySpinBox->setValue(value);
-    }
-
-    mConfig->setAmountOfPurchasesPerStock(value);
-}
-
-void SettingsDialog::on_commissionDoubleSpinBox_valueChanged(double value)
-{
-    mConfig->setCommission(value);
 }
 
 void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
