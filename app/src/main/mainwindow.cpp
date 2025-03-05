@@ -6,6 +6,15 @@
 
 
 
+#define STOCK_COLUMN       0
+#define PRICE_COLUMN       1
+#define DAY_CHANGE_COLUMN  2
+#define DATE_CHANGE_COLUMN 3
+#define PAYBACK_COLUMN     4
+#define LINK_COLUMN        5
+
+
+
 MainWindow::MainWindow(
     IConfig*                           config,
     IConfig*                           configForSettingsDialog,
@@ -322,9 +331,15 @@ void MainWindow::saveWindowState()
     qDebug() << "Saving window state";
 
     // clang-format off
-    mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
-    mSettingsEditor->setValue("MainWindow/windowState", saveState());
-    mSettingsEditor->setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
+    mSettingsEditor->setValue("MainWindow/geometry",                     saveGeometry());
+    mSettingsEditor->setValue("MainWindow/windowState",                  saveState());
+    mSettingsEditor->setValue("MainWindow/pageIndex",                    ui->stackedWidget->currentIndex());
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Stock",      ui->stocksTableWidget->columnWidth(STOCK_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Price",      ui->stocksTableWidget->columnWidth(PRICE_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_DayChange",  ui->stocksTableWidget->columnWidth(DAY_CHANGE_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_DateChange", ui->stocksTableWidget->columnWidth(DATE_CHANGE_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Payback",    ui->stocksTableWidget->columnWidth(PAYBACK_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Link",       ui->stocksTableWidget->columnWidth(LINK_COLUMN));
     // clang-format on
 }
 
@@ -335,6 +350,15 @@ void MainWindow::loadWindowState()
     restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
     restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
     ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
+
+    // clang-format off
+    ui->stocksTableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Stock",      46).toInt());
+    ui->stocksTableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Price",      38).toInt());
+    ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  121).toInt());
+    ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 121).toInt());
+    ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    104).toInt());
+    ui->stocksTableWidget->setColumnWidth(LINK_COLUMN,        mSettingsEditor->value("MainWindow/stocksTableWidget_Link",       51).toInt());
+    // clang-format on
 
     updateStackWidgetToolbar();
 }

@@ -24,12 +24,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="50"/>
         <source>Token is invalid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="48"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="50"/>
         <source>You should provide correct token</source>
         <translation></translation>
     </message>
@@ -124,48 +124,83 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="91"/>
+        <location filename="../../src/main/mainwindow.ui" line="65"/>
+        <source>Stock</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="70"/>
+        <source>Price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="75"/>
+        <source>Change from day start</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="80"/>
+        <source>Change from some date</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="85"/>
+        <source>Payback</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="88"/>
+        <source>Opportunity to get money back (including commission) based on the last 24 hours</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="97"/>
+        <source>Link</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="134"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="94"/>
+        <location filename="../../src/main/mainwindow.ui" line="137"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="115"/>
+        <location filename="../../src/main/mainwindow.ui" line="158"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="118"/>
+        <location filename="../../src/main/mainwindow.ui" line="161"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="136"/>
+        <location filename="../../src/main/mainwindow.ui" line="179"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="139"/>
+        <location filename="../../src/main/mainwindow.ui" line="182"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="157"/>
+        <location filename="../../src/main/mainwindow.ui" line="200"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="160"/>
+        <location filename="../../src/main/mainwindow.ui" line="203"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="175"/>
-        <location filename="../../src/main/mainwindow.ui" line="178"/>
+        <location filename="../../src/main/mainwindow.ui" line="218"/>
+        <location filename="../../src/main/mainwindow.ui" line="221"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
@@ -173,22 +208,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="73"/>
+        <location filename="../../src/main.cpp" line="79"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="73"/>
+        <location filename="../../src/main.cpp" line="79"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="85"/>
+        <location filename="../../src/main.cpp" line="91"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="85"/>
+        <location filename="../../src/main.cpp" line="91"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
