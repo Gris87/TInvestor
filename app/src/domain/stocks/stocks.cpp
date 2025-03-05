@@ -63,12 +63,14 @@ QJsonObject StockMeta::toJsonObject() const
 }
 
 StockOperational::StockOperational() :
-    lastStoredTimestamp()
+    lastStoredTimestamp(),
+    detailedData()
 {
 }
 
 StockOperational::StockOperational(const StockOperational& another) :
-    lastStoredTimestamp(another.lastStoredTimestamp)
+    lastStoredTimestamp(another.lastStoredTimestamp),
+    detailedData(another.detailedData)
 {
 }
 
@@ -79,6 +81,7 @@ StockOperational::~StockOperational()
 StockOperational& StockOperational::operator=(const StockOperational& another)
 {
     lastStoredTimestamp = another.lastStoredTimestamp;
+    detailedData        = another.detailedData;
 
     return *this;
 }

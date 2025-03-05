@@ -21,4 +21,6 @@ public:
     LastPriceThreadMock& operator=(const LastPriceThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
+    MOCK_METHOD(void, stocksChanged, (), (override));
+    MOCK_METHOD(void, terminateThread, (), (override));
 };

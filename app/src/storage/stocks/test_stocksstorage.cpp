@@ -6,6 +6,7 @@
 
 
 
+using ::testing::_;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -45,36 +46,36 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 
     QList<Stock*> stocksDB;
 
-    Stock stock1;
-    Stock stock2;
-    Stock stock3;
+    Stock* stock1 = new Stock(); // StocksStorage will take ownership
+    Stock* stock2 = new Stock(); // StocksStorage will take ownership
+    Stock* stock3 = new Stock(); // StocksStorage will take ownership
 
     StockData stockData1;
     StockData stockData2;
     StockData stockData3;
     StockData stockData4;
 
-    stock1.meta.uid                     = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
-    stock1.meta.ticker                  = "TEST";
-    stock1.meta.name                    = "abc";
-    stock1.meta.forQualInvestorFlag     = true;
-    stock1.meta.lot                     = 1;
-    stock1.meta.minPriceIncrement.units = 0;
-    stock1.meta.minPriceIncrement.nano  = 100000000;
-    stock2.meta.uid                     = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
-    stock2.meta.ticker                  = "MAGA";
-    stock2.meta.name                    = "def";
-    stock2.meta.forQualInvestorFlag     = false;
-    stock2.meta.lot                     = 10;
-    stock2.meta.minPriceIncrement.units = 0;
-    stock2.meta.minPriceIncrement.nano  = 500000000;
-    stock3.meta.uid                     = "cccccccc-cccc-cccc-cccc-cccccccccccc";
-    stock3.meta.ticker                  = "HNYA";
-    stock3.meta.name                    = "aaaa";
-    stock3.meta.forQualInvestorFlag     = true;
-    stock3.meta.lot                     = 100;
-    stock3.meta.minPriceIncrement.units = 1;
-    stock3.meta.minPriceIncrement.nano  = 500000000;
+    stock1->meta.uid                     = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+    stock1->meta.ticker                  = "TEST";
+    stock1->meta.name                    = "abc";
+    stock1->meta.forQualInvestorFlag     = true;
+    stock1->meta.lot                     = 1;
+    stock1->meta.minPriceIncrement.units = 0;
+    stock1->meta.minPriceIncrement.nano  = 100000000;
+    stock2->meta.uid                     = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
+    stock2->meta.ticker                  = "MAGA";
+    stock2->meta.name                    = "def";
+    stock2->meta.forQualInvestorFlag     = false;
+    stock2->meta.lot                     = 10;
+    stock2->meta.minPriceIncrement.units = 0;
+    stock2->meta.minPriceIncrement.nano  = 500000000;
+    stock3->meta.uid                     = "cccccccc-cccc-cccc-cccc-cccccccccccc";
+    stock3->meta.ticker                  = "HNYA";
+    stock3->meta.name                    = "aaaa";
+    stock3->meta.forQualInvestorFlag     = true;
+    stock3->meta.lot                     = 100;
+    stock3->meta.minPriceIncrement.units = 1;
+    stock3->meta.minPriceIncrement.nano  = 500000000;
 
     stockData1.timestamp = 100;
     stockData2.timestamp = 200;
@@ -86,18 +87,18 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     stockData3.price = 0.3f;
     stockData4.price = 0.4f;
 
-    stock1.data << stockData1 << stockData2;
-    stock2.data << stockData2 << stockData3;
-    stock3.data << stockData1 << stockData3 << stockData4;
+    stock1->data << stockData1 << stockData2;
+    stock2->data << stockData2 << stockData3;
+    stock3->data << stockData1 << stockData3 << stockData4;
 
-    stock1.operational.lastStoredTimestamp = stock1.data.last().timestamp;
-    stock2.operational.lastStoredTimestamp = stock2.data.last().timestamp;
-    stock3.operational.lastStoredTimestamp = stock3.data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
 
-    stocksDB << &stock1 << &stock2 << &stock3;
+    stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(stocks));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();

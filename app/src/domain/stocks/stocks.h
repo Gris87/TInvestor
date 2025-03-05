@@ -46,6 +46,7 @@ struct StockOperational
     StockOperational& operator=(const StockOperational& another);
 
     qint64 lastStoredTimestamp;
+    QList<StockData> detailedData;
 };
 
 struct Stock

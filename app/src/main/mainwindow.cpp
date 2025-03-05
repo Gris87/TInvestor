@@ -67,14 +67,15 @@ MainWindow::MainWindow(
     ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(trayIcon,          SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(trayIcon,          SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(trayIcon,          SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,       SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
-    connect(userUpdateTimer,   SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer, SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,      SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer, SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
+    connect(trayIcon,            SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon,            SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(trayIcon,            SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,         SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
+    connect(userUpdateTimer,     SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer,   SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
+    connect(cleanupTimer,        SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer,   SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
+    connect(mPriceCollectThread, SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
     // clang-format on
 
     trayIcon->show();
@@ -92,7 +93,7 @@ MainWindow::~MainWindow()
 
     mUserUpdateThread->requestInterruption();
     mPriceCollectThread->requestInterruption();
-    mLastPriceThread->requestInterruption();
+    mLastPriceThread->terminateThread();
     mCleanupThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
@@ -158,7 +159,7 @@ void MainWindow::authFailed()
     mPriceCollectThread->requestInterruption();
     mPriceCollectThread->wait();
 
-    mLastPriceThread->requestInterruption();
+    mLastPriceThread->terminateThread();
     mLastPriceThread->wait();
 
     makeDecisionTimer->stop();
@@ -204,6 +205,13 @@ void MainWindow::makeDecisionTimerTicked()
     qDebug() << "Make decision timer ticked";
 
     mMakeDecisionThread->start();
+}
+
+void MainWindow::stocksChanged()
+{
+    qInfo() << "Stocks сhanged";
+
+    mLastPriceThread->stocksChanged();
 }
 
 void MainWindow::on_actionAuth_triggered()

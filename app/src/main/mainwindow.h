@@ -113,6 +113,7 @@ public slots:
     void priceCollectTimerTicked();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
+    void stocksChanged();
 
 private slots:
     void on_actionAuth_triggered();

@@ -41,7 +41,7 @@ QList<Stock*>& StocksStorage::getStocks()
     return mStocks;
 }
 
-void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
+bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 {
     bool changed = false;
 
@@ -90,6 +90,8 @@ void StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     {
         mStocksDatabase->writeStocksMeta(mStocks);
     }
+
+    return changed;
 }
 
 void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize)

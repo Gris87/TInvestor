@@ -8,6 +8,8 @@
 
 class IPriceCollectThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit IPriceCollectThread(QObject* parent = nullptr) :
         QThread(parent)
@@ -17,4 +19,7 @@ public:
 
     IPriceCollectThread(const IPriceCollectThread& another)            = delete;
     IPriceCollectThread& operator=(const IPriceCollectThread& another) = delete;
+
+signals:
+    void stocksChanged();
 };

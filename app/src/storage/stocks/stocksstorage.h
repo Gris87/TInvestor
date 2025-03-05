@@ -20,7 +20,7 @@ public:
     void           readFromDatabase() override;
     QMutex*        getMutex() override;
     QList<Stock*>& getStocks() override;
-    void           mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
+    bool           mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
     void           appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
     void           deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks) override;
 

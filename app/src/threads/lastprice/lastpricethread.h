@@ -22,9 +22,15 @@ public:
 
     void run() override;
 
+    void stocksChanged() override;
+    void terminateThread() override;
+
 private:
     QStringList getStockUIDs();
+    QMap<std::string, Stock*> buildStocksMap();
 
     IStocksStorage* mStocksStorage;
     IGrpcClient*    mGrpcClient;
+    std::shared_ptr<MarketDataStream> mMarketDataStream;
+    bool                              mNeedToRebuildStocksMap;
 };

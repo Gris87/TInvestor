@@ -17,4 +17,7 @@ public:
 
     ILastPriceThread(const ILastPriceThread& another)            = delete;
     ILastPriceThread& operator=(const ILastPriceThread& another) = delete;
+
+    virtual void stocksChanged()   = 0;
+    virtual void terminateThread() = 0;
 };

@@ -60,8 +60,13 @@ void PriceCollectThread::run()
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
-        storeNewStocksInfo(tinkoffStocks);
+        bool changed = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
+
+        if (changed)
+        {
+            emit stocksChanged();
+        }
     }
 
     qDebug() << "Finish PriceCollectThread";
@@ -111,7 +116,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
     }
 }
 
-void PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks)
+bool PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks)
 {
     QList<const tinkoff::Share*> qtTinkoffStocks;
     QList<StockMeta>             stocksMeta;
@@ -145,7 +150,7 @@ void PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
     processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
     QMutexLocker lock(mStocksStorage->getMutex());
-    mStocksStorage->mergeStocksMeta(stocksMeta);
+    return mStocksStorage->mergeStocksMeta(stocksMeta);
 }
 
 void getCandlesWithGrpc(

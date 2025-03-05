@@ -4,7 +4,7 @@
 
 #include "src/db/user/iuserdatabase.h"
 
-#include <QtSql>
+#include <QSqlDatabase>
 
 #include "src/simplecrypt/simplecrypt.h"
 

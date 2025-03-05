@@ -3,6 +3,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QSqlRecord>
 
 
 

@@ -41,7 +41,7 @@ public:
     void run() override;
 
 private:
-    void storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
+    bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
 
     IConfig*          mConfig;

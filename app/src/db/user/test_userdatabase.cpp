@@ -1,5 +1,7 @@
 #include "src/db/user/userdatabase.h"
 
+#include <QCoreApplication>
+#include <QDir>
 #include <gtest/gtest.h>
 
 
