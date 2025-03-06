@@ -79,6 +79,7 @@ MainWindow::MainWindow(
     connect(cleanupTimer,        SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
     connect(makeDecisionTimer,   SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
     connect(mPriceCollectThread, SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
+    connect(mLastPriceThread,    SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
     // clang-format on
 
     trayIcon->show();
@@ -216,6 +217,20 @@ void MainWindow::stocksChanged()
 
     updateStocksTableWidget();
     mLastPriceThread->stocksChanged();
+}
+
+void MainWindow::lastPriceChanged(const QString& uid)
+{
+    ui->stocksTableWidget->setSortingEnabled(false);
+
+    ITableRecord* record = mTableRecords[uid];
+
+    if (record != nullptr)
+    {
+        record->updatePrice();
+    }
+
+    ui->stocksTableWidget->setSortingEnabled(true);
 }
 
 void MainWindow::on_actionAuth_triggered()

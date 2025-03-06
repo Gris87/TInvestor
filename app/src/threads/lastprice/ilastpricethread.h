@@ -8,6 +8,8 @@
 
 class ILastPriceThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit ILastPriceThread(QObject* parent = nullptr) :
         QThread(parent)
@@ -20,4 +22,7 @@ public:
 
     virtual void stocksChanged()   = 0;
     virtual void terminateThread() = 0;
+
+signals:
+    void lastPriceChanged(const QString& uid);
 };

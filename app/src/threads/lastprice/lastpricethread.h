@@ -26,8 +26,8 @@ public:
     void terminateThread() override;
 
 private:
-    QStringList               getStockUIDs();
-    QMap<std::string, Stock*> buildStocksMap();
+    QStringList           getStockUIDs();
+    QMap<QString, Stock*> buildStocksMap();
 
     IStocksStorage*                   mStocksStorage;
     IGrpcClient*                      mGrpcClient;

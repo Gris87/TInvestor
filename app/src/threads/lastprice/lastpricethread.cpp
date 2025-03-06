@@ -46,7 +46,7 @@ void LastPriceThread::run()
         return;
     }
 
-    QMap<std::string, Stock*> stocksMap;
+    QMap<QString, Stock*> stocksMap;
     mNeedToRebuildStocksMap = true;
 
     mMarketDataStream = mGrpcClient->createMarketDataStream();
@@ -76,10 +76,14 @@ void LastPriceThread::run()
             stockData.timestamp = lastPriceResp.time().seconds() * 1000 + lastPriceResp.time().nanos() / 1000000;
             stockData.price     = quotationToFloat(lastPriceResp.price());
 
-            Stock* stock = stocksMap[lastPriceResp.instrument_uid()];
+            QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
+
+            Stock* stock = stocksMap[uid];
 
             QMutexLocker lock(stock->mutex);
             stock->operational.detailedData.append(stockData);
+
+            emit lastPriceChanged(uid);
         }
     }
 
@@ -107,9 +111,9 @@ QStringList LastPriceThread::getStockUIDs()
     return res;
 }
 
-QMap<std::string, Stock*> LastPriceThread::buildStocksMap()
+QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 {
-    QMap<std::string, Stock*> res; // UID => Stock
+    QMap<QString, Stock*> res; // UID => Stock
 
     QMutexLocker   lock(mStocksStorage->getMutex());
     QList<Stock*>& stocks = mStocksStorage->getStocks();
@@ -118,7 +122,7 @@ QMap<std::string, Stock*> LastPriceThread::buildStocksMap()
     {
         Stock* stock = stocks.at(i);
 
-        res[stock->meta.uid.toStdString()] = stock;
+        res[stock->meta.uid] = stock;
     }
 
     return res;

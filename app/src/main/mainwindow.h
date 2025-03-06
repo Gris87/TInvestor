@@ -119,6 +119,7 @@ public slots:
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
     void stocksChanged();
+    void lastPriceChanged(const QString& uid);
 
 private slots:
     void on_actionAuth_triggered();
