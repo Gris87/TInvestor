@@ -41,6 +41,7 @@
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
+#include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
@@ -108,6 +109,7 @@ int runApplication(int argc, char* argv[])
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
 
     TrayIconFactory trayIconFactory;
+    TableRecordFactory tableRecordFactory;
     DirFactory      dirFactory;
     FileFactory     fileFactory;
     QZipFactory     qZipFactory;
@@ -248,7 +250,8 @@ int runApplication(int argc, char* argv[])
         &cleanupThread,
         &makeDecisionThread,
         &messageBoxUtils,
-        &settingsEditor
+        &settingsEditor,
+        &tableRecordFactory
     );
     mainWindow.init();
 

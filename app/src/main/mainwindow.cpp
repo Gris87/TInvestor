@@ -6,15 +6,6 @@
 
 
 
-#define STOCK_COLUMN       0
-#define PRICE_COLUMN       1
-#define DAY_CHANGE_COLUMN  2
-#define DATE_CHANGE_COLUMN 3
-#define PAYBACK_COLUMN     4
-#define LINK_COLUMN        5
-
-
-
 MainWindow::MainWindow(
     IConfig*                           config,
     IConfig*                           configForSettingsDialog,
@@ -38,7 +29,8 @@ MainWindow::MainWindow(
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
     IMessageBoxUtils*                  messageBoxUtils,
-    ISettingsEditor*                   settingsEditor
+    ISettingsEditor*                   settingsEditor,
+    ITableRecordFactory*               tableRecordFactory
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
@@ -67,7 +59,9 @@ MainWindow::MainWindow(
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
     mMessageBoxUtils(messageBoxUtils),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mTableRecordFactory(tableRecordFactory),
+    mTableRecords()
 {
     qDebug() << "Create MainWindow";
 
@@ -220,6 +214,7 @@ void MainWindow::stocksChanged()
 {
     qInfo() << "Stocks сhanged";
 
+    updateStocksTableWidget();
     mLastPriceThread->stocksChanged();
 }
 
@@ -312,6 +307,38 @@ void MainWindow::init()
     cleanupTimerTicked();
 
     on_actionAuth_triggered();
+    updateStocksTableWidget();
+}
+
+void MainWindow::updateStocksTableWidget()
+{
+    ui->stocksTableWidget->setSortingEnabled(false);
+
+    QMutexLocker   lock(mStocksStorage->getMutex());
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
+
+    for (int i = 0; i < stocks.size(); ++i)
+    {
+        Stock* stock = stocks.at(i);
+
+        stock->mutex->lock();
+        QString uid = stock->meta.uid;
+        stock->mutex->unlock();
+
+        ITableRecord* record = mTableRecords[uid];
+
+        if (record != nullptr)
+        {
+            record->updateAll();
+        }
+        else
+        {
+            record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, stock, this);
+            mTableRecords[uid] = record;
+        }
+    }
+
+    ui->stocksTableWidget->setSortingEnabled(true);
 }
 
 void MainWindow::updateStackWidgetToolbar()

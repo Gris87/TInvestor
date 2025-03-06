@@ -17,6 +17,7 @@
 #include "src/threads/makedecision/imakedecisionthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
+#include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
 
@@ -58,7 +59,8 @@ public:
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
         IMessageBoxUtils*                  messageBoxUtils,
-        ISettingsEditor*                   settingsEditor
+        ISettingsEditor*                   settingsEditor,
+        ITableRecordFactory*               tableRecordFactory
     );
     ~MainWindow();
 
@@ -76,6 +78,7 @@ public:
     QTimer* makeDecisionTimer;
 
 private:
+    void updateStocksTableWidget();
     void updateStackWidgetToolbar();
     void applyConfig();
     void saveWindowState();
@@ -103,6 +106,8 @@ private:
     IMakeDecisionThread*               mMakeDecisionThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
+    ITableRecordFactory*               mTableRecordFactory;
+    QMap<QString, ITableRecord*>       mTableRecords;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
