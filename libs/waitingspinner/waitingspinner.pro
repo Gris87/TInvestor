@@ -1,8 +1,9 @@
-CONFIG -= qt
+QT += widgets
+
 CONFIG += c++20
 CONFIG += staticlib
 
-TARGET = investapi
+TARGET = waitingspinner
 TEMPLATE = lib
 
 
@@ -24,10 +25,8 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-INCLUDEPATH += \
-    $${PWD}/messages/generated
+SOURCES += \
+    src/waitingspinner/waitingspinnerwidget.cpp
 
-
-
-include(../../libs/grpc.pri)
-include(../../libs/investapi/investapi.pri)
+HEADERS += \
+    src/waitingspinner/waitingspinnerwidget.h
