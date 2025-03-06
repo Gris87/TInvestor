@@ -327,33 +327,46 @@ void MainWindow::init()
 
 void MainWindow::updateStocksTableWidget()
 {
-    ui->stocksTableWidget->setSortingEnabled(false);
-
     QMutexLocker   lock(mStocksStorage->getMutex());
     QList<Stock*>& stocks = mStocksStorage->getStocks();
 
-    for (int i = 0; i < stocks.size(); ++i)
+    if (!stocks.isEmpty())
     {
-        Stock* stock = stocks.at(i);
+        ui->stocksTableWidget->setSortingEnabled(false);
 
-        stock->mutex->lock();
-        QString uid = stock->meta.uid;
-        stock->mutex->unlock();
-
-        ITableRecord* record = mTableRecords[uid];
-
-        if (record != nullptr)
+        for (int i = 0; i < stocks.size(); ++i)
         {
-            record->updateAll();
+            Stock* stock = stocks.at(i);
+
+            stock->mutex->lock();
+            QString uid = stock->meta.uid;
+            stock->mutex->unlock();
+
+            ITableRecord* record = mTableRecords[uid];
+
+            if (record != nullptr)
+            {
+                record->updateAll();
+            }
+            else
+            {
+                record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, stock, this);
+                mTableRecords[uid] = record;
+            }
         }
-        else
-        {
-            record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, stock, this);
-            mTableRecords[uid] = record;
-        }
+
+        ui->stocksTableWidget->setSortingEnabled(true);
+
+        ui->stocksTableWidget->setVisible(true);
+        ui->waitingSpinnerWidget->setVisible(false);
+        ui->waitingSpinnerWidget->stop();
     }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
+    else
+    {
+        ui->stocksTableWidget->setVisible(false);
+        ui->waitingSpinnerWidget->setVisible(true);
+        ui->waitingSpinnerWidget->start();
+    }
 }
 
 void MainWindow::updateStackWidgetToolbar()

@@ -31,6 +31,9 @@
      <number>4</number>
     </property>
     <item>
+     <widget class="WaitingSpinnerWidget" name="waitingSpinnerWidget" native="true"/>
+    </item>
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <widget class="QWidget" name="stocksPage">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -228,6 +231,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>src/waitingspinner/waitingspinnerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../Resources.qrc"/>
  </resources>
