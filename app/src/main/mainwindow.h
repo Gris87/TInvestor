@@ -76,6 +76,7 @@ public:
     QTimer* priceCollectTimer;
     QTimer* cleanupTimer;
     QTimer* makeDecisionTimer;
+    QTimer* stocksTableUpdateTimer;
 
 private:
     void updateStocksTableWidget();
@@ -108,6 +109,7 @@ private:
     ISettingsEditor*                   mSettingsEditor;
     ITableRecordFactory*               mTableRecordFactory;
     QMap<QString, ITableRecord*>       mTableRecords;
+    QMap<QString, bool>                mLastPricesUpdates;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
@@ -118,6 +120,7 @@ public slots:
     void priceCollectTimerTicked();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
+    void stocksTableUpdateTimerTicked();
     void stocksChanged();
     void lastPriceChanged(const QString& uid);
 

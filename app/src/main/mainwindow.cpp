@@ -38,6 +38,7 @@ MainWindow::MainWindow(
     priceCollectTimer(new QTimer(this)),
     cleanupTimer(new QTimer(this)),
     makeDecisionTimer(new QTimer(this)),
+    stocksTableUpdateTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -61,7 +62,8 @@ MainWindow::MainWindow(
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mTableRecordFactory(tableRecordFactory),
-    mTableRecords()
+    mTableRecords(),
+    mLastPricesUpdates()
 {
     qDebug() << "Create MainWindow";
 
@@ -70,16 +72,17 @@ MainWindow::MainWindow(
     ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(trayIcon,            SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(trayIcon,            SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(trayIcon,            SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,         SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
-    connect(userUpdateTimer,     SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer,   SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,        SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer,   SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
-    connect(mPriceCollectThread, SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
-    connect(mLastPriceThread,    SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
+    connect(trayIcon,               SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(trayIcon,               SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(trayIcon,               SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,            SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
+    connect(userUpdateTimer,        SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer,      SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
+    connect(cleanupTimer,           SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer,      SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
+    connect(stocksTableUpdateTimer, SIGNAL(timeout()),                                    this, SLOT(stocksTableUpdateTimerTicked()));
+    connect(mPriceCollectThread,    SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
+    connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
     // clang-format on
 
     trayIcon->show();
@@ -170,6 +173,8 @@ void MainWindow::authFailed()
     mMakeDecisionThread->requestInterruption();
     mMakeDecisionThread->wait();
 
+    stocksTableUpdateTimer->stop();
+
     ui->actionAuth->setEnabled(true);
     trayIconShowClicked();
 
@@ -211,6 +216,32 @@ void MainWindow::makeDecisionTimerTicked()
     mMakeDecisionThread->start();
 }
 
+void MainWindow::stocksTableUpdateTimerTicked()
+{
+    qDebug() << "Stocks table update timer ticked";
+
+    if (!mLastPricesUpdates.isEmpty())
+    {
+        ui->stocksTableWidget->setUpdatesEnabled(false);
+        ui->stocksTableWidget->setSortingEnabled(false);
+
+        for (auto it = mLastPricesUpdates.begin(); it != mLastPricesUpdates.end(); ++it)
+        {
+            ITableRecord* record = mTableRecords[it.key()];
+
+            if (record != nullptr)
+            {
+                record->updatePrice();
+            }
+        }
+
+        mLastPricesUpdates.clear();
+
+        ui->stocksTableWidget->setSortingEnabled(true);
+        ui->stocksTableWidget->setUpdatesEnabled(true);
+    }
+}
+
 void MainWindow::stocksChanged()
 {
     qInfo() << "Stocks сhanged";
@@ -221,16 +252,7 @@ void MainWindow::stocksChanged()
 
 void MainWindow::lastPriceChanged(const QString& uid)
 {
-    ui->stocksTableWidget->setSortingEnabled(false);
-
-    ITableRecord* record = mTableRecords[uid];
-
-    if (record != nullptr)
-    {
-        record->updatePrice();
-    }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
+    mLastPricesUpdates[uid] = true;
 }
 
 void MainWindow::on_actionAuth_triggered()
@@ -247,6 +269,8 @@ void MainWindow::on_actionAuth_triggered()
 
     makeDecisionTimer->start();
     makeDecisionTimerTicked();
+
+    stocksTableUpdateTimer->start();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -321,6 +345,8 @@ void MainWindow::init()
     cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
     cleanupTimerTicked();
 
+    stocksTableUpdateTimer->setInterval(3000); // 3 seconds
+
     on_actionAuth_triggered();
     updateStocksTableWidget();
 }
@@ -332,6 +358,7 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
+        ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
 
         for (int i = 0; i < stocks.size(); ++i)
@@ -356,6 +383,7 @@ void MainWindow::updateStocksTableWidget()
         }
 
         ui->stocksTableWidget->setSortingEnabled(true);
+        ui->stocksTableWidget->setUpdatesEnabled(true);
 
         ui->stocksTableWidget->setVisible(true);
         ui->waitingSpinnerWidget->setVisible(false);
