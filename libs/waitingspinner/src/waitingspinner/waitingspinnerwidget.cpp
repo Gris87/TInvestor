@@ -1,6 +1,8 @@
 /* Original Work Copyright (c) 2012-2014 Alexander Turkin
    Modified 2014 by William Hallatt
    Modified 2015 by Jacob Dawid
+   Modified 2018 by huxingyi
+   Modified 2024 by Harold
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -58,6 +60,7 @@ WaitingSpinnerWidget::WaitingSpinnerWidget(
 void WaitingSpinnerWidget::initialize()
 {
     _color                = Qt::black;
+    _textColor            = Qt::black;
     _roundness            = 100.0;
     _minimumTrailOpacity  = 3.14159265358979323846;
     _trailFadePercentage  = 80.0;
@@ -93,6 +96,7 @@ void WaitingSpinnerWidget::paintEvent(QPaintEvent*)
     {
         painter.save();
         painter.translate(_innerRadius + _lineLength, _innerRadius + _lineLength);
+        painter.translate((width() - _imageSize.width()) / 2, 0);
         qreal rotateAngle = static_cast<qreal>(360 * i) / static_cast<qreal>(_numberOfLines);
         painter.rotate(rotateAngle);
         painter.translate(_innerRadius, 0);
@@ -102,6 +106,14 @@ void WaitingSpinnerWidget::paintEvent(QPaintEvent*)
         // TODO improve the way rounded rect is painted
         painter.drawRoundedRect(QRect(0, -_lineWidth / 2, _lineLength, _lineWidth), _roundness, _roundness, Qt::RelativeSize);
         painter.restore();
+    }
+
+    if (!_text.isEmpty())
+    {
+        painter.setPen(QPen(_textColor));
+        painter.drawText(
+            QRect(0, _imageSize.height(), width(), height() - _imageSize.height()), Qt::AlignBottom | Qt::AlignHCenter, _text
+        );
     }
 }
 
@@ -165,47 +177,47 @@ void WaitingSpinnerWidget::setInnerRadius(int radius)
     updateSize();
 }
 
-QColor WaitingSpinnerWidget::color()
+QColor WaitingSpinnerWidget::color() const
 {
     return _color;
 }
 
-qreal WaitingSpinnerWidget::roundness()
+qreal WaitingSpinnerWidget::roundness() const
 {
     return _roundness;
 }
 
-qreal WaitingSpinnerWidget::minimumTrailOpacity()
+qreal WaitingSpinnerWidget::minimumTrailOpacity() const
 {
     return _minimumTrailOpacity;
 }
 
-qreal WaitingSpinnerWidget::trailFadePercentage()
+qreal WaitingSpinnerWidget::trailFadePercentage() const
 {
     return _trailFadePercentage;
 }
 
-qreal WaitingSpinnerWidget::revolutionsPersSecond()
+qreal WaitingSpinnerWidget::revolutionsPersSecond() const
 {
     return _revolutionsPerSecond;
 }
 
-int WaitingSpinnerWidget::numberOfLines()
+int WaitingSpinnerWidget::numberOfLines() const
 {
     return _numberOfLines;
 }
 
-int WaitingSpinnerWidget::lineLength()
+int WaitingSpinnerWidget::lineLength() const
 {
     return _lineLength;
 }
 
-int WaitingSpinnerWidget::lineWidth()
+int WaitingSpinnerWidget::lineWidth() const
 {
     return _lineWidth;
 }
 
-int WaitingSpinnerWidget::innerRadius()
+int WaitingSpinnerWidget::innerRadius() const
 {
     return _innerRadius;
 }
@@ -217,7 +229,7 @@ bool WaitingSpinnerWidget::isSpinning() const
 
 void WaitingSpinnerWidget::setRoundness(qreal roundness)
 {
-    _roundness = std::max(0.0, std::min(100.0, roundness));
+    _roundness = std::clamp(roundness, 0., 100.);
 }
 
 void WaitingSpinnerWidget::setColor(QColor color)
@@ -253,8 +265,18 @@ void WaitingSpinnerWidget::rotate()
 
 void WaitingSpinnerWidget::updateSize()
 {
-    int size = (_innerRadius + _lineLength) * 2;
-    setFixedSize(size, size);
+    int size   = (_innerRadius + _lineLength) * 2;
+    _imageSize = QSize(size, size);
+    if (_text.isEmpty())
+    {
+        setFixedSize(size, size);
+    }
+    else
+    {
+        QFontMetrics fm(font());
+        QSize        textSize = QSize(fm.horizontalAdvance(_text), fm.height());
+        setFixedSize(std::max(size, textSize.width()), size + size / 4 + textSize.height());
+    }
 }
 
 void WaitingSpinnerWidget::updateTimer()
@@ -300,8 +322,29 @@ WaitingSpinnerWidget::currentLineColor(int countDistance, int totalNrOfLines, qr
         qreal resultAlpha = color.alphaF() - gradient * countDistance;
 
         // If alpha is out of bounds, clip it.
-        resultAlpha = std::min(1.0, std::max(0.0, resultAlpha));
+        resultAlpha = std::clamp(resultAlpha, 0., 1.);
         color.setAlphaF(resultAlpha);
     }
     return color;
+}
+
+QString WaitingSpinnerWidget::text() const
+{
+    return _text;
+}
+
+QColor WaitingSpinnerWidget::textColor() const
+{
+    return _textColor;
+}
+
+void WaitingSpinnerWidget::setText(QString text)
+{
+    _text = text;
+    updateSize();
+}
+
+void WaitingSpinnerWidget::setTextColor(QColor color)
+{
+    _textColor = color;
 }

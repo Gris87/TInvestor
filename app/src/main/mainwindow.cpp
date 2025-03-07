@@ -81,6 +81,7 @@ MainWindow::MainWindow(
     connect(cleanupTimer,           SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
     connect(makeDecisionTimer,      SIGNAL(timeout()),                                    this, SLOT(makeDecisionTimerTicked()));
     connect(stocksTableUpdateTimer, SIGNAL(timeout()),                                    this, SLOT(stocksTableUpdateTimerTicked()));
+    connect(mPriceCollectThread,    SIGNAL(notifyStocksProgress(const QString&)),         this, SLOT(notifyStocksProgress(const QString&)));
     connect(mPriceCollectThread,    SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
     connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
     // clang-format on
@@ -176,6 +177,7 @@ void MainWindow::authFailed()
     stocksTableUpdateTimer->stop();
 
     ui->actionAuth->setEnabled(true);
+    ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
     trayIconShowClicked();
 
     std::shared_ptr<IAuthDialog> dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
@@ -225,9 +227,9 @@ void MainWindow::stocksTableUpdateTimerTicked()
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
 
-        for (auto it = mLastPricesUpdates.begin(); it != mLastPricesUpdates.end(); ++it)
+        for (auto it = mLastPricesUpdates.cbegin(); it != mLastPricesUpdates.cend(); ++it)
         {
-            ITableRecord* record = mTableRecords[it.key()];
+            ITableRecord* record = mTableRecords[*it];
 
             if (record != nullptr)
             {
@@ -242,6 +244,11 @@ void MainWindow::stocksTableUpdateTimerTicked()
     }
 }
 
+void MainWindow::notifyStocksProgress(const QString& message)
+{
+    ui->waitingSpinnerWidget->setText(message);
+}
+
 void MainWindow::stocksChanged()
 {
     qInfo() << "Stocks сhanged";
@@ -252,7 +259,7 @@ void MainWindow::stocksChanged()
 
 void MainWindow::lastPriceChanged(const QString& uid)
 {
-    mLastPricesUpdates[uid] = true;
+    mLastPricesUpdates.insert(uid);
 }
 
 void MainWindow::on_actionAuth_triggered()
@@ -339,6 +346,8 @@ void MainWindow::init()
     mUserStorage->readFromDatabase();
     mStocksStorage->readFromDatabase();
 
+    updateStocksTableWidget();
+
     userUpdateTimer->setInterval(15 * 60 * 1000);       // 15 minutes
     priceCollectTimer->setInterval(1 * 60 * 60 * 1000); // 1 hour
 
@@ -348,7 +357,6 @@ void MainWindow::init()
     stocksTableUpdateTimer->setInterval(3000); // 3 seconds
 
     on_actionAuth_triggered();
-    updateStocksTableWidget();
 }
 
 void MainWindow::updateStocksTableWidget()

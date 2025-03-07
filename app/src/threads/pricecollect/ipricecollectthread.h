@@ -21,5 +21,6 @@ public:
     IPriceCollectThread& operator=(const IPriceCollectThread& another) = delete;
 
 signals:
+    void notifyStocksProgress(const QString& message);
     void stocksChanged();
 };

@@ -1,5 +1,6 @@
 #include "src/threads/pricecollect/pricecollectthread.h"
 
+#include <QAtomicInt>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QMutexLocker>
@@ -56,6 +57,8 @@ void PriceCollectThread::run()
 {
     qDebug() << "Running PriceCollectThread";
 
+    emit notifyStocksProgress(tr("Downloading stocks metadata"));
+
     std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
@@ -74,8 +77,10 @@ void PriceCollectThread::run()
 
 struct DownloadLogosInfo
 {
-    IFileFactory* fileFactory;
-    IHttpClient*  httpClient;
+    PriceCollectThread* thread;
+    IFileFactory*       fileFactory;
+    IHttpClient*        httpClient;
+    QAtomicInt          finished;
 };
 
 void
@@ -113,6 +118,13 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
                 stockLogoFile->close();
             }
         }
+
+        downloadLogosInfo->finished++;
+
+        emit downloadLogosInfo->thread->notifyStocksProgress(
+            downloadLogosInfo->thread->tr("Downloading stocks logos") +
+            QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(stocks.size()))
+        );
     }
 }
 
@@ -143,9 +155,13 @@ bool PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
         }
     }
 
+    emit notifyStocksProgress(tr("Downloading stocks logos"));
+
     DownloadLogosInfo downloadLogosInfo;
+    downloadLogosInfo.thread      = this;
     downloadLogosInfo.fileFactory = mFileFactory;
     downloadLogosInfo.httpClient  = mHttpClient;
+    downloadLogosInfo.finished    = 0;
 
     processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
@@ -347,15 +363,17 @@ void getCandlesWithHttp(
 
 struct GetCandlesInfo
 {
-    IConfig*          config;
-    IUserStorage*     userStorage;
-    IStocksStorage*   stocksStorage;
-    IFileFactory*     fileFactory;
-    IQZipFactory*     qZipFactory;
-    IQZipFileFactory* qZipFileFactory;
-    IHttpClient*      httpClient;
-    IGrpcClient*      grpcClient;
-    qint64            currentTimestamp;
+    PriceCollectThread* thread;
+    IConfig*            config;
+    IUserStorage*       userStorage;
+    IStocksStorage*     stocksStorage;
+    IFileFactory*       fileFactory;
+    IQZipFactory*       qZipFactory;
+    IQZipFileFactory*   qZipFileFactory;
+    IHttpClient*        httpClient;
+    IGrpcClient*        grpcClient;
+    qint64              currentTimestamp;
+    QAtomicInt          finished;
 };
 
 void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
@@ -409,12 +427,22 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
                 parentThread, stocksStorage, grpcClient, stock, stock->operational.lastStoredTimestamp + 60000, currentTimestamp
             );
         }
+
+        getCandlesInfo->finished++;
+
+        emit getCandlesInfo->thread->notifyStocksProgress(
+            getCandlesInfo->thread->tr("Obtain stocks data") +
+            QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(stocks.size()))
+        );
     }
 }
 
 void PriceCollectThread::obtainStocksData()
 {
+    emit notifyStocksProgress(tr("Obtain stocks data"));
+
     GetCandlesInfo getCandlesInfo;
+    getCandlesInfo.thread           = this;
     getCandlesInfo.config           = mConfig;
     getCandlesInfo.userStorage      = mUserStorage;
     getCandlesInfo.stocksStorage    = mStocksStorage;
@@ -424,6 +452,7 @@ void PriceCollectThread::obtainStocksData()
     getCandlesInfo.httpClient       = mHttpClient;
     getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
+    getCandlesInfo.finished         = 0;
 
     QList<Stock*>& stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);

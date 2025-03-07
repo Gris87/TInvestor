@@ -195,7 +195,7 @@ void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks,
         Stock*       stock = stockArray[i];
         QMutexLocker lock(stock->mutex);
 
-        qint64 index = 0;
+        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
 
         while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
         {

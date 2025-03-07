@@ -1,6 +1,9 @@
 /* Original Work Copyright (c) 2012-2014 Alexander Turkin
    Modified 2014 by William Hallatt
    Modified 2015 by Jacob Dawid
+   Modified 2018 by huxingyi
+   Modified 2024 by Harold
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
@@ -44,6 +47,8 @@ public:
         Qt::WindowModality modality, QWidget* parent = 0, bool centerOnParent = true, bool disableParentWhenSpinning = true
     );
 
+    Q_DISABLE_COPY(WaitingSpinnerWidget)
+
 public slots:
     void start();
     void stop();
@@ -59,16 +64,19 @@ public:
     void setLineWidth(int width);
     void setInnerRadius(int radius);
     void setText(QString text);
+    void setTextColor(QColor color);
 
-    QColor color();
-    qreal  roundness();
-    qreal  minimumTrailOpacity();
-    qreal  trailFadePercentage();
-    qreal  revolutionsPersSecond();
-    int    numberOfLines();
-    int    lineLength();
-    int    lineWidth();
-    int    innerRadius();
+    QColor  color() const;
+    QString text() const;
+    QColor  textColor() const;
+    qreal   roundness() const;
+    qreal   minimumTrailOpacity() const;
+    qreal   trailFadePercentage() const;
+    qreal   revolutionsPersSecond() const;
+    int     numberOfLines() const;
+    int     lineLength() const;
+    int     lineWidth() const;
+    int     innerRadius() const;
 
     bool isSpinning() const;
 
@@ -76,7 +84,7 @@ private slots:
     void rotate();
 
 protected:
-    void paintEvent(QPaintEvent* paintEvent);
+    void paintEvent(QPaintEvent* paintEvent) override;
 
 private:
     static int    lineCountDistanceFromPrimary(int current, int primary, int totalNrOfLines);
@@ -88,19 +96,18 @@ private:
     void updatePosition();
 
 private:
-    QColor _color;
-    qreal  _roundness; // 0..100
-    qreal  _minimumTrailOpacity;
-    qreal  _trailFadePercentage;
-    qreal  _revolutionsPerSecond;
-    int    _numberOfLines;
-    int    _lineLength;
-    int    _lineWidth;
-    int    _innerRadius;
-
-private:
-    WaitingSpinnerWidget(const WaitingSpinnerWidget&);
-    WaitingSpinnerWidget& operator=(const WaitingSpinnerWidget&);
+    QColor  _color;
+    qreal   _roundness; // 0..100
+    qreal   _minimumTrailOpacity;
+    qreal   _trailFadePercentage;
+    qreal   _revolutionsPerSecond;
+    int     _numberOfLines;
+    int     _lineLength;
+    int     _lineWidth;
+    int     _innerRadius;
+    QString _text;
+    QSize   _imageSize;
+    QColor  _textColor;
 
     QTimer* _timer;
     bool    _centerOnParent;

@@ -109,7 +109,7 @@ private:
     ISettingsEditor*                   mSettingsEditor;
     ITableRecordFactory*               mTableRecordFactory;
     QMap<QString, ITableRecord*>       mTableRecords;
-    QMap<QString, bool>                mLastPricesUpdates;
+    QSet<QString>                      mLastPricesUpdates;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
@@ -121,6 +121,7 @@ public slots:
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
     void stocksTableUpdateTimerTicked();
+    void notifyStocksProgress(const QString& message);
     void stocksChanged();
     void lastPriceChanged(const QString& uid);
 
