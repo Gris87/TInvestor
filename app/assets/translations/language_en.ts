@@ -124,88 +124,93 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="68"/>
+        <location filename="../../src/main/mainwindow.ui" line="94"/>
+        <source>Price change from moment:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="145"/>
         <source>Stock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="73"/>
+        <location filename="../../src/main/mainwindow.ui" line="150"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="78"/>
+        <location filename="../../src/main/mainwindow.ui" line="155"/>
         <source>Change from day start</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="83"/>
+        <location filename="../../src/main/mainwindow.ui" line="160"/>
         <source>Change from some date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="88"/>
+        <location filename="../../src/main/mainwindow.ui" line="165"/>
         <source>Payback</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="91"/>
+        <location filename="../../src/main/mainwindow.ui" line="168"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="100"/>
+        <location filename="../../src/main/mainwindow.ui" line="177"/>
         <source>Link</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="137"/>
+        <location filename="../../src/main/mainwindow.ui" line="214"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="140"/>
+        <location filename="../../src/main/mainwindow.ui" line="217"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="161"/>
+        <location filename="../../src/main/mainwindow.ui" line="238"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="164"/>
+        <location filename="../../src/main/mainwindow.ui" line="241"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="182"/>
+        <location filename="../../src/main/mainwindow.ui" line="259"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="185"/>
+        <location filename="../../src/main/mainwindow.ui" line="262"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="203"/>
+        <location filename="../../src/main/mainwindow.ui" line="280"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="206"/>
+        <location filename="../../src/main/mainwindow.ui" line="283"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="221"/>
-        <location filename="../../src/main/mainwindow.ui" line="224"/>
+        <location filename="../../src/main/mainwindow.ui" line="298"/>
+        <location filename="../../src/main/mainwindow.ui" line="301"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="182"/>
+        <location filename="../../src/main/mainwindow.cpp" line="193"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
@@ -213,28 +218,20 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="62"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="63"/>
         <source>Downloading stocks metadata</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="172"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="140"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="173"/>
         <source>Downloading stocks logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="457"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="450"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="458"/>
         <source>Obtain stocks data</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="527"/>
-        <source>Obtain stocks day start price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="619"/>
-        <source>Obtain stocks payback</source>
         <translation></translation>
     </message>
 </context>

@@ -13,6 +13,7 @@
 
 #define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
 #define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
+#define MOSCOW_TIME         10800000LL   // 3 * 60 * 60 * 1000 // 3 hours
 
 #define CSV_FIELD_TIMESTAMP   1
 #define CSV_FIELD_CLOSE_PRICE 3
@@ -136,7 +137,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
         downloadLogosInfo->finished++;
 
         emit thread->notifyStocksProgress(
-            thread->tr("Downloading stocks logos") +
+            PriceCollectThread::tr("Downloading stocks logos") +
             QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(stocks.size()))
         );
     }
@@ -446,7 +447,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
         getCandlesInfo->finished++;
 
         emit thread->notifyStocksProgress(
-            thread->tr("Obtain stocks data") +
+            PriceCollectThread::tr("Obtain stocks data") +
             QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(stocks.size()))
         );
     }
@@ -476,7 +477,7 @@ void PriceCollectThread::obtainStocksData()
 bool PriceCollectThread::obtainStocksDayStartPrice()
 {
     // Round to 1 day
-    qint64 newDayStartTimestamp = (QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY;
+    qint64 newDayStartTimestamp = (QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY - MOSCOW_TIME;
 
     if (mDayStartTimestamp != newDayStartTimestamp)
     {
