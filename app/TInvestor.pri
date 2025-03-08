@@ -59,6 +59,9 @@ SOURCES += \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
     src/utils/settingseditor/settingseditor.cpp \
+    src/widgets/tablerecord/items/paybacktableitem.cpp \
+    src/widgets/tablerecord/items/pricechangetableitem.cpp \
+    src/widgets/tablerecord/items/pricetableitem.cpp \
     src/widgets/tablerecord/tablerecord.cpp \
     src/widgets/tablerecord/tablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -170,6 +173,9 @@ HEADERS += \
     src/utils/settingseditor/settingseditor.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
+    src/widgets/tablerecord/items/paybacktableitem.h \
+    src/widgets/tablerecord/items/pricechangetableitem.h \
+    src/widgets/tablerecord/items/pricetableitem.h \
     src/widgets/tablerecord/tablerecord.h \
     src/widgets/tablerecord/tablerecordfactory.h \
     src/widgets/trayicon/itrayicon.h \

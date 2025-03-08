@@ -7,6 +7,9 @@
 #include <QTableWidget>
 
 #include "src/domain/stocks/stocks.h"
+#include "src/widgets/tablerecord/items/paybacktableitem.h"
+#include "src/widgets/tablerecord/items/pricechangetableitem.h"
+#include "src/widgets/tablerecord/items/pricetableitem.h"
 
 
 
@@ -26,15 +29,13 @@ public:
     void updatePayback() override;
 
 private:
-    void setPriceChangeValue(QTableWidgetItem* item, float value);
-
-    Stock*            mStock;
-    QTableWidgetItem* mStockTableWidgetItem;
-    QTableWidgetItem* mPriceTableWidgetItem;
-    QTableWidgetItem* mDayChangeTableWidgetItem;
-    QTableWidgetItem* mDateChangeTableWidgetItem;
-    QTableWidgetItem* mPaybackTableWidgetItem;
-    int               mPrecision;
+    Stock*                mStock;
+    QTableWidgetItem*     mStockTableWidgetItem;
+    PriceTableItem*       mPriceTableWidgetItem;
+    PriceChangeTableItem* mDayChangeTableWidgetItem;
+    PriceChangeTableItem* mDateChangeTableWidgetItem;
+    PaybackTableItem*     mPaybackTableWidgetItem;
+    int                   mPrecision;
 
 private slots:
     void linkButtonClicked();

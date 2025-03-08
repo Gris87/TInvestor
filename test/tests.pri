@@ -52,6 +52,9 @@ SOURCES += \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
+    src/widgets/tablerecord/items/test_paybacktableitem.cpp \
+    src/widgets/tablerecord/items/test_pricechangetableitem.cpp \
+    src/widgets/tablerecord/items/test_pricetableitem.cpp \
     src/widgets/tablerecord/test_tablerecord.cpp \
     src/widgets/tablerecord/test_tablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \

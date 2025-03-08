@@ -11,10 +11,10 @@ TableRecord::TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* paren
     ITableRecord(parent),
     mStock(stock),
     mStockTableWidgetItem(new QTableWidgetItem()),
-    mPriceTableWidgetItem(new QTableWidgetItem()),
-    mDayChangeTableWidgetItem(new QTableWidgetItem()),
-    mDateChangeTableWidgetItem(new QTableWidgetItem()),
-    mPaybackTableWidgetItem(new QTableWidgetItem())
+    mPriceTableWidgetItem(new PriceTableItem()),
+    mDayChangeTableWidgetItem(new PriceChangeTableItem()),
+    mDateChangeTableWidgetItem(new PriceChangeTableItem()),
+    mPaybackTableWidgetItem(new PaybackTableItem())
 {
     qDebug() << "Create TableRecord";
 
@@ -81,26 +81,16 @@ void TableRecord::updatePrice()
     float dateChange =
         mStock->operational.specifiedDatePrice > 0 ? (price / mStock->operational.specifiedDatePrice) * 100 - 100 : 0;
 
-    mPriceTableWidgetItem->setData(Qt::EditRole, price);
-    mPriceTableWidgetItem->setData(Qt::DisplayRole, QString::number(price, 'f', mPrecision) + " " + QChar(0x20BD));
-    setPriceChangeValue(mDayChangeTableWidgetItem, dayChange);
-    setPriceChangeValue(mDateChangeTableWidgetItem, dateChange);
+    mPriceTableWidgetItem->setValue(price, mPrecision);
+    mDayChangeTableWidgetItem->setValue(dayChange);
+    mDateChangeTableWidgetItem->setValue(dateChange);
 }
 
 void TableRecord::updatePayback()
 {
     QMutexLocker lock(mStock->mutex);
 
-    mPaybackTableWidgetItem->setData(Qt::EditRole, mStock->operational.payback);
-    mPaybackTableWidgetItem->setData(Qt::DisplayRole, QString::number(mStock->operational.payback, 'f', 2) + "%");
-}
-
-void TableRecord::setPriceChangeValue(QTableWidgetItem* item, float value)
-{
-    QString prefix = value > 0 ? "+" : "";
-
-    item->setData(Qt::EditRole, value);
-    item->setData(Qt::DisplayRole, prefix + QString::number(value, 'f', 2) + "%");
+    mPaybackTableWidgetItem->setValue(mStock->operational.payback);
 }
 
 void TableRecord::linkButtonClicked()
