@@ -49,6 +49,7 @@ void TableRecord::updateAll()
     mStock->mutex->unlock();
 
     updatePrice();
+    updatePayback();
 }
 
 void TableRecord::updatePrice()
@@ -65,4 +66,11 @@ void TableRecord::updatePrice()
     mPriceTableWidgetItem->setData(Qt::EditRole, price);
     mDayChangeTableWidgetItem->setData(Qt::EditRole, dayChange);
     mDateChangeTableWidgetItem->setData(Qt::EditRole, dateChange);
+}
+
+void TableRecord::updatePayback()
+{
+    QMutexLocker lock(mStock->mutex);
+
+    mPaybackTableWidgetItem->setData(Qt::EditRole, mStock->operational.payback);
 }

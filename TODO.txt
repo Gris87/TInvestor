@@ -1,6 +1,4 @@
 Authorization failed => Start timer that will press auth button
-Get price at start of the day
-Get payback value
 Put link button
 Add left panel
 Allow to select some date

@@ -31,4 +31,5 @@ public:
 
     virtual void updateAll()   = 0;
     virtual void updatePrice() = 0;
+    virtual void updatePayback() = 0;
 };

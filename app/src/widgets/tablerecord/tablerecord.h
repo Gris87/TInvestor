@@ -23,6 +23,7 @@ public:
 
     void updateAll() override;
     void updatePrice() override;
+    void updatePayback() override;
 
 private:
     Stock*            mStock;

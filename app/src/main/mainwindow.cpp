@@ -84,6 +84,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,    SIGNAL(notifyStocksProgress(const QString&)),         this, SLOT(notifyStocksProgress(const QString&)));
     connect(mPriceCollectThread,    SIGNAL(stocksChanged()),                              this, SLOT(stocksChanged()));
     connect(mPriceCollectThread,    SIGNAL(pricesChanged()),                              this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,    SIGNAL(paybackChanged()),                             this, SLOT(paybackChanged()));
     connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
     // clang-format on
 
@@ -260,11 +261,11 @@ void MainWindow::stocksChanged()
 
 void MainWindow::pricesChanged()
 {
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
-
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
+
+    QMutexLocker   lock(mStocksStorage->getMutex());
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     for (int i = 0; i < stocks.size(); ++i)
     {
@@ -279,6 +280,34 @@ void MainWindow::pricesChanged()
         if (record != nullptr)
         {
             record->updatePrice();
+        }
+    }
+
+    ui->stocksTableWidget->setSortingEnabled(true);
+    ui->stocksTableWidget->setUpdatesEnabled(true);
+}
+
+void MainWindow::paybackChanged()
+{
+    ui->stocksTableWidget->setUpdatesEnabled(false);
+    ui->stocksTableWidget->setSortingEnabled(false);
+
+    QMutexLocker   lock(mStocksStorage->getMutex());
+    QList<Stock*>& stocks = mStocksStorage->getStocks();
+
+    for (int i = 0; i < stocks.size(); ++i)
+    {
+        Stock* stock = stocks.at(i);
+
+        stock->mutex->lock();
+        QString uid = stock->meta.uid;
+        stock->mutex->unlock();
+
+        ITableRecord* record = mTableRecords[uid];
+
+        if (record != nullptr)
+        {
+            record->updatePayback();
         }
     }
 

@@ -124,6 +124,7 @@ public slots:
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
     void pricesChanged();
+    void paybackChanged();
     void lastPriceChanged(const QString& uid);
 
 private slots:

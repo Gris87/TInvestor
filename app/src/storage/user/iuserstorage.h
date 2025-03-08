@@ -24,6 +24,7 @@ public:
     virtual const QString&        getToken()                                  = 0;
     virtual void                  setToken(const QString& token)              = 0;
     virtual void                  setUserInfo(const User& user)               = 0;
+    virtual float                 getCommission()                             = 0;
     virtual const QList<Account>& getAccounts()                               = 0;
     virtual void                  setAccounts(const QList<Account>& accounts) = 0;
 };

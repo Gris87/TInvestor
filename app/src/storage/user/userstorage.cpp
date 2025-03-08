@@ -62,6 +62,11 @@ void UserStorage::setUserInfo(const User& user)
     }
 }
 
+float UserStorage::getCommission()
+{
+    return mUser.commission;
+}
+
 const QList<Account>& UserStorage::getAccounts()
 {
     return mAccounts;

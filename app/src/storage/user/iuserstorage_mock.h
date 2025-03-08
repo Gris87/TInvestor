@@ -25,6 +25,7 @@ public:
     MOCK_METHOD(const QString&, getToken, (), (override));
     MOCK_METHOD(void, setToken, (const QString& token), (override));
     MOCK_METHOD(void, setUserInfo, (const User& user), (override));
+    MOCK_METHOD(float, getCommission, (), (override));
     MOCK_METHOD(const QList<Account>&, getAccounts, (), (override));
     MOCK_METHOD(void, setAccounts, (const QList<Account>& accounts), (override));
 };

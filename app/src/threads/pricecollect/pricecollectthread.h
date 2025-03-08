@@ -44,6 +44,7 @@ private:
     bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
     bool obtainStocksDayStartPrice();
+    void obtainPayback();
 
     IConfig*          mConfig;
     IUserStorage*     mUserStorage;
