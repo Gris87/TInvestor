@@ -1,4 +1,3 @@
-Authorization failed => Start timer that will press auth button
 Add left panel
 Allow to select some date
 Get price from specified date

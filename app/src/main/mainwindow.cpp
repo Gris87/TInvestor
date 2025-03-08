@@ -34,6 +34,7 @@ MainWindow::MainWindow(
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
+    authFailedDelayTimer(new QTimer(this)),
     userUpdateTimer(new QTimer(this)),
     priceCollectTimer(new QTimer(this)),
     cleanupTimer(new QTimer(this)),
@@ -76,6 +77,7 @@ MainWindow::MainWindow(
     connect(trayIcon,               SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
     connect(trayIcon,               SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
     connect(mGrpcClient,            SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
+    connect(authFailedDelayTimer,   SIGNAL(timeout()),                                    this, SLOT(authFailedDelayTimerTicked()));
     connect(userUpdateTimer,        SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
     connect(priceCollectTimer,      SIGNAL(timeout()),                                    this, SLOT(priceCollectTimerTicked()));
     connect(cleanupTimer,           SIGNAL(timeout()),                                    this, SLOT(cleanupTimerTicked()));
@@ -160,6 +162,15 @@ void MainWindow::trayIconExitClicked()
 void MainWindow::authFailed()
 {
     qWarning() << "Authorization failed";
+
+    authFailedDelayTimer->start(1000); // 1 second
+}
+
+void MainWindow::authFailedDelayTimerTicked()
+{
+    qDebug() << "Authorization failed delay timer ticked";
+
+    authFailedDelayTimer->stop();
 
     userUpdateTimer->stop();
     mUserUpdateThread->requestInterruption();

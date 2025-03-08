@@ -72,6 +72,7 @@ public:
 
     Ui::MainWindow* ui;
 
+    QTimer* authFailedDelayTimer;
     QTimer* userUpdateTimer;
     QTimer* priceCollectTimer;
     QTimer* cleanupTimer;
@@ -116,6 +117,7 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void authFailed();
+    void authFailedDelayTimerTicked();
     void userUpdateTimerTicked();
     void priceCollectTimerTicked();
     void cleanupTimerTicked();
