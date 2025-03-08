@@ -12,6 +12,7 @@
 
 
 #define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
+#define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
 
 #define CSV_FIELD_TIMESTAMP   1
 #define CSV_FIELD_CLOSE_PRICE 3
@@ -38,14 +39,15 @@ PriceCollectThread::PriceCollectThread(
     mQZipFactory(qZipFactory),
     mQZipFileFactory(qZipFileFactory),
     mHttpClient(httpClient),
-    mGrpcClient(grpcClient)
+    mGrpcClient(grpcClient),
+    mDayStartTimestamp()
 {
     qDebug() << "Create PriceCollectThread";
 
     std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
     bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
-    Q_ASSERT_X(ok, "PriceCollectThread::obtainStocksData()", "Failed to create dir");
+    Q_ASSERT_X(ok, "PriceCollectThread::PriceCollectThread()", "Failed to create dir");
 }
 
 PriceCollectThread::~PriceCollectThread()
@@ -63,12 +65,20 @@ void PriceCollectThread::run()
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
-        bool changed = storeNewStocksInfo(tinkoffStocks);
+        bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
+        bool needPricesUpdate = obtainStocksDayStartPrice();
 
-        if (changed)
+        if (needStocksUpdate)
         {
             emit stocksChanged();
+        }
+        else
+        {
+            if (needPricesUpdate)
+            {
+                emit pricesChanged();
+            }
         }
     }
 
@@ -86,9 +96,10 @@ struct DownloadLogosInfo
 void
 downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& stocks, int start, int end, void* additionalArgs)
 {
-    DownloadLogosInfo* downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
-    IFileFactory*      fileFactory       = downloadLogosInfo->fileFactory;
-    IHttpClient*       httpClient        = downloadLogosInfo->httpClient;
+    DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
+    PriceCollectThread* thread            = downloadLogosInfo->thread;
+    IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
+    IHttpClient*        httpClient        = downloadLogosInfo->httpClient;
 
     QString appDir = qApp->applicationDirPath();
 
@@ -121,8 +132,8 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
 
         downloadLogosInfo->finished++;
 
-        emit downloadLogosInfo->thread->notifyStocksProgress(
-            downloadLogosInfo->thread->tr("Downloading stocks logos") +
+        emit thread->notifyStocksProgress(
+            thread->tr("Downloading stocks logos") +
             QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(stocks.size()))
         );
     }
@@ -378,16 +389,17 @@ struct GetCandlesInfo
 
 void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
-    GetCandlesInfo*   getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
-    IConfig*          config           = getCandlesInfo->config;
-    IUserStorage*     userStorage      = getCandlesInfo->userStorage;
-    IStocksStorage*   stocksStorage    = getCandlesInfo->stocksStorage;
-    IFileFactory*     fileFactory      = getCandlesInfo->fileFactory;
-    IQZipFactory*     qZipFactory      = getCandlesInfo->qZipFactory;
-    IQZipFileFactory* qZipFileFactory  = getCandlesInfo->qZipFileFactory;
-    IHttpClient*      httpClient       = getCandlesInfo->httpClient;
-    IGrpcClient*      grpcClient       = getCandlesInfo->grpcClient;
-    qint64            currentTimestamp = getCandlesInfo->currentTimestamp;
+    GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
+    PriceCollectThread* thread           = getCandlesInfo->thread;
+    IConfig*            config           = getCandlesInfo->config;
+    IUserStorage*       userStorage      = getCandlesInfo->userStorage;
+    IStocksStorage*     stocksStorage    = getCandlesInfo->stocksStorage;
+    IFileFactory*       fileFactory      = getCandlesInfo->fileFactory;
+    IQZipFactory*       qZipFactory      = getCandlesInfo->qZipFactory;
+    IQZipFileFactory*   qZipFileFactory  = getCandlesInfo->qZipFileFactory;
+    IHttpClient*        httpClient       = getCandlesInfo->httpClient;
+    IGrpcClient*        grpcClient       = getCandlesInfo->grpcClient;
+    qint64              currentTimestamp = getCandlesInfo->currentTimestamp;
 
     qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * 2678400000LL; // 31 * 24 * 60 * 60 * 1000 // 31 days
 
@@ -430,8 +442,8 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
 
         getCandlesInfo->finished++;
 
-        emit getCandlesInfo->thread->notifyStocksProgress(
-            getCandlesInfo->thread->tr("Obtain stocks data") +
+        emit thread->notifyStocksProgress(
+            thread->tr("Obtain stocks data") +
             QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(stocks.size()))
         );
     }
@@ -456,4 +468,71 @@ void PriceCollectThread::obtainStocksData()
 
     QList<Stock*>& stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
+}
+
+struct GetDayStartPriceInfo
+{
+    PriceCollectThread* thread;
+    qint64              dayStartTimestamp;
+    QAtomicInt          finished;
+};
+
+void getDayStartPriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    GetDayStartPriceInfo* getDayStartPriceInfo = reinterpret_cast<GetDayStartPriceInfo*>(additionalArgs);
+    PriceCollectThread*   thread               = getDayStartPriceInfo->thread;
+    qint64                dayStartTimestamp    = getDayStartPriceInfo->dayStartTimestamp;
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
+        for (int i = stock->data.size() - 1; i >= 0; --i)
+        {
+            const StockData& stockData = stock->data.at(i);
+
+            if (stockData.timestamp < dayStartTimestamp)
+            {
+                stock->operational.dayStartPrice = stockData.price;
+
+                break;
+            }
+        }
+
+        getDayStartPriceInfo->finished++;
+
+        emit thread->notifyStocksProgress(
+            thread->tr("Obtain stocks day start price") +
+            QString(" (%1 / %2)").arg(QString::number(getDayStartPriceInfo->finished), QString::number(stocks.size()))
+        );
+    }
+}
+
+bool PriceCollectThread::obtainStocksDayStartPrice()
+{
+    // Round to 1 day
+    qint64 newDayStartTimestamp = (QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY;
+
+    if (mDayStartTimestamp != newDayStartTimestamp)
+    {
+        mDayStartTimestamp = newDayStartTimestamp;
+
+        emit notifyStocksProgress(tr("Obtain stocks day start price"));
+
+        GetDayStartPriceInfo getDayStartPriceInfo;
+        getDayStartPriceInfo.thread            = this;
+        getDayStartPriceInfo.dayStartTimestamp = mDayStartTimestamp;
+        getDayStartPriceInfo.finished          = 0;
+
+        QList<Stock*>& stocks = mStocksStorage->getStocks();
+        processInParallel(stocks, getDayStartPriceForParallel, &getDayStartPriceInfo);
+
+        return true;
+    }
+
+    return false;
 }

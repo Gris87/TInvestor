@@ -43,6 +43,7 @@ public:
 private:
     bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
+    bool obtainStocksDayStartPrice();
 
     IConfig*          mConfig;
     IUserStorage*     mUserStorage;
@@ -52,4 +53,5 @@ private:
     IQZipFileFactory* mQZipFileFactory;
     IHttpClient*      mHttpClient;
     IGrpcClient*      mGrpcClient;
+    qint64            mDayStartTimestamp;
 };

@@ -123,6 +123,7 @@ public slots:
     void stocksTableUpdateTimerTicked();
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
+    void pricesChanged();
     void lastPriceChanged(const QString& uid);
 
 private slots:

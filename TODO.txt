@@ -1,6 +1,11 @@
 Authorization failed => Start timer that will press auth button
-Thread for getting all stocks and combining by minute duration
-Thread for stock streaming
+Get price at start of the day
+Get payback value
+Put link button
+Add left panel
+Allow to select some date
+Get price from specified date
+Allow to filter stocks
 Autorun
 Big fall from 24h ago
 Calculate okupaemost

@@ -23,4 +23,5 @@ public:
 signals:
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
+    void pricesChanged();
 };
