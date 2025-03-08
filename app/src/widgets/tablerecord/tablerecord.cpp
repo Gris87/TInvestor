@@ -2,6 +2,8 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDesktopServices>
+#include <QPushButton>
 
 
 
@@ -12,17 +14,20 @@ TableRecord::TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* paren
     mPriceTableWidgetItem(new QTableWidgetItem()),
     mDayChangeTableWidgetItem(new QTableWidgetItem()),
     mDateChangeTableWidgetItem(new QTableWidgetItem()),
-    mPaybackTableWidgetItem(new QTableWidgetItem()),
-    mLinkTableWidgetItem(new QTableWidgetItem())
+    mPaybackTableWidgetItem(new QTableWidgetItem())
 {
     qDebug() << "Create TableRecord";
 
     mStock->mutex->lock();
     QString uid = mStock->meta.uid;
+    qint32  priceNanos = mStock->meta.minPriceIncrement.nano;
     mStock->mutex->unlock();
 
     QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
     mStockTableWidgetItem->setIcon(stockLogo);
+
+    QPushButton* linkButton = new QPushButton(QIcon(":/assets/images/link.png"), ""); // tableWidget will take ownership
+    connect(linkButton, SIGNAL(clicked()), this, SLOT(linkButtonClicked()));
 
     int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
@@ -32,7 +37,20 @@ TableRecord::TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* paren
     tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
-    tableWidget->setItem(rowIndex, LINK_COLUMN, mLinkTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LINK_COLUMN, linkButton);
+
+    mPrecision = 9;
+
+    while (mPrecision > 2)
+    {
+        if (priceNanos % 10 != 0)
+        {
+            break;
+        }
+
+        priceNanos /= 10;
+        --mPrecision;
+    }
 
     updateAll();
 }
@@ -64,8 +82,9 @@ void TableRecord::updatePrice()
         mStock->operational.specifiedDatePrice > 0 ? (price / mStock->operational.specifiedDatePrice) * 100 - 100 : 0;
 
     mPriceTableWidgetItem->setData(Qt::EditRole, price);
-    mDayChangeTableWidgetItem->setData(Qt::EditRole, dayChange);
-    mDateChangeTableWidgetItem->setData(Qt::EditRole, dateChange);
+    mPriceTableWidgetItem->setData(Qt::DisplayRole, QString::number(price, 'f', mPrecision) + " " + QChar(0x20BD));
+    setPriceChangeValue(mDayChangeTableWidgetItem, dayChange);
+    setPriceChangeValue(mDateChangeTableWidgetItem, dateChange);
 }
 
 void TableRecord::updatePayback()
@@ -73,4 +92,23 @@ void TableRecord::updatePayback()
     QMutexLocker lock(mStock->mutex);
 
     mPaybackTableWidgetItem->setData(Qt::EditRole, mStock->operational.payback);
+    mPaybackTableWidgetItem->setData(Qt::DisplayRole, QString::number(mStock->operational.payback, 'f', 2) + "%");
+}
+
+void TableRecord::setPriceChangeValue(QTableWidgetItem* item, float value)
+{
+    QString prefix = value > 0 ? "+" : "";
+
+    item->setData(Qt::EditRole, value);
+    item->setData(Qt::DisplayRole, prefix + QString::number(value, 'f', 2) + "%");
+}
+
+void TableRecord::linkButtonClicked()
+{
+    mStock->mutex->lock();
+    QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
+    mStock->mutex->unlock();
+
+    bool ok = QDesktopServices::openUrl(url);
+    Q_ASSERT_X(ok, "TableRecord::linkButtonClicked()", "Failed to open link");
 }

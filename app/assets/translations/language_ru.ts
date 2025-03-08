@@ -205,7 +205,7 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="180"/>
+        <location filename="../../src/main/mainwindow.cpp" line="182"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
@@ -213,19 +213,29 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="60"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="62"/>
         <source>Downloading stocks metadata</source>
         <translation>Скачивание метаданных по акциям</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="158"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="172"/>
         <source>Downloading stocks logos</source>
         <translation>Скачивание логотипов акций</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="442"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="457"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="527"/>
+        <source>Obtain stocks day start price</source>
+        <translation>Получение цены на начало дня</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="619"/>
+        <source>Obtain stocks payback</source>
+        <translation>Получение окупаемости по акциям</translation>
     </message>
 </context>
 <context>

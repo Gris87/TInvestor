@@ -579,31 +579,38 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
             }
         }
 
-        int goodDeals = 0;
-
-        for (int i = index; i < stock->data.size() - 1; ++i)
+        if (index < stock->data.size() - 1)
         {
-            float expectedPrice = stock->data.at(i).price * (1 + commission * 0.02f); // 2 / 100.0 (2 commissions)
+            int goodDeals = 0;
 
-            bool good = false;
-
-            for (int j = i + 1; j < stock->data.size(); ++j)
+            for (int i = index; i < stock->data.size() - 1; ++i)
             {
-                if (stock->data.at(j).price > expectedPrice)
-                {
-                    good = true;
+                float expectedPrice = stock->data.at(i).price * (1 + commission * 0.02f); // 2 / 100.0 (2 commissions)
 
-                    break;
+                bool good = false;
+
+                for (int j = i + 1; j < stock->data.size(); ++j)
+                {
+                    if (stock->data.at(j).price > expectedPrice)
+                    {
+                        good = true;
+
+                        break;
+                    }
+                }
+
+                if (good)
+                {
+                    ++goodDeals;
                 }
             }
 
-            if (good)
-            {
-                ++goodDeals;
-            }
+            stock->operational.payback = (goodDeals * 100.0f) / (stock->data.size() - index - 1);
         }
-
-        stock->operational.payback = (goodDeals * 100.0f) / (stock->data.size() - index - 1);
+        else
+        {
+            stock->operational.payback = 0;
+        }
 
         getPaybackInfo->finished++;
 

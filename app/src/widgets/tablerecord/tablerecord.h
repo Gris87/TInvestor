@@ -26,11 +26,16 @@ public:
     void updatePayback() override;
 
 private:
+    void setPriceChangeValue(QTableWidgetItem* item, float value);
+
     Stock*            mStock;
     QTableWidgetItem* mStockTableWidgetItem;
     QTableWidgetItem* mPriceTableWidgetItem;
     QTableWidgetItem* mDayChangeTableWidgetItem;
     QTableWidgetItem* mDateChangeTableWidgetItem;
     QTableWidgetItem* mPaybackTableWidgetItem;
-    QTableWidgetItem* mLinkTableWidgetItem;
+    int               mPrecision;
+
+private slots:
+    void linkButtonClicked();
 };
