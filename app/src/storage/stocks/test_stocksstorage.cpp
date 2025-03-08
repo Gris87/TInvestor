@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/db/stocks/istocksdatabase_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 
 
 
@@ -19,18 +20,21 @@ protected:
     void SetUp()
     {
         stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
+        userStorageMock    = new StrictMock<UserStorageMock>();
 
-        storage = new StocksStorage(stocksDatabaseMock);
+        storage = new StocksStorage(stocksDatabaseMock, userStorageMock);
     }
 
     void TearDown()
     {
         delete storage;
         delete stocksDatabaseMock;
+        delete userStorageMock;
     }
 
     StocksStorage*                  storage;
     StrictMock<StocksDatabaseMock>* stocksDatabaseMock;
+    StrictMock<UserStorageMock>*    userStorageMock;
 };
 
 

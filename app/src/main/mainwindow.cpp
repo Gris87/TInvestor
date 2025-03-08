@@ -275,23 +275,9 @@ void MainWindow::pricesChanged()
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
-
-    for (int i = 0; i < stocks.size(); ++i)
+    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
     {
-        Stock* stock = stocks.at(i);
-
-        stock->mutex->lock();
-        QString uid = stock->meta.uid;
-        stock->mutex->unlock();
-
-        ITableRecord* record = mTableRecords[uid];
-
-        if (record != nullptr)
-        {
-            record->updatePrice();
-        }
+        it.value()->updatePrice();
     }
 
     ui->stocksTableWidget->setSortingEnabled(true);
@@ -303,23 +289,9 @@ void MainWindow::paybackChanged()
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
-
-    for (int i = 0; i < stocks.size(); ++i)
+    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
     {
-        Stock* stock = stocks.at(i);
-
-        stock->mutex->lock();
-        QString uid = stock->meta.uid;
-        stock->mutex->unlock();
-
-        ITableRecord* record = mTableRecords[uid];
-
-        if (record != nullptr)
-        {
-            record->updatePayback();
-        }
+        it.value()->updatePayback();
     }
 
     ui->stocksTableWidget->setSortingEnabled(true);
@@ -408,6 +380,13 @@ void MainWindow::on_actionSettings_triggered()
     }
 }
 
+void MainWindow::on_dateChangeTimeEdit_editingFinished()
+{
+    mStocksStorage->obtainStocksDatePrice(ui->dateChangeTimeEdit->dateTime().toMSecsSinceEpoch());
+
+    pricesChanged();
+}
+
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
@@ -416,6 +395,7 @@ void MainWindow::init()
     mStocksStorage->readFromDatabase();
 
     updateStocksTableWidget();
+    ui->stocksTableWidget->sortByColumn(STOCK_COLUMN, Qt::AscendingOrder);
 
     userUpdateTimer->setInterval(15 * 60 * 1000);       // 15 minutes
     priceCollectTimer->setInterval(1 * 60 * 60 * 1000); // 1 hour

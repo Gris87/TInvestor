@@ -2,11 +2,14 @@
 
 #include <QDebug>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
-StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase) :
+
+StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase, IUserStorage* userStorage) :
     IStocksStorage(),
     mStocksDatabase(stocksDatabase),
+    mUserStorage(userStorage),
     mMutex(new QMutex()),
     mStocks()
 {
@@ -102,4 +105,148 @@ void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, in
 void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)
 {
     mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
+}
+
+struct GetDatePriceInfo
+{
+    qint64 dayStartTimestamp;
+    bool   isDayStartNeeded;
+};
+
+void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    GetDatePriceInfo* getDatePriceInfo  = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
+    qint64            dayStartTimestamp = getDatePriceInfo->dayStartTimestamp;
+    bool              isDayStartNeeded  = getDatePriceInfo->isDayStartNeeded;
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
+        int index = 0;
+
+        for (int i = stock->data.size() - 1; i >= 0; --i)
+        {
+            if (stock->data.at(i).timestamp < dayStartTimestamp)
+            {
+                index = i;
+
+                break;
+            }
+        }
+
+        if (index < stock->data.size())
+        {
+            if (isDayStartNeeded)
+            {
+                stock->operational.dayStartPrice = stock->data.at(index).price;
+            }
+            else
+            {
+                stock->operational.specifiedDatePrice = stock->data.at(index).price;
+            }
+        }
+    }
+}
+
+void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
+{
+    GetDatePriceInfo getDatePriceInfo;
+    getDatePriceInfo.dayStartTimestamp = timestamp;
+    getDatePriceInfo.isDayStartNeeded  = true;
+
+    processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
+}
+
+void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
+{
+    GetDatePriceInfo getDatePriceInfo;
+    getDatePriceInfo.dayStartTimestamp = timestamp;
+    getDatePriceInfo.isDayStartNeeded  = false;
+
+    processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
+}
+
+struct GetPaybackInfo
+{
+    IUserStorage* userStorage;
+    qint64        startTimestamp;
+};
+
+void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
+    IUserStorage*   userStorage    = getPaybackInfo->userStorage;
+    qint64          startTimestamp = getPaybackInfo->startTimestamp;
+
+    userStorage->getMutex()->lock();
+    float commission = userStorage->getCommission();
+    userStorage->getMutex()->unlock();
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
+        int index = 0;
+
+        for (int i = stock->data.size() - 1; i >= 0; --i)
+        {
+            if (stock->data.at(i).timestamp < startTimestamp)
+            {
+                index = i;
+
+                break;
+            }
+        }
+
+        if (index < stock->data.size() - 1)
+        {
+            int goodDeals = 0;
+
+            for (int i = index; i < stock->data.size() - 1; ++i)
+            {
+                float expectedPrice = stock->data.at(i).price * (1 + commission * 0.02f); // 2 / 100.0 (2 commissions)
+
+                bool good = false;
+
+                for (int j = i + 1; j < stock->data.size(); ++j)
+                {
+                    if (stock->data.at(j).price > expectedPrice)
+                    {
+                        good = true;
+
+                        break;
+                    }
+                }
+
+                if (good)
+                {
+                    ++goodDeals;
+                }
+            }
+
+            stock->operational.payback = (goodDeals * 100.0f) / (stock->data.size() - index - 1);
+        }
+        else
+        {
+            stock->operational.payback = 0;
+        }
+    }
+}
+
+void StocksStorage::obtainPayback(qint64 timestamp)
+{
+    GetPaybackInfo getPaybackInfo;
+    getPaybackInfo.userStorage    = mUserStorage;
+    getPaybackInfo.startTimestamp = timestamp;
+
+    processInParallel(mStocks, getPaybackForParallel, &getPaybackInfo);
 }

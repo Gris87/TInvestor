@@ -135,4 +135,5 @@ private slots:
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
+    void on_dateChangeTimeEdit_editingFinished();
 };

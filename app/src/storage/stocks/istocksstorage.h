@@ -25,4 +25,7 @@ public:
     virtual bool           mergeStocksMeta(const QList<StockMeta>& stocksMeta)                          = 0;
     virtual void           appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
     virtual void           deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)          = 0;
+    virtual void           obtainStocksDayStartPrice(qint64 timestamp)                                  = 0;
+    virtual void           obtainStocksDatePrice(qint64 timestamp)                                      = 0;
+    virtual void           obtainPayback(qint64 timestamp)                                              = 0;
 };

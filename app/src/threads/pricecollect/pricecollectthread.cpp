@@ -473,48 +473,6 @@ void PriceCollectThread::obtainStocksData()
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
 }
 
-struct GetDayStartPriceInfo
-{
-    PriceCollectThread* thread;
-    qint64              dayStartTimestamp;
-    QAtomicInt          finished;
-};
-
-void getDayStartPriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
-{
-    GetDayStartPriceInfo* getDayStartPriceInfo = reinterpret_cast<GetDayStartPriceInfo*>(additionalArgs);
-    PriceCollectThread*   thread               = getDayStartPriceInfo->thread;
-    qint64                dayStartTimestamp    = getDayStartPriceInfo->dayStartTimestamp;
-
-    Stock** stockArray = stocks.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
-
-        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
-        for (int i = stock->data.size() - 1; i >= 0; --i)
-        {
-            const StockData& stockData = stock->data.at(i);
-
-            if (stockData.timestamp < dayStartTimestamp)
-            {
-                stock->operational.dayStartPrice = stockData.price;
-
-                break;
-            }
-        }
-
-        getDayStartPriceInfo->finished++;
-
-        emit thread->notifyStocksProgress(
-            thread->tr("Obtain stocks day start price") +
-            QString(" (%1 / %2)").arg(QString::number(getDayStartPriceInfo->finished), QString::number(stocks.size()))
-        );
-    }
-}
-
 bool PriceCollectThread::obtainStocksDayStartPrice()
 {
     // Round to 1 day
@@ -524,15 +482,7 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     {
         mDayStartTimestamp = newDayStartTimestamp;
 
-        emit notifyStocksProgress(tr("Obtain stocks day start price"));
-
-        GetDayStartPriceInfo getDayStartPriceInfo;
-        getDayStartPriceInfo.thread            = this;
-        getDayStartPriceInfo.dayStartTimestamp = mDayStartTimestamp;
-        getDayStartPriceInfo.finished          = 0;
-
-        QList<Stock*>& stocks = mStocksStorage->getStocks();
-        processInParallel(stocks, getDayStartPriceForParallel, &getDayStartPriceInfo);
+        mStocksStorage->obtainStocksDayStartPrice(mDayStartTimestamp);
 
         return true;
     }
@@ -540,97 +490,7 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     return false;
 }
 
-struct GetPaybackInfo
-{
-    PriceCollectThread* thread;
-    IUserStorage*       userStorage;
-    qint64              startTimestamp;
-    QAtomicInt          finished;
-};
-
-void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
-{
-    GetPaybackInfo*     getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
-    PriceCollectThread* thread         = getPaybackInfo->thread;
-    IUserStorage*       userStorage    = getPaybackInfo->userStorage;
-    qint64              startTimestamp = getPaybackInfo->startTimestamp;
-
-    userStorage->getMutex()->lock();
-    float commission = userStorage->getCommission();
-    userStorage->getMutex()->unlock();
-
-    Stock** stockArray = stocks.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
-
-        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
-        int index = 0;
-
-        for (int i = stock->data.size() - 1; i >= 0; --i)
-        {
-            if (stock->data.at(i).timestamp < startTimestamp)
-            {
-                index = i;
-
-                break;
-            }
-        }
-
-        if (index < stock->data.size() - 1)
-        {
-            int goodDeals = 0;
-
-            for (int i = index; i < stock->data.size() - 1; ++i)
-            {
-                float expectedPrice = stock->data.at(i).price * (1 + commission * 0.02f); // 2 / 100.0 (2 commissions)
-
-                bool good = false;
-
-                for (int j = i + 1; j < stock->data.size(); ++j)
-                {
-                    if (stock->data.at(j).price > expectedPrice)
-                    {
-                        good = true;
-
-                        break;
-                    }
-                }
-
-                if (good)
-                {
-                    ++goodDeals;
-                }
-            }
-
-            stock->operational.payback = (goodDeals * 100.0f) / (stock->data.size() - index - 1);
-        }
-        else
-        {
-            stock->operational.payback = 0;
-        }
-
-        getPaybackInfo->finished++;
-
-        emit thread->notifyStocksProgress(
-            thread->tr("Obtain stocks payback") +
-            QString(" (%1 / %2)").arg(QString::number(getPaybackInfo->finished), QString::number(stocks.size()))
-        );
-    }
-}
-
 void PriceCollectThread::obtainPayback()
 {
-    emit notifyStocksProgress(tr("Obtain stocks payback"));
-
-    GetPaybackInfo getPaybackInfo;
-    getPaybackInfo.thread         = this;
-    getPaybackInfo.userStorage    = mUserStorage;
-    getPaybackInfo.startTimestamp = QDateTime::currentMSecsSinceEpoch() - ONE_DAY;
-    getPaybackInfo.finished       = 0;
-
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
-    processInParallel(stocks, getPaybackForParallel, &getPaybackInfo);
+    mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
 }

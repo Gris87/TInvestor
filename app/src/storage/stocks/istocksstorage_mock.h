@@ -26,4 +26,7 @@ public:
     MOCK_METHOD(bool, mergeStocksMeta, (const QList<StockMeta>& stocksMeta), (override));
     MOCK_METHOD(void, appendStockData, (Stock * stock, const StockData* dataArray, int dataArraySize), (override));
     MOCK_METHOD(void, deleteObsoleteData, (qint64 obsoleteTimestamp, QList<Stock*>& stocks), (override));
+    MOCK_METHOD(void, obtainStocksDayStartPrice, (qint64 timestamp), (override));
+    MOCK_METHOD(void, obtainStocksDatePrice, (qint64 timestamp), (override));
+    MOCK_METHOD(void, obtainPayback, (qint64 timestamp), (override));
 };
