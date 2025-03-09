@@ -33,8 +33,8 @@ public:
     ITableRecord(const ITableRecord& another)            = delete;
     ITableRecord& operator=(const ITableRecord& another) = delete;
 
-    virtual void updateAll()     = 0;
-    virtual void updatePrice()   = 0;
-    virtual void updatePayback() = 0;
+    virtual void updateAll()                                             = 0;
+    virtual void updatePrice()                                           = 0;
+    virtual void updatePayback()                                         = 0;
     virtual void filter(QTableWidget* tableWidget, const Filter& filter) = 0;
 };
