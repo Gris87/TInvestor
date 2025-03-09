@@ -4,10 +4,14 @@
 
 #include <QWidget>
 
+#include "src/domain/filter/filter.h"
+
 
 
 class IFilterWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit IFilterWidget(QWidget* parent = nullptr) :
         QWidget(parent)
@@ -17,4 +21,7 @@ public:
 
     IFilterWidget(const IFilterWidget& another)            = delete;
     IFilterWidget& operator=(const IFilterWidget& another) = delete;
+
+signals:
+    void filterChanged(const Filter& filter);
 };

@@ -446,13 +446,13 @@ void MainWindow::updateStocksTableWidget()
         ui->stocksTableWidget->setSortingEnabled(true);
         ui->stocksTableWidget->setUpdatesEnabled(true);
 
-        ui->stocksTableWidget->setVisible(true);
+        ui->stackedWidget->setVisible(true);
         ui->waitingSpinnerWidget->setVisible(false);
         ui->waitingSpinnerWidget->stop();
     }
     else
     {
-        ui->stocksTableWidget->setVisible(false);
+        ui->stackedWidget->setVisible(false);
         ui->waitingSpinnerWidget->setVisible(true);
         ui->waitingSpinnerWidget->start();
     }
