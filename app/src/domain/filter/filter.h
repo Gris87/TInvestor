@@ -8,6 +8,14 @@
 
 struct Filter
 {
+    Filter();
+    Filter(const Filter& another);
+    ~Filter();
+
+    Filter& operator=(const Filter& another);
+
+    bool isFiltered(const QString& t, float price, float dayStartChange, float dateChange, float payback) const;
+
     bool    useTicker;
     QString ticker;
     bool    usePrice;

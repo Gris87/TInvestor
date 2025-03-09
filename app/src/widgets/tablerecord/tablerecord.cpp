@@ -93,6 +93,20 @@ void TableRecord::updatePayback()
     mPaybackTableWidgetItem->setValue(mStock->operational.payback);
 }
 
+void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
+{
+    int  row    = mStockTableWidgetItem->row();
+    bool hidden = !filter.isFiltered(
+        mStockTableWidgetItem->text(),
+        mPriceTableWidgetItem->getValue(),
+        mDayChangeTableWidgetItem->getValue(),
+        mDateChangeTableWidgetItem->getValue(),
+        mPaybackTableWidgetItem->getValue()
+    );
+
+    tableWidget->setRowHidden(row, hidden);
+}
+
 void TableRecord::linkButtonClicked()
 {
     mStock->mutex->lock();

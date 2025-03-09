@@ -131,6 +131,7 @@ public slots:
     void pricesChanged();
     void paybackChanged();
     void lastPriceChanged(const QString& uid);
+    void filterChanged(const Filter& filter);
 
 private slots:
     void on_actionAuth_triggered();

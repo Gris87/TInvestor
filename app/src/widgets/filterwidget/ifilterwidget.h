@@ -22,6 +22,8 @@ public:
     IFilterWidget(const IFilterWidget& another)            = delete;
     IFilterWidget& operator=(const IFilterWidget& another) = delete;
 
+    virtual const Filter& getFilter() = 0;
+
 signals:
     void filterChanged(const Filter& filter);
 };

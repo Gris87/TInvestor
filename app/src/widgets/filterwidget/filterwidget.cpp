@@ -22,6 +22,11 @@ FilterWidget::~FilterWidget()
     delete ui;
 }
 
+const Filter& FilterWidget::getFilter()
+{
+    return mFilter;
+}
+
 void FilterWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;

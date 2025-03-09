@@ -22,6 +22,11 @@ void PriceTableItem::setValue(float value, int precision)
     setData(Qt::DisplayRole, QString::number(mValue, 'f', precision) + " " + QChar(0x20BD));
 }
 
+float PriceTableItem::getValue() const
+{
+    return mValue;
+}
+
 bool PriceTableItem::operator<(const QTableWidgetItem& another) const
 {
     float anotherFloat = reinterpret_cast<const PriceTableItem*>(&another)->mValue;

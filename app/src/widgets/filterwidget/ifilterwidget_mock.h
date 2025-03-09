@@ -19,4 +19,6 @@ public:
 
     FilterWidgetMock(const FilterWidgetMock& another)            = delete;
     FilterWidgetMock& operator=(const FilterWidgetMock& another) = delete;
+
+    MOCK_METHOD(const Filter&, getFilter, (), (override));
 };

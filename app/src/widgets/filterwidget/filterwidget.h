@@ -26,6 +26,8 @@ public:
 
     Ui::FilterWidget* ui;
 
+    const Filter& getFilter() override;
+
 private:
     Filter mFilter;
 

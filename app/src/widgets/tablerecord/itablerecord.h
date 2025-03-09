@@ -4,6 +4,10 @@
 
 #include <QObject>
 
+#include <QTableWidget>
+
+#include "src/domain/filter/filter.h"
+
 
 
 #define STOCK_COLUMN       0
@@ -32,4 +36,5 @@ public:
     virtual void updateAll()     = 0;
     virtual void updatePrice()   = 0;
     virtual void updatePayback() = 0;
+    virtual void filter(QTableWidget* tableWidget, const Filter& filter) = 0;
 };

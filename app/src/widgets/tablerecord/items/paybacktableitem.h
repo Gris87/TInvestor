@@ -16,6 +16,8 @@ public:
     PaybackTableItem& operator=(const PaybackTableItem& another) = delete;
 
     void setValue(float value);
+    float getValue() const;
+
     bool operator<(const QTableWidgetItem& another) const;
 
 private:

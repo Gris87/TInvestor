@@ -34,6 +34,7 @@ SOURCES += \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/domain/filter/filter.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stocks/stocks.cpp \
     src/domain/user/user.cpp \

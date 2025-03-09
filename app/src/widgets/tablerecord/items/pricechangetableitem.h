@@ -16,6 +16,8 @@ public:
     PriceChangeTableItem& operator=(const PriceChangeTableItem& another) = delete;
 
     void setValue(float value);
+    float getValue() const;
+
     bool operator<(const QTableWidgetItem& another) const;
 
 private:

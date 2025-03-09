@@ -22,6 +22,11 @@ void PaybackTableItem::setValue(float value)
     setData(Qt::DisplayRole, QString::number(mValue, 'f', 2) + "%");
 }
 
+float PaybackTableItem::getValue() const
+{
+    return mValue;
+}
+
 bool PaybackTableItem::operator<(const QTableWidgetItem& another) const
 {
     float anotherFloat = reinterpret_cast<const PaybackTableItem*>(&another)->mValue;

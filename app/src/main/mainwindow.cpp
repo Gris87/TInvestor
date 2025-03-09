@@ -92,6 +92,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,    SIGNAL(pricesChanged()),                              this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,    SIGNAL(paybackChanged()),                             this, SLOT(paybackChanged()));
     connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),             this, SLOT(lastPriceChanged(const QString&)));
+    connect(mFilterWidget,          SIGNAL(filterChanged(const Filter&)),                 this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     trayIcon->show();
@@ -241,6 +242,8 @@ void MainWindow::stocksTableUpdateTimerTicked()
 
     if (!mLastPricesUpdates.isEmpty())
     {
+        const Filter& filter = mFilterWidget->getFilter();
+
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
 
@@ -251,6 +254,7 @@ void MainWindow::stocksTableUpdateTimerTicked()
             if (record != nullptr)
             {
                 record->updatePrice();
+                record->filter(ui->stocksTableWidget, filter);
             }
         }
 
@@ -276,12 +280,15 @@ void MainWindow::stocksChanged()
 
 void MainWindow::pricesChanged()
 {
+    const Filter& filter = mFilterWidget->getFilter();
+
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
     for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
     {
         it.value()->updatePrice();
+        it.value()->filter(ui->stocksTableWidget, filter);
     }
 
     ui->stocksTableWidget->setSortingEnabled(true);
@@ -290,12 +297,15 @@ void MainWindow::pricesChanged()
 
 void MainWindow::paybackChanged()
 {
+    const Filter& filter = mFilterWidget->getFilter();
+
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
     for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
     {
         it.value()->updatePayback();
+        it.value()->filter(ui->stocksTableWidget, filter);
     }
 
     ui->stocksTableWidget->setSortingEnabled(true);
@@ -305,6 +315,18 @@ void MainWindow::paybackChanged()
 void MainWindow::lastPriceChanged(const QString& uid)
 {
     mLastPricesUpdates.insert(uid);
+}
+
+void MainWindow::filterChanged(const Filter& filter)
+{
+    ui->stocksTableWidget->setUpdatesEnabled(false);
+
+    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
+    {
+        it.value()->filter(ui->stocksTableWidget, filter);
+    }
+
+    ui->stocksTableWidget->setUpdatesEnabled(true);
 }
 
 void MainWindow::on_actionAuth_triggered()
@@ -419,6 +441,8 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
+        const Filter& filter = mFilterWidget->getFilter();
+
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
 
@@ -441,6 +465,8 @@ void MainWindow::updateStocksTableWidget()
                 record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, stock, this);
                 mTableRecords[uid] = record;
             }
+
+            record->filter(ui->stocksTableWidget, filter);
         }
 
         ui->stocksTableWidget->setSortingEnabled(true);

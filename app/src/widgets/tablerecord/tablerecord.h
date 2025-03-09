@@ -4,8 +4,6 @@
 
 #include "src/widgets/tablerecord/itablerecord.h"
 
-#include <QTableWidget>
-
 #include "src/domain/stocks/stocks.h"
 #include "src/widgets/tablerecord/items/paybacktableitem.h"
 #include "src/widgets/tablerecord/items/pricechangetableitem.h"
@@ -27,6 +25,7 @@ public:
     void updateAll() override;
     void updatePrice() override;
     void updatePayback() override;
+    void filter(QTableWidget* tableWidget, const Filter& filter) override;
 
 private:
     Stock*                mStock;

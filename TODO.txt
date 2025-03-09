@@ -1,7 +1,5 @@
-Allow to filter stocks
 Autorun
 Big fall from 24h ago
-Calculate okupaemost
 Buy on fall with high likvidity
 Buy if max cost reached
 Rezko rastet, znachit budet rezko padat (2-3 times)

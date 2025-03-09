@@ -23,6 +23,11 @@ void PriceChangeTableItem::setValue(float value)
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");
 }
 
+float PriceChangeTableItem::getValue() const
+{
+    return mValue;
+}
+
 bool PriceChangeTableItem::operator<(const QTableWidgetItem& another) const
 {
     float anotherFloat = reinterpret_cast<const PriceChangeTableItem*>(&another)->mValue;
