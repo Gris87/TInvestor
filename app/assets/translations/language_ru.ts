@@ -129,22 +129,22 @@
         <translation>Тикер</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="63"/>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="67"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="93"/>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="117"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="123"/>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="173"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="153"/>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="229"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>
@@ -153,6 +153,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
+        <location filename="../../src/main/mainwindow.cpp" line="143"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
@@ -243,7 +244,12 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="197"/>
+        <location filename="../../src/main/mainwindow.cpp" line="143"/>
+        <source>TInvestor is working in background</source>
+        <translation>Ты ж инвестор работает в фоновом режиме</translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="203"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>

@@ -27,3 +27,8 @@ QVariant SettingsEditor::value(const QString& key, const QVariant& defaultValue)
 {
     return mSettings->value(key, defaultValue);
 }
+
+void SettingsEditor::remove(const QString& key)
+{
+    mSettings->remove(key);
+}

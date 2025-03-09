@@ -70,6 +70,7 @@ protected:
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+        autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
@@ -109,6 +110,7 @@ protected:
             makeDecisionThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
+            autorunSettingsEditorMock,
             tableRecordFactoryMock
         );
     }
@@ -147,6 +149,7 @@ protected:
         delete makeDecisionThreadMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
+        delete autorunSettingsEditorMock;
         delete trayIconMock;
     }
 
@@ -176,6 +179,7 @@ protected:
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
+    StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
 

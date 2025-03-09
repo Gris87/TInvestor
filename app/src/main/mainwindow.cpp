@@ -2,7 +2,12 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QEvent>
+
+
+
+#define AUTORUN_PATH "CurrentVersion/Run/TInvestor"
 
 
 
@@ -31,6 +36,7 @@ MainWindow::MainWindow(
     IMakeDecisionThread*               makeDecisionThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
+    ISettingsEditor*                   autorunSettingsEditor,
     ITableRecordFactory*               tableRecordFactory
 ) :
     QMainWindow(),
@@ -63,6 +69,7 @@ MainWindow::MainWindow(
     mMakeDecisionThread(makeDecisionThread),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
+    mAutorunSettingsEditor(autorunSettingsEditor),
     mTableRecordFactory(tableRecordFactory),
     mTableRecords(),
     mLastPricesUpdates()
@@ -74,12 +81,12 @@ MainWindow::MainWindow(
     mFilterWidget = filterWidgetFactory->newInstance(this);
     ui->layoutForFilterWidget->addWidget(mFilterWidget);
 
-    ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
+    mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(trayIcon,               SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(trayIcon,               SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
-    connect(trayIcon,               SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
+    connect(mTrayIcon,              SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,              SIGNAL(trayIconShowClicked()),                        this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,              SIGNAL(trayIconExitClicked()),                        this, SLOT(trayIconExitClicked()));
     connect(mGrpcClient,            SIGNAL(authFailed()),                                 this, SLOT(authFailed()));
     connect(authFailedDelayTimer,   SIGNAL(timeout()),                                    this, SLOT(authFailedDelayTimerTicked()));
     connect(userUpdateTimer,        SIGNAL(timeout()),                                    this, SLOT(userUpdateTimerTicked()));
@@ -95,7 +102,7 @@ MainWindow::MainWindow(
     connect(mFilterWidget,          SIGNAL(filterChanged(const Filter&)),                 this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
-    trayIcon->show();
+    mTrayIcon->show();
 
     mConfig->makeDefault();
     mConfig->load(mSettingsEditor);
@@ -136,6 +143,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     event->ignore();
     hide();
+
+    mTrayIcon->showMessage(tr("TInvestor"), tr("TInvestor is working in background"));
 
     qDebug() << "Main window moved to tray";
 }
@@ -494,6 +503,17 @@ void MainWindow::updateStackWidgetToolbar()
 void MainWindow::applyConfig()
 {
     makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * 60 * 1000);
+
+    if (mConfig->isAutorun())
+    {
+        QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
+
+        mAutorunSettingsEditor->setValue(AUTORUN_PATH, QString("\"%1\" --autorun").arg(appPath));
+    }
+    else
+    {
+        mAutorunSettingsEditor->remove(AUTORUN_PATH);
+    }
 }
 
 void MainWindow::saveWindowState()

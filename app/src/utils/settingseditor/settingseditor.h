@@ -19,6 +19,7 @@ public:
 
     void     setValue(const QString& key, const QVariant& value) override;
     QVariant value(const QString& key, const QVariant& defaultValue) override;
+    void     remove(const QString& key) override;
 
 private:
     QSettings* mSettings;

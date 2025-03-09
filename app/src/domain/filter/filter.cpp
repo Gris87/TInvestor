@@ -66,7 +66,7 @@ bool Filter::isFiltered(const QString& t, float price, float dayStartChange, flo
 {
     if (useTicker && ticker != "")
     {
-        if (!t.contains(ticker))
+        if (!t.contains(ticker, Qt::CaseInsensitive))
         {
             return false;
         }

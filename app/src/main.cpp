@@ -120,6 +120,7 @@ int runApplication(int argc, char* argv[])
 
     MessageBoxUtils messageBoxUtils;
     SettingsEditor  settingsEditor("GrisCom", "TInvestor");
+    SettingsEditor  autorunSettingsEditor("Microsoft", "Windows");
 
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
@@ -254,11 +255,17 @@ int runApplication(int argc, char* argv[])
         &makeDecisionThread,
         &messageBoxUtils,
         &settingsEditor,
+        &autorunSettingsEditor,
         &tableRecordFactory
     );
     mainWindow.init();
 
     qInfo() << "UP and Running";
+
+    if (!qApp->arguments().contains("--autorun"))
+    {
+        mainWindow.show();
+    }
 
     return app.exec();
 }

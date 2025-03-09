@@ -62,6 +62,7 @@ public:
         IMakeDecisionThread*               makeDecisionThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
+        ISettingsEditor*                   autorunSettingsEditor,
         ITableRecordFactory*               tableRecordFactory
     );
     ~MainWindow();
@@ -101,6 +102,7 @@ private:
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
     IFilterWidget*                     mFilterWidget;
+    ITrayIcon*                         mTrayIcon;
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
     IGrpcClient*                       mGrpcClient;
@@ -111,6 +113,7 @@ private:
     IMakeDecisionThread*               mMakeDecisionThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
+    ISettingsEditor*                   mAutorunSettingsEditor;
     ITableRecordFactory*               mTableRecordFactory;
     QMap<QString, ITableRecord*>       mTableRecords;
     QSet<QString>                      mLastPricesUpdates;

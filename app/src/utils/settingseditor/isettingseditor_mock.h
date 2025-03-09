@@ -22,4 +22,5 @@ public:
 
     MOCK_METHOD(void, setValue, (const QString& key, const QVariant& value), (override));
     MOCK_METHOD(QVariant, value, (const QString& key, const QVariant& defaultValue), (override));
+    MOCK_METHOD(void, remove, (const QString& key), (override));
 };
