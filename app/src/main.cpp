@@ -41,6 +41,7 @@
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
+#include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -107,6 +108,7 @@ int runApplication(int argc, char* argv[])
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
+    FilterWidgetFactory              filterWidgetFactory;
 
     TrayIconFactory trayIconFactory;
     TableRecordFactory tableRecordFactory;
@@ -240,6 +242,7 @@ int runApplication(int argc, char* argv[])
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
+        &filterWidgetFactory,
         &trayIconFactory,
         &userStorage,
         &stocksStorage,

@@ -26,6 +26,7 @@
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/filterwidget/ifilterwidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
@@ -56,6 +57,7 @@ protected:
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        filterWidgetFactoryMock              = new StrictMock<FilterWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -95,6 +97,7 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
+            filterWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
             stocksStorageMock,
@@ -131,6 +134,7 @@ protected:
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
+        delete filterWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete tableRecordFactoryMock;
         delete userStorageMock;
@@ -159,6 +163,7 @@ protected:
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<FilterWidgetFactoryMock>*              filterWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;

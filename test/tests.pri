@@ -52,6 +52,8 @@ SOURCES += \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
+    src/widgets/filterwidget/test_filterwidget.cpp \
+    src/widgets/filterwidget/test_filterwidgetfactory.cpp \
     src/widgets/tablerecord/items/test_paybacktableitem.cpp \
     src/widgets/tablerecord/items/test_pricechangetableitem.cpp \
     src/widgets/tablerecord/items/test_pricetableitem.cpp \
@@ -109,6 +111,8 @@ HEADERS += \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
+    src/widgets/filterwidget/ifilterwidgetfactory_mock.h \
+    src/widgets/filterwidget/ifilterwidget_mock.h \
     src/widgets/tablerecord/itablerecordfactory_mock.h \
     src/widgets/tablerecord/itablerecord_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \

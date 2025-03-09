@@ -31,12 +31,12 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     mSellDecision3ConfigWidget = sellDecision3ConfigWidgetFactory->newInstance(config->getSellDecision3Config(), ui->sellGroupBox);
     // clang-format on
 
-    ui->layoutForBuyDecisions->addWidget(mBuyDecision1ConfigWidget);
-    ui->layoutForBuyDecisions->addWidget(mBuyDecision2ConfigWidget);
-    ui->layoutForBuyDecisions->addWidget(mBuyDecision3ConfigWidget);
-    ui->layoutForSellDecisions->addWidget(mSellDecision1ConfigWidget);
-    ui->layoutForSellDecisions->addWidget(mSellDecision2ConfigWidget);
-    ui->layoutForSellDecisions->addWidget(mSellDecision3ConfigWidget);
+    ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision1ConfigWidget);
+    ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision2ConfigWidget);
+    ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision3ConfigWidget);
+    ui->layoutForSellDecisionWidgets->addWidget(mSellDecision1ConfigWidget);
+    ui->layoutForSellDecisionWidgets->addWidget(mSellDecision2ConfigWidget);
+    ui->layoutForSellDecisionWidgets->addWidget(mSellDecision3ConfigWidget);
 }
 
 DecisionMakerConfigWidget::~DecisionMakerConfigWidget()

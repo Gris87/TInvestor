@@ -19,6 +19,7 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    IFilterWidgetFactory*              filterWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
@@ -69,6 +70,9 @@ MainWindow::MainWindow(
     qDebug() << "Create MainWindow";
 
     ui->setupUi(this);
+
+    mFilterWidget = filterWidgetFactory->newInstance(this);
+    ui->layoutForFilterWidget->addWidget(mFilterWidget);
 
     ITrayIcon* trayIcon = trayIconFactory->newInstance(this);
 

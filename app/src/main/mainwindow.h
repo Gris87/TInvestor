@@ -17,6 +17,7 @@
 #include "src/threads/makedecision/imakedecisionthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
+#include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -49,6 +50,7 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        IFilterWidgetFactory*              filterWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
@@ -98,6 +100,7 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
+    IFilterWidget*                     mFilterWidget;
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
     IGrpcClient*                       mGrpcClient;

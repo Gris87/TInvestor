@@ -59,6 +59,8 @@ SOURCES += \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
     src/utils/settingseditor/settingseditor.cpp \
+    src/widgets/filterwidget/filterwidget.cpp \
+    src/widgets/filterwidget/filterwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
     src/widgets/tablerecord/items/pricechangetableitem.cpp \
     src/widgets/tablerecord/items/pricetableitem.cpp \
@@ -125,6 +127,7 @@ HEADERS += \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
+    src/domain/filter/filter.h \
     src/domain/quotation/quotation.h \
     src/domain/stocks/stocks.h \
     src/domain/user/user.h \
@@ -171,6 +174,10 @@ HEADERS += \
     src/utils/messagebox/messagebox.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
+    src/widgets/filterwidget/filterwidget.h \
+    src/widgets/filterwidget/filterwidgetfactory.h \
+    src/widgets/filterwidget/ifilterwidget.h \
+    src/widgets/filterwidget/ifilterwidgetfactory.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
     src/widgets/tablerecord/items/paybacktableitem.h \
@@ -195,3 +202,4 @@ FORMS += \
     src/dialogs/authdialog/authdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
+    src/widgets/filterwidget/filterwidget.ui \

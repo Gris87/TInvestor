@@ -117,6 +117,39 @@
     </message>
 </context>
 <context>
+    <name>FilterWidget</name>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="32"/>
+        <source>Filters</source>
+        <translation>Фильтры</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="53"/>
+        <source>Ticker</source>
+        <translation>Тикер</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="63"/>
+        <source>Price</source>
+        <translation>Цена</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="93"/>
+        <source>Change from day start</source>
+        <translation>Изменение за день</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="123"/>
+        <source>Change from some date</source>
+        <translation>Изменение от даты</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="153"/>
+        <source>Payback</source>
+        <translation>Окупаемость</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
@@ -129,88 +162,88 @@
         <translation>Изменение цены от даты:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="145"/>
+        <location filename="../../src/main/mainwindow.ui" line="152"/>
         <source>Stock</source>
         <translation>Акция</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="150"/>
+        <location filename="../../src/main/mainwindow.ui" line="157"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="155"/>
+        <location filename="../../src/main/mainwindow.ui" line="162"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="160"/>
+        <location filename="../../src/main/mainwindow.ui" line="167"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="165"/>
+        <location filename="../../src/main/mainwindow.ui" line="172"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="168"/>
+        <location filename="../../src/main/mainwindow.ui" line="175"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation>Возможность вернуть потраченную стоимость (с учётом комиссии) на основании последних 24 часов</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="177"/>
+        <location filename="../../src/main/mainwindow.ui" line="184"/>
         <source>Link</source>
         <translation>Ссылка</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="214"/>
+        <location filename="../../src/main/mainwindow.ui" line="221"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="217"/>
+        <location filename="../../src/main/mainwindow.ui" line="224"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation>Авторизовать пользователя (Ctrl+L)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="238"/>
+        <location filename="../../src/main/mainwindow.ui" line="245"/>
         <source>Stocks (Ctrl+1)</source>
         <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="241"/>
+        <location filename="../../src/main/mainwindow.ui" line="248"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="259"/>
+        <location filename="../../src/main/mainwindow.ui" line="266"/>
         <source>Simulation (Ctrl+2)</source>
         <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="262"/>
+        <location filename="../../src/main/mainwindow.ui" line="269"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="280"/>
+        <location filename="../../src/main/mainwindow.ui" line="287"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="283"/>
+        <location filename="../../src/main/mainwindow.ui" line="290"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="298"/>
-        <location filename="../../src/main/mainwindow.ui" line="301"/>
+        <location filename="../../src/main/mainwindow.ui" line="305"/>
+        <location filename="../../src/main/mainwindow.ui" line="308"/>
         <source>Settings (F6)</source>
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="193"/>
+        <location filename="../../src/main/mainwindow.cpp" line="197"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
@@ -238,22 +271,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="80"/>
+        <location filename="../../src/main.cpp" line="81"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="80"/>
+        <location filename="../../src/main.cpp" line="81"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="92"/>
+        <location filename="../../src/main.cpp" line="93"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="92"/>
+        <location filename="../../src/main.cpp" line="93"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
