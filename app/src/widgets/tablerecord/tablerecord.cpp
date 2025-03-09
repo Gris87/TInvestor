@@ -19,7 +19,7 @@ TableRecord::TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* paren
     qDebug() << "Create TableRecord";
 
     mStock->mutex->lock();
-    QString uid = mStock->meta.uid;
+    QString uid        = mStock->meta.uid;
     qint32  priceNanos = mStock->meta.minPriceIncrement.nano;
     mStock->mutex->unlock();
 
