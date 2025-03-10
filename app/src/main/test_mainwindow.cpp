@@ -26,6 +26,7 @@
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/filterwidget/ifilterwidget_mock.h"
 #include "src/widgets/filterwidget/ifilterwidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -71,18 +72,29 @@ protected:
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
+        filterWidgetMock                     = new StrictMock<FilterWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
+        EXPECT_CALL(*filterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(filterWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
         EXPECT_CALL(*configMock, load(settingsEditorMock));
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
+        EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+
+        EXPECT_CALL(*autorunSettingsEditorMock, setValue(QString("CurrentVersion/Run/TInvestor"), _));
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),                     QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"),                  QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),                    QVariant(0))).WillOnce(Return(QVariant(0)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(46))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Price"),      QVariant(38))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(121))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(121))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(104))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Link"),       QVariant(51))).WillOnce(Return(QVariant(100)));
         // clang-format on
 
         mainWindow = new MainWindow(
@@ -117,10 +129,18 @@ protected:
 
     void TearDown()
     {
+        EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"), _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),   _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),                     _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"),                  _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),                    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Stock"),      _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Price"),      _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DayChange"),  _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DateChange"), _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Payback"),    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Link"),       _));
         // clang-format on
 
         delete mainWindow;
@@ -150,6 +170,10 @@ protected:
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete autorunSettingsEditorMock;
+        // It will be deleted by `delete ui;`
+        /*
+        delete filterWidgetMock;
+        */
         delete trayIconMock;
     }
 
@@ -180,6 +204,7 @@ protected:
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
+    StrictMock<FilterWidgetMock>*                     filterWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
 

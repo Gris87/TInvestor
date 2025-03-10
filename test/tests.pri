@@ -52,6 +52,7 @@ SOURCES += \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
+    src/utils/style/test_darkpalette.cpp \
     src/widgets/filterwidget/test_filterwidget.cpp \
     src/widgets/filterwidget/test_filterwidgetfactory.cpp \
     src/widgets/tablerecord/items/test_paybacktableitem.cpp \

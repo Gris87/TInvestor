@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QStyleFactory>
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
@@ -41,6 +42,7 @@
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
+#include "src/utils/style/darkpalette.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -71,6 +73,8 @@ int main(int argc, char* argv[])
 int runApplication(int argc, char* argv[])
 {
     QApplication app(argc, argv);
+    app.setStyle(QStyleFactory::create("Fusion"));
+    app.setPalette(DarkPalette());
 
     Q_INIT_RESOURCE(Resources);
 

@@ -216,8 +216,8 @@ TEST(Test_Config, Test_save)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
-    EXPECT_CALL(simulatorConfigMock, save(&settingsEditorMock, QString("Simulator")));
-    EXPECT_CALL(autoPilotConfigMock, save(&settingsEditorMock, QString("AutoPilot")));
+    EXPECT_CALL(simulatorConfigMock, save(&settingsEditorMock, QString("Config/Simulator")));
+    EXPECT_CALL(autoPilotConfigMock, save(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),               QVariant(false)));
@@ -274,8 +274,8 @@ TEST(Test_Config, Test_load)
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
-    EXPECT_CALL(simulatorConfigMock, load(&settingsEditorMock, QString("Simulator")));
-    EXPECT_CALL(autoPilotConfigMock, load(&settingsEditorMock, QString("AutoPilot")));
+    EXPECT_CALL(simulatorConfigMock, load(&settingsEditorMock, QString("Config/Simulator")));
+    EXPECT_CALL(autoPilotConfigMock, load(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),               QVariant(false))).WillOnce(Return(QVariant(true)));

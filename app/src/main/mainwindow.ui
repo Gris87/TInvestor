@@ -56,7 +56,7 @@
          <widget class="QScrollArea" name="scrollArea">
           <property name="maximumSize">
            <size>
-            <width>210</width>
+            <width>230</width>
             <height>16777215</height>
            </size>
           </property>
@@ -68,7 +68,7 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>208</width>
+             <width>228</width>
              <height>705</height>
             </rect>
            </property>
@@ -140,6 +140,9 @@
          <widget class="QTableWidget" name="stocksTableWidget">
           <property name="editTriggers">
            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
           </property>
           <property name="columnCount">
            <number>6</number>
