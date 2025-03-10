@@ -89,12 +89,12 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),                     QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"),                  QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),                    QVariant(0))).WillOnce(Return(QVariant(0)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(46))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Price"),      QVariant(38))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(121))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(121))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(104))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Link"),       QVariant(51))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(79))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Price"),      QVariant(61))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(139))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(139))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Link"),       QVariant(69))).WillOnce(Return(QVariant(100)));
         // clang-format on
 
         mainWindow = new MainWindow(

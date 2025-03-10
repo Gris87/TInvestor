@@ -542,12 +542,12 @@ void MainWindow::loadWindowState()
     ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
 
     // clang-format off
-    ui->stocksTableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Stock",      46).toInt());
-    ui->stocksTableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Price",      38).toInt());
-    ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  121).toInt());
-    ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 121).toInt());
-    ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    104).toInt());
-    ui->stocksTableWidget->setColumnWidth(LINK_COLUMN,        mSettingsEditor->value("MainWindow/stocksTableWidget_Link",       51).toInt());
+    ui->stocksTableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Stock",      79).toInt());
+    ui->stocksTableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Price",      61).toInt());
+    ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  139).toInt());
+    ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 139).toInt());
+    ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    120).toInt());
+    ui->stocksTableWidget->setColumnWidth(LINK_COLUMN,        mSettingsEditor->value("MainWindow/stocksTableWidget_Link",       69).toInt());
     // clang-format on
 
     updateStackWidgetToolbar();
