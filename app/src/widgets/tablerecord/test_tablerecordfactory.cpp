@@ -13,7 +13,10 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 {
     TableRecordFactory factory;
 
-    ITableRecord* record = factory.newInstance(nullptr, nullptr, nullptr);
+    QTableWidget tableWidget;
+    Stock        stock;
+
+    ITableRecord* record = factory.newInstance(&tableWidget, &stock, nullptr);
     ASSERT_TRUE(record != nullptr);
 
     delete record;

@@ -37,6 +37,7 @@
 using ::testing::_;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -265,8 +266,37 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_authFailed)
 {
-    StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
+    // clang-format off
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
+    // clang-format on
 
+    mainWindow->authFailed();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
+    // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
+{
+    // clang-format off
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
+    // clang-format on
+
+    mainWindow->authFailed();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
+    // clang-format on
+
+    StrictMock<AuthDialogMock>* authDialogMock =
+        new StrictMock<AuthDialogMock>(); // Will be deleted in authFailedDelayTimerTicked
+
+    EXPECT_CALL(*lastPriceThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, NotNull()))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
@@ -277,7 +307,12 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*lastPriceThreadMock, run());
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
-    mainWindow->authFailed();
+    mainWindow->authFailedDelayTimerTicked();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
+    // clang-format on
 
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
@@ -425,6 +460,9 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, save(settingsEditorMock));
 
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
+    EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
+
+    EXPECT_CALL(*autorunSettingsEditorMock, remove(QString("CurrentVersion/Run/TInvestor")));
 
     mainWindow->ui->actionSettings->trigger();
 
@@ -433,6 +471,9 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_init)
 {
+    QMutex        mutex;
+    QList<Stock*> stocks;
+
     ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
     ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
     ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
@@ -444,6 +485,8 @@ TEST_F(Test_MainWindow, Test_init)
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*cleanupThreadMock, run());
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
