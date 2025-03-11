@@ -33,17 +33,17 @@ private:
 
 private slots:
     void on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_tickerLineEdit_editingFinished();
+    void on_tickerLineEdit_textChanged(const QString& text);
     void on_priceCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_priceFromDoubleSpinBox_editingFinished();
-    void on_priceToDoubleSpinBox_editingFinished();
+    void on_priceFromDoubleSpinBox_valueChanged(double value);
+    void on_priceToDoubleSpinBox_valueChanged(double value);
     void on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_dayStartChangeFromDoubleSpinBox_editingFinished();
-    void on_dayStartChangeToDoubleSpinBox_editingFinished();
+    void on_dayStartChangeFromDoubleSpinBox_valueChanged(double value);
+    void on_dayStartChangeToDoubleSpinBox_valueChanged(double value);
     void on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_dateChangeFromDoubleSpinBox_editingFinished();
-    void on_dateChangeToDoubleSpinBox_editingFinished();
+    void on_dateChangeFromDoubleSpinBox_valueChanged(double value);
+    void on_dateChangeToDoubleSpinBox_valueChanged(double value);
     void on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_paybackFromDoubleSpinBox_editingFinished();
-    void on_paybackToDoubleSpinBox_editingFinished();
+    void on_paybackFromDoubleSpinBox_valueChanged(double value);
+    void on_paybackToDoubleSpinBox_valueChanged(double value);
 };

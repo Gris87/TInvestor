@@ -37,9 +37,9 @@ void FilterWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& val
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_tickerLineEdit_editingFinished()
+void FilterWidget::on_tickerLineEdit_textChanged(const QString& text)
 {
-    mFilter.ticker = ui->tickerLineEdit->text();
+    mFilter.ticker = text;
 
     emit filterChanged(mFilter);
 }
@@ -55,9 +55,9 @@ void FilterWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& valu
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_priceFromDoubleSpinBox_editingFinished()
+void FilterWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.priceFrom = ui->priceFromDoubleSpinBox->value();
+    mFilter.priceFrom = value;
 
     if (mFilter.priceFrom > mFilter.priceTo)
     {
@@ -68,9 +68,9 @@ void FilterWidget::on_priceFromDoubleSpinBox_editingFinished()
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_priceToDoubleSpinBox_editingFinished()
+void FilterWidget::on_priceToDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.priceTo = ui->priceToDoubleSpinBox->value();
+    mFilter.priceTo = value;
 
     if (mFilter.priceTo < mFilter.priceFrom)
     {
@@ -92,9 +92,9 @@ void FilterWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckSt
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dayStartChangeFromDoubleSpinBox_editingFinished()
+void FilterWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.dayStartChangeFrom = ui->dayStartChangeFromDoubleSpinBox->value();
+    mFilter.dayStartChangeFrom = value;
 
     if (mFilter.dayStartChangeFrom > mFilter.dayStartChangeTo)
     {
@@ -105,9 +105,9 @@ void FilterWidget::on_dayStartChangeFromDoubleSpinBox_editingFinished()
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dayStartChangeToDoubleSpinBox_editingFinished()
+void FilterWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.dayStartChangeTo = ui->dayStartChangeToDoubleSpinBox->value();
+    mFilter.dayStartChangeTo = value;
 
     if (mFilter.dayStartChangeTo < mFilter.dayStartChangeFrom)
     {
@@ -129,9 +129,9 @@ void FilterWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState&
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dateChangeFromDoubleSpinBox_editingFinished()
+void FilterWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.dateChangeFrom = ui->dateChangeFromDoubleSpinBox->value();
+    mFilter.dateChangeFrom = value;
 
     if (mFilter.dateChangeFrom > mFilter.dateChangeTo)
     {
@@ -142,9 +142,9 @@ void FilterWidget::on_dateChangeFromDoubleSpinBox_editingFinished()
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dateChangeToDoubleSpinBox_editingFinished()
+void FilterWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.dateChangeTo = ui->dateChangeToDoubleSpinBox->value();
+    mFilter.dateChangeTo = value;
 
     if (mFilter.dateChangeTo < mFilter.dateChangeFrom)
     {
@@ -166,9 +166,9 @@ void FilterWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& va
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_paybackFromDoubleSpinBox_editingFinished()
+void FilterWidget::on_paybackFromDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.paybackFrom = ui->paybackFromDoubleSpinBox->value();
+    mFilter.paybackFrom = value;
 
     if (mFilter.paybackFrom > mFilter.paybackTo)
     {
@@ -179,9 +179,9 @@ void FilterWidget::on_paybackFromDoubleSpinBox_editingFinished()
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_paybackToDoubleSpinBox_editingFinished()
+void FilterWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
 {
-    mFilter.paybackTo = ui->paybackToDoubleSpinBox->value();
+    mFilter.paybackTo = value;
 
     if (mFilter.paybackTo < mFilter.paybackFrom)
     {

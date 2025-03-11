@@ -174,3 +174,18 @@ TEST_F(Test_File, Test_read)
     ASSERT_EQ(readData.at(2), 'S');
     ASSERT_EQ(readData.at(3), 'T');
 }
+
+TEST_F(Test_File, Test_exists)
+{
+    File file(appDir + "/test/dir_for_file/test.txt");
+
+    ASSERT_EQ(file.exists(), false);
+
+    QFile qFile(appDir + "/test/dir_for_file/test.txt");
+
+    ASSERT_TRUE(qFile.open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile.write("TEST"), 4);
+    qFile.close();
+
+    ASSERT_EQ(file.exists(), true);
+}
