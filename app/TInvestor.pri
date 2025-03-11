@@ -36,7 +36,10 @@ SOURCES += \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/domain/filter/filter.cpp \
     src/domain/quotation/quotation.cpp \
-    src/domain/stocks/stocks.cpp \
+    src/domain/stocks/stock.cpp \
+    src/domain/stocks/stockmeta.cpp \
+    src/domain/stocks/stockoperational.cpp \
+    src/domain/user/account.cpp \
     src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
     src/grpc/utils.cpp \
@@ -131,7 +134,11 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/domain/filter/filter.h \
     src/domain/quotation/quotation.h \
-    src/domain/stocks/stocks.h \
+    src/domain/stocks/stock.h \
+    src/domain/stocks/stockdata.h \
+    src/domain/stocks/stockmeta.h \
+    src/domain/stocks/stockoperational.h \
+    src/domain/user/account.h \
     src/domain/user/user.h \
     src/grpc/grpcclient.h \
     src/grpc/igrpcclient.h \

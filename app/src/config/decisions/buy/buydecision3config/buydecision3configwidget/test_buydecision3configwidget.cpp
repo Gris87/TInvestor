@@ -38,7 +38,7 @@ TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
-    ASSERT_NEAR(configWidget.ui->priceRiseDoubleSpinBox->value(), 2.1f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->priceRiseDoubleSpinBox->value(), 2.1f, 0.0001f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          3);
     // clang-format on
 
@@ -50,7 +50,7 @@ TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
-    ASSERT_NEAR(configWidget.ui->priceRiseDoubleSpinBox->value(), 5.3f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->priceRiseDoubleSpinBox->value(), 5.3f, 0.0001f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          2);
     // clang-format on
 }

@@ -36,7 +36,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        true);
-    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 2.1f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 2.1f, 0.0001f);
     // clang-format on
 
     EXPECT_CALL(sellDecision1ConfigMock, isEnabled()).WillOnce(Return(false));
@@ -46,7 +46,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        false);
-    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.0001f);
     // clang-format on
 }
 

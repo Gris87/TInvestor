@@ -27,7 +27,7 @@ DarkPalette::DarkPalette() :
     setColor(QPalette::Active, QPalette::Mid,             QColor("#1C2833"));
     setColor(QPalette::Active, QPalette::Shadow,          QColor("#000000"));
     setColor(QPalette::Active, QPalette::Highlight,       QColor("#4C6882"));
-    setColor(QPalette::Active, QPalette::Accent ,         QColor("#4C6882"));
+    setColor(QPalette::Active, QPalette::Accent,          QColor("#4C6882"));
     setColor(QPalette::Active, QPalette::HighlightedText, QColor("#FFFFFF"));
     setColor(QPalette::Active, QPalette::Link,            QColor("#0078D7"));
     setColor(QPalette::Active, QPalette::LinkVisited,     QColor("#002642"));
@@ -51,7 +51,7 @@ DarkPalette::DarkPalette() :
     setColor(QPalette::Inactive, QPalette::Mid,             QColor("#1C2833"));
     setColor(QPalette::Inactive, QPalette::Shadow,          QColor("#000000"));
     setColor(QPalette::Inactive, QPalette::Highlight,       QColor("#4C6882"));
-    setColor(QPalette::Inactive, QPalette::Accent ,         QColor("#4C6882"));
+    setColor(QPalette::Inactive, QPalette::Accent,          QColor("#4C6882"));
     setColor(QPalette::Inactive, QPalette::HighlightedText, QColor("#000000"));
     setColor(QPalette::Inactive, QPalette::Link,            QColor("#0078D7"));
     setColor(QPalette::Inactive, QPalette::LinkVisited,     QColor("#002642"));
@@ -75,7 +75,7 @@ DarkPalette::DarkPalette() :
     setColor(QPalette::Disabled, QPalette::Mid,             QColor("#1C2833"));
     setColor(QPalette::Disabled, QPalette::Shadow,          QColor("#000000"));
     setColor(QPalette::Disabled, QPalette::Highlight,       QColor("#4C6882"));
-    setColor(QPalette::Disabled, QPalette::Accent ,         QColor("#4C6882"));
+    setColor(QPalette::Disabled, QPalette::Accent,          QColor("#4C6882"));
     setColor(QPalette::Disabled, QPalette::HighlightedText, QColor("#000000"));
     setColor(QPalette::Disabled, QPalette::Link,            QColor("#0078D7"));
     setColor(QPalette::Disabled, QPalette::LinkVisited,     QColor("#002642"));

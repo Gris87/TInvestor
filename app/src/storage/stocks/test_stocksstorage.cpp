@@ -119,9 +119,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp, 200);
     ASSERT_EQ(stocks.at(0)->data.size(),                     2);
     ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,            100);
-    ASSERT_NEAR(stocks.at(0)->data.at(0).price,              0.1f, 0.001f);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,              0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,            200);
-    ASSERT_NEAR(stocks.at(0)->data.at(1).price,              0.2f, 0.001f);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,              0.2f, 0.0001f);
     // clang-format on
 
     // clang-format off
@@ -135,9 +135,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp, 300);
     ASSERT_EQ(stocks.at(1)->data.size(),                     2);
     ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,            200);
-    ASSERT_NEAR(stocks.at(1)->data.at(0).price,              0.2f, 0.001f);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,              0.2f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,            300);
-    ASSERT_NEAR(stocks.at(1)->data.at(1).price,              0.3f, 0.001f);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,              0.3f, 0.0001f);
     // clang-format on
 
     // clang-format off
@@ -151,11 +151,11 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp, 400);
     ASSERT_EQ(stocks.at(2)->data.size(),                     3);
     ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,            100);
-    ASSERT_NEAR(stocks.at(2)->data.at(0).price,              0.1f, 0.001f);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,              0.1f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,            300);
-    ASSERT_NEAR(stocks.at(2)->data.at(1).price,              0.3f, 0.001f);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,              0.3f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,            400);
-    ASSERT_NEAR(stocks.at(2)->data.at(2).price,              0.4f, 0.001f);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,              0.4f, 0.0001f);
     // clang-format on
 }
 

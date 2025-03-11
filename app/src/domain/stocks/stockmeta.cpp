@@ -1,4 +1,4 @@
-#include "src/domain/stocks/stocks.h"
+#include "src/domain/stocks/stockmeta.h"
 
 
 
@@ -60,69 +60,6 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("minPriceIncrement", minPriceIncrement.toJsonObject());
 
     return res;
-}
-
-StockOperational::StockOperational() :
-    lastStoredTimestamp(),
-    dayStartPrice(-1),
-    specifiedDatePrice(-1),
-    payback(),
-    detailedData()
-{
-}
-
-StockOperational::StockOperational(const StockOperational& another) :
-    lastStoredTimestamp(another.lastStoredTimestamp),
-    dayStartPrice(another.dayStartPrice),
-    specifiedDatePrice(another.specifiedDatePrice),
-    payback(another.payback),
-    detailedData(another.detailedData)
-{
-}
-
-StockOperational::~StockOperational()
-{
-}
-
-StockOperational& StockOperational::operator=(const StockOperational& another)
-{
-    lastStoredTimestamp = another.lastStoredTimestamp;
-    dayStartPrice       = another.dayStartPrice;
-    specifiedDatePrice  = another.specifiedDatePrice;
-    payback             = another.payback;
-    detailedData        = another.detailedData;
-
-    return *this;
-}
-
-Stock::Stock() :
-    mutex(new QMutex()),
-    meta(),
-    operational(),
-    data()
-{
-}
-
-Stock::Stock(const Stock& another) :
-    mutex(new QMutex()),
-    meta(another.meta),
-    operational(another.operational),
-    data(another.data)
-{
-}
-
-Stock::~Stock()
-{
-    delete mutex;
-}
-
-Stock& Stock::operator=(const Stock& another)
-{
-    meta        = another.meta;
-    operational = another.operational;
-    data        = another.data;
-
-    return *this;
 }
 
 bool operator==(const StockMeta& lhs, const StockMeta& rhs)

@@ -38,7 +38,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       true);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 2.1f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 2.1f, 0.0001f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           4);
     // clang-format on
 
@@ -50,7 +50,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       false);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 5.3f, 0.01f);
+    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 5.3f, 0.0001f);
     ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           7);
     // clang-format on
 }

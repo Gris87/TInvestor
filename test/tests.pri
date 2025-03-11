@@ -29,6 +29,13 @@ SOURCES += \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
+    src/domain/filter/test_filter.cpp \
+    src/domain/quotation/test_quotation.cpp \
+    src/domain/stocks/test_stock.cpp \
+    src/domain/stocks/test_stockmeta.cpp \
+    src/domain/stocks/test_stockoperational.cpp \
+    src/domain/user/test_account.cpp \
+    src/domain/user/test_user.cpp \
     src/grpc/test_grpcclient.cpp \
     src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \

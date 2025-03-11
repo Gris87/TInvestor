@@ -4,7 +4,7 @@
 
 #include "src/widgets/tablerecord/itablerecord.h"
 
-#include "src/domain/stocks/stocks.h"
+#include "src/domain/stocks/stock.h"
 #include "src/widgets/tablerecord/items/paybacktableitem.h"
 #include "src/widgets/tablerecord/items/pricechangetableitem.h"
 #include "src/widgets/tablerecord/items/pricetableitem.h"

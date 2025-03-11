@@ -2,7 +2,6 @@
 
 
 
-#include <QMap>
 #include <QStringList>
 
 
@@ -27,22 +26,3 @@ struct User
     QString     tariff;
     float       commission;
 };
-
-struct Account
-{
-    Account();
-    Account(const Account& another);
-    ~Account();
-
-    Account& operator=(const Account& another);
-
-    void setId(const QString& value);
-
-    QString id;
-    QString idHash;
-    QString name;
-};
-
-
-
-bool operator==(const Account& lhs, const Account& rhs);

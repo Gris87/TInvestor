@@ -6,4 +6,5 @@
 
 TEST(Test_DarkPalette, Test_constructor_and_destructor)
 {
+    DarkPalette palette;
 }
