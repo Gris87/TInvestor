@@ -78,6 +78,9 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
+    ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
+    ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
+
     mFilterWidget = filterWidgetFactory->newInstance(this);
     ui->layoutForFilterWidget->addWidget(mFilterWidget);
 
@@ -496,8 +499,22 @@ void MainWindow::updateStocksTableWidget()
 void MainWindow::updateStackWidgetToolbar()
 {
     ui->actionStocksPage->setChecked(ui->stackedWidget->currentWidget() == ui->stocksPage);
+    ui->actionStocksPage->setIcon(QIcon(
+        ui->stackedWidget->currentWidget() == ui->stocksPage ? ":/assets/images/stocks_selected.png"
+                                                             : ":/assets/images/stocks.png"
+    ));
+
     ui->actionSimulationPage->setChecked(ui->stackedWidget->currentWidget() == ui->simulationPage);
+    ui->actionSimulationPage->setIcon(QIcon(
+        ui->stackedWidget->currentWidget() == ui->simulationPage ? ":/assets/images/simulation_selected.png"
+                                                                 : ":/assets/images/simulation.png"
+    ));
+
     ui->actionAutoPilotPage->setChecked(ui->stackedWidget->currentWidget() == ui->autoPilotPage);
+    ui->actionAutoPilotPage->setIcon(QIcon(
+        ui->stackedWidget->currentWidget() == ui->autoPilotPage ? ":/assets/images/auto_pilot_selected.png"
+                                                                : ":/assets/images/auto_pilot.png"
+    ));
 }
 
 void MainWindow::applyConfig()

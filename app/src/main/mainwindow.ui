@@ -221,7 +221,8 @@
   <action name="actionAuth">
    <property name="icon">
     <iconset resource="../../Resources.qrc">
-     <normaloff>:/assets/images/auth.png</normaloff>:/assets/images/auth.png</iconset>
+     <normaloff>:/assets/images/auth.png</normaloff>
+     <disabledoff>:/assets/images/auth_disabled.png</disabledoff>:/assets/images/auth.png</iconset>
    </property>
    <property name="text">
     <string>Authorization</string>
