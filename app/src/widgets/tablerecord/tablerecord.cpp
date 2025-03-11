@@ -64,6 +64,7 @@ void TableRecord::updateAll()
 {
     mStock->mutex->lock();
     mStockTableWidgetItem->setText(mStock->meta.ticker);
+    mStockTableWidgetItem->setToolTip(mStock->meta.name);
     mStock->mutex->unlock();
 
     updatePrice();

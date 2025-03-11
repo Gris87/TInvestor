@@ -1,3 +1,4 @@
+Show stock name on hover
 Big fall from 24h ago
 Buy on fall with high likvidity
 Buy if max cost reached

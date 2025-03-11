@@ -6,6 +6,7 @@
 
 
 
+using ::testing::_;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -38,10 +39,11 @@ TEST_F(Test_UserStorage, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getAccounts)
+TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getCommission_and_getAccounts)
 {
     User user;
     user.token = "someToken";
+    user.commission = 0.99f;
 
     Account account1;
     Account account2;
@@ -61,7 +63,13 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getAccounts)
     storage->readFromDatabase();
 
     ASSERT_EQ(storage->getToken(), "someToken");
+    ASSERT_NEAR(storage->getCommission(), 0.99f, 0.0001f);
     ASSERT_EQ(storage->getAccounts(), accounts);
+}
+
+TEST_F(Test_UserStorage, Test_getMutex)
+{
+    ASSERT_NE(storage->getMutex(), nullptr);
 }
 
 TEST_F(Test_UserStorage, Test_setToken)
@@ -93,6 +101,16 @@ TEST_F(Test_UserStorage, Test_setToken)
 
     storage->setToken("BlahToken");
     ASSERT_EQ(storage->getToken(), "BlahToken");
+}
+
+TEST_F(Test_UserStorage, Test_setUserInfo)
+{
+    User user;
+    user.tariff = "premium";
+
+    EXPECT_CALL(*userDatabaseMock, writeUserInfo(_));
+
+    storage->setUserInfo(user);
 }
 
 TEST_F(Test_UserStorage, Test_setAccounts)

@@ -140,7 +140,7 @@ User UserDatabase::readUserInfo()
 
 QList<Account> UserDatabase::readAccounts()
 {
-    qDebug() << "Reading account";
+    qDebug() << "Reading accounts";
 
     QList<Account> res;
 

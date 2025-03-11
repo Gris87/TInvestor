@@ -82,7 +82,7 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 
     for (int i = 0; i < newMetas.size(); ++i)
     {
-        Stock* stock = new Stock();
+        Stock* stock = new Stock(); // StocksStorage will take ownership
 
         stock->meta = *newMetas.at(i);
 
@@ -109,15 +109,15 @@ void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& 
 
 struct GetDatePriceInfo
 {
-    qint64 dayStartTimestamp;
+    qint64 startTimestamp;
     bool   isDayStartNeeded;
 };
 
 void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
-    GetDatePriceInfo* getDatePriceInfo  = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
-    qint64            dayStartTimestamp = getDatePriceInfo->dayStartTimestamp;
-    bool              isDayStartNeeded  = getDatePriceInfo->isDayStartNeeded;
+    GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
+    qint64            startTimestamp   = getDatePriceInfo->startTimestamp;
+    bool              isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
 
     Stock** stockArray = stocks.data();
 
@@ -131,7 +131,7 @@ void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int s
 
         for (int i = stock->data.size() - 1; i >= 0; --i)
         {
-            if (stock->data.at(i).timestamp < dayStartTimestamp)
+            if (stock->data.at(i).timestamp <= startTimestamp)
             {
                 index = i;
 
@@ -156,8 +156,8 @@ void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int s
 void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo;
-    getDatePriceInfo.dayStartTimestamp = timestamp;
-    getDatePriceInfo.isDayStartNeeded  = true;
+    getDatePriceInfo.startTimestamp   = timestamp;
+    getDatePriceInfo.isDayStartNeeded = true;
 
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
@@ -165,8 +165,8 @@ void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo;
-    getDatePriceInfo.dayStartTimestamp = timestamp;
-    getDatePriceInfo.isDayStartNeeded  = false;
+    getDatePriceInfo.startTimestamp   = timestamp;
+    getDatePriceInfo.isDayStartNeeded = false;
 
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
@@ -199,7 +199,7 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
 
         for (int i = stock->data.size() - 1; i >= 0; --i)
         {
-            if (stock->data.at(i).timestamp < startTimestamp)
+            if (stock->data.at(i).timestamp <= startTimestamp)
             {
                 index = i;
 
@@ -234,10 +234,6 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
             }
 
             stock->operational.payback = (goodDeals * 100.0f) / (stock->data.size() - index - 1);
-        }
-        else
-        {
-            stock->operational.payback = 0;
         }
     }
 }

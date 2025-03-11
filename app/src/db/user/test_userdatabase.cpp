@@ -98,3 +98,41 @@ TEST_F(Test_UserDatabase, Test_writeUserInfo)
     ASSERT_NEAR(user.commission,         0.04f, 0.0001f);
     // clang-format on
 }
+
+TEST_F(Test_UserDatabase, Test_readAccounts)
+{
+    QList<Account> accounts = database->readAccounts();
+
+    ASSERT_EQ(accounts.size(), 0);
+}
+
+TEST_F(Test_UserDatabase, Test_writeAccounts)
+{
+    QList<Account> accounts = database->readAccounts();
+
+    ASSERT_EQ(accounts.size(), 0);
+
+    Account account1;
+    Account account2;
+
+    account1.setId("aaaaa");
+    account1.name = "WATA";
+
+    account2.setId("bbbbb");
+    account2.name = "Zorro";
+
+    accounts << account1 << account2;
+
+    database->writeAccounts(accounts);
+    accounts = database->readAccounts();
+
+    // clang-format off
+    ASSERT_EQ(accounts.size(),       2);
+    ASSERT_EQ(accounts.at(0).id,     "aaaaa");
+    ASSERT_EQ(accounts.at(0).idHash, "594f803b380a41396ed63dca39503542");
+    ASSERT_EQ(accounts.at(0).name,   "WATA");
+    ASSERT_EQ(accounts.at(1).id,     "bbbbb");
+    ASSERT_EQ(accounts.at(1).idHash, "a21075a36eeddd084e17611a238c7101");
+    ASSERT_EQ(accounts.at(1).name,   "Zorro");
+    // clang-format on
+}
