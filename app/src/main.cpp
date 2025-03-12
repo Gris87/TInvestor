@@ -43,6 +43,7 @@
 #include "src/utils/messagebox/messagebox.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
+#include "src/utils/timeutils/timeutils.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -120,6 +121,7 @@ int runApplication(int argc, char* argv[])
     FileFactory        fileFactory;
     QZipFactory        qZipFactory;
     QZipFileFactory    qZipFileFactory;
+    TimeUtils          timeUtils;
     HttpClient         httpClient;
 
     MessageBoxUtils messageBoxUtils;
@@ -225,12 +227,21 @@ int runApplication(int argc, char* argv[])
     UserStorage        userStorage(&userDatabase);
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage(&stocksDatabase, &userStorage);
-    GrpcClient         grpcClient(&userStorage);
+    GrpcClient         grpcClient(&userStorage, &timeUtils);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     PriceCollectThread priceCollectThread(
-        &config, &userStorage, &stocksStorage, &dirFactory, &fileFactory, &qZipFactory, &qZipFileFactory, &httpClient, &grpcClient
+        &config,
+        &userStorage,
+        &stocksStorage,
+        &dirFactory,
+        &fileFactory,
+        &qZipFactory,
+        &qZipFileFactory,
+        &timeUtils,
+        &httpClient,
+        &grpcClient
     );
-    LastPriceThread    lastPriceThread(&stocksStorage, &grpcClient);
+    LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
 

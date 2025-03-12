@@ -13,6 +13,7 @@
 #include "src/utils/fs/zip/qzip/iqzipfactory.h"
 #include "src/utils/fs/zip/qzipfile/iqzipfilefactory.h"
 #include "src/utils/http/ihttpclient.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -29,6 +30,7 @@ public:
         IFileFactory*     fileFactory,
         IQZipFactory*     qZipFactory,
         IQZipFileFactory* qZipFileFactory,
+        ITimeUtils*       timeUtils,
         IHttpClient*      httpClient,
         IGrpcClient*      grpcClient,
         QObject*          parent = nullptr
@@ -52,6 +54,7 @@ private:
     IFileFactory*     mFileFactory;
     IQZipFactory*     mQZipFactory;
     IQZipFileFactory* mQZipFileFactory;
+    ITimeUtils*       mTimeUtils;
     IHttpClient*      mHttpClient;
     IGrpcClient*      mGrpcClient;
     qint64            mDayStartTimestamp;

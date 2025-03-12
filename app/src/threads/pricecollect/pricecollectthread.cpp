@@ -28,6 +28,7 @@ PriceCollectThread::PriceCollectThread(
     IFileFactory*     fileFactory,
     IQZipFactory*     qZipFactory,
     IQZipFileFactory* qZipFileFactory,
+    ITimeUtils*       timeUtils,
     IHttpClient*      httpClient,
     IGrpcClient*      grpcClient,
     QObject*          parent
@@ -39,6 +40,7 @@ PriceCollectThread::PriceCollectThread(
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
     mQZipFileFactory(qZipFileFactory),
+    mTimeUtils(timeUtils),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mDayStartTimestamp()
@@ -302,6 +304,7 @@ void getCandlesWithHttp(
     IFileFactory*     fileFactory,
     IQZipFactory*     qZipFactory,
     IQZipFileFactory* qZipFileFactory,
+    ITimeUtils*       timeUtils,
     IHttpClient*      httpClient,
     Stock*            stock,
     qint64            startTimestamp,
@@ -361,9 +364,9 @@ void getCandlesWithHttp(
                     break;
                 }
 
-                for (int t = 0; t < 10 && !parentThread->isInterruptionRequested(); ++t)
+                if (timeUtils->interruptibleSleep(5000, parentThread))
                 {
-                    QThread::msleep(500);
+                    break;
                 }
             }
         }
@@ -385,6 +388,7 @@ struct GetCandlesInfo
     IFileFactory*       fileFactory;
     IQZipFactory*       qZipFactory;
     IQZipFileFactory*   qZipFileFactory;
+    ITimeUtils*         timeUtils;
     IHttpClient*        httpClient;
     IGrpcClient*        grpcClient;
     qint64              currentTimestamp;
@@ -401,6 +405,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     IFileFactory*       fileFactory      = getCandlesInfo->fileFactory;
     IQZipFactory*       qZipFactory      = getCandlesInfo->qZipFactory;
     IQZipFileFactory*   qZipFileFactory  = getCandlesInfo->qZipFileFactory;
+    ITimeUtils*         timeUtils        = getCandlesInfo->timeUtils;
     IHttpClient*        httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*        grpcClient       = getCandlesInfo->grpcClient;
     qint64              currentTimestamp = getCandlesInfo->currentTimestamp;
@@ -434,6 +439,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
                 fileFactory,
                 qZipFactory,
                 qZipFileFactory,
+                timeUtils,
                 httpClient,
                 stock,
                 startTimestamp,
@@ -465,6 +471,7 @@ void PriceCollectThread::obtainStocksData()
     getCandlesInfo.fileFactory      = mFileFactory;
     getCandlesInfo.qZipFactory      = mQZipFactory;
     getCandlesInfo.qZipFileFactory  = mQZipFileFactory;
+    getCandlesInfo.timeUtils        = mTimeUtils;
     getCandlesInfo.httpClient       = mHttpClient;
     getCandlesInfo.grpcClient       = mGrpcClient;
     getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();

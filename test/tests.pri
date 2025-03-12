@@ -60,6 +60,7 @@ SOURCES += \
     src/utils/messagebox/test_messagebox.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
+    src/utils/timeutils/test_timeutils.cpp \
     src/widgets/filterwidget/test_filterwidget.cpp \
     src/widgets/filterwidget/test_filterwidgetfactory.cpp \
     src/widgets/tablerecord/items/test_paybacktableitem.cpp \
@@ -119,6 +120,7 @@ HEADERS += \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
+    src/utils/timeutils/itimeutils_mock.h \
     src/widgets/filterwidget/ifilterwidgetfactory_mock.h \
     src/widgets/filterwidget/ifilterwidget_mock.h \
     src/widgets/tablerecord/itablerecordfactory_mock.h \

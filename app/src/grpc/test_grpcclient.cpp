@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -18,18 +19,21 @@ protected:
     void SetUp()
     {
         userStorageMock = new StrictMock<UserStorageMock>();
+        timeUtilsMock   = new StrictMock<TimeUtilsMock>();
 
-        client = new GrpcClient(userStorageMock);
+        client = new GrpcClient(userStorageMock, timeUtilsMock);
     }
 
     void TearDown()
     {
         delete client;
         delete userStorageMock;
+        delete timeUtilsMock;
     }
 
     GrpcClient*                  client;
     StrictMock<UserStorageMock>* userStorageMock;
+    StrictMock<TimeUtilsMock>*   timeUtilsMock;
 };
 
 

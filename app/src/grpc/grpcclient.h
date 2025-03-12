@@ -5,6 +5,7 @@
 #include "src/grpc/igrpcclient.h"
 
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -13,7 +14,7 @@ class GrpcClient : public IGrpcClient
     Q_OBJECT
 
 public:
-    explicit GrpcClient(IUserStorage* userStorage, QObject* parent = nullptr);
+    explicit GrpcClient(IUserStorage* userStorage, ITimeUtils* timeUtils, QObject* parent = nullptr);
     ~GrpcClient();
 
     GrpcClient(const GrpcClient& another)            = delete;
@@ -34,6 +35,7 @@ public:
 
 private:
     QMutex*                                                 mMutex;
+    ITimeUtils*                                             mTimeUtils;
     std::shared_ptr<grpc::CallCredentials>                  mCreds;
     std::unique_ptr<tinkoff::UsersService::Stub>            mUsersService;
     std::unique_ptr<tinkoff::InstrumentsService::Stub>      mInstrumentsService;

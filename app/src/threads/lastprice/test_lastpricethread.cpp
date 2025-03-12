@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 
 
 
@@ -21,20 +22,23 @@ protected:
     void SetUp()
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new LastPriceThread(stocksStorageMock, grpcClientMock);
+        thread = new LastPriceThread(stocksStorageMock, timeUtilsMock, grpcClientMock);
     }
 
     void TearDown()
     {
         delete thread;
         delete stocksStorageMock;
+        delete timeUtilsMock;
         delete grpcClientMock;
     }
 
     LastPriceThread*               thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<TimeUtilsMock>*     timeUtilsMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
@@ -49,7 +53,6 @@ TEST_F(Test_LastPriceThread, Test_run)
     InSequence seq;
 
     QMutex        mutex;
-    QList<Stock*> emptyStocks;
     QList<Stock*> stocks;
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
@@ -81,8 +84,6 @@ TEST_F(Test_LastPriceThread, Test_run)
     ASSERT_EQ(stock.operational.detailedData.size(), 0);
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa"));
@@ -99,6 +100,20 @@ TEST_F(Test_LastPriceThread, Test_run)
     ASSERT_EQ(stock.operational.detailedData.at(0).timestamp, 1000123);
     ASSERT_NEAR(stock.operational.detailedData.at(0).price,   100.5f, 0.0001f);
     // clang-format on
+}
+
+TEST_F(Test_LastPriceThread, Test_run_interrupted_without_stocks)
+{
+    InSequence seq;
+
+    QMutex        mutex;
+    QList<Stock*> stocks;
+
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(true));
+
+    thread->run();
 }
 
 TEST_F(Test_LastPriceThread, Test_stocksChanged)

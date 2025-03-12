@@ -7,9 +7,10 @@
 
 
 
-LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, IGrpcClient* grpcClient, QObject* parent) :
+LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     ILastPriceThread(parent),
     mStocksStorage(stocksStorage),
+    mTimeUtils(timeUtils),
     mGrpcClient(grpcClient)
 {
     qDebug() << "Create LastPriceThread";
@@ -35,9 +36,9 @@ void LastPriceThread::run()
             break;
         }
 
-        for (int t = 0; t < 10 && !QThread::currentThread()->isInterruptionRequested(); ++t)
+        if (mTimeUtils->interruptibleSleep(5000, QThread::currentThread()))
         {
-            QThread::msleep(500);
+            break;
         }
     }
 

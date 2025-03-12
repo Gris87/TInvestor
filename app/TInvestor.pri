@@ -64,6 +64,7 @@ SOURCES += \
     src/utils/messagebox/messagebox.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
+    src/utils/timeutils/timeutils.cpp \
     src/widgets/filterwidget/filterwidget.cpp \
     src/widgets/filterwidget/filterwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
@@ -184,6 +185,8 @@ HEADERS += \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \
+    src/utils/timeutils/itimeutils.h \
+    src/utils/timeutils/timeutils.h \
     src/widgets/filterwidget/filterwidget.h \
     src/widgets/filterwidget/filterwidgetfactory.h \
     src/widgets/filterwidget/ifilterwidget.h \
