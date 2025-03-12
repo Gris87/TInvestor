@@ -90,7 +90,6 @@ QByteArray SimpleCrypt::encryptToByteArray(QByteArray plaintext)
         return QByteArray();
     }
 
-
     QByteArray ba = plaintext;
 
     CryptoFlags flags = CryptoFlagNone;

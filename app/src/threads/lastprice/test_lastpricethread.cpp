@@ -7,8 +7,10 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -44,4 +46,29 @@ TEST_F(Test_LastPriceThread, Test_constructor_and_destructor)
 
 TEST_F(Test_LastPriceThread, Test_run)
 {
+    InSequence seq;
+
+    QMutex        mutex;
+    QList<Stock*> emptyStocks;
+    QList<Stock*> stocks;
+
+    std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
+
+    Stock stock;
+    stock.meta.uid = "aaaa";
+
+    stocks.append(&stock);
+
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(emptyStocks));
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa"));
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(nullptr));
+    EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
+
+    thread->run();
 }

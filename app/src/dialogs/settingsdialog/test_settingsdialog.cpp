@@ -16,6 +16,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -27,6 +28,8 @@ class Test_SettingsDialog : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         configMock                           = new StrictMock<ConfigMock>();
         simulatorConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
         autoPilotConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
@@ -41,7 +44,6 @@ protected:
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
 
         EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
-        EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
@@ -56,6 +58,8 @@ protected:
             )
         )
             .WillOnce(Return(simulatorConfigWidgetMock));
+
+        EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
@@ -126,6 +130,8 @@ TEST_F(Test_SettingsDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 {
+    InSequence seq;
+
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
@@ -137,16 +143,17 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
+
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
@@ -168,16 +175,17 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(), false);
     // clang-format on
 
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(11));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(20));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
+
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(11));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(15));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(20));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(50000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
@@ -202,6 +210,8 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 
 TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->autorunCheckBox->setChecked(false);
     dialog->ui->autorunCheckBox->blockSignals(false);
@@ -215,6 +225,8 @@ TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
 {
+    InSequence seq;
+
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->setValue(1);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(false);
@@ -228,6 +240,8 @@ TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->setChecked(false);
     dialog->ui->useScheduleCheckBox->blockSignals(false);
@@ -251,6 +265,8 @@ TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
 {
+    InSequence seq;
+
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
@@ -266,10 +282,10 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
     EXPECT_CALL(*configMock, setScheduleStartMinute(20));
     dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 20));
 
-    EXPECT_CALL(*configMock, setScheduleStartHour(12));
-    EXPECT_CALL(*configMock, setScheduleStartMinute(30));
     EXPECT_CALL(*configMock, setScheduleEndHour(12));
     EXPECT_CALL(*configMock, setScheduleEndMinute(30));
+    EXPECT_CALL(*configMock, setScheduleStartHour(12));
+    EXPECT_CALL(*configMock, setScheduleStartMinute(30));
     dialog->ui->scheduleStartTimeEdit->setTime(QTime(12, 30));
 
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(), QTime(12, 30));
@@ -277,6 +293,8 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
 {
+    InSequence seq;
+
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->setTime(QTime(10, 15));
@@ -303,6 +321,8 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->setChecked(false);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(false);
@@ -318,6 +338,8 @@ TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged
 
 TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
 {
+    InSequence seq;
+
     dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
     dialog->ui->amountOfStockPurchaseSpinBox->setValue(1);
     dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(false);
@@ -331,6 +353,8 @@ TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
@@ -361,6 +385,8 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
 {
+    InSequence seq;
+
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
@@ -384,6 +410,8 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
@@ -414,6 +442,8 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
 {
+    InSequence seq;
+
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
@@ -437,6 +467,8 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)
 {
+    InSequence seq;
+
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->setValue(1);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(false);
@@ -464,6 +496,8 @@ TEST_F(Test_SettingsDialog, Test_on_cancelButton_clicked)
 
 TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
 {
+    InSequence seq;
+
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
@@ -476,16 +510,18 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
 
     EXPECT_CALL(*configMock, makeDefault());
+
+    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
+    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
+    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
+    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
+
     EXPECT_CALL(*simulatorConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
-    EXPECT_CALL(*configMock, getScheduleStartMinute()).WillOnce(Return(30));
-    EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(19));
-    EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(15));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));

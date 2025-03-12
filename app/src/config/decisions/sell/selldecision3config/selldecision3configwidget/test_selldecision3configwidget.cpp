@@ -7,6 +7,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -22,6 +23,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
 
 TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 {
+    InSequence seq;
+
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
     SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
@@ -31,8 +34,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
     configWidget.ui->durationSpinBox->blockSignals(true);
 
     EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(2.1f));
     EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
+    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(2.1f));
 
     configWidget.updateUiFromConfig();
 
@@ -43,8 +46,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
     // clang-format on
 
     EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(5.3f));
     EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
+    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(5.3f));
 
     configWidget.updateUiFromConfig();
 
@@ -57,6 +60,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
     SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
@@ -84,6 +89,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
     SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
@@ -101,6 +108,8 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
     SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);

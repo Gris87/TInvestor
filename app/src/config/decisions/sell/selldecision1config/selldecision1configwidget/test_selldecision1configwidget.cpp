@@ -7,6 +7,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -22,6 +23,8 @@ TEST(Test_SellDecision1ConfigWidget, Test_constructor_and_destructor)
 
 TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 {
+    InSequence seq;
+
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
     SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
@@ -52,6 +55,8 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
     SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
@@ -71,6 +76,8 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
     SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);

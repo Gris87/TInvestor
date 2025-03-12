@@ -11,6 +11,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -29,6 +30,8 @@ class Test_StocksDatabase : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         appDir = qApp->applicationDirPath();
 
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in StocksDatabase constructor
@@ -143,6 +146,8 @@ TEST_F(Test_StocksDatabase, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
+    InSequence seq;
+
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/stocks/stocks.json")))
@@ -197,6 +202,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
+    InSequence seq;
+
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/stocks/stocks.json")))
@@ -442,6 +449,8 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
 TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 {
+    InSequence seq;
+
     QList<Stock*> stocks;
 
     Stock stock1;
@@ -494,6 +503,8 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_appendStockData)
 {
+    InSequence seq;
+
     StockData stockData1;
     StockData stockData2;
     StockData stockData3;
@@ -544,6 +555,8 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
 TEST_F(Test_StocksDatabase, Test_deleteObsoleteData)
 {
+    // InSequence seq;
+
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/stocks/stocks.json")))

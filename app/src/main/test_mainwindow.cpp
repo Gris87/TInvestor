@@ -35,6 +35,7 @@
 
 
 using ::testing::_;
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -47,6 +48,8 @@ class Test_MainWindow : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         configMock                           = new StrictMock<ConfigMock>();
         configForSettingsDialogMock          = new StrictMock<ConfigMock>();
         configForSimulationMock              = new StrictMock<ConfigMock>();
@@ -130,6 +133,8 @@ protected:
 
     void TearDown()
     {
+        InSequence seq;
+
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
 
         // clang-format off
@@ -281,6 +286,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
 TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
 {
+    InSequence seq;
+
     // clang-format off
     ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
     ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
@@ -322,6 +329,8 @@ TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
 
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 {
+    InSequence seq;
+
     EXPECT_CALL(*userUpdateThreadMock, run());
 
     mainWindow->userUpdateTimerTicked();
@@ -331,6 +340,8 @@ TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 
 TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 {
+    InSequence seq;
+
     EXPECT_CALL(*priceCollectThreadMock, run());
 
     mainWindow->priceCollectTimerTicked();
@@ -340,6 +351,8 @@ TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
+    InSequence seq;
+
     EXPECT_CALL(*cleanupThreadMock, run());
 
     mainWindow->cleanupTimerTicked();
@@ -349,6 +362,8 @@ TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 
 TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
+    InSequence seq;
+
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->makeDecisionTimerTicked();
@@ -358,6 +373,8 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
+    InSequence seq;
+
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
     ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
@@ -434,6 +451,8 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
 
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
+    InSequence seq;
+
     // Will be deleted in on_actionSettings_triggered
     StrictMock<SettingsDialogMock>* settingsDialogMock = new StrictMock<SettingsDialogMock>();
 
@@ -471,6 +490,8 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_init)
 {
+    InSequence seq;
+
     QMutex        mutex;
     QList<Stock*> stocks;
 

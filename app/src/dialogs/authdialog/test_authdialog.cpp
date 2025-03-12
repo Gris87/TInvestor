@@ -10,6 +10,7 @@
 
 
 using ::testing::_;
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -54,6 +55,8 @@ TEST_F(Test_AuthDialog, Test_getToken)
 
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
+    InSequence seq;
+
     EXPECT_CALL(*messageBoxUtilsMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
         .WillOnce(Return(QMessageBox::Ok));
 

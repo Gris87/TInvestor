@@ -15,6 +15,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -28,6 +29,8 @@ TEST(Test_SettingsDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_SettingsDialogFactory, Test_newInstance)
 {
+    InSequence seq;
+
     SettingsDialogFactory factory;
 
     StrictMock<ConfigMock>                           configMock;
@@ -44,7 +47,6 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
 
     EXPECT_CALL(configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
-    EXPECT_CALL(configMock, getAutoPilotConfig()).WillOnce(Return(&autoPilotConfigMock));
     EXPECT_CALL(
         decisionMakerConfigWidgetFactoryMock,
         newInstance(
@@ -59,6 +61,8 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
         )
     )
         .WillOnce(Return(simulatorConfigWidgetMock));
+
+    EXPECT_CALL(configMock, getAutoPilotConfig()).WillOnce(Return(&autoPilotConfigMock));
     EXPECT_CALL(
         decisionMakerConfigWidgetFactoryMock,
         newInstance(

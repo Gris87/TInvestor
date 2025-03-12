@@ -7,6 +7,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -23,6 +24,8 @@ TEST(Test_Config, Test_constructor_and_destructor)
 
 TEST(Test_Config, Test_assign)
 {
+    InSequence seq;
+
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock2;
@@ -125,6 +128,8 @@ TEST(Test_Config, Test_assign)
 
 TEST(Test_Config, Test_makeDefault)
 {
+    InSequence seq;
+
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 
@@ -181,6 +186,8 @@ TEST(Test_Config, Test_makeDefault)
 
 TEST(Test_Config, Test_save)
 {
+    InSequence seq;
+
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 
@@ -239,6 +246,8 @@ TEST(Test_Config, Test_save)
 
 TEST(Test_Config, Test_load)
 {
+    InSequence seq;
+
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 

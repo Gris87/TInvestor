@@ -7,6 +7,7 @@
 
 
 using ::testing::_;
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -41,8 +42,10 @@ TEST_F(Test_UserStorage, Test_constructor_and_destructor)
 
 TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getCommission_and_getAccounts)
 {
+    InSequence seq;
+
     User user;
-    user.token = "someToken";
+    user.token      = "someToken";
     user.commission = 0.99f;
 
     Account account1;
@@ -74,6 +77,8 @@ TEST_F(Test_UserStorage, Test_getMutex)
 
 TEST_F(Test_UserStorage, Test_setToken)
 {
+    InSequence seq;
+
     User user;
     user.token = "someToken";
 
@@ -105,6 +110,8 @@ TEST_F(Test_UserStorage, Test_setToken)
 
 TEST_F(Test_UserStorage, Test_setUserInfo)
 {
+    InSequence seq;
+
     User user;
     user.tariff = "premium";
 
@@ -115,6 +122,8 @@ TEST_F(Test_UserStorage, Test_setUserInfo)
 
 TEST_F(Test_UserStorage, Test_setAccounts)
 {
+    InSequence seq;
+
     User user;
     user.token = "someToken";
 

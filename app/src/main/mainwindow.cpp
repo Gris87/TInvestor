@@ -284,7 +284,7 @@ void MainWindow::notifyStocksProgress(const QString& message)
 
 void MainWindow::stocksChanged()
 {
-    qInfo() << "Stocks сhanged";
+    qInfo() << "Stocks changed";
 
     updateStocksTableWidget();
     mLastPriceThread->stocksChanged();

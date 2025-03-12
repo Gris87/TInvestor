@@ -1,7 +1,45 @@
+#include "src/widgets/tablerecord/items/pricechangetableitem.h"
+
 #include <gtest/gtest.h>
 
 
 
 TEST(Test_PriceChangeTableItem, Test_constructor_and_destructor)
 {
+    PriceChangeTableItem item;
+}
+
+TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
+{
+    PriceChangeTableItem item;
+
+    item.setValue(-1);
+    ASSERT_EQ(item.getValue(), -1);
+    ASSERT_EQ(item.data(Qt::DisplayRole), "-1.00%");
+    ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
+
+    item.setValue(0);
+    ASSERT_EQ(item.getValue(), 0);
+    ASSERT_EQ(item.data(Qt::DisplayRole), "0.00%");
+    ASSERT_EQ(item.foreground().color(), QColor("#97AEC4"));
+
+    item.setValue(1);
+    ASSERT_EQ(item.getValue(), 1);
+    ASSERT_EQ(item.data(Qt::DisplayRole), "+1.00%");
+    ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
+}
+
+TEST(Test_PriceChangeTableItem, Test_less)
+{
+    PriceChangeTableItem item;
+    PriceChangeTableItem item2;
+
+    item.setValue(10);
+    item2.setValue(20);
+
+    ASSERT_LT(item, item2);
+
+    item.setValue(30);
+
+    ASSERT_LT(item2, item);
 }

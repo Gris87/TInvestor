@@ -7,6 +7,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -22,6 +23,8 @@ TEST(Test_BuyDecision2ConfigWidget, Test_constructor_and_destructor)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
     BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
@@ -62,6 +65,8 @@ TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
     BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
@@ -91,6 +96,8 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
     BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
@@ -108,6 +115,8 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
     BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
@@ -125,6 +134,8 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
     BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);

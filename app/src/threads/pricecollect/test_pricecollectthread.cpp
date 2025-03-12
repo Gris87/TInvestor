@@ -16,6 +16,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -27,6 +28,8 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         appDir = qApp->applicationDirPath();
 
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in PriceCollectThread constructor

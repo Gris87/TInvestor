@@ -8,6 +8,7 @@
 
 
 using ::testing::_;
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Ref;
 using ::testing::Return;
@@ -46,6 +47,8 @@ TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 {
+    InSequence seq;
+
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
@@ -179,6 +182,8 @@ TEST_F(Test_StocksStorage, Test_getMutex)
 
 TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 {
+    InSequence seq;
+
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
@@ -416,6 +421,8 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
 TEST_F(Test_StocksStorage, Test_appendStockData)
 {
+    InSequence seq;
+
     Stock     stock;
     StockData stockData;
 
@@ -426,6 +433,8 @@ TEST_F(Test_StocksStorage, Test_appendStockData)
 
 TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 {
+    InSequence seq;
+
     QList<Stock*> stocks;
 
     EXPECT_CALL(*stocksDatabaseMock, deleteObsoleteData(1000, Ref(stocks)));
@@ -435,6 +444,8 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
 TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 {
+    InSequence seq;
+
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
@@ -653,6 +664,8 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
 TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 {
+    InSequence seq;
+
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
@@ -871,6 +884,8 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
 TEST_F(Test_StocksStorage, Test_obtainPayback)
 {
+    // InSequence seq;
+
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 

@@ -12,6 +12,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -39,6 +40,8 @@ TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor)
 
 TEST(Test_DecisionMakerConfig, Test_assign)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -83,6 +86,8 @@ TEST(Test_DecisionMakerConfig, Test_assign)
 
 TEST(Test_DecisionMakerConfig, Test_makeDefault)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -111,6 +116,8 @@ TEST(Test_DecisionMakerConfig, Test_makeDefault)
 
 TEST(Test_DecisionMakerConfig, Test_save)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -143,6 +150,8 @@ TEST(Test_DecisionMakerConfig, Test_save)
 
 TEST(Test_DecisionMakerConfig, Test_load)
 {
+    InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;

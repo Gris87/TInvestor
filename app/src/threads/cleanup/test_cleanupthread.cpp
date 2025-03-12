@@ -8,6 +8,7 @@
 
 
 using ::testing::Gt;
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -46,6 +47,8 @@ TEST_F(Test_CleanupThread, Test_constructor_and_destructor)
 
 TEST_F(Test_CleanupThread, Test_run)
 {
+    InSequence seq;
+
     QMutex        mutex;
     QList<Stock*> stocks;
 

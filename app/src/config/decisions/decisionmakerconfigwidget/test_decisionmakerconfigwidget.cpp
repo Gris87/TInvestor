@@ -24,6 +24,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -35,6 +36,8 @@ class Test_DecisionMakerConfigWidget : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         decisionMakerConfigMock              = new StrictMock<DecisionMakerConfigMock>();
         buyDecision1ConfigMock               = new StrictMock<BuyDecision1ConfigMock>();
         buyDecision2ConfigMock               = new StrictMock<BuyDecision2ConfigMock>();
@@ -56,22 +59,26 @@ protected:
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
 
         EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision1Config()).WillOnce(Return(buyDecision1ConfigMock));
-        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(buyDecision2ConfigMock));
-        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision3Config()).WillOnce(Return(buyDecision3ConfigMock));
-        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(sellDecision1ConfigMock));
-        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision2Config()).WillOnce(Return(sellDecision2ConfigMock));
-        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
-
         EXPECT_CALL(*buyDecision1ConfigWidgetFactoryMock, newInstance(buyDecision1ConfigMock, NotNull()))
             .WillOnce(Return(buyDecision1ConfigWidgetMock));
+
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision2Config()).WillOnce(Return(buyDecision2ConfigMock));
         EXPECT_CALL(*buyDecision2ConfigWidgetFactoryMock, newInstance(buyDecision2ConfigMock, NotNull()))
             .WillOnce(Return(buyDecision2ConfigWidgetMock));
+
+        EXPECT_CALL(*decisionMakerConfigMock, getBuyDecision3Config()).WillOnce(Return(buyDecision3ConfigMock));
         EXPECT_CALL(*buyDecision3ConfigWidgetFactoryMock, newInstance(buyDecision3ConfigMock, NotNull()))
             .WillOnce(Return(buyDecision3ConfigWidgetMock));
+
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision1Config()).WillOnce(Return(sellDecision1ConfigMock));
         EXPECT_CALL(*sellDecision1ConfigWidgetFactoryMock, newInstance(sellDecision1ConfigMock, NotNull()))
             .WillOnce(Return(sellDecision1ConfigWidgetMock));
+
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision2Config()).WillOnce(Return(sellDecision2ConfigMock));
         EXPECT_CALL(*sellDecision2ConfigWidgetFactoryMock, newInstance(sellDecision2ConfigMock, NotNull()))
             .WillOnce(Return(sellDecision2ConfigWidgetMock));
+
+        EXPECT_CALL(*decisionMakerConfigMock, getSellDecision3Config()).WillOnce(Return(sellDecision3ConfigMock));
         EXPECT_CALL(*sellDecision3ConfigWidgetFactoryMock, newInstance(sellDecision3ConfigMock, NotNull()))
             .WillOnce(Return(sellDecision3ConfigWidgetMock));
 
@@ -143,6 +150,8 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
 {
+    InSequence seq;
+
     EXPECT_CALL(*buyDecision1ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*buyDecision2ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*buyDecision3ConfigWidgetMock, updateUiFromConfig());

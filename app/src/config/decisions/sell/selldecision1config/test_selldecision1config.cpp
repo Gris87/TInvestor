@@ -6,6 +6,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -67,6 +68,8 @@ TEST(Test_SellDecision1Config, Test_makeDefault)
 
 TEST(Test_SellDecision1Config, Test_save)
 {
+    InSequence seq;
+
     SellDecision1Config config;
 
     config.setEnabled(false);
@@ -89,6 +92,8 @@ TEST(Test_SellDecision1Config, Test_save)
 
 TEST(Test_SellDecision1Config, Test_load)
 {
+    InSequence seq;
+
     SellDecision1Config config;
 
     config.setEnabled(false);
