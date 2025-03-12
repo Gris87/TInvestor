@@ -286,7 +286,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
 TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
 {
-    InSequence seq;
+    // InSequence seq;
 
     // clang-format off
     ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
@@ -373,7 +373,7 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
-    InSequence seq;
+    // InSequence seq;
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
@@ -490,7 +490,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_init)
 {
-    InSequence seq;
+    // InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;

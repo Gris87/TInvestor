@@ -49,7 +49,7 @@ void LastPriceThread::run()
     QMap<QString, Stock*> stocksMap;
     mNeedToRebuildStocksMap = true;
 
-    mMarketDataStream = mGrpcClient->createMarketDataStream();
+    createMarketDataStream();
     mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks);
 
     while (true)
@@ -146,4 +146,9 @@ void LastPriceThread::terminateThread()
     }
 
     requestInterruption();
+}
+
+void LastPriceThread::createMarketDataStream()
+{
+    mMarketDataStream = mGrpcClient->createMarketDataStream();
 }

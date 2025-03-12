@@ -25,6 +25,8 @@ public:
     void stocksChanged() override;
     void terminateThread() override;
 
+    void createMarketDataStream();
+
 private:
     QStringList           getStockUIDs();
     QMap<QString, Stock*> buildStocksMap();
