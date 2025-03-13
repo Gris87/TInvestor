@@ -13,6 +13,7 @@
 
 #define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
 #define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
+#define ONE_MINUTE          60000LL      // 60 * 1000 // 1 minute
 #define MOSCOW_TIME         10800000LL   // 3 * 60 * 60 * 1000 // 3 hours
 
 #define CSV_FIELD_TIMESTAMP   1
@@ -196,11 +197,11 @@ void getCandlesWithGrpc(
 )
 {
     // Round to 1 minute
-    startTimestamp = (startTimestamp / 60000) * 60000;
-    endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
+    startTimestamp = (startTimestamp / ONE_MINUTE) * ONE_MINUTE;
+    endTimestamp   = (endTimestamp / ONE_MINUTE + 1) * ONE_MINUTE;
 
     QList<StockData> data;
-    data.resize((endTimestamp - startTimestamp) / 60000);
+    data.resize((endTimestamp - startTimestamp) / ONE_MINUTE);
     StockData* dataArray = data.data();
 
     int lastIndex = data.size() - 1;
@@ -314,11 +315,11 @@ void getCandlesWithHttp(
     QString appDir = qApp->applicationDirPath();
 
     // Round to 1 minute
-    startTimestamp = (startTimestamp / 60000) * 60000;
-    endTimestamp   = (endTimestamp / 60000 + 1) * 60000;
+    startTimestamp = (startTimestamp / ONE_MINUTE) * ONE_MINUTE;
+    endTimestamp   = (endTimestamp / ONE_MINUTE + 1) * ONE_MINUTE;
 
     QList<StockData> data;
-    data.resize((endTimestamp - startTimestamp) / 60000);
+    data.resize((endTimestamp - startTimestamp) / ONE_MINUTE);
     StockData* dataArray = data.data();
 
     int indexOffset = 0;
@@ -419,18 +420,10 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
         Stock*       stock = stockArray[i];
         QMutexLocker lock(stock->mutex);
 
-        qint64 startTimestamp = stock->operational.lastStoredTimestamp + 60000;
+        qint64 startTimestamp =
+            qBound(currentTimestamp - storageMonthLimit, stock->operational.lastStoredTimestamp + ONE_MINUTE, currentTimestamp);
 
-        if (startTimestamp < currentTimestamp - storageMonthLimit)
-        {
-            startTimestamp = currentTimestamp - storageMonthLimit;
-        }
-
-        if (currentTimestamp - startTimestamp < MAX_GRPC_TIME_LIMIT)
-        {
-            getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
-        }
-        else
+        if (currentTimestamp - startTimestamp >= MAX_GRPC_TIME_LIMIT)
         {
             getCandlesWithHttp(
                 parentThread,
@@ -445,10 +438,11 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
                 startTimestamp,
                 currentTimestamp
             );
-            getCandlesWithGrpc(
-                parentThread, stocksStorage, grpcClient, stock, stock->operational.lastStoredTimestamp + 60000, currentTimestamp
-            );
+
+            startTimestamp = stock->operational.lastStoredTimestamp + ONE_MINUTE;
         }
+
+        getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
 
         getCandlesInfo->finished++;
 

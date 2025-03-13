@@ -42,12 +42,12 @@ public:
 
     void run() override;
 
-private:
     bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
     bool obtainStocksDayStartPrice();
     void obtainPayback();
 
+private:
     IConfig*          mConfig;
     IUserStorage*     mUserStorage;
     IStocksStorage*   mStocksStorage;

@@ -92,3 +92,48 @@ TEST(Test_User, Test_setTariff)
     ASSERT_EQ(user.tariff, "blah");
     ASSERT_NEAR(user.commission, 0.00f, 0.0001f);
 }
+
+TEST(Test_User, Test_equals)
+{
+    User user;
+    User user2;
+
+    user.token                = "TOKEN";
+    user.qualified            = true;
+    user.qualifiedForWorkWith = QStringList() << "hello" << "world";
+    user.tariff               = "admin";
+    user.commission           = 0.01f;
+
+    user2.token                = "TOKEN";
+    user2.qualified            = true;
+    user2.qualifiedForWorkWith = QStringList() << "hello" << "world";
+    user2.tariff               = "admin";
+    user2.commission           = 0.01f;
+
+    ASSERT_EQ(user, user2);
+
+    user2.token = "aaaa";
+    ASSERT_NE(user, user2);
+    user2.token = "TOKEN";
+    ASSERT_EQ(user, user2);
+
+    user2.qualified = false;
+    ASSERT_NE(user, user2);
+    user2.qualified = true;
+    ASSERT_EQ(user, user2);
+
+    user2.qualifiedForWorkWith << "Zinderwaflen";
+    ASSERT_NE(user, user2);
+    user2.qualifiedForWorkWith.removeOne("Zinderwaflen");
+    ASSERT_EQ(user, user2);
+
+    user2.tariff = "aaaa";
+    ASSERT_NE(user, user2);
+    user2.tariff = "admin";
+    ASSERT_EQ(user, user2);
+
+    user2.commission = 0.3f;
+    ASSERT_NE(user, user2);
+    user2.commission = 0.01f;
+    ASSERT_EQ(user, user2);
+}

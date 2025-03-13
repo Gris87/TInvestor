@@ -51,3 +51,9 @@ void User::setTariff(const QString& value)
     tariff     = value;
     commission = tariffToCommission[tariff];
 }
+
+bool operator==(const User& lhs, const User& rhs)
+{
+    return lhs.token == rhs.token && lhs.qualified == rhs.qualified && lhs.qualifiedForWorkWith == rhs.qualifiedForWorkWith &&
+           lhs.tariff == rhs.tariff && lhs.commission == rhs.commission;
+}

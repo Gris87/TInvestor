@@ -26,3 +26,7 @@ struct User
     QString     tariff;
     float       commission;
 };
+
+
+
+bool operator==(const User& lhs, const User& rhs);
