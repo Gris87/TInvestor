@@ -1,6 +1,7 @@
 #include "src/utils/http/httpclient.h"
 
 #include <QDebug>
+#include <QDesktopServices>
 #include <QEventLoop>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -45,4 +46,9 @@ HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
     }
 
     return res;
+}
+
+bool HttpClient::openInBrowser(const QUrl& url)
+{
+    return QDesktopServices::openUrl(url);
 }

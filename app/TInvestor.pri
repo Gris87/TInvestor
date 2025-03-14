@@ -42,6 +42,7 @@ SOURCES += \
     src/domain/user/account.cpp \
     src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
+    src/grpc/rawgrpcclient.cpp \
     src/grpc/utils.cpp \
     src/main/mainwindow.cpp \
     src/storage/stocks/stocksstorage.cpp \
@@ -144,6 +145,8 @@ HEADERS += \
     src/grpc/grpcclient.h \
     src/grpc/igrpcclient.h \
     src/grpc/investapiuthenticator.h \
+    src/grpc/irawgrpcclient.h \
+    src/grpc/rawgrpcclient.h \
     src/grpc/utils.h \
     src/main/mainwindow.h \
     src/storage/stocks/istocksstorage.h \

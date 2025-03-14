@@ -37,6 +37,7 @@ SOURCES += \
     src/domain/user/test_account.cpp \
     src/domain/user/test_user.cpp \
     src/grpc/test_grpcclient.cpp \
+    src/grpc/test_rawgrpcclient.cpp \
     src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
@@ -102,6 +103,7 @@ HEADERS += \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/grpc/igrpcclient_mock.h \
+    src/grpc/irawgrpcclient_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \

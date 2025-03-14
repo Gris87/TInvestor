@@ -5,6 +5,7 @@
 #include "src/widgets/tablerecord/itablerecord.h"
 
 #include "src/domain/stocks/stock.h"
+#include "src/utils/http/ihttpclient.h"
 #include "src/widgets/tablerecord/items/paybacktableitem.h"
 #include "src/widgets/tablerecord/items/pricechangetableitem.h"
 #include "src/widgets/tablerecord/items/pricetableitem.h"
@@ -16,7 +17,7 @@ class TableRecord : public ITableRecord
     Q_OBJECT
 
 public:
-    explicit TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* parent = nullptr);
+    explicit TableRecord(QTableWidget* tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent = nullptr);
     ~TableRecord();
 
     TableRecord(const TableRecord& another)            = delete;
@@ -28,6 +29,7 @@ public:
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
 
 private:
+    IHttpClient*          mHttpClient;
     Stock*                mStock;
     QTableWidgetItem*     mStockTableWidgetItem;
     PriceTableItem*       mPriceTableWidgetItem;

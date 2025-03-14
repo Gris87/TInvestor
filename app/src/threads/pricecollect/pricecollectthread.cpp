@@ -206,7 +206,7 @@ void getCandlesWithGrpc(
                 stocksStorage->appendStockData(stock, &dataArray[lastIndex + 1], data.size() - lastIndex - 1);
             }
 
-            return;
+            break;
         }
 
         for (int i = tinkoffCandles->candles_size() - 1; i >= 0; --i)

@@ -17,6 +17,7 @@
 #include "src/threads/makedecision/imakedecisionthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
+#include "src/utils/http/ihttpclient.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -54,6 +55,7 @@ public:
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
+        IHttpClient*                       httpClient,
         IGrpcClient*                       grpcClient,
         IUserUpdateThread*                 userUpdateThread,
         IPriceCollectThread*               priceCollectThread,
@@ -105,6 +107,7 @@ private:
     ITrayIcon*                         mTrayIcon;
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
+    IHttpClient*                       mHttpClient;
     IGrpcClient*                       mGrpcClient;
     IUserUpdateThread*                 mUserUpdateThread;
     IPriceCollectThread*               mPriceCollectThread;

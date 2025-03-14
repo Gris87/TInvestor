@@ -2,13 +2,13 @@
 
 #include <QCoreApplication>
 #include <QDebug>
-#include <QDesktopServices>
 #include <QPushButton>
 
 
 
-TableRecord::TableRecord(QTableWidget* tableWidget, Stock* stock, QObject* parent) :
+TableRecord::TableRecord(QTableWidget* tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent) :
     ITableRecord(parent),
+    mHttpClient(httpClient),
     mStock(stock),
     mStockTableWidgetItem(new QTableWidgetItem()),
     mPriceTableWidgetItem(new PriceTableItem()),
@@ -114,6 +114,6 @@ void TableRecord::linkButtonClicked()
     QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
     mStock->mutex->unlock();
 
-    bool ok = QDesktopServices::openUrl(url);
+    bool ok = mHttpClient->openInBrowser(url);
     Q_ASSERT_X(ok, "TableRecord::linkButtonClicked()", "Failed to open link");
 }

@@ -21,4 +21,5 @@ public:
     HttpClientMock& operator=(const HttpClientMock& another) = delete;
 
     MOCK_METHOD(HttpResult, download, (const QUrl& url, const Headers& headers), (override));
+    MOCK_METHOD(bool, openInBrowser, (const QUrl& url), (override));
 };

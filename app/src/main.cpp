@@ -262,6 +262,7 @@ int runApplication(int argc, char* argv[])
         &trayIconFactory,
         &userStorage,
         &stocksStorage,
+        &httpClient,
         &grpcClient,
         &userUpdateThread,
         &priceCollectThread,

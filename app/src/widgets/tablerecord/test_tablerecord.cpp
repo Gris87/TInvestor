@@ -3,6 +3,15 @@
 #include <QPushButton>
 #include <gtest/gtest.h>
 
+#include "src/utils/http/ihttpclient_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 class Test_TableRecord : public ::testing::Test
@@ -10,8 +19,9 @@ class Test_TableRecord : public ::testing::Test
 protected:
     void SetUp()
     {
-        tableWidget = new QTableWidget();
-        stock       = new Stock();
+        httpClientMock = new StrictMock<HttpClientMock>();
+        tableWidget    = new QTableWidget();
+        stock          = new Stock();
 
         tableWidget->setColumnCount(LINK_COLUMN + 1);
 
@@ -29,19 +39,21 @@ protected:
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
-        record = new TableRecord(tableWidget, stock);
+        record = new TableRecord(tableWidget, httpClientMock, stock);
     }
 
     void TearDown()
     {
         delete record;
-        delete stock;
+        delete httpClientMock;
         delete tableWidget;
+        delete stock;
     }
 
-    QTableWidget* tableWidget;
-    Stock*        stock;
-    TableRecord*  record;
+    TableRecord*                record;
+    StrictMock<HttpClientMock>* httpClientMock;
+    QTableWidget*               tableWidget;
+    Stock*                      stock;
 };
 
 
@@ -115,7 +127,10 @@ TEST_F(Test_TableRecord, Test_filter)
 
 TEST_F(Test_TableRecord, Test_linkButtonClicked)
 {
-    // Nothing
-    // QPushButton* linkButton = reinterpret_cast<QPushButton*>(tableWidget->cellWidget(0, LINK_COLUMN));
-    // linkButton->click();
+    InSequence seq;
+
+    EXPECT_CALL(*httpClientMock, openInBrowser(QUrl("https://www.tbank.ru/invest/stocks/WAGA/"))).WillOnce(Return(true));
+
+    QPushButton* linkButton = reinterpret_cast<QPushButton*>(tableWidget->cellWidget(0, LINK_COLUMN));
+    linkButton->click();
 }

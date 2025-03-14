@@ -20,5 +20,10 @@ public:
     TableRecordFactoryMock(const TableRecordFactoryMock& another)            = delete;
     TableRecordFactoryMock& operator=(const TableRecordFactoryMock& another) = delete;
 
-    MOCK_METHOD(ITableRecord*, newInstance, (QTableWidget * tableWidget, Stock* stock, QObject* parent), (override));
+    MOCK_METHOD(
+        ITableRecord*,
+        newInstance,
+        (QTableWidget * tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent),
+        (override)
+    );
 };

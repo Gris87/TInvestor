@@ -28,3 +28,8 @@ TEST(Test_HttpClient, Test_download)
 
     ASSERT_EQ(result.statusCode, 200);
 }
+
+TEST(Test_HttpClient, Test_openInBrowser)
+{
+    // Nothing
+}

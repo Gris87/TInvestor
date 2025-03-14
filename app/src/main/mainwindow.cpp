@@ -28,6 +28,7 @@ MainWindow::MainWindow(
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
+    IHttpClient*                       httpClient,
     IGrpcClient*                       grpcClient,
     IUserUpdateThread*                 userUpdateThread,
     IPriceCollectThread*               priceCollectThread,
@@ -61,6 +62,7 @@ MainWindow::MainWindow(
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
+    mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mUserUpdateThread(userUpdateThread),
     mPriceCollectThread(priceCollectThread),
@@ -474,7 +476,7 @@ void MainWindow::updateStocksTableWidget()
             }
             else
             {
-                record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, stock, this);
+                record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, mHttpClient, stock, this);
                 mTableRecords[uid] = record;
             }
 

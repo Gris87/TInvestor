@@ -17,7 +17,7 @@ TableRecordFactory::~TableRecordFactory()
     qDebug() << "Destroy TableRecordFactory";
 }
 
-ITableRecord* TableRecordFactory::newInstance(QTableWidget* tableWidget, Stock* stock, QObject* parent)
+ITableRecord* TableRecordFactory::newInstance(QTableWidget* tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent)
 {
-    return new TableRecord(tableWidget, stock, parent);
+    return new TableRecord(tableWidget, httpClient, stock, parent);
 }

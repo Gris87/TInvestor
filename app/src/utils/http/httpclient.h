@@ -16,4 +16,5 @@ public:
     HttpClient& operator=(const HttpClient& another) = delete;
 
     HttpResult download(const QUrl& url, const Headers& headers) override;
+    bool       openInBrowser(const QUrl& url) override;
 };

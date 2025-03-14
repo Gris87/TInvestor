@@ -24,6 +24,7 @@
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
+#include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/filterwidget/ifilterwidget_mock.h"
@@ -67,6 +68,7 @@ protected:
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
+        httpClientMock                       = new StrictMock<HttpClientMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
         priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
@@ -118,6 +120,7 @@ protected:
             trayIconFactoryMock,
             userStorageMock,
             stocksStorageMock,
+            httpClientMock,
             grpcClientMock,
             userUpdateThreadMock,
             priceCollectThreadMock,
@@ -167,6 +170,7 @@ protected:
         delete tableRecordFactoryMock;
         delete userStorageMock;
         delete stocksStorageMock;
+        delete httpClientMock;
         delete grpcClientMock;
         delete userUpdateThreadMock;
         delete priceCollectThreadMock;
@@ -201,6 +205,7 @@ protected:
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
+    StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
     StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
