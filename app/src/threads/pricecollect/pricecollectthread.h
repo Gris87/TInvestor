@@ -46,6 +46,7 @@ public:
     void obtainStocksData();
     bool obtainStocksDayStartPrice();
     void obtainPayback();
+    void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
     IConfig*          mConfig;

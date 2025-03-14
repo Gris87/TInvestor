@@ -74,19 +74,7 @@ void PriceCollectThread::run()
         bool needPricesUpdate = obtainStocksDayStartPrice();
         obtainPayback();
 
-        if (needStocksUpdate)
-        {
-            emit stocksChanged();
-        }
-        else
-        {
-            if (needPricesUpdate)
-            {
-                emit pricesChanged();
-            }
-
-            emit paybackChanged();
-        }
+        notifyAboutChanges(needStocksUpdate, needPricesUpdate);
     }
 
     qDebug() << "Finish PriceCollectThread";
@@ -213,7 +201,7 @@ void getCandlesWithGrpc(
 
         if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
         {
-            if (tinkoffCandles->candles_size() == 0)
+            if (tinkoffCandles != nullptr && tinkoffCandles->candles_size() == 0)
             {
                 stocksStorage->appendStockData(stock, &dataArray[lastIndex + 1], data.size() - lastIndex - 1);
             }
@@ -495,4 +483,21 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
 void PriceCollectThread::obtainPayback()
 {
     mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
+}
+
+void PriceCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate)
+{
+    if (needStocksUpdate)
+    {
+        emit stocksChanged();
+    }
+    else
+    {
+        if (needPricesUpdate)
+        {
+            emit pricesChanged();
+        }
+
+        emit paybackChanged();
+    }
 }
