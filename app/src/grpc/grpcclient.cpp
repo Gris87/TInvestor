@@ -28,7 +28,7 @@
             {                                                                                       \
                 if (timeUtils->interruptibleSleep(5000, parentThread))                              \
                 {                                                                                   \
-                    return resp;                                                                    \
+                    return nullptr;                                                                 \
                 }                                                                                   \
                                                                                                     \
                 continue;                                                                           \
@@ -39,7 +39,7 @@
             return nullptr;                                                                         \
         }                                                                                           \
                                                                                                     \
-        return resp;                                                                                \
+        break;                                                                                      \
     }
 
 
@@ -77,6 +77,8 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* paren
     context.set_credentials(mCreds);
 
     REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getUserInfo, mUsersService, context, req, resp);
+
+    return resp;
 }
 
 std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* parentThread)
@@ -91,6 +93,8 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* p
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
     REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getAccounts, mUsersService, context, req, resp);
+
+    return resp;
 }
 
 std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread)
@@ -102,6 +106,8 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
     context.set_credentials(mCreds);
 
     REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, findStocks, mInstrumentsService, context, req, resp);
+
+    return resp;
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
@@ -129,6 +135,8 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
     REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getCandles, mMarketDataService, context, req, resp);
+
+    return resp;
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
