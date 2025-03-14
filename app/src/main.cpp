@@ -26,6 +26,7 @@
 #include "src/dialogs/authdialog/authdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/grpc/grpcclient.h"
+#include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
@@ -227,7 +228,8 @@ int runApplication(int argc, char* argv[])
     UserStorage        userStorage(&userDatabase);
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage(&stocksDatabase, &userStorage);
-    GrpcClient         grpcClient(&userStorage, &timeUtils);
+    RawGrpcClient      rawGrpcClient;
+    GrpcClient         grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     PriceCollectThread priceCollectThread(
         &config,

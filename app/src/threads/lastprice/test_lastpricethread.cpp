@@ -86,7 +86,7 @@ TEST_F(Test_LastPriceThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
-    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa"));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse));
@@ -137,10 +137,10 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
 
     thread->createMarketDataStream();
 
-    EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "bbbb"));
+    EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "bbbb")).WillOnce(Return(true));
 
     thread->stocksChanged();
 }
@@ -154,7 +154,7 @@ TEST_F(Test_LastPriceThread, Test_terminateThread)
 
     thread->createMarketDataStream();
 
-    EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream));
+    EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
 
     thread->terminateThread();
 }

@@ -46,9 +46,10 @@
 
 
 
-GrpcClient::GrpcClient(IUserStorage* userStorage, ITimeUtils* timeUtils, QObject* parent) :
+GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient, ITimeUtils* timeUtils, QObject* parent) :
     IGrpcClient(parent),
     mMutex(new QMutex()),
+    mRawGrpcClient(rawGrpcClient),
     mTimeUtils(timeUtils)
 {
     qDebug() << "Create GrpcClient";
@@ -140,12 +141,12 @@ std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
     std::shared_ptr<MarketDataStream> res(new MarketDataStream());
 
     res->context.set_credentials(mCreds);
-    res->stream = mMarketDataStreamService->MarketDataStream(&res->context);
+    res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context);
 
     return res;
 }
 
-void GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids)
+bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids)
 {
     tinkoff::MarketDataRequest          req;
     tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
@@ -160,10 +161,17 @@ void GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-    marketDataStream->stream->Write(req);
+    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+
+    if (!res)
+    {
+        emit authFailed();
+    }
+
+    return res;
 }
 
-void GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)
+bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
     tinkoff::MarketDataRequest          req;
     tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
@@ -173,7 +181,14 @@ void GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-    marketDataStream->stream->Write(req);
+    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+
+    if (!res)
+    {
+        emit authFailed();
+    }
+
+    return res;
 }
 
 std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
@@ -181,22 +196,31 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
     std::shared_ptr<tinkoff::MarketDataResponse> resp =
         std::shared_ptr<tinkoff::MarketDataResponse>(new tinkoff::MarketDataResponse());
 
-    if (!marketDataStream->stream->Read(resp.get()))
+    if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
     {
+        emit authFailed();
+
         return nullptr;
     }
 
     return resp;
 }
 
-void GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
+bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    marketDataStream->stream->WritesDone();
+    bool res = mRawGrpcClient->closeWriteMarketDataStream(marketDataStream);
+
+    if (!res)
+    {
+        emit authFailed();
+    }
+
+    return res;
 }
 
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    grpc::Status status = marketDataStream->stream->Finish();
+    grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
 
     if (!status.ok())
     {

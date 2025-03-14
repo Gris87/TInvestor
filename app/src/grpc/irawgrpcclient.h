@@ -2,6 +2,36 @@
 
 
 
+#include <QObject>
+
+
+
+#pragma warning(push)
+#pragma warning(disable : 4100 4189 4267)
+#include "messages/generated/instruments.grpc.pb.h"
+#include "messages/generated/marketdata.grpc.pb.h"
+#include "messages/generated/users.grpc.pb.h"
+#pragma warning(pop)
+
+
+
+namespace tinkoff
+{
+using namespace tinkoff::public_::invest::api::contract::v1;
+}
+
+
+
+struct MarketDataStream
+{
+    typedef std::unique_ptr<grpc::ClientReaderWriter<tinkoff::MarketDataRequest, tinkoff::MarketDataResponse>> Stream;
+
+    grpc::ClientContext context;
+    Stream              stream;
+};
+
+
+
 class IRawGrpcClient
 {
 public:
@@ -12,4 +42,13 @@ public:
 
     IRawGrpcClient(const IRawGrpcClient& another)            = delete;
     IRawGrpcClient& operator=(const IRawGrpcClient& another) = delete;
+
+    virtual MarketDataStream::Stream createMarketDataStream(
+        const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
+    ) = 0;
+    virtual bool
+    writeMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, const tinkoff::MarketDataRequest& req)         = 0;
+    virtual bool readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, tinkoff::MarketDataResponse* resp) = 0;
+    virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                              = 0;
+    virtual grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                          = 0;
 };

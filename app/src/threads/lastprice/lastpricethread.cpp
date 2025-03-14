@@ -51,40 +51,43 @@ void LastPriceThread::run()
     mNeedToRebuildStocksMap = true;
 
     createMarketDataStream();
-    mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks);
 
-    while (true)
+    if (mGrpcClient->subscribeLastPrices(mMarketDataStream, stocks))
     {
-        if (mNeedToRebuildStocksMap)
+        while (true)
         {
-            stocksMap               = buildStocksMap();
-            mNeedToRebuildStocksMap = false;
-        }
+            if (mNeedToRebuildStocksMap)
+            {
+                stocksMap               = buildStocksMap();
+                mNeedToRebuildStocksMap = false;
+            }
 
-        std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse = mGrpcClient->readMarketDataStream(mMarketDataStream);
+            std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
+                mGrpcClient->readMarketDataStream(mMarketDataStream);
 
-        if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
-        {
-            break;
-        }
+            if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
+            {
+                break;
+            }
 
-        if (marketDataResponse->has_last_price())
-        {
-            const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
+            if (marketDataResponse->has_last_price())
+            {
+                const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
 
-            StockData stockData;
+                StockData stockData;
 
-            stockData.timestamp = lastPriceResp.time().seconds() * 1000 + lastPriceResp.time().nanos() / 1000000;
-            stockData.price     = quotationToFloat(lastPriceResp.price());
+                stockData.timestamp = lastPriceResp.time().seconds() * 1000 + lastPriceResp.time().nanos() / 1000000;
+                stockData.price     = quotationToFloat(lastPriceResp.price());
 
-            QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
+                QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
 
-            Stock* stock = stocksMap[uid];
+                Stock* stock = stocksMap[uid];
 
-            QMutexLocker lock(stock->mutex);
-            stock->operational.detailedData.append(stockData);
+                QMutexLocker lock(stock->mutex);
+                stock->operational.detailedData.append(stockData);
 
-            emit lastPriceChanged(uid);
+                emit lastPriceChanged(uid);
+            }
         }
     }
 
@@ -133,9 +136,11 @@ void LastPriceThread::stocksChanged()
 {
     if (mMarketDataStream != nullptr)
     {
-        mGrpcClient->unsubscribeLastPrices(mMarketDataStream);
-        mNeedToRebuildStocksMap = true;
-        mGrpcClient->subscribeLastPrices(mMarketDataStream, getStockUIDs());
+        if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
+        {
+            mNeedToRebuildStocksMap = true;
+            mGrpcClient->subscribeLastPrices(mMarketDataStream, getStockUIDs());
+        }
     }
 }
 

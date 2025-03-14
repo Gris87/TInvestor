@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/grpc/irawgrpcclient_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/timeutils/itimeutils_mock.h"
 
@@ -18,22 +19,25 @@ class Test_GrpcClient : public ::testing::Test
 protected:
     void SetUp()
     {
-        userStorageMock = new StrictMock<UserStorageMock>();
-        timeUtilsMock   = new StrictMock<TimeUtilsMock>();
+        userStorageMock   = new StrictMock<UserStorageMock>();
+        rawGrpcClientMock = new StrictMock<RawGrpcClientMock>();
+        timeUtilsMock     = new StrictMock<TimeUtilsMock>();
 
-        client = new GrpcClient(userStorageMock, timeUtilsMock);
+        client = new GrpcClient(userStorageMock, rawGrpcClientMock, timeUtilsMock);
     }
 
     void TearDown()
     {
         delete client;
         delete userStorageMock;
+        delete rawGrpcClientMock;
         delete timeUtilsMock;
     }
 
-    GrpcClient*                  client;
-    StrictMock<UserStorageMock>* userStorageMock;
-    StrictMock<TimeUtilsMock>*   timeUtilsMock;
+    GrpcClient*                    client;
+    StrictMock<UserStorageMock>*   userStorageMock;
+    StrictMock<RawGrpcClientMock>* rawGrpcClientMock;
+    StrictMock<TimeUtilsMock>*     timeUtilsMock;
 };
 
 
