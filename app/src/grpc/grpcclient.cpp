@@ -17,38 +17,35 @@
 
 
 
-#define REPEAT_REQUEST(parentThread, mutex, timeUtils, service, action, context, req, resp) \
-    while (true)                                                                            \
-    {                                                                                       \
-        mutex->lock();                                                                      \
-        grpc::Status status = service->action(&context, req, resp.get());                   \
-        mutex->unlock();                                                                    \
-                                                                                            \
-        if (!parentThread->isInterruptionRequested() && !status.ok())                       \
-        {                                                                                   \
-            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)                \
-            {                                                                               \
-                if (timeUtils->interruptibleSleep(5000, parentThread))                      \
-                {                                                                           \
-                    return resp;                                                            \
-                }                                                                           \
-                                                                                            \
-                continue;                                                                   \
-            }                                                                               \
-                                                                                            \
-            emit authFailed();                                                              \
-                                                                                            \
-            return nullptr;                                                                 \
-        }                                                                                   \
-                                                                                            \
-        return resp;                                                                        \
+#define REPEAT_REQUEST(parentThread, timeUtils, rawGrpcClient, action, service, context, req, resp) \
+    while (true)                                                                                    \
+    {                                                                                               \
+        grpc::Status status = rawGrpcClient->action(service, &context, req, resp.get());            \
+                                                                                                    \
+        if (!parentThread->isInterruptionRequested() && !status.ok())                               \
+        {                                                                                           \
+            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)                        \
+            {                                                                                       \
+                if (timeUtils->interruptibleSleep(5000, parentThread))                              \
+                {                                                                                   \
+                    return resp;                                                                    \
+                }                                                                                   \
+                                                                                                    \
+                continue;                                                                           \
+            }                                                                                       \
+                                                                                                    \
+            emit authFailed();                                                                      \
+                                                                                                    \
+            return nullptr;                                                                         \
+        }                                                                                           \
+                                                                                                    \
+        return resp;                                                                                \
     }
 
 
 
 GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient, ITimeUtils* timeUtils, QObject* parent) :
     IGrpcClient(parent),
-    mMutex(new QMutex()),
     mRawGrpcClient(rawGrpcClient),
     mTimeUtils(timeUtils)
 {
@@ -69,8 +66,6 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
 GrpcClient::~GrpcClient()
 {
     qDebug() << "Destroy GrpcClient";
-
-    delete mMutex;
 }
 
 std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* parentThread)
@@ -81,7 +76,7 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* paren
 
     context.set_credentials(mCreds);
 
-    REPEAT_REQUEST(parentThread, mMutex, mTimeUtils, mUsersService, GetInfo, context, req, resp);
+    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getUserInfo, mUsersService, context, req, resp);
 }
 
 std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* parentThread)
@@ -95,7 +90,7 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* p
 
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
-    REPEAT_REQUEST(parentThread, mMutex, mTimeUtils, mUsersService, GetAccounts, context, req, resp);
+    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getAccounts, mUsersService, context, req, resp);
 }
 
 std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread)
@@ -106,7 +101,7 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
 
     context.set_credentials(mCreds);
 
-    REPEAT_REQUEST(parentThread, mMutex, mTimeUtils, mInstrumentsService, Shares, context, req, resp);
+    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, findStocks, mInstrumentsService, context, req, resp);
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
@@ -133,7 +128,7 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
-    REPEAT_REQUEST(parentThread, mMutex, mTimeUtils, mMarketDataService, GetCandles, context, req, resp);
+    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getCandles, mMarketDataService, context, req, resp);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()

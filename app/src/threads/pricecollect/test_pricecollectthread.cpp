@@ -120,7 +120,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     QMutex mutex;
 
     std::shared_ptr<tinkoff::SharesResponse> sharesResponse(new tinkoff::SharesResponse());
-    tinkoff::Share* share = sharesResponse->add_instruments();
+    tinkoff::Share*                          share = sharesResponse->add_instruments();
 
     tinkoff::Quotation* minPriceIncrement = new tinkoff::Quotation(); // share will take ownership
     minPriceIncrement->set_units(1);
@@ -171,7 +171,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     QuaZip zip;
 
     std::shared_ptr<tinkoff::GetCandlesResponse> getCandlesResponse(new tinkoff::GetCandlesResponse());
-    tinkoff::HistoricCandle* candle = getCandlesResponse->add_candles();
+    tinkoff::HistoricCandle*                     candle = getCandlesResponse->add_candles();
 
     tinkoff::Quotation* price = new tinkoff::Quotation(); // marketDataResponse will take ownership
     price->set_units(125);
@@ -218,8 +218,10 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*qZipMock1, setCurrentFile(QString("data.txt")));
     EXPECT_CALL(*qZipFileMock1, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*qZipFileMock1, readAll())
-        .WillOnce(Return("02b2ea14-3c4b-47e8-9548-45a8dbcc8f8a;2025-03-12T03:59:00Z;124.45;124.45;124.45;124.45;2759;\n"
-                         "02b2ea14-3c4b-47e8-9548-45a8dbcc8f8a;2025-03-12T04:00:00Z;124.45;124.05;124.45;123.65;2914;"));
+        .WillOnce(Return(
+            "02b2ea14-3c4b-47e8-9548-45a8dbcc8f8a;2025-03-12T03:59:00Z;124.45;124.45;124.45;124.45;2759;\n"
+            "02b2ea14-3c4b-47e8-9548-45a8dbcc8f8a;2025-03-12T04:00:00Z;124.45;124.05;124.45;123.65;2914;"
+        ));
     EXPECT_CALL(*qZipFileMock1, close());
     EXPECT_CALL(*qZipMock1, close());
     EXPECT_CALL(*fileFactoryMock, newInstance(Ne(QString()))).WillOnce(Return(std::shared_ptr<IFile>(zipFileMock2)));

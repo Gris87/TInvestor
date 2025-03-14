@@ -37,7 +37,6 @@ public:
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
 private:
-    QMutex*                                                 mMutex;
     IRawGrpcClient*                                         mRawGrpcClient;
     ITimeUtils*                                             mTimeUtils;
     std::shared_ptr<grpc::CallCredentials>                  mCreds;

@@ -43,6 +43,31 @@ public:
     IRawGrpcClient(const IRawGrpcClient& another)            = delete;
     IRawGrpcClient& operator=(const IRawGrpcClient& another) = delete;
 
+    virtual grpc::Status getUserInfo(
+        const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+        grpc::ClientContext*                                context,
+        const tinkoff::GetInfoRequest&                      req,
+        tinkoff::GetInfoResponse*                           resp
+    ) = 0;
+    virtual grpc::Status getAccounts(
+        const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+        grpc::ClientContext*                                context,
+        const tinkoff::GetAccountsRequest&                  req,
+        tinkoff::GetAccountsResponse*                       resp
+    ) = 0;
+    virtual grpc::Status findStocks(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::SharesResponse*                                  resp
+    ) = 0;
+    virtual grpc::Status getCandles(
+        const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::GetCandlesRequest&                        req,
+        tinkoff::GetCandlesResponse*                             resp
+    ) = 0;
+
     virtual MarketDataStream::Stream createMarketDataStream(
         const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
     ) = 0;

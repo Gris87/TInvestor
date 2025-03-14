@@ -17,6 +17,31 @@ public:
     RawGrpcClient(const RawGrpcClient& another)            = delete;
     RawGrpcClient& operator=(const RawGrpcClient& another) = delete;
 
+    grpc::Status getUserInfo(
+        const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+        grpc::ClientContext*                                context,
+        const tinkoff::GetInfoRequest&                      req,
+        tinkoff::GetInfoResponse*                           resp
+    ) override;
+    grpc::Status getAccounts(
+        const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+        grpc::ClientContext*                                context,
+        const tinkoff::GetAccountsRequest&                  req,
+        tinkoff::GetAccountsResponse*                       resp
+    ) override;
+    grpc::Status findStocks(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::SharesResponse*                                  resp
+    ) override;
+    grpc::Status getCandles(
+        const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::GetCandlesRequest&                        req,
+        tinkoff::GetCandlesResponse*                             resp
+    ) override;
+
     MarketDataStream::Stream createMarketDataStream(
         const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
     ) override;

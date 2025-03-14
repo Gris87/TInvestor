@@ -21,6 +21,43 @@ public:
     RawGrpcClientMock& operator=(const RawGrpcClientMock& another) = delete;
 
     MOCK_METHOD(
+        grpc::Status,
+        getUserInfo,
+        (const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+         grpc::ClientContext*                                context,
+         const tinkoff::GetInfoRequest&                      req,
+         tinkoff::GetInfoResponse*                           resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        getAccounts,
+        (const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+         grpc::ClientContext*                                context,
+         const tinkoff::GetAccountsRequest&                  req,
+         tinkoff::GetAccountsResponse*                       resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        findStocks,
+        (const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+         grpc::ClientContext*                                      context,
+         const tinkoff::InstrumentsRequest&                        req,
+         tinkoff::SharesResponse*                                  resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        getCandles,
+        (const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+         grpc::ClientContext*                                     context,
+         const tinkoff::GetCandlesRequest&                        req,
+         tinkoff::GetCandlesResponse*                             resp),
+        (override)
+    );
+
+    MOCK_METHOD(
         MarketDataStream::Stream,
         createMarketDataStream,
         (const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context),
