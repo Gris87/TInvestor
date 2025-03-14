@@ -15,6 +15,16 @@
 
 
 
+#ifndef USE_SANDBOX
+#define ADDRESS "invest-public-api.tinkoff.ru:443"
+#else
+#define ADDRESS "sandbox-invest-public-api.tinkoff.ru:443"
+#endif
+
+#define MAX_LIMIT_FOR_INTERVAL_1_MIN 2400
+
+
+
 namespace tinkoff
 {
 using namespace tinkoff::public_::invest::api::contract::v1;

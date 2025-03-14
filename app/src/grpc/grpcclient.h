@@ -4,7 +4,6 @@
 
 #include "src/grpc/igrpcclient.h"
 
-#include "src/grpc/irawgrpcclient.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/timeutils/itimeutils.h"
 

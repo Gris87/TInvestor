@@ -7,16 +7,6 @@
 
 
 
-#ifndef USE_SANDBOX
-#define ADDRESS "invest-public-api.tinkoff.ru:443"
-#else
-#define ADDRESS "sandbox-invest-public-api.tinkoff.ru:443"
-#endif
-
-#define MAX_LIMIT_FOR_INTERVAL_1_MIN 2400
-
-
-
 #define REPEAT_REQUEST(parentThread, timeUtils, rawGrpcClient, action, service, context, req, resp) \
     while (true)                                                                                    \
     {                                                                                               \
