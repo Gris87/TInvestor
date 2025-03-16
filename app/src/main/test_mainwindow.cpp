@@ -423,7 +423,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
     // clang-format off
     ASSERT_EQ(mainWindow->lastPricesUpdates.size(),            1);
     ASSERT_EQ(mainWindow->lastPricesUpdates.contains("aaaaa"), true);
-    // clang-format
+    // clang-format on
 
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(tableRecordMock1, updatePrice());
