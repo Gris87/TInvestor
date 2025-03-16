@@ -23,7 +23,8 @@ public:
     QList<Stock*>& getStocks() override;
     bool           mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
     void           appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
-    void           deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks) override;
+    void           deleteObsoleteData(qint64 timestamp) override;
+    void           cleanupOperationalData(qint64 timestamp) override;
     void           obtainStocksDayStartPrice(qint64 timestamp) override;
     void           obtainStocksDatePrice(qint64 timestamp) override;
     void           obtainPayback(qint64 timestamp) override;

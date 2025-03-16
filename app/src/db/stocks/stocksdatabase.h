@@ -22,7 +22,7 @@ public:
     void          readStocksData(QList<Stock*>& stocks) override;
     void          writeStocksMeta(const QList<Stock*>& stocks) override;
     void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
-    void          deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks) override;
+    void          writeStockData(const Stock& stock) override;
 
 private:
     IFileFactory* mFileFactory;

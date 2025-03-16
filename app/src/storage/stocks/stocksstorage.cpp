@@ -102,9 +102,55 @@ void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, in
     mStocksDatabase->appendStockData(stock, dataArray, dataArraySize);
 }
 
-void StocksStorage::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)
+struct DeleteObsoleteDataInfo
 {
-    mStocksDatabase->deleteObsoleteData(obsoleteTimestamp, stocks);
+    IStocksDatabase* stocksDatabase;
+    qint64           obsoleteTimestamp;
+};
+
+void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
+    IStocksDatabase*        stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
+    qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
+
+        while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
+        {
+            ++index;
+        }
+
+        if (index > 0)
+        {
+            stock->data.remove(0, index);
+
+            stocksDatabase->writeStockData(*stock);
+        }
+    }
+}
+
+void StocksStorage::deleteObsoleteData(qint64 timestamp)
+{
+    qDebug() << "Deleting obsolete stocks data";
+
+    DeleteObsoleteDataInfo deleteObsoleteDataInfo;
+    deleteObsoleteDataInfo.stocksDatabase    = mStocksDatabase;
+    deleteObsoleteDataInfo.obsoleteTimestamp = timestamp;
+
+    processInParallel(mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
+}
+
+void StocksStorage::cleanupOperationalData(qint64 /*timestamp*/)
+{
+    // TODO: Implement
 }
 
 struct GetDatePriceInfo

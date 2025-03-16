@@ -54,8 +54,7 @@ TEST_F(Test_CleanupThread, Test_run)
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(0), stocks));
+    EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(0)));
 
     thread->run();
 }

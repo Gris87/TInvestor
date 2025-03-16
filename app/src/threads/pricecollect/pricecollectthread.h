@@ -44,6 +44,7 @@ public:
 
     bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
+    void cleanupOperationalData();
     bool obtainStocksDayStartPrice();
     void obtainPayback();
     void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);

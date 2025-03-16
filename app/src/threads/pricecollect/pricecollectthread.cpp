@@ -12,8 +12,9 @@
 
 
 #define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
-#define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
 #define ONE_MINUTE          60000LL      // 60 * 1000 // 1 minute
+#define ONE_HOUR            3600000LL    // 60 * 60 * 1000 // 1 hour
+#define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
 #define MOSCOW_TIME         10800000LL   // 3 * 60 * 60 * 1000 // 3 hours
 
 #define CSV_FIELD_TIMESTAMP   1
@@ -71,6 +72,7 @@ void PriceCollectThread::run()
     {
         bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
+        cleanupOperationalData();
         bool needPricesUpdate = obtainStocksDayStartPrice();
         obtainPayback();
 
@@ -461,6 +463,11 @@ void PriceCollectThread::obtainStocksData()
 
     QList<Stock*>& stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
+}
+
+void PriceCollectThread::cleanupOperationalData()
+{
+    mStocksStorage->cleanupOperationalData(QDateTime::currentMSecsSinceEpoch() - ONE_HOUR);
 }
 
 bool PriceCollectThread::obtainStocksDayStartPrice()

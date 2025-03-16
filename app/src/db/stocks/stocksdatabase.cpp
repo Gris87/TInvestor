@@ -164,60 +164,14 @@ void StocksDatabase::appendStockData(Stock* stock, const StockData* dataArray, i
     stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.last().timestamp : 0;
 }
 
-void writeStockData(IFileFactory* fileFactory, const Stock& stock)
+void StocksDatabase::writeStockData(const Stock& stock)
 {
     QString                stockDataFilePath = QString("%1/data/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.meta.uid);
-    std::shared_ptr<IFile> stockDataFile     = fileFactory->newInstance(stockDataFilePath);
+    std::shared_ptr<IFile> stockDataFile     = mFileFactory->newInstance(stockDataFilePath);
 
     bool ok = stockDataFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, "StocksDatabase::writeStockData()", "Failed to open file");
 
     stockDataFile->write(reinterpret_cast<const char*>(stock.data.constData()), stock.data.size() * sizeof(StockData));
     stockDataFile->close();
-}
-
-struct DeleteObsoleteDataInfo
-{
-    IFileFactory* fileFactory;
-    qint64        obsoleteTimestamp;
-};
-
-void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
-{
-    DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
-    IFileFactory*           fileFactory            = deleteObsoleteDataInfo->fileFactory;
-    qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
-
-    Stock** stockArray = stocks.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
-
-        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
-
-        while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
-        {
-            ++index;
-        }
-
-        if (index > 0)
-        {
-            stock->data.remove(0, index);
-
-            writeStockData(fileFactory, *stock);
-        }
-    }
-}
-
-void StocksDatabase::deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)
-{
-    qDebug() << "Deleting obsolete stocks data";
-
-    DeleteObsoleteDataInfo deleteObsoleteDataInfo;
-    deleteObsoleteDataInfo.fileFactory       = mFileFactory;
-    deleteObsoleteDataInfo.obsoleteTimestamp = obsoleteTimestamp;
-
-    processInParallel(stocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }

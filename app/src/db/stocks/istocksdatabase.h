@@ -23,5 +23,5 @@ public:
     virtual void          readStocksData(QList<Stock*>& stocks)                                        = 0;
     virtual void          writeStocksMeta(const QList<Stock*>& stocks)                                 = 0;
     virtual void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
-    virtual void          deleteObsoleteData(qint64 obsoleteTimestamp, QList<Stock*>& stocks)          = 0;
+    virtual void          writeStockData(const Stock& stock)                                           = 0;
 };

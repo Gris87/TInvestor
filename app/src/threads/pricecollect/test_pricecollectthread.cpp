@@ -241,6 +241,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
         .WillOnce(Return(getCandlesResponse));
     EXPECT_CALL(*grpcClientMock, getCandles(NotNull(), QString("aaaaa"), 60, 1000)).WillOnce(Return(emptyCandlesResponse));
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
+    EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1741726800000)));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1741726800000)));
     EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1741726800000)));
 
