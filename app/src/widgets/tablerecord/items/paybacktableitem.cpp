@@ -29,13 +29,13 @@ void PaybackTableItem::setValue(float value)
 
     QColor color;
 
-    if (mValue > 50 && mValue < 80)
+    if (mValue > 30 && mValue < 60)
     {
         color = NORMAL_COLOR;
     }
     else
     {
-        if (mValue >= 80)
+        if (mValue >= 60)
         {
             color = GREEN_COLOR;
         }

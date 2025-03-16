@@ -1,4 +1,3 @@
-Calculate payback base on whole day
 Try to eliminate _
 Show stock name on hover
 Big fall from 24h ago

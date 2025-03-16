@@ -1632,7 +1632,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
-    ASSERT_NEAR(stocks.at(1)->operational.payback,            33.33333f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.payback,            16.66666f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
     ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,             200);

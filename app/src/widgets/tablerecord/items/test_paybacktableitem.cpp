@@ -18,9 +18,9 @@ TEST(Test_PaybackTableItem, Test_setValue_and_getValue)
     ASSERT_EQ(item.data(Qt::DisplayRole), "10.00%");
     ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 
-    item.setValue(60);
-    ASSERT_EQ(item.getValue(), 60);
-    ASSERT_EQ(item.data(Qt::DisplayRole), "60.00%");
+    item.setValue(50);
+    ASSERT_EQ(item.getValue(), 50);
+    ASSERT_EQ(item.data(Qt::DisplayRole), "50.00%");
     ASSERT_EQ(item.foreground().color(), QColor("#97AEC4"));
 
     item.setValue(90);
