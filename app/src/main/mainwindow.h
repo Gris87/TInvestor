@@ -79,12 +79,12 @@ public:
 
     Ui::MainWindow* ui;
 
-    QTimer* authFailedDelayTimer;
-    QTimer* userUpdateTimer;
-    QTimer* priceCollectTimer;
-    QTimer* cleanupTimer;
-    QTimer* makeDecisionTimer;
-    QTimer* stocksTableUpdateTimer;
+    QTimer*                      authFailedDelayTimer;
+    QTimer*                      userUpdateTimer;
+    QTimer*                      priceCollectTimer;
+    QTimer*                      cleanupTimer;
+    QTimer*                      makeDecisionTimer;
+    QTimer*                      stocksTableUpdateTimer;
     QMap<QString, ITableRecord*> tableRecords;
     QSet<QString>                lastPricesUpdates;
 

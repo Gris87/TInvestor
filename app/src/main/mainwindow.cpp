@@ -476,8 +476,8 @@ void MainWindow::updateStocksTableWidget()
             }
             else
             {
-                record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, mHttpClient, stock, this);
-                tableRecords[uid]  = record;
+                record            = mTableRecordFactory->newInstance(ui->stocksTableWidget, mHttpClient, stock, this);
+                tableRecords[uid] = record;
             }
 
             record->filter(ui->stocksTableWidget, filter);
