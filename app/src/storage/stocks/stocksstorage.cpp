@@ -148,9 +148,46 @@ void StocksStorage::deleteObsoleteData(qint64 timestamp)
     processInParallel(mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }
 
-void StocksStorage::cleanupOperationalData(qint64 /*timestamp*/)
+struct CleanupOperationalDataInfo
 {
-    // TODO: Implement
+    qint64 obsoleteTimestamp;
+};
+
+void cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
+    qint64                      obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
+
+        while (index < stock->operational.detailedData.size() &&
+               stock->operational.detailedData.at(index).timestamp < obsoleteTimestamp)
+        {
+            ++index;
+        }
+
+        if (index > 0)
+        {
+            stock->operational.detailedData.remove(0, index);
+        }
+    }
+}
+
+void StocksStorage::cleanupOperationalData(qint64 timestamp)
+{
+    qDebug() << "Cleanup operational data";
+
+    CleanupOperationalDataInfo cleanupOperationalDataInfo;
+    cleanupOperationalDataInfo.obsoleteTimestamp = timestamp;
+
+    processInParallel(mStocks, cleanupOperationalDataForParallel, &cleanupOperationalDataInfo);
 }
 
 struct GetDatePriceInfo

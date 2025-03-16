@@ -11,11 +11,12 @@
 
 
 
-#define MAX_GRPC_TIME_LIMIT 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
-#define ONE_MINUTE          60000LL      // 60 * 1000 // 1 minute
-#define ONE_HOUR            3600000LL    // 60 * 60 * 1000 // 1 hour
-#define ONE_DAY             86400000LL   // 24 * 60 * 60 * 1000 // 1 day
-#define MOSCOW_TIME         10800000LL   // 3 * 60 * 60 * 1000 // 3 hours
+#define ONE_MINUTE          60000LL        // 60 * 1000 // 1 minute
+#define ONE_HOUR            3600000LL      // 60 * 60 * 1000 // 1 hour
+#define ONE_DAY             86400000LL     // 24 * 60 * 60 * 1000 // 1 day
+#define ONE_MONTH           2678400000LL   // 31 * 24 * 60 * 60 * 1000 // 31 days
+#define MOSCOW_TIME         (3 * ONE_HOUR) // 3 hours
+#define MAX_GRPC_TIME_LIMIT ONE_MONTH      // 1 month
 
 #define CSV_FIELD_TIMESTAMP   1
 #define CSV_FIELD_CLOSE_PRICE 3
@@ -401,7 +402,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     IGrpcClient*        grpcClient       = getCandlesInfo->grpcClient;
     qint64              currentTimestamp = getCandlesInfo->currentTimestamp;
 
-    qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * 2678400000LL; // 31 * 24 * 60 * 60 * 1000 // 31 days
+    qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * ONE_MONTH;
 
     Stock** stockArray = stocks.data();
 

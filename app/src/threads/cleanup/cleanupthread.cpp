@@ -6,6 +6,10 @@
 
 
 
+#define ONE_MONTH 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
+
+
+
 CleanupThread::CleanupThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent) :
     ICleanupThread(parent),
     mConfig(config),
@@ -23,7 +27,7 @@ void CleanupThread::run()
 {
     qDebug() << "Running CleanupThread";
 
-    qint64 obsoleteTimestamp = QDateTime::currentSecsSinceEpoch() - mConfig->getStorageMonthLimit() * 31 * 24 * 60 * 60;
+    qint64 obsoleteTimestamp = QDateTime::currentMSecsSinceEpoch() - mConfig->getStorageMonthLimit() * ONE_MONTH;
 
     QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->deleteObsoleteData(obsoleteTimestamp);
