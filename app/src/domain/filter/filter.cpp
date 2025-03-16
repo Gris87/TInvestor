@@ -106,3 +106,13 @@ bool Filter::isFiltered(const QString& t, float price, float dayStartChange, flo
 
     return true;
 }
+
+bool operator==(const Filter& lhs, const Filter& rhs)
+{
+    return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.usePrice == rhs.usePrice &&
+           lhs.priceFrom == rhs.priceFrom && lhs.priceTo == rhs.priceTo && lhs.useDayStartChange == rhs.useDayStartChange &&
+           lhs.dayStartChangeFrom == rhs.dayStartChangeFrom && lhs.dayStartChangeTo == rhs.dayStartChangeTo &&
+           lhs.useDateChange == rhs.useDateChange && lhs.dateChangeFrom == rhs.dateChangeFrom &&
+           lhs.dateChangeTo == rhs.dateChangeTo && lhs.usePayback == rhs.usePayback && lhs.paybackFrom == rhs.paybackFrom &&
+           lhs.paybackTo == rhs.paybackTo;
+}

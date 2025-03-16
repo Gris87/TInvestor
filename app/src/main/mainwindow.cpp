@@ -48,6 +48,8 @@ MainWindow::MainWindow(
     cleanupTimer(new QTimer(this)),
     makeDecisionTimer(new QTimer(this)),
     stocksTableUpdateTimer(new QTimer(this)),
+    tableRecords(),
+    lastPricesUpdates(),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -72,9 +74,7 @@ MainWindow::MainWindow(
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mAutorunSettingsEditor(autorunSettingsEditor),
-    mTableRecordFactory(tableRecordFactory),
-    mTableRecords(),
-    mLastPricesUpdates()
+    mTableRecordFactory(tableRecordFactory)
 {
     qDebug() << "Create MainWindow";
 
@@ -254,16 +254,16 @@ void MainWindow::stocksTableUpdateTimerTicked()
 {
     qDebug() << "Stocks table update timer ticked";
 
-    if (!mLastPricesUpdates.isEmpty())
+    if (!lastPricesUpdates.isEmpty())
     {
         const Filter& filter = mFilterWidget->getFilter();
 
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
 
-        for (auto it = mLastPricesUpdates.cbegin(); it != mLastPricesUpdates.cend(); ++it)
+        for (auto it = lastPricesUpdates.cbegin(); it != lastPricesUpdates.cend(); ++it)
         {
-            ITableRecord* record = mTableRecords[*it];
+            ITableRecord* record = tableRecords[*it];
 
             if (record != nullptr)
             {
@@ -272,7 +272,7 @@ void MainWindow::stocksTableUpdateTimerTicked()
             }
         }
 
-        mLastPricesUpdates.clear();
+        lastPricesUpdates.clear();
 
         ui->stocksTableWidget->setSortingEnabled(true);
         ui->stocksTableWidget->setUpdatesEnabled(true);
@@ -299,7 +299,7 @@ void MainWindow::pricesChanged()
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
-    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
+    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
     {
         it.value()->updatePrice();
         it.value()->filter(ui->stocksTableWidget, filter);
@@ -316,7 +316,7 @@ void MainWindow::paybackChanged()
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
 
-    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
+    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
     {
         it.value()->updatePayback();
         it.value()->filter(ui->stocksTableWidget, filter);
@@ -328,14 +328,14 @@ void MainWindow::paybackChanged()
 
 void MainWindow::lastPriceChanged(const QString& uid)
 {
-    mLastPricesUpdates.insert(uid);
+    lastPricesUpdates.insert(uid);
 }
 
 void MainWindow::filterChanged(const Filter& filter)
 {
     ui->stocksTableWidget->setUpdatesEnabled(false);
 
-    for (auto it = mTableRecords.cbegin(); it != mTableRecords.cend(); ++it)
+    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
     {
         it.value()->filter(ui->stocksTableWidget, filter);
     }
@@ -420,9 +420,9 @@ void MainWindow::on_actionSettings_triggered()
     }
 }
 
-void MainWindow::on_dateChangeTimeEdit_editingFinished()
+void MainWindow::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
 {
-    mStocksStorage->obtainStocksDatePrice(ui->dateChangeTimeEdit->dateTime().toMSecsSinceEpoch());
+    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
     pricesChanged();
 }
@@ -468,7 +468,7 @@ void MainWindow::updateStocksTableWidget()
             QString uid = stock->meta.uid;
             stock->mutex->unlock();
 
-            ITableRecord* record = mTableRecords[uid];
+            ITableRecord* record = tableRecords[uid];
 
             if (record != nullptr)
             {
@@ -477,7 +477,7 @@ void MainWindow::updateStocksTableWidget()
             else
             {
                 record             = mTableRecordFactory->newInstance(ui->stocksTableWidget, mHttpClient, stock, this);
-                mTableRecords[uid] = record;
+                tableRecords[uid]  = record;
             }
 
             record->filter(ui->stocksTableWidget, filter);

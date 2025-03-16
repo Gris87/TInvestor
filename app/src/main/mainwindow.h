@@ -75,6 +75,8 @@ public:
     void closeEvent(QCloseEvent* event);
     void init();
 
+    void updateStocksTableWidget();
+
     Ui::MainWindow* ui;
 
     QTimer* authFailedDelayTimer;
@@ -83,9 +85,10 @@ public:
     QTimer* cleanupTimer;
     QTimer* makeDecisionTimer;
     QTimer* stocksTableUpdateTimer;
+    QMap<QString, ITableRecord*> tableRecords;
+    QSet<QString>                lastPricesUpdates;
 
 private:
-    void updateStocksTableWidget();
     void updateStackWidgetToolbar();
     void applyConfig();
     void saveWindowState();
@@ -118,8 +121,6 @@ private:
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;
     ITableRecordFactory*               mTableRecordFactory;
-    QMap<QString, ITableRecord*>       mTableRecords;
-    QSet<QString>                      mLastPricesUpdates;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
@@ -145,5 +146,5 @@ private slots:
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
-    void on_dateChangeTimeEdit_editingFinished();
+    void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);
 };

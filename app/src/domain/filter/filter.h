@@ -31,3 +31,7 @@ struct Filter
     float   paybackFrom;
     float   paybackTo;
 };
+
+
+
+bool operator==(const Filter& lhs, const Filter& rhs);

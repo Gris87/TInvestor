@@ -137,3 +137,111 @@ TEST(Test_Filter, Test_isFiltered)
     ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 75.0f, 90.0f), true);
     // clang-format on
 }
+
+TEST(Test_Filter, Test_equals)
+{
+    Filter filter;
+    Filter filter2;
+
+    filter.useTicker          = true;
+    filter.ticker             = "BLAH";
+    filter.usePrice           = true;
+    filter.priceFrom          = 1.0f;
+    filter.priceTo            = 2.0f;
+    filter.useDayStartChange  = true;
+    filter.dayStartChangeFrom = 3.0f;
+    filter.dayStartChangeTo   = 4.0f;
+    filter.useDateChange      = true;
+    filter.dateChangeFrom     = 5.0f;
+    filter.dateChangeTo       = 6.0f;
+    filter.usePayback         = true;
+    filter.paybackFrom        = 7.0f;
+    filter.paybackTo          = 8.0f;
+
+    filter2.useTicker          = true;
+    filter2.ticker             = "BLAH";
+    filter2.usePrice           = true;
+    filter2.priceFrom          = 1.0f;
+    filter2.priceTo            = 2.0f;
+    filter2.useDayStartChange  = true;
+    filter2.dayStartChangeFrom = 3.0f;
+    filter2.dayStartChangeTo   = 4.0f;
+    filter2.useDateChange      = true;
+    filter2.dateChangeFrom     = 5.0f;
+    filter2.dateChangeTo       = 6.0f;
+    filter2.usePayback         = true;
+    filter2.paybackFrom        = 7.0f;
+    filter2.paybackTo          = 8.0f;
+
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useTicker = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useTicker = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.ticker = "HOOYAK";
+    ASSERT_NE(filter, filter2);
+    filter2.ticker = "BLAH";
+    ASSERT_EQ(filter, filter2);
+
+    filter2.usePrice = false;
+    ASSERT_NE(filter, filter2);
+    filter2.usePrice = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.priceFrom = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.priceFrom = 1.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.priceTo = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.priceTo = 2.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useDayStartChange = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useDayStartChange = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dayStartChangeFrom = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dayStartChangeFrom = 3.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dayStartChangeTo = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dayStartChangeTo = 4.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useDateChange = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useDateChange = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dateChangeFrom = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dateChangeFrom = 5.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.dateChangeTo = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.dateChangeTo = 6.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.usePayback = false;
+    ASSERT_NE(filter, filter2);
+    filter2.usePayback = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.paybackFrom = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.paybackFrom = 7.0f;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.paybackTo = 100.0f;
+    ASSERT_NE(filter, filter2);
+    filter2.paybackTo = 8.0f;
+    ASSERT_EQ(filter, filter2);
+}
