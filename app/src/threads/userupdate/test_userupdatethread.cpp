@@ -90,8 +90,8 @@ TEST_F(Test_UserUpdateThread, Test_run)
     tinkoffAccount2->set_id("bbbbb");
     tinkoffAccount2->set_name("Everyday party");
 
-    EXPECT_CALL(*grpcClientMock, getUserInfo(NotNull())).WillOnce(Return(getInfoResponse));
-    EXPECT_CALL(*grpcClientMock, getAccounts(NotNull())).WillOnce(Return(getAccountsResponse));
+    EXPECT_CALL(*grpcClientMock, getUserInfo(QThread::currentThread())).WillOnce(Return(getInfoResponse));
+    EXPECT_CALL(*grpcClientMock, getAccounts(QThread::currentThread())).WillOnce(Return(getAccountsResponse));
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, setUserInfo(user));
     EXPECT_CALL(*userStorageMock, setAccounts(accounts));

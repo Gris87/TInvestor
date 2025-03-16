@@ -9,7 +9,6 @@
 
 
 
-using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -57,7 +56,16 @@ TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
     InSequence seq;
 
-    EXPECT_CALL(*messageBoxUtilsMock, warning(dialog, _, _, QMessageBox::StandardButtons(QMessageBox::Ok), QMessageBox::NoButton))
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        warning(
+            dialog,
+            QString("Token is invalid"),
+            QString("You should provide correct token"),
+            QMessageBox::StandardButtons(QMessageBox::Ok),
+            QMessageBox::NoButton
+        )
+    )
         .WillOnce(Return(QMessageBox::Ok));
 
     dialog->ui->tokenLineEdit->setText("BadRegexpToken");

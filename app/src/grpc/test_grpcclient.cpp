@@ -57,7 +57,7 @@ TEST_F(Test_GrpcClient, Test_getUserInfo)
     grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getUserInfo(QThread::currentThread()), nullptr);
@@ -76,7 +76,7 @@ TEST_F(Test_GrpcClient, Test_getAccounts)
     grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getAccounts(QThread::currentThread()), nullptr);
@@ -95,7 +95,7 @@ TEST_F(Test_GrpcClient, Test_findStocks)
     grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->findStocks(QThread::currentThread()), nullptr);
@@ -114,7 +114,7 @@ TEST_F(Test_GrpcClient, Test_getCandles)
     grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
     ASSERT_EQ(client->getCandles(QThread::currentThread(), "aaaaa", 0, 1000), nullptr);

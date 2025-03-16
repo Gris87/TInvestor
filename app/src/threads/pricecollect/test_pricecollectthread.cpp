@@ -20,7 +20,6 @@
 
 
 
-using ::testing::_;
 using ::testing::Gt;
 using ::testing::InSequence;
 using ::testing::Ne;
@@ -187,7 +186,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     std::shared_ptr<tinkoff::GetCandlesResponse> emptyCandlesResponse(new tinkoff::GetCandlesResponse());
 
-    EXPECT_CALL(*grpcClientMock, findStocks(NotNull())).WillOnce(Return(sharesResponse));
+    EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread())).WillOnce(Return(sharesResponse));
     EXPECT_CALL(*fileFactoryMock, newInstance(Ne(QString()))).WillOnce(Return(std::shared_ptr<IFile>(logoFileMock)));
     EXPECT_CALL(*logoFileMock, exists()).WillOnce(Return(false));
     EXPECT_CALL(
@@ -205,7 +204,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*zipFileMock1, exists()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
     EXPECT_CALL(*httpClientMock, download(Ne(QString()), headers)).WillOnce(Return(tooManyRequestsHttpResult));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*httpClientMock, download(Ne(QString()), headers)).WillOnce(Return(httpResult));
     EXPECT_CALL(*zipFileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
     EXPECT_CALL(*zipFileMock1, write(httpResult.body)).WillOnce(Return(1));
@@ -233,17 +232,18 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(Ne(QString()))).WillOnce(Return(std::shared_ptr<IFile>(zipFileMock3)));
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
     EXPECT_CALL(*httpClientMock, download(Ne(QString()), headers)).WillOnce(Return(tooManyRequestsHttpResult));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
     EXPECT_CALL(*qZipFactoryMock, newInstance(Ne(QString()))).WillOnce(Return(std::shared_ptr<IQZip>(qZipMock3)));
     EXPECT_CALL(*qZipMock3, open(QuaZip::mdUnzip)).WillOnce(Return(false));
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 2));
-    EXPECT_CALL(*grpcClientMock, getCandles(NotNull(), QString("aaaaa"), 60, Gt(1741726800)))
+    EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, Gt(1704056400000)))
         .WillOnce(Return(getCandlesResponse));
-    EXPECT_CALL(*grpcClientMock, getCandles(NotNull(), QString("aaaaa"), 60, 1000)).WillOnce(Return(emptyCandlesResponse));
+    EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, 1000000))
+        .WillOnce(Return(emptyCandlesResponse));
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
-    EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1741726800000)));
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1741726800000)));
-    EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1741726800000)));
+    EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1704056400000)));
 
     thread->run();
 }
@@ -252,7 +252,7 @@ TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
 {
     InSequence seq;
 
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1741726800000)));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
 
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), true);
     ASSERT_EQ(thread->obtainStocksDayStartPrice(), false);

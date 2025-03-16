@@ -111,10 +111,10 @@ TEST_F(Test_LastPriceThread, Test_run_interrupted_without_stocks)
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(false));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, NotNull())).WillOnce(Return(true));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
 }

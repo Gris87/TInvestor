@@ -1,7 +1,7 @@
-Try to eliminate _
 Show stock name on hover
 Big fall from 24h ago
 Buy on fall with high likvidity
 Buy if max cost reached (market limit)
 Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums
+Buy if price is less than average for last n days

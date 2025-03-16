@@ -1,6 +1,7 @@
 #include "src/main/mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QDir>
 #include <QtCore/private/qcoreapplication_p.h>
 #include <gtest/gtest.h>
 
@@ -82,6 +83,8 @@ protected:
         filterWidgetMock                     = new StrictMock<FilterWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
+        QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
+
         EXPECT_CALL(*filterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(filterWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
@@ -90,7 +93,10 @@ protected:
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
 
-        EXPECT_CALL(*autorunSettingsEditorMock, setValue(QString("CurrentVersion/Run/TInvestor"), _));
+        EXPECT_CALL(
+            *autorunSettingsEditorMock,
+            setValue(QString("CurrentVersion/Run/TInvestor"), QVariant(QString("\"%1\" --autorun").arg(appPath)))
+        );
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),                     QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -310,7 +316,7 @@ TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
         new StrictMock<AuthDialogMock>(); // Will be deleted in authFailedDelayTimerTicked
 
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
-    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, NotNull()))
+    EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
@@ -723,7 +729,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
-            NotNull()
+            mainWindow
         )
     )
         .WillOnce(Return(std::shared_ptr<ISettingsDialog>(settingsDialogMock)));

@@ -200,7 +200,7 @@ void getCandlesWithGrpc(
     while (true)
     {
         std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
-            grpcClient->getCandles(parentThread, stock->meta.uid, startTimestamp / 1000, endTimestamp / 1000);
+            grpcClient->getCandles(parentThread, stock->meta.uid, startTimestamp, endTimestamp);
 
         if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
         {

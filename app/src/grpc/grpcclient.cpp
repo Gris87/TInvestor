@@ -113,9 +113,9 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     ::google::protobuf::Timestamp* fromTimestamp = new ::google::protobuf::Timestamp(); // req will take ownership
     ::google::protobuf::Timestamp* toTimestamp   = new ::google::protobuf::Timestamp(); // req will take ownership
 
-    fromTimestamp->set_seconds(from);
+    fromTimestamp->set_seconds(from / 1000);
     fromTimestamp->set_nanos(0);
-    toTimestamp->set_seconds(to);
+    toTimestamp->set_seconds(to / 1000);
     toTimestamp->set_nanos(0);
 
     req.set_instrument_id(uid.toStdString());
