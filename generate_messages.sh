@@ -2,6 +2,10 @@
 
 
 
+GRPC_CPP_PLUGIN="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe"
+
+
+
 rm -rf /tmp/investAPI
 git clone git@github.com:RussianInvestments/investAPI.git /tmp/investAPI
 
@@ -18,7 +22,7 @@ cd libs/investapi/messages
 
 for file in `find -name \*.proto`
 do
-    protoc -I=. --cpp_out=generated --grpc_out=generated --plugin=protoc-gen-grpc="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe" ${file}
+    protoc -I=. --cpp_out=generated --grpc_out=generated --plugin=protoc-gen-grpc="${GRPC_CPP_PLUGIN}" ${file}
 done
 
 for file in `find -name \*.grpc.pb.\*`

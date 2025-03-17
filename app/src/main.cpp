@@ -122,10 +122,7 @@ int runApplication(int argc, char* argv[])
     FileFactory        fileFactory;
     QZipFactory        qZipFactory;
     QZipFileFactory    qZipFileFactory;
-    TimeUtils          timeUtils;
-    HttpClient         httpClient;
 
-    MessageBoxUtils messageBoxUtils;
     SettingsEditor  settingsEditor("GrisCom", "TInvestor");
     SettingsEditor  autorunSettingsEditor("Microsoft", "Windows");
 
@@ -228,8 +225,13 @@ int runApplication(int argc, char* argv[])
     UserStorage        userStorage(&userDatabase);
     StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage      stocksStorage(&stocksDatabase, &userStorage);
-    RawGrpcClient      rawGrpcClient;
-    GrpcClient         grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+
+    TimeUtils       timeUtils;
+    MessageBoxUtils messageBoxUtils;
+    HttpClient      httpClient;
+    RawGrpcClient   rawGrpcClient;
+    GrpcClient      grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     PriceCollectThread priceCollectThread(
         &config,
