@@ -1,6 +1,7 @@
 #include "src/utils/logger/logger.h"
 
 #include <QDateTime>
+#include <QThread>
 #include <QtLogging>
 
 
@@ -15,7 +16,7 @@ QMap<QtMsgType, QString> logLevelToString{
     {QtFatalMsg,    "FATAL   "}
 };
 
-// HACK for bad QtInfoMsg
+// HACK for bad QtInfoMsg (Remove on Qt 7)
 QMap<QtMsgType, int> logLevelToInteger{
     {QtDebugMsg,    0},
     {QtInfoMsg,     1},
@@ -40,10 +41,11 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
     oldMessageHandler(
         type,
         context,
-        QString("%1 %2 %3:%4 %5: %6")
+        QString("%1 %2 0x%3 %4:%5 %6: %7")
             .arg(
                 QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
                 logLevelToString[type],
+                QString::number((qint64)QThread::currentThreadId(), 16).toUpper().rightJustified(4, '0'),
                 QString(context.file).remove("..\\..\\..\\app\\"),
                 QString::number(context.line),
                 QString(context.function),
