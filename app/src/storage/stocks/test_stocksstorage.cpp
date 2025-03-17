@@ -9,6 +9,7 @@
 
 using ::testing::_;
 using ::testing::InSequence;
+using ::testing::Ne;
 using ::testing::NotNull;
 using ::testing::Ref;
 using ::testing::Return;
@@ -106,7 +107,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -241,7 +242,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -332,7 +333,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     stocksMeta << stockMeta1 << stockMeta2;
 
-    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(_));
+    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(Ne(QList<Stock*>())));
 
     ASSERT_EQ(storage->mergeStocksMeta(stocksMeta), true);
     ASSERT_EQ(storage->mergeStocksMeta(stocksMeta), false);
@@ -501,7 +502,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -788,7 +789,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     }
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -1075,7 +1076,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -1295,7 +1296,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
@@ -1515,7 +1516,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stocksDB << stock1 << stock2 << stock3;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
-    EXPECT_CALL(*stocksDatabaseMock, readStocksData(_));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
 
     storage->readFromDatabase();
     stocks = storage->getStocks();
