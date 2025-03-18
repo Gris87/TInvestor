@@ -22,6 +22,8 @@ HttpClient::~HttpClient()
 
 HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
 {
+    qDebug() << "Downloading file:" << url;
+
     QNetworkAccessManager manager;
     QNetworkRequest       request(url);
 
@@ -50,5 +52,7 @@ HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
 
 bool HttpClient::openInBrowser(const QUrl& url)
 {
+    qDebug() << "Openning web page in browser:" << url;
+
     return QDesktopServices::openUrl(url);
 }

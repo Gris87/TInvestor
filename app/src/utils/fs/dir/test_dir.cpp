@@ -16,10 +16,10 @@ TEST(Test_Dir, Test_mkpath)
 
     QString appDir = qApp->applicationDirPath();
 
-    QDir qDir(appDir + "/test/some/path");
+    QDir qDir(appDir + "/test/some_dir");
     ASSERT_TRUE(!qDir.exists());
 
-    ASSERT_TRUE(dir.mkpath(appDir + "/test/some/path"));
+    ASSERT_TRUE(dir.mkpath(appDir + "/test/some_dir"));
     ASSERT_TRUE(qDir.exists());
 
     ASSERT_TRUE(qDir.removeRecursively());

@@ -10,7 +10,7 @@
 
 
 
-const int amountOfDataPerDay = 24 * 60;
+#define AMOUNT_OF_DATA_PER_DAY 24 * 60 // Amount of minutes in day
 
 
 
@@ -94,7 +94,7 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int
             qint64    fileSize = stockDataFile->size();
             qsizetype dataSize = fileSize / sizeof(StockData);
 
-            stock->data.reserve(dataSize + amountOfDataPerDay);
+            stock->data.reserve(dataSize + AMOUNT_OF_DATA_PER_DAY);
             stock->data.resizeForOverwrite(dataSize);
 
             stockDataFile->read(reinterpret_cast<char*>(stock->data.data()), fileSize);

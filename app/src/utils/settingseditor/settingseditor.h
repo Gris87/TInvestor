@@ -22,5 +22,5 @@ public:
     void     remove(const QString& key) override;
 
 private:
-    QSettings* mSettings;
+    QSettings mSettings;
 };

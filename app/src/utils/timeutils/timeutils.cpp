@@ -17,6 +17,8 @@ TimeUtils::~TimeUtils()
 
 bool TimeUtils::interruptibleSleep(int ms, QThread* parentThread)
 {
+    qDebug() << "Sleeping for" << ms << "ms";
+
     bool res = false;
 
     int count = ms / 100;

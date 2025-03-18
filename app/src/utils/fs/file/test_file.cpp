@@ -14,13 +14,21 @@ protected:
         appDir = qApp->applicationDirPath();
         QDir(appDir + "/test/dir_for_file").removeRecursively();
         QDir().mkpath(appDir + "/test/dir_for_file");
+
+        file  = new File(appDir + "/test/dir_for_file/test.txt");
+        qFile = new QFile(appDir + "/test/dir_for_file/test.txt");
     }
 
     void TearDown()
     {
+        delete qFile;
+        delete file;
+
         QDir(appDir + "/test/dir_for_file").removeRecursively();
     }
 
+    File*   file;
+    QFile*  qFile;
     QString appDir;
 };
 
@@ -28,25 +36,21 @@ protected:
 
 TEST_F(Test_File, Test_constructor_and_destructor)
 {
-    File file(appDir + "/test/dir_for_file/test.txt");
 }
 
 TEST_F(Test_File, Test_write)
 {
-    File  file(appDir + "/test/dir_for_file/test.txt");
-    QFile qFile(appDir + "/test/dir_for_file/test.txt");
-
     const char* bytes = "BLAH";
 
-    ASSERT_TRUE(file.open(QIODevice::WriteOnly));
-    ASSERT_EQ(file.write(bytes, strlen(bytes)), 4);
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::WriteOnly));
+    ASSERT_EQ(file->write(bytes, strlen(bytes)), 4);
+    file->close();
 
-    ASSERT_EQ(file.size(), 4);
+    ASSERT_EQ(file->size(), 4);
 
-    ASSERT_TRUE(qFile.open(QIODevice::ReadOnly));
-    QByteArray writtenData = qFile.readAll();
-    qFile.close();
+    ASSERT_TRUE(qFile->open(QIODevice::ReadOnly));
+    QByteArray writtenData = qFile->readAll();
+    qFile->close();
 
     ASSERT_EQ(writtenData.size(), 4);
     ASSERT_EQ(writtenData.at(0), 'B');
@@ -59,15 +63,15 @@ TEST_F(Test_File, Test_write)
     data.append(2);
     data.append(3);
 
-    ASSERT_TRUE(file.open(QIODevice::WriteOnly));
-    ASSERT_EQ(file.write(data), 3);
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::WriteOnly));
+    ASSERT_EQ(file->write(data), 3);
+    file->close();
 
-    ASSERT_EQ(file.size(), 3);
+    ASSERT_EQ(file->size(), 3);
 
-    ASSERT_TRUE(qFile.open(QIODevice::ReadOnly));
-    writtenData = qFile.readAll();
-    qFile.close();
+    ASSERT_TRUE(qFile->open(QIODevice::ReadOnly));
+    writtenData = qFile->readAll();
+    qFile->close();
 
     ASSERT_EQ(writtenData.size(), 3);
     ASSERT_EQ(writtenData.at(0), 1);
@@ -77,26 +81,23 @@ TEST_F(Test_File, Test_write)
 
 TEST_F(Test_File, Test_append)
 {
-    File  file(appDir + "/test/dir_for_file/test.txt");
-    QFile qFile(appDir + "/test/dir_for_file/test.txt");
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("TEST"), 4);
+    qFile->close();
 
-    ASSERT_TRUE(qFile.open(QIODevice::WriteOnly));
-    ASSERT_EQ(qFile.write("TEST"), 4);
-    qFile.close();
-
-    ASSERT_EQ(file.size(), 4);
+    ASSERT_EQ(file->size(), 4);
 
     const char* bytes = "BLAH";
 
-    ASSERT_TRUE(file.open(QIODevice::Append));
-    ASSERT_EQ(file.write(bytes, strlen(bytes)), strlen(bytes));
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::Append));
+    ASSERT_EQ(file->write(bytes, strlen(bytes)), strlen(bytes));
+    file->close();
 
-    ASSERT_EQ(file.size(), 8);
+    ASSERT_EQ(file->size(), 8);
 
-    ASSERT_TRUE(qFile.open(QIODevice::ReadOnly));
-    QByteArray writtenData = qFile.readAll();
-    qFile.close();
+    ASSERT_TRUE(qFile->open(QIODevice::ReadOnly));
+    QByteArray writtenData = qFile->readAll();
+    qFile->close();
 
     ASSERT_EQ(writtenData.size(), 8);
     ASSERT_EQ(writtenData.at(0), 'T');
@@ -113,15 +114,15 @@ TEST_F(Test_File, Test_append)
     data.append(2);
     data.append(3);
 
-    ASSERT_TRUE(file.open(QIODevice::Append));
-    ASSERT_EQ(file.write(data), 3);
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::Append));
+    ASSERT_EQ(file->write(data), 3);
+    file->close();
 
-    ASSERT_EQ(file.size(), 11);
+    ASSERT_EQ(file->size(), 11);
 
-    ASSERT_TRUE(qFile.open(QIODevice::ReadOnly));
-    writtenData = qFile.readAll();
-    qFile.close();
+    ASSERT_TRUE(qFile->open(QIODevice::ReadOnly));
+    writtenData = qFile->readAll();
+    qFile->close();
 
     ASSERT_EQ(writtenData.size(), 11);
     ASSERT_EQ(writtenData.at(0), 'T');
@@ -139,18 +140,15 @@ TEST_F(Test_File, Test_append)
 
 TEST_F(Test_File, Test_read)
 {
-    File  file(appDir + "/test/dir_for_file/test.txt");
-    QFile qFile(appDir + "/test/dir_for_file/test.txt");
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("TEST"), 4);
+    qFile->close();
 
-    ASSERT_TRUE(qFile.open(QIODevice::WriteOnly));
-    ASSERT_EQ(qFile.write("TEST"), 4);
-    qFile.close();
+    ASSERT_EQ(file->size(), 4);
 
-    ASSERT_EQ(file.size(), 4);
-
-    ASSERT_TRUE(file.open(QIODevice::ReadOnly));
-    QByteArray readData = file.readAll();
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::ReadOnly));
+    QByteArray readData = file->readAll();
+    file->close();
 
     ASSERT_EQ(readData.size(), 4);
     ASSERT_EQ(readData.at(0), 'T');
@@ -158,15 +156,15 @@ TEST_F(Test_File, Test_read)
     ASSERT_EQ(readData.at(2), 'S');
     ASSERT_EQ(readData.at(3), 'T');
 
-    ASSERT_TRUE(qFile.open(QIODevice::WriteOnly));
-    ASSERT_EQ(qFile.write("Hello"), 5);
-    qFile.close();
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("Hello"), 5);
+    qFile->close();
 
-    ASSERT_EQ(file.size(), 5);
+    ASSERT_EQ(file->size(), 5);
 
-    ASSERT_TRUE(file.open(QIODevice::ReadOnly));
-    file.read(readData.data(), 2);
-    file.close();
+    ASSERT_TRUE(file->open(QIODevice::ReadOnly));
+    file->read(readData.data(), 2);
+    file->close();
 
     ASSERT_EQ(readData.size(), 4);
     ASSERT_EQ(readData.at(0), 'H');
@@ -177,15 +175,11 @@ TEST_F(Test_File, Test_read)
 
 TEST_F(Test_File, Test_exists)
 {
-    File file(appDir + "/test/dir_for_file/test.txt");
+    ASSERT_EQ(file->exists(), false);
 
-    ASSERT_EQ(file.exists(), false);
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("TEST"), 4);
+    qFile->close();
 
-    QFile qFile(appDir + "/test/dir_for_file/test.txt");
-
-    ASSERT_TRUE(qFile.open(QIODevice::WriteOnly));
-    ASSERT_EQ(qFile.write("TEST"), 4);
-    qFile.close();
-
-    ASSERT_EQ(file.exists(), true);
+    ASSERT_EQ(file->exists(), true);
 }
