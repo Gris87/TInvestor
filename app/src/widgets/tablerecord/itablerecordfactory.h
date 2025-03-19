@@ -7,6 +7,7 @@
 #include <QTableWidget>
 
 #include "src/domain/stocks/stock.h"
+#include "src/threads/marketwaves/imarketwavesthread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory.h"
 
@@ -27,6 +28,7 @@ public:
         QTableWidget*                   tableWidget,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IMarketWavesDialogFactory*      marketWavesDialogFactory,
+        IMarketWavesThread*             marketWavesThread,
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent

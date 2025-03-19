@@ -21,10 +21,13 @@ ITableRecord* TableRecordFactory::newInstance(
     QTableWidget*                   tableWidget,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IMarketWavesDialogFactory*      marketWavesDialogFactory,
+    IMarketWavesThread*             marketWavesThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
     QObject*                        parent
 )
 {
-    return new TableRecord(tableWidget, actionsTableItemWidgetFactory, marketWavesDialogFactory, httpClient, stock, parent);
+    return new TableRecord(
+        tableWidget, actionsTableItemWidgetFactory, marketWavesDialogFactory, marketWavesThread, httpClient, stock, parent
+    );
 }

@@ -24,6 +24,7 @@
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/threads/marketwaves/imarketwavesthread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
@@ -79,6 +80,7 @@ protected:
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
+        marketWavesThreadMock                = new StrictMock<MarketWavesThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
@@ -139,6 +141,7 @@ protected:
             lastPriceThreadMock,
             cleanupThreadMock,
             makeDecisionThreadMock,
+            marketWavesThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
             autorunSettingsEditorMock,
@@ -190,6 +193,7 @@ protected:
         delete lastPriceThreadMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
+        delete marketWavesThreadMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete autorunSettingsEditorMock;
@@ -227,6 +231,7 @@ protected:
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
+    StrictMock<MarketWavesThreadMock>*                marketWavesThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
@@ -422,6 +427,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -437,6 +443,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -524,6 +531,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -539,6 +547,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -594,6 +603,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -609,6 +619,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -684,6 +695,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -699,6 +711,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -868,6 +881,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -883,6 +897,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -992,6 +1007,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -1007,6 +1023,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
             httpClientMock,
             &stock2,
             mainWindow

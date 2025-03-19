@@ -15,5 +15,6 @@ public:
     MarketWavesDialogFactory(const MarketWavesDialogFactory& another)            = delete;
     MarketWavesDialogFactory& operator=(const MarketWavesDialogFactory& another) = delete;
 
-    std::shared_ptr<IMarketWavesDialog> newInstance(QWidget* parent) override;
+    std::shared_ptr<IMarketWavesDialog>
+    newInstance(IMarketWavesThread* marketWavesThread, Stock* stock, QWidget* parent) override;
 };

@@ -23,7 +23,11 @@ public:
     MOCK_METHOD(
         IActionsTableItemWidget*,
         newInstance,
-        (IMarketWavesDialogFactory * marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent),
+        (IMarketWavesDialogFactory * marketWavesDialogFactory,
+         IMarketWavesThread* marketWavesThread,
+         IHttpClient*        httpClient,
+         Stock*              stock,
+         QWidget*            parent),
         (override)
     );
 };

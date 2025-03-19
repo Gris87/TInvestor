@@ -6,11 +6,16 @@
 
 
 ActionsTableItemWidget::ActionsTableItemWidget(
-    IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent
+    IMarketWavesDialogFactory* marketWavesDialogFactory,
+    IMarketWavesThread*        marketWavesThread,
+    IHttpClient*               httpClient,
+    Stock*                     stock,
+    QWidget*                   parent
 ) :
     IActionsTableItemWidget(parent),
     ui(new Ui::ActionsTableItemWidget),
     mMarketWavesDialogFactory(marketWavesDialogFactory),
+    mMarketWavesThread(marketWavesThread),
     mHttpClient(httpClient),
     mStock(stock)
 {
@@ -28,7 +33,7 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 
 void ActionsTableItemWidget::on_marketWavesButton_clicked()
 {
-    std::shared_ptr<IMarketWavesDialog> dialog = mMarketWavesDialogFactory->newInstance(this);
+    std::shared_ptr<IMarketWavesDialog> dialog = mMarketWavesDialogFactory->newInstance(mMarketWavesThread, mStock, this);
     dialog->exec();
 }
 

@@ -6,6 +6,7 @@
 
 #include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h"
 #include "src/domain/stocks/stock.h"
+#include "src/threads/marketwaves/imarketwavesthread.h"
 #include "src/utils/http/ihttpclient.h"
 
 
@@ -21,6 +22,11 @@ public:
     IActionsTableItemWidgetFactory(const IActionsTableItemWidgetFactory& another)            = delete;
     IActionsTableItemWidgetFactory& operator=(const IActionsTableItemWidgetFactory& another) = delete;
 
-    virtual IActionsTableItemWidget*
-    newInstance(IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent) = 0;
+    virtual IActionsTableItemWidget* newInstance(
+        IMarketWavesDialogFactory* marketWavesDialogFactory,
+        IMarketWavesThread*        marketWavesThread,
+        IHttpClient*               httpClient,
+        Stock*                     stock,
+        QWidget*                   parent
+    ) = 0;
 };

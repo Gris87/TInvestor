@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
+#include "src/threads/marketwaves/imarketwavesthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -26,6 +27,7 @@ protected:
 
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         marketWavesDialogFactoryMock      = new StrictMock<MarketWavesDialogFactoryMock>();
+        marketWavesThreadMock             = new StrictMock<MarketWavesThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
         actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
         tableWidget                       = new QTableWidget();
@@ -48,12 +50,19 @@ protected:
         stock->operational.detailedData.append(stockData);
 
         EXPECT_CALL(
-            *actionsTableItemWidgetFactoryMock, newInstance(marketWavesDialogFactoryMock, httpClientMock, stock, tableWidget)
+            *actionsTableItemWidgetFactoryMock,
+            newInstance(marketWavesDialogFactoryMock, marketWavesThreadMock, httpClientMock, stock, tableWidget)
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
 
-        record =
-            new TableRecord(tableWidget, actionsTableItemWidgetFactoryMock, marketWavesDialogFactoryMock, httpClientMock, stock);
+        record = new TableRecord(
+            tableWidget,
+            actionsTableItemWidgetFactoryMock,
+            marketWavesDialogFactoryMock,
+            marketWavesThreadMock,
+            httpClientMock,
+            stock
+        );
     }
 
     void TearDown()
@@ -61,6 +70,7 @@ protected:
         delete record;
         delete actionsTableItemWidgetFactoryMock;
         delete marketWavesDialogFactoryMock;
+        delete marketWavesThreadMock;
         delete httpClientMock;
         // It will be deleted by tableWidget
         /*
@@ -73,6 +83,7 @@ protected:
     TableRecord*                                   record;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<MarketWavesDialogFactoryMock>*      marketWavesDialogFactoryMock;
+    StrictMock<MarketWavesThreadMock>*             marketWavesThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
     StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
     QTableWidget*                                  tableWidget;

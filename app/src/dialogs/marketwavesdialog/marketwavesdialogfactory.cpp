@@ -17,7 +17,8 @@ MarketWavesDialogFactory::~MarketWavesDialogFactory()
     qDebug() << "Destroy MarketWavesDialogFactory";
 }
 
-std::shared_ptr<IMarketWavesDialog> MarketWavesDialogFactory::newInstance(QWidget* parent)
+std::shared_ptr<IMarketWavesDialog>
+MarketWavesDialogFactory::newInstance(IMarketWavesThread* marketWavesThread, Stock* stock, QWidget* parent)
 {
-    return std::shared_ptr<IMarketWavesDialog>(new MarketWavesDialog(parent));
+    return std::shared_ptr<IMarketWavesDialog>(new MarketWavesDialog(marketWavesThread, stock, parent));
 }

@@ -34,6 +34,7 @@
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
+#include "src/threads/marketwaves/marketwavesthread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
@@ -252,6 +253,7 @@ int runApplication(int argc, char* argv[])
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
+    MarketWavesThread  marketWavesThread;
 
     MainWindow mainWindow(
         &config,
@@ -278,6 +280,7 @@ int runApplication(int argc, char* argv[])
         &lastPriceThread,
         &cleanupThread,
         &makeDecisionThread,
+        &marketWavesThread,
         &messageBoxUtils,
         &settingsEditor,
         &autorunSettingsEditor,

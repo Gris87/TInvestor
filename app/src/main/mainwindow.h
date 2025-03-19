@@ -16,6 +16,7 @@
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
+#include "src/threads/marketwaves/imarketwavesthread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
@@ -64,6 +65,7 @@ public:
         ILastPriceThread*                  lastPriceThread,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
+        IMarketWavesThread*                marketWavesThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   autorunSettingsEditor,
@@ -121,6 +123,7 @@ private:
     ILastPriceThread*                  mLastPriceThread;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
+    IMarketWavesThread*                mMarketWavesThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;

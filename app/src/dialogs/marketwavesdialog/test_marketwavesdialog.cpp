@@ -3,6 +3,15 @@
 
 #include <gtest/gtest.h>
 
+#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 class Test_MarketWavesDialog : public ::testing::Test
@@ -10,15 +19,22 @@ class Test_MarketWavesDialog : public ::testing::Test
 protected:
     void SetUp()
     {
-        dialog = new MarketWavesDialog();
+        marketWavesThread = new StrictMock<MarketWavesThreadMock>();
+        stock             = new Stock();
+
+        dialog = new MarketWavesDialog(marketWavesThread, stock);
     }
 
     void TearDown()
     {
         delete dialog;
+        delete marketWavesThread;
+        delete stock;
     }
 
-    MarketWavesDialog* dialog;
+    MarketWavesDialog*                 dialog;
+    StrictMock<MarketWavesThreadMock>* marketWavesThread;
+    Stock*                             stock;
 };
 
 

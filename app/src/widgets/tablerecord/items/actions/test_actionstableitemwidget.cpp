@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
+#include "src/threads/marketwaves/imarketwavesthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
 
@@ -21,6 +22,7 @@ protected:
     void SetUp()
     {
         marketWavesDialogFactoryMock = new StrictMock<MarketWavesDialogFactoryMock>();
+        marketWavesThreadMock        = new StrictMock<MarketWavesThreadMock>();
         httpClientMock               = new StrictMock<HttpClientMock>();
         stock                        = new Stock();
 
@@ -29,19 +31,21 @@ protected:
         stock->meta.name                   = "Wata Giga";
         stock->meta.minPriceIncrement.nano = 10000;
 
-        widget = new ActionsTableItemWidget(marketWavesDialogFactoryMock, httpClientMock, stock);
+        widget = new ActionsTableItemWidget(marketWavesDialogFactoryMock, marketWavesThreadMock, httpClientMock, stock);
     }
 
     void TearDown()
     {
         delete widget;
         delete marketWavesDialogFactoryMock;
+        delete marketWavesThreadMock;
         delete httpClientMock;
         delete stock;
     }
 
     ActionsTableItemWidget*                   widget;
     StrictMock<MarketWavesDialogFactoryMock>* marketWavesDialogFactoryMock;
+    StrictMock<MarketWavesThreadMock>*        marketWavesThreadMock;
     StrictMock<HttpClientMock>*               httpClientMock;
     Stock*                                    stock;
 };

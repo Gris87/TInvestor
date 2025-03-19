@@ -6,6 +6,7 @@
 
 #include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h"
 #include "src/domain/stocks/stock.h"
+#include "src/threads/marketwaves/imarketwavesthread.h"
 #include "src/utils/http/ihttpclient.h"
 
 
@@ -23,7 +24,11 @@ class ActionsTableItemWidget : public IActionsTableItemWidget
 
 public:
     explicit ActionsTableItemWidget(
-        IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent = nullptr
+        IMarketWavesDialogFactory* marketWavesDialogFactory,
+        IMarketWavesThread*        marketWavesThread,
+        IHttpClient*               httpClient,
+        Stock*                     stock,
+        QWidget*                   parent = nullptr
     );
     ~ActionsTableItemWidget();
 
@@ -34,6 +39,7 @@ public:
 
 private:
     IMarketWavesDialogFactory* mMarketWavesDialogFactory;
+    IMarketWavesThread*        mMarketWavesThread;
     IHttpClient*               mHttpClient;
     Stock*                     mStock;
 

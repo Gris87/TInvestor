@@ -36,6 +36,7 @@ MainWindow::MainWindow(
     ILastPriceThread*                  lastPriceThread,
     ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
+    IMarketWavesThread*                marketWavesThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     ISettingsEditor*                   autorunSettingsEditor,
@@ -74,6 +75,7 @@ MainWindow::MainWindow(
     mLastPriceThread(lastPriceThread),
     mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
+    mMarketWavesThread(marketWavesThread),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mAutorunSettingsEditor(autorunSettingsEditor),
@@ -481,7 +483,13 @@ void MainWindow::updateStocksTableWidget()
             else
             {
                 record = mTableRecordFactory->newInstance(
-                    ui->stocksTableWidget, mActionsTableItemWidgetFactory, mMarketWavesDialogFactory, mHttpClient, stock, this
+                    ui->stocksTableWidget,
+                    mActionsTableItemWidgetFactory,
+                    mMarketWavesDialogFactory,
+                    mMarketWavesThread,
+                    mHttpClient,
+                    stock,
+                    this
                 );
                 tableRecords[uid] = record;
             }

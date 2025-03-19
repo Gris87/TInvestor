@@ -5,9 +5,11 @@
 
 
 
-MarketWavesDialog::MarketWavesDialog(QWidget* parent) :
+MarketWavesDialog::MarketWavesDialog(IMarketWavesThread* marketWavesThread, Stock* stock, QWidget* parent) :
     IMarketWavesDialog(parent),
-    ui(new Ui::MarketWavesDialog)
+    ui(new Ui::MarketWavesDialog),
+    mMarketWavesThread(marketWavesThread),
+    mStock(stock)
 {
     qDebug() << "Create MarketWavesDialog";
 

@@ -26,6 +26,7 @@ public:
         (QTableWidget * tableWidget,
          IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
          IMarketWavesDialogFactory*      marketWavesDialogFactory,
+         IMarketWavesThread*             marketWavesThread,
          IHttpClient*                    httpClient,
          Stock*                          stock,
          QObject*                        parent),

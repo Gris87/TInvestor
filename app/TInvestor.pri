@@ -52,6 +52,7 @@ SOURCES += \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/threads/marketwaves/marketwavesthread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/fs/dir/dir.cpp \
@@ -167,6 +168,8 @@ HEADERS += \
     src/threads/lastprice/lastpricethread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
+    src/threads/marketwaves/imarketwavesthread.h \
+    src/threads/marketwaves/marketwavesthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
