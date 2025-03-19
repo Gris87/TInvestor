@@ -6,9 +6,14 @@
 
 
 
-TableRecord::TableRecord(QTableWidget* tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent) :
+TableRecord::TableRecord(
+    QTableWidget*                   tableWidget,
+    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+    IHttpClient*                    httpClient,
+    Stock*                          stock,
+    QObject*                        parent
+) :
     ITableRecord(parent),
-    mHttpClient(httpClient),
     mStock(stock),
     mStockTableWidgetItem(new QTableWidgetItem()),
     mPriceTableWidgetItem(new PriceTableItem()),
@@ -26,8 +31,8 @@ TableRecord::TableRecord(QTableWidget* tableWidget, IHttpClient* httpClient, Sto
     QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
     mStockTableWidgetItem->setIcon(stockLogo);
 
-    QPushButton* linkButton = new QPushButton(QIcon(":/assets/images/link.png"), ""); // tableWidget will take ownership
-    connect(linkButton, SIGNAL(clicked()), this, SLOT(linkButtonClicked()));
+    IActionsTableItemWidget* actionsTableItemWidget =
+        actionsTableItemWidgetFactory->newInstance(httpClient, mStock, tableWidget); // tableWidget will take ownership
 
     int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
@@ -37,7 +42,7 @@ TableRecord::TableRecord(QTableWidget* tableWidget, IHttpClient* httpClient, Sto
     tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, LINK_COLUMN, linkButton);
+    tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
 
     mPrecision = 9;
 
@@ -106,14 +111,4 @@ void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
     );
 
     tableWidget->setRowHidden(row, hidden);
-}
-
-void TableRecord::linkButtonClicked()
-{
-    mStock->mutex->lock();
-    QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
-    mStock->mutex->unlock();
-
-    bool ok = mHttpClient->openInBrowser(url);
-    Q_ASSERT_X(ok, "TableRecord::linkButtonClicked()", "Failed to open link");
 }

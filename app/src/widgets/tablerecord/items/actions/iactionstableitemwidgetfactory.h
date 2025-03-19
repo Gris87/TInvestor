@@ -1,0 +1,24 @@
+#pragma once
+
+
+
+#include "src/widgets/tablerecord/items/actions/iactionstableitemwidget.h"
+
+#include "src/domain/stocks/stock.h"
+#include "src/utils/http/ihttpclient.h"
+
+
+
+class IActionsTableItemWidgetFactory
+{
+public:
+    IActionsTableItemWidgetFactory()
+    {
+    }
+    virtual ~IActionsTableItemWidgetFactory() = default;
+
+    IActionsTableItemWidgetFactory(const IActionsTableItemWidgetFactory& another)            = delete;
+    IActionsTableItemWidgetFactory& operator=(const IActionsTableItemWidgetFactory& another) = delete;
+
+    virtual IActionsTableItemWidget* newInstance(IHttpClient* httpClient, Stock* stock, QWidget* parent) = 0;
+};

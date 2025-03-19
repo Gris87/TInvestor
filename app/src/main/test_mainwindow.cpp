@@ -32,6 +32,7 @@
 #include "src/widgets/filterwidget/ifilterwidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecord_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
+#include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
@@ -67,7 +68,6 @@ protected:
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         filterWidgetFactoryMock              = new StrictMock<FilterWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
-        tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
@@ -80,6 +80,8 @@ protected:
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
+        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         filterWidgetMock                     = new StrictMock<FilterWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
@@ -107,7 +109,7 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(139))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(139))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Link"),       QVariant(69))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
         // clang-format on
 
         mainWindow = new MainWindow(
@@ -137,6 +139,7 @@ protected:
             messageBoxUtilsMock,
             settingsEditorMock,
             autorunSettingsEditorMock,
+            actionsTableItemWidgetFactoryMock,
             tableRecordFactoryMock
         );
     }
@@ -156,7 +159,7 @@ protected:
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DayChange"),  _));
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DateChange"), _));
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Payback"),    _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Link"),       _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Actions"),    _));
         // clang-format on
 
         delete mainWindow;
@@ -174,7 +177,6 @@ protected:
         delete sellDecision3ConfigWidgetFactoryMock;
         delete filterWidgetFactoryMock;
         delete trayIconFactoryMock;
-        delete tableRecordFactoryMock;
         delete userStorageMock;
         delete stocksStorageMock;
         delete httpClientMock;
@@ -187,6 +189,8 @@ protected:
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete autorunSettingsEditorMock;
+        delete actionsTableItemWidgetFactoryMock;
+        delete tableRecordFactoryMock;
         // It will be deleted by `delete ui;`
         /*
         delete filterWidgetMock;
@@ -209,7 +213,6 @@ protected:
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<FilterWidgetFactoryMock>*              filterWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
-    StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
@@ -222,6 +225,8 @@ protected:
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
+    StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<FilterWidgetMock>*                     filterWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
@@ -406,12 +411,18 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 
@@ -488,12 +499,18 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 
@@ -538,12 +555,18 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 
@@ -608,12 +631,18 @@ TEST_F(Test_MainWindow, Test_filterChanged)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 
@@ -772,12 +801,18 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 
@@ -876,12 +911,18 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock1, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock1, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock1));
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
     EXPECT_CALL(tableRecordMock1, updateAll());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(*tableRecordFactoryMock, newInstance(mainWindow->ui->stocksTableWidget, httpClientMock, &stock2, mainWindow))
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(mainWindow->ui->stocksTableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, &stock2, mainWindow)
+    )
         .WillOnce(Return(&tableRecordMock2));
     EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
 

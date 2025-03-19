@@ -4,6 +4,8 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/http/ihttpclient_mock.h"
+#include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
+#include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
 
 
 
@@ -19,11 +21,13 @@ class Test_TableRecord : public ::testing::Test
 protected:
     void SetUp()
     {
-        httpClientMock = new StrictMock<HttpClientMock>();
-        tableWidget    = new QTableWidget();
-        stock          = new Stock();
+        actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        httpClientMock                    = new StrictMock<HttpClientMock>();
+        actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
+        tableWidget                       = new QTableWidget();
+        stock                             = new Stock();
 
-        tableWidget->setColumnCount(LINK_COLUMN + 1);
+        tableWidget->setColumnCount(ACTIONS_COLUMN + 1);
 
         StockData stockData;
         stockData.timestamp = 100;
@@ -39,21 +43,31 @@ protected:
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
-        record = new TableRecord(tableWidget, httpClientMock, stock);
+        EXPECT_CALL(*actionsTableItemWidgetFactoryMock, newInstance(httpClientMock, stock, tableWidget))
+            .WillOnce(Return(actionsTableItemWidgetMock));
+
+        record = new TableRecord(tableWidget, actionsTableItemWidgetFactoryMock, httpClientMock, stock);
     }
 
     void TearDown()
     {
         delete record;
+        delete actionsTableItemWidgetFactoryMock;
         delete httpClientMock;
+        // It will be deleted by tableWidget
+        /*
+        delete actionsTableItemWidgetMock;
+        */
         delete tableWidget;
         delete stock;
     }
 
-    TableRecord*                record;
-    StrictMock<HttpClientMock>* httpClientMock;
-    QTableWidget*               tableWidget;
-    Stock*                      stock;
+    TableRecord*                                   record;
+    StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
+    StrictMock<HttpClientMock>*                    httpClientMock;
+    StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
+    QTableWidget*                                  tableWidget;
+    Stock*                                         stock;
 };
 
 
@@ -123,14 +137,4 @@ TEST_F(Test_TableRecord, Test_filter)
     record->filter(tableWidget, filter);
 
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
-}
-
-TEST_F(Test_TableRecord, Test_linkButtonClicked)
-{
-    InSequence seq;
-
-    EXPECT_CALL(*httpClientMock, openInBrowser(QUrl("https://www.tbank.ru/invest/stocks/WAGA/"))).WillOnce(Return(true));
-
-    QPushButton* linkButton = reinterpret_cast<QPushButton*>(tableWidget->cellWidget(0, LINK_COLUMN));
-    linkButton->click();
 }

@@ -15,7 +15,7 @@
 #define DAY_CHANGE_COLUMN  2
 #define DATE_CHANGE_COLUMN 3
 #define PAYBACK_COLUMN     4
-#define LINK_COLUMN        5
+#define ACTIONS_COLUMN     5
 
 
 

@@ -23,7 +23,11 @@ public:
     MOCK_METHOD(
         ITableRecord*,
         newInstance,
-        (QTableWidget * tableWidget, IHttpClient* httpClient, Stock* stock, QObject* parent),
+        (QTableWidget * tableWidget,
+         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+         IHttpClient*                    httpClient,
+         Stock*                          stock,
+         QObject*                        parent),
         (override)
     );
 };

@@ -187,7 +187,7 @@
           </column>
           <column>
            <property name="text">
-            <string>Link</string>
+            <string>Actions</string>
            </property>
           </column>
          </widget>

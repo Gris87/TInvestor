@@ -38,6 +38,7 @@ MainWindow::MainWindow(
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     ISettingsEditor*                   autorunSettingsEditor,
+    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     ITableRecordFactory*               tableRecordFactory
 ) :
     QMainWindow(),
@@ -74,6 +75,7 @@ MainWindow::MainWindow(
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mAutorunSettingsEditor(autorunSettingsEditor),
+    mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mTableRecordFactory(tableRecordFactory)
 {
     qDebug() << "Create MainWindow";
@@ -476,7 +478,9 @@ void MainWindow::updateStocksTableWidget()
             }
             else
             {
-                record            = mTableRecordFactory->newInstance(ui->stocksTableWidget, mHttpClient, stock, this);
+                record = mTableRecordFactory->newInstance(
+                    ui->stocksTableWidget, mActionsTableItemWidgetFactory, mHttpClient, stock, this
+                );
                 tableRecords[uid] = record;
             }
 
@@ -548,7 +552,7 @@ void MainWindow::saveWindowState()
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_DayChange",  ui->stocksTableWidget->columnWidth(DAY_CHANGE_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_DateChange", ui->stocksTableWidget->columnWidth(DATE_CHANGE_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Payback",    ui->stocksTableWidget->columnWidth(PAYBACK_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Link",       ui->stocksTableWidget->columnWidth(LINK_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Actions",    ui->stocksTableWidget->columnWidth(ACTIONS_COLUMN));
     // clang-format on
 }
 
@@ -566,7 +570,7 @@ void MainWindow::loadWindowState()
     ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  139).toInt());
     ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 139).toInt());
     ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    120).toInt());
-    ui->stocksTableWidget->setColumnWidth(LINK_COLUMN,        mSettingsEditor->value("MainWindow/stocksTableWidget_Link",       69).toInt());
+    ui->stocksTableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Actions",    83).toInt());
     // clang-format on
 
     updateStackWidgetToolbar();

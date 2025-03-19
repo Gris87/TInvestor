@@ -64,6 +64,8 @@ SOURCES += \
     src/utils/timeutils/test_timeutils.cpp \
     src/widgets/filterwidget/test_filterwidget.cpp \
     src/widgets/filterwidget/test_filterwidgetfactory.cpp \
+    src/widgets/tablerecord/items/actions/test_actionstableitemwidget.cpp \
+    src/widgets/tablerecord/items/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/test_paybacktableitem.cpp \
     src/widgets/tablerecord/items/test_pricechangetableitem.cpp \
     src/widgets/tablerecord/items/test_pricetableitem.cpp \
@@ -127,5 +129,7 @@ HEADERS += \
     src/widgets/filterwidget/ifilterwidget_mock.h \
     src/widgets/tablerecord/itablerecordfactory_mock.h \
     src/widgets/tablerecord/itablerecord_mock.h \
+    src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h \
+    src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \

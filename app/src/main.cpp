@@ -46,6 +46,7 @@
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
+#include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -115,6 +116,7 @@ int runApplication(int argc, char* argv[])
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
     FilterWidgetFactory              filterWidgetFactory;
+    ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
 
     TrayIconFactory    trayIconFactory;
     TableRecordFactory tableRecordFactory;
@@ -276,6 +278,7 @@ int runApplication(int argc, char* argv[])
         &messageBoxUtils,
         &settingsEditor,
         &autorunSettingsEditor,
+        &actionsTableItemWidgetFactory,
         &tableRecordFactory
     );
     mainWindow.init();

@@ -65,6 +65,7 @@ public:
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   autorunSettingsEditor,
+        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         ITableRecordFactory*               tableRecordFactory
     );
     ~MainWindow();
@@ -120,6 +121,7 @@ private:
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;
+    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
     ITableRecordFactory*               mTableRecordFactory;
 
 public slots:

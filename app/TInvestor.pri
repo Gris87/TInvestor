@@ -68,6 +68,8 @@ SOURCES += \
     src/utils/timeutils/timeutils.cpp \
     src/widgets/filterwidget/filterwidget.cpp \
     src/widgets/filterwidget/filterwidgetfactory.cpp \
+    src/widgets/tablerecord/items/actions/actionstableitemwidget.cpp \
+    src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
     src/widgets/tablerecord/items/pricechangetableitem.cpp \
     src/widgets/tablerecord/items/pricetableitem.cpp \
@@ -196,6 +198,10 @@ HEADERS += \
     src/widgets/filterwidget/ifilterwidgetfactory.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
+    src/widgets/tablerecord/items/actions/actionstableitemwidget.h \
+    src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h \
+    src/widgets/tablerecord/items/actions/iactionstableitemwidget.h \
+    src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory.h \
     src/widgets/tablerecord/items/paybacktableitem.h \
     src/widgets/tablerecord/items/pricechangetableitem.h \
     src/widgets/tablerecord/items/pricetableitem.h \
@@ -219,3 +225,4 @@ FORMS += \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/filterwidget/filterwidget.ui \
+    src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
