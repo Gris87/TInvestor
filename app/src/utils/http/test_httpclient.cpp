@@ -29,10 +29,12 @@ TEST(Test_HttpClient, Test_download)
     ASSERT_EQ(result.statusCode, 200);
     ASSERT_EQ(
         QString::fromUtf8(result.body)
-            .startsWith("{\n  \"args\": {\n    \"hello\": \"test\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": "
-                        "{}, \n  \"headers\": {\n    \"Accept-Encoding\": \"gzip, deflate\", \n    \"Accept-Language\": "
-                        "\"ru-RU,en,*\", \n    \"Authorization\": \"Bearer debearer\", \n    \"Host\": \"httpbin.org\", \n    "
-                        "\"User-Agent\": \"Mozilla/5.0\", \n    \"X-Amzn-Trace-Id\": "),
+            .startsWith(
+                "{\n  \"args\": {\n    \"hello\": \"test\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": "
+                "{}, \n  \"headers\": {\n    \"Accept-Encoding\": \"gzip, deflate\", \n    \"Accept-Language\": "
+                "\"ru-RU,en,*\", \n    \"Authorization\": \"Bearer debearer\", \n    \"Host\": \"httpbin.org\", \n    "
+                "\"User-Agent\": \"Mozilla/5.0\", \n    \"X-Amzn-Trace-Id\": "
+            ),
         true
     );
 }

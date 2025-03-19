@@ -106,8 +106,8 @@ int runApplication(int argc, char* argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    AuthDialogFactory     authDialogFactory;
-    SettingsDialogFactory settingsDialogFactory;
+    AuthDialogFactory        authDialogFactory;
+    SettingsDialogFactory    settingsDialogFactory;
     MarketWavesDialogFactory marketWavesDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
@@ -127,8 +127,8 @@ int runApplication(int argc, char* argv[])
     QZipFactory        qZipFactory;
     QZipFileFactory    qZipFileFactory;
 
-    SettingsEditor  settingsEditor("GrisCom", "TInvestor");
-    SettingsEditor  autorunSettingsEditor("Microsoft", "Windows");
+    SettingsEditor settingsEditor("GrisCom", "TInvestor");
+    SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
 
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
@@ -225,10 +225,10 @@ int runApplication(int argc, char* argv[])
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
     Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
-    UserDatabase       userDatabase;
-    UserStorage        userStorage(&userDatabase);
-    StocksDatabase     stocksDatabase(&dirFactory, &fileFactory);
-    StocksStorage      stocksStorage(&stocksDatabase, &userStorage);
+    UserDatabase   userDatabase;
+    UserStorage    userStorage(&userDatabase);
+    StocksDatabase stocksDatabase(&dirFactory, &fileFactory);
+    StocksStorage  stocksStorage(&stocksDatabase, &userStorage);
 
     TimeUtils       timeUtils;
     MessageBoxUtils messageBoxUtils;

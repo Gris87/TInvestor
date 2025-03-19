@@ -34,8 +34,8 @@ public:
 
 private:
     IMarketWavesDialogFactory* mMarketWavesDialogFactory;
-    IHttpClient* mHttpClient;
-    Stock*       mStock;
+    IHttpClient*               mHttpClient;
+    Stock*                     mStock;
 
 private slots:
     void on_marketWavesButton_clicked();

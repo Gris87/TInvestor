@@ -22,6 +22,8 @@ class Test_TableRecord : public ::testing::Test
 protected:
     void SetUp()
     {
+        InSequence seq;
+
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         marketWavesDialogFactoryMock      = new StrictMock<MarketWavesDialogFactoryMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();

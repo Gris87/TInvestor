@@ -22,6 +22,8 @@ TEST(Test_TableRecordFactory, Test_constructor_and_destructor)
 
 TEST(Test_TableRecordFactory, Test_newInstance)
 {
+    InSequence seq;
+
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
