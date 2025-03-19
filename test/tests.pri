@@ -27,6 +27,8 @@ SOURCES += \
     src/db/user/test_userdatabase.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
+    src/dialogs/marketwavesdialog/test_marketwavesdialog.cpp \
+    src/dialogs/marketwavesdialog/test_marketwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
@@ -102,6 +104,8 @@ HEADERS += \
     src/db/user/iuserdatabase_mock.h \
     src/dialogs/authdialog/iauthdialogfactory_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \
+    src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h \
+    src/dialogs/marketwavesdialog/imarketwavesdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/grpc/igrpcclient_mock.h \

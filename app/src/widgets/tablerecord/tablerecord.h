@@ -21,6 +21,7 @@ public:
     explicit TableRecord(
         QTableWidget*                   tableWidget,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IMarketWavesDialogFactory*      marketWavesDialogFactory,
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent = nullptr

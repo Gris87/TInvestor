@@ -17,6 +17,7 @@ MainWindow::MainWindow(
     IConfig*                           configForSimulation,
     IAuthDialogFactory*                authDialogFactory,
     ISettingsDialogFactory*            settingsDialogFactory,
+    IMarketWavesDialogFactory*         marketWavesDialogFactory,
     IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
     IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -56,6 +57,7 @@ MainWindow::MainWindow(
     mConfigForSimulation(configForSimulation),
     mAuthDialogFactory(authDialogFactory),
     mSettingsDialogFactory(settingsDialogFactory),
+    mMarketWavesDialogFactory(marketWavesDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
     mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
     mBuyDecision2ConfigWidgetFactory(buyDecision2ConfigWidgetFactory),
@@ -479,7 +481,7 @@ void MainWindow::updateStocksTableWidget()
             else
             {
                 record = mTableRecordFactory->newInstance(
-                    ui->stocksTableWidget, mActionsTableItemWidgetFactory, mHttpClient, stock, this
+                    ui->stocksTableWidget, mActionsTableItemWidgetFactory, mMarketWavesDialogFactory, mHttpClient, stock, this
                 );
                 tableRecords[uid] = record;
             }

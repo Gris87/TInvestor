@@ -24,6 +24,7 @@
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
+#include "src/dialogs/marketwavesdialog/marketwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/grpc/grpcclient.h"
 #include "src/grpc/rawgrpcclient.h"
@@ -107,6 +108,7 @@ int runApplication(int argc, char* argv[])
 
     AuthDialogFactory     authDialogFactory;
     SettingsDialogFactory settingsDialogFactory;
+    MarketWavesDialogFactory marketWavesDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
@@ -257,6 +259,7 @@ int runApplication(int argc, char* argv[])
         &configForSimulation,
         &authDialogFactory,
         &settingsDialogFactory,
+        &marketWavesDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,
         &buyDecision2ConfigWidgetFactory,

@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
 
@@ -19,27 +20,30 @@ class Test_ActionsTableItemWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        httpClientMock = new StrictMock<HttpClientMock>();
-        stock          = new Stock();
+        marketWavesDialogFactoryMock = new StrictMock<MarketWavesDialogFactoryMock>();
+        httpClientMock               = new StrictMock<HttpClientMock>();
+        stock                        = new Stock();
 
         stock->meta.uid                    = "aaa";
         stock->meta.ticker                 = "WAGA";
         stock->meta.name                   = "Wata Giga";
         stock->meta.minPriceIncrement.nano = 10000;
 
-        widget = new ActionsTableItemWidget(httpClientMock, stock);
+        widget = new ActionsTableItemWidget(marketWavesDialogFactoryMock, httpClientMock, stock);
     }
 
     void TearDown()
     {
         delete widget;
+        delete marketWavesDialogFactoryMock;
         delete httpClientMock;
         delete stock;
     }
 
-    ActionsTableItemWidget*     widget;
-    StrictMock<HttpClientMock>* httpClientMock;
-    Stock*                      stock;
+    ActionsTableItemWidget*                   widget;
+    StrictMock<MarketWavesDialogFactoryMock>* marketWavesDialogFactoryMock;
+    StrictMock<HttpClientMock>*               httpClientMock;
+    Stock*                                    stock;
 };
 
 

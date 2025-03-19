@@ -32,6 +32,8 @@ SOURCES += \
     src/db/user/userdatabase.cpp \
     src/dialogs/authdialog/authdialog.cpp \
     src/dialogs/authdialog/authdialogfactory.cpp \
+    src/dialogs/marketwavesdialog/marketwavesdialog.cpp \
+    src/dialogs/marketwavesdialog/marketwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/domain/filter/filter.cpp \
@@ -132,6 +134,10 @@ HEADERS += \
     src/dialogs/authdialog/authdialogfactory.h \
     src/dialogs/authdialog/iauthdialog.h \
     src/dialogs/authdialog/iauthdialogfactory.h \
+    src/dialogs/marketwavesdialog/imarketwavesdialog.h \
+    src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h \
+    src/dialogs/marketwavesdialog/marketwavesdialog.h \
+    src/dialogs/marketwavesdialog/marketwavesdialogfactory.h \
     src/dialogs/settingsdialog/isettingsdialog.h \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
@@ -222,6 +228,7 @@ FORMS += \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
     src/dialogs/authdialog/authdialog.ui \
+    src/dialogs/marketwavesdialog/marketwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/filterwidget/filterwidget.ui \

@@ -26,6 +26,7 @@ public:
     virtual ITableRecord* newInstance(
         QTableWidget*                   tableWidget,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IMarketWavesDialogFactory*      marketWavesDialogFactory,
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent

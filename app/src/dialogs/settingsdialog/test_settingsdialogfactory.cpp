@@ -89,6 +89,5 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
         &sellDecision3ConfigWidgetFactoryMock,
         nullptr
     );
-
     ASSERT_TRUE(dialog != nullptr);
 }

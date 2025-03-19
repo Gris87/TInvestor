@@ -8,6 +8,7 @@
 #include <QTimer>
 
 #include "src/dialogs/authdialog/iauthdialogfactory.h"
+#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -44,6 +45,7 @@ public:
         IConfig*                           configForSimulation,
         IAuthDialogFactory*                authDialogFactory,
         ISettingsDialogFactory*            settingsDialogFactory,
+        IMarketWavesDialogFactory*         marketWavesDialogFactory,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -100,6 +102,7 @@ private:
     IConfig*                           mConfigForSimulation;
     IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
+    IMarketWavesDialogFactory*         mMarketWavesDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory*  mBuyDecision2ConfigWidgetFactory;

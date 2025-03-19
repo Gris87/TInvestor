@@ -4,6 +4,7 @@
 
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget.h"
 
+#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h"
 #include "src/domain/stocks/stock.h"
 #include "src/utils/http/ihttpclient.h"
 
@@ -21,7 +22,9 @@ class ActionsTableItemWidget : public IActionsTableItemWidget
     Q_OBJECT
 
 public:
-    explicit ActionsTableItemWidget(IHttpClient* httpClient, Stock* stock, QWidget* parent = nullptr);
+    explicit ActionsTableItemWidget(
+        IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent = nullptr
+    );
     ~ActionsTableItemWidget();
 
     ActionsTableItemWidget(const ActionsTableItemWidget& another)            = delete;
@@ -30,6 +33,7 @@ public:
     Ui::ActionsTableItemWidget* ui;
 
 private:
+    IMarketWavesDialogFactory* mMarketWavesDialogFactory;
     IHttpClient* mHttpClient;
     Stock*       mStock;
 

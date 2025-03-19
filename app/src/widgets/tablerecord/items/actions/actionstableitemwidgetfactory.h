@@ -15,5 +15,7 @@ public:
     ActionsTableItemWidgetFactory(const ActionsTableItemWidgetFactory& another)            = delete;
     ActionsTableItemWidgetFactory& operator=(const ActionsTableItemWidgetFactory& another) = delete;
 
-    IActionsTableItemWidget* newInstance(IHttpClient* httpClient, Stock* stock, QWidget* parent) override;
+    IActionsTableItemWidget* newInstance(
+        IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent
+    ) override;
 };

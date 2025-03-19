@@ -17,7 +17,9 @@ ActionsTableItemWidgetFactory::~ActionsTableItemWidgetFactory()
     qDebug() << "Destroy ActionsTableItemWidgetFactory";
 }
 
-IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(IHttpClient* httpClient, Stock* stock, QWidget* parent)
+IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
+    IMarketWavesDialogFactory* marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent
+)
 {
-    return new ActionsTableItemWidget(httpClient, stock, parent);
+    return new ActionsTableItemWidget(marketWavesDialogFactory, httpClient, stock, parent);
 }

@@ -20,5 +20,10 @@ public:
     ActionsTableItemWidgetFactoryMock(const ActionsTableItemWidgetFactoryMock& another)            = delete;
     ActionsTableItemWidgetFactoryMock& operator=(const ActionsTableItemWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IActionsTableItemWidget*, newInstance, (IHttpClient * httpClient, Stock* stock, QWidget* parent), (override));
+    MOCK_METHOD(
+        IActionsTableItemWidget*,
+        newInstance,
+        (IMarketWavesDialogFactory * marketWavesDialogFactory, IHttpClient* httpClient, Stock* stock, QWidget* parent),
+        (override)
+    );
 };
