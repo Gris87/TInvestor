@@ -23,7 +23,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     OrderWavesDialogFactory factory;
 
     StrictMock<OrderBookThreadMock> orderBookThread;
-    Stock                             stock;
+    Stock                           stock;
 
     std::shared_ptr<IOrderWavesDialog> dialog = factory.newInstance(&orderBookThread, &stock, nullptr);
     ASSERT_TRUE(dialog != nullptr);

@@ -30,8 +30,8 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
-    StrictMock<OrderBookThreadMock>        orderBookThreadMock;
-    StrictMock<HttpClientMock>               httpClientMock;
+    StrictMock<OrderBookThreadMock>         orderBookThreadMock;
+    StrictMock<HttpClientMock>              httpClientMock;
 
     TableRecordFactory factory;
 

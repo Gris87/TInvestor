@@ -61,7 +61,7 @@ protected:
         configForSimulationMock              = new StrictMock<ConfigMock>();
         authDialogFactoryMock                = new StrictMock<AuthDialogFactoryMock>();
         settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
-        orderWavesDialogFactoryMock         = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
         buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
@@ -80,7 +80,7 @@ protected:
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
-        orderBookThreadMock                = new StrictMock<OrderBookThreadMock>();
+        orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
@@ -212,7 +212,7 @@ protected:
     StrictMock<ConfigMock>*                           configForSimulationMock;
     StrictMock<AuthDialogFactoryMock>*                authDialogFactoryMock;
     StrictMock<SettingsDialogFactoryMock>*            settingsDialogFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>*         orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>*  buyDecision2ConfigWidgetFactoryMock;
@@ -231,7 +231,7 @@ protected:
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
-    StrictMock<OrderBookThreadMock>*                orderBookThreadMock;
+    StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;

@@ -20,7 +20,7 @@ protected:
     void SetUp()
     {
         orderBookThread = new StrictMock<OrderBookThreadMock>();
-        stock             = new Stock();
+        stock           = new Stock();
 
         dialog = new OrderWavesDialog(orderBookThread, stock);
     }
@@ -32,9 +32,9 @@ protected:
         delete stock;
     }
 
-    OrderWavesDialog*                 dialog;
+    OrderWavesDialog*                dialog;
     StrictMock<OrderBookThreadMock>* orderBookThread;
-    Stock*                             stock;
+    Stock*                           stock;
 };
 
 

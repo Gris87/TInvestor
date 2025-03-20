@@ -24,9 +24,9 @@ public:
 
     virtual IActionsTableItemWidget* newInstance(
         IOrderWavesDialogFactory* orderWavesDialogFactory,
-        IOrderBookThread*        orderBookThread,
-        IHttpClient*               httpClient,
-        Stock*                     stock,
-        QWidget*                   parent
+        IOrderBookThread*         orderBookThread,
+        IHttpClient*              httpClient,
+        Stock*                    stock,
+        QWidget*                  parent
     ) = 0;
 };

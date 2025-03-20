@@ -25,10 +25,10 @@ class ActionsTableItemWidget : public IActionsTableItemWidget
 public:
     explicit ActionsTableItemWidget(
         IOrderWavesDialogFactory* orderWavesDialogFactory,
-        IOrderBookThread*        orderBookThread,
-        IHttpClient*               httpClient,
-        Stock*                     stock,
-        QWidget*                   parent = nullptr
+        IOrderBookThread*         orderBookThread,
+        IHttpClient*              httpClient,
+        Stock*                    stock,
+        QWidget*                  parent = nullptr
     );
     ~ActionsTableItemWidget();
 
@@ -39,9 +39,9 @@ public:
 
 private:
     IOrderWavesDialogFactory* mOrderWavesDialogFactory;
-    IOrderBookThread*        mOrderBookThread;
-    IHttpClient*               mHttpClient;
-    Stock*                     mStock;
+    IOrderBookThread*         mOrderBookThread;
+    IHttpClient*              mHttpClient;
+    Stock*                    mStock;
 
 private slots:
     void on_orderWavesButton_clicked();

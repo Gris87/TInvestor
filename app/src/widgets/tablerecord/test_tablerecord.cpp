@@ -26,8 +26,8 @@ protected:
         InSequence seq;
 
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        orderWavesDialogFactoryMock      = new StrictMock<OrderWavesDialogFactoryMock>();
-        orderBookThreadMock             = new StrictMock<OrderBookThreadMock>();
+        orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
         actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
         tableWidget                       = new QTableWidget();
@@ -82,8 +82,8 @@ protected:
 
     TableRecord*                                   record;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>*      orderWavesDialogFactoryMock;
-    StrictMock<OrderBookThreadMock>*             orderBookThreadMock;
+    StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
+    StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
     StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
     QTableWidget*                                  tableWidget;

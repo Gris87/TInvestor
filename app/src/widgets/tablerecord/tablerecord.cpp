@@ -9,8 +9,8 @@
 TableRecord::TableRecord(
     QTableWidget*                   tableWidget,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*      orderWavesDialogFactory,
-    IOrderBookThread*             orderBookThread,
+    IOrderWavesDialogFactory*       orderWavesDialogFactory,
+    IOrderBookThread*               orderBookThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
     QObject*                        parent

@@ -19,10 +19,10 @@ ActionsTableItemWidgetFactory::~ActionsTableItemWidgetFactory()
 
 IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
     IOrderWavesDialogFactory* orderWavesDialogFactory,
-    IOrderBookThread*        orderBookThread,
-    IHttpClient*               httpClient,
-    Stock*                     stock,
-    QWidget*                   parent
+    IOrderBookThread*         orderBookThread,
+    IHttpClient*              httpClient,
+    Stock*                    stock,
+    QWidget*                  parent
 )
 {
     return new ActionsTableItemWidget(orderWavesDialogFactory, orderBookThread, httpClient, stock, parent);

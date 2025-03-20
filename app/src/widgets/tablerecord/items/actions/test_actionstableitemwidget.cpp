@@ -22,9 +22,9 @@ protected:
     void SetUp()
     {
         orderWavesDialogFactoryMock = new StrictMock<OrderWavesDialogFactoryMock>();
-        orderBookThreadMock        = new StrictMock<OrderBookThreadMock>();
-        httpClientMock               = new StrictMock<HttpClientMock>();
-        stock                        = new Stock();
+        orderBookThreadMock         = new StrictMock<OrderBookThreadMock>();
+        httpClientMock              = new StrictMock<HttpClientMock>();
+        stock                       = new Stock();
 
         stock->meta.uid                    = "aaa";
         stock->meta.ticker                 = "WAGA";
@@ -43,11 +43,11 @@ protected:
         delete stock;
     }
 
-    ActionsTableItemWidget*                   widget;
+    ActionsTableItemWidget*                  widget;
     StrictMock<OrderWavesDialogFactoryMock>* orderWavesDialogFactoryMock;
-    StrictMock<OrderBookThreadMock>*        orderBookThreadMock;
-    StrictMock<HttpClientMock>*               httpClientMock;
-    Stock*                                    stock;
+    StrictMock<OrderBookThreadMock>*         orderBookThreadMock;
+    StrictMock<HttpClientMock>*              httpClientMock;
+    Stock*                                   stock;
 };
 
 

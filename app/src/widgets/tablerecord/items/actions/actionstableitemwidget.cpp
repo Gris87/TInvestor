@@ -7,10 +7,10 @@
 
 ActionsTableItemWidget::ActionsTableItemWidget(
     IOrderWavesDialogFactory* orderWavesDialogFactory,
-    IOrderBookThread*        orderBookThread,
-    IHttpClient*               httpClient,
-    Stock*                     stock,
-    QWidget*                   parent
+    IOrderBookThread*         orderBookThread,
+    IHttpClient*              httpClient,
+    Stock*                    stock,
+    QWidget*                  parent
 ) :
     IActionsTableItemWidget(parent),
     ui(new Ui::ActionsTableItemWidget),

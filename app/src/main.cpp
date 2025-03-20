@@ -107,9 +107,9 @@ int runApplication(int argc, char* argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    AuthDialogFactory        authDialogFactory;
-    SettingsDialogFactory    settingsDialogFactory;
-    OrderWavesDialogFactory  orderWavesDialogFactory;
+    AuthDialogFactory       authDialogFactory;
+    SettingsDialogFactory   settingsDialogFactory;
+    OrderWavesDialogFactory orderWavesDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
@@ -253,7 +253,7 @@ int runApplication(int argc, char* argv[])
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
-    OrderBookThread  orderBookThread;
+    OrderBookThread    orderBookThread;
 
     MainWindow mainWindow(
         &config,

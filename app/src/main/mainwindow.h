@@ -46,7 +46,7 @@ public:
         IConfig*                           configForSimulation,
         IAuthDialogFactory*                authDialogFactory,
         ISettingsDialogFactory*            settingsDialogFactory,
-        IOrderWavesDialogFactory*         orderWavesDialogFactory,
+        IOrderWavesDialogFactory*          orderWavesDialogFactory,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -65,7 +65,7 @@ public:
         ILastPriceThread*                  lastPriceThread,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
-        IOrderBookThread*                orderBookThread,
+        IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   autorunSettingsEditor,
@@ -104,7 +104,7 @@ private:
     IConfig*                           mConfigForSimulation;
     IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
-    IOrderWavesDialogFactory*         mOrderWavesDialogFactory;
+    IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory*  mBuyDecision2ConfigWidgetFactory;
@@ -123,7 +123,7 @@ private:
     ILastPriceThread*                  mLastPriceThread;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
-    IOrderBookThread*                mOrderBookThread;
+    IOrderBookThread*                  mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;

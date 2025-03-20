@@ -31,5 +31,5 @@ public:
 
 private:
     IOrderBookThread* mOrderBookThread;
-    Stock*              mStock;
+    Stock*            mStock;
 };

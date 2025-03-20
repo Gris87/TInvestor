@@ -24,9 +24,9 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
     ActionsTableItemWidgetFactory factory;
 
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
-    StrictMock<OrderBookThreadMock>        orderBookThreadMock;
-    StrictMock<HttpClientMock>               httpClientMock;
-    Stock                                    stock;
+    StrictMock<OrderBookThreadMock>         orderBookThreadMock;
+    StrictMock<HttpClientMock>              httpClientMock;
+    Stock                                   stock;
 
     IActionsTableItemWidget* widget =
         factory.newInstance(&orderWavesDialogFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, nullptr);

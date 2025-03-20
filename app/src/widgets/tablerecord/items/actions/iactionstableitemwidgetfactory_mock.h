@@ -25,9 +25,9 @@ public:
         newInstance,
         (IOrderWavesDialogFactory * orderWavesDialogFactory,
          IOrderBookThread* orderBookThread,
-         IHttpClient*        httpClient,
-         Stock*              stock,
-         QWidget*            parent),
+         IHttpClient*      httpClient,
+         Stock*            stock,
+         QWidget*          parent),
         (override)
     );
 };
