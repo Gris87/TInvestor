@@ -91,8 +91,8 @@ void TableRecord::updatePrice()
         mStock->operational.specifiedDatePrice > 0 ? (price / mStock->operational.specifiedDatePrice) * 100 - 100 : 0;
 
     mPriceTableWidgetItem->setValue(price, mPrecision);
-    mDayChangeTableWidgetItem->setValue(dayChange);
-    mDateChangeTableWidgetItem->setValue(dateChange);
+    mDayChangeTableWidgetItem->setValue(dayChange, mStock->operational.dayStartPrice, mPrecision);
+    mDateChangeTableWidgetItem->setValue(dateChange, mStock->operational.specifiedDatePrice, mPrecision);
 }
 
 void TableRecord::updatePayback()

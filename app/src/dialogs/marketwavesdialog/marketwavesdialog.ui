@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Market waves</string>
+   <string>Market waves (glass)</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

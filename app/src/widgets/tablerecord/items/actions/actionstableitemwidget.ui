@@ -47,6 +47,9 @@
        <height>24</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Market waves (glass)</string>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-image: url(:/assets/images/waves.png);
@@ -71,6 +74,9 @@ QPushButton:hover {
        <width>24</width>
        <height>24</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Open in browser</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {

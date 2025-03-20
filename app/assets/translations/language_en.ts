@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>ActionsTableItemWidget</name>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/actions/actionstableitemwidget.ui" line="51"/>
+        <source>Market waves (glass)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/actions/actionstableitemwidget.ui" line="79"/>
+        <source>Open in browser</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>AuthDialog</name>
     <message>
         <location filename="../../src/dialogs/authdialog/authdialog.ui" line="26"/>
@@ -153,7 +166,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="154"/>
+        <location filename="../../src/main/mainwindow.cpp" line="158"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
@@ -244,13 +257,21 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="154"/>
+        <location filename="../../src/main/mainwindow.cpp" line="158"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="219"/>
         <source>Waiting for authorization</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>MarketWavesDialog</name>
+    <message>
+        <location filename="../../src/dialogs/marketwavesdialog/marketwavesdialog.ui" line="14"/>
+        <source>Market waves (glass)</source>
         <translation></translation>
     </message>
 </context>
@@ -277,23 +298,28 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="88"/>
+        <location filename="../../src/main.cpp" line="90"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="88"/>
+        <location filename="../../src/main.cpp" line="90"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Failed to detect any system tray on this system</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/pricechangetableitem.cpp" line="30"/>
+        <source>From price: %1</source>
         <translation></translation>
     </message>
 </context>

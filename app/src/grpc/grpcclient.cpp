@@ -24,7 +24,7 @@
                 continue;                                                                           \
             }                                                                                       \
                                                                                                     \
-            emit authFailed();                                                                      \
+            emit authFailed(status.error_code(), status.error_message(), status.error_details());   \
                                                                                                     \
             return nullptr;                                                                         \
         }                                                                                           \
@@ -158,7 +158,7 @@ bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     if (!res)
     {
-        emit authFailed();
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
     }
 
     return res;
@@ -178,7 +178,7 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
 
     if (!res)
     {
-        emit authFailed();
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
     }
 
     return res;
@@ -191,7 +191,7 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
 
     if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
     {
-        emit authFailed();
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
 
         return nullptr;
     }
@@ -205,7 +205,7 @@ bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& m
 
     if (!res)
     {
-        emit authFailed();
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
     }
 
     return res;
@@ -217,6 +217,6 @@ void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marke
 
     if (!status.ok())
     {
-        emit authFailed();
+        emit authFailed(status.error_code(), status.error_message(), status.error_details());
     }
 }

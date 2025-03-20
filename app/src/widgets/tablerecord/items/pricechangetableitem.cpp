@@ -21,12 +21,13 @@ PriceChangeTableItem::~PriceChangeTableItem()
     qDebug() << "Destroy PriceChangeTableItem";
 }
 
-void PriceChangeTableItem::setValue(float value)
+void PriceChangeTableItem::setValue(float value, float fromPrice, int precision)
 {
     mValue         = value;
     QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");
+    setToolTip(fromPrice > 0 ? QObject::tr("From price: %1").arg(fromPrice, 0, 'f', precision) + " " + QChar(0x20BD) : "");
 
     QColor color;
 

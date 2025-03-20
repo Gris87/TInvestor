@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>ActionsTableItemWidget</name>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/actions/actionstableitemwidget.ui" line="51"/>
+        <source>Market waves (glass)</source>
+        <translation>Биржевые волны (стакан)</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/actions/actionstableitemwidget.ui" line="79"/>
+        <source>Open in browser</source>
+        <translation>Открыть в браузере</translation>
+    </message>
+</context>
+<context>
     <name>AuthDialog</name>
     <message>
         <location filename="../../src/dialogs/authdialog/authdialog.ui" line="26"/>
@@ -153,7 +166,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="154"/>
+        <location filename="../../src/main/mainwindow.cpp" line="158"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
@@ -244,14 +257,22 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="154"/>
+        <location filename="../../src/main/mainwindow.cpp" line="158"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="214"/>
+        <location filename="../../src/main/mainwindow.cpp" line="219"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
+    </message>
+</context>
+<context>
+    <name>MarketWavesDialog</name>
+    <message>
+        <location filename="../../src/dialogs/marketwavesdialog/marketwavesdialog.ui" line="14"/>
+        <source>Market waves (glass)</source>
+        <translation>Биржевые волны (стакан)</translation>
     </message>
 </context>
 <context>
@@ -277,24 +298,29 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="88"/>
+        <location filename="../../src/main.cpp" line="90"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="88"/>
+        <location filename="../../src/main.cpp" line="90"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/pricechangetableitem.cpp" line="30"/>
+        <source>From price: %1</source>
+        <translation>От цены: %1</translation>
     </message>
 </context>
 <context>

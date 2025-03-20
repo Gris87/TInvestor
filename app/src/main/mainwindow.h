@@ -16,7 +16,7 @@
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
-#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+#include "src/threads/marketwaves/imarketwavesthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
@@ -134,7 +134,7 @@ public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
-    void authFailed();
+    void authFailed(grpc::StatusCode errorCode, const std::string& errorMessage, const std::string& errorDetails);
     void authFailedDelayTimerTicked();
     void userUpdateTimerTicked();
     void priceCollectTimerTicked();
