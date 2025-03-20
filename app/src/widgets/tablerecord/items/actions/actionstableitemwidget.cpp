@@ -6,16 +6,16 @@
 
 
 ActionsTableItemWidget::ActionsTableItemWidget(
-    IMarketWavesDialogFactory* marketWavesDialogFactory,
-    IMarketWavesThread*        marketWavesThread,
+    IOrderWavesDialogFactory* orderWavesDialogFactory,
+    IOrderBookThread*        orderBookThread,
     IHttpClient*               httpClient,
     Stock*                     stock,
     QWidget*                   parent
 ) :
     IActionsTableItemWidget(parent),
     ui(new Ui::ActionsTableItemWidget),
-    mMarketWavesDialogFactory(marketWavesDialogFactory),
-    mMarketWavesThread(marketWavesThread),
+    mOrderWavesDialogFactory(orderWavesDialogFactory),
+    mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
     mStock(stock)
 {
@@ -31,9 +31,9 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
     delete ui;
 }
 
-void ActionsTableItemWidget::on_marketWavesButton_clicked()
+void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
-    std::shared_ptr<IMarketWavesDialog> dialog = mMarketWavesDialogFactory->newInstance(mMarketWavesThread, mStock, this);
+    std::shared_ptr<IOrderWavesDialog> dialog = mOrderWavesDialogFactory->newInstance(mOrderBookThread, mStock, this);
     dialog->exec();
 }
 

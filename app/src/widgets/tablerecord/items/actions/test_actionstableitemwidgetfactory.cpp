@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
-#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
-#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+#include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 
 
@@ -23,13 +23,13 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
 {
     ActionsTableItemWidgetFactory factory;
 
-    StrictMock<MarketWavesDialogFactoryMock> marketWavesDialogFactoryMock;
-    StrictMock<MarketWavesThreadMock>        marketWavesThreadMock;
+    StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
+    StrictMock<OrderBookThreadMock>        orderBookThreadMock;
     StrictMock<HttpClientMock>               httpClientMock;
     Stock                                    stock;
 
     IActionsTableItemWidget* widget =
-        factory.newInstance(&marketWavesDialogFactoryMock, &marketWavesThreadMock, &httpClientMock, &stock, nullptr);
+        factory.newInstance(&orderWavesDialogFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

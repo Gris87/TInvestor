@@ -8,7 +8,7 @@
 #include <QTimer>
 
 #include "src/dialogs/authdialog/iauthdialogfactory.h"
-#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h"
+#include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
@@ -16,7 +16,7 @@
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
-#include "src/threads/marketwaves/imarketwavesthread.h"
+#include "src/threads/orderbook/iorderbookthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
@@ -46,7 +46,7 @@ public:
         IConfig*                           configForSimulation,
         IAuthDialogFactory*                authDialogFactory,
         ISettingsDialogFactory*            settingsDialogFactory,
-        IMarketWavesDialogFactory*         marketWavesDialogFactory,
+        IOrderWavesDialogFactory*         orderWavesDialogFactory,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -65,7 +65,7 @@ public:
         ILastPriceThread*                  lastPriceThread,
         ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
-        IMarketWavesThread*                marketWavesThread,
+        IOrderBookThread*                orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   autorunSettingsEditor,
@@ -104,7 +104,7 @@ private:
     IConfig*                           mConfigForSimulation;
     IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
-    IMarketWavesDialogFactory*         mMarketWavesDialogFactory;
+    IOrderWavesDialogFactory*         mOrderWavesDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory*  mBuyDecision2ConfigWidgetFactory;
@@ -123,7 +123,7 @@ private:
     ILastPriceThread*                  mLastPriceThread;
     ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
-    IMarketWavesThread*                mMarketWavesThread;
+    IOrderBookThread*                mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;

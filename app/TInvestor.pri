@@ -32,8 +32,8 @@ SOURCES += \
     src/db/user/userdatabase.cpp \
     src/dialogs/authdialog/authdialog.cpp \
     src/dialogs/authdialog/authdialogfactory.cpp \
-    src/dialogs/marketwavesdialog/marketwavesdialog.cpp \
-    src/dialogs/marketwavesdialog/marketwavesdialogfactory.cpp \
+    src/dialogs/orderwavesdialog/orderwavesdialog.cpp \
+    src/dialogs/orderwavesdialog/orderwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/domain/filter/filter.cpp \
@@ -52,7 +52,7 @@ SOURCES += \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
-    src/threads/marketwaves/marketwavesthread.cpp \
+    src/threads/orderbook/orderbookthread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/fs/dir/dir.cpp \
@@ -135,10 +135,10 @@ HEADERS += \
     src/dialogs/authdialog/authdialogfactory.h \
     src/dialogs/authdialog/iauthdialog.h \
     src/dialogs/authdialog/iauthdialogfactory.h \
-    src/dialogs/marketwavesdialog/imarketwavesdialog.h \
-    src/dialogs/marketwavesdialog/imarketwavesdialogfactory.h \
-    src/dialogs/marketwavesdialog/marketwavesdialog.h \
-    src/dialogs/marketwavesdialog/marketwavesdialogfactory.h \
+    src/dialogs/orderwavesdialog/iorderwavesdialog.h \
+    src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h \
+    src/dialogs/orderwavesdialog/orderwavesdialog.h \
+    src/dialogs/orderwavesdialog/orderwavesdialogfactory.h \
     src/dialogs/settingsdialog/isettingsdialog.h \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
@@ -168,8 +168,8 @@ HEADERS += \
     src/threads/lastprice/lastpricethread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
-    src/threads/marketwaves/imarketwavesthread.h \
-    src/threads/marketwaves/marketwavesthread.h \
+    src/threads/orderbook/iorderbookthread.h \
+    src/threads/orderbook/orderbookthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
@@ -231,7 +231,7 @@ FORMS += \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
     src/dialogs/authdialog/authdialog.ui \
-    src/dialogs/marketwavesdialog/marketwavesdialog.ui \
+    src/dialogs/orderwavesdialog/orderwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/filterwidget/filterwidget.ui \

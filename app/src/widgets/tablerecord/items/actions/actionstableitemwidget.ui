@@ -40,7 +40,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="marketWavesButton">
+    <widget class="QPushButton" name="orderWavesButton">
      <property name="maximumSize">
       <size>
        <width>24</width>
@@ -48,7 +48,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Market waves (glass)</string>
+      <string>Order waves (book)</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {

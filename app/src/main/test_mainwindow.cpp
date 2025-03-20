@@ -15,7 +15,7 @@
 #include "src/config/iconfig_mock.h"
 #include "src/dialogs/authdialog/iauthdialog_mock.h"
 #include "src/dialogs/authdialog/iauthdialogfactory_mock.h"
-#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
+#include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
@@ -24,7 +24,7 @@
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
-#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+#include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
@@ -61,7 +61,7 @@ protected:
         configForSimulationMock              = new StrictMock<ConfigMock>();
         authDialogFactoryMock                = new StrictMock<AuthDialogFactoryMock>();
         settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
-        marketWavesDialogFactoryMock         = new StrictMock<MarketWavesDialogFactoryMock>();
+        orderWavesDialogFactoryMock         = new StrictMock<OrderWavesDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
         buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
@@ -80,7 +80,7 @@ protected:
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
-        marketWavesThreadMock                = new StrictMock<MarketWavesThreadMock>();
+        orderBookThreadMock                = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
@@ -122,7 +122,7 @@ protected:
             configForSimulationMock,
             authDialogFactoryMock,
             settingsDialogFactoryMock,
-            marketWavesDialogFactoryMock,
+            orderWavesDialogFactoryMock,
             decisionMakerConfigWidgetFactoryMock,
             buyDecision1ConfigWidgetFactoryMock,
             buyDecision2ConfigWidgetFactoryMock,
@@ -141,7 +141,7 @@ protected:
             lastPriceThreadMock,
             cleanupThreadMock,
             makeDecisionThreadMock,
-            marketWavesThreadMock,
+            orderBookThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
             autorunSettingsEditorMock,
@@ -174,7 +174,7 @@ protected:
         delete configForSimulationMock;
         delete authDialogFactoryMock;
         delete settingsDialogFactoryMock;
-        delete marketWavesDialogFactoryMock;
+        delete orderWavesDialogFactoryMock;
         delete decisionMakerConfigWidgetFactoryMock;
         delete buyDecision1ConfigWidgetFactoryMock;
         delete buyDecision2ConfigWidgetFactoryMock;
@@ -193,7 +193,7 @@ protected:
         delete lastPriceThreadMock;
         delete cleanupThreadMock;
         delete makeDecisionThreadMock;
-        delete marketWavesThreadMock;
+        delete orderBookThreadMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete autorunSettingsEditorMock;
@@ -212,7 +212,7 @@ protected:
     StrictMock<ConfigMock>*                           configForSimulationMock;
     StrictMock<AuthDialogFactoryMock>*                authDialogFactoryMock;
     StrictMock<SettingsDialogFactoryMock>*            settingsDialogFactoryMock;
-    StrictMock<MarketWavesDialogFactoryMock>*         marketWavesDialogFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>*         orderWavesDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>*  buyDecision2ConfigWidgetFactoryMock;
@@ -231,7 +231,7 @@ protected:
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
-    StrictMock<MarketWavesThreadMock>*                marketWavesThreadMock;
+    StrictMock<OrderBookThreadMock>*                orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
@@ -426,8 +426,8 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -442,8 +442,8 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -530,8 +530,8 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -546,8 +546,8 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -602,8 +602,8 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -618,8 +618,8 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -694,8 +694,8 @@ TEST_F(Test_MainWindow, Test_filterChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -710,8 +710,8 @@ TEST_F(Test_MainWindow, Test_filterChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -880,8 +880,8 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -896,8 +896,8 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow
@@ -1006,8 +1006,8 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock1,
             mainWindow
@@ -1022,8 +1022,8 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
         newInstance(
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             &stock2,
             mainWindow

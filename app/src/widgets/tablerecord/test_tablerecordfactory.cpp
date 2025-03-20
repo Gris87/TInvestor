@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
-#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
-#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+#include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -29,8 +29,8 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
-    StrictMock<MarketWavesDialogFactoryMock> marketWavesDialogFactoryMock;
-    StrictMock<MarketWavesThreadMock>        marketWavesThreadMock;
+    StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
+    StrictMock<OrderBookThreadMock>        orderBookThreadMock;
     StrictMock<HttpClientMock>               httpClientMock;
 
     TableRecordFactory factory;
@@ -40,15 +40,15 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 
     EXPECT_CALL(
         actionsTableItemWidgetFactoryMock,
-        newInstance(&marketWavesDialogFactoryMock, &marketWavesThreadMock, &httpClientMock, &stock, &tableWidget)
+        newInstance(&orderWavesDialogFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, &tableWidget)
     )
         .WillOnce(Return(actionsTableItemWidgetMock));
 
     ITableRecord* record = factory.newInstance(
         &tableWidget,
         &actionsTableItemWidgetFactoryMock,
-        &marketWavesDialogFactoryMock,
-        &marketWavesThreadMock,
+        &orderWavesDialogFactoryMock,
+        &orderBookThreadMock,
         &httpClientMock,
         &stock,
         nullptr

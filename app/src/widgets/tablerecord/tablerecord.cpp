@@ -9,8 +9,8 @@
 TableRecord::TableRecord(
     QTableWidget*                   tableWidget,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-    IMarketWavesDialogFactory*      marketWavesDialogFactory,
-    IMarketWavesThread*             marketWavesThread,
+    IOrderWavesDialogFactory*      orderWavesDialogFactory,
+    IOrderBookThread*             orderBookThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
     QObject*                        parent
@@ -34,7 +34,7 @@ TableRecord::TableRecord(
     mStockTableWidgetItem->setIcon(stockLogo);
 
     IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
-        marketWavesDialogFactory, marketWavesThread, httpClient, mStock, tableWidget
+        orderWavesDialogFactory, orderBookThread, httpClient, mStock, tableWidget
     ); // tableWidget will take ownership
 
     int rowIndex = tableWidget->rowCount();

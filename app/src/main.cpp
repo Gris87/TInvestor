@@ -24,7 +24,7 @@
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
-#include "src/dialogs/marketwavesdialog/marketwavesdialogfactory.h"
+#include "src/dialogs/orderwavesdialog/orderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
 #include "src/grpc/grpcclient.h"
 #include "src/grpc/rawgrpcclient.h"
@@ -34,7 +34,7 @@
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
-#include "src/threads/marketwaves/marketwavesthread.h"
+#include "src/threads/orderbook/orderbookthread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/fs/dir/dirfactory.h"
@@ -109,7 +109,7 @@ int runApplication(int argc, char* argv[])
 
     AuthDialogFactory        authDialogFactory;
     SettingsDialogFactory    settingsDialogFactory;
-    MarketWavesDialogFactory marketWavesDialogFactory;
+    OrderWavesDialogFactory  orderWavesDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
@@ -253,7 +253,7 @@ int runApplication(int argc, char* argv[])
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
-    MarketWavesThread  marketWavesThread;
+    OrderBookThread  orderBookThread;
 
     MainWindow mainWindow(
         &config,
@@ -261,7 +261,7 @@ int runApplication(int argc, char* argv[])
         &configForSimulation,
         &authDialogFactory,
         &settingsDialogFactory,
-        &marketWavesDialogFactory,
+        &orderWavesDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,
         &buyDecision2ConfigWidgetFactory,
@@ -280,7 +280,7 @@ int runApplication(int argc, char* argv[])
         &lastPriceThread,
         &cleanupThread,
         &makeDecisionThread,
-        &marketWavesThread,
+        &orderBookThread,
         &messageBoxUtils,
         &settingsEditor,
         &autorunSettingsEditor,

@@ -3,8 +3,8 @@
 #include <QPushButton>
 #include <gtest/gtest.h>
 
-#include "src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h"
-#include "src/threads/marketwaves/imarketwavesthread_mock.h"
+#include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -26,8 +26,8 @@ protected:
         InSequence seq;
 
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        marketWavesDialogFactoryMock      = new StrictMock<MarketWavesDialogFactoryMock>();
-        marketWavesThreadMock             = new StrictMock<MarketWavesThreadMock>();
+        orderWavesDialogFactoryMock      = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderBookThreadMock             = new StrictMock<OrderBookThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
         actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
         tableWidget                       = new QTableWidget();
@@ -51,15 +51,15 @@ protected:
 
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
-            newInstance(marketWavesDialogFactoryMock, marketWavesThreadMock, httpClientMock, stock, tableWidget)
+            newInstance(orderWavesDialogFactoryMock, orderBookThreadMock, httpClientMock, stock, tableWidget)
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
 
         record = new TableRecord(
             tableWidget,
             actionsTableItemWidgetFactoryMock,
-            marketWavesDialogFactoryMock,
-            marketWavesThreadMock,
+            orderWavesDialogFactoryMock,
+            orderBookThreadMock,
             httpClientMock,
             stock
         );
@@ -69,8 +69,8 @@ protected:
     {
         delete record;
         delete actionsTableItemWidgetFactoryMock;
-        delete marketWavesDialogFactoryMock;
-        delete marketWavesThreadMock;
+        delete orderWavesDialogFactoryMock;
+        delete orderBookThreadMock;
         delete httpClientMock;
         // It will be deleted by tableWidget
         /*
@@ -82,8 +82,8 @@ protected:
 
     TableRecord*                                   record;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
-    StrictMock<MarketWavesDialogFactoryMock>*      marketWavesDialogFactoryMock;
-    StrictMock<MarketWavesThreadMock>*             marketWavesThreadMock;
+    StrictMock<OrderWavesDialogFactoryMock>*      orderWavesDialogFactoryMock;
+    StrictMock<OrderBookThreadMock>*             orderBookThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
     StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
     QTableWidget*                                  tableWidget;

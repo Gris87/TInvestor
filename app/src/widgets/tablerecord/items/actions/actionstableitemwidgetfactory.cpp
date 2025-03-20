@@ -18,12 +18,12 @@ ActionsTableItemWidgetFactory::~ActionsTableItemWidgetFactory()
 }
 
 IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
-    IMarketWavesDialogFactory* marketWavesDialogFactory,
-    IMarketWavesThread*        marketWavesThread,
+    IOrderWavesDialogFactory* orderWavesDialogFactory,
+    IOrderBookThread*        orderBookThread,
     IHttpClient*               httpClient,
     Stock*                     stock,
     QWidget*                   parent
 )
 {
-    return new ActionsTableItemWidget(marketWavesDialogFactory, marketWavesThread, httpClient, stock, parent);
+    return new ActionsTableItemWidget(orderWavesDialogFactory, orderBookThread, httpClient, stock, parent);
 }

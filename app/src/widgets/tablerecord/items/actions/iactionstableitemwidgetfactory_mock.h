@@ -23,8 +23,8 @@ public:
     MOCK_METHOD(
         IActionsTableItemWidget*,
         newInstance,
-        (IMarketWavesDialogFactory * marketWavesDialogFactory,
-         IMarketWavesThread* marketWavesThread,
+        (IOrderWavesDialogFactory * orderWavesDialogFactory,
+         IOrderBookThread* orderBookThread,
          IHttpClient*        httpClient,
          Stock*              stock,
          QWidget*            parent),

@@ -1,0 +1,24 @@
+#pragma once
+
+
+
+#include "src/dialogs/orderwavesdialog/iorderwavesdialog.h"
+
+#include "src/domain/stocks/stock.h"
+#include "src/threads/orderbook/iorderbookthread.h"
+
+
+
+class IOrderWavesDialogFactory
+{
+public:
+    IOrderWavesDialogFactory()
+    {
+    }
+    virtual ~IOrderWavesDialogFactory() = default;
+
+    IOrderWavesDialogFactory(const IOrderWavesDialogFactory& another)            = delete;
+    IOrderWavesDialogFactory& operator=(const IOrderWavesDialogFactory& another) = delete;
+
+    virtual std::shared_ptr<IOrderWavesDialog> newInstance(IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent) = 0;
+};

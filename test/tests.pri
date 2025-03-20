@@ -27,8 +27,8 @@ SOURCES += \
     src/db/user/test_userdatabase.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
-    src/dialogs/marketwavesdialog/test_marketwavesdialog.cpp \
-    src/dialogs/marketwavesdialog/test_marketwavesdialogfactory.cpp \
+    src/dialogs/orderwavesdialog/test_orderwavesdialog.cpp \
+    src/dialogs/orderwavesdialog/test_orderwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
@@ -47,7 +47,7 @@ SOURCES += \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
-    src/threads/marketwaves/test_marketwavesthread.cpp \
+    src/threads/orderbook/test_orderbookthread.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/pricecollect/test_pricecollectthread.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
@@ -105,8 +105,8 @@ HEADERS += \
     src/db/user/iuserdatabase_mock.h \
     src/dialogs/authdialog/iauthdialogfactory_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \
-    src/dialogs/marketwavesdialog/imarketwavesdialogfactory_mock.h \
-    src/dialogs/marketwavesdialog/imarketwavesdialog_mock.h \
+    src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h \
+    src/dialogs/orderwavesdialog/iorderwavesdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
     src/grpc/igrpcclient_mock.h \
@@ -116,7 +116,7 @@ HEADERS += \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
-    src/threads/marketwaves/imarketwavesthread_mock.h \
+    src/threads/orderbook/iorderbookthread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/fs/dir/idirfactory_mock.h \

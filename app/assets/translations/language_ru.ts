@@ -5,7 +5,7 @@
     <name>ActionsTableItemWidget</name>
     <message>
         <location filename="../../src/widgets/tablerecord/items/actions/actionstableitemwidget.ui" line="51"/>
-        <source>Market waves (glass)</source>
+        <source>Order waves (book)</source>
         <translation>Биржевые волны (стакан)</translation>
     </message>
     <message>
@@ -268,10 +268,10 @@
     </message>
 </context>
 <context>
-    <name>MarketWavesDialog</name>
+    <name>OrderWavesDialog</name>
     <message>
-        <location filename="../../src/dialogs/marketwavesdialog/marketwavesdialog.ui" line="14"/>
-        <source>Market waves (glass)</source>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.ui" line="14"/>
+        <source>Order waves (book)</source>
         <translation>Биржевые волны (стакан)</translation>
     </message>
 </context>

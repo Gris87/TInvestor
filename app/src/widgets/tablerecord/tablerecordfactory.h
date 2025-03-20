@@ -18,8 +18,8 @@ public:
     ITableRecord* newInstance(
         QTableWidget*                   tableWidget,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-        IMarketWavesDialogFactory*      marketWavesDialogFactory,
-        IMarketWavesThread*             marketWavesThread,
+        IOrderWavesDialogFactory*      orderWavesDialogFactory,
+        IOrderBookThread*             orderBookThread,
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent

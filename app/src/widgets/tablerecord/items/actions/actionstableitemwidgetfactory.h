@@ -16,8 +16,8 @@ public:
     ActionsTableItemWidgetFactory& operator=(const ActionsTableItemWidgetFactory& another) = delete;
 
     IActionsTableItemWidget* newInstance(
-        IMarketWavesDialogFactory* marketWavesDialogFactory,
-        IMarketWavesThread*        marketWavesThread,
+        IOrderWavesDialogFactory* orderWavesDialogFactory,
+        IOrderBookThread*        orderBookThread,
         IHttpClient*               httpClient,
         Stock*                     stock,
         QWidget*                   parent
