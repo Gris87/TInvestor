@@ -56,6 +56,15 @@ public:
          tinkoff::GetCandlesResponse*                             resp),
         (override)
     );
+    MOCK_METHOD(
+        grpc::Status,
+        getOrderBook,
+        (const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+         grpc::ClientContext*                                     context,
+         const tinkoff::GetOrderBookRequest&                      req,
+         tinkoff::GetOrderBookResponse*                           resp),
+        (override)
+    );
 
     MOCK_METHOD(
         MarketDataStream::Stream,

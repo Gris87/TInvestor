@@ -4,10 +4,15 @@
 
 #include <QThread>
 
+#include "src/domain/stocks/stock.h"
+#include "src/grpc/igrpcclient.h"
+
 
 
 class IOrderBookThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit IOrderBookThread(QObject* parent = nullptr) :
         QThread(parent)
@@ -17,4 +22,10 @@ public:
 
     IOrderBookThread(const IOrderBookThread& another)            = delete;
     IOrderBookThread& operator=(const IOrderBookThread& another) = delete;
+
+    virtual void setStock(Stock* stock) = 0;
+    virtual void terminateThread() = 0;
+
+signals:
+    void orderBookChanged(const tinkoff::OrderBook& orderBook);
 };

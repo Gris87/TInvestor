@@ -27,9 +27,12 @@ public:
     std::shared_ptr<tinkoff::SharesResponse>      findStocks(QThread* parentThread) override;
     std::shared_ptr<tinkoff::GetCandlesResponse>
                                       getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to) override;
+    std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid) override;
     std::shared_ptr<MarketDataStream> createMarketDataStream() override;
     bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids) override;
     bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream) override;
+    bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& uid) override;
+    bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     std::shared_ptr<tinkoff::MarketDataResponse>
          readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;

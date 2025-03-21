@@ -32,4 +32,7 @@ public:
 private:
     IOrderBookThread* mOrderBookThread;
     Stock*            mStock;
+
+private slots:
+    void orderBookChanged(const tinkoff::OrderBook& orderBook);
 };

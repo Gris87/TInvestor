@@ -253,7 +253,7 @@ int runApplication(int argc, char* argv[])
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
-    OrderBookThread    orderBookThread;
+    OrderBookThread    orderBookThread(&grpcClient);
 
     MainWindow mainWindow(
         &config,

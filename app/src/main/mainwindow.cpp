@@ -189,7 +189,7 @@ void MainWindow::authFailed(grpc::StatusCode errorCode, const std::string& error
     qWarning() << "Authorization failed with code:" << errorCode << "message:" << QString::fromStdString(errorMessage)
                << "details:" << QString::fromStdString(errorDetails);
 
-    authFailedDelayTimer->start(1000); // 1 second
+    authFailedDelayTimer->start(3000); // 3 seconds
 }
 
 void MainWindow::authFailedDelayTimerTicked()

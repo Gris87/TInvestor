@@ -66,6 +66,18 @@ grpc::Status RawGrpcClient::getCandles(
     return service->GetCandles(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::getOrderBook(
+    const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::GetOrderBookRequest&                      req,
+    tinkoff::GetOrderBookResponse*                           resp
+)
+{
+    QMutexLocker lock(mMutex);
+
+    return service->GetOrderBook(context, req, resp);
+}
+
 MarketDataStream::Stream RawGrpcClient::createMarketDataStream(
     const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
 )

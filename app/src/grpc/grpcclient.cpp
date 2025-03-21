@@ -7,29 +7,32 @@
 
 
 
-#define REPEAT_REQUEST(parentThread, timeUtils, rawGrpcClient, action, service, context, req, resp) \
-    while (true)                                                                                    \
-    {                                                                                               \
-        grpc::Status status = rawGrpcClient->action(service, &context, req, resp.get());            \
-                                                                                                    \
-        if (!parentThread->isInterruptionRequested() && !status.ok())                               \
-        {                                                                                           \
-            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)                        \
-            {                                                                                       \
-                if (timeUtils->interruptibleSleep(5000, parentThread))                              \
-                {                                                                                   \
-                    return nullptr;                                                                 \
-                }                                                                                   \
-                                                                                                    \
-                continue;                                                                           \
-            }                                                                                       \
-                                                                                                    \
-            emit authFailed(status.error_code(), status.error_message(), status.error_details());   \
-                                                                                                    \
-            return nullptr;                                                                         \
-        }                                                                                           \
-                                                                                                    \
-        break;                                                                                      \
+#define REPEAT_REQUEST(parentThread, timeUtils, rawGrpcClient, action, service, context, req, resp)   \
+    while (true)                                                                                      \
+    {                                                                                                 \
+        grpc::Status status = rawGrpcClient->action(service, &context, req, resp.get());              \
+                                                                                                      \
+        if (!parentThread->isInterruptionRequested() && !status.ok())                                 \
+        {                                                                                             \
+            if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)                          \
+            {                                                                                         \
+                if (timeUtils->interruptibleSleep(5000, parentThread))                                \
+                {                                                                                     \
+                    return nullptr;                                                                   \
+                }                                                                                     \
+                                                                                                      \
+                continue;                                                                             \
+            }                                                                                         \
+                                                                                                      \
+            if (status.error_code() != grpc::StatusCode::CANCELLED)                                   \
+            {                                                                                         \
+                emit authFailed(status.error_code(), status.error_message(), status.error_details()); \
+            }                                                                                         \
+                                                                                                      \
+            return nullptr;                                                                           \
+        }                                                                                             \
+                                                                                                      \
+        break;                                                                                        \
     }
 
 
@@ -129,6 +132,23 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     return resp;
 }
 
+std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread* parentThread, const QString& uid)
+{
+    grpc::ClientContext                            context;
+    tinkoff::GetOrderBookRequest                   req;
+    std::shared_ptr<tinkoff::GetOrderBookResponse> resp =
+        std::shared_ptr<tinkoff::GetOrderBookResponse>(new tinkoff::GetOrderBookResponse());
+
+    context.set_credentials(mCreds);
+
+    req.set_instrument_id(uid.toStdString());
+    req.set_depth(50);
+
+    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getOrderBook, mMarketDataService, context, req, resp);
+
+    return resp;
+}
+
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
 {
     std::shared_ptr<MarketDataStream> res(new MarketDataStream());
@@ -173,6 +193,51 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
     subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_UNSUBSCRIBE);
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
+
+    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+
+    if (!res)
+    {
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+    }
+
+    return res;
+}
+
+bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& uid)
+{
+    tinkoff::MarketDataRequest          req;
+    tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
+        new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
+
+    subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
+    tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
+
+    orderBook->set_instrument_id(uid.toStdString());
+    orderBook->set_depth(50);
+    orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
+
+    req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
+
+    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+
+    if (!res)
+    {
+        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+    }
+
+    return res;
+}
+
+bool GrpcClient::unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    tinkoff::MarketDataRequest          req;
+    tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
+        new tinkoff::SubscribeOrderBookRequest(); // req will take ownership
+
+    subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_UNSUBSCRIBE);
+
+    req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
     bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
 
