@@ -4,6 +4,10 @@
 
 #include "src/widgets/orderwaveswidget/iorderwaveswidget.h"
 
+#include <QGraphicsLineItem>
+#include <QGraphicsRectItem>
+#include <QGraphicsSimpleTextItem>
+
 
 
 class OrderWavesWidget : public IOrderWavesWidget
@@ -19,12 +23,15 @@ public:
     void reset() override;
 
 private:
-    QGraphicsScene            mScene;
-    QList<QGraphicsRectItem*> mBids;
-    QList<QGraphicsRectItem*> mSkips;
-    QList<QGraphicsRectItem*> mAsks;
-    qint32                    mMaxQuantity;
-    float                     mMinPrice;
-    float                     mMaxPrice;
-    float                     mPriceIncrement;
+    QGraphicsScene                  mScene;
+    QGraphicsLineItem*              mBottomLine;
+    QList<QGraphicsLineItem*>       mAxisLines;
+    QList<QGraphicsSimpleTextItem*> mAxisMarkers;
+    QList<QGraphicsRectItem*>       mBids;
+    QList<QGraphicsRectItem*>       mSkips;
+    QList<QGraphicsRectItem*>       mAsks;
+    qint32                          mMaxQuantity;
+    float                           mMinPrice;
+    float                           mMaxPrice;
+    float                           mPriceIncrement;
 };
