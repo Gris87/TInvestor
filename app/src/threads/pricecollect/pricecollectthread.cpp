@@ -220,7 +220,7 @@ void getCandlesWithGrpc(
             {
                 StockData* stockData = &dataArray[lastIndex];
 
-                stockData->timestamp = candle.time().seconds() * 1000;
+                stockData->timestamp = timeToTimestamp(candle.time());
                 stockData->price     = quotationToFloat(candle.close());
 
                 --lastIndex;

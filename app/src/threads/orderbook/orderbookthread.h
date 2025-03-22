@@ -25,6 +25,8 @@ public:
     void terminateThread() override;
 
     void createMarketDataStream();
+    void handleGetOrderBookResponse(std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook);
+    void handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook);
 
 private:
     IGrpcClient*                      mGrpcClient;

@@ -3,8 +3,6 @@
 
 #include <QDebug>
 
-#include "src/grpc/utils.h"
-
 
 
 OrderWavesDialog::OrderWavesDialog(IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent) :
@@ -22,12 +20,7 @@ OrderWavesDialog::OrderWavesDialog(IOrderBookThread* orderBookThread, Stock* sto
         Qt::WindowCloseButtonHint
     );
 
-    connect(
-        mOrderBookThread,
-        SIGNAL(orderBookChanged(const tinkoff::OrderBook&)),
-        this,
-        SLOT(orderBookChanged(const tinkoff::OrderBook&))
-    );
+    connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));
 
     mOrderBookThread->setStock(mStock);
     mOrderBookThread->start();
@@ -42,28 +35,18 @@ OrderWavesDialog::~OrderWavesDialog()
     delete ui;
 }
 
-void OrderWavesDialog::orderBookChanged(const tinkoff::OrderBook& orderBook)
+void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
     qInfo() << "==============";
-    qInfo() << orderBook.figi();
-    qInfo() << orderBook.depth();
-    qInfo() << orderBook.is_consistent();
-    qInfo() << orderBook.time().seconds();
-    qInfo() << quotationToFloat(orderBook.limit_up());
-    qInfo() << quotationToFloat(orderBook.limit_down());
-    qInfo() << orderBook.instrument_uid();
-    qInfo() << orderBook.order_book_type();
-    qInfo() << orderBook.bids_size();
+    qInfo() << orderBook.timestamp;
 
-    for (int i = 0; i < orderBook.bids_size(); ++i)
+    for (int i = 0; i < orderBook.bids.size(); ++i)
     {
-        qInfo() << orderBook.bids(i).quantity() << "-" << quotationToFloat(orderBook.bids(i).price());
+        qInfo() << orderBook.bids.at(i).quantity << "-" << orderBook.bids.at(i).price;
     }
 
-    qInfo() << orderBook.asks_size();
-
-    for (int i = 0; i < orderBook.asks_size(); ++i)
+    for (int i = 0; i < orderBook.asks.size(); ++i)
     {
-        qInfo() << orderBook.asks(i).quantity() << "-" << quotationToFloat(orderBook.asks(i).price());
+        qInfo() << orderBook.asks.at(i).quantity << "-" << orderBook.asks.at(i).price;
     }
 }

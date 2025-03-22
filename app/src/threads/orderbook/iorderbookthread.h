@@ -4,8 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/orderbook/orderbook.h"
 #include "src/domain/stocks/stock.h"
-#include "src/grpc/igrpcclient.h"
 
 
 
@@ -27,5 +27,5 @@ public:
     virtual void terminateThread() = 0;
 
 signals:
-    void orderBookChanged(const tinkoff::OrderBook& orderBook);
+    void orderBookChanged(const OrderBook& orderBook);
 };

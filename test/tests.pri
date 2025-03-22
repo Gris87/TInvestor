@@ -32,6 +32,7 @@ SOURCES += \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
+    src/domain/orderbook/test_orderbook.cpp \
     src/domain/quotation/test_quotation.cpp \
     src/domain/stocks/test_stock.cpp \
     src/domain/stocks/test_stockmeta.cpp \

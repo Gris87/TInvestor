@@ -37,6 +37,7 @@ SOURCES += \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
     src/domain/filter/filter.cpp \
+    src/domain/orderbook/orderbook.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stocks/stock.cpp \
     src/domain/stocks/stockmeta.cpp \
@@ -144,6 +145,8 @@ HEADERS += \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
     src/domain/filter/filter.h \
+    src/domain/orderbook/orderbook.h \
+    src/domain/orderbook/orderbookdata.h \
     src/domain/quotation/quotation.h \
     src/domain/stocks/stock.h \
     src/domain/stocks/stockdata.h \

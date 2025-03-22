@@ -34,5 +34,5 @@ private:
     Stock*            mStock;
 
 private slots:
-    void orderBookChanged(const tinkoff::OrderBook& orderBook);
+    void orderBookChanged(const OrderBook& orderBook);
 };

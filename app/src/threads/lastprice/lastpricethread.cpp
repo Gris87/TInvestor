@@ -76,7 +76,7 @@ void LastPriceThread::run()
 
                 StockData stockData;
 
-                stockData.timestamp = lastPriceResp.time().seconds() * 1000 + lastPriceResp.time().nanos() / 1000000;
+                stockData.timestamp = timeToTimestamp(lastPriceResp.time());
                 stockData.price     = quotationToFloat(lastPriceResp.price());
 
                 QString uid = QString::fromStdString(lastPriceResp.instrument_uid());

@@ -6,4 +6,5 @@
 
 
 
-float quotationToFloat(const tinkoff::Quotation& quotation);
+qint64 timeToTimestamp(const google::protobuf::Timestamp& timestamp);
+float  quotationToFloat(const tinkoff::Quotation& quotation);
