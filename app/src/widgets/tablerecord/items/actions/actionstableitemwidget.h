@@ -30,6 +30,7 @@ public:
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
         Stock*                    stock,
+        int                       precision,
         QWidget*                  parent = nullptr
     );
     ~ActionsTableItemWidget();
@@ -45,6 +46,7 @@ private:
     IOrderBookThread*         mOrderBookThread;
     IHttpClient*              mHttpClient;
     Stock*                    mStock;
+    int                       mPrecision;
 
 private slots:
     void on_orderWavesButton_clicked();

@@ -18,8 +18,14 @@ OrderWavesDialogFactory::~OrderWavesDialogFactory()
 }
 
 std::shared_ptr<IOrderWavesDialog> OrderWavesDialogFactory::newInstance(
-    IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory,
+    IOrderBookThread*         orderBookThread,
+    Stock*                    stock,
+    int                       precision,
+    QWidget*                  parent
 )
 {
-    return std::shared_ptr<IOrderWavesDialog>(new OrderWavesDialog(orderWavesWidgetFactory, orderBookThread, stock, parent));
+    return std::shared_ptr<IOrderWavesDialog>(
+        new OrderWavesDialog(orderWavesWidgetFactory, orderBookThread, stock, precision, parent)
+    );
 }

@@ -6,12 +6,17 @@
 
 
 OrderWavesDialog::OrderWavesDialog(
-    IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory,
+    IOrderBookThread*         orderBookThread,
+    Stock*                    stock,
+    int                       precision,
+    QWidget*                  parent
 ) :
     IOrderWavesDialog(parent),
     ui(new Ui::OrderWavesDialog),
     mOrderBookThread(orderBookThread),
-    mStock(stock)
+    mStock(stock),
+    mPrecision(precision)
 {
     qDebug() << "Create OrderWavesDialog";
 
@@ -43,6 +48,7 @@ OrderWavesDialog::~OrderWavesDialog()
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
     ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString());
+    ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + QChar(0x20BD));
 
     qInfo() << "==============";
     qInfo() << orderBook.timestamp;

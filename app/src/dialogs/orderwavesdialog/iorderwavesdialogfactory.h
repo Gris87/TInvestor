@@ -22,6 +22,10 @@ public:
     IOrderWavesDialogFactory& operator=(const IOrderWavesDialogFactory& another) = delete;
 
     virtual std::shared_ptr<IOrderWavesDialog> newInstance(
-        IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory,
+        IOrderBookThread*         orderBookThread,
+        Stock*                    stock,
+        int                       precision,
+        QWidget*                  parent
     ) = 0;
 };

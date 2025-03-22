@@ -29,6 +29,7 @@ public:
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
         Stock*                    stock,
+        int                       precision,
         QWidget*                  parent
     ) = 0;
 };

@@ -24,7 +24,7 @@ protected:
         orderBookThreadMock         = new StrictMock<OrderBookThreadMock>();
         stock                       = new Stock();
 
-        dialog = new OrderWavesDialog(orderWavesWidgetFactoryMock, orderBookThreadMock, stock);
+        dialog = new OrderWavesDialog(orderWavesWidgetFactoryMock, orderBookThreadMock, stock, 2);
     }
 
     void TearDown()

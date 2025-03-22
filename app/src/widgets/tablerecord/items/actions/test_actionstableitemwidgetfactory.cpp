@@ -31,7 +31,7 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
     Stock                                   stock;
 
     IActionsTableItemWidget* widget = factory.newInstance(
-        &orderWavesDialogFactoryMock, &orderWavesWidgetFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, nullptr
+        &orderWavesDialogFactoryMock, &orderWavesWidgetFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, 2, nullptr
     );
     ASSERT_TRUE(widget != nullptr);
 

@@ -54,7 +54,13 @@ protected:
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
             newInstance(
-                orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock, tableWidget
+                orderWavesDialogFactoryMock,
+                orderWavesWidgetFactoryMock,
+                orderBookThreadMock,
+                httpClientMock,
+                stock,
+                2,
+                tableWidget
             )
         )
             .WillOnce(Return(actionsTableItemWidgetMock));

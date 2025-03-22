@@ -48,6 +48,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
             &orderBookThreadMock,
             &httpClientMock,
             &stock,
+            2,
             &tableWidget
         )
     )

@@ -11,6 +11,7 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
     Stock*                    stock,
+    int                       precision,
     QWidget*                  parent
 ) :
     IActionsTableItemWidget(parent),
@@ -19,7 +20,8 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
-    mStock(stock)
+    mStock(stock),
+    mPrecision(precision)
 {
     qDebug() << "Create ActionsTableItemWidget";
 
@@ -36,7 +38,7 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
     std::shared_ptr<IOrderWavesDialog> dialog =
-        mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, mStock, this);
+        mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, mStock, mPrecision, this);
     dialog->exec();
 }
 

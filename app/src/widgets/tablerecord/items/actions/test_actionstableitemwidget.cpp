@@ -34,7 +34,7 @@ protected:
         stock->meta.minPriceIncrement.nano = 10000;
 
         widget = new ActionsTableItemWidget(
-            orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock
+            orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock, 2
         );
     }
 

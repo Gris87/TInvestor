@@ -31,23 +31,6 @@ TableRecord::TableRecord(
     qint32  priceNanos = mStock->meta.minPriceIncrement.nano;
     mStock->mutex->unlock();
 
-    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
-    mStockTableWidgetItem->setIcon(stockLogo);
-
-    IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
-        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, tableWidget
-    ); // tableWidget will take ownership
-
-    int rowIndex = tableWidget->rowCount();
-    tableWidget->setRowCount(rowIndex + 1);
-
-    tableWidget->setItem(rowIndex, STOCK_COLUMN, mStockTableWidgetItem);
-    tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
-
     mPrecision = 9;
 
     while (mPrecision > 2)
@@ -60,6 +43,23 @@ TableRecord::TableRecord(
         priceNanos /= 10;
         --mPrecision;
     }
+
+    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
+    mStockTableWidgetItem->setIcon(stockLogo);
+
+    IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
+        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, mPrecision, tableWidget
+    ); // tableWidget will take ownership
+
+    int rowIndex = tableWidget->rowCount();
+    tableWidget->setRowCount(rowIndex + 1);
+
+    tableWidget->setItem(rowIndex, STOCK_COLUMN, mStockTableWidgetItem);
+    tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
 
     updateAll();
 }

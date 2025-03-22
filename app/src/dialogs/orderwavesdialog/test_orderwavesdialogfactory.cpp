@@ -28,6 +28,6 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     Stock                                   stock;
 
     std::shared_ptr<IOrderWavesDialog> dialog =
-        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, nullptr);
+        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, 2, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

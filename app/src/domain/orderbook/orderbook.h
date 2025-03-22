@@ -17,6 +17,7 @@ struct OrderBook
     OrderBook& operator=(const OrderBook& another);
 
     qint64               timestamp;
+    float                price;
     QList<OrderBookData> bids;
     QList<OrderBookData> asks;
 };
