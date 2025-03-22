@@ -34,6 +34,8 @@ public:
     OrderWavesDialog(const OrderWavesDialog& another)            = delete;
     OrderWavesDialog& operator=(const OrderWavesDialog& another) = delete;
 
+    void resizeEvent(QResizeEvent* event) override;
+
     Ui::OrderWavesDialog* ui;
 
 private:

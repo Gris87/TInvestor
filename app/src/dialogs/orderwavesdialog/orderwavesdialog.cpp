@@ -27,8 +27,10 @@ OrderWavesDialog::OrderWavesDialog(
         Qt::WindowCloseButtonHint
     );
 
+    ui->nameLabel->setText(mStock->meta.name);
+
     mOrderWavesWidget = orderWavesWidgetFactory->newInstance(this);
-    ui->layoutForOrderWavesWidget->addWidget(mOrderWavesWidget);
+    ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 
     connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));
 
@@ -41,27 +43,25 @@ OrderWavesDialog::~OrderWavesDialog()
     qDebug() << "Destroy OrderWavesDialog";
 
     mOrderBookThread->terminateThread();
+    mOrderBookThread->wait();
 
     delete ui;
 }
 
+void OrderWavesDialog::resizeEvent(QResizeEvent* event)
+{
+    IOrderWavesDialog::resizeEvent(event);
+
+    QRect windowRect(0, 0, width(), height());
+
+    ui->layoutForOrderWavesWidget->setGeometry(windowRect);
+    ui->layoutForControlsWidget->setGeometry(windowRect);
+}
+
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
-    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString());
+    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss.zzz"));
     ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + QChar(0x20BD));
-
-    qInfo() << "==============";
-    qInfo() << orderBook.timestamp;
-
-    for (int i = 0; i < orderBook.bids.size(); ++i)
-    {
-        qInfo() << orderBook.bids.at(i).quantity << "-" << orderBook.bids.at(i).price;
-    }
-
-    for (int i = 0; i < orderBook.asks.size(); ++i)
-    {
-        qInfo() << orderBook.asks.at(i).quantity << "-" << orderBook.asks.at(i).price;
-    }
 }
 
 void OrderWavesDialog::on_resetButton_clicked()
