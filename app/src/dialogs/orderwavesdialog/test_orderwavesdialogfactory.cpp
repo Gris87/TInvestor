@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/threads/orderbook/iorderbookthread_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 
 
 
@@ -22,9 +23,11 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
 {
     OrderWavesDialogFactory factory;
 
-    StrictMock<OrderBookThreadMock> orderBookThread;
-    Stock                           stock;
+    StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
+    StrictMock<OrderBookThreadMock>         orderBookThreadMock;
+    Stock                                   stock;
 
-    std::shared_ptr<IOrderWavesDialog> dialog = factory.newInstance(&orderBookThread, &stock, nullptr);
+    std::shared_ptr<IOrderWavesDialog> dialog =
+        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

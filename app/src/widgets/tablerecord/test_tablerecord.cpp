@@ -6,6 +6,7 @@
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
 
@@ -27,6 +28,7 @@ protected:
 
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
         orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
         actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
@@ -51,7 +53,9 @@ protected:
 
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
-            newInstance(orderWavesDialogFactoryMock, orderBookThreadMock, httpClientMock, stock, tableWidget)
+            newInstance(
+                orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock, tableWidget
+            )
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
 
@@ -59,6 +63,7 @@ protected:
             tableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             stock
@@ -70,6 +75,7 @@ protected:
         delete record;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
+        delete orderWavesWidgetFactoryMock;
         delete orderBookThreadMock;
         delete httpClientMock;
         // It will be deleted by tableWidget
@@ -83,6 +89,7 @@ protected:
     TableRecord*                                   record;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
     StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;

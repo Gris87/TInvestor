@@ -23,6 +23,7 @@ public:
         QTableWidget*                   tableWidget,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
         IOrderBookThread*               orderBookThread,
         IHttpClient*                    httpClient,
         Stock*                          stock,

@@ -8,6 +8,7 @@
 #include "src/domain/stocks/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/http/ihttpclient.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 
 
 
@@ -25,6 +26,7 @@ class ActionsTableItemWidget : public IActionsTableItemWidget
 public:
     explicit ActionsTableItemWidget(
         IOrderWavesDialogFactory* orderWavesDialogFactory,
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
         Stock*                    stock,
@@ -39,6 +41,7 @@ public:
 
 private:
     IOrderWavesDialogFactory* mOrderWavesDialogFactory;
+    IOrderWavesWidgetFactory* mOrderWavesWidgetFactory;
     IOrderBookThread*         mOrderBookThread;
     IHttpClient*              mHttpClient;
     Stock*                    mStock;

@@ -7,6 +7,7 @@
 
 ActionsTableItemWidget::ActionsTableItemWidget(
     IOrderWavesDialogFactory* orderWavesDialogFactory,
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
     Stock*                    stock,
@@ -15,6 +16,7 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     IActionsTableItemWidget(parent),
     ui(new Ui::ActionsTableItemWidget),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
+    mOrderWavesWidgetFactory(orderWavesWidgetFactory),
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
     mStock(stock)
@@ -33,7 +35,8 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 
 void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
-    std::shared_ptr<IOrderWavesDialog> dialog = mOrderWavesDialogFactory->newInstance(mOrderBookThread, mStock, this);
+    std::shared_ptr<IOrderWavesDialog> dialog =
+        mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, mStock, this);
     dialog->exec();
 }
 

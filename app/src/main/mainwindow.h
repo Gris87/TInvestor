@@ -21,6 +21,7 @@
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -54,6 +55,9 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+        ITableRecordFactory*               tableRecordFactory,
         IFilterWidgetFactory*              filterWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
@@ -68,9 +72,7 @@ public:
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
-        ISettingsEditor*                   autorunSettingsEditor,
-        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-        ITableRecordFactory*               tableRecordFactory
+        ISettingsEditor*                   autorunSettingsEditor
     );
     ~MainWindow();
 
@@ -112,6 +114,9 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
+    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
+    IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
+    ITableRecordFactory*               mTableRecordFactory;
     IFilterWidget*                     mFilterWidget;
     ITrayIcon*                         mTrayIcon;
     IUserStorage*                      mUserStorage;
@@ -127,8 +132,6 @@ private:
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mAutorunSettingsEditor;
-    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
-    ITableRecordFactory*               mTableRecordFactory;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

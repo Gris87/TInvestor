@@ -25,6 +25,9 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    ITableRecordFactory*               tableRecordFactory,
     IFilterWidgetFactory*              filterWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -39,9 +42,7 @@ MainWindow::MainWindow(
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
-    ISettingsEditor*                   autorunSettingsEditor,
-    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-    ITableRecordFactory*               tableRecordFactory
+    ISettingsEditor*                   autorunSettingsEditor
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
@@ -66,6 +67,9 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
+    mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
+    mOrderWavesWidgetFactory(orderWavesWidgetFactory),
+    mTableRecordFactory(tableRecordFactory),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mHttpClient(httpClient),
@@ -78,9 +82,7 @@ MainWindow::MainWindow(
     mOrderBookThread(orderBookThread),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
-    mAutorunSettingsEditor(autorunSettingsEditor),
-    mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
-    mTableRecordFactory(tableRecordFactory)
+    mAutorunSettingsEditor(autorunSettingsEditor)
 {
     qDebug() << "Create MainWindow";
 
@@ -487,6 +489,7 @@ void MainWindow::updateStocksTableWidget()
                     ui->stocksTableWidget,
                     mActionsTableItemWidgetFactory,
                     mOrderWavesDialogFactory,
+                    mOrderWavesWidgetFactory,
                     mOrderBookThread,
                     mHttpClient,
                     stock,

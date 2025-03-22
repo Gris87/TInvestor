@@ -48,6 +48,7 @@
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
+#include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
 #include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -118,11 +119,12 @@ int runApplication(int argc, char* argv[])
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
-    FilterWidgetFactory              filterWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
+    OrderWavesWidgetFactory          orderWavesWidgetFactory;
+    FilterWidgetFactory              filterWidgetFactory;
 
-    TrayIconFactory    trayIconFactory;
     TableRecordFactory tableRecordFactory;
+    TrayIconFactory    trayIconFactory;
     DirFactory         dirFactory;
     FileFactory        fileFactory;
     QZipFactory        qZipFactory;
@@ -269,6 +271,9 @@ int runApplication(int argc, char* argv[])
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
+        &actionsTableItemWidgetFactory,
+        &orderWavesWidgetFactory,
+        &tableRecordFactory,
         &filterWidgetFactory,
         &trayIconFactory,
         &userStorage,
@@ -283,9 +288,7 @@ int runApplication(int argc, char* argv[])
         &orderBookThread,
         &messageBoxUtils,
         &settingsEditor,
-        &autorunSettingsEditor,
-        &actionsTableItemWidgetFactory,
-        &tableRecordFactory
+        &autorunSettingsEditor
     );
     mainWindow.init();
 

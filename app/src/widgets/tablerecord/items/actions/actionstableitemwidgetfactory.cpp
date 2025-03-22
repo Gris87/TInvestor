@@ -19,11 +19,14 @@ ActionsTableItemWidgetFactory::~ActionsTableItemWidgetFactory()
 
 IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
     IOrderWavesDialogFactory* orderWavesDialogFactory,
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
     Stock*                    stock,
     QWidget*                  parent
 )
 {
-    return new ActionsTableItemWidget(orderWavesDialogFactory, orderBookThread, httpClient, stock, parent);
+    return new ActionsTableItemWidget(
+        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, stock, parent
+    );
 }

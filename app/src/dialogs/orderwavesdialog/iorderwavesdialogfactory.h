@@ -6,6 +6,7 @@
 
 #include "src/domain/stocks/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 
 
 
@@ -20,5 +21,7 @@ public:
     IOrderWavesDialogFactory(const IOrderWavesDialogFactory& another)            = delete;
     IOrderWavesDialogFactory& operator=(const IOrderWavesDialogFactory& another) = delete;
 
-    virtual std::shared_ptr<IOrderWavesDialog> newInstance(IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent) = 0;
+    virtual std::shared_ptr<IOrderWavesDialog> newInstance(
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
+    ) = 0;
 };

@@ -6,6 +6,7 @@
 
 #include "src/domain/stocks/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 
 
 
@@ -21,7 +22,12 @@ class OrderWavesDialog : public IOrderWavesDialog
     Q_OBJECT
 
 public:
-    explicit OrderWavesDialog(IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent = nullptr);
+    explicit OrderWavesDialog(
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory,
+        IOrderBookThread*         orderBookThread,
+        Stock*                    stock,
+        QWidget*                  parent = nullptr
+    );
     ~OrderWavesDialog();
 
     OrderWavesDialog(const OrderWavesDialog& another)            = delete;
@@ -30,9 +36,13 @@ public:
     Ui::OrderWavesDialog* ui;
 
 private:
-    IOrderBookThread* mOrderBookThread;
+    IOrderWavesWidget* mOrderWavesWidget;
+    IOrderBookThread*  mOrderBookThread;
     Stock*            mStock;
 
-private slots:
+public slots:
     void orderBookChanged(const OrderBook& orderBook);
+
+private slots:
+    void on_resetButton_clicked();
 };

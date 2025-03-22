@@ -21,6 +21,7 @@ ITableRecord* TableRecordFactory::newInstance(
     QTableWidget*                   tableWidget,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
     IOrderBookThread*               orderBookThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
@@ -28,6 +29,13 @@ ITableRecord* TableRecordFactory::newInstance(
 )
 {
     return new TableRecord(
-        tableWidget, actionsTableItemWidgetFactory, orderWavesDialogFactory, orderBookThread, httpClient, stock, parent
+        tableWidget,
+        actionsTableItemWidgetFactory,
+        orderWavesDialogFactory,
+        orderWavesWidgetFactory,
+        orderBookThread,
+        httpClient,
+        stock,
+        parent
     );
 }

@@ -10,6 +10,7 @@ TableRecord::TableRecord(
     QTableWidget*                   tableWidget,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
     IOrderBookThread*               orderBookThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
@@ -34,7 +35,7 @@ TableRecord::TableRecord(
     mStockTableWidgetItem->setIcon(stockLogo);
 
     IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
-        orderWavesDialogFactory, orderBookThread, httpClient, mStock, tableWidget
+        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, tableWidget
     ); // tableWidget will take ownership
 
     int rowIndex = tableWidget->rowCount();

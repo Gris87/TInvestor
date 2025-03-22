@@ -5,7 +5,9 @@
 
 
 
-OrderWavesDialog::OrderWavesDialog(IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent) :
+OrderWavesDialog::OrderWavesDialog(
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
+) :
     IOrderWavesDialog(parent),
     ui(new Ui::OrderWavesDialog),
     mOrderBookThread(orderBookThread),
@@ -19,6 +21,9 @@ OrderWavesDialog::OrderWavesDialog(IOrderBookThread* orderBookThread, Stock* sto
         Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMaximizeButtonHint |
         Qt::WindowCloseButtonHint
     );
+
+    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(this);
+    ui->layoutForOrderWavesWidget->addWidget(mOrderWavesWidget);
 
     connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));
 
@@ -37,6 +42,8 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
+    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString());
+
     qInfo() << "==============";
     qInfo() << orderBook.timestamp;
 
@@ -49,4 +56,8 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
     {
         qInfo() << orderBook.asks.at(i).quantity << "-" << orderBook.asks.at(i).price;
     }
+}
+
+void OrderWavesDialog::on_resetButton_clicked()
+{
 }

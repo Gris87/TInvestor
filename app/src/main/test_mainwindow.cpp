@@ -32,6 +32,7 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/filterwidget/ifilterwidget_mock.h"
 #include "src/widgets/filterwidget/ifilterwidgetfactory_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecord_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -69,6 +70,9 @@ protected:
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
+        tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         filterWidgetFactoryMock              = new StrictMock<FilterWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -84,8 +88,6 @@ protected:
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
-        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         filterWidgetMock                     = new StrictMock<FilterWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
@@ -130,6 +132,9 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesWidgetFactoryMock,
+            tableRecordFactoryMock,
             filterWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
@@ -144,9 +149,7 @@ protected:
             orderBookThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
-            autorunSettingsEditorMock,
-            actionsTableItemWidgetFactoryMock,
-            tableRecordFactoryMock
+            autorunSettingsEditorMock
         );
     }
 
@@ -182,6 +185,9 @@ protected:
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
+        delete actionsTableItemWidgetFactoryMock;
+        delete orderWavesWidgetFactoryMock;
+        delete tableRecordFactoryMock;
         delete filterWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
@@ -197,8 +203,6 @@ protected:
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete autorunSettingsEditorMock;
-        delete actionsTableItemWidgetFactoryMock;
-        delete tableRecordFactoryMock;
         // It will be deleted by `delete ui;`
         /*
         delete filterWidgetMock;
@@ -220,6 +224,9 @@ protected:
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
+    StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<FilterWidgetFactoryMock>*              filterWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
@@ -235,8 +242,6 @@ protected:
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
-    StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<FilterWidgetMock>*                     filterWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
@@ -427,6 +432,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -443,6 +449,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,
@@ -531,6 +538,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -547,6 +555,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,
@@ -603,6 +612,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -619,6 +629,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,
@@ -695,6 +706,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -711,6 +723,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,
@@ -881,6 +894,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -897,6 +911,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,
@@ -1007,6 +1022,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock1,
@@ -1023,6 +1039,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
             mainWindow->ui->stocksTableWidget,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
             orderBookThreadMock,
             httpClientMock,
             &stock2,

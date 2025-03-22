@@ -5,6 +5,7 @@
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
 
@@ -30,6 +31,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
 
@@ -40,7 +42,14 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 
     EXPECT_CALL(
         actionsTableItemWidgetFactoryMock,
-        newInstance(&orderWavesDialogFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, &tableWidget)
+        newInstance(
+            &orderWavesDialogFactoryMock,
+            &orderWavesWidgetFactoryMock,
+            &orderBookThreadMock,
+            &httpClientMock,
+            &stock,
+            &tableWidget
+        )
     )
         .WillOnce(Return(actionsTableItemWidgetMock));
 
@@ -48,6 +57,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
         &tableWidget,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
+        &orderWavesWidgetFactoryMock,
         &orderBookThreadMock,
         &httpClientMock,
         &stock,

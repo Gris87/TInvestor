@@ -5,6 +5,7 @@
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 
 
 
@@ -24,12 +25,14 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
     ActionsTableItemWidgetFactory factory;
 
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
     Stock                                   stock;
 
-    IActionsTableItemWidget* widget =
-        factory.newInstance(&orderWavesDialogFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, nullptr);
+    IActionsTableItemWidget* widget = factory.newInstance(
+        &orderWavesDialogFactoryMock, &orderWavesWidgetFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, nullptr
+    );
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

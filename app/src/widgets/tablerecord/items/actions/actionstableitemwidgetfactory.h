@@ -17,6 +17,7 @@ public:
 
     IActionsTableItemWidget* newInstance(
         IOrderWavesDialogFactory* orderWavesDialogFactory,
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
         Stock*                    stock,

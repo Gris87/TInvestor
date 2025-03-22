@@ -23,7 +23,7 @@ public:
     MOCK_METHOD(
         std::shared_ptr<IOrderWavesDialog>,
         newInstance,
-        (IOrderBookThread * orderBookThread, Stock* stock, QWidget* parent),
+        (IOrderWavesWidgetFactory * orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent),
         (override)
     );
 };

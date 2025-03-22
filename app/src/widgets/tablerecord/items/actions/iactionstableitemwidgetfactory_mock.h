@@ -24,10 +24,11 @@ public:
         IActionsTableItemWidget*,
         newInstance,
         (IOrderWavesDialogFactory * orderWavesDialogFactory,
-         IOrderBookThread* orderBookThread,
-         IHttpClient*      httpClient,
-         Stock*            stock,
-         QWidget*          parent),
+         IOrderWavesWidgetFactory* orderWavesWidgetFactory,
+         IOrderBookThread*         orderBookThread,
+         IHttpClient*              httpClient,
+         Stock*                    stock,
+         QWidget*                  parent),
         (override)
     );
 };

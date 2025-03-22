@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/threads/orderbook/iorderbookthread_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 
 
 
@@ -19,22 +20,25 @@ class Test_OrderWavesDialog : public ::testing::Test
 protected:
     void SetUp()
     {
-        orderBookThread = new StrictMock<OrderBookThreadMock>();
-        stock           = new Stock();
+        orderWavesWidgetFactoryMock = new StrictMock<OrderWavesWidgetFactoryMock>();
+        orderBookThreadMock         = new StrictMock<OrderBookThreadMock>();
+        stock                       = new Stock();
 
-        dialog = new OrderWavesDialog(orderBookThread, stock);
+        dialog = new OrderWavesDialog(orderWavesWidgetFactoryMock, orderBookThreadMock, stock);
     }
 
     void TearDown()
     {
         delete dialog;
-        delete orderBookThread;
+        delete orderWavesWidgetFactoryMock;
+        delete orderBookThreadMock;
         delete stock;
     }
 
-    OrderWavesDialog*                dialog;
-    StrictMock<OrderBookThreadMock>* orderBookThread;
-    Stock*                           stock;
+    OrderWavesDialog*                        dialog;
+    StrictMock<OrderWavesWidgetFactoryMock>* orderWavesWidgetFactoryMock;
+    StrictMock<OrderBookThreadMock>*         orderBookThreadMock;
+    Stock*                                   stock;
 };
 
 
