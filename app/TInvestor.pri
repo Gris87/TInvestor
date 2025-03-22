@@ -72,6 +72,8 @@ SOURCES += \
     src/utils/timeutils/timeutils.cpp \
     src/widgets/filterwidget/filterwidget.cpp \
     src/widgets/filterwidget/filterwidgetfactory.cpp \
+    src/widgets/orderwaveswidget/orderwaveswidget.cpp \
+    src/widgets/orderwaveswidget/orderwaveswidgetfactory.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
@@ -208,6 +210,10 @@ HEADERS += \
     src/widgets/filterwidget/filterwidgetfactory.h \
     src/widgets/filterwidget/ifilterwidget.h \
     src/widgets/filterwidget/ifilterwidgetfactory.h \
+    src/widgets/orderwaveswidget/iorderwaveswidget.h \
+    src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h \
+    src/widgets/orderwaveswidget/orderwaveswidget.h \
+    src/widgets/orderwaveswidget/orderwaveswidgetfactory.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.h \
