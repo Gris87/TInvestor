@@ -17,7 +17,7 @@ OrderWavesWidgetFactory::~OrderWavesWidgetFactory()
     qDebug() << "Destroy OrderWavesWidgetFactory";
 }
 
-IOrderWavesWidget* OrderWavesWidgetFactory::newInstance(QWidget* parent)
+IOrderWavesWidget* OrderWavesWidgetFactory::newInstance(float priceIncrement, QWidget* parent)
 {
-    return new OrderWavesWidget(parent);
+    return new OrderWavesWidget(priceIncrement, parent);
 }

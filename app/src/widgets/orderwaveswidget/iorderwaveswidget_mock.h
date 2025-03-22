@@ -19,4 +19,7 @@ public:
 
     OrderWavesWidgetMock(const OrderWavesWidgetMock& another)            = delete;
     OrderWavesWidgetMock& operator=(const OrderWavesWidgetMock& another) = delete;
+
+    MOCK_METHOD(void, orderBookChanged, (const OrderBook& orderBook), (override));
+    MOCK_METHOD(void, reset, (), (override));
 };

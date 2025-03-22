@@ -9,7 +9,7 @@ class Test_OrderWavesWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        orderWavesWidget = new OrderWavesWidget();
+        orderWavesWidget = new OrderWavesWidget(0.01f);
     }
 
     void TearDown()

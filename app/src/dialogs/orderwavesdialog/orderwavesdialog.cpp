@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include "src/grpc/utils.h"
+
 
 
 OrderWavesDialog::OrderWavesDialog(
@@ -29,7 +31,7 @@ OrderWavesDialog::OrderWavesDialog(
 
     ui->nameLabel->setText(mStock->meta.name);
 
-    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(this);
+    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(quotationToFloat(mStock->meta.minPriceIncrement), this);
     ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 
     connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));
@@ -60,10 +62,13 @@ void OrderWavesDialog::resizeEvent(QResizeEvent* event)
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
-    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss.zzz"));
+    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss"));
     ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + QChar(0x20BD));
+
+    mOrderWavesWidget->orderBookChanged(orderBook);
 }
 
 void OrderWavesDialog::on_resetButton_clicked()
 {
+    mOrderWavesWidget->reset();
 }
