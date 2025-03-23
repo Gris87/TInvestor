@@ -13,7 +13,7 @@ TEST(Test_OrderWavesWidgetFactory, Test_newInstance)
 {
     OrderWavesWidgetFactory factory;
 
-    IOrderWavesWidget* widget = factory.newInstance(0.01f, nullptr);
+    IOrderWavesWidget* widget = factory.newInstance(2, 0.01f, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

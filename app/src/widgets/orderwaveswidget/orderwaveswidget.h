@@ -13,7 +13,7 @@
 class OrderWavesWidget : public IOrderWavesWidget
 {
 public:
-    explicit OrderWavesWidget(float priceIncrement, QWidget* parent = nullptr);
+    explicit OrderWavesWidget(int precision, float priceIncrement, QWidget* parent = nullptr);
     ~OrderWavesWidget();
 
     OrderWavesWidget(const OrderWavesWidget& another)            = delete;
@@ -22,16 +22,32 @@ public:
     void orderBookChanged(const OrderBook& orderBook) override;
     void reset() override;
 
+    QGraphicsRectItem*       getOrCreateBar(int* index);
+    QGraphicsSimpleTextItem* getOrCreateBarMarker(int* index);
+    void                     deleteBars(int index);
+    void                     deleteBarsMarkers(int index);
+
+    void setupBar(
+        int                      axisX,
+        QGraphicsRectItem*       bar,
+        QGraphicsSimpleTextItem* barMarker,
+        qint32                   quantity,
+        QString                  quantityText,
+        const QColor&            color
+    );
+
+    qint64 normalizePrice(float price);
+
 private:
     QGraphicsScene                  mScene;
     QGraphicsLineItem*              mBottomLine;
     QList<QGraphicsLineItem*>       mAxisLines;
     QList<QGraphicsSimpleTextItem*> mAxisMarkers;
-    QList<QGraphicsRectItem*>       mBids;
-    QList<QGraphicsRectItem*>       mSkips;
-    QList<QGraphicsRectItem*>       mAsks;
-    qint32                          mMaxQuantity;
+    QList<QGraphicsRectItem*>       mBars;
+    QList<QGraphicsSimpleTextItem*> mBarsMarkers;
+    int                             mPrecision;
+    float                           mPriceIncrement;
     float                           mMinPrice;
     float                           mMaxPrice;
-    float                           mPriceIncrement;
+    qint32                          mMaxQuantity;
 };

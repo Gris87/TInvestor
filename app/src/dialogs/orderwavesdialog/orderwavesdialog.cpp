@@ -31,7 +31,7 @@ OrderWavesDialog::OrderWavesDialog(
 
     ui->nameLabel->setText(mStock->meta.name);
 
-    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(quotationToFloat(mStock->meta.minPriceIncrement), this);
+    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mPrecision, quotationToFloat(mStock->meta.minPriceIncrement), this);
     ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 
     connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));

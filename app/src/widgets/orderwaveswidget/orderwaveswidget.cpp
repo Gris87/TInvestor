@@ -2,29 +2,35 @@
 
 #include <QDebug>
 
-#define SCENE_HEIGHT       580
-#define BAR_WIDTH          80
+#define MAX_BAR_HEIGHT     580
+#define BAR_WIDTH          40
 #define AXIS_LINE_HEIGHT   10
 #define AXIS_MARKER_OFFSET 10
+#define BAR_OFFSET         10
+#define BAR_MARKER_OFFSET  20
 #define LINE_COLOR         "#FFFFFF"
 #define AXIS_LINE_COLOR    "#FFFFFF"
 #define AXIS_MARKER_COLOR  "#FFFFFF"
+#define BAR_MARKER_COLOR   "#FFFFFF"
+#define GREEN_COLOR        "#00FF00"
+#define RED_COLOR          "#FF0000"
+#define GREY_COLOR         "#808080"
 
 
 
-OrderWavesWidget::OrderWavesWidget(float priceIncrement, QWidget* parent) :
+OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget* parent) :
     IOrderWavesWidget(parent),
     mScene(),
     mBottomLine(),
     mAxisLines(),
     mAxisMarkers(),
-    mBids(),
-    mSkips(),
-    mAsks(),
-    mMaxQuantity(-1),
+    mBars(),
+    mBarsMarkers(),
+    mPrecision(precision),
+    mPriceIncrement(priceIncrement),
     mMinPrice(-1),
     mMaxPrice(-1),
-    mPriceIncrement(priceIncrement)
+    mMaxQuantity(-1)
 {
     qDebug() << "Create OrderWavesWidget";
 
@@ -38,38 +44,86 @@ OrderWavesWidget::~OrderWavesWidget()
 
 void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 {
+    QMap<qint64, qint32> priceToQuantityBids; // priceNormal => quantity
+    QMap<qint64, qint32> priceToQuantityAsks; // priceNormal => quantity
+
+    float minBidsPrice = -1;
+    float maxBidsPrice = -1;
+    float minAsksPrice = -1;
+    float maxAsksPrice = -1;
+
     for (int i = 0; i < orderBook.bids.size(); ++i)
     {
-        qint32 quantity = orderBook.bids.at(i).quantity;
+        qint32 quantity    = orderBook.bids.at(i).quantity;
+        float  price       = orderBook.bids.at(i).price;
+        qint64 priceNormal = normalizePrice(price);
+
+        priceToQuantityBids[priceNormal] = quantity;
 
         if (quantity > mMaxQuantity)
         {
             mMaxQuantity = quantity;
+        }
+
+        if (minBidsPrice < 0 || price < minBidsPrice)
+        {
+            minBidsPrice = price;
+        }
+
+        if (maxBidsPrice < 0 || price > maxBidsPrice)
+        {
+            maxBidsPrice = price;
         }
     }
 
     for (int i = 0; i < orderBook.asks.size(); ++i)
     {
-        qint32 quantity = orderBook.asks.at(i).quantity;
+        qint32 quantity    = orderBook.asks.at(i).quantity;
+        float  price       = orderBook.asks.at(i).price;
+        qint64 priceNormal = normalizePrice(price);
+
+        priceToQuantityAsks[priceNormal] = quantity;
 
         if (quantity > mMaxQuantity)
         {
             mMaxQuantity = quantity;
         }
+
+        if (minAsksPrice < 0 || price < minAsksPrice)
+        {
+            minAsksPrice = price;
+        }
+
+        if (maxAsksPrice < 0 || price > maxAsksPrice)
+        {
+            maxAsksPrice = price;
+        }
     }
 
-    float minPrice = !orderBook.bids.isEmpty() ? orderBook.bids.last().price : orderBook.price;
-    float maxPrice = !orderBook.asks.isEmpty() ? orderBook.asks.last().price : orderBook.price;
-
-    if (mMinPrice < 0 || minPrice < mMinPrice)
+    if (mMinPrice < 0 || minBidsPrice < mMinPrice)
     {
-        mMinPrice = minPrice;
+        mMinPrice = minBidsPrice;
     }
 
-    if (mMaxPrice < 0 || maxPrice < mMaxPrice)
+    if (mMinPrice < 0 || minAsksPrice < mMinPrice)
     {
-        mMaxPrice = maxPrice;
+        mMinPrice = minAsksPrice;
     }
+
+    if (mMaxPrice < 0 || maxBidsPrice > mMaxPrice)
+    {
+        mMaxPrice = maxBidsPrice;
+    }
+
+    if (mMaxPrice < 0 || maxAsksPrice > mMaxPrice)
+    {
+        mMaxPrice = maxAsksPrice;
+    }
+
+    qint64 minBidsPriceNormal = normalizePrice(minBidsPrice);
+    qint64 maxBidsPriceNormal = normalizePrice(maxBidsPrice);
+    qint64 minAsksPriceNormal = normalizePrice(minAsksPrice);
+    qint64 maxAsksPriceNormal = normalizePrice(maxAsksPrice);
 
     int amountOfBars = qRound((mMaxPrice - mMinPrice) / mPriceIncrement) + 1;
 
@@ -82,23 +136,30 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
         mBottomLine = mScene.addLine(0, 0, amountOfBars * BAR_WIDTH, 0, QPen(QColor(LINE_COLOR)));
     }
 
+    int barIndex       = 0;
+    int barMarkerIndex = 0;
+
     for (int i = 0; i < amountOfBars; ++i)
     {
-        int axisX = i * BAR_WIDTH + BAR_WIDTH / 2;
-
         QGraphicsSimpleTextItem* axisMarker;
+
+        int     axisX          = i * BAR_WIDTH + BAR_WIDTH / 2;
+        float   price          = amountOfBars > 1 ? mMinPrice + (mMaxPrice - mMinPrice) * i / (amountOfBars - 1) : mMinPrice;
+        qint64  priceNormal    = normalizePrice(price);
+        QString axisMarkerText = QString::number(price, 'f', mPrecision);
 
         if (i < mAxisLines.size())
         {
             axisMarker = mAxisMarkers.at(i);
 
             mAxisLines.at(i)->setLine(axisX, -AXIS_LINE_HEIGHT / 2, axisX, AXIS_LINE_HEIGHT / 2);
-            axisMarker->setText("50000000.00");
+            axisMarker->setText(axisMarkerText + " " + QChar(0x20BD));
         }
         else
         {
-            axisMarker = mScene.addSimpleText("50000000.00");
+            axisMarker = mScene.addSimpleText(axisMarkerText + " " + QChar(0x20BD));
             axisMarker->setBrush(QBrush(QColor(AXIS_MARKER_COLOR)));
+            axisMarker->setRotation(45);
 
             mAxisLines.append(
                 mScene.addLine(axisX, -AXIS_LINE_HEIGHT / 2, axisX, AXIS_LINE_HEIGHT / 2, QPen(QColor(AXIS_LINE_COLOR)))
@@ -106,10 +167,158 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
             mAxisMarkers.append(axisMarker);
         }
 
-        axisMarker->setPos(axisX - axisMarker->boundingRect().width() / 2, AXIS_MARKER_OFFSET);
+        axisMarker->setPos(axisX, AXIS_MARKER_OFFSET);
+
+        if (priceNormal < minBidsPriceNormal)
+        {
+            if (priceToQuantityBids.size() >= 50)
+            {
+                setupBar(axisX, getOrCreateBar(&barIndex), getOrCreateBarMarker(&barMarkerIndex), 0, "?", QColor(GREY_COLOR));
+            }
+        }
+
+        if (priceNormal >= minBidsPriceNormal && priceNormal <= maxBidsPriceNormal)
+        {
+            qint32 quantity = priceToQuantityBids[priceNormal];
+
+            setupBar(
+                axisX,
+                getOrCreateBar(&barIndex),
+                getOrCreateBarMarker(&barMarkerIndex),
+                quantity,
+                QString::number(quantity),
+                QColor(GREEN_COLOR)
+            );
+        }
+
+        if (priceNormal > maxBidsPriceNormal && priceNormal < minAsksPriceNormal)
+        {
+            setupBar(axisX, getOrCreateBar(&barIndex), nullptr, 0, "", QColor(GREY_COLOR));
+        }
+
+        if (priceNormal >= minAsksPriceNormal && priceNormal <= maxAsksPriceNormal)
+        {
+            qint32 quantity = priceToQuantityAsks[priceNormal];
+
+            setupBar(
+                axisX,
+                getOrCreateBar(&barIndex),
+                getOrCreateBarMarker(&barMarkerIndex),
+                quantity,
+                QString::number(quantity),
+                QColor(RED_COLOR)
+            );
+        }
+
+        if (priceNormal > maxAsksPriceNormal)
+        {
+            if (priceToQuantityAsks.size() >= 50)
+            {
+                setupBar(axisX, getOrCreateBar(&barIndex), getOrCreateBarMarker(&barMarkerIndex), 0, "?", QColor(GREY_COLOR));
+            }
+        }
     }
+
+    deleteBars(barIndex);
+    deleteBarsMarkers(barMarkerIndex);
 }
 
 void OrderWavesWidget::reset()
 {
+}
+
+QGraphicsRectItem* OrderWavesWidget::getOrCreateBar(int* index)
+{
+    QGraphicsRectItem* res;
+
+    if (*index < mBars.size())
+    {
+        res = mBars.at(*index);
+    }
+    else
+    {
+        res = mScene.addRect(0, 0, 0, 0);
+        mBars.append(res);
+    }
+
+    *index += 1;
+
+    return res;
+}
+
+QGraphicsSimpleTextItem* OrderWavesWidget::getOrCreateBarMarker(int* index)
+{
+    QGraphicsSimpleTextItem* res;
+
+    if (*index < mBarsMarkers.size())
+    {
+        res = mBarsMarkers.at(*index);
+    }
+    else
+    {
+        res = mScene.addSimpleText("");
+        res->setBrush(QBrush(QColor(BAR_MARKER_COLOR)));
+        mBarsMarkers.append(res);
+    }
+
+    *index += 1;
+
+    return res;
+}
+
+void OrderWavesWidget::deleteBars(int index)
+{
+    for (int i = index; i < mBars.size(); ++i)
+    {
+        QGraphicsRectItem* bar = mBars.at(i);
+
+        mScene.removeItem(bar);
+        delete bar;
+    }
+
+    mBars.resize(index);
+}
+
+void OrderWavesWidget::deleteBarsMarkers(int index)
+{
+    for (int i = index; i < mBarsMarkers.size(); ++i)
+    {
+        QGraphicsSimpleTextItem* marker = mBarsMarkers.at(i);
+
+        mScene.removeItem(marker);
+        delete marker;
+    }
+
+    mBarsMarkers.resize(index);
+}
+
+void OrderWavesWidget::setupBar(
+    int                      axisX,
+    QGraphicsRectItem*       bar,
+    QGraphicsSimpleTextItem* barMarker,
+    qint32                   quantity,
+    QString                  quantityText,
+    const QColor&            color
+)
+{
+    int barHeight = MAX_BAR_HEIGHT * quantity / mMaxQuantity;
+
+    if (barHeight < 4)
+    {
+        barHeight = 4;
+    }
+
+    bar->setRect(axisX - BAR_WIDTH / 2, -BAR_OFFSET - barHeight, BAR_WIDTH, barHeight);
+    bar->setBrush(QBrush(color));
+
+    if (barMarker != nullptr)
+    {
+        barMarker->setText(quantityText);
+        barMarker->setPos(axisX - barMarker->boundingRect().width() / 2, -BAR_OFFSET - barHeight - BAR_MARKER_OFFSET);
+    }
+}
+
+qint64 OrderWavesWidget::normalizePrice(float price)
+{
+    return qRound64(price * qPow(10, mPrecision));
 }
