@@ -1,6 +1,7 @@
 #include "src/widgets/orderwaveswidget/orderwaveswidget.h"
 
 #include <QDebug>
+#include <QTimer>
 
 #define MAX_BAR_HEIGHT     580
 #define BAR_WIDTH          40
@@ -12,9 +13,9 @@
 #define AXIS_LINE_COLOR    "#FFFFFF"
 #define AXIS_MARKER_COLOR  "#FFFFFF"
 #define BAR_MARKER_COLOR   "#FFFFFF"
-#define GREEN_COLOR        "#00FF00"
-#define RED_COLOR          "#FF0000"
-#define GREY_COLOR         "#808080"
+#define GREEN_COLOR        "#2CE89C"
+#define RED_COLOR          "#FF7584"
+#define GREY_COLOR         "#E5E5E5"
 
 
 
@@ -30,9 +31,13 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
     mPriceIncrement(priceIncrement),
     mMinPrice(-1),
     mMaxPrice(-1),
-    mMaxQuantity(-1)
+    mMaxQuantity(-1),
+    mNeedToFollow(true),
+    mCurrentPricePosX()
 {
     qDebug() << "Create OrderWavesWidget";
+
+    setDragMode(DragMode::ScrollHandDrag);
 
     setScene(&mScene);
 }
@@ -40,6 +45,14 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
 OrderWavesWidget::~OrderWavesWidget()
 {
     qDebug() << "Destroy OrderWavesWidget";
+}
+
+void OrderWavesWidget::wheelEvent(QWheelEvent* event)
+{
+    if (event->angleDelta().y() > 0)
+    {
+        // TODO: Zoom
+    }
 }
 
 void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
@@ -221,10 +234,20 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
     deleteBars(barIndex);
     deleteBarsMarkers(barMarkerIndex);
+
+    mCurrentPricePosX =
+        ((calculateCurrentPrice(maxBidsPrice, minAsksPrice) - mMinPrice) / (mMaxPrice - mMinPrice)) * amountOfBars * BAR_WIDTH;
+
+    if (mNeedToFollow)
+    {
+        QTimer::singleShot(0, this, SLOT(followToCurrentPrice()));
+    }
 }
 
 void OrderWavesWidget::reset()
 {
+    mNeedToFollow = true;
+    followToCurrentPrice();
 }
 
 QGraphicsRectItem* OrderWavesWidget::getOrCreateBar(int* index)
@@ -308,8 +331,12 @@ void OrderWavesWidget::setupBar(
         barHeight = 4;
     }
 
+    QColor brushColor = color;
+    brushColor.setAlphaF(0.5f);
+
     bar->setRect(axisX - BAR_WIDTH / 2, -BAR_OFFSET - barHeight, BAR_WIDTH, barHeight);
-    bar->setBrush(QBrush(color));
+    bar->setPen(QPen(color));
+    bar->setBrush(QBrush(brushColor));
 
     if (barMarker != nullptr)
     {
@@ -321,4 +348,33 @@ void OrderWavesWidget::setupBar(
 qint64 OrderWavesWidget::normalizePrice(float price)
 {
     return qRound64(price * qPow(10, mPrecision));
+}
+
+float OrderWavesWidget::calculateCurrentPrice(float maxBidsPrice, float minAsksPrice)
+{
+    if (maxBidsPrice >= 0)
+    {
+        if (minAsksPrice >= 0)
+        {
+            return (maxBidsPrice + minAsksPrice) / 2;
+        }
+        else
+        {
+            return maxBidsPrice;
+        }
+    }
+    else
+    {
+        if (minAsksPrice >= 0)
+        {
+            return minAsksPrice;
+        }
+    }
+
+    return 0;
+}
+
+void OrderWavesWidget::followToCurrentPrice()
+{
+    centerOn(mCurrentPricePosX, 0);
 }

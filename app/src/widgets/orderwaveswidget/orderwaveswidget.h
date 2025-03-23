@@ -7,17 +7,22 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsSimpleTextItem>
+#include <QWheelEvent>
 
 
 
 class OrderWavesWidget : public IOrderWavesWidget
 {
+    Q_OBJECT
+
 public:
     explicit OrderWavesWidget(int precision, float priceIncrement, QWidget* parent = nullptr);
     ~OrderWavesWidget();
 
     OrderWavesWidget(const OrderWavesWidget& another)            = delete;
     OrderWavesWidget& operator=(const OrderWavesWidget& another) = delete;
+
+    void wheelEvent(QWheelEvent* event) override;
 
     void orderBookChanged(const OrderBook& orderBook) override;
     void reset() override;
@@ -37,6 +42,7 @@ public:
     );
 
     qint64 normalizePrice(float price);
+    float  calculateCurrentPrice(float maxBidsPrice, float minAsksPrice);
 
 private:
     QGraphicsScene                  mScene;
@@ -50,4 +56,9 @@ private:
     float                           mMinPrice;
     float                           mMaxPrice;
     qint32                          mMaxQuantity;
+    bool                            mNeedToFollow;
+    int                             mCurrentPricePosX;
+
+private slots:
+    void followToCurrentPrice();
 };

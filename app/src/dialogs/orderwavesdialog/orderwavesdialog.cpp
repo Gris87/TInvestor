@@ -50,16 +50,6 @@ OrderWavesDialog::~OrderWavesDialog()
     delete ui;
 }
 
-void OrderWavesDialog::resizeEvent(QResizeEvent* event)
-{
-    IOrderWavesDialog::resizeEvent(event);
-
-    QRect windowRect(0, 0, width(), height());
-
-    ui->layoutForOrderWavesWidget->setGeometry(windowRect);
-    ui->layoutForControlsWidget->setGeometry(windowRect);
-}
-
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
     ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss"));
