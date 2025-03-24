@@ -60,5 +60,6 @@ private:
     int                             mCurrentPricePosX;
 
 private slots:
+    void sliderMoved(int value);
     void followToCurrentPrice();
 };

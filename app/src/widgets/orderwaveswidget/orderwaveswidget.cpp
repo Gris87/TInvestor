@@ -1,6 +1,7 @@
 #include "src/widgets/orderwaveswidget/orderwaveswidget.h"
 
 #include <QDebug>
+#include <QScrollBar>
 #include <QTimer>
 
 #define MAX_BAR_HEIGHT     580
@@ -40,6 +41,8 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
     setDragMode(DragMode::ScrollHandDrag);
 
     setScene(&mScene);
+
+    connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(sliderMoved(int)));
 }
 
 OrderWavesWidget::~OrderWavesWidget()
@@ -49,6 +52,8 @@ OrderWavesWidget::~OrderWavesWidget()
 
 void OrderWavesWidget::wheelEvent(QWheelEvent* event)
 {
+    mNeedToFollow = false;
+
     if (event->angleDelta().y() > 0)
     {
         // TODO: Zoom
@@ -235,6 +240,8 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
     deleteBars(barIndex);
     deleteBarsMarkers(barMarkerIndex);
 
+    viewport()->update();
+
     mCurrentPricePosX =
         ((calculateCurrentPrice(maxBidsPrice, minAsksPrice) - mMinPrice) / (mMaxPrice - mMinPrice)) * amountOfBars * BAR_WIDTH;
 
@@ -246,7 +253,6 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
 void OrderWavesWidget::reset()
 {
-    mNeedToFollow = true;
     followToCurrentPrice();
 }
 
@@ -374,7 +380,13 @@ float OrderWavesWidget::calculateCurrentPrice(float maxBidsPrice, float minAsksP
     return 0;
 }
 
+void OrderWavesWidget::sliderMoved(int /*value*/)
+{
+    mNeedToFollow = false;
+}
+
 void OrderWavesWidget::followToCurrentPrice()
 {
     centerOn(mCurrentPricePosX, 0);
+    mNeedToFollow = true;
 }

@@ -1,4 +1,5 @@
 Market waves
+Show lock icon for qual investor
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
 Show oborot on table
