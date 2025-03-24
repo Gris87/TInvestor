@@ -22,7 +22,9 @@ public:
     OrderWavesWidget(const OrderWavesWidget& another)            = delete;
     OrderWavesWidget& operator=(const OrderWavesWidget& another) = delete;
 
-    void wheelEvent(QWheelEvent* event) override;
+    void zoom(double factor);
+
+    bool eventFilter(QObject* object, QEvent* event) override;
 
     void orderBookChanged(const OrderBook& orderBook) override;
     void reset() override;
@@ -58,6 +60,8 @@ private:
     qint32                          mMaxQuantity;
     bool                            mNeedToFollow;
     int                             mCurrentPricePosX;
+    QPointF                         mTargetScenePos;
+    QPointF                         mTargetViewportPos;
 
 private slots:
     void sliderMoved(int value);

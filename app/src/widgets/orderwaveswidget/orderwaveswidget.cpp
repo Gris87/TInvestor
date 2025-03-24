@@ -4,7 +4,9 @@
 #include <QScrollBar>
 #include <QTimer>
 
-#define MAX_BAR_HEIGHT     580
+
+
+#define MAX_BAR_HEIGHT     600
 #define BAR_WIDTH          40
 #define AXIS_LINE_HEIGHT   10
 #define AXIS_MARKER_OFFSET 10
@@ -17,6 +19,7 @@
 #define GREEN_COLOR        "#2CE89C"
 #define RED_COLOR          "#FF7584"
 #define GREY_COLOR         "#E5E5E5"
+#define ZOOM_FACTOR_BASE   1.001
 
 
 
@@ -38,9 +41,12 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
 {
     qDebug() << "Create OrderWavesWidget";
 
+    setScene(&mScene);
+
     setDragMode(DragMode::ScrollHandDrag);
 
-    setScene(&mScene);
+    viewport()->installEventFilter(this);
+    setMouseTracking(true);
 
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(sliderMoved(int)));
 }
@@ -50,14 +56,41 @@ OrderWavesWidget::~OrderWavesWidget()
     qDebug() << "Destroy OrderWavesWidget";
 }
 
-void OrderWavesWidget::wheelEvent(QWheelEvent* event)
+void OrderWavesWidget::zoom(double factor)
 {
     mNeedToFollow = false;
 
-    if (event->angleDelta().y() > 0)
+    scale(factor, factor);
+    centerOn(mTargetScenePos);
+
+    QPointF deltaViewportPos = mTargetViewportPos - QPointF(viewport()->width() / 2.0, viewport()->height() / 2.0);
+    QPointF viewportCenter   = mapFromScene(mTargetScenePos) - deltaViewportPos;
+
+    centerOn(mapToScene(viewportCenter.toPoint()));
+}
+
+bool OrderWavesWidget::eventFilter(QObject* /*object*/, QEvent* event)
+{
+    if (event->type() == QEvent::MouseMove)
     {
-        // TODO: Zoom
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+
+        mTargetViewportPos = mouseEvent->pos();
+        mTargetScenePos    = mapToScene(mouseEvent->pos());
     }
+    else if (event->type() == QEvent::Wheel)
+    {
+        QWheelEvent* wheelEvent = static_cast<QWheelEvent*>(event);
+
+        double angle  = wheelEvent->angleDelta().y();
+        double factor = qPow(ZOOM_FACTOR_BASE, angle);
+
+        zoom(factor);
+
+        return true;
+    }
+
+    return false;
 }
 
 void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
@@ -253,6 +286,7 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
 void OrderWavesWidget::reset()
 {
+    resetTransform();
     followToCurrentPrice();
 }
 
