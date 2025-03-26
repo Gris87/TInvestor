@@ -14,4 +14,6 @@ Buy if max cost reached (market limit)
 Follow for the crowd (Buy if price raises and sell if price fall)
 Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums (AI assisted)
+Sell if price extrimely fall (>5% in 5 minutes)
+Do not buy if it is the most worse stock in a day
 Buy if price is less than average for last n days

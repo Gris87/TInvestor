@@ -43,6 +43,8 @@ public:
         const QColor&            color
     );
 
+    void setupArrow(float maxBidsPrice, float minAsksPrice, float price);
+
     qint64 normalizePrice(float price);
     float  calculateCurrentPrice(float maxBidsPrice, float minAsksPrice);
 
@@ -53,6 +55,7 @@ private:
     QList<QGraphicsSimpleTextItem*> mAxisMarkers;
     QList<QGraphicsRectItem*>       mBars;
     QList<QGraphicsSimpleTextItem*> mBarsMarkers;
+    QGraphicsItem*                  mArrow;
     int                             mPrecision;
     float                           mPriceIncrement;
     float                           mMinPrice;

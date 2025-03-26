@@ -12,6 +12,8 @@
 #define AXIS_MARKER_OFFSET 10
 #define BAR_OFFSET         10
 #define BAR_MARKER_OFFSET  20
+#define ARROW_OFFSET       80
+#define ARROW_SIZE         20
 #define LINE_COLOR         "#FFFFFF"
 #define AXIS_LINE_COLOR    "#FFFFFF"
 #define AXIS_MARKER_COLOR  "#FFFFFF"
@@ -19,6 +21,7 @@
 #define GREEN_COLOR        "#2CE89C"
 #define RED_COLOR          "#FF7584"
 #define GREY_COLOR         "#E5E5E5"
+#define ARROW_COLOR        "#FFFFFF"
 #define ZOOM_FACTOR_BASE   1.001
 
 
@@ -31,6 +34,7 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
     mAxisMarkers(),
     mBars(),
     mBarsMarkers(),
+    mArrow(),
     mPrecision(precision),
     mPriceIncrement(priceIncrement),
     mMinPrice(-1),
@@ -171,6 +175,11 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
         mMaxPrice = maxAsksPrice;
     }
 
+    if (mMinPrice < 0 && mMaxPrice < 0)
+    {
+        return;
+    }
+
     qint64 minBidsPriceNormal = normalizePrice(minBidsPrice);
     qint64 maxBidsPriceNormal = normalizePrice(maxBidsPrice);
     qint64 minAsksPriceNormal = normalizePrice(minAsksPrice);
@@ -273,10 +282,14 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
     deleteBars(barIndex);
     deleteBarsMarkers(barMarkerIndex);
 
+    setupArrow(maxBidsPrice, minAsksPrice, orderBook.price);
+
     viewport()->update();
 
-    mCurrentPricePosX =
-        ((calculateCurrentPrice(maxBidsPrice, minAsksPrice) - mMinPrice) / (mMaxPrice - mMinPrice)) * amountOfBars * BAR_WIDTH;
+    mCurrentPricePosX = mMaxPrice > mMinPrice
+                            ? ((calculateCurrentPrice(maxBidsPrice, minAsksPrice) - mMinPrice) / (mMaxPrice - mMinPrice)) *
+                                  amountOfBars * BAR_WIDTH
+                            : 0;
 
     if (mNeedToFollow)
     {
@@ -382,6 +395,79 @@ void OrderWavesWidget::setupBar(
     {
         barMarker->setText(quantityText);
         barMarker->setPos(axisX - barMarker->boundingRect().width() / 2, -BAR_OFFSET - barHeight - BAR_MARKER_OFFSET);
+    }
+}
+
+void OrderWavesWidget::setupArrow(float maxBidsPrice, float minAsksPrice, float price)
+{
+    if (mArrow != nullptr)
+    {
+        mScene.removeItem(mArrow);
+
+        delete mArrow;
+        mArrow = nullptr;
+    }
+
+    if (maxBidsPrice < 0 && minAsksPrice < 0)
+    {
+        return;
+    }
+
+    float startPrice;
+    float endPrice = price;
+
+    if (maxBidsPrice >= 0 && minAsksPrice >= 0)
+    {
+        float middlePrice = (maxBidsPrice + minAsksPrice) / 2;
+
+        if (price < middlePrice)
+        {
+            startPrice = minAsksPrice;
+        }
+        else if (price > middlePrice)
+        {
+            startPrice = maxBidsPrice;
+        }
+        else
+        {
+            startPrice = middlePrice;
+            endPrice   = middlePrice;
+        }
+    }
+    else
+    {
+        startPrice = price;
+    }
+
+    int amountOfBars   = qRound((mMaxPrice - mMinPrice) / mPriceIncrement) + 1;
+    int startPricePosX = ((startPrice - mMinPrice) / (mMaxPrice - mMinPrice)) * amountOfBars * BAR_WIDTH;
+    int endPricePosX   = ((endPrice - mMinPrice) / (mMaxPrice - mMinPrice)) * amountOfBars * BAR_WIDTH;
+
+    if (startPrice == endPrice)
+    {
+        mArrow = mScene.addEllipse(
+            endPricePosX - ARROW_SIZE / 2,
+            -ARROW_OFFSET - ARROW_SIZE / 2,
+            ARROW_SIZE,
+            ARROW_SIZE,
+            QPen(QBrush(QColor(ARROW_COLOR)), 2)
+        );
+    }
+    else
+    {
+        QPolygonF arrowPolygon;
+
+        int sign = endPrice > startPrice ? 1 : -1;
+
+        arrowPolygon.append(QPointF(startPricePosX, -ARROW_OFFSET + ARROW_SIZE / 10));
+        arrowPolygon.append(QPointF(endPricePosX, -ARROW_OFFSET + ARROW_SIZE / 10));
+        arrowPolygon.append(QPointF(endPricePosX, -ARROW_OFFSET + ARROW_SIZE / 4));
+        arrowPolygon.append(QPointF(endPricePosX + sign * ARROW_SIZE / 4, -ARROW_OFFSET));
+        arrowPolygon.append(QPointF(endPricePosX, -ARROW_OFFSET - ARROW_SIZE / 4));
+        arrowPolygon.append(QPointF(endPricePosX, -ARROW_OFFSET - ARROW_SIZE / 10));
+        arrowPolygon.append(QPointF(startPricePosX, -ARROW_OFFSET - ARROW_SIZE / 10));
+
+        mArrow = mScene.addPolygon(arrowPolygon, QPen(QColor(ARROW_COLOR)), QBrush(QColor(ARROW_COLOR)));
     }
 }
 
