@@ -6,6 +6,7 @@
 
 
 
+#define LIMIT_BARS         200
 #define MAX_BAR_HEIGHT     600
 #define BAR_WIDTH          40
 #define AXIS_LINE_HEIGHT   10
@@ -39,7 +40,7 @@ OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget*
     mPriceIncrement(priceIncrement),
     mMinPrice(-1),
     mMaxPrice(-1),
-    mMaxQuantity(-1),
+    mMaxQuantity(1),
     mNeedToFollow(true),
     mCurrentPricePosX()
 {
@@ -107,10 +108,33 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
     float minAsksPrice = -1;
     float maxAsksPrice = -1;
 
+    float limitMinPrice = orderBook.price - LIMIT_BARS * mPriceIncrement;
+    float limitMaxPrice = orderBook.price + LIMIT_BARS * mPriceIncrement;
+
     for (int i = 0; i < orderBook.bids.size(); ++i)
     {
+        float price = orderBook.bids.at(i).price;
+
+        if (price < limitMinPrice)
+        {
+            qint64 priceNormal = normalizePrice(limitMinPrice);
+
+            priceToQuantityBids[priceNormal] = 0;
+
+            if (minBidsPrice < 0 || limitMinPrice < minBidsPrice)
+            {
+                minBidsPrice = limitMinPrice;
+            }
+
+            if (maxBidsPrice < 0 || limitMinPrice > maxBidsPrice)
+            {
+                maxBidsPrice = limitMinPrice;
+            }
+
+            break;
+        }
+
         qint32 quantity    = orderBook.bids.at(i).quantity;
-        float  price       = orderBook.bids.at(i).price;
         qint64 priceNormal = normalizePrice(price);
 
         priceToQuantityBids[priceNormal] = quantity;
@@ -133,8 +157,28 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
     for (int i = 0; i < orderBook.asks.size(); ++i)
     {
+        float price = orderBook.asks.at(i).price;
+
+        if (price > limitMaxPrice)
+        {
+            qint64 priceNormal = normalizePrice(limitMaxPrice);
+
+            priceToQuantityAsks[priceNormal] = 0;
+
+            if (minAsksPrice < 0 || limitMaxPrice < minAsksPrice)
+            {
+                minAsksPrice = limitMaxPrice;
+            }
+
+            if (maxAsksPrice < 0 || limitMaxPrice > maxAsksPrice)
+            {
+                maxAsksPrice = limitMaxPrice;
+            }
+
+            break;
+        }
+
         qint32 quantity    = orderBook.asks.at(i).quantity;
-        float  price       = orderBook.asks.at(i).price;
         qint64 priceNormal = normalizePrice(price);
 
         priceToQuantityAsks[priceNormal] = quantity;

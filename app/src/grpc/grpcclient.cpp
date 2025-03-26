@@ -256,7 +256,7 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
 
     if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "", ""); // Not a problem
 
         return nullptr;
     }
