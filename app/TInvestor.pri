@@ -79,6 +79,8 @@ SOURCES += \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
     src/widgets/tablerecord/items/pricechangetableitem.cpp \
     src/widgets/tablerecord/items/pricetableitem.cpp \
+    src/widgets/tablerecord/items/stock/stocktableitemwidget.cpp \
+    src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.cpp \
     src/widgets/tablerecord/tablerecord.cpp \
     src/widgets/tablerecord/tablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -223,6 +225,10 @@ HEADERS += \
     src/widgets/tablerecord/items/paybacktableitem.h \
     src/widgets/tablerecord/items/pricechangetableitem.h \
     src/widgets/tablerecord/items/pricetableitem.h \
+    src/widgets/tablerecord/items/stock/istocktableitemwidget.h \
+    src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h \
+    src/widgets/tablerecord/items/stock/stocktableitemwidget.h \
+    src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.h \
     src/widgets/tablerecord/tablerecord.h \
     src/widgets/tablerecord/tablerecordfactory.h \
     src/widgets/trayicon/itrayicon.h \
@@ -245,3 +251,4 @@ FORMS += \
     src/main/mainwindow.ui \
     src/widgets/filterwidget/filterwidget.ui \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
+    src/widgets/tablerecord/items/stock/stocktableitemwidget.ui \

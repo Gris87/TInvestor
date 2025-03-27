@@ -62,7 +62,6 @@ TEST_F(Test_ActionsTableItemWidget, Test_constructor_and_destructor)
 {
 }
 
-
 TEST_F(Test_ActionsTableItemWidget, Test_on_linkButton_clicked)
 {
     InSequence seq;

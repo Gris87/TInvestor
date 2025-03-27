@@ -5,14 +5,15 @@ Show oborot on table
 Allow to select/deselect stocks for trading
 Allow to perform manual buying with trailing tickets from nearest maximum
 Show stock name on hover
+
 Put buy ticket always with -5% price (for unexpected selling) each minute
 Put tratiling tickets on market start/end (There are ~4 times - 00:00 02:00 07:00 10:00)
 Buy if there is a big fall from 24h ago (at the end of the day)
+Do not buy if it is the most worse stock in a day
 Buy on fall with high likvidity
 Buy if max cost reached (market limit)
 Follow for the crowd (Buy if price raises and sell if price fall)
 Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums (AI assisted)
 Sell if price extrimely fall (>5% in 5 minutes)
-Do not buy if it is the most worse stock in a day
 Buy if price is less than average for last n days
