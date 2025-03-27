@@ -17,6 +17,7 @@ public:
 
     ITableRecord* newInstance(
         QTableWidget*                   tableWidget,
+        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,

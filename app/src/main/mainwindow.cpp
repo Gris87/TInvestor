@@ -25,6 +25,7 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    IStockTableItemWidgetFactory*      stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
     ITableRecordFactory*               tableRecordFactory,
@@ -67,6 +68,7 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
+    mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
     mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
     mTableRecordFactory(tableRecordFactory),
@@ -487,6 +489,7 @@ void MainWindow::updateStocksTableWidget()
             {
                 record = mTableRecordFactory->newInstance(
                     ui->stocksTableWidget,
+                    mStockTableItemWidgetFactory,
                     mActionsTableItemWidgetFactory,
                     mOrderWavesDialogFactory,
                     mOrderWavesWidgetFactory,

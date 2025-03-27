@@ -8,6 +8,8 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidget_mock.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory_mock.h"
 
 
 
@@ -27,6 +29,9 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 {
     InSequence seq;
 
+    StrictMock<StockTableItemWidgetFactoryMock> stockTableItemWidgetFactoryMock;
+    StrictMock<StockTableItemWidgetMock>*       stockTableItemWidgetMock =
+        new StrictMock<StockTableItemWidgetMock>(); // tableWidget will take ownership
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
@@ -39,6 +44,8 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 
     QTableWidget tableWidget;
     Stock        stock;
+
+    EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&tableWidget)).WillOnce(Return(stockTableItemWidgetMock));
 
     EXPECT_CALL(
         actionsTableItemWidgetFactoryMock,
@@ -56,6 +63,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 
     ITableRecord* record = factory.newInstance(
         &tableWidget,
+        &stockTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,

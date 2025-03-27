@@ -55,6 +55,7 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        IStockTableItemWidgetFactory*      stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
         ITableRecordFactory*               tableRecordFactory,
@@ -114,6 +115,7 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
+    IStockTableItemWidgetFactory*      mStockTableItemWidgetFactory;
     IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
     IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
     ITableRecordFactory*               mTableRecordFactory;

@@ -11,6 +11,7 @@
 #include "src/widgets/tablerecord/items/paybacktableitem.h"
 #include "src/widgets/tablerecord/items/pricechangetableitem.h"
 #include "src/widgets/tablerecord/items/pricetableitem.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h"
 
 
 
@@ -21,6 +22,7 @@ class TableRecord : public ITableRecord
 public:
     explicit TableRecord(
         QTableWidget*                   tableWidget,
+        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,

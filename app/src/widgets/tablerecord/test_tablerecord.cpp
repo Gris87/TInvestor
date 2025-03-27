@@ -9,6 +9,8 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidget_mock.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory_mock.h"
 
 
 
@@ -26,11 +28,13 @@ protected:
     {
         InSequence seq;
 
+        stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
         orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
         orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
+        stockTableItemWidgetMock          = new StrictMock<StockTableItemWidgetMock>();   // tableWidget will take ownership
         actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
         tableWidget                       = new QTableWidget();
         stock                             = new Stock();
@@ -51,6 +55,8 @@ protected:
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
+        EXPECT_CALL(*stockTableItemWidgetFactoryMock, newInstance(tableWidget)).WillOnce(Return(stockTableItemWidgetMock));
+
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
             newInstance(
@@ -67,6 +73,7 @@ protected:
 
         record = new TableRecord(
             tableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -79,6 +86,7 @@ protected:
     void TearDown()
     {
         delete record;
+        delete stockTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
@@ -86,6 +94,7 @@ protected:
         delete httpClientMock;
         // It will be deleted by tableWidget
         /*
+        delete stockTableItemWidgetMock;
         delete actionsTableItemWidgetMock;
         */
         delete tableWidget;
@@ -93,11 +102,13 @@ protected:
     }
 
     TableRecord*                                   record;
+    StrictMock<StockTableItemWidgetFactoryMock>*   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
+    StrictMock<StockTableItemWidgetMock>*          stockTableItemWidgetMock;
     StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
     QTableWidget*                                  tableWidget;
     Stock*                                         stock;

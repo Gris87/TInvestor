@@ -19,6 +19,7 @@ TableRecordFactory::~TableRecordFactory()
 
 ITableRecord* TableRecordFactory::newInstance(
     QTableWidget*                   tableWidget,
+    IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
     IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
@@ -30,6 +31,7 @@ ITableRecord* TableRecordFactory::newInstance(
 {
     return new TableRecord(
         tableWidget,
+        stockTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,

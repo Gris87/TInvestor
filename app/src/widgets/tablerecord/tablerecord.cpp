@@ -7,7 +7,8 @@
 
 
 TableRecord::TableRecord(
-    QTableWidget*                   tableWidget,
+    QTableWidget* tableWidget,
+    IStockTableItemWidgetFactory* /*stockTableItemWidgetFactory*/,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
     IOrderWavesWidgetFactory*       orderWavesWidgetFactory,

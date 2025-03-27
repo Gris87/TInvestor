@@ -10,6 +10,7 @@
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h"
 
 
 
@@ -26,6 +27,7 @@ public:
 
     virtual ITableRecord* newInstance(
         QTableWidget*                   tableWidget,
+        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,

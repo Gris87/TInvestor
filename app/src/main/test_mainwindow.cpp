@@ -36,6 +36,7 @@
 #include "src/widgets/tablerecord/itablerecord_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
@@ -70,6 +71,7 @@ protected:
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        stockTableItemWidgetFactoryMock      = new StrictMock<StockTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
@@ -132,6 +134,7 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesWidgetFactoryMock,
             tableRecordFactoryMock,
@@ -185,6 +188,7 @@ protected:
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
+        delete stockTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesWidgetFactoryMock;
         delete tableRecordFactoryMock;
@@ -224,6 +228,7 @@ protected:
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<StockTableItemWidgetFactoryMock>*      stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
@@ -430,6 +435,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -447,6 +453,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -536,6 +543,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -553,6 +561,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -610,6 +619,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -627,6 +637,7 @@ TEST_F(Test_MainWindow, Test_paybackChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -704,6 +715,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -721,6 +733,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -892,6 +905,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -909,6 +923,7 @@ TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -1020,6 +1035,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -1037,6 +1053,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
         *tableRecordFactoryMock,
         newInstance(
             mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
