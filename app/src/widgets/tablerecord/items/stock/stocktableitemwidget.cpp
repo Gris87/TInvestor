@@ -5,9 +5,10 @@
 
 
 
-StockTableItemWidget::StockTableItemWidget(QWidget* parent) :
+StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* parent) :
     IStockTableItemWidget(parent),
-    ui(new Ui::StockTableItemWidget)
+    ui(new Ui::StockTableItemWidget),
+    mUserStorage(userStorage)
 {
     qDebug() << "Create StockTableItemWidget";
 
@@ -19,4 +20,41 @@ StockTableItemWidget::~StockTableItemWidget()
     qDebug() << "Destroy StockTableItemWidget";
 
     delete ui;
+}
+
+void StockTableItemWidget::setIcon(const QIcon& icon)
+{
+    ui->logoLabel->setPixmap(icon.pixmap(ui->logoLabel->size()));
+}
+
+void StockTableItemWidget::setQualInvestor(bool forQualInvestorFlag)
+{
+    mForQualInvestorFlag = forQualInvestorFlag;
+
+    ui->lockLabel->setVisible(mForQualInvestorFlag && !mUserStorage->isQualified());
+}
+
+void StockTableItemWidget::setText(const QString& text)
+{
+    ui->nameLabel->setText(text);
+}
+
+void StockTableItemWidget::setFullText(const QString& text)
+{
+    ui->nameLabel->setToolTip(text);
+}
+
+bool StockTableItemWidget::forQualInvestorFlag()
+{
+    return mForQualInvestorFlag;
+}
+
+QString StockTableItemWidget::text()
+{
+    return ui->nameLabel->text();
+}
+
+QString StockTableItemWidget::fullText()
+{
+    return ui->nameLabel->toolTip();
 }

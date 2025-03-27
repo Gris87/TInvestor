@@ -28,6 +28,7 @@ public:
          IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
          IOrderWavesDialogFactory*       orderWavesDialogFactory,
          IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+         IUserStorage*                   userStorage,
          IOrderBookThread*               orderBookThread,
          IHttpClient*                    httpClient,
          Stock*                          stock,

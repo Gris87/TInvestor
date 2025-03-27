@@ -493,6 +493,7 @@ void MainWindow::updateStocksTableWidget()
                     mActionsTableItemWidgetFactory,
                     mOrderWavesDialogFactory,
                     mOrderWavesWidgetFactory,
+                    mUserStorage,
                     mOrderBookThread,
                     mHttpClient,
                     stock,

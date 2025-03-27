@@ -7,11 +7,12 @@
 
 
 TableRecord::TableRecord(
-    QTableWidget* tableWidget,
-    IStockTableItemWidgetFactory* /*stockTableItemWidgetFactory*/,
+    QTableWidget*                   tableWidget,
+    IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
     IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+    IUserStorage*                   userStorage,
     IOrderBookThread*               orderBookThread,
     IHttpClient*                    httpClient,
     Stock*                          stock,
@@ -19,7 +20,7 @@ TableRecord::TableRecord(
 ) :
     ITableRecord(parent),
     mStock(stock),
-    mStockTableWidgetItem(new QTableWidgetItem()),
+    mStockTableItemWidget(),
     mPriceTableWidgetItem(new PriceTableItem()),
     mDayChangeTableWidgetItem(new PriceChangeTableItem()),
     mDateChangeTableWidgetItem(new PriceChangeTableItem()),
@@ -45,17 +46,19 @@ TableRecord::TableRecord(
         --mPrecision;
     }
 
-    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
-    mStockTableWidgetItem->setIcon(stockLogo);
+    mStockTableItemWidget = stockTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
 
     IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
         orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, mPrecision, tableWidget
     ); // tableWidget will take ownership
 
+    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
+    mStockTableItemWidget->setIcon(stockLogo);
+
     int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
-    tableWidget->setItem(rowIndex, STOCK_COLUMN, mStockTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
     tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
     tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
@@ -73,8 +76,9 @@ TableRecord::~TableRecord()
 void TableRecord::updateAll()
 {
     mStock->mutex->lock();
-    mStockTableWidgetItem->setText(mStock->meta.ticker);
-    mStockTableWidgetItem->setToolTip(mStock->meta.name);
+    mStockTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
+    mStockTableItemWidget->setText(mStock->meta.ticker);
+    mStockTableItemWidget->setFullText(mStock->meta.name);
     mStock->mutex->unlock();
 
     updatePrice();
@@ -106,9 +110,9 @@ void TableRecord::updatePayback()
 
 void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
-    int  row    = mStockTableWidgetItem->row();
+    int  row    = mPriceTableWidgetItem->row();
     bool hidden = !filter.isFiltered(
-        mStockTableWidgetItem->text(),
+        mStockTableItemWidget->text(),
         mPriceTableWidgetItem->getValue(),
         mDayChangeTableWidgetItem->getValue(),
         mDateChangeTableWidgetItem->getValue(),

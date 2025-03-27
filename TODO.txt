@@ -1,10 +1,17 @@
+Add IUserStorage to cell
+Fix tests
+Fix style
+Double check cell height
 Show lock icon for qual investor
+Show stock name on hover
+Filter by full stock name
+Filter by qual investor
+Add timer to do updateAll each 24h
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
 Show oborot on table
 Allow to select/deselect stocks for trading
 Allow to perform manual buying with trailing tickets from nearest maximum
-Show stock name on hover
 
 Put buy ticket always with -5% price (for unexpected selling) each minute
 Put tratiling tickets on market start/end (There are ~4 times - 00:00 02:00 07:00 10:00)

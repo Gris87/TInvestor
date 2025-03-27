@@ -19,12 +19,13 @@ public:
 
     void                  readFromDatabase() override;
     QMutex*               getMutex() override;
-    const QString&        getToken() override;
     void                  setToken(const QString& token) override;
+    const QString&        getToken() override;
     void                  setUserInfo(const User& user) override;
+    bool                  isQualified() override;
     float                 getCommission() override;
-    const QList<Account>& getAccounts() override;
     void                  setAccounts(const QList<Account>& accounts) override;
+    const QList<Account>& getAccounts() override;
 
 private:
     IUserDatabase* mUserDatabase;

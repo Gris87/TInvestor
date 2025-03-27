@@ -26,6 +26,7 @@ public:
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+        IUserStorage*                   userStorage,
         IOrderBookThread*               orderBookThread,
         IHttpClient*                    httpClient,
         Stock*                          stock,
@@ -42,11 +43,11 @@ public:
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
 
 private:
-    Stock*                mStock;
-    QTableWidgetItem*     mStockTableWidgetItem;
-    PriceTableItem*       mPriceTableWidgetItem;
-    PriceChangeTableItem* mDayChangeTableWidgetItem;
-    PriceChangeTableItem* mDateChangeTableWidgetItem;
-    PaybackTableItem*     mPaybackTableWidgetItem;
-    int                   mPrecision;
+    Stock*                 mStock;
+    IStockTableItemWidget* mStockTableItemWidget;
+    PriceTableItem*        mPriceTableWidgetItem;
+    PriceChangeTableItem*  mDayChangeTableWidgetItem;
+    PriceChangeTableItem*  mDateChangeTableWidgetItem;
+    PaybackTableItem*      mPaybackTableWidgetItem;
+    int                    mPrecision;
 };

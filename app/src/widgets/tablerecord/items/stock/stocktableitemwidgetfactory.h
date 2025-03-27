@@ -15,5 +15,5 @@ public:
     StockTableItemWidgetFactory(const StockTableItemWidgetFactory& another)            = delete;
     StockTableItemWidgetFactory& operator=(const StockTableItemWidgetFactory& another) = delete;
 
-    IStockTableItemWidget* newInstance(QWidget* parent) override;
+    IStockTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) override;
 };

@@ -22,10 +22,11 @@ public:
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
     MOCK_METHOD(QMutex*, getMutex, (), (override));
-    MOCK_METHOD(const QString&, getToken, (), (override));
     MOCK_METHOD(void, setToken, (const QString& token), (override));
+    MOCK_METHOD(const QString&, getToken, (), (override));
     MOCK_METHOD(void, setUserInfo, (const User& user), (override));
+    MOCK_METHOD(bool, isQualified, (), (override));
     MOCK_METHOD(float, getCommission, (), (override));
-    MOCK_METHOD(const QList<Account>&, getAccounts, (), (override));
     MOCK_METHOD(void, setAccounts, (const QList<Account>& accounts), (override));
+    MOCK_METHOD(const QList<Account>&, getAccounts, (), (override));
 };

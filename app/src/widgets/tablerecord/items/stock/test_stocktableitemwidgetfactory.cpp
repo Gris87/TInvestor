@@ -2,6 +2,15 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 TEST(Test_StockTableItemWidgetFactory, Test_constructor_and_destructor)
@@ -13,7 +22,9 @@ TEST(Test_StockTableItemWidgetFactory, Test_newInstance)
 {
     StockTableItemWidgetFactory factory;
 
-    IStockTableItemWidget* widget = factory.newInstance(nullptr);
+    StrictMock<UserStorageMock> userStorageMock;
+
+    IStockTableItemWidget* widget = factory.newInstance(&userStorageMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

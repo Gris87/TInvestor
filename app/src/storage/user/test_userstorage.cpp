@@ -40,12 +40,13 @@ TEST_F(Test_UserStorage, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getCommission_and_getAccounts)
+TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_getCommission_and_getAccounts)
 {
     InSequence seq;
 
     User user;
     user.token      = "someToken";
+    user.qualified  = true;
     user.commission = 0.99f;
 
     Account account1;
@@ -65,9 +66,12 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_getCommission_an
 
     storage->readFromDatabase();
 
-    ASSERT_EQ(storage->getToken(), "someToken");
+    // clang-format off
+    ASSERT_EQ(storage->getToken(),        "someToken");
+    ASSERT_EQ(storage->isQualified(),     true);
     ASSERT_NEAR(storage->getCommission(), 0.99f, 0.0001f);
-    ASSERT_EQ(storage->getAccounts(), accounts);
+    ASSERT_EQ(storage->getAccounts(),     accounts);
+    // clang-format on
 }
 
 TEST_F(Test_UserStorage, Test_getMutex)

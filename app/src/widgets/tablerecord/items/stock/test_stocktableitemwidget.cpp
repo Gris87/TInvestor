@@ -3,6 +3,15 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::StrictMock;
+
 
 
 class Test_StockTableItemWidget : public ::testing::Test
@@ -10,15 +19,19 @@ class Test_StockTableItemWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        widget = new StockTableItemWidget();
+        userStorageMock = new StrictMock<UserStorageMock>();
+
+        widget = new StockTableItemWidget(userStorageMock);
     }
 
     void TearDown()
     {
         delete widget;
+        delete userStorageMock;
     }
 
-    StockTableItemWidget* widget;
+    StockTableItemWidget*        widget;
+    StrictMock<UserStorageMock>* userStorageMock;
 };
 
 

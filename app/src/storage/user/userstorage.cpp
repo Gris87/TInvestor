@@ -34,11 +34,6 @@ QMutex* UserStorage::getMutex()
     return mMutex;
 }
 
-const QString& UserStorage::getToken()
-{
-    return mUser.token;
-}
-
 void UserStorage::setToken(const QString& token)
 {
     if (mUser.token != token)
@@ -47,6 +42,11 @@ void UserStorage::setToken(const QString& token)
 
         mUserDatabase->writeToken(token);
     }
+}
+
+const QString& UserStorage::getToken()
+{
+    return mUser.token;
 }
 
 void UserStorage::setUserInfo(const User& user)
@@ -62,14 +62,14 @@ void UserStorage::setUserInfo(const User& user)
     }
 }
 
+bool UserStorage::isQualified()
+{
+    return mUser.qualified;
+}
+
 float UserStorage::getCommission()
 {
     return mUser.commission;
-}
-
-const QList<Account>& UserStorage::getAccounts()
-{
-    return mAccounts;
 }
 
 void UserStorage::setAccounts(const QList<Account>& accounts)
@@ -87,4 +87,9 @@ void UserStorage::setAccounts(const QList<Account>& accounts)
 
         mUserDatabase->writeAccounts(mAccounts);
     }
+}
+
+const QList<Account>& UserStorage::getAccounts()
+{
+    return mAccounts;
 }

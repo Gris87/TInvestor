@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
@@ -32,6 +33,7 @@ protected:
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
         orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
+        userStorageMock                   = new StrictMock<UserStorageMock>();
         orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
         httpClientMock                    = new StrictMock<HttpClientMock>();
         stockTableItemWidgetMock          = new StrictMock<StockTableItemWidgetMock>();   // tableWidget will take ownership
@@ -55,7 +57,8 @@ protected:
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
-        EXPECT_CALL(*stockTableItemWidgetFactoryMock, newInstance(tableWidget)).WillOnce(Return(stockTableItemWidgetMock));
+        EXPECT_CALL(*stockTableItemWidgetFactoryMock, newInstance(userStorageMock, tableWidget))
+            .WillOnce(Return(stockTableItemWidgetMock));
 
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
@@ -77,6 +80,7 @@ protected:
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
+            userStorageMock,
             orderBookThreadMock,
             httpClientMock,
             stock
@@ -90,6 +94,7 @@ protected:
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
+        delete userStorageMock;
         delete orderBookThreadMock;
         delete httpClientMock;
         // It will be deleted by tableWidget
@@ -106,6 +111,7 @@ protected:
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                   userStorageMock;
     StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
     StrictMock<HttpClientMock>*                    httpClientMock;
     StrictMock<StockTableItemWidgetMock>*          stockTableItemWidgetMock;

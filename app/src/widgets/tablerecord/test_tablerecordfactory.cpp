@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
@@ -37,6 +38,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
         new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>             userStorageMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
 
@@ -45,7 +47,8 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     QTableWidget tableWidget;
     Stock        stock;
 
-    EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&tableWidget)).WillOnce(Return(stockTableItemWidgetMock));
+    EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
+        .WillOnce(Return(stockTableItemWidgetMock));
 
     EXPECT_CALL(
         actionsTableItemWidgetFactoryMock,
@@ -67,6 +70,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,
+        &userStorageMock,
         &orderBookThreadMock,
         &httpClientMock,
         &stock,
