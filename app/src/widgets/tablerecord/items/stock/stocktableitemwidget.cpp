@@ -58,3 +58,10 @@ QString StockTableItemWidget::fullText()
 {
     return ui->nameLabel->toolTip();
 }
+
+bool StockTableItemWidget::operator<(const QTableWidgetItem& another) const
+{
+    QString anotherName = static_cast<const StockTableItemWidget*>(&another)->ui->nameLabel->text();
+
+    return ui->nameLabel->text() < anotherName;
+}

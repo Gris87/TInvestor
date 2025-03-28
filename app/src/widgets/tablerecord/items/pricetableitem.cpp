@@ -29,7 +29,7 @@ float PriceTableItem::getValue() const
 
 bool PriceTableItem::operator<(const QTableWidgetItem& another) const
 {
-    float anotherFloat = reinterpret_cast<const PriceTableItem*>(&another)->mValue;
+    float anotherFloat = static_cast<const PriceTableItem*>(&another)->mValue;
 
     return mValue < anotherFloat;
 }

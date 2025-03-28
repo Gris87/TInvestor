@@ -35,6 +35,8 @@ public:
     QString text() override;
     QString fullText() override;
 
+    bool operator<(const QTableWidgetItem& another) const;
+
     Ui::StockTableItemWidget* ui;
 
 private:

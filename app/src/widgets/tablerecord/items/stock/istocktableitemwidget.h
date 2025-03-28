@@ -2,15 +2,18 @@
 
 
 
+#include <QTableWidgetItem>
 #include <QWidget>
 
 
 
-class IStockTableItemWidget : public QWidget
+class IStockTableItemWidget : public QWidget,
+                              public QTableWidgetItem
 {
 public:
     explicit IStockTableItemWidget(QWidget* parent = nullptr) :
-        QWidget(parent)
+        QWidget(parent),
+        QTableWidgetItem()
     {
     }
     virtual ~IStockTableItemWidget() = default;

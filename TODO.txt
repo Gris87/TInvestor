@@ -1,10 +1,8 @@
-Double check cell height
 Show stock name on hover
 Show oborot on table
 Filter by full stock name
 Filter by qual investor
 Filter by oborot
-Move toolbar to the left by default
 Change default column width
 Add timer to do updateAll each 24h
 UI for Simulator and Auto-Pilot

@@ -55,7 +55,7 @@ float PaybackTableItem::getValue() const
 
 bool PaybackTableItem::operator<(const QTableWidgetItem& another) const
 {
-    float anotherFloat = reinterpret_cast<const PaybackTableItem*>(&another)->mValue;
+    float anotherFloat = static_cast<const PaybackTableItem*>(&another)->mValue;
 
     return mValue < anotherFloat;
 }

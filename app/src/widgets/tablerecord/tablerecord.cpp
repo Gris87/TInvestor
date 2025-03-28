@@ -59,6 +59,7 @@ TableRecord::TableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     tableWidget->setCellWidget(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
+    tableWidget->setItem(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
     tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
     tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
