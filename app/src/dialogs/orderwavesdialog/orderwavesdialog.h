@@ -39,7 +39,7 @@ public:
 private:
     IOrderWavesWidget* mOrderWavesWidget;
     IOrderBookThread*  mOrderBookThread;
-    Stock*            mStock;
+    Stock*             mStock;
     int                mPrecision;
 
 public slots:

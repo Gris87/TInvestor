@@ -24,7 +24,7 @@ public:
     IOrderBookThread& operator=(const IOrderBookThread& another) = delete;
 
     virtual void setStock(Stock* stock) = 0;
-    virtual void terminateThread() = 0;
+    virtual void terminateThread()      = 0;
 
 signals:
     void orderBookChanged(const OrderBook& orderBook);

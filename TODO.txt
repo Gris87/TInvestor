@@ -1,4 +1,3 @@
-Fix style
 Double check cell height
 Show stock name on hover
 Show oborot on table

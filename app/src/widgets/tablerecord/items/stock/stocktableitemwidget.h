@@ -39,5 +39,5 @@ public:
 
 private:
     IUserStorage* mUserStorage;
-    float mForQualInvestorFlag;
+    float         mForQualInvestorFlag;
 };

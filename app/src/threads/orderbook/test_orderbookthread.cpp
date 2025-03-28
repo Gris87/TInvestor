@@ -29,7 +29,7 @@ protected:
         delete grpcClientMock;
     }
 
-    OrderBookThread* thread;
+    OrderBookThread*            thread;
     StrictMock<GrpcClientMock>* grpcClientMock;
 };
 

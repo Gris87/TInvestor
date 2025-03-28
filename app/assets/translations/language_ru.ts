@@ -166,7 +166,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="158"/>
+        <location filename="../../src/main/mainwindow.cpp" line="162"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
@@ -257,12 +257,12 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="158"/>
+        <location filename="../../src/main/mainwindow.cpp" line="162"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="219"/>
+        <location filename="../../src/main/mainwindow.cpp" line="223"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
@@ -270,7 +270,7 @@
 <context>
     <name>OrderWavesDialog</name>
     <message>
-        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.ui" line="14"/>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.ui" line="20"/>
         <source>Order waves (book)</source>
         <translation>Биржевые волны (стакан)</translation>
     </message>
@@ -298,22 +298,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="90"/>
+        <location filename="../../src/main.cpp" line="92"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="90"/>
+        <location filename="../../src/main.cpp" line="92"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="102"/>
+        <location filename="../../src/main.cpp" line="104"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="102"/>
+        <location filename="../../src/main.cpp" line="104"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -474,6 +474,14 @@
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="180"/>
         <source>Decision maker</source>
         <translation>Принятие решений</translation>
+    </message>
+</context>
+<context>
+    <name>StockTableItemWidget</name>
+    <message>
+        <location filename="../../src/widgets/tablerecord/items/stock/stocktableitemwidget.ui" line="66"/>
+        <source>For qual investor only</source>
+        <translation>Только для квал инвесторов</translation>
     </message>
 </context>
 <context>
