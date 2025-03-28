@@ -14,6 +14,7 @@
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -47,6 +48,23 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     QTableWidget tableWidget;
     Stock        stock;
 
+    tableWidget.setColumnCount(ACTIONS_COLUMN + 1);
+
+    StockData stockData;
+    stockData.timestamp = 100;
+    stockData.price     = 50;
+
+    stock.meta.uid                    = "aaa";
+    stock.meta.ticker                 = "WAGA";
+    stock.meta.name                   = "Wata Giga";
+    stock.meta.forQualInvestorFlag    = true;
+    stock.meta.minPriceIncrement.nano = 10000;
+
+    stock.operational.dayStartPrice      = 40;
+    stock.operational.specifiedDatePrice = 20;
+    stock.operational.payback            = 90;
+    stock.operational.detailedData.append(stockData);
+
     EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
         .WillOnce(Return(stockTableItemWidgetMock));
 
@@ -58,11 +76,16 @@ TEST(Test_TableRecordFactory, Test_newInstance)
             &orderBookThreadMock,
             &httpClientMock,
             &stock,
-            2,
+            5,
             &tableWidget
         )
     )
         .WillOnce(Return(actionsTableItemWidgetMock));
+
+    EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
+    EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
+    EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
+    EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
     ITableRecord* record = factory.newInstance(
         &tableWidget,

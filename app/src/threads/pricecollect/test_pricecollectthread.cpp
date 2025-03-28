@@ -178,7 +178,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     ::google::protobuf::Timestamp* time = new ::google::protobuf::Timestamp(); // marketDataResponse will take ownership
     time->set_seconds(1000);
-    time->set_nanos(123000000);
+    time->set_nanos(0);
 
     candle->set_is_complete(true);
     candle->set_allocated_time(time);

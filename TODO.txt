@@ -1,15 +1,15 @@
-Add IUserStorage to cell
-Fix tests
 Fix style
 Double check cell height
-Show lock icon for qual investor
 Show stock name on hover
+Show oborot on table
 Filter by full stock name
 Filter by qual investor
+Filter by oborot
+Move toolbar to the left by default
+Change default column width
 Add timer to do updateAll each 24h
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
-Show oborot on table
 Allow to select/deselect stocks for trading
 Allow to perform manual buying with trailing tickets from nearest maximum
 

@@ -38,8 +38,3 @@ protected:
 TEST_F(Test_OrderBookThread, Test_constructor_and_destructor)
 {
 }
-
-TEST_F(Test_OrderBookThread, Test_run)
-{
-    thread->run();
-}

@@ -316,7 +316,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
     mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
 
     // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
     ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
     // clang-format on
 }
@@ -333,7 +333,7 @@ TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
     mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
 
     // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
     ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
     // clang-format on
 
@@ -354,7 +354,7 @@ TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
     mainWindow->authFailedDelayTimerTicked();
 
     // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 1000);
+    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
     ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
     // clang-format on
 

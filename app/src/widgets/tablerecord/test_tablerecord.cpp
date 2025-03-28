@@ -15,6 +15,7 @@
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -50,6 +51,7 @@ protected:
         stock->meta.uid                    = "aaa";
         stock->meta.ticker                 = "WAGA";
         stock->meta.name                   = "Wata Giga";
+        stock->meta.forQualInvestorFlag    = true;
         stock->meta.minPriceIncrement.nano = 10000;
 
         stock->operational.dayStartPrice      = 40;
@@ -68,11 +70,16 @@ protected:
                 orderBookThreadMock,
                 httpClientMock,
                 stock,
-                2,
+                5,
                 tableWidget
             )
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
+
+        EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
+        EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
+        EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
+        EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
         record = new TableRecord(
             tableWidget,
@@ -128,11 +135,15 @@ TEST_F(Test_TableRecord, Test_constructor_and_destructor)
 
 TEST_F(Test_TableRecord, Test_updateAll)
 {
+    InSequence seq;
+
+    EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
+    EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
+    EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
+
     record->updateAll();
 
     // clang-format off
-    ASSERT_EQ(tableWidget->item(0, STOCK_COLUMN)->data(Qt::DisplayRole),       "WAGA");
-    ASSERT_EQ(tableWidget->item(0, STOCK_COLUMN)->toolTip(),                   "Wata Giga");
     ASSERT_EQ(tableWidget->item(0, PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
     ASSERT_EQ(tableWidget->item(0, DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
     ASSERT_EQ(tableWidget->item(0, DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
@@ -160,6 +171,8 @@ TEST_F(Test_TableRecord, Test_updatePayback)
 
 TEST_F(Test_TableRecord, Test_filter)
 {
+    InSequence seq;
+
     Filter filter;
 
     filter.useTicker          = true;
@@ -179,9 +192,13 @@ TEST_F(Test_TableRecord, Test_filter)
 
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
 
+    EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+
     record->filter(tableWidget, filter);
 
     ASSERT_EQ(tableWidget->isRowHidden(0), true);
+
+    EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
 
     filter.paybackTo = 95.0f;
     record->filter(tableWidget, filter);
