@@ -30,12 +30,13 @@ TEST(Test_Stock, Test_copy_constructor)
 {
     Stock stock;
 
-    StockData stockData1;
-    StockData stockData2;
+    StockOperationalData stockData1;
+    StockData            stockData2;
 
     stockData1.timestamp = 8;
     stockData1.price     = 9.0f;
     stockData2.timestamp = 10;
+    stockData2.quantity  = 5;
     stockData2.price     = 11.0f;
 
     stock.meta.uid                        = "a";
@@ -73,6 +74,7 @@ TEST(Test_Stock, Test_copy_constructor)
     ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   9.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
     ASSERT_EQ(stock2.data.at(0).timestamp,                     10);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      5);
     ASSERT_NEAR(stock2.data.at(0).price,                       11.0f, 0.0001f);
     // clang-format on
 }
@@ -82,12 +84,13 @@ TEST(Test_Stock, Test_assign)
     Stock stock;
     Stock stock2;
 
-    StockData stockData1;
-    StockData stockData2;
+    StockOperationalData stockData1;
+    StockData            stockData2;
 
     stockData1.timestamp = 8;
     stockData1.price     = 9.0f;
     stockData2.timestamp = 10;
+    stockData2.quantity  = 5;
     stockData2.price     = 11.0f;
 
     stock.meta.uid                        = "a";
@@ -125,6 +128,7 @@ TEST(Test_Stock, Test_assign)
     ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   9.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
     ASSERT_EQ(stock2.data.at(0).timestamp,                     10);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      5);
     ASSERT_NEAR(stock2.data.at(0).price,                       11.0f, 0.0001f);
     // clang-format on
 }

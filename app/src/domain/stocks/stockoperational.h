@@ -16,9 +16,9 @@ struct StockOperational
 
     StockOperational& operator=(const StockOperational& another);
 
-    qint64           lastStoredTimestamp;
-    float            dayStartPrice;
-    float            specifiedDatePrice;
-    float            payback;
-    QList<StockData> detailedData;
+    qint64                      lastStoredTimestamp;
+    float                       dayStartPrice;
+    float                       specifiedDatePrice;
+    float                       payback;
+    QList<StockOperationalData> detailedData;
 };

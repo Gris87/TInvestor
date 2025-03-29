@@ -20,6 +20,7 @@
 
 #define CSV_FIELD_TIMESTAMP   1
 #define CSV_FIELD_CLOSE_PRICE 3
+#define CSV_FIELD_QUANTITY    6
 
 
 
@@ -221,6 +222,7 @@ void getCandlesWithGrpc(
                 StockData* stockData = &dataArray[lastIndex];
 
                 stockData->timestamp = timeToTimestamp(candle.time());
+                stockData->quantity  = candle.volume();
                 stockData->price     = quotationToFloat(candle.close());
 
                 --lastIndex;
@@ -266,7 +268,7 @@ int getCandlesFromZipFile(
             {
                 QStringList csvFields = csvLines.at(j).split(';');
 
-                if (csvFields.size() > CSV_FIELD_CLOSE_PRICE)
+                if (csvFields.size() > CSV_FIELD_QUANTITY)
                 {
                     qint64 timestamp = QDateTime::fromString(csvFields.at(CSV_FIELD_TIMESTAMP), Qt::ISODate).toMSecsSinceEpoch();
 
@@ -275,6 +277,7 @@ int getCandlesFromZipFile(
                         StockData* stockData = &dataArray[indexOffset];
 
                         stockData->timestamp = timestamp;
+                        stockData->quantity  = csvFields.at(CSV_FIELD_QUANTITY).toLongLong();
                         stockData->price     = csvFields.at(CSV_FIELD_CLOSE_PRICE).toFloat();
 
                         ++indexOffset;

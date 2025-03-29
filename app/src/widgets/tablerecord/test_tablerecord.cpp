@@ -44,7 +44,7 @@ protected:
 
         tableWidget->setColumnCount(ACTIONS_COLUMN + 1);
 
-        StockData stockData;
+        StockOperationalData stockData;
         stockData.timestamp = 100;
         stockData.price     = 50;
 

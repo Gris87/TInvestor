@@ -74,7 +74,7 @@ void LastPriceThread::run()
             {
                 const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
 
-                StockData stockData;
+                StockOperationalData stockData;
 
                 stockData.timestamp = timeToTimestamp(lastPriceResp.time());
                 stockData.price     = quotationToFloat(lastPriceResp.price());

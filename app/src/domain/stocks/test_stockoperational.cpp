@@ -21,7 +21,7 @@ TEST(Test_StockOperational, Test_copy_constructor)
 {
     StockOperational stockOperational;
 
-    StockData stockData;
+    StockOperationalData stockData;
     stockData.timestamp = 5;
     stockData.price     = 6.0f;
 
@@ -49,7 +49,7 @@ TEST(Test_StockOperational, Test_assign)
     StockOperational stockOperational;
     StockOperational stockOperational2;
 
-    StockData stockData;
+    StockOperationalData stockData;
     stockData.timestamp = 5;
     stockData.price     = 6.0f;
 
