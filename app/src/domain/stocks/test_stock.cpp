@@ -20,6 +20,7 @@ TEST(Test_Stock, Test_constructor_and_destructor)
     ASSERT_EQ(stock.operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stock.operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stock.operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stock.operational.turnover,             0);
     ASSERT_NEAR(stock.operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stock.operational.detailedData.size(),  0);
     ASSERT_EQ(stock.data.size(),                      0);
@@ -33,11 +34,11 @@ TEST(Test_Stock, Test_copy_constructor)
     StockOperationalData stockData1;
     StockData            stockData2;
 
-    stockData1.timestamp = 8;
-    stockData1.price     = 9.0f;
-    stockData2.timestamp = 10;
-    stockData2.quantity  = 5;
-    stockData2.price     = 11.0f;
+    stockData1.timestamp = 9;
+    stockData1.price     = 10.0f;
+    stockData2.timestamp = 11;
+    stockData2.quantity  = 12;
+    stockData2.price     = 13.0f;
 
     stock.meta.uid                        = "a";
     stock.meta.ticker                     = "b";
@@ -49,7 +50,8 @@ TEST(Test_Stock, Test_copy_constructor)
     stock.operational.lastStoredTimestamp = 4;
     stock.operational.dayStartPrice       = 5.0f;
     stock.operational.specifiedDatePrice  = 6.0f;
-    stock.operational.payback             = 7.0f;
+    stock.operational.turnover            = 7;
+    stock.operational.payback             = 8.0f;
     stock.operational.detailedData.append(stockData1);
     stock.data.append(stockData2);
 
@@ -68,14 +70,15 @@ TEST(Test_Stock, Test_copy_constructor)
     ASSERT_EQ(stock2.operational.lastStoredTimestamp,          4);
     ASSERT_NEAR(stock2.operational.dayStartPrice,              5.0f, 0.0001f);
     ASSERT_NEAR(stock2.operational.specifiedDatePrice,         6.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.payback,                    7.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.turnover,                     7);
+    ASSERT_NEAR(stock2.operational.payback,                    8.0f, 0.0001f);
     ASSERT_EQ(stock2.operational.detailedData.size(),          1);
-    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 8);
-    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   9.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 9);
+    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   10.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
-    ASSERT_EQ(stock2.data.at(0).timestamp,                     10);
-    ASSERT_EQ(stock2.data.at(0).quantity,                      5);
-    ASSERT_NEAR(stock2.data.at(0).price,                       11.0f, 0.0001f);
+    ASSERT_EQ(stock2.data.at(0).timestamp,                     11);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      12);
+    ASSERT_NEAR(stock2.data.at(0).price,                       13.0f, 0.0001f);
     // clang-format on
 }
 
@@ -87,11 +90,11 @@ TEST(Test_Stock, Test_assign)
     StockOperationalData stockData1;
     StockData            stockData2;
 
-    stockData1.timestamp = 8;
-    stockData1.price     = 9.0f;
-    stockData2.timestamp = 10;
-    stockData2.quantity  = 5;
-    stockData2.price     = 11.0f;
+    stockData1.timestamp = 9;
+    stockData1.price     = 10.0f;
+    stockData2.timestamp = 11;
+    stockData2.quantity  = 12;
+    stockData2.price     = 13.0f;
 
     stock.meta.uid                        = "a";
     stock.meta.ticker                     = "b";
@@ -103,7 +106,8 @@ TEST(Test_Stock, Test_assign)
     stock.operational.lastStoredTimestamp = 4;
     stock.operational.dayStartPrice       = 5.0f;
     stock.operational.specifiedDatePrice  = 6.0f;
-    stock.operational.payback             = 7.0f;
+    stock.operational.turnover            = 7;
+    stock.operational.payback             = 8.0f;
     stock.operational.detailedData.append(stockData1);
     stock.data.append(stockData2);
 
@@ -122,13 +126,14 @@ TEST(Test_Stock, Test_assign)
     ASSERT_EQ(stock2.operational.lastStoredTimestamp,          4);
     ASSERT_NEAR(stock2.operational.dayStartPrice,              5.0f, 0.0001f);
     ASSERT_NEAR(stock2.operational.specifiedDatePrice,         6.0f, 0.0001f);
-    ASSERT_NEAR(stock2.operational.payback,                    7.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.turnover,                     7);
+    ASSERT_NEAR(stock2.operational.payback,                    8.0f, 0.0001f);
     ASSERT_EQ(stock2.operational.detailedData.size(),          1);
-    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 8);
-    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   9.0f, 0.0001f);
+    ASSERT_EQ(stock2.operational.detailedData.at(0).timestamp, 9);
+    ASSERT_NEAR(stock2.operational.detailedData.at(0).price,   10.0f, 0.0001f);
     ASSERT_EQ(stock2.data.size(),                              1);
-    ASSERT_EQ(stock2.data.at(0).timestamp,                     10);
-    ASSERT_EQ(stock2.data.at(0).quantity,                      5);
-    ASSERT_NEAR(stock2.data.at(0).price,                       11.0f, 0.0001f);
+    ASSERT_EQ(stock2.data.at(0).timestamp,                     11);
+    ASSERT_EQ(stock2.data.at(0).quantity,                      12);
+    ASSERT_NEAR(stock2.data.at(0).price,                       13.0f, 0.0001f);
     // clang-format on
 }

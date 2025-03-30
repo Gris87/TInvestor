@@ -129,6 +129,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      2);
@@ -151,6 +152,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      2);
@@ -173,6 +175,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      3);
@@ -276,6 +279,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      2);
@@ -298,6 +302,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      2);
@@ -320,6 +325,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      3);
@@ -376,6 +382,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  200);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      2);
@@ -398,6 +405,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      2);
@@ -420,6 +428,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  400);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      3);
@@ -445,6 +454,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     ASSERT_EQ(stocks.at(3)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(3)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(3)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(3)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(3)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(3)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(3)->data.size(),                      0);
@@ -555,6 +565,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -580,6 +591,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      6);
@@ -614,6 +626,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      5);
@@ -650,6 +663,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      2);
@@ -672,6 +686,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      5);
@@ -703,6 +718,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -736,6 +752,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      0);
@@ -752,6 +769,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      3);
@@ -777,6 +795,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      2);
@@ -872,6 +891,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),          3);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.at(0).timestamp, 100);
@@ -894,6 +914,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),          6);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.at(0).timestamp, 150);
@@ -922,6 +943,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),          5);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.at(0).timestamp, 120);
@@ -951,6 +973,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),          2);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.at(0).timestamp, 200);
@@ -971,6 +994,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),          5);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.at(0).timestamp, 250);
@@ -997,6 +1021,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),          4);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.at(0).timestamp, 220);
@@ -1024,6 +1049,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      0);
@@ -1040,6 +1066,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),          3);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.at(0).timestamp, 450);
@@ -1062,6 +1089,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,          0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,              -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice,         -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,                     0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,                    0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),          2);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.at(0).timestamp, 420);
@@ -1167,6 +1195,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1192,6 +1221,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1220,6 +1250,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -1251,6 +1282,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      0.2f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1276,6 +1308,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      0.3f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1304,6 +1337,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      0.4f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -1417,6 +1451,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1442,6 +1477,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1470,6 +1506,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -1501,6 +1538,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, 0.2f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1526,6 +1564,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, 0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1554,6 +1593,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, 0.4f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -1569,6 +1609,267 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     ASSERT_EQ(stocks.at(2)->data.at(3).timestamp,             500);
     ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.5f, 0.0001f);
+    // clang-format on
+}
+
+TEST_F(Test_StocksStorage, Test_obtainTurnover)
+{
+    // InSequence seq;
+
+    QList<Stock*>& stocks = storage->getStocks();
+    ASSERT_EQ(stocks.size(), 0);
+
+    QList<Stock*> stocksDB;
+
+    Stock* stock1 = new Stock(); // StocksStorage will take ownership
+    Stock* stock2 = new Stock(); // StocksStorage will take ownership
+    Stock* stock3 = new Stock(); // StocksStorage will take ownership
+
+    StockData stockData1;
+    StockData stockData2;
+    StockData stockData3;
+    StockData stockData4;
+    StockData stockData5;
+    StockData stockData6;
+    StockData stockData7;
+
+    stock1->meta.uid                     = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+    stock1->meta.ticker                  = "TEST";
+    stock1->meta.name                    = "abc";
+    stock1->meta.forQualInvestorFlag     = true;
+    stock1->meta.lot                     = 1;
+    stock1->meta.minPriceIncrement.units = 0;
+    stock1->meta.minPriceIncrement.nano  = 100000000;
+    stock2->meta.uid                     = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
+    stock2->meta.ticker                  = "MAGA";
+    stock2->meta.name                    = "def";
+    stock2->meta.forQualInvestorFlag     = false;
+    stock2->meta.lot                     = 10;
+    stock2->meta.minPriceIncrement.units = 0;
+    stock2->meta.minPriceIncrement.nano  = 500000000;
+    stock3->meta.uid                     = "cccccccc-cccc-cccc-cccc-cccccccccccc";
+    stock3->meta.ticker                  = "HNYA";
+    stock3->meta.name                    = "aaaa";
+    stock3->meta.forQualInvestorFlag     = true;
+    stock3->meta.lot                     = 100;
+    stock3->meta.minPriceIncrement.units = 1;
+    stock3->meta.minPriceIncrement.nano  = 500000000;
+
+    stockData1.timestamp = 100;
+    stockData2.timestamp = 200;
+    stockData3.timestamp = 300;
+    stockData4.timestamp = 400;
+    stockData5.timestamp = 500;
+    stockData6.timestamp = 600;
+    stockData7.timestamp = 700;
+
+    stockData1.quantity = 1;
+    stockData2.quantity = 2;
+    stockData3.quantity = 3;
+    stockData4.quantity = 4;
+    stockData5.quantity = 5;
+    stockData6.quantity = 6;
+    stockData7.quantity = 7;
+
+    stockData1.price = 0.1f;
+    stockData2.price = 0.9f;
+    stockData3.price = 0.3f;
+    stockData4.price = 0.4f;
+    stockData5.price = 0.2f;
+    stockData6.price = 0.6f;
+    stockData7.price = 0.1f;
+
+    stock1->data << stockData1 << stockData2 << stockData5;
+    stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
+    stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
+
+    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+
+    stocksDB << stock1 << stock2 << stock3;
+
+    EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
+    EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
+
+    storage->readFromDatabase();
+    stocks = storage->getStocks();
+
+    // clang-format off
+    ASSERT_EQ(stocks.size(),                                  3);
+    ASSERT_EQ(stocks.at(0)->meta.uid,                         "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.ticker,                      "TEST");
+    ASSERT_EQ(stocks.at(0)->meta.name,                        "abc");
+    ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.units,     0);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.nano,      100000000);
+    ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
+    ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(0)->data.size(),                      3);
+    ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,             100);
+    ASSERT_EQ(stocks.at(0)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,             200);
+    ASSERT_EQ(stocks.at(0)->data.at(1).quantity,              2);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(2).timestamp,             500);
+    ASSERT_EQ(stocks.at(0)->data.at(2).quantity,              5);
+    ASSERT_NEAR(stocks.at(0)->data.at(2).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(1)->meta.uid,                         "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.ticker,                      "MAGA");
+    ASSERT_EQ(stocks.at(1)->meta.name,                        "def");
+    ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.units,     0);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.nano,      500000000);
+    ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
+    ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(1)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,             200);
+    ASSERT_EQ(stocks.at(1)->data.at(0).quantity,              2);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,             300);
+    ASSERT_EQ(stocks.at(1)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(2).timestamp,             600);
+    ASSERT_EQ(stocks.at(1)->data.at(2).quantity,              6);
+    ASSERT_NEAR(stocks.at(1)->data.at(2).price,               0.6f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(3).timestamp,             700);
+    ASSERT_EQ(stocks.at(1)->data.at(3).quantity,              7);
+    ASSERT_NEAR(stocks.at(1)->data.at(3).price,               0.1f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(2)->meta.uid,                         "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.ticker,                      "HNYA");
+    ASSERT_EQ(stocks.at(2)->meta.name,                        "aaaa");
+    ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.units,     1);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.nano,      500000000);
+    ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
+    ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(2)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,             100);
+    ASSERT_EQ(stocks.at(2)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,             300);
+    ASSERT_EQ(stocks.at(2)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,             400);
+    ASSERT_EQ(stocks.at(2)->data.at(2).quantity,              4);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,               0.4f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(3).timestamp,             500);
+    ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
+    ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    QMutex mutex;
+
+    EXPECT_CALL(*userStorageMock, getMutex()).WillRepeatedly(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillRepeatedly(Return(0.3f));
+
+    storage->obtainTurnover(200);
+
+    // clang-format off
+    ASSERT_EQ(stocks.size(),                                  3);
+    ASSERT_EQ(stocks.at(0)->meta.uid,                         "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.ticker,                      "TEST");
+    ASSERT_EQ(stocks.at(0)->meta.name,                        "abc");
+    ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
+    ASSERT_EQ(stocks.at(0)->meta.lot,                         1);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.units,     0);
+    ASSERT_EQ(stocks.at(0)->meta.minPriceIncrement.nano,      100000000);
+    ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
+    ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(0)->data.size(),                      3);
+    ASSERT_EQ(stocks.at(0)->data.at(0).timestamp,             100);
+    ASSERT_EQ(stocks.at(0)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(0)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(1).timestamp,             200);
+    ASSERT_EQ(stocks.at(0)->data.at(1).quantity,              2);
+    ASSERT_NEAR(stocks.at(0)->data.at(1).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->data.at(2).timestamp,             500);
+    ASSERT_EQ(stocks.at(0)->data.at(2).quantity,              5);
+    ASSERT_NEAR(stocks.at(0)->data.at(2).price,               0.2f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(1)->meta.uid,                         "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.ticker,                      "MAGA");
+    ASSERT_EQ(stocks.at(1)->meta.name,                        "def");
+    ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
+    ASSERT_EQ(stocks.at(1)->meta.lot,                         10);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.units,     0);
+    ASSERT_EQ(stocks.at(1)->meta.minPriceIncrement.nano,      500000000);
+    ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
+    ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(1)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(1)->data.at(0).timestamp,             200);
+    ASSERT_EQ(stocks.at(1)->data.at(0).quantity,              2);
+    ASSERT_NEAR(stocks.at(1)->data.at(0).price,               0.9f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(1).timestamp,             300);
+    ASSERT_EQ(stocks.at(1)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(1)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(2).timestamp,             600);
+    ASSERT_EQ(stocks.at(1)->data.at(2).quantity,              6);
+    ASSERT_NEAR(stocks.at(1)->data.at(2).price,               0.6f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->data.at(3).timestamp,             700);
+    ASSERT_EQ(stocks.at(1)->data.at(3).quantity,              7);
+    ASSERT_NEAR(stocks.at(1)->data.at(3).price,               0.1f, 0.0001f);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(stocks.at(2)->meta.uid,                         "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.ticker,                      "HNYA");
+    ASSERT_EQ(stocks.at(2)->meta.name,                        "aaaa");
+    ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
+    ASSERT_EQ(stocks.at(2)->meta.lot,                         100);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.units,     1);
+    ASSERT_EQ(stocks.at(2)->meta.minPriceIncrement.nano,      500000000);
+    ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
+    ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
+    ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
+    ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
+    ASSERT_EQ(stocks.at(2)->data.size(),                      4);
+    ASSERT_EQ(stocks.at(2)->data.at(0).timestamp,             100);
+    ASSERT_EQ(stocks.at(2)->data.at(0).quantity,              1);
+    ASSERT_NEAR(stocks.at(2)->data.at(0).price,               0.1f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(1).timestamp,             300);
+    ASSERT_EQ(stocks.at(2)->data.at(1).quantity,              3);
+    ASSERT_NEAR(stocks.at(2)->data.at(1).price,               0.3f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(2).timestamp,             400);
+    ASSERT_EQ(stocks.at(2)->data.at(2).quantity,              4);
+    ASSERT_NEAR(stocks.at(2)->data.at(2).price,               0.4f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->data.at(3).timestamp,             500);
+    ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
+    ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 }
 
@@ -1667,6 +1968,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1692,6 +1994,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1720,6 +2023,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);
@@ -1756,6 +2060,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -1781,6 +2086,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  700);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            16.66666f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      4);
@@ -1809,6 +2115,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  500);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            66.66666f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      4);

@@ -112,6 +112,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,    SIGNAL(notifyStocksProgress(const QString&)),                                 this, SLOT(notifyStocksProgress(const QString&)));
     connect(mPriceCollectThread,    SIGNAL(stocksChanged()),                                                      this, SLOT(stocksChanged()));
     connect(mPriceCollectThread,    SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,    SIGNAL(turnoverChanged()),                                                    this, SLOT(turnoverChanged()));
     connect(mPriceCollectThread,    SIGNAL(paybackChanged()),                                                     this, SLOT(paybackChanged()));
     connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
     connect(mFilterWidget,          SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
@@ -313,6 +314,23 @@ void MainWindow::pricesChanged()
     for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
     {
         it.value()->updatePrice();
+        it.value()->filter(ui->stocksTableWidget, filter);
+    }
+
+    ui->stocksTableWidget->setSortingEnabled(true);
+    ui->stocksTableWidget->setUpdatesEnabled(true);
+}
+
+void MainWindow::turnoverChanged()
+{
+    const Filter& filter = mFilterWidget->getFilter();
+
+    ui->stocksTableWidget->setUpdatesEnabled(false);
+    ui->stocksTableWidget->setSortingEnabled(false);
+
+    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
+    {
+        it.value()->updateTurnover();
         it.value()->filter(ui->stocksTableWidget, filter);
     }
 
@@ -569,6 +587,7 @@ void MainWindow::saveWindowState()
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Price",      ui->stocksTableWidget->columnWidth(PRICE_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_DayChange",  ui->stocksTableWidget->columnWidth(DAY_CHANGE_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_DateChange", ui->stocksTableWidget->columnWidth(DATE_CHANGE_COLUMN));
+    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Turnover",   ui->stocksTableWidget->columnWidth(TURNOVER_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Payback",    ui->stocksTableWidget->columnWidth(PAYBACK_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Actions",    ui->stocksTableWidget->columnWidth(ACTIONS_COLUMN));
     // clang-format on
@@ -587,6 +606,7 @@ void MainWindow::loadWindowState()
     ui->stocksTableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Price",      61).toInt());
     ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  139).toInt());
     ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 139).toInt());
+    ui->stocksTableWidget->setColumnWidth(TURNOVER_COLUMN,    mSettingsEditor->value("MainWindow/stocksTableWidget_Turnover",   120).toInt());
     ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    120).toInt());
     ui->stocksTableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Actions",    83).toInt());
     // clang-format on

@@ -155,6 +155,43 @@ void FilterWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
+void FilterWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    bool checked = value == Qt::Checked;
+
+    mFilter.useTurnover = checked;
+    ui->turnoverFromSpinBox->setEnabled(checked);
+    ui->turnoverToSpinBox->setEnabled(checked);
+
+    emit filterChanged(mFilter);
+}
+
+void FilterWidget::on_turnoverFromSpinBox_valueChanged(int value)
+{
+    mFilter.turnoverFrom = qint64(value) * 1000;
+
+    if (mFilter.turnoverFrom > mFilter.turnoverTo)
+    {
+        mFilter.turnoverTo = mFilter.turnoverFrom;
+        ui->turnoverToSpinBox->setValue(mFilter.turnoverTo / 1000);
+    }
+
+    emit filterChanged(mFilter);
+}
+
+void FilterWidget::on_turnoverToSpinBox_valueChanged(int value)
+{
+    mFilter.turnoverTo = qint64(value) * 1000;
+
+    if (mFilter.turnoverTo < mFilter.turnoverFrom)
+    {
+        mFilter.turnoverFrom = mFilter.turnoverTo;
+        ui->turnoverFromSpinBox->setValue(mFilter.turnoverFrom / 1000);
+    }
+
+    emit filterChanged(mFilter);
+}
+
 void FilterWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;

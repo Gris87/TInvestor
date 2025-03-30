@@ -76,6 +76,7 @@ void PriceCollectThread::run()
         obtainStocksData();
         cleanupOperationalData();
         bool needPricesUpdate = obtainStocksDayStartPrice();
+        obtainTurnover();
         obtainPayback();
 
         notifyAboutChanges(needStocksUpdate, needPricesUpdate);
@@ -491,6 +492,11 @@ bool PriceCollectThread::obtainStocksDayStartPrice()
     return false;
 }
 
+void PriceCollectThread::obtainTurnover()
+{
+    mStocksStorage->obtainTurnover(QDateTime::currentMSecsSinceEpoch() - ONE_MONTH);
+}
+
 void PriceCollectThread::obtainPayback()
 {
     mStocksStorage->obtainPayback(QDateTime::currentMSecsSinceEpoch() - ONE_DAY);
@@ -509,6 +515,7 @@ void PriceCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPric
             emit pricesChanged();
         }
 
+        emit turnoverChanged();
         emit paybackChanged();
     }
 }

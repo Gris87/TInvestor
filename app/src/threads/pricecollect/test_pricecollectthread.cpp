@@ -262,6 +262,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
     EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
+    EXPECT_CALL(*stocksStorageMock, obtainTurnover(Gt(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1704056400000)));
 
     thread->run();

@@ -42,7 +42,7 @@ protected:
         tableWidget                       = new QTableWidget();
         stock                             = new Stock();
 
-        tableWidget->setColumnCount(ACTIONS_COLUMN + 1);
+        tableWidget->setColumnCount(COLUMN_COUNT);
 
         StockOperationalData stockData;
         stockData.timestamp = 100;
@@ -56,6 +56,7 @@ protected:
 
         stock->operational.dayStartPrice      = 40;
         stock->operational.specifiedDatePrice = 20;
+        stock->operational.turnover           = 1500000000;
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
@@ -147,6 +148,7 @@ TEST_F(Test_TableRecord, Test_updateAll)
     ASSERT_EQ(tableWidget->item(0, PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
     ASSERT_EQ(tableWidget->item(0, DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
     ASSERT_EQ(tableWidget->item(0, DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
+    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole),    QString("1.50B ") + QChar(0x20BD));
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole),     "90.00%");
     // clang-format on
 }
@@ -162,11 +164,26 @@ TEST_F(Test_TableRecord, Test_updatePrice)
     // clang-format on
 }
 
+TEST_F(Test_TableRecord, Test_updateTurnover)
+{
+    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
+
+    stock->operational.turnover = 1250000;
+
+    record->updateTurnover();
+
+    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.25M ") + QChar(0x20BD));
+}
+
 TEST_F(Test_TableRecord, Test_updatePayback)
 {
+    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
+
+    stock->operational.payback = 60;
+
     record->updatePayback();
 
-    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
+    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "60.00%");
 }
 
 TEST_F(Test_TableRecord, Test_filter)
@@ -193,12 +210,14 @@ TEST_F(Test_TableRecord, Test_filter)
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
 
     EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
 
     record->filter(tableWidget, filter);
 
     ASSERT_EQ(tableWidget->isRowHidden(0), true);
 
     EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
 
     filter.paybackTo = 95.0f;
     record->filter(tableWidget, filter);

@@ -48,7 +48,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     QTableWidget tableWidget;
     Stock        stock;
 
-    tableWidget.setColumnCount(ACTIONS_COLUMN + 1);
+    tableWidget.setColumnCount(COLUMN_COUNT);
 
     StockOperationalData stockData;
     stockData.timestamp = 100;
@@ -62,6 +62,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
 
     stock.operational.dayStartPrice      = 40;
     stock.operational.specifiedDatePrice = 20;
+    stock.operational.turnover           = 1500000000;
     stock.operational.payback            = 90;
     stock.operational.detailedData.append(stockData);
 

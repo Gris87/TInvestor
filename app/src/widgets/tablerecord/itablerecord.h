@@ -14,8 +14,10 @@
 #define PRICE_COLUMN       1
 #define DAY_CHANGE_COLUMN  2
 #define DATE_CHANGE_COLUMN 3
-#define PAYBACK_COLUMN     4
-#define ACTIONS_COLUMN     5
+#define TURNOVER_COLUMN    4
+#define PAYBACK_COLUMN     5
+#define ACTIONS_COLUMN     6
+#define COLUMN_COUNT       7
 
 
 
@@ -35,6 +37,7 @@ public:
 
     virtual void updateAll()                                             = 0;
     virtual void updatePrice()                                           = 0;
+    virtual void updateTurnover()                                        = 0;
     virtual void updatePayback()                                         = 0;
     virtual void filter(QTableWidget* tableWidget, const Filter& filter) = 0;
 };

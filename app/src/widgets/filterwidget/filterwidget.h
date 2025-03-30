@@ -43,6 +43,9 @@ private slots:
     void on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_dateChangeFromDoubleSpinBox_valueChanged(double value);
     void on_dateChangeToDoubleSpinBox_valueChanged(double value);
+    void on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value);
+    void on_turnoverFromSpinBox_valueChanged(int value);
+    void on_turnoverToSpinBox_valueChanged(int value);
     void on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_paybackFromDoubleSpinBox_valueChanged(double value);
     void on_paybackToDoubleSpinBox_valueChanged(double value);

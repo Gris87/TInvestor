@@ -14,7 +14,9 @@ struct Filter
 
     Filter& operator=(const Filter& another);
 
-    bool isFiltered(const QString& t, float price, float dayStartChange, float dateChange, float payback) const;
+    bool isFiltered(
+        const QString& t, const QString& name, float price, float dayStartChange, float dateChange, qint64 turnover, float payback
+    ) const;
 
     bool    useTicker;
     QString ticker;
@@ -27,6 +29,9 @@ struct Filter
     bool    useDateChange;
     float   dateChangeFrom;
     float   dateChangeTo;
+    bool    useTurnover;
+    qint64  turnoverFrom;
+    qint64  turnoverTo;
     bool    usePayback;
     float   paybackFrom;
     float   paybackTo;

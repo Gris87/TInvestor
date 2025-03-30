@@ -43,6 +43,9 @@ TEST_F(Test_FilterWidget, Test_getFilter)
     ASSERT_EQ(filter.useDateChange,        false);
     ASSERT_NEAR(filter.dateChangeFrom,     0.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeTo,       0.0f, 0.0001f);
+    ASSERT_EQ(filter.useTurnover,          false);
+    ASSERT_EQ(filter.turnoverFrom,         0);
+    ASSERT_EQ(filter.turnoverTo,           1000000000);
     ASSERT_EQ(filter.usePayback,           false);
     ASSERT_NEAR(filter.paybackFrom,        0.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackTo,          100.0f, 0.0001f);
@@ -266,6 +269,67 @@ TEST_F(Test_FilterWidget, Test_on_dateChangeToDoubleSpinBox_valueChanged)
     ASSERT_NEAR(filterWidget->ui->dateChangeFromDoubleSpinBox->value(), 1.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeFrom, 1.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeTo, 1.0f, 0.0001f);
+}
+
+TEST_F(Test_FilterWidget, Test_on_turnoverCheckBox_checkStateChanged)
+{
+    filterWidget->ui->turnoverCheckBox->blockSignals(true);
+    filterWidget->ui->turnoverCheckBox->setChecked(false);
+    filterWidget->ui->turnoverCheckBox->blockSignals(false);
+
+    filterWidget->ui->turnoverCheckBox->setChecked(true);
+    Filter filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverFromSpinBox->isEnabled(), true);
+    ASSERT_EQ(filterWidget->ui->turnoverToSpinBox->isEnabled(), true);
+    ASSERT_EQ(filter.useTurnover, true);
+
+    filterWidget->ui->turnoverCheckBox->setChecked(false);
+    filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverFromSpinBox->isEnabled(), false);
+    ASSERT_EQ(filterWidget->ui->turnoverToSpinBox->isEnabled(), false);
+    ASSERT_EQ(filter.useTurnover, false);
+}
+
+TEST_F(Test_FilterWidget, Test_on_turnoverFromSpinBox_valueChanged)
+{
+    filterWidget->ui->turnoverFromSpinBox->setValue(2);
+    filterWidget->ui->turnoverToSpinBox->setValue(4);
+
+    filterWidget->ui->turnoverFromSpinBox->setValue(3);
+    Filter filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverToSpinBox->value(), 4);
+    ASSERT_EQ(filter.turnoverFrom, 3000);
+    ASSERT_EQ(filter.turnoverTo, 4000);
+
+    filterWidget->ui->turnoverFromSpinBox->setValue(5);
+    filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverToSpinBox->value(), 5);
+    ASSERT_EQ(filter.turnoverFrom, 5000);
+    ASSERT_EQ(filter.turnoverTo, 5000);
+}
+
+TEST_F(Test_FilterWidget, Test_on_turnoverToSpinBox_valueChanged)
+{
+    filterWidget->ui->turnoverFromSpinBox->setValue(2);
+    filterWidget->ui->turnoverToSpinBox->setValue(4);
+
+    filterWidget->ui->turnoverToSpinBox->setValue(3);
+    Filter filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverFromSpinBox->value(), 2);
+    ASSERT_EQ(filter.turnoverFrom, 2000);
+    ASSERT_EQ(filter.turnoverTo, 3000);
+
+    filterWidget->ui->turnoverToSpinBox->setValue(1);
+    filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->turnoverFromSpinBox->value(), 1);
+    ASSERT_EQ(filter.turnoverFrom, 1000);
+    ASSERT_EQ(filter.turnoverTo, 1000);
 }
 
 TEST_F(Test_FilterWidget, Test_on_paybackCheckBox_checkStateChanged)

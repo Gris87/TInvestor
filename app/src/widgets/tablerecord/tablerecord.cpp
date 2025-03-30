@@ -24,6 +24,7 @@ TableRecord::TableRecord(
     mPriceTableWidgetItem(new PriceTableItem()),
     mDayChangeTableWidgetItem(new PriceChangeTableItem()),
     mDateChangeTableWidgetItem(new PriceChangeTableItem()),
+    mTurnoverTableWidgetItem(new TurnoverTableItem()),
     mPaybackTableWidgetItem(new PaybackTableItem())
 {
     qDebug() << "Create TableRecord";
@@ -63,6 +64,7 @@ TableRecord::TableRecord(
     tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
     tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex, TURNOVER_COLUMN, mTurnoverTableWidgetItem);
     tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
     tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
 
@@ -83,6 +85,7 @@ void TableRecord::updateAll()
     mStock->mutex->unlock();
 
     updatePrice();
+    updateTurnover();
     updatePayback();
 }
 
@@ -102,6 +105,13 @@ void TableRecord::updatePrice()
     mDateChangeTableWidgetItem->setValue(dateChange, mStock->operational.specifiedDatePrice, mPrecision);
 }
 
+void TableRecord::updateTurnover()
+{
+    QMutexLocker lock(mStock->mutex);
+
+    mTurnoverTableWidgetItem->setValue(mStock->operational.turnover);
+}
+
 void TableRecord::updatePayback()
 {
     QMutexLocker lock(mStock->mutex);
@@ -114,9 +124,11 @@ void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
     int  row    = mPriceTableWidgetItem->row();
     bool hidden = !filter.isFiltered(
         mStockTableItemWidget->text(),
+        mStockTableItemWidget->fullText(),
         mPriceTableWidgetItem->getValue(),
         mDayChangeTableWidgetItem->getValue(),
         mDateChangeTableWidgetItem->getValue(),
+        mTurnoverTableWidgetItem->getValue(),
         mPaybackTableWidgetItem->getValue()
     );
 

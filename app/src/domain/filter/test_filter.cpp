@@ -20,6 +20,9 @@ TEST(Test_Filter, Test_constructor_and_destructor)
     ASSERT_EQ(filter.useDateChange,        false);
     ASSERT_NEAR(filter.dateChangeFrom,     0.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeTo,       0.0f, 0.0001f);
+    ASSERT_EQ(filter.useTurnover,          false);
+    ASSERT_EQ(filter.turnoverFrom,         0);
+    ASSERT_EQ(filter.turnoverTo,           1000000000000);
     ASSERT_EQ(filter.usePayback,           false);
     ASSERT_NEAR(filter.paybackFrom,        0.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackTo,          100.0f, 0.0001f);
@@ -41,9 +44,12 @@ TEST(Test_Filter, Test_copy_constructor)
     filter.useDateChange      = true;
     filter.dateChangeFrom     = 5.0f;
     filter.dateChangeTo       = 6.0f;
+    filter.useTurnover        = true;
+    filter.turnoverFrom       = 7;
+    filter.turnoverTo         = 8;
     filter.usePayback         = true;
-    filter.paybackFrom        = 7.0f;
-    filter.paybackTo          = 8.0f;
+    filter.paybackFrom        = 9.0f;
+    filter.paybackTo          = 10.0f;
 
     Filter filter2(filter);
 
@@ -59,9 +65,12 @@ TEST(Test_Filter, Test_copy_constructor)
     ASSERT_EQ(filter2.useDateChange,        true);
     ASSERT_NEAR(filter2.dateChangeFrom,     5.0f, 0.0001f);
     ASSERT_NEAR(filter2.dateChangeTo,       6.0f, 0.0001f);
+    ASSERT_EQ(filter2.useTurnover,          true);
+    ASSERT_EQ(filter2.turnoverFrom,         7);
+    ASSERT_EQ(filter2.turnoverTo,           8);
     ASSERT_EQ(filter2.usePayback,           true);
-    ASSERT_NEAR(filter2.paybackFrom,        7.0f, 0.0001f);
-    ASSERT_NEAR(filter2.paybackTo,          8.0f, 0.0001f);
+    ASSERT_NEAR(filter2.paybackFrom,        9.0f, 0.0001f);
+    ASSERT_NEAR(filter2.paybackTo,          10.0f, 0.0001f);
     // clang-format on
 }
 
@@ -81,9 +90,12 @@ TEST(Test_Filter, Test_assign)
     filter.useDateChange      = true;
     filter.dateChangeFrom     = 5.0f;
     filter.dateChangeTo       = 6.0f;
+    filter.useTurnover        = true;
+    filter.turnoverFrom       = 7;
+    filter.turnoverTo         = 8;
     filter.usePayback         = true;
-    filter.paybackFrom        = 7.0f;
-    filter.paybackTo          = 8.0f;
+    filter.paybackFrom        = 9.0f;
+    filter.paybackTo          = 10.0f;
 
     filter2 = filter;
 
@@ -99,9 +111,12 @@ TEST(Test_Filter, Test_assign)
     ASSERT_EQ(filter2.useDateChange,        true);
     ASSERT_NEAR(filter2.dateChangeFrom,     5.0f, 0.0001f);
     ASSERT_NEAR(filter2.dateChangeTo,       6.0f, 0.0001f);
+    ASSERT_EQ(filter2.useTurnover,          true);
+    ASSERT_EQ(filter2.turnoverFrom,         7);
+    ASSERT_EQ(filter2.turnoverTo,           8);
     ASSERT_EQ(filter2.usePayback,           true);
-    ASSERT_NEAR(filter2.paybackFrom,        7.0f, 0.0001f);
-    ASSERT_NEAR(filter2.paybackTo,          8.0f, 0.0001f);
+    ASSERT_NEAR(filter2.paybackFrom,        9.0f, 0.0001f);
+    ASSERT_NEAR(filter2.paybackTo,          10.0f, 0.0001f);
     // clang-format on
 }
 
@@ -120,21 +135,28 @@ TEST(Test_Filter, Test_isFiltered)
     filter.useDateChange      = true;
     filter.dateChangeFrom     = 50.0f;
     filter.dateChangeTo       = 80.0f;
+    filter.useTurnover        = true;
+    filter.turnoverFrom       = 150;
+    filter.turnoverTo         = 200;
     filter.usePayback         = true;
     filter.paybackFrom        = 70.0f;
     filter.paybackTo          = 95.0f;
 
     // clang-format off
-    ASSERT_EQ(filter.isFiltered("SEPB", 300.0f, 3.5f, 75.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 200.0f, 3.5f, 75.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 400.0f, 3.5f, 75.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 1.0f, 75.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 8.0f, 75.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 40.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 90.0f, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 75.0f, 60.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 75.0f, 99.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", 300.0f, 3.5f, 75.0f, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SEPB", "SEB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 200.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 400.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 1.0f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 8.0f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 40.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 90.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 250, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 60.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 99.0f), false);
+    ASSERT_EQ(filter.isFiltered("SEPB", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SEB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
     // clang-format on
 }
 
@@ -154,9 +176,12 @@ TEST(Test_Filter, Test_equals)
     filter.useDateChange      = true;
     filter.dateChangeFrom     = 5.0f;
     filter.dateChangeTo       = 6.0f;
+    filter.useTurnover        = true;
+    filter.turnoverFrom       = 7;
+    filter.turnoverTo         = 8;
     filter.usePayback         = true;
-    filter.paybackFrom        = 7.0f;
-    filter.paybackTo          = 8.0f;
+    filter.paybackFrom        = 9.0f;
+    filter.paybackTo          = 10.0f;
 
     filter2.useTicker          = true;
     filter2.ticker             = "BLAH";
@@ -169,9 +194,12 @@ TEST(Test_Filter, Test_equals)
     filter2.useDateChange      = true;
     filter2.dateChangeFrom     = 5.0f;
     filter2.dateChangeTo       = 6.0f;
+    filter2.useTurnover        = true;
+    filter2.turnoverFrom       = 7;
+    filter2.turnoverTo         = 8;
     filter2.usePayback         = true;
-    filter2.paybackFrom        = 7.0f;
-    filter2.paybackTo          = 8.0f;
+    filter2.paybackFrom        = 9.0f;
+    filter2.paybackTo          = 10.0f;
 
     ASSERT_EQ(filter, filter2);
 
@@ -230,6 +258,21 @@ TEST(Test_Filter, Test_equals)
     filter2.dateChangeTo = 6.0f;
     ASSERT_EQ(filter, filter2);
 
+    filter2.useTurnover = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useTurnover = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.turnoverFrom = 100;
+    ASSERT_NE(filter, filter2);
+    filter2.turnoverFrom = 7;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.turnoverTo = 100;
+    ASSERT_NE(filter, filter2);
+    filter2.turnoverTo = 8;
+    ASSERT_EQ(filter, filter2);
+
     filter2.usePayback = false;
     ASSERT_NE(filter, filter2);
     filter2.usePayback = true;
@@ -237,11 +280,11 @@ TEST(Test_Filter, Test_equals)
 
     filter2.paybackFrom = 100.0f;
     ASSERT_NE(filter, filter2);
-    filter2.paybackFrom = 7.0f;
+    filter2.paybackFrom = 9.0f;
     ASSERT_EQ(filter, filter2);
 
     filter2.paybackTo = 100.0f;
     ASSERT_NE(filter, filter2);
-    filter2.paybackTo = 8.0f;
+    filter2.paybackTo = 10.0f;
     ASSERT_EQ(filter, filter2);
 }

@@ -148,7 +148,7 @@
            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
           </property>
           <property name="columnCount">
-           <number>6</number>
+           <number>7</number>
           </property>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>true</bool>
@@ -171,6 +171,18 @@
           <column>
            <property name="text">
             <string>Change from some date</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Turnover</string>
+           </property>
+           <property name="toolTip">
+            <string>Average daily turnover in the last 31 days</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../Resources.qrc">
+             <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
            </property>
           </column>
           <column>

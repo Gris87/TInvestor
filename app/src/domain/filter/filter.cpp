@@ -14,6 +14,9 @@ Filter::Filter() :
     useDateChange(),
     dateChangeFrom(),
     dateChangeTo(),
+    useTurnover(),
+    turnoverFrom(),
+    turnoverTo(1000000000000),
     usePayback(),
     paybackFrom(),
     paybackTo(100)
@@ -32,6 +35,9 @@ Filter::Filter(const Filter& another) :
     useDateChange(another.useDateChange),
     dateChangeFrom(another.dateChangeFrom),
     dateChangeTo(another.dateChangeTo),
+    useTurnover(another.useTurnover),
+    turnoverFrom(another.turnoverFrom),
+    turnoverTo(another.turnoverTo),
     usePayback(another.usePayback),
     paybackFrom(another.paybackFrom),
     paybackTo(another.paybackTo)
@@ -55,6 +61,9 @@ Filter& Filter::operator=(const Filter& another)
     useDateChange      = another.useDateChange;
     dateChangeFrom     = another.dateChangeFrom;
     dateChangeTo       = another.dateChangeTo;
+    useTurnover        = another.useTurnover;
+    turnoverFrom       = another.turnoverFrom;
+    turnoverTo         = another.turnoverTo;
     usePayback         = another.usePayback;
     paybackFrom        = another.paybackFrom;
     paybackTo          = another.paybackTo;
@@ -62,11 +71,13 @@ Filter& Filter::operator=(const Filter& another)
     return *this;
 }
 
-bool Filter::isFiltered(const QString& t, float price, float dayStartChange, float dateChange, float payback) const
+bool Filter::isFiltered(
+    const QString& t, const QString& name, float price, float dayStartChange, float dateChange, qint64 turnover, float payback
+) const
 {
     if (useTicker && ticker != "")
     {
-        if (!t.contains(ticker, Qt::CaseInsensitive))
+        if (!t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
         {
             return false;
         }
@@ -96,6 +107,14 @@ bool Filter::isFiltered(const QString& t, float price, float dayStartChange, flo
         }
     }
 
+    if (useTurnover)
+    {
+        if (turnover < turnoverFrom || turnover > turnoverTo)
+        {
+            return false;
+        }
+    }
+
     if (usePayback)
     {
         if (payback < paybackFrom || payback > paybackTo)
@@ -113,6 +132,7 @@ bool operator==(const Filter& lhs, const Filter& rhs)
            lhs.priceFrom == rhs.priceFrom && lhs.priceTo == rhs.priceTo && lhs.useDayStartChange == rhs.useDayStartChange &&
            lhs.dayStartChangeFrom == rhs.dayStartChangeFrom && lhs.dayStartChangeTo == rhs.dayStartChangeTo &&
            lhs.useDateChange == rhs.useDateChange && lhs.dateChangeFrom == rhs.dateChangeFrom &&
-           lhs.dateChangeTo == rhs.dateChangeTo && lhs.usePayback == rhs.usePayback && lhs.paybackFrom == rhs.paybackFrom &&
+           lhs.dateChangeTo == rhs.dateChangeTo && lhs.useTurnover == rhs.useTurnover && lhs.turnoverFrom == rhs.turnoverFrom &&
+           lhs.turnoverTo == rhs.turnoverTo && lhs.usePayback == rhs.usePayback && lhs.paybackFrom == rhs.paybackFrom &&
            lhs.paybackTo == rhs.paybackTo;
 }

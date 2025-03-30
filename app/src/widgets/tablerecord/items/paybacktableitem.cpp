@@ -29,20 +29,17 @@ void PaybackTableItem::setValue(float value)
 
     QColor color;
 
-    if (mValue > 30 && mValue < 60)
+    if (mValue >= 60)
+    {
+        color = GREEN_COLOR;
+    }
+    else if (mValue >= 30)
     {
         color = NORMAL_COLOR;
     }
     else
     {
-        if (mValue >= 60)
-        {
-            color = GREEN_COLOR;
-        }
-        else
-        {
-            color = RED_COLOR;
-        }
+        color = RED_COLOR;
     }
 
     setForeground(QBrush(color));

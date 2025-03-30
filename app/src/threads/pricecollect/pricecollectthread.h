@@ -46,6 +46,7 @@ public:
     void obtainStocksData();
     void cleanupOperationalData();
     bool obtainStocksDayStartPrice();
+    void obtainTurnover();
     void obtainPayback();
     void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 

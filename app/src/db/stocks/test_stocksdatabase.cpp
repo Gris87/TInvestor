@@ -176,6 +176,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      0);
@@ -193,6 +194,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      0);
@@ -210,6 +212,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      0);
@@ -244,6 +247,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      0);
@@ -261,6 +265,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      0);
@@ -278,6 +283,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      0);
@@ -326,6 +332,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -352,6 +359,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  650);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      6);
@@ -387,6 +395,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      5);
@@ -457,6 +466,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(0)->operational.lastStoredTimestamp,  300);
     ASSERT_NEAR(stocks.at(0)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(0)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(0)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(0)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(0)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(0)->data.size(),                      3);
@@ -483,6 +493,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(1)->operational.lastStoredTimestamp,  0);
     ASSERT_NEAR(stocks.at(1)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(1)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(1)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(1)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(1)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(1)->data.size(),                      0);
@@ -500,6 +511,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     ASSERT_EQ(stocks.at(2)->operational.lastStoredTimestamp,  520);
     ASSERT_NEAR(stocks.at(2)->operational.dayStartPrice,      -1.0f, 0.0001f);
     ASSERT_NEAR(stocks.at(2)->operational.specifiedDatePrice, -1.0f, 0.0001f);
+    ASSERT_EQ(stocks.at(2)->operational.turnover,             0);
     ASSERT_NEAR(stocks.at(2)->operational.payback,            0.0f, 0.0001f);
     ASSERT_EQ(stocks.at(2)->operational.detailedData.size(),  0);
     ASSERT_EQ(stocks.at(2)->data.size(),                      5);

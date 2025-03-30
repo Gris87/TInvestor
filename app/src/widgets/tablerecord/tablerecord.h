@@ -12,6 +12,7 @@
 #include "src/widgets/tablerecord/items/pricechangetableitem.h"
 #include "src/widgets/tablerecord/items/pricetableitem.h"
 #include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecord/items/turnovertableitem.h"
 
 
 
@@ -39,6 +40,7 @@ public:
 
     void updateAll() override;
     void updatePrice() override;
+    void updateTurnover() override;
     void updatePayback() override;
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
 
@@ -48,6 +50,7 @@ private:
     PriceTableItem*        mPriceTableWidgetItem;
     PriceChangeTableItem*  mDayChangeTableWidgetItem;
     PriceChangeTableItem*  mDateChangeTableWidgetItem;
+    TurnoverTableItem*     mTurnoverTableWidgetItem;
     PaybackTableItem*      mPaybackTableWidgetItem;
     int                    mPrecision;
 };

@@ -19,6 +19,7 @@ struct StockOperational
     qint64                      lastStoredTimestamp;
     float                       dayStartPrice;
     float                       specifiedDatePrice;
+    qint64                      turnover;
     float                       payback;
     QList<StockOperationalData> detailedData;
 };

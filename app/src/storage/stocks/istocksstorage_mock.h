@@ -29,5 +29,6 @@ public:
     MOCK_METHOD(void, cleanupOperationalData, (qint64 timestamp), (override));
     MOCK_METHOD(void, obtainStocksDayStartPrice, (qint64 timestamp), (override));
     MOCK_METHOD(void, obtainStocksDatePrice, (qint64 timestamp), (override));
+    MOCK_METHOD(void, obtainTurnover, (qint64 timestamp), (override));
     MOCK_METHOD(void, obtainPayback, (qint64 timestamp), (override));
 };

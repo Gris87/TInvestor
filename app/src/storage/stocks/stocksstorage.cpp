@@ -254,6 +254,35 @@ void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
 
+struct GetTurnoverInfo
+{
+    qint64 startTimestamp;
+};
+
+void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
+    qint64           startTimestamp  = getTurnoverInfo->startTimestamp;
+
+    Stock** stockArray = stocks.data();
+
+    Q_UNUSED(startTimestamp);
+    Q_UNUSED(stockArray);
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        // TODO: HOOYAK
+    }
+}
+
+void StocksStorage::obtainTurnover(qint64 timestamp)
+{
+    GetTurnoverInfo getTurnoverInfo;
+    getTurnoverInfo.startTimestamp = timestamp;
+
+    processInParallel(mStocks, getTurnoverForParallel, &getTurnoverInfo);
+}
+
 struct GetPaybackInfo
 {
     IUserStorage* userStorage;
