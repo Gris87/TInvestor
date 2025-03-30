@@ -515,7 +515,6 @@ void PriceCollectThread::notifyAboutChanges(bool needStocksUpdate, bool needPric
             emit pricesChanged();
         }
 
-        emit turnoverChanged();
-        emit paybackChanged();
+        emit periodicDataChanged();
     }
 }

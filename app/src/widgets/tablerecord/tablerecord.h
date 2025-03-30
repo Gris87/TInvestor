@@ -40,8 +40,7 @@ public:
 
     void updateAll() override;
     void updatePrice() override;
-    void updateTurnover() override;
-    void updatePayback() override;
+    void updatePeriodicData() override;
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
 
 private:

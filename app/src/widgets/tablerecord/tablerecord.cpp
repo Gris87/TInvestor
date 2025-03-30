@@ -85,8 +85,7 @@ void TableRecord::updateAll()
     mStock->mutex->unlock();
 
     updatePrice();
-    updateTurnover();
-    updatePayback();
+    updatePeriodicData();
 }
 
 void TableRecord::updatePrice()
@@ -105,17 +104,11 @@ void TableRecord::updatePrice()
     mDateChangeTableWidgetItem->setValue(dateChange, mStock->operational.specifiedDatePrice, mPrecision);
 }
 
-void TableRecord::updateTurnover()
+void TableRecord::updatePeriodicData()
 {
     QMutexLocker lock(mStock->mutex);
 
     mTurnoverTableWidgetItem->setValue(mStock->operational.turnover);
-}
-
-void TableRecord::updatePayback()
-{
-    QMutexLocker lock(mStock->mutex);
-
     mPaybackTableWidgetItem->setValue(mStock->operational.payback);
 }
 

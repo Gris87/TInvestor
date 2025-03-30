@@ -3,7 +3,6 @@ Show oborot on table
 Filter by full stock name
 Filter by qual investor
 Filter by oborot
-Combine turnover and payback functions
 Change default column width
 Download logos at midnight
 Put unknown logo if absent

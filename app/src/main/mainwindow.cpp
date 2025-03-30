@@ -112,8 +112,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,    SIGNAL(notifyStocksProgress(const QString&)),                                 this, SLOT(notifyStocksProgress(const QString&)));
     connect(mPriceCollectThread,    SIGNAL(stocksChanged()),                                                      this, SLOT(stocksChanged()));
     connect(mPriceCollectThread,    SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,    SIGNAL(turnoverChanged()),                                                    this, SLOT(turnoverChanged()));
-    connect(mPriceCollectThread,    SIGNAL(paybackChanged()),                                                     this, SLOT(paybackChanged()));
+    connect(mPriceCollectThread,    SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,       SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
     connect(mFilterWidget,          SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -321,7 +320,7 @@ void MainWindow::pricesChanged()
     ui->stocksTableWidget->setUpdatesEnabled(true);
 }
 
-void MainWindow::turnoverChanged()
+void MainWindow::periodicDataChanged()
 {
     const Filter& filter = mFilterWidget->getFilter();
 
@@ -330,24 +329,7 @@ void MainWindow::turnoverChanged()
 
     for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
     {
-        it.value()->updateTurnover();
-        it.value()->filter(ui->stocksTableWidget, filter);
-    }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
-    ui->stocksTableWidget->setUpdatesEnabled(true);
-}
-
-void MainWindow::paybackChanged()
-{
-    const Filter& filter = mFilterWidget->getFilter();
-
-    ui->stocksTableWidget->setUpdatesEnabled(false);
-    ui->stocksTableWidget->setSortingEnabled(false);
-
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
-    {
-        it.value()->updatePayback();
+        it.value()->updatePeriodicData();
         it.value()->filter(ui->stocksTableWidget, filter);
     }
 

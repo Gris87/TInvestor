@@ -164,25 +164,17 @@ TEST_F(Test_TableRecord, Test_updatePrice)
     // clang-format on
 }
 
-TEST_F(Test_TableRecord, Test_updateTurnover)
+TEST_F(Test_TableRecord, Test_updatePeriodicData)
 {
     ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
-
-    stock->operational.turnover = 1250000;
-
-    record->updateTurnover();
-
-    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.25M ") + QChar(0x20BD));
-}
-
-TEST_F(Test_TableRecord, Test_updatePayback)
-{
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
 
+    stock->operational.turnover = 1250000;
     stock->operational.payback = 60;
 
-    record->updatePayback();
+    record->updatePeriodicData();
 
+    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.25M ") + QChar(0x20BD));
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "60.00%");
 }
 

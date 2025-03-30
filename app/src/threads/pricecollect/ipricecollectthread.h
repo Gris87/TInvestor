@@ -24,6 +24,5 @@ signals:
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
     void pricesChanged();
-    void turnoverChanged();
-    void paybackChanged();
+    void periodicDataChanged();
 };
