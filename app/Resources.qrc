@@ -15,8 +15,10 @@
         <file>assets/images/settings.png</file>
         <file>assets/images/simulation.png</file>
         <file>assets/images/simulation_selected.png</file>
+        <file>assets/images/start.png</file>
         <file>assets/images/stocks.png</file>
         <file>assets/images/stocks_selected.png</file>
+        <file>assets/images/stop.png</file>
         <file>assets/images/waves.png</file>
         <file>assets/images/waves_hover.png</file>
         <file>assets/translations/language_en.qm</file>
