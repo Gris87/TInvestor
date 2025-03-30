@@ -163,7 +163,7 @@ TEST(Test_Filter, Test_isFiltered)
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 8.0f, 75.0f, 170, 90.0f), false);
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 40.0f, 170, 90.0f), false);
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 90.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 100, 90.0f), false);
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 250, 90.0f), false);
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 60.0f), false);
     ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 99.0f), false);

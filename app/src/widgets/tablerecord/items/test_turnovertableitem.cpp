@@ -14,19 +14,19 @@ TEST(Test_TurnoverTableItem, Test_setValue_and_getValue)
     TurnoverTableItem item;
 
     item.setValue(1500000000);
-    ASSERT_EQ(item.getValue(), 10);
+    ASSERT_EQ(item.getValue(), 1500000000);
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
-    ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
+    ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
 
     item.setValue(1500000);
-    ASSERT_EQ(item.getValue(), 50);
+    ASSERT_EQ(item.getValue(), 1500000);
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("1.50M ") + QChar(0x20BD));
     ASSERT_EQ(item.foreground().color(), QColor("#97AEC4"));
 
     item.setValue(1500);
-    ASSERT_EQ(item.getValue(), 90);
+    ASSERT_EQ(item.getValue(), 1500);
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("1.50K ") + QChar(0x20BD));
-    ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
+    ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 }
 
 TEST(Test_TurnoverTableItem, Test_less)

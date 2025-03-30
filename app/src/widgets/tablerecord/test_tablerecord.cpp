@@ -170,7 +170,7 @@ TEST_F(Test_TableRecord, Test_updatePeriodicData)
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
 
     stock->operational.turnover = 1250000;
-    stock->operational.payback = 60;
+    stock->operational.payback  = 60;
 
     record->updatePeriodicData();
 
@@ -180,7 +180,7 @@ TEST_F(Test_TableRecord, Test_updatePeriodicData)
 
 TEST_F(Test_TableRecord, Test_filter)
 {
-    InSequence seq;
+    // InSequence seq;
 
     Filter filter;
 

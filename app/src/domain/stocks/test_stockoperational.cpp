@@ -53,8 +53,8 @@ TEST(Test_StockOperational, Test_assign)
     StockOperational stockOperational2;
 
     StockOperationalData stockData;
-    stockData.timestamp = 5;
-    stockData.price     = 6.0f;
+    stockData.timestamp = 6;
+    stockData.price     = 7.0f;
 
     stockOperational.lastStoredTimestamp = 1;
     stockOperational.dayStartPrice       = 2.0f;

@@ -47,7 +47,7 @@ TEST_F(Test_FilterWidget, Test_getFilter)
     ASSERT_NEAR(filter.dateChangeTo,       0.0f, 0.0001f);
     ASSERT_EQ(filter.useTurnover,          false);
     ASSERT_EQ(filter.turnoverFrom,         0);
-    ASSERT_EQ(filter.turnoverTo,           1000000000);
+    ASSERT_EQ(filter.turnoverTo,           1000000000000);
     ASSERT_EQ(filter.usePayback,           false);
     ASSERT_NEAR(filter.paybackFrom,        0.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackTo,          100.0f, 0.0001f);
