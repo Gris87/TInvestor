@@ -1,4 +1,3 @@
-Show stock name on hover
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
 Add CI to Github

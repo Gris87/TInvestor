@@ -8,7 +8,8 @@
 StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* parent) :
     IStockTableItemWidget(parent),
     ui(new Ui::StockTableItemWidget),
-    mUserStorage(userStorage)
+    mUserStorage(userStorage),
+    mHoverTextWidget()
 {
     qDebug() << "Create StockTableItemWidget";
 
@@ -19,7 +20,35 @@ StockTableItemWidget::~StockTableItemWidget()
 {
     qDebug() << "Destroy StockTableItemWidget";
 
+    if (mHoverTextWidget != nullptr)
+    {
+        delete mHoverTextWidget;
+    }
+
     delete ui;
+}
+
+void StockTableItemWidget::enterEvent(QEnterEvent* event)
+{
+    mHoverTextWidget = new QLabel();
+    mHoverTextWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowTransparentForInput);
+    mHoverTextWidget->setText(mFullText);
+
+    QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
+    mHoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), mHoverTextWidget->sizeHint().width(), ui->nameLabel->height());
+
+    mHoverTextWidget->show();
+    ui->nameLabel->setVisible(false);
+
+    IStockTableItemWidget::enterEvent(event);
+}
+
+void StockTableItemWidget::leaveEvent(QEvent* event)
+{
+    delete mHoverTextWidget;
+    ui->nameLabel->setVisible(true);
+
+    IStockTableItemWidget::leaveEvent(event);
 }
 
 void StockTableItemWidget::setIcon(const QIcon& icon)
@@ -41,7 +70,7 @@ void StockTableItemWidget::setText(const QString& text)
 
 void StockTableItemWidget::setFullText(const QString& text)
 {
-    ui->nameLabel->setToolTip(text);
+    mFullText = text;
 }
 
 bool StockTableItemWidget::forQualInvestorFlag()
@@ -56,7 +85,7 @@ QString StockTableItemWidget::text()
 
 QString StockTableItemWidget::fullText()
 {
-    return ui->nameLabel->toolTip();
+    return mFullText;
 }
 
 bool StockTableItemWidget::operator<(const QTableWidgetItem& another) const

@@ -4,6 +4,8 @@
 
 #include "src/widgets/tablerecord/items/stock/istocktableitemwidget.h"
 
+#include <QLabel>
+
 #include "src/storage/user/iuserstorage.h"
 
 
@@ -26,6 +28,9 @@ public:
     StockTableItemWidget(const StockTableItemWidget& another)            = delete;
     StockTableItemWidget& operator=(const StockTableItemWidget& another) = delete;
 
+    void enterEvent(QEnterEvent* event) override;
+    void leaveEvent(QEvent* event) override;
+
     void setIcon(const QIcon& icon) override;
     void setQualInvestor(bool forQualInvestorFlag) override;
     void setText(const QString& text) override;
@@ -41,5 +46,7 @@ public:
 
 private:
     IUserStorage* mUserStorage;
+    QLabel*       mHoverTextWidget;
     float         mForQualInvestorFlag;
+    QString       mFullText;
 };
