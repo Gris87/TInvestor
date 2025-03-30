@@ -1,14 +1,11 @@
 Show stock name on hover
-Show oborot on table
-Filter by full stock name
-Filter by qual investor
-Filter by oborot
 Change default column width
 Download logos at midnight
 Put unknown logo if absent
 Add timer to do updateAll each 24h
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
+Add CI to Github
 
 Put buy ticket always with -5% price (for unexpected selling) each minute
 Put tratiling tickets on market start/end (There are ~4 times - 00:00 02:00 07:00 10:00)

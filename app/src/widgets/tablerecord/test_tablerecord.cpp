@@ -186,6 +186,8 @@ TEST_F(Test_TableRecord, Test_filter)
 
     filter.useTicker          = true;
     filter.ticker             = "WAG";
+    filter.useQualInvestor    = true;
+    filter.qualInvestor       = QUAL_INVESTOR_ONLY_WITH_STATUS;
     filter.usePrice           = true;
     filter.priceFrom          = 20.0f;
     filter.priceTo            = 100.0f;
@@ -203,6 +205,7 @@ TEST_F(Test_TableRecord, Test_filter)
 
     EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
     EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
+    EXPECT_CALL(*stockTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 
     record->filter(tableWidget, filter);
 
@@ -210,6 +213,7 @@ TEST_F(Test_TableRecord, Test_filter)
 
     EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
     EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
+    EXPECT_CALL(*stockTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 
     filter.paybackTo = 95.0f;
     record->filter(tableWidget, filter);

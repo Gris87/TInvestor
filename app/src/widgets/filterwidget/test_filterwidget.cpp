@@ -34,6 +34,8 @@ TEST_F(Test_FilterWidget, Test_getFilter)
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
     ASSERT_EQ(filter.ticker,               "");
+    ASSERT_EQ(filter.useQualInvestor,      false);
+    ASSERT_EQ(filter.qualInvestor,         QUAL_INVESTOR_SHOW_ALL);
     ASSERT_EQ(filter.usePrice,             false);
     ASSERT_NEAR(filter.priceFrom,          0.0f, 0.0001f);
     ASSERT_NEAR(filter.priceTo,            0.0f, 0.0001f);
@@ -86,6 +88,42 @@ TEST_F(Test_FilterWidget, Test_on_tickerLineEdit_textChanged)
     filter = filterWidget->getFilter();
 
     ASSERT_EQ(filter.ticker, "RBCM");
+}
+
+TEST_F(Test_FilterWidget, Test_on_qualInvestorCheckBox_checkStateChanged)
+{
+    filterWidget->ui->qualInvestorCheckBox->blockSignals(true);
+    filterWidget->ui->qualInvestorCheckBox->setChecked(false);
+    filterWidget->ui->qualInvestorCheckBox->blockSignals(false);
+
+    filterWidget->ui->qualInvestorCheckBox->setChecked(true);
+    Filter filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->qualInvestorComboBox->isEnabled(), true);
+    ASSERT_EQ(filter.useQualInvestor, true);
+
+    filterWidget->ui->qualInvestorCheckBox->setChecked(false);
+    filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filterWidget->ui->qualInvestorComboBox->isEnabled(), false);
+    ASSERT_EQ(filter.useQualInvestor, false);
+}
+
+TEST_F(Test_FilterWidget, Test_on_qualInvestorComboBox_currentIndexChanged)
+{
+    filterWidget->ui->qualInvestorComboBox->blockSignals(true);
+    filterWidget->ui->qualInvestorComboBox->setCurrentIndex(0);
+    filterWidget->ui->qualInvestorComboBox->blockSignals(false);
+
+    filterWidget->ui->qualInvestorComboBox->setCurrentIndex(1);
+    Filter filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filter.qualInvestor, QUAL_INVESTOR_ONLY_WITH_STATUS);
+
+    filterWidget->ui->qualInvestorComboBox->setCurrentIndex(2);
+    filter = filterWidget->getFilter();
+
+    ASSERT_EQ(filter.qualInvestor, QUAL_INVESTOR_ONLY_WITHOUT_STATUS);
 }
 
 TEST_F(Test_FilterWidget, Test_on_priceCheckBox_checkStateChanged)

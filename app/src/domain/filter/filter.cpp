@@ -5,6 +5,8 @@
 Filter::Filter() :
     useTicker(),
     ticker(),
+    useQualInvestor(),
+    qualInvestor(),
     usePrice(),
     priceFrom(),
     priceTo(),
@@ -26,6 +28,8 @@ Filter::Filter() :
 Filter::Filter(const Filter& another) :
     useTicker(another.useTicker),
     ticker(another.ticker),
+    useQualInvestor(another.useQualInvestor),
+    qualInvestor(another.qualInvestor),
     usePrice(another.usePrice),
     priceFrom(another.priceFrom),
     priceTo(another.priceTo),
@@ -52,6 +56,8 @@ Filter& Filter::operator=(const Filter& another)
 {
     useTicker          = another.useTicker;
     ticker             = another.ticker;
+    useQualInvestor    = another.useQualInvestor;
+    qualInvestor       = another.qualInvestor;
     usePrice           = another.usePrice;
     priceFrom          = another.priceFrom;
     priceTo            = another.priceTo;
@@ -72,12 +78,27 @@ Filter& Filter::operator=(const Filter& another)
 }
 
 bool Filter::isFiltered(
-    const QString& t, const QString& name, float price, float dayStartChange, float dateChange, qint64 turnover, float payback
+    const QString& t,
+    const QString& name,
+    bool           forQualInvestorFlag,
+    float          price,
+    float          dayStartChange,
+    float          dateChange,
+    qint64         turnover,
+    float          payback
 ) const
 {
     if (useTicker && ticker != "")
     {
         if (!t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
+        {
+            return false;
+        }
+    }
+
+    if (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL)
+    {
+        if (forQualInvestorFlag != (qualInvestor == QUAL_INVESTOR_ONLY_WITH_STATUS))
         {
             return false;
         }
@@ -128,8 +149,9 @@ bool Filter::isFiltered(
 
 bool operator==(const Filter& lhs, const Filter& rhs)
 {
-    return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.usePrice == rhs.usePrice &&
-           lhs.priceFrom == rhs.priceFrom && lhs.priceTo == rhs.priceTo && lhs.useDayStartChange == rhs.useDayStartChange &&
+    return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.useQualInvestor == rhs.useQualInvestor &&
+           lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice && lhs.priceFrom == rhs.priceFrom &&
+           lhs.priceTo == rhs.priceTo && lhs.useDayStartChange == rhs.useDayStartChange &&
            lhs.dayStartChangeFrom == rhs.dayStartChangeFrom && lhs.dayStartChangeTo == rhs.dayStartChangeTo &&
            lhs.useDateChange == rhs.useDateChange && lhs.dateChangeFrom == rhs.dateChangeFrom &&
            lhs.dateChangeTo == rhs.dateChangeTo && lhs.useTurnover == rhs.useTurnover && lhs.turnoverFrom == rhs.turnoverFrom &&

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>346</width>
-    <height>368</height>
+    <height>422</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -59,6 +59,38 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="qualInvestorCheckBox">
+        <property name="text">
+         <string>Qual investor</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="qualInvestorComboBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Show all</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Only with status</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Only without status</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>

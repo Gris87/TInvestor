@@ -11,6 +11,8 @@ TEST(Test_Filter, Test_constructor_and_destructor)
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
     ASSERT_EQ(filter.ticker,               "");
+    ASSERT_EQ(filter.useQualInvestor,      false);
+    ASSERT_EQ(filter.qualInvestor,         QUAL_INVESTOR_SHOW_ALL);
     ASSERT_EQ(filter.usePrice,             false);
     ASSERT_NEAR(filter.priceFrom,          0.0f, 0.0001f);
     ASSERT_NEAR(filter.priceTo,            0.0f, 0.0001f);
@@ -35,6 +37,8 @@ TEST(Test_Filter, Test_copy_constructor)
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";
+    filter.useQualInvestor    = true;
+    filter.qualInvestor       = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     filter.usePrice           = true;
     filter.priceFrom          = 1.0f;
     filter.priceTo            = 2.0f;
@@ -56,6 +60,8 @@ TEST(Test_Filter, Test_copy_constructor)
     // clang-format off
     ASSERT_EQ(filter2.useTicker,            true);
     ASSERT_EQ(filter2.ticker,               "BLAH");
+    ASSERT_EQ(filter2.useQualInvestor,      true);
+    ASSERT_EQ(filter2.qualInvestor,         QUAL_INVESTOR_ONLY_WITHOUT_STATUS);
     ASSERT_EQ(filter2.usePrice,             true);
     ASSERT_NEAR(filter2.priceFrom,          1.0f, 0.0001f);
     ASSERT_NEAR(filter2.priceTo,            2.0f, 0.0001f);
@@ -81,6 +87,8 @@ TEST(Test_Filter, Test_assign)
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";
+    filter.useQualInvestor    = true;
+    filter.qualInvestor       = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     filter.usePrice           = true;
     filter.priceFrom          = 1.0f;
     filter.priceTo            = 2.0f;
@@ -102,6 +110,8 @@ TEST(Test_Filter, Test_assign)
     // clang-format off
     ASSERT_EQ(filter2.useTicker,            true);
     ASSERT_EQ(filter2.ticker,               "BLAH");
+    ASSERT_EQ(filter2.useQualInvestor,      true);
+    ASSERT_EQ(filter2.qualInvestor,         QUAL_INVESTOR_ONLY_WITHOUT_STATUS);
     ASSERT_EQ(filter2.usePrice,             true);
     ASSERT_NEAR(filter2.priceFrom,          1.0f, 0.0001f);
     ASSERT_NEAR(filter2.priceTo,            2.0f, 0.0001f);
@@ -126,6 +136,8 @@ TEST(Test_Filter, Test_isFiltered)
 
     filter.useTicker          = true;
     filter.ticker             = "SPB";
+    filter.useQualInvestor    = true;
+    filter.qualInvestor       = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     filter.usePrice           = true;
     filter.priceFrom          = 250.0f;
     filter.priceTo            = 350.0f;
@@ -143,20 +155,21 @@ TEST(Test_Filter, Test_isFiltered)
     filter.paybackTo          = 95.0f;
 
     // clang-format off
-    ASSERT_EQ(filter.isFiltered("SEPB", "SEB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 200.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 400.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 1.0f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 8.0f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 40.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 90.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 250, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 60.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 99.0f), false);
-    ASSERT_EQ(filter.isFiltered("SEPB", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SEB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SEPB", "SEB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", true, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 200.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 400.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 1.0f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 8.0f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 40.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 90.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 250, 90.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 60.0f), false);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 99.0f), false);
+    ASSERT_EQ(filter.isFiltered("SEPB", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SEB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
+    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
     // clang-format on
 }
 
@@ -167,6 +180,8 @@ TEST(Test_Filter, Test_equals)
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";
+    filter.useQualInvestor    = true;
+    filter.qualInvestor       = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     filter.usePrice           = true;
     filter.priceFrom          = 1.0f;
     filter.priceTo            = 2.0f;
@@ -185,6 +200,8 @@ TEST(Test_Filter, Test_equals)
 
     filter2.useTicker          = true;
     filter2.ticker             = "BLAH";
+    filter2.useQualInvestor    = true;
+    filter2.qualInvestor       = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     filter2.usePrice           = true;
     filter2.priceFrom          = 1.0f;
     filter2.priceTo            = 2.0f;
@@ -211,6 +228,16 @@ TEST(Test_Filter, Test_equals)
     filter2.ticker = "HOOYAK";
     ASSERT_NE(filter, filter2);
     filter2.ticker = "BLAH";
+    ASSERT_EQ(filter, filter2);
+
+    filter2.useQualInvestor = false;
+    ASSERT_NE(filter, filter2);
+    filter2.useQualInvestor = true;
+    ASSERT_EQ(filter, filter2);
+
+    filter2.qualInvestor = QUAL_INVESTOR_ONLY_WITH_STATUS;
+    ASSERT_NE(filter, filter2);
+    filter2.qualInvestor = QUAL_INVESTOR_ONLY_WITHOUT_STATUS;
     ASSERT_EQ(filter, filter2);
 
     filter2.usePrice = false;

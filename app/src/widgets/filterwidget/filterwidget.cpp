@@ -44,6 +44,23 @@ void FilterWidget::on_tickerLineEdit_textChanged(const QString& text)
     emit filterChanged(mFilter);
 }
 
+void FilterWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    bool checked = value == Qt::Checked;
+
+    mFilter.useQualInvestor = checked;
+    ui->qualInvestorComboBox->setEnabled(checked);
+
+    emit filterChanged(mFilter);
+}
+
+void FilterWidget::on_qualInvestorComboBox_currentIndexChanged(int index)
+{
+    mFilter.qualInvestor = QualInvestorFilter(index);
+
+    emit filterChanged(mFilter);
+}
+
 void FilterWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;

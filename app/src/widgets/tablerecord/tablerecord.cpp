@@ -118,6 +118,7 @@ void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
     bool hidden = !filter.isFiltered(
         mStockTableItemWidget->text(),
         mStockTableItemWidget->fullText(),
+        mStockTableItemWidget->forQualInvestorFlag(),
         mPriceTableWidgetItem->getValue(),
         mDayChangeTableWidgetItem->getValue(),
         mDateChangeTableWidgetItem->getValue(),
