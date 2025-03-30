@@ -90,6 +90,7 @@ struct DownloadLogosInfo
     PriceCollectThread* thread;
     IFileFactory*       fileFactory;
     IHttpClient*        httpClient;
+    bool                forceToDownload;
     QAtomicInt          finished;
 };
 
@@ -100,6 +101,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
     PriceCollectThread* thread            = downloadLogosInfo->thread;
     IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
     IHttpClient*        httpClient        = downloadLogosInfo->httpClient;
+    bool                forceToDownload   = downloadLogosInfo->forceToDownload;
 
     QString appDir = qApp->applicationDirPath();
 
@@ -113,7 +115,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
 
         std::shared_ptr<IFile> stockLogoFile = fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
 
-        if (!stockLogoFile->exists())
+        if (forceToDownload || !stockLogoFile->exists())
         {
             QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
             QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
@@ -122,11 +124,22 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
 
             HttpResult httpResult = httpClient->download(url, headers);
 
-            if (httpResult.statusCode == 200)
+            if (httpResult.statusCode == 200 && httpResult.body.size() > 0)
             {
                 stockLogoFile->open(QIODevice::WriteOnly);
                 stockLogoFile->write(httpResult.body);
                 stockLogoFile->close();
+            }
+            else
+            {
+                std::shared_ptr<IFile> noImageFile = fileFactory->newInstance(":/assets/images/no_image.png");
+                noImageFile->open(QIODevice::ReadOnly);
+
+                stockLogoFile->open(QIODevice::WriteOnly);
+                stockLogoFile->write(noImageFile->readAll());
+                stockLogoFile->close();
+
+                noImageFile->close();
             }
         }
 
@@ -168,11 +181,20 @@ bool PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
 
     emit notifyStocksProgress(tr("Downloading stocks logos"));
 
+    static int lastDownloadHour = -1;
+    int        currentHour      = QDateTime::currentDateTime().time().hour();
+
+    if (lastDownloadHour < 0)
+    {
+        lastDownloadHour = currentHour;
+    }
+
     DownloadLogosInfo downloadLogosInfo;
-    downloadLogosInfo.thread      = this;
-    downloadLogosInfo.fileFactory = mFileFactory;
-    downloadLogosInfo.httpClient  = mHttpClient;
-    downloadLogosInfo.finished    = 0;
+    downloadLogosInfo.thread          = this;
+    downloadLogosInfo.fileFactory     = mFileFactory;
+    downloadLogosInfo.httpClient      = mHttpClient;
+    downloadLogosInfo.forceToDownload = lastDownloadHour == currentHour;
+    downloadLogosInfo.finished        = 0;
 
     processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 

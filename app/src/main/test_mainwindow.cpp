@@ -112,11 +112,11 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),                     QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"),                  QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),                    QVariant(0))).WillOnce(Return(QVariant(0)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(79))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(99))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Price"),      QVariant(61))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(139))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(139))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Turnover"),   QVariant(120))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Turnover"),   QVariant(86))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
         // clang-format on
@@ -410,7 +410,85 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
     makeDecisionThreadMock->wait();
 }
 
-TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
+TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
+{
+    InSequence seq;
+
+    StrictMock<TableRecordMock> tableRecordMock1;
+    StrictMock<TableRecordMock> tableRecordMock2;
+
+    QMutex        mutex;
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(
+            mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            mainWindow
+        )
+    )
+        .WillOnce(Return(&tableRecordMock1));
+    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
+    EXPECT_CALL(tableRecordMock1, updateAll());
+    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
+    EXPECT_CALL(
+        *tableRecordFactoryMock,
+        newInstance(
+            mainWindow->ui->stocksTableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            mainWindow
+        )
+    )
+        .WillOnce(Return(&tableRecordMock2));
+    EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
+
+    mainWindow->updateStocksTableWidget();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->tableRecords.size(),                    2);
+    ASSERT_EQ(mainWindow->tableRecords["aaaaa"],                  &tableRecordMock1);
+    ASSERT_EQ(mainWindow->tableRecords["bbbbb"],                  &tableRecordMock2);
+    // clang-format on
+
+    EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(tableRecordMock1, updateAll());
+    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
+    EXPECT_CALL(tableRecordMock2, updateAll());
+    EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
+
+    mainWindow->stocksTableUpdateAllTimerTicked();
+}
+
+TEST_F(Test_MainWindow, Test_stocksTableUpdatePriceTimerTicked)
 {
     InSequence seq;
 
@@ -490,7 +568,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateTimerTicked)
     EXPECT_CALL(tableRecordMock1, updatePrice());
     EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
 
-    mainWindow->stocksTableUpdateTimerTicked();
+    mainWindow->stocksTableUpdatePriceTimerTicked();
 
     ASSERT_EQ(mainWindow->lastPricesUpdates.isEmpty(), true);
 }

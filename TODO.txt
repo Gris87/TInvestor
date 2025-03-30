@@ -1,8 +1,4 @@
 Show stock name on hover
-Change default column width
-Download logos at midnight
-Put unknown logo if absent
-Add timer to do updateAll each 24h
 UI for Simulator and Auto-Pilot
 Build for Ubuntu
 Add CI to Github

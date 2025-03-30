@@ -138,6 +138,7 @@ TEST_F(Test_TableRecord, Test_updateAll)
 {
     InSequence seq;
 
+    EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
     EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
     EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
     EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));

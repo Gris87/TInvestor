@@ -92,7 +92,8 @@ public:
     QTimer*                      priceCollectTimer;
     QTimer*                      cleanupTimer;
     QTimer*                      makeDecisionTimer;
-    QTimer*                      stocksTableUpdateTimer;
+    QTimer*                      stocksTableUpdateAllTimer;
+    QTimer*                      stocksTableUpdatePriceTimer;
     QMap<QString, ITableRecord*> tableRecords;
     QSet<QString>                lastPricesUpdates;
 
@@ -145,7 +146,8 @@ public slots:
     void priceCollectTimerTicked();
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
-    void stocksTableUpdateTimerTicked();
+    void stocksTableUpdateAllTimerTicked();
+    void stocksTableUpdatePriceTimerTicked();
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
     void pricesChanged();

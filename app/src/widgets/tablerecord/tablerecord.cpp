@@ -30,8 +30,7 @@ TableRecord::TableRecord(
     qDebug() << "Create TableRecord";
 
     mStock->mutex->lock();
-    QString uid        = mStock->meta.uid;
-    qint32  priceNanos = mStock->meta.minPriceIncrement.nano;
+    qint32 priceNanos = mStock->meta.minPriceIncrement.nano;
     mStock->mutex->unlock();
 
     mPrecision = 9;
@@ -52,9 +51,6 @@ TableRecord::TableRecord(
     IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
         orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, mPrecision, tableWidget
     ); // tableWidget will take ownership
-
-    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), uid));
-    mStockTableItemWidget->setIcon(stockLogo);
 
     int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
@@ -79,9 +75,14 @@ TableRecord::~TableRecord()
 void TableRecord::updateAll()
 {
     mStock->mutex->lock();
+
+    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
+
+    mStockTableItemWidget->setIcon(stockLogo);
     mStockTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
     mStockTableItemWidget->setText(mStock->meta.ticker);
     mStockTableItemWidget->setFullText(mStock->meta.name);
+
     mStock->mutex->unlock();
 
     updatePrice();
