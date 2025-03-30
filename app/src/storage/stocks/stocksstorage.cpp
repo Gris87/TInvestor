@@ -6,6 +6,10 @@
 
 
 
+#define ONE_DAY_DOUBLE 86400000.0 // 24 * 60 * 60 * 1000 // 1 day
+
+
+
 StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase, IUserStorage* userStorage) :
     IStocksStorage(),
     mStocksDatabase(stocksDatabase),
@@ -266,12 +270,37 @@ void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int st
 
     Stock** stockArray = stocks.data();
 
-    Q_UNUSED(startTimestamp);
-    Q_UNUSED(stockArray);
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        // TODO: HOOYAK
+        Stock*       stock = stockArray[i];
+        QMutexLocker lock(stock->mutex);
+
+        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
+        int index = 0;
+
+        for (int i = stock->data.size() - 1; i >= 0; --i)
+        {
+            if (stock->data.at(i).timestamp <= startTimestamp)
+            {
+                index = i;
+
+                break;
+            }
+        }
+
+        if (index < stock->data.size())
+        {
+            qint64 totalTurnover = 0;
+
+            for (int i = index; i < stock->data.size(); ++i)
+            {
+                totalTurnover += qRound64(stock->data.at(i).quantity * stock->data.at(i).price);
+            }
+
+            qint64 deltaTimestamp = stock->data.last().timestamp - stock->data.at(index).timestamp;
+
+            stock->operational.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
+        }
     }
 }
 
