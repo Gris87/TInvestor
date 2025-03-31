@@ -20,3 +20,8 @@ StartSimulationDialog::~StartSimulationDialog()
 
     delete ui;
 }
+
+void StartSimulationDialog::on_startButton_clicked()
+{
+    accept();
+}

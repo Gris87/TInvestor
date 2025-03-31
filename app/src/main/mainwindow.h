@@ -10,6 +10,8 @@
 #include "src/dialogs/authdialog/iauthdialogfactory.h"
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory.h"
+#include "src/dialogs/startautopilotdialog/istartautopilotdialogfactory.h"
+#include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
@@ -49,6 +51,8 @@ public:
         IAuthDialogFactory*                authDialogFactory,
         ISettingsDialogFactory*            settingsDialogFactory,
         IOrderWavesDialogFactory*          orderWavesDialogFactory,
+        IStartSimulationDialogFactory*     startSimulationDialogFactory,
+        IStartAutoPilotDialogFactory*      startAutoPilotDialogFactory,
         IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
         IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -111,6 +115,8 @@ private:
     IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
     IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
+    IStartSimulationDialogFactory*     mStartSimulationDialogFactory;
+    IStartAutoPilotDialogFactory*      mStartAutoPilotDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
     IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory*  mBuyDecision2ConfigWidgetFactory;
@@ -166,4 +172,6 @@ private slots:
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
     void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);
+    void on_startSimulationButton_clicked();
+    void on_startAutoPilotButton_clicked();
 };

@@ -290,7 +290,7 @@
        <item>
         <widget class="QCheckBox" name="simulatorConfigCommonCheckBox">
          <property name="text">
-          <string>Use the same config for Simulator and Auto-pilot</string>
+          <string>Use the same config for simulator and auto-pilot</string>
          </property>
         </widget>
        </item>
@@ -326,7 +326,7 @@
        <item>
         <widget class="QCheckBox" name="autoPilotConfigCommonCheckBox">
          <property name="text">
-          <string>Use the same config for Simulator and Auto-pilot</string>
+          <string>Use the same config for simulator and auto-pilot</string>
          </property>
         </widget>
        </item>

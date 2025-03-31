@@ -282,129 +282,129 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="170"/>
+        <location filename="../../src/main/mainwindow.ui" line="20"/>
+        <location filename="../../src/main/mainwindow.cpp" line="174"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="97"/>
+        <location filename="../../src/main/mainwindow.ui" line="103"/>
         <source>Price change from moment:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="161"/>
+        <location filename="../../src/main/mainwindow.ui" line="167"/>
         <source>Stock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="166"/>
+        <location filename="../../src/main/mainwindow.ui" line="172"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="171"/>
+        <location filename="../../src/main/mainwindow.ui" line="177"/>
         <source>Change from day start</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="176"/>
+        <location filename="../../src/main/mainwindow.ui" line="182"/>
         <source>Change from some date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="181"/>
+        <location filename="../../src/main/mainwindow.ui" line="187"/>
         <source>Turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="184"/>
+        <location filename="../../src/main/mainwindow.ui" line="190"/>
         <source>Average daily turnover in the last 31 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="193"/>
+        <location filename="../../src/main/mainwindow.ui" line="199"/>
         <source>Payback</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="196"/>
+        <location filename="../../src/main/mainwindow.ui" line="202"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="205"/>
+        <location filename="../../src/main/mainwindow.ui" line="211"/>
         <source>Actions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="237"/>
+        <location filename="../../src/main/mainwindow.ui" line="243"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="294"/>
+        <location filename="../../src/main/mainwindow.ui" line="300"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="318"/>
+        <location filename="../../src/main/mainwindow.ui" line="324"/>
         <source>Keep money on account:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="372"/>
+        <location filename="../../src/main/mainwindow.ui" line="378"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="375"/>
+        <location filename="../../src/main/mainwindow.ui" line="381"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="396"/>
+        <location filename="../../src/main/mainwindow.ui" line="402"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="399"/>
+        <location filename="../../src/main/mainwindow.ui" line="405"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="417"/>
+        <location filename="../../src/main/mainwindow.ui" line="423"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="420"/>
+        <location filename="../../src/main/mainwindow.ui" line="426"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="438"/>
+        <location filename="../../src/main/mainwindow.ui" line="444"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="441"/>
+        <location filename="../../src/main/mainwindow.ui" line="447"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="456"/>
-        <location filename="../../src/main/mainwindow.ui" line="459"/>
+        <location filename="../../src/main/mainwindow.ui" line="462"/>
+        <location filename="../../src/main/mainwindow.ui" line="465"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="170"/>
+        <location filename="../../src/main/mainwindow.cpp" line="174"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="232"/>
+        <location filename="../../src/main/mainwindow.cpp" line="236"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
@@ -440,22 +440,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="93"/>
+        <location filename="../../src/main.cpp" line="95"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="93"/>
+        <location filename="../../src/main.cpp" line="95"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="105"/>
+        <location filename="../../src/main.cpp" line="107"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="105"/>
+        <location filename="../../src/main.cpp" line="107"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -586,7 +586,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="293"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="329"/>
-        <source>Use the same config for Simulator and Auto-pilot</source>
+        <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
@@ -615,6 +615,32 @@
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="157"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="180"/>
         <source>Decision maker</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>StartAutoPilotDialog</name>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="14"/>
+        <source>Start auto-pilot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="53"/>
+        <source>Start</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>StartSimulationDialog</name>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="14"/>
+        <source>Start simulation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="53"/>
+        <source>Start</source>
         <translation></translation>
     </message>
 </context>

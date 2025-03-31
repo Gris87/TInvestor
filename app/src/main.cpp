@@ -26,6 +26,8 @@
 #include "src/dialogs/authdialog/authdialogfactory.h"
 #include "src/dialogs/orderwavesdialog/orderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
+#include "src/dialogs/startautopilotdialog/startautopilotdialogfactory.h"
+#include "src/dialogs/startsimulationdialog/startsimulationdialogfactory.h"
 #include "src/grpc/grpcclient.h"
 #include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
@@ -110,9 +112,11 @@ int runApplication(int argc, char* argv[])
 
     QApplication::setQuitOnLastWindowClosed(false);
 
-    AuthDialogFactory       authDialogFactory;
-    SettingsDialogFactory   settingsDialogFactory;
-    OrderWavesDialogFactory orderWavesDialogFactory;
+    AuthDialogFactory            authDialogFactory;
+    SettingsDialogFactory        settingsDialogFactory;
+    OrderWavesDialogFactory      orderWavesDialogFactory;
+    StartSimulationDialogFactory startSimulationDialogFactory;
+    StartAutoPilotDialogFactory  startAutoPilotDialogFactory;
 
     DecisionMakerConfigWidgetFactory decisionMakerConfigWidgetFactory;
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
@@ -268,6 +272,8 @@ int runApplication(int argc, char* argv[])
         &authDialogFactory,
         &settingsDialogFactory,
         &orderWavesDialogFactory,
+        &startSimulationDialogFactory,
+        &startAutoPilotDialogFactory,
         &decisionMakerConfigWidgetFactory,
         &buyDecision1ConfigWidgetFactory,
         &buyDecision2ConfigWidgetFactory,

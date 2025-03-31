@@ -25,4 +25,7 @@ public:
     StartSimulationDialog& operator=(const StartSimulationDialog& another) = delete;
 
     Ui::StartSimulationDialog* ui;
+
+private slots:
+    void on_startButton_clicked();
 };

@@ -20,3 +20,8 @@ StartAutoPilotDialog::~StartAutoPilotDialog()
 
     delete ui;
 }
+
+void StartAutoPilotDialog::on_startButton_clicked()
+{
+    accept();
+}

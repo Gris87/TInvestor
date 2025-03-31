@@ -18,6 +18,8 @@ MainWindow::MainWindow(
     IAuthDialogFactory*                authDialogFactory,
     ISettingsDialogFactory*            settingsDialogFactory,
     IOrderWavesDialogFactory*          orderWavesDialogFactory,
+    IStartSimulationDialogFactory*     startSimulationDialogFactory,
+    IStartAutoPilotDialogFactory*      startAutoPilotDialogFactory,
     IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
     IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
     IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
@@ -63,6 +65,8 @@ MainWindow::MainWindow(
     mAuthDialogFactory(authDialogFactory),
     mSettingsDialogFactory(settingsDialogFactory),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
+    mStartSimulationDialogFactory(startSimulationDialogFactory),
+    mStartAutoPilotDialogFactory(startAutoPilotDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
     mBuyDecision1ConfigWidgetFactory(buyDecision1ConfigWidgetFactory),
     mBuyDecision2ConfigWidgetFactory(buyDecision2ConfigWidgetFactory),
@@ -465,6 +469,26 @@ void MainWindow::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
     pricesChanged();
+}
+
+void MainWindow::on_startSimulationButton_clicked()
+{
+    std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(this);
+
+    if (dialog->exec())
+    {
+        // TODO: Start simulation
+    }
+}
+
+void MainWindow::on_startAutoPilotButton_clicked()
+{
+    std::shared_ptr<IStartAutoPilotDialog> dialog = mStartAutoPilotDialogFactory->newInstance(this);
+
+    if (dialog->exec())
+    {
+        // TODO: Start auto-pilot
+    }
 }
 
 void MainWindow::init()

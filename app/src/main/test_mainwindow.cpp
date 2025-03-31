@@ -18,6 +18,10 @@
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialog_mock.h"
 #include "src/dialogs/settingsdialog/isettingsdialogfactory_mock.h"
+#include "src/dialogs/startautopilotdialog/istartautopilotdialog_mock.h"
+#include "src/dialogs/startautopilotdialog/istartautopilotdialogfactory_mock.h"
+#include "src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h"
+#include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
@@ -66,6 +70,8 @@ protected:
         authDialogFactoryMock                = new StrictMock<AuthDialogFactoryMock>();
         settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
         orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
+        startSimulationDialogFactoryMock     = new StrictMock<StartSimulationDialogFactoryMock>();
+        startAutoPilotDialogFactoryMock      = new StrictMock<StartAutoPilotDialogFactoryMock>();
         decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
         buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
         buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
@@ -137,6 +143,8 @@ protected:
             authDialogFactoryMock,
             settingsDialogFactoryMock,
             orderWavesDialogFactoryMock,
+            startSimulationDialogFactoryMock,
+            startAutoPilotDialogFactoryMock,
             decisionMakerConfigWidgetFactoryMock,
             buyDecision1ConfigWidgetFactoryMock,
             buyDecision2ConfigWidgetFactoryMock,
@@ -193,6 +201,8 @@ protected:
         delete authDialogFactoryMock;
         delete settingsDialogFactoryMock;
         delete orderWavesDialogFactoryMock;
+        delete startSimulationDialogFactoryMock;
+        delete startAutoPilotDialogFactoryMock;
         delete decisionMakerConfigWidgetFactoryMock;
         delete buyDecision1ConfigWidgetFactoryMock;
         delete buyDecision2ConfigWidgetFactoryMock;
@@ -236,6 +246,8 @@ protected:
     StrictMock<AuthDialogFactoryMock>*                authDialogFactoryMock;
     StrictMock<SettingsDialogFactoryMock>*            settingsDialogFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
+    StrictMock<StartSimulationDialogFactoryMock>*     startSimulationDialogFactoryMock;
+    StrictMock<StartAutoPilotDialogFactoryMock>*      startAutoPilotDialogFactoryMock;
     StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>*  buyDecision2ConfigWidgetFactoryMock;

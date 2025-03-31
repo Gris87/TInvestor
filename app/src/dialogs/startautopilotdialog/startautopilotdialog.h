@@ -25,4 +25,7 @@ public:
     StartAutoPilotDialog& operator=(const StartAutoPilotDialog& another) = delete;
 
     Ui::StartAutoPilotDialog* ui;
+
+private slots:
+    void on_startButton_clicked();
 };
