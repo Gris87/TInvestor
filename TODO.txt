@@ -1,4 +1,7 @@
 UI for Simulator and Auto-Pilot
+Store filter state
+Store from price date
+Hide/Show filter button
 Move ui->stocksTableWidget to dedicated module
 Build for Ubuntu
 Add CI to Github

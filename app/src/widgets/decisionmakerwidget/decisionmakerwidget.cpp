@@ -37,6 +37,8 @@ DecisionMakerWidget::DecisionMakerWidget(ISettingsEditor* settingsEditor, const 
     qDebug() << "Create DecisionMakerWidget";
 
     ui->setupUi(this);
+
+    ui->tabWidget->setCurrentWidget(ui->operationsTab);
 }
 
 DecisionMakerWidget::~DecisionMakerWidget()
