@@ -70,6 +70,8 @@ SOURCES += \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
+    src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
+    src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
     src/widgets/filterwidget/filterwidget.cpp \
     src/widgets/filterwidget/filterwidgetfactory.cpp \
     src/widgets/orderwaveswidget/orderwaveswidget.cpp \
@@ -209,6 +211,10 @@ HEADERS += \
     src/utils/style/darkpalette.h \
     src/utils/timeutils/itimeutils.h \
     src/utils/timeutils/timeutils.h \
+    src/widgets/decisionmakerwidget/decisionmakerwidget.h \
+    src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
+    src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
+    src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
     src/widgets/filterwidget/filterwidget.h \
     src/widgets/filterwidget/filterwidgetfactory.h \
     src/widgets/filterwidget/ifilterwidget.h \
@@ -251,6 +257,7 @@ FORMS += \
     src/dialogs/orderwavesdialog/orderwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \
     src/main/mainwindow.ui \
+    src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/filterwidget/filterwidget.ui \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
     src/widgets/tablerecord/items/stock/stocktableitemwidget.ui \

@@ -258,7 +258,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="layoutForSimulatorMakeDecision">
+         <layout class="QVBoxLayout" name="layoutForSimulatorDecisionMaker">
           <property name="spacing">
            <number>4</number>
           </property>
@@ -332,7 +332,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="layoutForAutoPilotMakeDecision">
+         <layout class="QVBoxLayout" name="layoutForAutoPilotDecisionMaker">
           <property name="spacing">
            <number>4</number>
           </property>

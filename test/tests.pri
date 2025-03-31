@@ -66,6 +66,8 @@ SOURCES += \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
+    src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
+    src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
     src/widgets/filterwidget/test_filterwidget.cpp \
     src/widgets/filterwidget/test_filterwidgetfactory.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidget.cpp \
@@ -137,6 +139,8 @@ HEADERS += \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
+    src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
+    src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
     src/widgets/filterwidget/ifilterwidgetfactory_mock.h \
     src/widgets/filterwidget/ifilterwidget_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
