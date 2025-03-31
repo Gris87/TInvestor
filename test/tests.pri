@@ -31,6 +31,10 @@ SOURCES += \
     src/dialogs/orderwavesdialog/test_orderwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/test_settingsdialog.cpp \
     src/dialogs/settingsdialog/test_settingsdialogfactory.cpp \
+    src/dialogs/startautopilotdialog/test_startautopilotdialog.cpp \
+    src/dialogs/startautopilotdialog/test_startautopilotdialogfactory.cpp \
+    src/dialogs/startsimulationdialog/test_startsimulationdialog.cpp \
+    src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
     src/domain/orderbook/test_orderbook.cpp \
     src/domain/quotation/test_quotation.cpp \
@@ -117,6 +121,10 @@ HEADERS += \
     src/dialogs/orderwavesdialog/iorderwavesdialog_mock.h \
     src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
+    src/dialogs/startautopilotdialog/istartautopilotdialogfactory_mock.h \
+    src/dialogs/startautopilotdialog/istartautopilotdialog_mock.h \
+    src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h \
+    src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h \
     src/grpc/igrpcclient_mock.h \
     src/grpc/irawgrpcclient_mock.h \
     src/storage/stocks/istocksstorage_mock.h \

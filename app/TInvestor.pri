@@ -36,6 +36,10 @@ SOURCES += \
     src/dialogs/orderwavesdialog/orderwavesdialogfactory.cpp \
     src/dialogs/settingsdialog/settingsdialog.cpp \
     src/dialogs/settingsdialog/settingsdialogfactory.cpp \
+    src/dialogs/startautopilotdialog/startautopilotdialog.cpp \
+    src/dialogs/startautopilotdialog/startautopilotdialogfactory.cpp \
+    src/dialogs/startsimulationdialog/startsimulationdialog.cpp \
+    src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
     src/domain/filter/filter.cpp \
     src/domain/orderbook/orderbook.cpp \
     src/domain/quotation/quotation.cpp \
@@ -151,6 +155,14 @@ HEADERS += \
     src/dialogs/settingsdialog/isettingsdialogfactory.h \
     src/dialogs/settingsdialog/settingsdialog.h \
     src/dialogs/settingsdialog/settingsdialogfactory.h \
+    src/dialogs/startautopilotdialog/istartautopilotdialog.h \
+    src/dialogs/startautopilotdialog/istartautopilotdialogfactory.h \
+    src/dialogs/startautopilotdialog/startautopilotdialog.h \
+    src/dialogs/startautopilotdialog/startautopilotdialogfactory.h \
+    src/dialogs/startsimulationdialog/istartsimulationdialog.h \
+    src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h \
+    src/dialogs/startsimulationdialog/startsimulationdialog.h \
+    src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
     src/domain/filter/filter.h \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
@@ -256,6 +268,8 @@ FORMS += \
     src/dialogs/authdialog/authdialog.ui \
     src/dialogs/orderwavesdialog/orderwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \
+    src/dialogs/startautopilotdialog/startautopilotdialog.ui \
+    src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/filterwidget/filterwidget.ui \
