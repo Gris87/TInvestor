@@ -132,62 +132,86 @@
 <context>
     <name>DecisionMakerWidget</name>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="36"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="40"/>
         <source>Operations</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="41"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="96"/>
         <source>Chart</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="46"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="121"/>
         <source>Logs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="55"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="67"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="159"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="60"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="164"/>
         <source>Available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="65"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="77"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="169"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="70"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="174"/>
         <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="75"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="87"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="179"/>
         <source>Cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="80"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="62"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="143"/>
+        <source>Time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="72"/>
+        <source>Operation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="82"/>
+        <source>Quantity</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="148"/>
+        <source>Message</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="184"/>
         <source>Part</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="85"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="189"/>
         <source>Income</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="90"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="194"/>
         <source>Income, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="95"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="199"/>
         <source>In a day, %</source>
         <translation></translation>
     </message>
