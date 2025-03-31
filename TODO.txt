@@ -1,4 +1,5 @@
 UI for Simulator and Auto-Pilot
+Move ui->stocksTableWidget to dedicated module
 Build for Ubuntu
 Add CI to Github
 

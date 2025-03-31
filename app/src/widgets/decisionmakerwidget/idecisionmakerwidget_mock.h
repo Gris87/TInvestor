@@ -19,4 +19,7 @@ public:
 
     DecisionMakerWidgetMock(const DecisionMakerWidgetMock& another)            = delete;
     DecisionMakerWidgetMock& operator=(const DecisionMakerWidgetMock& another) = delete;
+
+    MOCK_METHOD(void, saveWindowState, (), (override));
+    MOCK_METHOD(void, loadWindowState, (), (override));
 };

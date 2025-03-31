@@ -20,5 +20,7 @@ public:
     DecisionMakerWidgetFactoryMock(const DecisionMakerWidgetFactoryMock& another)            = delete;
     DecisionMakerWidgetFactoryMock& operator=(const DecisionMakerWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IDecisionMakerWidget*, newInstance, (QWidget * parent), (override));
+    MOCK_METHOD(
+        IDecisionMakerWidget*, newInstance, (ISettingsEditor * settingsEditor, const QString& type, QWidget* parent), (override)
+    );
 };

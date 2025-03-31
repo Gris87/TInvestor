@@ -15,5 +15,5 @@ public:
     DecisionMakerWidgetFactory(const DecisionMakerWidgetFactory& another)            = delete;
     DecisionMakerWidgetFactory& operator=(const DecisionMakerWidgetFactory& another) = delete;
 
-    IDecisionMakerWidget* newInstance(QWidget* parent) override;
+    IDecisionMakerWidget* newInstance(ISettingsEditor* settingsEditor, const QString& type, QWidget* parent) override;
 };

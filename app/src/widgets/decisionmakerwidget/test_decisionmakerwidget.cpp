@@ -3,6 +3,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/settingseditor/isettingseditor_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
+
 
 
 class Test_DecisionMakerWidget : public ::testing::Test
@@ -10,15 +20,19 @@ class Test_DecisionMakerWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        decisionMakerWidget = new DecisionMakerWidget();
+        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+
+        decisionMakerWidget = new DecisionMakerWidget(settingsEditorMock, "Simulator");
     }
 
     void TearDown()
     {
         delete decisionMakerWidget;
+        delete settingsEditorMock;
     }
 
-    DecisionMakerWidget* decisionMakerWidget;
+    DecisionMakerWidget*            decisionMakerWidget;
+    StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 
 

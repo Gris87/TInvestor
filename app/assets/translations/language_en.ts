@@ -130,6 +130,69 @@
     </message>
 </context>
 <context>
+    <name>DecisionMakerWidget</name>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="36"/>
+        <source>Operations</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="41"/>
+        <source>Chart</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="46"/>
+        <source>Logs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="55"/>
+        <source>Name</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="60"/>
+        <source>Available</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="65"/>
+        <source>Price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="70"/>
+        <source>Avg price</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="75"/>
+        <source>Cost</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="80"/>
+        <source>Part</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="85"/>
+        <source>Income</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="90"/>
+        <source>Income, %</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="95"/>
+        <source>In a day, %</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>FilterWidget</name>
     <message>
         <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="32"/>
@@ -196,113 +259,128 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="162"/>
+        <location filename="../../src/main/mainwindow.cpp" line="170"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="94"/>
+        <location filename="../../src/main/mainwindow.ui" line="97"/>
         <source>Price change from moment:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="158"/>
+        <location filename="../../src/main/mainwindow.ui" line="161"/>
         <source>Stock</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="163"/>
+        <location filename="../../src/main/mainwindow.ui" line="166"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="168"/>
+        <location filename="../../src/main/mainwindow.ui" line="171"/>
         <source>Change from day start</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="173"/>
+        <location filename="../../src/main/mainwindow.ui" line="176"/>
         <source>Change from some date</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="178"/>
+        <location filename="../../src/main/mainwindow.ui" line="181"/>
         <source>Turnover</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="181"/>
+        <location filename="../../src/main/mainwindow.ui" line="184"/>
         <source>Average daily turnover in the last 31 days</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="190"/>
+        <location filename="../../src/main/mainwindow.ui" line="193"/>
         <source>Payback</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="193"/>
+        <location filename="../../src/main/mainwindow.ui" line="196"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="202"/>
+        <location filename="../../src/main/mainwindow.ui" line="205"/>
         <source>Actions</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="240"/>
+        <location filename="../../src/main/mainwindow.ui" line="237"/>
+        <source>Start simulation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="294"/>
+        <source>Start auto-pilot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="318"/>
+        <source>Keep money on account:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="372"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="243"/>
+        <location filename="../../src/main/mainwindow.ui" line="375"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="264"/>
+        <location filename="../../src/main/mainwindow.ui" line="396"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="267"/>
+        <location filename="../../src/main/mainwindow.ui" line="399"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="285"/>
+        <location filename="../../src/main/mainwindow.ui" line="417"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="288"/>
+        <location filename="../../src/main/mainwindow.ui" line="420"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="306"/>
+        <location filename="../../src/main/mainwindow.ui" line="438"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="309"/>
+        <location filename="../../src/main/mainwindow.ui" line="441"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="324"/>
-        <location filename="../../src/main/mainwindow.ui" line="327"/>
+        <location filename="../../src/main/mainwindow.ui" line="456"/>
+        <location filename="../../src/main/mainwindow.ui" line="459"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="162"/>
+        <location filename="../../src/main/mainwindow.cpp" line="170"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="223"/>
+        <location filename="../../src/main/mainwindow.cpp" line="232"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
@@ -323,14 +401,14 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="136"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="169"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="149"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="182"/>
         <source>Downloading stocks logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="445"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="453"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="467"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="475"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -338,22 +416,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="92"/>
+        <location filename="../../src/main.cpp" line="93"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="92"/>
+        <location filename="../../src/main.cpp" line="93"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="104"/>
+        <location filename="../../src/main.cpp" line="105"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="104"/>
+        <location filename="../../src/main.cpp" line="105"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>

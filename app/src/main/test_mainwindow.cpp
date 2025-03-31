@@ -101,8 +101,10 @@ protected:
         QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
         EXPECT_CALL(*filterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(filterWidgetMock));
-        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(simulatorDecisionMakerWidgetMock));
-        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(autoPilotDecisionMakerWidgetMock));
+        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
+            .WillOnce(Return(simulatorDecisionMakerWidgetMock));
+        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("AutoPilot"), NotNull()))
+            .WillOnce(Return(autoPilotDecisionMakerWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());

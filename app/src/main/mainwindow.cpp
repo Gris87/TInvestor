@@ -96,8 +96,8 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
     mFilterWidget                 = filterWidgetFactory->newInstance(this);
-    mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(this);
-    mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(this);
+    mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
+    mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
     ui->layoutForFilterWidget->addWidget(mFilterWidget);
     ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
@@ -603,6 +603,9 @@ void MainWindow::saveWindowState()
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Payback",    ui->stocksTableWidget->columnWidth(PAYBACK_COLUMN));
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Actions",    ui->stocksTableWidget->columnWidth(ACTIONS_COLUMN));
     // clang-format on
+
+    mSimulatorDecisionMakerWidget->saveWindowState();
+    mAutoPilotDecisionMakerWidget->saveWindowState();
 }
 
 void MainWindow::loadWindowState()
@@ -622,6 +625,9 @@ void MainWindow::loadWindowState()
     ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    120).toInt());
     ui->stocksTableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Actions",    83).toInt());
     // clang-format on
+
+    mSimulatorDecisionMakerWidget->loadWindowState();
+    mAutoPilotDecisionMakerWidget->loadWindowState();
 
     updateStackWidgetToolbar();
 }

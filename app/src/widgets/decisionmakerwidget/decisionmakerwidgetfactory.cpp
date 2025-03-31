@@ -17,7 +17,8 @@ DecisionMakerWidgetFactory::~DecisionMakerWidgetFactory()
     qDebug() << "Destroy DecisionMakerWidgetFactory";
 }
 
-IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(QWidget* parent)
+IDecisionMakerWidget*
+DecisionMakerWidgetFactory::newInstance(ISettingsEditor* settingsEditor, const QString& type, QWidget* parent)
 {
-    return new DecisionMakerWidget(parent);
+    return new DecisionMakerWidget(settingsEditor, type, parent);
 }
