@@ -30,6 +30,7 @@ MainWindow::MainWindow(
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
     ITableRecordFactory*               tableRecordFactory,
     IFilterWidgetFactory*              filterWidgetFactory,
+    IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
@@ -94,8 +95,13 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mFilterWidget = filterWidgetFactory->newInstance(this);
+    mFilterWidget                 = filterWidgetFactory->newInstance(this);
+    mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(this);
+    mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(this);
+
     ui->layoutForFilterWidget->addWidget(mFilterWidget);
+    ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
+    ui->layoutForAutoPilotDecisionMaker->addWidget(mAutoPilotDecisionMakerWidget);
 
     mTrayIcon = trayIconFactory->newInstance(this);
 

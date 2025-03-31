@@ -20,7 +20,8 @@
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
-#include "src/widgets/filterwidget/filterwidgetfactory.h"
+#include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
+#include "src/widgets/filterwidget/ifilterwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -60,6 +61,7 @@ public:
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
         ITableRecordFactory*               tableRecordFactory,
         IFilterWidgetFactory*              filterWidgetFactory,
+        IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
@@ -121,6 +123,8 @@ private:
     IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
     ITableRecordFactory*               mTableRecordFactory;
     IFilterWidget*                     mFilterWidget;
+    IDecisionMakerWidget*              mSimulatorDecisionMakerWidget;
+    IDecisionMakerWidget*              mAutoPilotDecisionMakerWidget;
     ITrayIcon*                         mTrayIcon;
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;

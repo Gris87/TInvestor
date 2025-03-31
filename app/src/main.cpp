@@ -47,6 +47,7 @@
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
+#include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
 #include "src/widgets/filterwidget/filterwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
 #include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
@@ -124,6 +125,7 @@ int runApplication(int argc, char* argv[])
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     FilterWidgetFactory              filterWidgetFactory;
+    DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
     TableRecordFactory tableRecordFactory;
     TrayIconFactory    trayIconFactory;
@@ -278,6 +280,7 @@ int runApplication(int argc, char* argv[])
         &orderWavesWidgetFactory,
         &tableRecordFactory,
         &filterWidgetFactory,
+        &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,
         &stocksStorage,

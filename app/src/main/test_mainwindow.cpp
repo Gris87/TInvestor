@@ -30,6 +30,8 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
+#include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h"
 #include "src/widgets/filterwidget/ifilterwidget_mock.h"
 #include "src/widgets/filterwidget/ifilterwidgetfactory_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
@@ -76,6 +78,7 @@ protected:
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         filterWidgetFactoryMock              = new StrictMock<FilterWidgetFactoryMock>();
+        decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
@@ -91,11 +94,15 @@ protected:
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
         filterWidgetMock                     = new StrictMock<FilterWidgetMock>();
+        simulatorDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
+        autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
         QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
         EXPECT_CALL(*filterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(filterWidgetMock));
+        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(simulatorDecisionMakerWidgetMock));
+        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(autoPilotDecisionMakerWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
@@ -140,6 +147,7 @@ protected:
             orderWavesWidgetFactoryMock,
             tableRecordFactoryMock,
             filterWidgetFactoryMock,
+            decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
             stocksStorageMock,
@@ -195,6 +203,7 @@ protected:
         delete orderWavesWidgetFactoryMock;
         delete tableRecordFactoryMock;
         delete filterWidgetFactoryMock;
+        delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
         delete stocksStorageMock;
@@ -212,6 +221,8 @@ protected:
         // It will be deleted by `delete ui;`
         /*
         delete filterWidgetMock;
+        delete simulatorDecisionMakerWidgetMock;
+        delete autoPilotDecisionMakerWidgetMock;
         */
         delete trayIconMock;
     }
@@ -235,6 +246,7 @@ protected:
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<FilterWidgetFactoryMock>*              filterWidgetFactoryMock;
+    StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
@@ -250,6 +262,8 @@ protected:
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
     StrictMock<FilterWidgetMock>*                     filterWidgetMock;
+    StrictMock<DecisionMakerWidgetMock>*              simulatorDecisionMakerWidgetMock;
+    StrictMock<DecisionMakerWidgetMock>*              autoPilotDecisionMakerWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;
 };
 
