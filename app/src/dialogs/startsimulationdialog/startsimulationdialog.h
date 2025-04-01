@@ -4,6 +4,8 @@
 
 #include "src/dialogs/startsimulationdialog/istartsimulationdialog.h"
 
+#include "src/utils/settingseditor/isettingseditor.h"
+
 
 
 namespace Ui
@@ -18,7 +20,7 @@ class StartSimulationDialog : public IStartSimulationDialog
     Q_OBJECT
 
 public:
-    explicit StartSimulationDialog(QWidget* parent = nullptr);
+    explicit StartSimulationDialog(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
     ~StartSimulationDialog();
 
     StartSimulationDialog(const StartSimulationDialog& another)            = delete;
@@ -26,6 +28,15 @@ public:
 
     Ui::StartSimulationDialog* ui;
 
+private:
+    void saveWindowState();
+    void loadWindowState();
+
+    ISettingsEditor* mSettingsEditor;
+
 private slots:
+    void on_dateRangeRadioButton_toggled(bool checked);
+    void on_fromDateEdit_dateChanged(const QDate& date);
+    void on_toDateEdit_dateChanged(const QDate& date);
     void on_startButton_clicked();
 };

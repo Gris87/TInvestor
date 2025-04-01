@@ -3,6 +3,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/settingseditor/isettingseditor_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
+
 
 
 class Test_StartAutoPilotDialog : public ::testing::Test
@@ -10,15 +20,19 @@ class Test_StartAutoPilotDialog : public ::testing::Test
 protected:
     void SetUp()
     {
-        dialog = new StartAutoPilotDialog();
+        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+
+        dialog = new StartAutoPilotDialog(settingsEditorMock);
     }
 
     void TearDown()
     {
         delete dialog;
+        delete settingsEditorMock;
     }
 
     StartAutoPilotDialog* dialog;
+    StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 
 

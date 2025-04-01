@@ -17,7 +17,7 @@ StartAutoPilotDialogFactory::~StartAutoPilotDialogFactory()
     qDebug() << "Destroy StartAutoPilotDialogFactory";
 }
 
-std::shared_ptr<IStartAutoPilotDialog> StartAutoPilotDialogFactory::newInstance(QWidget* parent)
+std::shared_ptr<IStartAutoPilotDialog> StartAutoPilotDialogFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent)
 {
-    return std::shared_ptr<IStartAutoPilotDialog>(new StartAutoPilotDialog(parent));
+    return std::shared_ptr<IStartAutoPilotDialog>(new StartAutoPilotDialog(settingsEditor, parent));
 }

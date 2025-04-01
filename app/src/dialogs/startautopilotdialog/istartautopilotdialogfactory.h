@@ -4,6 +4,8 @@
 
 #include "src/dialogs/startautopilotdialog/istartautopilotdialog.h"
 
+#include "src/utils/settingseditor/isettingseditor.h"
+
 
 
 class IStartAutoPilotDialogFactory
@@ -17,5 +19,5 @@ public:
     IStartAutoPilotDialogFactory(const IStartAutoPilotDialogFactory& another)            = delete;
     IStartAutoPilotDialogFactory& operator=(const IStartAutoPilotDialogFactory& another) = delete;
 
-    virtual std::shared_ptr<IStartAutoPilotDialog> newInstance(QWidget* parent) = 0;
+    virtual std::shared_ptr<IStartAutoPilotDialog> newInstance(ISettingsEditor* settingsEditor, QWidget* parent) = 0;
 };

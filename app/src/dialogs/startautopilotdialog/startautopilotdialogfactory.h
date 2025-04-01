@@ -15,5 +15,5 @@ public:
     StartAutoPilotDialogFactory(const StartAutoPilotDialogFactory& another)            = delete;
     StartAutoPilotDialogFactory& operator=(const StartAutoPilotDialogFactory& another) = delete;
 
-    std::shared_ptr<IStartAutoPilotDialog> newInstance(QWidget* parent) override;
+    std::shared_ptr<IStartAutoPilotDialog> newInstance(ISettingsEditor* settingsEditor, QWidget* parent) override;
 };

@@ -473,7 +473,7 @@ void MainWindow::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime
 
 void MainWindow::on_startSimulationButton_clicked()
 {
-    std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(this);
+    std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
 
     if (dialog->exec())
     {
@@ -483,7 +483,7 @@ void MainWindow::on_startSimulationButton_clicked()
 
 void MainWindow::on_startAutoPilotButton_clicked()
 {
-    std::shared_ptr<IStartAutoPilotDialog> dialog = mStartAutoPilotDialogFactory->newInstance(this);
+    std::shared_ptr<IStartAutoPilotDialog> dialog = mStartAutoPilotDialogFactory->newInstance(mSettingsEditor, this);
 
     if (dialog->exec())
     {

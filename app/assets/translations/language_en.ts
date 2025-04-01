@@ -621,12 +621,32 @@
 <context>
     <name>StartAutoPilotDialog</name>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="14"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="26"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="53"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="47"/>
+        <source>Use account:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="57"/>
+        <source>Make decisions by internal driver</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="67"/>
+        <source>Follow operations on another account</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="86"/>
+        <source>Another account:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="117"/>
         <source>Start</source>
         <translation></translation>
     </message>
@@ -634,12 +654,27 @@
 <context>
     <name>StartSimulationDialog</name>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="14"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="26"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="53"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="47"/>
+        <source>In realtime mode</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="57"/>
+        <source>In specified date range</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="139"/>
+        <source>Try to detect the best configuration (this option may take a lot of time for calculation)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="167"/>
         <source>Start</source>
         <translation></translation>
     </message>

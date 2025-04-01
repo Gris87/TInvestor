@@ -17,7 +17,8 @@ StartSimulationDialogFactory::~StartSimulationDialogFactory()
     qDebug() << "Destroy StartSimulationDialogFactory";
 }
 
-std::shared_ptr<IStartSimulationDialog> StartSimulationDialogFactory::newInstance(QWidget* parent)
+std::shared_ptr<IStartSimulationDialog>
+StartSimulationDialogFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent)
 {
-    return std::shared_ptr<IStartSimulationDialog>(new StartSimulationDialog(parent));
+    return std::shared_ptr<IStartSimulationDialog>(new StartSimulationDialog(settingsEditor, parent));
 }

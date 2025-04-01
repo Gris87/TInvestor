@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>611</width>
-    <height>427</height>
+    <width>510</width>
+    <height>143</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>510</width>
+    <height>143</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>510</width>
+    <height>143</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Start simulation</string>
@@ -29,6 +41,108 @@
    <property name="bottomMargin">
     <number>4</number>
    </property>
+   <item>
+    <widget class="QRadioButton" name="realTimeRadioButton">
+     <property name="text">
+      <string>In realtime mode</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="dateRangeRadioButton">
+     <property name="text">
+      <string>In specified date range</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="dateRangeWidget" native="true">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+        <item>
+         <widget class="QDateEdit" name="fromDateEdit">
+          <property name="dateTime">
+           <datetime>
+            <hour>18</hour>
+            <minute>0</minute>
+            <second>0</second>
+            <year>2023</year>
+            <month>12</month>
+            <day>31</day>
+           </datetime>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string notr="true">-</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="toDateEdit">
+          <property name="dateTime">
+           <datetime>
+            <hour>18</hour>
+            <minute>0</minute>
+            <second>0</second>
+            <year>2024</year>
+            <month>12</month>
+            <day>31</day>
+           </datetime>
+          </property>
+          <property name="calendarPopup">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bestConfigCheckBox">
+        <property name="text">
+         <string>Try to detect the best configuration (this option may take a lot of time for calculation)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
