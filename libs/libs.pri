@@ -2,6 +2,7 @@ include(../libs/grpc.pri)
 include(../libs/investapi.pri)
 include(../libs/quazip.pri)
 include(../libs/simplecrypt.pri)
+include(../libs/verticallabel.pri)
 include(../libs/waitingspinner.pri)
 
 
