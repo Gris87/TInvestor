@@ -5,6 +5,10 @@
 
 
 
+#define DATE_FORMAT "yyyy-MM-dd"
+
+
+
 StartSimulationDialog::StartSimulationDialog(ISettingsEditor* settingsEditor, QWidget* parent) :
     IStartSimulationDialog(parent),
     ui(new Ui::StartSimulationDialog),
@@ -54,8 +58,31 @@ void StartSimulationDialog::on_startButton_clicked()
 
 void StartSimulationDialog::saveWindowState()
 {
+    qDebug() << "Saving window state";
+
+    // clang-format off
+    mSettingsEditor->setValue("StartSimulationDialog/startMoney", ui->startMoneySpinBox->value());
+    mSettingsEditor->setValue("StartSimulationDialog/dateRange",  ui->dateRangeRadioButton->isChecked());
+    mSettingsEditor->setValue("StartSimulationDialog/fromDate",   ui->fromDateEdit->date().toString(DATE_FORMAT));
+    mSettingsEditor->setValue("StartSimulationDialog/toDate",     ui->toDateEdit->date().toString(DATE_FORMAT));
+    mSettingsEditor->setValue("StartSimulationDialog/bestConfig", ui->bestConfigCheckBox->isChecked());
+    // clang-format on
 }
 
 void StartSimulationDialog::loadWindowState()
 {
+    qDebug() << "Loading window state";
+
+    int currentYear = QDateTime::currentDateTime().date().year();
+
+    QString defaultFromDate = QString("01-01-%1").arg(currentYear - 1);
+    QString defaultToDate   = QString("01-01-%1").arg(currentYear);
+
+    // clang-format off
+    ui->startMoneySpinBox->setValue(mSettingsEditor->value("StartSimulationDialog/startMoney",           100000).toInt());
+    ui->dateRangeRadioButton->setChecked(mSettingsEditor->value("StartSimulationDialog/dateRange",       false).toBool());
+    ui->fromDateEdit->setDate(QDate::fromString(mSettingsEditor->value("StartSimulationDialog/fromDate", defaultFromDate).toString(), DATE_FORMAT));
+    ui->toDateEdit->setDate(QDate::fromString(mSettingsEditor->value("StartSimulationDialog/toDate",     defaultToDate).toString(),   DATE_FORMAT));
+    ui->bestConfigCheckBox->setChecked(mSettingsEditor->value("StartSimulationDialog/bestConfig",        false).toBool());
+    // clang-format on
 }
