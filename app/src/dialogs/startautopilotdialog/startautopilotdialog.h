@@ -4,6 +4,8 @@
 
 #include "src/dialogs/startautopilotdialog/istartautopilotdialog.h"
 
+#include "src/storage/user/iuserstorage.h"
+#include "src/utils/messagebox/imessagebox.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -20,7 +22,9 @@ class StartAutoPilotDialog : public IStartAutoPilotDialog
     Q_OBJECT
 
 public:
-    explicit StartAutoPilotDialog(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    explicit StartAutoPilotDialog(
+        IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent = nullptr
+    );
     ~StartAutoPilotDialog();
 
     StartAutoPilotDialog(const StartAutoPilotDialog& another)            = delete;
@@ -29,9 +33,12 @@ public:
     Ui::StartAutoPilotDialog* ui;
 
 private:
+    QStringList getAccounts();
     void saveWindowState();
     void loadWindowState();
 
+    IUserStorage*    mUserStorage;
+    IMessageBoxUtils* mMessageBoxUtils;
     ISettingsEditor* mSettingsEditor;
 
 private slots:

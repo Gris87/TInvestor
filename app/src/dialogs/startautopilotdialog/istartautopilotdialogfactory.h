@@ -4,6 +4,8 @@
 
 #include "src/dialogs/startautopilotdialog/istartautopilotdialog.h"
 
+#include "src/storage/user/iuserstorage.h"
+#include "src/utils/messagebox/imessagebox.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -19,5 +21,7 @@ public:
     IStartAutoPilotDialogFactory(const IStartAutoPilotDialogFactory& another)            = delete;
     IStartAutoPilotDialogFactory& operator=(const IStartAutoPilotDialogFactory& another) = delete;
 
-    virtual std::shared_ptr<IStartAutoPilotDialog> newInstance(ISettingsEditor* settingsEditor, QWidget* parent) = 0;
+    virtual std::shared_ptr<IStartAutoPilotDialog> newInstance(
+        IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent
+    ) = 0;
 };

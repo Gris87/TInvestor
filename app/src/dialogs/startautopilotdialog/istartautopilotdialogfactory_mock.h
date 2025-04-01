@@ -21,6 +21,9 @@ public:
     StartAutoPilotDialogFactoryMock& operator=(const StartAutoPilotDialogFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        std::shared_ptr<IStartAutoPilotDialog>, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (override)
+        std::shared_ptr<IStartAutoPilotDialog>,
+        newInstance,
+        (IUserStorage * userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent),
+        (override)
     );
 };

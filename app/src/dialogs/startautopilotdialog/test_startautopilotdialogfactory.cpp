@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -21,10 +23,13 @@ TEST(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
+    StrictMock<UserStorageMock>    userStorageMock;
+    StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     StartAutoPilotDialogFactory factory;
 
-    std::shared_ptr<IStartAutoPilotDialog> dialog = factory.newInstance(&settingsEditorMock, nullptr);
+    std::shared_ptr<IStartAutoPilotDialog> dialog =
+        factory.newInstance(&userStorageMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

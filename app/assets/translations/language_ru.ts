@@ -646,9 +646,20 @@
         <translation>Другой счёт:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="117"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="130"/>
         <source>Start</source>
         <translation>Запуск</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="47"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="64"/>
+        <source>No another account</source>
+        <translation>Нет другого счёта</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="64"/>
+        <source>There is no any account to follow</source>
+        <translation>Нет счёта, за которым можно было бы следовать</translation>
     </message>
 </context>
 <context>
@@ -659,22 +670,27 @@
         <translation>Запуск симуляции</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="47"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="52"/>
+        <source>Start with amount of money:</source>
+        <translation>Начинать с суммой денег:</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="87"/>
         <source>In realtime mode</source>
         <translation>В режиме реального времени</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="57"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="97"/>
         <source>In specified date range</source>
         <translation>В указанном диапазоне дат</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="139"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="179"/>
         <source>Try to detect the best configuration (this option may take a lot of time for calculation)</source>
         <translation>Пытаться найти лучшую конфигурацию (эта опция может занять много времени)</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="167"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="220"/>
         <source>Start</source>
         <translation>Запуск</translation>
     </message>

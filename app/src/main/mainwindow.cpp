@@ -483,7 +483,8 @@ void MainWindow::on_startSimulationButton_clicked()
 
 void MainWindow::on_startAutoPilotButton_clicked()
 {
-    std::shared_ptr<IStartAutoPilotDialog> dialog = mStartAutoPilotDialogFactory->newInstance(mSettingsEditor, this);
+    std::shared_ptr<IStartAutoPilotDialog> dialog =
+        mStartAutoPilotDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, mSettingsEditor, this);
 
     if (dialog->exec())
     {

@@ -3,6 +3,8 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -20,18 +22,24 @@ class Test_StartAutoPilotDialog : public ::testing::Test
 protected:
     void SetUp()
     {
+        userStorageMock    = new StrictMock<UserStorageMock>();
+        messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
-        dialog = new StartAutoPilotDialog(settingsEditorMock);
+        dialog = new StartAutoPilotDialog(userStorageMock, messageBoxUtilsMock, settingsEditorMock);
     }
 
     void TearDown()
     {
         delete dialog;
+        delete userStorageMock;
+        delete messageBoxUtilsMock;
         delete settingsEditorMock;
     }
 
-    StartAutoPilotDialog* dialog;
+    StartAutoPilotDialog*           dialog;
+    StrictMock<UserStorageMock>*    userStorageMock;
+    StrictMock<MessageBoxUtilsMock>* messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 
