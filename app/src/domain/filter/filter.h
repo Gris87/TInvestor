@@ -23,6 +23,8 @@ struct Filter
 
     Filter& operator=(const Filter& another);
 
+    bool isActive() const;
+
     bool isFiltered(
         const QString& t,
         const QString& name,

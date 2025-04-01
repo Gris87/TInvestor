@@ -14,16 +14,29 @@ VerticalLabel::VerticalLabel(const QString& text, QWidget* parent) :
 {
 }
 
+void VerticalLabel::setColor(const QColor& color)
+{
+    mColor = color;
+
+    update();
+}
+
+const QColor& VerticalLabel::color() const
+{
+    return mColor;
+}
+
 void VerticalLabel::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
 
-    painter.setPen(Qt::black);
-    painter.setBrush(Qt::Dense1Pattern);
+    painter.setPen(mColor);
 
-    painter.rotate(90);
+    painter.translate(0, height());
+    painter.rotate(270);
 
-    painter.drawText(0, 0, text());
+    painter.setFont(font());
+    painter.drawText(0, 0, height(), width(), alignment(), text());
 }
 
 QSize VerticalLabel::minimumSizeHint() const

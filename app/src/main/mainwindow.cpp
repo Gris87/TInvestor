@@ -8,6 +8,8 @@
 
 
 #define AUTORUN_PATH "CurrentVersion/Run/TInvestor"
+#define GREY_COLOR   QColor("#AFC2D7")
+#define GREEN_COLOR  QColor("#2BD793")
 
 
 
@@ -478,6 +480,17 @@ void MainWindow::on_hideStocksControlsButton_clicked()
         ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsHiddenPage);
         ui->stocksControlWidget->setMaximumSize(24, 16777215);
         ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
+
+        if (mFilterWidget->getFilter().isActive())
+        {
+            ui->filterActiveLabel->setColor(GREEN_COLOR);
+            ui->filterActiveLabel->setText(tr("Filter active"));
+        }
+        else
+        {
+            ui->filterActiveLabel->setColor(GREY_COLOR);
+            ui->filterActiveLabel->setText(tr("Filter inactive"));
+        }
     }
     else
     {

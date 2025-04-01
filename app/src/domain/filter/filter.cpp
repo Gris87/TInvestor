@@ -77,6 +77,12 @@ Filter& Filter::operator=(const Filter& another)
     return *this;
 }
 
+bool Filter::isActive() const
+{
+    return (useTicker && ticker != "") || (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL) || usePrice ||
+           useDayStartChange || useDateChange || useTurnover || usePayback;
+}
+
 bool Filter::isFiltered(
     const QString& t,
     const QString& name,
