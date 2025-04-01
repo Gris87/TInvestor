@@ -471,6 +471,22 @@ void MainWindow::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime
     pricesChanged();
 }
 
+void MainWindow::on_hideStocksControlsButton_clicked()
+{
+    if (ui->stocksControlStackedWidget->currentWidget() == ui->controlsVisiblePage)
+    {
+        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsHiddenPage);
+        ui->stocksControlWidget->setMaximumSize(24, 16777215);
+        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
+    }
+    else
+    {
+        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsVisiblePage);
+        ui->stocksControlWidget->setMaximumSize(250, 16777215);
+        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
+    }
+}
+
 void MainWindow::on_startSimulationButton_clicked()
 {
     std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);

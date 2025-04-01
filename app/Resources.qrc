@@ -5,6 +5,7 @@
         <file>assets/images/auto_pilot.png</file>
         <file>assets/images/auto_pilot_selected.png</file>
         <file>assets/images/icon.png</file>
+        <file>assets/images/left_arrows.png</file>
         <file>assets/images/link.png</file>
         <file>assets/images/link_hover.png</file>
         <file>assets/images/lock.png</file>
@@ -12,6 +13,7 @@
         <file>assets/images/question.png</file>
         <file>assets/images/reset.png</file>
         <file>assets/images/reset_hover.png</file>
+        <file>assets/images/right_arrows.png</file>
         <file>assets/images/settings.png</file>
         <file>assets/images/simulation.png</file>
         <file>assets/images/simulation_selected.png</file>

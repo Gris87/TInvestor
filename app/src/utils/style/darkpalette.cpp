@@ -66,7 +66,7 @@ DarkPalette::DarkPalette() :
     setColor(QPalette::Disabled, QPalette::ToolTipText,     QColor("#A0B3C7"));
     setColor(QPalette::Disabled, QPalette::PlaceholderText, QColor("#718799"));
     setColor(QPalette::Disabled, QPalette::Text,            QColor("#151E26"));
-    setColor(QPalette::Disabled, QPalette::Button,          QColor("#243442"));
+    setColor(QPalette::Disabled, QPalette::Button,          QColor("#151E26"));
     setColor(QPalette::Disabled, QPalette::ButtonText,      QColor("#151E26"));
     setColor(QPalette::Disabled, QPalette::BrightText,      QColor("#FFFFFF"));
     setColor(QPalette::Disabled, QPalette::Light,           QColor("#314659"));

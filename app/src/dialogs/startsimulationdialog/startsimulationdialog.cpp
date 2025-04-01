@@ -75,8 +75,8 @@ void StartSimulationDialog::loadWindowState()
 
     int currentYear = QDateTime::currentDateTime().date().year();
 
-    QString defaultFromDate = QString("01-01-%1").arg(currentYear - 1);
-    QString defaultToDate   = QString("01-01-%1").arg(currentYear);
+    QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
+    QString defaultToDate   = QString("%1-01-01").arg(currentYear);
 
     // clang-format off
     ui->startMoneySpinBox->setValue(mSettingsEditor->value("StartSimulationDialog/startMoney",           100000).toInt());
