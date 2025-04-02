@@ -74,10 +74,18 @@ SOURCES += \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
+    src/widgets/accountchartwidget/accountchartwidget.cpp \
+    src/widgets/accountchartwidget/accountchartwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
+    src/widgets/logstablewidget/logstablewidget.cpp \
+    src/widgets/logstablewidget/logstablewidgetfactory.cpp \
+    src/widgets/operationstablewidget/operationstablewidget.cpp \
+    src/widgets/operationstablewidget/operationstablewidgetfactory.cpp \
     src/widgets/orderwaveswidget/orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.cpp \
+    src/widgets/portfoliotablewidget/portfoliotablewidget.cpp \
+    src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/stockstablewidget.cpp \
@@ -225,14 +233,30 @@ HEADERS += \
     src/utils/style/darkpalette.h \
     src/utils/timeutils/itimeutils.h \
     src/utils/timeutils/timeutils.h \
+    src/widgets/accountchartwidget/accountchartwidget.h \
+    src/widgets/accountchartwidget/accountchartwidgetfactory.h \
+    src/widgets/accountchartwidget/iaccountchartwidget.h \
+    src/widgets/accountchartwidget/iaccountchartwidgetfactory.h \
     src/widgets/decisionmakerwidget/decisionmakerwidget.h \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
+    src/widgets/logstablewidget/ilogstablewidget.h \
+    src/widgets/logstablewidget/ilogstablewidgetfactory.h \
+    src/widgets/logstablewidget/logstablewidget.h \
+    src/widgets/logstablewidget/logstablewidgetfactory.h \
+    src/widgets/operationstablewidget/ioperationstablewidget.h \
+    src/widgets/operationstablewidget/ioperationstablewidgetfactory.h \
+    src/widgets/operationstablewidget/operationstablewidget.h \
+    src/widgets/operationstablewidget/operationstablewidgetfactory.h \
     src/widgets/orderwaveswidget/iorderwaveswidget.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h \
     src/widgets/orderwaveswidget/orderwaveswidget.h \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.h \
+    src/widgets/portfoliotablewidget/iportfoliotablewidget.h \
+    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory.h \
+    src/widgets/portfoliotablewidget/portfoliotablewidget.h \
+    src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget.h \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h \
     src/widgets/stockscontrolswidget/stockscontrolswidget.h \
@@ -278,6 +302,9 @@ FORMS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
+    src/widgets/logstablewidget/logstablewidget.ui \
+    src/widgets/operationstablewidget/operationstablewidget.ui \
+    src/widgets/portfoliotablewidget/portfoliotablewidget.ui \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \

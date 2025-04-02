@@ -70,10 +70,18 @@ SOURCES += \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
+    src/widgets/accountchartwidget/test_accountchartwidget.cpp \
+    src/widgets/accountchartwidget/test_accountchartwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
+    src/widgets/logstablewidget/test_logstablewidget.cpp \
+    src/widgets/logstablewidget/test_logstablewidgetfactory.cpp \
+    src/widgets/operationstablewidget/test_operationstablewidget.cpp \
+    src/widgets/operationstablewidget/test_operationstablewidgetfactory.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidgetfactory.cpp \
+    src/widgets/portfoliotablewidget/test_portfoliotablewidget.cpp \
+    src/widgets/portfoliotablewidget/test_portfoliotablewidgetfactory.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/test_stockstablewidget.cpp \
@@ -149,10 +157,18 @@ HEADERS += \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
+    src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
+    src/widgets/accountchartwidget/iaccountchartwidget_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
+    src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h \
+    src/widgets/logstablewidget/ilogstablewidget_mock.h \
+    src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h \
+    src/widgets/operationstablewidget/ioperationstablewidget_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidget_mock.h \
+    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h \
+    src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
     src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
