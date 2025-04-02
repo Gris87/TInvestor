@@ -33,7 +33,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QStackedWidget" name="stocksControlStackedWidget">
+    <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -510,7 +510,7 @@
       <number>4</number>
      </property>
      <item>
-      <widget class="QPushButton" name="hideStocksControlsButton">
+      <widget class="QPushButton" name="hideButton">
        <property name="minimumSize">
         <size>
          <width>24</width>

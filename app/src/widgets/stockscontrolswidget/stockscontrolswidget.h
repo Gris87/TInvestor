@@ -55,5 +55,5 @@ private slots:
     void on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_paybackFromDoubleSpinBox_valueChanged(double value);
     void on_paybackToDoubleSpinBox_valueChanged(double value);
-    void on_hideStocksControlsButton_clicked();
+    void on_hideButton_clicked();
 };

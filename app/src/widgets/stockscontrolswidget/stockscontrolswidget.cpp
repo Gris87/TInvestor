@@ -259,13 +259,13 @@ void StocksControlsWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void StocksControlsWidget::on_hideStocksControlsButton_clicked()
+void StocksControlsWidget::on_hideButton_clicked()
 {
-    if (ui->stocksControlStackedWidget->currentWidget() == ui->controlsVisiblePage)
+    if (ui->stackedWidget->currentWidget() == ui->controlsVisiblePage)
     {
-        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsHiddenPage);
         setMaximumSize(24, 16777215);
-        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
+        ui->stackedWidget->setCurrentWidget(ui->controlsHiddenPage);
+        ui->hideButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
 
         if (mFilter.isActive())
         {
@@ -280,8 +280,8 @@ void StocksControlsWidget::on_hideStocksControlsButton_clicked()
     }
     else
     {
-        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsVisiblePage);
         setMaximumSize(250, 16777215);
-        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
+        ui->stackedWidget->setCurrentWidget(ui->controlsVisiblePage);
+        ui->hideButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
     }
 }

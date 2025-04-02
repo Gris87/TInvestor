@@ -217,194 +217,126 @@
     </message>
 </context>
 <context>
-    <name>StocksControlsWidget</name>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="32"/>
-        <source>Filters</source>
-        <translation>Фильтры</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="53"/>
-        <source>Ticker</source>
-        <translation>Тикер</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="67"/>
-        <source>Qual investor</source>
-        <translation>Квал инвестор</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="81"/>
-        <source>Show all</source>
-        <translation>Показывать всё</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="86"/>
-        <source>Only with status</source>
-        <translation>Только со статусом</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="91"/>
-        <source>Only without status</source>
-        <translation>Только без статуса</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="99"/>
-        <source>Price</source>
-        <translation>Цена</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="149"/>
-        <source>Change from day start</source>
-        <translation>Изменение за день</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="205"/>
-        <source>Change from some date</source>
-        <translation>Изменение от даты</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="261"/>
-        <source>In thousands</source>
-        <translation>В тысячах</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="264"/>
-        <source>Turnover</source>
-        <translation>Оборот</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="317"/>
-        <source>Payback</source>
-        <translation>Окупаемость</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="174"/>
+        <location filename="../../src/main/mainwindow.cpp" line="175"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="103"/>
-        <source>Price change from moment:</source>
-        <translation>Изменение цены от даты:</translation>
-    </message>
-    <message>
-        <location filename="../../src/main/mainwindow.ui" line="167"/>
+        <location filename="../../src/main/mainwindow.ui" line="90"/>
         <source>Stock</source>
         <translation>Акция</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="172"/>
+        <location filename="../../src/main/mainwindow.ui" line="95"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="177"/>
+        <location filename="../../src/main/mainwindow.ui" line="100"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="182"/>
+        <location filename="../../src/main/mainwindow.ui" line="105"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="187"/>
+        <location filename="../../src/main/mainwindow.ui" line="110"/>
         <source>Turnover</source>
         <translation>Оборот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="190"/>
+        <location filename="../../src/main/mainwindow.ui" line="113"/>
         <source>Average daily turnover in the last 31 days</source>
         <translation>Средний ежедневный оборот за последний 31 день</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="199"/>
+        <location filename="../../src/main/mainwindow.ui" line="122"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="202"/>
+        <location filename="../../src/main/mainwindow.ui" line="125"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation>Возможность вернуть потраченную стоимость (с учётом комиссии) на основании последних 24 часов</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="211"/>
+        <location filename="../../src/main/mainwindow.ui" line="134"/>
         <source>Actions</source>
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="243"/>
+        <location filename="../../src/main/mainwindow.ui" line="166"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="300"/>
+        <location filename="../../src/main/mainwindow.ui" line="223"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="324"/>
+        <location filename="../../src/main/mainwindow.ui" line="247"/>
         <source>Keep money on account:</source>
         <translation>Оставлять деньги на счёте:</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="378"/>
+        <location filename="../../src/main/mainwindow.ui" line="301"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="381"/>
+        <location filename="../../src/main/mainwindow.ui" line="304"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation>Авторизовать пользователя (Ctrl+L)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="402"/>
+        <location filename="../../src/main/mainwindow.ui" line="325"/>
         <source>Stocks (Ctrl+1)</source>
         <translation>Акции (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="405"/>
+        <location filename="../../src/main/mainwindow.ui" line="328"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation>Показать страницу с акциями (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="423"/>
+        <location filename="../../src/main/mainwindow.ui" line="346"/>
         <source>Simulation (Ctrl+2)</source>
         <translation>Симуляция (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="426"/>
+        <location filename="../../src/main/mainwindow.ui" line="349"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation>Показать страницу с режимом симулаяции (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="444"/>
+        <location filename="../../src/main/mainwindow.ui" line="367"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation>Авто-пилот (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="447"/>
+        <location filename="../../src/main/mainwindow.ui" line="370"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation>Показать страницу с режимом авто-пилота (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="462"/>
-        <location filename="../../src/main/mainwindow.ui" line="465"/>
+        <location filename="../../src/main/mainwindow.ui" line="385"/>
+        <location filename="../../src/main/mainwindow.ui" line="388"/>
         <source>Settings (F6)</source>
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="174"/>
+        <location filename="../../src/main/mainwindow.cpp" line="175"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="236"/>
+        <location filename="../../src/main/mainwindow.cpp" line="237"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
@@ -675,22 +607,22 @@
         <translation>Начинать с суммой денег:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="87"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="90"/>
         <source>In realtime mode</source>
         <translation>В режиме реального времени</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="97"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="100"/>
         <source>In specified date range</source>
         <translation>В указанном диапазоне дат</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="179"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="182"/>
         <source>Try to detect the best configuration (this option may take a lot of time for calculation)</source>
         <translation>Пытаться найти лучшую конфигурацию (эта опция может занять много времени)</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="220"/>
+        <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="223"/>
         <source>Start</source>
         <translation>Запуск</translation>
     </message>
@@ -701,6 +633,84 @@
         <location filename="../../src/widgets/tablerecord/items/stock/stocktableitemwidget.ui" line="66"/>
         <source>For qual investor only</source>
         <translation>Только для квал инвесторов</translation>
+    </message>
+</context>
+<context>
+    <name>StocksControlsWidget</name>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="90"/>
+        <source>Price change from moment:</source>
+        <translation>Изменение цены от даты:</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="114"/>
+        <source>Filters</source>
+        <translation>Фильтры</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="135"/>
+        <source>Ticker</source>
+        <translation>Тикер</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="149"/>
+        <source>Qual investor</source>
+        <translation>Квал инвестор</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="163"/>
+        <source>Show all</source>
+        <translation>Показывать всё</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="168"/>
+        <source>Only with status</source>
+        <translation>Только со статусом</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="173"/>
+        <source>Only without status</source>
+        <translation>Только без статуса</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="181"/>
+        <source>Price</source>
+        <translation>Цена</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="231"/>
+        <source>Change from day start</source>
+        <translation>Изменение за день</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="287"/>
+        <source>Change from some date</source>
+        <translation>Изменение от даты</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="343"/>
+        <source>In thousands</source>
+        <translation>В тысячах</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="346"/>
+        <source>Turnover</source>
+        <translation>Оборот</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="399"/>
+        <source>Payback</source>
+        <translation>Окупаемость</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="273"/>
+        <source>Filter active</source>
+        <translation>Фильтр активен</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="278"/>
+        <source>Filter inactive</source>
+        <translation>Фильтр неактивен</translation>
     </message>
 </context>
 <context>
