@@ -3,6 +3,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/stocks/istocksstorage_mock.h"
+
+
+
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
+
 
 
 class Test_FilterWidget : public ::testing::Test
@@ -10,15 +20,19 @@ class Test_FilterWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        filterWidget = new FilterWidget();
+        stocksStorageMock = new StrictMock<StocksStorageMock>();
+
+        filterWidget = new FilterWidget(stocksStorageMock);
     }
 
     void TearDown()
     {
         delete filterWidget;
+        delete stocksStorageMock;
     }
 
     FilterWidget* filterWidget;
+    StrictMock<StocksStorageMock>* stocksStorageMock;
 };
 
 

@@ -25,5 +25,6 @@ public:
     virtual const Filter& getFilter() = 0;
 
 signals:
+    void dateChangeDateTimeChanged();
     void filterChanged(const Filter& filter);
 };

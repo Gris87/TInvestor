@@ -20,5 +20,5 @@ public:
     FilterWidgetFactoryMock(const FilterWidgetFactoryMock& another)            = delete;
     FilterWidgetFactoryMock& operator=(const FilterWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IFilterWidget*, newInstance, (QWidget * parent), (override));
+    MOCK_METHOD(IFilterWidget*, newInstance, (IStocksStorage * stocksStorage, QWidget* parent), (override));
 };

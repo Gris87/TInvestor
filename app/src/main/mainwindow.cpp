@@ -8,8 +8,6 @@
 
 
 #define AUTORUN_PATH "CurrentVersion/Run/TInvestor"
-#define GREY_COLOR   QColor("#AFC2D7")
-#define GREEN_COLOR  QColor("#2BD793")
 
 
 
@@ -101,7 +99,7 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mFilterWidget                 = filterWidgetFactory->newInstance(this);
+    mFilterWidget                 = filterWidgetFactory->newInstance(mStocksStorage, this);
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
@@ -128,6 +126,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,         SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,         SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,            SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mFilterWidget,               SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(pricesChanged()));
     connect(mFilterWidget,               SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
@@ -463,40 +462,6 @@ void MainWindow::on_actionSettings_triggered()
         mConfig->save(mSettingsEditor);
 
         applyConfig();
-    }
-}
-
-void MainWindow::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
-{
-    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
-
-    pricesChanged();
-}
-
-void MainWindow::on_hideStocksControlsButton_clicked()
-{
-    if (ui->stocksControlStackedWidget->currentWidget() == ui->controlsVisiblePage)
-    {
-        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsHiddenPage);
-        ui->stocksControlWidget->setMaximumSize(24, 16777215);
-        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
-
-        if (mFilterWidget->getFilter().isActive())
-        {
-            ui->filterActiveLabel->setColor(GREEN_COLOR);
-            ui->filterActiveLabel->setText(tr("Filter active"));
-        }
-        else
-        {
-            ui->filterActiveLabel->setColor(GREY_COLOR);
-            ui->filterActiveLabel->setText(tr("Filter inactive"));
-        }
-    }
-    else
-    {
-        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsVisiblePage);
-        ui->stocksControlWidget->setMaximumSize(250, 16777215);
-        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
     }
 }
 

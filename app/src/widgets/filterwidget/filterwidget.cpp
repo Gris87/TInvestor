@@ -5,9 +5,15 @@
 
 
 
-FilterWidget::FilterWidget(QWidget* parent) :
+#define GREY_COLOR  QColor("#AFC2D7")
+#define GREEN_COLOR QColor("#2BD793")
+
+
+
+FilterWidget::FilterWidget(IStocksStorage* stocksStorage, QWidget* parent) :
     IFilterWidget(parent),
     ui(new Ui::FilterWidget),
+    mStocksStorage(stocksStorage),
     mFilter()
 {
     qDebug() << "Create FilterWidget";
@@ -25,6 +31,13 @@ FilterWidget::~FilterWidget()
 const Filter& FilterWidget::getFilter()
 {
     return mFilter;
+}
+
+void FilterWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
+{
+    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
+
+    emit dateChangeDateTimeChanged();
 }
 
 void FilterWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -244,4 +257,31 @@ void FilterWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
     }
 
     emit filterChanged(mFilter);
+}
+
+void FilterWidget::on_hideStocksControlsButton_clicked()
+{
+    if (ui->stocksControlStackedWidget->currentWidget() == ui->controlsVisiblePage)
+    {
+        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsHiddenPage);
+        setMaximumSize(24, 16777215);
+        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
+
+        if (mFilter.isActive())
+        {
+            ui->filterActiveLabel->setColor(GREEN_COLOR);
+            ui->filterActiveLabel->setText(tr("Filter active"));
+        }
+        else
+        {
+            ui->filterActiveLabel->setColor(GREY_COLOR);
+            ui->filterActiveLabel->setText(tr("Filter inactive"));
+        }
+    }
+    else
+    {
+        ui->stocksControlStackedWidget->setCurrentWidget(ui->controlsVisiblePage);
+        setMaximumSize(250, 16777215);
+        ui->hideStocksControlsButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
+    }
 }

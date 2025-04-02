@@ -17,7 +17,7 @@ FilterWidgetFactory::~FilterWidgetFactory()
     qDebug() << "Destroy FilterWidgetFactory";
 }
 
-IFilterWidget* FilterWidgetFactory::newInstance(QWidget* parent)
+IFilterWidget* FilterWidgetFactory::newInstance(IStocksStorage* stocksStorage, QWidget* parent)
 {
-    return new FilterWidget(parent);
+    return new FilterWidget(stocksStorage, parent);
 }

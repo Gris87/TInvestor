@@ -15,5 +15,5 @@ public:
     FilterWidgetFactory(const FilterWidgetFactory& another)            = delete;
     FilterWidgetFactory& operator=(const FilterWidgetFactory& another) = delete;
 
-    IFilterWidget* newInstance(QWidget* parent) override;
+    IFilterWidget* newInstance(IStocksStorage* stocksStorage, QWidget* parent) override;
 };

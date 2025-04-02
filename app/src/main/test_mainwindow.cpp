@@ -106,7 +106,7 @@ protected:
 
         QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
-        EXPECT_CALL(*filterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(filterWidgetMock));
+        EXPECT_CALL(*filterWidgetFactoryMock, newInstance(stocksStorageMock, NotNull())).WillOnce(Return(filterWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
             .WillOnce(Return(simulatorDecisionMakerWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("AutoPilot"), NotNull()))
@@ -992,85 +992,6 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     mainWindow->ui->actionSettings->trigger();
 
     ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 120000);
-}
-
-TEST_F(Test_MainWindow, Test_on_dateChangeTimeEdit_dateTimeChanged)
-{
-    InSequence seq;
-
-    StrictMock<TableRecordMock> tableRecordMock1;
-    StrictMock<TableRecordMock> tableRecordMock2;
-
-    QMutex        mutex;
-    QList<Stock*> stocks;
-
-    Stock stock1;
-    Stock stock2;
-
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
-
-    stocks << &stock1 << &stock1 << &stock2;
-
-    Filter filter;
-
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
-    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(
-        *tableRecordFactoryMock,
-        newInstance(
-            mainWindow->ui->stocksTableWidget,
-            stockTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            mainWindow
-        )
-    )
-        .WillOnce(Return(&tableRecordMock1));
-    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(tableRecordMock1, updateAll());
-    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(
-        *tableRecordFactoryMock,
-        newInstance(
-            mainWindow->ui->stocksTableWidget,
-            stockTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            mainWindow
-        )
-    )
-        .WillOnce(Return(&tableRecordMock2));
-    EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
-
-    mainWindow->updateStocksTableWidget();
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), false);
-    ASSERT_EQ(mainWindow->tableRecords.size(),                    2);
-    ASSERT_EQ(mainWindow->tableRecords["aaaaa"],                  &tableRecordMock1);
-    ASSERT_EQ(mainWindow->tableRecords["bbbbb"],                  &tableRecordMock2);
-    // clang-format on
-
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1742106991000));
-    EXPECT_CALL(*filterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(tableRecordMock1, updatePrice());
-    EXPECT_CALL(tableRecordMock1, filter(mainWindow->ui->stocksTableWidget, filter));
-    EXPECT_CALL(tableRecordMock2, updatePrice());
-    EXPECT_CALL(tableRecordMock2, filter(mainWindow->ui->stocksTableWidget, filter));
-
-    mainWindow->ui->dateChangeTimeEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(1742106991000));
 }
 
 TEST_F(Test_MainWindow, Test_init)

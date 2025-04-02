@@ -171,8 +171,6 @@ private slots:
     void on_actionSimulationPage_toggled(bool checked);
     void on_actionAutoPilotPage_toggled(bool checked);
     void on_actionSettings_triggered();
-    void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);
-    void on_hideStocksControlsButton_clicked();
     void on_startSimulationButton_clicked();
     void on_startAutoPilotButton_clicked();
 };

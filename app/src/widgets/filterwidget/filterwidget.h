@@ -4,6 +4,8 @@
 
 #include "src/widgets/filterwidget/ifilterwidget.h"
 
+#include "src/storage/stocks/istocksstorage.h"
+
 
 
 namespace Ui
@@ -18,7 +20,7 @@ class FilterWidget : public IFilterWidget
     Q_OBJECT
 
 public:
-    explicit FilterWidget(QWidget* parent = nullptr);
+    explicit FilterWidget(IStocksStorage* stocksStorage, QWidget* parent = nullptr);
     ~FilterWidget();
 
     FilterWidget(const FilterWidget& another)            = delete;
@@ -29,9 +31,11 @@ public:
     const Filter& getFilter() override;
 
 private:
+    IStocksStorage* mStocksStorage;
     Filter mFilter;
 
 private slots:
+    void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);
     void on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_tickerLineEdit_textChanged(const QString& text);
     void on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value);
@@ -51,4 +55,5 @@ private slots:
     void on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_paybackFromDoubleSpinBox_valueChanged(double value);
     void on_paybackToDoubleSpinBox_valueChanged(double value);
+    void on_hideStocksControlsButton_clicked();
 };
