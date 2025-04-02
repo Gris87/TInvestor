@@ -76,6 +76,8 @@ SOURCES += \
     src/widgets/orderwaveswidget/test_orderwaveswidgetfactory.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
+    src/widgets/stockstablewidget/test_stockstablewidget.cpp \
+    src/widgets/stockstablewidget/test_stockstablewidgetfactory.cpp \
     src/widgets/tablerecord/items/actions/test_actionstableitemwidget.cpp \
     src/widgets/tablerecord/items/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/stock/test_stocktableitemwidget.cpp \
@@ -153,6 +155,8 @@ HEADERS += \
     src/widgets/orderwaveswidget/iorderwaveswidget_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
+    src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
+    src/widgets/stockstablewidget/istockstablewidget_mock.h \
     src/widgets/tablerecord/itablerecordfactory_mock.h \
     src/widgets/tablerecord/itablerecord_mock.h \
     src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h \

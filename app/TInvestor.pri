@@ -80,6 +80,8 @@ SOURCES += \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
+    src/widgets/stockstablewidget/stockstablewidget.cpp \
+    src/widgets/stockstablewidget/stockstablewidgetfactory.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
@@ -235,6 +237,10 @@ HEADERS += \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h \
     src/widgets/stockscontrolswidget/stockscontrolswidget.h \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h \
+    src/widgets/stockstablewidget/istockstablewidget.h \
+    src/widgets/stockstablewidget/istockstablewidgetfactory.h \
+    src/widgets/stockstablewidget/stockstablewidget.h \
+    src/widgets/stockstablewidget/stockstablewidgetfactory.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.h \
@@ -273,5 +279,6 @@ FORMS += \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
+    src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
     src/widgets/tablerecord/items/stock/stocktableitemwidget.ui \

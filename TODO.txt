@@ -1,4 +1,5 @@
 Show spinner on simulator/auto-pilot start
+Double check `_\d+` suffix on ui files
 Calculate dateChange on first run
 Move ui->stocksTableWidget to dedicated module
 Move another tables to dedicated modules
