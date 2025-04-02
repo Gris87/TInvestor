@@ -76,10 +76,10 @@ SOURCES += \
     src/utils/timeutils/timeutils.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
-    src/widgets/filterwidget/filterwidget.cpp \
-    src/widgets/filterwidget/filterwidgetfactory.cpp \
     src/widgets/orderwaveswidget/orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.cpp \
+    src/widgets/stockscontrolswidget/stockscontrolswidget.cpp \
+    src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.cpp \
     src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/paybacktableitem.cpp \
@@ -227,14 +227,14 @@ HEADERS += \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
-    src/widgets/filterwidget/filterwidget.h \
-    src/widgets/filterwidget/filterwidgetfactory.h \
-    src/widgets/filterwidget/ifilterwidget.h \
-    src/widgets/filterwidget/ifilterwidgetfactory.h \
     src/widgets/orderwaveswidget/iorderwaveswidget.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h \
     src/widgets/orderwaveswidget/orderwaveswidget.h \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.h \
+    src/widgets/stockscontrolswidget/istockscontrolswidget.h \
+    src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h \
+    src/widgets/stockscontrolswidget/stockscontrolswidget.h \
+    src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h \
     src/widgets/tablerecord/itablerecord.h \
     src/widgets/tablerecord/itablerecordfactory.h \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.h \
@@ -272,6 +272,6 @@ FORMS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
-    src/widgets/filterwidget/filterwidget.ui \
+    src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
     src/widgets/tablerecord/items/stock/stocktableitemwidget.ui \

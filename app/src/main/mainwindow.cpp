@@ -31,7 +31,7 @@ MainWindow::MainWindow(
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
     ITableRecordFactory*               tableRecordFactory,
-    IFilterWidgetFactory*              filterWidgetFactory,
+    IStocksControlsWidgetFactory*              stocksControlsWidgetFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -99,11 +99,11 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mFilterWidget                 = filterWidgetFactory->newInstance(mStocksStorage, this);
+    mStocksControlsWidget                 = stocksControlsWidgetFactory->newInstance(mStocksStorage, this);
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
-    ui->layoutForFilterWidget->addWidget(mFilterWidget);
+    ui->layoutForStocksControlsWidget->addWidget(mStocksControlsWidget);
     ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
     ui->layoutForAutoPilotDecisionMaker->addWidget(mAutoPilotDecisionMakerWidget);
 
@@ -126,8 +126,8 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,         SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,         SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,            SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mFilterWidget,               SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(pricesChanged()));
-    connect(mFilterWidget,               SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mStocksControlsWidget,       SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(pricesChanged()));
+    connect(mStocksControlsWidget,       SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -279,7 +279,7 @@ void MainWindow::stocksTableUpdateAllTimerTicked()
 {
     qDebug() << "Stocks table update all timer ticked";
 
-    const Filter& filter = mFilterWidget->getFilter();
+    const Filter& filter = mStocksControlsWidget->getFilter();
 
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
@@ -300,7 +300,7 @@ void MainWindow::stocksTableUpdatePriceTimerTicked()
 
     if (!lastPricesUpdates.isEmpty())
     {
-        const Filter& filter = mFilterWidget->getFilter();
+        const Filter& filter = mStocksControlsWidget->getFilter();
 
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);
@@ -338,7 +338,7 @@ void MainWindow::stocksChanged()
 
 void MainWindow::pricesChanged()
 {
-    const Filter& filter = mFilterWidget->getFilter();
+    const Filter& filter = mStocksControlsWidget->getFilter();
 
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
@@ -355,7 +355,7 @@ void MainWindow::pricesChanged()
 
 void MainWindow::periodicDataChanged()
 {
-    const Filter& filter = mFilterWidget->getFilter();
+    const Filter& filter = mStocksControlsWidget->getFilter();
 
     ui->stocksTableWidget->setUpdatesEnabled(false);
     ui->stocksTableWidget->setSortingEnabled(false);
@@ -515,7 +515,7 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
-        const Filter& filter = mFilterWidget->getFilter();
+        const Filter& filter = mStocksControlsWidget->getFilter();
 
         ui->stocksTableWidget->setUpdatesEnabled(false);
         ui->stocksTableWidget->setSortingEnabled(false);

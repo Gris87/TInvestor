@@ -40,7 +40,7 @@ class OperationsService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Получить список операций по счету.
+    // GetOperations — список операций по счету
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>> AsyncGetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
@@ -49,7 +49,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>> PrepareAsyncGetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OperationsResponse>>(PrepareAsyncGetOperationsRaw(context, request, cq));
     }
-    // Получить портфель по счету.
+    // GetPortfolio — портфель по счету
     virtual ::grpc::Status GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>> AsyncGetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>>(AsyncGetPortfolioRaw(context, request, cq));
@@ -57,7 +57,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>> PrepareAsyncGetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse>>(PrepareAsyncGetPortfolioRaw(context, request, cq));
     }
-    // Получить список позиций по счету.
+    // GetPositions — список позиций по счету
     virtual ::grpc::Status GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>> AsyncGetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>>(AsyncGetPositionsRaw(context, request, cq));
@@ -65,7 +65,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>> PrepareAsyncGetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsResponse>>(PrepareAsyncGetPositionsRaw(context, request, cq));
     }
-    // Получить доступный остаток для вывода средств.
+    // GetWithdrawLimits — доступный остаток для вывода средств
     virtual ::grpc::Status GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>> AsyncGetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>>(AsyncGetWithdrawLimitsRaw(context, request, cq));
@@ -73,7 +73,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>> PrepareAsyncGetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse>>(PrepareAsyncGetWithdrawLimitsRaw(context, request, cq));
     }
-    // Получить брокерский отчет.
+    // GetBrokerReport — брокерский отчет.
     virtual ::grpc::Status GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>> AsyncGetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>>(AsyncGetBrokerReportRaw(context, request, cq));
@@ -81,7 +81,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>> PrepareAsyncGetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse>>(PrepareAsyncGetBrokerReportRaw(context, request, cq));
     }
-    // Получить отчет «Справка о доходах за пределами РФ».
+    // GetDividendsForeignIssuer — отчет «Справка о доходах за пределами РФ»
     virtual ::grpc::Status GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>> AsyncGetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>>(AsyncGetDividendsForeignIssuerRaw(context, request, cq));
@@ -89,7 +89,7 @@ class OperationsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>> PrepareAsyncGetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse>>(PrepareAsyncGetDividendsForeignIssuerRaw(context, request, cq));
     }
-    // Получить список операций по счету с пагинацией.
+    // GetOperationsByCursor — список операций по счету с пагинацией
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse>> AsyncGetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest& request, ::grpc::CompletionQueue* cq) {
@@ -101,26 +101,26 @@ class OperationsService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Получить список операций по счету.
+      // GetOperations — список операций по счету
       // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOperations(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить портфель по счету.
+      // GetPortfolio — портфель по счету
       virtual void GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetPortfolio(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список позиций по счету.
+      // GetPositions — список позиций по счету
       virtual void GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetPositions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить доступный остаток для вывода средств.
+      // GetWithdrawLimits — доступный остаток для вывода средств
       virtual void GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetWithdrawLimits(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить брокерский отчет.
+      // GetBrokerReport — брокерский отчет.
       virtual void GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBrokerReport(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить отчет «Справка о доходах за пределами РФ».
+      // GetDividendsForeignIssuer — отчет «Справка о доходах за пределами РФ»
       virtual void GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetDividendsForeignIssuer(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список операций по счету с пагинацией.
+      // GetOperationsByCursor — список операций по счету с пагинацией
       // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
       virtual void GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOperationsByCursor(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
@@ -252,20 +252,20 @@ class OperationsService final {
    public:
     Service();
     virtual ~Service();
-    // Получить список операций по счету.
+    // GetOperations — список операций по счету
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperations(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OperationsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OperationsResponse* response);
-    // Получить портфель по счету.
+    // GetPortfolio — портфель по счету
     virtual ::grpc::Status GetPortfolio(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioRequest* request, ::tinkoff::public_::invest::api::contract::v1::PortfolioResponse* response);
-    // Получить список позиций по счету.
+    // GetPositions — список позиций по счету
     virtual ::grpc::Status GetPositions(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::PositionsResponse* response);
-    // Получить доступный остаток для вывода средств.
+    // GetWithdrawLimits — доступный остаток для вывода средств
     virtual ::grpc::Status GetWithdrawLimits(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsRequest* request, ::tinkoff::public_::invest::api::contract::v1::WithdrawLimitsResponse* response);
-    // Получить брокерский отчет.
+    // GetBrokerReport — брокерский отчет.
     virtual ::grpc::Status GetBrokerReport(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::BrokerReportRequest* request, ::tinkoff::public_::invest::api::contract::v1::BrokerReportResponse* response);
-    // Получить отчет «Справка о доходах за пределами РФ».
+    // GetDividendsForeignIssuer — отчет «Справка о доходах за пределами РФ»
     virtual ::grpc::Status GetDividendsForeignIssuer(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsForeignIssuerResponse* response);
-    // Получить список операций по счету с пагинацией.
+    // GetOperationsByCursor — список операций по счету с пагинацией
     // При работе с методом учитывайте [особенности взаимодействия](/invest/services/operations/operations_problems).
     virtual ::grpc::Status GetOperationsByCursor(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOperationsByCursorResponse* response);
   };
@@ -1219,7 +1219,7 @@ class OperationsStreamService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Server-side stream обновлений портфеля.
+    // PortfolioStream — стрим обновлений портфеля
     std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>> PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>>(PortfolioStreamRaw(context, request));
     }
@@ -1229,7 +1229,7 @@ class OperationsStreamService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>> PrepareAsyncPortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>>(PrepareAsyncPortfolioStreamRaw(context, request, cq));
     }
-    // Server-side stream обновлений информации по изменению позиций портфеля.
+    // PositionsStream — стрим обновлений информации по изменению позиций портфеля
     std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>> PositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>>(PositionsStreamRaw(context, request));
     }
@@ -1242,9 +1242,9 @@ class OperationsStreamService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Server-side stream обновлений портфеля.
+      // PortfolioStream — стрим обновлений портфеля
       virtual void PortfolioStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* reactor) = 0;
-      // Server-side stream обновлений информации по изменению позиций портфеля.
+      // PositionsStream — стрим обновлений информации по изменению позиций портфеля
       virtual void PositionsStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
@@ -1310,9 +1310,9 @@ class OperationsStreamService final {
    public:
     Service();
     virtual ~Service();
-    // Server-side stream обновлений портфеля.
+    // PortfolioStream — стрим обновлений портфеля
     virtual ::grpc::Status PortfolioStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PortfolioStreamResponse>* writer);
-    // Server-side stream обновлений информации по изменению позиций портфеля.
+    // PositionsStream — стрим обновлений информации по изменению позиций портфеля
     virtual ::grpc::Status PositionsStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PositionsStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::PositionsStreamResponse>* writer);
   };
   template <class BaseClass>

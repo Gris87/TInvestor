@@ -40,7 +40,7 @@ class SignalService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Запросить стратегии.
+    // GetStrategies — стратегии
     virtual ::grpc::Status GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>> AsyncGetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>>(AsyncGetStrategiesRaw(context, request, cq));
@@ -48,7 +48,7 @@ class SignalService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>> PrepareAsyncGetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse>>(PrepareAsyncGetStrategiesRaw(context, request, cq));
     }
-    // Запросить сигналы.
+    // GetSignals — сигналы
     virtual ::grpc::Status GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse>> AsyncGetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse>>(AsyncGetSignalsRaw(context, request, cq));
@@ -59,10 +59,10 @@ class SignalService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Запросить стратегии.
+      // GetStrategies — стратегии
       virtual void GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetStrategies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить сигналы.
+      // GetSignals — сигналы
       virtual void GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSignals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -123,9 +123,9 @@ class SignalService final {
    public:
     Service();
     virtual ~Service();
-    // Запросить стратегии.
+    // GetStrategies — стратегии
     virtual ::grpc::Status GetStrategies(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStrategiesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStrategiesResponse* response);
-    // Запросить сигналы.
+    // GetSignals — сигналы
     virtual ::grpc::Status GetSignals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetSignalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetSignalsResponse* response);
   };
   template <class BaseClass>

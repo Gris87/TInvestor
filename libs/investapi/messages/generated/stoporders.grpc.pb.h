@@ -40,7 +40,7 @@ class StopOrdersService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Выставить стоп-заявку.
+    // PostStopOrder — выставить стоп-заявку
     virtual ::grpc::Status PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> AsyncPostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(AsyncPostStopOrderRaw(context, request, cq));
@@ -48,7 +48,7 @@ class StopOrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>> PrepareAsyncPostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse>>(PrepareAsyncPostStopOrderRaw(context, request, cq));
     }
-    // Получить список активных стоп-заявок по счету.
+    // GetStopOrders — получить список активных стоп-заявок по счету
     virtual ::grpc::Status GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> AsyncGetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(AsyncGetStopOrdersRaw(context, request, cq));
@@ -56,7 +56,7 @@ class StopOrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>> PrepareAsyncGetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse>>(PrepareAsyncGetStopOrdersRaw(context, request, cq));
     }
-    // Отменить стоп-заявку.
+    // CancelStopOrder — отменить стоп-заявку
     virtual ::grpc::Status CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>> AsyncCancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse>>(AsyncCancelStopOrderRaw(context, request, cq));
@@ -67,13 +67,13 @@ class StopOrdersService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Выставить стоп-заявку.
+      // PostStopOrder — выставить стоп-заявку
       virtual void PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PostStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список активных стоп-заявок по счету.
+      // GetStopOrders — получить список активных стоп-заявок по счету
       virtual void GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetStopOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Отменить стоп-заявку.
+      // CancelStopOrder — отменить стоп-заявку
       virtual void CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CancelStopOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -148,11 +148,11 @@ class StopOrdersService final {
    public:
     Service();
     virtual ~Service();
-    // Выставить стоп-заявку.
+    // PostStopOrder — выставить стоп-заявку
     virtual ::grpc::Status PostStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse* response);
-    // Получить список активных стоп-заявок по счету.
+    // GetStopOrders — получить список активных стоп-заявок по счету
     virtual ::grpc::Status GetStopOrders(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse* response);
-    // Отменить стоп-заявку.
+    // CancelStopOrder — отменить стоп-заявку
     virtual ::grpc::Status CancelStopOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse* response);
   };
   template <class BaseClass>

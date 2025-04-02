@@ -23,7 +23,7 @@
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
-#include "src/widgets/filterwidget/ifilterwidgetfactory.h"
+#include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
@@ -64,7 +64,7 @@ public:
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
         ITableRecordFactory*               tableRecordFactory,
-        IFilterWidgetFactory*              filterWidgetFactory,
+        IStocksControlsWidgetFactory*              stocksControlsWidgetFactory,
         IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
@@ -128,7 +128,7 @@ private:
     IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
     IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
     ITableRecordFactory*               mTableRecordFactory;
-    IFilterWidget*                     mFilterWidget;
+    IStocksControlsWidget*                     mStocksControlsWidget;
     IDecisionMakerWidget*              mSimulatorDecisionMakerWidget;
     IDecisionMakerWidget*              mAutoPilotDecisionMakerWidget;
     ITrayIcon*                         mTrayIcon;

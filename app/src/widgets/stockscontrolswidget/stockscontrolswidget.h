@@ -2,7 +2,7 @@
 
 
 
-#include "src/widgets/filterwidget/ifilterwidget.h"
+#include "src/widgets/stockscontrolswidget/istockscontrolswidget.h"
 
 #include "src/storage/stocks/istocksstorage.h"
 
@@ -10,23 +10,23 @@
 
 namespace Ui
 {
-class FilterWidget;
+class StocksControlsWidget;
 }
 
 
 
-class FilterWidget : public IFilterWidget
+class StocksControlsWidget : public IStocksControlsWidget
 {
     Q_OBJECT
 
 public:
-    explicit FilterWidget(IStocksStorage* stocksStorage, QWidget* parent = nullptr);
-    ~FilterWidget();
+    explicit StocksControlsWidget(IStocksStorage* stocksStorage, QWidget* parent = nullptr);
+    ~StocksControlsWidget();
 
-    FilterWidget(const FilterWidget& another)            = delete;
-    FilterWidget& operator=(const FilterWidget& another) = delete;
+    StocksControlsWidget(const StocksControlsWidget& another)            = delete;
+    StocksControlsWidget& operator=(const StocksControlsWidget& another) = delete;
 
-    Ui::FilterWidget* ui;
+    Ui::StocksControlsWidget* ui;
 
     const Filter& getFilter() override;
 

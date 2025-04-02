@@ -40,7 +40,8 @@ class UsersService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Получить счета пользователя.
+    // GetAccounts — счета пользователя
+    // Получить список счетов.
     virtual ::grpc::Status GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>> AsyncGetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>>(AsyncGetAccountsRaw(context, request, cq));
@@ -48,7 +49,8 @@ class UsersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>> PrepareAsyncGetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse>>(PrepareAsyncGetAccountsRaw(context, request, cq));
     }
-    // Рассчитать маржинальные показатели по счёту.
+    // GetMarginAttributes — маржинальные показатели по счeту
+    // Метод позволяет получить маржинальные показатели и ликвидность по заданному счeту.
     virtual ::grpc::Status GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>> AsyncGetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>>(AsyncGetMarginAttributesRaw(context, request, cq));
@@ -56,7 +58,8 @@ class UsersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>> PrepareAsyncGetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse>>(PrepareAsyncGetMarginAttributesRaw(context, request, cq));
     }
-    // Запросить тариф пользователя.
+    // GetUserTariff — тариф пользователя
+    // Получить информацию о текущих лимитах на подклчение, согласно текущему тарифу пользователя.
     virtual ::grpc::Status GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>> AsyncGetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>>(AsyncGetUserTariffRaw(context, request, cq));
@@ -64,7 +67,8 @@ class UsersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>> PrepareAsyncGetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse>>(PrepareAsyncGetUserTariffRaw(context, request, cq));
     }
-    // Получить информацию о пользователе.
+    // GetInfo — информация о пользователе
+    // Получить информацию о пользователе: тариф, признак квалификации, пройденные тесты и др.
     virtual ::grpc::Status GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse>> AsyncGetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse>>(AsyncGetInfoRaw(context, request, cq));
@@ -75,16 +79,20 @@ class UsersService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Получить счета пользователя.
+      // GetAccounts — счета пользователя
+      // Получить список счетов.
       virtual void GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAccounts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Рассчитать маржинальные показатели по счёту.
+      // GetMarginAttributes — маржинальные показатели по счeту
+      // Метод позволяет получить маржинальные показатели и ликвидность по заданному счeту.
       virtual void GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetMarginAttributes(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить тариф пользователя.
+      // GetUserTariff — тариф пользователя
+      // Получить информацию о текущих лимитах на подклчение, согласно текущему тарифу пользователя.
       virtual void GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetUserTariff(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить информацию о пользователе.
+      // GetInfo — информация о пользователе
+      // Получить информацию о пользователе: тариф, признак квалификации, пройденные тесты и др.
       virtual void GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetInfo(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -173,13 +181,17 @@ class UsersService final {
    public:
     Service();
     virtual ~Service();
-    // Получить счета пользователя.
+    // GetAccounts — счета пользователя
+    // Получить список счетов.
     virtual ::grpc::Status GetAccounts(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccountsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccountsResponse* response);
-    // Рассчитать маржинальные показатели по счёту.
+    // GetMarginAttributes — маржинальные показатели по счeту
+    // Метод позволяет получить маржинальные показатели и ликвидность по заданному счeту.
     virtual ::grpc::Status GetMarginAttributes(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarginAttributesResponse* response);
-    // Запросить тариф пользователя.
+    // GetUserTariff — тариф пользователя
+    // Получить информацию о текущих лимитах на подклчение, согласно текущему тарифу пользователя.
     virtual ::grpc::Status GetUserTariff(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetUserTariffRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetUserTariffResponse* response);
-    // Получить информацию о пользователе.
+    // GetInfo — информация о пользователе
+    // Получить информацию о пользователе: тариф, признак квалификации, пройденные тесты и др.
     virtual ::grpc::Status GetInfo(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetInfoRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetInfoResponse* response);
   };
   template <class BaseClass>
@@ -722,7 +734,7 @@ class UsersService final {
   typedef WithStreamedUnaryMethod_GetAccounts<WithStreamedUnaryMethod_GetMarginAttributes<WithStreamedUnaryMethod_GetUserTariff<WithStreamedUnaryMethod_GetInfo<Service > > > > StreamedService;
 };
 // С помощью сервиса можно получить: <br/> 1.
-// список счетов пользователя; <br/> 2. маржинальные показатели по счёту.
+// список счетов пользователя; <br/> 2. маржинальные показатели по счeту.
 
 }  // namespace v1
 }  // namespace contract

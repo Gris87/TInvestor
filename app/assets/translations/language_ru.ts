@@ -217,64 +217,64 @@
     </message>
 </context>
 <context>
-    <name>FilterWidget</name>
+    <name>StocksControlsWidget</name>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="32"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="32"/>
         <source>Filters</source>
         <translation>Фильтры</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="53"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="53"/>
         <source>Ticker</source>
         <translation>Тикер</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="67"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="67"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="81"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="81"/>
         <source>Show all</source>
         <translation>Показывать всё</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="86"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="86"/>
         <source>Only with status</source>
         <translation>Только со статусом</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="91"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="91"/>
         <source>Only without status</source>
         <translation>Только без статуса</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="99"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="99"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="149"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="149"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="205"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="205"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="261"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="261"/>
         <source>In thousands</source>
         <translation>В тысячах</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="264"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="264"/>
         <source>Turnover</source>
         <translation>Оборот</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/filterwidget/filterwidget.ui" line="317"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.ui" line="317"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>

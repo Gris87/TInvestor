@@ -1005,6 +1005,7 @@ class PositionsSecurities final : public ::google::protobuf::Message
     kFigiFieldNumber = 1,
     kPositionUidFieldNumber = 4,
     kInstrumentUidFieldNumber = 5,
+    kTickerFieldNumber = 6,
     kInstrumentTypeFieldNumber = 16,
     kBlockedFieldNumber = 2,
     kBalanceFieldNumber = 3,
@@ -1058,6 +1059,22 @@ class PositionsSecurities final : public ::google::protobuf::Message
   std::string* _internal_mutable_instrument_uid();
 
   public:
+  // string ticker = 6;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
+
+  public:
   // string instrument_type = 16;
   void clear_instrument_type() ;
   const std::string& instrument_type() const;
@@ -1109,8 +1126,8 @@ class PositionsSecurities final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 7, 0,
-      111, 2>
+      4, 8, 0,
+      125, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1130,6 +1147,7 @@ class PositionsSecurities final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr position_uid_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr instrument_type_;
     ::int64_t blocked_;
     ::int64_t balance_;
@@ -1486,6 +1504,7 @@ class PositionsOptions final : public ::google::protobuf::Message
   enum : int {
     kPositionUidFieldNumber = 1,
     kInstrumentUidFieldNumber = 2,
+    kTickerFieldNumber = 3,
     kBlockedFieldNumber = 11,
     kBalanceFieldNumber = 21,
   };
@@ -1521,6 +1540,22 @@ class PositionsOptions final : public ::google::protobuf::Message
   std::string* _internal_mutable_instrument_uid();
 
   public:
+  // string ticker = 3;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
+
+  public:
   // int64 blocked = 11;
   void clear_blocked() ;
   ::int64_t blocked() const;
@@ -1546,8 +1581,8 @@ class PositionsOptions final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 4, 0,
-      89, 2>
+      3, 5, 0,
+      95, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1566,6 +1601,7 @@ class PositionsOptions final : public ::google::protobuf::Message
                           const PositionsOptions& from_msg);
     ::google::protobuf::internal::ArenaStringPtr position_uid_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::int64_t blocked_;
     ::int64_t balance_;
     ::google::protobuf::internal::CachedSize _cached_size_;
@@ -1725,6 +1761,7 @@ class PositionsFutures final : public ::google::protobuf::Message
     kFigiFieldNumber = 1,
     kPositionUidFieldNumber = 4,
     kInstrumentUidFieldNumber = 5,
+    kTickerFieldNumber = 6,
     kBlockedFieldNumber = 2,
     kBalanceFieldNumber = 3,
   };
@@ -1776,6 +1813,22 @@ class PositionsFutures final : public ::google::protobuf::Message
   std::string* _internal_mutable_instrument_uid();
 
   public:
+  // string ticker = 6;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
+
+  public:
   // int64 blocked = 2;
   void clear_blocked() ;
   ::int64_t blocked() const;
@@ -1801,8 +1854,8 @@ class PositionsFutures final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 5, 0,
-      93, 2>
+      3, 6, 0,
+      99, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1822,6 +1875,7 @@ class PositionsFutures final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr position_uid_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::int64_t blocked_;
     ::int64_t balance_;
     ::google::protobuf::internal::CachedSize _cached_size_;
@@ -3467,6 +3521,7 @@ class VirtualPortfolioPosition final : public ::google::protobuf::Message
     kInstrumentUidFieldNumber = 2,
     kFigiFieldNumber = 3,
     kInstrumentTypeFieldNumber = 4,
+    kTickerFieldNumber = 32,
     kQuantityFieldNumber = 5,
     kAveragePositionPriceFieldNumber = 6,
     kExpectedYieldFieldNumber = 7,
@@ -3538,6 +3593,22 @@ class VirtualPortfolioPosition final : public ::google::protobuf::Message
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_type(
       const std::string& value);
   std::string* _internal_mutable_instrument_type();
+
+  public:
+  // string ticker = 32;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
 
   public:
   // .tinkoff.public.invest.api.contract.v1.Quotation quantity = 5;
@@ -3665,8 +3736,8 @@ class VirtualPortfolioPosition final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 12, 8,
-      124, 2>
+      4, 13, 8,
+      130, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -3689,6 +3760,7 @@ class VirtualPortfolioPosition final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr instrument_type_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* quantity_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* average_position_price_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* expected_yield_;
@@ -5288,6 +5360,7 @@ class PortfolioPosition final : public ::google::protobuf::Message
     kInstrumentTypeFieldNumber = 2,
     kPositionUidFieldNumber = 24,
     kInstrumentUidFieldNumber = 25,
+    kTickerFieldNumber = 32,
     kQuantityFieldNumber = 3,
     kAveragePositionPriceFieldNumber = 4,
     kExpectedYieldFieldNumber = 5,
@@ -5364,6 +5437,22 @@ class PortfolioPosition final : public ::google::protobuf::Message
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_uid(
       const std::string& value);
   std::string* _internal_mutable_instrument_uid();
+
+  public:
+  // string ticker = 32;
+  void clear_ticker() ;
+  const std::string& ticker() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_ticker(Arg_&& arg, Args_... args);
+  std::string* mutable_ticker();
+  PROTOBUF_NODISCARD std::string* release_ticker();
+  void set_allocated_ticker(std::string* value);
+
+  private:
+  const std::string& _internal_ticker() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_ticker(
+      const std::string& value);
+  std::string* _internal_mutable_ticker();
 
   public:
   // .tinkoff.public.invest.api.contract.v1.Quotation quantity = 3;
@@ -5561,8 +5650,8 @@ class PortfolioPosition final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 17, 12,
-      125, 2>
+      5, 18, 12,
+      131, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -5585,6 +5674,7 @@ class PortfolioPosition final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr instrument_type_;
     ::google::protobuf::internal::ArenaStringPtr position_uid_;
     ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* quantity_;
     ::tinkoff::public_::invest::api::contract::v1::MoneyValue* average_position_price_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* expected_yield_;
@@ -17492,6 +17582,54 @@ inline void PortfolioPosition::set_allocated_daily_yield(::tinkoff::public_::inv
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioPosition.daily_yield)
 }
 
+// string ticker = 32;
+inline void PortfolioPosition::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& PortfolioPosition::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PortfolioPosition.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PortfolioPosition::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PortfolioPosition.ticker)
+}
+inline std::string* PortfolioPosition::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PortfolioPosition.ticker)
+  return _s;
+}
+inline const std::string& PortfolioPosition::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void PortfolioPosition::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* PortfolioPosition::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* PortfolioPosition::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PortfolioPosition.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void PortfolioPosition::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PortfolioPosition.ticker)
+}
+
 // -------------------------------------------------------------------
 
 // VirtualPortfolioPosition
@@ -18416,6 +18554,54 @@ inline void VirtualPortfolioPosition::set_allocated_daily_yield(::tinkoff::publi
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.daily_yield)
 }
 
+// string ticker = 32;
+inline void VirtualPortfolioPosition::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& VirtualPortfolioPosition::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void VirtualPortfolioPosition::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.ticker)
+}
+inline std::string* VirtualPortfolioPosition::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.ticker)
+  return _s;
+}
+inline const std::string& VirtualPortfolioPosition::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void VirtualPortfolioPosition::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* VirtualPortfolioPosition::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* VirtualPortfolioPosition::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void VirtualPortfolioPosition::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.VirtualPortfolioPosition.ticker)
+}
+
 // -------------------------------------------------------------------
 
 // PositionsSecurities
@@ -18606,6 +18792,54 @@ inline void PositionsSecurities::set_allocated_instrument_uid(std::string* value
     _impl_.instrument_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsSecurities.instrument_uid)
+}
+
+// string ticker = 6;
+inline void PositionsSecurities::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& PositionsSecurities::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PositionsSecurities.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PositionsSecurities::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PositionsSecurities.ticker)
+}
+inline std::string* PositionsSecurities::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PositionsSecurities.ticker)
+  return _s;
+}
+inline const std::string& PositionsSecurities::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void PositionsSecurities::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* PositionsSecurities::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* PositionsSecurities::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PositionsSecurities.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void PositionsSecurities::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsSecurities.ticker)
 }
 
 // bool exchange_blocked = 11;
@@ -18870,6 +19104,54 @@ inline void PositionsFutures::set_allocated_instrument_uid(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsFutures.instrument_uid)
 }
 
+// string ticker = 6;
+inline void PositionsFutures::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& PositionsFutures::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PositionsFutures.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PositionsFutures::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PositionsFutures.ticker)
+}
+inline std::string* PositionsFutures::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PositionsFutures.ticker)
+  return _s;
+}
+inline const std::string& PositionsFutures::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void PositionsFutures::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* PositionsFutures::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* PositionsFutures::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PositionsFutures.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void PositionsFutures::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsFutures.ticker)
+}
+
 // -------------------------------------------------------------------
 
 // PositionsOptions
@@ -18968,6 +19250,54 @@ inline void PositionsOptions::set_allocated_instrument_uid(std::string* value) {
     _impl_.instrument_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsOptions.instrument_uid)
+}
+
+// string ticker = 3;
+inline void PositionsOptions::clear_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.ClearToEmpty();
+}
+inline const std::string& PositionsOptions::ticker() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PositionsOptions.ticker)
+  return _internal_ticker();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void PositionsOptions::set_ticker(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PositionsOptions.ticker)
+}
+inline std::string* PositionsOptions::mutable_ticker() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_ticker();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.PositionsOptions.ticker)
+  return _s;
+}
+inline const std::string& PositionsOptions::_internal_ticker() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.ticker_.Get();
+}
+inline void PositionsOptions::_internal_set_ticker(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.Set(value, GetArena());
+}
+inline std::string* PositionsOptions::_internal_mutable_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.ticker_.Mutable( GetArena());
+}
+inline std::string* PositionsOptions::release_ticker() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.PositionsOptions.ticker)
+  return _impl_.ticker_.Release();
+}
+inline void PositionsOptions::set_allocated_ticker(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.ticker_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.ticker_.IsDefault()) {
+    _impl_.ticker_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PositionsOptions.ticker)
 }
 
 // int64 blocked = 11;

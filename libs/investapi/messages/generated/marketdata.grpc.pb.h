@@ -40,7 +40,7 @@ class MarketDataService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Запросить исторические свечи по инструменту.
+    // GetCandles — исторические свечи по инструменту
     virtual ::grpc::Status GetCandles(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse>> AsyncGetCandles(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse>>(AsyncGetCandlesRaw(context, request, cq));
@@ -48,7 +48,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse>> PrepareAsyncGetCandles(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse>>(PrepareAsyncGetCandlesRaw(context, request, cq));
     }
-    // Запросить цены последних сделок по инструментам.
+    // GetLastPrices — цены последних сделок по инструментам
     virtual ::grpc::Status GetLastPrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse>> AsyncGetLastPrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse>>(AsyncGetLastPricesRaw(context, request, cq));
@@ -56,7 +56,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse>> PrepareAsyncGetLastPrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse>>(PrepareAsyncGetLastPricesRaw(context, request, cq));
     }
-    // Получить стакан по инструменту.
+    // GetOrderBook — стакан по инструменту
     virtual ::grpc::Status GetOrderBook(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse>> AsyncGetOrderBook(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse>>(AsyncGetOrderBookRaw(context, request, cq));
@@ -64,7 +64,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse>> PrepareAsyncGetOrderBook(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse>>(PrepareAsyncGetOrderBookRaw(context, request, cq));
     }
-    // Запросить статус торгов по инструментам.
+    // GetTradingStatus — статус торгов по инструменту
     virtual ::grpc::Status GetTradingStatus(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse>> AsyncGetTradingStatus(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse>>(AsyncGetTradingStatusRaw(context, request, cq));
@@ -72,7 +72,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse>> PrepareAsyncGetTradingStatus(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse>>(PrepareAsyncGetTradingStatusRaw(context, request, cq));
     }
-    // Запросить статус торгов по инструментам.
+    // GetTradingStatuses — статус торгов по инструментам
     virtual ::grpc::Status GetTradingStatuses(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse>> AsyncGetTradingStatuses(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse>>(AsyncGetTradingStatusesRaw(context, request, cq));
@@ -80,7 +80,8 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse>> PrepareAsyncGetTradingStatuses(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse>>(PrepareAsyncGetTradingStatusesRaw(context, request, cq));
     }
-    // Запросить обезличенные сделки за последний час.
+    // GetLastTrades — обезличенные сделки
+    // Обезличенные сделки по инструменту. Метод гарантирует получение информации за последний час.
     virtual ::grpc::Status GetLastTrades(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse>> AsyncGetLastTrades(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse>>(AsyncGetLastTradesRaw(context, request, cq));
@@ -88,7 +89,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse>> PrepareAsyncGetLastTrades(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse>>(PrepareAsyncGetLastTradesRaw(context, request, cq));
     }
-    // Запросить цены закрытия торговой сессии по инструментам.
+    // GetClosePrices — цены закрытия торговой сессии по инструментам
     virtual ::grpc::Status GetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>> AsyncGetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>>(AsyncGetClosePricesRaw(context, request, cq));
@@ -96,7 +97,7 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>> PrepareAsyncGetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>>(PrepareAsyncGetClosePricesRaw(context, request, cq));
     }
-    // Получить технические индикаторы по инструменту.
+    // GetTechAnalysis — технические индикаторы по инструменту
     virtual ::grpc::Status GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>> AsyncGetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>>(AsyncGetTechAnalysisRaw(context, request, cq));
@@ -107,28 +108,29 @@ class MarketDataService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Запросить исторические свечи по инструменту.
+      // GetCandles — исторические свечи по инструменту
       virtual void GetCandles(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetCandles(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить цены последних сделок по инструментам.
+      // GetLastPrices — цены последних сделок по инструментам
       virtual void GetLastPrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetLastPrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить стакан по инструменту.
+      // GetOrderBook — стакан по инструменту
       virtual void GetOrderBook(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOrderBook(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить статус торгов по инструментам.
+      // GetTradingStatus — статус торгов по инструменту
       virtual void GetTradingStatus(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetTradingStatus(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить статус торгов по инструментам.
+      // GetTradingStatuses — статус торгов по инструментам
       virtual void GetTradingStatuses(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetTradingStatuses(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить обезличенные сделки за последний час.
+      // GetLastTrades — обезличенные сделки
+      // Обезличенные сделки по инструменту. Метод гарантирует получение информации за последний час.
       virtual void GetLastTrades(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetLastTrades(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Запросить цены закрытия торговой сессии по инструментам.
+      // GetClosePrices — цены закрытия торговой сессии по инструментам
       virtual void GetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить технические индикаторы по инструменту.
+      // GetTechAnalysis — технические индикаторы по инструменту
       virtual void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -273,21 +275,22 @@ class MarketDataService final {
    public:
     Service();
     virtual ~Service();
-    // Запросить исторические свечи по инструменту.
+    // GetCandles — исторические свечи по инструменту
     virtual ::grpc::Status GetCandles(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCandlesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCandlesResponse* response);
-    // Запросить цены последних сделок по инструментам.
+    // GetLastPrices — цены последних сделок по инструментам
     virtual ::grpc::Status GetLastPrices(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastPricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastPricesResponse* response);
-    // Получить стакан по инструменту.
+    // GetOrderBook — стакан по инструменту
     virtual ::grpc::Status GetOrderBook(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderBookRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderBookResponse* response);
-    // Запросить статус торгов по инструментам.
+    // GetTradingStatus — статус торгов по инструменту
     virtual ::grpc::Status GetTradingStatus(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusResponse* response);
-    // Запросить статус торгов по инструментам.
+    // GetTradingStatuses — статус торгов по инструментам
     virtual ::grpc::Status GetTradingStatuses(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTradingStatusesResponse* response);
-    // Запросить обезличенные сделки за последний час.
+    // GetLastTrades — обезличенные сделки
+    // Обезличенные сделки по инструменту. Метод гарантирует получение информации за последний час.
     virtual ::grpc::Status GetLastTrades(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetLastTradesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetLastTradesResponse* response);
-    // Запросить цены закрытия торговой сессии по инструментам.
+    // GetClosePrices — цены закрытия торговой сессии по инструментам
     virtual ::grpc::Status GetClosePrices(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response);
-    // Получить технические индикаторы по инструменту.
+    // GetTechAnalysis — технические индикаторы по инструменту
     virtual ::grpc::Status GetTechAnalysis(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response);
   };
   template <class BaseClass>
@@ -1371,7 +1374,7 @@ class MarketDataStreamService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Bidirectional-стрим предоставления биржевой информации.
+    // MarketDataStream — bidirectional стрим предоставления биржевой информации
     std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest, ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>> MarketDataStream(::grpc::ClientContext* context) {
       return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest, ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>>(MarketDataStreamRaw(context));
     }
@@ -1381,7 +1384,7 @@ class MarketDataStreamService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest, ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>> PrepareAsyncMarketDataStream(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest, ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>>(PrepareAsyncMarketDataStreamRaw(context, cq));
     }
-    // Server-side стрим предоставления биржевой информации.
+    // MarketDataServerSideStream — server-side стрим предоставления биржевой информации
     std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>> MarketDataServerSideStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::MarketDataServerSideStreamRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>>(MarketDataServerSideStreamRaw(context, request));
     }
@@ -1394,9 +1397,9 @@ class MarketDataStreamService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Bidirectional-стрим предоставления биржевой информации.
+      // MarketDataStream — bidirectional стрим предоставления биржевой информации
       virtual void MarketDataStream(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest,::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>* reactor) = 0;
-      // Server-side стрим предоставления биржевой информации.
+      // MarketDataServerSideStream — server-side стрим предоставления биржевой информации
       virtual void MarketDataServerSideStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::MarketDataServerSideStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
@@ -1462,9 +1465,9 @@ class MarketDataStreamService final {
    public:
     Service();
     virtual ~Service();
-    // Bidirectional-стрим предоставления биржевой информации.
+    // MarketDataStream — bidirectional стрим предоставления биржевой информации
     virtual ::grpc::Status MarketDataStream(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse, ::tinkoff::public_::invest::api::contract::v1::MarketDataRequest>* stream);
-    // Server-side стрим предоставления биржевой информации.
+    // MarketDataServerSideStream — server-side стрим предоставления биржевой информации
     virtual ::grpc::Status MarketDataServerSideStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::MarketDataServerSideStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::MarketDataResponse>* writer);
   };
   template <class BaseClass>

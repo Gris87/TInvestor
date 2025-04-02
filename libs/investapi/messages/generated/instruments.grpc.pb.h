@@ -40,7 +40,7 @@ class InstrumentsService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Получить расписания торгов торговых площадок
+    // TradingSchedules — расписания торговых площадок
     virtual ::grpc::Status TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse>> AsyncTradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse>>(AsyncTradingSchedulesRaw(context, request, cq));
@@ -48,7 +48,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse>> PrepareAsyncTradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse>>(PrepareAsyncTradingSchedulesRaw(context, request, cq));
     }
-    // Получить облигации по ее идентификатору
+    // BondBy — получить облигацию по ее идентификатору
     virtual ::grpc::Status BondBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::BondResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondResponse>> AsyncBondBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondResponse>>(AsyncBondByRaw(context, request, cq));
@@ -56,7 +56,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondResponse>> PrepareAsyncBondBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondResponse>>(PrepareAsyncBondByRaw(context, request, cq));
     }
-    // Получить список облигаций
+    // Bonds — список облигаций
     virtual ::grpc::Status Bonds(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::BondsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondsResponse>> AsyncBonds(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondsResponse>>(AsyncBondsRaw(context, request, cq));
@@ -64,7 +64,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondsResponse>> PrepareAsyncBonds(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::BondsResponse>>(PrepareAsyncBondsRaw(context, request, cq));
     }
-    // Получить график выплат купонов по облигации
+    // GetBondCoupons — график выплат купонов по облигации
     virtual ::grpc::Status GetBondCoupons(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse>> AsyncGetBondCoupons(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse>>(AsyncGetBondCouponsRaw(context, request, cq));
@@ -72,7 +72,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse>> PrepareAsyncGetBondCoupons(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse>>(PrepareAsyncGetBondCouponsRaw(context, request, cq));
     }
-    // Получить события по облигации
+    // GetBondEvents — события по облигации
     virtual ::grpc::Status GetBondEvents(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse>> AsyncGetBondEvents(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse>>(AsyncGetBondEventsRaw(context, request, cq));
@@ -80,7 +80,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse>> PrepareAsyncGetBondEvents(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse>>(PrepareAsyncGetBondEventsRaw(context, request, cq));
     }
-    // Получить валюту по ее идентификатору
+    // CurrencyBy — получить валюту по ее идентификатору
     virtual ::grpc::Status CurrencyBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse>> AsyncCurrencyBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse>>(AsyncCurrencyByRaw(context, request, cq));
@@ -88,7 +88,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse>> PrepareAsyncCurrencyBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse>>(PrepareAsyncCurrencyByRaw(context, request, cq));
     }
-    // Получить список валют
+    // Currencies — список валют
     virtual ::grpc::Status Currencies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse>> AsyncCurrencies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse>>(AsyncCurrenciesRaw(context, request, cq));
@@ -96,7 +96,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse>> PrepareAsyncCurrencies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse>>(PrepareAsyncCurrenciesRaw(context, request, cq));
     }
-    // Получить инвестиционный фонд по его идентификатору
+    // EtfBy — получить инвестиционный фонд по его идентификатору
     virtual ::grpc::Status EtfBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::EtfResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfResponse>> AsyncEtfBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfResponse>>(AsyncEtfByRaw(context, request, cq));
@@ -104,7 +104,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfResponse>> PrepareAsyncEtfBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfResponse>>(PrepareAsyncEtfByRaw(context, request, cq));
     }
-    // Получить список инвестиционных фондов
+    // Etfs — список инвестиционных фондов
     virtual ::grpc::Status Etfs(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::EtfsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfsResponse>> AsyncEtfs(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfsResponse>>(AsyncEtfsRaw(context, request, cq));
@@ -112,7 +112,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfsResponse>> PrepareAsyncEtfs(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EtfsResponse>>(PrepareAsyncEtfsRaw(context, request, cq));
     }
-    // Получить фьючерс по его идентификатору
+    // FutureBy — получить фьючерс по его идентификатору
     virtual ::grpc::Status FutureBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::FutureResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FutureResponse>> AsyncFutureBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FutureResponse>>(AsyncFutureByRaw(context, request, cq));
@@ -120,7 +120,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FutureResponse>> PrepareAsyncFutureBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FutureResponse>>(PrepareAsyncFutureByRaw(context, request, cq));
     }
-    // Получить список фьючерсов
+    // Futures — список фьючерсов
     virtual ::grpc::Status Futures(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::FuturesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FuturesResponse>> AsyncFutures(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FuturesResponse>>(AsyncFuturesRaw(context, request, cq));
@@ -128,7 +128,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FuturesResponse>> PrepareAsyncFutures(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FuturesResponse>>(PrepareAsyncFuturesRaw(context, request, cq));
     }
-    // Получить опцион по его идентификатору
+    // OptionBy — получить опцион по его идентификатору
     virtual ::grpc::Status OptionBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::OptionResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionResponse>> AsyncOptionBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionResponse>>(AsyncOptionByRaw(context, request, cq));
@@ -136,7 +136,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionResponse>> PrepareAsyncOptionBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionResponse>>(PrepareAsyncOptionByRaw(context, request, cq));
     }
-    // Deprecated Получить список опционов
+    // Deprecated Options — список опционов
     virtual ::grpc::Status Options(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>> AsyncOptions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>>(AsyncOptionsRaw(context, request, cq));
@@ -144,7 +144,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>> PrepareAsyncOptions(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>>(PrepareAsyncOptionsRaw(context, request, cq));
     }
-    // Получить список опционов
+    // OptionsBy — список опционов
     virtual ::grpc::Status OptionsBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest& request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>> AsyncOptionsBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>>(AsyncOptionsByRaw(context, request, cq));
@@ -152,7 +152,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>> PrepareAsyncOptionsBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OptionsResponse>>(PrepareAsyncOptionsByRaw(context, request, cq));
     }
-    // Получить акцию по ее идентификатору
+    // ShareBy — получить акцию по ее идентификатору
     virtual ::grpc::Status ShareBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::ShareResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::ShareResponse>> AsyncShareBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::ShareResponse>>(AsyncShareByRaw(context, request, cq));
@@ -160,7 +160,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::ShareResponse>> PrepareAsyncShareBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::ShareResponse>>(PrepareAsyncShareByRaw(context, request, cq));
     }
-    // Получить список акций
+    // Shares — список акций
     virtual ::grpc::Status Shares(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::tinkoff::public_::invest::api::contract::v1::SharesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::SharesResponse>> AsyncShares(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::SharesResponse>>(AsyncSharesRaw(context, request, cq));
@@ -168,7 +168,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::SharesResponse>> PrepareAsyncShares(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::SharesResponse>>(PrepareAsyncSharesRaw(context, request, cq));
     }
-    // Получить индикативные инструменты — индексы, товары и другие
+    // Indicatives — индикативные инструменты — индексы, товары и другие
     virtual ::grpc::Status Indicatives(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest& request, ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse>> AsyncIndicatives(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse>>(AsyncIndicativesRaw(context, request, cq));
@@ -176,7 +176,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse>> PrepareAsyncIndicatives(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse>>(PrepareAsyncIndicativesRaw(context, request, cq));
     }
-    // Получить накопленный купонный доход по облигации
+    // GetAccruedInterests — накопленный купонный доход по облигации
     virtual ::grpc::Status GetAccruedInterests(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse>> AsyncGetAccruedInterests(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse>>(AsyncGetAccruedInterestsRaw(context, request, cq));
@@ -184,7 +184,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse>> PrepareAsyncGetAccruedInterests(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse>>(PrepareAsyncGetAccruedInterestsRaw(context, request, cq));
     }
-    // Получить размера гарантийного обеспечения по фьючерсам
+    // GetFuturesMargin — размера гарантийного обеспечения по фьючерсам
     virtual ::grpc::Status GetFuturesMargin(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse>> AsyncGetFuturesMargin(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse>>(AsyncGetFuturesMarginRaw(context, request, cq));
@@ -192,7 +192,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse>> PrepareAsyncGetFuturesMargin(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse>>(PrepareAsyncGetFuturesMarginRaw(context, request, cq));
     }
-    // Получить основную информацию об инструменте
+    // GetInstrumentBy — основная информация об инструменте
     virtual ::grpc::Status GetInstrumentBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse>> AsyncGetInstrumentBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse>>(AsyncGetInstrumentByRaw(context, request, cq));
@@ -200,7 +200,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse>> PrepareAsyncGetInstrumentBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse>>(PrepareAsyncGetInstrumentByRaw(context, request, cq));
     }
-    // Получить события выплаты дивидендов по инструменту
+    // GetDividends — события выплаты дивидендов по инструменту
     virtual ::grpc::Status GetDividends(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse>> AsyncGetDividends(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse>>(AsyncGetDividendsRaw(context, request, cq));
@@ -208,7 +208,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse>> PrepareAsyncGetDividends(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse>>(PrepareAsyncGetDividendsRaw(context, request, cq));
     }
-    // Получить актив по его идентификатору
+    // GetAssetBy — получить актив по его идентификатору
     virtual ::grpc::Status GetAssetBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest& request, ::tinkoff::public_::invest::api::contract::v1::AssetResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetResponse>> AsyncGetAssetBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetResponse>>(AsyncGetAssetByRaw(context, request, cq));
@@ -216,7 +216,8 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetResponse>> PrepareAsyncGetAssetBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetResponse>>(PrepareAsyncGetAssetByRaw(context, request, cq));
     }
-    // Получить список активов. Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
+    // GetAssets — список активов
+    // Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
     virtual ::grpc::Status GetAssets(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest& request, ::tinkoff::public_::invest::api::contract::v1::AssetsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetsResponse>> AsyncGetAssets(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetsResponse>>(AsyncGetAssetsRaw(context, request, cq));
@@ -224,7 +225,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetsResponse>> PrepareAsyncGetAssets(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::AssetsResponse>>(PrepareAsyncGetAssetsRaw(context, request, cq));
     }
-    // Получить список избранных инструментов
+    // GetFavorites — получить список избранных инструментов
     virtual ::grpc::Status GetFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse>> AsyncGetFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse>>(AsyncGetFavoritesRaw(context, request, cq));
@@ -232,7 +233,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse>> PrepareAsyncGetFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse>>(PrepareAsyncGetFavoritesRaw(context, request, cq));
     }
-    // Отредактировать список избранных инструментов
+    // EditFavorites — отредактировать список избранных инструментов
     virtual ::grpc::Status EditFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest& request, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse>> AsyncEditFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse>>(AsyncEditFavoritesRaw(context, request, cq));
@@ -240,7 +241,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse>> PrepareAsyncEditFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse>>(PrepareAsyncEditFavoritesRaw(context, request, cq));
     }
-    // Создать новую группу избранных инструментов
+    // CreateFavoriteGroup — создать новую группу избранных инструментов
     virtual ::grpc::Status CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>> AsyncCreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>>(AsyncCreateFavoriteGroupRaw(context, request, cq));
@@ -248,7 +249,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>> PrepareAsyncCreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse>>(PrepareAsyncCreateFavoriteGroupRaw(context, request, cq));
     }
-    // Удалить группу избранных инструментов
+    // DeleteFavoriteGroup — удалить группу избранных инструментов
     virtual ::grpc::Status DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>> AsyncDeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>>(AsyncDeleteFavoriteGroupRaw(context, request, cq));
@@ -256,7 +257,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>> PrepareAsyncDeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse>>(PrepareAsyncDeleteFavoriteGroupRaw(context, request, cq));
     }
-    // Получить список групп избранных инструментов
+    // GetFavoriteGroups — список групп избранных инструментов
     virtual ::grpc::Status GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>> AsyncGetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>>(AsyncGetFavoriteGroupsRaw(context, request, cq));
@@ -264,7 +265,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>> PrepareAsyncGetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse>>(PrepareAsyncGetFavoriteGroupsRaw(context, request, cq));
     }
-    // Получить список стран
+    // GetCountries — список стран
     virtual ::grpc::Status GetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse>> AsyncGetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse>>(AsyncGetCountriesRaw(context, request, cq));
@@ -272,7 +273,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse>> PrepareAsyncGetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse>>(PrepareAsyncGetCountriesRaw(context, request, cq));
     }
-    // Найти инструмент
+    // FindInstrument — найти инструмент
     virtual ::grpc::Status FindInstrument(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest& request, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse>> AsyncFindInstrument(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse>>(AsyncFindInstrumentRaw(context, request, cq));
@@ -280,7 +281,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse>> PrepareAsyncFindInstrument(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse>>(PrepareAsyncFindInstrumentRaw(context, request, cq));
     }
-    // Получить список брендов
+    // GetBrands — список брендов
     virtual ::grpc::Status GetBrands(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse>> AsyncGetBrands(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse>>(AsyncGetBrandsRaw(context, request, cq));
@@ -288,7 +289,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse>> PrepareAsyncGetBrands(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse>>(PrepareAsyncGetBrandsRaw(context, request, cq));
     }
-    // Получить бренд по его идентификатору
+    // GetBrandBy — получить бренд по его идентификатору
     virtual ::grpc::Status GetBrandBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest& request, ::tinkoff::public_::invest::api::contract::v1::Brand* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::Brand>> AsyncGetBrandBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::Brand>>(AsyncGetBrandByRaw(context, request, cq));
@@ -296,7 +297,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::Brand>> PrepareAsyncGetBrandBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::Brand>>(PrepareAsyncGetBrandByRaw(context, request, cq));
     }
-    // Получить фундаментальные показатели по активу
+    // GetAssetFundamentals — фундаментальные показатели по активу
     virtual ::grpc::Status GetAssetFundamentals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse>> AsyncGetAssetFundamentals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse>>(AsyncGetAssetFundamentalsRaw(context, request, cq));
@@ -304,7 +305,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse>> PrepareAsyncGetAssetFundamentals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse>>(PrepareAsyncGetAssetFundamentalsRaw(context, request, cq));
     }
-    // Получить расписания выхода отчетностей эмитентов
+    // GetAssetReports — расписания выхода отчетностей эмитентов
     virtual ::grpc::Status GetAssetReports(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse>> AsyncGetAssetReports(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse>>(AsyncGetAssetReportsRaw(context, request, cq));
@@ -312,7 +313,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse>> PrepareAsyncGetAssetReports(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse>>(PrepareAsyncGetAssetReportsRaw(context, request, cq));
     }
-    // Получить мнения аналитиков по инструменту
+    // GetConsensusForecasts — мнения аналитиков по инструменту
     virtual ::grpc::Status GetConsensusForecasts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse>> AsyncGetConsensusForecasts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse>>(AsyncGetConsensusForecastsRaw(context, request, cq));
@@ -320,7 +321,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse>> PrepareAsyncGetConsensusForecasts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse>>(PrepareAsyncGetConsensusForecastsRaw(context, request, cq));
     }
-    // Получить прогнозов инвестдомов по инструменту
+    // GetForecastBy — прогнозы инвестдомов по инструменту
     virtual ::grpc::Status GetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>> AsyncGetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>>(AsyncGetForecastByRaw(context, request, cq));
@@ -328,6 +329,7 @@ class InstrumentsService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>> PrepareAsyncGetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse>>(PrepareAsyncGetForecastByRaw(context, request, cq));
     }
+    // GetRiskRates — ставки риска по инструменту
     virtual ::grpc::Status GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>> AsyncGetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse>>(AsyncGetRiskRatesRaw(context, request, cq));
@@ -338,114 +340,116 @@ class InstrumentsService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Получить расписания торгов торговых площадок
+      // TradingSchedules — расписания торговых площадок
       virtual void TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest* request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void TradingSchedules(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest* request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить облигации по ее идентификатору
+      // BondBy — получить облигацию по ее идентификатору
       virtual void BondBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void BondBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список облигаций
+      // Bonds — список облигаций
       virtual void Bonds(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Bonds(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить график выплат купонов по облигации
+      // GetBondCoupons — график выплат купонов по облигации
       virtual void GetBondCoupons(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBondCoupons(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить события по облигации
+      // GetBondEvents — события по облигации
       virtual void GetBondEvents(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBondEvents(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить валюту по ее идентификатору
+      // CurrencyBy — получить валюту по ее идентификатору
       virtual void CurrencyBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CurrencyBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список валют
+      // Currencies — список валют
       virtual void Currencies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Currencies(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить инвестиционный фонд по его идентификатору
+      // EtfBy — получить инвестиционный фонд по его идентификатору
       virtual void EtfBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void EtfBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список инвестиционных фондов
+      // Etfs — список инвестиционных фондов
       virtual void Etfs(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Etfs(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить фьючерс по его идентификатору
+      // FutureBy — получить фьючерс по его идентификатору
       virtual void FutureBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FutureResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void FutureBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FutureResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список фьючерсов
+      // Futures — список фьючерсов
       virtual void Futures(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::FuturesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Futures(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::FuturesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить опцион по его идентификатору
+      // OptionBy — получить опцион по его идентификатору
       virtual void OptionBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void OptionBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Deprecated Получить список опционов
+      // Deprecated Options — список опционов
       virtual void Options(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Options(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список опционов
+      // OptionsBy — список опционов
       virtual void OptionsBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void OptionsBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить акцию по ее идентификатору
+      // ShareBy — получить акцию по ее идентификатору
       virtual void ShareBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::ShareResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ShareBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::ShareResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список акций
+      // Shares — список акций
       virtual void Shares(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::SharesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Shares(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::SharesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить индикативные инструменты — индексы, товары и другие
+      // Indicatives — индикативные инструменты — индексы, товары и другие
       virtual void Indicatives(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest* request, ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void Indicatives(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest* request, ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить накопленный купонный доход по облигации
+      // GetAccruedInterests — накопленный купонный доход по облигации
       virtual void GetAccruedInterests(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAccruedInterests(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить размера гарантийного обеспечения по фьючерсам
+      // GetFuturesMargin — размера гарантийного обеспечения по фьючерсам
       virtual void GetFuturesMargin(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetFuturesMargin(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить основную информацию об инструменте
+      // GetInstrumentBy — основная информация об инструменте
       virtual void GetInstrumentBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetInstrumentBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить события выплаты дивидендов по инструменту
+      // GetDividends — события выплаты дивидендов по инструменту
       virtual void GetDividends(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetDividends(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить актив по его идентификатору
+      // GetAssetBy — получить актив по его идентификатору
       virtual void GetAssetBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAssetBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список активов. Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
+      // GetAssets — список активов
+      // Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
       virtual void GetAssets(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAssets(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список избранных инструментов
+      // GetFavorites — получить список избранных инструментов
       virtual void GetFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Отредактировать список избранных инструментов
+      // EditFavorites — отредактировать список избранных инструментов
       virtual void EditFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void EditFavorites(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Создать новую группу избранных инструментов
+      // CreateFavoriteGroup — создать новую группу избранных инструментов
       virtual void CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CreateFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Удалить группу избранных инструментов
+      // DeleteFavoriteGroup — удалить группу избранных инструментов
       virtual void DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void DeleteFavoriteGroup(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список групп избранных инструментов
+      // GetFavoriteGroups — список групп избранных инструментов
       virtual void GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetFavoriteGroups(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список стран
+      // GetCountries — список стран
       virtual void GetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetCountries(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Найти инструмент
+      // FindInstrument — найти инструмент
       virtual void FindInstrument(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void FindInstrument(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить список брендов
+      // GetBrands — список брендов
       virtual void GetBrands(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBrands(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить бренд по его идентификатору
+      // GetBrandBy — получить бренд по его идентификатору
       virtual void GetBrandBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest* request, ::tinkoff::public_::invest::api::contract::v1::Brand* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBrandBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest* request, ::tinkoff::public_::invest::api::contract::v1::Brand* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить фундаментальные показатели по активу
+      // GetAssetFundamentals — фундаментальные показатели по активу
       virtual void GetAssetFundamentals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAssetFundamentals(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить расписания выхода отчетностей эмитентов
+      // GetAssetReports — расписания выхода отчетностей эмитентов
       virtual void GetAssetReports(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetAssetReports(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить мнения аналитиков по инструменту
+      // GetConsensusForecasts — мнения аналитиков по инструменту
       virtual void GetConsensusForecasts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetConsensusForecasts(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Получить прогнозов инвестдомов по инструменту
+      // GetForecastBy — прогнозы инвестдомов по инструменту
       virtual void GetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetForecastBy(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // GetRiskRates — ставки риска по инструменту
       virtual void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetRiskRates(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -996,78 +1000,80 @@ class InstrumentsService final {
    public:
     Service();
     virtual ~Service();
-    // Получить расписания торгов торговых площадок
+    // TradingSchedules — расписания торговых площадок
     virtual ::grpc::Status TradingSchedules(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesRequest* request, ::tinkoff::public_::invest::api::contract::v1::TradingSchedulesResponse* response);
-    // Получить облигации по ее идентификатору
+    // BondBy — получить облигацию по ее идентификатору
     virtual ::grpc::Status BondBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondResponse* response);
-    // Получить список облигаций
+    // Bonds — список облигаций
     virtual ::grpc::Status Bonds(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::BondsResponse* response);
-    // Получить график выплат купонов по облигации
+    // GetBondCoupons — график выплат купонов по облигации
     virtual ::grpc::Status GetBondCoupons(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondCouponsResponse* response);
-    // Получить события по облигации
+    // GetBondEvents — события по облигации
     virtual ::grpc::Status GetBondEvents(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBondEventsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBondEventsResponse* response);
-    // Получить валюту по ее идентификатору
+    // CurrencyBy — получить валюту по ее идентификатору
     virtual ::grpc::Status CurrencyBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrencyResponse* response);
-    // Получить список валют
+    // Currencies — список валют
     virtual ::grpc::Status Currencies(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::CurrenciesResponse* response);
-    // Получить инвестиционный фонд по его идентификатору
+    // EtfBy — получить инвестиционный фонд по его идентификатору
     virtual ::grpc::Status EtfBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfResponse* response);
-    // Получить список инвестиционных фондов
+    // Etfs — список инвестиционных фондов
     virtual ::grpc::Status Etfs(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::EtfsResponse* response);
-    // Получить фьючерс по его идентификатору
+    // FutureBy — получить фьючерс по его идентификатору
     virtual ::grpc::Status FutureBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FutureResponse* response);
-    // Получить список фьючерсов
+    // Futures — список фьючерсов
     virtual ::grpc::Status Futures(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::FuturesResponse* response);
-    // Получить опцион по его идентификатору
+    // OptionBy — получить опцион по его идентификатору
     virtual ::grpc::Status OptionBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionResponse* response);
-    // Deprecated Получить список опционов
+    // Deprecated Options — список опционов
     virtual ::grpc::Status Options(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response);
-    // Получить список опционов
+    // OptionsBy — список опционов
     virtual ::grpc::Status OptionsBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::FilterOptionsRequest* request, ::tinkoff::public_::invest::api::contract::v1::OptionsResponse* response);
-    // Получить акцию по ее идентификатору
+    // ShareBy — получить акцию по ее идентификатору
     virtual ::grpc::Status ShareBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::ShareResponse* response);
-    // Получить список акций
+    // Shares — список акций
     virtual ::grpc::Status Shares(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentsRequest* request, ::tinkoff::public_::invest::api::contract::v1::SharesResponse* response);
-    // Получить индикативные инструменты — индексы, товары и другие
+    // Indicatives — индикативные инструменты — индексы, товары и другие
     virtual ::grpc::Status Indicatives(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::IndicativesRequest* request, ::tinkoff::public_::invest::api::contract::v1::IndicativesResponse* response);
-    // Получить накопленный купонный доход по облигации
+    // GetAccruedInterests — накопленный купонный доход по облигации
     virtual ::grpc::Status GetAccruedInterests(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAccruedInterestsResponse* response);
-    // Получить размера гарантийного обеспечения по фьючерсам
+    // GetFuturesMargin — размера гарантийного обеспечения по фьючерсам
     virtual ::grpc::Status GetFuturesMargin(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFuturesMarginResponse* response);
-    // Получить основную информацию об инструменте
+    // GetInstrumentBy — основная информация об инструменте
     virtual ::grpc::Status GetInstrumentBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::InstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::InstrumentResponse* response);
-    // Получить события выплаты дивидендов по инструменту
+    // GetDividends — события выплаты дивидендов по инструменту
     virtual ::grpc::Status GetDividends(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetDividendsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetDividendsResponse* response);
-    // Получить актив по его идентификатору
+    // GetAssetBy — получить актив по его идентификатору
     virtual ::grpc::Status GetAssetBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetResponse* response);
-    // Получить список активов. Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
+    // GetAssets — список активов
+    // Метод работает для всех инструментов, кроме срочных — фьючерсов и опционов
     virtual ::grpc::Status GetAssets(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::AssetsRequest* request, ::tinkoff::public_::invest::api::contract::v1::AssetsResponse* response);
-    // Получить список избранных инструментов
+    // GetFavorites — получить список избранных инструментов
     virtual ::grpc::Status GetFavorites(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoritesResponse* response);
-    // Отредактировать список избранных инструментов
+    // EditFavorites — отредактировать список избранных инструментов
     virtual ::grpc::Status EditFavorites(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::EditFavoritesRequest* request, ::tinkoff::public_::invest::api::contract::v1::EditFavoritesResponse* response);
-    // Создать новую группу избранных инструментов
+    // CreateFavoriteGroup — создать новую группу избранных инструментов
     virtual ::grpc::Status CreateFavoriteGroup(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::CreateFavoriteGroupResponse* response);
-    // Удалить группу избранных инструментов
+    // DeleteFavoriteGroup — удалить группу избранных инструментов
     virtual ::grpc::Status DeleteFavoriteGroup(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupRequest* request, ::tinkoff::public_::invest::api::contract::v1::DeleteFavoriteGroupResponse* response);
-    // Получить список групп избранных инструментов
+    // GetFavoriteGroups — список групп избранных инструментов
     virtual ::grpc::Status GetFavoriteGroups(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetFavoriteGroupsResponse* response);
-    // Получить список стран
+    // GetCountries — список стран
     virtual ::grpc::Status GetCountries(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetCountriesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetCountriesResponse* response);
-    // Найти инструмент
+    // FindInstrument — найти инструмент
     virtual ::grpc::Status FindInstrument(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::FindInstrumentRequest* request, ::tinkoff::public_::invest::api::contract::v1::FindInstrumentResponse* response);
-    // Получить список брендов
+    // GetBrands — список брендов
     virtual ::grpc::Status GetBrands(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetBrandsResponse* response);
-    // Получить бренд по его идентификатору
+    // GetBrandBy — получить бренд по его идентификатору
     virtual ::grpc::Status GetBrandBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetBrandRequest* request, ::tinkoff::public_::invest::api::contract::v1::Brand* response);
-    // Получить фундаментальные показатели по активу
+    // GetAssetFundamentals — фундаментальные показатели по активу
     virtual ::grpc::Status GetAssetFundamentals(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetFundamentalsResponse* response);
-    // Получить расписания выхода отчетностей эмитентов
+    // GetAssetReports — расписания выхода отчетностей эмитентов
     virtual ::grpc::Status GetAssetReports(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetAssetReportsResponse* response);
-    // Получить мнения аналитиков по инструменту
+    // GetConsensusForecasts — мнения аналитиков по инструменту
     virtual ::grpc::Status GetConsensusForecasts(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetConsensusForecastsResponse* response);
-    // Получить прогнозов инвестдомов по инструменту
+    // GetForecastBy — прогнозы инвестдомов по инструменту
     virtual ::grpc::Status GetForecastBy(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetForecastRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetForecastResponse* response);
+    // GetRiskRates — ставки риска по инструменту
     virtual ::grpc::Status GetRiskRates(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::RiskRatesRequest* request, ::tinkoff::public_::invest::api::contract::v1::RiskRatesResponse* response);
   };
   template <class BaseClass>

@@ -1,5 +1,5 @@
-#include "src/widgets/filterwidget/filterwidget.h"
-#include "ui_filterwidget.h"
+#include "src/widgets/stockscontrolswidget/stockscontrolswidget.h"
+#include "ui_stockscontrolswidget.h"
 
 #include <QDebug>
 
@@ -10,37 +10,37 @@
 
 
 
-FilterWidget::FilterWidget(IStocksStorage* stocksStorage, QWidget* parent) :
-    IFilterWidget(parent),
-    ui(new Ui::FilterWidget),
+StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, QWidget* parent) :
+    IStocksControlsWidget(parent),
+    ui(new Ui::StocksControlsWidget),
     mStocksStorage(stocksStorage),
     mFilter()
 {
-    qDebug() << "Create FilterWidget";
+    qDebug() << "Create StocksControlsWidget";
 
     ui->setupUi(this);
 }
 
-FilterWidget::~FilterWidget()
+StocksControlsWidget::~StocksControlsWidget()
 {
-    qDebug() << "Destroy FilterWidget";
+    qDebug() << "Destroy StocksControlsWidget";
 
     delete ui;
 }
 
-const Filter& FilterWidget::getFilter()
+const Filter& StocksControlsWidget::getFilter()
 {
     return mFilter;
 }
 
-void FilterWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
+void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
 {
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
     emit dateChangeDateTimeChanged();
 }
 
-void FilterWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -50,14 +50,14 @@ void FilterWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& val
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_tickerLineEdit_textChanged(const QString& text)
+void StocksControlsWidget::on_tickerLineEdit_textChanged(const QString& text)
 {
     mFilter.ticker = text;
 
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -67,14 +67,14 @@ void FilterWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckStat
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_qualInvestorComboBox_currentIndexChanged(int index)
+void StocksControlsWidget::on_qualInvestorComboBox_currentIndexChanged(int index)
 {
     mFilter.qualInvestor = QualInvestorFilter(index);
 
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -85,7 +85,7 @@ void FilterWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& valu
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
 {
     mFilter.priceFrom = value;
 
@@ -98,7 +98,7 @@ void FilterWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_priceToDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_priceToDoubleSpinBox_valueChanged(double value)
 {
     mFilter.priceTo = value;
 
@@ -111,7 +111,7 @@ void FilterWidget::on_priceToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -122,7 +122,7 @@ void FilterWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckSt
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(double value)
 {
     mFilter.dayStartChangeFrom = value;
 
@@ -135,7 +135,7 @@ void FilterWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double value)
 {
     mFilter.dayStartChangeTo = value;
 
@@ -148,7 +148,7 @@ void FilterWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -159,7 +159,7 @@ void FilterWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState&
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double value)
 {
     mFilter.dateChangeFrom = value;
 
@@ -172,7 +172,7 @@ void FilterWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
 {
     mFilter.dateChangeTo = value;
 
@@ -185,7 +185,7 @@ void FilterWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -196,7 +196,7 @@ void FilterWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& v
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_turnoverFromSpinBox_valueChanged(int value)
+void StocksControlsWidget::on_turnoverFromSpinBox_valueChanged(int value)
 {
     mFilter.turnoverFrom = qint64(value) * 1000;
 
@@ -209,7 +209,7 @@ void FilterWidget::on_turnoverFromSpinBox_valueChanged(int value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_turnoverToSpinBox_valueChanged(int value)
+void StocksControlsWidget::on_turnoverToSpinBox_valueChanged(int value)
 {
     mFilter.turnoverTo = qint64(value) * 1000;
 
@@ -222,7 +222,7 @@ void FilterWidget::on_turnoverToSpinBox_valueChanged(int value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value)
+void StocksControlsWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     bool checked = value == Qt::Checked;
 
@@ -233,7 +233,7 @@ void FilterWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& va
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_paybackFromDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_paybackFromDoubleSpinBox_valueChanged(double value)
 {
     mFilter.paybackFrom = value;
 
@@ -246,7 +246,7 @@ void FilterWidget::on_paybackFromDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
+void StocksControlsWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
 {
     mFilter.paybackTo = value;
 
@@ -259,7 +259,7 @@ void FilterWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
     emit filterChanged(mFilter);
 }
 
-void FilterWidget::on_hideStocksControlsButton_clicked()
+void StocksControlsWidget::on_hideStocksControlsButton_clicked()
 {
     if (ui->stocksControlStackedWidget->currentWidget() == ui->controlsVisiblePage)
     {

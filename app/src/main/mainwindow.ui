@@ -62,7 +62,7 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="layoutForFilterWidget">
+         <layout class="QVBoxLayout" name="layoutForStocksControlsWidget">
           <property name="spacing">
            <number>4</number>
           </property>

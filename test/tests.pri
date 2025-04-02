@@ -72,10 +72,10 @@ SOURCES += \
     src/utils/timeutils/test_timeutils.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
-    src/widgets/filterwidget/test_filterwidget.cpp \
-    src/widgets/filterwidget/test_filterwidgetfactory.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidgetfactory.cpp \
+    src/widgets/stockscontrolswidget/test_stockscontrolswidget.cpp \
+    src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
     src/widgets/tablerecord/items/actions/test_actionstableitemwidget.cpp \
     src/widgets/tablerecord/items/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tablerecord/items/stock/test_stocktableitemwidget.cpp \
@@ -149,10 +149,10 @@ HEADERS += \
     src/utils/timeutils/itimeutils_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
-    src/widgets/filterwidget/ifilterwidgetfactory_mock.h \
-    src/widgets/filterwidget/ifilterwidget_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidget_mock.h \
+    src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
+    src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
     src/widgets/tablerecord/itablerecordfactory_mock.h \
     src/widgets/tablerecord/itablerecord_mock.h \
     src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h \

@@ -593,6 +593,9 @@ enum CandleInterval : int {
   CANDLE_INTERVAL_4_HOUR = 11,
   CANDLE_INTERVAL_WEEK = 12,
   CANDLE_INTERVAL_MONTH = 13,
+  CANDLE_INTERVAL_5_SEC = 14,
+  CANDLE_INTERVAL_10_SEC = 15,
+  CANDLE_INTERVAL_30_SEC = 16,
   CandleInterval_INT_MIN_SENTINEL_DO_NOT_USE_ =
       std::numeric_limits<::int32_t>::min(),
   CandleInterval_INT_MAX_SENTINEL_DO_NOT_USE_ =
@@ -602,8 +605,8 @@ enum CandleInterval : int {
 bool CandleInterval_IsValid(int value);
 extern const uint32_t CandleInterval_internal_data_[];
 constexpr CandleInterval CandleInterval_MIN = static_cast<CandleInterval>(0);
-constexpr CandleInterval CandleInterval_MAX = static_cast<CandleInterval>(13);
-constexpr int CandleInterval_ARRAYSIZE = 13 + 1;
+constexpr CandleInterval CandleInterval_MAX = static_cast<CandleInterval>(16);
+constexpr int CandleInterval_ARRAYSIZE = 16 + 1;
 const ::google::protobuf::EnumDescriptor*
 CandleInterval_descriptor();
 template <typename T>
@@ -616,7 +619,7 @@ const std::string& CandleInterval_Name(T value) {
 template <>
 inline const std::string& CandleInterval_Name(CandleInterval value) {
   return ::google::protobuf::internal::NameOfDenseEnum<CandleInterval_descriptor,
-                                                 0, 13>(
+                                                 0, 16>(
       static_cast<int>(value));
 }
 inline bool CandleInterval_Parse(absl::string_view name, CandleInterval* value) {

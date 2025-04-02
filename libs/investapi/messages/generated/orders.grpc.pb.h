@@ -40,7 +40,7 @@ class OrdersStreamService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Stream сделок пользователя.
+    // TradesStream — стрим сделок пользователя
     std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(TradesStreamRaw(context, request));
     }
@@ -50,7 +50,7 @@ class OrdersStreamService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>> PrepareAsyncTradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>>(PrepareAsyncTradesStreamRaw(context, request, cq));
     }
-    // Stream поручений пользователя.
+    // OrderStateStream — стрим поручений пользователя
     // Перед работой прочитайте [статью](/invest/services/orders/orders_state_stream).
     std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>> OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>>(OrderStateStreamRaw(context, request));
@@ -64,9 +64,9 @@ class OrdersStreamService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Stream сделок пользователя.
+      // TradesStream — стрим сделок пользователя
       virtual void TradesStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* reactor) = 0;
-      // Stream поручений пользователя.
+      // OrderStateStream — стрим поручений пользователя
       // Перед работой прочитайте [статью](/invest/services/orders/orders_state_stream).
       virtual void OrderStateStream(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ClientReadReactor< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* reactor) = 0;
     };
@@ -133,9 +133,9 @@ class OrdersStreamService final {
    public:
     Service();
     virtual ~Service();
-    // Stream сделок пользователя.
+    // TradesStream — стрим сделок пользователя
     virtual ::grpc::Status TradesStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::TradesStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::TradesStreamResponse>* writer);
-    // Stream поручений пользователя.
+    // OrderStateStream — стрим поручений пользователя
     // Перед работой прочитайте [статью](/invest/services/orders/orders_state_stream).
     virtual ::grpc::Status OrderStateStream(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamRequest* request, ::grpc::ServerWriter< ::tinkoff::public_::invest::api::contract::v1::OrderStateStreamResponse>* writer);
   };
@@ -411,7 +411,7 @@ class OrdersService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Метод выставления заявки.
+    // PostOrder — выставить заявку
     virtual ::grpc::Status PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncPostOrderRaw(context, request, cq));
@@ -419,7 +419,8 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncPostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncPostOrderRaw(context, request, cq));
     }
-    // Асинхронный метод выставления заявки.
+    // PostOrderAsync — выставить заявку асинхронным методом
+    // Особенности работы приведены в [статье](/invest/services/orders/async).
     virtual ::grpc::Status PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> AsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(AsyncPostOrderAsyncRaw(context, request, cq));
@@ -427,7 +428,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>> PrepareAsyncPostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse>>(PrepareAsyncPostOrderAsyncRaw(context, request, cq));
     }
-    // Метод отмены биржевой заявки.
+    // CancelOrder — отменить заявку
     virtual ::grpc::Status CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> AsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(AsyncCancelOrderRaw(context, request, cq));
@@ -435,7 +436,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>> PrepareAsyncCancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse>>(PrepareAsyncCancelOrderRaw(context, request, cq));
     }
-    // Метод получения статуса торгового поручения.
+    // GetOrderState — получить статус торгового поручения
     virtual ::grpc::Status GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>> AsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(AsyncGetOrderStateRaw(context, request, cq));
@@ -443,7 +444,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>> PrepareAsyncGetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::OrderState>>(PrepareAsyncGetOrderStateRaw(context, request, cq));
     }
-    // Метод получения списка активных заявок по счету.
+    // GetOrders — получить список активных заявок по счету
     virtual ::grpc::Status GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> AsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(AsyncGetOrdersRaw(context, request, cq));
@@ -451,7 +452,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>> PrepareAsyncGetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse>>(PrepareAsyncGetOrdersRaw(context, request, cq));
     }
-    // Метод изменения выставленной заявки.
+    // ReplaceOrder — изменить выставленную заявку
     virtual ::grpc::Status ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> AsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(AsyncReplaceOrderRaw(context, request, cq));
@@ -459,7 +460,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>> PrepareAsyncReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse>>(PrepareAsyncReplaceOrderRaw(context, request, cq));
     }
-    // Расчет количества доступных для покупки/продажи лотов.
+    // GetMaxLots — расчет количества доступных для покупки/продажи лотов
     virtual ::grpc::Status GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> AsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(AsyncGetMaxLotsRaw(context, request, cq));
@@ -467,7 +468,7 @@ class OrdersService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>> PrepareAsyncGetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse>>(PrepareAsyncGetMaxLotsRaw(context, request, cq));
     }
-    // Метод получения предварительной стоимости для лимитной заявки.
+    // GetOrderPrice — получить предварительную стоимость для лимитной заявки
     virtual ::grpc::Status GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>> AsyncGetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse>>(AsyncGetOrderPriceRaw(context, request, cq));
@@ -478,28 +479,29 @@ class OrdersService final {
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Метод выставления заявки.
+      // PostOrder — выставить заявку
       virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PostOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Асинхронный метод выставления заявки.
+      // PostOrderAsync — выставить заявку асинхронным методом
+      // Особенности работы приведены в [статье](/invest/services/orders/async).
       virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void PostOrderAsync(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Метод отмены биржевой заявки.
+      // CancelOrder — отменить заявку
       virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CancelOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Метод получения статуса торгового поручения.
+      // GetOrderState — получить статус торгового поручения
       virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOrderState(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Метод получения списка активных заявок по счету.
+      // GetOrders — получить список активных заявок по счету
       virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOrders(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Метод изменения выставленной заявки.
+      // ReplaceOrder — изменить выставленную заявку
       virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ReplaceOrder(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Расчет количества доступных для покупки/продажи лотов.
+      // GetMaxLots — расчет количества доступных для покупки/продажи лотов
       virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetMaxLots(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Метод получения предварительной стоимости для лимитной заявки.
+      // GetOrderPrice — получить предварительную стоимость для лимитной заявки
       virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetOrderPrice(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
@@ -644,21 +646,22 @@ class OrdersService final {
    public:
     Service();
     virtual ~Service();
-    // Метод выставления заявки.
+    // PostOrder — выставить заявку
     virtual ::grpc::Status PostOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response);
-    // Асинхронный метод выставления заявки.
+    // PostOrderAsync — выставить заявку асинхронным методом
+    // Особенности работы приведены в [статье](/invest/services/orders/async).
     virtual ::grpc::Status PostOrderAsync(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderAsyncResponse* response);
-    // Метод отмены биржевой заявки.
+    // CancelOrder — отменить заявку
     virtual ::grpc::Status CancelOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::CancelOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::CancelOrderResponse* response);
-    // Метод получения статуса торгового поручения.
+    // GetOrderState — получить статус торгового поручения
     virtual ::grpc::Status GetOrderState(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderStateRequest* request, ::tinkoff::public_::invest::api::contract::v1::OrderState* response);
-    // Метод получения списка активных заявок по счету.
+    // GetOrders — получить список активных заявок по счету
     virtual ::grpc::Status GetOrders(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrdersRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrdersResponse* response);
-    // Метод изменения выставленной заявки.
+    // ReplaceOrder — изменить выставленную заявку
     virtual ::grpc::Status ReplaceOrder(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::ReplaceOrderRequest* request, ::tinkoff::public_::invest::api::contract::v1::PostOrderResponse* response);
-    // Расчет количества доступных для покупки/продажи лотов.
+    // GetMaxLots — расчет количества доступных для покупки/продажи лотов
     virtual ::grpc::Status GetMaxLots(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMaxLotsResponse* response);
-    // Метод получения предварительной стоимости для лимитной заявки.
+    // GetOrderPrice — получить предварительную стоимость для лимитной заявки
     virtual ::grpc::Status GetOrderPrice(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetOrderPriceResponse* response);
   };
   template <class BaseClass>
