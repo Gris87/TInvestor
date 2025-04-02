@@ -31,7 +31,7 @@ MainWindow::MainWindow(
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
     ITableRecordFactory*               tableRecordFactory,
-    IStocksControlsWidgetFactory*              stocksControlsWidgetFactory,
+    IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -99,7 +99,7 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mStocksControlsWidget                 = stocksControlsWidgetFactory->newInstance(mStocksStorage, this);
+    mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, this);
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 

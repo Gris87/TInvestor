@@ -26,7 +26,7 @@ protected:
 
         userStorageMock     = new StrictMock<UserStorageMock>();
         messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
-        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+        settingsEditorMock  = new StrictMock<SettingsEditorMock>();
 
         QMutex mutex;
 
@@ -63,10 +63,10 @@ protected:
         delete settingsEditorMock;
     }
 
-    StartAutoPilotDialog*           dialog;
-    StrictMock<UserStorageMock>*    userStorageMock;
+    StartAutoPilotDialog*            dialog;
+    StrictMock<UserStorageMock>*     userStorageMock;
     StrictMock<MessageBoxUtilsMock>* messageBoxUtilsMock;
-    StrictMock<SettingsEditorMock>* settingsEditorMock;
+    StrictMock<SettingsEditorMock>*  settingsEditorMock;
 };
 
 

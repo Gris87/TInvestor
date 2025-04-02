@@ -32,7 +32,7 @@ public:
 
 private:
     IStocksStorage* mStocksStorage;
-    Filter mFilter;
+    Filter          mFilter;
 
 private slots:
     void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);

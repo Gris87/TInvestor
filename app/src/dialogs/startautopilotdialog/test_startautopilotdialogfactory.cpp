@@ -25,9 +25,9 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
     InSequence seq;
 
-    StrictMock<UserStorageMock>    userStorageMock;
+    StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
-    StrictMock<SettingsEditorMock> settingsEditorMock;
+    StrictMock<SettingsEditorMock>  settingsEditorMock;
 
     QMutex mutex;
 

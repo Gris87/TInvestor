@@ -34,12 +34,12 @@ public:
 
 private:
     QStringList getAccounts();
-    void saveWindowState();
-    void loadWindowState();
+    void        saveWindowState();
+    void        loadWindowState();
 
-    IUserStorage*    mUserStorage;
+    IUserStorage*     mUserStorage;
     IMessageBoxUtils* mMessageBoxUtils;
-    ISettingsEditor* mSettingsEditor;
+    ISettingsEditor*  mSettingsEditor;
 
 private slots:
     void on_accountComboBox_currentIndexChanged(int index);

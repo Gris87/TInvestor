@@ -36,9 +36,9 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h"
-#include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecord_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -83,7 +83,7 @@ protected:
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
-        stocksControlsWidgetFactoryMock              = new StrictMock<StocksControlsWidgetFactoryMock>();
+        stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -99,14 +99,15 @@ protected:
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
-        stocksControlsWidgetMock                     = new StrictMock<StocksControlsWidgetMock>();
+        stocksControlsWidgetMock             = new StrictMock<StocksControlsWidgetMock>();
         simulatorDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
         QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
-        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, NotNull())).WillOnce(Return(stocksControlsWidgetMock));
+        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, NotNull()))
+            .WillOnce(Return(stocksControlsWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
             .WillOnce(Return(simulatorDecisionMakerWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("AutoPilot"), NotNull()))
@@ -134,8 +135,8 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Turnover"),   QVariant(86))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
-        // clang-format on        
-        
+        // clang-format on
+
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState());
 
@@ -265,7 +266,7 @@ protected:
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
-    StrictMock<StocksControlsWidgetFactoryMock>*              stocksControlsWidgetFactoryMock;
+    StrictMock<StocksControlsWidgetFactoryMock>*      stocksControlsWidgetFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
@@ -281,7 +282,7 @@ protected:
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
-    StrictMock<StocksControlsWidgetMock>*                     stocksControlsWidgetMock;
+    StrictMock<StocksControlsWidgetMock>*             stocksControlsWidgetMock;
     StrictMock<DecisionMakerWidgetMock>*              simulatorDecisionMakerWidgetMock;
     StrictMock<DecisionMakerWidgetMock>*              autoPilotDecisionMakerWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;

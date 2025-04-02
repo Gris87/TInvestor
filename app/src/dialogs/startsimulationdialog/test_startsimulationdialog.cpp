@@ -41,7 +41,7 @@ protected:
         delete settingsEditorMock;
     }
 
-    StartSimulationDialog* dialog;
+    StartSimulationDialog*          dialog;
     StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 

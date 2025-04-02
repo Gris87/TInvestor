@@ -50,8 +50,8 @@
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
 #include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
-#include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
+#include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
@@ -128,7 +128,7 @@ int runApplication(int argc, char* argv[])
     StockTableItemWidgetFactory      stockTableItemWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
-    StocksControlsWidgetFactory              stocksControlsWidgetFactory;
+    StocksControlsWidgetFactory      stocksControlsWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
     TableRecordFactory tableRecordFactory;

@@ -31,7 +31,7 @@ protected:
         delete stocksStorageMock;
     }
 
-    StocksControlsWidget* stocksControlsWidget;
+    StocksControlsWidget*          stocksControlsWidget;
     StrictMock<StocksStorageMock>* stocksStorageMock;
 };
 
