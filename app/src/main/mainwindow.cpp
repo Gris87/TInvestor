@@ -99,7 +99,7 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, this);
+    mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
@@ -623,6 +623,7 @@ void MainWindow::saveWindowState()
     mSettingsEditor->setValue("MainWindow/stocksTableWidget_Actions",    ui->stocksTableWidget->columnWidth(ACTIONS_COLUMN));
     // clang-format on
 
+    mStocksControlsWidget->saveWindowState("MainWindow/StocksControlsWidget");
     mSimulatorDecisionMakerWidget->saveWindowState();
     mAutoPilotDecisionMakerWidget->saveWindowState();
 }
@@ -645,6 +646,7 @@ void MainWindow::loadWindowState()
     ui->stocksTableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Actions",    83).toInt());
     // clang-format on
 
+    mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
     mSimulatorDecisionMakerWidget->loadWindowState();
     mAutoPilotDecisionMakerWidget->loadWindowState();
 

@@ -5,6 +5,7 @@
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget.h"
 
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/utils/settingseditor/isettingseditor.h"
 
 
 
@@ -20,7 +21,7 @@ class StocksControlsWidget : public IStocksControlsWidget
     Q_OBJECT
 
 public:
-    explicit StocksControlsWidget(IStocksStorage* stocksStorage, QWidget* parent = nullptr);
+    explicit StocksControlsWidget(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
     ~StocksControlsWidget();
 
     StocksControlsWidget(const StocksControlsWidget& another)            = delete;
@@ -28,10 +29,14 @@ public:
 
     Ui::StocksControlsWidget* ui;
 
+    void saveWindowState(const QString& type) override;
+    void loadWindowState(const QString& type) override;
+
     const Filter& getFilter() override;
 
 private:
     IStocksStorage* mStocksStorage;
+    ISettingsEditor* mSettingsEditor;
     Filter          mFilter;
 
 private slots:

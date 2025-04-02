@@ -20,5 +20,10 @@ public:
     StocksControlsWidgetFactoryMock(const StocksControlsWidgetFactoryMock& another)            = delete;
     StocksControlsWidgetFactoryMock& operator=(const StocksControlsWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IStocksControlsWidget*, newInstance, (IStocksStorage * stocksStorage, QWidget* parent), (override));
+    MOCK_METHOD(
+        IStocksControlsWidget*,
+        newInstance,
+        (IStocksStorage * stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent),
+        (override)
+    );
 };

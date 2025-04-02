@@ -5,15 +5,17 @@
 
 
 
+#define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
 #define GREY_COLOR  QColor("#AFC2D7")
 #define GREEN_COLOR QColor("#2BD793")
 
 
 
-StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, QWidget* parent) :
+StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) :
     IStocksControlsWidget(parent),
     ui(new Ui::StocksControlsWidget),
     mStocksStorage(stocksStorage),
+    mSettingsEditor(settingsEditor),
     mFilter()
 {
     qDebug() << "Create StocksControlsWidget";
@@ -283,5 +285,68 @@ void StocksControlsWidget::on_hideButton_clicked()
         setMaximumSize(250, 16777215);
         ui->stackedWidget->setCurrentWidget(ui->controlsVisiblePage);
         ui->hideButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
+    }
+}
+
+void StocksControlsWidget::saveWindowState(const QString& type)
+{
+    // clang-format off
+    mSettingsEditor->setValue(type + "/dateChangeTime",     ui->dateChangeTimeEdit->dateTime().toString(DATETIME_FORMAT));
+    mSettingsEditor->setValue(type + "/useTicker",          ui->tickerCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/ticker",             ui->tickerLineEdit->text());
+    mSettingsEditor->setValue(type + "/useQualInvestor",    ui->qualInvestorCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/qualInvestor",       ui->qualInvestorComboBox->currentIndex());
+    mSettingsEditor->setValue(type + "/usePrice",           ui->priceCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/priceFrom",          ui->priceFromDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/priceTo",            ui->priceToDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/useDayStartChange",  ui->dayStartChangeCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/dayStartChangeFrom", ui->dayStartChangeFromDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/dayStartChangeTo",   ui->dayStartChangeToDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/useDateChange",      ui->dateChangeCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/dateChangeFrom",     ui->dateChangeFromDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/dateChangeTo",       ui->dateChangeToDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/useTurnover",        ui->turnoverCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/turnoverFrom",       ui->turnoverFromSpinBox->value());
+    mSettingsEditor->setValue(type + "/turnoverTo",         ui->turnoverToSpinBox->value());
+    mSettingsEditor->setValue(type + "/usePayback",         ui->paybackCheckBox->isChecked());
+    mSettingsEditor->setValue(type + "/paybackFrom",        ui->paybackFromDoubleSpinBox->value());
+    mSettingsEditor->setValue(type + "/paybackTo",          ui->paybackToDoubleSpinBox->value());
+    // clang-format off
+
+    mSettingsEditor->setValue(type + "/visible", ui->stackedWidget->currentWidget() == ui->controlsVisiblePage);
+}
+
+void StocksControlsWidget::loadWindowState(const QString& type)
+{
+    int currentYear = QDateTime::currentDateTime().date().year();
+
+    QString defaultDateChangeTime = QString("%1-01-01 00:00:00").arg(currentYear - 1);
+
+    // clang-format off
+    ui->dateChangeTimeEdit->setDateTime(QDateTime::fromString(mSettingsEditor->value(type + "/dateChangeTime", defaultDateChangeTime).toString(), DATETIME_FORMAT));
+    ui->tickerCheckBox->setChecked(mSettingsEditor->value(type + "/useTicker",                                 false).toBool());
+    ui->tickerLineEdit->setText(mSettingsEditor->value(type + "/ticker",                                       "").toString());
+    ui->qualInvestorCheckBox->setChecked(mSettingsEditor->value(type + "/useQualInvestor",                     false).toBool());
+    ui->qualInvestorComboBox->setCurrentIndex(mSettingsEditor->value(type + "/qualInvestor",                   QUAL_INVESTOR_SHOW_ALL).toInt());
+    ui->priceCheckBox->setChecked(mSettingsEditor->value(type + "/usePrice",                                   false).toBool());
+    ui->priceFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/priceFrom",                           0.0).toDouble());
+    ui->priceToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/priceTo",                               0.0).toDouble());
+    ui->dayStartChangeCheckBox->setChecked(mSettingsEditor->value(type + "/useDayStartChange",                 false).toBool());
+    ui->dayStartChangeFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dayStartChangeFrom",         0.0).toDouble());
+    ui->dayStartChangeToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dayStartChangeTo",             0.0).toDouble());
+    ui->dateChangeCheckBox->setChecked(mSettingsEditor->value(type + "/useDateChange",                         false).toBool());
+    ui->dateChangeFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dateChangeFrom",                 0.0).toDouble());
+    ui->dateChangeToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dateChangeTo",                     0.0).toDouble());
+    ui->turnoverCheckBox->setChecked(mSettingsEditor->value(type + "/useTurnover",                             false).toBool());
+    ui->turnoverFromSpinBox->setValue(mSettingsEditor->value(type + "/turnoverFrom",                           0).toLongLong());
+    ui->turnoverToSpinBox->setValue(mSettingsEditor->value(type + "/turnoverTo",                               1000000000000).toLongLong());
+    ui->paybackCheckBox->setChecked(mSettingsEditor->value(type + "/usePayback",                               false).toBool());
+    ui->paybackFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackFrom",                       0.0).toDouble());
+    ui->paybackToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackTo",                           100.0).toDouble());
+    // clang-format off
+
+    if (!mSettingsEditor->value(type + "/visible", true).toBool())
+    {
+        ui->hideButton->click();
     }
 }

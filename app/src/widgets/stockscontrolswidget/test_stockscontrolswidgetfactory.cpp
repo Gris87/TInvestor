@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 
@@ -22,10 +23,11 @@ TEST(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
 TEST(Test_StocksControlsWidgetFactory, Test_newInstance)
 {
     StrictMock<StocksStorageMock> stocksStorageMock;
+    StrictMock<SettingsEditorMock> settingsEditorMock;
 
     StocksControlsWidgetFactory factory;
 
-    IStocksControlsWidget* widget = factory.newInstance(&stocksStorageMock, nullptr);
+    IStocksControlsWidget* widget = factory.newInstance(&stocksStorageMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

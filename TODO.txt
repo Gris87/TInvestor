@@ -1,8 +1,5 @@
 Show spinner on simulator/auto-pilot start
-Store filter state
-Store from price date
-Hide/Show filter button
-Show badge "Filter active/inactive" Green/Grey
+Calculate dateChange on first run
 Move ui->stocksTableWidget to dedicated module
 Move another tables to dedicated modules
 Remove auth failed timer and add global variable to check if already shown

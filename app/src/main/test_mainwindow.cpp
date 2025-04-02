@@ -106,7 +106,7 @@ protected:
 
         QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
-        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, NotNull()))
+        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
             .WillOnce(Return(simulatorDecisionMakerWidgetMock));
@@ -137,6 +137,7 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
         // clang-format on
 
+        EXPECT_CALL(*stocksControlsWidgetMock, loadWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState());
 
@@ -198,6 +199,7 @@ protected:
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Actions"),    _));
         // clang-format on
 
+        EXPECT_CALL(*stocksControlsWidgetMock, saveWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, saveWindowState());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, saveWindowState());
 

@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 
@@ -21,18 +22,21 @@ protected:
     void SetUp()
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
-        stocksControlsWidget = new StocksControlsWidget(stocksStorageMock);
+        stocksControlsWidget = new StocksControlsWidget(stocksStorageMock, settingsEditorMock);
     }
 
     void TearDown()
     {
         delete stocksControlsWidget;
         delete stocksStorageMock;
+        delete settingsEditorMock;
     }
 
     StocksControlsWidget*          stocksControlsWidget;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 
 

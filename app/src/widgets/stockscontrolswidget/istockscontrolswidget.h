@@ -22,6 +22,9 @@ public:
     IStocksControlsWidget(const IStocksControlsWidget& another)            = delete;
     IStocksControlsWidget& operator=(const IStocksControlsWidget& another) = delete;
 
+    virtual void saveWindowState(const QString& type) = 0;
+    virtual void loadWindowState(const QString& type) = 0;
+
     virtual const Filter& getFilter() = 0;
 
 signals:

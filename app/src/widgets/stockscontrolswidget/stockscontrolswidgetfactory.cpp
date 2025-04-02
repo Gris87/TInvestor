@@ -17,7 +17,8 @@ StocksControlsWidgetFactory::~StocksControlsWidgetFactory()
     qDebug() << "Destroy StocksControlsWidgetFactory";
 }
 
-IStocksControlsWidget* StocksControlsWidgetFactory::newInstance(IStocksStorage* stocksStorage, QWidget* parent)
+IStocksControlsWidget*
+StocksControlsWidgetFactory::newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent)
 {
-    return new StocksControlsWidget(stocksStorage, parent);
+    return new StocksControlsWidget(stocksStorage, settingsEditor, parent);
 }
