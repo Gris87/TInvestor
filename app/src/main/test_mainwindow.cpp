@@ -134,7 +134,10 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Turnover"),   QVariant(86))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
-        // clang-format on
+        // clang-format on        
+        
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState());
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState());
 
         mainWindow = new MainWindow(
             configMock,
@@ -193,6 +196,9 @@ protected:
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Payback"),    _));
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Actions"),    _));
         // clang-format on
+
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, saveWindowState());
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, saveWindowState());
 
         delete mainWindow;
         delete configMock;

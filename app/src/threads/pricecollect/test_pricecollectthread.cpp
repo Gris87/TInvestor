@@ -189,7 +189,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread())).WillOnce(Return(sharesResponse));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/stocks/logos/aaaaa.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock)));
-    EXPECT_CALL(*logoFileMock, exists()).WillOnce(Return(false));
     EXPECT_CALL(
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/WAGAx160.png")), IHttpClient::Headers())
     )

@@ -23,9 +23,35 @@ TEST(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
+    InSequence seq;
+
     StrictMock<UserStorageMock>    userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
     StrictMock<SettingsEditorMock> settingsEditorMock;
+
+    QMutex mutex;
+
+    QList<Account> accounts;
+
+    Account account1;
+    Account account2;
+
+    account1.setId("aaaa");
+    account2.setId("bbbb");
+
+    account1.name = "Babushka";
+    account2.name = "Matreshka";
+
+    accounts << account1 << account2;
+
+    EXPECT_CALL(userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+
+    // clang-format off
+    EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));
+    EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/follow"),         QVariant(false))).WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
+    // clang-format on
 
     StartAutoPilotDialogFactory factory;
 
