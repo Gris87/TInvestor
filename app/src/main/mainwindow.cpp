@@ -58,14 +58,11 @@ MainWindow::MainWindow(
     makeDecisionTimer(new QTimer(this)),
     stocksTableUpdateAllTimer(new QTimer(this)),
     stocksTableUpdatePriceTimer(new QTimer(this)),
-    tableRecords(),
-    lastPricesUpdates(),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
     mAuthDialogFactory(authDialogFactory),
     mSettingsDialogFactory(settingsDialogFactory),
-    mOrderWavesDialogFactory(orderWavesDialogFactory),
     mStartSimulationDialogFactory(startSimulationDialogFactory),
     mStartAutoPilotDialogFactory(startAutoPilotDialogFactory),
     mDecisionMakerConfigWidgetFactory(decisionMakerConfigWidgetFactory),
@@ -75,10 +72,6 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
-    mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
-    mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
-    mOrderWavesWidgetFactory(orderWavesWidgetFactory),
-    mTableRecordFactory(tableRecordFactory),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mHttpClient(httpClient),
@@ -101,7 +94,18 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
     mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
-    mStocksTableWidget            = stocksTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mStocksTableWidget            = stocksTableWidgetFactory->newInstance(
+        tableRecordFactory,
+        stockTableItemWidgetFactory,
+        actionsTableItemWidgetFactory,
+        orderWavesDialogFactory,
+        orderWavesWidgetFactory,
+        mUserStorage,
+        mOrderBookThread,
+        mHttpClient,
+        mSettingsEditor,
+        this
+    );
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
@@ -129,7 +133,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,         SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,         SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,            SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mStocksControlsWidget,       SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(pricesChanged()));
+    connect(mStocksControlsWidget,       SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(dateChangeDateTimeChanged()));
     connect(mStocksControlsWidget,       SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
@@ -282,48 +286,14 @@ void MainWindow::stocksTableUpdateAllTimerTicked()
 {
     qDebug() << "Stocks table update all timer ticked";
 
-    const Filter& filter = mStocksControlsWidget->getFilter();
-
-    ui->stocksTableWidget->setUpdatesEnabled(false);
-    ui->stocksTableWidget->setSortingEnabled(false);
-
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
-    {
-        it.value()->updateAll();
-        it.value()->filter(ui->stocksTableWidget, filter);
-    }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
-    ui->stocksTableWidget->setUpdatesEnabled(true);
+    mStocksTableWidget->updateAll(mStocksControlsWidget->getFilter());
 }
 
 void MainWindow::stocksTableUpdatePriceTimerTicked()
 {
     qDebug() << "Stocks table update timer ticked";
 
-    if (!lastPricesUpdates.isEmpty())
-    {
-        const Filter& filter = mStocksControlsWidget->getFilter();
-
-        ui->stocksTableWidget->setUpdatesEnabled(false);
-        ui->stocksTableWidget->setSortingEnabled(false);
-
-        for (auto it = lastPricesUpdates.cbegin(); it != lastPricesUpdates.cend(); ++it)
-        {
-            ITableRecord* record = tableRecords[*it];
-
-            if (record != nullptr)
-            {
-                record->updatePrice();
-                record->filter(ui->stocksTableWidget, filter);
-            }
-        }
-
-        lastPricesUpdates.clear();
-
-        ui->stocksTableWidget->setSortingEnabled(true);
-        ui->stocksTableWidget->setUpdatesEnabled(true);
-    }
+    mStocksTableWidget->updateLastPrices(mStocksControlsWidget->getFilter());
 }
 
 void MainWindow::notifyStocksProgress(const QString& message)
@@ -341,53 +311,27 @@ void MainWindow::stocksChanged()
 
 void MainWindow::pricesChanged()
 {
-    const Filter& filter = mStocksControlsWidget->getFilter();
-
-    ui->stocksTableWidget->setUpdatesEnabled(false);
-    ui->stocksTableWidget->setSortingEnabled(false);
-
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
-    {
-        it.value()->updatePrice();
-        it.value()->filter(ui->stocksTableWidget, filter);
-    }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
-    ui->stocksTableWidget->setUpdatesEnabled(true);
+    mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
 
 void MainWindow::periodicDataChanged()
 {
-    const Filter& filter = mStocksControlsWidget->getFilter();
-
-    ui->stocksTableWidget->setUpdatesEnabled(false);
-    ui->stocksTableWidget->setSortingEnabled(false);
-
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
-    {
-        it.value()->updatePeriodicData();
-        it.value()->filter(ui->stocksTableWidget, filter);
-    }
-
-    ui->stocksTableWidget->setSortingEnabled(true);
-    ui->stocksTableWidget->setUpdatesEnabled(true);
+    mStocksTableWidget->updatePeriodicData(mStocksControlsWidget->getFilter());
 }
 
 void MainWindow::lastPriceChanged(const QString& uid)
 {
-    lastPricesUpdates.insert(uid);
+    mStocksTableWidget->lastPriceChanged(uid);
+}
+
+void MainWindow::dateChangeDateTimeChanged()
+{
+    mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
 
 void MainWindow::filterChanged(const Filter& filter)
 {
-    ui->stocksTableWidget->setUpdatesEnabled(false);
-
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
-    {
-        it.value()->filter(ui->stocksTableWidget, filter);
-    }
-
-    ui->stocksTableWidget->setUpdatesEnabled(true);
+    mStocksTableWidget->filterChanged(filter);
 }
 
 void MainWindow::on_actionAuth_triggered()
@@ -497,7 +441,6 @@ void MainWindow::init()
     mStocksStorage->readFromDatabase();
 
     updateStocksTableWidget();
-    ui->stocksTableWidget->sortByColumn(STOCK_COLUMN, Qt::AscendingOrder);
 
     userUpdateTimer->setInterval(15 * 60 * 1000);       // 15 minutes
     priceCollectTimer->setInterval(1 * 60 * 60 * 1000); // 1 hour
@@ -518,47 +461,7 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
-        const Filter& filter = mStocksControlsWidget->getFilter();
-
-        ui->stocksTableWidget->setUpdatesEnabled(false);
-        ui->stocksTableWidget->setSortingEnabled(false);
-
-        for (int i = 0; i < stocks.size(); ++i)
-        {
-            Stock* stock = stocks.at(i);
-
-            stock->mutex->lock();
-            QString uid = stock->meta.uid;
-            stock->mutex->unlock();
-
-            ITableRecord* record = tableRecords[uid];
-
-            if (record != nullptr)
-            {
-                record->updateAll();
-            }
-            else
-            {
-                record = mTableRecordFactory->newInstance(
-                    ui->stocksTableWidget,
-                    mStockTableItemWidgetFactory,
-                    mActionsTableItemWidgetFactory,
-                    mOrderWavesDialogFactory,
-                    mOrderWavesWidgetFactory,
-                    mUserStorage,
-                    mOrderBookThread,
-                    mHttpClient,
-                    stock,
-                    this
-                );
-                tableRecords[uid] = record;
-            }
-
-            record->filter(ui->stocksTableWidget, filter);
-        }
-
-        ui->stocksTableWidget->setSortingEnabled(true);
-        ui->stocksTableWidget->setUpdatesEnabled(true);
+        mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
         ui->stackedWidget->setVisible(true);
         ui->waitingSpinnerWidget->setVisible(false);
@@ -614,16 +517,9 @@ void MainWindow::saveWindowState()
     qDebug() << "Saving window state";
 
     // clang-format off
-    mSettingsEditor->setValue("MainWindow/geometry",                     saveGeometry());
-    mSettingsEditor->setValue("MainWindow/windowState",                  saveState());
-    mSettingsEditor->setValue("MainWindow/pageIndex",                    ui->stackedWidget->currentIndex());
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Stock",      ui->stocksTableWidget->columnWidth(STOCK_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Price",      ui->stocksTableWidget->columnWidth(PRICE_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_DayChange",  ui->stocksTableWidget->columnWidth(DAY_CHANGE_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_DateChange", ui->stocksTableWidget->columnWidth(DATE_CHANGE_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Turnover",   ui->stocksTableWidget->columnWidth(TURNOVER_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Payback",    ui->stocksTableWidget->columnWidth(PAYBACK_COLUMN));
-    mSettingsEditor->setValue("MainWindow/stocksTableWidget_Actions",    ui->stocksTableWidget->columnWidth(ACTIONS_COLUMN));
+    mSettingsEditor->setValue("MainWindow/geometry",    saveGeometry());
+    mSettingsEditor->setValue("MainWindow/windowState", saveState());
+    mSettingsEditor->setValue("MainWindow/pageIndex",   ui->stackedWidget->currentIndex());
     // clang-format on
 
     mStocksControlsWidget->saveWindowState("MainWindow/StocksControlsWidget");
@@ -639,16 +535,6 @@ void MainWindow::loadWindowState()
     restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
     restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
     ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
-
-    // clang-format off
-    ui->stocksTableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Stock",      99).toInt());
-    ui->stocksTableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value("MainWindow/stocksTableWidget_Price",      61).toInt());
-    ui->stocksTableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value("MainWindow/stocksTableWidget_DayChange",  139).toInt());
-    ui->stocksTableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value("MainWindow/stocksTableWidget_DateChange", 139).toInt());
-    ui->stocksTableWidget->setColumnWidth(TURNOVER_COLUMN,    mSettingsEditor->value("MainWindow/stocksTableWidget_Turnover",   86).toInt());
-    ui->stocksTableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Payback",    120).toInt());
-    ui->stocksTableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value("MainWindow/stocksTableWidget_Actions",    83).toInt());
-    // clang-format on
 
     mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");

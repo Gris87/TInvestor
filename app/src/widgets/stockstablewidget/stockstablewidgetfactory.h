@@ -15,5 +15,16 @@ public:
     StocksTableWidgetFactory(const StocksTableWidgetFactory& another)            = delete;
     StocksTableWidgetFactory& operator=(const StocksTableWidgetFactory& another) = delete;
 
-    IStocksTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) override;
+    IStocksTableWidget* newInstance(
+        ITableRecordFactory*            tableRecordFactory,
+        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
+        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*       orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+        IUserStorage*                   userStorage,
+        IOrderBookThread*               orderBookThread,
+        IHttpClient*                    httpClient,
+        ISettingsEditor*                settingsEditor,
+        QWidget*                        parent
+    ) override;
 };

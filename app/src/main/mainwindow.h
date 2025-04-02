@@ -102,8 +102,6 @@ public:
     QTimer*                      makeDecisionTimer;
     QTimer*                      stocksTableUpdateAllTimer;
     QTimer*                      stocksTableUpdatePriceTimer;
-    QMap<QString, ITableRecord*> tableRecords;
-    QSet<QString>                lastPricesUpdates;
 
 private:
     void updateStackWidgetToolbar();
@@ -116,7 +114,6 @@ private:
     IConfig*                           mConfigForSimulation;
     IAuthDialogFactory*                mAuthDialogFactory;
     ISettingsDialogFactory*            mSettingsDialogFactory;
-    IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
     IStartSimulationDialogFactory*     mStartSimulationDialogFactory;
     IStartAutoPilotDialogFactory*      mStartAutoPilotDialogFactory;
     IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
@@ -126,10 +123,6 @@ private:
     ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
-    IStockTableItemWidgetFactory*      mStockTableItemWidgetFactory;
-    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
-    IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
-    ITableRecordFactory*               mTableRecordFactory;
     IStocksControlsWidget*             mStocksControlsWidget;
     IStocksTableWidget*                mStocksTableWidget;
     IDecisionMakerWidget*              mSimulatorDecisionMakerWidget;
@@ -166,6 +159,7 @@ public slots:
     void pricesChanged();
     void periodicDataChanged();
     void lastPriceChanged(const QString& uid);
+    void dateChangeDateTimeChanged();
     void filterChanged(const Filter& filter);
 
 private slots:

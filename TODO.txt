@@ -3,6 +3,7 @@ Double check `_\d+` suffix on ui files
 Calculate dateChange on first run
 Move ui->stocksTableWidget to dedicated module
 Move another tables to dedicated modules
+TableRecord => StockTableRecord
 Remove auth failed timer and add global variable to check if already shown
 Build for Ubuntu
 Add CI to Github

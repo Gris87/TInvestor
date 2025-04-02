@@ -20,5 +20,19 @@ public:
     StocksTableWidgetFactoryMock(const StocksTableWidgetFactoryMock& another)            = delete;
     StocksTableWidgetFactoryMock& operator=(const StocksTableWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IStocksTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (override));
+    MOCK_METHOD(
+        IStocksTableWidget*,
+        newInstance,
+        (ITableRecordFactory * tableRecordFactory,
+         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
+         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+         IOrderWavesDialogFactory*       orderWavesDialogFactory,
+         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+         IUserStorage*                   userStorage,
+         IOrderBookThread*               orderBookThread,
+         IHttpClient*                    httpClient,
+         ISettingsEditor*                settingsEditor,
+         QWidget*                        parent),
+        (override)
+    );
 };
