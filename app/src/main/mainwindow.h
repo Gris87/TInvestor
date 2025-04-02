@@ -25,6 +25,7 @@
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
+#include "src/widgets/stockstablewidget/istockstablewidgetfactory.h"
 #include "src/widgets/tablerecord/itablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
@@ -65,6 +66,7 @@ public:
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
         ITableRecordFactory*               tableRecordFactory,
         IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
+        IStocksTableWidgetFactory*         stocksTableWidgetFactory,
         IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
@@ -129,6 +131,7 @@ private:
     IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
     ITableRecordFactory*               mTableRecordFactory;
     IStocksControlsWidget*             mStocksControlsWidget;
+    IStocksTableWidget*                mStocksTableWidget;
     IDecisionMakerWidget*              mSimulatorDecisionMakerWidget;
     IDecisionMakerWidget*              mAutoPilotDecisionMakerWidget;
     ITrayIcon*                         mTrayIcon;

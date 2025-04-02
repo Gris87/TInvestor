@@ -32,6 +32,7 @@ MainWindow::MainWindow(
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
     ITableRecordFactory*               tableRecordFactory,
     IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
+    IStocksTableWidgetFactory*         stocksTableWidgetFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -100,10 +101,12 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
     mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
+    mStocksTableWidget            = stocksTableWidgetFactory->newInstance(mSettingsEditor, this);
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
 
     ui->layoutForStocksControlsWidget->addWidget(mStocksControlsWidget);
+    ui->layoutForStocksTableWidget->addWidget(mStocksTableWidget);
     ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
     ui->layoutForAutoPilotDecisionMaker->addWidget(mAutoPilotDecisionMakerWidget);
 
@@ -624,6 +627,7 @@ void MainWindow::saveWindowState()
     // clang-format on
 
     mStocksControlsWidget->saveWindowState("MainWindow/StocksControlsWidget");
+    mStocksTableWidget->saveWindowState("MainWindow/StocksTableWidget");
     mSimulatorDecisionMakerWidget->saveWindowState();
     mAutoPilotDecisionMakerWidget->saveWindowState();
 }
@@ -647,6 +651,7 @@ void MainWindow::loadWindowState()
     // clang-format on
 
     mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
+    mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
     mSimulatorDecisionMakerWidget->loadWindowState();
     mAutoPilotDecisionMakerWidget->loadWindowState();
 

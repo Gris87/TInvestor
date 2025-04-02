@@ -39,6 +39,8 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h"
+#include "src/widgets/stockstablewidget/istockstablewidget_mock.h"
+#include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
 #include "src/widgets/tablerecord/itablerecord_mock.h"
 #include "src/widgets/tablerecord/itablerecordfactory_mock.h"
 #include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
@@ -84,6 +86,7 @@ protected:
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
+        stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -100,6 +103,7 @@ protected:
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
         stocksControlsWidgetMock             = new StrictMock<StocksControlsWidgetMock>();
+        stocksTableWidgetMock                = new StrictMock<StocksTableWidgetMock>();
         simulatorDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
@@ -108,6 +112,8 @@ protected:
 
         EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
+        EXPECT_CALL(*stocksTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
+            .WillOnce(Return(stocksTableWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
             .WillOnce(Return(simulatorDecisionMakerWidgetMock));
         EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("AutoPilot"), NotNull()))
@@ -138,6 +144,7 @@ protected:
         // clang-format on
 
         EXPECT_CALL(*stocksControlsWidgetMock, loadWindowState(QString("MainWindow/StocksControlsWidget")));
+        EXPECT_CALL(*stocksTableWidgetMock, loadWindowState(QString("MainWindow/StocksTableWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState());
 
@@ -162,6 +169,7 @@ protected:
             orderWavesWidgetFactoryMock,
             tableRecordFactoryMock,
             stocksControlsWidgetFactoryMock,
+            stocksTableWidgetFactoryMock,
             decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
@@ -200,6 +208,7 @@ protected:
         // clang-format on
 
         EXPECT_CALL(*stocksControlsWidgetMock, saveWindowState(QString("MainWindow/StocksControlsWidget")));
+        EXPECT_CALL(*stocksTableWidgetMock, saveWindowState(QString("MainWindow/StocksTableWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, saveWindowState());
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, saveWindowState());
 
@@ -224,6 +233,7 @@ protected:
         delete orderWavesWidgetFactoryMock;
         delete tableRecordFactoryMock;
         delete stocksControlsWidgetFactoryMock;
+        delete stocksTableWidgetFactoryMock;
         delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
@@ -242,6 +252,7 @@ protected:
         // It will be deleted by `delete ui;`
         /*
         delete stocksControlsWidgetMock;
+        delete stocksTableWidgetMock;
         delete simulatorDecisionMakerWidgetMock;
         delete autoPilotDecisionMakerWidgetMock;
         */
@@ -269,6 +280,7 @@ protected:
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<StocksControlsWidgetFactoryMock>*      stocksControlsWidgetFactoryMock;
+    StrictMock<StocksTableWidgetFactoryMock>*         stocksTableWidgetFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
@@ -285,6 +297,7 @@ protected:
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
     StrictMock<StocksControlsWidgetMock>*             stocksControlsWidgetMock;
+    StrictMock<StocksTableWidgetMock>*                stocksTableWidgetMock;
     StrictMock<DecisionMakerWidgetMock>*              simulatorDecisionMakerWidgetMock;
     StrictMock<DecisionMakerWidgetMock>*              autoPilotDecisionMakerWidgetMock;
     StrictMock<TrayIconMock>*                         trayIconMock;

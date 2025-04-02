@@ -52,6 +52,7 @@
 #include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
+#include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.h"
 #include "src/widgets/tablerecord/tablerecordfactory.h"
@@ -129,6 +130,7 @@ int runApplication(int argc, char* argv[])
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     StocksControlsWidgetFactory      stocksControlsWidgetFactory;
+    StocksTableWidgetFactory         stocksTableWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
     TableRecordFactory tableRecordFactory;
@@ -286,6 +288,7 @@ int runApplication(int argc, char* argv[])
         &orderWavesWidgetFactory,
         &tableRecordFactory,
         &stocksControlsWidgetFactory,
+        &stocksTableWidgetFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,
