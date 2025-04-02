@@ -46,6 +46,8 @@ void StockTableItemWidget::enterEvent(QEnterEvent* event)
 void StockTableItemWidget::leaveEvent(QEvent* event)
 {
     delete mHoverTextWidget;
+    mHoverTextWidget = nullptr;
+
     ui->nameLabel->setVisible(true);
 
     IStockTableItemWidget::leaveEvent(event);
