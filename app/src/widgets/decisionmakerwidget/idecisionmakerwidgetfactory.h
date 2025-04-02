@@ -5,6 +5,10 @@
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
+#include "src/widgets/logstablewidget/ilogstablewidgetfactory.h"
+#include "src/widgets/operationstablewidget/ioperationstablewidgetfactory.h"
+#include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory.h"
 
 
 
@@ -19,5 +23,12 @@ public:
     IDecisionMakerWidgetFactory(const IDecisionMakerWidgetFactory& another)            = delete;
     IDecisionMakerWidgetFactory& operator=(const IDecisionMakerWidgetFactory& another) = delete;
 
-    virtual IDecisionMakerWidget* newInstance(ISettingsEditor* settingsEditor, const QString& type, QWidget* parent) = 0;
+    virtual IDecisionMakerWidget* newInstance(
+        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*    accountChartWidgetFactory,
+        ILogsTableWidgetFactory*       logsTableWidgetFactory,
+        IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent
+    ) = 0;
 };

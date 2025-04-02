@@ -20,6 +20,6 @@ public:
     IDecisionMakerWidget(const IDecisionMakerWidget& another)            = delete;
     IDecisionMakerWidget& operator=(const IDecisionMakerWidget& another) = delete;
 
-    virtual void saveWindowState() = 0;
-    virtual void loadWindowState() = 0;
+    virtual void saveWindowState(const QString& type) = 0;
+    virtual void loadWindowState(const QString& type) = 0;
 };

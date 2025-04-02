@@ -33,6 +33,10 @@ MainWindow::MainWindow(
     ITableRecordFactory*               tableRecordFactory,
     IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
     IStocksTableWidgetFactory*         stocksTableWidgetFactory,
+    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*        accountChartWidgetFactory,
+    ILogsTableWidgetFactory*           logsTableWidgetFactory,
+    IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -57,7 +61,7 @@ MainWindow::MainWindow(
     cleanupTimer(new QTimer(this)),
     makeDecisionTimer(new QTimer(this)),
     stocksTableUpdateAllTimer(new QTimer(this)),
-    stocksTableUpdatePriceTimer(new QTimer(this)),
+    stocksTableUpdateLastPricesTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -106,8 +110,22 @@ MainWindow::MainWindow(
         mSettingsEditor,
         this
     );
-    mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "Simulator", this);
-    mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(mSettingsEditor, "AutoPilot", this);
+    mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
+        operationsTableWidgetFactory,
+        accountChartWidgetFactory,
+        logsTableWidgetFactory,
+        portfolioTableWidgetFactory,
+        mSettingsEditor,
+        this
+    );
+    mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
+        operationsTableWidgetFactory,
+        accountChartWidgetFactory,
+        logsTableWidgetFactory,
+        portfolioTableWidgetFactory,
+        mSettingsEditor,
+        this
+    );
 
     ui->layoutForStocksControlsWidget->addWidget(mStocksControlsWidget);
     ui->layoutForStocksTableWidget->addWidget(mStocksTableWidget);
@@ -117,24 +135,24 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,                   SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,                   SIGNAL(trayIconShowClicked()),                                                this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,                   SIGNAL(trayIconExitClicked()),                                                this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,                 SIGNAL(authFailed(grpc::StatusCode, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const std::string&, const std::string&)));
-    connect(authFailedDelayTimer,        SIGNAL(timeout()),                                                            this, SLOT(authFailedDelayTimerTicked()));
-    connect(userUpdateTimer,             SIGNAL(timeout()),                                                            this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer,           SIGNAL(timeout()),                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,                SIGNAL(timeout()),                                                            this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer,           SIGNAL(timeout()),                                                            this, SLOT(makeDecisionTimerTicked()));
-    connect(stocksTableUpdateAllTimer,   SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
-    connect(stocksTableUpdatePriceTimer, SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdatePriceTimerTicked()));
-    connect(mPriceCollectThread,         SIGNAL(notifyStocksProgress(const QString&)),                                 this, SLOT(notifyStocksProgress(const QString&)));
-    connect(mPriceCollectThread,         SIGNAL(stocksChanged()),                                                      this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,         SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,         SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
-    connect(mLastPriceThread,            SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mStocksControlsWidget,       SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(dateChangeDateTimeChanged()));
-    connect(mStocksControlsWidget,       SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mTrayIcon,                        SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,                        SIGNAL(trayIconShowClicked()),                                                this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,                        SIGNAL(trayIconExitClicked()),                                                this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,                      SIGNAL(authFailed(grpc::StatusCode, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const std::string&, const std::string&)));
+    connect(authFailedDelayTimer,             SIGNAL(timeout()),                                                            this, SLOT(authFailedDelayTimerTicked()));
+    connect(userUpdateTimer,                  SIGNAL(timeout()),                                                            this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer,                SIGNAL(timeout()),                                                            this, SLOT(priceCollectTimerTicked()));
+    connect(cleanupTimer,                     SIGNAL(timeout()),                                                            this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer,                SIGNAL(timeout()),                                                            this, SLOT(makeDecisionTimerTicked()));
+    connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
+    connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(mPriceCollectThread,              SIGNAL(notifyStocksProgress(const QString&)),                                 this, SLOT(notifyStocksProgress(const QString&)));
+    connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                      this, SLOT(stocksChanged()));
+    connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
+    connect(mLastPriceThread,                 SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(dateChangeDateTimeChanged()));
+    connect(mStocksControlsWidget,            SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -238,7 +256,7 @@ void MainWindow::authFailedDelayTimerTicked()
     mMakeDecisionThread->wait();
 
     stocksTableUpdateAllTimer->stop();
-    stocksTableUpdatePriceTimer->stop();
+    stocksTableUpdateLastPricesTimer->stop();
 
     ui->actionAuth->setEnabled(true);
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
@@ -289,7 +307,7 @@ void MainWindow::stocksTableUpdateAllTimerTicked()
     mStocksTableWidget->updateAll(mStocksControlsWidget->getFilter());
 }
 
-void MainWindow::stocksTableUpdatePriceTimerTicked()
+void MainWindow::stocksTableUpdateLastPricesTimerTicked()
 {
     qDebug() << "Stocks table update timer ticked";
 
@@ -350,7 +368,7 @@ void MainWindow::on_actionAuth_triggered()
     makeDecisionTimerTicked();
 
     stocksTableUpdateAllTimer->start();
-    stocksTableUpdatePriceTimer->start();
+    stocksTableUpdateLastPricesTimer->start();
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -449,7 +467,7 @@ void MainWindow::init()
     cleanupTimerTicked();
 
     stocksTableUpdateAllTimer->setInterval(24 * 60 * 60 * 1000); // 1 day
-    stocksTableUpdatePriceTimer->setInterval(3 * 1000);          // 3 seconds
+    stocksTableUpdateLastPricesTimer->setInterval(3 * 1000);     // 3 seconds
 
     on_actionAuth_triggered();
 }
@@ -524,8 +542,8 @@ void MainWindow::saveWindowState()
 
     mStocksControlsWidget->saveWindowState("MainWindow/StocksControlsWidget");
     mStocksTableWidget->saveWindowState("MainWindow/StocksTableWidget");
-    mSimulatorDecisionMakerWidget->saveWindowState();
-    mAutoPilotDecisionMakerWidget->saveWindowState();
+    mSimulatorDecisionMakerWidget->saveWindowState("MainWindow/Simulator");
+    mAutoPilotDecisionMakerWidget->saveWindowState("MainWindow/AutoPilot");
 }
 
 void MainWindow::loadWindowState()
@@ -538,8 +556,8 @@ void MainWindow::loadWindowState()
 
     mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
-    mSimulatorDecisionMakerWidget->loadWindowState();
-    mAutoPilotDecisionMakerWidget->loadWindowState();
+    mSimulatorDecisionMakerWidget->loadWindowState("MainWindow/Simulator");
+    mAutoPilotDecisionMakerWidget->loadWindowState("MainWindow/AutoPilot");
 
     updateStackWidgetToolbar();
 }

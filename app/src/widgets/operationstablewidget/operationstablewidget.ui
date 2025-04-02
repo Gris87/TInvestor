@@ -38,14 +38,24 @@
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>7</number>
+      <number>6</number>
      </property>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>
      </attribute>
      <column>
       <property name="text">
-       <string>Stock</string>
+       <string>Time</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Operation</string>
       </property>
      </column>
      <column>
@@ -55,49 +65,18 @@
      </column>
      <column>
       <property name="text">
-       <string>Change from day start</string>
+       <string>Quantity</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Change from some date</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Turnover</string>
-      </property>
-      <property name="toolTip">
-       <string>Average daily turnover in the last 31 days</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../../Resources.qrc">
-        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Payback</string>
-      </property>
-      <property name="toolTip">
-       <string>Opportunity to get money back (with commission) based on the last 24 hours</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../../Resources.qrc">
-        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Actions</string>
+       <string>Cost</string>
       </property>
      </column>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

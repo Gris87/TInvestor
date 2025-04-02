@@ -67,6 +67,10 @@ public:
         ITableRecordFactory*               tableRecordFactory,
         IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
         IStocksTableWidgetFactory*         stocksTableWidgetFactory,
+        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*        accountChartWidgetFactory,
+        ILogsTableWidgetFactory*           logsTableWidgetFactory,
+        IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
         IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
@@ -101,7 +105,7 @@ public:
     QTimer*                      cleanupTimer;
     QTimer*                      makeDecisionTimer;
     QTimer*                      stocksTableUpdateAllTimer;
-    QTimer*                      stocksTableUpdatePriceTimer;
+    QTimer*                      stocksTableUpdateLastPricesTimer;
 
 private:
     void updateStackWidgetToolbar();
@@ -153,7 +157,7 @@ public slots:
     void cleanupTimerTicked();
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
-    void stocksTableUpdatePriceTimerTicked();
+    void stocksTableUpdateLastPricesTimerTicked();
     void notifyStocksProgress(const QString& message);
     void stocksChanged();
     void pricesChanged();

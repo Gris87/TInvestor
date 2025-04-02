@@ -49,8 +49,12 @@
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
+#include "src/widgets/accountchartwidget/accountchartwidgetfactory.h"
 #include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
+#include "src/widgets/logstablewidget/logstablewidgetfactory.h"
+#include "src/widgets/operationstablewidget/operationstablewidgetfactory.h"
 #include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
+#include "src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
@@ -131,6 +135,10 @@ int runApplication(int argc, char* argv[])
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     StocksControlsWidgetFactory      stocksControlsWidgetFactory;
     StocksTableWidgetFactory         stocksTableWidgetFactory;
+    OperationsTableWidgetFactory     operationsTableWidgetFactory;
+    AccountChartWidgetFactory        accountChartWidgetFactory;
+    LogsTableWidgetFactory           logsTableWidgetFactory;
+    PortfolioTableWidgetFactory      portfolioTableWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
     TableRecordFactory tableRecordFactory;
@@ -289,6 +297,10 @@ int runApplication(int argc, char* argv[])
         &tableRecordFactory,
         &stocksControlsWidgetFactory,
         &stocksTableWidgetFactory,
+        &operationsTableWidgetFactory,
+        &accountChartWidgetFactory,
+        &logsTableWidgetFactory,
+        &portfolioTableWidgetFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,

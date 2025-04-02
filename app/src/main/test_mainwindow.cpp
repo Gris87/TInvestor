@@ -34,9 +34,13 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h"
+#include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
+#include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
+#include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h"
 #include "src/widgets/stockstablewidget/istockstablewidget_mock.h"
@@ -87,6 +91,10 @@ protected:
         tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
         stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
         stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
+        operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
+        accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
+        portfolioTableWidgetFactoryMock      = new StrictMock<PortfolioTableWidgetFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -128,9 +136,29 @@ protected:
             )
         )
             .WillOnce(Return(stocksTableWidgetMock));
-        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("Simulator"), NotNull()))
+        EXPECT_CALL(
+            *decisionMakerWidgetFactoryMock,
+            newInstance(
+                operationsTableWidgetFactoryMock,
+                accountChartWidgetFactoryMock,
+                logsTableWidgetFactoryMock,
+                portfolioTableWidgetFactoryMock,
+                settingsEditorMock,
+                NotNull()
+            )
+        )
             .WillOnce(Return(simulatorDecisionMakerWidgetMock));
-        EXPECT_CALL(*decisionMakerWidgetFactoryMock, newInstance(settingsEditorMock, QString("AutoPilot"), NotNull()))
+        EXPECT_CALL(
+            *decisionMakerWidgetFactoryMock,
+            newInstance(
+                operationsTableWidgetFactoryMock,
+                accountChartWidgetFactoryMock,
+                logsTableWidgetFactoryMock,
+                portfolioTableWidgetFactoryMock,
+                settingsEditorMock,
+                NotNull()
+            )
+        )
             .WillOnce(Return(autoPilotDecisionMakerWidgetMock));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
@@ -145,22 +173,15 @@ protected:
         );
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),                     QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"),                  QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),                    QVariant(0))).WillOnce(Return(QVariant(0)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Stock"),      QVariant(99))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Price"),      QVariant(61))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DayChange"),  QVariant(139))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_DateChange"), QVariant(139))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Turnover"),   QVariant(86))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Payback"),    QVariant(120))).WillOnce(Return(QVariant(100)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/stocksTableWidget_Actions"),    QVariant(83))).WillOnce(Return(QVariant(100)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/windowState"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+        EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
         // clang-format on
 
         EXPECT_CALL(*stocksControlsWidgetMock, loadWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*stocksTableWidgetMock, loadWindowState(QString("MainWindow/StocksTableWidget")));
-        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState());
-        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState());
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/Simulator")));
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/AutoPilot")));
 
         mainWindow = new MainWindow(
             configMock,
@@ -184,6 +205,10 @@ protected:
             tableRecordFactoryMock,
             stocksControlsWidgetFactoryMock,
             stocksTableWidgetFactoryMock,
+            operationsTableWidgetFactoryMock,
+            accountChartWidgetFactoryMock,
+            logsTableWidgetFactoryMock,
+            portfolioTableWidgetFactoryMock,
             decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
@@ -209,22 +234,15 @@ protected:
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),                     _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"),                  _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),                    _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Stock"),      _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Price"),      _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DayChange"),  _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_DateChange"), _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Turnover"),   _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Payback"),    _));
-        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/stocksTableWidget_Actions"),    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/windowState"), _));
+        EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/pageIndex"),   _));
         // clang-format on
 
         EXPECT_CALL(*stocksControlsWidgetMock, saveWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*stocksTableWidgetMock, saveWindowState(QString("MainWindow/StocksTableWidget")));
-        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, saveWindowState());
-        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, saveWindowState());
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, saveWindowState(QString("MainWindow/Simulator")));
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, saveWindowState(QString("MainWindow/AutoPilot")));
 
         delete mainWindow;
         delete configMock;
@@ -248,6 +266,10 @@ protected:
         delete tableRecordFactoryMock;
         delete stocksControlsWidgetFactoryMock;
         delete stocksTableWidgetFactoryMock;
+        delete operationsTableWidgetFactoryMock;
+        delete accountChartWidgetFactoryMock;
+        delete logsTableWidgetFactoryMock;
+        delete portfolioTableWidgetFactoryMock;
         delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
@@ -295,6 +317,10 @@ protected:
     StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
     StrictMock<StocksControlsWidgetFactoryMock>*      stocksControlsWidgetFactoryMock;
     StrictMock<StocksTableWidgetFactoryMock>*         stocksTableWidgetFactoryMock;
+    StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
+    StrictMock<PortfolioTableWidgetFactoryMock>*      portfolioTableWidgetFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;

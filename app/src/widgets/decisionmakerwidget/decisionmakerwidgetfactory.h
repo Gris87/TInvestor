@@ -15,5 +15,12 @@ public:
     DecisionMakerWidgetFactory(const DecisionMakerWidgetFactory& another)            = delete;
     DecisionMakerWidgetFactory& operator=(const DecisionMakerWidgetFactory& another) = delete;
 
-    IDecisionMakerWidget* newInstance(ISettingsEditor* settingsEditor, const QString& type, QWidget* parent) override;
+    IDecisionMakerWidget* newInstance(
+        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*    accountChartWidgetFactory,
+        ILogsTableWidgetFactory*       logsTableWidgetFactory,
+        IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent
+    ) override;
 };

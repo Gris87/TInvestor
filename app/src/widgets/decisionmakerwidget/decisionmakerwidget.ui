@@ -56,38 +56,11 @@
          <number>4</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="operationsTableWidget">
-          <column>
-           <property name="text">
-            <string>Time</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Name</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Operation</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Price</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Quantity</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cost</string>
-           </property>
-          </column>
-         </widget>
+         <layout class="QVBoxLayout" name="layoutForOperationsTableWidget">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -112,7 +85,11 @@
          <number>4</number>
         </property>
         <item>
-         <widget class="QGraphicsView" name="chartGraphicsView"/>
+         <layout class="QVBoxLayout" name="layoutForAccountChartWidget">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -137,68 +114,21 @@
          <number>4</number>
         </property>
         <item>
-         <widget class="QTableWidget" name="logsTableWidget">
-          <column>
-           <property name="text">
-            <string>Time</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Message</string>
-           </property>
-          </column>
-         </widget>
+         <layout class="QVBoxLayout" name="layoutForLogsTableWidget">
+          <property name="spacing">
+           <number>4</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
      </widget>
-     <widget class="QTableWidget" name="portfolioTableWidget">
-      <column>
-       <property name="text">
-        <string>Name</string>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <layout class="QVBoxLayout" name="layoutForPortfolioTableWidget">
+       <property name="spacing">
+        <number>4</number>
        </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Available</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Price</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Avg price</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Cost</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Part</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Income</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Income, %</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>In a day, %</string>
-       </property>
-      </column>
+      </layout>
      </widget>
     </widget>
    </item>

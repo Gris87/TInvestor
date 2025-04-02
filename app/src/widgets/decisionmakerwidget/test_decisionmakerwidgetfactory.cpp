@@ -3,6 +3,10 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
+#include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
+#include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
+#include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
 
 
 
@@ -21,11 +25,22 @@ TEST(Test_DecisionMakerWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 {
-    StrictMock<SettingsEditorMock> settingsEditorMock;
+    StrictMock<OperationsTableWidgetFactoryMock> operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>    accountChartWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>       logsTableWidgetFactoryMock;
+    StrictMock<PortfolioTableWidgetFactoryMock>  portfolioTableWidgetFactoryMock;
+    StrictMock<SettingsEditorMock>               settingsEditorMock;
 
     DecisionMakerWidgetFactory factory;
 
-    IDecisionMakerWidget* widget = factory.newInstance(&settingsEditorMock, "Simulator", nullptr);
+    IDecisionMakerWidget* widget = factory.newInstance(
+        &operationsTableWidgetFactoryMock,
+        &accountChartWidgetFactoryMock,
+        &logsTableWidgetFactoryMock,
+        &portfolioTableWidgetFactoryMock,
+        &settingsEditorMock,
+        nullptr
+    );
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

@@ -38,14 +38,19 @@
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>7</number>
+      <number>9</number>
      </property>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>
      </attribute>
      <column>
       <property name="text">
-       <string>Stock</string>
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Available</string>
       </property>
      </column>
      <column>
@@ -55,49 +60,38 @@
      </column>
      <column>
       <property name="text">
-       <string>Change from day start</string>
+       <string>Avg price</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Change from some date</string>
+       <string>Cost</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Turnover</string>
-      </property>
-      <property name="toolTip">
-       <string>Average daily turnover in the last 31 days</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../../Resources.qrc">
-        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
+       <string>Part</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Payback</string>
-      </property>
-      <property name="toolTip">
-       <string>Opportunity to get money back (with commission) based on the last 24 hours</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../../Resources.qrc">
-        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
+       <string>Income</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Actions</string>
+       <string>Income, %</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>In a day, %</string>
       </property>
      </column>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

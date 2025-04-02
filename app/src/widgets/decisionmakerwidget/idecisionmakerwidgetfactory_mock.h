@@ -21,6 +21,14 @@ public:
     DecisionMakerWidgetFactoryMock& operator=(const DecisionMakerWidgetFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        IDecisionMakerWidget*, newInstance, (ISettingsEditor * settingsEditor, const QString& type, QWidget* parent), (override)
+        IDecisionMakerWidget*,
+        newInstance,
+        (IOperationsTableWidgetFactory * operationsTableWidgetFactory,
+         IAccountChartWidgetFactory*   accountChartWidgetFactory,
+         ILogsTableWidgetFactory*      logsTableWidgetFactory,
+         IPortfolioTableWidgetFactory* portfolioTableWidgetFactory,
+         ISettingsEditor*              settingsEditor,
+         QWidget*                      parent),
+        (override)
     );
 };
