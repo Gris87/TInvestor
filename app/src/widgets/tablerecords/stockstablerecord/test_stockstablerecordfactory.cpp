@@ -31,19 +31,19 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
 {
     InSequence seq;
 
-    StrictMock<StockTableItemWidgetFactoryMock> stockTableItemWidgetFactoryMock;
-    StrictMock<StockTableItemWidgetMock>*       stockTableItemWidgetMock =
-        new StrictMock<StockTableItemWidgetMock>(); // tableWidget will take ownership
-    StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetMock>*       actionsTableItemWidgetMock =
-        new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
-    StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
-    StrictMock<UserStorageMock>             userStorageMock;
-    StrictMock<OrderBookThreadMock>         orderBookThreadMock;
-    StrictMock<HttpClientMock>              httpClientMock;
-
     StocksTableRecordFactory factory;
+
+    StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>       orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>       orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>                   userStorageMock;
+    StrictMock<OrderBookThreadMock>               orderBookThreadMock;
+    StrictMock<HttpClientMock>                    httpClientMock;
+
+    // tableWidget will take ownership
+    StrictMock<StockTableItemWidgetMock>*   stockTableItemWidgetMock   = new StrictMock<StockTableItemWidgetMock>();
+    StrictMock<ActionsTableItemWidgetMock>* actionsTableItemWidgetMock = new StrictMock<ActionsTableItemWidgetMock>();
 
     QTableWidget tableWidget;
     Stock        stock;

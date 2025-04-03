@@ -21,9 +21,9 @@ TEST(Test_PortfolioTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_PortfolioTableWidgetFactory, Test_newInstance)
 {
-    StrictMock<SettingsEditorMock> settingsEditorMock;
-
     PortfolioTableWidgetFactory factory;
+
+    StrictMock<SettingsEditorMock> settingsEditorMock;
 
     IPortfolioTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);

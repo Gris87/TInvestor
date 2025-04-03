@@ -99,10 +99,10 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(GREY_COLOR);
     ui->waitingSpinnerWidget->setTextColor(GREY_COLOR);
 
-    ui->simulatorActiveWidget->setVisible(false);
-    ui->simulatorActiveSpinnerWidget->setInnerRadius(6);
-    ui->simulatorActiveSpinnerWidget->setLineLength(6);
-    ui->simulatorActiveSpinnerWidget->setColor(GREY_COLOR);
+    ui->simulationActiveWidget->setVisible(false);
+    ui->simulationActiveSpinnerWidget->setInnerRadius(6);
+    ui->simulationActiveSpinnerWidget->setLineLength(6);
+    ui->simulationActiveSpinnerWidget->setColor(GREY_COLOR);
 
     ui->autoPilotActiveWidget->setVisible(false);
     ui->autoPilotActiveSpinnerWidget->setInnerRadius(6);
@@ -444,14 +444,14 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::on_startSimulationButton_clicked()
 {
-    if (!ui->simulatorActiveWidget->isVisible())
+    if (!ui->simulationActiveWidget->isVisible())
     {
         std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
 
         if (dialog->exec())
         {
-            ui->simulatorActiveWidget->setVisible(true);
-            ui->simulatorActiveSpinnerWidget->start();
+            ui->simulationActiveWidget->setVisible(true);
+            ui->simulationActiveSpinnerWidget->start();
 
             ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
             ui->startSimulationButton->setText(tr("Stop simulation"));
@@ -464,8 +464,8 @@ void MainWindow::on_startSimulationButton_clicked()
         if (mMessageBoxUtils->question(this, tr("Stop simulation"), tr("Do you really want to stop simulation?")) ==
             QMessageBox::Yes)
         {
-            ui->simulatorActiveWidget->setVisible(false);
-            ui->simulatorActiveSpinnerWidget->stop();
+            ui->simulationActiveWidget->setVisible(false);
+            ui->simulationActiveSpinnerWidget->stop();
 
             ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
             ui->startSimulationButton->setText(tr("Start simulation"));

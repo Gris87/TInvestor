@@ -21,9 +21,9 @@ TEST(Test_LogsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_LogsTableWidgetFactory, Test_newInstance)
 {
-    StrictMock<SettingsEditorMock> settingsEditorMock;
-
     LogsTableWidgetFactory factory;
+
+    StrictMock<SettingsEditorMock> settingsEditorMock;
 
     ILogsTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);

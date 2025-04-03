@@ -609,6 +609,106 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 120000);
 }
 
+TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
+{
+    InSequence seq;
+
+    StrictMock<StartSimulationDialogMock>* startSimulationDialogMock =
+        new StrictMock<StartSimulationDialogMock>(); // Will be deleted in on_startSimulationButton_clicked
+
+    mainWindow->show();
+    mainWindow->ui->stackedWidget->setCurrentWidget(mainWindow->ui->simulationPage);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->simulationActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startSimulationButton->text(),               "Start simulation");
+    // clang-format on
+
+    EXPECT_CALL(*startSimulationDialogFactoryMock, newInstance(settingsEditorMock, mainWindow))
+        .WillOnce(Return(std::shared_ptr<IStartSimulationDialog>(startSimulationDialogMock)));
+    EXPECT_CALL(*startSimulationDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+
+    mainWindow->ui->startSimulationButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         true);
+    ASSERT_EQ(mainWindow->ui->simulationActiveSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(mainWindow->ui->startSimulationButton->text(),               "Stop simulation");
+    // clang-format on
+
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            mainWindow,
+            QString("Stop simulation"),
+            QString("Do you really want to stop simulation?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+
+    mainWindow->ui->startSimulationButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->simulationActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startSimulationButton->text(),               "Start simulation");
+    // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
+{
+    InSequence seq;
+
+    StrictMock<StartAutoPilotDialogMock>* startAutoPilotDialogMock =
+        new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
+
+    mainWindow->show();
+    mainWindow->ui->stackedWidget->setCurrentWidget(mainWindow->ui->autoPilotPage);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
+    // clang-format on
+
+    EXPECT_CALL(
+        *startAutoPilotDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, settingsEditorMock, mainWindow)
+    )
+        .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
+    EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+
+    mainWindow->ui->startAutoPilotButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         true);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Stop auto-pilot");
+    // clang-format on
+
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            mainWindow,
+            QString("Stop auto-pilot"),
+            QString("Do you really want to stop auto-pilot?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+
+    mainWindow->ui->startAutoPilotButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
+    // clang-format on
+}
+
 TEST_F(Test_MainWindow, Test_init)
 {
     // InSequence seq;
@@ -651,4 +751,50 @@ TEST_F(Test_MainWindow, Test_init)
     lastPriceThreadMock->wait();
     cleanupThreadMock->wait();
     makeDecisionThreadMock->wait();
+}
+
+TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
+{
+    InSequence seq;
+
+    mainWindow->show();
+
+    QMutex        mutex;
+    QList<Stock*> stocks;
+
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+
+    mainWindow->updateStocksTableWidget();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isVisible(),  true);
+    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), true);
+    // clang-format on
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
+    Filter    filter;
+
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksControlsWidgetMock, getDateChangeTime()).WillOnce(Return(dateChangeTime));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
+    EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateTable(stocks, filter));
+
+    mainWindow->updateStocksTableWidget();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isVisible(),  false);
+    ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), false);
+    // clang-format on
 }

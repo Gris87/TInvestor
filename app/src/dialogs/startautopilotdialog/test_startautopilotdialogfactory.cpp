@@ -25,6 +25,8 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
     InSequence seq;
 
+    StartAutoPilotDialogFactory factory;
+
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>  settingsEditorMock;
@@ -52,8 +54,6 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/follow"),         QVariant(false))).WillOnce(Return(QVariant(false)));
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
     // clang-format on
-
-    StartAutoPilotDialogFactory factory;
 
     std::shared_ptr<IStartAutoPilotDialog> dialog =
         factory.newInstance(&userStorageMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr);

@@ -130,6 +130,56 @@ TEST(Test_Filter, Test_assign)
     // clang-format on
 }
 
+TEST(Test_Filter, Test_isActive)
+{
+    Filter filter;
+
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useTicker = true;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.ticker = "aaa";
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useTicker = false;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.ticker = "";
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useQualInvestor = true;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.qualInvestor = QUAL_INVESTOR_ONLY_WITH_STATUS;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useQualInvestor = false;
+    ASSERT_EQ(filter.isActive(), false);
+    filter.qualInvestor = QUAL_INVESTOR_SHOW_ALL;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.usePrice = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.usePrice = false;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useDayStartChange = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useDayStartChange = false;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useDateChange = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useDateChange = false;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.useTurnover = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.useTurnover = false;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.usePayback = true;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.usePayback = false;
+    ASSERT_EQ(filter.isActive(), false);
+}
+
 TEST(Test_Filter, Test_isFiltered)
 {
     Filter filter;

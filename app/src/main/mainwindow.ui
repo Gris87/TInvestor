@@ -117,7 +117,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="simulatorActiveWidget" native="true">
+           <widget class="QWidget" name="simulationActiveWidget" native="true">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
               <number>4</number>
@@ -165,7 +165,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="WaitingSpinnerWidget" name="simulatorActiveSpinnerWidget" native="true"/>
+                 <widget class="WaitingSpinnerWidget" name="simulationActiveSpinnerWidget" native="true"/>
                 </item>
                </layout>
               </widget>

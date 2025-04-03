@@ -15,6 +15,12 @@ win32-msvc* {
 }
 # Disable warnings - END
 
+# Extend number of sections - BEGIN
+win32-msvc* {
+    QMAKE_CXXFLAGS += -bigobj
+}
+# Extend number of sections - END
+
 # Target dirs - BEGIN
 DESTDIR     = build/
 OBJECTS_DIR = build/gen/$${TARGET}/objs

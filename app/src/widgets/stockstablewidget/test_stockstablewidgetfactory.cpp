@@ -29,6 +29,8 @@ TEST(Test_StocksTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 {
+    StocksTableWidgetFactory factory;
+
     StrictMock<StocksTableRecordFactoryMock>      stockTableRecordFactoryMock;
     StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
@@ -38,8 +40,6 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
     StrictMock<OrderBookThreadMock>               orderBookThreadMock;
     StrictMock<HttpClientMock>                    httpClientMock;
     StrictMock<SettingsEditorMock>                settingsEditorMock;
-
-    StocksTableWidgetFactory factory;
 
     IStocksTableWidget* widget = factory.newInstance(
         &stockTableRecordFactoryMock,

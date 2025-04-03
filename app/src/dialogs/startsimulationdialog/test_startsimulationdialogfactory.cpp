@@ -23,6 +23,8 @@ TEST(Test_StartSimulationDialogFactory, Test_newInstance)
 {
     InSequence seq;
 
+    StartSimulationDialogFactory factory;
+
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     // clang-format off
@@ -32,8 +34,6 @@ TEST(Test_StartSimulationDialogFactory, Test_newInstance)
     EXPECT_CALL(settingsEditorMock, value(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01"))).WillOnce(Return(QVariant("2025-01-01")));
     EXPECT_CALL(settingsEditorMock, value(QString("StartSimulationDialog/bestConfig"), QVariant(false))).WillOnce(Return(QVariant(false)));
     // clang-format on
-
-    StartSimulationDialogFactory factory;
 
     std::shared_ptr<IStartSimulationDialog> dialog = factory.newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);

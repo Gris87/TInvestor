@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/dialogs/orderwavesdialog/iorderwavesdialog_mock.h"
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
@@ -60,6 +61,20 @@ protected:
 
 TEST_F(Test_ActionsTableItemWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_ActionsTableItemWidget, Test_on_orderWavesButton_clicked)
+{
+    InSequence seq;
+
+    StrictMock<OrderWavesDialogMock>* orderWavesDialogMock =
+        new StrictMock<OrderWavesDialogMock>(); // Will be deleted in authFailed
+
+    EXPECT_CALL(*orderWavesDialogFactoryMock, newInstance(orderWavesWidgetFactoryMock, orderBookThreadMock, stock, 2, widget))
+        .WillOnce(Return(std::shared_ptr<IOrderWavesDialog>(orderWavesDialogMock)));
+    EXPECT_CALL(*orderWavesDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+
+    widget->ui->orderWavesButton->click();
 }
 
 TEST_F(Test_ActionsTableItemWidget, Test_on_linkButton_clicked)

@@ -22,10 +22,10 @@ TEST(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_StocksControlsWidgetFactory, Test_newInstance)
 {
+    StocksControlsWidgetFactory factory;
+
     StrictMock<StocksStorageMock>  stocksStorageMock;
     StrictMock<SettingsEditorMock> settingsEditorMock;
-
-    StocksControlsWidgetFactory factory;
 
     IStocksControlsWidget* widget = factory.newInstance(&stocksStorageMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);

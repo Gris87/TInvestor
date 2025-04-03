@@ -21,9 +21,9 @@ TEST(Test_OperationsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
 {
-    StrictMock<SettingsEditorMock> settingsEditorMock;
-
     OperationsTableWidgetFactory factory;
+
+    StrictMock<SettingsEditorMock> settingsEditorMock;
 
     IOperationsTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);

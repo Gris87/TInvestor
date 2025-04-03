@@ -273,6 +273,32 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
     // clang-format on
 }
 
+TEST_F(Test_RawGrpcClient, Test_getOrderBook)
+{
+    InSequence seq;
+
+    grpc::ClientContext                            context;
+    tinkoff::GetOrderBookRequest                   req;
+    std::shared_ptr<tinkoff::GetOrderBookResponse> resp =
+        std::shared_ptr<tinkoff::GetOrderBookResponse>(new tinkoff::GetOrderBookResponse());
+
+    context.set_credentials(creds);
+
+    req.set_instrument_id(SPBE_UID);
+    req.set_depth(50);
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    grpc::Status status = client->getOrderBook(marketDataService, &context, req, resp.get());
+
+    // clang-format off
+    ASSERT_EQ(status.ok(),            true);
+    ASSERT_EQ(resp->depth(),          50);
+    ASSERT_EQ(resp->instrument_uid(), SPBE_UID);
+    // clang-format on
+}
+
 TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
 {
     InSequence seq;

@@ -42,6 +42,7 @@ public:
 
     void run() override;
 
+    void downloadLogo(QUrl url, std::shared_ptr<IFile> stockLogoFile);
     bool storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks);
     void obtainStocksData();
     void cleanupOperationalData();

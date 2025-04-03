@@ -36,8 +36,6 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<ConfigMock>                           configMock;
     StrictMock<DecisionMakerConfigMock>              simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock>              autoPilotConfigMock;
-    StrictMock<DecisionMakerConfigWidgetMock>*       simulatorConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
-    StrictMock<DecisionMakerConfigWidgetMock>*       autoPilotConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
     StrictMock<DecisionMakerConfigWidgetFactoryMock> decisionMakerConfigWidgetFactoryMock;
     StrictMock<BuyDecision1ConfigWidgetFactoryMock>  buyDecision1ConfigWidgetFactoryMock;
     StrictMock<BuyDecision2ConfigWidgetFactoryMock>  buyDecision2ConfigWidgetFactoryMock;
@@ -45,6 +43,10 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
+
+    // It will be deleted by `delete ui;`
+    StrictMock<DecisionMakerConfigWidgetMock>* simulatorConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
+    StrictMock<DecisionMakerConfigWidgetMock>* autoPilotConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
 
     EXPECT_CALL(configMock, getSimulatorConfig()).WillOnce(Return(&simulatorConfigMock));
     EXPECT_CALL(
