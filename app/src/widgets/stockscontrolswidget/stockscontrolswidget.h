@@ -29,10 +29,11 @@ public:
 
     Ui::StocksControlsWidget* ui;
 
+    QDateTime     getDateChangeTime() override;
+    const Filter& getFilter() override;
+
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
-
-    const Filter& getFilter() override;
 
 private:
     IStocksStorage* mStocksStorage;

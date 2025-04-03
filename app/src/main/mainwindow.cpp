@@ -479,6 +479,7 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
+        mStocksStorage->obtainStocksDatePrice(mStocksControlsWidget->getDateChangeTime().toMSecsSinceEpoch());
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
         ui->stackedWidget->setVisible(true);

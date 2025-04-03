@@ -30,6 +30,11 @@ StocksControlsWidget::~StocksControlsWidget()
     delete ui;
 }
 
+QDateTime StocksControlsWidget::getDateChangeTime()
+{
+    return ui->dateChangeTimeEdit->dateTime();
+}
+
 const Filter& StocksControlsWidget::getFilter()
 {
     return mFilter;
@@ -37,6 +42,7 @@ const Filter& StocksControlsWidget::getFilter()
 
 void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
 {
+    QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
     emit dateChangeDateTimeChanged();
