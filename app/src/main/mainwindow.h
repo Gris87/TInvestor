@@ -26,7 +26,7 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory.h"
-#include "src/widgets/tablerecord/itablerecordfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
 

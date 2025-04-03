@@ -199,7 +199,7 @@ void StocksTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      99).toInt());
     ui->tableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      61).toInt());
     ui->tableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  139).toInt());
-    ui->tableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", 139).toInt());
+    ui->tableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", 157).toInt());
     ui->tableWidget->setColumnWidth(TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   86).toInt());
     ui->tableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    120).toInt());
     ui->tableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    83).toInt());

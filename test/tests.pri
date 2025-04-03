@@ -86,16 +86,16 @@ SOURCES += \
     src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/test_stockstablewidget.cpp \
     src/widgets/stockstablewidget/test_stockstablewidgetfactory.cpp \
-    src/widgets/tablerecord/items/actions/test_actionstableitemwidget.cpp \
-    src/widgets/tablerecord/items/actions/test_actionstableitemwidgetfactory.cpp \
-    src/widgets/tablerecord/items/stock/test_stocktableitemwidget.cpp \
-    src/widgets/tablerecord/items/stock/test_stocktableitemwidgetfactory.cpp \
-    src/widgets/tablerecord/items/test_paybacktableitem.cpp \
-    src/widgets/tablerecord/items/test_pricechangetableitem.cpp \
-    src/widgets/tablerecord/items/test_pricetableitem.cpp \
-    src/widgets/tablerecord/items/test_turnovertableitem.cpp \
-    src/widgets/tablerecord/test_tablerecord.cpp \
-    src/widgets/tablerecord/test_tablerecordfactory.cpp \
+    src/widgets/tableitems/actions/test_actionstableitemwidget.cpp \
+    src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
+    src/widgets/tableitems/stock/test_stocktableitemwidget.cpp \
+    src/widgets/tableitems/stock/test_stocktableitemwidgetfactory.cpp \
+    src/widgets/tableitems/test_paybacktableitem.cpp \
+    src/widgets/tableitems/test_pricechangetableitem.cpp \
+    src/widgets/tableitems/test_pricetableitem.cpp \
+    src/widgets/tableitems/test_turnovertableitem.cpp \
+    src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
+    src/widgets/tablerecords/stockstablerecord/test_stockstablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
 
@@ -173,11 +173,11 @@ HEADERS += \
     src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
     src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
     src/widgets/stockstablewidget/istockstablewidget_mock.h \
-    src/widgets/tablerecord/itablerecordfactory_mock.h \
-    src/widgets/tablerecord/itablerecord_mock.h \
-    src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h \
-    src/widgets/tablerecord/items/actions/iactionstableitemwidget_mock.h \
-    src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory_mock.h \
-    src/widgets/tablerecord/items/stock/istocktableitemwidget_mock.h \
+    src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
+    src/widgets/tableitems/actions/iactionstableitemwidget_mock.h \
+    src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h \
+    src/widgets/tableitems/stock/istocktableitemwidget_mock.h \
+    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
+    src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \

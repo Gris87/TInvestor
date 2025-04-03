@@ -9,9 +9,9 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
-#include "src/widgets/tablerecord/itablerecordfactory_mock.h"
-#include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
+#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
 
 
 

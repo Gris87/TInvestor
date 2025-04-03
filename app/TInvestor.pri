@@ -90,16 +90,16 @@ SOURCES += \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/stockstablewidget.cpp \
     src/widgets/stockstablewidget/stockstablewidgetfactory.cpp \
-    src/widgets/tablerecord/items/actions/actionstableitemwidget.cpp \
-    src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.cpp \
-    src/widgets/tablerecord/items/paybacktableitem.cpp \
-    src/widgets/tablerecord/items/pricechangetableitem.cpp \
-    src/widgets/tablerecord/items/pricetableitem.cpp \
-    src/widgets/tablerecord/items/stock/stocktableitemwidget.cpp \
-    src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.cpp \
-    src/widgets/tablerecord/items/turnovertableitem.cpp \
-    src/widgets/tablerecord/tablerecord.cpp \
-    src/widgets/tablerecord/tablerecordfactory.cpp \
+    src/widgets/tableitems/actions/actionstableitemwidget.cpp \
+    src/widgets/tableitems/actions/actionstableitemwidgetfactory.cpp \
+    src/widgets/tableitems/paybacktableitem.cpp \
+    src/widgets/tableitems/pricechangetableitem.cpp \
+    src/widgets/tableitems/pricetableitem.cpp \
+    src/widgets/tableitems/stock/stocktableitemwidget.cpp \
+    src/widgets/tableitems/stock/stocktableitemwidgetfactory.cpp \
+    src/widgets/tableitems/turnovertableitem.cpp \
+    src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
+    src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
 
@@ -265,22 +265,22 @@ HEADERS += \
     src/widgets/stockstablewidget/istockstablewidgetfactory.h \
     src/widgets/stockstablewidget/stockstablewidget.h \
     src/widgets/stockstablewidget/stockstablewidgetfactory.h \
-    src/widgets/tablerecord/itablerecord.h \
-    src/widgets/tablerecord/itablerecordfactory.h \
-    src/widgets/tablerecord/items/actions/actionstableitemwidget.h \
-    src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h \
-    src/widgets/tablerecord/items/actions/iactionstableitemwidget.h \
-    src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory.h \
-    src/widgets/tablerecord/items/paybacktableitem.h \
-    src/widgets/tablerecord/items/pricechangetableitem.h \
-    src/widgets/tablerecord/items/pricetableitem.h \
-    src/widgets/tablerecord/items/stock/istocktableitemwidget.h \
-    src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h \
-    src/widgets/tablerecord/items/stock/stocktableitemwidget.h \
-    src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.h \
-    src/widgets/tablerecord/items/turnovertableitem.h \
-    src/widgets/tablerecord/tablerecord.h \
-    src/widgets/tablerecord/tablerecordfactory.h \
+    src/widgets/tableitems/actions/actionstableitemwidget.h \
+    src/widgets/tableitems/actions/actionstableitemwidgetfactory.h \
+    src/widgets/tableitems/actions/iactionstableitemwidget.h \
+    src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h \
+    src/widgets/tableitems/paybacktableitem.h \
+    src/widgets/tableitems/pricechangetableitem.h \
+    src/widgets/tableitems/pricetableitem.h \
+    src/widgets/tableitems/stock/istocktableitemwidget.h \
+    src/widgets/tableitems/stock/istocktableitemwidgetfactory.h \
+    src/widgets/tableitems/stock/stocktableitemwidget.h \
+    src/widgets/tableitems/stock/stocktableitemwidgetfactory.h \
+    src/widgets/tableitems/turnovertableitem.h \
+    src/widgets/tablerecords/stockstablerecord/istockstablerecord.h \
+    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h \
+    src/widgets/tablerecords/stockstablerecord/stockstablerecord.h \
+    src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \
@@ -307,5 +307,5 @@ FORMS += \
     src/widgets/portfoliotablewidget/portfoliotablewidget.ui \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
-    src/widgets/tablerecord/items/actions/actionstableitemwidget.ui \
-    src/widgets/tablerecord/items/stock/stocktableitemwidget.ui \
+    src/widgets/tableitems/actions/actionstableitemwidget.ui \
+    src/widgets/tableitems/stock/stocktableitemwidget.ui \

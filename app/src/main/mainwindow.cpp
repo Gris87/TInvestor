@@ -345,7 +345,7 @@ void MainWindow::lastPriceChanged(const QString& uid)
 
 void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 {
-    mStocksTableWidget->setDateChangeTooltip(QString("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
+    mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
     mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
 
@@ -484,7 +484,7 @@ void MainWindow::updateStocksTableWidget()
         QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
 
         mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
-        mStocksTableWidget->setDateChangeTooltip(QString("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
+        mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
         ui->stackedWidget->setVisible(true);

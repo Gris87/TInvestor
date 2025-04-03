@@ -10,9 +10,9 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
-#include "src/widgets/tablerecord/itablerecordfactory.h"
-#include "src/widgets/tablerecord/items/actions/iactionstableitemwidgetfactory.h"
-#include "src/widgets/tablerecord/items/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
+#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
+#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
 
 
 

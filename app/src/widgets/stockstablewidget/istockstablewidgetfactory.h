@@ -10,7 +10,7 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
-#include "src/widgets/tablerecord/itablerecordfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 
 

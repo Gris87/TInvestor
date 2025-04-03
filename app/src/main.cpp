@@ -57,9 +57,9 @@
 #include "src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
-#include "src/widgets/tablerecord/items/actions/actionstableitemwidgetfactory.h"
-#include "src/widgets/tablerecord/items/stock/stocktableitemwidgetfactory.h"
-#include "src/widgets/tablerecord/tablerecordfactory.h"
+#include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
+#include "src/widgets/tableitems/stock/stocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
