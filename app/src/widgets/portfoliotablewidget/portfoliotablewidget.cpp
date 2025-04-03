@@ -5,7 +5,7 @@
 
 
 
-// TODO: Move to TableRecord
+// TODO: Move to PortfolioTableRecord
 #define PORTFOLIO_NAME_COLUMN           0
 #define PORTFOLIO_AVAILABLE_COLUMN      1
 #define PORTFOLIO_PRICE_COLUMN          2

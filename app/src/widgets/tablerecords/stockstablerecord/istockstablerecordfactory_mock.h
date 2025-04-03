@@ -8,20 +8,20 @@
 
 
 
-class TableRecordFactoryMock : public ITableRecordFactory
+class StocksTableRecordFactoryMock : public IStocksTableRecordFactory
 {
 public:
-    TableRecordFactoryMock() :
-        ITableRecordFactory()
+    StocksTableRecordFactoryMock() :
+        IStocksTableRecordFactory()
     {
     }
-    ~TableRecordFactoryMock() override = default;
+    ~StocksTableRecordFactoryMock() override = default;
 
-    TableRecordFactoryMock(const TableRecordFactoryMock& another)            = delete;
-    TableRecordFactoryMock& operator=(const TableRecordFactoryMock& another) = delete;
+    StocksTableRecordFactoryMock(const StocksTableRecordFactoryMock& another)            = delete;
+    StocksTableRecordFactoryMock& operator=(const StocksTableRecordFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        ITableRecord*,
+        IStocksTableRecord*,
         newInstance,
         (QTableWidget * tableWidget,
          IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,

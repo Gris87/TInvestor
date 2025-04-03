@@ -45,10 +45,10 @@
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h"
 #include "src/widgets/stockstablewidget/istockstablewidget_mock.h"
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
@@ -88,7 +88,7 @@ protected:
         stockTableItemWidgetFactoryMock      = new StrictMock<StockTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
-        tableRecordFactoryMock               = new StrictMock<TableRecordFactoryMock>();
+        stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
         stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
         stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
         operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
@@ -123,7 +123,7 @@ protected:
         EXPECT_CALL(
             *stocksTableWidgetFactoryMock,
             newInstance(
-                tableRecordFactoryMock,
+                stockTableRecordFactoryMock,
                 stockTableItemWidgetFactoryMock,
                 actionsTableItemWidgetFactoryMock,
                 orderWavesDialogFactoryMock,
@@ -202,7 +202,7 @@ protected:
             stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesWidgetFactoryMock,
-            tableRecordFactoryMock,
+            stockTableRecordFactoryMock,
             stocksControlsWidgetFactoryMock,
             stocksTableWidgetFactoryMock,
             operationsTableWidgetFactoryMock,
@@ -263,7 +263,7 @@ protected:
         delete stockTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesWidgetFactoryMock;
-        delete tableRecordFactoryMock;
+        delete stockTableRecordFactoryMock;
         delete stocksControlsWidgetFactoryMock;
         delete stocksTableWidgetFactoryMock;
         delete operationsTableWidgetFactoryMock;
@@ -314,7 +314,7 @@ protected:
     StrictMock<StockTableItemWidgetFactoryMock>*      stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
-    StrictMock<TableRecordFactoryMock>*               tableRecordFactoryMock;
+    StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
     StrictMock<StocksControlsWidgetFactoryMock>*      stocksControlsWidgetFactoryMock;
     StrictMock<StocksTableWidgetFactoryMock>*         stocksTableWidgetFactoryMock;
     StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;

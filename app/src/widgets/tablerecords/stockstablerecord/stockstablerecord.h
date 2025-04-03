@@ -16,12 +16,12 @@
 
 
 
-class TableRecord : public ITableRecord
+class StocksTableRecord : public IStocksTableRecord
 {
     Q_OBJECT
 
 public:
-    explicit TableRecord(
+    explicit StocksTableRecord(
         QTableWidget*                   tableWidget,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
@@ -33,10 +33,10 @@ public:
         Stock*                          stock,
         QObject*                        parent = nullptr
     );
-    ~TableRecord();
+    ~StocksTableRecord();
 
-    TableRecord(const TableRecord& another)            = delete;
-    TableRecord& operator=(const TableRecord& another) = delete;
+    StocksTableRecord(const StocksTableRecord& another)            = delete;
+    StocksTableRecord& operator=(const StocksTableRecord& another) = delete;
 
     void updateAll() override;
     void updatePrice() override;

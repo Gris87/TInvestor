@@ -6,7 +6,7 @@
 
 
 
-TableRecord::TableRecord(
+StocksTableRecord::StocksTableRecord(
     QTableWidget*                   tableWidget,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
@@ -18,7 +18,7 @@ TableRecord::TableRecord(
     Stock*                          stock,
     QObject*                        parent
 ) :
-    ITableRecord(parent),
+    IStocksTableRecord(parent),
     mStock(stock),
     mStockTableItemWidget(),
     mPriceTableWidgetItem(new PriceTableItem()),
@@ -27,7 +27,7 @@ TableRecord::TableRecord(
     mTurnoverTableWidgetItem(new TurnoverTableItem()),
     mPaybackTableWidgetItem(new PaybackTableItem())
 {
-    qDebug() << "Create TableRecord";
+    qDebug() << "Create StocksTableRecord";
 
     mStock->mutex->lock();
     qint32 priceNanos = mStock->meta.minPriceIncrement.nano;
@@ -67,12 +67,12 @@ TableRecord::TableRecord(
     updateAll();
 }
 
-TableRecord::~TableRecord()
+StocksTableRecord::~StocksTableRecord()
 {
-    qDebug() << "Destroy TableRecord";
+    qDebug() << "Destroy StocksTableRecord";
 }
 
-void TableRecord::updateAll()
+void StocksTableRecord::updateAll()
 {
     mStock->mutex->lock();
 
@@ -89,7 +89,7 @@ void TableRecord::updateAll()
     updatePeriodicData();
 }
 
-void TableRecord::updatePrice()
+void StocksTableRecord::updatePrice()
 {
     QMutexLocker lock(mStock->mutex);
 
@@ -105,7 +105,7 @@ void TableRecord::updatePrice()
     mDateChangeTableWidgetItem->setValue(dateChange, mStock->operational.specifiedDatePrice, mPrecision);
 }
 
-void TableRecord::updatePeriodicData()
+void StocksTableRecord::updatePeriodicData()
 {
     QMutexLocker lock(mStock->mutex);
 
@@ -113,7 +113,7 @@ void TableRecord::updatePeriodicData()
     mPaybackTableWidgetItem->setValue(mStock->operational.payback);
 }
 
-void TableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
+void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
     int  row    = mPriceTableWidgetItem->row();
     bool hidden = !filter.isFiltered(

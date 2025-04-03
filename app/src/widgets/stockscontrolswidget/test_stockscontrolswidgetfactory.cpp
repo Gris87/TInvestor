@@ -22,7 +22,7 @@ TEST(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_StocksControlsWidgetFactory, Test_newInstance)
 {
-    StrictMock<StocksStorageMock> stocksStorageMock;
+    StrictMock<StocksStorageMock>  stocksStorageMock;
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     StocksControlsWidgetFactory factory;

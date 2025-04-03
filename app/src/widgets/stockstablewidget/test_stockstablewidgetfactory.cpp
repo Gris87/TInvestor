@@ -8,9 +8,9 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
 
 
@@ -29,7 +29,7 @@ TEST(Test_StocksTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 {
-    StrictMock<TableRecordFactoryMock>            tableRecordFactoryMock;
+    StrictMock<StocksTableRecordFactoryMock>      stockTableRecordFactoryMock;
     StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>       orderWavesDialogFactoryMock;
@@ -42,7 +42,7 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
     StocksTableWidgetFactory factory;
 
     IStocksTableWidget* widget = factory.newInstance(
-        &tableRecordFactoryMock,
+        &stockTableRecordFactoryMock,
         &stockTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,

@@ -5,7 +5,7 @@
 
 
 
-// TODO: Move to TableRecord
+// TODO: Move to OperationsTableRecord
 #define OPERATIONS_TIME_COLUMN      0
 #define OPERATIONS_NAME_COLUMN      1
 #define OPERATIONS_OPERATION_COLUMN 2

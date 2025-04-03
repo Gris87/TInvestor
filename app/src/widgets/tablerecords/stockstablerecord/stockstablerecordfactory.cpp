@@ -6,18 +6,18 @@
 
 
 
-TableRecordFactory::TableRecordFactory() :
-    ITableRecordFactory()
+StocksTableRecordFactory::StocksTableRecordFactory() :
+    IStocksTableRecordFactory()
 {
-    qDebug() << "Create TableRecordFactory";
+    qDebug() << "Create StocksTableRecordFactory";
 }
 
-TableRecordFactory::~TableRecordFactory()
+StocksTableRecordFactory::~StocksTableRecordFactory()
 {
-    qDebug() << "Destroy TableRecordFactory";
+    qDebug() << "Destroy StocksTableRecordFactory";
 }
 
-ITableRecord* TableRecordFactory::newInstance(
+IStocksTableRecord* StocksTableRecordFactory::newInstance(
     QTableWidget*                   tableWidget,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
@@ -30,7 +30,7 @@ ITableRecord* TableRecordFactory::newInstance(
     QObject*                        parent
 )
 {
-    return new TableRecord(
+    return new StocksTableRecord(
         tableWidget,
         stockTableItemWidgetFactory,
         actionsTableItemWidgetFactory,

@@ -8,17 +8,17 @@
 
 
 
-class TableRecordMock : public ITableRecord
+class StocksTableRecordMock : public IStocksTableRecord
 {
 public:
-    explicit TableRecordMock(QObject* parent = nullptr) :
-        ITableRecord(parent)
+    explicit StocksTableRecordMock(QObject* parent = nullptr) :
+        IStocksTableRecord(parent)
     {
     }
-    ~TableRecordMock() override = default;
+    ~StocksTableRecordMock() override = default;
 
-    TableRecordMock(const TableRecordMock& another)            = delete;
-    TableRecordMock& operator=(const TableRecordMock& another) = delete;
+    StocksTableRecordMock(const StocksTableRecordMock& another)            = delete;
+    StocksTableRecordMock& operator=(const StocksTableRecordMock& another) = delete;
 
     MOCK_METHOD(void, updateAll, (), (override));
     MOCK_METHOD(void, updatePrice, (), (override));

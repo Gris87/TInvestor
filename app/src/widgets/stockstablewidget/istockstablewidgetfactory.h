@@ -26,7 +26,7 @@ public:
     IStocksTableWidgetFactory& operator=(const IStocksTableWidgetFactory& another) = delete;
 
     virtual IStocksTableWidget* newInstance(
-        ITableRecordFactory*            tableRecordFactory,
+        IStocksTableRecordFactory*      stockTableRecordFactory,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,

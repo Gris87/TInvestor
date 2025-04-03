@@ -23,7 +23,7 @@ using ::testing::StrictMock;
 
 
 
-class Test_TableRecord : public ::testing::Test
+class Test_StocksTableRecord : public ::testing::Test
 {
 protected:
     void SetUp()
@@ -82,7 +82,7 @@ protected:
         EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
         EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
-        record = new TableRecord(
+        record = new StocksTableRecord(
             tableWidget,
             stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
@@ -114,7 +114,7 @@ protected:
         delete stock;
     }
 
-    TableRecord*                                   record;
+    StocksTableRecord*                             record;
     StrictMock<StockTableItemWidgetFactoryMock>*   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
@@ -130,11 +130,11 @@ protected:
 
 
 
-TEST_F(Test_TableRecord, Test_constructor_and_destructor)
+TEST_F(Test_StocksTableRecord, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_TableRecord, Test_updateAll)
+TEST_F(Test_StocksTableRecord, Test_updateAll)
 {
     InSequence seq;
 
@@ -154,7 +154,7 @@ TEST_F(Test_TableRecord, Test_updateAll)
     // clang-format on
 }
 
-TEST_F(Test_TableRecord, Test_updatePrice)
+TEST_F(Test_StocksTableRecord, Test_updatePrice)
 {
     record->updatePrice();
 
@@ -165,7 +165,7 @@ TEST_F(Test_TableRecord, Test_updatePrice)
     // clang-format on
 }
 
-TEST_F(Test_TableRecord, Test_updatePeriodicData)
+TEST_F(Test_StocksTableRecord, Test_updatePeriodicData)
 {
     ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
@@ -179,7 +179,7 @@ TEST_F(Test_TableRecord, Test_updatePeriodicData)
     ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "60.00%");
 }
 
-TEST_F(Test_TableRecord, Test_filter)
+TEST_F(Test_StocksTableRecord, Test_filter)
 {
     // InSequence seq;
 

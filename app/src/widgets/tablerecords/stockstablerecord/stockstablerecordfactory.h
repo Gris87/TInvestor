@@ -6,16 +6,16 @@
 
 
 
-class TableRecordFactory : public ITableRecordFactory
+class StocksTableRecordFactory : public IStocksTableRecordFactory
 {
 public:
-    TableRecordFactory();
-    ~TableRecordFactory();
+    StocksTableRecordFactory();
+    ~StocksTableRecordFactory();
 
-    TableRecordFactory(const TableRecordFactory& another)            = delete;
-    TableRecordFactory& operator=(const TableRecordFactory& another) = delete;
+    StocksTableRecordFactory(const StocksTableRecordFactory& another)            = delete;
+    StocksTableRecordFactory& operator=(const StocksTableRecordFactory& another) = delete;
 
-    ITableRecord* newInstance(
+    IStocksTableRecord* newInstance(
         QTableWidget*                   tableWidget,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,

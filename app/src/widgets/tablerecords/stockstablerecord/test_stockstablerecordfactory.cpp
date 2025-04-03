@@ -22,12 +22,12 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_TableRecordFactory, Test_constructor_and_destructor)
+TEST(Test_StocksTableRecordFactory, Test_constructor_and_destructor)
 {
-    TableRecordFactory factory;
+    StocksTableRecordFactory factory;
 }
 
-TEST(Test_TableRecordFactory, Test_newInstance)
+TEST(Test_StocksTableRecordFactory, Test_newInstance)
 {
     InSequence seq;
 
@@ -43,7 +43,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
 
-    TableRecordFactory factory;
+    StocksTableRecordFactory factory;
 
     QTableWidget tableWidget;
     Stock        stock;
@@ -88,7 +88,7 @@ TEST(Test_TableRecordFactory, Test_newInstance)
     EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
     EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
-    ITableRecord* record = factory.newInstance(
+    IStocksTableRecord* record = factory.newInstance(
         &tableWidget,
         &stockTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,

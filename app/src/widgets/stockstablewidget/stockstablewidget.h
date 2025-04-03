@@ -10,9 +10,9 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 
 
@@ -29,7 +29,7 @@ class StocksTableWidget : public IStocksTableWidget
 
 public:
     explicit StocksTableWidget(
-        ITableRecordFactory*            tableRecordFactory,
+        IStocksTableRecordFactory*      stockTableRecordFactory,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
@@ -47,8 +47,8 @@ public:
 
     Ui::StocksTableWidget* ui;
 
-    QMap<QString, ITableRecord*> tableRecords;
-    QSet<QString>                lastPricesUpdates;
+    QMap<QString, IStocksTableRecord*> tableRecords;
+    QSet<QString>                      lastPricesUpdates;
 
     void updateTable(const QList<Stock*>& stocks, const Filter& filter) override;
 
@@ -66,7 +66,7 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    ITableRecordFactory*            mTableRecordFactory;
+    IStocksTableRecordFactory*      mStocksTableRecordFactory;
     IStockTableItemWidgetFactory*   mStockTableItemWidgetFactory;
     IActionsTableItemWidgetFactory* mActionsTableItemWidgetFactory;
     IOrderWavesDialogFactory*       mOrderWavesDialogFactory;
@@ -74,5 +74,5 @@ private:
     IUserStorage*                   mUserStorage;
     IOrderBookThread*               mOrderBookThread;
     IHttpClient*                    mHttpClient;
-    ISettingsEditor* mSettingsEditor;
+    ISettingsEditor*                mSettingsEditor;
 };

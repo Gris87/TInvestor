@@ -6,7 +6,7 @@
 
 
 StocksTableWidget::StocksTableWidget(
-    ITableRecordFactory*            tableRecordFactory,
+    IStocksTableRecordFactory*      stockTableRecordFactory,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
@@ -21,7 +21,7 @@ StocksTableWidget::StocksTableWidget(
     ui(new Ui::StocksTableWidget),
     tableRecords(),
     lastPricesUpdates(),
-    mTableRecordFactory(tableRecordFactory),
+    mStocksTableRecordFactory(stockTableRecordFactory),
     mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
     mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
@@ -58,7 +58,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
         QString uid = stock->meta.uid;
         stock->mutex->unlock();
 
-        ITableRecord* record = tableRecords[uid];
+        IStocksTableRecord* record = tableRecords[uid];
 
         if (record != nullptr)
         {
@@ -66,7 +66,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
         }
         else
         {
-            record = mTableRecordFactory->newInstance(
+            record = mStocksTableRecordFactory->newInstance(
                 ui->tableWidget,
                 mStockTableItemWidgetFactory,
                 mActionsTableItemWidgetFactory,
@@ -112,7 +112,7 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
 
         for (auto it = lastPricesUpdates.cbegin(); it != lastPricesUpdates.cend(); ++it)
         {
-            ITableRecord* record = tableRecords[*it];
+            IStocksTableRecord* record = tableRecords[*it];
 
             if (record != nullptr)
             {

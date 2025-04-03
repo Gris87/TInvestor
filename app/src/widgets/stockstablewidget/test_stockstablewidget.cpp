@@ -9,9 +9,9 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
 
 
@@ -28,7 +28,7 @@ class Test_StocksTableWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        tableRecordFactoryMock            = new StrictMock<TableRecordFactoryMock>();
+        stockTableRecordFactoryMock       = new StrictMock<StocksTableRecordFactoryMock>();
         stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
@@ -39,7 +39,7 @@ protected:
         settingsEditorMock                = new StrictMock<SettingsEditorMock>();
 
         stocksTableWidget = new StocksTableWidget(
-            tableRecordFactoryMock,
+            stockTableRecordFactoryMock,
             stockTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
@@ -54,7 +54,7 @@ protected:
     void TearDown()
     {
         delete stocksTableWidget;
-        delete tableRecordFactoryMock;
+        delete stockTableRecordFactoryMock;
         delete stockTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
@@ -66,7 +66,7 @@ protected:
     }
 
     StocksTableWidget*                             stocksTableWidget;
-    StrictMock<TableRecordFactoryMock>*            tableRecordFactoryMock;
+    StrictMock<StocksTableRecordFactoryMock>*      stockTableRecordFactoryMock;
     StrictMock<StockTableItemWidgetFactoryMock>*   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;

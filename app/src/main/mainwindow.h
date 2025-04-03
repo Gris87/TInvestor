@@ -64,7 +64,7 @@ public:
         IStockTableItemWidgetFactory*      stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        ITableRecordFactory*               tableRecordFactory,
+        IStocksTableRecordFactory*         stockTableRecordFactory,
         IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
         IStocksTableWidgetFactory*         stocksTableWidgetFactory,
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
@@ -99,13 +99,13 @@ public:
 
     Ui::MainWindow* ui;
 
-    QTimer*                      authFailedDelayTimer;
-    QTimer*                      userUpdateTimer;
-    QTimer*                      priceCollectTimer;
-    QTimer*                      cleanupTimer;
-    QTimer*                      makeDecisionTimer;
-    QTimer*                      stocksTableUpdateAllTimer;
-    QTimer*                      stocksTableUpdateLastPricesTimer;
+    QTimer* authFailedDelayTimer;
+    QTimer* userUpdateTimer;
+    QTimer* priceCollectTimer;
+    QTimer* cleanupTimer;
+    QTimer* makeDecisionTimer;
+    QTimer* stocksTableUpdateAllTimer;
+    QTimer* stocksTableUpdateLastPricesTimer;
 
 private:
     void updateStackWidgetToolbar();

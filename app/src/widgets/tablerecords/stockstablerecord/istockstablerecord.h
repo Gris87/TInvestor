@@ -21,19 +21,19 @@
 
 
 
-class ITableRecord : public QObject
+class IStocksTableRecord : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ITableRecord(QObject* parent = nullptr) :
+    explicit IStocksTableRecord(QObject* parent = nullptr) :
         QObject(parent)
     {
     }
-    virtual ~ITableRecord() = default;
+    virtual ~IStocksTableRecord() = default;
 
-    ITableRecord(const ITableRecord& another)            = delete;
-    ITableRecord& operator=(const ITableRecord& another) = delete;
+    IStocksTableRecord(const IStocksTableRecord& another)            = delete;
+    IStocksTableRecord& operator=(const IStocksTableRecord& another) = delete;
 
     virtual void updateAll()                                             = 0;
     virtual void updatePrice()                                           = 0;

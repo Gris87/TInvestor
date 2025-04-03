@@ -18,7 +18,7 @@ StocksTableWidgetFactory::~StocksTableWidgetFactory()
 }
 
 IStocksTableWidget* StocksTableWidgetFactory::newInstance(
-    ITableRecordFactory*            tableRecordFactory,
+    IStocksTableRecordFactory*      stockTableRecordFactory,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
@@ -31,7 +31,7 @@ IStocksTableWidget* StocksTableWidgetFactory::newInstance(
 )
 {
     return new StocksTableWidget(
-        tableRecordFactory,
+        stockTableRecordFactory,
         stockTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,

@@ -141,12 +141,12 @@ int runApplication(int argc, char* argv[])
     PortfolioTableWidgetFactory      portfolioTableWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
-    TableRecordFactory tableRecordFactory;
-    TrayIconFactory    trayIconFactory;
-    DirFactory         dirFactory;
-    FileFactory        fileFactory;
-    QZipFactory        qZipFactory;
-    QZipFileFactory    qZipFileFactory;
+    StocksTableRecordFactory stockTableRecordFactory;
+    TrayIconFactory          trayIconFactory;
+    DirFactory               dirFactory;
+    FileFactory              fileFactory;
+    QZipFactory              qZipFactory;
+    QZipFileFactory          qZipFileFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
     SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
@@ -294,7 +294,7 @@ int runApplication(int argc, char* argv[])
         &stockTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
-        &tableRecordFactory,
+        &stockTableRecordFactory,
         &stocksControlsWidgetFactory,
         &stocksTableWidgetFactory,
         &operationsTableWidgetFactory,

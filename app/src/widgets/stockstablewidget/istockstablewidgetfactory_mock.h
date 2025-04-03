@@ -23,7 +23,7 @@ public:
     MOCK_METHOD(
         IStocksTableWidget*,
         newInstance,
-        (ITableRecordFactory * tableRecordFactory,
+        (IStocksTableRecordFactory * stockTableRecordFactory,
          IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
          IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
          IOrderWavesDialogFactory*       orderWavesDialogFactory,

@@ -21,7 +21,7 @@ class Test_StocksControlsWidget : public ::testing::Test
 protected:
     void SetUp()
     {
-        stocksStorageMock = new StrictMock<StocksStorageMock>();
+        stocksStorageMock  = new StrictMock<StocksStorageMock>();
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
         stocksControlsWidget = new StocksControlsWidget(stocksStorageMock, settingsEditorMock);
@@ -34,8 +34,8 @@ protected:
         delete settingsEditorMock;
     }
 
-    StocksControlsWidget*          stocksControlsWidget;
-    StrictMock<StocksStorageMock>* stocksStorageMock;
+    StocksControlsWidget*           stocksControlsWidget;
+    StrictMock<StocksStorageMock>*  stocksStorageMock;
     StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 

@@ -5,7 +5,7 @@
 
 
 
-// TODO: Move to TableRecord
+// TODO: Move to LogsTableRecord
 #define LOGS_TIME_COLUMN    0
 #define LOGS_MESSAGE_COLUMN 1
 

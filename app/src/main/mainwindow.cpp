@@ -7,7 +7,7 @@
 
 
 
-#define AUTORUN_PATH "CurrentVersion/Run/TInvestor"
+#define AUTORUN_PATH    "CurrentVersion/Run/TInvestor"
 #define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
 
 
@@ -31,7 +31,7 @@ MainWindow::MainWindow(
     IStockTableItemWidgetFactory*      stockTableItemWidgetFactory,
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-    ITableRecordFactory*               tableRecordFactory,
+    IStocksTableRecordFactory*         stockTableRecordFactory,
     IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
     IStocksTableWidgetFactory*         stocksTableWidgetFactory,
     IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
@@ -98,9 +98,9 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
     ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
 
-    mStocksControlsWidget         = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
-    mStocksTableWidget            = stocksTableWidgetFactory->newInstance(
-        tableRecordFactory,
+    mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
+    mStocksTableWidget    = stocksTableWidgetFactory->newInstance(
+        stockTableRecordFactory,
         stockTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,

@@ -14,18 +14,18 @@
 
 
 
-class ITableRecordFactory
+class IStocksTableRecordFactory
 {
 public:
-    ITableRecordFactory()
+    IStocksTableRecordFactory()
     {
     }
-    virtual ~ITableRecordFactory() = default;
+    virtual ~IStocksTableRecordFactory() = default;
 
-    ITableRecordFactory(const ITableRecordFactory& another)            = delete;
-    ITableRecordFactory& operator=(const ITableRecordFactory& another) = delete;
+    IStocksTableRecordFactory(const IStocksTableRecordFactory& another)            = delete;
+    IStocksTableRecordFactory& operator=(const IStocksTableRecordFactory& another) = delete;
 
-    virtual ITableRecord* newInstance(
+    virtual IStocksTableRecord* newInstance(
         QTableWidget*                   tableWidget,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,

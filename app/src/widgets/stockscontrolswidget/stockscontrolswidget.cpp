@@ -6,8 +6,8 @@
 
 
 #define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
-#define GREY_COLOR  QColor("#AFC2D7")
-#define GREEN_COLOR QColor("#2BD793")
+#define GREY_COLOR      QColor("#AFC2D7")
+#define GREEN_COLOR     QColor("#2BD793")
 
 
 
@@ -339,7 +339,7 @@ void StocksControlsWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/usePayback",         ui->paybackCheckBox->isChecked());
     mSettingsEditor->setValue(type + "/paybackFrom",        ui->paybackFromDoubleSpinBox->value());
     mSettingsEditor->setValue(type + "/paybackTo",          ui->paybackToDoubleSpinBox->value());
-    // clang-format off
+    // clang-format on
 
     mSettingsEditor->setValue(type + "/visible", ui->stackedWidget->currentWidget() == ui->controlsVisiblePage);
 }
@@ -371,7 +371,7 @@ void StocksControlsWidget::loadWindowState(const QString& type)
     ui->paybackCheckBox->setChecked(mSettingsEditor->value(type + "/usePayback",                               false).toBool());
     ui->paybackFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackFrom",                       0.0).toDouble());
     ui->paybackToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackTo",                           100.0).toDouble());
-    // clang-format off
+    // clang-format on
 
     if (!mSettingsEditor->value(type + "/visible", true).toBool())
     {
