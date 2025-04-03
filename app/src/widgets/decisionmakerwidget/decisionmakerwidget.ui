@@ -68,7 +68,7 @@
        <attribute name="title">
         <string>Chart</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
          <number>4</number>
         </property>
@@ -97,7 +97,7 @@
        <attribute name="title">
         <string>Logs</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
         <property name="spacing">
          <number>4</number>
         </property>
@@ -123,7 +123,7 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="verticalLayoutWidget_2">
+     <widget class="QWidget" name="verticalLayoutWidget">
       <layout class="QVBoxLayout" name="layoutForPortfolioTableWidget">
        <property name="spacing">
         <number>4</number>

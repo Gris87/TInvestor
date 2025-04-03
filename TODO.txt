@@ -1,4 +1,3 @@
-Double check `_\d+` suffix on ui files
 Raise test coverage
 Build for Ubuntu
 Add CI to Github
