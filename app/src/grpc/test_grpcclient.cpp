@@ -124,6 +124,25 @@ TEST_F(Test_GrpcClient, Test_getCandles)
     ASSERT_NE(client->getCandles(QThread::currentThread(), "aaaaa", 0, 1000), nullptr);
 }
 
+TEST_F(Test_GrpcClient, Test_getOrderBook)
+{
+    InSequence seq;
+
+    grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getOrderBook(QThread::currentThread(), "aaaaa"), nullptr);
+}
+
 TEST_F(Test_GrpcClient, Test_createMarketDataStream)
 {
     InSequence seq;
@@ -171,6 +190,42 @@ TEST_F(Test_GrpcClient, Test_unsubscribeLastPrices)
     EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(true));
 
     ASSERT_EQ(client->unsubscribeLastPrices(marketDataStream), true);
+}
+
+TEST_F(Test_GrpcClient, Test_subscribeOrderBook)
+{
+    InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
+
+    std::shared_ptr<MarketDataStream> marketDataStream = client->createMarketDataStream();
+    ASSERT_NE(marketDataStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(false));
+
+    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa"), false);
+
+    EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(true));
+
+    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa"), true);
+}
+
+TEST_F(Test_GrpcClient, Test_unsubscribeOrderBook)
+{
+    InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
+
+    std::shared_ptr<MarketDataStream> marketDataStream = client->createMarketDataStream();
+    ASSERT_NE(marketDataStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(false));
+
+    ASSERT_EQ(client->unsubscribeOrderBook(marketDataStream), false);
+
+    EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(true));
+
+    ASSERT_EQ(client->unsubscribeOrderBook(marketDataStream), true);
 }
 
 TEST_F(Test_GrpcClient, Test_readMarketDataStream)

@@ -421,6 +421,10 @@ TEST_F(Test_MainWindow, Test_authFailed)
     priceCollectThreadMock->wait();
     lastPriceThreadMock->wait();
     makeDecisionThreadMock->wait();
+
+    mainWindow->authFailedDialogShown = true;
+
+    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
 }
 
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
@@ -467,6 +471,30 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
     makeDecisionThreadMock->wait();
 }
 
+TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
+{
+    InSequence seq;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateAll(filter));
+
+    mainWindow->stocksTableUpdateAllTimerTicked();
+}
+
+TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
+{
+    InSequence seq;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateLastPrices(filter));
+
+    mainWindow->stocksTableUpdateLastPricesTimerTicked();
+}
+
 TEST_F(Test_MainWindow, Test_notifyStocksProgress)
 {
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->text(), "");
@@ -490,6 +518,64 @@ TEST_F(Test_MainWindow, Test_stocksChanged)
     EXPECT_CALL(*lastPriceThreadMock, stocksChanged());
 
     mainWindow->stocksChanged();
+}
+
+TEST_F(Test_MainWindow, Test_pricesChanged)
+{
+    InSequence seq;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
+
+    mainWindow->pricesChanged();
+}
+
+TEST_F(Test_MainWindow, Test_periodicDataChanged)
+{
+    InSequence seq;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePeriodicData(filter));
+
+    mainWindow->periodicDataChanged();
+}
+
+TEST_F(Test_MainWindow, Test_lastPriceChanged)
+{
+    InSequence seq;
+
+    EXPECT_CALL(*stocksTableWidgetMock, lastPriceChanged(QString("aaaa")));
+
+    mainWindow->lastPriceChanged("aaaa");
+}
+
+TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
+{
+    InSequence seq;
+
+    QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
+    Filter    filter;
+
+    EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
+    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
+
+    mainWindow->dateChangeDateTimeChanged(dateChangeTime);
+}
+
+TEST_F(Test_MainWindow, Test_filterChanged)
+{
+    InSequence seq;
+
+    Filter filter;
+
+    EXPECT_CALL(*stocksTableWidgetMock, filterChanged(filter));
+
+    mainWindow->filterChanged(filter);
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
