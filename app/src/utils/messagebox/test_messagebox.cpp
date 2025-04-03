@@ -13,3 +13,8 @@ TEST(Test_MessageBoxUtils, Test_warning)
 {
     // Nothing
 }
+
+TEST(Test_MessageBoxUtils, Test_question)
+{
+    // Nothing
+}

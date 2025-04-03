@@ -8,6 +8,7 @@
 
 
 #define AUTORUN_PATH    "CurrentVersion/Run/TInvestor"
+#define GREY_COLOR      QColor("#AFC2D7")
 #define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
 
 
@@ -95,8 +96,18 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
-    ui->waitingSpinnerWidget->setColor(QColor("#AFC2D7"));
-    ui->waitingSpinnerWidget->setTextColor(QColor("#AFC2D7"));
+    ui->waitingSpinnerWidget->setColor(GREY_COLOR);
+    ui->waitingSpinnerWidget->setTextColor(GREY_COLOR);
+
+    ui->simulatorActiveWidget->setVisible(false);
+    ui->simulatorActiveSpinnerWidget->setInnerRadius(6);
+    ui->simulatorActiveSpinnerWidget->setLineLength(6);
+    ui->simulatorActiveSpinnerWidget->setColor(GREY_COLOR);
+
+    ui->autoPilotActiveWidget->setVisible(false);
+    ui->autoPilotActiveSpinnerWidget->setInnerRadius(6);
+    ui->autoPilotActiveSpinnerWidget->setLineLength(6);
+    ui->autoPilotActiveSpinnerWidget->setColor(GREY_COLOR);
 
     mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
     mStocksTableWidget    = stocksTableWidgetFactory->newInstance(
@@ -433,22 +444,68 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::on_startSimulationButton_clicked()
 {
-    std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
-
-    if (dialog->exec())
+    if (!ui->simulatorActiveWidget->isVisible())
     {
-        // TODO: Start simulation
+        std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
+
+        if (dialog->exec())
+        {
+            ui->simulatorActiveWidget->setVisible(true);
+            ui->simulatorActiveSpinnerWidget->start();
+
+            ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
+            ui->startSimulationButton->setText(tr("Stop simulation"));
+
+            // TODO: Start simulation
+        }
+    }
+    else
+    {
+        if (mMessageBoxUtils->question(this, tr("Stop simulation"), tr("Do you really want to stop simulation?")) ==
+            QMessageBox::Yes)
+        {
+            ui->simulatorActiveWidget->setVisible(false);
+            ui->simulatorActiveSpinnerWidget->stop();
+
+            ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
+            ui->startSimulationButton->setText(tr("Start simulation"));
+
+            // TODO: Stop simulation
+        }
     }
 }
 
 void MainWindow::on_startAutoPilotButton_clicked()
 {
-    std::shared_ptr<IStartAutoPilotDialog> dialog =
-        mStartAutoPilotDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, mSettingsEditor, this);
-
-    if (dialog->exec())
+    if (!ui->autoPilotActiveWidget->isVisible())
     {
-        // TODO: Start auto-pilot
+        std::shared_ptr<IStartAutoPilotDialog> dialog =
+            mStartAutoPilotDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, mSettingsEditor, this);
+
+        if (dialog->exec())
+        {
+            ui->autoPilotActiveWidget->setVisible(true);
+            ui->autoPilotActiveSpinnerWidget->start();
+
+            ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
+            ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
+
+            // TODO: Start auto-pilot
+        }
+    }
+    else
+    {
+        if (mMessageBoxUtils->question(this, tr("Stop auto-pilot"), tr("Do you really want to stop auto-pilot?")) ==
+            QMessageBox::Yes)
+        {
+            ui->autoPilotActiveWidget->setVisible(false);
+            ui->autoPilotActiveSpinnerWidget->stop();
+
+            ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
+            ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
+
+            // TODO: Stop auto-pilot
+        }
     }
 }
 

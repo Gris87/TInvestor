@@ -30,4 +30,15 @@ public:
          QMessageBox::StandardButton  defaultButton),
         (override)
     );
+
+    MOCK_METHOD(
+        QMessageBox::StandardButton,
+        question,
+        (QWidget * parent,
+         const QString&               title,
+         const QString&               text,
+         QMessageBox::StandardButtons buttons,
+         QMessageBox::StandardButton  defaultButton),
+        (override)
+    );
 };

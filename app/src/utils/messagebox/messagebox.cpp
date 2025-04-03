@@ -25,3 +25,14 @@ QMessageBox::StandardButton MessageBoxUtils::warning(
 {
     return QMessageBox::warning(parent, title, text, buttons, defaultButton);
 }
+
+QMessageBox::StandardButton MessageBoxUtils::question(
+    QWidget*                     parent,
+    const QString&               title,
+    const QString&               text,
+    QMessageBox::StandardButtons buttons,
+    QMessageBox::StandardButton  defaultButton
+)
+{
+    return QMessageBox::question(parent, title, text, buttons, defaultButton);
+}

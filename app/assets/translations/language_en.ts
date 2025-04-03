@@ -163,86 +163,120 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="201"/>
+        <location filename="../../src/main/mainwindow.ui" line="14"/>
+        <location filename="../../src/main/mainwindow.cpp" line="211"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="105"/>
+        <location filename="../../src/main/mainwindow.ui" line="99"/>
+        <location filename="../../src/main/mainwindow.cpp" line="471"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="162"/>
+        <location filename="../../src/main/mainwindow.ui" line="164"/>
+        <source>Simulator active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="220"/>
+        <location filename="../../src/main/mainwindow.cpp" line="505"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="186"/>
+        <location filename="../../src/main/mainwindow.ui" line="285"/>
+        <source>Auto-pilot active</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.ui" line="308"/>
         <source>Keep money on account:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="240"/>
+        <location filename="../../src/main/mainwindow.ui" line="362"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="243"/>
+        <location filename="../../src/main/mainwindow.ui" line="365"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="264"/>
+        <location filename="../../src/main/mainwindow.ui" line="386"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="267"/>
+        <location filename="../../src/main/mainwindow.ui" line="389"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="285"/>
+        <location filename="../../src/main/mainwindow.ui" line="407"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="288"/>
+        <location filename="../../src/main/mainwindow.ui" line="410"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="306"/>
+        <location filename="../../src/main/mainwindow.ui" line="428"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="309"/>
+        <location filename="../../src/main/mainwindow.ui" line="431"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="324"/>
-        <location filename="../../src/main/mainwindow.ui" line="327"/>
+        <location filename="../../src/main/mainwindow.ui" line="446"/>
+        <location filename="../../src/main/mainwindow.ui" line="449"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="201"/>
+        <location filename="../../src/main/mainwindow.cpp" line="211"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="263"/>
+        <location filename="../../src/main/mainwindow.cpp" line="269"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="348"/>
-        <location filename="../../src/main/mainwindow.cpp" line="487"/>
+        <location filename="../../src/main/mainwindow.cpp" line="358"/>
+        <location filename="../../src/main/mainwindow.cpp" line="543"/>
         <source>From: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="457"/>
+        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <source>Stop simulation</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <source>Do you really want to stop simulation?</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="491"/>
+        <location filename="../../src/main/mainwindow.cpp" line="498"/>
+        <source>Stop auto-pilot</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/main/mainwindow.cpp" line="498"/>
+        <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
 </context>
