@@ -99,7 +99,7 @@ public:
 
     Ui::MainWindow* ui;
 
-    QTimer* authFailedDelayTimer;
+    bool    authFailedDialogShown;
     QTimer* userUpdateTimer;
     QTimer* priceCollectTimer;
     QTimer* cleanupTimer;
@@ -151,7 +151,6 @@ public slots:
     void trayIconShowClicked();
     void trayIconExitClicked();
     void authFailed(grpc::StatusCode errorCode, const std::string& errorMessage, const std::string& errorDetails);
-    void authFailedDelayTimerTicked();
     void userUpdateTimerTicked();
     void priceCollectTimerTicked();
     void cleanupTimerTicked();

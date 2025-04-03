@@ -1,4 +1,3 @@
-Remove auth failed timer and add global variable to check if already shown
 Show spinner on simulator/auto-pilot start
 Double check `_\d+` suffix on ui files
 Build for Ubuntu

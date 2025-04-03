@@ -56,7 +56,7 @@ MainWindow::MainWindow(
 ) :
     QMainWindow(),
     ui(new Ui::MainWindow),
-    authFailedDelayTimer(new QTimer(this)),
+    authFailedDialogShown(false),
     userUpdateTimer(new QTimer(this)),
     priceCollectTimer(new QTimer(this)),
     cleanupTimer(new QTimer(this)),
@@ -140,7 +140,6 @@ MainWindow::MainWindow(
     connect(mTrayIcon,                        SIGNAL(trayIconShowClicked()),                                                this, SLOT(trayIconShowClicked()));
     connect(mTrayIcon,                        SIGNAL(trayIconExitClicked()),                                                this, SLOT(trayIconExitClicked()));
     connect(mGrpcClient,                      SIGNAL(authFailed(grpc::StatusCode, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const std::string&, const std::string&)));
-    connect(authFailedDelayTimer,             SIGNAL(timeout()),                                                            this, SLOT(authFailedDelayTimerTicked()));
     connect(userUpdateTimer,                  SIGNAL(timeout()),                                                            this, SLOT(userUpdateTimerTicked()));
     connect(priceCollectTimer,                SIGNAL(timeout()),                                                            this, SLOT(priceCollectTimerTicked()));
     connect(cleanupTimer,                     SIGNAL(timeout()),                                                            this, SLOT(cleanupTimerTicked()));
@@ -232,14 +231,10 @@ void MainWindow::authFailed(grpc::StatusCode errorCode, const std::string& error
     qWarning() << "Authorization failed with code:" << errorCode << "message:" << QString::fromStdString(errorMessage)
                << "details:" << QString::fromStdString(errorDetails);
 
-    authFailedDelayTimer->start(3000); // 3 seconds
-}
-
-void MainWindow::authFailedDelayTimerTicked()
-{
-    qDebug() << "Authorization failed delay timer ticked";
-
-    authFailedDelayTimer->stop();
+    if (authFailedDialogShown)
+    {
+        return;
+    }
 
     userUpdateTimer->stop();
     mUserUpdateThread->requestInterruption();
@@ -263,6 +258,8 @@ void MainWindow::authFailedDelayTimerTicked()
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
     trayIconShowClicked();
 
+    authFailedDialogShown = true;
+
     std::shared_ptr<IAuthDialog> dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
 
     if (dialog->exec())
@@ -271,6 +268,8 @@ void MainWindow::authFailedDelayTimerTicked()
 
         on_actionAuth_triggered();
     }
+
+    authFailedDialogShown = false;
 }
 
 void MainWindow::userUpdateTimerTicked()

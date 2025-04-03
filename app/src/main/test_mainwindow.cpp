@@ -400,37 +400,9 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_authFailed)
 {
-    // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
-    // clang-format on
-
-    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
-    // clang-format on
-}
-
-TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
-{
     // InSequence seq;
 
-    // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
-    // clang-format on
-
-    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), true);
-    // clang-format on
-
-    StrictMock<AuthDialogMock>* authDialogMock =
-        new StrictMock<AuthDialogMock>(); // Will be deleted in authFailedDelayTimerTicked
+    StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
@@ -443,12 +415,7 @@ TEST_F(Test_MainWindow, Test_authFailedDelayTimerTicked)
     EXPECT_CALL(*lastPriceThreadMock, run());
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
-    mainWindow->authFailedDelayTimerTicked();
-
-    // clang-format off
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->interval(), 3000);
-    ASSERT_EQ(mainWindow->authFailedDelayTimer->isActive(), false);
-    // clang-format on
+    mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "", "");
 
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
