@@ -57,6 +57,8 @@ public:
     void updatePrices(const Filter& filter) override;
     void updatePeriodicData(const Filter& filter) override;
 
+    void setDateChangeTooltip(const QString& tooltip) override;
+
     void lastPriceChanged(const QString& uid) override;
     void filterChanged(const Filter& filter) override;
 

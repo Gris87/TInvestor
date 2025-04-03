@@ -62,6 +62,10 @@
       <property name="text">
        <string>Change from some date</string>
       </property>
+      <property name="icon">
+       <iconset resource="../../../Resources.qrc">
+        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
+      </property>
      </column>
      <column>
       <property name="text">

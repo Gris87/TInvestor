@@ -29,6 +29,6 @@ public:
     virtual void loadWindowState(const QString& type) = 0;
 
 signals:
-    void dateChangeDateTimeChanged();
+    void dateChangeDateTimeChanged(const QDateTime& dateTime);
     void filterChanged(const Filter& filter);
 };

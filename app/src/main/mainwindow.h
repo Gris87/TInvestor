@@ -163,7 +163,7 @@ public slots:
     void pricesChanged();
     void periodicDataChanged();
     void lastPriceChanged(const QString& uid);
-    void dateChangeDateTimeChanged();
+    void dateChangeDateTimeChanged(const QDateTime& dateTime);
     void filterChanged(const Filter& filter);
 
 private slots:

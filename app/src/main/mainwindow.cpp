@@ -8,6 +8,7 @@
 
 
 #define AUTORUN_PATH "CurrentVersion/Run/TInvestor"
+#define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
 
 
 
@@ -151,7 +152,7 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,                 SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged()),                                          this, SLOT(dateChangeDateTimeChanged()));
+    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,            SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
@@ -342,8 +343,9 @@ void MainWindow::lastPriceChanged(const QString& uid)
     mStocksTableWidget->lastPriceChanged(uid);
 }
 
-void MainWindow::dateChangeDateTimeChanged()
+void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 {
+    mStocksTableWidget->setDateChangeTooltip(QString("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
     mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
 
@@ -479,7 +481,10 @@ void MainWindow::updateStocksTableWidget()
 
     if (!stocks.isEmpty())
     {
-        mStocksStorage->obtainStocksDatePrice(mStocksControlsWidget->getDateChangeTime().toMSecsSinceEpoch());
+        QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
+
+        mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
+        mStocksTableWidget->setDateChangeTooltip(QString("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
         ui->stackedWidget->setVisible(true);

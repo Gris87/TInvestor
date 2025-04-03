@@ -30,6 +30,8 @@ public:
     virtual void updatePrices(const Filter& filter)       = 0;
     virtual void updatePeriodicData(const Filter& filter) = 0;
 
+    virtual void setDateChangeTooltip(const QString& tooltip) = 0;
+
     virtual void lastPriceChanged(const QString& uid) = 0;
     virtual void filterChanged(const Filter& filter)  = 0;
 

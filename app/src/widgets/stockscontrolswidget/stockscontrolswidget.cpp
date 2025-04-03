@@ -45,7 +45,7 @@ void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime
     QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
-    emit dateChangeDateTimeChanged();
+    emit dateChangeDateTimeChanged(dateTime);
 }
 
 void StocksControlsWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)

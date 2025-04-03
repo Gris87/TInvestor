@@ -158,6 +158,11 @@ void StocksTableWidget::updatePeriodicData(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
+void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
+{
+    ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->setToolTip(tooltip);
+}
+
 void StocksTableWidget::lastPriceChanged(const QString& uid)
 {
     lastPricesUpdates.insert(uid);
