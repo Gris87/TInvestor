@@ -4,6 +4,8 @@
 
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget.h"
 
+#include <QTimer>
+
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
@@ -36,9 +38,15 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    IStocksStorage* mStocksStorage;
+    IStocksStorage*  mStocksStorage;
     ISettingsEditor* mSettingsEditor;
-    Filter          mFilter;
+    QTimer           mDateChangeDelayTimer;
+    QTimer           mFilterChangeDelayTimer;
+    Filter           mFilter;
+
+public slots:
+    void dateChangeDelayTimerTicked();
+    void filterChangeDelayTimerTicked();
 
 private slots:
     void on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime);
