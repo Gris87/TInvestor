@@ -444,7 +444,7 @@ void MainWindow::on_actionSettings_triggered()
 
 void MainWindow::on_startSimulationButton_clicked()
 {
-    if (!ui->simulationActiveWidget->isVisible())
+    if (!ui->simulationActiveSpinnerWidget->isSpinning())
     {
         std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
 
@@ -477,7 +477,7 @@ void MainWindow::on_startSimulationButton_clicked()
 
 void MainWindow::on_startAutoPilotButton_clicked()
 {
-    if (!ui->autoPilotActiveWidget->isVisible())
+    if (!ui->autoPilotActiveSpinnerWidget->isSpinning())
     {
         std::shared_ptr<IStartAutoPilotDialog> dialog =
             mStartAutoPilotDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, mSettingsEditor, this);

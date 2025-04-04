@@ -7,6 +7,7 @@
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -39,4 +40,28 @@ protected:
 
 TEST_F(Test_LogsTableWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_LogsTableWidget, Test_saveWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Time"),    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Message"), _));
+    // clang-format on
+
+    logsTableWidget->saveWindowState("AAAAA");
+}
+
+TEST_F(Test_LogsTableWidget, Test_loadWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    QVariant(42))).WillOnce(Return(QVariant(42)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), QVariant(72))).WillOnce(Return(QVariant(72)));
+    // clang-format on
+
+    logsTableWidget->loadWindowState("AAAAA");
 }

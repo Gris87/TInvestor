@@ -22,12 +22,12 @@ StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, ISetti
 
     ui->setupUi(this);
 
-    mDateChangeDelayTimer.setInterval(1000);   // 1 second
-    mFilterChangeDelayTimer.setInterval(1000); // 1 second
+    dateChangeDelayTimer.setInterval(1000);   // 1 second
+    filterChangeDelayTimer.setInterval(1000); // 1 second
 
     // clang-format off
-    connect(&mDateChangeDelayTimer,   SIGNAL(timeout()), this, SLOT(dateChangeDelayTimerTicked()));
-    connect(&mFilterChangeDelayTimer, SIGNAL(timeout()), this, SLOT(filterChangeDelayTimerTicked()));
+    connect(&dateChangeDelayTimer,   SIGNAL(timeout()), this, SLOT(dateChangeDelayTimerTicked()));
+    connect(&filterChangeDelayTimer, SIGNAL(timeout()), this, SLOT(filterChangeDelayTimerTicked()));
     // clang-format on
 }
 
@@ -50,24 +50,26 @@ const Filter& StocksControlsWidget::getFilter()
 
 void StocksControlsWidget::dateChangeDelayTimerTicked()
 {
-    mDateChangeDelayTimer.stop();
+    dateChangeDelayTimer.stop();
 
-    emit dateChangeDateTimeChanged(ui->dateChangeTimeEdit->dateTime());
+    QDateTime dateTime = ui->dateChangeTimeEdit->dateTime();
+
+    QMutexLocker lock(mStocksStorage->getMutex());
+    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
+
+    emit dateChangeDateTimeChanged(dateTime);
 }
 
 void StocksControlsWidget::filterChangeDelayTimerTicked()
 {
-    mFilterChangeDelayTimer.stop();
+    filterChangeDelayTimer.stop();
 
     emit filterChanged(mFilter);
 }
 
-void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& dateTime)
+void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime& /*dateTime*/)
 {
-    QMutexLocker lock(mStocksStorage->getMutex());
-    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
-
-    mDateChangeDelayTimer.start();
+    dateChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -77,14 +79,14 @@ void StocksControlsWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckSt
     mFilter.useTicker = checked;
     ui->tickerLineEdit->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_tickerLineEdit_textChanged(const QString& text)
 {
     mFilter.ticker = text;
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -94,14 +96,14 @@ void StocksControlsWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::C
     mFilter.useQualInvestor = checked;
     ui->qualInvestorComboBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_qualInvestorComboBox_currentIndexChanged(int index)
 {
     mFilter.qualInvestor = QualInvestorFilter(index);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -112,7 +114,7 @@ void StocksControlsWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckSta
     ui->priceFromDoubleSpinBox->setEnabled(checked);
     ui->priceToDoubleSpinBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
@@ -125,7 +127,7 @@ void StocksControlsWidget::on_priceFromDoubleSpinBox_valueChanged(double value)
         ui->priceToDoubleSpinBox->setValue(mFilter.priceTo);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_priceToDoubleSpinBox_valueChanged(double value)
@@ -138,7 +140,7 @@ void StocksControlsWidget::on_priceToDoubleSpinBox_valueChanged(double value)
         ui->priceFromDoubleSpinBox->setValue(mFilter.priceFrom);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -149,7 +151,7 @@ void StocksControlsWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt:
     ui->dayStartChangeFromDoubleSpinBox->setEnabled(checked);
     ui->dayStartChangeToDoubleSpinBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(double value)
@@ -162,7 +164,7 @@ void StocksControlsWidget::on_dayStartChangeFromDoubleSpinBox_valueChanged(doubl
         ui->dayStartChangeToDoubleSpinBox->setValue(mFilter.dayStartChangeTo);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double value)
@@ -175,7 +177,7 @@ void StocksControlsWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double 
         ui->dayStartChangeFromDoubleSpinBox->setValue(mFilter.dayStartChangeFrom);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -186,7 +188,7 @@ void StocksControlsWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::Che
     ui->dateChangeFromDoubleSpinBox->setEnabled(checked);
     ui->dateChangeToDoubleSpinBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double value)
@@ -199,7 +201,7 @@ void StocksControlsWidget::on_dateChangeFromDoubleSpinBox_valueChanged(double va
         ui->dateChangeToDoubleSpinBox->setValue(mFilter.dateChangeTo);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_dateChangeToDoubleSpinBox_valueChanged(double value)
@@ -212,7 +214,7 @@ void StocksControlsWidget::on_dateChangeToDoubleSpinBox_valueChanged(double valu
         ui->dateChangeFromDoubleSpinBox->setValue(mFilter.dateChangeFrom);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -223,7 +225,7 @@ void StocksControlsWidget::on_turnoverCheckBox_checkStateChanged(const Qt::Check
     ui->turnoverFromSpinBox->setEnabled(checked);
     ui->turnoverToSpinBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_turnoverFromSpinBox_valueChanged(int value)
@@ -236,7 +238,7 @@ void StocksControlsWidget::on_turnoverFromSpinBox_valueChanged(int value)
         ui->turnoverToSpinBox->setValue(mFilter.turnoverTo / 1000);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_turnoverToSpinBox_valueChanged(int value)
@@ -249,7 +251,7 @@ void StocksControlsWidget::on_turnoverToSpinBox_valueChanged(int value)
         ui->turnoverFromSpinBox->setValue(mFilter.turnoverFrom / 1000);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -260,7 +262,7 @@ void StocksControlsWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckS
     ui->paybackFromDoubleSpinBox->setEnabled(checked);
     ui->paybackToDoubleSpinBox->setEnabled(checked);
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_paybackFromDoubleSpinBox_valueChanged(double value)
@@ -273,7 +275,7 @@ void StocksControlsWidget::on_paybackFromDoubleSpinBox_valueChanged(double value
         ui->paybackToDoubleSpinBox->setValue(mFilter.paybackTo);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
@@ -286,7 +288,7 @@ void StocksControlsWidget::on_paybackToDoubleSpinBox_valueChanged(double value)
         ui->paybackFromDoubleSpinBox->setValue(mFilter.paybackFrom);
     }
 
-    mFilterChangeDelayTimer.start();
+    filterChangeDelayTimer.start();
 }
 
 void StocksControlsWidget::on_hideButton_clicked()
@@ -367,7 +369,7 @@ void StocksControlsWidget::loadWindowState(const QString& type)
     ui->dateChangeToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/dateChangeTo",                     0.0).toDouble());
     ui->turnoverCheckBox->setChecked(mSettingsEditor->value(type + "/useTurnover",                             false).toBool());
     ui->turnoverFromSpinBox->setValue(mSettingsEditor->value(type + "/turnoverFrom",                           0).toLongLong());
-    ui->turnoverToSpinBox->setValue(mSettingsEditor->value(type + "/turnoverTo",                               1000000000000).toLongLong());
+    ui->turnoverToSpinBox->setValue(mSettingsEditor->value(type + "/turnoverTo",                               1000000000).toLongLong());
     ui->paybackCheckBox->setChecked(mSettingsEditor->value(type + "/usePayback",                               false).toBool());
     ui->paybackFromDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackFrom",                       0.0).toDouble());
     ui->paybackToDoubleSpinBox->setValue(mSettingsEditor->value(type + "/paybackTo",                           100.0).toDouble());

@@ -15,6 +15,7 @@
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -90,4 +91,32 @@ protected:
 
 TEST_F(Test_DecisionMakerWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock,        setValue(QString("AAAAA/splitter"), _));
+    EXPECT_CALL(*operationsTableWidgetMock, saveWindowState(QString("AAAAA/OperationsTableWidget")));
+    EXPECT_CALL(*logsTableWidgetMock,       saveWindowState(QString("AAAAA/LogsTableWidget")));
+    EXPECT_CALL(*portfolioTableWidgetMock,  saveWindowState(QString("AAAAA/PortfolioTableWidget")));
+    // clang-format on
+
+    decisionMakerWidget->saveWindowState("AAAAA");
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_loadWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock,        value(QString("AAAAA/splitter"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
+    EXPECT_CALL(*operationsTableWidgetMock, loadWindowState(QString("AAAAA/OperationsTableWidget")));
+    EXPECT_CALL(*logsTableWidgetMock,       loadWindowState(QString("AAAAA/LogsTableWidget")));
+    EXPECT_CALL(*portfolioTableWidgetMock,  loadWindowState(QString("AAAAA/PortfolioTableWidget")));
+    // clang-format on
+
+    decisionMakerWidget->loadWindowState("AAAAA");
 }

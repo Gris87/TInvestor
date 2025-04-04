@@ -31,6 +31,9 @@ public:
 
     Ui::StocksControlsWidget* ui;
 
+    QTimer dateChangeDelayTimer;
+    QTimer filterChangeDelayTimer;
+
     QDateTime     getDateChangeTime() override;
     const Filter& getFilter() override;
 
@@ -40,8 +43,6 @@ public:
 private:
     IStocksStorage*  mStocksStorage;
     ISettingsEditor* mSettingsEditor;
-    QTimer           mDateChangeDelayTimer;
-    QTimer           mFilterChangeDelayTimer;
     Filter           mFilter;
 
 public slots:

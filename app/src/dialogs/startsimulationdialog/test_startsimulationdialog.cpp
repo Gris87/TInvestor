@@ -50,3 +50,71 @@ protected:
 TEST_F(Test_StartSimulationDialog, Test_constructor_and_destructor)
 {
 }
+
+TEST_F(Test_StartSimulationDialog, Test_on_dateRangeRadioButton_toggled)
+{
+    ASSERT_EQ(dialog->ui->dateRangeWidget->isEnabled(), false);
+
+    dialog->ui->dateRangeRadioButton->setChecked(true);
+    ASSERT_EQ(dialog->ui->dateRangeWidget->isEnabled(), true);
+
+    dialog->ui->realTimeRadioButton->setChecked(true);
+    ASSERT_EQ(dialog->ui->dateRangeWidget->isEnabled(), false);
+}
+
+TEST_F(Test_StartSimulationDialog, Test_on_fromDateEdit_dateChanged)
+{
+    QDate fromDate(2024, 1, 1);
+    QDate toDate(2025, 1, 1);
+    QDate newDate(2026, 1, 1);
+
+    dialog->ui->fromDateEdit->setDate(fromDate);
+    dialog->ui->toDateEdit->setDate(toDate);
+
+    // clang-format off
+    ASSERT_EQ(dialog->ui->fromDateEdit->date(), fromDate);
+    ASSERT_EQ(dialog->ui->toDateEdit->date(),   toDate);
+    // clang-format on
+
+    dialog->ui->fromDateEdit->setDate(newDate);
+
+    // clang-format off
+    ASSERT_EQ(dialog->ui->fromDateEdit->date(), newDate);
+    ASSERT_EQ(dialog->ui->toDateEdit->date(),   newDate);
+    // clang-format on
+}
+
+TEST_F(Test_StartSimulationDialog, Test_on_toDateEdit_dateChanged)
+{
+    QDate fromDate(2024, 1, 1);
+    QDate toDate(2025, 1, 1);
+    QDate newDate(2023, 1, 1);
+
+    dialog->ui->fromDateEdit->setDate(fromDate);
+    dialog->ui->toDateEdit->setDate(toDate);
+
+    // clang-format off
+    ASSERT_EQ(dialog->ui->fromDateEdit->date(), fromDate);
+    ASSERT_EQ(dialog->ui->toDateEdit->date(),   toDate);
+    // clang-format on
+
+    dialog->ui->toDateEdit->setDate(newDate);
+
+    // clang-format off
+    ASSERT_EQ(dialog->ui->fromDateEdit->date(), newDate);
+    ASSERT_EQ(dialog->ui->toDateEdit->date(),   newDate);
+    // clang-format on
+}
+
+TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
+{
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(100000)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/dateRange"),  QVariant(false)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/bestConfig"), QVariant(false)));
+    // clang-format on
+
+    dialog->ui->startButton->click();
+}
