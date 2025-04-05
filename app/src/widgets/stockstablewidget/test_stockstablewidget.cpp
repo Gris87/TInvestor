@@ -11,10 +11,12 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -81,4 +83,479 @@ protected:
 
 TEST_F(Test_StocksTableWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_StocksTableWidget, Test_updateTable)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+}
+
+TEST_F(Test_StocksTableWidget, Test_updateAll)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateAll(filter);
+}
+
+TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+
+    stocksTableWidget->lastPriceChanged("aaaaa");
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.size(),            1);
+    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.contains("aaaaa"), true);
+    // clang-format on
+
+    EXPECT_CALL(stocksTableRecordMock1, updatePrice());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateLastPrices(filter);
+
+    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.isEmpty(), true);
+}
+
+TEST_F(Test_StocksTableWidget, Test_updatePrices)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+
+    EXPECT_CALL(stocksTableRecordMock1, updatePrice());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock2, updatePrice());
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updatePrices(filter);
+}
+
+TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+
+    EXPECT_CALL(stocksTableRecordMock1, updatePeriodicData());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock2, updatePeriodicData());
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updatePeriodicData(filter);
+}
+
+TEST_F(Test_StocksTableWidget, Test_setDateChangeTooltip)
+{
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "");
+
+    stocksTableWidget->setDateChangeTooltip("AAAAA");
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "AAAAA");
+
+    stocksTableWidget->setDateChangeTooltip("BBBBB");
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "BBBBB");
+}
+
+TEST_F(Test_StocksTableWidget, Test_filterChanged)
+{
+    InSequence seq;
+
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
+    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+
+    QList<Stock*> stocks;
+
+    Stock stock1;
+    Stock stock2;
+
+    stock1.meta.uid = "aaaaa";
+    stock2.meta.uid = "bbbbb";
+
+    stocks << &stock1 << &stock1 << &stock2;
+
+    Filter filter;
+
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock1,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(
+        *stockTableRecordFactoryMock,
+        newInstance(
+            stocksTableWidget->ui->tableWidget,
+            stockTableItemWidgetFactoryMock,
+            actionsTableItemWidgetFactoryMock,
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            userStorageMock,
+            orderBookThreadMock,
+            httpClientMock,
+            &stock2,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->updateTable(stocks, filter);
+
+    // clang-format off
+    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
+    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    // clang-format on
+
+    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+
+    stocksTableWidget->filterChanged(filter);
+}
+
+TEST_F(Test_StocksTableWidget, Test_saveWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Stock"),      _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Price"),      _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_DayChange"),  _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_DateChange"), _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Turnover"),   _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Payback"),    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Actions"),    _));
+    // clang-format on
+
+    stocksTableWidget->saveWindowState("AAAAA");
+}
+
+TEST_F(Test_StocksTableWidget, Test_loadWindowState)
+{
+    InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      QVariant(99))).WillOnce(Return(QVariant(99)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),      QVariant(61))).WillOnce(Return(QVariant(61)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DayChange"),  QVariant(139))).WillOnce(Return(QVariant(139)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), QVariant(157))).WillOnce(Return(QVariant(157)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Turnover"),   QVariant(86))).WillOnce(Return(QVariant(86)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payback"),    QVariant(120))).WillOnce(Return(QVariant(120)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Actions"),    QVariant(83))).WillOnce(Return(QVariant(83)));
+    // clang-format on
+
+    stocksTableWidget->loadWindowState("AAAAA");
 }

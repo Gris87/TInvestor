@@ -44,9 +44,10 @@ public:
 
     Ui::StockTableItemWidget* ui;
 
+    QLabel* hoverTextWidget;
+
 private:
     IUserStorage* mUserStorage;
-    QLabel*       mHoverTextWidget;
-    float         mForQualInvestorFlag;
+    bool          mForQualInvestorFlag;
     QString       mFullText;
 };

@@ -95,7 +95,7 @@ void OrderBookThread::handleGetOrderBookResponse(std::shared_ptr<tinkoff::GetOrd
 
     for (int i = 0; i < tinkoffOrderBook->bids_size(); ++i)
     {
-        const tinkoff::public_::invest::api::contract::v1::Order& tinkoffOrder = tinkoffOrderBook->bids(i);
+        const tinkoff::Order& tinkoffOrder = tinkoffOrderBook->bids(i);
 
         bids[i].quantity = tinkoffOrder.quantity();
         bids[i].price    = quotationToFloat(tinkoffOrder.price());
@@ -103,7 +103,7 @@ void OrderBookThread::handleGetOrderBookResponse(std::shared_ptr<tinkoff::GetOrd
 
     for (int i = 0; i < tinkoffOrderBook->asks_size(); ++i)
     {
-        const tinkoff::public_::invest::api::contract::v1::Order& tinkoffOrder = tinkoffOrderBook->asks(i);
+        const tinkoff::Order& tinkoffOrder = tinkoffOrderBook->asks(i);
 
         asks[i].quantity = tinkoffOrder.quantity();
         asks[i].price    = quotationToFloat(tinkoffOrder.price());
@@ -130,7 +130,7 @@ void OrderBookThread::handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook
 
     for (int i = 0; i < tinkoffOrderBook.bids_size(); ++i)
     {
-        const tinkoff::public_::invest::api::contract::v1::Order& tinkoffOrder = tinkoffOrderBook.bids(i);
+        const tinkoff::Order& tinkoffOrder = tinkoffOrderBook.bids(i);
 
         bids[i].quantity = tinkoffOrder.quantity();
         bids[i].price    = quotationToFloat(tinkoffOrder.price());
@@ -138,7 +138,7 @@ void OrderBookThread::handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook
 
     for (int i = 0; i < tinkoffOrderBook.asks_size(); ++i)
     {
-        const tinkoff::public_::invest::api::contract::v1::Order& tinkoffOrder = tinkoffOrderBook.asks(i);
+        const tinkoff::Order& tinkoffOrder = tinkoffOrderBook.asks(i);
 
         asks[i].quantity = tinkoffOrder.quantity();
         asks[i].price    = quotationToFloat(tinkoffOrder.price());

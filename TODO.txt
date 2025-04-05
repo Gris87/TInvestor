@@ -1,4 +1,5 @@
 Raise test coverage
+Replace setVisible with show()/hide()
 Use timestamps from 2024 in tests
 Build for Ubuntu
 Add CI to Github

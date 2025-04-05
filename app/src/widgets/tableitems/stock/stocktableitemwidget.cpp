@@ -9,7 +9,8 @@ StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* p
     IStockTableItemWidget(parent),
     ui(new Ui::StockTableItemWidget),
     mUserStorage(userStorage),
-    mHoverTextWidget()
+    mForQualInvestorFlag(false),
+    hoverTextWidget()
 {
     qDebug() << "Create StockTableItemWidget";
 
@@ -20,9 +21,9 @@ StockTableItemWidget::~StockTableItemWidget()
 {
     qDebug() << "Destroy StockTableItemWidget";
 
-    if (mHoverTextWidget != nullptr)
+    if (hoverTextWidget != nullptr)
     {
-        delete mHoverTextWidget;
+        delete hoverTextWidget;
     }
 
     delete ui;
@@ -30,14 +31,14 @@ StockTableItemWidget::~StockTableItemWidget()
 
 void StockTableItemWidget::enterEvent(QEnterEvent* event)
 {
-    mHoverTextWidget = new QLabel();
-    mHoverTextWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowTransparentForInput);
-    mHoverTextWidget->setText(mFullText);
+    hoverTextWidget = new QLabel();
+    hoverTextWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowTransparentForInput);
+    hoverTextWidget->setText(mFullText);
 
     QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
-    mHoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), mHoverTextWidget->sizeHint().width(), ui->nameLabel->height());
+    hoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), hoverTextWidget->sizeHint().width(), ui->nameLabel->height());
 
-    mHoverTextWidget->show();
+    hoverTextWidget->show();
     ui->nameLabel->setVisible(false);
 
     IStockTableItemWidget::enterEvent(event);
@@ -45,8 +46,8 @@ void StockTableItemWidget::enterEvent(QEnterEvent* event)
 
 void StockTableItemWidget::leaveEvent(QEvent* event)
 {
-    delete mHoverTextWidget;
-    mHoverTextWidget = nullptr;
+    delete hoverTextWidget;
+    hoverTextWidget = nullptr;
 
     ui->nameLabel->setVisible(true);
 
