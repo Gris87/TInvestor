@@ -199,22 +199,22 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
         }
     }
 
-    if (mMinPrice < 0 || minBidsPrice < mMinPrice)
+    if (mMinPrice < 0 || (minBidsPrice > 0 && minBidsPrice < mMinPrice))
     {
         mMinPrice = minBidsPrice;
     }
 
-    if (mMinPrice < 0 || minAsksPrice < mMinPrice)
+    if (mMinPrice < 0 || (minAsksPrice > 0 && minAsksPrice < mMinPrice))
     {
         mMinPrice = minAsksPrice;
     }
 
-    if (mMaxPrice < 0 || maxBidsPrice > mMaxPrice)
+    if (mMaxPrice < 0 || (maxBidsPrice > 0 && maxBidsPrice > mMaxPrice))
     {
         mMaxPrice = maxBidsPrice;
     }
 
-    if (mMaxPrice < 0 || maxAsksPrice > mMaxPrice)
+    if (mMaxPrice < 0 || (maxAsksPrice > 0 && maxAsksPrice > mMaxPrice))
     {
         mMaxPrice = maxAsksPrice;
     }
@@ -522,26 +522,28 @@ qint64 OrderWavesWidget::normalizePrice(float price)
 
 float OrderWavesWidget::calculateCurrentPrice(float maxBidsPrice, float minAsksPrice)
 {
+    float res = 0.0;
+
     if (maxBidsPrice >= 0)
     {
         if (minAsksPrice >= 0)
         {
-            return (maxBidsPrice + minAsksPrice) / 2;
+            res = (maxBidsPrice + minAsksPrice) / 2;
         }
         else
         {
-            return maxBidsPrice;
+            res = maxBidsPrice;
         }
     }
     else
     {
         if (minAsksPrice >= 0)
         {
-            return minAsksPrice;
+            res = minAsksPrice;
         }
     }
 
-    return 0;
+    return res;
 }
 
 void OrderWavesWidget::sliderMoved(int /*value*/)

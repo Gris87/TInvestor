@@ -148,6 +148,7 @@ void LastPriceThread::terminateThread()
 {
     if (mMarketDataStream != nullptr)
     {
+        mGrpcClient->unsubscribeLastPrices(mMarketDataStream);
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
     }
 

@@ -124,6 +124,7 @@ TEST_F(Test_OrderBookThread, Test_terminateThread)
 
     thread->createMarketDataStream();
 
+    EXPECT_CALL(*grpcClientMock, unsubscribeOrderBook(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
 
     thread->terminateThread();

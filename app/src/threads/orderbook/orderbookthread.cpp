@@ -66,6 +66,7 @@ void OrderBookThread::terminateThread()
 {
     if (mMarketDataStream != nullptr)
     {
+        mGrpcClient->unsubscribeOrderBook(mMarketDataStream);
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
     }
 
