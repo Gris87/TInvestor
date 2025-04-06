@@ -99,12 +99,12 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setColor(GREY_COLOR);
     ui->waitingSpinnerWidget->setTextColor(GREY_COLOR);
 
-    ui->simulationActiveWidget->setVisible(false);
+    ui->simulationActiveWidget->hide();
     ui->simulationActiveSpinnerWidget->setInnerRadius(6);
     ui->simulationActiveSpinnerWidget->setLineLength(6);
     ui->simulationActiveSpinnerWidget->setColor(GREY_COLOR);
 
-    ui->autoPilotActiveWidget->setVisible(false);
+    ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->setInnerRadius(6);
     ui->autoPilotActiveSpinnerWidget->setLineLength(6);
     ui->autoPilotActiveSpinnerWidget->setColor(GREY_COLOR);
@@ -450,7 +450,7 @@ void MainWindow::on_startSimulationButton_clicked()
 
         if (dialog->exec())
         {
-            ui->simulationActiveWidget->setVisible(true);
+            ui->simulationActiveWidget->show();
             ui->simulationActiveSpinnerWidget->start();
 
             ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
@@ -464,7 +464,7 @@ void MainWindow::on_startSimulationButton_clicked()
         if (mMessageBoxUtils->question(this, tr("Stop simulation"), tr("Do you really want to stop simulation?")) ==
             QMessageBox::Yes)
         {
-            ui->simulationActiveWidget->setVisible(false);
+            ui->simulationActiveWidget->hide();
             ui->simulationActiveSpinnerWidget->stop();
 
             ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
@@ -484,7 +484,7 @@ void MainWindow::on_startAutoPilotButton_clicked()
 
         if (dialog->exec())
         {
-            ui->autoPilotActiveWidget->setVisible(true);
+            ui->autoPilotActiveWidget->show();
             ui->autoPilotActiveSpinnerWidget->start();
 
             ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
@@ -498,7 +498,7 @@ void MainWindow::on_startAutoPilotButton_clicked()
         if (mMessageBoxUtils->question(this, tr("Stop auto-pilot"), tr("Do you really want to stop auto-pilot?")) ==
             QMessageBox::Yes)
         {
-            ui->autoPilotActiveWidget->setVisible(false);
+            ui->autoPilotActiveWidget->hide();
             ui->autoPilotActiveSpinnerWidget->stop();
 
             ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
@@ -543,14 +543,14 @@ void MainWindow::updateStocksTableWidget()
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
-        ui->stackedWidget->setVisible(true);
-        ui->waitingSpinnerWidget->setVisible(false);
+        ui->stackedWidget->show();
+        ui->waitingSpinnerWidget->hide();
         ui->waitingSpinnerWidget->stop();
     }
     else
     {
-        ui->stackedWidget->setVisible(false);
-        ui->waitingSpinnerWidget->setVisible(true);
+        ui->stackedWidget->hide();
+        ui->waitingSpinnerWidget->show();
         ui->waitingSpinnerWidget->start();
     }
 }

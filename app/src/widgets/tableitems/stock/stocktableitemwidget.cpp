@@ -39,7 +39,7 @@ void StockTableItemWidget::enterEvent(QEnterEvent* event)
     hoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), hoverTextWidget->sizeHint().width(), ui->nameLabel->height());
 
     hoverTextWidget->show();
-    ui->nameLabel->setVisible(false);
+    ui->nameLabel->hide();
 
     IStockTableItemWidget::enterEvent(event);
 }
@@ -49,7 +49,7 @@ void StockTableItemWidget::leaveEvent(QEvent* event)
     delete hoverTextWidget;
     hoverTextWidget = nullptr;
 
-    ui->nameLabel->setVisible(true);
+    ui->nameLabel->show();
 
     IStockTableItemWidget::leaveEvent(event);
 }
