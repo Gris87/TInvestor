@@ -91,7 +91,7 @@ void StocksTableRecord::updateAll()
 
 void StocksTableRecord::updatePrice()
 {
-    QMutexLocker lock(mStock->mutex);
+    const QMutexLocker lock(mStock->mutex);
 
     float price = !mStock->operational.detailedData.isEmpty() ? mStock->operational.detailedData.last().price
                                                               : (!mStock->data.isEmpty() ? mStock->data.last().price : 0);
@@ -107,7 +107,7 @@ void StocksTableRecord::updatePrice()
 
 void StocksTableRecord::updatePeriodicData()
 {
-    QMutexLocker lock(mStock->mutex);
+    const QMutexLocker lock(mStock->mutex);
 
     mTurnoverTableWidgetItem->setValue(mStock->operational.turnover);
     mPaybackTableWidgetItem->setValue(mStock->operational.payback);

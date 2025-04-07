@@ -21,7 +21,7 @@ SellDecision3Config::~SellDecision3Config()
 
 void SellDecision3Config::assign(ISellDecision3Config* another)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision3Config to SellDecision3Config";
 
@@ -34,7 +34,7 @@ void SellDecision3Config::assign(ISellDecision3Config* another)
 
 void SellDecision3Config::makeDefault()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Set SellDecision3Config to default";
 
@@ -45,7 +45,7 @@ void SellDecision3Config::makeDefault()
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision3Config";
 
@@ -58,7 +58,7 @@ void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision3Config";
 
@@ -71,42 +71,42 @@ void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision3Config::setEnabled(bool value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision3Config::isEnabled()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void SellDecision3Config::setLoseIncome(float value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mLoseIncome = value;
 }
 
 float SellDecision3Config::getLoseIncome()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mLoseIncome;
 }
 
 void SellDecision3Config::setDuration(int value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mDuration = value;
 }
 
 int SellDecision3Config::getDuration()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mDuration;
 }

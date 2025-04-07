@@ -200,7 +200,7 @@ bool PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesRespo
 
     processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
-    QMutexLocker lock(mStocksStorage->getMutex());
+    const QMutexLocker lock(mStocksStorage->getMutex());
     return mStocksStorage->mergeStocksMeta(stocksMeta);
 }
 
@@ -437,7 +437,7 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         qint64 startTimestamp =
             qBound(currentTimestamp - storageMonthLimit, stock->operational.lastStoredTimestamp + ONE_MINUTE, currentTimestamp);

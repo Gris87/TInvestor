@@ -83,7 +83,7 @@ void LastPriceThread::run()
 
                 Stock* stock = stocksMap[uid];
 
-                QMutexLocker lock(stock->mutex);
+                const QMutexLocker lock(stock->mutex);
                 stock->operational.detailedData.append(stockData);
 
                 emit lastPriceChanged(uid);

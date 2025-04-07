@@ -21,7 +21,7 @@ BuyDecision3Config::~BuyDecision3Config()
 
 void BuyDecision3Config::assign(IBuyDecision3Config* another)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning BuyDecision3Config to BuyDecision3Config";
 
@@ -34,7 +34,7 @@ void BuyDecision3Config::assign(IBuyDecision3Config* another)
 
 void BuyDecision3Config::makeDefault()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Set BuyDecision3Config to default";
 
@@ -45,7 +45,7 @@ void BuyDecision3Config::makeDefault()
 
 void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Save BuyDecision3Config";
 
@@ -58,7 +58,7 @@ void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& ty
 
 void BuyDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Load BuyDecision3Config";
 
@@ -71,42 +71,42 @@ void BuyDecision3Config::load(ISettingsEditor* settingsEditor, const QString& ty
 
 void BuyDecision3Config::setEnabled(bool value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool BuyDecision3Config::isEnabled()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void BuyDecision3Config::setPriceRise(float value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mPriceRise = value;
 }
 
 float BuyDecision3Config::getPriceRise()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mPriceRise;
 }
 
 void BuyDecision3Config::setDuration(int value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mDuration = value;
 }
 
 int BuyDecision3Config::getDuration()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mDuration;
 }

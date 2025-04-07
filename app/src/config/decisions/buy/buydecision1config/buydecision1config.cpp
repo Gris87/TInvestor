@@ -7,7 +7,10 @@
 
 BuyDecision1Config::BuyDecision1Config() :
     IBuyDecision1Config(),
-    mMutex(new QMutex())
+    mMutex(new QMutex()),
+    mEnabled(),
+    mPriceFall(),
+    mDuration()
 {
     qDebug() << "Create BuyDecision1Config";
 }
@@ -21,7 +24,7 @@ BuyDecision1Config::~BuyDecision1Config()
 
 void BuyDecision1Config::assign(IBuyDecision1Config* another)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning BuyDecision1Config to BuyDecision1Config";
 
@@ -34,7 +37,7 @@ void BuyDecision1Config::assign(IBuyDecision1Config* another)
 
 void BuyDecision1Config::makeDefault()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Set BuyDecision1Config to default";
 
@@ -45,7 +48,7 @@ void BuyDecision1Config::makeDefault()
 
 void BuyDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Save BuyDecision1Config";
 
@@ -58,7 +61,7 @@ void BuyDecision1Config::save(ISettingsEditor* settingsEditor, const QString& ty
 
 void BuyDecision1Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Load BuyDecision1Config";
 
@@ -71,42 +74,42 @@ void BuyDecision1Config::load(ISettingsEditor* settingsEditor, const QString& ty
 
 void BuyDecision1Config::setEnabled(bool value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool BuyDecision1Config::isEnabled()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void BuyDecision1Config::setPriceFall(float value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mPriceFall = value;
 }
 
 float BuyDecision1Config::getPriceFall()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mPriceFall;
 }
 
 void BuyDecision1Config::setDuration(int value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mDuration = value;
 }
 
 int BuyDecision1Config::getDuration()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mDuration;
 }

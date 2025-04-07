@@ -6,7 +6,7 @@
 
 
 
-enum QualInvestorFilter
+enum QualInvestorFilter : quint8
 {
     QUAL_INVESTOR_SHOW_ALL,
     QUAL_INVESTOR_ONLY_WITH_STATUS,

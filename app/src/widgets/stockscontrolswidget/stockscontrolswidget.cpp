@@ -54,7 +54,7 @@ void StocksControlsWidget::dateChangeDelayTimerTicked()
 
     QDateTime dateTime = ui->dateChangeTimeEdit->dateTime();
 
-    QMutexLocker lock(mStocksStorage->getMutex());
+    const QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
 
     emit dateChangeDateTimeChanged(dateTime);

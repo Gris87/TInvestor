@@ -25,7 +25,7 @@ grpc::Status RawGrpcClient::getUserInfo(
     tinkoff::GetInfoResponse*                           resp
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->GetInfo(context, req, resp);
 }
@@ -37,7 +37,7 @@ grpc::Status RawGrpcClient::getAccounts(
     tinkoff::GetAccountsResponse*                       resp
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->GetAccounts(context, req, resp);
 }
@@ -49,7 +49,7 @@ grpc::Status RawGrpcClient::findStocks(
     tinkoff::SharesResponse*                                  resp
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->Shares(context, req, resp);
 }
@@ -61,7 +61,7 @@ grpc::Status RawGrpcClient::getCandles(
     tinkoff::GetCandlesResponse*                             resp
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->GetCandles(context, req, resp);
 }
@@ -73,7 +73,7 @@ grpc::Status RawGrpcClient::getOrderBook(
     tinkoff::GetOrderBookResponse*                           resp
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->GetOrderBook(context, req, resp);
 }
@@ -82,7 +82,7 @@ MarketDataStream::Stream RawGrpcClient::createMarketDataStream(
     const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
 )
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return service->MarketDataStream(context);
 }
@@ -90,7 +90,7 @@ MarketDataStream::Stream RawGrpcClient::createMarketDataStream(
 bool
 RawGrpcClient::writeMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, const tinkoff::MarketDataRequest& req)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return marketDataStream->stream->Write(req);
 }
@@ -102,14 +102,14 @@ bool RawGrpcClient::readMarketDataStream(std::shared_ptr<MarketDataStream>& mark
 
 bool RawGrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return marketDataStream->stream->WritesDone();
 }
 
 grpc::Status RawGrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return marketDataStream->stream->Finish();
 }

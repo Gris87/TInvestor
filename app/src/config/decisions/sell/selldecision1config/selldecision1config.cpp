@@ -21,7 +21,7 @@ SellDecision1Config::~SellDecision1Config()
 
 void SellDecision1Config::assign(ISellDecision1Config* another)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
 
@@ -33,7 +33,7 @@ void SellDecision1Config::assign(ISellDecision1Config* another)
 
 void SellDecision1Config::makeDefault()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Set SellDecision1Config to default";
 
@@ -43,7 +43,7 @@ void SellDecision1Config::makeDefault()
 
 void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Save SellDecision1Config";
 
@@ -55,7 +55,7 @@ void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision1Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     qDebug() << "Load SellDecision1Config";
 
@@ -67,28 +67,28 @@ void SellDecision1Config::load(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision1Config::setEnabled(bool value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision1Config::isEnabled()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mEnabled;
 }
 
 void SellDecision1Config::setIncomeAbove(float value)
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     mIncomeAbove = value;
 }
 
 float SellDecision1Config::getIncomeAbove()
 {
-    QMutexLocker lock(mMutex);
+    const QMutexLocker lock(mMutex);
 
     return mIncomeAbove;
 }

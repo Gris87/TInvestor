@@ -866,14 +866,14 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
+    QDateTime dateChangeTime(QDate(2023, 12, 30), QTime(23, 59, 45));
     Filter    filter;
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksControlsWidgetMock, getDateChangeTime()).WillOnce(Return(dateChangeTime));
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
-    EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1703969985000));
+    EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2023-12-30 23:59:45")));
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updateTable(stocks, filter));
 

@@ -123,7 +123,7 @@ void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks,
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
 
@@ -167,7 +167,7 @@ void cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& sto
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
 
@@ -211,7 +211,7 @@ void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int s
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;
@@ -273,7 +273,7 @@ void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int st
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;
@@ -333,7 +333,7 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*       stock = stockArray[i];
-        QMutexLocker lock(stock->mutex);
+        const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;

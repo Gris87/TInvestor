@@ -1,4 +1,3 @@
-Use timestamps from 2024 in tests
 Init all variables in constructor
 Build for Ubuntu
 Add CI to Github
