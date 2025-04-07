@@ -10,6 +10,8 @@
 
 class SettingsDialogMock : public ISettingsDialog
 {
+    Q_OBJECT
+
 public:
     explicit SettingsDialogMock(QWidget* parent = nullptr) :
         ISettingsDialog(parent)

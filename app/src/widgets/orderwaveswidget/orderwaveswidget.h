@@ -39,7 +39,7 @@ public:
         QGraphicsRectItem*       bar,
         QGraphicsSimpleTextItem* barMarker,
         qint32                   quantity,
-        QString                  quantityText,
+        const QString&           quantityText,
         const QColor&            color
     );
 

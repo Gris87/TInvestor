@@ -40,7 +40,7 @@ public:
     QString text() override;
     QString fullText() override;
 
-    bool operator<(const QTableWidgetItem& another) const;
+    bool operator<(const QTableWidgetItem& another) const override;
 
     Ui::StockTableItemWidget* ui;
 

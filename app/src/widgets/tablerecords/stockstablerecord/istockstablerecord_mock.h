@@ -10,6 +10,8 @@
 
 class StocksTableRecordMock : public IStocksTableRecord
 {
+    Q_OBJECT
+
 public:
     explicit StocksTableRecordMock(QObject* parent = nullptr) :
         IStocksTableRecord(parent)

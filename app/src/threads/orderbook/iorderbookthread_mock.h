@@ -10,9 +10,11 @@
 
 class OrderBookThreadMock : public IOrderBookThread
 {
+    Q_OBJECT
+
 public:
-    OrderBookThreadMock() :
-        IOrderBookThread()
+    OrderBookThreadMock(QObject* parent = nullptr) :
+        IOrderBookThread(parent)
     {
     }
     ~OrderBookThreadMock() override = default;

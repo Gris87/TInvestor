@@ -8,6 +8,8 @@
 
 class IAuthDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit IAuthDialog(QWidget* parent = nullptr) :
         QDialog(parent)

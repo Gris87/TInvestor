@@ -10,6 +10,8 @@
 
 class StocksTableWidgetMock : public IStocksTableWidget
 {
+    Q_OBJECT
+
 public:
     explicit StocksTableWidgetMock(QWidget* parent = nullptr) :
         IStocksTableWidget(parent)

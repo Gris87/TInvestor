@@ -85,7 +85,8 @@ public:
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
-        ISettingsEditor*                   autorunSettingsEditor
+        ISettingsEditor*                   autorunSettingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~MainWindow();
 

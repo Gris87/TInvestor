@@ -10,6 +10,8 @@
 
 class ActionsTableItemWidgetMock : public IActionsTableItemWidget
 {
+    Q_OBJECT
+
 public:
     explicit ActionsTableItemWidgetMock(QWidget* parent = nullptr) :
         IActionsTableItemWidget(parent)

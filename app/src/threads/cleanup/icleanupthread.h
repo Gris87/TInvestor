@@ -8,6 +8,8 @@
 
 class ICleanupThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit ICleanupThread(QObject* parent = nullptr) :
         QThread(parent)

@@ -10,6 +10,8 @@
 
 class OperationsTableWidgetMock : public IOperationsTableWidget
 {
+    Q_OBJECT
+
 public:
     explicit OperationsTableWidgetMock(QWidget* parent = nullptr) :
         IOperationsTableWidget(parent)

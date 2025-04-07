@@ -10,6 +10,8 @@
 
 class LogsTableWidgetMock : public ILogsTableWidget
 {
+    Q_OBJECT
+
 public:
     explicit LogsTableWidgetMock(QWidget* parent = nullptr) :
         ILogsTableWidget(parent)

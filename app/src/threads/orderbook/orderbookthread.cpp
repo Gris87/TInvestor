@@ -78,7 +78,7 @@ void OrderBookThread::createMarketDataStream()
     mMarketDataStream = mGrpcClient->createMarketDataStream();
 }
 
-void OrderBookThread::handleGetOrderBookResponse(std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook)
+void OrderBookThread::handleGetOrderBookResponse(const std::shared_ptr<tinkoff::GetOrderBookResponse>& tinkoffOrderBook)
 {
     OrderBook orderBook;
 

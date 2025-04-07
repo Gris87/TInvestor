@@ -10,6 +10,8 @@
 
 class StartAutoPilotDialogMock : public IStartAutoPilotDialog
 {
+    Q_OBJECT
+
 public:
     explicit StartAutoPilotDialogMock(QWidget* parent = nullptr) :
         IStartAutoPilotDialog(parent)

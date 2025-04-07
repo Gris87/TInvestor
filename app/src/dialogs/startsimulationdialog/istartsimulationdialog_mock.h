@@ -10,6 +10,8 @@
 
 class StartSimulationDialogMock : public IStartSimulationDialog
 {
+    Q_OBJECT
+
 public:
     explicit StartSimulationDialogMock(QWidget* parent = nullptr) :
         IStartSimulationDialog(parent)

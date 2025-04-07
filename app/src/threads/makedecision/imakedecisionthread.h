@@ -8,6 +8,8 @@
 
 class IMakeDecisionThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit IMakeDecisionThread(QObject* parent = nullptr) :
         QThread(parent)

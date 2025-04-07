@@ -11,7 +11,7 @@ class TrayIcon : public ITrayIcon
     Q_OBJECT
 
 public:
-    explicit TrayIcon(QWidget* parent = nullptr);
+    explicit TrayIcon(QObject* parent = nullptr);
     ~TrayIcon();
 
     TrayIcon(const TrayIcon& another)            = delete;

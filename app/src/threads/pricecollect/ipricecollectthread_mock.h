@@ -10,9 +10,11 @@
 
 class PriceCollectThreadMock : public IPriceCollectThread
 {
+    Q_OBJECT
+
 public:
-    PriceCollectThreadMock() :
-        IPriceCollectThread()
+    PriceCollectThreadMock(QObject* parent = nullptr) :
+        IPriceCollectThread(parent)
     {
     }
     ~PriceCollectThreadMock() override = default;

@@ -10,9 +10,11 @@
 
 class UserUpdateThreadMock : public IUserUpdateThread
 {
+    Q_OBJECT
+
 public:
-    UserUpdateThreadMock() :
-        IUserUpdateThread()
+    UserUpdateThreadMock(QObject* parent = nullptr) :
+        IUserUpdateThread(parent)
     {
     }
     ~UserUpdateThreadMock() override = default;

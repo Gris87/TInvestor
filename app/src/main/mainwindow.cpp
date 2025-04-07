@@ -53,9 +53,10 @@ MainWindow::MainWindow(
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
-    ISettingsEditor*                   autorunSettingsEditor
+    ISettingsEditor*                   autorunSettingsEditor,
+    QWidget*                           parent
 ) :
-    QMainWindow(),
+    QMainWindow(parent),
     ui(new Ui::MainWindow),
     authFailedDialogShown(false),
     userUpdateTimer(new QTimer(this)),

@@ -10,8 +10,10 @@
 
 class TrayIconMock : public ITrayIcon
 {
+    Q_OBJECT
+
 public:
-    explicit TrayIconMock(QWidget* parent = nullptr) :
+    explicit TrayIconMock(QObject* parent = nullptr) :
         ITrayIcon(parent)
     {
     }

@@ -4,6 +4,8 @@
 
 #include <QWidget>
 
+#include <QDateTime>
+
 #include "src/domain/filter/filter.h"
 
 

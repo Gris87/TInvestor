@@ -8,6 +8,8 @@
 
 class IUserUpdateThread : public QThread
 {
+    Q_OBJECT
+
 public:
     explicit IUserUpdateThread(QObject* parent = nullptr) :
         QThread(parent)

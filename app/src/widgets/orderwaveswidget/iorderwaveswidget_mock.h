@@ -10,6 +10,8 @@
 
 class OrderWavesWidgetMock : public IOrderWavesWidget
 {
+    Q_OBJECT
+
 public:
     explicit OrderWavesWidgetMock(QWidget* parent = nullptr) :
         IOrderWavesWidget(parent)

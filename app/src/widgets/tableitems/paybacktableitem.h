@@ -18,7 +18,7 @@ public:
     void  setValue(float value);
     float getValue() const;
 
-    bool operator<(const QTableWidgetItem& another) const;
+    bool operator<(const QTableWidgetItem& another) const override;
 
 private:
     float mValue;

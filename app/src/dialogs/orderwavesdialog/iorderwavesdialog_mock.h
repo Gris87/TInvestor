@@ -10,6 +10,8 @@
 
 class OrderWavesDialogMock : public IOrderWavesDialog
 {
+    Q_OBJECT
+
 public:
     explicit OrderWavesDialogMock(QWidget* parent = nullptr) :
         IOrderWavesDialog(parent)

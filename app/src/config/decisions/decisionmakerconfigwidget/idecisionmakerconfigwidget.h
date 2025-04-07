@@ -8,6 +8,8 @@
 
 class IDecisionMakerConfigWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit IDecisionMakerConfigWidget(QWidget* parent = nullptr) :
         QWidget(parent)

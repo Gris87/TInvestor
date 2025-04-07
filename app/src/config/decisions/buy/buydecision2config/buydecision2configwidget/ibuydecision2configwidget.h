@@ -10,6 +10,8 @@
 
 class IBuyDecision2ConfigWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit IBuyDecision2ConfigWidget(QWidget* parent = nullptr) :
         QWidget(parent)

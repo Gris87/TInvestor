@@ -10,6 +10,8 @@
 
 class PortfolioTableWidgetMock : public IPortfolioTableWidget
 {
+    Q_OBJECT
+
 public:
     explicit PortfolioTableWidgetMock(QWidget* parent = nullptr) :
         IPortfolioTableWidget(parent)

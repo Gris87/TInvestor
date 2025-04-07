@@ -8,6 +8,8 @@
 
 class IAccountChartWidget : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     explicit IAccountChartWidget(QWidget* parent = nullptr) :
         QGraphicsView(parent)

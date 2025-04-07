@@ -10,6 +10,8 @@
 
 class GrpcClientMock : public IGrpcClient
 {
+    Q_OBJECT
+
 public:
     explicit GrpcClientMock(QObject* parent = nullptr) :
         IGrpcClient(parent)

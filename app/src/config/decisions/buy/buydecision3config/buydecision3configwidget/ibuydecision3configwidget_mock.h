@@ -10,6 +10,8 @@
 
 class BuyDecision3ConfigWidgetMock : public IBuyDecision3ConfigWidget
 {
+    Q_OBJECT
+
 public:
     explicit BuyDecision3ConfigWidgetMock(QWidget* parent = nullptr) :
         IBuyDecision3ConfigWidget(parent)

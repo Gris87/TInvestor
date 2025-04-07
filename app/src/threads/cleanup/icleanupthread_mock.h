@@ -10,9 +10,11 @@
 
 class CleanupThreadMock : public ICleanupThread
 {
+    Q_OBJECT
+
 public:
-    CleanupThreadMock() :
-        ICleanupThread()
+    CleanupThreadMock(QObject* parent = nullptr) :
+        ICleanupThread(parent)
     {
     }
     ~CleanupThreadMock() override = default;

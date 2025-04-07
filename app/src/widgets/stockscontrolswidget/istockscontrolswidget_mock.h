@@ -10,6 +10,8 @@
 
 class StocksControlsWidgetMock : public IStocksControlsWidget
 {
+    Q_OBJECT
+
 public:
     explicit StocksControlsWidgetMock(QWidget* parent = nullptr) :
         IStocksControlsWidget(parent)

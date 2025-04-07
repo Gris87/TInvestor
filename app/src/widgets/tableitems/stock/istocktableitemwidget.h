@@ -10,6 +10,8 @@
 class IStockTableItemWidget : public QWidget,
                               public QTableWidgetItem
 {
+    Q_OBJECT
+
 public:
     explicit IStockTableItemWidget(QWidget* parent = nullptr) :
         QWidget(parent),

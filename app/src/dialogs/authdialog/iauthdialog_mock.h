@@ -10,6 +10,8 @@
 
 class AuthDialogMock : public IAuthDialog
 {
+    Q_OBJECT
+
 public:
     explicit AuthDialogMock(QWidget* parent = nullptr) :
         IAuthDialog(parent)

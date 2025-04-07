@@ -17,8 +17,8 @@ public:
     }
 
     grpc::Status GetMetadata(
-        grpc::string_ref /*serviceUrl*/,
-        grpc::string_ref /*methodName*/,
+        grpc::string_ref /*serviceUrl*/, // clazy:exclude=function-args-by-ref
+        grpc::string_ref /*methodName*/, // clazy:exclude=function-args-by-ref
         const grpc::AuthContext& /*channelAuthContext*/,
         std::multimap<grpc::string, grpc::string>* metadata
     ) override

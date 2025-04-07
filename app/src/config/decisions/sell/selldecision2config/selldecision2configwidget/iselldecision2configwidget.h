@@ -10,6 +10,8 @@
 
 class ISellDecision2ConfigWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit ISellDecision2ConfigWidget(QWidget* parent = nullptr) :
         QWidget(parent)

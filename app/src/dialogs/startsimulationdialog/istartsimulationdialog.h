@@ -8,6 +8,8 @@
 
 class IStartSimulationDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit IStartSimulationDialog(QWidget* parent = nullptr) :
         QDialog(parent)

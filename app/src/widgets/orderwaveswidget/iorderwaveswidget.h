@@ -10,6 +10,8 @@
 
 class IOrderWavesWidget : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     explicit IOrderWavesWidget(QWidget* parent = nullptr) :
         QGraphicsView(parent)

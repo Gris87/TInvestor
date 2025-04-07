@@ -10,9 +10,11 @@
 
 class LastPriceThreadMock : public ILastPriceThread
 {
+    Q_OBJECT
+
 public:
-    LastPriceThreadMock() :
-        ILastPriceThread()
+    LastPriceThreadMock(QObject* parent = nullptr) :
+        ILastPriceThread(parent)
     {
     }
     ~LastPriceThreadMock() override = default;

@@ -8,6 +8,8 @@
 
 class IOrderWavesDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit IOrderWavesDialog(QWidget* parent = nullptr) :
         QDialog(parent)

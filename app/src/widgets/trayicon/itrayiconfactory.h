@@ -17,5 +17,5 @@ public:
     ITrayIconFactory(const ITrayIconFactory& another)            = delete;
     ITrayIconFactory& operator=(const ITrayIconFactory& another) = delete;
 
-    virtual ITrayIcon* newInstance(QWidget* parent) = 0;
+    virtual ITrayIcon* newInstance(QObject* parent) = 0;
 };

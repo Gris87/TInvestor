@@ -74,7 +74,7 @@ void OrderWavesWidget::zoom(double factor)
     centerOn(mapToScene(viewportCenter.toPoint()));
 }
 
-bool OrderWavesWidget::eventFilter(QObject* /*object*/, QEvent* event)
+bool OrderWavesWidget::eventFilter(QObject* object, QEvent* event)
 {
     if (event->type() == QEvent::MouseMove)
     {
@@ -95,7 +95,7 @@ bool OrderWavesWidget::eventFilter(QObject* /*object*/, QEvent* event)
         return true;
     }
 
-    return false;
+    return IOrderWavesWidget::eventFilter(object, event);
 }
 
 void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
@@ -417,7 +417,7 @@ void OrderWavesWidget::setupBar(
     QGraphicsRectItem*       bar,
     QGraphicsSimpleTextItem* barMarker,
     qint32                   quantity,
-    QString                  quantityText,
+    const QString&           quantityText,
     const QColor&            color
 )
 {

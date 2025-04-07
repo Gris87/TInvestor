@@ -8,6 +8,8 @@
 
 class ISettingsDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit ISettingsDialog(QWidget* parent = nullptr) :
         QDialog(parent)

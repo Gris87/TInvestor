@@ -10,6 +10,8 @@
 
 class DecisionMakerWidgetMock : public IDecisionMakerWidget
 {
+    Q_OBJECT
+
 public:
     explicit DecisionMakerWidgetMock(QWidget* parent = nullptr) :
         IDecisionMakerWidget(parent)

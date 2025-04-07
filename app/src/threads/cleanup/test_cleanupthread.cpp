@@ -49,8 +49,7 @@ TEST_F(Test_CleanupThread, Test_run)
 {
     InSequence seq;
 
-    QMutex        mutex;
-    QList<Stock*> stocks;
+    QMutex mutex;
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));

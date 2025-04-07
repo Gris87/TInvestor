@@ -8,6 +8,8 @@
 
 class IActionsTableItemWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit IActionsTableItemWidget(QWidget* parent = nullptr) :
         QWidget(parent)

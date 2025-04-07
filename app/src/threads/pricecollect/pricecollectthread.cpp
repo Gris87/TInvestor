@@ -85,7 +85,7 @@ void PriceCollectThread::run()
     qDebug() << "Finish PriceCollectThread";
 }
 
-void PriceCollectThread::downloadLogo(QUrl url, std::shared_ptr<IFile> stockLogoFile)
+void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile)
 {
     IHttpClient::Headers headers;
 
@@ -155,7 +155,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
     }
 }
 
-bool PriceCollectThread::storeNewStocksInfo(std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks)
+bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
     QList<const tinkoff::Share*> qtTinkoffStocks;
     QList<StockMeta>             stocksMeta;

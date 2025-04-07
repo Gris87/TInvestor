@@ -11,8 +11,8 @@ class ITrayIcon : public QSystemTrayIcon
     Q_OBJECT
 
 public:
-    explicit ITrayIcon(QWidget* parent = nullptr) :
-        QSystemTrayIcon(reinterpret_cast<QObject*>(parent))
+    explicit ITrayIcon(QObject* parent = nullptr) :
+        QSystemTrayIcon(parent)
     {
     }
     virtual ~ITrayIcon() = default;

@@ -10,6 +10,8 @@
 
 class AccountChartWidgetMock : public IAccountChartWidget
 {
+    Q_OBJECT
+
 public:
     explicit AccountChartWidgetMock(QWidget* parent = nullptr) :
         IAccountChartWidget(parent)

@@ -8,6 +8,8 @@
 
 class IStartAutoPilotDialog : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit IStartAutoPilotDialog(QWidget* parent = nullptr) :
         QDialog(parent)

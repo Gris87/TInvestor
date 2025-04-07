@@ -10,9 +10,11 @@
 
 class MakeDecisionThreadMock : public IMakeDecisionThread
 {
+    Q_OBJECT
+
 public:
-    MakeDecisionThreadMock() :
-        IMakeDecisionThread()
+    MakeDecisionThreadMock(QObject* parent = nullptr) :
+        IMakeDecisionThread(parent)
     {
     }
     ~MakeDecisionThreadMock() override = default;

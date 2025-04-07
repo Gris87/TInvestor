@@ -18,7 +18,7 @@ public:
     void   setValue(qint64 value);
     qint64 getValue() const;
 
-    bool operator<(const QTableWidgetItem& another) const;
+    bool operator<(const QTableWidgetItem& another) const override;
 
 private:
     qint64 mValue;
