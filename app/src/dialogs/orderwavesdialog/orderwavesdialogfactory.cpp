@@ -23,7 +23,7 @@ std::shared_ptr<IOrderWavesDialog> OrderWavesDialogFactory::newInstance(
     Stock*                    stock,
     int                       precision,
     QWidget*                  parent
-)
+) const
 {
     return std::shared_ptr<IOrderWavesDialog>(
         new OrderWavesDialog(orderWavesWidgetFactory, orderBookThread, stock, precision, parent)

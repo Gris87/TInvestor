@@ -8,18 +8,18 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_Config, Test_constructor_and_destructor)
 {
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 
-    Config config(&simulatorConfigMock, &autoPilotConfigMock);
+    const Config config(&simulatorConfigMock, &autoPilotConfigMock);
 }
 
 TEST(Test_Config, Test_assign)
@@ -458,11 +458,11 @@ TEST(Test_Config, Test_setAmountOfStockPurchase_and_getAmountOfStockPurchase)
 
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
-    config.setAmountOfStockPurchase(false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), false);
+    config.setAmountOfStockPurchase(1000);
+    ASSERT_EQ(config.getAmountOfStockPurchase(), 1000);
 
-    config.setAmountOfStockPurchase(true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), true);
+    config.setAmountOfStockPurchase(5000);
+    ASSERT_EQ(config.getAmountOfStockPurchase(), 5000);
 }
 
 TEST(Test_Config, Test_setStorageMonthLimit_and_getStorageMonthLimit)
@@ -506,3 +506,4 @@ TEST(Test_Config, Test_setAutoPilotConfigCommon_and_isAutoPilotConfigCommon)
     config.setAutoPilotConfigCommon(true);
     ASSERT_EQ(config.isAutoPilotConfigCommon(), true);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

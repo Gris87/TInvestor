@@ -18,6 +18,7 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_OrderWavesDialog : public ::testing::Test
 {
 protected:
@@ -99,3 +100,4 @@ TEST_F(Test_OrderWavesDialog, Test_on_resetButton_clicked)
 
     dialog->ui->resetButton->click();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

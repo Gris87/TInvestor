@@ -5,9 +5,16 @@
 
 
 
+constexpr bool  ENABLED_DEFAULT      = true;
+constexpr float INCOME_ABOVE_DEFAULT = 1.0f;
+
+
+
 SellDecision1Config::SellDecision1Config() :
     ISellDecision1Config(),
-    mMutex(new QMutex())
+    mMutex(new QMutex()),
+    mEnabled(),
+    mIncomeAbove()
 {
     qDebug() << "Create SellDecision1Config";
 }
@@ -37,8 +44,8 @@ void SellDecision1Config::makeDefault()
 
     qDebug() << "Set SellDecision1Config to default";
 
-    mEnabled     = true;
-    mIncomeAbove = 1.0f;
+    mEnabled     = ENABLED_DEFAULT;
+    mIncomeAbove = INCOME_ABOVE_DEFAULT;
 }
 
 void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)

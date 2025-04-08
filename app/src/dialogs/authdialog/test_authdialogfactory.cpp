@@ -7,25 +7,22 @@
 
 
 
-using ::testing::NotNull;
-using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_AuthDialogFactory, Test_constructor_and_destructor)
 {
-    AuthDialogFactory factory;
+    const AuthDialogFactory factory;
 }
 
 TEST(Test_AuthDialogFactory, Test_newInstance)
 {
-    AuthDialogFactory factory;
+    const AuthDialogFactory factory;
 
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
 
-    std::shared_ptr<IAuthDialog> dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
+    const std::shared_ptr<IAuthDialog> dialog = factory.newInstance(&userStorageMock, &messageBoxUtilsMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

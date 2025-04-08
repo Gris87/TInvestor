@@ -13,8 +13,6 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
@@ -28,7 +26,7 @@ TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor)
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    DecisionMakerConfig config(
+    const DecisionMakerConfig config(
         &buyDecision1ConfigMock,
         &buyDecision2ConfigMock,
         &buyDecision3ConfigMock,

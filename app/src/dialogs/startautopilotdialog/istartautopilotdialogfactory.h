@@ -13,9 +13,7 @@
 class IStartAutoPilotDialogFactory
 {
 public:
-    IStartAutoPilotDialogFactory()
-    {
-    }
+    IStartAutoPilotDialogFactory()          = default;
     virtual ~IStartAutoPilotDialogFactory() = default;
 
     IStartAutoPilotDialogFactory(const IStartAutoPilotDialogFactory& another)            = delete;

@@ -7,12 +7,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_SellDecision2Config, Test_constructor_and_destructor)
 {
     SellDecision2Config config;
@@ -167,3 +167,4 @@ TEST(Test_SellDecision2Config, Test_setLoseIncome_and_getLoseIncome)
     config.setLoseIncome(0.5f);
     ASSERT_EQ(config.getLoseIncome(), 0.5f);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

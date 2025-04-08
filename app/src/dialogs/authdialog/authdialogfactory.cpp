@@ -18,7 +18,7 @@ AuthDialogFactory::~AuthDialogFactory()
 }
 
 std::shared_ptr<IAuthDialog>
-AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent)
+AuthDialogFactory::newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) const
 {
     return std::shared_ptr<IAuthDialog>(new AuthDialog(userStorage, messageBoxUtils, parent));
 }

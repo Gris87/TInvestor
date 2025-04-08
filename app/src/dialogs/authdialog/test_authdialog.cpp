@@ -10,13 +10,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_AuthDialog : public ::testing::Test
 {
 protected:
@@ -79,3 +78,4 @@ TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
     dialog->ui->tokenLineEdit->setText(niceToken);
     dialog->ui->loginButton->click();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

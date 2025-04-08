@@ -9,13 +9,11 @@
 class ISellDecision3ConfigWidgetFactory
 {
 public:
-    ISellDecision3ConfigWidgetFactory()
-    {
-    }
+    ISellDecision3ConfigWidgetFactory()          = default;
     virtual ~ISellDecision3ConfigWidgetFactory() = default;
 
     ISellDecision3ConfigWidgetFactory(const ISellDecision3ConfigWidgetFactory& another)            = delete;
     ISellDecision3ConfigWidgetFactory& operator=(const ISellDecision3ConfigWidgetFactory& another) = delete;
 
-    virtual ISellDecision3ConfigWidget* newInstance(ISellDecision3Config* config, QWidget* parent) = 0;
+    virtual ISellDecision3ConfigWidget* newInstance(ISellDecision3Config* config, QWidget* parent) const = 0;
 };

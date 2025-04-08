@@ -43,7 +43,7 @@ QString AuthDialog::getToken()
 
 void AuthDialog::on_loginButton_clicked()
 {
-    QRegularExpressionMatch match = mTokenRegexp.match(getToken());
+    const QRegularExpressionMatch match = mTokenRegexp.match(getToken());
 
     if (!match.hasMatch())
     {

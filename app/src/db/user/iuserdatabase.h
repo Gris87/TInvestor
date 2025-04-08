@@ -10,9 +10,7 @@
 class IUserDatabase
 {
 public:
-    explicit IUserDatabase()
-    {
-    }
+    explicit IUserDatabase() = default;
     virtual ~IUserDatabase() = default;
 
     IUserDatabase(const IUserDatabase& another)            = delete;

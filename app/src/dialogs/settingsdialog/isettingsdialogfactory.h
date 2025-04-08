@@ -11,9 +11,7 @@
 class ISettingsDialogFactory
 {
 public:
-    ISettingsDialogFactory()
-    {
-    }
+    ISettingsDialogFactory()          = default;
     virtual ~ISettingsDialogFactory() = default;
 
     ISettingsDialogFactory(const ISettingsDialogFactory& another)            = delete;

@@ -13,9 +13,7 @@
 class IOrderWavesDialogFactory
 {
 public:
-    IOrderWavesDialogFactory()
-    {
-    }
+    IOrderWavesDialogFactory()          = default;
     virtual ~IOrderWavesDialogFactory() = default;
 
     IOrderWavesDialogFactory(const IOrderWavesDialogFactory& another)            = delete;
@@ -27,5 +25,5 @@ public:
         Stock*                    stock,
         int                       precision,
         QWidget*                  parent
-    ) = 0;
+    ) const = 0;
 };

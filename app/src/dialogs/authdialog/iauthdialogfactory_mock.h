@@ -24,6 +24,6 @@ public:
         std::shared_ptr<IAuthDialog>,
         newInstance,
         (IUserStorage * userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent),
-        (override)
+        (const, override)
     );
 };

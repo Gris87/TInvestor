@@ -8,17 +8,17 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_SellDecision2ConfigWidget, Test_constructor_and_destructor)
 {
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
-    SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
+    const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
 }
 
 TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
@@ -27,7 +27,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
-    SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
+    const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
@@ -64,7 +64,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
-    SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
+    const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -93,7 +93,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
-    SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
+    const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
 
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->setValue(1.0f);
@@ -112,7 +112,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
-    SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
+    const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);
 
     configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
     configWidget.ui->loseIncomeDoubleSpinBox->setValue(1.0f);
@@ -124,3 +124,4 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
     EXPECT_CALL(sellDecision2ConfigMock, setLoseIncome(3.0f));
     configWidget.ui->loseIncomeDoubleSpinBox->setValue(3.0f);
 }
+// NOLINTEND(readability-magic-numbers)

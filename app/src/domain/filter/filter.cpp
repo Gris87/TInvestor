@@ -25,33 +25,6 @@ Filter::Filter() :
 {
 }
 
-Filter::Filter(const Filter& another) :
-    useTicker(another.useTicker),
-    ticker(another.ticker),
-    useQualInvestor(another.useQualInvestor),
-    qualInvestor(another.qualInvestor),
-    usePrice(another.usePrice),
-    priceFrom(another.priceFrom),
-    priceTo(another.priceTo),
-    useDayStartChange(another.useDayStartChange),
-    dayStartChangeFrom(another.dayStartChangeFrom),
-    dayStartChangeTo(another.dayStartChangeTo),
-    useDateChange(another.useDateChange),
-    dateChangeFrom(another.dateChangeFrom),
-    dateChangeTo(another.dateChangeTo),
-    useTurnover(another.useTurnover),
-    turnoverFrom(another.turnoverFrom),
-    turnoverTo(another.turnoverTo),
-    usePayback(another.usePayback),
-    paybackFrom(another.paybackFrom),
-    paybackTo(another.paybackTo)
-{
-}
-
-Filter::~Filter()
-{
-}
-
 Filter& Filter::operator=(const Filter& another)
 {
     useTicker          = another.useTicker;

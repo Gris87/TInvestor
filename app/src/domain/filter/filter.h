@@ -18,8 +18,8 @@ enum QualInvestorFilter : quint8
 struct Filter
 {
     Filter();
-    Filter(const Filter& another);
-    ~Filter();
+    Filter(const Filter& another) = default;
+    ~Filter()                     = default;
 
     Filter& operator=(const Filter& another);
 

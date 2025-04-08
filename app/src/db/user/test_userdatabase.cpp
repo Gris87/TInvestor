@@ -6,12 +6,13 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_UserDatabase : public ::testing::Test
 {
 protected:
     void SetUp() override
     {
-        QString appDir = qApp->applicationDirPath();
+        const QString appDir = qApp->applicationDirPath();
         QDir(appDir + "/data/user").removeRecursively();
 
         database = new UserDatabase();
@@ -21,7 +22,7 @@ protected:
     {
         delete database;
 
-        QString appDir = qApp->applicationDirPath();
+        const QString appDir = qApp->applicationDirPath();
         QDir(appDir + "/data/user").removeRecursively();
     }
 
@@ -36,7 +37,7 @@ TEST_F(Test_UserDatabase, Test_constructor_and_destructor)
 
 TEST_F(Test_UserDatabase, Test_readUserInfo)
 {
-    User user = database->readUserInfo();
+    const User user = database->readUserInfo();
 
     // clang-format off
     ASSERT_EQ(user.token,                "");
@@ -101,7 +102,7 @@ TEST_F(Test_UserDatabase, Test_writeUserInfo)
 
 TEST_F(Test_UserDatabase, Test_readAccounts)
 {
-    QList<Account> accounts = database->readAccounts();
+    const QList<Account> accounts = database->readAccounts();
 
     ASSERT_EQ(accounts.size(), 0);
 }
@@ -136,3 +137,4 @@ TEST_F(Test_UserDatabase, Test_writeAccounts)
     ASSERT_EQ(accounts.at(1).name,   "Zorro");
     // clang-format on
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

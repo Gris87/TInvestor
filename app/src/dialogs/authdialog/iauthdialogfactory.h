@@ -12,14 +12,12 @@
 class IAuthDialogFactory
 {
 public:
-    IAuthDialogFactory()
-    {
-    }
+    IAuthDialogFactory()          = default;
     virtual ~IAuthDialogFactory() = default;
 
     IAuthDialogFactory(const IAuthDialogFactory& another)            = delete;
     IAuthDialogFactory& operator=(const IAuthDialogFactory& another) = delete;
 
     virtual std::shared_ptr<IAuthDialog>
-    newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) = 0;
+    newInstance(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent) const = 0;
 };

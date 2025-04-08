@@ -9,7 +9,7 @@
 
 
 
-#define CRYPT_KEY 0x5EBEB228C0D4D48F
+constexpr quint64 CRYPT_KEY = 0x5EBEB228C0D4D48FULL;
 
 
 
@@ -20,12 +20,12 @@ UserDatabase::UserDatabase() :
 {
     qDebug() << "Create UserDatabase";
 
-    QString appDir = qApp->applicationDirPath();
+    const QString appDir = qApp->applicationDirPath();
 
     bool ok = QDir().mkpath(appDir + "/data/user");
     Q_ASSERT_X(ok, "UserDatabase::UserDatabase()", "Failed to create dir");
 
-    QString dbPath = appDir + "/data/user/user.db";
+    const QString dbPath = appDir + "/data/user/user.db";
     db.setDatabaseName(dbPath);
 
     ok = db.open();
@@ -44,11 +44,11 @@ UserDatabase::~UserDatabase()
     db.close();
 }
 
-void UserDatabase::createUserTable()
+void UserDatabase::createUserTable() const
 {
     qDebug() << "Create table with user info";
 
-    QString str =
+    const QString str =
         "CREATE TABLE IF NOT EXISTS user ("
         "    id                      INTEGER NOT NULL PRIMARY KEY, "
         "    token                   TEXT NOT NULL, "
@@ -59,15 +59,15 @@ void UserDatabase::createUserTable()
 
     QSqlQuery query(db);
 
-    bool ok = query.exec(str);
+    const bool ok = query.exec(str);
     Q_ASSERT_X(ok, "UserDatabase::createUserTable()", query.lastError().text().toLocal8Bit().constData());
 }
 
-void UserDatabase::createAccountsTable()
+void UserDatabase::createAccountsTable() const
 {
     qDebug() << "Create table with accounts";
 
-    QString str =
+    const QString str =
         "CREATE TABLE IF NOT EXISTS accounts ("
         "    id   TEXT NOT NULL PRIMARY KEY, "
         "    name TEXT NOT NULL"
@@ -75,7 +75,7 @@ void UserDatabase::createAccountsTable()
 
     QSqlQuery query(db);
 
-    bool ok = query.exec(str);
+    const bool ok = query.exec(str);
     Q_ASSERT_X(ok, "UserDatabase::createAccountsTable()", query.lastError().text().toLocal8Bit().constData());
 }
 
@@ -85,22 +85,22 @@ User UserDatabase::readUserInfo()
 
     User res;
 
-    QString str =
+    const QString str =
         "SELECT token, qualified, qualified_for_work_with, tariff "
         "FROM user "
         "WHERE id = 1;";
 
     QSqlQuery query(db);
 
-    bool ok = query.exec(str);
+    const bool ok = query.exec(str);
     Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
 
-    QSqlRecord rec = query.record();
+    const QSqlRecord rec = query.record();
 
-    int tokenIndex                = rec.indexOf("token");
-    int qualifiedIndex            = rec.indexOf("qualified");
-    int qualifiedForWorkWithIndex = rec.indexOf("qualified_for_work_with");
-    int tariffIndex               = rec.indexOf("tariff");
+    const int tokenIndex                = rec.indexOf("token");
+    const int qualifiedIndex            = rec.indexOf("qualified");
+    const int qualifiedForWorkWithIndex = rec.indexOf("qualified_for_work_with");
+    const int tariffIndex               = rec.indexOf("tariff");
 
     if (query.first())
     {
@@ -131,7 +131,7 @@ User UserDatabase::readUserInfo()
         query.bindValue(":qualified_for_work_with", res.qualifiedForWorkWith.isEmpty() ? "" : res.qualifiedForWorkWith.join(','));
         query.bindValue(":tariff", res.tariff);
 
-        bool ok = query.exec();
+        const bool ok = query.exec();
         Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
     }
 
@@ -144,19 +144,19 @@ QList<Account> UserDatabase::readAccounts()
 
     QList<Account> res;
 
-    QString str =
+    const QString str =
         "SELECT id, name "
         "FROM accounts;";
 
     QSqlQuery query(db);
 
-    bool ok = query.exec(str);
+    const bool ok = query.exec(str);
     Q_ASSERT_X(ok, "UserDatabase::readAccounts()", query.lastError().text().toLocal8Bit().constData());
 
-    QSqlRecord rec = query.record();
+    const QSqlRecord rec = query.record();
 
-    int idIndex   = rec.indexOf("id");
-    int nameIndex = rec.indexOf("name");
+    const int idIndex   = rec.indexOf("id");
+    const int nameIndex = rec.indexOf("name");
 
     while (query.next())
     {
@@ -181,7 +181,7 @@ void UserDatabase::writeToken(const QString& token)
     );
     query.bindValue(":token", mSimpleCrypt.encryptToString(token));
 
-    bool ok = query.exec();
+    const bool ok = query.exec();
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
 }
 
@@ -200,7 +200,7 @@ void UserDatabase::writeUserInfo(const User& user)
     query.bindValue(":qualified_for_work_with", user.qualifiedForWorkWith.isEmpty() ? "" : user.qualifiedForWorkWith.join(','));
     query.bindValue(":tariff", user.tariff);
 
-    bool ok = query.exec();
+    const bool ok = query.exec();
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
 }
 
@@ -209,7 +209,7 @@ void UserDatabase::writeAccounts(const QList<Account>& accounts)
     bool ok = db.transaction();
     Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
 
-    QString str =
+    const QString str =
         "DELETE "
         "FROM accounts;";
 

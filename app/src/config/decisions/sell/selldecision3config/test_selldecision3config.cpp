@@ -7,15 +7,15 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_SellDecision3Config, Test_constructor_and_destructor)
 {
-    SellDecision3Config config;
+    const SellDecision3Config config;
 }
 
 TEST(Test_SellDecision3Config, Test_assign)
@@ -167,3 +167,4 @@ TEST(Test_SellDecision3Config, Test_setDuration_and_getDuration)
     config.setDuration(5);
     ASSERT_EQ(config.getDuration(), 5);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

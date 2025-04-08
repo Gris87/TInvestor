@@ -10,9 +10,7 @@
 class IConfig
 {
 public:
-    IConfig()
-    {
-    }
+    IConfig()          = default;
     virtual ~IConfig() = default;
 
     IConfig(const IConfig& another)            = delete;

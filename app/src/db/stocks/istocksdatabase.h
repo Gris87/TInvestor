@@ -11,9 +11,7 @@
 class IStocksDatabase
 {
 public:
-    explicit IStocksDatabase()
-    {
-    }
+    explicit IStocksDatabase() = default;
     virtual ~IStocksDatabase() = default;
 
     IStocksDatabase(const IStocksDatabase& another)            = delete;

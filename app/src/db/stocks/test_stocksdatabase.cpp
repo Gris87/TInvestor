@@ -18,6 +18,7 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 MATCHER_P2(IsMemEqual, m, size, "")
 {
     return memcmp(arg, m, size) == 0;
@@ -55,7 +56,7 @@ protected:
 
     void fillWithData()
     {
-        QString stocksStr =
+        const QString stocksStr =
             "["
             "    {"
             "        \"forQualInvestorFlag\":true,"
@@ -117,7 +118,7 @@ protected:
 
         for (int i = 0; i < 3; ++i)
         {
-            int              dataSize = timestamps[i].size();
+            const int        dataSize = timestamps[i].size();
             QList<StockData> stockDataList(dataSize);
 
             StockData* stockDataArray = stockDataList.data();
@@ -162,7 +163,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
     EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
     EXPECT_CALL(*fileMock, close());
 
-    QList<Stock*> stocks = database->readStocksMeta();
+    const QList<Stock*> stocks = database->readStocksMeta();
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
@@ -691,3 +692,4 @@ TEST_F(Test_StocksDatabase, Test_writeStockData)
 
     database->writeStockData(stock);
 }
+// NOLINTEND(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

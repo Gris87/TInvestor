@@ -11,9 +11,7 @@
 class IStartSimulationDialogFactory
 {
 public:
-    IStartSimulationDialogFactory()
-    {
-    }
+    IStartSimulationDialogFactory()          = default;
     virtual ~IStartSimulationDialogFactory() = default;
 
     IStartSimulationDialogFactory(const IStartSimulationDialogFactory& another)            = delete;

@@ -32,7 +32,15 @@ Checks:
         -cppcoreguidelines-prefer-member-initializer,
         -hicpp-use-auto,
         -hicpp-member-init,
-        -modernize-use-auto
+        -modernize-use-auto,
+        -altera-unroll-loops,
+        -altera-id-dependent-backward-branch,
+        -cppcoreguidelines-pro-type-reinterpret-cast,
+        -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+        -llvm-include-order,
+        -cppcoreguidelines-avoid-c-arrays,
+        -cppcoreguidelines-pro-bounds-constant-array-index,
+        -bugprone-easily-swappable-parameters
     '
 CheckOptions:
     cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true

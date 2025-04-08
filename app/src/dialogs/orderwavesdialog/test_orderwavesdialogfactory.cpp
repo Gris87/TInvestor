@@ -10,21 +10,21 @@
 using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_OrderWavesDialogFactory, Test_constructor_and_destructor)
 {
-    OrderWavesDialogFactory factory;
+    const OrderWavesDialogFactory factory;
 }
 
 TEST(Test_OrderWavesDialogFactory, Test_newInstance)
 {
     const InSequence seq;
 
-    OrderWavesDialogFactory factory;
+    const OrderWavesDialogFactory factory;
 
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
@@ -38,9 +38,10 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     EXPECT_CALL(orderBookThreadMock, run());
     EXPECT_CALL(orderBookThreadMock, terminateThread());
 
-    std::shared_ptr<IOrderWavesDialog> dialog =
+    const std::shared_ptr<IOrderWavesDialog> dialog =
         factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, 2, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 
     orderBookThreadMock.wait();
 }
+// NOLINTEND(readability-magic-numbers)

@@ -8,17 +8,17 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_SellDecision1ConfigWidget, Test_constructor_and_destructor)
 {
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
-    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
+    const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 }
 
 TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
@@ -27,7 +27,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
-    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
+    const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
@@ -59,7 +59,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
-    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
+    const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -80,7 +80,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
 
     StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
 
-    SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
+    const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
     configWidget.ui->incomeAboveDoubleSpinBox->setValue(1.0f);
@@ -92,3 +92,4 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
     EXPECT_CALL(sellDecision1ConfigMock, setIncomeAbove(3.0f));
     configWidget.ui->incomeAboveDoubleSpinBox->setValue(3.0f);
 }
+// NOLINTEND(readability-magic-numbers)

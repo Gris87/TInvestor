@@ -6,20 +6,18 @@
 
 
 
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_SellDecision2ConfigWidgetFactory, Test_constructor_and_destructor)
 {
-    SellDecision2ConfigWidgetFactory factory;
+    const SellDecision2ConfigWidgetFactory factory;
 }
 
 TEST(Test_SellDecision2ConfigWidgetFactory, Test_newInstance)
 {
-    SellDecision2ConfigWidgetFactory factory;
+    const SellDecision2ConfigWidgetFactory factory;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 

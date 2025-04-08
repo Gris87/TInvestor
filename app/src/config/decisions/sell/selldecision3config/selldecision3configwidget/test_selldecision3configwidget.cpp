@@ -8,17 +8,17 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_SellDecision3ConfigWidget, Test_constructor_and_destructor)
 {
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 }
 
 TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
@@ -27,7 +27,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
@@ -64,7 +64,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -93,7 +93,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
     configWidget.ui->loseIncomeDoubleSpinBox->setValue(1.0f);
@@ -112,7 +112,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
 
     StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
 
-    SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
+    const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->durationSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->setValue(1);
@@ -124,3 +124,4 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
     EXPECT_CALL(sellDecision3ConfigMock, setDuration(3));
     configWidget.ui->durationSpinBox->setValue(3);
 }
+// NOLINTEND(readability-magic-numbers)
