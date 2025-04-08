@@ -18,14 +18,14 @@ using ::testing::StrictMock;
 class Test_StockTableItemWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userStorageMock = new StrictMock<UserStorageMock>();
 
         widget = new StockTableItemWidget(userStorageMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete widget;
         delete userStorageMock;
@@ -89,7 +89,7 @@ TEST_F(Test_StockTableItemWidget, Test_setIcon)
 
 TEST_F(Test_StockTableItemWidget, Test_setQualInvestor_and_forQualInvestorFlag)
 {
-    InSequence seq;
+    const InSequence seq;
 
     widget->show();
 

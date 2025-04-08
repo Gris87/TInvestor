@@ -8,26 +8,26 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_BuyDecision2ConfigWidget, Test_constructor_and_destructor)
 {
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 }
 
 TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->priceDiffDoubleSpinBox->blockSignals(true);
@@ -65,11 +65,11 @@ TEST(Test_BuyDecision2ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -96,11 +96,11 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->priceDiffDoubleSpinBox->blockSignals(true);
     configWidget.ui->priceDiffDoubleSpinBox->setValue(1.0f);
@@ -115,11 +115,11 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_priceDiffDoubleSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->amountOfTimesSpinBox->blockSignals(true);
     configWidget.ui->amountOfTimesSpinBox->setValue(1);
@@ -134,11 +134,11 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_amountOfTimesSpinBox_valueChanged)
 
 TEST(Test_BuyDecision2ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision2ConfigMock> buyDecision2ConfigMock;
 
-    BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
+    const BuyDecision2ConfigWidget configWidget(&buyDecision2ConfigMock);
 
     configWidget.ui->durationSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->setValue(1);
@@ -150,3 +150,4 @@ TEST(Test_BuyDecision2ConfigWidget, Test_on_durationSpinBox_valueChanged)
     EXPECT_CALL(buyDecision2ConfigMock, setDuration(3));
     configWidget.ui->durationSpinBox->setValue(3);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

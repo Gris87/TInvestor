@@ -7,12 +7,12 @@
 class Test_AccountChartWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         accountChartWidget = new AccountChartWidget();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete accountChartWidget;
     }

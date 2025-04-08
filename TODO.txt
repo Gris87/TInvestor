@@ -5,6 +5,7 @@ Add test coverage badge on Github
 Add build status badge on Github
 
 Buy less than 1% from turnover
+Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes
 Sellf if raise more than 2% and price change in range 0-1% during 30 minutes
 Put buy ticket always with -5% price (for unexpected selling) each minute

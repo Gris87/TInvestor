@@ -22,7 +22,7 @@ SellDecision2ConfigWidget::~SellDecision2ConfigWidget()
     delete ui;
 }
 
-void SellDecision2ConfigWidget::updateUiFromConfig()
+void SellDecision2ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
     ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
@@ -31,7 +31,7 @@ void SellDecision2ConfigWidget::updateUiFromConfig()
 
 void SellDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setEnabled(checked);
 

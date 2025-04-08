@@ -33,9 +33,9 @@ using ::testing::StrictMock;
 class Test_PriceCollectThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         appDir = qApp->applicationDirPath();
 
@@ -68,7 +68,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete configMock;
@@ -105,7 +105,7 @@ TEST_F(Test_PriceCollectThread, Test_constructor_and_destructor)
 
 TEST_F(Test_PriceCollectThread, Test_run)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<FileMock>*     logoFileMock  = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     zipFileMock1  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
@@ -269,7 +269,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
 TEST_F(Test_PriceCollectThread, Test_downloadLogo)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<FileMock>*  logoFileMock    = new StrictMock<FileMock>();
     StrictMock<FileMock>*  noImageFileMock = new StrictMock<FileMock>(); // Will be deleted in downloadLogo
@@ -306,7 +306,7 @@ TEST_F(Test_PriceCollectThread, Test_downloadLogo)
 
 TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
 

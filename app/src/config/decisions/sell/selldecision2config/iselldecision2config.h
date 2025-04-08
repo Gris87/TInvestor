@@ -9,9 +9,7 @@
 class ISellDecision2Config
 {
 public:
-    ISellDecision2Config()
-    {
-    }
+    ISellDecision2Config()          = default;
     virtual ~ISellDecision2Config() = default;
 
     ISellDecision2Config(const ISellDecision2Config& another)            = delete;

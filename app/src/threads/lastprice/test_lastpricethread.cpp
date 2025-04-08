@@ -19,7 +19,7 @@ using ::testing::StrictMock;
 class Test_LastPriceThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
         timeUtilsMock     = new StrictMock<TimeUtilsMock>();
@@ -28,7 +28,7 @@ protected:
         thread = new LastPriceThread(stocksStorageMock, timeUtilsMock, grpcClientMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete stocksStorageMock;
@@ -50,7 +50,7 @@ TEST_F(Test_LastPriceThread, Test_constructor_and_destructor)
 
 TEST_F(Test_LastPriceThread, Test_run)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;
@@ -104,7 +104,7 @@ TEST_F(Test_LastPriceThread, Test_run)
 
 TEST_F(Test_LastPriceThread, Test_run_interrupted_without_stocks)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;
@@ -121,7 +121,7 @@ TEST_F(Test_LastPriceThread, Test_run_interrupted_without_stocks)
 
 TEST_F(Test_LastPriceThread, Test_stocksChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;
@@ -147,7 +147,7 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
 
 TEST_F(Test_LastPriceThread, Test_terminateThread)
 {
-    InSequence seq;
+    const InSequence seq;
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));

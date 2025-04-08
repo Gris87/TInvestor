@@ -23,7 +23,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_constructor_and_destructor)
 
 TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
@@ -60,7 +60,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
@@ -89,7 +89,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
@@ -108,7 +108,7 @@ TEST(Test_SellDecision2ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
 
 TEST(Test_SellDecision2ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 

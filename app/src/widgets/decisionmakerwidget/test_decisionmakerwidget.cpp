@@ -27,9 +27,9 @@ using ::testing::StrictMock;
 class Test_DecisionMakerWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         operationsTableWidgetFactoryMock = new StrictMock<OperationsTableWidgetFactoryMock>();
         accountChartWidgetFactoryMock    = new StrictMock<AccountChartWidgetFactoryMock>();
@@ -58,7 +58,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete decisionMakerWidget;
         delete operationsTableWidgetFactoryMock;
@@ -95,7 +95,7 @@ TEST_F(Test_DecisionMakerWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock,        setValue(QString("AAAAA/splitter"), _));
@@ -109,7 +109,7 @@ TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)
 
 TEST_F(Test_DecisionMakerWidget, Test_loadWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock,        value(QString("AAAAA/splitter"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));

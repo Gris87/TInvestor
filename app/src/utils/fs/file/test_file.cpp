@@ -9,7 +9,7 @@
 class Test_File : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         appDir = qApp->applicationDirPath();
         QDir(appDir + "/test/dir_for_file").removeRecursively();
@@ -19,7 +19,7 @@ protected:
         qFile = new QFile(appDir + "/test/dir_for_file/test.txt");
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete qFile;
         delete file;

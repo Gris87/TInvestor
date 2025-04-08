@@ -24,7 +24,7 @@ public:
     BuyDecision3ConfigWidget(const BuyDecision3ConfigWidget& another)            = delete;
     BuyDecision3ConfigWidget& operator=(const BuyDecision3ConfigWidget& another) = delete;
 
-    void updateUiFromConfig() override;
+    void updateUiFromConfig() const override;
 
     Ui::BuyDecision3ConfigWidget* ui;
 

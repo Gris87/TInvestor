@@ -28,7 +28,7 @@ using ::testing::StrictMock;
 class Test_StocksTableWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         stockTableRecordFactoryMock       = new StrictMock<StocksTableRecordFactoryMock>();
         stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
@@ -53,7 +53,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete stocksTableWidget;
         delete stockTableRecordFactoryMock;
@@ -87,7 +87,7 @@ TEST_F(Test_StocksTableWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksTableWidget, Test_updateTable)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -152,7 +152,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
 
 TEST_F(Test_StocksTableWidget, Test_updateAll)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -224,7 +224,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
 
 TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -303,7 +303,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
 
 TEST_F(Test_StocksTableWidget, Test_updatePrices)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -375,7 +375,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
 
 TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -458,7 +458,7 @@ TEST_F(Test_StocksTableWidget, Test_setDateChangeTooltip)
 
 TEST_F(Test_StocksTableWidget, Test_filterChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
     StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
@@ -528,7 +528,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
 
 TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Stock"),      _));
@@ -545,7 +545,7 @@ TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 
 TEST_F(Test_StocksTableWidget, Test_loadWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      QVariant(99))).WillOnce(Return(QVariant(99)));

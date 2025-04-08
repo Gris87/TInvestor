@@ -24,7 +24,7 @@ public:
     SellDecision2ConfigWidget(const SellDecision2ConfigWidget& another)            = delete;
     SellDecision2ConfigWidget& operator=(const SellDecision2ConfigWidget& another) = delete;
 
-    void updateUiFromConfig() override;
+    void updateUiFromConfig() const override;
 
     Ui::SellDecision2ConfigWidget* ui;
 

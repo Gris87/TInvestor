@@ -31,6 +31,6 @@ public:
          ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
          ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
          QWidget*                           parent),
-        (override)
+        (const, override)
     );
 };

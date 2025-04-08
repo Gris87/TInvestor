@@ -33,14 +33,14 @@ using ::testing::StrictMock;
 
 TEST(Test_DecisionMakerConfigWidgetFactory, Test_constructor_and_destructor)
 {
-    DecisionMakerConfigWidgetFactory factory;
+    const DecisionMakerConfigWidgetFactory factory;
 }
 
 TEST(Test_DecisionMakerConfigWidgetFactory, Test_newInstance)
 {
-    InSequence seq;
+    const InSequence seq;
 
-    DecisionMakerConfigWidgetFactory factory;
+    const DecisionMakerConfigWidgetFactory factory;
 
     StrictMock<DecisionMakerConfigMock>              decisionMakerConfigMock;
     StrictMock<BuyDecision1ConfigMock>               buyDecision1ConfigMock;

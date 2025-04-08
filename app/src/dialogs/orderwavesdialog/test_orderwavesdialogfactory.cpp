@@ -22,7 +22,7 @@ TEST(Test_OrderWavesDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_OrderWavesDialogFactory, Test_newInstance)
 {
-    InSequence seq;
+    const InSequence seq;
 
     OrderWavesDialogFactory factory;
 

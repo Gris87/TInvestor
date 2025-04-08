@@ -20,9 +20,9 @@ using ::testing::StrictMock;
 class Test_StartAutoPilotDialog : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         userStorageMock     = new StrictMock<UserStorageMock>();
         messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
@@ -58,7 +58,7 @@ protected:
         dialog = new StartAutoPilotDialog(userStorageMock, messageBoxUtilsMock, settingsEditorMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete dialog;
         delete userStorageMock;

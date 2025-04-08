@@ -19,7 +19,7 @@ using ::testing::StrictMock;
 class Test_CleanupThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         configMock        = new StrictMock<ConfigMock>();
         stocksStorageMock = new StrictMock<StocksStorageMock>();
@@ -27,7 +27,7 @@ protected:
         thread = new CleanupThread(configMock, stocksStorageMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete configMock;
@@ -47,7 +47,7 @@ TEST_F(Test_CleanupThread, Test_constructor_and_destructor)
 
 TEST_F(Test_CleanupThread, Test_run)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex mutex;
 

@@ -17,7 +17,7 @@ using ::testing::StrictMock;
 class Test_UserUpdateThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userStorageMock = new StrictMock<UserStorageMock>();
         grpcClientMock  = new StrictMock<GrpcClientMock>();
@@ -25,7 +25,7 @@ protected:
         thread = new UserUpdateThread(userStorageMock, grpcClientMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete userStorageMock;
@@ -45,7 +45,7 @@ TEST_F(Test_UserUpdateThread, Test_constructor_and_destructor)
 
 TEST_F(Test_UserUpdateThread, Test_run)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex mutex;
 

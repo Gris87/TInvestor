@@ -19,7 +19,7 @@ using ::testing::StrictMock;
 class Test_StocksControlsWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         stocksStorageMock  = new StrictMock<StocksStorageMock>();
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
@@ -27,7 +27,7 @@ protected:
         stocksControlsWidget = new StocksControlsWidget(stocksStorageMock, settingsEditorMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete stocksControlsWidget;
         delete stocksStorageMock;
@@ -86,7 +86,7 @@ TEST_F(Test_StocksControlsWidget, Test_getFilter)
 
 TEST_F(Test_StocksControlsWidget, Test_dateChangeDelayTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex    mutex;
     QDateTime dateTime(QDate(2024, 1, 1), QTime(0, 0, 0));
@@ -615,7 +615,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_hideButton_clicked)
 
 TEST_F(Test_StocksControlsWidget, Test_saveWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/dateChangeTime"),     QVariant("2025-01-01 00:00:00")));
@@ -646,7 +646,7 @@ TEST_F(Test_StocksControlsWidget, Test_saveWindowState)
 
 TEST_F(Test_StocksControlsWidget, Test_loadWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/dateChangeTime"),     QVariant("2024-01-01 00:00:00"))).WillOnce(Return(QVariant("2024-01-01 00:00:00")));

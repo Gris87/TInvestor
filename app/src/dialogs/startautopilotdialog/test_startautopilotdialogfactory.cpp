@@ -23,7 +23,7 @@ TEST(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StartAutoPilotDialogFactory factory;
 

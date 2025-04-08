@@ -8,12 +8,12 @@
 class Test_OrderWavesWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         orderWavesWidget = new OrderWavesWidget(2, 0.01f);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete orderWavesWidget;
     }

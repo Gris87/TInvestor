@@ -9,7 +9,7 @@
 class Test_QZipFile : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         appDir = qApp->applicationDirPath();
         QDir(appDir + "/test/dir_for_qzipfile").removeRecursively();
@@ -36,7 +36,7 @@ protected:
         qZipFile = new QZipFile(zip);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         zip->close();
 

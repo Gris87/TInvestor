@@ -5,9 +5,20 @@
 
 
 
+constexpr bool  ENABLED_DEFAULT         = true;
+constexpr float PRICE_DIFF_DEFAULT      = 1.0f;
+constexpr int   AMOUNT_OF_TIMES_DEFAULT = 2;
+constexpr int   DURATION_DEFAULT        = 15;
+
+
+
 BuyDecision2Config::BuyDecision2Config() :
     IBuyDecision2Config(),
-    mMutex(new QMutex())
+    mMutex(new QMutex()),
+    mEnabled(),
+    mPriceDiff(),
+    mAmountOfTimes(),
+    mDuration()
 {
     qDebug() << "Create BuyDecision2Config";
 }
@@ -39,10 +50,10 @@ void BuyDecision2Config::makeDefault()
 
     qDebug() << "Set BuyDecision2Config to default";
 
-    mEnabled       = true;
-    mPriceDiff     = 1.0f;
-    mAmountOfTimes = 2;
-    mDuration      = 15;
+    mEnabled       = ENABLED_DEFAULT;
+    mPriceDiff     = PRICE_DIFF_DEFAULT;
+    mAmountOfTimes = AMOUNT_OF_TIMES_DEFAULT;
+    mDuration      = DURATION_DEFAULT;
 }
 
 void BuyDecision2Config::save(ISettingsEditor* settingsEditor, const QString& type)

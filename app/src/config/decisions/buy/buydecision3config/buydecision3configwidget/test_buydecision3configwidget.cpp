@@ -8,26 +8,26 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_BuyDecision3ConfigWidget, Test_constructor_and_destructor)
 {
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
+    const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
 }
 
 TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
+    const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->priceRiseDoubleSpinBox->blockSignals(true);
@@ -60,11 +60,11 @@ TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
+    const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
     configWidget.ui->enabledCheckBox->setChecked(false);
@@ -89,11 +89,11 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
 TEST(Test_BuyDecision3ConfigWidget, Test_on_priceRiseDoubleSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
+    const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
 
     configWidget.ui->priceRiseDoubleSpinBox->blockSignals(true);
     configWidget.ui->priceRiseDoubleSpinBox->setValue(1.0f);
@@ -108,11 +108,11 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_priceRiseDoubleSpinBox_valueChanged)
 
 TEST(Test_BuyDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
-    BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
+    const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
 
     configWidget.ui->durationSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->setValue(1);
@@ -124,3 +124,4 @@ TEST(Test_BuyDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)
     EXPECT_CALL(buyDecision3ConfigMock, setDuration(3));
     configWidget.ui->durationSpinBox->setValue(3);
 }
+// NOLINTEND(readability-magic-numbers)

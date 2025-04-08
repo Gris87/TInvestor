@@ -19,7 +19,7 @@ using ::testing::StrictMock;
 class Test_GrpcClient : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userStorageMock   = new StrictMock<UserStorageMock>();
         rawGrpcClientMock = new StrictMock<RawGrpcClientMock>();
@@ -28,7 +28,7 @@ protected:
         client = new GrpcClient(userStorageMock, rawGrpcClientMock, timeUtilsMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete client;
         delete userStorageMock;
@@ -50,7 +50,7 @@ TEST_F(Test_GrpcClient, Test_constructor_and_destructor)
 
 TEST_F(Test_GrpcClient, Test_getUserInfo)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
@@ -69,7 +69,7 @@ TEST_F(Test_GrpcClient, Test_getUserInfo)
 
 TEST_F(Test_GrpcClient, Test_getAccounts)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
@@ -88,7 +88,7 @@ TEST_F(Test_GrpcClient, Test_getAccounts)
 
 TEST_F(Test_GrpcClient, Test_findStocks)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
@@ -107,7 +107,7 @@ TEST_F(Test_GrpcClient, Test_findStocks)
 
 TEST_F(Test_GrpcClient, Test_getCandles)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
@@ -126,7 +126,7 @@ TEST_F(Test_GrpcClient, Test_getCandles)
 
 TEST_F(Test_GrpcClient, Test_getOrderBook)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
@@ -145,7 +145,7 @@ TEST_F(Test_GrpcClient, Test_getOrderBook)
 
 TEST_F(Test_GrpcClient, Test_createMarketDataStream)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -155,7 +155,7 @@ TEST_F(Test_GrpcClient, Test_createMarketDataStream)
 
 TEST_F(Test_GrpcClient, Test_subscribeLastPrices)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QStringList uids;
     uids << "aaaaa";
@@ -176,7 +176,7 @@ TEST_F(Test_GrpcClient, Test_subscribeLastPrices)
 
 TEST_F(Test_GrpcClient, Test_unsubscribeLastPrices)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -194,7 +194,7 @@ TEST_F(Test_GrpcClient, Test_unsubscribeLastPrices)
 
 TEST_F(Test_GrpcClient, Test_subscribeOrderBook)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -212,7 +212,7 @@ TEST_F(Test_GrpcClient, Test_subscribeOrderBook)
 
 TEST_F(Test_GrpcClient, Test_unsubscribeOrderBook)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -230,7 +230,7 @@ TEST_F(Test_GrpcClient, Test_unsubscribeOrderBook)
 
 TEST_F(Test_GrpcClient, Test_readMarketDataStream)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -248,7 +248,7 @@ TEST_F(Test_GrpcClient, Test_readMarketDataStream)
 
 TEST_F(Test_GrpcClient, Test_closeWriteMarketDataStream)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -266,7 +266,7 @@ TEST_F(Test_GrpcClient, Test_closeWriteMarketDataStream)
 
 TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::Status goodStatus(grpc::StatusCode::OK, "");
     grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");

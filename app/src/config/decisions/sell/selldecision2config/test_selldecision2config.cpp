@@ -77,7 +77,7 @@ TEST(Test_SellDecision2Config, Test_makeDefault)
 
 TEST(Test_SellDecision2Config, Test_save)
 {
-    InSequence seq;
+    const InSequence seq;
 
     SellDecision2Config config;
 
@@ -104,7 +104,7 @@ TEST(Test_SellDecision2Config, Test_save)
 
 TEST(Test_SellDecision2Config, Test_load)
 {
-    InSequence seq;
+    const InSequence seq;
 
     SellDecision2Config config;
 

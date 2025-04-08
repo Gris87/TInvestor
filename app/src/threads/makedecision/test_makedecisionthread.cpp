@@ -17,7 +17,7 @@ using ::testing::StrictMock;
 class Test_MakeDecisionThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         configMock         = new StrictMock<ConfigMock>();
         stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
@@ -26,7 +26,7 @@ protected:
         thread = new MakeDecisionThread(configMock, stocksDatabaseMock, stocksStorageMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete configMock;

@@ -22,5 +22,5 @@ public:
     ISellDecision2ConfigWidget(const ISellDecision2ConfigWidget& another)            = delete;
     ISellDecision2ConfigWidget& operator=(const ISellDecision2ConfigWidget& another) = delete;
 
-    virtual void updateUiFromConfig() = 0;
+    virtual void updateUiFromConfig() const = 0;
 };

@@ -9,7 +9,7 @@
 class Test_UserDatabase : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         QString appDir = qApp->applicationDirPath();
         QDir(appDir + "/data/user").removeRecursively();
@@ -17,7 +17,7 @@ protected:
         database = new UserDatabase();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete database;
 

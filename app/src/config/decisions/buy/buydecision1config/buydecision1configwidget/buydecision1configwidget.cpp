@@ -22,7 +22,7 @@ BuyDecision1ConfigWidget::~BuyDecision1ConfigWidget()
     delete ui;
 }
 
-void BuyDecision1ConfigWidget::updateUiFromConfig()
+void BuyDecision1ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
     ui->priceFallDoubleSpinBox->setValue(mConfig->getPriceFall());
@@ -31,7 +31,7 @@ void BuyDecision1ConfigWidget::updateUiFromConfig()
 
 void BuyDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setEnabled(checked);
 

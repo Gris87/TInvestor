@@ -20,7 +20,7 @@ using ::testing::StrictMock;
 class Test_AuthDialog : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userStorageMock     = new StrictMock<UserStorageMock>();
         messageBoxUtilsMock = new StrictMock<MessageBoxUtilsMock>();
@@ -28,7 +28,7 @@ protected:
         dialog = new AuthDialog(userStorageMock, messageBoxUtilsMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete dialog;
         delete userStorageMock;
@@ -54,7 +54,7 @@ TEST_F(Test_AuthDialog, Test_getToken)
 
 TEST_F(Test_AuthDialog, Test_on_loginButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(
         *messageBoxUtilsMock,

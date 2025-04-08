@@ -40,7 +40,7 @@ TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor)
 
 TEST(Test_DecisionMakerConfig, Test_assign)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
@@ -86,7 +86,7 @@ TEST(Test_DecisionMakerConfig, Test_assign)
 
 TEST(Test_DecisionMakerConfig, Test_makeDefault)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
@@ -116,7 +116,7 @@ TEST(Test_DecisionMakerConfig, Test_makeDefault)
 
 TEST(Test_DecisionMakerConfig, Test_save)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
@@ -150,7 +150,7 @@ TEST(Test_DecisionMakerConfig, Test_save)
 
 TEST(Test_DecisionMakerConfig, Test_load)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;

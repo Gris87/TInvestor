@@ -1,13 +1,41 @@
-Checks: '-*,abseil-*,altera-/kernel-name-restriction,altera-/single-work-item-barrier,android-*,boost-*,bugprone-/argument-comment,bugprone-/assert-side-effect,bugprone-/assignment-in-if-condition,bugprone-/bad-signal-to-kill-thread,bugprone-/bool-pointer-implicit-conversion,bugprone-/branch-clone,bugprone-/casting-through-void,bugprone-/chained-comparison,bugprone-/compare-pointer-to-member-virtual-function,bugprone-/copy-constructor-init,bugprone-/crtp-constructor-accessibility,bugprone-/dangling-handle,bugprone-/dynamic-static-initializers,bugprone-/easily-swappable-parameters,bugprone-/empty-catch,bugprone-/exception-escape,bugprone-/fold-init-type,bugprone-/forward-declaration-namespace,bugprone-/forwarding-reference-overload,bugprone-/implicit-widening-of-multiplication-result,bugprone-/inaccurate-erase,bugprone-/inc-dec-in-conditions,bugprone-/incorrect-*,bugprone-/infinite-loop,bugprone-/integer-division,bugprone-/lambda-function-name,bugprone-/macro-*,bugprone-/misplaced-*,bugprone-/move-forwarding-reference,bugprone-/multi-level-implicit-pointer-conversion,bugprone-/multiple-*,bugprone-/no-escape,bugprone-/non-zero-enum-to-bool-conversion,bugprone-/not-null-terminated-result,bugprone-/optional-value-conversion,bugprone-/parent-virtual-call,bugprone-/pointer-arithmetic-on-polymorphic-object,bugprone-/posix-return,bugprone-/redundant-branch-condition,bugprone-/reserved-identifier,bugprone-/return-const-ref-from-parameter,bugprone-/shared-ptr-array-mismatch,bugprone-/signal-handler,bugprone-/signed-char-misuse,bugprone-/sizeof-*,bugprone-/spuriously-wake-up-functions,bugprone-/standalone-empty,bugprone-/string-*,bugprone-/stringview-nullptr,bugprone-/suspicious-*,bugprone-/swapped-arguments,bugprone-/switch-missing-default-case,bugprone-/terminating-continue,bugprone-/throw-keyword-missing,bugprone-/too-small-loop-variable,bugprone-/unchecked-optional-access,bugprone-/undefined-memory-manipulation,bugprone-/undelegated-constructor,bugprone-/unhandled-*,bugprone-/unique-ptr-array-mismatch,bugprone-/unsafe-functions,bugprone-/unused-*,bugprone-/use-after-move,bugprone-/virtual-near-miss,cert-/con36-c,cert-/con54-cpp,cert-/ctr56-cpp,cert-/dcl03-c,cert-/dcl16-c,cert-/dcl37-c,cert-/dcl50-cpp,cert-/dcl51-cpp,cert-/dcl54-cpp,cert-/dcl58-cpp,cert-/dcl59-cpp,cert-/env33-c,cert-/err09-cpp,cert-/err33-c,cert-/err34-c,cert-/err52-cpp,cert-/err60-cpp,cert-/err61-cpp,cert-/exp42-c,cert-/fio38-c,cert-/flp30-c,cert-/flp37-c,cert-/int09-c,cert-/mem57-cpp,cert-/msc24-c,cert-/msc30-c,cert-/msc32-c,cert-/msc33-c,cert-/msc50-cpp,cert-/msc51-cpp,cert-/msc54-cpp,cert-/oop11-cpp,cert-/oop54-cpp,cert-/oop57-cpp,cert-/oop58-cpp,cert-/pos44-c,cert-/pos47-c,cert-/sig30-c,cert-/str34-c,clang-/analyzer-/apiModeling.*,clang-/analyzer-/core.*,clang-/analyzer-/cplusplus.*,clang-/analyzer-/deadcode.DeadStores,clang-/analyzer-/fuchsia.HandleChecker,clang-/analyzer-/nullability.*,clang-/analyzer-/optin./core.EnumCastOutOfRange,clang-/analyzer-/optin./cplusplus./UninitializedObject,clang-/analyzer-/optin./mpi.MPI-Checker,clang-/analyzer-/optin./osx.*,clang-/analyzer-/optin./performance.*,clang-/analyzer-/optin./portability.UnixAPI,clang-/analyzer-/optin./taint.TaintedAlloc,clang-/analyzer-/osx.*,clang-/analyzer-/security.*,clang-/analyzer-/unix.*,clang-/analyzer-/valist.*,clang-/analyzer-/webkit.*,concurrency-*,cppcoreguidelines-/avoid-*,cppcoreguidelines-/c-copy-assignment-signature,cppcoreguidelines-/explicit-virtual-functions,cppcoreguidelines-/init-variables,cppcoreguidelines-/interfaces-global-init,cppcoreguidelines-/macro-*,cppcoreguidelines-/misleading-capture-default-by-value,cppcoreguidelines-/missing-std-forward,cppcoreguidelines-/narrowing-conversions,cppcoreguidelines-/no-*,cppcoreguidelines-/noexcept-*,cppcoreguidelines-/owning-memory,cppcoreguidelines-/prefer-member-initializer,cppcoreguidelines-/pro-*,cppcoreguidelines-/rvalue-reference-param-not-moved,cppcoreguidelines-/slicing,cppcoreguidelines-/use-default-member-init,cppcoreguidelines-/virtual-class-destructor,darwin-*,fuchsia-/default-arguments-/calls,fuchsia-/header-anon-namespaces,fuchsia-/multiple-inheritance,fuchsia-/overloaded-operator,fuchsia-/statically-constructed-objects,fuchsia-/trailing-return,fuchsia-/virtual-inheritance,google-/build-*,google-/default-arguments,google-/explicit-constructor,google-/global-names-in-headers,google-/objc-*,google-/readability-/braces-around-statements,google-/readability-/casting,google-/readability-/function-size,google-/readability-/namespace-comments,google-/readability-/todo,google-/runtime-*,google-/upgrade-googletest-case,hicpp-/avoid-*,hicpp-/braces-around-statements,hicpp-/deprecated-headers,hicpp-/exception-baseclass,hicpp-/explicit-conversions,hicpp-/function-size,hicpp-/ignored-remove-result,hicpp-/invalid-access-moved,hicpp-/member-init,hicpp-/move-const-arg,hicpp-/multiway-paths-covered,hicpp-/named-parameter,hicpp-/new-delete-operators,hicpp-/no-*,hicpp-/noexcept-move,hicpp-/signed-bitwise,hicpp-/static-assert,hicpp-/undelegated-constructor,hicpp-/use-/auto,hicpp-/use-/emplace,hicpp-/use-/equals-*,hicpp-/use-/noexcept,hicpp-/use-/nullptr,hicpp-/vararg,linuxkernel-*,llvm-/else-after-return,llvm-/include-order,llvm-/prefer-*,llvm-/qualified-auto,llvm-/twine-local,llvmlibc-/inline-function-decl,llvmlibc-/restrict-system-libc-headers,misc-/confusable-identifiers,misc-/const-correctness,misc-/coroutine-hostile-raii,misc-/definitions-in-headers,misc-/header-include-cycle,misc-/misleading-*,misc-/misplaced-const,misc-/new-delete-overloads,misc-/no-recursion,misc-/non-*,misc-/redundant-expression,misc-/static-assert,misc-/throw-by-value-catch-by-reference,misc-/unconventional-assign-operator,misc-/uniqueptr-reset-release,misc-/unused-*,misc-/use-*,modernize-/avoid-*,modernize-/concat-nested-namespaces,modernize-/deprecated-*,modernize-/loop-convert,modernize-/macro-to-enum,modernize-/make-*,modernize-/min-max-use-initializer-list,modernize-/pass-by-value,modernize-/raw-string-literal,modernize-/redundant-void-arg,modernize-/replace-*,modernize-/return-braced-init-list,modernize-/shrink-to-fit,modernize-/type-traits,modernize-/unary-static-assert,modernize-/use-/auto,modernize-/use-/bool-literals,modernize-/use-/constraints,modernize-/use-/default-member-init,modernize-/use-/designated-initializers,modernize-/use-/emplace,modernize-/use-/equals-*,modernize-/use-/nodiscard,modernize-/use-/noexcept,modernize-/use-/nullptr,modernize-/use-/override,modernize-/use-/ranges,modernize-/use-/starts-ends-with,modernize-/use-/std-*,modernize-/use-/transparent-functors,modernize-/use-/uncaught-exceptions,modernize-/use-/using,mpi-*,objc-*,openmp-*,performance-*,portability-*,readability-/avoid-*,readability-/braces-around-statements,readability-/const-return-type,readability-/container-*,readability-/convert-member-functions-to-static,readability-/delete-null-pointer,readability-/duplicate-include,readability-/else-after-return,readability-/enum-initial-value,readability-/function-*,readability-/identifier-/naming,readability-/implicit-bool-conversion,readability-/inconsistent-declaration-parameter-name,readability-/isolate-declaration,readability-/magic-numbers,readability-/make-member-function-const,readability-/math-missing-parentheses,readability-/misleading-indentation,readability-/misplaced-array-index,readability-/named-parameter,readability-/non-const-parameter,readability-/operators-representation,readability-/qualified-auto,readability-/redundant-/casting,readability-/redundant-/control-flow,readability-/redundant-/declaration,readability-/redundant-/function-ptr-dereference,readability-/redundant-/inline-specifier,readability-/redundant-/member-init,readability-/redundant-/preprocessor,readability-/redundant-/smartptr-get,readability-/redundant-/string-*,readability-/reference-to-constructed-temporary,readability-/simplify-*,readability-/static-*,readability-/string-compare,readability-/suspicious-call-argument,readability-/uniqueptr-delete-release,readability-/uppercase-literal-suffix,readability-/use-*,zircon-*'
-HeaderFileExtensions:
-  - ''
-  - h
-  - hh
-  - hpp
-  - hxx
-ImplementationFileExtensions:
-  - c
-  - cc
-  - cpp
-  - cxx
-SystemHeaders: false
+Checks:
+    '
+        -*,
+        *,
+        -bugprone-narrowing-conversions,
+        -cert-err58-cpp,
+        -cppcoreguidelines-avoid-magic-numbers,
+        -cppcoreguidelines-narrowing-conversions,
+        -cppcoreguidelines-non-private-member-variables-in-classes,
+        -cppcoreguidelines-owning-memory,
+        -fuchsia-default-arguments-calls,
+        -fuchsia-default-arguments-declarations,
+        -fuchsia-statically-constructed-objects,
+        -google-readability-avoid-underscore-in-googletest-name,
+        -hicpp-special-member-functions,
+        -hicpp-uppercase-literal-suffix,
+        -hicpp-use-override,
+        -llvm-header-guard,
+        -llvm-namespace-comment,
+        -llvmlibc-callee-namespace,
+        -llvmlibc-implementation-in-namespace,
+        -llvmlibc-inline-function-decl,
+        -misc-include-cleaner,
+        -misc-non-private-member-variables-in-classes,
+        -modernize-type-traits,
+        -modernize-use-override,
+        -modernize-use-trailing-return-type,
+        -readability-identifier-length,
+        -readability-redundant-access-specifiers,
+        -readability-redundant-member-init,
+        -readability-uppercase-literal-suffix,
+        -cppcoreguidelines-prefer-member-initializer,
+        -hicpp-use-auto,
+        -hicpp-member-init,
+        -modernize-use-auto
+    '
+CheckOptions:
+    cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true
+    cppcoreguidelines-explicit-virtual-functions.IgnoreDestructors: true
+HeaderFilterRegex:        '.*src/.*'
+ExcludeHeaderFilterRegex: '.*(gtest|gmock)/.*'

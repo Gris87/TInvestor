@@ -18,9 +18,9 @@ using ::testing::StrictMock;
 class Test_StartSimulationDialog : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
@@ -35,7 +35,7 @@ protected:
         dialog = new StartSimulationDialog(settingsEditorMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete dialog;
         delete settingsEditorMock;

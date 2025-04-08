@@ -31,12 +31,13 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_DecisionMakerConfigWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         decisionMakerConfigMock              = new StrictMock<DecisionMakerConfigMock>();
         buyDecision1ConfigMock               = new StrictMock<BuyDecision1ConfigMock>();
@@ -93,7 +94,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete configWidget;
         delete decisionMakerConfigMock;
@@ -150,7 +151,7 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*buyDecision1ConfigWidgetMock, updateUiFromConfig());
     EXPECT_CALL(*buyDecision2ConfigWidgetMock, updateUiFromConfig());
@@ -161,3 +162,4 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
 
     configWidget->updateUiFromConfig();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

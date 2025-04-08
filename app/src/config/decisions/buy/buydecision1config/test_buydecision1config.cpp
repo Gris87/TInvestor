@@ -7,15 +7,15 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_BuyDecision1Config, Test_constructor_and_destructor)
 {
-    BuyDecision1Config config;
+    const BuyDecision1Config config;
 }
 
 TEST(Test_BuyDecision1Config, Test_assign)
@@ -77,7 +77,7 @@ TEST(Test_BuyDecision1Config, Test_makeDefault)
 
 TEST(Test_BuyDecision1Config, Test_save)
 {
-    InSequence seq;
+    const InSequence seq;
 
     BuyDecision1Config config;
 
@@ -104,7 +104,7 @@ TEST(Test_BuyDecision1Config, Test_save)
 
 TEST(Test_BuyDecision1Config, Test_load)
 {
-    InSequence seq;
+    const InSequence seq;
 
     BuyDecision1Config config;
 
@@ -167,3 +167,4 @@ TEST(Test_BuyDecision1Config, Test_setDuration_and_getDuration)
     config.setDuration(20);
     ASSERT_EQ(config.getDuration(), 20);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

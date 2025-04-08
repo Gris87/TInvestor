@@ -16,14 +16,14 @@ using ::testing::StrictMock;
 class Test_OrderBookThread : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         grpcClientMock = new StrictMock<GrpcClientMock>();
 
         thread = new OrderBookThread(grpcClientMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete thread;
         delete grpcClientMock;
@@ -41,7 +41,7 @@ TEST_F(Test_OrderBookThread, Test_constructor_and_destructor)
 
 TEST_F(Test_OrderBookThread, Test_run)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StockOperationalData stockData;
 
@@ -117,7 +117,7 @@ TEST_F(Test_OrderBookThread, Test_run)
 
 TEST_F(Test_OrderBookThread, Test_terminateThread)
 {
-    InSequence seq;
+    const InSequence seq;
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));

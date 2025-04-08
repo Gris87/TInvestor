@@ -74,7 +74,7 @@ void StocksControlsWidget::on_dateChangeTimeEdit_dateTimeChanged(const QDateTime
 
 void StocksControlsWidget::on_tickerCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.useTicker = checked;
     ui->tickerLineEdit->setEnabled(checked);
@@ -91,7 +91,7 @@ void StocksControlsWidget::on_tickerLineEdit_textChanged(const QString& text)
 
 void StocksControlsWidget::on_qualInvestorCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.useQualInvestor = checked;
     ui->qualInvestorComboBox->setEnabled(checked);
@@ -108,7 +108,7 @@ void StocksControlsWidget::on_qualInvestorComboBox_currentIndexChanged(int index
 
 void StocksControlsWidget::on_priceCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.usePrice = checked;
     ui->priceFromDoubleSpinBox->setEnabled(checked);
@@ -145,7 +145,7 @@ void StocksControlsWidget::on_priceToDoubleSpinBox_valueChanged(double value)
 
 void StocksControlsWidget::on_dayStartChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.useDayStartChange = checked;
     ui->dayStartChangeFromDoubleSpinBox->setEnabled(checked);
@@ -182,7 +182,7 @@ void StocksControlsWidget::on_dayStartChangeToDoubleSpinBox_valueChanged(double 
 
 void StocksControlsWidget::on_dateChangeCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.useDateChange = checked;
     ui->dateChangeFromDoubleSpinBox->setEnabled(checked);
@@ -219,7 +219,7 @@ void StocksControlsWidget::on_dateChangeToDoubleSpinBox_valueChanged(double valu
 
 void StocksControlsWidget::on_turnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.useTurnover = checked;
     ui->turnoverFromSpinBox->setEnabled(checked);
@@ -256,7 +256,7 @@ void StocksControlsWidget::on_turnoverToSpinBox_valueChanged(int value)
 
 void StocksControlsWidget::on_paybackCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mFilter.usePayback = checked;
     ui->paybackFromDoubleSpinBox->setEnabled(checked);

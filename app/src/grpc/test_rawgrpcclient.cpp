@@ -25,7 +25,7 @@ using ::testing::StrictMock;
 class Test_RawGrpcClient : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userStorageMock = new StrictMock<UserStorageMock>();
 
@@ -44,7 +44,7 @@ protected:
         client = new RawGrpcClient();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete client;
         delete userStorageMock;
@@ -67,7 +67,7 @@ TEST_F(Test_RawGrpcClient, Test_constructor_and_destructor)
 
 TEST_F(Test_RawGrpcClient, Test_getUserInfo)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::ClientContext                       context;
     tinkoff::GetInfoRequest                   req;
@@ -104,7 +104,7 @@ TEST_F(Test_RawGrpcClient, Test_getUserInfo)
 
 TEST_F(Test_RawGrpcClient, Test_getAccounts)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::ClientContext                           context;
     tinkoff::GetAccountsRequest                   req;
@@ -142,7 +142,7 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
 
 TEST_F(Test_RawGrpcClient, Test_findStocks)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::ClientContext                      context;
     tinkoff::InstrumentsRequest              req;
@@ -227,7 +227,7 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
 
 TEST_F(Test_RawGrpcClient, Test_getCandles)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::ClientContext                          context;
     tinkoff::GetCandlesRequest                   req;
@@ -275,7 +275,7 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
 
 TEST_F(Test_RawGrpcClient, Test_getOrderBook)
 {
-    InSequence seq;
+    const InSequence seq;
 
     grpc::ClientContext                            context;
     tinkoff::GetOrderBookRequest                   req;
@@ -301,7 +301,7 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
 
 TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));

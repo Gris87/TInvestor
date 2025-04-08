@@ -16,9 +16,7 @@
 class IDecisionMakerConfigWidgetFactory
 {
 public:
-    IDecisionMakerConfigWidgetFactory()
-    {
-    }
+    IDecisionMakerConfigWidgetFactory()          = default;
     virtual ~IDecisionMakerConfigWidgetFactory() = default;
 
     IDecisionMakerConfigWidgetFactory(const IDecisionMakerConfigWidgetFactory& another)            = delete;
@@ -33,5 +31,5 @@ public:
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         QWidget*                           parent
-    ) = 0;
+    ) const = 0;
 };

@@ -17,14 +17,14 @@ using ::testing::StrictMock;
 class Test_UserStorage : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         userDatabaseMock = new StrictMock<UserDatabaseMock>();
 
         storage = new UserStorage(userDatabaseMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete storage;
         delete userDatabaseMock;
@@ -42,7 +42,7 @@ TEST_F(Test_UserStorage, Test_constructor_and_destructor)
 
 TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_getCommission_and_getAccounts)
 {
-    InSequence seq;
+    const InSequence seq;
 
     User user;
     user.token      = "someToken";
@@ -81,7 +81,7 @@ TEST_F(Test_UserStorage, Test_getMutex)
 
 TEST_F(Test_UserStorage, Test_setToken)
 {
-    InSequence seq;
+    const InSequence seq;
 
     User user;
     user.token = "someToken";
@@ -114,7 +114,7 @@ TEST_F(Test_UserStorage, Test_setToken)
 
 TEST_F(Test_UserStorage, Test_setUserInfo)
 {
-    InSequence seq;
+    const InSequence seq;
 
     User user;
     user.tariff = "premium";
@@ -126,7 +126,7 @@ TEST_F(Test_UserStorage, Test_setUserInfo)
 
 TEST_F(Test_UserStorage, Test_setAccounts)
 {
-    InSequence seq;
+    const InSequence seq;
 
     User user;
     user.token = "someToken";

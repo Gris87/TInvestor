@@ -29,7 +29,7 @@ TEST(Test_SettingsDialogFactory, Test_constructor_and_destructor)
 
 TEST(Test_SettingsDialogFactory, Test_newInstance)
 {
-    InSequence seq;
+    const InSequence seq;
 
     SettingsDialogFactory factory;
 

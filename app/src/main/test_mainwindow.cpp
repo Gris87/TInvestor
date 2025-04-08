@@ -66,9 +66,9 @@ using ::testing::StrictMock;
 class Test_MainWindow : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         configMock                           = new StrictMock<ConfigMock>();
         configForSettingsDialogMock          = new StrictMock<ConfigMock>();
@@ -227,9 +227,9 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
 
@@ -400,7 +400,7 @@ TEST_F(Test_MainWindow, Test_trayIconExitClicked)
 
 TEST_F(Test_MainWindow, Test_authFailed)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
@@ -429,7 +429,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*userUpdateThreadMock, run());
 
@@ -440,7 +440,7 @@ TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 
 TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*priceCollectThreadMock, run());
 
@@ -451,7 +451,7 @@ TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 
 TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*cleanupThreadMock, run());
 
@@ -462,7 +462,7 @@ TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 
 TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
@@ -473,7 +473,7 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 
 TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 
@@ -485,7 +485,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
 
 TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 
@@ -508,7 +508,7 @@ TEST_F(Test_MainWindow, Test_notifyStocksProgress)
 
 TEST_F(Test_MainWindow, Test_stocksChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;
@@ -522,7 +522,7 @@ TEST_F(Test_MainWindow, Test_stocksChanged)
 
 TEST_F(Test_MainWindow, Test_pricesChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 
@@ -534,7 +534,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
 
 TEST_F(Test_MainWindow, Test_periodicDataChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 
@@ -546,7 +546,7 @@ TEST_F(Test_MainWindow, Test_periodicDataChanged)
 
 TEST_F(Test_MainWindow, Test_lastPriceChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*stocksTableWidgetMock, lastPriceChanged(QString("aaaa")));
 
@@ -555,7 +555,7 @@ TEST_F(Test_MainWindow, Test_lastPriceChanged)
 
 TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
     Filter    filter;
@@ -569,7 +569,7 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 
 TEST_F(Test_MainWindow, Test_filterChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 
@@ -580,7 +580,7 @@ TEST_F(Test_MainWindow, Test_filterChanged)
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
@@ -658,7 +658,7 @@ TEST_F(Test_MainWindow, Test_on_actionAutoPilotPage_toggled)
 
 TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // Will be deleted in on_actionSettings_triggered
     StrictMock<SettingsDialogMock>* settingsDialogMock = new StrictMock<SettingsDialogMock>();
@@ -697,7 +697,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StartSimulationDialogMock>* startSimulationDialogMock =
         new StrictMock<StartSimulationDialogMock>(); // Will be deleted in on_startSimulationButton_clicked
@@ -746,7 +746,7 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 
 TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<StartAutoPilotDialogMock>* startAutoPilotDialogMock =
         new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
@@ -797,7 +797,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 
 TEST_F(Test_MainWindow, Test_init)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     QMutex        mutex;
     QList<Stock*> stocks;
@@ -841,7 +841,7 @@ TEST_F(Test_MainWindow, Test_init)
 
 TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
 {
-    InSequence seq;
+    const InSequence seq;
 
     mainWindow->show();
 

@@ -5,6 +5,12 @@
 
 
 
+constexpr bool  ENABLED_DEFAULT    = true;
+constexpr float PRICE_FALL_DEFAULT = 1.0f;
+constexpr int   DURATION_DEFAULT   = 5;
+
+
+
 BuyDecision1Config::BuyDecision1Config() :
     IBuyDecision1Config(),
     mMutex(new QMutex()),
@@ -41,9 +47,9 @@ void BuyDecision1Config::makeDefault()
 
     qDebug() << "Set BuyDecision1Config to default";
 
-    mEnabled   = true;
-    mPriceFall = 1.0f;
-    mDuration  = 5;
+    mEnabled   = ENABLED_DEFAULT;
+    mPriceFall = PRICE_FALL_DEFAULT;
+    mDuration  = DURATION_DEFAULT;
 }
 
 void BuyDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)

@@ -85,7 +85,7 @@ void SettingsDialog::updateUiFromConfig()
 
 void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setAutorun(checked);
 }
@@ -97,7 +97,7 @@ void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)
 
 void SettingsDialog::on_useScheduleCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setUseSchedule(checked);
 
@@ -129,7 +129,7 @@ void SettingsDialog::on_scheduleEndTimeEdit_timeChanged(const QTime& time)
 
 void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setLimitStockPurchase(checked);
 
@@ -148,7 +148,7 @@ void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt
         return; // Unexpected behaviour
     }
 
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setSimulatorConfigCommon(checked);
 
@@ -171,7 +171,7 @@ void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt
         return; // Unexpected behaviour
     }
 
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setAutoPilotConfigCommon(checked);
 

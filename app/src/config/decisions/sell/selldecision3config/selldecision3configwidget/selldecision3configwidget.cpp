@@ -22,7 +22,7 @@ SellDecision3ConfigWidget::~SellDecision3ConfigWidget()
     delete ui;
 }
 
-void SellDecision3ConfigWidget::updateUiFromConfig()
+void SellDecision3ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
     ui->durationSpinBox->setValue(mConfig->getDuration());
@@ -31,7 +31,7 @@ void SellDecision3ConfigWidget::updateUiFromConfig()
 
 void SellDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
-    bool checked = value == Qt::Checked;
+    const bool checked = value == Qt::Checked;
 
     mConfig->setEnabled(checked);
 

@@ -9,9 +9,7 @@
 class IBuyDecision2Config
 {
 public:
-    IBuyDecision2Config()
-    {
-    }
+    IBuyDecision2Config()          = default;
     virtual ~IBuyDecision2Config() = default;
 
     IBuyDecision2Config(const IBuyDecision2Config& another)            = delete;

@@ -26,9 +26,9 @@ using ::testing::StrictMock;
 class Test_SettingsDialog : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         configMock                           = new StrictMock<ConfigMock>();
         simulatorConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
@@ -87,7 +87,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete dialog;
         delete configMock;
@@ -130,7 +130,7 @@ TEST_F(Test_SettingsDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
@@ -210,7 +210,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 
 TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->autorunCheckBox->setChecked(false);
@@ -225,7 +225,7 @@ TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->setValue(1);
@@ -240,7 +240,7 @@ TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->setChecked(false);
@@ -265,7 +265,7 @@ TEST_F(Test_SettingsDialog, Test_on_useScheduleCheckBox_checkStateChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
@@ -293,7 +293,7 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleStartTimeEdit_timeChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
@@ -321,7 +321,7 @@ TEST_F(Test_SettingsDialog, Test_on_scheduleEndTimeEdit_timeChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->setChecked(false);
@@ -338,7 +338,7 @@ TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged
 
 TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
     dialog->ui->amountOfStockPurchaseSpinBox->setValue(1);
@@ -353,7 +353,7 @@ TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
@@ -385,7 +385,7 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
@@ -410,7 +410,7 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
@@ -442,7 +442,7 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(true);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(true);
@@ -467,7 +467,7 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
 
 TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->setValue(1);
@@ -496,7 +496,7 @@ TEST_F(Test_SettingsDialog, Test_on_cancelButton_clicked)
 
 TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     dialog->ui->autorunCheckBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);

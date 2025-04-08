@@ -28,9 +28,9 @@ MATCHER_P2(IsMemEqual, m, size, "")
 class Test_StocksDatabase : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         appDir = qApp->applicationDirPath();
 
@@ -46,7 +46,7 @@ protected:
         fillWithData();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete database;
         delete dirFactoryMock;
@@ -151,7 +151,7 @@ TEST_F(Test_StocksDatabase, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
@@ -222,7 +222,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
@@ -536,7 +536,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
 TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*> stocks;
 
@@ -590,7 +590,7 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_appendStockData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StockData stockData1;
     StockData stockData2;
@@ -651,7 +651,7 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
 
 TEST_F(Test_StocksDatabase, Test_writeStockData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StockData stockData1;
     StockData stockData2;

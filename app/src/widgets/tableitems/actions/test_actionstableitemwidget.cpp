@@ -21,7 +21,7 @@ using ::testing::StrictMock;
 class Test_ActionsTableItemWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         orderWavesDialogFactoryMock = new StrictMock<OrderWavesDialogFactoryMock>();
         orderWavesWidgetFactoryMock = new StrictMock<OrderWavesWidgetFactoryMock>();
@@ -39,7 +39,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete widget;
         delete orderWavesDialogFactoryMock;
@@ -65,7 +65,7 @@ TEST_F(Test_ActionsTableItemWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_ActionsTableItemWidget, Test_on_orderWavesButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StrictMock<OrderWavesDialogMock>* orderWavesDialogMock =
         new StrictMock<OrderWavesDialogMock>(); // Will be deleted in authFailed
@@ -79,7 +79,7 @@ TEST_F(Test_ActionsTableItemWidget, Test_on_orderWavesButton_clicked)
 
 TEST_F(Test_ActionsTableItemWidget, Test_on_linkButton_clicked)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*httpClientMock, openInBrowser(QUrl("https://www.tbank.ru/invest/stocks/WAGA/"))).WillOnce(Return(true));
 

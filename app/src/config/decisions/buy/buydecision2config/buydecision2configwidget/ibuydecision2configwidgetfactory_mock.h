@@ -20,5 +20,5 @@ public:
     BuyDecision2ConfigWidgetFactoryMock(const BuyDecision2ConfigWidgetFactoryMock& another)            = delete;
     BuyDecision2ConfigWidgetFactoryMock& operator=(const BuyDecision2ConfigWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IBuyDecision2ConfigWidget*, newInstance, (IBuyDecision2Config * config, QWidget* parent), (override));
+    MOCK_METHOD(IBuyDecision2ConfigWidget*, newInstance, (IBuyDecision2Config * config, QWidget* parent), (const, override));
 };

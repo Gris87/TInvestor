@@ -21,9 +21,9 @@ using ::testing::StrictMock;
 class Test_OrderWavesDialog : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         orderWavesWidgetFactoryMock = new StrictMock<OrderWavesWidgetFactoryMock>();
         orderWavesWidgetMock        = new StrictMock<OrderWavesWidgetMock>();
@@ -44,9 +44,9 @@ protected:
         orderBookThreadMock->wait();
     }
 
-    void TearDown()
+    void TearDown() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         EXPECT_CALL(*orderBookThreadMock, terminateThread());
 
@@ -76,7 +76,7 @@ TEST_F(Test_OrderWavesDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_OrderWavesDialog, Test_orderBookChanged)
 {
-    InSequence seq;
+    const InSequence seq;
 
     OrderBook orderBook;
 

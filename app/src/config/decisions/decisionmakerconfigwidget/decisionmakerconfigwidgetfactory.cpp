@@ -26,7 +26,7 @@ IDecisionMakerConfigWidget* DecisionMakerConfigWidgetFactory::newInstance(
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     QWidget*                           parent
-)
+) const
 {
     return new DecisionMakerConfigWidget(
         config,

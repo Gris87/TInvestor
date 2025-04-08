@@ -26,9 +26,9 @@ using ::testing::StrictMock;
 class Test_StocksTableRecord : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
-        InSequence seq;
+        const InSequence seq;
 
         stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
@@ -95,7 +95,7 @@ protected:
         );
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete record;
         delete stockTableItemWidgetFactoryMock;
@@ -136,7 +136,7 @@ TEST_F(Test_StocksTableRecord, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksTableRecord, Test_updateAll)
 {
-    InSequence seq;
+    const InSequence seq;
 
     EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
     EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
@@ -181,7 +181,7 @@ TEST_F(Test_StocksTableRecord, Test_updatePeriodicData)
 
 TEST_F(Test_StocksTableRecord, Test_filter)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     Filter filter;
 

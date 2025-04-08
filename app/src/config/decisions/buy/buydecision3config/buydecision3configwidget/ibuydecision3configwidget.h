@@ -22,5 +22,5 @@ public:
     IBuyDecision3ConfigWidget(const IBuyDecision3ConfigWidget& another)            = delete;
     IBuyDecision3ConfigWidget& operator=(const IBuyDecision3ConfigWidget& another) = delete;
 
-    virtual void updateUiFromConfig() = 0;
+    virtual void updateUiFromConfig() const = 0;
 };

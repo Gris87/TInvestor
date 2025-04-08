@@ -9,9 +9,7 @@
 class ISellDecision1ConfigWidgetFactory
 {
 public:
-    ISellDecision1ConfigWidgetFactory()
-    {
-    }
+    ISellDecision1ConfigWidgetFactory()          = default;
     virtual ~ISellDecision1ConfigWidgetFactory() = default;
 
     ISellDecision1ConfigWidgetFactory(const ISellDecision1ConfigWidgetFactory& another)            = delete;

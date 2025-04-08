@@ -29,7 +29,7 @@ TEST(Test_StocksTableRecordFactory, Test_constructor_and_destructor)
 
 TEST(Test_StocksTableRecordFactory, Test_newInstance)
 {
-    InSequence seq;
+    const InSequence seq;
 
     StocksTableRecordFactory factory;
 

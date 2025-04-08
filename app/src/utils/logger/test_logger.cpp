@@ -8,12 +8,12 @@
 class Test_Logger : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         Logger::init();
     }
 
-    void TearDown()
+    void TearDown() override
     {
         Logger::deinit();
     }

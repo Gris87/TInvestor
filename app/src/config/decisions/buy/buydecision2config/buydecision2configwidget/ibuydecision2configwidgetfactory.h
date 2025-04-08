@@ -9,13 +9,11 @@
 class IBuyDecision2ConfigWidgetFactory
 {
 public:
-    IBuyDecision2ConfigWidgetFactory()
-    {
-    }
+    IBuyDecision2ConfigWidgetFactory()          = default;
     virtual ~IBuyDecision2ConfigWidgetFactory() = default;
 
     IBuyDecision2ConfigWidgetFactory(const IBuyDecision2ConfigWidgetFactory& another)            = delete;
     IBuyDecision2ConfigWidgetFactory& operator=(const IBuyDecision2ConfigWidgetFactory& another) = delete;
 
-    virtual IBuyDecision2ConfigWidget* newInstance(IBuyDecision2Config* config, QWidget* parent) = 0;
+    virtual IBuyDecision2ConfigWidget* newInstance(IBuyDecision2Config* config, QWidget* parent) const = 0;
 };

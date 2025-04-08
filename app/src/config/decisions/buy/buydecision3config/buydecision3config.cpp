@@ -5,9 +5,18 @@
 
 
 
+constexpr bool  ENABLED_DEFAULT    = true;
+constexpr float PRICE_RISE_DEFAULT = 2.0f;
+constexpr int   DURATION_DEFAULT   = 1;
+
+
+
 BuyDecision3Config::BuyDecision3Config() :
     IBuyDecision3Config(),
-    mMutex(new QMutex())
+    mMutex(new QMutex()),
+    mEnabled(),
+    mPriceRise(),
+    mDuration()
 {
     qDebug() << "Create BuyDecision3Config";
 }
@@ -38,9 +47,9 @@ void BuyDecision3Config::makeDefault()
 
     qDebug() << "Set BuyDecision3Config to default";
 
-    mEnabled   = true;
-    mPriceRise = 2.0f;
-    mDuration  = 1;
+    mEnabled   = ENABLED_DEFAULT;
+    mPriceRise = PRICE_RISE_DEFAULT;
+    mDuration  = DURATION_DEFAULT;
 }
 
 void BuyDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)

@@ -20,7 +20,7 @@ using ::testing::StrictMock;
 class Test_StocksStorage : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
         userStorageMock    = new StrictMock<UserStorageMock>();
@@ -28,7 +28,7 @@ protected:
         storage = new StocksStorage(stocksDatabaseMock, userStorageMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete storage;
         delete stocksDatabaseMock;
@@ -48,7 +48,7 @@ TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -198,7 +198,7 @@ TEST_F(Test_StocksStorage, Test_getMutex)
 
 TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -463,7 +463,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
 TEST_F(Test_StocksStorage, Test_appendStockData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     Stock     stock;
     StockData stockData;
@@ -475,7 +475,7 @@ TEST_F(Test_StocksStorage, Test_appendStockData)
 
 TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -810,7 +810,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
 TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -1102,7 +1102,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
 TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -1358,7 +1358,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
 TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 {
-    InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -1614,7 +1614,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
 TEST_F(Test_StocksStorage, Test_obtainTurnover)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -1875,7 +1875,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
 TEST_F(Test_StocksStorage, Test_obtainPayback)
 {
-    // InSequence seq;
+    // const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);

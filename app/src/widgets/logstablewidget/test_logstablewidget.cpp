@@ -19,14 +19,14 @@ using ::testing::StrictMock;
 class Test_LogsTableWidget : public ::testing::Test
 {
 protected:
-    void SetUp()
+    void SetUp() override
     {
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
         logsTableWidget = new LogsTableWidget(settingsEditorMock);
     }
 
-    void TearDown()
+    void TearDown() override
     {
         delete logsTableWidget;
         delete settingsEditorMock;
@@ -44,7 +44,7 @@ TEST_F(Test_LogsTableWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_LogsTableWidget, Test_saveWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Time"),    _));
@@ -56,7 +56,7 @@ TEST_F(Test_LogsTableWidget, Test_saveWindowState)
 
 TEST_F(Test_LogsTableWidget, Test_loadWindowState)
 {
-    InSequence seq;
+    const InSequence seq;
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    QVariant(42))).WillOnce(Return(QVariant(42)));
