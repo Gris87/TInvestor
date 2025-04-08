@@ -5,6 +5,8 @@ Add test coverage badge on Github
 Add build status badge on Github
 
 Buy less than 1% from turnover
+Buy if fall more than 2% and price change in range 0-1% during 30 minutes
+Sellf if raise more than 2% and price change in range 0-1% during 30 minutes
 Put buy ticket always with -5% price (for unexpected selling) each minute
 Put tratiling tickets on market start/end (There are ~4 times - 00:00 02:00 07:00 10:00)
 Buy if there is a big fall from 24h ago (at the end of the day)

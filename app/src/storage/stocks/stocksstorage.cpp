@@ -55,6 +55,8 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
     QMap<QString, StockMeta*> existingMetas; // uid => meta
     QList<const StockMeta*>   newMetas;
 
+    newMetas.reserve(stocksMeta.size());
+
     for (int i = 0; i < mStocks.size(); ++i)
     {
         StockMeta* existingMeta          = &mStocks[i]->meta;
@@ -297,7 +299,7 @@ void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int st
                 totalTurnover += qRound64(stock->data.at(i).quantity * stock->data.at(i).price);
             }
 
-            qint64 deltaTimestamp = stock->data.last().timestamp - stock->data.at(index).timestamp;
+            qint64 deltaTimestamp = stock->data.constLast().timestamp - stock->data.at(index).timestamp;
 
             stock->operational.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
         }

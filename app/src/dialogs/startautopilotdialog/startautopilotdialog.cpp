@@ -78,9 +78,14 @@ QStringList StartAutoPilotDialog::getAccounts()
     QMutexLocker          lock(mUserStorage->getMutex());
     const QList<Account>& accounts = mUserStorage->getAccounts();
 
+    res.reserve(accounts.size());
+    res.resizeForOverwrite(accounts.size());
+
+    QString* resData = res.data();
+
     for (int i = 0; i < accounts.size(); ++i)
     {
-        res.append(accounts.at(i).name);
+        resData[i] = accounts.at(i).name;
     }
 
     return res;

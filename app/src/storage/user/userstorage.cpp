@@ -77,12 +77,11 @@ void UserStorage::setAccounts(const QList<Account>& accounts)
     if (mAccounts != accounts)
     {
         mAccounts = accounts;
+        Account* accountData = mAccounts.data();
 
         for (int i = 0; i < mAccounts.size(); ++i)
         {
-            Account& account = mAccounts[i];
-
-            account.setId(account.id);
+            accountData[i].setId(accountData[i].id);
         }
 
         mUserDatabase->writeAccounts(mAccounts);

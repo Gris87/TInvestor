@@ -93,8 +93,8 @@ void StocksTableRecord::updatePrice()
 {
     const QMutexLocker lock(mStock->mutex);
 
-    float price = !mStock->operational.detailedData.isEmpty() ? mStock->operational.detailedData.last().price
-                                                              : (!mStock->data.isEmpty() ? mStock->data.last().price : 0);
+    float price = !mStock->operational.detailedData.isEmpty() ? mStock->operational.detailedData.constLast().price
+                                                              : (!mStock->data.isEmpty() ? mStock->data.constLast().price : 0);
 
     float dayChange = mStock->operational.dayStartPrice > 0 ? (price / mStock->operational.dayStartPrice) * 100 - 100 : 0;
     float dateChange =

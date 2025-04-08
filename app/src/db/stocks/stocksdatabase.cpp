@@ -109,7 +109,7 @@ void readStocksDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int
             qWarning() << "Failed to read stock data" << stock->meta.ticker;
         }
 
-        stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.last().timestamp : 0;
+        stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.constLast().timestamp : 0;
     }
 }
 
@@ -161,7 +161,7 @@ void StocksDatabase::appendStockData(Stock* stock, const StockData* dataArray, i
         stock->data.append(dataArray[i]);
     }
 
-    stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.last().timestamp : 0;
+    stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.constLast().timestamp : 0;
 }
 
 void StocksDatabase::writeStockData(const Stock& stock)
