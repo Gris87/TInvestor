@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 TEST(Test_Account, Test_constructor_and_destructor)
 {
-    Account account;
+    const Account account;
 
     // clang-format off
     ASSERT_EQ(account.id,     "");
@@ -23,7 +24,7 @@ TEST(Test_Account, Test_copy_constructor)
     account.idHash = "b";
     account.name   = "c";
 
-    Account account2(account);
+    const Account account2(account);
 
     // clang-format off
     ASSERT_EQ(account2.id,     "a");
@@ -98,3 +99,4 @@ TEST(Test_Account, Test_equals)
     account2.name = "c";
     ASSERT_EQ(account, account2);
 }
+// NOLINTEND(readability-function-cognitive-complexity)

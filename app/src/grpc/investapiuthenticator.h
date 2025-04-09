@@ -11,7 +11,7 @@
 class InvestApiAuthenticator : public grpc::MetadataCredentialsPlugin
 {
 public:
-    InvestApiAuthenticator(IUserStorage* userStorage) :
+    explicit InvestApiAuthenticator(IUserStorage* userStorage) :
         mUserStorage(userStorage)
     {
     }
@@ -23,7 +23,7 @@ public:
         std::multimap<grpc::string, grpc::string>* metadata
     ) override
     {
-        QString bearer = QString("Bearer %1").arg(mUserStorage->getToken());
+        const QString bearer = QString("Bearer %1").arg(mUserStorage->getToken());
 
         metadata->insert(std::make_pair("authorization", bearer.toUtf8().constData()));
 

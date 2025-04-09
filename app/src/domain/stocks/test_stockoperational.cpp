@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_StockOperational, Test_constructor_and_destructor)
 {
-    StockOperational stockOperational;
+    const StockOperational stockOperational;
 
     // clang-format off
     ASSERT_EQ(stockOperational.lastStoredTimestamp,  0);
@@ -33,7 +34,7 @@ TEST(Test_StockOperational, Test_copy_constructor)
     stockOperational.payback             = 5.0f;
     stockOperational.detailedData.append(stockData);
 
-    StockOperational stockOperational2(stockOperational);
+    const StockOperational stockOperational2(stockOperational);
 
     // clang-format off
     ASSERT_EQ(stockOperational2.lastStoredTimestamp,          1);
@@ -76,3 +77,4 @@ TEST(Test_StockOperational, Test_assign)
     ASSERT_NEAR(stockOperational2.detailedData.at(0).price,   7.0f, 0.0001f);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

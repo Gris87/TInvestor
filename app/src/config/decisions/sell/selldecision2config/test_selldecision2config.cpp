@@ -15,7 +15,7 @@ using ::testing::StrictMock;
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_SellDecision2Config, Test_constructor_and_destructor)
 {
-    SellDecision2Config config;
+    const SellDecision2Config config;
 }
 
 TEST(Test_SellDecision2Config, Test_assign)

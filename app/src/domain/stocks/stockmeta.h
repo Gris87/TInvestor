@@ -11,12 +11,13 @@
 struct StockMeta
 {
     StockMeta();
-    StockMeta(const StockMeta& another);
-    ~StockMeta();
+    StockMeta(const StockMeta& another) = default;
+    ~StockMeta()                        = default;
 
-    StockMeta& operator=(const StockMeta& another);
+    StockMeta& operator=(const StockMeta& another) = default;
 
     void        fromJsonObject(const QJsonObject& jsonObject);
+    [[nodiscard]]
     QJsonObject toJsonObject() const;
 
     QString   uid;

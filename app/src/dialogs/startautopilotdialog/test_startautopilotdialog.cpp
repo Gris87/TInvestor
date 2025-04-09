@@ -10,13 +10,13 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_StartAutoPilotDialog : public ::testing::Test
 {
 protected:
@@ -147,3 +147,4 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
 
     dialog->ui->startButton->click();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

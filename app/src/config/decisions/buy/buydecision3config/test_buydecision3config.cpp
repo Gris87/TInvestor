@@ -15,7 +15,7 @@ using ::testing::StrictMock;
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_BuyDecision3Config, Test_constructor_and_destructor)
 {
-    BuyDecision3Config config;
+    const BuyDecision3Config config;
 }
 
 TEST(Test_BuyDecision3Config, Test_assign)

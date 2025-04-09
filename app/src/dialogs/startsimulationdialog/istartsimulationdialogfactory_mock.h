@@ -21,6 +21,9 @@ public:
     StartSimulationDialogFactoryMock& operator=(const StartSimulationDialogFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        std::shared_ptr<IStartSimulationDialog>, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (override)
+        std::shared_ptr<IStartSimulationDialog>,
+        newInstance,
+        (ISettingsEditor * settingsEditor, QWidget* parent),
+        (const, override)
     );
 };

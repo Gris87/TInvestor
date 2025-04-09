@@ -10,13 +10,12 @@
 using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Ne;
-using ::testing::NotNull;
-using ::testing::Ref;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_StocksStorage : public ::testing::Test
 {
 protected:
@@ -2133,3 +2132,4 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

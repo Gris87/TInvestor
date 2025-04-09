@@ -19,7 +19,7 @@ StartAutoPilotDialogFactory::~StartAutoPilotDialogFactory()
 
 std::shared_ptr<IStartAutoPilotDialog> StartAutoPilotDialogFactory::newInstance(
     IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent
-)
+) const
 {
     return std::shared_ptr<IStartAutoPilotDialog>(new StartAutoPilotDialog(userStorage, messageBoxUtils, settingsEditor, parent));
 }

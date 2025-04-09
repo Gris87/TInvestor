@@ -9,10 +9,10 @@
 struct Account
 {
     Account();
-    Account(const Account& another);
-    ~Account();
+    Account(const Account& another) = default;
+    ~Account()                      = default;
 
-    Account& operator=(const Account& another);
+    Account& operator=(const Account& another) = default;
 
     void setId(const QString& value);
 

@@ -9,7 +9,6 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
@@ -18,14 +17,14 @@ using ::testing::StrictMock;
 
 TEST(Test_StartAutoPilotDialogFactory, Test_constructor_and_destructor)
 {
-    StartAutoPilotDialogFactory factory;
+    const StartAutoPilotDialogFactory factory;
 }
 
 TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 {
     const InSequence seq;
 
-    StartAutoPilotDialogFactory factory;
+    const StartAutoPilotDialogFactory factory;
 
     StrictMock<UserStorageMock>     userStorageMock;
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
@@ -55,7 +54,7 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
     // clang-format on
 
-    std::shared_ptr<IStartAutoPilotDialog> dialog =
+    const std::shared_ptr<IStartAutoPilotDialog> dialog =
         factory.newInstance(&userStorageMock, &messageBoxUtilsMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 }

@@ -5,9 +5,18 @@
 
 
 
+constexpr bool  ENABLED_DEFAULT     = true;
+constexpr float LOSE_INCOME_DEFAULT = 5.0f;
+constexpr int   DURATION_DEFAULT    = 3;
+
+
+
 SellDecision3Config::SellDecision3Config() :
     ISellDecision3Config(),
-    mMutex(new QMutex())
+    mMutex(new QMutex()),
+    mEnabled(),
+    mLoseIncome(),
+    mDuration()
 {
     qDebug() << "Create SellDecision3Config";
 }
@@ -38,9 +47,9 @@ void SellDecision3Config::makeDefault()
 
     qDebug() << "Set SellDecision3Config to default";
 
-    mEnabled    = true;
-    mLoseIncome = 5.0f;
-    mDuration   = 3;
+    mEnabled    = ENABLED_DEFAULT;
+    mLoseIncome = LOSE_INCOME_DEFAULT;
+    mDuration   = DURATION_DEFAULT;
 }
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)

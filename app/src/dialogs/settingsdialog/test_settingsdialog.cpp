@@ -23,6 +23,7 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_SettingsDialog : public ::testing::Test
 {
 protected:
@@ -543,3 +544,4 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->autoPilotConfigCommonCheckBox->isChecked(), false);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

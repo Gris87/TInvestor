@@ -11,10 +11,10 @@
 struct StockOperational
 {
     StockOperational();
-    StockOperational(const StockOperational& another);
-    ~StockOperational();
+    StockOperational(const StockOperational& another) = default;
+    ~StockOperational()                               = default;
 
-    StockOperational& operator=(const StockOperational& another);
+    StockOperational& operator=(const StockOperational& another) = default;
 
     qint64                      lastStoredTimestamp;
     float                       dayStartPrice;

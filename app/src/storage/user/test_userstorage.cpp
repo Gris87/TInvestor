@@ -8,12 +8,12 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_UserStorage : public ::testing::Test
 {
 protected:
@@ -158,3 +158,4 @@ TEST_F(Test_UserStorage, Test_setAccounts)
     storage->setAccounts(accounts);
     ASSERT_EQ(storage->getAccounts(), accounts);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

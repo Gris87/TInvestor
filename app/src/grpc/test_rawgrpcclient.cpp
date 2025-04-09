@@ -9,19 +9,18 @@
 
 
 
-#define HHRU_UID "cf9ed7ef-784d-4c2c-aabe-362891fcd80c"
-#define SPBE_UID "15dc2120-29d2-48b8-87c0-da1d95255f68"
+const char* const HHRU_UID = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c";
+const char* const SPBE_UID = "15dc2120-29d2-48b8-87c0-da1d95255f68";
 
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_RawGrpcClient : public ::testing::Test
 {
 protected:
@@ -33,8 +32,8 @@ protected:
             std::unique_ptr<grpc::MetadataCredentialsPlugin>(new InvestApiAuthenticator(userStorageMock))
         );
 
-        std::shared_ptr<grpc::Channel> channel =
-            grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
+        const std::shared_ptr<grpc::Channel> channel =
+            grpc::CreateChannel(GRPC_ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
         usersService            = tinkoff::UsersService::NewStub(channel);
         instrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
@@ -70,15 +69,16 @@ TEST_F(Test_RawGrpcClient, Test_getUserInfo)
     const InSequence seq;
 
     grpc::ClientContext                       context;
-    tinkoff::GetInfoRequest                   req;
-    std::shared_ptr<tinkoff::GetInfoResponse> resp = std::shared_ptr<tinkoff::GetInfoResponse>(new tinkoff::GetInfoResponse());
+    const tinkoff::GetInfoRequest                   req;
+    const std::shared_ptr<tinkoff::GetInfoResponse> resp =
+        std::shared_ptr<tinkoff::GetInfoResponse>(new tinkoff::GetInfoResponse());
 
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
 
-    grpc::Status status = client->getUserInfo(usersService, &context, req, resp.get());
+    const grpc::Status status = client->getUserInfo(usersService, &context, req, resp.get());
 
     // clang-format off
     ASSERT_EQ(status.ok(),                          true);
@@ -118,7 +118,7 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
 
-    grpc::Status status = client->getAccounts(usersService, &context, req, resp.get());
+    const grpc::Status status = client->getAccounts(usersService, &context, req, resp.get());
 
     // clang-format off
     ASSERT_EQ(status.ok(),                               true);
@@ -145,15 +145,15 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
     const InSequence seq;
 
     grpc::ClientContext                      context;
-    tinkoff::InstrumentsRequest              req;
-    std::shared_ptr<tinkoff::SharesResponse> resp = std::shared_ptr<tinkoff::SharesResponse>(new tinkoff::SharesResponse());
+    const tinkoff::InstrumentsRequest              req;
+    const std::shared_ptr<tinkoff::SharesResponse> resp = std::shared_ptr<tinkoff::SharesResponse>(new tinkoff::SharesResponse());
 
     context.set_credentials(creds);
 
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
 
-    grpc::Status status = client->findStocks(instrumentsService, &context, req, resp.get());
+    const grpc::Status status = client->findStocks(instrumentsService, &context, req, resp.get());
 
     int index = -1;
 
@@ -231,7 +231,7 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
 
     grpc::ClientContext                          context;
     tinkoff::GetCandlesRequest                   req;
-    std::shared_ptr<tinkoff::GetCandlesResponse> resp =
+    const std::shared_ptr<tinkoff::GetCandlesResponse> resp =
         std::shared_ptr<tinkoff::GetCandlesResponse>(new tinkoff::GetCandlesResponse());
 
     context.set_credentials(creds);
@@ -253,7 +253,7 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
 
-    grpc::Status status = client->getCandles(marketDataService, &context, req, resp.get());
+    const grpc::Status status = client->getCandles(marketDataService, &context, req, resp.get());
 
     // clang-format off
     ASSERT_EQ(status.ok(),                       true);
@@ -279,7 +279,7 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
 
     grpc::ClientContext                            context;
     tinkoff::GetOrderBookRequest                   req;
-    std::shared_ptr<tinkoff::GetOrderBookResponse> resp =
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> resp =
         std::shared_ptr<tinkoff::GetOrderBookResponse>(new tinkoff::GetOrderBookResponse());
 
     context.set_credentials(creds);
@@ -290,7 +290,7 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
     QString token = SANDBOX_TOKEN;
     EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
 
-    grpc::Status status = client->getOrderBook(marketDataService, &context, req, resp.get());
+    const grpc::Status status = client->getOrderBook(marketDataService, &context, req, resp.get());
 
     // clang-format off
     ASSERT_EQ(status.ok(),            true);
@@ -344,3 +344,4 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::OK);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

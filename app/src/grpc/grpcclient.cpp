@@ -7,6 +7,17 @@
 
 
 
+#ifndef USE_SANDBOX
+const char* GRPC_ADDRESS = "invest-public-api.tinkoff.ru:443";
+#else
+const char* GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
+#endif
+
+constexpr int MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
+constexpr int MS_IN_SECOND                 = 1000;
+
+
+
 #define REPEAT_REQUEST(parentThread, timeUtils, rawGrpcClient, action, service, context, req, resp)   \
     while (true)                                                                                      \
     {                                                                                                 \
@@ -48,7 +59,8 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
         std::unique_ptr<grpc::MetadataCredentialsPlugin>(new InvestApiAuthenticator(userStorage))
     );
 
-    std::shared_ptr<grpc::Channel> channel = grpc::CreateChannel(ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
+    const std::shared_ptr<grpc::Channel> channel =
+        grpc::CreateChannel(GRPC_ADDRESS, grpc::SslCredentials(grpc::SslCredentialsOptions()));
 
     mUsersService            = tinkoff::UsersService::NewStub(channel);
     mInstrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
@@ -64,7 +76,7 @@ GrpcClient::~GrpcClient()
 std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* parentThread)
 {
     grpc::ClientContext                       context;
-    tinkoff::GetInfoRequest                   req;
+    const tinkoff::GetInfoRequest             req;
     std::shared_ptr<tinkoff::GetInfoResponse> resp = std::shared_ptr<tinkoff::GetInfoResponse>(new tinkoff::GetInfoResponse());
 
     context.set_credentials(mCreds);
@@ -116,9 +128,9 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     ::google::protobuf::Timestamp* fromTimestamp = new ::google::protobuf::Timestamp(); // req will take ownership
     ::google::protobuf::Timestamp* toTimestamp   = new ::google::protobuf::Timestamp(); // req will take ownership
 
-    fromTimestamp->set_seconds(from / 1000);
+    fromTimestamp->set_seconds(from / MS_IN_SECOND);
     fromTimestamp->set_nanos(0);
-    toTimestamp->set_seconds(to / 1000);
+    toTimestamp->set_seconds(to / MS_IN_SECOND);
     toTimestamp->set_nanos(0);
 
     req.set_instrument_id(uid.toStdString());
@@ -174,7 +186,7 @@ bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
 
     if (!res)
     {
@@ -194,7 +206,7 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
 
-    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
 
     if (!res)
     {
@@ -219,7 +231,7 @@ bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDat
 
     req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
-    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
 
     if (!res)
     {
@@ -239,7 +251,7 @@ bool GrpcClient::unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketD
 
     req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
 
-    bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
+    const bool res = mRawGrpcClient->writeMarketDataStream(marketDataStream, req);
 
     if (!res)
     {
@@ -266,7 +278,7 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
 
 bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    bool res = mRawGrpcClient->closeWriteMarketDataStream(marketDataStream);
+    const bool res = mRawGrpcClient->closeWriteMarketDataStream(marketDataStream);
 
     if (!res)
     {
@@ -278,7 +290,7 @@ bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& m
 
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
-    grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+    const grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
 
     if (!status.ok())
     {

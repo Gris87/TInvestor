@@ -40,10 +40,19 @@ Checks:
         -llvm-include-order,
         -cppcoreguidelines-avoid-c-arrays,
         -cppcoreguidelines-pro-bounds-constant-array-index,
-        -bugprone-easily-swappable-parameters
+        -bugprone-easily-swappable-parameters,
+        -fuchsia-overloaded-operator,
+        -altera-struct-pack-align,
+        -misc-use-anonymous-namespace,
+        -hicpp-avoid-c-arrays,
+        -google-readability-todo,
+        -modernize-avoid-c-arrays,
+        -google-readability-function-size,
+        -bugprone-reserved-identifier,
+        -cert-dcl37-c
     '
 CheckOptions:
     cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true
     cppcoreguidelines-explicit-virtual-functions.IgnoreDestructors: true
-HeaderFilterRegex:        '.*src/.*'
-ExcludeHeaderFilterRegex: '.*(gtest|gmock)/.*'
+HeaderFilterRegex:        '.*src.*'
+ExcludeHeaderFilterRegex: '.*(gtest|gmock).*'

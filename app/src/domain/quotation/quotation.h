@@ -9,12 +9,13 @@
 struct Quotation
 {
     Quotation();
-    Quotation(const Quotation& another);
-    ~Quotation();
+    Quotation(const Quotation& another) = default;
+    ~Quotation()                        = default;
 
-    Quotation& operator=(const Quotation& another);
+    Quotation& operator=(const Quotation& another) = default;
 
     void        fromJsonObject(const QJsonObject& jsonObject);
+    [[nodiscard]]
     QJsonObject toJsonObject() const;
 
     qint64 units;

@@ -18,7 +18,7 @@ StartSimulationDialogFactory::~StartSimulationDialogFactory()
 }
 
 std::shared_ptr<IStartSimulationDialog>
-StartSimulationDialogFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent)
+StartSimulationDialogFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const
 {
     return std::shared_ptr<IStartSimulationDialog>(new StartSimulationDialog(settingsEditor, parent));
 }

@@ -63,10 +63,10 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::updateUiFromConfig()
 {
-    int scheduleStartHour   = mConfig->getScheduleStartHour();
-    int scheduleStartMinute = mConfig->getScheduleStartMinute();
-    int scheduleEndHour     = mConfig->getScheduleEndHour();
-    int scheduleEndMinute   = mConfig->getScheduleEndMinute();
+    const int scheduleStartHour   = mConfig->getScheduleStartHour();
+    const int scheduleStartMinute = mConfig->getScheduleStartMinute();
+    const int scheduleEndHour     = mConfig->getScheduleEndHour();
+    const int scheduleEndMinute   = mConfig->getScheduleEndMinute();
 
     mSimulatorConfigWidget->updateUiFromConfig();
     mAutoPilotConfigWidget->updateUiFromConfig();

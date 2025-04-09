@@ -42,7 +42,7 @@ private:
     ISettingsEditor*  mSettingsEditor;
 
 private slots:
-    void on_accountComboBox_currentIndexChanged(int index);
-    void on_followRadioButton_toggled(bool checked);
+    void on_accountComboBox_currentIndexChanged(int index) const;
+    void on_followRadioButton_toggled(bool checked) const;
     void on_startButton_clicked();
 };

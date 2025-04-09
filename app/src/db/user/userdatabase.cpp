@@ -221,10 +221,8 @@ void UserDatabase::writeAccounts(const QList<Account>& accounts)
     QVariantList ids;
     QVariantList names;
 
-    for (int i = 0; i < accounts.size(); ++i)
+    for (const Account& account : accounts)
     {
-        const Account& account = accounts.at(i);
-
         ids << mSimpleCrypt.encryptToString(account.id);
         names << account.name;
     }

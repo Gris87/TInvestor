@@ -16,6 +16,7 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_GrpcClient : public ::testing::Test
 {
 protected:
@@ -52,9 +53,9 @@ TEST_F(Test_GrpcClient, Test_getUserInfo)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getUserInfo(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -71,9 +72,9 @@ TEST_F(Test_GrpcClient, Test_getAccounts)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getAccounts(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -90,9 +91,9 @@ TEST_F(Test_GrpcClient, Test_findStocks)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, findStocks(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -109,9 +110,9 @@ TEST_F(Test_GrpcClient, Test_getCandles)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getCandles(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -128,9 +129,9 @@ TEST_F(Test_GrpcClient, Test_getOrderBook)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
@@ -149,7 +150,7 @@ TEST_F(Test_GrpcClient, Test_createMarketDataStream)
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
-    std::shared_ptr<MarketDataStream> marketDataStream = client->createMarketDataStream();
+    const std::shared_ptr<MarketDataStream> marketDataStream = client->createMarketDataStream();
     ASSERT_NE(marketDataStream, nullptr);
 }
 
@@ -268,8 +269,8 @@ TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
 {
     const InSequence seq;
 
-    grpc::Status goodStatus(grpc::StatusCode::OK, "");
-    grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -284,3 +285,4 @@ TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
 
     client->finishMarketDataStream(marketDataStream);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

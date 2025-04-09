@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_Stock, Test_constructor_and_destructor)
 {
-    Stock stock;
+    const Stock stock;
 
     // clang-format off
     ASSERT_NE(stock.mutex,                            nullptr);
@@ -55,7 +56,7 @@ TEST(Test_Stock, Test_copy_constructor)
     stock.operational.detailedData.append(stockData1);
     stock.data.append(stockData2);
 
-    Stock stock2(stock);
+    const Stock stock2(stock);
 
     // clang-format off
     ASSERT_NE(stock2.mutex,                                    stock.mutex);
@@ -137,3 +138,4 @@ TEST(Test_Stock, Test_assign)
     ASSERT_NEAR(stock2.data.at(0).price,                       13.0f, 0.0001f);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

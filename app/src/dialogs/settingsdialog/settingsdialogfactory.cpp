@@ -27,7 +27,7 @@ std::shared_ptr<ISettingsDialog> SettingsDialogFactory::newInstance(
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
     QWidget*                           parent
-)
+) const
 {
     return std::shared_ptr<ISettingsDialog>(new SettingsDialog(
         config,

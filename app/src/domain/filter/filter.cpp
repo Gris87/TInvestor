@@ -2,6 +2,11 @@
 
 
 
+constexpr qint64 TURNOVER_TO_DEFAULT = 1000000000000;
+constexpr float  PAYBACK_TO_DEFAULT  = 100;
+
+
+
 Filter::Filter() :
     useTicker(),
     ticker(),
@@ -18,36 +23,11 @@ Filter::Filter() :
     dateChangeTo(),
     useTurnover(),
     turnoverFrom(),
-    turnoverTo(1000000000000),
+    turnoverTo(TURNOVER_TO_DEFAULT),
     usePayback(),
     paybackFrom(),
-    paybackTo(100)
+    paybackTo(PAYBACK_TO_DEFAULT)
 {
-}
-
-Filter& Filter::operator=(const Filter& another)
-{
-    useTicker          = another.useTicker;
-    ticker             = another.ticker;
-    useQualInvestor    = another.useQualInvestor;
-    qualInvestor       = another.qualInvestor;
-    usePrice           = another.usePrice;
-    priceFrom          = another.priceFrom;
-    priceTo            = another.priceTo;
-    useDayStartChange  = another.useDayStartChange;
-    dayStartChangeFrom = another.dayStartChangeFrom;
-    dayStartChangeTo   = another.dayStartChangeTo;
-    useDateChange      = another.useDateChange;
-    dateChangeFrom     = another.dateChangeFrom;
-    dateChangeTo       = another.dateChangeTo;
-    useTurnover        = another.useTurnover;
-    turnoverFrom       = another.turnoverFrom;
-    turnoverTo         = another.turnoverTo;
-    usePayback         = another.usePayback;
-    paybackFrom        = another.paybackFrom;
-    paybackTo          = another.paybackTo;
-
-    return *this;
 }
 
 bool Filter::isActive() const
@@ -67,60 +47,40 @@ bool Filter::isFiltered(
     float          payback
 ) const
 {
-    if (useTicker && ticker != "")
+    if (useTicker && ticker != "" && !t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
     {
-        if (!t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL)
+    if (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL &&
+        forQualInvestorFlag != (qualInvestor == QUAL_INVESTOR_ONLY_WITH_STATUS))
     {
-        if (forQualInvestorFlag != (qualInvestor == QUAL_INVESTOR_ONLY_WITH_STATUS))
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (usePrice)
+    if (usePrice && (price < priceFrom || price > priceTo))
     {
-        if (price < priceFrom || price > priceTo)
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (useDayStartChange)
+    if (useDayStartChange && (dayStartChange < dayStartChangeFrom || dayStartChange > dayStartChangeTo))
     {
-        if (dayStartChange < dayStartChangeFrom || dayStartChange > dayStartChangeTo)
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (useDateChange)
+    if (useDateChange && (dateChange < dateChangeFrom || dateChange > dateChangeTo))
     {
-        if (dateChange < dateChangeFrom || dateChange > dateChangeTo)
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (useTurnover)
+    if (useTurnover && (turnover < turnoverFrom || turnover > turnoverTo))
     {
-        if (turnover < turnoverFrom || turnover > turnoverTo)
-        {
-            return false;
-        }
+        return false;
     }
 
-    if (usePayback)
+    if (usePayback && (payback < paybackFrom || payback > paybackTo))
     {
-        if (payback < paybackFrom || payback > paybackTo)
-        {
-            return false;
-        }
+        return false;
     }
 
     return true;

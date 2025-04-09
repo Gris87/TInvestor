@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_Filter, Test_constructor_and_destructor)
 {
-    Filter filter;
+    const Filter filter;
 
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
@@ -55,7 +56,7 @@ TEST(Test_Filter, Test_copy_constructor)
     filter.paybackFrom        = 9.0f;
     filter.paybackTo          = 10.0f;
 
-    Filter filter2(filter);
+    const Filter filter2(filter);
 
     // clang-format off
     ASSERT_EQ(filter2.useTicker,            true);
@@ -365,3 +366,4 @@ TEST(Test_Filter, Test_equals)
     filter2.paybackTo = 10.0f;
     ASSERT_EQ(filter, filter2);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

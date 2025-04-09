@@ -12,32 +12,6 @@ StockMeta::StockMeta() :
 {
 }
 
-StockMeta::StockMeta(const StockMeta& another) :
-    uid(another.uid),
-    ticker(another.ticker),
-    name(another.name),
-    forQualInvestorFlag(another.forQualInvestorFlag),
-    lot(another.lot),
-    minPriceIncrement(another.minPriceIncrement)
-{
-}
-
-StockMeta::~StockMeta()
-{
-}
-
-StockMeta& StockMeta::operator=(const StockMeta& another)
-{
-    uid                 = another.uid;
-    ticker              = another.ticker;
-    name                = another.name;
-    forQualInvestorFlag = another.forQualInvestorFlag;
-    lot                 = another.lot;
-    minPriceIncrement   = another.minPriceIncrement;
-
-    return *this;
-}
-
 void StockMeta::fromJsonObject(const QJsonObject& jsonObject)
 {
     uid                 = jsonObject.value("uid").toString("");

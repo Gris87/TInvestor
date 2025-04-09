@@ -35,8 +35,8 @@ private:
     ISettingsEditor* mSettingsEditor;
 
 private slots:
-    void on_dateRangeRadioButton_toggled(bool checked);
-    void on_fromDateEdit_dateChanged(const QDate& date);
-    void on_toDateEdit_dateChanged(const QDate& date);
+    void on_dateRangeRadioButton_toggled(bool checked) const;
+    void on_fromDateEdit_dateChanged(const QDate& date) const;
+    void on_toDateEdit_dateChanged(const QDate& date) const;
     void on_startButton_clicked();
 };

@@ -11,10 +11,10 @@
 struct OrderBook
 {
     OrderBook();
-    OrderBook(const OrderBook& another);
-    ~OrderBook();
+    OrderBook(const OrderBook& another) = default;
+    ~OrderBook()                        = default;
 
-    OrderBook& operator=(const OrderBook& another);
+    OrderBook& operator=(const OrderBook& another) = default;
 
     qint64               timestamp;
     float                price;

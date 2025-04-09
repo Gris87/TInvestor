@@ -4,12 +4,14 @@
 
 
 
-QMap<QString, float> tariffToCommission{
+// NOLINTBEGIN(readability-magic-numbers)
+const QMap<QString, float> TARIFF_TO_COMMISSION{
     {"fees",    0.3f },
     {"trader",  0.05f},
     {"premium", 0.04f},
     {"sandbox", 0.04f}
 };
+// NOLINTEND(readability-magic-numbers)
 
 
 
@@ -22,34 +24,10 @@ User::User() :
 {
 }
 
-User::User(const User& another) :
-    token(another.token),
-    qualified(another.qualified),
-    qualifiedForWorkWith(another.qualifiedForWorkWith),
-    tariff(another.tariff),
-    commission(another.commission)
-{
-}
-
-User::~User()
-{
-}
-
-User& User::operator=(const User& another)
-{
-    token                = another.token;
-    qualified            = another.qualified;
-    qualifiedForWorkWith = another.qualifiedForWorkWith;
-    tariff               = another.tariff;
-    commission           = another.commission;
-
-    return *this;
-}
-
 void User::setTariff(const QString& value)
 {
     tariff     = value;
-    commission = tariffToCommission[tariff];
+    commission = TARIFF_TO_COMMISSION[tariff];
 }
 
 bool operator==(const User& lhs, const User& rhs)

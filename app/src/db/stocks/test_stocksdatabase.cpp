@@ -18,7 +18,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
+// NOLINTBEGIN(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)
 MATCHER_P2(IsMemEqual, m, size, "")
 {
     return memcmp(arg, m, size) == 0;
@@ -569,13 +569,13 @@ TEST_F(Test_StocksDatabase, Test_writeStocksMeta)
 
     stocks << &stock1 << &stock2 << &stock3;
 
-    QString stocksStr =
+    const QString stocksStr =
         "[{\"forQualInvestorFlag\":true,\"lot\":1,\"minPriceIncrement\":{\"nano\":100000000,\"units\":0},\"name\":\"abc\","
         "\"ticker\":\"TEST\",\"uid\":\"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa\"},{\"forQualInvestorFlag\":false,\"lot\":10,"
         "\"minPriceIncrement\":{\"nano\":500000000,\"units\":0},\"name\":\"def\",\"ticker\":\"MAGA\",\"uid\":\"bbbbbbbb-bbbb-"
         "bbbb-bbbb-bbbbbbbbbbbb\"},{\"forQualInvestorFlag\":true,\"lot\":100,\"minPriceIncrement\":{\"nano\":500000000,\"units\":"
         "1},\"name\":\"aaaa\",\"ticker\":\"HNYA\",\"uid\":\"cccccccc-cccc-cccc-cccc-cccccccccccc\"}]";
-    QByteArray stocksBytes = stocksStr.toUtf8();
+    const QByteArray stocksBytes = stocksStr.toUtf8();
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
@@ -620,7 +620,7 @@ TEST_F(Test_StocksDatabase, Test_appendStockData)
     stock.data << stockData1;
     data << stockData2 << stockData3 << stockData4;
 
-    qint64 fileSize = data.size() * sizeof(StockData);
+    const qint64 fileSize = data.size() * sizeof(StockData);
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
@@ -679,7 +679,7 @@ TEST_F(Test_StocksDatabase, Test_writeStockData)
     stock.meta.uid = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
     stock.data << stockData1 << stockData2 << stockData3 << stockData4;
 
-    qint64 fileSize = stock.data.size() * sizeof(StockData);
+    const qint64 fileSize = stock.data.size() * sizeof(StockData);
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeStocksMeta
 
@@ -692,4 +692,4 @@ TEST_F(Test_StocksDatabase, Test_writeStockData)
 
     database->writeStockData(stock);
 }
-// NOLINTEND(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
+// NOLINTEND(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)

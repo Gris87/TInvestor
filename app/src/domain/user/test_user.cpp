@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_User, Test_constructor_and_destructor)
 {
-    User user;
+    const User user;
 
     // clang-format off
     ASSERT_EQ(user.token,                "");
@@ -27,7 +28,7 @@ TEST(Test_User, Test_copy_constructor)
     user.tariff               = "admin";
     user.commission           = 0.01f;
 
-    User user2(user);
+    const User user2(user);
 
     // clang-format off
     ASSERT_EQ(user2.token,                "TOKEN");
@@ -137,3 +138,4 @@ TEST(Test_User, Test_equals)
     user2.commission = 0.01f;
     ASSERT_EQ(user, user2);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

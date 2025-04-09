@@ -30,7 +30,7 @@ StartAutoPilotDialog::~StartAutoPilotDialog()
     delete ui;
 }
 
-void StartAutoPilotDialog::on_accountComboBox_currentIndexChanged(int index)
+void StartAutoPilotDialog::on_accountComboBox_currentIndexChanged(int index) const
 {
     QStringList items;
 
@@ -52,7 +52,7 @@ void StartAutoPilotDialog::on_accountComboBox_currentIndexChanged(int index)
     ui->anotherAccountComboBox->setCurrentIndex(0);
 }
 
-void StartAutoPilotDialog::on_followRadioButton_toggled(bool checked)
+void StartAutoPilotDialog::on_followRadioButton_toggled(bool checked) const
 {
     ui->followWidget->setEnabled(checked);
 }
@@ -75,7 +75,7 @@ QStringList StartAutoPilotDialog::getAccounts()
 {
     QStringList res;
 
-    QMutexLocker          lock(mUserStorage->getMutex());
+    const QMutexLocker    lock(mUserStorage->getMutex());
     const QList<Account>& accounts = mUserStorage->getAccounts();
 
     res.reserve(accounts.size());

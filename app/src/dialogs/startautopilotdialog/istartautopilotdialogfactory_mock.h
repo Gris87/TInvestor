@@ -24,6 +24,6 @@ public:
         std::shared_ptr<IStartAutoPilotDialog>,
         newInstance,
         (IUserStorage * userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent),
-        (override)
+        (const, override)
     );
 };

@@ -5,7 +5,8 @@
 
 
 
-#define DATE_FORMAT "yyyy-MM-dd"
+const QString DATE_FORMAT = "yyyy-MM-dd";
+constexpr int START_MONEY = 100000;
 
 
 
@@ -28,12 +29,12 @@ StartSimulationDialog::~StartSimulationDialog()
     delete ui;
 }
 
-void StartSimulationDialog::on_dateRangeRadioButton_toggled(bool checked)
+void StartSimulationDialog::on_dateRangeRadioButton_toggled(bool checked) const
 {
     ui->dateRangeWidget->setEnabled(checked);
 }
 
-void StartSimulationDialog::on_fromDateEdit_dateChanged(const QDate& date)
+void StartSimulationDialog::on_fromDateEdit_dateChanged(const QDate& date) const
 {
     if (date > ui->toDateEdit->date())
     {
@@ -41,7 +42,7 @@ void StartSimulationDialog::on_fromDateEdit_dateChanged(const QDate& date)
     }
 }
 
-void StartSimulationDialog::on_toDateEdit_dateChanged(const QDate& date)
+void StartSimulationDialog::on_toDateEdit_dateChanged(const QDate& date) const
 {
     if (date < ui->fromDateEdit->date())
     {
@@ -73,13 +74,13 @@ void StartSimulationDialog::loadWindowState()
 {
     qDebug() << "Loading window state";
 
-    int currentYear = QDateTime::currentDateTime().date().year();
+    const int currentYear = QDateTime::currentDateTime().date().year();
 
-    QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
-    QString defaultToDate   = QString("%1-01-01").arg(currentYear);
+    const QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
+    const QString defaultToDate   = QString("%1-01-01").arg(currentYear);
 
     // clang-format off
-    ui->startMoneySpinBox->setValue(mSettingsEditor->value("StartSimulationDialog/startMoney",           100000).toInt());
+    ui->startMoneySpinBox->setValue(mSettingsEditor->value("StartSimulationDialog/startMoney",           START_MONEY).toInt());
     ui->dateRangeRadioButton->setChecked(mSettingsEditor->value("StartSimulationDialog/dateRange",       false).toBool());
     ui->fromDateEdit->setDate(QDate::fromString(mSettingsEditor->value("StartSimulationDialog/fromDate", defaultFromDate).toString(), DATE_FORMAT));
     ui->toDateEdit->setDate(QDate::fromString(mSettingsEditor->value("StartSimulationDialog/toDate",     defaultToDate).toString(),   DATE_FORMAT));

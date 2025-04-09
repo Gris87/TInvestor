@@ -11,26 +11,6 @@ Account::Account() :
 {
 }
 
-Account::Account(const Account& another) :
-    id(another.id),
-    idHash(another.idHash),
-    name(another.name)
-{
-}
-
-Account::~Account()
-{
-}
-
-Account& Account::operator=(const Account& another)
-{
-    id     = another.id;
-    idHash = another.idHash;
-    name   = another.name;
-
-    return *this;
-}
-
 void Account::setId(const QString& value)
 {
     id     = value;

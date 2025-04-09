@@ -11,29 +11,3 @@ StockOperational::StockOperational() :
     detailedData()
 {
 }
-
-StockOperational::StockOperational(const StockOperational& another) :
-    lastStoredTimestamp(another.lastStoredTimestamp),
-    dayStartPrice(another.dayStartPrice),
-    specifiedDatePrice(another.specifiedDatePrice),
-    turnover(another.turnover),
-    payback(another.payback),
-    detailedData(another.detailedData)
-{
-}
-
-StockOperational::~StockOperational()
-{
-}
-
-StockOperational& StockOperational::operator=(const StockOperational& another)
-{
-    lastStoredTimestamp = another.lastStoredTimestamp;
-    dayStartPrice       = another.dayStartPrice;
-    specifiedDatePrice  = another.specifiedDatePrice;
-    turnover            = another.turnover;
-    payback             = another.payback;
-    detailedData        = another.detailedData;
-
-    return *this;
-}

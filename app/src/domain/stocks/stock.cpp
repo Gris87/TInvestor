@@ -25,9 +25,12 @@ Stock::~Stock()
 
 Stock& Stock::operator=(const Stock& another)
 {
-    meta        = another.meta;
-    operational = another.operational;
-    data        = another.data;
+    if (&another != this)
+    {
+        meta        = another.meta;
+        operational = another.operational;
+        data        = another.data;
+    }
 
     return *this;
 }

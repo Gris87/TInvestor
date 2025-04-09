@@ -14,9 +14,7 @@
 class IDecisionMakerConfig
 {
 public:
-    IDecisionMakerConfig()
-    {
-    }
+    IDecisionMakerConfig()          = default;
     virtual ~IDecisionMakerConfig() = default;
 
     IDecisionMakerConfig(const IDecisionMakerConfig& another)            = delete;

@@ -93,7 +93,7 @@ public:
     MainWindow(const MainWindow& another)            = delete;
     MainWindow& operator=(const MainWindow& another) = delete;
 
-    void closeEvent(QCloseEvent* event);
+    void closeEvent(QCloseEvent* event) override;
     void init();
 
     void updateStocksTableWidget();

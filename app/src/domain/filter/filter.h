@@ -21,10 +21,12 @@ struct Filter
     Filter(const Filter& another) = default;
     ~Filter()                     = default;
 
-    Filter& operator=(const Filter& another);
+    Filter& operator=(const Filter& another) = default;
 
+    [[nodiscard]]
     bool isActive() const;
 
+    [[nodiscard]]
     bool isFiltered(
         const QString& t,
         const QString& name,

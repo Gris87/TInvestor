@@ -6,9 +6,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_StockMeta, Test_constructor_and_destructor)
 {
-    StockMeta stockMeta;
+    const StockMeta stockMeta;
 
     // clang-format off
     ASSERT_EQ(stockMeta.uid,                     "");
@@ -33,7 +34,7 @@ TEST(Test_StockMeta, Test_copy_constructor)
     stockMeta.minPriceIncrement.units = 2;
     stockMeta.minPriceIncrement.nano  = 3;
 
-    StockMeta stockMeta2(stockMeta);
+    const StockMeta stockMeta2(stockMeta);
 
     // clang-format off
     ASSERT_EQ(stockMeta2.uid,                     "a");
@@ -86,12 +87,11 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     ASSERT_EQ(stockMeta.minPriceIncrement.nano,  0);
     // clang-format on
 
-    QString content =
-        "{\"forQualInvestorFlag\":true,\"lot\":1,\"minPriceIncrement\":{\"nano\":3,\"units\":2},\"name\":\"c\",\"ticker\":\"b\","
-        "\"uid\":\"a\"}";
+    const QString content =
+        R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
 
-    QJsonParseError parseError;
-    QJsonDocument   jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    QJsonParseError     parseError;
+    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
 
     ASSERT_EQ(parseError.error, QJsonParseError::NoError);
     stockMeta.fromJsonObject(jsonDoc.object());
@@ -119,13 +119,12 @@ TEST(Test_StockMeta, Test_toJsonObject)
     stockMeta.minPriceIncrement.units = 2;
     stockMeta.minPriceIncrement.nano  = 3;
 
-    QJsonObject   jsonObject = stockMeta.toJsonObject();
-    QJsonDocument jsonDoc(jsonObject);
+    const QJsonObject   jsonObject = stockMeta.toJsonObject();
+    const QJsonDocument jsonDoc(jsonObject);
 
-    QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
-    QString expectedContent =
-        "{\"forQualInvestorFlag\":true,\"lot\":1,\"minPriceIncrement\":{\"nano\":3,\"units\":2},\"name\":\"c\",\"ticker\":\"b\","
-        "\"uid\":\"a\"}";
+    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString expectedContent =
+        R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -188,3 +187,4 @@ TEST(Test_StockMeta, Test_equals)
     stockMeta2.minPriceIncrement.nano = 3;
     ASSERT_EQ(stockMeta, stockMeta2);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

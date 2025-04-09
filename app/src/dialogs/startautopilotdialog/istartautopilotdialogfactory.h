@@ -21,5 +21,5 @@ public:
 
     virtual std::shared_ptr<IStartAutoPilotDialog> newInstance(
         IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent
-    ) = 0;
+    ) const = 0;
 };

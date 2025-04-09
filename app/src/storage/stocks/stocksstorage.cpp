@@ -6,7 +6,8 @@
 
 
 
-#define ONE_DAY_DOUBLE 86400000.0 // 24 * 60 * 60 * 1000 // 1 day
+constexpr double ONE_DAY_DOUBLE             = 86400000.0; // 24 * 60 * 60 * 1000 // 1 day
+constexpr float  TWO_COMMISSIONS_IN_PERCENT = 2 / 100.0f;
 
 
 
@@ -26,9 +27,9 @@ StocksStorage::~StocksStorage()
 
     delete mMutex;
 
-    for (int i = 0; i < mStocks.size(); ++i)
+    for (Stock* stock : mStocks)
     {
-        delete mStocks.at(i);
+        delete stock;
     }
 }
 
@@ -57,40 +58,38 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 
     newMetas.reserve(stocksMeta.size());
 
-    for (int i = 0; i < mStocks.size(); ++i)
+    for (Stock* stock : mStocks)
     {
-        StockMeta* existingMeta          = &mStocks[i]->meta;
+        StockMeta* existingMeta          = &stock->meta;
         existingMetas[existingMeta->uid] = existingMeta;
     }
 
-    for (int i = 0; i < stocksMeta.size(); ++i)
+    for (const StockMeta& newMeta : stocksMeta)
     {
-        const StockMeta* newMeta = &stocksMeta.at(i);
-
-        if (existingMetas.contains(newMeta->uid))
+        if (existingMetas.contains(newMeta.uid))
         {
-            StockMeta* existingMeta = existingMetas[newMeta->uid];
+            StockMeta* existingMeta = existingMetas[newMeta.uid];
 
-            if (*existingMeta != *newMeta)
+            if (*existingMeta != newMeta)
             {
                 changed = true;
 
-                *existingMeta = *newMeta;
+                *existingMeta = newMeta;
             }
         }
         else
         {
             changed = true;
 
-            newMetas.append(newMeta);
+            newMetas.append(&newMeta);
         }
     }
 
-    for (int i = 0; i < newMetas.size(); ++i)
+    for (const StockMeta* newMeta : newMetas)
     {
         Stock* stock = new Stock(); // StocksStorage will take ownership
 
-        stock->meta = *newMetas.at(i);
+        stock->meta = *newMeta;
 
         mStocks.append(stock);
     }
@@ -114,11 +113,11 @@ struct DeleteObsoleteDataInfo
     qint64           obsoleteTimestamp;
 };
 
-void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
     IStocksDatabase*        stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
-    qint64                  obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
+    const qint64            obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
     Stock** stockArray = stocks.data();
 
@@ -143,6 +142,7 @@ void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks,
     }
 }
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::deleteObsoleteData(qint64 timestamp)
 {
     qDebug() << "Deleting obsolete stocks data";
@@ -153,16 +153,18 @@ void StocksStorage::deleteObsoleteData(qint64 timestamp)
 
     processInParallel(mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct CleanupOperationalDataInfo
 {
     qint64 obsoleteTimestamp;
 };
 
-void cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void
+cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
-    qint64                      obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
+    const qint64                obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
 
     Stock** stockArray = stocks.data();
 
@@ -186,6 +188,7 @@ void cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& sto
     }
 }
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::cleanupOperationalData(qint64 timestamp)
 {
     qDebug() << "Cleanup operational data";
@@ -195,6 +198,7 @@ void StocksStorage::cleanupOperationalData(qint64 timestamp)
 
     processInParallel(mStocks, cleanupOperationalDataForParallel, &cleanupOperationalDataInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetDatePriceInfo
 {
@@ -202,11 +206,11 @@ struct GetDatePriceInfo
     bool   isDayStartNeeded;
 };
 
-void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
-    qint64            startTimestamp   = getDatePriceInfo->startTimestamp;
-    bool              isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
+    const qint64      startTimestamp   = getDatePriceInfo->startTimestamp;
+    const bool        isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
 
     Stock** stockArray = stocks.data();
 
@@ -242,6 +246,7 @@ void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int s
     }
 }
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo;
@@ -250,6 +255,7 @@ void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
@@ -265,10 +271,10 @@ struct GetTurnoverInfo
     qint64 startTimestamp;
 };
 
-void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
-    qint64           startTimestamp  = getTurnoverInfo->startTimestamp;
+    const qint64     startTimestamp  = getTurnoverInfo->startTimestamp;
 
     Stock** stockArray = stocks.data();
 
@@ -299,13 +305,14 @@ void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int st
                 totalTurnover += qRound64(stock->data.at(i).quantity * stock->data.at(i).price);
             }
 
-            qint64 deltaTimestamp = stock->data.constLast().timestamp - stock->data.at(index).timestamp;
+            const qint64 deltaTimestamp = stock->data.constLast().timestamp - stock->data.at(index).timestamp;
 
             stock->operational.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
         }
     }
 }
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainTurnover(qint64 timestamp)
 {
     GetTurnoverInfo getTurnoverInfo;
@@ -313,6 +320,7 @@ void StocksStorage::obtainTurnover(qint64 timestamp)
 
     processInParallel(mStocks, getTurnoverForParallel, &getTurnoverInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetPaybackInfo
 {
@@ -320,14 +328,14 @@ struct GetPaybackInfo
     qint64        startTimestamp;
 };
 
-void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
     IUserStorage*   userStorage    = getPaybackInfo->userStorage;
-    qint64          startTimestamp = getPaybackInfo->startTimestamp;
+    const qint64    startTimestamp = getPaybackInfo->startTimestamp;
 
     userStorage->getMutex()->lock();
-    float commission = userStorage->getCommission();
+    const float commission = userStorage->getCommission();
     userStorage->getMutex()->unlock();
 
     Stock** stockArray = stocks.data();
@@ -357,7 +365,7 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
 
             for (int i = index; i < stock->data.size() - 1; ++i)
             {
-                float expectedPrice = stock->data.at(i).price * (1 + commission * 0.02f); // 2 / 100.0 (2 commissions)
+                const float expectedPrice = stock->data.at(i).price * (1 + commission * TWO_COMMISSIONS_IN_PERCENT);
 
                 for (int j = i + 1; j < stock->data.size(); ++j)
                 {
@@ -375,6 +383,7 @@ void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     }
 }
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainPayback(qint64 timestamp)
 {
     GetPaybackInfo getPaybackInfo;
@@ -383,3 +392,4 @@ void StocksStorage::obtainPayback(qint64 timestamp)
 
     processInParallel(mStocks, getPaybackForParallel, &getPaybackInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

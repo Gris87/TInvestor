@@ -8,24 +8,6 @@ Quotation::Quotation() :
 {
 }
 
-Quotation::Quotation(const Quotation& another) :
-    units(another.units),
-    nano(another.nano)
-{
-}
-
-Quotation::~Quotation()
-{
-}
-
-Quotation& Quotation::operator=(const Quotation& another)
-{
-    units = another.units;
-    nano  = another.nano;
-
-    return *this;
-}
-
 void Quotation::fromJsonObject(const QJsonObject& jsonObject)
 {
     units = jsonObject.value("units").toInt(0);

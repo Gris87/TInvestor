@@ -8,13 +8,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_StartSimulationDialog : public ::testing::Test
 {
 protected:
@@ -64,9 +63,9 @@ TEST_F(Test_StartSimulationDialog, Test_on_dateRangeRadioButton_toggled)
 
 TEST_F(Test_StartSimulationDialog, Test_on_fromDateEdit_dateChanged)
 {
-    QDate fromDate(2024, 1, 1);
-    QDate toDate(2025, 1, 1);
-    QDate newDate(2026, 1, 1);
+    const QDate fromDate(2024, 1, 1);
+    const QDate toDate(2025, 1, 1);
+    const QDate newDate(2026, 1, 1);
 
     dialog->ui->fromDateEdit->setDate(fromDate);
     dialog->ui->toDateEdit->setDate(toDate);
@@ -86,9 +85,9 @@ TEST_F(Test_StartSimulationDialog, Test_on_fromDateEdit_dateChanged)
 
 TEST_F(Test_StartSimulationDialog, Test_on_toDateEdit_dateChanged)
 {
-    QDate fromDate(2024, 1, 1);
-    QDate toDate(2025, 1, 1);
-    QDate newDate(2023, 1, 1);
+    const QDate fromDate(2024, 1, 1);
+    const QDate toDate(2025, 1, 1);
+    const QDate newDate(2023, 1, 1);
 
     dialog->ui->fromDateEdit->setDate(fromDate);
     dialog->ui->toDateEdit->setDate(toDate);
@@ -118,3 +117,4 @@ TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
 
     dialog->ui->startButton->click();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

@@ -11,9 +11,7 @@
 class IStocksStorage
 {
 public:
-    IStocksStorage()
-    {
-    }
+    IStocksStorage()          = default;
     virtual ~IStocksStorage() = default;
 
     IStocksStorage(const IStocksStorage& another)            = delete;

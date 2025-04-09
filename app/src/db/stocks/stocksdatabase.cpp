@@ -10,7 +10,7 @@
 
 
 
-constexpr qsizetype AMOUNT_OF_DATA_PER_DAY = 24 * 60; // Amount of minutes in day
+constexpr qsizetype AMOUNT_OF_DATA_PER_DAY = 24LL * 60LL; // Amount of minutes in day
 
 
 
@@ -70,7 +70,7 @@ QList<Stock*> StocksDatabase::readStocksMeta()
 
 struct ReadStocksDataInfo
 {
-    ReadStocksDataInfo(IFileFactory* fileFactory)
+    explicit ReadStocksDataInfo(IFileFactory* fileFactory)
     {
         this->fileFactory = fileFactory;
     }

@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_OrderBook, Test_constructor_and_destructor)
 {
-    OrderBook orderbook;
+    const OrderBook orderbook;
 
     // clang-format off
     ASSERT_EQ(orderbook.timestamp,   0);
@@ -33,7 +34,7 @@ TEST(Test_OrderBook, Test_copy_constructor)
     orderbook.bids.append(orderbookData1);
     orderbook.asks.append(orderbookData2);
 
-    OrderBook orderbook2(orderbook);
+    const OrderBook orderbook2(orderbook);
 
     // clang-format off
     ASSERT_EQ(orderbook.timestamp,           1);
@@ -78,3 +79,4 @@ TEST(Test_OrderBook, Test_assign)
     ASSERT_NEAR(orderbook.asks.at(0).price,  6.0f, 0.0001f);
     // clang-format on
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

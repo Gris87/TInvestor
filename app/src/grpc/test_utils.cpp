@@ -4,6 +4,7 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_GrpcUtils, Test_quotationToFloat)
 {
     tinkoff::Quotation quotation;
@@ -18,3 +19,4 @@ TEST(Test_GrpcUtils, Test_quotationToFloat)
 
     ASSERT_NEAR(quotationToFloat(quotation), 0.01f, 0.0001f);
 }
+// NOLINTEND(readability-magic-numbers)

@@ -7,6 +7,10 @@
 
 
 
+constexpr QChar RUBLE = QChar(0x20BD);
+
+
+
 OrderWavesDialog::OrderWavesDialog(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
@@ -53,7 +57,7 @@ OrderWavesDialog::~OrderWavesDialog()
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
     ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss"));
-    ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + QChar(0x20BD));
+    ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE);
 
     mOrderWavesWidget->orderBookChanged(orderBook);
 }

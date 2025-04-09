@@ -12,9 +12,7 @@
 class IUserStorage
 {
 public:
-    explicit IUserStorage()
-    {
-    }
+    explicit IUserStorage() = default;
     virtual ~IUserStorage() = default;
 
     IUserStorage(const IUserStorage& another)            = delete;

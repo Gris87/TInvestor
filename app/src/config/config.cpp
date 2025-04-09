@@ -5,11 +5,38 @@
 
 
 
+constexpr bool AUTORUN_DEFAULT                  = true;
+constexpr int  MAKE_DECISION_TIMEOUT_DEFAULT    = 1;
+constexpr bool USE_SCHEDULE_DEFAULT             = true;
+constexpr int  SCHEDULE_START_HOUR_DEFAULT      = 10;
+constexpr int  SCHEDULE_START_MINUTE_DEFAULT    = 0;
+constexpr int  SCHEDULE_END_HOUR_DEFAULT        = 18;
+constexpr int  SCHEDULE_END_MINUTE_DEFAULT      = 40;
+constexpr bool LIMIT_STOCK_PURCHASE_DEFAULT     = true;
+constexpr int  AMOUNT_OF_STOCK_PURCHASE_DEFAULT = 10000;
+constexpr int  STORAGE_MONTH_LIMIT_DEFAULT      = 12;
+constexpr bool SIMULATOR_CONFIG_COMMON_DEFAULT  = true;
+constexpr bool AUTOPILOT_CONFIG_COMMON_DEFAULT  = false;
+
+
+
 Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* autoPilotConfig) :
     IConfig(),
     mMutex(new QMutex()),
     mSimulatorConfig(simulatorConfig),
-    mAutoPilotConfig(autoPilotConfig)
+    mAutoPilotConfig(autoPilotConfig),
+    mAutorun(),
+    mMakeDecisionTimeout(),
+    mUseSchedule(),
+    mScheduleStartHour(),
+    mScheduleStartMinute(),
+    mScheduleEndHour(),
+    mScheduleEndMinute(),
+    mLimitStockPurchase(),
+    mAmountOfStockPurchase(),
+    mStorageMonthLimit(),
+    mSimulatorConfigCommon(),
+    mAutoPilotConfigCommon()
 {
     qDebug() << "Create Config";
 }
@@ -55,18 +82,18 @@ void Config::makeDefault()
     mSimulatorConfig->makeDefault();
     mAutoPilotConfig->makeDefault();
 
-    mAutorun               = true;
-    mMakeDecisionTimeout   = 1;
-    mUseSchedule           = true;
-    mScheduleStartHour     = 10;
-    mScheduleStartMinute   = 0;
-    mScheduleEndHour       = 18;
-    mScheduleEndMinute     = 40;
-    mLimitStockPurchase    = true;
-    mAmountOfStockPurchase = 10000;
-    mStorageMonthLimit     = 12;
-    mSimulatorConfigCommon = true;
-    mAutoPilotConfigCommon = false;
+    mAutorun               = AUTORUN_DEFAULT;
+    mMakeDecisionTimeout   = MAKE_DECISION_TIMEOUT_DEFAULT;
+    mUseSchedule           = USE_SCHEDULE_DEFAULT;
+    mScheduleStartHour     = SCHEDULE_START_MINUTE_DEFAULT;
+    mScheduleStartMinute   = SCHEDULE_START_MINUTE_DEFAULT;
+    mScheduleEndHour       = SCHEDULE_END_HOUR_DEFAULT;
+    mScheduleEndMinute     = SCHEDULE_END_MINUTE_DEFAULT;
+    mLimitStockPurchase    = LIMIT_STOCK_PURCHASE_DEFAULT;
+    mAmountOfStockPurchase = AMOUNT_OF_STOCK_PURCHASE_DEFAULT;
+    mStorageMonthLimit     = STORAGE_MONTH_LIMIT_DEFAULT;
+    mSimulatorConfigCommon = SIMULATOR_CONFIG_COMMON_DEFAULT;
+    mAutoPilotConfigCommon = AUTOPILOT_CONFIG_COMMON_DEFAULT;
 }
 
 void Config::save(ISettingsEditor* settingsEditor)

@@ -6,9 +6,10 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_Quotation, Test_constructor_and_destructor)
 {
-    Quotation quotation;
+    const Quotation quotation;
 
     ASSERT_EQ(quotation.units, 0);
     ASSERT_EQ(quotation.nano, 0);
@@ -21,7 +22,7 @@ TEST(Test_Quotation, Test_copy_constructor)
     quotation.units = 1;
     quotation.nano  = 2;
 
-    Quotation quotation2(quotation);
+    const Quotation quotation2(quotation);
 
     ASSERT_EQ(quotation2.units, 1);
     ASSERT_EQ(quotation2.nano, 2);
@@ -48,10 +49,10 @@ TEST(Test_Quotation, Test_fromJsonObject)
     ASSERT_EQ(quotation.units, 0);
     ASSERT_EQ(quotation.nano, 0);
 
-    QString content = "{\"nano\":2,\"units\":1}";
+    const QString content = R"({"nano":2,"units":1})";
 
     QJsonParseError parseError;
-    QJsonDocument   jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
 
     ASSERT_EQ(parseError.error, QJsonParseError::NoError);
     quotation.fromJsonObject(jsonDoc.object());
@@ -67,11 +68,11 @@ TEST(Test_Quotation, Test_toJsonObject)
     quotation.units = 1;
     quotation.nano  = 2;
 
-    QJsonObject   jsonObject = quotation.toJsonObject();
-    QJsonDocument jsonDoc(jsonObject);
+    const QJsonObject   jsonObject = quotation.toJsonObject();
+    const QJsonDocument jsonDoc(jsonObject);
 
-    QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
-    QString expectedContent = "{\"nano\":2,\"units\":1}";
+    const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString expectedContent = R"({"nano":2,"units":1})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -99,3 +100,4 @@ TEST(Test_Quotation, Test_equals)
     quotation2.nano = 2;
     ASSERT_EQ(quotation, quotation2);
 }
+// NOLINTEND(readability-magic-numbers)

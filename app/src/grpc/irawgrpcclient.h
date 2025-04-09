@@ -15,26 +15,23 @@
 
 
 
-#ifndef USE_SANDBOX
-#define ADDRESS "invest-public-api.tinkoff.ru:443"
-#else
-#define ADDRESS "sandbox-invest-public-api.tinkoff.ru:443"
-#endif
-
-#define MAX_LIMIT_FOR_INTERVAL_1_MIN 2400
+extern const char* GRPC_ADDRESS;
+extern const int   MAX_LIMIT_FOR_INTERVAL_1_MIN;
 
 
 
+// NOLINTBEGIN(google-build-using-namespace)
 namespace tinkoff
 {
 using namespace tinkoff::public_::invest::api::contract::v1;
 }
+// NOLINTEND(google-build-using-namespace)
 
 
 
 struct MarketDataStream
 {
-    typedef std::unique_ptr<grpc::ClientReaderWriter<tinkoff::MarketDataRequest, tinkoff::MarketDataResponse>> Stream;
+    using Stream = std::unique_ptr<grpc::ClientReaderWriter<tinkoff::MarketDataRequest, tinkoff::MarketDataResponse>>;
 
     grpc::ClientContext context;
     Stream              stream;
@@ -45,9 +42,7 @@ struct MarketDataStream
 class IRawGrpcClient
 {
 public:
-    explicit IRawGrpcClient()
-    {
-    }
+    explicit IRawGrpcClient() = default;
     virtual ~IRawGrpcClient() = default;
 
     IRawGrpcClient(const IRawGrpcClient& another)            = delete;

@@ -15,5 +15,5 @@ public:
     StartSimulationDialogFactory(const StartSimulationDialogFactory& another)            = delete;
     StartSimulationDialogFactory& operator=(const StartSimulationDialogFactory& another) = delete;
 
-    std::shared_ptr<IStartSimulationDialog> newInstance(ISettingsEditor* settingsEditor, QWidget* parent) override;
+    std::shared_ptr<IStartSimulationDialog> newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const override;
 };
