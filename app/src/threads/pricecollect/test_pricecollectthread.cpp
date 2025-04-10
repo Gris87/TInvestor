@@ -30,6 +30,7 @@ using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_PriceCollectThread : public ::testing::Test
 {
 protected:
@@ -118,7 +119,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     QMutex mutex;
 
-    std::shared_ptr<tinkoff::SharesResponse> sharesResponse(new tinkoff::SharesResponse());
+    const std::shared_ptr<tinkoff::SharesResponse> sharesResponse(new tinkoff::SharesResponse());
     tinkoff::Share*                          share = sharesResponse->add_instruments();
 
     tinkoff::Quotation* minPriceIncrement = new tinkoff::Quotation(); // share will take ownership
@@ -169,7 +170,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     QuaZip zip;
 
-    std::shared_ptr<tinkoff::GetCandlesResponse> getCandlesResponse(new tinkoff::GetCandlesResponse());
+    const std::shared_ptr<tinkoff::GetCandlesResponse> getCandlesResponse(new tinkoff::GetCandlesResponse());
     tinkoff::HistoricCandle*                     candle = getCandlesResponse->add_candles();
 
     tinkoff::Quotation* price = new tinkoff::Quotation(); // marketDataResponse will take ownership
@@ -184,7 +185,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     candle->set_allocated_time(time);
     candle->set_allocated_close(price);
 
-    std::shared_ptr<tinkoff::GetCandlesResponse> emptyCandlesResponse(new tinkoff::GetCandlesResponse());
+    const std::shared_ptr<tinkoff::GetCandlesResponse> emptyCandlesResponse(new tinkoff::GetCandlesResponse());
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread())).WillOnce(Return(sharesResponse));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/stocks/logos/aaaaa.png").arg(appDir)))
@@ -273,7 +274,7 @@ TEST_F(Test_PriceCollectThread, Test_downloadLogo)
 
     StrictMock<FileMock>*  logoFileMock    = new StrictMock<FileMock>();
     StrictMock<FileMock>*  noImageFileMock = new StrictMock<FileMock>(); // Will be deleted in downloadLogo
-    std::shared_ptr<IFile> sharedLogoFile(logoFileMock);
+    const std::shared_ptr<IFile> sharedLogoFile(logoFileMock);
 
     HttpResult httpResult;
     httpResult.statusCode = 200;
@@ -321,3 +322,4 @@ TEST_F(Test_PriceCollectThread, Test_notifyAboutChanges)
     thread->notifyAboutChanges(true, false);
     thread->notifyAboutChanges(true, true);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

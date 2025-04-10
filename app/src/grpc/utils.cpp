@@ -2,7 +2,7 @@
 
 
 
-constexpr qint64 MS_IN_SECOND = 1000;
+constexpr qint64 MS_IN_SECOND = 1000LL;
 constexpr qint32 NANOS_IN_MS  = 1000000;
 constexpr float  NANOS_FLOAT  = 1000000000.0f;
 

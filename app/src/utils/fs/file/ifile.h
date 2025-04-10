@@ -10,9 +10,7 @@
 class IFile
 {
 public:
-    IFile()
-    {
-    }
+    IFile()          = default;
     virtual ~IFile() = default;
 
     IFile(const IFile& another)            = delete;

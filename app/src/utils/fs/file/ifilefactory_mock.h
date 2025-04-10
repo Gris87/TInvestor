@@ -20,5 +20,5 @@ public:
     FileFactoryMock(const FileFactoryMock& another)            = delete;
     FileFactoryMock& operator=(const FileFactoryMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<IFile>, newInstance, (const QString& name), (override));
+    MOCK_METHOD(std::shared_ptr<IFile>, newInstance, (const QString& name), (const, override));
 };

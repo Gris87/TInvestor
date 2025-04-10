@@ -15,5 +15,5 @@ public:
     QZipFileFactory(const QZipFileFactory& another)            = delete;
     QZipFileFactory& operator=(const QZipFileFactory& another) = delete;
 
-    std::shared_ptr<IQZipFile> newInstance(QuaZip* zip) override;
+    std::shared_ptr<IQZipFile> newInstance(QuaZip* zip) const override;
 };

@@ -7,11 +7,18 @@
 
 
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
+
+
+
 LastPriceThread::LastPriceThread(IStocksStorage* stocksStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent) :
     ILastPriceThread(parent),
     mStocksStorage(stocksStorage),
     mTimeUtils(timeUtils),
-    mGrpcClient(grpcClient)
+    mGrpcClient(grpcClient),
+    mMarketDataStream(),
+    mNeedToRebuildStocksMap()
 {
     qDebug() << "Create LastPriceThread";
 }
@@ -36,7 +43,7 @@ void LastPriceThread::run()
             break;
         }
 
-        if (mTimeUtils->interruptibleSleep(5000, QThread::currentThread()))
+        if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
         {
             break;
         }
@@ -62,7 +69,7 @@ void LastPriceThread::run()
                 mNeedToRebuildStocksMap = false;
             }
 
-            std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
+            const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
                 mGrpcClient->readMarketDataStream(mMarketDataStream);
 
             if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)
@@ -74,12 +81,12 @@ void LastPriceThread::run()
             {
                 const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
 
-                StockOperationalData stockData;
+                StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
                 stockData.timestamp = timeToTimestamp(lastPriceResp.time());
                 stockData.price     = quotationToFloat(lastPriceResp.price());
 
-                QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
+                const QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
 
                 Stock* stock = stocksMap[uid];
 
@@ -101,8 +108,8 @@ QStringList LastPriceThread::getStockUIDs()
 {
     QStringList res;
 
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
+    const QMutexLocker   lock(mStocksStorage->getMutex());
+    const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     res.reserve(stocks.size());
     res.resizeForOverwrite(stocks.size());
@@ -119,13 +126,11 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 {
     QMap<QString, Stock*> res; // UID => Stock
 
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
+    const QMutexLocker   lock(mStocksStorage->getMutex());
+    const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
-    for (int i = 0; i < stocks.size(); ++i)
+    for (Stock* stock : stocks)
     {
-        Stock* stock = stocks.at(i);
-
         res[stock->meta.uid] = stock;
     }
 

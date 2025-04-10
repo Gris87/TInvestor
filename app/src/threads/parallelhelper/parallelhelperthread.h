@@ -10,7 +10,7 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    typedef void (*ActionType)(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs);
+    using ActionType = void (*)(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
         ActionType action,
@@ -31,9 +31,7 @@ public:
     {
     }
 
-    ~ParallelHelperThread()
-    {
-    }
+    ~ParallelHelperThread() = default;
 
     ParallelHelperThread(const ParallelHelperThread& another)            = delete;
     ParallelHelperThread& operator=(const ParallelHelperThread& another) = delete;

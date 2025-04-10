@@ -9,9 +9,7 @@
 class IDir
 {
 public:
-    IDir()
-    {
-    }
+    IDir()          = default;
     virtual ~IDir() = default;
 
     IDir(const IDir& another)            = delete;

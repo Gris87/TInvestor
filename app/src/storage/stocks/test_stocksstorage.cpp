@@ -15,7 +15,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)
 class Test_StocksStorage : public ::testing::Test
 {
 protected:
@@ -465,7 +465,7 @@ TEST_F(Test_StocksStorage, Test_appendStockData)
     const InSequence seq;
 
     Stock     stock;
-    StockData stockData;
+    const StockData stockData{};
 
     EXPECT_CALL(*stocksDatabaseMock, appendStockData(&stock, &stockData, 1));
 
@@ -528,7 +528,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     for (int i = 0; i < 3; ++i)
     {
         Stock* stock    = stocksDB.at(i);
-        int    dataSize = timestamps[i].size();
+        const int dataSize = timestamps[i].size();
 
         for (int j = 0; j < dataSize; ++j)
         {
@@ -859,7 +859,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     for (int i = 0; i < 3; ++i)
     {
         Stock* stock    = stocksDB.at(i);
-        int    dataSize = timestamps[i].size();
+        const int dataSize = timestamps[i].size();
 
         for (int j = 0; j < dataSize; ++j)
         {
@@ -2132,4 +2132,4 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)

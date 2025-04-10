@@ -8,12 +8,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_UserUpdateThread : public ::testing::Test
 {
 protected:
@@ -66,14 +66,14 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     accounts << account1 << account2;
 
-    std::shared_ptr<tinkoff::GetInfoResponse> getInfoResponse(new tinkoff::GetInfoResponse());
+    const std::shared_ptr<tinkoff::GetInfoResponse> getInfoResponse(new tinkoff::GetInfoResponse());
 
     getInfoResponse->set_qual_status(true);
     getInfoResponse->add_qualified_for_work_with("blah");
     getInfoResponse->add_qualified_for_work_with("disintegration gun");
     getInfoResponse->set_tariff("premium");
 
-    std::shared_ptr<tinkoff::GetAccountsResponse> getAccountsResponse(new tinkoff::GetAccountsResponse());
+    const std::shared_ptr<tinkoff::GetAccountsResponse> getAccountsResponse(new tinkoff::GetAccountsResponse());
 
     tinkoff::Account* tinkoffAccount1 = getAccountsResponse->add_accounts();
     tinkoff::Account* tinkoffAccount2 = getAccountsResponse->add_accounts();
@@ -98,3 +98,4 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     thread->run();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

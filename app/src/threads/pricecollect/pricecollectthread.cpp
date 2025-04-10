@@ -11,16 +11,27 @@
 
 
 
-#define ONE_MINUTE          60000LL        // 60 * 1000 // 1 minute
-#define ONE_HOUR            3600000LL      // 60 * 60 * 1000 // 1 hour
-#define ONE_DAY             86400000LL     // 24 * 60 * 60 * 1000 // 1 day
-#define ONE_MONTH           2678400000LL   // 31 * 24 * 60 * 60 * 1000 // 31 days
-#define MOSCOW_TIME         (3 * ONE_HOUR) // 3 hours
-#define MAX_GRPC_TIME_LIMIT ONE_MONTH      // 1 month
+constexpr qint64 MS_IN_SECOND        = 1000LL;
+constexpr qint64 ONE_MINUTE          = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR            = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY             = 24LL * ONE_HOUR;
+constexpr qint64 ONE_MONTH           = 31LL * ONE_DAY;
+constexpr qint64 SLEEP_DELAY         = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 MOSCOW_TIME         = 3 * ONE_HOUR;       // 3 hours
+constexpr qint64 MAX_GRPC_TIME_LIMIT = ONE_MONTH;          // 1 month
+constexpr int    HTTP_STATUS_CODE_OK = 200;
 
-#define CSV_FIELD_TIMESTAMP   1
-#define CSV_FIELD_CLOSE_PRICE 3
-#define CSV_FIELD_QUANTITY    6
+
+enum CsvField : qint8
+{
+    CSV_FIELD_FIGI,
+    CSV_FIELD_TIMESTAMP,
+    CSV_FIELD_OPEN_PRICE,
+    CSV_FIELD_CLOSE_PRICE,
+    CSV_FIELD_HIGH_PRICE,
+    CSV_FIELD_LOW_PRICE,
+    CSV_FIELD_VOLUME,
+};
 
 
 
@@ -51,9 +62,9 @@ PriceCollectThread::PriceCollectThread(
 {
     qDebug() << "Create PriceCollectThread";
 
-    std::shared_ptr<IDir> dir = dirFactory->newInstance();
+    const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
-    bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
+    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
     Q_ASSERT_X(ok, "PriceCollectThread::PriceCollectThread()", "Failed to create dir");
 }
 
@@ -68,14 +79,14 @@ void PriceCollectThread::run()
 
     emit notifyStocksProgress(tr("Downloading stocks metadata"));
 
-    std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
+    const std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
 
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
-        bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
+        const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
         cleanupOperationalData();
-        bool needPricesUpdate = obtainStocksDayStartPrice();
+        const bool needPricesUpdate = obtainStocksDayStartPrice();
         obtainTurnover();
         obtainPayback();
 
@@ -87,11 +98,11 @@ void PriceCollectThread::run()
 
 void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile)
 {
-    IHttpClient::Headers headers;
+    const IHttpClient::Headers headers;
 
-    HttpResult httpResult = mHttpClient->download(url, headers);
+    const HttpResult httpResult = mHttpClient->download(url, headers);
 
-    if (httpResult.statusCode == 200 && httpResult.body.size() > 0)
+    if (httpResult.statusCode == HTTP_STATUS_CODE_OK && httpResult.body.size() > 0)
     {
         stockLogoFile->open(QIODevice::WriteOnly);
         stockLogoFile->write(httpResult.body);
@@ -99,7 +110,7 @@ void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFi
     }
     else
     {
-        std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
+        const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
         noImageFile->open(QIODevice::ReadOnly);
 
         stockLogoFile->open(QIODevice::WriteOnly);
@@ -118,15 +129,15 @@ struct DownloadLogosInfo
     QAtomicInt          finished;
 };
 
-void
+static void
 downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& stocks, int start, int end, void* additionalArgs)
 {
     DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
     PriceCollectThread* thread            = downloadLogosInfo->thread;
     IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
-    bool                forceToDownload   = downloadLogosInfo->forceToDownload;
+    const bool          forceToDownload   = downloadLogosInfo->forceToDownload;
 
-    QString appDir = qApp->applicationDirPath();
+    const QString appDir = qApp->applicationDirPath();
 
     const tinkoff::Share** stockArray = stocks.data();
 
@@ -134,14 +145,15 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
     {
         const tinkoff::Share* stock = stockArray[i];
 
-        QString uid = QString::fromStdString(stock->uid());
+        const QString uid = QString::fromStdString(stock->uid());
 
-        std::shared_ptr<IFile> stockLogoFile = fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
+        const std::shared_ptr<IFile> stockLogoFile =
+            fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
 
         if (forceToDownload || !stockLogoFile->exists())
         {
-            QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
-            QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
+            const QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
+            const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
 
             thread->downloadLogo(url, stockLogoFile);
         }
@@ -185,7 +197,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     emit notifyStocksProgress(tr("Downloading stocks logos"));
 
     static int lastDownloadHour = -1;
-    int        currentHour      = QDateTime::currentDateTime().time().hour();
+    const int  currentHour      = QDateTime::currentDateTime().time().hour();
 
     if (lastDownloadHour < 0)
     {
@@ -204,7 +216,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     return mStocksStorage->mergeStocksMeta(stocksMeta);
 }
 
-void getCandlesWithGrpc(
+static void getCandlesWithGrpc(
     QThread*        parentThread,
     IStocksStorage* stocksStorage,
     IGrpcClient*    grpcClient,
@@ -225,7 +237,7 @@ void getCandlesWithGrpc(
 
     while (true)
     {
-        std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
+        const std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
             grpcClient->getCandles(parentThread, stock->meta.uid, startTimestamp, endTimestamp);
 
         if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
@@ -258,7 +270,7 @@ void getCandlesWithGrpc(
     }
 }
 
-int getCandlesFromZipFile(
+static int getCandlesFromZipFile(
     QThread*          parentThread,
     IQZipFactory*     qZipFactory,
     IQZipFileFactory* qZipFileFactory,
@@ -270,11 +282,11 @@ int getCandlesFromZipFile(
 {
     int indexOffset = 0;
 
-    std::shared_ptr<IQZip> stockDataFile = qZipFactory->newInstance(zipFilePath);
+    const std::shared_ptr<IQZip> stockDataFile = qZipFactory->newInstance(zipFilePath);
 
     if (stockDataFile->open(QuaZip::mdUnzip))
     {
-        std::shared_ptr<IQZipFile> stockZippedFile = qZipFileFactory->newInstance(stockDataFile->getZip());
+        const std::shared_ptr<IQZipFile> stockZippedFile = qZipFileFactory->newInstance(stockDataFile->getZip());
 
         QStringList zippedFiles = stockDataFile->getFileNameList();
         zippedFiles.sort();
@@ -284,25 +296,26 @@ int getCandlesFromZipFile(
             stockDataFile->setCurrentFile(zippedFiles.at(i));
 
             stockZippedFile->open(QIODevice::ReadOnly);
-            QString content = QString::fromUtf8(stockZippedFile->readAll());
+            const QString content = QString::fromUtf8(stockZippedFile->readAll());
             stockZippedFile->close();
 
-            QStringList csvLines = content.split('\n');
+            const QStringList csvLines = content.split('\n');
 
             for (int j = 0; j < csvLines.size(); ++j)
             {
-                QStringList csvFields = csvLines.at(j).split(';');
+                const QStringList csvFields = csvLines.at(j).split(';');
 
-                if (csvFields.size() > CSV_FIELD_QUANTITY)
+                if (csvFields.size() > CSV_FIELD_VOLUME)
                 {
-                    qint64 timestamp = QDateTime::fromString(csvFields.at(CSV_FIELD_TIMESTAMP), Qt::ISODate).toMSecsSinceEpoch();
+                    const qint64 timestamp =
+                        QDateTime::fromString(csvFields.at(CSV_FIELD_TIMESTAMP), Qt::ISODate).toMSecsSinceEpoch();
 
                     if (timestamp >= startTimestamp && timestamp < endTimestamp)
                     {
                         StockData* stockData = &dataArray[indexOffset];
 
                         stockData->timestamp = timestamp;
-                        stockData->quantity  = csvFields.at(CSV_FIELD_QUANTITY).toLongLong();
+                        stockData->quantity  = csvFields.at(CSV_FIELD_VOLUME).toLongLong();
                         stockData->price     = csvFields.at(CSV_FIELD_CLOSE_PRICE).toFloat();
 
                         ++indexOffset;
@@ -331,7 +344,7 @@ void getCandlesWithHttp(
     qint64            endTimestamp
 )
 {
-    QString appDir = qApp->applicationDirPath();
+    const QString appDir = qApp->applicationDirPath();
 
     // Round to 1 minute
     startTimestamp = (startTimestamp / ONE_MINUTE) * ONE_MINUTE;
@@ -343,14 +356,14 @@ void getCandlesWithHttp(
 
     int indexOffset = 0;
 
-    int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
-    int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
+    const int startYear = QDateTime::fromMSecsSinceEpoch(startTimestamp).date().year();
+    const int endYear   = QDateTime::fromMSecsSinceEpoch(endTimestamp).date().year();
 
     for (int year = startYear; year <= endYear && !parentThread->isInterruptionRequested(); ++year)
     {
-        QString zipFilePath = QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year));
+        const QString zipFilePath = QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year));
 
-        std::shared_ptr<IFile> stockDataFile = fileFactory->newInstance(zipFilePath);
+        const std::shared_ptr<IFile> stockDataFile = fileFactory->newInstance(zipFilePath);
 
         if (year == endYear || !stockDataFile->exists())
         {
@@ -368,14 +381,15 @@ void getCandlesWithHttp(
 
             while (true)
             {
-                HttpResult httpResult = httpClient->download(url, headers);
+                const HttpResult httpResult = httpClient->download(url, headers);
 
-                if (parentThread->isInterruptionRequested() || (httpResult.statusCode != 200 && httpResult.statusCode != 429))
+                if (parentThread->isInterruptionRequested() ||
+                    (httpResult.statusCode != HTTP_STATUS_CODE_OK && httpResult.statusCode != 429))
                 {
                     break;
                 }
 
-                if (httpResult.statusCode == 200)
+                if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
                 {
                     stockDataFile->open(QIODevice::WriteOnly);
                     stockDataFile->write(httpResult.body);
@@ -384,7 +398,7 @@ void getCandlesWithHttp(
                     break;
                 }
 
-                if (timeUtils->interruptibleSleep(5000, parentThread))
+                if (timeUtils->interruptibleSleep(SLEEP_DELAY, parentThread))
                 {
                     break;
                 }
@@ -415,7 +429,7 @@ struct GetCandlesInfo
     QAtomicInt          finished;
 };
 
-void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     PriceCollectThread* thread           = getCandlesInfo->thread;
@@ -428,9 +442,9 @@ void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int sta
     ITimeUtils*         timeUtils        = getCandlesInfo->timeUtils;
     IHttpClient*        httpClient       = getCandlesInfo->httpClient;
     IGrpcClient*        grpcClient       = getCandlesInfo->grpcClient;
-    qint64              currentTimestamp = getCandlesInfo->currentTimestamp;
+    const qint64        currentTimestamp = getCandlesInfo->currentTimestamp;
 
-    qint64 storageMonthLimit = qint64(config->getStorageMonthLimit()) * ONE_MONTH;
+    const qint64 storageMonthLimit = static_cast<qint64>(config->getStorageMonthLimit()) * ONE_MONTH;
 
     Stock** stockArray = stocks.data();
 
@@ -502,7 +516,7 @@ void PriceCollectThread::cleanupOperationalData()
 bool PriceCollectThread::obtainStocksDayStartPrice()
 {
     // Round to 1 day
-    qint64 newDayStartTimestamp = (QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY - MOSCOW_TIME;
+    const qint64 newDayStartTimestamp = ((QDateTime::currentMSecsSinceEpoch() / ONE_DAY) * ONE_DAY) - MOSCOW_TIME;
 
     if (mDayStartTimestamp != newDayStartTimestamp)
     {

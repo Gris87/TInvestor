@@ -9,13 +9,12 @@
 
 using ::testing::Gt;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_CleanupThread : public ::testing::Test
 {
 protected:
@@ -57,3 +56,4 @@ TEST_F(Test_CleanupThread, Test_run)
 
     thread->run();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

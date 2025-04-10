@@ -8,7 +8,7 @@
 
 TEST(Test_HttpClient, Test_constructor_and_destructor)
 {
-    HttpClient client;
+    const HttpClient client;
 }
 
 TEST(Test_HttpClient, Test_download)
@@ -24,7 +24,7 @@ TEST(Test_HttpClient, Test_download)
     IHttpClient::Headers headers;
     headers["Authorization"] = "Bearer debearer";
 
-    HttpResult result = client.download(url, headers);
+    const HttpResult result = client.download(url, headers);
 
     ASSERT_EQ(result.statusCode, 200);
     ASSERT_EQ(

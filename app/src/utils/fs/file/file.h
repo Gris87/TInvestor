@@ -11,7 +11,7 @@
 class File : public IFile
 {
 public:
-    File(const QString& name);
+    explicit File(const QString& name);
     ~File();
 
     File(const File& another)            = delete;

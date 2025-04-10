@@ -13,7 +13,7 @@ class MakeDecisionThreadMock : public IMakeDecisionThread
     Q_OBJECT
 
 public:
-    MakeDecisionThreadMock(QObject* parent = nullptr) :
+    explicit MakeDecisionThreadMock(QObject* parent = nullptr) :
         IMakeDecisionThread(parent)
     {
     }

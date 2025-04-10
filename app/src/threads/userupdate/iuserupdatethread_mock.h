@@ -13,7 +13,7 @@ class UserUpdateThreadMock : public IUserUpdateThread
     Q_OBJECT
 
 public:
-    UserUpdateThreadMock(QObject* parent = nullptr) :
+    explicit UserUpdateThreadMock(QObject* parent = nullptr) :
         IUserUpdateThread(parent)
     {
     }

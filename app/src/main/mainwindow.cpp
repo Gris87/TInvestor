@@ -7,9 +7,20 @@
 
 
 
-#define AUTORUN_PATH    "CurrentVersion/Run/TInvestor"
-#define GREY_COLOR      QColor("#AFC2D7")
-#define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
+const QString    AUTORUN_PATH                             = "CurrentVersion/Run/TInvestor";
+const QColor     GREY_COLOR                               = QColor("#AFC2D7");
+const QString    DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
+constexpr int    SMALL_SPINNER_INNER_RADIUS               = 6;
+constexpr int    SMALL_SPINNER_LINE_LENGTH                = 6;
+constexpr qint64 MS_IN_SECOND                             = 1000LL;
+constexpr qint64 ONE_MINUTE                               = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                                 = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY                                  = 24LL * ONE_HOUR;
+constexpr qint64 USER_UPDATE_INTERVAL                     = 15LL * ONE_MINUTE; // 15 minutes
+constexpr qint64 PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          // 1 hour
+constexpr qint64 CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
+constexpr qint64 STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
+constexpr qint64 STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
 
 
 
@@ -101,13 +112,13 @@ MainWindow::MainWindow(
     ui->waitingSpinnerWidget->setTextColor(GREY_COLOR);
 
     ui->simulationActiveWidget->hide();
-    ui->simulationActiveSpinnerWidget->setInnerRadius(6);
-    ui->simulationActiveSpinnerWidget->setLineLength(6);
+    ui->simulationActiveSpinnerWidget->setInnerRadius(SMALL_SPINNER_INNER_RADIUS);
+    ui->simulationActiveSpinnerWidget->setLineLength(SMALL_SPINNER_LINE_LENGTH);
     ui->simulationActiveSpinnerWidget->setColor(GREY_COLOR);
 
     ui->autoPilotActiveWidget->hide();
-    ui->autoPilotActiveSpinnerWidget->setInnerRadius(6);
-    ui->autoPilotActiveSpinnerWidget->setLineLength(6);
+    ui->autoPilotActiveSpinnerWidget->setInnerRadius(SMALL_SPINNER_INNER_RADIUS);
+    ui->autoPilotActiveSpinnerWidget->setLineLength(SMALL_SPINNER_LINE_LENGTH);
     ui->autoPilotActiveSpinnerWidget->setColor(GREY_COLOR);
 
     mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
@@ -272,9 +283,9 @@ void MainWindow::authFailed(grpc::StatusCode errorCode, const std::string& error
 
     authFailedDialogShown = true;
 
-    std::shared_ptr<IAuthDialog> dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
+    const std::shared_ptr<IAuthDialog> dialog = mAuthDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, this);
 
-    if (dialog->exec())
+    if (dialog->exec() == QDialog::Accepted)
     {
         mUserStorage->setToken(dialog->getToken());
 
@@ -326,7 +337,7 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
     mStocksTableWidget->updateLastPrices(mStocksControlsWidget->getFilter());
 }
 
-void MainWindow::notifyStocksProgress(const QString& message)
+void MainWindow::notifyStocksProgress(const QString& message) const
 {
     ui->waitingSpinnerWidget->setText(message);
 }
@@ -418,7 +429,7 @@ void MainWindow::on_actionSettings_triggered()
 {
     mConfigForSettingsDialog->assign(mConfig);
 
-    std::shared_ptr<ISettingsDialog> dialog = mSettingsDialogFactory->newInstance(
+    const std::shared_ptr<ISettingsDialog> dialog = mSettingsDialogFactory->newInstance(
         mConfigForSettingsDialog,
         mDecisionMakerConfigWidgetFactory,
         mBuyDecision1ConfigWidgetFactory,
@@ -432,7 +443,7 @@ void MainWindow::on_actionSettings_triggered()
 
     dialog->updateUiFromConfig();
 
-    if (dialog->exec())
+    if (dialog->exec() == QDialog::Accepted)
     {
         qInfo() << "Settings applied";
 
@@ -447,9 +458,9 @@ void MainWindow::on_startSimulationButton_clicked()
 {
     if (!ui->simulationActiveSpinnerWidget->isSpinning())
     {
-        std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
+        const std::shared_ptr<IStartSimulationDialog> dialog = mStartSimulationDialogFactory->newInstance(mSettingsEditor, this);
 
-        if (dialog->exec())
+        if (dialog->exec() == QDialog::Accepted)
         {
             ui->simulationActiveWidget->show();
             ui->simulationActiveSpinnerWidget->start();
@@ -480,10 +491,10 @@ void MainWindow::on_startAutoPilotButton_clicked()
 {
     if (!ui->autoPilotActiveSpinnerWidget->isSpinning())
     {
-        std::shared_ptr<IStartAutoPilotDialog> dialog =
+        const std::shared_ptr<IStartAutoPilotDialog> dialog =
             mStartAutoPilotDialogFactory->newInstance(mUserStorage, mMessageBoxUtils, mSettingsEditor, this);
 
-        if (dialog->exec())
+        if (dialog->exec() == QDialog::Accepted)
         {
             ui->autoPilotActiveWidget->show();
             ui->autoPilotActiveSpinnerWidget->start();
@@ -519,26 +530,26 @@ void MainWindow::init()
 
     updateStocksTableWidget();
 
-    userUpdateTimer->setInterval(15 * 60 * 1000);       // 15 minutes
-    priceCollectTimer->setInterval(1 * 60 * 60 * 1000); // 1 hour
+    userUpdateTimer->setInterval(USER_UPDATE_INTERVAL);
+    priceCollectTimer->setInterval(PRICE_COLLECT_INTERVAL);
 
-    cleanupTimer->start(24 * 60 * 60 * 1000); // 1 day
+    cleanupTimer->start(CLEANUP_INTERVAL);
     cleanupTimerTicked();
 
-    stocksTableUpdateAllTimer->setInterval(24 * 60 * 60 * 1000); // 1 day
-    stocksTableUpdateLastPricesTimer->setInterval(3 * 1000);     // 3 seconds
+    stocksTableUpdateAllTimer->setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
+    stocksTableUpdateLastPricesTimer->setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
 
     on_actionAuth_triggered();
 }
 
 void MainWindow::updateStocksTableWidget()
 {
-    QMutexLocker   lock(mStocksStorage->getMutex());
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
+    const QMutexLocker   lock(mStocksStorage->getMutex());
+    const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     if (!stocks.isEmpty())
     {
-        QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
+        const QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
 
         mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
@@ -556,7 +567,7 @@ void MainWindow::updateStocksTableWidget()
     }
 }
 
-void MainWindow::updateStackWidgetToolbar()
+void MainWindow::updateStackWidgetToolbar() const
 {
     ui->actionStocksPage->setChecked(ui->stackedWidget->currentWidget() == ui->stocksPage);
     ui->actionStocksPage->setIcon(QIcon(
@@ -579,11 +590,12 @@ void MainWindow::updateStackWidgetToolbar()
 
 void MainWindow::applyConfig()
 {
-    makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * 60 * 1000);
+    makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
 
     if (mConfig->isAutorun())
     {
-        QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast)
+        const QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
         mAutorunSettingsEditor->setValue(AUTORUN_PATH, QString("\"%1\" --autorun").arg(appPath));
     }

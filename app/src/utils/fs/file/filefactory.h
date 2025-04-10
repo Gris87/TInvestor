@@ -15,5 +15,5 @@ public:
     FileFactory(const FileFactory& another)            = delete;
     FileFactory& operator=(const FileFactory& another) = delete;
 
-    std::shared_ptr<IFile> newInstance(const QString& name) override;
+    std::shared_ptr<IFile> newInstance(const QString& name) const override;
 };

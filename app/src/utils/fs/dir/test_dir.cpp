@@ -7,14 +7,14 @@
 
 TEST(Test_Dir, Test_constructor_and_destructor)
 {
-    Dir dir;
+    const Dir dir;
 }
 
 TEST(Test_Dir, Test_mkpath)
 {
     Dir dir;
 
-    QString appDir = qApp->applicationDirPath();
+    const QString appDir = qApp->applicationDirPath();
 
     QDir qDir(appDir + "/test/some_dir");
     ASSERT_TRUE(!qDir.exists());

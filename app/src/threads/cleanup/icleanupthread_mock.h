@@ -13,7 +13,7 @@ class CleanupThreadMock : public ICleanupThread
     Q_OBJECT
 
 public:
-    CleanupThreadMock(QObject* parent = nullptr) :
+    explicit CleanupThreadMock(QObject* parent = nullptr) :
         ICleanupThread(parent)
     {
     }

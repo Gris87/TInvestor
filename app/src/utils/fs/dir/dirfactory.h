@@ -15,5 +15,6 @@ public:
     DirFactory(const DirFactory& another)            = delete;
     DirFactory& operator=(const DirFactory& another) = delete;
 
-    std::shared_ptr<IDir> newInstance(const QString& path = QString()) override;
+    [[nodiscard]]
+    std::shared_ptr<IDir> newInstance(const QString& path = QString()) const override;
 };

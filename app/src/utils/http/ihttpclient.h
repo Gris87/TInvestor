@@ -19,11 +19,9 @@ struct HttpResult
 class IHttpClient
 {
 public:
-    typedef QMap<QString, QString> Headers;
+    using Headers = QMap<QString, QString>;
 
-    IHttpClient()
-    {
-    }
+    IHttpClient()          = default;
     virtual ~IHttpClient() = default;
 
     IHttpClient(const IHttpClient& another)            = delete;

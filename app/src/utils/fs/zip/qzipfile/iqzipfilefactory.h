@@ -11,13 +11,11 @@
 class IQZipFileFactory
 {
 public:
-    IQZipFileFactory()
-    {
-    }
+    IQZipFileFactory()          = default;
     virtual ~IQZipFileFactory() = default;
 
     IQZipFileFactory(const IQZipFileFactory& another)            = delete;
     IQZipFileFactory& operator=(const IQZipFileFactory& another) = delete;
 
-    virtual std::shared_ptr<IQZipFile> newInstance(QuaZip* zip) = 0;
+    virtual std::shared_ptr<IQZipFile> newInstance(QuaZip* zip) const = 0;
 };

@@ -9,13 +9,13 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_LastPriceThread : public ::testing::Test
 {
 protected:
@@ -62,7 +62,7 @@ TEST_F(Test_LastPriceThread, Test_run)
 
     stocks.append(&stock);
 
-    std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
+    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
 
     tinkoff::LastPrice* lastPrice = new tinkoff::LastPrice(); // marketDataResponse will take ownership
     tinkoff::Quotation* price     = new tinkoff::Quotation(); // marketDataResponse will take ownership
@@ -159,3 +159,4 @@ TEST_F(Test_LastPriceThread, Test_terminateThread)
 
     thread->terminateThread();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

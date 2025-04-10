@@ -7,12 +7,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_OrderBookThread : public ::testing::Test
 {
 protected:
@@ -54,7 +54,7 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     thread->setStock(&stock);
 
-    std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBookResponse(new tinkoff::GetOrderBookResponse());
 
     tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
@@ -75,7 +75,7 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
-    std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
+    const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse(new tinkoff::MarketDataResponse());
 
     tinkoff::OrderBook* orderBook = new tinkoff::OrderBook(); // marketDataResponse will take ownership
 
@@ -129,3 +129,4 @@ TEST_F(Test_OrderBookThread, Test_terminateThread)
 
     thread->terminateThread();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

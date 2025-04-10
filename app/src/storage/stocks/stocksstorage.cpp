@@ -255,7 +255,6 @@ void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
@@ -265,6 +264,7 @@ void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetTurnoverInfo
 {

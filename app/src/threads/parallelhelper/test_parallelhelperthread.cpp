@@ -5,6 +5,7 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 struct SumResult
 {
     SumResult() :
@@ -19,7 +20,7 @@ struct SumResult
 
 
 
-void action(QThread* /*parentThread*/, QList<int>& array, int start, int end, void* additionalArgs)
+static void action(QThread* /*parentThread*/, QList<int>& array, int start, int end, void* additionalArgs)
 {
     SumResult* sumResult = reinterpret_cast<SumResult*>(additionalArgs);
 
@@ -49,7 +50,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
 
     ASSERT_EQ(sumResult.result, 6);
 
-    int datasize = 1000;
+    const int datasize = 1000;
     array.resize(datasize);
 
     int* arrayData = array.data();

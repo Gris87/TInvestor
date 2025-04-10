@@ -8,7 +8,9 @@
 
 OrderBookThread::OrderBookThread(IGrpcClient* grpcClient, QObject* parent) :
     IOrderBookThread(parent),
-    mGrpcClient(grpcClient)
+    mGrpcClient(grpcClient),
+    mStock(),
+    mMarketDataStream()
 {
     qDebug() << "Create OrderBookThread";
 }
@@ -22,7 +24,7 @@ void OrderBookThread::run()
 {
     qDebug() << "Running OrderBookThread";
 
-    std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid);
 
     if (tinkoffOrderBook != nullptr && !QThread::currentThread()->isInterruptionRequested())
@@ -35,7 +37,7 @@ void OrderBookThread::run()
         {
             while (true)
             {
-                std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
+                const std::shared_ptr<tinkoff::MarketDataResponse> marketDataResponse =
                     mGrpcClient->readMarketDataStream(mMarketDataStream);
 
                 if (QThread::currentThread()->isInterruptionRequested() || marketDataResponse == nullptr)

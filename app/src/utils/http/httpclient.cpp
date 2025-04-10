@@ -9,6 +9,10 @@
 
 
 
+constexpr int HTTP_STATUS_CODE_OK = 200;
+
+
+
 HttpClient::HttpClient() :
     IHttpClient()
 {
@@ -42,7 +46,7 @@ HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
 
     res.statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    if (reply->error() == QNetworkReply::NoError && res.statusCode == 200)
+    if (reply->error() == QNetworkReply::NoError && res.statusCode == HTTP_STATUS_CODE_OK)
     {
         res.body = reply->readAll();
     }

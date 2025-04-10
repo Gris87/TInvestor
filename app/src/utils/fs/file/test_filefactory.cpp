@@ -6,13 +6,13 @@
 
 TEST(Test_FileFactory, Test_constructor_and_destructor)
 {
-    FileFactory factory;
+    const FileFactory factory;
 }
 
 TEST(Test_FileFactory, Test_newInstance)
 {
-    FileFactory factory;
+    const FileFactory factory;
 
-    std::shared_ptr<IFile> file = factory.newInstance("test.txt");
+    const std::shared_ptr<IFile> file = factory.newInstance("test.txt");
     ASSERT_TRUE(file != nullptr);
 }

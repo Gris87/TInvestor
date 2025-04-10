@@ -13,7 +13,7 @@ class LastPriceThreadMock : public ILastPriceThread
     Q_OBJECT
 
 public:
-    LastPriceThreadMock(QObject* parent = nullptr) :
+    explicit LastPriceThreadMock(QObject* parent = nullptr) :
         ILastPriceThread(parent)
     {
     }

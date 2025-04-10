@@ -11,7 +11,7 @@
 class Dir : public IDir
 {
 public:
-    Dir(const QString& path = QString());
+    explicit Dir(const QString& path = QString());
     ~Dir();
 
     Dir(const Dir& another)            = delete;

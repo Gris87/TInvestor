@@ -13,7 +13,7 @@ class PriceCollectThreadMock : public IPriceCollectThread
     Q_OBJECT
 
 public:
-    PriceCollectThreadMock(QObject* parent = nullptr) :
+    explicit PriceCollectThreadMock(QObject* parent = nullptr) :
         IPriceCollectThread(parent)
     {
     }

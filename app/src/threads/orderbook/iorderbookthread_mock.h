@@ -13,7 +13,7 @@ class OrderBookThreadMock : public IOrderBookThread
     Q_OBJECT
 
 public:
-    OrderBookThreadMock(QObject* parent = nullptr) :
+    explicit OrderBookThreadMock(QObject* parent = nullptr) :
         IOrderBookThread(parent)
     {
     }

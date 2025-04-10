@@ -26,12 +26,16 @@ public:
     RESP_T repeatRequest(
         QThread*     parentThread,
         grpc::Status action(
-            IRawGrpcClient* rawGrpcClient, const SERVICE_T& service, grpc::ClientContext* context, const REQ_T& req, RESP_T resp
+            IRawGrpcClient*      rawGrpcClient,
+            const SERVICE_T&     service,
+            grpc::ClientContext* context,
+            const REQ_T&         req,
+            const RESP_T&        resp
         ),
         const SERVICE_T&     service,
         grpc::ClientContext* context,
         const REQ_T&         req,
-        RESP_T               resp
+        const RESP_T&        resp
     )
     {
         while (true)
@@ -42,7 +46,7 @@ public:
             {
                 if (status.error_code() == grpc::StatusCode::RESOURCE_EXHAUSTED)
                 {
-                    if (mTimeUtils->interruptibleSleep(5000, parentThread))
+                    if (mTimeUtils->interruptibleSleep(5000, parentThread)) // 5 seconds // NOLINT(readability-magic-numbers)
                     {
                         return nullptr;
                     }

@@ -20,5 +20,5 @@ public:
     QZipFileFactoryMock(const QZipFileFactoryMock& another)            = delete;
     QZipFileFactoryMock& operator=(const QZipFileFactoryMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<IQZipFile>, newInstance, (QuaZip * zip), (override));
+    MOCK_METHOD(std::shared_ptr<IQZipFile>, newInstance, (QuaZip * zip), (const, override));
 };

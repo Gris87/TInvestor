@@ -8,12 +8,11 @@
 
 
 
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_MakeDecisionThread : public ::testing::Test
 {
 protected:
@@ -50,3 +49,4 @@ TEST_F(Test_MakeDecisionThread, Test_run)
 {
     thread->run();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

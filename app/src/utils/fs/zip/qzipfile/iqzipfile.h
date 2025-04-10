@@ -15,9 +15,7 @@
 class IQZipFile
 {
 public:
-    IQZipFile()
-    {
-    }
+    IQZipFile()          = default;
     virtual ~IQZipFile() = default;
 
     IQZipFile(const IQZipFile& another)            = delete;

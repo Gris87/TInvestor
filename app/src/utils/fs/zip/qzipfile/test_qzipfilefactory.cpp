@@ -6,15 +6,15 @@
 
 TEST(Test_QZipFileFactory, Test_constructor_and_destructor)
 {
-    QZipFileFactory factory;
+    const QZipFileFactory factory;
 }
 
 TEST(Test_QZipFileFactory, Test_newInstance)
 {
-    QZipFileFactory factory;
+    const QZipFileFactory factory;
 
     QuaZip zip;
 
-    std::shared_ptr<IQZipFile> QZipFile = factory.newInstance(&zip);
+    const std::shared_ptr<IQZipFile> QZipFile = factory.newInstance(&zip);
     ASSERT_TRUE(QZipFile != nullptr);
 }

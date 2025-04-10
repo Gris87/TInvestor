@@ -17,7 +17,7 @@ QZipFileFactory::~QZipFileFactory()
     qDebug() << "Destroy QZipFileFactory";
 }
 
-std::shared_ptr<IQZipFile> QZipFileFactory::newInstance(QuaZip* zip)
+std::shared_ptr<IQZipFile> QZipFileFactory::newInstance(QuaZip* zip) const
 {
     return std::shared_ptr<IQZipFile>(new QZipFile(zip));
 }

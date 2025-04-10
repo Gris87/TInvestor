@@ -9,7 +9,7 @@
 class QZip : public IQZip
 {
 public:
-    QZip(const QString& name);
+    explicit QZip(const QString& name);
     ~QZip();
 
     QZip(const QZip& another)            = delete;

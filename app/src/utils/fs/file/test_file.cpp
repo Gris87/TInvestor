@@ -6,6 +6,7 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
 class Test_File : public ::testing::Test
 {
 protected:
@@ -183,3 +184,4 @@ TEST_F(Test_File, Test_exists)
 
     ASSERT_EQ(file->exists(), true);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

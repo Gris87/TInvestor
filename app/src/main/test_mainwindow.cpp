@@ -63,7 +63,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-static-cast-downcast, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_MainWindow : public ::testing::Test
 {
 protected:
@@ -117,7 +117,7 @@ protected:
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
-        QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
+        const QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
         EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
@@ -885,4 +885,4 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), false);
     // clang-format on
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-pro-type-static-cast-downcast, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

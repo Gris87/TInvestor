@@ -6,7 +6,11 @@
 
 
 
-#define ONE_MONTH 2678400000LL // 31 * 24 * 60 * 60 * 1000 // 31 days
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 ONE_MINUTE   = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR     = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY      = 24LL * ONE_HOUR;
+constexpr qint64 ONE_MONTH    = 31LL * ONE_DAY;
 
 
 
@@ -27,7 +31,7 @@ void CleanupThread::run()
 {
     qDebug() << "Running CleanupThread";
 
-    qint64 obsoleteTimestamp = QDateTime::currentMSecsSinceEpoch() - mConfig->getStorageMonthLimit() * ONE_MONTH;
+    const qint64 obsoleteTimestamp = QDateTime::currentMSecsSinceEpoch() - (mConfig->getStorageMonthLimit() * ONE_MONTH);
 
     const QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->deleteObsoleteData(obsoleteTimestamp);

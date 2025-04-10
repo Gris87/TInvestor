@@ -2,6 +2,7 @@
 
 #include <grpcpp/grpcpp.h>
 #include <gtest/gtest.h>
+#include <memory>
 
 #include "src/domain/user/user.h"
 #include "src/grpc/investapiuthenticator.h"
@@ -72,8 +73,7 @@ TEST_F(Test_RawGrpcClient, Test_getUserInfo)
 
     grpc::ClientContext                       context;
     const tinkoff::GetInfoRequest                   req;
-    const std::shared_ptr<tinkoff::GetInfoResponse> resp =
-        std::shared_ptr<tinkoff::GetInfoResponse>(new tinkoff::GetInfoResponse());
+    const std::shared_ptr<tinkoff::GetInfoResponse> resp = std::make_shared<tinkoff::GetInfoResponse>();
 
     context.set_credentials(creds);
 
@@ -110,8 +110,7 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
 
     grpc::ClientContext                           context;
     tinkoff::GetAccountsRequest                   req;
-    std::shared_ptr<tinkoff::GetAccountsResponse> resp =
-        std::shared_ptr<tinkoff::GetAccountsResponse>(new tinkoff::GetAccountsResponse());
+    const std::shared_ptr<tinkoff::GetAccountsResponse> resp = std::make_shared<tinkoff::GetAccountsResponse>();
 
     context.set_credentials(creds);
 
@@ -148,7 +147,7 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
 
     grpc::ClientContext                      context;
     const tinkoff::InstrumentsRequest              req;
-    const std::shared_ptr<tinkoff::SharesResponse> resp = std::shared_ptr<tinkoff::SharesResponse>(new tinkoff::SharesResponse());
+    const std::shared_ptr<tinkoff::SharesResponse> resp = std::make_shared<tinkoff::SharesResponse>();
 
     context.set_credentials(creds);
 
@@ -233,8 +232,7 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
 
     grpc::ClientContext                          context;
     tinkoff::GetCandlesRequest                   req;
-    const std::shared_ptr<tinkoff::GetCandlesResponse> resp =
-        std::shared_ptr<tinkoff::GetCandlesResponse>(new tinkoff::GetCandlesResponse());
+    const std::shared_ptr<tinkoff::GetCandlesResponse> resp = std::make_shared<tinkoff::GetCandlesResponse>();
 
     context.set_credentials(creds);
 
@@ -281,8 +279,7 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
 
     grpc::ClientContext                            context;
     tinkoff::GetOrderBookRequest                   req;
-    const std::shared_ptr<tinkoff::GetOrderBookResponse> resp =
-        std::shared_ptr<tinkoff::GetOrderBookResponse>(new tinkoff::GetOrderBookResponse());
+    const std::shared_ptr<tinkoff::GetOrderBookResponse> resp = std::make_shared<tinkoff::GetOrderBookResponse>();
 
     context.set_credentials(creds);
 

@@ -49,7 +49,15 @@ Checks:
         -modernize-avoid-c-arrays,
         -google-readability-function-size,
         -bugprone-reserved-identifier,
-        -cert-dcl37-c
+        -cert-dcl37-c,
+        -cert-dcl51-cpp,
+        -llvmlibc-restrict-system-libc-headers,
+        -readability-convert-member-functions-to-static,
+        -hicpp-function-size,
+        -readability-avoid-nested-conditional-operator,
+        -modernize-use-default-member-init,
+        -cppcoreguidelines-use-default-member-init,
+        -google-default-arguments¶
     '
 CheckOptions:
     cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true

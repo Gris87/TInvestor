@@ -6,6 +6,7 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_QZipFile : public ::testing::Test
 {
 protected:
@@ -20,12 +21,12 @@ protected:
 
         QuaZipFile zipFile(zip);
 
-        QuaZipNewInfo info("hello.txt", "hello.txt");
+        const QuaZipNewInfo info("hello.txt", "hello.txt");
         zipFile.open(QIODevice::WriteOnly, info);
         zipFile.write("AzazAZazzzaaz");
         zipFile.close();
 
-        QuaZipNewInfo info2("world.txt", "world.txt");
+        const QuaZipNewInfo info2("world.txt", "world.txt");
         zipFile.open(QIODevice::WriteOnly, info2);
         zipFile.write("Hello World!!!");
         zipFile.close();
@@ -71,3 +72,4 @@ TEST_F(Test_QZipFile, Test_open_readAll_close)
     ASSERT_EQ(qZipFile->readAll(), "Hello World!!!");
     qZipFile->close();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

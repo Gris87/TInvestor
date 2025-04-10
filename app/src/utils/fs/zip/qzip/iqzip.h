@@ -14,9 +14,7 @@
 class IQZip
 {
 public:
-    IQZip()
-    {
-    }
+    IQZip()          = default;
     virtual ~IQZip() = default;
 
     IQZip(const IQZip& another)            = delete;

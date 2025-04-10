@@ -109,7 +109,7 @@ public:
     QTimer* stocksTableUpdateLastPricesTimer;
 
 private:
-    void updateStackWidgetToolbar();
+    void updateStackWidgetToolbar() const;
     void applyConfig();
     void saveWindowState();
     void loadWindowState();
@@ -158,7 +158,7 @@ public slots:
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();
-    void notifyStocksProgress(const QString& message);
+    void notifyStocksProgress(const QString& message) const;
     void stocksChanged();
     void pricesChanged();
     void periodicDataChanged();

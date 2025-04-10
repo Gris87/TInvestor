@@ -9,13 +9,11 @@
 class IFileFactory
 {
 public:
-    IFileFactory()
-    {
-    }
+    IFileFactory()          = default;
     virtual ~IFileFactory() = default;
 
     IFileFactory(const IFileFactory& another)            = delete;
     IFileFactory& operator=(const IFileFactory& another) = delete;
 
-    virtual std::shared_ptr<IFile> newInstance(const QString& name) = 0;
+    virtual std::shared_ptr<IFile> newInstance(const QString& name) const = 0;
 };
