@@ -8,9 +8,9 @@
 
 
 #ifndef USE_SANDBOX
-const char* GRPC_ADDRESS = "invest-public-api.tinkoff.ru:443";
+constexpr const char* GRPC_ADDRESS = "invest-public-api.tinkoff.ru:443";
 #else
-const char* GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
+constexpr const char* GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
 #endif
 
 constexpr int MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
@@ -73,6 +73,17 @@ GrpcClient::~GrpcClient()
     qDebug() << "Destroy GrpcClient";
 }
 
+static grpc::Status getUserInfoAction(
+    IRawGrpcClient*                                     rawGrpcClient,
+    const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+    grpc::ClientContext*                                context,
+    const tinkoff::GetInfoRequest&                      req,
+    std::shared_ptr<tinkoff::GetInfoResponse>           resp
+)
+{
+    return rawGrpcClient->getUserInfo(service, context, req, resp.get());
+}
+
 std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* parentThread)
 {
     grpc::ClientContext                       context;
@@ -81,9 +92,18 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* paren
 
     context.set_credentials(mCreds);
 
-    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getUserInfo, mUsersService, context, req, resp);
+    return repeatRequest(parentThread, getUserInfoAction, mUsersService, &context, req, resp);
+}
 
-    return resp;
+static grpc::Status getAccountsAction(
+    IRawGrpcClient*                                     rawGrpcClient,
+    const std::unique_ptr<tinkoff::UsersService::Stub>& service,
+    grpc::ClientContext*                                context,
+    const tinkoff::GetAccountsRequest&                  req,
+    std::shared_ptr<tinkoff::GetAccountsResponse>       resp
+)
+{
+    return rawGrpcClient->getAccounts(service, context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* parentThread)
@@ -97,9 +117,18 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* p
 
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
-    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getAccounts, mUsersService, context, req, resp);
+    return repeatRequest(parentThread, getAccountsAction, mUsersService, &context, req, resp);
+}
 
-    return resp;
+static grpc::Status findStocksAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    std::shared_ptr<tinkoff::SharesResponse>                  resp
+)
+{
+    return rawGrpcClient->findStocks(service, context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread)
@@ -110,9 +139,18 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
 
     context.set_credentials(mCreds);
 
-    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, findStocks, mInstrumentsService, context, req, resp);
+    return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp);
+}
 
-    return resp;
+static grpc::Status getCandlesAction(
+    IRawGrpcClient*                                          rawGrpcClient,
+    const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::GetCandlesRequest&                        req,
+    std::shared_ptr<tinkoff::GetCandlesResponse>             resp
+)
+{
+    return rawGrpcClient->getCandles(service, context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
@@ -139,9 +177,18 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
-    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getCandles, mMarketDataService, context, req, resp);
+    return repeatRequest(parentThread, getCandlesAction, mMarketDataService, &context, req, resp);
+}
 
-    return resp;
+static grpc::Status getOrderBookAction(
+    IRawGrpcClient*                                          rawGrpcClient,
+    const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::GetOrderBookRequest&                      req,
+    std::shared_ptr<tinkoff::GetOrderBookResponse>           resp
+)
+{
+    return rawGrpcClient->getOrderBook(service, context, req, resp.get());
 }
 
 std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread* parentThread, const QString& uid)
@@ -156,9 +203,7 @@ std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread*
     req.set_instrument_id(uid.toStdString());
     req.set_depth(50);
 
-    REPEAT_REQUEST(parentThread, mTimeUtils, mRawGrpcClient, getOrderBook, mMarketDataService, context, req, resp);
-
-    return resp;
+    return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()

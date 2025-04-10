@@ -85,7 +85,7 @@ void Config::makeDefault()
     mAutorun               = AUTORUN_DEFAULT;
     mMakeDecisionTimeout   = MAKE_DECISION_TIMEOUT_DEFAULT;
     mUseSchedule           = USE_SCHEDULE_DEFAULT;
-    mScheduleStartHour     = SCHEDULE_START_MINUTE_DEFAULT;
+    mScheduleStartHour     = SCHEDULE_START_HOUR_DEFAULT;
     mScheduleStartMinute   = SCHEDULE_START_MINUTE_DEFAULT;
     mScheduleEndHour       = SCHEDULE_END_HOUR_DEFAULT;
     mScheduleEndMinute     = SCHEDULE_END_MINUTE_DEFAULT;

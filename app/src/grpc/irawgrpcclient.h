@@ -15,11 +15,6 @@
 
 
 
-extern const char* GRPC_ADDRESS;
-extern const int   MAX_LIMIT_FOR_INTERVAL_1_MIN;
-
-
-
 // NOLINTBEGIN(google-build-using-namespace)
 namespace tinkoff
 {

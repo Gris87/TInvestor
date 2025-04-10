@@ -9,8 +9,10 @@
 
 
 
-const char* const HHRU_UID = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c";
-const char* const SPBE_UID = "15dc2120-29d2-48b8-87c0-da1d95255f68";
+constexpr const char*       GRPC_ADDRESS                 = "sandbox-invest-public-api.tinkoff.ru:443";
+constexpr const char* const HHRU_UID                     = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c";
+constexpr const char* const SPBE_UID                     = "15dc2120-29d2-48b8-87c0-da1d95255f68";
+constexpr int               MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
 
 
 
