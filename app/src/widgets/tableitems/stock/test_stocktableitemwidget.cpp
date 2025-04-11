@@ -9,12 +9,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
 class Test_StockTableItemWidget : public ::testing::Test
 {
 protected:
@@ -43,7 +43,7 @@ TEST_F(Test_StockTableItemWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_StockTableItemWidget, Test_enterEvent_and_leaveEvent)
 {
-    QPointF pos;
+    const QPointF pos;
 
     QEnterEvent enterEvent(pos, pos, pos);
     QEvent      leaveEvent(QEvent::Leave);
@@ -170,3 +170,4 @@ TEST_F(Test_StockTableItemWidget, Test_less)
 
     ASSERT_LT(widget2, *widget);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

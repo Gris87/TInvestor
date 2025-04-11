@@ -6,26 +6,22 @@
 
 
 
-using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_PortfolioTableWidgetFactory, Test_constructor_and_destructor)
 {
-    PortfolioTableWidgetFactory factory;
+    const PortfolioTableWidgetFactory factory;
 }
 
 TEST(Test_PortfolioTableWidgetFactory, Test_newInstance)
 {
-    PortfolioTableWidgetFactory factory;
+    const PortfolioTableWidgetFactory factory;
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
-    IPortfolioTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
+    const IPortfolioTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

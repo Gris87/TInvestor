@@ -4,9 +4,16 @@
 
 
 
-#define GREEN_COLOR  QColor("#2BD793")
-#define RED_COLOR    QColor("#ED6F7E")
-#define NORMAL_COLOR QColor("#97AEC4")
+constexpr QChar  RUBLE        = QChar(0x20BD);
+constexpr qint64 GREEN_LIMIT  = 1000000000LL;
+constexpr qint64 NORMAL_LIMIT = 1000000LL;
+constexpr double BILLIONS     = 1000000000.0;
+constexpr qint64 MILLIONS     = 1000000.0;
+constexpr qint64 KILOS        = 1000.0;
+
+const QColor GREEN_COLOR  = QColor("#2BD793");
+const QColor RED_COLOR    = QColor("#ED6F7E");
+const QColor NORMAL_COLOR = QColor("#97AEC4");
 
 
 
@@ -28,19 +35,19 @@ void TurnoverTableItem::setValue(qint64 value)
     QString text;
     QColor  color;
 
-    if (mValue >= 1000000000)
+    if (mValue >= GREEN_LIMIT)
     {
-        text  = QString::number(mValue / 1000000000.0, 'f', 2) + "B " + QChar(0x20BD);
+        text  = QString::number(mValue / BILLIONS, 'f', 2) + "B " + RUBLE;
         color = GREEN_COLOR;
     }
-    else if (mValue >= 1000000)
+    else if (mValue >= NORMAL_LIMIT)
     {
-        text  = QString::number(mValue / 1000000.0, 'f', 2) + "M " + QChar(0x20BD);
+        text  = QString::number(mValue / MILLIONS, 'f', 2) + "M " + RUBLE;
         color = NORMAL_COLOR;
     }
     else
     {
-        text  = QString::number(mValue / 1000.0, 'f', 2) + "K " + QChar(0x20BD);
+        text  = QString::number(mValue / KILOS, 'f', 2) + "K " + RUBLE;
         color = RED_COLOR;
     }
 

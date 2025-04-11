@@ -18,7 +18,7 @@ StocksControlsWidgetFactory::~StocksControlsWidgetFactory()
 }
 
 IStocksControlsWidget*
-StocksControlsWidgetFactory::newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent)
+StocksControlsWidgetFactory::newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) const
 {
     return new StocksControlsWidget(stocksStorage, settingsEditor, parent);
 }

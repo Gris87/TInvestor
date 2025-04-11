@@ -28,7 +28,7 @@ IStocksTableRecord* StocksTableRecordFactory::newInstance(
     IHttpClient*                    httpClient,
     Stock*                          stock,
     QObject*                        parent
-)
+) const
 {
     return new StocksTableRecord(
         tableWidget,

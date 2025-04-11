@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_SettingsEditor, Test_constructor_and_destructor)
 {
-    SettingsEditor editor("GrisCom", "TInvestor_Test");
+    const SettingsEditor editor("GrisCom", "TInvestor_Test");
 }
 
 TEST(Test_SettingsEditor, Test_setValue_and_value)
@@ -30,3 +31,4 @@ TEST(Test_SettingsEditor, Test_remove)
 
     ASSERT_EQ(editor.value("TestKey", 44).toInt(), 44);
 }
+// NOLINTEND(readability-magic-numbers)

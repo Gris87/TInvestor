@@ -20,5 +20,5 @@ public:
     TrayIconFactoryMock(const TrayIconFactoryMock& another)            = delete;
     TrayIconFactoryMock& operator=(const TrayIconFactoryMock& another) = delete;
 
-    MOCK_METHOD(ITrayIcon*, newInstance, (QObject * parent), (override));
+    MOCK_METHOD(ITrayIcon*, newInstance, (QObject * parent), (const, override));
 };

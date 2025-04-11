@@ -11,13 +11,11 @@
 class ILogsTableWidgetFactory
 {
 public:
-    ILogsTableWidgetFactory()
-    {
-    }
+    ILogsTableWidgetFactory()          = default;
     virtual ~ILogsTableWidgetFactory() = default;
 
     ILogsTableWidgetFactory(const ILogsTableWidgetFactory& another)            = delete;
     ILogsTableWidgetFactory& operator=(const ILogsTableWidgetFactory& another) = delete;
 
-    virtual ILogsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) = 0;
+    virtual ILogsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };

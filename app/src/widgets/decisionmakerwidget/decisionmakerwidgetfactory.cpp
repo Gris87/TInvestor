@@ -24,7 +24,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
     IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
     ISettingsEditor*               settingsEditor,
     QWidget*                       parent
-)
+) const
 {
     return new DecisionMakerWidget(
         operationsTableWidgetFactory,

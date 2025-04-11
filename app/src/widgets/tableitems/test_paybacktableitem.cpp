@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_PaybackTableItem, Test_constructor_and_destructor)
 {
-    PaybackTableItem item;
+    const PaybackTableItem item;
 }
 
 TEST(Test_PaybackTableItem, Test_setValue_and_getValue)
@@ -43,3 +44,4 @@ TEST(Test_PaybackTableItem, Test_less)
 
     ASSERT_LT(item2, item);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

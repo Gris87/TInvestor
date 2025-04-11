@@ -17,7 +17,7 @@ StockTableItemWidgetFactory::~StockTableItemWidgetFactory()
     qDebug() << "Destroy StockTableItemWidgetFactory";
 }
 
-IStockTableItemWidget* StockTableItemWidgetFactory::newInstance(IUserStorage* userStorage, QWidget* parent)
+IStockTableItemWidget* StockTableItemWidgetFactory::newInstance(IUserStorage* userStorage, QWidget* parent) const
 {
     return new StockTableItemWidget(userStorage, parent);
 }

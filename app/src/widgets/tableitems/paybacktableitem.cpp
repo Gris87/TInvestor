@@ -4,14 +4,18 @@
 
 
 
-#define GREEN_COLOR  QColor("#2BD793")
-#define RED_COLOR    QColor("#ED6F7E")
-#define NORMAL_COLOR QColor("#97AEC4")
+constexpr float GREEN_LIMIT  = 60.0f;
+constexpr float NORMAL_LIMIT = 30.0f;
+
+const QColor GREEN_COLOR  = QColor("#2BD793");
+const QColor RED_COLOR    = QColor("#ED6F7E");
+const QColor NORMAL_COLOR = QColor("#97AEC4");
 
 
 
 PaybackTableItem::PaybackTableItem(int type) :
-    QTableWidgetItem(type)
+    QTableWidgetItem(type),
+    mValue()
 {
     qDebug() << "Create PaybackTableItem";
 }
@@ -29,11 +33,11 @@ void PaybackTableItem::setValue(float value)
 
     QColor color;
 
-    if (mValue >= 60)
+    if (mValue >= GREEN_LIMIT)
     {
         color = GREEN_COLOR;
     }
-    else if (mValue >= 30)
+    else if (mValue >= NORMAL_LIMIT)
     {
         color = NORMAL_COLOR;
     }
@@ -52,7 +56,7 @@ float PaybackTableItem::getValue() const
 
 bool PaybackTableItem::operator<(const QTableWidgetItem& another) const
 {
-    float anotherFloat = static_cast<const PaybackTableItem*>(&another)->mValue;
+    const float anotherFloat = dynamic_cast<const PaybackTableItem*>(&another)->mValue;
 
     return mValue < anotherFloat;
 }

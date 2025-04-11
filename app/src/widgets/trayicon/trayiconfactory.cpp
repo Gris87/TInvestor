@@ -17,7 +17,7 @@ TrayIconFactory::~TrayIconFactory()
     qDebug() << "Destroy TrayIconFactory";
 }
 
-ITrayIcon* TrayIconFactory::newInstance(QObject* parent)
+ITrayIcon* TrayIconFactory::newInstance(QObject* parent) const
 {
     return new TrayIcon(parent);
 }

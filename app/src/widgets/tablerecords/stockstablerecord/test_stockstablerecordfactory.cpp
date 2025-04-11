@@ -16,22 +16,22 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 TEST(Test_StocksTableRecordFactory, Test_constructor_and_destructor)
 {
-    StocksTableRecordFactory factory;
+    const StocksTableRecordFactory factory;
 }
 
 TEST(Test_StocksTableRecordFactory, Test_newInstance)
 {
     const InSequence seq;
 
-    StocksTableRecordFactory factory;
+    const StocksTableRecordFactory factory;
 
     StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
@@ -88,7 +88,7 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
     EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
-    IStocksTableRecord* record = factory.newInstance(
+    const IStocksTableRecord* record = factory.newInstance(
         &tableWidget,
         &stockTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
@@ -104,3 +104,4 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
 
     delete record;
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

@@ -17,21 +17,20 @@
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_DecisionMakerWidgetFactory, Test_constructor_and_destructor)
 {
-    DecisionMakerWidgetFactory factory;
+    const DecisionMakerWidgetFactory factory;
 }
 
 TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 {
     const InSequence seq;
 
-    DecisionMakerWidgetFactory factory;
+    const DecisionMakerWidgetFactory factory;
 
     StrictMock<OperationsTableWidgetFactoryMock> operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>    accountChartWidgetFactoryMock;
@@ -52,7 +51,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTableWidgetFactoryMock, newInstance(&settingsEditorMock, NotNull()))
         .WillOnce(Return(portfolioTableWidgetMock));
 
-    IDecisionMakerWidget* widget = factory.newInstance(
+    const IDecisionMakerWidget* widget = factory.newInstance(
         &operationsTableWidgetFactoryMock,
         &accountChartWidgetFactoryMock,
         &logsTableWidgetFactoryMock,

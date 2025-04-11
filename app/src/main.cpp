@@ -68,7 +68,7 @@
 
 
 
-int runApplication(int argc, char* argv[]);
+static int runApplication(int argc, char* argv[]);
 
 
 
@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 
     qInfo() << "START";
 
-    int res = runApplication(argc, argv);
+    const int res = runApplication(argc, argv);
 
     qInfo() << "END";
 
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 
 int runApplication(int argc, char* argv[])
 {
-    QApplication app(argc, argv);
+    const QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
     app.setPalette(DarkPalette());
 
@@ -321,7 +321,7 @@ int runApplication(int argc, char* argv[])
 
     qInfo() << "UP and Running";
 
-    if (!qApp->arguments().contains("--autorun"))
+    if (!qApp->arguments().contains("--autorun")) // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
     {
         mainWindow.show();
     }

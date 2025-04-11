@@ -30,6 +30,6 @@ public:
          Stock*                    stock,
          int                       precision,
          QWidget*                  parent),
-        (override)
+        (const, override)
     );
 };

@@ -4,6 +4,7 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_AccountChartWidget : public ::testing::Test
 {
 protected:
@@ -25,3 +26,4 @@ protected:
 TEST_F(Test_AccountChartWidget, Test_constructor_and_destructor)
 {
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

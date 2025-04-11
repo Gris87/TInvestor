@@ -5,6 +5,7 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_OrderWavesWidget : public ::testing::Test
 {
 protected:
@@ -58,7 +59,7 @@ TEST_F(Test_OrderWavesWidget, Test_zoom)
 
 TEST_F(Test_OrderWavesWidget, Test_eventFilter)
 {
-    QPointF pos;
+    const QPointF pos;
 
     QMouseEvent mouseEvent(QEvent::MouseMove, pos, pos, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     QWheelEvent wheelEvent(pos, pos, QPoint(0, 0), QPoint(0, 0), Qt::LeftButton, Qt::NoModifier, Qt::NoScrollPhase, false);
@@ -239,3 +240,4 @@ TEST_F(Test_OrderWavesWidget, Test_calculateCurrentPrice)
 {
     ASSERT_NEAR(orderWavesWidget->calculateCurrentPrice(-1.0f, -1.0f), 0.0f, 0.0001f);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

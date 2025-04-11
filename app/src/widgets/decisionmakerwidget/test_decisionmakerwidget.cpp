@@ -19,11 +19,11 @@ using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_DecisionMakerWidget : public ::testing::Test
 {
 protected:
@@ -120,3 +120,4 @@ TEST_F(Test_DecisionMakerWidget, Test_loadWindowState)
 
     decisionMakerWidget->loadWindowState("AAAAA");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

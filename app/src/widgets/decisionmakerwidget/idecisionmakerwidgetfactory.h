@@ -15,9 +15,7 @@
 class IDecisionMakerWidgetFactory
 {
 public:
-    IDecisionMakerWidgetFactory()
-    {
-    }
+    IDecisionMakerWidgetFactory()          = default;
     virtual ~IDecisionMakerWidgetFactory() = default;
 
     IDecisionMakerWidgetFactory(const IDecisionMakerWidgetFactory& another)            = delete;
@@ -30,5 +28,5 @@ public:
         IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
         ISettingsEditor*               settingsEditor,
         QWidget*                       parent
-    ) = 0;
+    ) const = 0;
 };

@@ -6,9 +6,13 @@
 
 
 
+constexpr int HEX_DIGITS = 16;
+
+
+
 const QtMsgType logLevel = QtInfoMsg;
 
-QMap<QtMsgType, QString> logLevelToString{
+static const QMap<QtMsgType, QString> logLevelToString{
     {QtDebugMsg,    "DEBUG   "},
     {QtInfoMsg,     "INFO    "},
     {QtWarningMsg,  "WARNING "},
@@ -17,7 +21,7 @@ QMap<QtMsgType, QString> logLevelToString{
 };
 
 // HACK for bad QtInfoMsg (Remove on Qt 7)
-QMap<QtMsgType, int> logLevelToInteger{
+static const QMap<QtMsgType, int> logLevelToInteger{
     {QtDebugMsg,    0},
     {QtInfoMsg,     1},
     {QtWarningMsg,  2},
@@ -27,9 +31,9 @@ QMap<QtMsgType, int> logLevelToInteger{
 
 
 
-QtMessageHandler oldMessageHandler;
+static QtMessageHandler oldMessageHandler;
 
-void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
     Q_ASSERT_X(QtInfoMsg != 1, "messageHandler()", "It's time to remove hack");
 
@@ -45,8 +49,10 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
             .arg(
                 QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
                 logLevelToString[type],
-                QString::number((qint64)QThread::currentThreadId(), 16).toUpper().rightJustified(4, '0'),
-                QString(context.file).remove("..\\..\\..\\app\\"),
+                QString::number(reinterpret_cast<qint64>(QThread::currentThreadId()), HEX_DIGITS)
+                    .toUpper()
+                    .rightJustified(4, '0'),
+                QString(context.file).remove(R"(..\..\..\app\)"),
                 QString::number(context.line),
                 QString(context.function),
                 msg

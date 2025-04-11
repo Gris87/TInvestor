@@ -9,13 +9,11 @@
 class IAccountChartWidgetFactory
 {
 public:
-    IAccountChartWidgetFactory()
-    {
-    }
+    IAccountChartWidgetFactory()          = default;
     virtual ~IAccountChartWidgetFactory() = default;
 
     IAccountChartWidgetFactory(const IAccountChartWidgetFactory& another)            = delete;
     IAccountChartWidgetFactory& operator=(const IAccountChartWidgetFactory& another) = delete;
 
-    virtual IAccountChartWidget* newInstance(QWidget* parent) = 0;
+    virtual IAccountChartWidget* newInstance(QWidget* parent) const = 0;
 };

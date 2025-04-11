@@ -20,5 +20,5 @@ public:
     PortfolioTableWidgetFactoryMock(const PortfolioTableWidgetFactoryMock& another)            = delete;
     PortfolioTableWidgetFactoryMock& operator=(const PortfolioTableWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IPortfolioTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (override));
+    MOCK_METHOD(IPortfolioTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (const, override));
 };

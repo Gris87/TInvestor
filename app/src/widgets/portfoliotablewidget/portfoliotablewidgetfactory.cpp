@@ -17,7 +17,7 @@ PortfolioTableWidgetFactory::~PortfolioTableWidgetFactory()
     qDebug() << "Destroy PortfolioTableWidgetFactory";
 }
 
-IPortfolioTableWidget* PortfolioTableWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent)
+IPortfolioTableWidget* PortfolioTableWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const
 {
     return new PortfolioTableWidget(settingsEditor, parent);
 }

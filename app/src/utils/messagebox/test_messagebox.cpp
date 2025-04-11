@@ -6,7 +6,7 @@
 
 TEST(Test_MessageBoxUtils, Test_constructor_and_destructor)
 {
-    MessageBoxUtils messageBoxUtils;
+    const MessageBoxUtils messageBoxUtils;
 }
 
 TEST(Test_MessageBoxUtils, Test_warning)

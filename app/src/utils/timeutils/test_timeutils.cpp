@@ -6,7 +6,7 @@
 
 TEST(Test_TimeUtils, Test_constructor_and_destructor)
 {
-    TimeUtils timeUtils;
+    const TimeUtils timeUtils;
 }
 
 TEST(Test_TimeUtils, Test_interruptibleSleep)

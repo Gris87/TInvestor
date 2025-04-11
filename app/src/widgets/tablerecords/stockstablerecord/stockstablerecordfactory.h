@@ -26,5 +26,5 @@ public:
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent
-    ) override;
+    ) const override;
 };

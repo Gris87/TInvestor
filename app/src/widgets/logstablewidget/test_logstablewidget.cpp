@@ -9,13 +9,12 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_LogsTableWidget : public ::testing::Test
 {
 protected:
@@ -65,3 +64,4 @@ TEST_F(Test_LogsTableWidget, Test_loadWindowState)
 
     logsTableWidget->loadWindowState("AAAAA");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

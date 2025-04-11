@@ -6,12 +6,15 @@
 
 
 // TODO: Move to OperationsTableRecord
-#define OPERATIONS_TIME_COLUMN      0
-#define OPERATIONS_NAME_COLUMN      1
-#define OPERATIONS_OPERATION_COLUMN 2
-#define OPERATIONS_PRICE_COLUMN     3
-#define OPERATIONS_QUANTITY_COLUMN  4
-#define OPERATIONS_COST_COLUMN      5
+enum OperationsTableColumns : qint8
+{
+    OPERATIONS_TIME_COLUMN,
+    OPERATIONS_NAME_COLUMN,
+    OPERATIONS_OPERATION_COLUMN,
+    OPERATIONS_PRICE_COLUMN,
+    OPERATIONS_QUANTITY_COLUMN,
+    OPERATIONS_COST_COLUMN,
+};
 
 
 
@@ -44,6 +47,7 @@ void OperationsTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
+// NOLINTBEGIN(readability-magic-numbers)
 void OperationsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -55,3 +59,4 @@ void OperationsTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Cost",      65).toInt());
     // clang-format on
 }
+// NOLINTEND(readability-magic-numbers)

@@ -12,14 +12,12 @@
 class IStocksControlsWidgetFactory
 {
 public:
-    IStocksControlsWidgetFactory()
-    {
-    }
+    IStocksControlsWidgetFactory()          = default;
     virtual ~IStocksControlsWidgetFactory() = default;
 
     IStocksControlsWidgetFactory(const IStocksControlsWidgetFactory& another)            = delete;
     IStocksControlsWidgetFactory& operator=(const IStocksControlsWidgetFactory& another) = delete;
 
     virtual IStocksControlsWidget*
-    newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) = 0;
+    newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };

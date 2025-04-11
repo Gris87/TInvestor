@@ -17,12 +17,12 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_StocksTableRecord : public ::testing::Test
 {
 protected:
@@ -221,3 +221,4 @@ TEST_F(Test_StocksTableRecord, Test_filter)
 
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

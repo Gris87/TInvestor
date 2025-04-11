@@ -4,17 +4,19 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_OrderWavesWidgetFactory, Test_constructor_and_destructor)
 {
-    OrderWavesWidgetFactory factory;
+    const OrderWavesWidgetFactory factory;
 }
 
 TEST(Test_OrderWavesWidgetFactory, Test_newInstance)
 {
-    OrderWavesWidgetFactory factory;
+    const OrderWavesWidgetFactory factory;
 
-    IOrderWavesWidget* widget = factory.newInstance(2, 0.01f, nullptr);
+    const IOrderWavesWidget* widget = factory.newInstance(2, 0.01f, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;
 }
+// NOLINTEND(readability-magic-numbers)

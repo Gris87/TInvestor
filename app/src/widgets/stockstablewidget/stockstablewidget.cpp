@@ -50,12 +50,10 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (int i = 0; i < stocks.size(); ++i)
+    for (Stock* stock : stocks)
     {
-        Stock* stock = stocks.at(i);
-
         stock->mutex->lock();
-        QString uid = stock->meta.uid;
+        const QString uid = stock->meta.uid;
         stock->mutex->unlock();
 
         IStocksTableRecord* record = tableRecords[uid]; // clazy:exclude=detaching-member
@@ -110,9 +108,9 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
         ui->tableWidget->setUpdatesEnabled(false);
         ui->tableWidget->setSortingEnabled(false);
 
-        for (auto it = lastPricesUpdates.cbegin(); it != lastPricesUpdates.cend(); ++it)
+        for (const QString& lastPricesUpdate : lastPricesUpdates)
         {
-            IStocksTableRecord* record = tableRecords[*it]; // clazy:exclude=detaching-member
+            IStocksTableRecord* record = tableRecords[lastPricesUpdate]; // clazy:exclude=detaching-member
 
             if (record != nullptr)
             {
@@ -193,6 +191,7 @@ void StocksTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
+// NOLINTBEGIN(readability-magic-numbers)
 void StocksTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -205,3 +204,4 @@ void StocksTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    83).toInt());
     // clang-format on
 }
+// NOLINTEND(readability-magic-numbers)

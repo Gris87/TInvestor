@@ -14,22 +14,18 @@
 
 
 
-using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_StocksTableWidgetFactory, Test_constructor_and_destructor)
 {
-    StocksTableWidgetFactory factory;
+    const StocksTableWidgetFactory factory;
 }
 
 TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 {
-    StocksTableWidgetFactory factory;
+    const StocksTableWidgetFactory factory;
 
     StrictMock<StocksTableRecordFactoryMock>      stockTableRecordFactoryMock;
     StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
@@ -41,7 +37,7 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
     StrictMock<HttpClientMock>                    httpClientMock;
     StrictMock<SettingsEditorMock>                settingsEditorMock;
 
-    IStocksTableWidget* widget = factory.newInstance(
+    const IStocksTableWidget* widget = factory.newInstance(
         &stockTableRecordFactoryMock,
         &stockTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,

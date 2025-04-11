@@ -5,14 +5,15 @@
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 TEST(Test_TrayIcon, Test_constructor_and_destructor)
 {
-    TrayIcon trayIcon;
+    const TrayIcon trayIcon;
 
     QMenu* trayIconMenu = trayIcon.contextMenu();
     ASSERT_TRUE(trayIconMenu != nullptr);
 
-    QList<QAction*> actions = trayIconMenu->actions();
+    const QList<QAction*> actions = trayIconMenu->actions();
     ASSERT_EQ(actions.size(), 3);
 
     ASSERT_EQ(actions.at(0)->isSeparator(), false);
@@ -26,3 +27,4 @@ TEST(Test_TrayIcon, Test_constructor_and_destructor)
 
     ASSERT_EQ(trayIcon.toolTip(), "TInvestor");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

@@ -6,25 +6,22 @@
 
 
 
-using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_StockTableItemWidgetFactory, Test_constructor_and_destructor)
 {
-    StockTableItemWidgetFactory factory;
+    const StockTableItemWidgetFactory factory;
 }
 
 TEST(Test_StockTableItemWidgetFactory, Test_newInstance)
 {
-    StockTableItemWidgetFactory factory;
+    const StockTableItemWidgetFactory factory;
 
     StrictMock<UserStorageMock> userStorageMock;
 
-    IStockTableItemWidget* widget = factory.newInstance(&userStorageMock, nullptr);
+    const IStockTableItemWidget* widget = factory.newInstance(&userStorageMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

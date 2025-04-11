@@ -70,9 +70,9 @@ QList<Stock*> StocksDatabase::readStocksMeta()
 
 struct ReadStocksDataInfo
 {
-    explicit ReadStocksDataInfo(IFileFactory* fileFactory)
+    explicit ReadStocksDataInfo(IFileFactory* _fileFactory) :
+        fileFactory(_fileFactory)
     {
-        this->fileFactory = fileFactory;
     }
 
     IFileFactory* fileFactory;

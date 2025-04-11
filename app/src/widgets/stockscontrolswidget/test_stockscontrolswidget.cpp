@@ -9,13 +9,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
 class Test_StocksControlsWidget : public ::testing::Test
 {
 protected:
@@ -47,8 +46,8 @@ TEST_F(Test_StocksControlsWidget, Test_constructor_and_destructor)
 
 TEST_F(Test_StocksControlsWidget, Test_getDateChangeTime)
 {
-    QDateTime dateTime1(QDate(2024, 1, 1), QTime(0, 0, 0));
-    QDateTime dateTime2(QDate(2025, 1, 1), QTime(0, 0, 0));
+    const QDateTime dateTime1(QDate(2024, 1, 1), QTime(0, 0, 0));
+    const QDateTime dateTime2(QDate(2025, 1, 1), QTime(0, 0, 0));
 
     stocksControlsWidget->ui->dateChangeTimeEdit->setDateTime(dateTime1);
     ASSERT_EQ(stocksControlsWidget->getDateChangeTime(), dateTime1);
@@ -59,7 +58,7 @@ TEST_F(Test_StocksControlsWidget, Test_getDateChangeTime)
 
 TEST_F(Test_StocksControlsWidget, Test_getFilter)
 {
-    Filter filter = stocksControlsWidget->getFilter();
+    const Filter filter = stocksControlsWidget->getFilter();
 
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
@@ -89,7 +88,7 @@ TEST_F(Test_StocksControlsWidget, Test_dateChangeDelayTimerTicked)
     const InSequence seq;
 
     QMutex    mutex;
-    QDateTime dateTime(QDate(2024, 1, 1), QTime(0, 0, 0));
+    const QDateTime dateTime(QDate(2024, 1, 1), QTime(0, 0, 0));
 
     ASSERT_EQ(stocksControlsWidget->dateChangeDelayTimer.isActive(), false);
 
@@ -118,8 +117,8 @@ TEST_F(Test_StocksControlsWidget, Test_filterChangeDelayTimerTicked)
 
 TEST_F(Test_StocksControlsWidget, Test_on_dateChangeTimeEdit_dateTimeChanged)
 {
-    QDateTime dateTime1(QDate(2024, 1, 1), QTime(0, 0, 0));
-    QDateTime dateTime2(QDate(2025, 1, 1), QTime(0, 0, 0));
+    const QDateTime dateTime1(QDate(2024, 1, 1), QTime(0, 0, 0));
+    const QDateTime dateTime2(QDate(2025, 1, 1), QTime(0, 0, 0));
 
     ASSERT_EQ(stocksControlsWidget->dateChangeDelayTimer.isActive(), false);
 
@@ -674,3 +673,4 @@ TEST_F(Test_StocksControlsWidget, Test_loadWindowState)
 
     stocksControlsWidget->loadWindowState("AAAAA");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

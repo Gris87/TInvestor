@@ -15,5 +15,5 @@ public:
     TrayIconFactory(const TrayIconFactory& another)            = delete;
     TrayIconFactory& operator=(const TrayIconFactory& another) = delete;
 
-    ITrayIcon* newInstance(QObject* parent) override;
+    ITrayIcon* newInstance(QObject* parent) const override;
 };

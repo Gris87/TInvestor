@@ -11,13 +11,11 @@
 class IOperationsTableWidgetFactory
 {
 public:
-    IOperationsTableWidgetFactory()
-    {
-    }
+    IOperationsTableWidgetFactory()          = default;
     virtual ~IOperationsTableWidgetFactory() = default;
 
     IOperationsTableWidgetFactory(const IOperationsTableWidgetFactory& another)            = delete;
     IOperationsTableWidgetFactory& operator=(const IOperationsTableWidgetFactory& another) = delete;
 
-    virtual IOperationsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) = 0;
+    virtual IOperationsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };

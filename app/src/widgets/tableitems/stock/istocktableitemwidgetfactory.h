@@ -11,13 +11,11 @@
 class IStockTableItemWidgetFactory
 {
 public:
-    IStockTableItemWidgetFactory()
-    {
-    }
+    IStockTableItemWidgetFactory()          = default;
     virtual ~IStockTableItemWidgetFactory() = default;
 
     IStockTableItemWidgetFactory(const IStockTableItemWidgetFactory& another)            = delete;
     IStockTableItemWidgetFactory& operator=(const IStockTableItemWidgetFactory& another) = delete;
 
-    virtual IStockTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) = 0;
+    virtual IStockTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) const = 0;
 };

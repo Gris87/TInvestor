@@ -10,14 +10,17 @@
 
 
 
-#define STOCK_COLUMN       0
-#define PRICE_COLUMN       1
-#define DAY_CHANGE_COLUMN  2
-#define DATE_CHANGE_COLUMN 3
-#define TURNOVER_COLUMN    4
-#define PAYBACK_COLUMN     5
-#define ACTIONS_COLUMN     6
-#define COLUMN_COUNT       7
+enum StocksTableColums : qint8
+{
+    STOCK_COLUMN,
+    PRICE_COLUMN,
+    DAY_CHANGE_COLUMN,
+    DATE_CHANGE_COLUMN,
+    TURNOVER_COLUMN,
+    PAYBACK_COLUMN,
+    ACTIONS_COLUMN,
+    COLUMN_COUNT
+};
 
 
 

@@ -18,13 +18,12 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_StocksTableWidget : public ::testing::Test
 {
 protected:
@@ -102,7 +101,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -167,7 +166,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -239,7 +238,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -318,7 +317,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -390,7 +389,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -473,7 +472,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    Filter filter;
+    const Filter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -559,3 +558,4 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
 
     stocksTableWidget->loadWindowState("AAAAA");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

@@ -29,6 +29,6 @@ public:
          IPortfolioTableWidgetFactory* portfolioTableWidgetFactory,
          ISettingsEditor*              settingsEditor,
          QWidget*                      parent),
-        (override)
+        (const, override)
     );
 };

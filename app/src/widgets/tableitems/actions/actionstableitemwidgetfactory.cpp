@@ -25,7 +25,7 @@ IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
     Stock*                    stock,
     int                       precision,
     QWidget*                  parent
-)
+) const
 {
     return new ActionsTableItemWidget(
         orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, stock, precision, parent

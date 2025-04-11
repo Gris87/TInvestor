@@ -15,5 +15,5 @@ public:
     OperationsTableWidgetFactory(const OperationsTableWidgetFactory& another)            = delete;
     OperationsTableWidgetFactory& operator=(const OperationsTableWidgetFactory& another) = delete;
 
-    IOperationsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) override;
+    IOperationsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const override;
 };

@@ -11,15 +11,16 @@
 
 
 
-constexpr qint64 MS_IN_SECOND        = 1000LL;
-constexpr qint64 ONE_MINUTE          = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR            = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY             = 24LL * ONE_HOUR;
-constexpr qint64 ONE_MONTH           = 31LL * ONE_DAY;
-constexpr qint64 SLEEP_DELAY         = 5LL * MS_IN_SECOND; // 5 seconds
-constexpr qint64 MOSCOW_TIME         = 3 * ONE_HOUR;       // 3 hours
-constexpr qint64 MAX_GRPC_TIME_LIMIT = ONE_MONTH;          // 1 month
-constexpr int    HTTP_STATUS_CODE_OK = 200;
+constexpr qint64 MS_IN_SECOND                       = 1000LL;
+constexpr qint64 ONE_MINUTE                         = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                           = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY                            = 24LL * ONE_HOUR;
+constexpr qint64 ONE_MONTH                          = 31LL * ONE_DAY;
+constexpr qint64 SLEEP_DELAY                        = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 MOSCOW_TIME                        = 3 * ONE_HOUR;       // 3 hours
+constexpr qint64 MAX_GRPC_TIME_LIMIT                = ONE_MONTH;          // 1 month
+constexpr int    HTTP_STATUS_CODE_OK                = 200;
+constexpr int    HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
 
 
 enum CsvField : qint8
@@ -123,6 +124,14 @@ void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFi
 
 struct DownloadLogosInfo
 {
+    explicit DownloadLogosInfo(PriceCollectThread* _thread, IFileFactory* _fileFactory, bool _forceToDownload) :
+        thread(_thread),
+        fileFactory(_fileFactory),
+        forceToDownload(_forceToDownload),
+        finished()
+    {
+    }
+
     PriceCollectThread* thread;
     IFileFactory*       fileFactory;
     bool                forceToDownload;
@@ -204,12 +213,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         lastDownloadHour = currentHour;
     }
 
-    DownloadLogosInfo downloadLogosInfo;
-    downloadLogosInfo.thread          = this;
-    downloadLogosInfo.fileFactory     = mFileFactory;
-    downloadLogosInfo.forceToDownload = lastDownloadHour == currentHour;
-    downloadLogosInfo.finished        = 0;
-
+    DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
     processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
     const QMutexLocker lock(mStocksStorage->getMutex());
@@ -301,9 +305,9 @@ static int getCandlesFromZipFile(
 
             const QStringList csvLines = content.split('\n');
 
-            for (int j = 0; j < csvLines.size(); ++j)
+            for (const QString& csvLine : csvLines)
             {
-                const QStringList csvFields = csvLines.at(j).split(';');
+                const QStringList csvFields = csvLine.split(';');
 
                 if (csvFields.size() > CSV_FIELD_VOLUME)
                 {
@@ -330,7 +334,7 @@ static int getCandlesFromZipFile(
     return indexOffset;
 }
 
-void getCandlesWithHttp(
+static void getCandlesWithHttp(
     QThread*          parentThread,
     IUserStorage*     userStorage,
     IStocksStorage*   stocksStorage,
@@ -384,7 +388,7 @@ void getCandlesWithHttp(
                 const HttpResult httpResult = httpClient->download(url, headers);
 
                 if (parentThread->isInterruptionRequested() ||
-                    (httpResult.statusCode != HTTP_STATUS_CODE_OK && httpResult.statusCode != 429))
+                    (httpResult.statusCode != HTTP_STATUS_CODE_OK && httpResult.statusCode != HTTP_STATUS_CODE_TOO_MANY_REQUESTS))
                 {
                     break;
                 }
@@ -415,6 +419,34 @@ void getCandlesWithHttp(
 
 struct GetCandlesInfo
 {
+    explicit GetCandlesInfo(
+        PriceCollectThread* _thread,
+        IConfig*            _config,
+        IUserStorage*       _userStorage,
+        IStocksStorage*     _stocksStorage,
+        IFileFactory*       _fileFactory,
+        IQZipFactory*       _qZipFactory,
+        IQZipFileFactory*   _qZipFileFactory,
+        ITimeUtils*         _timeUtils,
+        IHttpClient*        _httpClient,
+        IGrpcClient*        _grpcClient,
+        qint64              _currentTimestamp
+    ) :
+        thread(_thread),
+        config(_config),
+        userStorage(_userStorage),
+        stocksStorage(_stocksStorage),
+        fileFactory(_fileFactory),
+        qZipFactory(_qZipFactory),
+        qZipFileFactory(_qZipFileFactory),
+        timeUtils(_timeUtils),
+        httpClient(_httpClient),
+        grpcClient(_grpcClient),
+        currentTimestamp(_currentTimestamp),
+        finished()
+    {
+    }
+
     PriceCollectThread* thread;
     IConfig*            config;
     IUserStorage*       userStorage;
@@ -450,7 +482,7 @@ static void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         qint64 startTimestamp =
@@ -490,19 +522,19 @@ void PriceCollectThread::obtainStocksData()
 {
     emit notifyStocksProgress(tr("Obtain stocks data"));
 
-    GetCandlesInfo getCandlesInfo;
-    getCandlesInfo.thread           = this;
-    getCandlesInfo.config           = mConfig;
-    getCandlesInfo.userStorage      = mUserStorage;
-    getCandlesInfo.stocksStorage    = mStocksStorage;
-    getCandlesInfo.fileFactory      = mFileFactory;
-    getCandlesInfo.qZipFactory      = mQZipFactory;
-    getCandlesInfo.qZipFileFactory  = mQZipFileFactory;
-    getCandlesInfo.timeUtils        = mTimeUtils;
-    getCandlesInfo.httpClient       = mHttpClient;
-    getCandlesInfo.grpcClient       = mGrpcClient;
-    getCandlesInfo.currentTimestamp = QDateTime::currentMSecsSinceEpoch();
-    getCandlesInfo.finished         = 0;
+    GetCandlesInfo getCandlesInfo(
+        this,
+        mConfig,
+        mUserStorage,
+        mStocksStorage,
+        mFileFactory,
+        mQZipFactory,
+        mQZipFileFactory,
+        mTimeUtils,
+        mHttpClient,
+        mGrpcClient,
+        QDateTime::currentMSecsSinceEpoch()
+    );
 
     QList<Stock*>& stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);

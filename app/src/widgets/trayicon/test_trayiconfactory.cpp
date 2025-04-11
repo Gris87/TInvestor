@@ -6,14 +6,14 @@
 
 TEST(Test_TrayIconFactory, Test_constructor_and_destructor)
 {
-    TrayIconFactory factory;
+    const TrayIconFactory factory;
 }
 
 TEST(Test_TrayIconFactory, Test_newInstance)
 {
-    TrayIconFactory factory;
+    const TrayIconFactory factory;
 
-    ITrayIcon* trayIcon = factory.newInstance(nullptr);
+    const ITrayIcon* trayIcon = factory.newInstance(nullptr);
     ASSERT_TRUE(trayIcon != nullptr);
 
     delete trayIcon;

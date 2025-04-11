@@ -9,9 +9,7 @@
 class ITimeUtils
 {
 public:
-    ITimeUtils()
-    {
-    }
+    ITimeUtils()          = default;
     virtual ~ITimeUtils() = default;
 
     ITimeUtils(const ITimeUtils& another)            = delete;

@@ -6,6 +6,12 @@
 
 
 
+constexpr int   START_PRECISION = 9;
+constexpr int   TENS            = 10;
+constexpr float HUNDRED_PROCENT = 100.0f;
+
+
+
 StocksTableRecord::StocksTableRecord(
     QTableWidget*                   tableWidget,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
@@ -33,16 +39,16 @@ StocksTableRecord::StocksTableRecord(
     qint32 priceNanos = mStock->meta.minPriceIncrement.nano;
     mStock->mutex->unlock();
 
-    mPrecision = 9;
+    mPrecision = START_PRECISION;
 
     while (mPrecision > 2)
     {
-        if (priceNanos % 10 != 0)
+        if (priceNanos % TENS != 0)
         {
             break;
         }
 
-        priceNanos /= 10;
+        priceNanos /= TENS;
         --mPrecision;
     }
 
@@ -52,7 +58,7 @@ StocksTableRecord::StocksTableRecord(
         orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, mPrecision, tableWidget
     ); // tableWidget will take ownership
 
-    int rowIndex = tableWidget->rowCount();
+    const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
     tableWidget->setCellWidget(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
@@ -76,7 +82,7 @@ void StocksTableRecord::updateAll()
 {
     mStock->mutex->lock();
 
-    QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
+    const QIcon stockLogo(QString("%1/data/stocks/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
 
     mStockTableItemWidget->setIcon(stockLogo);
     mStockTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
@@ -93,12 +99,16 @@ void StocksTableRecord::updatePrice()
 {
     const QMutexLocker lock(mStock->mutex);
 
-    float price = !mStock->operational.detailedData.isEmpty() ? mStock->operational.detailedData.constLast().price
-                                                              : (!mStock->data.isEmpty() ? mStock->data.constLast().price : 0);
+    const float price = !mStock->operational.detailedData.isEmpty()
+                            ? mStock->operational.detailedData.constLast().price
+                            : (!mStock->data.isEmpty() ? mStock->data.constLast().price : 0);
 
-    float dayChange = mStock->operational.dayStartPrice > 0 ? (price / mStock->operational.dayStartPrice) * 100 - 100 : 0;
-    float dateChange =
-        mStock->operational.specifiedDatePrice > 0 ? (price / mStock->operational.specifiedDatePrice) * 100 - 100 : 0;
+    const float dayChange  = mStock->operational.dayStartPrice > 0
+                                 ? ((price / mStock->operational.dayStartPrice) * HUNDRED_PROCENT) - HUNDRED_PROCENT
+                                 : 0;
+    const float dateChange = mStock->operational.specifiedDatePrice > 0
+                                 ? ((price / mStock->operational.specifiedDatePrice) * HUNDRED_PROCENT) - HUNDRED_PROCENT
+                                 : 0;
 
     mPriceTableWidgetItem->setValue(price, mPrecision);
     mDayChangeTableWidgetItem->setValue(dayChange, mStock->operational.dayStartPrice, mPrecision);
@@ -115,8 +125,8 @@ void StocksTableRecord::updatePeriodicData()
 
 void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
-    int  row    = mPriceTableWidgetItem->row();
-    bool hidden = !filter.isFiltered(
+    const int  row    = mPriceTableWidgetItem->row();
+    const bool hidden = !filter.isFiltered(
         mStockTableItemWidget->text(),
         mStockTableItemWidget->fullText(),
         mStockTableItemWidget->forQualInvestorFlag(),

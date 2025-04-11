@@ -11,13 +11,11 @@
 class IPortfolioTableWidgetFactory
 {
 public:
-    IPortfolioTableWidgetFactory()
-    {
-    }
+    IPortfolioTableWidgetFactory()          = default;
     virtual ~IPortfolioTableWidgetFactory() = default;
 
     IPortfolioTableWidgetFactory(const IPortfolioTableWidgetFactory& another)            = delete;
     IPortfolioTableWidgetFactory& operator=(const IPortfolioTableWidgetFactory& another) = delete;
 
-    virtual IPortfolioTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) = 0;
+    virtual IPortfolioTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };

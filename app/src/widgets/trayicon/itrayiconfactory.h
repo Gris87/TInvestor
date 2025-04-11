@@ -9,13 +9,11 @@
 class ITrayIconFactory
 {
 public:
-    ITrayIconFactory()
-    {
-    }
+    ITrayIconFactory()          = default;
     virtual ~ITrayIconFactory() = default;
 
     ITrayIconFactory(const ITrayIconFactory& another)            = delete;
     ITrayIconFactory& operator=(const ITrayIconFactory& another) = delete;
 
-    virtual ITrayIcon* newInstance(QObject* parent) = 0;
+    virtual ITrayIcon* newInstance(QObject* parent) const = 0;
 };

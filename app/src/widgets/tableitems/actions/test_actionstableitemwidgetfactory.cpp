@@ -9,20 +9,18 @@
 
 
 
-using ::testing::NotNull;
-using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_ActionsTableItemWidgetFactory, Test_constructor_and_destructor)
 {
-    ActionsTableItemWidgetFactory factory;
+    const ActionsTableItemWidgetFactory factory;
 }
 
 TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
 {
-    ActionsTableItemWidgetFactory factory;
+    const ActionsTableItemWidgetFactory factory;
 
     StrictMock<OrderWavesDialogFactoryMock> orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
@@ -30,7 +28,7 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
     StrictMock<HttpClientMock>              httpClientMock;
     Stock                                   stock;
 
-    IActionsTableItemWidget* widget = factory.newInstance(
+    const IActionsTableItemWidget* widget = factory.newInstance(
         &orderWavesDialogFactoryMock, &orderWavesWidgetFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, 2, nullptr
     );
     ASSERT_TRUE(widget != nullptr);

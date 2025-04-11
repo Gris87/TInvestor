@@ -20,5 +20,5 @@ public:
     LogsTableWidgetFactoryMock(const LogsTableWidgetFactoryMock& another)            = delete;
     LogsTableWidgetFactoryMock& operator=(const LogsTableWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(ILogsTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (override));
+    MOCK_METHOD(ILogsTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (const, override));
 };

@@ -15,5 +15,5 @@ public:
     PortfolioTableWidgetFactory(const PortfolioTableWidgetFactory& another)            = delete;
     PortfolioTableWidgetFactory& operator=(const PortfolioTableWidgetFactory& another) = delete;
 
-    IPortfolioTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) override;
+    IPortfolioTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const override;
 };

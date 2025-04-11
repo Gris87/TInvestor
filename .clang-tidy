@@ -57,7 +57,12 @@ Checks:
         -readability-avoid-nested-conditional-operator,
         -modernize-use-default-member-init,
         -cppcoreguidelines-use-default-member-init,
-        -google-default-arguments¶
+        -google-default-arguments,
+        -cppcoreguidelines-avoid-non-const-global-variables,
+        -fuchsia-multiple-inheritance,
+        -readability-static-accessed-through-instance,
+        -cppcoreguidelines-avoid-do-while,
+        -clang-analyzer-optin.cplusplus.VirtualCall
     '
 CheckOptions:
     cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true

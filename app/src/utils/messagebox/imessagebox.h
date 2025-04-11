@@ -9,9 +9,7 @@
 class IMessageBoxUtils
 {
 public:
-    IMessageBoxUtils()
-    {
-    }
+    IMessageBoxUtils()          = default;
     virtual ~IMessageBoxUtils() = default;
 
     IMessageBoxUtils(const IMessageBoxUtils& another)            = delete;

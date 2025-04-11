@@ -28,7 +28,7 @@ IStocksTableWidget* StocksTableWidgetFactory::newInstance(
     IHttpClient*                    httpClient,
     ISettingsEditor*                settingsEditor,
     QWidget*                        parent
-)
+) const
 {
     return new StocksTableWidget(
         stockTableRecordFactory,

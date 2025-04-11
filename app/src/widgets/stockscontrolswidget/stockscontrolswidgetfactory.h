@@ -15,5 +15,6 @@ public:
     StocksControlsWidgetFactory(const StocksControlsWidgetFactory& another)            = delete;
     StocksControlsWidgetFactory& operator=(const StocksControlsWidgetFactory& another) = delete;
 
-    IStocksControlsWidget* newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) override;
+    IStocksControlsWidget*
+    newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) const override;
 };

@@ -109,6 +109,12 @@ void StocksStorage::appendStockData(Stock* stock, const StockData* dataArray, in
 
 struct DeleteObsoleteDataInfo
 {
+    explicit DeleteObsoleteDataInfo(IStocksDatabase* _stocksDatabase, qint64 _obsoleteTimestamp) :
+        stocksDatabase(_stocksDatabase),
+        obsoleteTimestamp(_obsoleteTimestamp)
+    {
+    }
+
     IStocksDatabase* stocksDatabase;
     qint64           obsoleteTimestamp;
 };
@@ -142,21 +148,21 @@ static void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& 
     }
 }
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::deleteObsoleteData(qint64 timestamp)
 {
     qDebug() << "Deleting obsolete stocks data";
 
-    DeleteObsoleteDataInfo deleteObsoleteDataInfo;
-    deleteObsoleteDataInfo.stocksDatabase    = mStocksDatabase;
-    deleteObsoleteDataInfo.obsoleteTimestamp = timestamp;
-
+    DeleteObsoleteDataInfo deleteObsoleteDataInfo(mStocksDatabase, timestamp);
     processInParallel(mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct CleanupOperationalDataInfo
 {
+    explicit CleanupOperationalDataInfo(qint64 _obsoleteTimestamp) :
+        obsoleteTimestamp(_obsoleteTimestamp)
+    {
+    }
+
     qint64 obsoleteTimestamp;
 };
 
@@ -188,20 +194,22 @@ cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, 
     }
 }
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::cleanupOperationalData(qint64 timestamp)
 {
     qDebug() << "Cleanup operational data";
 
-    CleanupOperationalDataInfo cleanupOperationalDataInfo;
-    cleanupOperationalDataInfo.obsoleteTimestamp = timestamp;
-
+    CleanupOperationalDataInfo cleanupOperationalDataInfo(timestamp);
     processInParallel(mStocks, cleanupOperationalDataForParallel, &cleanupOperationalDataInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetDatePriceInfo
 {
+    explicit GetDatePriceInfo(qint64 _startTimestamp, bool _isDayStartNeeded) :
+        startTimestamp(_startTimestamp),
+        isDayStartNeeded(_isDayStartNeeded)
+    {
+    }
+
     qint64 startTimestamp;
     bool   isDayStartNeeded;
 };
@@ -246,28 +254,25 @@ static void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks
     }
 }
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 {
-    GetDatePriceInfo getDatePriceInfo;
-    getDatePriceInfo.startTimestamp   = timestamp;
-    getDatePriceInfo.isDayStartNeeded = true;
-
+    GetDatePriceInfo getDatePriceInfo(timestamp, true);
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
 
 void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
-    GetDatePriceInfo getDatePriceInfo;
-    getDatePriceInfo.startTimestamp   = timestamp;
-    getDatePriceInfo.isDayStartNeeded = false;
-
+    GetDatePriceInfo getDatePriceInfo(timestamp, false);
     processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetTurnoverInfo
 {
+    explicit GetTurnoverInfo(qint64 _startTimestamp) :
+        startTimestamp(_startTimestamp)
+    {
+    }
+
     qint64 startTimestamp;
 };
 
@@ -312,18 +317,20 @@ static void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks,
     }
 }
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainTurnover(qint64 timestamp)
 {
-    GetTurnoverInfo getTurnoverInfo;
-    getTurnoverInfo.startTimestamp = timestamp;
-
+    GetTurnoverInfo getTurnoverInfo(timestamp);
     processInParallel(mStocks, getTurnoverForParallel, &getTurnoverInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)
 
 struct GetPaybackInfo
 {
+    explicit GetPaybackInfo(IUserStorage* _userStorage, qint64 _startTimestamp) :
+        userStorage(_userStorage),
+        startTimestamp(_startTimestamp)
+    {
+    }
+
     IUserStorage* userStorage;
     qint64        startTimestamp;
 };
@@ -383,13 +390,8 @@ static void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, 
     }
 }
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 void StocksStorage::obtainPayback(qint64 timestamp)
 {
-    GetPaybackInfo getPaybackInfo;
-    getPaybackInfo.userStorage    = mUserStorage;
-    getPaybackInfo.startTimestamp = timestamp;
-
+    GetPaybackInfo getPaybackInfo(mUserStorage, timestamp);
     processInParallel(mStocks, getPaybackForParallel, &getPaybackInfo);
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init)

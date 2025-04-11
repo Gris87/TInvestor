@@ -12,12 +12,12 @@
 
 
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_ActionsTableItemWidget : public ::testing::Test
 {
 protected:
@@ -85,3 +85,4 @@ TEST_F(Test_ActionsTableItemWidget, Test_on_linkButton_clicked)
 
     widget->ui->linkButton->click();
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

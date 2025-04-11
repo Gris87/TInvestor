@@ -9,9 +9,7 @@
 class ISettingsEditor
 {
 public:
-    ISettingsEditor()
-    {
-    }
+    ISettingsEditor()          = default;
     virtual ~ISettingsEditor() = default;
 
     ISettingsEditor(const ISettingsEditor& another)            = delete;

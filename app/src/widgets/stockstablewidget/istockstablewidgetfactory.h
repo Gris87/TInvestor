@@ -17,9 +17,7 @@
 class IStocksTableWidgetFactory
 {
 public:
-    IStocksTableWidgetFactory()
-    {
-    }
+    IStocksTableWidgetFactory()          = default;
     virtual ~IStocksTableWidgetFactory() = default;
 
     IStocksTableWidgetFactory(const IStocksTableWidgetFactory& another)            = delete;
@@ -36,5 +34,5 @@ public:
         IHttpClient*                    httpClient,
         ISettingsEditor*                settingsEditor,
         QWidget*                        parent
-    ) = 0;
+    ) const = 0;
 };

@@ -24,6 +24,6 @@ public:
         IStocksControlsWidget*,
         newInstance,
         (IStocksStorage * stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent),
-        (override)
+        (const, override)
     );
 };

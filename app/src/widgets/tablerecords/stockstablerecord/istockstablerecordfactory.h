@@ -17,9 +17,7 @@
 class IStocksTableRecordFactory
 {
 public:
-    IStocksTableRecordFactory()
-    {
-    }
+    IStocksTableRecordFactory()          = default;
     virtual ~IStocksTableRecordFactory() = default;
 
     IStocksTableRecordFactory(const IStocksTableRecordFactory& another)            = delete;
@@ -36,5 +34,5 @@ public:
         IHttpClient*                    httpClient,
         Stock*                          stock,
         QObject*                        parent
-    ) = 0;
+    ) const = 0;
 };

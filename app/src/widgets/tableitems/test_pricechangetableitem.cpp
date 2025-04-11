@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_PriceChangeTableItem, Test_constructor_and_destructor)
 {
-    PriceChangeTableItem item;
+    const PriceChangeTableItem item;
 }
 
 TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
@@ -46,3 +47,4 @@ TEST(Test_PriceChangeTableItem, Test_less)
 
     ASSERT_LT(item2, item);
 }
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

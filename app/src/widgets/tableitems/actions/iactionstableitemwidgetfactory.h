@@ -15,9 +15,7 @@
 class IActionsTableItemWidgetFactory
 {
 public:
-    IActionsTableItemWidgetFactory()
-    {
-    }
+    IActionsTableItemWidgetFactory()          = default;
     virtual ~IActionsTableItemWidgetFactory() = default;
 
     IActionsTableItemWidgetFactory(const IActionsTableItemWidgetFactory& another)            = delete;
@@ -31,5 +29,5 @@ public:
         Stock*                    stock,
         int                       precision,
         QWidget*                  parent
-    ) = 0;
+    ) const = 0;
 };

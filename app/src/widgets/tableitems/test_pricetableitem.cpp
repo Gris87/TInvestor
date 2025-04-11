@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_PriceTableItem, Test_constructor_and_destructor)
 {
-    PriceTableItem item;
+    const PriceTableItem item;
 }
 
 TEST(Test_PriceTableItem, Test_setValue_and_getValue)
@@ -36,3 +37,4 @@ TEST(Test_PriceTableItem, Test_less)
 
     ASSERT_LT(item2, item);
 }
+// NOLINTEND(readability-magic-numbers)

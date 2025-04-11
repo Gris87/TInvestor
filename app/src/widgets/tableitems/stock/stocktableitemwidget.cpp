@@ -21,10 +21,7 @@ StockTableItemWidget::~StockTableItemWidget()
 {
     qDebug() << "Destroy StockTableItemWidget";
 
-    if (hoverTextWidget != nullptr)
-    {
-        delete hoverTextWidget;
-    }
+    delete hoverTextWidget;
 
     delete ui;
 }
@@ -35,7 +32,7 @@ void StockTableItemWidget::enterEvent(QEnterEvent* event)
     hoverTextWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowTransparentForInput);
     hoverTextWidget->setText(mFullText);
 
-    QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
+    const QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
     hoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), hoverTextWidget->sizeHint().width(), ui->nameLabel->height());
 
     hoverTextWidget->show();
@@ -93,7 +90,7 @@ QString StockTableItemWidget::fullText()
 
 bool StockTableItemWidget::operator<(const QTableWidgetItem& another) const
 {
-    QString anotherName = static_cast<const StockTableItemWidget*>(&another)->ui->nameLabel->text();
+    const QString anotherName = dynamic_cast<const StockTableItemWidget*>(&another)->ui->nameLabel->text();
 
     return ui->nameLabel->text() < anotherName;
 }

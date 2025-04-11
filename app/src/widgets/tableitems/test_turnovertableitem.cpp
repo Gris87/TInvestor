@@ -4,9 +4,10 @@
 
 
 
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
 TEST(Test_TurnoverTableItem, Test_constructor_and_destructor)
 {
-    TurnoverTableItem item;
+    const TurnoverTableItem item;
 }
 
 TEST(Test_TurnoverTableItem, Test_setValue_and_getValue)
@@ -43,3 +44,4 @@ TEST(Test_TurnoverTableItem, Test_less)
 
     ASSERT_LT(item2, item);
 }
+// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)

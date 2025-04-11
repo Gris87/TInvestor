@@ -6,15 +6,18 @@
 
 
 // TODO: Move to PortfolioTableRecord
-#define PORTFOLIO_NAME_COLUMN           0
-#define PORTFOLIO_AVAILABLE_COLUMN      1
-#define PORTFOLIO_PRICE_COLUMN          2
-#define PORTFOLIO_AVG_PRICE_COLUMN      3
-#define PORTFOLIO_COST_COLUMN           4
-#define PORTFOLIO_PART_COLUMN           5
-#define PORTFOLIO_INCOME_COLUMN         6
-#define PORTFOLIO_INCOME_PERCENT_COLUMN 7
-#define PORTFOLIO_IN_A_DAY_COLUMN       8
+enum PortfolioTableColumns : qint8
+{
+    PORTFOLIO_NAME_COLUMN,
+    PORTFOLIO_AVAILABLE_COLUMN,
+    PORTFOLIO_PRICE_COLUMN,
+    PORTFOLIO_AVG_PRICE_COLUMN,
+    PORTFOLIO_COST_COLUMN,
+    PORTFOLIO_PART_COLUMN,
+    PORTFOLIO_INCOME_COLUMN,
+    PORTFOLIO_INCOME_PERCENT_COLUMN,
+    PORTFOLIO_IN_A_DAY_COLUMN,
+};
 
 
 
@@ -50,6 +53,7 @@ void PortfolioTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
+// NOLINTBEGIN(readability-magic-numbers)
 void PortfolioTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -64,3 +68,4 @@ void PortfolioTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(PORTFOLIO_IN_A_DAY_COLUMN,       mSettingsEditor->value(type + "/columnWidth_InADay",        64).toInt());
     // clang-format on
 }
+// NOLINTEND(readability-magic-numbers)

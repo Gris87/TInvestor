@@ -4,14 +4,18 @@
 
 
 
-#define GREEN_COLOR  QColor("#2BD793")
-#define RED_COLOR    QColor("#ED6F7E")
-#define NORMAL_COLOR QColor("#97AEC4")
+constexpr QChar RUBLE      = QChar(0x20BD);
+constexpr float ZERO_LIMIT = 0.0001f;
+
+const QColor GREEN_COLOR  = QColor("#2BD793");
+const QColor RED_COLOR    = QColor("#ED6F7E");
+const QColor NORMAL_COLOR = QColor("#97AEC4");
 
 
 
 PriceChangeTableItem::PriceChangeTableItem(int type) :
-    QTableWidgetItem(type)
+    QTableWidgetItem(type),
+    mValue()
 {
     qDebug() << "Create PriceChangeTableItem";
 }
@@ -24,14 +28,14 @@ PriceChangeTableItem::~PriceChangeTableItem()
 void PriceChangeTableItem::setValue(float value, float fromPrice, int precision)
 {
     mValue         = value;
-    QString prefix = mValue > 0 ? "+" : "";
+    const QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");
-    setToolTip(fromPrice > 0 ? QObject::tr("From price: %1").arg(fromPrice, 0, 'f', precision) + " " + QChar(0x20BD) : "");
+    setToolTip(fromPrice > 0 ? QObject::tr("From price: %1").arg(fromPrice, 0, 'f', precision) + " " + RUBLE : "");
 
     QColor color;
 
-    if (mValue > -0.0001f && mValue < 0.0001f)
+    if (mValue > -ZERO_LIMIT && mValue < ZERO_LIMIT)
     {
         color = NORMAL_COLOR;
     }
@@ -57,7 +61,7 @@ float PriceChangeTableItem::getValue() const
 
 bool PriceChangeTableItem::operator<(const QTableWidgetItem& another) const
 {
-    float anotherFloat = static_cast<const PriceChangeTableItem*>(&another)->mValue;
+    const float anotherFloat = dynamic_cast<const PriceChangeTableItem*>(&another)->mValue;
 
     return mValue < anotherFloat;
 }

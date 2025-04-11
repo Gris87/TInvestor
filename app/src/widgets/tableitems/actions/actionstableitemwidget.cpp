@@ -37,7 +37,7 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 
 void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
-    std::shared_ptr<IOrderWavesDialog> dialog =
+    const std::shared_ptr<IOrderWavesDialog> dialog =
         mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, mStock, mPrecision, this);
     dialog->exec();
 }
@@ -45,9 +45,9 @@ void ActionsTableItemWidget::on_orderWavesButton_clicked()
 void ActionsTableItemWidget::on_linkButton_clicked()
 {
     mStock->mutex->lock();
-    QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
+    const QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
     mStock->mutex->unlock();
 
-    bool ok = mHttpClient->openInBrowser(url);
+    const bool ok = mHttpClient->openInBrowser(url);
     Q_ASSERT_X(ok, "ActionsTableItemWidget::on_linkButton_clicked()", "Failed to open link");
 }

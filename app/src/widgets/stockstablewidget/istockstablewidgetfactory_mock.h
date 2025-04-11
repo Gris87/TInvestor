@@ -33,6 +33,6 @@ public:
          IHttpClient*                    httpClient,
          ISettingsEditor*                settingsEditor,
          QWidget*                        parent),
-        (override)
+        (const, override)
     );
 };

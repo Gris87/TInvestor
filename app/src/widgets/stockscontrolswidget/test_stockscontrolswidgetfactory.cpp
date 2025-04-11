@@ -7,27 +7,23 @@
 
 
 
-using ::testing::InSequence;
-using ::testing::NotNull;
-using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
 TEST(Test_StocksControlsWidgetFactory, Test_constructor_and_destructor)
 {
-    StocksControlsWidgetFactory factory;
+    const StocksControlsWidgetFactory factory;
 }
 
 TEST(Test_StocksControlsWidgetFactory, Test_newInstance)
 {
-    StocksControlsWidgetFactory factory;
+    const StocksControlsWidgetFactory factory;
 
     StrictMock<StocksStorageMock>  stocksStorageMock;
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
-    IStocksControlsWidget* widget = factory.newInstance(&stocksStorageMock, &settingsEditorMock, nullptr);
+    const IStocksControlsWidget* widget = factory.newInstance(&stocksStorageMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

@@ -9,13 +9,12 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::NotNull;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_PortfolioTableWidget : public ::testing::Test
 {
 protected:
@@ -79,3 +78,4 @@ TEST_F(Test_PortfolioTableWidget, Test_loadWindowState)
 
     portfolioTableWidget->loadWindowState("AAAAA");
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

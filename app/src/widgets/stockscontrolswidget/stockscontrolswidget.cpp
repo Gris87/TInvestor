@@ -5,9 +5,16 @@
 
 
 
-#define DATETIME_FORMAT "yyyy-MM-dd hh:mm:ss"
-#define GREY_COLOR      QColor("#AFC2D7")
-#define GREEN_COLOR     QColor("#2BD793")
+const QString    DATETIME_FORMAT     = "yyyy-MM-dd hh:mm:ss";
+const QColor     GREY_COLOR          = QColor("#AFC2D7");
+const QColor     GREEN_COLOR         = QColor("#2BD793");
+constexpr qint64 MS_IN_SECOND        = 1000LL;
+constexpr qint64 DATE_CHANGE_DELAY   = MS_IN_SECOND; // 1 second
+constexpr qint64 FILTER_CHANGE_DELAY = MS_IN_SECOND; // 1 second
+constexpr qint64 TURNOVER_KILOS      = 1000;         // 1K rubles
+constexpr int    HIDDEN_WIDTH        = 24;
+constexpr int    VISIBLE_WIDTH       = 250;
+constexpr int    MAXIMUM_HEIGHT      = 16777215;
 
 
 
@@ -22,8 +29,8 @@ StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, ISetti
 
     ui->setupUi(this);
 
-    dateChangeDelayTimer.setInterval(1000);   // 1 second
-    filterChangeDelayTimer.setInterval(1000); // 1 second
+    dateChangeDelayTimer.setInterval(DATE_CHANGE_DELAY);
+    filterChangeDelayTimer.setInterval(FILTER_CHANGE_DELAY);
 
     // clang-format off
     connect(&dateChangeDelayTimer,   SIGNAL(timeout()), this, SLOT(dateChangeDelayTimerTicked()));
@@ -52,7 +59,7 @@ void StocksControlsWidget::dateChangeDelayTimerTicked()
 {
     dateChangeDelayTimer.stop();
 
-    QDateTime dateTime = ui->dateChangeTimeEdit->dateTime();
+    const QDateTime dateTime = ui->dateChangeTimeEdit->dateTime();
 
     const QMutexLocker lock(mStocksStorage->getMutex());
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
@@ -230,12 +237,12 @@ void StocksControlsWidget::on_turnoverCheckBox_checkStateChanged(const Qt::Check
 
 void StocksControlsWidget::on_turnoverFromSpinBox_valueChanged(int value)
 {
-    mFilter.turnoverFrom = qint64(value) * 1000;
+    mFilter.turnoverFrom = static_cast<qint64>(value) * TURNOVER_KILOS;
 
     if (mFilter.turnoverFrom > mFilter.turnoverTo)
     {
         mFilter.turnoverTo = mFilter.turnoverFrom;
-        ui->turnoverToSpinBox->setValue(mFilter.turnoverTo / 1000);
+        ui->turnoverToSpinBox->setValue(mFilter.turnoverTo / TURNOVER_KILOS);
     }
 
     filterChangeDelayTimer.start();
@@ -243,12 +250,12 @@ void StocksControlsWidget::on_turnoverFromSpinBox_valueChanged(int value)
 
 void StocksControlsWidget::on_turnoverToSpinBox_valueChanged(int value)
 {
-    mFilter.turnoverTo = qint64(value) * 1000;
+    mFilter.turnoverTo = static_cast<qint64>(value) * TURNOVER_KILOS;
 
     if (mFilter.turnoverTo < mFilter.turnoverFrom)
     {
         mFilter.turnoverFrom = mFilter.turnoverTo;
-        ui->turnoverFromSpinBox->setValue(mFilter.turnoverFrom / 1000);
+        ui->turnoverFromSpinBox->setValue(mFilter.turnoverFrom / TURNOVER_KILOS);
     }
 
     filterChangeDelayTimer.start();
@@ -295,7 +302,7 @@ void StocksControlsWidget::on_hideButton_clicked()
 {
     if (ui->stackedWidget->currentWidget() == ui->controlsVisiblePage)
     {
-        setMaximumSize(24, 16777215);
+        setMaximumSize(HIDDEN_WIDTH, MAXIMUM_HEIGHT);
         ui->stackedWidget->setCurrentWidget(ui->controlsHiddenPage);
         ui->hideButton->setIcon(QIcon(":/assets/images/right_arrows.png"));
 
@@ -312,7 +319,7 @@ void StocksControlsWidget::on_hideButton_clicked()
     }
     else
     {
-        setMaximumSize(250, 16777215);
+        setMaximumSize(VISIBLE_WIDTH, MAXIMUM_HEIGHT);
         ui->stackedWidget->setCurrentWidget(ui->controlsVisiblePage);
         ui->hideButton->setIcon(QIcon(":/assets/images/left_arrows.png"));
     }
@@ -346,11 +353,12 @@ void StocksControlsWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/visible", ui->stackedWidget->currentWidget() == ui->controlsVisiblePage);
 }
 
+// NOLINTBEGIN(readability-magic-numbers)
 void StocksControlsWidget::loadWindowState(const QString& type)
 {
-    int currentYear = QDateTime::currentDateTime().date().year();
+    const int currentYear = QDateTime::currentDateTime().date().year();
 
-    QString defaultDateChangeTime = QString("%1-01-01 00:00:00").arg(currentYear - 1);
+    const QString defaultDateChangeTime = QString("%1-01-01 00:00:00").arg(currentYear - 1);
 
     // clang-format off
     ui->dateChangeTimeEdit->setDateTime(QDateTime::fromString(mSettingsEditor->value(type + "/dateChangeTime", defaultDateChangeTime).toString(), DATETIME_FORMAT));
@@ -380,3 +388,4 @@ void StocksControlsWidget::loadWindowState(const QString& type)
         ui->hideButton->click();
     }
 }
+// NOLINTEND(readability-magic-numbers)

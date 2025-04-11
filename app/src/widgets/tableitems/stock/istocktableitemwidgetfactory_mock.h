@@ -20,5 +20,5 @@ public:
     StockTableItemWidgetFactoryMock(const StockTableItemWidgetFactoryMock& another)            = delete;
     StockTableItemWidgetFactoryMock& operator=(const StockTableItemWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IStockTableItemWidget*, newInstance, (IUserStorage * userStorage, QWidget* parent), (override));
+    MOCK_METHOD(IStockTableItemWidget*, newInstance, (IUserStorage * userStorage, QWidget* parent), (const, override));
 };

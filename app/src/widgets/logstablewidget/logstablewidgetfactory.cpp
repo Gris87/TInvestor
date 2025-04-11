@@ -17,7 +17,7 @@ LogsTableWidgetFactory::~LogsTableWidgetFactory()
     qDebug() << "Destroy LogsTableWidgetFactory";
 }
 
-ILogsTableWidget* LogsTableWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent)
+ILogsTableWidget* LogsTableWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const
 {
     return new LogsTableWidget(settingsEditor, parent);
 }

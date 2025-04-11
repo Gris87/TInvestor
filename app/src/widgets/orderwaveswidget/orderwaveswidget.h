@@ -41,11 +41,12 @@ public:
         qint32                   quantity,
         const QString&           quantityText,
         const QColor&            color
-    );
+    ) const;
 
     void setupArrow(float maxBidsPrice, float minAsksPrice, float price);
 
-    qint64 normalizePrice(float price);
+    [[nodiscard]]
+    qint64 normalizePrice(float price) const;
     float  calculateCurrentPrice(float maxBidsPrice, float minAsksPrice);
 
 private:

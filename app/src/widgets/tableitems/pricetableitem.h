@@ -16,6 +16,7 @@ public:
     PriceTableItem& operator=(const PriceTableItem& another) = delete;
 
     void  setValue(float value, int precision);
+    [[nodiscard]]
     float getValue() const;
 
     bool operator<(const QTableWidgetItem& another) const override;
