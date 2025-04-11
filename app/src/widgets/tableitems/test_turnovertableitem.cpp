@@ -44,4 +44,4 @@ TEST(Test_TurnoverTableItem, Test_less)
 
     ASSERT_LT(item2, item);
 }
-// NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)
