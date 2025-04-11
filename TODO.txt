@@ -1,4 +1,11 @@
-Init all variables in constructor
+Disable all Clang Tidy
+Try to reenable Clang Tidy
+Add description why disabled
+Play with NOLINT
+Add linter on NOLINT (Sorted list inside NOLINT, Need to specify linter (avoid empty NOLINT))
+Fix style
+Double check coverage
+Double check refactoring
 Build for Ubuntu
 Add CI to Github
 Add test coverage badge on Github
