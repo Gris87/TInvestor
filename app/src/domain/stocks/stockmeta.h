@@ -17,6 +17,7 @@ struct StockMeta
     StockMeta& operator=(const StockMeta& another) = default;
 
     void fromJsonObject(const QJsonObject& jsonObject);
+
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 

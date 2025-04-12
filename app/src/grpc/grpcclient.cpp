@@ -9,9 +9,9 @@
 
 
 #ifndef USE_SANDBOX
-constexpr const char* GRPC_ADDRESS = "invest-public-api.tinkoff.ru:443";
+constexpr const char* const GRPC_ADDRESS = "invest-public-api.tinkoff.ru:443";
 #else
-constexpr const char* GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
+constexpr const char* const GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
 #endif
 
 constexpr int    MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;

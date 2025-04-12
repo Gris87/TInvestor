@@ -1,6 +1,6 @@
 Double check coverage
-Double check refactoring
 Check if possible to do updateAll outside of constructor
+Try to enable linter on override
 Build for Ubuntu
 Add CI to Github
 Add test coverage badge on Github

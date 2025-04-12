@@ -15,6 +15,7 @@ struct Quotation
     Quotation& operator=(const Quotation& another) = default;
 
     void fromJsonObject(const QJsonObject& jsonObject);
+
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 

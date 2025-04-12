@@ -13,7 +13,6 @@
 # cppcoreguidelines-avoid-c-arrays                          - do not declare C-style arrays, use std::array<> instead
 # cppcoreguidelines-avoid-do-while                          - avoid do-while loops
 # cppcoreguidelines-avoid-magic-numbers                     - alias of `readability-magic-numbers`
-# cppcoreguidelines-avoid-non-const-global-variables        - variable 'oldMessageHandler' is non-const and globally accessible, consider making it const
 # cppcoreguidelines-narrowing-conversions                   - narrowing conversion from 'double' to 'float'
 # cppcoreguidelines-non-private-member-variables-in-classes - member variable 'ui' has public visibility
 # cppcoreguidelines-owning-memory                           - returning a newly created resource of type 'IBuyDecision1ConfigWidget *' or 'gsl::owner<>' from a function whose return type is not 'gsl::owner<>'
@@ -78,7 +77,6 @@ Checks:
         -cppcoreguidelines-avoid-c-arrays,
         -cppcoreguidelines-avoid-do-while,
         -cppcoreguidelines-avoid-magic-numbers,
-        -cppcoreguidelines-avoid-non-const-global-variables,
         -cppcoreguidelines-narrowing-conversions,
         -cppcoreguidelines-non-private-member-variables-in-classes,
         -cppcoreguidelines-owning-memory,

@@ -429,8 +429,7 @@ void OrderWavesWidget::setupBar(
 ) const
 {
     int barHeight = MAX_BAR_HEIGHT * quantity / mMaxQuantity;
-
-    barHeight = qMax(barHeight, 4);
+    barHeight     = qMax(barHeight, 4);
 
     QColor brushColor = color;
     brushColor.setAlphaF(BAR_OPACITY);

@@ -16,6 +16,7 @@ public:
     PriceChangeTableItem& operator=(const PriceChangeTableItem& another) = delete;
 
     void setValue(float value, float fromPrice, int precision);
+
     [[nodiscard]]
     float getValue() const;
 

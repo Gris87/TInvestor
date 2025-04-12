@@ -31,7 +31,7 @@ static const QMap<QtMsgType, int> logLevelToInteger{
 
 
 
-static QtMessageHandler oldMessageHandler;
+static QtMessageHandler oldMessageHandler; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
 static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
