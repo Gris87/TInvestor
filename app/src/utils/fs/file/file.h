@@ -12,7 +12,7 @@ class File : public IFile
 {
 public:
     explicit File(const QString& name);
-    ~File();
+    ~File() override;
 
     File(const File& another)            = delete;
     File& operator=(const File& another) = delete;

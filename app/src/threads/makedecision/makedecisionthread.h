@@ -18,7 +18,7 @@ public:
     explicit MakeDecisionThread(
         IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent = nullptr
     );
-    ~MakeDecisionThread();
+    ~MakeDecisionThread() override;
 
     MakeDecisionThread(const MakeDecisionThread& another)            = delete;
     MakeDecisionThread& operator=(const MakeDecisionThread& another) = delete;

@@ -15,7 +15,7 @@ public:
         QDialog(parent)
     {
     }
-    virtual ~IOrderWavesDialog() = default;
+    ~IOrderWavesDialog() override = default;
 
     IOrderWavesDialog(const IOrderWavesDialog& another)            = delete;
     IOrderWavesDialog& operator=(const IOrderWavesDialog& another) = delete;

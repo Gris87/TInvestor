@@ -15,7 +15,7 @@ class UserUpdateThread : public IUserUpdateThread
 
 public:
     explicit UserUpdateThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
-    ~UserUpdateThread();
+    ~UserUpdateThread() override;
 
     UserUpdateThread(const UserUpdateThread& another)            = delete;
     UserUpdateThread& operator=(const UserUpdateThread& another) = delete;

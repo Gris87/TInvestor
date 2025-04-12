@@ -17,7 +17,7 @@ public:
     explicit GrpcClient(
         IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient, ITimeUtils* timeUtils, QObject* parent = nullptr
     );
-    ~GrpcClient();
+    ~GrpcClient() override;
 
     GrpcClient(const GrpcClient& another)            = delete;
     GrpcClient& operator=(const GrpcClient& another) = delete;

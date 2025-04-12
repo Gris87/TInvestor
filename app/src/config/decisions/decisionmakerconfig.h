@@ -19,7 +19,7 @@ public:
         ISellDecision2Config* sellDecision2Config,
         ISellDecision3Config* sellDecision3Config
     );
-    ~DecisionMakerConfig();
+    ~DecisionMakerConfig() override;
 
     DecisionMakerConfig(const DecisionMakerConfig& another)            = delete;
     DecisionMakerConfig& operator=(const DecisionMakerConfig& another) = delete;

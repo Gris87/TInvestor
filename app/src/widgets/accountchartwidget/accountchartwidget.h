@@ -12,7 +12,7 @@ class AccountChartWidget : public IAccountChartWidget
 
 public:
     explicit AccountChartWidget(QWidget* parent = nullptr);
-    ~AccountChartWidget();
+    ~AccountChartWidget() override;
 
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;

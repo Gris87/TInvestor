@@ -10,7 +10,7 @@ class StartAutoPilotDialogFactory : public IStartAutoPilotDialogFactory
 {
 public:
     StartAutoPilotDialogFactory();
-    ~StartAutoPilotDialogFactory();
+    ~StartAutoPilotDialogFactory() override;
 
     StartAutoPilotDialogFactory(const StartAutoPilotDialogFactory& another)            = delete;
     StartAutoPilotDialogFactory& operator=(const StartAutoPilotDialogFactory& another) = delete;

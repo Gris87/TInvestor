@@ -29,7 +29,7 @@ public:
         int                       precision,
         QWidget*                  parent = nullptr
     );
-    ~OrderWavesDialog();
+    ~OrderWavesDialog() override;
 
     OrderWavesDialog(const OrderWavesDialog& another)            = delete;
     OrderWavesDialog& operator=(const OrderWavesDialog& another) = delete;

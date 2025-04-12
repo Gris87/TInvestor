@@ -21,7 +21,7 @@ class OperationsTableWidget : public IOperationsTableWidget
 
 public:
     explicit OperationsTableWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
-    ~OperationsTableWidget();
+    ~OperationsTableWidget() override;
 
     OperationsTableWidget(const OperationsTableWidget& another)            = delete;
     OperationsTableWidget& operator=(const OperationsTableWidget& another) = delete;

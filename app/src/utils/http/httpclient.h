@@ -10,7 +10,7 @@ class HttpClient : public IHttpClient
 {
 public:
     HttpClient();
-    ~HttpClient();
+    ~HttpClient() override;
 
     HttpClient(const HttpClient& another)            = delete;
     HttpClient& operator=(const HttpClient& another) = delete;

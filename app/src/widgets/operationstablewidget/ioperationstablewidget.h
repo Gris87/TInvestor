@@ -15,7 +15,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IOperationsTableWidget() = default;
+    ~IOperationsTableWidget() override = default;
 
     IOperationsTableWidget(const IOperationsTableWidget& another)            = delete;
     IOperationsTableWidget& operator=(const IOperationsTableWidget& another) = delete;

@@ -17,7 +17,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IBuyDecision1ConfigWidget() = default;
+    ~IBuyDecision1ConfigWidget() override = default;
 
     IBuyDecision1ConfigWidget(const IBuyDecision1ConfigWidget& another)            = delete;
     IBuyDecision1ConfigWidget& operator=(const IBuyDecision1ConfigWidget& another) = delete;

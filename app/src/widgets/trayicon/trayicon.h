@@ -12,7 +12,7 @@ class TrayIcon : public ITrayIcon
 
 public:
     explicit TrayIcon(QObject* parent = nullptr);
-    ~TrayIcon();
+    ~TrayIcon() override;
 
     TrayIcon(const TrayIcon& another)            = delete;
     TrayIcon& operator=(const TrayIcon& another) = delete;

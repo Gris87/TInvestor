@@ -10,7 +10,7 @@ class SellDecision2ConfigWidgetFactory : public ISellDecision2ConfigWidgetFactor
 {
 public:
     SellDecision2ConfigWidgetFactory();
-    ~SellDecision2ConfigWidgetFactory();
+    ~SellDecision2ConfigWidgetFactory() override;
 
     SellDecision2ConfigWidgetFactory(const SellDecision2ConfigWidgetFactory& another)            = delete;
     SellDecision2ConfigWidgetFactory& operator=(const SellDecision2ConfigWidgetFactory& another) = delete;

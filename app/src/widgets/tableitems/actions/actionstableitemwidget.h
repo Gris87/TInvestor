@@ -33,7 +33,7 @@ public:
         int                       precision,
         QWidget*                  parent = nullptr
     );
-    ~ActionsTableItemWidget();
+    ~ActionsTableItemWidget() override;
 
     ActionsTableItemWidget(const ActionsTableItemWidget& another)            = delete;
     ActionsTableItemWidget& operator=(const ActionsTableItemWidget& another) = delete;

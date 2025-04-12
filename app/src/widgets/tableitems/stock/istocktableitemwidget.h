@@ -18,7 +18,7 @@ public:
         QTableWidgetItem()
     {
     }
-    virtual ~IStockTableItemWidget() = default;
+    ~IStockTableItemWidget() override = default;
 
     IStockTableItemWidget(const IStockTableItemWidget& another)            = delete;
     IStockTableItemWidget& operator=(const IStockTableItemWidget& another) = delete;

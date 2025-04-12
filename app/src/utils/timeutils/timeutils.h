@@ -10,7 +10,7 @@ class TimeUtils : public ITimeUtils
 {
 public:
     TimeUtils();
-    ~TimeUtils();
+    ~TimeUtils() override;
 
     TimeUtils(const TimeUtils& another)            = delete;
     TimeUtils& operator=(const TimeUtils& another) = delete;

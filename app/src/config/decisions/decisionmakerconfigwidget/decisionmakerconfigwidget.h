@@ -36,7 +36,7 @@ public:
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         QWidget*                           parent = nullptr
     );
-    ~DecisionMakerConfigWidget();
+    ~DecisionMakerConfigWidget() override;
 
     DecisionMakerConfigWidget(const DecisionMakerConfigWidget& another)            = delete;
     DecisionMakerConfigWidget& operator=(const DecisionMakerConfigWidget& another) = delete;

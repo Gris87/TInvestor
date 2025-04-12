@@ -10,7 +10,7 @@ class PriceChangeTableItem : public QTableWidgetItem
 {
 public:
     explicit PriceChangeTableItem(int type = Type);
-    ~PriceChangeTableItem();
+    ~PriceChangeTableItem() override;
 
     PriceChangeTableItem(const PriceChangeTableItem& another)            = delete;
     PriceChangeTableItem& operator=(const PriceChangeTableItem& another) = delete;

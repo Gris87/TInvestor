@@ -18,7 +18,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IStocksTableWidget() = default;
+    ~IStocksTableWidget() override = default;
 
     IStocksTableWidget(const IStocksTableWidget& another)            = delete;
     IStocksTableWidget& operator=(const IStocksTableWidget& another) = delete;

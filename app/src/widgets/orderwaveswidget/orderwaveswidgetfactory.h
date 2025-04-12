@@ -10,7 +10,7 @@ class OrderWavesWidgetFactory : public IOrderWavesWidgetFactory
 {
 public:
     OrderWavesWidgetFactory();
-    ~OrderWavesWidgetFactory();
+    ~OrderWavesWidgetFactory() override;
 
     OrderWavesWidgetFactory(const OrderWavesWidgetFactory& another)            = delete;
     OrderWavesWidgetFactory& operator=(const OrderWavesWidgetFactory& another) = delete;

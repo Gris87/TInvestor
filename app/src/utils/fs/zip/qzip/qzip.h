@@ -10,7 +10,7 @@ class QZip : public IQZip
 {
 public:
     explicit QZip(const QString& name);
-    ~QZip();
+    ~QZip() override;
 
     QZip(const QZip& another)            = delete;
     QZip& operator=(const QZip& another) = delete;

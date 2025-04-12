@@ -10,7 +10,7 @@ class StocksTableRecordFactory : public IStocksTableRecordFactory
 {
 public:
     StocksTableRecordFactory();
-    ~StocksTableRecordFactory();
+    ~StocksTableRecordFactory() override;
 
     StocksTableRecordFactory(const StocksTableRecordFactory& another)            = delete;
     StocksTableRecordFactory& operator=(const StocksTableRecordFactory& another) = delete;

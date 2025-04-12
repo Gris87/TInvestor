@@ -32,7 +32,7 @@ public:
         ISettingsEditor*               settingsEditor,
         QWidget*                       parent = nullptr
     );
-    ~DecisionMakerWidget();
+    ~DecisionMakerWidget() override;
 
     DecisionMakerWidget(const DecisionMakerWidget& another)            = delete;
     DecisionMakerWidget& operator=(const DecisionMakerWidget& another) = delete;

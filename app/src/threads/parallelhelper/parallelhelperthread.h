@@ -31,7 +31,7 @@ public:
     {
     }
 
-    ~ParallelHelperThread() = default;
+    ~ParallelHelperThread() override = default;
 
     ParallelHelperThread(const ParallelHelperThread& another)            = delete;
     ParallelHelperThread& operator=(const ParallelHelperThread& another) = delete;

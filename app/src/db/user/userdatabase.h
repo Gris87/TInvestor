@@ -14,7 +14,7 @@ class UserDatabase : public IUserDatabase
 {
 public:
     explicit UserDatabase();
-    ~UserDatabase();
+    ~UserDatabase() override;
 
     UserDatabase(const UserDatabase& another)            = delete;
     UserDatabase& operator=(const UserDatabase& another) = delete;

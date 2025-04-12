@@ -13,7 +13,7 @@ class StocksStorage : public IStocksStorage
 {
 public:
     explicit StocksStorage(IStocksDatabase* stocksDatabase, IUserStorage* userStorage);
-    ~StocksStorage();
+    ~StocksStorage() override;
 
     StocksStorage(const StocksStorage& another)            = delete;
     StocksStorage& operator=(const StocksStorage& another) = delete;

@@ -12,7 +12,7 @@ class UserStorage : public IUserStorage
 {
 public:
     explicit UserStorage(IUserDatabase* userDatabase);
-    ~UserStorage();
+    ~UserStorage() override;
 
     UserStorage(const UserStorage& another)            = delete;
     UserStorage& operator=(const UserStorage& another) = delete;

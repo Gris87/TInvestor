@@ -15,7 +15,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~ICleanupThread() = default;
+    ~ICleanupThread() override = default;
 
     ICleanupThread(const ICleanupThread& another)            = delete;
     ICleanupThread& operator=(const ICleanupThread& another) = delete;

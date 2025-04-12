@@ -10,7 +10,7 @@ class StartSimulationDialogFactory : public IStartSimulationDialogFactory
 {
 public:
     StartSimulationDialogFactory();
-    ~StartSimulationDialogFactory();
+    ~StartSimulationDialogFactory() override;
 
     StartSimulationDialogFactory(const StartSimulationDialogFactory& another)            = delete;
     StartSimulationDialogFactory& operator=(const StartSimulationDialogFactory& another) = delete;

@@ -15,7 +15,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IPortfolioTableWidget() = default;
+    ~IPortfolioTableWidget() override = default;
 
     IPortfolioTableWidget(const IPortfolioTableWidget& another)            = delete;
     IPortfolioTableWidget& operator=(const IPortfolioTableWidget& another) = delete;

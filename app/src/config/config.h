@@ -12,7 +12,7 @@ class Config : public IConfig
 {
 public:
     explicit Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* autoPilotConfig);
-    ~Config();
+    ~Config() override;
 
     Config(const Config& another)            = delete;
     Config& operator=(const Config& another) = delete;

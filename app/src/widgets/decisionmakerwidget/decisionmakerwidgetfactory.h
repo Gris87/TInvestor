@@ -10,7 +10,7 @@ class DecisionMakerWidgetFactory : public IDecisionMakerWidgetFactory
 {
 public:
     DecisionMakerWidgetFactory();
-    ~DecisionMakerWidgetFactory();
+    ~DecisionMakerWidgetFactory() override;
 
     DecisionMakerWidgetFactory(const DecisionMakerWidgetFactory& another)            = delete;
     DecisionMakerWidgetFactory& operator=(const DecisionMakerWidgetFactory& another) = delete;

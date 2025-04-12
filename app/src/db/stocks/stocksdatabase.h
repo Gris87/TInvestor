@@ -13,7 +13,7 @@ class StocksDatabase : public IStocksDatabase
 {
 public:
     explicit StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory);
-    ~StocksDatabase();
+    ~StocksDatabase() override;
 
     StocksDatabase(const StocksDatabase& another)            = delete;
     StocksDatabase& operator=(const StocksDatabase& another) = delete;

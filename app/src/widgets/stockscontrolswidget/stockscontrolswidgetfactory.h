@@ -10,7 +10,7 @@ class StocksControlsWidgetFactory : public IStocksControlsWidgetFactory
 {
 public:
     StocksControlsWidgetFactory();
-    ~StocksControlsWidgetFactory();
+    ~StocksControlsWidgetFactory() override;
 
     StocksControlsWidgetFactory(const StocksControlsWidgetFactory& another)            = delete;
     StocksControlsWidgetFactory& operator=(const StocksControlsWidgetFactory& another) = delete;

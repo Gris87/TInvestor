@@ -10,7 +10,7 @@ class TrayIconFactory : public ITrayIconFactory
 {
 public:
     TrayIconFactory();
-    ~TrayIconFactory();
+    ~TrayIconFactory() override;
 
     TrayIconFactory(const TrayIconFactory& another)            = delete;
     TrayIconFactory& operator=(const TrayIconFactory& another) = delete;

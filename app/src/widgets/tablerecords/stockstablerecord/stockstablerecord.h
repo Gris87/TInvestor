@@ -33,7 +33,7 @@ public:
         Stock*                          stock,
         QObject*                        parent = nullptr
     );
-    ~StocksTableRecord();
+    ~StocksTableRecord() override;
 
     StocksTableRecord(const StocksTableRecord& another)            = delete;
     StocksTableRecord& operator=(const StocksTableRecord& another) = delete;

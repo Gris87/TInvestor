@@ -24,7 +24,7 @@ class AuthDialog : public IAuthDialog
 
 public:
     explicit AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, QWidget* parent = nullptr);
-    ~AuthDialog();
+    ~AuthDialog() override;
 
     AuthDialog(const AuthDialog& another)            = delete;
     AuthDialog& operator=(const AuthDialog& another) = delete;

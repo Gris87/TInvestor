@@ -9,7 +9,6 @@
 # cert-dcl37-c                                              - alias of `bugprone-reserved-identifier`
 # cert-dcl51-cpp                                            - alias of `bugprone-reserved-identifier`
 # cert-err58-cpp                                            - initialization of 'test_info_' with static storage duration may throw an exception that cannot be caught
-# clang-analyzer-optin.cplusplus.VirtualCall                - Call to virtual method 'StocksTableRecord::updateAll' during construction bypasses virtual dispatch
 # cppcoreguidelines-avoid-c-arrays                          - do not declare C-style arrays, use std::array<> instead
 # cppcoreguidelines-avoid-do-while                          - avoid do-while loops
 # cppcoreguidelines-avoid-magic-numbers                     - alias of `readability-magic-numbers`
@@ -51,7 +50,6 @@
 # modernize-type-traits                                     - use c++17 style variable templates
 # modernize-use-auto                                        - use auto when initializing with new to avoid duplicating the type name
 # modernize-use-default-member-init                         - alias of `cppcoreguidelines-use-default-member-init`
-# modernize-use-override                                    - annotate this function with 'override' or (rarely) 'final'
 # modernize-use-trailing-return-type                        - use a trailing return type for this function
 # readability-avoid-nested-conditional-operator             - conditional operator is used as sub-expression of parent conditional operator, refrain from using nested conditional operators
 # readability-convert-member-functions-to-static            - method 'trayIconExitClicked' can be made static
@@ -73,7 +71,6 @@ Checks:
         -cert-dcl37-c,
         -cert-dcl51-cpp,
         -cert-err58-cpp,
-        -clang-analyzer-optin.cplusplus.VirtualCall,
         -cppcoreguidelines-avoid-c-arrays,
         -cppcoreguidelines-avoid-do-while,
         -cppcoreguidelines-avoid-magic-numbers,
@@ -115,7 +112,6 @@ Checks:
         -modernize-type-traits,
         -modernize-use-auto,
         -modernize-use-default-member-init,
-        -modernize-use-override,
         -modernize-use-trailing-return-type,
         -readability-avoid-nested-conditional-operator,
         -readability-convert-member-functions-to-static,

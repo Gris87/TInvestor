@@ -40,7 +40,7 @@ public:
         ISettingsEditor*                settingsEditor,
         QWidget*                        parent = nullptr
     );
-    ~StocksTableWidget();
+    ~StocksTableWidget() override;
 
     StocksTableWidget(const StocksTableWidget& another)            = delete;
     StocksTableWidget& operator=(const StocksTableWidget& another) = delete;

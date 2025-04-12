@@ -23,7 +23,7 @@ class StockTableItemWidget : public IStockTableItemWidget
 
 public:
     explicit StockTableItemWidget(IUserStorage* userStorage, QWidget* parent = nullptr);
-    ~StockTableItemWidget();
+    ~StockTableItemWidget() override;
 
     StockTableItemWidget(const StockTableItemWidget& another)            = delete;
     StockTableItemWidget& operator=(const StockTableItemWidget& another) = delete;

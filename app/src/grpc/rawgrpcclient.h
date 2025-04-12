@@ -12,7 +12,7 @@ class RawGrpcClient : public IRawGrpcClient
 {
 public:
     explicit RawGrpcClient();
-    ~RawGrpcClient();
+    ~RawGrpcClient() override;
 
     RawGrpcClient(const RawGrpcClient& another)            = delete;
     RawGrpcClient& operator=(const RawGrpcClient& another) = delete;

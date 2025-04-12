@@ -12,7 +12,7 @@ class SettingsEditor : public ISettingsEditor
 {
 public:
     explicit SettingsEditor(const QString& organization, const QString& application);
-    ~SettingsEditor();
+    ~SettingsEditor() override;
 
     SettingsEditor(const SettingsEditor& another)            = delete;
     SettingsEditor& operator=(const SettingsEditor& another) = delete;

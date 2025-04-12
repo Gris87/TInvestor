@@ -18,7 +18,7 @@ public:
     explicit LastPriceThread(
         IStocksStorage* stocksStorage, ITimeUtils* timeUtils, IGrpcClient* grpcClient, QObject* parent = nullptr
     );
-    ~LastPriceThread();
+    ~LastPriceThread() override;
 
     LastPriceThread(const LastPriceThread& another)            = delete;
     LastPriceThread& operator=(const LastPriceThread& another) = delete;

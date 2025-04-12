@@ -33,7 +33,7 @@ public:
         QObject(parent)
     {
     }
-    virtual ~IStocksTableRecord() = default;
+    ~IStocksTableRecord() override = default;
 
     IStocksTableRecord(const IStocksTableRecord& another)            = delete;
     IStocksTableRecord& operator=(const IStocksTableRecord& another) = delete;

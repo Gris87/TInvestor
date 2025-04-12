@@ -10,7 +10,7 @@ class PaybackTableItem : public QTableWidgetItem
 {
 public:
     explicit PaybackTableItem(int type = Type);
-    ~PaybackTableItem();
+    ~PaybackTableItem() override;
 
     PaybackTableItem(const PaybackTableItem& another)            = delete;
     PaybackTableItem& operator=(const PaybackTableItem& another) = delete;

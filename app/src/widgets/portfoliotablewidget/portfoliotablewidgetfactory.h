@@ -10,7 +10,7 @@ class PortfolioTableWidgetFactory : public IPortfolioTableWidgetFactory
 {
 public:
     PortfolioTableWidgetFactory();
-    ~PortfolioTableWidgetFactory();
+    ~PortfolioTableWidgetFactory() override;
 
     PortfolioTableWidgetFactory(const PortfolioTableWidgetFactory& another)            = delete;
     PortfolioTableWidgetFactory& operator=(const PortfolioTableWidgetFactory& another) = delete;

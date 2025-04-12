@@ -15,7 +15,7 @@ public:
         QDialog(parent)
     {
     }
-    virtual ~ISettingsDialog() = default;
+    ~ISettingsDialog() override = default;
 
     ISettingsDialog(const ISettingsDialog& another)            = delete;
     ISettingsDialog& operator=(const ISettingsDialog& another) = delete;

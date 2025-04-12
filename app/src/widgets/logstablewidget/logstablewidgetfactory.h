@@ -10,7 +10,7 @@ class LogsTableWidgetFactory : public ILogsTableWidgetFactory
 {
 public:
     LogsTableWidgetFactory();
-    ~LogsTableWidgetFactory();
+    ~LogsTableWidgetFactory() override;
 
     LogsTableWidgetFactory(const LogsTableWidgetFactory& another)            = delete;
     LogsTableWidgetFactory& operator=(const LogsTableWidgetFactory& another) = delete;

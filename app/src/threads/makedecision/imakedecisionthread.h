@@ -15,7 +15,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~IMakeDecisionThread() = default;
+    ~IMakeDecisionThread() override = default;
 
     IMakeDecisionThread(const IMakeDecisionThread& another)            = delete;
     IMakeDecisionThread& operator=(const IMakeDecisionThread& another) = delete;

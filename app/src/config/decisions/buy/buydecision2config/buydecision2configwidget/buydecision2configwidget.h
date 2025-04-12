@@ -19,7 +19,7 @@ class BuyDecision2ConfigWidget : public IBuyDecision2ConfigWidget
 
 public:
     explicit BuyDecision2ConfigWidget(IBuyDecision2Config* config, QWidget* parent = nullptr);
-    ~BuyDecision2ConfigWidget();
+    ~BuyDecision2ConfigWidget() override;
 
     BuyDecision2ConfigWidget(const BuyDecision2ConfigWidget& another)            = delete;
     BuyDecision2ConfigWidget& operator=(const BuyDecision2ConfigWidget& another) = delete;

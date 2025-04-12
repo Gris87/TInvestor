@@ -15,7 +15,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IDecisionMakerConfigWidget() = default;
+    ~IDecisionMakerConfigWidget() override = default;
 
     IDecisionMakerConfigWidget(const IDecisionMakerConfigWidget& another)            = delete;
     IDecisionMakerConfigWidget& operator=(const IDecisionMakerConfigWidget& another) = delete;

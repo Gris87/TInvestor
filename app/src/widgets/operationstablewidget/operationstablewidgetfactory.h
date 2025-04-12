@@ -10,7 +10,7 @@ class OperationsTableWidgetFactory : public IOperationsTableWidgetFactory
 {
 public:
     OperationsTableWidgetFactory();
-    ~OperationsTableWidgetFactory();
+    ~OperationsTableWidgetFactory() override;
 
     OperationsTableWidgetFactory(const OperationsTableWidgetFactory& another)            = delete;
     OperationsTableWidgetFactory& operator=(const OperationsTableWidgetFactory& another) = delete;

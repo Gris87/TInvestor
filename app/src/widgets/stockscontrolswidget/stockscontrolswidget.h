@@ -24,7 +24,7 @@ class StocksControlsWidget : public IStocksControlsWidget
 
 public:
     explicit StocksControlsWidget(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
-    ~StocksControlsWidget();
+    ~StocksControlsWidget() override;
 
     StocksControlsWidget(const StocksControlsWidget& another)            = delete;
     StocksControlsWidget& operator=(const StocksControlsWidget& another) = delete;

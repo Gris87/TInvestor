@@ -15,7 +15,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~ILogsTableWidget() = default;
+    ~ILogsTableWidget() override = default;
 
     ILogsTableWidget(const ILogsTableWidget& another)            = delete;
     ILogsTableWidget& operator=(const ILogsTableWidget& another) = delete;

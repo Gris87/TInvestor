@@ -14,7 +14,7 @@ class OrderBookThread : public IOrderBookThread
 
 public:
     explicit OrderBookThread(IGrpcClient* grpcClient, QObject* parent = nullptr);
-    ~OrderBookThread();
+    ~OrderBookThread() override;
 
     OrderBookThread(const OrderBookThread& another)            = delete;
     OrderBookThread& operator=(const OrderBookThread& another) = delete;

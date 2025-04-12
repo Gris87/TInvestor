@@ -10,7 +10,7 @@ class ActionsTableItemWidgetFactory : public IActionsTableItemWidgetFactory
 {
 public:
     ActionsTableItemWidgetFactory();
-    ~ActionsTableItemWidgetFactory();
+    ~ActionsTableItemWidgetFactory() override;
 
     ActionsTableItemWidgetFactory(const ActionsTableItemWidgetFactory& another)            = delete;
     ActionsTableItemWidgetFactory& operator=(const ActionsTableItemWidgetFactory& another) = delete;

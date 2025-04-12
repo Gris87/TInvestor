@@ -88,7 +88,7 @@ public:
         ISettingsEditor*                   autorunSettingsEditor,
         QWidget*                           parent = nullptr
     );
-    ~MainWindow();
+    ~MainWindow() override;
 
     MainWindow(const MainWindow& another)            = delete;
     MainWindow& operator=(const MainWindow& another) = delete;

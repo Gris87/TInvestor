@@ -21,7 +21,7 @@ class LogsTableWidget : public ILogsTableWidget
 
 public:
     explicit LogsTableWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
-    ~LogsTableWidget();
+    ~LogsTableWidget() override;
 
     LogsTableWidget(const LogsTableWidget& another)            = delete;
     LogsTableWidget& operator=(const LogsTableWidget& another) = delete;

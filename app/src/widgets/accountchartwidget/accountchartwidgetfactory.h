@@ -10,7 +10,7 @@ class AccountChartWidgetFactory : public IAccountChartWidgetFactory
 {
 public:
     AccountChartWidgetFactory();
-    ~AccountChartWidgetFactory();
+    ~AccountChartWidgetFactory() override;
 
     AccountChartWidgetFactory(const AccountChartWidgetFactory& another)            = delete;
     AccountChartWidgetFactory& operator=(const AccountChartWidgetFactory& another) = delete;

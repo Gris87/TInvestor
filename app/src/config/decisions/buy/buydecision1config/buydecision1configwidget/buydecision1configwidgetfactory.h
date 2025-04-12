@@ -10,7 +10,7 @@ class BuyDecision1ConfigWidgetFactory : public IBuyDecision1ConfigWidgetFactory
 {
 public:
     BuyDecision1ConfigWidgetFactory();
-    ~BuyDecision1ConfigWidgetFactory();
+    ~BuyDecision1ConfigWidgetFactory() override;
 
     BuyDecision1ConfigWidgetFactory(const BuyDecision1ConfigWidgetFactory& another)            = delete;
     BuyDecision1ConfigWidgetFactory& operator=(const BuyDecision1ConfigWidgetFactory& another) = delete;

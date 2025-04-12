@@ -19,7 +19,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IStocksControlsWidget() = default;
+    ~IStocksControlsWidget() override = default;
 
     IStocksControlsWidget(const IStocksControlsWidget& another)            = delete;
     IStocksControlsWidget& operator=(const IStocksControlsWidget& another) = delete;

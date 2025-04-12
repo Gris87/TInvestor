@@ -10,7 +10,7 @@ class SettingsDialogFactory : public ISettingsDialogFactory
 {
 public:
     SettingsDialogFactory();
-    ~SettingsDialogFactory();
+    ~SettingsDialogFactory() override;
 
     SettingsDialogFactory(const SettingsDialogFactory& another)            = delete;
     SettingsDialogFactory& operator=(const SettingsDialogFactory& another) = delete;

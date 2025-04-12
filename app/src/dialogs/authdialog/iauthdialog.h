@@ -15,7 +15,7 @@ public:
         QDialog(parent)
     {
     }
-    virtual ~IAuthDialog() = default;
+    ~IAuthDialog() override = default;
 
     IAuthDialog(const IAuthDialog& another)            = delete;
     IAuthDialog& operator=(const IAuthDialog& another) = delete;

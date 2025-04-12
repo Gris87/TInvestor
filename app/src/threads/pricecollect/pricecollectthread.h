@@ -35,7 +35,7 @@ public:
         IGrpcClient*      grpcClient,
         QObject*          parent = nullptr
     );
-    ~PriceCollectThread();
+    ~PriceCollectThread() override;
 
     PriceCollectThread(const PriceCollectThread& another)            = delete;
     PriceCollectThread& operator=(const PriceCollectThread& another) = delete;

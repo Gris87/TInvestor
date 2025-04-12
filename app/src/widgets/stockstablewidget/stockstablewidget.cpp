@@ -58,11 +58,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
 
         IStocksTableRecord* record = tableRecords[uid]; // clazy:exclude=detaching-member
 
-        if (record != nullptr)
-        {
-            record->updateAll();
-        }
-        else
+        if (record == nullptr)
         {
             record = mStocksTableRecordFactory->newInstance(
                 ui->tableWidget,
@@ -79,6 +75,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
             tableRecords[uid] = record;
         }
 
+        record->updateAll();
         record->filter(ui->tableWidget, filter);
     }
 

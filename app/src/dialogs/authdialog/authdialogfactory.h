@@ -10,7 +10,7 @@ class AuthDialogFactory : public IAuthDialogFactory
 {
 public:
     AuthDialogFactory();
-    ~AuthDialogFactory();
+    ~AuthDialogFactory() override;
 
     AuthDialogFactory(const AuthDialogFactory& another)            = delete;
     AuthDialogFactory& operator=(const AuthDialogFactory& another) = delete;

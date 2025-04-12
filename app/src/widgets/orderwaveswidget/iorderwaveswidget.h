@@ -17,7 +17,7 @@ public:
         QGraphicsView(parent)
     {
     }
-    virtual ~IOrderWavesWidget() = default;
+    ~IOrderWavesWidget() override = default;
 
     IOrderWavesWidget(const IOrderWavesWidget& another)            = delete;
     IOrderWavesWidget& operator=(const IOrderWavesWidget& another) = delete;

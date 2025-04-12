@@ -12,7 +12,7 @@ class SellDecision1Config : public ISellDecision1Config
 {
 public:
     SellDecision1Config();
-    ~SellDecision1Config();
+    ~SellDecision1Config() override;
 
     SellDecision1Config(const SellDecision1Config& another)            = delete;
     SellDecision1Config& operator=(const SellDecision1Config& another) = delete;

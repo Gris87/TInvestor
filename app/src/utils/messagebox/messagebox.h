@@ -10,7 +10,7 @@ class MessageBoxUtils : public IMessageBoxUtils
 {
 public:
     explicit MessageBoxUtils();
-    ~MessageBoxUtils();
+    ~MessageBoxUtils() override;
 
     MessageBoxUtils(const MessageBoxUtils& another)            = delete;
     MessageBoxUtils& operator=(const MessageBoxUtils& another) = delete;

@@ -19,7 +19,7 @@ class SellDecision3ConfigWidget : public ISellDecision3ConfigWidget
 
 public:
     explicit SellDecision3ConfigWidget(ISellDecision3Config* config, QWidget* parent = nullptr);
-    ~SellDecision3ConfigWidget();
+    ~SellDecision3ConfigWidget() override;
 
     SellDecision3ConfigWidget(const SellDecision3ConfigWidget& another)            = delete;
     SellDecision3ConfigWidget& operator=(const SellDecision3ConfigWidget& another) = delete;

@@ -15,7 +15,7 @@ public:
         QGraphicsView(parent)
     {
     }
-    virtual ~IAccountChartWidget() = default;
+    ~IAccountChartWidget() override = default;
 
     IAccountChartWidget(const IAccountChartWidget& another)            = delete;
     IAccountChartWidget& operator=(const IAccountChartWidget& another) = delete;

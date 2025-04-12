@@ -10,7 +10,7 @@ class OrderWavesDialogFactory : public IOrderWavesDialogFactory
 {
 public:
     OrderWavesDialogFactory();
-    ~OrderWavesDialogFactory();
+    ~OrderWavesDialogFactory() override;
 
     OrderWavesDialogFactory(const OrderWavesDialogFactory& another)            = delete;
     OrderWavesDialogFactory& operator=(const OrderWavesDialogFactory& another) = delete;

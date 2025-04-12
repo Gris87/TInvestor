@@ -19,7 +19,7 @@ public:
         QObject(parent)
     {
     }
-    virtual ~IGrpcClient() = default;
+    ~IGrpcClient() override = default;
 
     IGrpcClient(const IGrpcClient& another)            = delete;
     IGrpcClient& operator=(const IGrpcClient& another) = delete;

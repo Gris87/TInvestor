@@ -15,7 +15,7 @@ class CleanupThread : public ICleanupThread
 
 public:
     explicit CleanupThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
-    ~CleanupThread();
+    ~CleanupThread() override;
 
     CleanupThread(const CleanupThread& another)            = delete;
     CleanupThread& operator=(const CleanupThread& another) = delete;

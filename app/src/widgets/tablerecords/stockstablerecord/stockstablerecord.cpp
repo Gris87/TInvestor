@@ -69,8 +69,6 @@ StocksTableRecord::StocksTableRecord(
     tableWidget->setItem(rowIndex, TURNOVER_COLUMN, mTurnoverTableWidgetItem);
     tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
     tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
-
-    updateAll();
 }
 
 StocksTableRecord::~StocksTableRecord()

@@ -19,7 +19,7 @@ class SellDecision2ConfigWidget : public ISellDecision2ConfigWidget
 
 public:
     explicit SellDecision2ConfigWidget(ISellDecision2Config* config, QWidget* parent = nullptr);
-    ~SellDecision2ConfigWidget();
+    ~SellDecision2ConfigWidget() override;
 
     SellDecision2ConfigWidget(const SellDecision2ConfigWidget& another)            = delete;
     SellDecision2ConfigWidget& operator=(const SellDecision2ConfigWidget& another) = delete;

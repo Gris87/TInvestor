@@ -10,7 +10,7 @@ class TurnoverTableItem : public QTableWidgetItem
 {
 public:
     explicit TurnoverTableItem(int type = Type);
-    ~TurnoverTableItem();
+    ~TurnoverTableItem() override;
 
     TurnoverTableItem(const TurnoverTableItem& another)            = delete;
     TurnoverTableItem& operator=(const TurnoverTableItem& another) = delete;

@@ -15,7 +15,7 @@ public:
         QWidget(parent)
     {
     }
-    virtual ~IActionsTableItemWidget() = default;
+    ~IActionsTableItemWidget() override = default;
 
     IActionsTableItemWidget(const IActionsTableItemWidget& another)            = delete;
     IActionsTableItemWidget& operator=(const IActionsTableItemWidget& another) = delete;

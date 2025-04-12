@@ -15,7 +15,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~IPriceCollectThread() = default;
+    ~IPriceCollectThread() override = default;
 
     IPriceCollectThread(const IPriceCollectThread& another)            = delete;
     IPriceCollectThread& operator=(const IPriceCollectThread& another) = delete;

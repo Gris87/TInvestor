@@ -21,7 +21,7 @@ class StartSimulationDialog : public IStartSimulationDialog
 
 public:
     explicit StartSimulationDialog(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
-    ~StartSimulationDialog();
+    ~StartSimulationDialog() override;
 
     StartSimulationDialog(const StartSimulationDialog& another)            = delete;
     StartSimulationDialog& operator=(const StartSimulationDialog& another) = delete;

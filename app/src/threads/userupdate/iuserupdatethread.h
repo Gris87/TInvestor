@@ -15,7 +15,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~IUserUpdateThread() = default;
+    ~IUserUpdateThread() override = default;
 
     IUserUpdateThread(const IUserUpdateThread& another)            = delete;
     IUserUpdateThread& operator=(const IUserUpdateThread& another) = delete;

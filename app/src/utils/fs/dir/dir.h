@@ -12,7 +12,7 @@ class Dir : public IDir
 {
 public:
     explicit Dir(const QString& path = QString());
-    ~Dir();
+    ~Dir() override;
 
     Dir(const Dir& another)            = delete;
     Dir& operator=(const Dir& another) = delete;

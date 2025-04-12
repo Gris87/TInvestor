@@ -18,7 +18,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~IOrderBookThread() = default;
+    ~IOrderBookThread() override = default;
 
     IOrderBookThread(const IOrderBookThread& another)            = delete;
     IOrderBookThread& operator=(const IOrderBookThread& another) = delete;

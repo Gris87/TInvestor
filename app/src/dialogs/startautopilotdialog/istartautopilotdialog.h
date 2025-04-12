@@ -15,7 +15,7 @@ public:
         QDialog(parent)
     {
     }
-    virtual ~IStartAutoPilotDialog() = default;
+    ~IStartAutoPilotDialog() override = default;
 
     IStartAutoPilotDialog(const IStartAutoPilotDialog& another)            = delete;
     IStartAutoPilotDialog& operator=(const IStartAutoPilotDialog& another) = delete;

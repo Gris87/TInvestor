@@ -10,7 +10,7 @@ class DirFactory : public IDirFactory
 {
 public:
     DirFactory();
-    ~DirFactory();
+    ~DirFactory() override;
 
     DirFactory(const DirFactory& another)            = delete;
     DirFactory& operator=(const DirFactory& another) = delete;

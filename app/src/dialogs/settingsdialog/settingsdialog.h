@@ -34,7 +34,7 @@ public:
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         QWidget*                           parent = nullptr
     );
-    ~SettingsDialog();
+    ~SettingsDialog() override;
 
     SettingsDialog(const SettingsDialog& another)            = delete;
     SettingsDialog& operator=(const SettingsDialog& another) = delete;

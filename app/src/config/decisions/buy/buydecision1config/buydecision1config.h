@@ -12,7 +12,7 @@ class BuyDecision1Config : public IBuyDecision1Config
 {
 public:
     BuyDecision1Config();
-    ~BuyDecision1Config();
+    ~BuyDecision1Config() override;
 
     BuyDecision1Config(const BuyDecision1Config& another)            = delete;
     BuyDecision1Config& operator=(const BuyDecision1Config& another) = delete;

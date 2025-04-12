@@ -17,7 +17,7 @@ class OrderWavesWidget : public IOrderWavesWidget
 
 public:
     explicit OrderWavesWidget(int precision, float priceIncrement, QWidget* parent = nullptr);
-    ~OrderWavesWidget();
+    ~OrderWavesWidget() override;
 
     OrderWavesWidget(const OrderWavesWidget& another)            = delete;
     OrderWavesWidget& operator=(const OrderWavesWidget& another) = delete;

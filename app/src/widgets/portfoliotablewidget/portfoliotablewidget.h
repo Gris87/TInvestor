@@ -21,7 +21,7 @@ class PortfolioTableWidget : public IPortfolioTableWidget
 
 public:
     explicit PortfolioTableWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
-    ~PortfolioTableWidget();
+    ~PortfolioTableWidget() override;
 
     PortfolioTableWidget(const PortfolioTableWidget& another)            = delete;
     PortfolioTableWidget& operator=(const PortfolioTableWidget& another) = delete;

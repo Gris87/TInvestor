@@ -25,7 +25,7 @@ public:
     explicit StartAutoPilotDialog(
         IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent = nullptr
     );
-    ~StartAutoPilotDialog();
+    ~StartAutoPilotDialog() override;
 
     StartAutoPilotDialog(const StartAutoPilotDialog& another)            = delete;
     StartAutoPilotDialog& operator=(const StartAutoPilotDialog& another) = delete;

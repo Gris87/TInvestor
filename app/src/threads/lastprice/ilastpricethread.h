@@ -15,7 +15,7 @@ public:
         QThread(parent)
     {
     }
-    virtual ~ILastPriceThread() = default;
+    ~ILastPriceThread() override = default;
 
     ILastPriceThread(const ILastPriceThread& another)            = delete;
     ILastPriceThread& operator=(const ILastPriceThread& another) = delete;

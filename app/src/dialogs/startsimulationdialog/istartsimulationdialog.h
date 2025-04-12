@@ -15,7 +15,7 @@ public:
         QDialog(parent)
     {
     }
-    virtual ~IStartSimulationDialog() = default;
+    ~IStartSimulationDialog() override = default;
 
     IStartSimulationDialog(const IStartSimulationDialog& another)            = delete;
     IStartSimulationDialog& operator=(const IStartSimulationDialog& another) = delete;

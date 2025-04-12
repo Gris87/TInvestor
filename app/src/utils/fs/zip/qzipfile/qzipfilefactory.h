@@ -10,7 +10,7 @@ class QZipFileFactory : public IQZipFileFactory
 {
 public:
     QZipFileFactory();
-    ~QZipFileFactory();
+    ~QZipFileFactory() override;
 
     QZipFileFactory(const QZipFileFactory& another)            = delete;
     QZipFileFactory& operator=(const QZipFileFactory& another) = delete;

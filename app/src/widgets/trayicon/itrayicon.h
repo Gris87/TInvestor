@@ -15,7 +15,7 @@ public:
         QSystemTrayIcon(parent)
     {
     }
-    virtual ~ITrayIcon() = default;
+    ~ITrayIcon() override = default;
 
     ITrayIcon(const ITrayIcon& another)            = delete;
     ITrayIcon& operator=(const ITrayIcon& another) = delete;
