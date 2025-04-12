@@ -18,7 +18,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, misc-use-internal-linkage, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)
 MATCHER_P2(IsMemEqual, m, size, "")
 {
     return memcmp(arg, m, size) == 0;
@@ -692,4 +692,4 @@ TEST_F(Test_StocksDatabase, Test_writeStockData)
 
     database->writeStockData(stock);
 }
-// NOLINTEND(misc-use-internal-linkage, cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members, cppcoreguidelines-pro-type-member-init, misc-use-internal-linkage, readability-function-cognitive-complexity, readability-function-size, readability-magic-numbers)

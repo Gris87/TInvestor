@@ -5,7 +5,7 @@
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 struct SumResult
 {
     SumResult() :
@@ -65,3 +65,4 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
 
     ASSERT_EQ(sumResult.result, 499500);
 }
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)

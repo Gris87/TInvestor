@@ -51,7 +51,7 @@ TEST(Test_Quotation, Test_fromJsonObject)
 
     const QString content = R"({"nano":2,"units":1})";
 
-    QJsonParseError parseError;
+    QJsonParseError     parseError;
     const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
 
     ASSERT_EQ(parseError.error, QJsonParseError::NoError);

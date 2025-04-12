@@ -16,7 +16,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
 class Test_StartAutoPilotDialog : public ::testing::Test
 {
 protected:
@@ -122,6 +122,8 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_followRadioButton_toggled)
 
 TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
 {
+    const InSequence seq;
+
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("Babushka")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/follow"),         QVariant(false)));
@@ -147,4 +149,4 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
 
     dialog->ui->startButton->click();
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

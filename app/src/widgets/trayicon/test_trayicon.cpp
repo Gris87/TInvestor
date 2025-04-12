@@ -5,7 +5,7 @@
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 TEST(Test_TrayIcon, Test_constructor_and_destructor)
 {
     const TrayIcon trayIcon;
@@ -27,4 +27,4 @@ TEST(Test_TrayIcon, Test_constructor_and_destructor)
 
     ASSERT_EQ(trayIcon.toolTip(), "TInvestor");
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
+// NOLINTEND(readability-function-cognitive-complexity)

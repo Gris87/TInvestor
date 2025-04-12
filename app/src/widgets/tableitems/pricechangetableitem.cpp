@@ -27,7 +27,7 @@ PriceChangeTableItem::~PriceChangeTableItem()
 
 void PriceChangeTableItem::setValue(float value, float fromPrice, int precision)
 {
-    mValue         = value;
+    mValue               = value;
     const QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");

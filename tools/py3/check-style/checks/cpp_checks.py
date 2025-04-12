@@ -10,6 +10,7 @@ check_modules = [
     "clang_format_off_on",
     "include_headers",
     "insequence",
+    "nolint",
 ]
 
 

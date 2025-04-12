@@ -129,7 +129,7 @@ static void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
@@ -176,7 +176,7 @@ cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
@@ -224,7 +224,7 @@ static void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
@@ -285,7 +285,7 @@ static void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks,
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
@@ -349,7 +349,7 @@ static void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*       stock = stockArray[i];
+        Stock*             stock = stockArray[i];
         const QMutexLocker lock(stock->mutex);
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)

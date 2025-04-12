@@ -71,7 +71,7 @@ TEST_F(Test_RawGrpcClient, Test_getUserInfo)
 {
     const InSequence seq;
 
-    grpc::ClientContext                       context;
+    grpc::ClientContext                             context;
     const tinkoff::GetInfoRequest                   req;
     const std::shared_ptr<tinkoff::GetInfoResponse> resp = std::make_shared<tinkoff::GetInfoResponse>();
 
@@ -108,8 +108,8 @@ TEST_F(Test_RawGrpcClient, Test_getAccounts)
 {
     const InSequence seq;
 
-    grpc::ClientContext                           context;
-    tinkoff::GetAccountsRequest                   req;
+    grpc::ClientContext                                 context;
+    tinkoff::GetAccountsRequest                         req;
     const std::shared_ptr<tinkoff::GetAccountsResponse> resp = std::make_shared<tinkoff::GetAccountsResponse>();
 
     context.set_credentials(creds);
@@ -145,7 +145,7 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
 {
     const InSequence seq;
 
-    grpc::ClientContext                      context;
+    grpc::ClientContext                            context;
     const tinkoff::InstrumentsRequest              req;
     const std::shared_ptr<tinkoff::SharesResponse> resp = std::make_shared<tinkoff::SharesResponse>();
 
@@ -230,8 +230,8 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
 {
     const InSequence seq;
 
-    grpc::ClientContext                          context;
-    tinkoff::GetCandlesRequest                   req;
+    grpc::ClientContext                                context;
+    tinkoff::GetCandlesRequest                         req;
     const std::shared_ptr<tinkoff::GetCandlesResponse> resp = std::make_shared<tinkoff::GetCandlesResponse>();
 
     context.set_credentials(creds);
@@ -277,8 +277,8 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
 {
     const InSequence seq;
 
-    grpc::ClientContext                            context;
-    tinkoff::GetOrderBookRequest                   req;
+    grpc::ClientContext                                  context;
+    tinkoff::GetOrderBookRequest                         req;
     const std::shared_ptr<tinkoff::GetOrderBookResponse> resp = std::make_shared<tinkoff::GetOrderBookResponse>();
 
     context.set_credentials(creds);

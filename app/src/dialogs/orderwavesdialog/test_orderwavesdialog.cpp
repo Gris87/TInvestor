@@ -96,6 +96,8 @@ TEST_F(Test_OrderWavesDialog, Test_orderBookChanged)
 
 TEST_F(Test_OrderWavesDialog, Test_on_resetButton_clicked)
 {
+    const InSequence seq;
+
     EXPECT_CALL(*orderWavesWidgetMock, reset());
 
     dialog->ui->resetButton->click();

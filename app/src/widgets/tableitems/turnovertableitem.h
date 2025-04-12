@@ -15,7 +15,7 @@ public:
     TurnoverTableItem(const TurnoverTableItem& another)            = delete;
     TurnoverTableItem& operator=(const TurnoverTableItem& another) = delete;
 
-    void   setValue(qint64 value);
+    void setValue(qint64 value);
     [[nodiscard]]
     qint64 getValue() const;
 

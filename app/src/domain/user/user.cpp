@@ -4,14 +4,12 @@
 
 
 
-// NOLINTBEGIN(readability-magic-numbers)
 const QMap<QString, float> TARIFF_TO_COMMISSION{
     {"fees",    0.3f },
     {"trader",  0.05f},
     {"premium", 0.04f},
     {"sandbox", 0.04f}
 };
-// NOLINTEND(readability-magic-numbers)
 
 
 

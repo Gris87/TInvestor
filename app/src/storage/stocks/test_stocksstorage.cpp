@@ -464,7 +464,7 @@ TEST_F(Test_StocksStorage, Test_appendStockData)
 {
     const InSequence seq;
 
-    Stock     stock;
+    Stock           stock;
     const StockData stockData{};
 
     EXPECT_CALL(*stocksDatabaseMock, appendStockData(&stock, &stockData, 1));
@@ -527,7 +527,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     for (int i = 0; i < 3; ++i)
     {
-        Stock* stock    = stocksDB.at(i);
+        Stock*    stock    = stocksDB.at(i);
         const int dataSize = timestamps[i].size();
 
         for (int j = 0; j < dataSize; ++j)
@@ -858,7 +858,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     for (int i = 0; i < 3; ++i)
     {
-        Stock* stock    = stocksDB.at(i);
+        Stock*    stock    = stocksDB.at(i);
         const int dataSize = timestamps[i].size();
 
         for (int j = 0; j < dataSize; ++j)

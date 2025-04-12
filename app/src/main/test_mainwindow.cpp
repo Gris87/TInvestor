@@ -63,7 +63,7 @@ using ::testing::StrictMock;
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-static-cast-downcast, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-static-cast-downcast, readability-function-cognitive-complexity)
 class Test_MainWindow : public ::testing::Test
 {
 protected:
@@ -559,7 +559,7 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
     const InSequence seq;
 
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
-    Filter    filter;
+    Filter          filter;
 
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
@@ -868,7 +868,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     stocks << &stock1 << &stock1 << &stock2;
 
     const QDateTime dateChangeTime(QDate(2023, 12, 30), QTime(23, 59, 45));
-    Filter    filter;
+    Filter          filter;
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
@@ -885,4 +885,4 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->isSpinning(), false);
     // clang-format on
 }
-// NOLINTEND(cppcoreguidelines-pro-type-static-cast-downcast, cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-static-cast-downcast, readability-function-cognitive-complexity)

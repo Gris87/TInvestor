@@ -1,3 +1,66 @@
+# Disabled checks:
+# =============================================================================================================
+# altera-id-dependent-backward-branch                       - backward branch (for loop) is ID-dependent due to variable reference to 'jsonStocks' and may cause performance degradation
+# altera-struct-pack-align                                  - accessing fields in struct 'Filter' is inefficient due to padding; only needs 80 bytes but is using 104 bytes
+# altera-unroll-loops                                       - kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive
+# bugprone-easily-swappable-parameters                      - 2 adjacent parameters of 'Config' of similar type ('IDecisionMakerConfig *') are easily swapped by mistake
+# bugprone-narrowing-conversions                            - alias of `cppcoreguidelines-narrowing-conversions`
+# bugprone-reserved-identifier                              - declaration uses identifier '_', which is reserved in the global namespace; cannot be fixed automatically
+# cert-dcl37-c                                              - alias of `bugprone-reserved-identifier`
+# cert-dcl51-cpp                                            - alias of `bugprone-reserved-identifier`
+# cert-err58-cpp                                            - initialization of 'test_info_' with static storage duration may throw an exception that cannot be caught
+# clang-analyzer-optin.cplusplus.VirtualCall                - Call to virtual method 'StocksTableRecord::updateAll' during construction bypasses virtual dispatch
+# cppcoreguidelines-avoid-c-arrays                          - do not declare C-style arrays, use std::array<> instead
+# cppcoreguidelines-avoid-do-while                          - avoid do-while loops
+# cppcoreguidelines-avoid-magic-numbers                     - alias of `readability-magic-numbers`
+# cppcoreguidelines-avoid-non-const-global-variables        - variable 'oldMessageHandler' is non-const and globally accessible, consider making it const
+# cppcoreguidelines-narrowing-conversions                   - narrowing conversion from 'double' to 'float'
+# cppcoreguidelines-non-private-member-variables-in-classes - member variable 'ui' has public visibility
+# cppcoreguidelines-owning-memory                           - returning a newly created resource of type 'IBuyDecision1ConfigWidget *' or 'gsl::owner<>' from a function whose return type is not 'gsl::owner<>'
+# cppcoreguidelines-prefer-member-initializer               - 'mBuyDecision1ConfigWidget' should be initialized in a member initializer of the constructor
+# cppcoreguidelines-pro-bounds-constant-array-index         - do not use array subscript when the index is not an integer constant expression
+# cppcoreguidelines-pro-bounds-pointer-arithmetic           - do not use pointer arithmetic
+# cppcoreguidelines-pro-type-reinterpret-cast               - do not use reinterpret_cast
+# cppcoreguidelines-use-default-member-init                 - use default member initializer for 'result'
+# fuchsia-default-arguments-calls                           - calling a function that uses a default argument is disallowed
+# fuchsia-default-arguments-declarations                    - declaring a parameter with a default argument is disallowed
+# fuchsia-multiple-inheritance                              - inheriting multiple classes that aren't pure virtual is discouraged
+# fuchsia-overloaded-operator                               - overloading 'operator==' is disallowed
+# fuchsia-statically-constructed-objects                    - static objects are disallowed; if possible, use a constexpr constructor instead
+# google-default-arguments                                  - default arguments on virtual or override methods are prohibited
+# google-readability-avoid-underscore-in-googletest-name    - avoid using "_" in test suite name "Test_BuyDecision1ConfigWidget" according to Googletest FAQ
+# google-readability-function-size                          - alias of `readability-function-size`
+# google-readability-todo                                   - missing username/bug in TODO
+# hicpp-avoid-c-arrays                                      - alias of `cppcoreguidelines-avoid-c-arrays`
+# hicpp-function-size                                       - alias of `readability-function-size`
+# hicpp-member-init                                         - alias of `cppcoreguidelines-pro-type-member-init`
+# hicpp-special-member-functions                            - alias of `cppcoreguidelines-special-member-functions`
+# hicpp-uppercase-literal-suffix                            - alias of `readability-uppercase-literal-suffix`
+# hicpp-use-auto                                            - alias of `modernize-use-auto`
+# hicpp-use-override                                        - alias of `modernize-use-override`
+# llvm-header-guard                                         - header is missing header guard
+# llvm-include-order                                        - #includes are not sorted properly
+# llvm-namespace-comment                                    - namespace 'Ui' not terminated with a closing comment
+# llvmlibc-callee-namespace                                 - 'operator<<' must resolve to a function declared within the namespace defined by the 'LIBC_NAMESPACE' macro
+# llvmlibc-implementation-in-namespace                      - declaration must be enclosed within the 'LIBC_NAMESPACE_DECL' namespace
+# llvmlibc-inline-function-decl                             - 'QPrivateSignal' must be tagged with the LIBC_INLINE macro; the macro should be placed at the beginning of the declaration
+# llvmlibc-restrict-system-libc-headers                     - system include memory not allowed
+# misc-include-cleaner                                      - no header providing "IBuyDecision1Config" is directly included
+# misc-non-private-member-variables-in-classes              - alias of `cppcoreguidelines-non-private-member-variables-in-classes`
+# misc-use-anonymous-namespace                              - function 'readStocksDataForParallel' declared 'static', move to anonymous namespace instead
+# modernize-avoid-c-arrays                                  - alias of `cppcoreguidelines-avoid-c-arrays`
+# modernize-type-traits                                     - use c++17 style variable templates
+# modernize-use-auto                                        - use auto when initializing with new to avoid duplicating the type name
+# modernize-use-default-member-init                         - alias of `cppcoreguidelines-use-default-member-init`
+# modernize-use-override                                    - annotate this function with 'override' or (rarely) 'final'
+# modernize-use-trailing-return-type                        - use a trailing return type for this function
+# readability-avoid-nested-conditional-operator             - conditional operator is used as sub-expression of parent conditional operator, refrain from using nested conditional operators
+# readability-convert-member-functions-to-static            - method 'trayIconExitClicked' can be made static
+# readability-identifier-length                             - parameter name 'c' is too short, expected at least 3 characters
+# readability-redundant-access-specifiers                   - redundant access specifier has the same accessibility as the previous access specifier
+# readability-redundant-member-init                         - initializer for base class 'IBuyDecision1Config' is redundant
+# readability-static-accessed-through-instance              - static member accessed through instance
+# readability-uppercase-literal-suffix                      - floating point literal has suffix 'f', which is not uppercase
 Checks:
     '
         -*,

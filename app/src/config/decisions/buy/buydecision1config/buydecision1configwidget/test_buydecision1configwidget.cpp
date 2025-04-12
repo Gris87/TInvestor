@@ -12,6 +12,7 @@ using ::testing::Return;
 using ::testing::StrictMock;
 
 
+
 // NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_BuyDecision1ConfigWidget, Test_constructor_and_destructor)
 {

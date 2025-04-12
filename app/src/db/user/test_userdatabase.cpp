@@ -6,7 +6,7 @@
 
 
 
-// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
 class Test_UserDatabase : public ::testing::Test
 {
 protected:
@@ -137,4 +137,4 @@ TEST_F(Test_UserDatabase, Test_writeAccounts)
     ASSERT_EQ(accounts.at(1).name,   "Zorro");
     // clang-format on
 }
-// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
+// NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

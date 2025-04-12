@@ -15,7 +15,7 @@ public:
     PaybackTableItem(const PaybackTableItem& another)            = delete;
     PaybackTableItem& operator=(const PaybackTableItem& another) = delete;
 
-    void  setValue(float value);
+    void setValue(float value);
     [[nodiscard]]
     float getValue() const;
 

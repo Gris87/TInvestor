@@ -23,6 +23,7 @@ constexpr int    HTTP_STATUS_CODE_OK                = 200;
 constexpr int    HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
 
 
+
 enum CsvField : qint8
 {
     CSV_FIELD_FIGI,

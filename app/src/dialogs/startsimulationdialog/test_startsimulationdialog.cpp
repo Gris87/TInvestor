@@ -107,6 +107,8 @@ TEST_F(Test_StartSimulationDialog, Test_on_toDateEdit_dateChanged)
 
 TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
 {
+    const InSequence seq;
+
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(100000)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/dateRange"),  QVariant(false)));

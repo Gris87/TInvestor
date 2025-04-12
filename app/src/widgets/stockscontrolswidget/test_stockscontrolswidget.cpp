@@ -87,7 +87,7 @@ TEST_F(Test_StocksControlsWidget, Test_dateChangeDelayTimerTicked)
 {
     const InSequence seq;
 
-    QMutex    mutex;
+    QMutex          mutex;
     const QDateTime dateTime(QDate(2024, 1, 1), QTime(0, 0, 0));
 
     ASSERT_EQ(stocksControlsWidget->dateChangeDelayTimer.isActive(), false);

@@ -44,7 +44,7 @@ QList<Stock*> StocksDatabase::readStocksMeta()
         const QByteArray content = stocksFile->readAll();
         stocksFile->close();
 
-        QJsonParseError parseError;
+        QJsonParseError     parseError;
         const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
 
         if (parseError.error == QJsonParseError::NoError)

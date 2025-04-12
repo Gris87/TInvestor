@@ -120,7 +120,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     QMutex mutex;
 
     const std::shared_ptr<tinkoff::SharesResponse> sharesResponse(new tinkoff::SharesResponse());
-    tinkoff::Share*                          share = sharesResponse->add_instruments();
+    tinkoff::Share*                                share = sharesResponse->add_instruments();
 
     tinkoff::Quotation* minPriceIncrement = new tinkoff::Quotation(); // share will take ownership
     minPriceIncrement->set_units(1);
@@ -171,7 +171,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     QuaZip zip;
 
     const std::shared_ptr<tinkoff::GetCandlesResponse> getCandlesResponse(new tinkoff::GetCandlesResponse());
-    tinkoff::HistoricCandle*                     candle = getCandlesResponse->add_candles();
+    tinkoff::HistoricCandle*                           candle = getCandlesResponse->add_candles();
 
     tinkoff::Quotation* price = new tinkoff::Quotation(); // marketDataResponse will take ownership
     price->set_units(125);
@@ -272,8 +272,8 @@ TEST_F(Test_PriceCollectThread, Test_downloadLogo)
 {
     const InSequence seq;
 
-    StrictMock<FileMock>*  logoFileMock    = new StrictMock<FileMock>();
-    StrictMock<FileMock>*  noImageFileMock = new StrictMock<FileMock>(); // Will be deleted in downloadLogo
+    StrictMock<FileMock>*        logoFileMock    = new StrictMock<FileMock>();
+    StrictMock<FileMock>*        noImageFileMock = new StrictMock<FileMock>(); // Will be deleted in downloadLogo
     const std::shared_ptr<IFile> sharedLogoFile(logoFileMock);
 
     HttpResult httpResult;
