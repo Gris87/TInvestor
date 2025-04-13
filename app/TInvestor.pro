@@ -1,4 +1,4 @@
-QT += core gui widgets sql websockets
+QT += core gui widgets sql
 
 CONFIG += c++20
 
