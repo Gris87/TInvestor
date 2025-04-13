@@ -38,7 +38,9 @@ public:
         const RESP_T&        resp
     )
     {
-        while (true)
+        bool running = true;
+
+        while (running)
         {
             grpc::Status status = action(mRawGrpcClient, service, context, req, resp);
 
@@ -62,7 +64,7 @@ public:
                 return nullptr;
             }
 
-            break;
+            running = false;
         }
 
         return resp;

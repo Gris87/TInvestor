@@ -1,4 +1,3 @@
-Double check coverage
 Build for Ubuntu
 Add CI to Github
 Add test coverage badge on Github

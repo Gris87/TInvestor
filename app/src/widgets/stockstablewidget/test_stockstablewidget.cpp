@@ -119,6 +119,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -138,6 +139,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);
@@ -184,6 +186,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -203,6 +206,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);
@@ -256,6 +260,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -275,6 +280,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);
@@ -335,6 +341,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -354,6 +361,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);
@@ -407,6 +415,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -426,6 +435,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);
@@ -490,6 +500,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock1));
+    EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
@@ -509,6 +520,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
         )
     )
         .WillOnce(Return(&stocksTableRecordMock2));
+    EXPECT_CALL(stocksTableRecordMock2, updateAll());
     EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
 
     stocksTableWidget->updateTable(stocks, filter);

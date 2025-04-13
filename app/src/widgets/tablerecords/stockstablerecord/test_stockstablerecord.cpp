@@ -93,6 +93,8 @@ protected:
             httpClientMock,
             stock
         );
+
+        record->updateAll();
     }
 
     void TearDown() override

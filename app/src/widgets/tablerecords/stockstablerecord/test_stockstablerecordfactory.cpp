@@ -83,11 +83,6 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     )
         .WillOnce(Return(actionsTableItemWidgetMock));
 
-    EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
-    EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
-    EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
-    EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
-
     const IStocksTableRecord* record = factory.newInstance(
         &tableWidget,
         &stockTableItemWidgetFactoryMock,
