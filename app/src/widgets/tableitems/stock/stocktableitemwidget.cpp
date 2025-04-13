@@ -8,9 +8,10 @@
 StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* parent) :
     IStockTableItemWidget(parent),
     ui(new Ui::StockTableItemWidget),
+    hoverTextWidget(),
     mUserStorage(userStorage),
     mForQualInvestorFlag(false),
-    hoverTextWidget()
+    mFullText()
 {
     qDebug() << "Create StockTableItemWidget";
 

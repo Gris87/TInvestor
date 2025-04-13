@@ -4,11 +4,17 @@
 
 #include <QString>
 
+#ifdef Q_OS_WINDOWS
 #pragma warning(push)
 #pragma warning(disable : 4996)
+#endif
+
 #include <quazip/quazip.h>
 #include <quazip/quazipfile.h>
+
+#ifdef Q_OS_WINDOWS
 #pragma warning(pop)
+#endif
 
 
 
