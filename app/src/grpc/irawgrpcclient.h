@@ -6,12 +6,24 @@
 
 
 
+#ifdef Q_OS_WINDOWS
 #pragma warning(push)
 #pragma warning(disable : 4100 4189 4267)
+#else
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-requires"
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
+
 #include "messages/generated/instruments.grpc.pb.h"
 #include "messages/generated/marketdata.grpc.pb.h"
 #include "messages/generated/users.grpc.pb.h"
+
+#ifdef Q_OS_WINDOWS
 #pragma warning(pop)
+#else
+#pragma GCC diagnostic pop
+#endif
 
 
 
