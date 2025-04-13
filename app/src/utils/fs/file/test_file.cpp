@@ -91,7 +91,7 @@ TEST_F(Test_File, Test_append)
     const char* bytes = "BLAH";
 
     ASSERT_TRUE(file->open(QIODevice::Append));
-    ASSERT_EQ(file->write(bytes, strlen(bytes)), static_cast<qf>(strlen(bytes)));
+    ASSERT_EQ(file->write(bytes, strlen(bytes)), static_cast<qint64>(strlen(bytes)));
     file->close();
 
     ASSERT_EQ(file->size(), 8);
