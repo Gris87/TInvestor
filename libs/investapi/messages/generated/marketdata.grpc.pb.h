@@ -24,7 +24,6 @@
 #include <grpcpp/support/status.h>
 #include <grpcpp/support/stub_options.h>
 #include <grpcpp/support/sync_stream.h>
-#include <grpcpp/ports_def.inc>
 
 namespace tinkoff {
 namespace public_ {
@@ -1718,5 +1717,4 @@ class MarketDataStreamService final {
 }  // namespace tinkoff
 
 
-#include <grpcpp/ports_undef.inc>
 #endif  // GRPC_marketdata_2eproto__INCLUDED

@@ -60,10 +60,10 @@ SOURCES += \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
-    src/utils/fs/zip/qzipfile/test_qzipfile.cpp \
-    src/utils/fs/zip/qzipfile/test_qzipfilefactory.cpp \
     src/utils/fs/zip/qzip/test_qzip.cpp \
     src/utils/fs/zip/qzip/test_qzipfactory.cpp \
+    src/utils/fs/zip/qzipfile/test_qzipfile.cpp \
+    src/utils/fs/zip/qzipfile/test_qzipfilefactory.cpp \
     src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
@@ -101,40 +101,40 @@ SOURCES += \
 
 # find app/ -name \*_mock.h | sort | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
-    src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidget_mock.h \
+    src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision1config/ibuydecision1config_mock.h \
-    src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidget_mock.h \
+    src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision2config/ibuydecision2config_mock.h \
-    src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidget_mock.h \
+    src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision3config/ibuydecision3config_mock.h \
-    src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h \
     src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h \
+    src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \
     src/config/decisions/sell/selldecision1config/iselldecision1config_mock.h \
-    src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidget_mock.h \
+    src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision2config/iselldecision2config_mock.h \
-    src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidget_mock.h \
+    src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h \
-    src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidget_mock.h \
+    src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
-    src/dialogs/authdialog/iauthdialogfactory_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \
-    src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h \
+    src/dialogs/authdialog/iauthdialogfactory_mock.h \
     src/dialogs/orderwavesdialog/iorderwavesdialog_mock.h \
-    src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
+    src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h \
     src/dialogs/settingsdialog/isettingsdialog_mock.h \
-    src/dialogs/startautopilotdialog/istartautopilotdialogfactory_mock.h \
+    src/dialogs/settingsdialog/isettingsdialogfactory_mock.h \
     src/dialogs/startautopilotdialog/istartautopilotdialog_mock.h \
-    src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h \
+    src/dialogs/startautopilotdialog/istartautopilotdialogfactory_mock.h \
     src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h \
+    src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h \
     src/grpc/igrpcclient_mock.h \
     src/grpc/irawgrpcclient_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
@@ -145,39 +145,39 @@ HEADERS += \
     src/threads/orderbook/iorderbookthread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
-    src/utils/fs/dir/idirfactory_mock.h \
     src/utils/fs/dir/idir_mock.h \
-    src/utils/fs/file/ifilefactory_mock.h \
+    src/utils/fs/dir/idirfactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
-    src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
-    src/utils/fs/zip/qzipfile/iqzipfile_mock.h \
-    src/utils/fs/zip/qzip/iqzipfactory_mock.h \
+    src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/zip/qzip/iqzip_mock.h \
+    src/utils/fs/zip/qzip/iqzipfactory_mock.h \
+    src/utils/fs/zip/qzipfile/iqzipfile_mock.h \
+    src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
-    src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidget_mock.h \
-    src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
+    src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
-    src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h \
+    src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
     src/widgets/logstablewidget/ilogstablewidget_mock.h \
-    src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h \
+    src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h \
     src/widgets/operationstablewidget/ioperationstablewidget_mock.h \
-    src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
+    src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidget_mock.h \
-    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h \
+    src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
     src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h \
-    src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
+    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
-    src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
+    src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
     src/widgets/stockstablewidget/istockstablewidget_mock.h \
-    src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
+    src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
     src/widgets/tableitems/actions/iactionstableitemwidget_mock.h \
-    src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h \
+    src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tableitems/stock/istocktableitemwidget_mock.h \
-    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
+    src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
-    src/widgets/trayicon/itrayiconfactory_mock.h \
+    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
+    src/widgets/trayicon/itrayiconfactory_mock.h \
