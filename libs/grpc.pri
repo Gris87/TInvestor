@@ -60,13 +60,13 @@ win32-msvc* {
 
     LIBS += \
         -L$${VCPKG_LIBS} \
-        -lgrpc \
-        -lgrpc++ \
         -lgrpc++_reflection \
+        -lgrpc++ \
         -lprotobuf$${DEBUG_SUFFIX} \
         -labsl_die_if_null \
         -labsl_log_initialize \
         -lutf8_validity \
+        -lgrpc \
         -labsl_statusor \
         -lupb_json_lib \
         -lupb_textformat_lib \
