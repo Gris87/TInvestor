@@ -1,5 +1,5 @@
 # Generated with generate_sources.sh
-# find libs/investapi/ -name \*.cc | sed "s/libs\/investapi\///g" | sed "s/\.cc/\.cc \\\/g"
+# find libs/investapi/ -name \*.cc | sort | sed "s/libs\/investapi\///g" | sed "s/\.cc/\.cc \\\/g"
 SOURCES += \
     messages/generated/common.grpc.pb.cc \
     messages/generated/common.pb.cc \
@@ -22,7 +22,7 @@ SOURCES += \
     messages/generated/users.grpc.pb.cc \
     messages/generated/users.pb.cc \
 
-# find libs/investapi/ -name \*.h | sed "s/libs\/investapi\///g" | sed "s/\.h/\.h \\\/g"
+# find libs/investapi/ -name \*.h | sort | sed "s/libs\/investapi\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
     messages/generated/common.grpc.pb.h \
     messages/generated/common.pb.h \

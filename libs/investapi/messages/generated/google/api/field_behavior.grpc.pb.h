@@ -39,6 +39,7 @@
 #include <grpcpp/support/status.h>
 #include <grpcpp/support/stub_options.h>
 #include <grpcpp/support/sync_stream.h>
+#include <grpcpp/ports_def.inc>
 
 namespace google {
 namespace api {
@@ -47,4 +48,5 @@ namespace api {
 }  // namespace google
 
 
+#include <grpcpp/ports_undef.inc>
 #endif  // GRPC_google_2fapi_2ffield_5fbehavior_2eproto__INCLUDED

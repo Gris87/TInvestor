@@ -2,7 +2,13 @@
 
 
 
-GRPC_CPP_PLUGIN="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe"
+if [ "${GRPC_CPP_PLUGIN}" == "" ]; then
+    if [ "${MSYSTEM}" != "" ]; then
+        GRPC_CPP_PLUGIN="E:\Qt\vcpkg\installed\x64-windows\tools\grpc\grpc_cpp_plugin.exe"
+    else
+        GRPC_CPP_PLUGIN="/home/gris/Qt/vcpkg/installed/x64-linux/tools/grpc/grpc_cpp_plugin"
+    fi
+fi
 
 
 

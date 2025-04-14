@@ -1,5 +1,5 @@
 # Generated with generate_sources.sh
-# find app/ -name test_\*.cpp | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
+# find app/ -name test_\*.cpp | sort | sed "s/app\///g" | sed "s/\.cpp/\.cpp \\\/g"
 SOURCES += \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/test_buydecision1configwidget.cpp \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/test_buydecision1configwidgetfactory.cpp \
@@ -60,10 +60,10 @@ SOURCES += \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
     src/utils/fs/file/test_filefactory.cpp \
-    src/utils/fs/zip/qzip/test_qzip.cpp \
-    src/utils/fs/zip/qzip/test_qzipfactory.cpp \
     src/utils/fs/zip/qzipfile/test_qzipfile.cpp \
     src/utils/fs/zip/qzipfile/test_qzipfilefactory.cpp \
+    src/utils/fs/zip/qzip/test_qzip.cpp \
+    src/utils/fs/zip/qzip/test_qzipfactory.cpp \
     src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
@@ -99,7 +99,7 @@ SOURCES += \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
 
-# find app/ -name \*_mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
+# find app/ -name \*_mock.h | sort | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidget_mock.h \
@@ -149,10 +149,10 @@ HEADERS += \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/file/ifilefactory_mock.h \
     src/utils/fs/file/ifile_mock.h \
-    src/utils/fs/zip/qzip/iqzipfactory_mock.h \
-    src/utils/fs/zip/qzip/iqzip_mock.h \
     src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
     src/utils/fs/zip/qzipfile/iqzipfile_mock.h \
+    src/utils/fs/zip/qzip/iqzipfactory_mock.h \
+    src/utils/fs/zip/qzip/iqzip_mock.h \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
