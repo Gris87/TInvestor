@@ -1,7 +1,6 @@
 #include "src/main/mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QDir>
 #include <QtCore/private/qcoreapplication_p.h>
 #include <gtest/gtest.h>
 
@@ -31,6 +30,7 @@
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
+#include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessagebox_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -110,14 +110,12 @@ protected:
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
-        autorunSettingsEditorMock            = new StrictMock<SettingsEditorMock>();
+        autorunEnablerMock                   = new StrictMock<AutorunEnablerMock>();
         stocksControlsWidgetMock             = new StrictMock<StocksControlsWidgetMock>();
         stocksTableWidgetMock                = new StrictMock<StocksTableWidgetMock>();
         simulatorDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
-
-        const QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
 
         EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
@@ -168,10 +166,7 @@ protected:
         EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
 
-        EXPECT_CALL(
-            *autorunSettingsEditorMock,
-            setValue(QString("CurrentVersion/Run/TInvestor"), QVariant(QString("\"%1\" --autorun").arg(appPath)))
-        );
+        EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -224,7 +219,7 @@ protected:
             orderBookThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
-            autorunSettingsEditorMock
+            autorunEnablerMock
         );
     }
 
@@ -285,7 +280,7 @@ protected:
         delete orderBookThreadMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
-        delete autorunSettingsEditorMock;
+        delete autorunEnablerMock;
         // It will be deleted by `delete ui;`
         /*
         delete stocksControlsWidgetMock;
@@ -336,7 +331,7 @@ protected:
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
-    StrictMock<SettingsEditorMock>*                   autorunSettingsEditorMock;
+    StrictMock<AutorunEnablerMock>*                   autorunEnablerMock;
     StrictMock<StocksControlsWidgetMock>*             stocksControlsWidgetMock;
     StrictMock<StocksTableWidgetMock>*                stocksTableWidgetMock;
     StrictMock<DecisionMakerWidgetMock>*              simulatorDecisionMakerWidgetMock;
@@ -689,7 +684,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
 
-    EXPECT_CALL(*autorunSettingsEditorMock, remove(QString("CurrentVersion/Run/TInvestor")));
+    EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
 
     mainWindow->ui->actionSettings->trigger();
 

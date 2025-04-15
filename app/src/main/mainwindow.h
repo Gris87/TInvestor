@@ -21,6 +21,7 @@
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
+#include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
@@ -85,7 +86,7 @@ public:
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
-        ISettingsEditor*                   autorunSettingsEditor,
+        IAutorunEnabler*                   autorunEnabler,
         QWidget*                           parent = nullptr
     );
     ~MainWindow() override;
@@ -145,7 +146,7 @@ private:
     IOrderBookThread*                  mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
-    ISettingsEditor*                   mAutorunSettingsEditor;
+    IAutorunEnabler*                   mAutorunEnabler;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

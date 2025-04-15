@@ -2,12 +2,10 @@
 #include "ui_mainwindow.h"
 
 #include <QDebug>
-#include <QDir>
 #include <QEvent>
 
 
 
-const QString    AUTORUN_PATH                             = "CurrentVersion/Run/TInvestor";
 const QColor     GREY_COLOR                               = QColor("#AFC2D7");
 const QString    DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
 constexpr int    SMALL_SPINNER_INNER_RADIUS               = 6;
@@ -64,7 +62,7 @@ MainWindow::MainWindow(
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
-    ISettingsEditor*                   autorunSettingsEditor,
+    IAutorunEnabler*                   autorunEnabler,
     QWidget*                           parent
 ) :
     QMainWindow(parent),
@@ -102,7 +100,7 @@ MainWindow::MainWindow(
     mOrderBookThread(orderBookThread),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
-    mAutorunSettingsEditor(autorunSettingsEditor)
+    mAutorunEnabler(autorunEnabler)
 {
     qDebug() << "Create MainWindow";
 
@@ -591,18 +589,7 @@ void MainWindow::updateStackWidgetToolbar() const
 void MainWindow::applyConfig()
 {
     makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
-
-    if (mConfig->isAutorun())
-    {
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast)
-        const QString appPath = QDir::toNativeSeparators(qApp->applicationFilePath());
-
-        mAutorunSettingsEditor->setValue(AUTORUN_PATH, QString("\"%1\" --autorun").arg(appPath));
-    }
-    else
-    {
-        mAutorunSettingsEditor->remove(AUTORUN_PATH);
-    }
+    mAutorunEnabler->setEnabled(mConfig->isAutorun());
 }
 
 void MainWindow::saveWindowState()

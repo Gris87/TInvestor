@@ -39,6 +39,7 @@
 #include "src/threads/orderbook/orderbookthread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
+#include "src/utils/autorunenabler/autorunenabler.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
 #include "src/utils/fs/zip/qzip/qzipfactory.h"
@@ -150,6 +151,7 @@ int runApplication(int argc, char* argv[])
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
     SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
+    AutorunEnabler autorunEnabler(&autorunSettingsEditor);
 
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
@@ -315,7 +317,7 @@ int runApplication(int argc, char* argv[])
         &orderBookThread,
         &messageBoxUtils,
         &settingsEditor,
-        &autorunSettingsEditor
+        &autorunEnabler
     );
     mainWindow.init();
 

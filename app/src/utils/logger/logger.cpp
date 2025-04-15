@@ -6,6 +6,12 @@
 
 
 
+#ifdef Q_OS_WINDOWS
+const QString appPrefixPath = R"(..\..\..\app\)";
+#else
+const QString appPrefixPath = "../../../app/";
+#endif
+
 constexpr int HEX_DIGITS = 16;
 
 
@@ -52,7 +58,7 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
                 QString::number(reinterpret_cast<qint64>(QThread::currentThreadId()), HEX_DIGITS)
                     .toUpper()
                     .rightJustified(4, '0'),
-                QString(context.file).remove(R"(..\..\..\app\)"),
+                QString(context.file).remove(appPrefixPath),
                 QString::number(context.line),
                 QString(context.function),
                 msg

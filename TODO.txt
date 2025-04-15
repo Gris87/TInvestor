@@ -1,7 +1,7 @@
 Ubuntu:
 - Autorun
+- Logo and desktop file
 - Headers for windows
-- Logs ../../../app/src
 - make scripts
 Add CI to Github
 Add test coverage badge on Github
