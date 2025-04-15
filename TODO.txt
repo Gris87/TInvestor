@@ -1,4 +1,8 @@
-Build for Ubuntu
+Ubuntu:
+- Autorun
+- Headers for windows
+- Logs ../../../app/src
+- make scripts
 Add CI to Github
 Add test coverage badge on Github
 Add build status badge on Github
