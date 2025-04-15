@@ -106,7 +106,9 @@ void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFi
 
     if (httpResult.statusCode == HTTP_STATUS_CODE_OK && httpResult.body.size() > 0)
     {
-        stockLogoFile->open(QIODevice::WriteOnly);
+        const bool ok = stockLogoFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+
         stockLogoFile->write(httpResult.body);
         stockLogoFile->close();
     }
@@ -115,7 +117,9 @@ void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFi
         const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
         noImageFile->open(QIODevice::ReadOnly);
 
-        stockLogoFile->open(QIODevice::WriteOnly);
+        const bool ok = stockLogoFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+
         stockLogoFile->write(noImageFile->readAll());
         stockLogoFile->close();
 
@@ -396,7 +400,9 @@ static void getCandlesWithHttp(
 
                 if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
                 {
-                    stockDataFile->open(QIODevice::WriteOnly);
+                    const bool ok = stockDataFile->open(QIODevice::WriteOnly);
+                    Q_ASSERT_X(ok, "PriceCollectThread::getCandlesWithHttp()", "Failed to open file");
+
                     stockDataFile->write(httpResult.body);
                     stockDataFile->close();
 

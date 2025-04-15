@@ -22,13 +22,13 @@ protected:
         QuaZipFile zipFile(zip);
 
         const QuaZipNewInfo info("hello.txt", "hello.txt");
-        zipFile.open(QIODevice::WriteOnly, info);
-        zipFile.write("AzazAZazzzaaz");
+        ASSERT_TRUE(zipFile.open(QIODevice::WriteOnly, info));
+        ASSERT_EQ(zipFile.write("AzazAZazzzaaz"), 13);
         zipFile.close();
 
         const QuaZipNewInfo info2("world.txt", "world.txt");
-        zipFile.open(QIODevice::WriteOnly, info2);
-        zipFile.write("Hello World!!!");
+        ASSERT_TRUE(zipFile.open(QIODevice::WriteOnly, info2));
+        ASSERT_EQ(zipFile.write("Hello World!!!"), 14);
         zipFile.close();
 
         zip->close();
