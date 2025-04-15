@@ -39,6 +39,7 @@ TEST_F(Test_AutorunEnabler, Test_constructor_and_destructor)
 {
 }
 
+#ifdef Q_OS_WINDOWS
 TEST_F(Test_AutorunEnabler, Test_setEnabled)
 {
     const InSequence seq;
@@ -49,16 +50,22 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
         *autorunSettingsEditorMock,
         setValue(QString("CurrentVersion/Run/TInvestor"), QVariant(QString("\"%1\" --autorun").arg(appPath)))
     );
-
     enabler->setEnabled(true);
 
     EXPECT_CALL(
         *autorunSettingsEditorMock,
         setValue(QString("CurrentVersion/Run/TInvestor"), QVariant(QString("\"%1\" --autorun").arg(appPath)))
     );
-
     enabler->setEnabled(true);
 
     EXPECT_CALL(*autorunSettingsEditorMock, remove(QString("CurrentVersion/Run/TInvestor")));
     enabler->setEnabled(false);
 }
+#else
+TEST_F(Test_AutorunEnabler, Test_setEnabled)
+{
+    enabler->setEnabled(true);
+    enabler->setEnabled(true);
+    enabler->setEnabled(false);
+}
+#endif

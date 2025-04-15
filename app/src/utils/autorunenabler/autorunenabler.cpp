@@ -34,6 +34,7 @@ void AutorunEnabler::setEnabled(bool enabled)
     }
 }
 
+#ifdef Q_OS_WINDOWS
 void AutorunEnabler::enable()
 {
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast)
@@ -46,3 +47,12 @@ void AutorunEnabler::disable()
 {
     mAutorunSettingsEditor->remove(AUTORUN_PATH);
 }
+#else
+void AutorunEnabler::enable()
+{
+}
+
+void AutorunEnabler::disable()
+{
+}
+#endif
