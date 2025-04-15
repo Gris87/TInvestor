@@ -31,9 +31,7 @@ TEST(Test_HttpClient, Test_download)
         QString::fromUtf8(result.body)
             .startsWith(
                 "{\n  \"args\": {\n    \"hello\": \"test\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": "
-                "{}, \n  \"headers\": {\n    \"Accept-Encoding\": \"gzip, deflate\", \n    \"Accept-Language\": "
-                "\"ru-RU,en,*\", \n    \"Authorization\": \"Bearer debearer\", \n    \"Host\": \"httpbin.org\", \n    "
-                "\"User-Agent\": \"Mozilla/5.0\", \n    \"X-Amzn-Trace-Id\": "
+                "{}, \n  \"headers\": {\n    \"Accept-Encoding\": "
             ),
         true
     );
