@@ -72,6 +72,8 @@ SOURCES += \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messagebox.cpp \
+    src/utils/processrunner/processrunner.cpp \
+    src/utils/processrunner/processrunnerfactory.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
@@ -231,6 +233,10 @@ HEADERS += \
     src/utils/logger/logger.h \
     src/utils/messagebox/imessagebox.h \
     src/utils/messagebox/messagebox.h \
+    src/utils/processrunner/iprocessrunner.h \
+    src/utils/processrunner/iprocessrunnerfactory.h \
+    src/utils/processrunner/processrunner.h \
+    src/utils/processrunner/processrunnerfactory.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \

@@ -4,6 +4,8 @@
 #include <QDir>
 #include <gtest/gtest.h>
 
+#include "src/utils/fs/file/ifilefactory_mock.h"
+#include "src/utils/processrunner/iprocessrunnerfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -19,8 +21,10 @@ protected:
     void SetUp() override
     {
         autorunSettingsEditorMock = new StrictMock<SettingsEditorMock>();
+        processRunnerFactoryMock  = new StrictMock<ProcessRunnerFactoryMock>();
+        fileFactoryMock           = new StrictMock<FileFactoryMock>();
 
-        enabler = new AutorunEnabler(autorunSettingsEditorMock);
+        enabler = new AutorunEnabler(autorunSettingsEditorMock, processRunnerFactoryMock, fileFactoryMock);
     }
 
     void TearDown() override
@@ -29,8 +33,10 @@ protected:
         delete autorunSettingsEditorMock;
     }
 
-    AutorunEnabler*                 enabler;
-    StrictMock<SettingsEditorMock>* autorunSettingsEditorMock;
+    AutorunEnabler*                       enabler;
+    StrictMock<SettingsEditorMock>*       autorunSettingsEditorMock;
+    StrictMock<ProcessRunnerFactoryMock>* processRunnerFactoryMock;
+    StrictMock<FileFactoryMock>*          fileFactoryMock;
 };
 
 

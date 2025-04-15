@@ -10,9 +10,13 @@ const QString AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
 
 
 
-AutorunEnabler::AutorunEnabler(ISettingsEditor* autorunSettingsEditor) :
+AutorunEnabler::AutorunEnabler(
+    ISettingsEditor* autorunSettingsEditor, IProcessRunnerFactory* processRunnerFactory, IFileFactory* fileFactory
+) :
     IAutorunEnabler(),
-    mAutorunSettingsEditor(autorunSettingsEditor)
+    mAutorunSettingsEditor(autorunSettingsEditor),
+    mProcessRunnerFactory(processRunnerFactory),
+    mFileFactory(fileFactory)
 {
     qDebug() << "Create AutorunEnabler";
 }

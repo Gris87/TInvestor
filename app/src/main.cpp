@@ -47,6 +47,7 @@
 #include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messagebox.h"
+#include "src/utils/processrunner/processrunnerfactory.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
@@ -148,10 +149,11 @@ int runApplication(int argc, char* argv[])
     FileFactory              fileFactory;
     QZipFactory              qZipFactory;
     QZipFileFactory          qZipFileFactory;
+    ProcessRunnerFactory     processRunnerFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
     SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
-    AutorunEnabler autorunEnabler(&autorunSettingsEditor);
+    AutorunEnabler autorunEnabler(&autorunSettingsEditor, &processRunnerFactory, &fileFactory);
 
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
