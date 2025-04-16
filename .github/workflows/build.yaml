@@ -214,13 +214,13 @@ jobs:
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  ${ZLIB_LIBRARY} = zlib.lib
+                  ${ZLIB_LIBRARY} = "zlib.lib"
               }
               "Linux" {
-                  ${ZLIB_LIBRARY} = libz.a
+                  ${ZLIB_LIBRARY} = "libz.a"
               }
           }
-          
+
           # Create build-quazip folder and enter into it
           New-Item -Path "." -Name "build-quazip" -ItemType "directory"
           Set-Location -Path "build-quazip"
