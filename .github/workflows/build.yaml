@@ -233,7 +233,8 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/quazip/install" `
             -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_dir }}/lib/cmake" `
             -DZLIB_LIBRARY:FILEPATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/${ZLIB_LIBRARY}" `
-            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/include"
+            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/include" `
+            -DQUAZIP_BZIP2=OFF
           cmake --build . --target install
 
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
