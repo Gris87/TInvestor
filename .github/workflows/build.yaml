@@ -129,7 +129,7 @@ jobs:
                 break()
               endif()
             endforeach()
-            execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ../${archive} -C ${target_dir})
+            execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${archive} -C ${target_dir})
           endfunction()
 
           # Download packages
