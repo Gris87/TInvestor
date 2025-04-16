@@ -249,10 +249,10 @@ jobs:
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  ./bootstrap-vcpkg.bat
+                  bootstrap-vcpkg.bat
               }
               "Linux" {
-                  ./bootstrap-vcpkg.sh
+                  sh ./bootstrap-vcpkg.sh
               }
           }
 
