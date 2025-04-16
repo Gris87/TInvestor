@@ -215,7 +215,7 @@ jobs:
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  ${ZLIB_LIBRARY} = "libzlib.dll.a"
+                  ${ZLIB_LIBRARY} = "zlib.lib"
               }
               "Linux" {
                   ${ZLIB_LIBRARY} = "libz.a"
