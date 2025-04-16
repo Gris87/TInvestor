@@ -246,18 +246,18 @@ jobs:
       - name: Build grpc
         shell: pwsh
         run: |
+          # Enter to vcpkg-source folder
+          Set-Location -Path "vcpkg-source"
+
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  bootstrap-vcpkg.bat
+                  ./bootstrap-vcpkg.bat
               }
               "Linux" {
-                  sh ./bootstrap-vcpkg.sh
+                  ./bootstrap-vcpkg.sh
               }
           }
-
-          # Enter to vcpkg-source folder
-          Set-Location -Path "vcpkg-source"
 
           ./vcpkg integrate install
           ./vcpkg install grpc
