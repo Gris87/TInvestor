@@ -1,0 +1,167 @@
+name: TInvestor workflow
+
+on: [push]
+
+# Setup environment variables
+env:
+  QT_VERSION: "6.9.0"
+  QT_MIRRORS: "download.qt.io;mirrors.ocf.berkeley.edu/qt;ftp.fau.de/qtproject;mirror.bit.edu.cn/qtproject"
+
+# List of jobs
+jobs:
+  # Release job.
+  # Provides meta information for release.
+  # This job is only used when github.ref contains /tags/
+  # It should be first in order to upload release artifacts.
+  release:
+    name: Create release
+    if: contains(github.ref, '/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: |
+            Release for TInvestor.
+
+          draft: false
+          prerelease: false
+
+      - name: Store release url
+        shell: pwsh
+        run: Write-Output "${{ steps.create_release.outputs.upload_url }}" > ./release_upload_url.txt
+
+      - name: Upload release url
+        uses: actions/upload-artifact@v4
+        with:
+          name: release_upload_url.txt
+          path: ./release_upload_url.txt
+
+  # Setup environment and upload artifacts
+  setup:
+    name: Setup for ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Install required packages
+      - name: System packages
+        shell: pwsh
+        run: |
+          switch ("${{runner.os}}")
+          {
+            "Windows" { choco install ninja }
+            "Linux"   { sudo apt-get update }
+            "macOS"   { brew update; brew install ninja }
+          }
+
+      # Download Qt with specified version
+      - name: Download Qt
+        id: qt
+        shell: cmake -P {0}
+        run: |
+          # Set qt_version variable to environment variable QT_VERSION
+          set(qt_version ${{env.QT_VERSION}})
+
+          # Remove all dots "." from qt_version and put result to qt_version_dotless
+          string(REPLACE "." "" qt_version_dotless "${qt_version}")
+
+          # Setup several platform-dependent variables
+          if ("${{ runner.os }}" STREQUAL "Windows")
+            set(url_os "windows_x86")
+            set(qt_package_arch_suffix "win64_msvc2022_64")
+            set(qt_dir_prefix "${qt_version}/msvc2022_64")
+            set(qt_package_suffix "-Windows-Windows_11_23H2-MSVC2022-Windows-Windows_11_23H2-X86_64")
+          elseif ("${{ runner.os }}" STREQUAL "Linux")
+            set(url_os "linux_x64")
+            set(qt_package_arch_suffix "linux_gcc_64")
+            set(qt_dir_prefix "${qt_version}/gcc_64")
+            set(qt_package_suffix "-Linux-RHEL_8_10-GCC-Linux-RHEL_8_10-X86_64")
+          elseif ("${{ runner.os }}" STREQUAL "macOS")
+            set(url_os "mac_x64")
+            set(qt_package_arch_suffix "clang_64")
+            set(qt_dir_prefix "${qt_version}/macos")
+            set(qt_package_suffix "-MacOS-MacOS_14-Clang-MacOS-MacOS_14-X86_64-ARM64")
+          endif()
+
+          # Set qt_base_url
+          set(qt_base_url "https://\${qt_mirror}/online/qtsdkrepository/${url_os}/desktop/qt6_${qt_version_dotless}/qt6_${qt_version_dotless}")
+
+          # Try to download Updates.xml from available QT mirrors
+          foreach(qt_mirror $ENV{QT_MIRRORS})
+            cmake_language(EVAL CODE "
+              message(\"Downloading: ${qt_base_url}/Updates.xml\")
+              file(DOWNLOAD \"${qt_base_url}/Updates.xml\" ./Updates.xml)
+            ")
+            file(SIZE ./Updates.xml fileSize)
+            if (fileSize GREATER 0)
+              break()
+            endif()
+          endforeach()
+
+          # Get package version that used together with package file name in order to download package
+          file(READ ./Updates.xml updates_xml)
+          string(REGEX MATCH "<Name>qt.qt6.*<Version>([0-9+-.]+)</Version>" updates_xml_output "${updates_xml}")
+          set(qt_package_version ${CMAKE_MATCH_1})
+
+          # Create Qt directory
+          file(MAKE_DIRECTORY Qt)
+
+          # Declare downloadAndExtract function
+          function(downloadAndExtract url archive target_dir)
+            foreach(qt_mirror $ENV{QT_MIRRORS})
+              cmake_language(EVAL CODE "
+                message(\"Downloading: ${url}\")
+                file(DOWNLOAD \"${url}\" ./${archive})
+              ")
+              file(SIZE ./${archive} fileSize)
+              if (fileSize GREATER 0)
+                break()
+              endif()
+            endforeach()
+            execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ../${archive} -C ${target_dir})
+          endfunction()
+
+          # Download packages
+          foreach(package qtbase qtdeclarative qtsvg qttools qttranslations)
+            downloadAndExtract(
+              "${qt_base_url}/qt.qt6.${qt_version_dotless}.${qt_package_arch_suffix}/${qt_package_version}${package}${qt_package_suffix}.7z"
+              ${package}.7z
+              "Qt/${qt_dir_prefix}"
+            )
+          endforeach()
+
+          foreach(package qt5compat qtcharts)
+            downloadAndExtract(
+              "${qt_base_url}/qt.qt6.${qt_version_dotless}.addons.${package}.${qt_package_arch_suffix}/${qt_package_version}${package}${qt_package_suffix}.7z"
+              ${package}.7z
+              "Qt/${qt_dir_prefix}"
+            )
+          endforeach()
+
+          # uic depends on libicu73.so
+          if ("${{ runner.os }}" STREQUAL "Linux")
+            downloadAndExtract(
+              "${qt_base_url}/qt.qt6.${qt_version_dotless}.${qt_package_arch_suffix}/${qt_package_version}icu-linux-Rhel8.6-x86_64.7z"
+              icu.7z
+              "Qt/${qt_dir_prefix}/lib"
+            )
+          endif()
+
+          # Update license from Enterprise to OpenSource
+          file(READ "Qt/${qt_dir_prefix}/mkspecs/qconfig.pri" qtconfig)
+          string(REPLACE "Enterprise" "OpenSource" qtconfig "${qtconfig}")
+          string(REPLACE "licheck.exe" "" qtconfig "${qtconfig}")
+          string(REPLACE "licheck64" "" qtconfig "${qtconfig}")
+          string(REPLACE "licheck_mac" "" qtconfig "${qtconfig}")
+          file(WRITE "Qt/${qt_dir_prefix}/mkspecs/qconfig.pri" "${qtconfig}")
