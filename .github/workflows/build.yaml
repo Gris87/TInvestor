@@ -69,9 +69,7 @@ jobs:
       - name: Download Qt
         id: qt
         shell: cmake -P {0}
-        run: |
-          set(CMAKE_VERBOSE_MAKEFILE on)
-        
+        run: |        
           # Set qt_version variable to environment variable QT_VERSION
           set(qt_version ${{env.QT_VERSION}})
 
