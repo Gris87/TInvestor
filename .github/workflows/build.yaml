@@ -4,8 +4,12 @@ on: [push]
 
 # Setup environment variables
 env:
-  QT_VERSION: "6.9.0"
-  QT_MIRRORS: "download.qt.io;mirrors.ocf.berkeley.edu/qt;ftp.fau.de/qtproject;mirror.bit.edu.cn/qtproject"
+  QT_MIRRORS:          "download.qt.io;mirrors.ocf.berkeley.edu/qt;ftp.fau.de/qtproject;mirror.bit.edu.cn/qtproject"
+  QT_VERSION:          "6.9.0"
+  GOOGLE_TEST_VERSION: "v1.16.0"
+  ZLIB_VERSION:        "v1.3.1"
+  QUAZIP_VERSION:      "v1.5"
+  VCPKG_VERSION:       "2025.04.09"
 
 # List of jobs
 jobs:
@@ -44,7 +48,7 @@ jobs:
 
   # Setup environment and upload artifacts
   setup:
-    name: Setup for ${{ matrix.config.name }}
+    name: Setup [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -58,7 +62,7 @@ jobs:
       - name: System packages
         shell: pwsh
         run: |
-          switch ("${{runner.os}}")
+          switch ("${{ runner.os }}")
           {
             "Windows" { choco install ninja }
             "Linux"   { sudo apt-get update }
@@ -70,10 +74,8 @@ jobs:
         id: qt
         shell: cmake -P {0}
         run: |
-          set(CMAKE_VERBOSE_MAKEFILE on)
-        
           # Set qt_version variable to environment variable QT_VERSION
-          set(qt_version ${{env.QT_VERSION}})
+          set(qt_version ${{ env.QT_VERSION }})
 
           # Remove all dots "." from qt_version and put result to qt_version_dotless
           string(REPLACE "." "" qt_version_dotless "${qt_version}")
@@ -160,5 +162,46 @@ jobs:
             )
           endif()
 
-      - name: BLAH
-        run: find
+      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
+      - uses: actions/checkout@v4
+        with:
+          repository: google/googletest
+          path: googletest-source
+          ref: ${{env.GOOGLE_TEST_VERSION}}
+
+      # Build googletest with specified version
+      - name: Build googletest
+        run: echo "TBD"
+
+      # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
+      - uses: actions/checkout@v4
+        with:
+          repository: madler/zlib
+          path: zlib-source
+          ref: ${{env.ZLIB_VERSION}}
+
+      # Build zlib with specified version
+      - name: Build zlib
+        run: echo "TBD"
+
+      # Checkout quazip repository with specific version to $GITHUB_WORKSPACE/quazip-source
+      - uses: actions/checkout@v4
+        with:
+          repository: stachenov/quazip
+          path: quazip-source
+          ref: ${{env.QUAZIP_VERSION}}
+
+      # Build quazip with specified version
+      - name: Build quazip
+        run: echo "TBD"
+
+      # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
+      - uses: actions/checkout@v4
+        with:
+          repository: microsoft/vcpkg
+          path: vcpkg-source
+          ref: ${{env.VCPKG_VERSION}}
+
+      # Build grpc with specified version
+      - name: Build grpc
+        run: echo "TBD"
