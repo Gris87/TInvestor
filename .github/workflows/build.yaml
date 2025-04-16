@@ -64,9 +64,9 @@ jobs:
         run: |
           switch ("${{ runner.os }}")
           {
-            "Windows" { choco install ninja }
+            "Windows" { choco install bzip2 }
             "Linux"   { sudo apt-get update }
-            "macOS"   { brew update; brew install ninja }
+            "macOS"   { brew update }
           }
 
       # Download Qt with specified version
@@ -191,7 +191,7 @@ jobs:
           Set-Location -Path "build-zlib"
 
           # Build Plugin
-          cmake -G Ninja `
+          cmake `
             -S ../zlib-source `
             -B . `
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
@@ -227,15 +227,14 @@ jobs:
           Set-Location -Path "build-quazip"
 
           # Build Plugin
-          cmake -G Ninja `
+          cmake `
             -S ../quazip-source `
             -B . `
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/quazip/install" `
             -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_dir }}/lib/cmake" `
             -DZLIB_LIBRARY:FILEPATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/${ZLIB_LIBRARY}" `
-            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/include" `
-            -DQUAZIP_BZIP2=OFF
+            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/include"
           cmake --build . --target install
 
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
