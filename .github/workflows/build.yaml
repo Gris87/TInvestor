@@ -194,6 +194,7 @@ jobs:
           cmake -G Ninja `
             -S ../zlib-source `
             -B . `
+            -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/zlib/install"
           cmake --build . --config Release
@@ -224,6 +225,8 @@ jobs:
           # Create build-quazip folder and enter into it
           New-Item -Path "." -Name "build-quazip" -ItemType "directory"
           Set-Location -Path "build-quazip"
+
+          Get-ChildItem -Path "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/"
 
           # Build Plugin
           cmake -G Ninja `
