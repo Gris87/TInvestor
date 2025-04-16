@@ -52,7 +52,7 @@ jobs:
           compression-level: 9
 
   # Setup environment and upload artifacts
-  setup:
+  setup1:
     name: Setup [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -234,6 +234,27 @@ jobs:
             -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/install-zlib/include"
           cmake --build . --target install
 
+      # Upload environment artifacts
+      - name: Upload environment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: environment1-${{ matrix.config.name }}
+          path: ./Qt
+          retention-days: 1
+          compression-level: 9
+
+  # Setup environment and upload artifacts
+  setup2:
+    name: Setup [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:          
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
       - name: Checkout vcpkg
         uses: actions/checkout@v4
@@ -268,14 +289,14 @@ jobs:
       - name: Upload environment artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: environment-${{ matrix.config.name }}
+          name: environment2-${{ matrix.config.name }}
           path: ./Qt
           retention-days: 1
           compression-level: 9
 
   # Build project
   build:
-    needs: setup
+    needs: [setup1, setup2]
     name: Build [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -286,22 +307,18 @@ jobs:
       fail-fast: false
 
     steps:
-      # Install required packages
-      - name: System packages
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-            "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update }
-            "macOS"   { brew update }
-          }
-
       # Download environment artifacts
-      - name: Download environment artifacts
+      - name: Download environment artifacts 1
         uses: actions/download-artifact@v4
         with:
-          name: environment-${{ matrix.config.name }}
+          name: environment1-${{ matrix.config.name }}
+          path: ./Qt
+
+      # Download environment artifacts
+      - name: Download environment artifacts 2
+        uses: actions/download-artifact@v4
+        with:
+          name: environment2-${{ matrix.config.name }}
           path: ./Qt
 
       # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
@@ -320,4 +337,7 @@ jobs:
 
       # Build TInvestor
       - name: Build TInvestor
-        run: find
+        shell: pwsh
+        run: |
+          # Enter to vcpkg-source folder
+          Set-Location -Path "TInvestor-source"
