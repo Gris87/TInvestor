@@ -69,7 +69,9 @@ jobs:
       - name: Download Qt
         id: qt
         shell: cmake -P {0}
-        run: |        
+        run: |
+          set(CMAKE_VERBOSE_MAKEFILE on)
+        
           # Set qt_version variable to environment variable QT_VERSION
           set(qt_version ${{env.QT_VERSION}})
 
@@ -129,7 +131,7 @@ jobs:
                 break()
               endif()
             endforeach()
-            execute_process(COMMAND ${CMAKE_COMMAND} -E "tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/${archive} WORKING_DIRECTORY ${target_dir})
+            execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/${archive} WORKING_DIRECTORY ${target_dir})
           endfunction()
 
           # Download packages
