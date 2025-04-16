@@ -226,7 +226,7 @@ jobs:
           New-Item -Path "." -Name "build-quazip" -ItemType "directory"
           Set-Location -Path "build-quazip"
 
-          Get-ChildItem -Path "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/"
+          Get-ChildItem -Path "${Env:GITHUB_WORKSPACE}/Qt/zlib/install/" -Recurse -Force
 
           # Build Plugin
           cmake -G Ninja `
