@@ -247,4 +247,20 @@ jobs:
 
       # Build grpc with specified version
       - name: Build grpc
-        run: echo "TBD"
+        shell: pwsh
+        run: |
+          # Enter to vcpkg-source folder
+          Set-Location -Path "vcpkg-source"
+
+      # Build grpc with specified version
+      - name: Build grpc
+        shell: pwsh
+        run: |
+          # Enter to vcpkg-source folder
+          Set-Location -Path "vcpkg-source"
+
+      - name: Upload environment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Qt
+          path: ./
