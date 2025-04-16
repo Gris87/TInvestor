@@ -162,19 +162,21 @@ jobs:
             )
           endif()
 
+          # Export qt_dir for other steps
+          file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/Qt/${qt_dir_prefix}" qt_dir)
+          message("::set-output name=qt_dir::${qt_dir}")
+
       # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - uses: actions/checkout@v4
+      - name: Checkout googletest
+        uses: actions/checkout@v4
         with:
           repository: google/googletest
-          path: googletest-source
+          path: Qt/googletest-source
           ref: ${{env.GOOGLE_TEST_VERSION}}
 
-      # Build googletest with specified version
-      - name: Build googletest
-        run: echo "TBD"
-
       # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
-      - uses: actions/checkout@v4
+      - name: Checkout zlib
+        uses: actions/checkout@v4
         with:
           repository: madler/zlib
           path: zlib-source
@@ -182,10 +184,24 @@ jobs:
 
       # Build zlib with specified version
       - name: Build zlib
-        run: echo "TBD"
+        shell: pwsh
+        run: |
+          # Create build-zlib folder and enter into it
+          New-Item -Path "." -Name "build-zlib" -ItemType "directory"
+          Set-Location -Path "build-zlib"
+
+          # Build Plugin
+          cmake -G Ninja `
+            -S ../zlib-source `
+            -B . `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_INSTALL_PREFIX=../Qt/zlib/install
+          cmake --build . --config Release
+          cmake --install . --config Release
 
       # Checkout quazip repository with specific version to $GITHUB_WORKSPACE/quazip-source
-      - uses: actions/checkout@v4
+      - name: Checkout quazip
+        uses: actions/checkout@v4
         with:
           repository: stachenov/quazip
           path: quazip-source
@@ -193,10 +209,36 @@ jobs:
 
       # Build quazip with specified version
       - name: Build quazip
-        run: echo "TBD"
+        shell: pwsh
+        run: |
+          switch ("${{runner.os}}")
+          {
+              "Windows" {
+                  ${ZLIB_LIBRARY} = zlib.lib
+              }
+              "Linux" {
+                  ${ZLIB_LIBRARY} = libz.a
+              }
+          }
+          
+          # Create build-quazip folder and enter into it
+          New-Item -Path "." -Name "build-quazip" -ItemType "directory"
+          Set-Location -Path "build-quazip"
+
+          # Build Plugin
+          cmake -G Ninja `
+            -S ../quazip-source `
+            -B . `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_INSTALL_PREFIX=../Qt/quazip/install `
+            -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_dir }}/lib/cmake" `
+            -DZLIB_LIBRARY:FILEPATH="${GITHUB_WORKSPACE}/Qt/zlib/install/lib/${ZLIB_LIBRARY}" `
+            -DZLIB_INCLUDE_DIR:PATH="${GITHUB_WORKSPACE}/Qt/zlib/install/include"
+          cmake --build . --target install
 
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
-      - uses: actions/checkout@v4
+      - name: Checkout vcpkg
+        uses: actions/checkout@v4
         with:
           repository: microsoft/vcpkg
           path: vcpkg-source
