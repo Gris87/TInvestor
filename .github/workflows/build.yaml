@@ -169,15 +169,7 @@ jobs:
 
           # Export qt_dir for other steps
           file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/Qt/${qt_dir_prefix}" qt_dir)
-          message("::set-output name=qt_dir::${qt_dir}")
-
-      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - name: Checkout googletest
-        uses: actions/checkout@v4
-        with:
-          repository: google/googletest
-          path: Qt/googletest-source
-          ref: ${{env.GOOGLE_TEST_VERSION}}
+          file(APPEND "$ENV{GITHUB_OUTPUT}" "qt_dir=${qt_dir}")
 
       # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
       - name: Checkout zlib
@@ -201,7 +193,7 @@ jobs:
             -B . `
             -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
             -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/zlib/install"
+            -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/install-zlib"
           cmake --build . --config Release
           cmake --install . --config Release
 
@@ -238,8 +230,8 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/quazip/install" `
             -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_dir }}/lib/cmake" `
-            -DZLIB_LIBRARY:FILEPATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/lib/${ZLIB_LIBRARY}" `
-            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/Qt/zlib/install/include"
+            -DZLIB_LIBRARY:FILEPATH="${Env:GITHUB_WORKSPACE}/install-zlib/lib/${ZLIB_LIBRARY}" `
+            -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/install-zlib/include"
           cmake --build . --target install
 
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
@@ -254,8 +246,24 @@ jobs:
       - name: Build grpc
         shell: pwsh
         run: |
+          switch ("${{runner.os}}")
+          {
+              "Windows" {
+                  ${BOOTSTRAP_CMD} = "./bootstrap-vcpkg.bat"
+              }
+              "Linux" {
+                  ${BOOTSTRAP_CMD} = "./bootstrap-vcpkg.sh"
+              }
+          }
+
           # Enter to vcpkg-source folder
           Set-Location -Path "vcpkg-source"
+
+          ${BOOTSTRAP_CMD}
+          ./vcpkg integrate install
+          ./vcpkg install grpc
+
+          Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 
       # Upload environment artifacts
       - name: Upload environment artifacts
@@ -296,6 +304,14 @@ jobs:
         with:
           name: environment-${{ matrix.config.name }}
           path: ./Qt
+
+      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
+      - name: Checkout googletest
+        uses: actions/checkout@v4
+        with:
+          repository: google/googletest
+          path: Qt/googletest-source
+          ref: ${{env.GOOGLE_TEST_VERSION}}
 
       # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
       - name: Checkout TInvestor
