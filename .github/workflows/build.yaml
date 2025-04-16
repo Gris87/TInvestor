@@ -22,6 +22,7 @@ jobs:
     if: contains(github.ref, '/tags/')
     runs-on: ubuntu-latest
     steps:
+      # Create release
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
@@ -36,15 +37,19 @@ jobs:
           draft: false
           prerelease: false
 
+      # Create file with url to release page
       - name: Store release url
         shell: pwsh
         run: Write-Output "${{ steps.create_release.outputs.upload_url }}" > ./release_upload_url.txt
 
+      # Upload file with url to release page
       - name: Upload release url
         uses: actions/upload-artifact@v4
         with:
           name: release_upload_url.txt
           path: ./release_upload_url.txt
+          retention-days: 1
+          compression-level: 9
 
   # Setup environment and upload artifacts
   setup:
@@ -252,15 +257,52 @@ jobs:
           # Enter to vcpkg-source folder
           Set-Location -Path "vcpkg-source"
 
-      # Build grpc with specified version
-      - name: Build grpc
-        shell: pwsh
-        run: |
-          # Enter to vcpkg-source folder
-          Set-Location -Path "vcpkg-source"
-
+      # Upload environment artifacts
       - name: Upload environment artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Qt
-          path: ./
+          name: environment-${{ matrix.config.name }}
+          path: ./Qt
+          retention-days: 1
+          compression-level: 9
+
+  # Build project
+  build:
+    needs: setup
+    name: Build [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Install required packages
+      - name: System packages
+        shell: pwsh
+        run: |
+          switch ("${{ runner.os }}")
+          {
+            "Windows" { choco install bzip2 }
+            "Linux"   { sudo apt-get update }
+            "macOS"   { brew update }
+          }
+
+      # Download environment artifacts
+      - name: Download environment artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: environment-${{ matrix.config.name }}
+          path: ./Qt
+
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-source
+
+      # Build TInvestor
+      - name: Build TInvestor
+        run: find
