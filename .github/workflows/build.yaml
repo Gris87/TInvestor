@@ -174,7 +174,7 @@ jobs:
             downloadAndExtract(
               "https://\${qt_mirror}/official_releases/jom/jom.zip"
               jom.zip
-              "Qt"
+              "Qt/jom"
             )
           elseif ("${{ runner.os }}" STREQUAL "Linux")
             # uic depends on libicu73.so
@@ -256,6 +256,10 @@ jobs:
             -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/install-zlib/include"
           cmake --build . --target install
 
+          # Cleanup
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig"
+
       # Upload environment artifacts
       - name: Upload environment artifacts
         uses: actions/upload-artifact@v4
@@ -317,6 +321,66 @@ jobs:
 
           Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 
+      - name: TODO REMOVE
+        shell: pwsh
+        run: |
+          # Cleanup
+          switch ("${{runner.os}}")
+          {
+              "Windows" {
+                  ${PACKAGE_NAME} = "x64-windows"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/bin/*.pdb"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_log_flags.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_poison.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_alts.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotoc.lib"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/utf8_validity.lib"
+              }
+              "Linux" {
+                  ${PACKAGE_NAME} = "x64-linux"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_poison.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotoc.a"
+              }
+          }
+
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/vcpkg"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/debug"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/pkgconfig"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/share"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/tools"
+
       # Upload environment artifacts
       - name: Upload environment artifacts
         uses: actions/upload-artifact@v4
@@ -339,6 +403,12 @@ jobs:
       fail-fast: false
 
     steps:
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-source
+
       # Download environment artifacts
       - name: Download environment artifacts 1
         uses: actions/download-artifact@v4
@@ -361,15 +431,22 @@ jobs:
           path: Qt/googletest-source
           ref: ${{env.GOOGLE_TEST_VERSION}}
 
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
-        uses: actions/checkout@v4
-        with:
-          path: TInvestor-source
-
       # Build TInvestor
       - name: Build TInvestor
         shell: pwsh
         run: |
           # Enter to vcpkg-source folder
           Set-Location -Path "TInvestor-source"
+
+          switch ("${{runner.os}}")
+          {
+              "Windows" {
+                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
+                  chcp 65001
+                  "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+              }
+              "Linux" {
+                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
+                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+              }
+          }
