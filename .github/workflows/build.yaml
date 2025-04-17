@@ -133,9 +133,6 @@ jobs:
           string(REGEX MATCH "<Name>qt.qt6.*<Version>([0-9+-.]+)</Version>" updates_xml_output "${updates_xml}")
           set(qt_package_version ${CMAKE_MATCH_1})
 
-          # Create Qt directory
-          file(MAKE_DIRECTORY Qt/${qt_dir_prefix})
-
           # Declare downloadAndExtract function
           function(downloadAndExtract url archive target_dir)
             foreach(qt_mirror $ENV{QT_MIRRORS})
@@ -148,6 +145,8 @@ jobs:
                 break()
               endif()
             endforeach()
+
+            file(MAKE_DIRECTORY ${target_dir})
             execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/${archive} WORKING_DIRECTORY ${target_dir})
           endfunction()
 
@@ -432,8 +431,6 @@ jobs:
       - name: Build TInvestor
         shell: pwsh
         run: |
-          Set-PSDebug -Trace 2
-          
           # Create TInvestor-source/build/Desktop-Release folder and enter into it
           New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory"
           Set-Location -Path "TInvestor-source/build/Desktop-Release"
