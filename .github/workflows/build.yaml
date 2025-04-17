@@ -488,7 +488,7 @@ jobs:
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
               }
               "Linux" {
-                  ${Env:QTDIR} = "{Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
+                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                   & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
                   make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
                   make -j4
