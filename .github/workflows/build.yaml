@@ -321,9 +321,6 @@ jobs:
 
           Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 
-      - name: TODO REMOVE
-        shell: pwsh
-        run: |
           # Cleanup
           switch ("${{runner.os}}")
           {
@@ -352,6 +349,7 @@ jobs:
               }
               "Linux" {
                   ${PACKAGE_NAME} = "x64-linux"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/etc" -Recurse
                   Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
                   Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a"
                   Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a"
@@ -441,12 +439,12 @@ jobs:
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
+                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" ${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro -spec win32-msvc "CONFIG+=qtquickcompiler"
                   chcp 65001
-                  "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                  "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f ${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile qmake_all
               }
               "Linux" {
-                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
-                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" ${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro -spec linux-g++ CONFIG+=qtquickcompiler
+                  make -f ${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile qmake_all
               }
           }
