@@ -254,11 +254,12 @@ jobs:
             -DCMAKE_PREFIX_PATH="${{ steps.qt.outputs.qt_dir }}/lib/cmake" `
             -DZLIB_LIBRARY:FILEPATH="${Env:GITHUB_WORKSPACE}/install-zlib/lib/${ZLIB_LIBRARY}" `
             -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/install-zlib/include"
-          cmake --build . --target install
+          cmake --build . --config Release
+          cmake --install . --config Release
 
           # Cleanup
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse -Force
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse -Force
 
       # Upload environment artifacts
       - name: Upload environment artifacts
@@ -319,65 +320,65 @@ jobs:
           ./vcpkg integrate install
           ./vcpkg install grpc
 
-          Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
-
           # Cleanup
           switch ("${{runner.os}}")
           {
               "Windows" {
                   ${PACKAGE_NAME} = "x64-windows"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/bin/*.pdb"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_log_flags.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_poison.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_alts.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotoc.lib"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/utf8_validity.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/bin/*.pdb"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_flags.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_poison.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_alts.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib"
               }
               "Linux" {
                   ${PACKAGE_NAME} = "x64-linux"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/etc" -Recurse
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_poison.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a"
-                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libprotoc.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_poison.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.a"
               }
           }
 
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/vcpkg" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/debug" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/share" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/tools" -Recurse
+          Remove-Item "installed/vcpkg" -Recurse -Force
+          Remove-Item "installed/${PACKAGE_NAME}/debug" -Recurse -Force
+          Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
+          Remove-Item "installed/${PACKAGE_NAME}/share" -Recurse -Force
+          Remove-Item "installed/${PACKAGE_NAME}/tools" -Recurse -Force
+
+          Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
 
       # Upload environment artifacts
       - name: Upload environment artifacts
