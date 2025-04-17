@@ -448,7 +448,7 @@ jobs:
 
           ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip";
           ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg";
-          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest";
+          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source";
 
           # Create TInvestor-source/build/Desktop-Release folder and enter into it
           New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory"
@@ -459,8 +459,6 @@ jobs:
               "Windows" {
                   & "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
                   chcp 65001
-                  Get-Location
-                  Get-ChildItem -Path . -Recurse
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
                   chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
@@ -471,3 +469,12 @@ jobs:
                   make -j4
               }
           }
+
+      # Upload artifacts
+      - name: Upload artifacts
+        if: always()
+        uses: thebrowsercompany/gha-upload-tar-artifact@main
+        with:
+          name: build-${{ matrix.config.name }}
+          path: ./
+          retention-days: 1

@@ -2,7 +2,7 @@ isEmpty(QUAZIP_PATH):QUAZIP_PATH=$$(QUAZIP_PATH)
 
 isEmpty(QUAZIP_PATH) {
     win32-msvc* {
-        QUAZIP_PATH = E:/Qt/quazip-1.4/install
+        QUAZIP_PATH = E:/Qt/quazip-1.5/install
     } else {
         QUAZIP_PATH = /home/gris/Qt/quazip-1.5/install
     }
@@ -10,7 +10,7 @@ isEmpty(QUAZIP_PATH) {
 
 win32-msvc* {
     INCLUDEPATH += \
-        $${QUAZIP_PATH}/include/QuaZip-Qt6-1.4
+        $${QUAZIP_PATH}/include/QuaZip-Qt6-1.5
 
     CONFIG (debug, debug|release) {
         DEBUG_SUFFIX = d
