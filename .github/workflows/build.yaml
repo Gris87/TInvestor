@@ -434,6 +434,10 @@ jobs:
       - name: Build TInvestor
         shell: pwsh
         run: |
+          Set-PSDebug -Trace 2
+
+          Get-ChildItem -Path ./ –Recurse
+
           # Enter to vcpkg-source folder
           Set-Location -Path "TInvestor-source"
 
