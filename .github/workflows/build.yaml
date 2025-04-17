@@ -53,7 +53,7 @@ jobs:
 
   # Setup environment and upload artifacts
   setup1:
-    name: Setup [${{ matrix.config.name }}]
+    name: Setup 1 [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -63,8 +63,17 @@ jobs:
       fail-fast: false
 
     steps:
+      # Download/upload cache
+      - name: Caching
+        uses: actions/cache@v4
+        id: cache-env
+        with:
+          path: ./Qt
+          key: ${{ runner.os }}-setup1-${{ env.QT_VERSION }}-${{ env.ZLIB_VERSION }}-${{ env.QUAZIP_VERSION }}
+
       # Install required packages
       - name: System packages
+        if: steps.cache-env.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           switch ("${{ runner.os }}")
@@ -76,6 +85,7 @@ jobs:
 
       # Download Qt with specified version
       - name: Download Qt
+        if: steps.cache-env.outputs.cache-hit != 'true'
         id: qt
         shell: cmake -P {0}
         run: |
@@ -141,7 +151,7 @@ jobs:
             execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/${archive} WORKING_DIRECTORY ${target_dir})
           endfunction()
 
-          # Download packages
+          # Download base packages
           foreach(package qtbase qtdeclarative qtsvg qttools qttranslations)
             downloadAndExtract(
               "${qt_base_url}/qt.qt6.${qt_version_dotless}.${qt_package_arch_suffix}/${qt_package_version}${package}${qt_package_suffix}.7z"
@@ -150,6 +160,7 @@ jobs:
             )
           endforeach()
 
+          # Download addons
           foreach(package qt5compat qtcharts)
             downloadAndExtract(
               "${qt_base_url}/qt.qt6.${qt_version_dotless}.addons.${package}.${qt_package_arch_suffix}/${qt_package_version}${package}${qt_package_suffix}.7z"
@@ -158,8 +169,15 @@ jobs:
             )
           endforeach()
 
-          # uic depends on libicu73.so
-          if ("${{ runner.os }}" STREQUAL "Linux")
+          if ("${{ runner.os }}" STREQUAL "Windows")
+            # jom is used for parallel building under Windows
+            downloadAndExtract(
+              "https://\${qt_mirror}/official_releases/jom/jom.zip"
+              jom.zip
+              "Qt"
+            )
+          elseif ("${{ runner.os }}" STREQUAL "Linux")
+            # uic depends on libicu73.so
             downloadAndExtract(
               "${qt_base_url}/qt.qt6.${qt_version_dotless}.${qt_package_arch_suffix}/${qt_package_version}icu-linux-Rhel8.6-x86_64.7z"
               icu.7z
@@ -173,6 +191,7 @@ jobs:
 
       # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
       - name: Checkout zlib
+        if: steps.cache-env.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           repository: madler/zlib
@@ -181,6 +200,7 @@ jobs:
 
       # Build zlib with specified version
       - name: Build zlib
+        if: steps.cache-env.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           # Create build-zlib folder and enter into it
@@ -199,6 +219,7 @@ jobs:
 
       # Checkout quazip repository with specific version to $GITHUB_WORKSPACE/quazip-source
       - name: Checkout quazip
+        if: steps.cache-env.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           repository: stachenov/quazip
@@ -207,6 +228,7 @@ jobs:
 
       # Build quazip with specified version
       - name: Build quazip
+        if: steps.cache-env.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           switch ("${{runner.os}}")
@@ -245,7 +267,7 @@ jobs:
 
   # Setup environment and upload artifacts
   setup2:
-    name: Setup [${{ matrix.config.name }}]
+    name: Setup 2 [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -254,9 +276,18 @@ jobs:
           - { name: "linux", os: ubuntu-latest }
       fail-fast: false
 
-    steps:          
+    steps:
+      # Download/upload cache
+      - name: Caching
+        uses: actions/cache@v4
+        id: cache-env
+        with:
+          path: ./Qt
+          key: ${{ runner.os }}-setup2-${{ env.VCPKG_VERSION }}
+
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
       - name: Checkout vcpkg
+        if: steps.cache-env.outputs.cache-hit != 'true'
         uses: actions/checkout@v4
         with:
           repository: microsoft/vcpkg
@@ -265,6 +296,7 @@ jobs:
 
       # Build grpc with specified version
       - name: Build grpc
+        if: steps.cache-env.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
           # Enter to vcpkg-source folder
