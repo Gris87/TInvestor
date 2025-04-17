@@ -434,8 +434,9 @@ jobs:
         run: |
           Set-PSDebug -Trace 2
           
-          # Enter to vcpkg-source folder
-          Set-Location -Path "TInvestor-source"
+          # Create TInvestor-source/build/Desktop-Release folder and enter into it
+          New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory"
+          Set-Location -Path "TInvestor-source/build/Desktop-Release"
 
           switch ("${{runner.os}}")
           {
