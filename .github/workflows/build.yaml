@@ -424,6 +424,18 @@ jobs:
           key: ${{ runner.os }}-build-${{ steps.folders-hash.outputs.hash }}
           restore-keys: ${{ runner.os }}-build-
 
+      # Install required packages
+      - name: System packages
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          switch ("${{ runner.os }}")
+          {
+            "Windows" { choco install bzip2 }
+            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev }
+            "macOS"   { brew update }
+          }
+
       # Download environment artifacts
       - name: Download environment artifacts 1
         if: steps.cache-build.outputs.cache-hit != 'true'
