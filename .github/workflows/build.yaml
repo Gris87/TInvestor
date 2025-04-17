@@ -257,8 +257,8 @@ jobs:
           cmake --build . --target install
 
           # Cleanup
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake"
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse
 
       # Upload environment artifacts
       - name: Upload environment artifacts
@@ -375,11 +375,11 @@ jobs:
               }
           }
 
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/vcpkg"
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/debug"
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/pkgconfig"
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/share"
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/tools"
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/vcpkg" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/debug" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/share" -Recurse
+          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/tools" -Recurse
 
       # Upload environment artifacts
       - name: Upload environment artifacts
