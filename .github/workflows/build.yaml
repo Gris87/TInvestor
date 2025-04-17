@@ -440,12 +440,12 @@ jobs:
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" ${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro -spec win32-msvc "CONFIG+=qtquickcompiler"
+                  & "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
                   chcp 65001
-                  "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f ${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile qmake_all
+                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
               }
               "Linux" {
-                  "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" ${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro -spec linux-g++ CONFIG+=qtquickcompiler
-                  make -f ${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile qmake_all
+                  & "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
+                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
               }
           }
