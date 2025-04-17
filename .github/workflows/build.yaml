@@ -432,22 +432,18 @@ jobs:
       - name: Build TInvestor
         shell: pwsh
         run: |
-          Set-PSDebug -Trace 2
-
-          Get-ChildItem -Path ./ –Recurse
-
           # Enter to vcpkg-source folder
           Set-Location -Path "TInvestor-source"
 
           switch ("${{runner.os}}")
           {
               "Windows" {
-                  Invoke-Command "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
+                  Invoke-Expression "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
                   chcp 65001
-                  Invoke-Command "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                  Invoke-Expression "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
               }
               "Linux" {
-                  Invoke-Command "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
+                  Invoke-Expression "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
                   make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
               }
           }
