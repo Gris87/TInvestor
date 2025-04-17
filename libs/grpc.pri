@@ -1,6 +1,14 @@
-win32-msvc* {
-    VCPKG_PATH = E:/Qt/vcpkg
+isEmpty(VCPKG_PATH):VCPKG_PATH=$$(VCPKG_PATH)
 
+isEmpty(VCPKG_PATH) {
+    win32-msvc* {
+        VCPKG_PATH = E:/Qt/vcpkg
+    } else {
+        VCPKG_PATH = /home/gris/Qt/vcpkg
+    }
+}
+
+win32-msvc* {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-windows/include
 
@@ -45,8 +53,6 @@ win32-msvc* {
         -lutf8_range \
         -lzlib$${DEBUG_SUFFIX}
 } else {
-    VCPKG_PATH = /home/gris/Qt/vcpkg
-
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-linux/include
 
