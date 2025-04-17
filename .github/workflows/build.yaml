@@ -431,11 +431,24 @@ jobs:
       - name: Build TInvestor
         shell: pwsh
         run: |
-          Set-PSDebug -Trace 2
-          
-          ${Env:QUAZIP_PATH} = "{Env:GITHUB_WORKSPACE}/Qt/quazip";
-          ${Env:VCPKG_PATH} = "{Env:GITHUB_WORKSPACE}/Qt/vcpkg";
-          ${Env:GOOGLETEST_DIR} = "{Env:GITHUB_WORKSPACE}/Qt/googletest"; 
+          # Setup Developer PowerShell for Windows
+          switch ("${{runner.os}}")
+          {
+              "Windows" {
+                  Write-Output "Setup Developer PowerShell"
+                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
+                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
+                  # see: https://github.com/microsoft/setup-msbuild/issues/24
+                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
+                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
+                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
+              }
+          }
+
+          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip";
+          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg";
+          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest";
 
           # Create TInvestor-source/build/Desktop-Release folder and enter into it
           New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory"
