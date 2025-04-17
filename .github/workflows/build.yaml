@@ -375,11 +375,6 @@ jobs:
               }
           }
 
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/vcpkg" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/debug" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse
-          Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/share" -Recurse
-
       # Upload environment artifacts
       - name: Upload environment artifacts
         uses: actions/upload-artifact@v4
