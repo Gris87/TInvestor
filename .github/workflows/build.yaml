@@ -323,50 +323,50 @@ jobs:
           {
               "Windows" {
                   ${PACKAGE_NAME} = "x64-windows"
-                  Remove-Item "installed/${PACKAGE_NAME}/bin/*.pdb"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_flags.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_poison.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_alts.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.lib"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib"
+                  Remove-Item "installed/${PACKAGE_NAME}/bin/*.pdb" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_flags.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_poison.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_alts.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib" -Force
               }
               "Linux" {
                   ${PACKAGE_NAME} = "x64-linux"
                   Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_poison.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a"
-                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.a"
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_poison.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.a" -Force
               }
           }
 
@@ -519,27 +519,27 @@ jobs:
                   Remove-Item "artifacts/app/build/gen" -Recurse -Force
                   Remove-Item "artifacts/app/debug" -Recurse -Force
                   Remove-Item "artifacts/app/release" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor"
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Debug"
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Release"
+                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
+                  Remove-Item "artifacts/app/Makefile.TInvestor.Debug" -Force
+                  Remove-Item "artifacts/app/Makefile.TInvestor.Release" -Force
                   Remove-Item "artifacts/libs" -Recurse -Force
                   Remove-Item "artifacts/test/build/gen" -Recurse -Force
                   Remove-Item "artifacts/test/debug" -Recurse -Force
                   Remove-Item "artifacts/test/release" -Recurse -Force
-                  Remove-Item "artifacts/test/Makefile.tests"
-                  Remove-Item "artifacts/test/Makefile.tests.Debug"
-                  Remove-Item "artifacts/test/Makefile.tests.Release"
-                  Remove-Item "artifacts/.qmake.stash"
-                  Remove-Item "artifacts/Makefile"
+                  Remove-Item "artifacts/test/Makefile.tests" -Force
+                  Remove-Item "artifacts/test/Makefile.tests.Debug" -Force
+                  Remove-Item "artifacts/test/Makefile.tests.Release" -Force
+                  Remove-Item "artifacts/.qmake.stash" -Force
+                  Remove-Item "artifacts/Makefile" -Force
               }
               "Linux" {
                   Remove-Item "artifacts/app/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor"
+                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
                   Remove-Item "artifacts/libs" -Recurse -Force
                   Remove-Item "artifacts/test/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/test/Makefile.tests"
-                  Remove-Item "artifacts/.qmake.stash"
-                  Remove-Item "artifacts/Makefile"
+                  Remove-Item "artifacts/test/Makefile.tests" -Force
+                  Remove-Item "artifacts/.qmake.stash" -Force
+                  Remove-Item "artifacts/Makefile" -Force
               }
           }
 
