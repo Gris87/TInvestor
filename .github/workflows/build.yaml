@@ -404,7 +404,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: TInvestor-source
-          
+
       # Calculate TInvestor hash on sources
       - name: Calculate TInvestor hash
         id: folders-hash
@@ -414,7 +414,7 @@ jobs:
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test
-            
+
       # Download/upload cache
       - name: Caching
         uses: actions/cache@v4
@@ -469,9 +469,9 @@ jobs:
               }
           }
 
-          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip";
-          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg";
-          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source";
+          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
+          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
+          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
 
           # Create TInvestor-source/build/Desktop-Release folder and enter into it
           New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory"
@@ -480,14 +480,16 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  & "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
+                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
+                  & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
                   chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
                   chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
               }
               "Linux" {
-                  & "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
+                  ${Env:QTDIR} = "{Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
+                  & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
                   make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
                   make -j4
               }
