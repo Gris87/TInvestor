@@ -411,7 +411,6 @@ jobs:
         uses: theowenyoung/folder-hash@v3
         with:
           path: |
-            ./Qt
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test

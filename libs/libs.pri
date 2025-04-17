@@ -8,7 +8,7 @@ include(../libs/waitingspinner.pri)
 
 win32-msvc* {
     copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
-    copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     first.depends = $(first) copy_grpc_files copy_quazip_files
 
@@ -31,7 +31,7 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/plugins/platforms/libqwayland-generic.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/plugins/platforms/libqwayland-egl.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so*)" "$$shell_path($${OUT_PWD}/build)"
-    copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
+    copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
 
     first.depends = $(first) copy_qt_files copy_quazip_files
 
