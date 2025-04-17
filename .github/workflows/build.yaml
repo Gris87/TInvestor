@@ -512,21 +512,36 @@ jobs:
         shell: pwsh
         run: |
           Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release" -Destination artifacts -Recurse
-          Remove-Item "artifacts/app/build/gen" -Recurse -Force
-          Remove-Item "artifacts/app/debug" -Recurse -Force
-          Remove-Item "artifacts/app/release" -Recurse -Force
-          Remove-Item "artifacts/app/Makefile.TInvestor"
-          Remove-Item "artifacts/app/Makefile.TInvestor.Debug"
-          Remove-Item "artifacts/app/Makefile.TInvestor.Release"
-          Remove-Item "artifacts/libs" -Recurse -Force
-          Remove-Item "artifacts/test/build/gen" -Recurse -Force
-          Remove-Item "artifacts/test/debug" -Recurse -Force
-          Remove-Item "artifacts/test/release" -Recurse -Force
-          Remove-Item "artifacts/test/Makefile.TInvestor"
-          Remove-Item "artifacts/test/Makefile.TInvestor.Debug"
-          Remove-Item "artifacts/test/Makefile.TInvestor.Release"
-          Remove-Item "artifacts/.qmake.stash"
-          Remove-Item "artifacts/Makefile"
+
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
+                  Remove-Item "artifacts/app/debug" -Recurse -Force
+                  Remove-Item "artifacts/app/release" -Recurse -Force
+                  Remove-Item "artifacts/app/Makefile.TInvestor"
+                  Remove-Item "artifacts/app/Makefile.TInvestor.Debug"
+                  Remove-Item "artifacts/app/Makefile.TInvestor.Release"
+                  Remove-Item "artifacts/libs" -Recurse -Force
+                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
+                  Remove-Item "artifacts/test/debug" -Recurse -Force
+                  Remove-Item "artifacts/test/release" -Recurse -Force
+                  Remove-Item "artifacts/test/Makefile.tests"
+                  Remove-Item "artifacts/test/Makefile.tests.Debug"
+                  Remove-Item "artifacts/test/Makefile.tests.Release"
+                  Remove-Item "artifacts/.qmake.stash"
+                  Remove-Item "artifacts/Makefile"
+              }
+              "Linux" {
+                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
+                  Remove-Item "artifacts/app/Makefile.TInvestor"
+                  Remove-Item "artifacts/libs" -Recurse -Force
+                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
+                  Remove-Item "artifacts/test/Makefile.tests"
+                  Remove-Item "artifacts/.qmake.stash"
+                  Remove-Item "artifacts/Makefile"
+              }
+          }
 
       # Upload artifacts
       - name: Upload artifacts
