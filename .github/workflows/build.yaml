@@ -329,9 +329,11 @@ jobs:
           {
               "Windows" {
                   ${PACKAGE_NAME} = "x64-windows"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/bin/*.pdb"
               }
               "Linux" {
                   ${PACKAGE_NAME} = "x64-linux"
+                  Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a"
               }
           }
 
