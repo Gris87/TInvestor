@@ -719,7 +719,15 @@ jobs:
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
           Get-Location
 
-          & "./test"
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  & "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build/test.exe"
+              }
+              "Linux" {
+                  & "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build/test"
+              }
+          }
 
       # Upload artifacts
       - name: Upload artifacts
