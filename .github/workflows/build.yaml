@@ -718,7 +718,7 @@ jobs:
           # Enter to TInvestor-source/build/Desktop-Release folder
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
 
-          ./test
+          & ./test
 
       # Upload artifacts
       - name: Upload artifacts
@@ -726,13 +726,4 @@ jobs:
         with:
           name: coverage-${{ matrix.config.name }}
           path: ./artifacts # TODO: Need to change
-          retention-days: 1
-
-      # Upload artifacts
-      - name: Upload all # TODO: Remove
-        if: always()
-        uses: thebrowsercompany/gha-upload-tar-artifact@main
-        with:
-          name: test-${{ matrix.config.name }}
-          path: ./
           retention-days: 1
