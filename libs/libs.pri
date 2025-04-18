@@ -45,8 +45,8 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libicudata.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path(/usr/lib/x86_64-linux-gnu/libEGL.so*)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_qt_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" &&
-    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so)" "$$shell_path($${OUT_PWD}/build/plugins/platforms)"
+    copy_qt_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/platforms)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so)" "$$shell_path($${OUT_PWD}/build/platforms)"
 
     copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
 
