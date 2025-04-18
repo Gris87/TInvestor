@@ -40,7 +40,7 @@ jobs:
       # Create file with url to release page
       - name: Store release url
         shell: pwsh
-        run: Write-Output "${{ steps.create_release.outputs.upload_url }}" > ./release_upload_url.txt
+        run: Write-Output "${{ steps.create-release.outputs.upload_url }}" > ./release_upload_url.txt
 
       # Upload file with url to release page
       - name: Upload release url
@@ -406,20 +406,21 @@ jobs:
 
       # Calculate TInvestor hash on sources
       - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
+        id: hash-files
+        uses: seepine/hash-files@v1
         with:
           path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-            ./TInvestor-source/tools/py3/check-style
-            ./TInvestor-source/.clang-format
+            TInvestor-source/app
+            TInvestor-source/libs
+            TInvestor-source/test
+            TInvestor-source/tools/py3/check-style
+            TInvestor-source/.clang-format
 
       # Check style
       - name: Check style
         shell: pwsh
         run: |
+          Write-Output "${{ steps.hash-files.outputs.matched-files }}"
           python tools\py3\check-style
 
   # Build project
