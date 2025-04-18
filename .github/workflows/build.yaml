@@ -203,6 +203,15 @@ jobs:
         if: steps.cache-env.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
+          ${PIC} = ""
+        
+          switch ("${{ runner.os }}")
+          {
+              "Linux" {
+                  ${PIC} = "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+              }
+          }
+          
           # Create build-zlib folder and enter into it
           New-Item -Path "." -Name "build-zlib" -ItemType "directory"
           Set-Location -Path "build-zlib"
@@ -211,7 +220,7 @@ jobs:
           cmake `
             -S ../zlib-source `
             -B . `
-            -DCMAKE_POSITION_INDEPENDENT_CODE=ON `
+            ${PIC} `
             -DCMAKE_BUILD_TYPE=Release `
             -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/install-zlib"
           cmake --build . --config Release
@@ -256,13 +265,6 @@ jobs:
             -DZLIB_INCLUDE_DIR:PATH="${Env:GITHUB_WORKSPACE}/install-zlib/include"
           cmake --build . --config Release
           cmake --install . --config Release
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Copy-Item "${Env:GITHUB_WORKSPACE}/install-zlib/bin/zlib.dll" -Destination "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/bin/"
-              }
-          }
 
           # Cleanup
           Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse -Force
