@@ -420,8 +420,7 @@ jobs:
       - name: Check style
         shell: pwsh
         run: |
-          Write-Output "${{ steps.hash-files.outputs.matched-files }}"
-          python tools\py3\check-style
+          python tools/py3/check-style
 
   # Build project
   build:
@@ -444,10 +443,10 @@ jobs:
 
       # Calculate TInvestor hash on sources
       - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
+        id: hash-files
+        uses: seepine/hash-files@v1
         with:
-          path: |
+          patterns: |
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test
@@ -458,7 +457,7 @@ jobs:
         id: cache-build
         with:
           path: ./TInvestor-source/build
-          key: ${{ runner.os }}-build-${{ steps.folders-hash.outputs.hash }}
+          key: ${{ runner.os }}-build-${{ steps.hash-files.outputs.hash }}
           restore-keys: ${{ runner.os }}-build-
 
       # Install required packages
