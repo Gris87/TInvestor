@@ -409,12 +409,12 @@ jobs:
         id: hash-files
         uses: seepine/hash-files@v1
         with:
-          path: |
-            TInvestor-source/app
-            TInvestor-source/libs
-            TInvestor-source/test
-            TInvestor-source/tools/py3/check-style
-            TInvestor-source/.clang-format
+          patterns: |
+            ./TInvestor-source/app
+            ./TInvestor-source/libs
+            ./TInvestor-source/test
+            ./TInvestor-source/tools/py3/check-style
+            ./TInvestor-source/.clang-format
 
       # Check style
       - name: Check style
