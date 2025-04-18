@@ -53,8 +53,8 @@ jobs:
           compression-level: 9
 
   # Setup environment and upload artifacts
-  setup-qt-quazip:
-    name: Setup Qt/Quazip [${{ matrix.config.name }}]
+  env-qt-quazip:
+    name: Environment Qt/Quazip [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -70,7 +70,7 @@ jobs:
         id: cache-env
         with:
           path: ./Qt
-          key: ${{ runner.os }}-setup-qt-quazip-${{ env.QT_VERSION }}-${{ env.ZLIB_VERSION }}-${{ env.QUAZIP_VERSION }}
+          key: ${{ runner.os }}-env-qt-quazip-${{ env.QT_VERSION }}-${{ env.QUAZIP_VERSION }}
 
       # Install required packages
       - name: System packages
@@ -270,8 +270,8 @@ jobs:
           retention-days: 1
 
   # Setup environment and upload artifacts
-  setup-vcpkg:
-    name: Setup vcpkg [${{ matrix.config.name }}]
+  env-vcpkg:
+    name: Environment vcpkg [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -287,7 +287,7 @@ jobs:
         id: cache-env
         with:
           path: ./Qt
-          key: ${{ runner.os }}-setup-vcpkg-${{ env.VCPKG_VERSION }}
+          key: ${{ runner.os }}-env-vcpkg-${{ env.VCPKG_VERSION }}
 
       # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
       - name: Checkout vcpkg
@@ -388,8 +388,8 @@ jobs:
           retention-days: 1
 
   # Setup environment and upload artifacts
-  setup-clang:
-    name: Setup clang [${{ matrix.config.name }}]
+  env-clang:
+    name: Environment clang [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -405,7 +405,7 @@ jobs:
         id: cache-env
         with:
           path: ./Qt
-          key: ${{ runner.os }}-setup-clang-${{ env.LLVM_VERSION }}
+          key: ${{ runner.os }}-env-clang-${{ env.LLVM_VERSION }}
 
       # Checkout llvm-project repository with specific version to $GITHUB_WORKSPACE/llvm-project-source
       - name: Checkout llvm-project
@@ -445,7 +445,7 @@ jobs:
 
   # Check style
   check-style:
-    needs: [setup-clang]
+    needs: [env-clang]
     name: Check style [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -503,7 +503,7 @@ jobs:
 
   # Build project
   build:
-    needs: [setup-qt-quazip, setup-vcpkg]
+    needs: [env-qt-quazip, env-vcpkg]
     name: Build [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
