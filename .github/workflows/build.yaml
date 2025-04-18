@@ -649,6 +649,8 @@ jobs:
                   Remove-Item "artifacts/test/Makefile.tests" -Force
                   Remove-Item "artifacts/.qmake.stash" -Force
                   Remove-Item "artifacts/Makefile" -Force
+
+                  & ldd "artifacts/test/build/tests" # TODO: DELETE ME
               }
           }
 
