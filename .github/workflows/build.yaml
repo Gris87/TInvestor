@@ -727,3 +727,12 @@ jobs:
           name: coverage-${{ matrix.config.name }}
           path: ./artifacts # TODO: Need to change
           retention-days: 1
+
+      # Upload artifacts
+      - name: Upload all # TODO: Remove
+        if: always()
+        uses: thebrowsercompany/gha-upload-tar-artifact@main
+        with:
+          name: test-${{ matrix.config.name }}
+          path: ./
+          retention-days: 1
