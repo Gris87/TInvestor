@@ -717,8 +717,9 @@ jobs:
         run: |
           # Enter to TInvestor-source/build/Desktop-Release folder
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
+          Get-Location
 
-          & ./test
+          & ./test.exe
 
       # Upload artifacts
       - name: Upload artifacts
