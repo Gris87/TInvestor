@@ -15,11 +15,13 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Sql$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core5Compat$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" &&
-    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/qwindows$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/plugins/platforms)"
+    copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/plugins/sqldrivers)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/plugins/sqldrivers)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/qwindows$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/plugins/platforms)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/sqldrivers/qsqlite$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/plugins/sqldrivers)"
 
     copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
 
-    copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
@@ -43,10 +45,12 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libicui18n.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libicuuc.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libicudata.so*)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path(/usr/lib/x86_64-linux-gnu/libEGL.so*)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path(/usr/lib/x86_64-linux-gnu/libxcb-cursor.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/platforms)" &&
-    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so)" "$$shell_path($${OUT_PWD}/build/platforms)"
+    copy_qt_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/sqldrivers)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/libqxcb.so)" "$$shell_path($${OUT_PWD}/build/platforms)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/sqldrivers/libqsqlite.so)" "$$shell_path($${OUT_PWD}/build/sqldrivers)"
 
     copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
 
