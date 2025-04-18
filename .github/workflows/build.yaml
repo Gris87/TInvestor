@@ -503,6 +503,11 @@ jobs:
       fail-fast: false
 
     steps:
+      # Set git to disable line endings conversion
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf false
+
       # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
       - name: Checkout TInvestor
         uses: actions/checkout@v4
@@ -653,4 +658,72 @@ jobs:
         with:
           name: build-${{ matrix.config.name }}
           path: ./artifacts
+          retention-days: 1
+
+  # Test project
+  test:
+    needs: [build]
+    name: Test [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Set git to disable line endings conversion
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf false
+
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-source
+
+      # Calculate TInvestor hash on sources
+      - name: Calculate TInvestor hash
+        id: folders-hash
+        uses: theowenyoung/folder-hash@v3
+        with:
+          path: |
+            ./TInvestor-source/app
+            ./TInvestor-source/libs
+            ./TInvestor-source/test
+
+      # Download/upload cache
+      - name: Caching
+        uses: actions/cache@v4
+        id: cache-test
+        with:
+          path: ./artifacts # TODO: Need to change
+          key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
+
+      # Download build artifacts
+      - name: Download build artifacts
+        if: steps.cache-test.outputs.cache-hit != 'true'
+        uses: thebrowsercompany/gha-download-tar-artifact@main
+        with:
+          name: build-${{ matrix.config.name }}
+          path: ./TInvestor-source/build/Desktop-Release
+
+      # Test TInvestor
+      - name: Test TInvestor
+        if: steps.cache-test.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          # Enter to TInvestor-source/build/Desktop-Release folder
+          Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
+
+          ./test
+
+      # Upload artifacts
+      - name: Upload artifacts
+        uses: thebrowsercompany/gha-upload-tar-artifact@main
+        with:
+          name: coverage-${{ matrix.config.name }}
+          path: ./artifacts # TODO: Need to change
           retention-days: 1
