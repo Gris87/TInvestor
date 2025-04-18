@@ -29,7 +29,7 @@ win32-msvc* {
     export(copy_zlib_files.commands)
     export(copy_quazip_files.commands)
 
-    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_grpc_files copy_quazip_files
+    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files
 } else {
     copy_qt_files.commands =  $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Core.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Gui.so*)" "$$shell_path($${OUT_PWD}/build)" &&
