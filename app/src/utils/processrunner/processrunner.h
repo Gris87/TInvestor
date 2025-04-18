@@ -18,8 +18,9 @@ public:
     ProcessRunner& operator=(const ProcessRunner& another) = delete;
 
     void setStandardOutputFile(const QString& fileName, QIODeviceBase::OpenMode mode = QIODeviceBase::Truncate) override;
-    void start(const QString& program, const QStringList& arguments = {}, QIODeviceBase::OpenMode mode = QIODeviceBase::ReadWrite)
-        override;
+    void start(
+        const QString& program, const QStringList& arguments = {}, QIODeviceBase::OpenMode mode = QIODeviceBase::ReadWrite
+    ) override;
     bool waitForFinished(int msecs = 30000) override;
 
 private:

@@ -448,7 +448,7 @@ jobs:
             message(\"Downloading: ${clang_release_url}\")
             file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
           ")
-          
+
           file(MAKE_DIRECTORY Qt/clang)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
 
@@ -459,13 +459,13 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-20.1.3-x86_64-pc-windows-msvc/bin:${Env:PATH}"
+                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-20.1.3-x86_64-pc-windows-msvc/bin;${Env:PATH}"
               }
               "Linux" {
                   ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
               }
           }
-        
+
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
