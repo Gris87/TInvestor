@@ -10,7 +10,7 @@ env:
   ZLIB_VERSION:        "v1.3.1"
   QUAZIP_VERSION:      "v1.5"
   VCPKG_VERSION:       "2025.04.09"
-  LLVM_VERSION:        "llvmorg-20.1.3"
+  CLANG_VERSION:       "20.1.3"
 
 # List of jobs
 jobs:
@@ -387,65 +387,8 @@ jobs:
           path: ./Qt
           retention-days: 1
 
-  # Setup environment and upload artifacts
-  env-clang:
-    name: Environment clang [${{ matrix.config.name }}]
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      matrix:
-        config:
-          - { name: "win64", os: windows-latest }
-          - { name: "linux", os: ubuntu-latest }
-      fail-fast: false
-
-    steps:
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-env
-        with:
-          path: ./Qt
-          key: ${{ runner.os }}-env-clang-${{ env.LLVM_VERSION }}
-
-      # Checkout llvm-project repository with specific version to $GITHUB_WORKSPACE/llvm-project-source
-      - name: Checkout llvm-project
-        if: steps.cache-env.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: llvm/llvm-project
-          path: llvm-project-source
-          ref: ${{ env.LLVM_VERSION }}
-
-      # Build clang with specified version
-      - name: Build clang
-        if: steps.cache-env.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Create build-llvm folder and enter into it
-          New-Item -Path "." -Name "build-llvm" -ItemType "directory"
-          Set-Location -Path "build-llvm"
-
-          # Build Plugin
-          cmake `
-            -S ../llvm-project-source/llvm `
-            -B . `
-            -DLLVM_ENABLE_PROJECTS=clang `
-            -DCMAKE_BUILD_TYPE=Release `
-            -DCMAKE_INSTALL_PREFIX="${Env:GITHUB_WORKSPACE}/Qt/llvm/install"
-          cmake --build . --config Release
-          cmake --install . --config Release
-
-      # Upload environment artifacts
-      - name: Upload environment artifacts
-        uses: thebrowsercompany/gha-upload-tar-artifact@main
-        with:
-          name: env-clang-${{ matrix.config.name }}
-          path: ./Qt
-          retention-days: 1
-
   # Check style
   check-style:
-    needs: [env-clang]
     name: Check style [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -456,7 +399,7 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings convesion
+      # Set git to disable line endings conversion
       - name: Configure git
         run: |
           git config --global core.autocrlf false
@@ -484,17 +427,37 @@ jobs:
         run: |
           pip install loguru
 
-      # Download environment artifacts
-      - name: Download environment artifacts
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-clang-${{ matrix.config.name }}
-          path: ./Qt
+      # Download clang
+      - name: Download clang
+        shell: cmake -P {0}
+        run: |
+          # Setup several platform-dependent variables
+          if ("${{ runner.os }}" STREQUAL "Windows")
+            set(os_tar_url "clang+llvm-${{ env.CLANG_VERSION }}-x86_64-pc-windows-msvc.tar.xz")
+          elseif ("${{ runner.os }}" STREQUAL "Linux")
+            set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-Linux-X64.tar.xz")
+          elseif ("${{ runner.os }}" STREQUAL "macOS")
+            set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-macOS-X64.tar.xz")
+          endif()
+
+          # Set clang_release_url
+          set(clang_release_url "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ env.CLANG_VERSION }}/${os_tar_url}")
+
+          # Download clang_release_url
+          cmake_language(EVAL CODE "
+            message(\"Downloading: ${clang_release_url}\")
+            file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
+          ")
+          
+          file(MAKE_DIRECTORY Qt/clang)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
 
       # Check style
       - name: Check style
         shell: pwsh
         run: |
+          Get-ChildItem -Path Qt -Recurse -Force
+        
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
