@@ -14,7 +14,7 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Network$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Sql$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core5Compat$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
-    copy_qt_files.commands += $(MKDIR) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" &&
+    copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/plugins/platforms)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/qwindows$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/plugins/platforms)"
 
     copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
