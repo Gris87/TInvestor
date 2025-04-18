@@ -719,7 +719,7 @@ jobs:
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
           Get-Location
 
-          & ./test.exe
+          & "./test"
 
       # Upload artifacts
       - name: Upload artifacts
