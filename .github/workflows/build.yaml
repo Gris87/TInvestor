@@ -432,7 +432,8 @@ jobs:
         run: |
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
-          
+
+          clang-format --version
           python tools/py3/check-style
 
   # Build project

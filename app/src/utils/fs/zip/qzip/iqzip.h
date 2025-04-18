@@ -4,7 +4,6 @@
 
 #include <QString>
 
-
 #ifdef Q_OS_WINDOWS
 #pragma warning(push)
 #pragma warning(disable : 4996)
