@@ -50,10 +50,12 @@ def _execute_command(command):
 
     lines = []
 
-    print(os.device_encoding(1))
+    encoding = os.device_encoding(1)
+    if encoding is None:
+        encoding = "utf-8"
 
     for line in iter(process.stdout.readline, b''):
-        lines.append(line.rstrip().decode(os.device_encoding(1)))
+        lines.append(line.rstrip().decode(encoding))
 
     process.wait()
 

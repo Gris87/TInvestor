@@ -409,7 +409,7 @@ jobs:
         id: folders-hash
         uses: theowenyoung/folder-hash@v3
         with:
-          patterns: |
+          path: |
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test
