@@ -722,10 +722,10 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  & "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build/test.exe"
+                  & ./tests
               }
               "Linux" {
-                  & "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build/test"
+                  & ./tests
               }
           }
 
