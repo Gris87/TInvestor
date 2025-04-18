@@ -257,6 +257,13 @@ jobs:
           cmake --build . --config Release
           cmake --install . --config Release
 
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  Copy-Item "${Env:GITHUB_WORKSPACE}/install-zlib/bin/zlib.dll" -Destination "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/bin/"
+              }
+          }
+
           # Cleanup
           Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/cmake" -Recurse -Force
           Remove-Item "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/lib/pkgconfig" -Recurse -Force
@@ -650,6 +657,7 @@ jobs:
                   Remove-Item "artifacts/.qmake.stash" -Force
                   Remove-Item "artifacts/Makefile" -Force
 
+                  ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/artifacts/test/build/tests:${Env:LD_LIBRARY_PATH}" # TODO: DELETE ME
                   & ldd "artifacts/test/build/tests" # TODO: DELETE ME
               }
           }
