@@ -386,6 +386,42 @@ jobs:
           path: ./Qt
           retention-days: 1
 
+  # Check style
+  check-style:
+    name: Check style [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-source
+
+      # Calculate TInvestor hash on sources
+      - name: Calculate TInvestor hash
+        id: folders-hash
+        uses: theowenyoung/folder-hash@v3
+        with:
+          path: |
+            ./TInvestor-source/app
+            ./TInvestor-source/libs
+            ./TInvestor-source/test
+            ./TInvestor-source/tools/py3/check-style
+            ./TInvestor-source/.clang-format
+
+      # Check style
+      - name: Check style
+        shell: pwsh
+        run: |
+          python tools\py3\check-style
+
   # Build project
   build:
     needs: [setup1, setup2]
