@@ -420,6 +420,9 @@ jobs:
       - name: Check style
         shell: pwsh
         run: |
+          # Enter to TInvestor-source folder
+          Set-Location -Path "TInvestor-source"
+          
           python tools/py3/check-style
 
   # Build project
