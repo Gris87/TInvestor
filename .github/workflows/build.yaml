@@ -416,6 +416,13 @@ jobs:
             ./TInvestor-source/tools/py3/check-style
             ./TInvestor-source/.clang-format
 
+      # Install required packages
+      - name: System packages
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          pip install loguru
+
       # Check style
       - name: Check style
         shell: pwsh
@@ -423,6 +430,7 @@ jobs:
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
           
+          python --version
           python tools/py3/check-style
 
   # Build project
