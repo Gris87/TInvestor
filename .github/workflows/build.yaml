@@ -458,7 +458,7 @@ jobs:
             message(\"Downloading: ${clang_release_url}\")
             file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
           ")
-          
+
           file(MAKE_DIRECTORY Qt/clang)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
 
@@ -476,12 +476,12 @@ jobs:
                   ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
               }
           }
-        
+
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
           python tools/py3/check-style
-          
+
           New-Item -Path . -Name "../success" -ItemType "File"
 
       # Finish
