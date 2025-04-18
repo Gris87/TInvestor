@@ -456,7 +456,15 @@ jobs:
       - name: Check style
         shell: pwsh
         run: |
-          Get-ChildItem -Path Qt -Recurse -Force
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-20.1.3-x86_64-pc-windows-msvc/bin:${Env:PATH}"
+              }
+              "Linux" {
+                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
+              }
+          }
         
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
