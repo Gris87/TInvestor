@@ -29,8 +29,10 @@ def _validate_file(args, file_path):
 
 
 def is_file_skipped(file_path):
+    file_path = file_path.replace("\\", "/")
+
     skip_files = (
-        "\\tools\\py3\\check-style\\checks\\common\\" in file_path
+        "/tools/py3/check-style/checks/common/" in file_path
     )
 
     if skip_files:

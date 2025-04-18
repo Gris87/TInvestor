@@ -77,10 +77,12 @@ def _validate_file(args, file_path, lines):
 
 
 def is_file_skipped(file_path):
+    file_path = file_path.replace("\\", "/")
+
     skip_files = (
-        "\\.git\\" in file_path or
-        "\\build\\" in file_path or
-        "\\test_" not in file_path
+        "/.git/" in file_path or
+        "/build/" in file_path or
+        "/test_" not in file_path
     )
 
     return skip_files

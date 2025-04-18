@@ -18,7 +18,7 @@ def run_checkers(args, group_name, matched_files, check_modules):
         python_module = importlib.import_module(f"checks.{group_name}.{module}")
         files = [file_path for file_path in matched_files if not python_module.is_file_skipped(file_path)]
 
-        res.extend(validate_files(args, f"{group_name}\\{module}.py", files))
+        res.extend(validate_files(args, Path(group_name) / Path(f"{module}.py"), files))
 
     return res
 
@@ -29,7 +29,7 @@ def validate_files(args, module, files):
     file_chunks = [files[i : i + max_files_for_linter] for i in range(0, len(files), max_files_for_linter)]
 
     for chunk in file_chunks:
-        argv = ["python", f"{path_to_script}\\{module}"]
+        argv = ["python", Path(path_to_script) / Path(module)]
 
         if args.fix:
             argv.append("--fix")

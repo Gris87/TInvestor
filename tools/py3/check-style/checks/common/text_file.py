@@ -151,9 +151,10 @@ def _check_for_mixing_whitespaces(file_path, lines):
 def _check_for_non_ascii(file_path, lines):
     res = True
 
+    file_path_simplified = file_path.replace("\\", "/")
+
     skip_files = (
-        "TInvestor.pro.user" in file_path or
-        "app\\assets\\translations\\language_ru.ts" in file_path
+        "/app/assets/translations/language_ru.ts" in file_path_simplified
     )
 
     if skip_files:
@@ -240,11 +241,13 @@ def _is_text_file(content):
 
 
 def is_file_skipped(file_path):
+    file_path = file_path.replace("\\", "/")
+
     skip_files = (
-        "\\.git\\" in file_path or
-        "\\build\\" in file_path or
-        "\\libs\\investapi\\messages\\" in file_path or
-        "\\TInvestor.pro.user" in file_path
+        "/.git/" in file_path or
+        "/build/" in file_path or
+        "/libs/investapi/messages/" in file_path or
+        "/TInvestor.pro.user" in file_path
     )
 
     return skip_files

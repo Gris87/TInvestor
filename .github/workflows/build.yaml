@@ -398,6 +398,11 @@ jobs:
       fail-fast: false
 
     steps:
+      # Set git to disable line endings convesion
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf false
+
       # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
       - name: Checkout TInvestor
         uses: actions/checkout@v4
