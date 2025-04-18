@@ -50,6 +50,8 @@ def _execute_command(command):
 
     lines = []
 
+    print(os.device_encoding(1))
+
     for line in iter(process.stdout.readline, b''):
         lines.append(line.rstrip().decode(os.device_encoding(1)))
 
