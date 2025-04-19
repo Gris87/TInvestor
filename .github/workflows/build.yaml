@@ -329,7 +329,7 @@ jobs:
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc_unsecure.lib" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpcpp_channelz.lib" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotobuf-lited.lib" -Force
-                  Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotoc.lib" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotocd.lib" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/utf8_validity.lib" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/bin/*.pdb" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib" -Force
@@ -374,7 +374,7 @@ jobs:
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc_unsecure.a" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpcpp_channelz.a" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotobuf-lited.a" -Force
-                  Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotoc.a" -Force
+                  Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotocd.a" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a" -Force
                   Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a" -Force
