@@ -713,6 +713,7 @@ jobs:
               "Windows" { choco install opencppcoverage }
           }
 
+          refreshenv
           Write-Output "PATH = ${Env:PATH}"
 
       # Download build artifacts
