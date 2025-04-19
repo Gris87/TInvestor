@@ -713,9 +713,6 @@ jobs:
               "Windows" { choco install opencppcoverage }
           }
 
-          refreshenv
-          Write-Output "PATH = ${Env:PATH}"
-
       # Download build artifacts
       - name: Download build artifacts
         if: steps.cache-test.outputs.cache-hit != 'true'
@@ -764,7 +761,7 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  Write-Output "PATH = ${Env:PATH}"
+                  ${Env:PATH} = "C:\Program Files\OpenCppCoverage;${Env:PATH}"
 
                   & ./make_coverage.bat --ci
               }
