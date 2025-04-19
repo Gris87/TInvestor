@@ -740,7 +740,7 @@ jobs:
                   & tzutil /s "Russian Standard Time"
 
                   & ./tests.exe
-                  Start-Sleep -Seconds 3
+                  Start-Sleep -Seconds 10
               }
               "Linux" {
                   & sudo timedatectl set-timezone Europe/Moscow
