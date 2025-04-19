@@ -14,7 +14,7 @@ if %RESULT_CODE% EQU 0 (
         --excluded_sources httpclient.cpp ^
         --export_type html:CoverageReport ^
         -- ^
-        Desktop-Debug\test\build\tests.exe
+        Desktop-%MODE%\test\build\tests.exe
     set RESULT_CODE=%ERRORLEVEL%
 
     if not "%1" == "--ci" CoverageReport\index.html

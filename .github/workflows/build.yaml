@@ -703,6 +703,20 @@ jobs:
           path: ./artifacts # TODO: Need to change
           key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
 
+      # Install required packages
+      - name: System packages
+        if: steps.cache-test.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  Invoke-WebRequest https://github.com/OpenCppCoverage/OpenCppCoverage/releases/download/release-0.9.9.0/OpenCppCoverageSetup-x64-0.9.9.0.exe -OutFile OpenCppCoverageSetup-x64-0.9.9.0.exe
+                  
+                  & OpenCppCoverageSetup-x64-0.9.9.0.exe /VERYSILENT /NORESTART
+              }
+          }
+
       # Download build artifacts
       - name: Download build artifacts
         if: steps.cache-test.outputs.cache-hit != 'true'
