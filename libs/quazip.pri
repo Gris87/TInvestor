@@ -12,15 +12,27 @@ win32-msvc* {
     INCLUDEPATH += \
         $${QUAZIP_PATH}/install/include/QuaZip-Qt6-1.5
 
+    CONFIG (debug, debug|release) {
+        DEBUG_SUFFIX = d
+    } else {
+        DEBUG_SUFFIX =
+    }
+
     LIBS += \
         -L$${QUAZIP_PATH}/install/lib \
-        -lbzip2 \
-        -lquazip1-qt6
+        -lbzip2$${DEBUG_SUFFIX} \
+        -lquazip1-qt6$${DEBUG_SUFFIX}
 } else {
     INCLUDEPATH += \
         $${QUAZIP_PATH}/install/include/QuaZip-Qt6-1.5
 
+    CONFIG (debug, debug|release) {
+        DEBUG_SUFFIX = d
+    } else {
+        DEBUG_SUFFIX =
+    }
+
     LIBS += \
         -L$${QUAZIP_PATH}/install/lib \
-        -lquazip1-qt6
+        -lquazip1-qt6$${DEBUG_SUFFIX}
 }

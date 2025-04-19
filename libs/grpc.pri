@@ -12,8 +12,15 @@ win32-msvc* {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-windows/include
 
-    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/lib
-    VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/bin
+    CONFIG (debug, debug|release) {
+        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/debug/lib
+        VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/debug/bin
+        DEBUG_SUFFIX = d
+    } else {
+        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/lib
+        VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/bin
+        DEBUG_SUFFIX =
+    }
 
     LIBS += \
         -L$${VCPKG_LIBS} \
@@ -33,7 +40,7 @@ win32-msvc* {
         -lgrpc++ \
         -lgrpc++_reflection \
         -llibcrypto \
-        -llibprotobuf \
+        -llibprotobuf$${DEBUG_SUFFIX} \
         -llibssl \
         -lre2 \
         -lupb_base_lib \
@@ -44,18 +51,24 @@ win32-msvc* {
         -lupb_textformat_lib \
         -lupb_wire_lib \
         -lutf8_range \
-        -lzlib
+        -lzlib$${DEBUG_SUFFIX}
 } else {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-linux/include
 
-    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/lib
+    CONFIG (debug, debug|release) {
+        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/debug/lib
+        DEBUG_SUFFIX = d
+    } else {
+        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/lib
+        DEBUG_SUFFIX =
+    }
 
     LIBS += \
         -L$${VCPKG_LIBS} \
         -lgrpc++_reflection \
         -lgrpc++ \
-        -lprotobuf \
+        -lprotobuf$${DEBUG_SUFFIX} \
         -labsl_die_if_null \
         -labsl_log_initialize \
         -lutf8_validity \

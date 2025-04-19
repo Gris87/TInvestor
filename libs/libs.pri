@@ -7,14 +7,6 @@ include(../libs/zlib.pri)
 
 
 
-CONFIG (debug, debug|release) {
-    DEBUG_SUFFIX = d
-} else {
-    DEBUG_SUFFIX =
-}
-
-
-
 win32-msvc* {
     copy_qt_files.commands =  $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Gui$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
@@ -32,9 +24,9 @@ win32-msvc* {
     # TODO: Specify required libraries
     copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
 
-    copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
-    copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     first.depends = $(first) copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files
 
@@ -81,7 +73,7 @@ win32-msvc* {
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path(/lib/x86_64-linux-gnu/libxcb-xfixes.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path(/lib/x86_64-linux-gnu/libxcb-xkb.so*)" "$$shell_path($${OUT_PWD}/build)"
 
-    copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6.so*)" "$$shell_path($${OUT_PWD}/build)"
+    copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
 
     first.depends = $(first) copy_qt_files copy_quazip_files
 
