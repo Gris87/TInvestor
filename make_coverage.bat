@@ -1,8 +1,12 @@
 cd build
 
-Desktop-Debug\test\build\tests.exe > output.txt 2>&1
+set MODE=Release
+if not "%1" == "--ci" set MODE=Debug
 
-if %ERRORLEVEL% EQU 0 (
+Desktop-%MODE%\test\build\tests.exe > output.txt 2>&1
+set RESULT_CODE=%ERRORLEVEL%
+
+if %RESULT_CODE% EQU 0 (
     OpenCppCoverage ^
         --sources TInvestor\app\src ^
         --excluded_sources test_*. ^
@@ -11,12 +15,16 @@ if %ERRORLEVEL% EQU 0 (
         --export_type html:CoverageReport ^
         -- ^
         Desktop-Debug\test\build\tests.exe
-    CoverageReport\index.html
+    set RESULT_CODE=%ERRORLEVEL%
+
+    if not "%1" == "--ci" CoverageReport\index.html
 ) else (
     type output.txt
-    pause
+    if not "%1" == "--ci" pause
 )
 
 del output.txt
 
 cd ..
+
+exit /b %RESULT_CODE%
