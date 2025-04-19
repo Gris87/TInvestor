@@ -719,6 +719,9 @@ jobs:
           # Enter to TInvestor-source/build/Desktop-Release/test/build folder
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
 
+          Get-TimeZone
+          Get-TimeZone -ListAvailable
+
           switch ("${{ runner.os }}")
           {
               "Windows" {
