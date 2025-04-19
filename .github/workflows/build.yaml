@@ -722,12 +722,12 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  & %windir%\system32\tzutil /s "Russian Standard Time"
+                  & tzutil /s "Russian Standard Time"
 
                   & ./tests.exe
               }
               "Linux" {
-                  & timedatectl set-timezone Europe/Moscow
+                  & sudo timedatectl set-timezone Europe/Moscow
 
                   ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build:${Env:LD_LIBRARY_PATH}"
                   ${Env:DISPLAY} = ":99"
