@@ -761,6 +761,7 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
+                  Update-SessionEnvironment
                   Write-Output "PATH = ${Env:PATH}"
 
                   & ./make_coverage.bat --ci
