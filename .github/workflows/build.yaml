@@ -532,7 +532,6 @@ jobs:
         with:
           path: ./TInvestor-source/build
           key: ${{ runner.os }}-build-${{ steps.folders-hash.outputs.hash }}
-          restore-keys: ${{ runner.os }}-build-
 
       # Install required packages
       - name: System packages
