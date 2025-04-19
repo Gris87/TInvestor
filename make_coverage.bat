@@ -1,20 +1,20 @@
 cd build
 
-set MODE=Release
-if not "%1" == "--ci" set MODE=Debug
+set SOURCES=TInvestor-source\app\src
+if not "%1" == "--ci" set SOURCES=TInvestor\app\src
 
-Desktop-%MODE%\test\build\tests.exe > output.txt 2>&1
+Desktop-Debug\test\build\tests.exe > output.txt 2>&1
 set RESULT_CODE=%ERRORLEVEL%
 
 if %RESULT_CODE% EQU 0 (
     OpenCppCoverage ^
-        --sources app\src ^
+        --sources %SOURCES% ^
         --excluded_sources test_*. ^
         --excluded_sources messagebox.cpp ^
         --excluded_sources httpclient.cpp ^
         --export_type html:CoverageReport ^
         -- ^
-        Desktop-%MODE%\test\build\tests.exe
+        Desktop-Debug\test\build\tests.exe
     set RESULT_CODE=%ERRORLEVEL%
 
     if not "%1" == "--ci" CoverageReport\index.html
