@@ -541,7 +541,7 @@ jobs:
           switch ("${{ runner.os }}")
           {
             "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxcb-cursor0 libxkbcommon-dev libxkbcommon-x11-dev }
+            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync libxcb-util libxcb-xfixes0 libxcb-xkb libxcb1 }
             "macOS"   { brew update }
           }
 
