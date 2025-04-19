@@ -716,8 +716,9 @@ jobs:
         if: steps.cache-test.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
-          # Enter to TInvestor-source/build/Desktop-Release folder
+          # Enter to TInvestor-source/build/Desktop-Release/test/build folder
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
+          Get-ChildItem -Path . -Recurse
 
           switch ("${{ runner.os }}")
           {
@@ -726,6 +727,8 @@ jobs:
               }
               "Linux" {
                   ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build:${Env:LD_LIBRARY_PATH}"
+                  & ldd ./tests
+                  & ldd **/*.so
                   & ./tests
               }
           }
