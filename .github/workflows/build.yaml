@@ -710,12 +710,7 @@ jobs:
         run: |
           switch ("${{ runner.os }}")
           {
-              "Windows" {
-                  Invoke-WebRequest https://github.com/OpenCppCoverage/OpenCppCoverage/releases/download/release-0.9.9.0/OpenCppCoverageSetup-x64-0.9.9.0.exe -OutFile ./OpenCppCoverageSetup-x64-0.9.9.0.exe
-
-                  & ./OpenCppCoverageSetup-x64-0.9.9.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP- /LOG=1.txt
-                  Write-Output "PATH = ${Env:PATH}"
-              }
+              "Windows" { choco install opencppcoverage }
           }
 
       # Download build artifacts
