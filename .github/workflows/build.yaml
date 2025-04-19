@@ -739,9 +739,8 @@ jobs:
               "Windows" {
                   & tzutil /s "Russian Standard Time"
 
-                  & dumpbin /dependents ./tests.exe
-                  & ldd ./tests.exe **/*.dll
                   & ./tests.exe
+                  Start-Sleep -Seconds 3
               }
               "Linux" {
                   & sudo timedatectl set-timezone Europe/Moscow
