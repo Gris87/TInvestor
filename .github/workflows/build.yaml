@@ -713,7 +713,7 @@ jobs:
               "Windows" {
                   Invoke-WebRequest https://github.com/OpenCppCoverage/OpenCppCoverage/releases/download/release-0.9.9.0/OpenCppCoverageSetup-x64-0.9.9.0.exe -OutFile ./OpenCppCoverageSetup-x64-0.9.9.0.exe
 
-                  & ./OpenCppCoverageSetup-x64-0.9.9.0.exe /VERYSILENT /NORESTART
+                  & ./OpenCppCoverageSetup-x64-0.9.9.0.exe /VERYSILENT /NORESTART /LOG=1.txt
               }
           }
 
@@ -777,5 +777,5 @@ jobs:
         uses: thebrowsercompany/gha-upload-tar-artifact@main
         with:
           name: coverage-${{ matrix.config.name }}
-          path: ./artifacts # TODO: Need to change
+          path: ./ # TODO: Need to change
           retention-days: 1
