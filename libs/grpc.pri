@@ -12,13 +12,8 @@ win32-msvc* {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-windows/include
 
-    CONFIG (debug, debug|release) {
-        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/debug/lib
-        VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/debug/bin
-    } else {
-        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/lib
-        VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/bin
-    }
+    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-windows/lib
+    VCPKG_DLLS = $${VCPKG_PATH}/installed/x64-windows/bin
 
     LIBS += \
         -L$${VCPKG_LIBS} \
@@ -54,11 +49,7 @@ win32-msvc* {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-linux/include
 
-    CONFIG (debug, debug|release) {
-        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/debug/lib
-    } else {
-        VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/lib
-    }
+    VCPKG_LIBS = $${VCPKG_PATH}/installed/x64-linux/lib
 
     LIBS += \
         -L$${VCPKG_LIBS} \
