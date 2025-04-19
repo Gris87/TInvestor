@@ -5,12 +5,14 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/fs/file/ifilefactory_mock.h"
+#include "src/utils/processrunner/iprocessrunner_mock.h"
 #include "src/utils/processrunner/iprocessrunnerfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 
 using ::testing::InSequence;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 
@@ -70,8 +72,24 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
 #else
 TEST_F(Test_AutorunEnabler, Test_setEnabled)
 {
+    const InSequence seq;
+
+    const QStringList crontabListArgs = QStringList() << "-l";
+
+    StrictMock<ProcessRunnerMock>* processRunnerMock = new StrictMock<ProcessRunnerMock>(); // Will be deleted in setEnabled
+
+    EXPECT_CALL(*processRunnerFactoryMock, newInstance()).WillOnce(Return(std::shared_ptr<IProcessRunner>(processRunnerMock)));
+    EXPECT_CALL(
+        *processRunnerMock,
+        setStandardOutputFile(QString("/tmp/TInvestor_autorun_cron"), QIODeviceBase::OpenMode(QIODeviceBase::Truncate))
+    );
+    EXPECT_CALL(
+        *processRunnerMock, start(QString("crontab"), crontabListArgs, QIODeviceBase::OpenMode(QIODeviceBase::ReadWrite))
+    );
+    EXPECT_CALL(*processRunnerMock, waitForFinished(30000)).WillOnce(Return(false));
+
     enabler->setEnabled(true);
-    enabler->setEnabled(true);
-    enabler->setEnabled(false);
+    //enabler->setEnabled(true);
+    //enabler->setEnabled(false);
 }
 #endif

@@ -56,14 +56,14 @@ void AutorunEnabler::enable()
 {
     const QString rebootLine = QString("@reboot \"%1\" --autorun").arg(qApp->applicationFilePath());
 
-    std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
+    const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
 
     process1->setStandardOutputFile("/tmp/TInvestor_autorun_cron");
     process1->start("crontab", QStringList() << "-l");
 
     if (process1->waitForFinished())
     {
-        std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
+        const std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
 
         if (cronFile->open(QIODevice::ReadOnly))
         {
@@ -102,7 +102,7 @@ void AutorunEnabler::enable()
             cronFile->write(content.toUtf8());
             cronFile->close();
 
-            std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
+            const std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
 
             process2->start("crontab", QStringList() << "/tmp/TInvestor_autorun_cron");
 
@@ -116,14 +116,14 @@ void AutorunEnabler::disable()
 {
     const QString rebootLine = QString("@reboot \"%1\" --autorun").arg(qApp->applicationFilePath());
 
-    std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
+    const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
 
     process1->setStandardOutputFile("/tmp/TInvestor_autorun_cron");
     process1->start("crontab", QStringList() << "-l");
 
     if (process1->waitForFinished())
     {
-        std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
+        const std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
 
         if (cronFile->open(QIODevice::ReadOnly))
         {
@@ -145,7 +145,7 @@ void AutorunEnabler::disable()
             cronFile->write(content.toUtf8());
             cronFile->close();
 
-            std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
+            const std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
 
             process2->start("crontab", QStringList() << "/tmp/TInvestor_autorun_cron");
 
