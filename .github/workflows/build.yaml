@@ -716,6 +716,21 @@ jobs:
         if: steps.cache-test.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
+          # Setup Developer PowerShell for Windows
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  Write-Output "Setup Developer PowerShell"
+                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
+                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
+                  # see: https://github.com/microsoft/setup-msbuild/issues/24
+                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
+                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
+                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
+              }
+          }
+
           # Enter to TInvestor-source/build/Desktop-Release/test/build folder
           Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
 
@@ -724,6 +739,8 @@ jobs:
               "Windows" {
                   & tzutil /s "Russian Standard Time"
 
+                  & dumpbin /dependents ./tests.exe
+                  & ldd ./tests.exe **/*.dll
                   & ./tests.exe
               }
               "Linux" {
