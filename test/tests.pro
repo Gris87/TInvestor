@@ -30,6 +30,7 @@ win32-msvc* {
 linux-g++ {
     CONFIG (debug, debug|release) {
         QMAKE_CXXFLAGS += "-fprofile-arcs -ftest-coverage"
+        LIBS           += "-lgcov"
     }
 }
 # Compile with coverage - END
