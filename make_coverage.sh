@@ -7,7 +7,7 @@ export LD_LIBRARY_PATH=`pwd`
 RESULT_CODE=$?
 
 if [ ${RESULT_CODE} -eq 0 ]; then
-    lcov -t "tests" --capture --directory . --output-file tests.info
+    lcov -t "tests" --capture --directory gen/tests/objs --output-file tests.info
 
     rm -rf ../../../CoverageReport
     genhtml --output-directory ../../../CoverageReport tests.info

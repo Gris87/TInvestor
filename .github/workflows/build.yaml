@@ -671,7 +671,7 @@ jobs:
                   Remove-Item "artifacts/app/build/gen" -Recurse -Force
                   Remove-Item "artifacts/app/Makefile.TInvestor" -Force
                   Remove-Item "artifacts/libs" -Recurse -Force
-                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
+                  # Remove-Item "artifacts/test/build/gen" -Recurse -Force # Do not delete. Needed for coverage
                   Remove-Item "artifacts/test/Makefile.tests" -Force
                   Remove-Item "artifacts/.qmake.stash" -Force
                   Remove-Item "artifacts/Makefile" -Force
