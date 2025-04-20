@@ -987,7 +987,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.config.name }}
-          path: ./ # TODO: Should be ./TInvestor-source/build/CoverageReport
+          path: ./TInvestor-source/build/CoverageReport
           retention-days: 1
           compression-level: 9
 

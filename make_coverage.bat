@@ -9,7 +9,7 @@ set RESULT_CODE=%ERRORLEVEL%
 if %RESULT_CODE% EQU 0 (
     OpenCppCoverage ^
         --sources %SOURCES% ^
-        --excluded_sources test_*. ^
+        --excluded_sources test_* ^
         --excluded_sources messagebox.cpp ^
         --excluded_sources httpclient.cpp ^
         --export_type html:CoverageReport ^
