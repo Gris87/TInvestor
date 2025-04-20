@@ -26,6 +26,14 @@ win32-msvc* {
 }
 # Extend number of sections - END
 
+# Compile with coverage - BEGIN
+linux-g++ {
+    CONFIG (debug, debug|release) {
+        QMAKE_CXXFLAGS += "-fprofile-arcs -ftest-coverage"
+    }
+}
+# Compile with coverage - END
+
 # Target dirs - BEGIN
 DESTDIR     = build/
 OBJECTS_DIR = build/gen/$${TARGET}/objs

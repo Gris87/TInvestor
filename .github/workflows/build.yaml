@@ -895,7 +895,7 @@ jobs:
         uses: actions/cache@v4
         id: cache-test
         with:
-          path: ./artifacts # TODO: Need to change
+          path: ./TInvestor-source/build/CoverageReport
           key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
 
       # Install required packages
@@ -964,22 +964,32 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
+                  & tzutil /s "Russian Standard Time"
                   ${Env:PATH} = "C:\Program Files\OpenCppCoverage;${Env:PATH}"
 
                   & ./make_coverage.bat --ci
               }
               "Linux" {
-                  & echo "TBD"
+                  & sudo timedatectl set-timezone Europe/Moscow
+
+                  ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build:${Env:LD_LIBRARY_PATH}"
+                  ${Env:DISPLAY} = ":99"
+
+                  & sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+                  Start-Sleep -Seconds 3
+
+                  & ./make_coverage.sh --ci
               }
           }
 
       # Upload artifacts
       - name: Upload artifacts
-        uses: thebrowsercompany/gha-upload-tar-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.config.name }}
-          path: ./ # TODO: Need to change
+          path: ./TInvestor-source/build/CoverageReport
           retention-days: 1
+          compression-level: 9
 
   # Release job.
   # Provides meta information for release.
