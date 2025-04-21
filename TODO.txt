@@ -1,6 +1,5 @@
 Ubuntu:
 - Autorun
-Add test coverage badge on Github
 Generate docs in CI
 WTF with coverage on Windows
 Publish artifacts to release

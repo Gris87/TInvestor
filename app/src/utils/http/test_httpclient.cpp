@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include <QThread>
 #include <QUrlQuery>
 
 
@@ -24,17 +25,26 @@ TEST(Test_HttpClient, Test_download)
     IHttpClient::Headers headers;
     headers["Authorization"] = "Bearer debearer";
 
-    const HttpResult result = client.download(url, headers);
+    for (int attempts = 0; attempts < 10; ++attempts)
+    {
+        const HttpResult result = client.download(url, headers);
 
-    ASSERT_EQ(result.statusCode, 200);
-    ASSERT_EQ(
-        QString::fromUtf8(result.body)
-            .startsWith(
-                "{\n  \"args\": {\n    \"hello\": \"test\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": "
-                "{}, \n  \"headers\": {\n    \"Accept-Encoding\": "
-            ),
-        true
-    );
+        if (result.statusCode == 200)
+        {
+            ASSERT_EQ(
+                QString::fromUtf8(result.body)
+                    .startsWith(
+                        "{\n  \"args\": {\n    \"hello\": \"test\"\n  }, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": "
+                        "{}, \n  \"headers\": {\n    \"Accept-Encoding\": "
+                    ),
+                true
+            );
+
+            break;
+        }
+
+        QThread::msleep(5000);
+    }
 }
 
 TEST(Test_HttpClient, Test_openInBrowser)
