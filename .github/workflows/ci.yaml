@@ -989,7 +989,7 @@ jobs:
         with:
           gist-id: ${{ github.repository_owner }}
           token: ${{ secrets.GIST_TOKEN }}
-          prefix: TInvestor-coverage-${{ runner.os }}
+          prefix: TInvestor-${{ runner.os }}
 
       # Upload artifacts
       - name: Upload artifacts
