@@ -501,7 +501,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
         <source>Limit stock purchase</source>
-        <translation>Не покупать акции на сумму больше,</translation>
+        <translation>Не покупать акции на сумму больше, чем</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="184"/>
