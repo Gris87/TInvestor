@@ -7,6 +7,7 @@ export LD_LIBRARY_PATH=`pwd`
 RESULT_CODE=$?
 
 if [ ${RESULT_CODE} -eq 0 ]; then
+    rm -rf ../../../CoverageReport
     lcov \
         -t "tests" \
         --capture \
@@ -15,10 +16,9 @@ if [ ${RESULT_CODE} -eq 0 ]; then
         --exclude */messagebox.cpp \
         --exclude */httpclient.cpp \
         --directory gen/tests/objs \
-        --output-file lcov.info
+        --output-file ../../../CoverageReport/lcov.info
 
-    rm -rf ../../../CoverageReport
-    genhtml --output-directory ../../../CoverageReport lcov.info
+    genhtml --output-directory ../../../CoverageReport ../../../CoverageReport/lcov.info
 
     if [ "$1" != "--ci" ]; then
         firefox ../../../CoverageReport/index.html > /dev/null 2>&1 &
