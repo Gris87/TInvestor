@@ -218,7 +218,15 @@ void MainWindow::closeEvent(QCloseEvent* event)
     event->ignore();
     hide();
 
-    mTrayIcon->showMessage(tr("TInvestor"), tr("TInvestor is working in background"));
+    const QString title = tr("TInvestor");
+    const QString msg   = tr("TInvestor is working in background");
+
+    Q_UNUSED(title);
+    Q_UNUSED(msg);
+
+#ifdef Q_OS_WINDOWS
+    mTrayIcon->showMessage(title, msg);
+#endif
 
     qDebug() << "Main window moved to tray";
 }

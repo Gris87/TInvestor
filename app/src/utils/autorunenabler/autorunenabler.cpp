@@ -54,7 +54,8 @@ void AutorunEnabler::disable()
 #else
 void AutorunEnabler::enable()
 {
-    const QString rebootLine = QString("@reboot \"%1\" --autorun").arg(qApp->applicationFilePath());
+    const QString rebootLine =
+        QString("@reboot sh -c \"cd %1 && LD_LIBRARY_PATH=%1 ./TInvestor --autorun\"").arg(qApp->applicationDirPath());
 
     const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
 
@@ -114,7 +115,8 @@ void AutorunEnabler::enable()
 
 void AutorunEnabler::disable()
 {
-    const QString rebootLine = QString("@reboot \"%1\" --autorun").arg(qApp->applicationFilePath());
+    const QString rebootLine =
+        QString("@reboot sh -c \"cd %1 && LD_LIBRARY_PATH=%1 ./TInvestor --autorun\"").arg(qApp->applicationDirPath());
 
     const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
 
