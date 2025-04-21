@@ -1,11 +1,8 @@
 Ubuntu:
 - Autorun
-- Logo and desktop file
-Add build status badge on Github
 Add test coverage badge on Github
 Generate docs in CI
 Publish artifacts to release
-Update dependencies
 
 Buy less than 1% from turnover
 Buy if it was sold during 24h and price is less than 1%
