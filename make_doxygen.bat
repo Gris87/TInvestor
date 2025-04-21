@@ -1,6 +1,9 @@
 mkdir build
 
 doxygen
-build\doxygen\html\index.html
+
+if not "%1" == "--ci" (
+    build\doxygen\html\index.html
+)
 
 pause
