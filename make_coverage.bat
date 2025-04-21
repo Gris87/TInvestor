@@ -10,6 +10,7 @@ if %RESULT_CODE% EQU 0 (
         --excluded_sources messagebox.cpp ^
         --excluded_sources httpclient.cpp ^
         --export_type html:..\..\..\CoverageReport ^
+        --export_type cobertura:..\..\..\CoverageReport\cobertura.xml ^
         -- ^
         tests.exe
     set RESULT_CODE=%ERRORLEVEL%

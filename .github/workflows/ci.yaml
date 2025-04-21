@@ -982,6 +982,15 @@ jobs:
               }
           }
 
+      # Upload coverage badge
+      - name: Upload coverage badge
+        if: steps.cache-test.outputs.cache-hit != 'true'
+        uses: gaelgirodon/ci-badges-action@v1
+        with:
+          gist-id: ${{ github.repository_owner }}
+          token: ${{ secrets.GIST_TOKEN }}
+          prefix: TInvestor-coverage-${{ runner.os }}
+
       # Upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

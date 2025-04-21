@@ -15,10 +15,10 @@ if [ ${RESULT_CODE} -eq 0 ]; then
         --exclude */messagebox.cpp \
         --exclude */httpclient.cpp \
         --directory gen/tests/objs \
-        --output-file tests.info
+        --output-file lcov.info
 
     rm -rf ../../../CoverageReport
-    genhtml --output-directory ../../../CoverageReport tests.info
+    genhtml --output-directory ../../../CoverageReport lcov.info
 
     if [ "$1" != "--ci" ]; then
         firefox ../../../CoverageReport/index.html > /dev/null 2>&1 &
