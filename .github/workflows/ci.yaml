@@ -1,4 +1,4 @@
-name: TInvestor workflow
+name: CI
 
 on: [push]
 
