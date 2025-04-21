@@ -163,119 +163,119 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="14"/>
-        <location filename="../../src/main/mainwindow.cpp" line="211"/>
+        <location filename="../../src/main/mainwindow.ui" line="20"/>
+        <location filename="../../src/main/mainwindow.cpp" line="221"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="99"/>
-        <location filename="../../src/main/mainwindow.cpp" line="471"/>
+        <location filename="../../src/main/mainwindow.ui" line="111"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="164"/>
+        <location filename="../../src/main/mainwindow.ui" line="176"/>
         <source>Simulator active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="220"/>
-        <location filename="../../src/main/mainwindow.cpp" line="505"/>
+        <location filename="../../src/main/mainwindow.ui" line="238"/>
+        <location filename="../../src/main/mainwindow.cpp" line="515"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="285"/>
+        <location filename="../../src/main/mainwindow.ui" line="303"/>
         <source>Auto-pilot active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="308"/>
+        <location filename="../../src/main/mainwindow.ui" line="326"/>
         <source>Keep money on account:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="362"/>
+        <location filename="../../src/main/mainwindow.ui" line="380"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="365"/>
+        <location filename="../../src/main/mainwindow.ui" line="383"/>
         <source>Authorize user (Ctrl+L)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="386"/>
+        <location filename="../../src/main/mainwindow.ui" line="404"/>
         <source>Stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="389"/>
+        <location filename="../../src/main/mainwindow.ui" line="407"/>
         <source>Show page with list of stocks (Ctrl+1)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="407"/>
+        <location filename="../../src/main/mainwindow.ui" line="425"/>
         <source>Simulation (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="410"/>
+        <location filename="../../src/main/mainwindow.ui" line="428"/>
         <source>Show page with simulation mode (Ctrl+2)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="428"/>
+        <location filename="../../src/main/mainwindow.ui" line="446"/>
         <source>Auto-pilot (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="431"/>
+        <location filename="../../src/main/mainwindow.ui" line="449"/>
         <source>Show page with auto-pilot mode (Ctrl+3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.ui" line="446"/>
-        <location filename="../../src/main/mainwindow.ui" line="449"/>
+        <location filename="../../src/main/mainwindow.ui" line="464"/>
+        <location filename="../../src/main/mainwindow.ui" line="467"/>
         <source>Settings (F6)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="211"/>
+        <location filename="../../src/main/mainwindow.cpp" line="221"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="269"/>
+        <location filename="../../src/main/mainwindow.cpp" line="279"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="358"/>
-        <location filename="../../src/main/mainwindow.cpp" line="543"/>
+        <location filename="../../src/main/mainwindow.cpp" line="368"/>
+        <location filename="../../src/main/mainwindow.cpp" line="553"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="457"/>
-        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <location filename="../../src/main/mainwindow.cpp" line="467"/>
+        <location filename="../../src/main/mainwindow.cpp" line="474"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <location filename="../../src/main/mainwindow.cpp" line="474"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="491"/>
-        <location filename="../../src/main/mainwindow.cpp" line="498"/>
+        <location filename="../../src/main/mainwindow.cpp" line="501"/>
+        <location filename="../../src/main/mainwindow.cpp" line="508"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="498"/>
+        <location filename="../../src/main/mainwindow.cpp" line="508"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -372,19 +372,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="69"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="82"/>
         <source>Downloading stocks metadata</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="149"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="182"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="178"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="211"/>
         <source>Downloading stocks logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="467"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="475"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="522"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="530"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -392,27 +392,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="100"/>
+        <location filename="../../src/main.cpp" line="102"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="112"/>
+        <location filename="../../src/main.cpp" line="114"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="112"/>
+        <location filename="../../src/main.cpp" line="114"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/pricechangetableitem.cpp" line="30"/>
+        <location filename="../../src/widgets/tableitems/pricechangetableitem.cpp" line="34"/>
         <source>From price: %1</source>
         <translation></translation>
     </message>
@@ -723,12 +723,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="303"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="312"/>
         <source>Filter active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="308"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="317"/>
         <source>Filter inactive</source>
         <translation></translation>
     </message>

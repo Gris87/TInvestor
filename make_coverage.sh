@@ -20,7 +20,7 @@ if [ ${RESULT_CODE} -eq 0 ]; then
     rm -rf ../../../CoverageReport
     genhtml --output-directory ../../../CoverageReport tests.info
 
-    if [ "%1" != "--ci" ]; then
+    if [ "$1" != "--ci" ]; then
         firefox ../../../CoverageReport/index.html > /dev/null 2>&1 &
     fi
 else
