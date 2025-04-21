@@ -75,11 +75,12 @@ win32-msvc* {
 
     copy_quazip_files.commands = $(COPY_FILE) --no-dereference "$$shell_path($${QUAZIP_PATH}/install/lib/libquazip1-qt6$${DEBUG_SUFFIX}.so*)" "$$shell_path($${OUT_PWD}/build)"
 
-    first.depends = $(first) copy_qt_files copy_quazip_files
+    first.depends = $(first) copy_qt_files copy_quazip_files copy_dist_files
 
     export(first.depends)
     export(copy_qt_files.commands)
     export(copy_quazip_files.commands)
+    export(copy_dist_files.commands)
 
-    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_quazip_files
+    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_quazip_files copy_dist_files
 }

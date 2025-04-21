@@ -1,6 +1,6 @@
-cd build
+cd build\Desktop-Debug\test\build
 
-Desktop-Debug\test\build\tests.exe > output.txt 2>&1
+tests.exe > output.txt 2>&1
 set RESULT_CODE=%ERRORLEVEL%
 
 if %RESULT_CODE% EQU 0 (
@@ -9,12 +9,12 @@ if %RESULT_CODE% EQU 0 (
         --excluded_sources test_* ^
         --excluded_sources messagebox.cpp ^
         --excluded_sources httpclient.cpp ^
-        --export_type html:CoverageReport ^
+        --export_type html:..\..\..\CoverageReport ^
         -- ^
-        Desktop-Debug\test\build\tests.exe
+        tests.exe
     set RESULT_CODE=%ERRORLEVEL%
 
-    if not "%1" == "--ci" CoverageReport\index.html
+    if not "%1" == "--ci" ..\..\..\CoverageReport\index.html
 ) else (
     type output.txt
     if not "%1" == "--ci" pause
@@ -22,6 +22,6 @@ if %RESULT_CODE% EQU 0 (
 
 del output.txt
 
-cd ..
+cd ..\..\..\..
 
 exit /b %RESULT_CODE%

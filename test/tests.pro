@@ -45,6 +45,12 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
+linux-g++ {
+    copy_dist_files.commands = echo "Nothing to copy from dist folder"
+}
+
+
+
 include(../app/TInvestor.pri)
 include(../libs/gtest.pri)
 include(../libs/libs.pri)
