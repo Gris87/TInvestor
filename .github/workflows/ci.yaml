@@ -517,145 +517,6 @@ jobs:
         run: |
           Write-Output "Finished"
 
-  # Prepare compile_commands.json
-  compile-commands:
-    needs: [env-qt-zlib-quazip, env-vcpkg]
-    name: Prepare compile_commands.json [${{ matrix.config.name }}]
-    runs-on: ${{ matrix.config.os }}
-    strategy:
-      matrix:
-        config:
-          - { name: "win64", os: windows-latest }
-          - { name: "linux", os: ubuntu-latest }
-      fail-fast: false
-
-    steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
-        uses: actions/checkout@v4
-        with:
-          path: TInvestor-source
-
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-build
-        with:
-          path: ./TInvestor-source/build/Desktop-Debug/compile_commands.json
-          key: ${{ runner.os }}-compile-commands-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-            "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1 }
-            "macOS"   { brew update }
-          }
-
-          pip install scan-build
-
-      # Download environment artifacts
-      - name: Download environment artifacts (Qt/ZLib/Quazip)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-qt-zlib-quazip-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Download environment artifacts
-      - name: Download environment artifacts (vcpkg)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-vcpkg-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - name: Checkout googletest
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: google/googletest
-          path: Qt/googletest-source
-          ref: ${{ env.GOOGLE_TEST_VERSION }}
-
-      # Prepare compile_commands.json
-      - name: Prepare compile_commands.json
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Setup Developer PowerShell for Windows
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Write-Output "Setup Developer PowerShell"
-                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
-                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
-                  # see: https://github.com/microsoft/setup-msbuild/issues/24
-                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
-                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
-                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
-                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
-              }
-          }
-
-          ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
-          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
-          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
-          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
-
-          # Create TInvestor-source/build/Desktop-Debug folder and enter into it
-          New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
-          Set-Location -Path "TInvestor-source/build/Desktop-Debug"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
-                  & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
-                  & chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  & chcp 65001
-
-                  & intercept-build "${Env:GITHUB_WORKSPACE}\Qt\jom\jom.exe"
-              }
-              "Linux" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
-                  & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-
-                  & intercept-build make
-              }
-          }
-
-      # Upload artifacts
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: compile-commands-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Debug/compile_commands.json
-          retention-days: 1
-          compression-level: 9
-
   # Build project in Debug
   build-debug:
     needs: [env-qt-zlib-quazip, env-vcpkg]
@@ -1174,6 +1035,7 @@ jobs:
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test
+            ./TInvestor-source/tools/py3/generate-compile-commands
 
       # Download/upload cache
       - name: Caching
@@ -1203,6 +1065,16 @@ jobs:
           }
 
           npm install -g @mermaid-js/mermaid-cli
+
+      # Generate compile_commands.json
+      - name: Generate compile_commands.json
+        if: steps.cache-doc.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          # Enter to TInvestor-source folder
+          Set-Location -Path "TInvestor-source"
+
+          & python tools\py3\generate-compile-commands --os ${{ runner.os }} --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
 
       # Generate doxygen
       - name: Generate doxygen
