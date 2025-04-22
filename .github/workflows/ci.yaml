@@ -507,7 +507,7 @@ jobs:
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
-          python tools/py3/check-style
+          & python tools/py3/check-style
 
           New-Item -Path . -Name "../success" -ItemType "File"
 
@@ -1052,6 +1052,16 @@ jobs:
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  & ./make_doxygen.bat --ci
+              }
+              "Linux" {
+                  & ./make_doxygen.sh --ci
+              }
+          }
+
       # Generate clang-uml
       - name: Generate clang-uml
         if: steps.cache-doc.outputs.cache-hit != 'true'
@@ -1059,6 +1069,16 @@ jobs:
         run: |
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
+
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  & ./make_clang_uml.bat --ci
+              }
+              "Linux" {
+                  & ./make_clang_uml.sh --ci
+              }
+          }
 
       # Upload artifacts
       - name: Upload artifacts
