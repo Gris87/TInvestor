@@ -1076,9 +1076,9 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
-                  ${Env:PATH} = "C:\Program Files\doxygen;${Env:PATH}"
-                  ${Env:PATH} = "C:\Program Files\Graphviz;${Env:PATH}"
-                  
+                  ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
+                  ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
+
                   & ./make_doxygen.bat --ci
               }
               "Linux" {
