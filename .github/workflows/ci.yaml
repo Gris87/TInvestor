@@ -635,16 +635,17 @@ jobs:
                   chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
                   chcp 65001
+                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" > build.log
 
-                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}\Qt\jom;${Env:PATH}"
-                  & compiledb --no-build jom
+                  & compiledb --parse build.log
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                   & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
                   make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
+                  make -j4 > build.log
 
-                  & compiledb --no-build make
+                  & compiledb --parse build.log
               }
           }
 
@@ -749,7 +750,7 @@ jobs:
                   # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
                   # The setup-msbuild action is not used since it does not set up the path to 'cl'
                   # see: https://github.com/microsoft/setup-msbuild/issues/24
-                  ${VS_INST_PATH} = & "${rogramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
                   Write-Output "VS Installation Path: ${VS_INST_PATH}"
                   Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
                   Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
@@ -920,7 +921,7 @@ jobs:
                   # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
                   # The setup-msbuild action is not used since it does not set up the path to 'cl'
                   # see: https://github.com/microsoft/setup-msbuild/issues/24
-                  ${VS_INST_PATH} = & "${rogramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
                   Write-Output "VS Installation Path: ${VS_INST_PATH}"
                   Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
                   Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
