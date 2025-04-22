@@ -7,7 +7,7 @@ include(../libs/zlib.pri)
 
 
 
-win32-msvc* {
+win32* {
     copy_qt_files.commands =  $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Gui$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Widgets$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&

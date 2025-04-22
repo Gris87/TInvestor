@@ -1,7 +1,7 @@
 isEmpty(GOOGLETEST_DIR):GOOGLETEST_DIR=$$(GOOGLETEST_DIR)
 
 isEmpty(GOOGLETEST_DIR) {
-    win32-msvc* {
+    win32* {
         GOOGLETEST_DIR = "E:/Qt/googletest-1.16.0"
     } else {
         GOOGLETEST_DIR = "/home/gris/Qt/googletest-1.16.0"

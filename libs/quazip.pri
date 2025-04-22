@@ -1,14 +1,14 @@
 isEmpty(QUAZIP_PATH):QUAZIP_PATH=$$(QUAZIP_PATH)
 
 isEmpty(QUAZIP_PATH) {
-    win32-msvc* {
+    win32* {
         QUAZIP_PATH = E:/Qt/quazip-1.5
     } else {
         QUAZIP_PATH = /home/gris/Qt/quazip-1.5
     }
 }
 
-win32-msvc* {
+win32* {
     INCLUDEPATH += \
         $${QUAZIP_PATH}/install/include/QuaZip-Qt6-1.5
 

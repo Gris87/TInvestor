@@ -1,14 +1,14 @@
 isEmpty(VCPKG_PATH):VCPKG_PATH=$$(VCPKG_PATH)
 
 isEmpty(VCPKG_PATH) {
-    win32-msvc* {
+    win32* {
         VCPKG_PATH = E:/Qt/vcpkg
     } else {
         VCPKG_PATH = /home/gris/Qt/vcpkg
     }
 }
 
-win32-msvc* {
+win32* {
     INCLUDEPATH += \
         $${VCPKG_PATH}/installed/x64-windows/include
 

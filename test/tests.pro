@@ -27,7 +27,7 @@ win32-msvc* {
 # Extend number of sections - END
 
 # Compile with coverage - BEGIN
-linux-g++ {
+linux* {
     CONFIG (debug, debug|release) {
         QMAKE_CXXFLAGS += "--coverage"
         LIBS           += "-lgcov"
@@ -45,7 +45,7 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-linux-g++ {
+linux* {
     copy_dist_files.commands = echo "Nothing to copy from dist folder"
 }
 
