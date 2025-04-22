@@ -571,7 +571,7 @@ jobs:
             "macOS"   { brew update }
           }
 
-          pip install compiledb
+          pip install scan-build
 
       # Download environment artifacts
       - name: Download environment artifacts (Qt/ZLib/Quazip)
@@ -632,20 +632,18 @@ jobs:
               "Windows" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                   & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
-                  chcp 65001
+                  & chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" > build.log
+                  & chcp 65001
 
-                  & compiledb --parse build.log
+                  & intercept-build "${Env:GITHUB_WORKSPACE}\Qt\jom\jom.exe"
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                   & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  make -j4 > build.log
+                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
 
-                  & compiledb --parse build.log
+                  & intercept-build make
               }
           }
 
@@ -771,16 +769,16 @@ jobs:
               "Windows" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                   & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
-                  chcp 65001
+                  & chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  chcp 65001
+                  & chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                   & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  make -j4
+                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
+                  & make -j4
               }
           }
 
@@ -942,16 +940,16 @@ jobs:
               "Windows" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                   & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
-                  chcp 65001
+                  & chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
-                  chcp 65001
+                  & chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
                   & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
-                  make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
-                  make -j4
+                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                  & make -j4
               }
           }
 
