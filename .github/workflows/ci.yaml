@@ -636,7 +636,8 @@ jobs:
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
                   chcp 65001
 
-                  & compiledb --no-build nmake
+                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}\Qt\jom;${Env:PATH}"
+                  & compiledb --no-build jom
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
