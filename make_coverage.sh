@@ -16,14 +16,18 @@ if [ ${RESULT_CODE} -eq 0 ]; then
         --exclude */httpclient.cpp \
         --directory gen/tests/objs \
         --output-file lcov.info
+    RESULT_CODE=$?
 
-    rm -rf ../../../CoverageReport
-    genhtml --output-directory ../../../CoverageReport lcov.info
+    if [ ${RESULT_CODE} -eq 0 ]; then
+        rm -rf ../../../CoverageReport
+        genhtml --output-directory ../../../CoverageReport lcov.info
+        RESULT_CODE=$?
 
-    mv lcov.info ../../../CoverageReport
+        mv lcov.info ../../../CoverageReport
 
-    if [ "$1" != "--ci" ]; then
-        firefox ../../../CoverageReport/index.html > /dev/null 2>&1 &
+        if [ "$1" != "--ci" ]; then
+            firefox ../../../CoverageReport/index.html > /dev/null 2>&1 &
+        fi
     fi
 else
     cat output.txt
