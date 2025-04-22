@@ -556,7 +556,7 @@ jobs:
         uses: actions/cache@v4
         id: cache-build
         with:
-          path: ./artifacts
+          path: ./TInvestor-source/build/Desktop-Debug/.qtc_clangd
           key: ${{ runner.os }}-compile-commands-${{ steps.folders-hash.outputs.hash }}
 
       # Install required packages
@@ -609,7 +609,7 @@ jobs:
           ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
 
           # Create TInvestor-source/build/Desktop-Debug folder and enter into it
-          New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
+          New-Item -Path "TInvestor-source/build/Desktop-Debug/.qtc_clangd" -ItemType "directory" -Force
           Set-Location -Path "TInvestor-source/build/Desktop-Debug"
 
           switch ("${{ runner.os }}")
@@ -630,12 +630,14 @@ jobs:
               }
           }
 
+          Move-Item -Path ./compile_commands.json -Destination ./.qtc_clangd/compile_commands.json
+
       # Upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: compile-commands-${{ matrix.config.name }}
-          path: ./artifacts
+          path: ./TInvestor-source/build/Desktop-Debug/.qtc_clangd
           retention-days: 1
           compression-level: 9
 
