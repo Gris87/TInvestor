@@ -631,6 +631,8 @@ jobs:
           }
 
           Move-Item -Path ./compile_commands.json -Destination ./.qtc_clangd/compile_commands.json
+          
+          Get-ChildItem -Path . -Recurse -Force
 
       # Upload artifacts
       - name: Upload artifacts
