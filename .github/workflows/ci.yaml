@@ -1051,9 +1051,19 @@ jobs:
         run: |
           switch ("${{ runner.os }}")
           {
-              "Windows" { choco install doxygen.install graphviz }
-              "Linux"   { sudo apt-get update; sudo apt-get install -y doxygen graphviz }
+              "Windows" {
+                  choco install doxygen.install
+                  choco install graphviz
+                  choco install nodejs-lts
+              }
+              "Linux" {
+                  sudo add-apt-repository ppa:bkryza/clang-uml
+                  sudo apt-get update
+                  sudo apt-get install -y doxygen graphviz clang-uml nodejs npm
+              }
           }
+
+          npm install -g @mermaid-js/mermaid-cli
 
       # Generate doxygen
       - name: Generate doxygen
@@ -1066,6 +1076,9 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
+                  ${Env:PATH} = "C:\Program Files\doxygen;${Env:PATH}"
+                  ${Env:PATH} = "C:\Program Files\Graphviz;${Env:PATH}"
+                  
                   & ./make_doxygen.bat --ci
               }
               "Linux" {
@@ -1084,6 +1097,8 @@ jobs:
           switch ("${{ runner.os }}")
           {
               "Windows" {
+                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}\TInvestor-source\3rdparty\clang-uml-0.6.1;${Env:PATH}"
+
                   & ./make_clang_uml.bat --ci
               }
               "Linux" {
