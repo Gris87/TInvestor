@@ -632,9 +632,11 @@ jobs:
               "Windows" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
                   & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
+                  chcp 65001
                   & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
+                  chcp 65001
 
-                  & compiledb --no-build make
+                  & compiledb --no-build "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
               }
               "Linux" {
                   ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
