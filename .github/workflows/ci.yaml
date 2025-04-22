@@ -556,7 +556,7 @@ jobs:
         uses: actions/cache@v4
         id: cache-build
         with:
-          path: ./TInvestor-source/build/Desktop-Debug/.qtc_clangd
+          path: ./TInvestor-source/build/Desktop-Debug/compile_commands.json
           key: ${{ runner.os }}-compile-commands-${{ steps.folders-hash.outputs.hash }}
 
       # Install required packages
@@ -603,13 +603,28 @@ jobs:
         if: steps.cache-build.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
+          # Setup Developer PowerShell for Windows
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  Write-Output "Setup Developer PowerShell"
+                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
+                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
+                  # see: https://github.com/microsoft/setup-msbuild/issues/24
+                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
+                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
+                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
+              }
+          }
+
           ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
           ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
           ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
           ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
 
           # Create TInvestor-source/build/Desktop-Debug folder and enter into it
-          New-Item -Path "TInvestor-source/build/Desktop-Debug/.qtc_clangd" -ItemType "directory" -Force
+          New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
           Set-Location -Path "TInvestor-source/build/Desktop-Debug"
 
           switch ("${{ runner.os }}")
@@ -630,16 +645,12 @@ jobs:
               }
           }
 
-          Move-Item -Path ./compile_commands.json -Destination ./.qtc_clangd/compile_commands.json
-          
-          Get-ChildItem -Path . -Recurse -Force
-
       # Upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: compile-commands-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Debug/.qtc_clangd
+          path: ./TInvestor-source/build/Desktop-Debug/compile_commands.json
           retention-days: 1
           compression-level: 9
 
