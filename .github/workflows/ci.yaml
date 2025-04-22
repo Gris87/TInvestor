@@ -1044,6 +1044,17 @@ jobs:
           path: ./artifacts
           key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
 
+      # Install required packages
+      - name: System packages
+        if: steps.cache-doc.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          switch ("${{ runner.os }}")
+          {
+              "Windows" { choco install doxygen.install graphviz }
+              "Linux"   { sudo apt-get update; sudo apt-get install -y doxygen graphviz }
+          }
+
       # Generate doxygen
       - name: Generate doxygen
         if: steps.cache-doc.outputs.cache-hit != 'true'
