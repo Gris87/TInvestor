@@ -1134,13 +1134,10 @@ jobs:
           {
               "Windows" {
                   ${Env:PATH} = "${Env:GITHUB_WORKSPACE}\TInvestor-source\3rdparty\clang-uml-0.6.1;${Env:PATH}"
-                  & ldd ${Env:GITHUB_WORKSPACE}\TInvestor-source\3rdparty\clang-uml-0.6.1\clang-uml
 
                   & ./make_clang_uml.bat --ci
               }
               "Linux" {
-                  & ldd /usr/bin/clang-uml
-
                   & ./make_clang_uml.sh --ci
               }
           }
@@ -1150,7 +1147,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: doc-${{ matrix.config.name }}
-          path: ./artifacts
+          if: always()
+          path: ./
           retention-days: 1
           compression-level: 9
 
