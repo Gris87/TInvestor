@@ -528,6 +528,8 @@ def _store_compile_commands(args, commands):
     with open(args.output, "w") as f:
         f.write(json.dumps(commands, indent=4))
 
+    return True
+
 
 def main():
     parser = argparse.ArgumentParser()

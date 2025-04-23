@@ -1087,7 +1087,7 @@ jobs:
                       --msvc-tools-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433" `
                       --msvc-auxiliary-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary" `
                       --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0" `
-                      --output build\Desktop-Debug\.qtc_clangd\compile_commands.json > output.txt 2>&1
+                      --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
               }
               "Linux" {
                   & python tools/py3/generate-compile-commands `
@@ -1097,7 +1097,7 @@ jobs:
                       --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip-1.5/install/include/QuaZip-Qt6-1.5" `
                       --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
                       --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-1.16.0" `
-                      --output build/Desktop-Debug/.qtc_clangd/compile_commands.json > output.txt 2>&1
+                      --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
               }
           }
 
@@ -1144,11 +1144,10 @@ jobs:
 
       # Upload artifacts
       - name: Upload artifacts
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: doc-${{ matrix.config.name }}
-          path: ./
+          path: ./artifacts
           retention-days: 1
           compression-level: 9
 
