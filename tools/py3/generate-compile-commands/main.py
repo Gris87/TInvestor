@@ -31,6 +31,9 @@ def _generate_compile_commands(args):
     for path in paths:
         file_path = str(path.absolute()).replace("\\", "/")
 
+        if "/build/gen/" in file_path:
+            continue
+
         if "_mock.h" not in file_path and "/test_" not in file_path and "/test/main.cpp" not in file_path:
             res.append({
                 "arguments": _get_arguments_for_file(args, file_path, False),
@@ -215,14 +218,17 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         if duplicate_for_tests:
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\test\\build\\gen\\tests\\moc")
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\test\\build\\gen\\tests\\ui")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\test")
         else:
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\moc")
             res.append(f"-I{cwd}\\build\\Desktop-Debug\\app\\build\\gen\\TInvestor\\ui")
+            res.append(f"-I{cwd}\\build\\Desktop-Debug\\app")
 
     if "/libs/investapi/" in file_path:
         res.append(f"-I{cwd}\\libs\\investapi")
         res.append(f"-I{cwd}\\libs\\investapi\\messages\\generated")
         res.append(f"-I{args.vcpkg_path}\\installed\\x64-windows\\include")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\investapi")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
@@ -233,6 +239,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtGui")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\simplecrypt\\build\\gen\\simplecrypt\\moc")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\simplecrypt")
 
     if "/libs/verticallabel/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
@@ -244,6 +251,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtGui")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\verticallabel\\build\\gen\\verticallabel\\moc")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\verticallabel")
 
     if "/libs/waitingspinner/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
@@ -255,6 +263,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtGui")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\waitingspinner\\build\\gen\\waitingspinner\\moc")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\waitingspinner")
 
     res.append(f"-I{args.qt_path}\\mkspecs\\win32-msvc")
     res.append("/clang:-isystem")
@@ -301,7 +310,6 @@ def _load_qtc_compile_commands(args):
 
         res.sort(key=lambda x: (x["file"], x["arguments"]))
 
-        # TODO: Remove it
         with open(args.qtc_commands, "w") as f:
             f.write(json.dumps(res, indent=4))
     except Exception as e:

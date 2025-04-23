@@ -1074,7 +1074,32 @@ jobs:
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
-          & python tools\py3\generate-compile-commands --os ${{ runner.os }} --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
+          switch ("${{ runner.os }}")
+          {
+            "Windows" {
+                  & python tools/py3/generate-compile-commands `
+                      --os Windows `
+                      --qt-path "${Env:GITHUB_WORKSPACE}\Qt\${Env:QT_VERSION}\msvc2022_64" `
+                      --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator-windows-x64-msvc-15.0.0" `
+                      --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip-1.5\install\include\QuaZip-Qt6-1.5" `
+                      --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
+                      --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-1.16.0" `
+                      --msvc-tools-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433" `
+                      --msvc-auxiliary-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary" `
+                      --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0" `
+                      --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
+              }
+              "Linux" {
+                  & python tools/py3/generate-compile-commands `
+                      --os Linux `
+                      --qt-path "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64" `
+                      --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-windows-x64-msvc-15.0.0" `
+                      --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip-1.5/install/include/QuaZip-Qt6-1.5" `
+                      --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
+                      --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-1.16.0" `
+                      --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
+              }
+          }
 
       # Generate doxygen
       - name: Generate doxygen
