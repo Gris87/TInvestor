@@ -1041,7 +1041,7 @@ jobs:
         uses: actions/cache@v4
         id: cache-doc
         with:
-          path: ./TInvestor-source/build/Desktop-Debug
+          path: ./TInvestor-source/build
           key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
 
       # Install required packages
@@ -1088,7 +1088,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: doc-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Debug
+          path: ./TInvestor-source/build
           retention-days: 1
           compression-level: 9
 
