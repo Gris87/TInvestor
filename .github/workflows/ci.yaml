@@ -1005,7 +1005,6 @@ jobs:
 
   # Generate documentation
   doc:
-    needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
     name: Documentation [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -1036,14 +1035,13 @@ jobs:
             ./TInvestor-source/app
             ./TInvestor-source/libs
             ./TInvestor-source/test
-            ./TInvestor-source/tools/py3/generate-compile-commands
 
       # Download/upload cache
       - name: Caching
         uses: actions/cache@v4
         id: cache-doc
         with:
-          path: ./artifacts
+          path: ./TInvestor-source/build/Desktop-Debug
           key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
 
       # Install required packages
@@ -1056,85 +1054,11 @@ jobs:
               "Windows" {
                   choco install doxygen.install
                   choco install graphviz
-                  choco install nodejs-lts
               }
               "Linux" {
                   sudo add-apt-repository ppa:bkryza/clang-uml
                   sudo apt-get update
-                  sudo apt-get install -y doxygen graphviz clang-uml nodejs npm
-              }
-          }
-
-          npm install -g @mermaid-js/mermaid-cli
-
-      # Download environment artifacts
-      - name: Download environment artifacts (Qt/ZLib/Quazip)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-qt-zlib-quazip-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Download environment artifacts
-      - name: Download environment artifacts (vcpkg)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-vcpkg-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Download build artifacts (Debug)
-      - name: Download build artifacts (Debug)
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: build-debug-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Debug
-
-      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - name: Checkout googletest
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: google/googletest
-          path: Qt/googletest-source
-          ref: ${{ env.GOOGLE_TEST_VERSION }}
-
-      # Generate compile_commands.json
-      - name: Generate compile_commands.json
-        if: steps.cache-doc.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Enter to TInvestor-source folder
-          Set-Location -Path "TInvestor-source"
-
-          switch ("${{ runner.os }}")
-          {
-            "Windows" {
-                  Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\" -Recurse -Force
-                  Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\" -Recurse -Force
-
-                  & python tools/py3/generate-compile-commands `
-                      --os Windows `
-                      --qt-path "${Env:GITHUB_WORKSPACE}\Qt\${Env:QT_VERSION}\msvc2022_64" `
-                      --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator-windows-x64-msvc-15.0.0" `
-                      --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip-1.5\install\include\QuaZip-Qt6-1.5" `
-                      --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
-                      --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-1.16.0" `
-                      --msvc-tools-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433" `
-                      --msvc-auxiliary-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary" `
-                      --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0" `
-                      --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
-              }
-              "Linux" {
-                  & python tools/py3/generate-compile-commands `
-                      --os Linux `
-                      --qt-path "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64" `
-                      --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-16.0.1" `
-                      --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip-1.5/install/include/QuaZip-Qt6-1.5" `
-                      --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
-                      --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-1.16.0" `
-                      --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
+                  sudo apt-get install -y doxygen graphviz
               }
           }
 
@@ -1159,33 +1083,12 @@ jobs:
               }
           }
 
-      # Generate clang-uml
-      - name: Generate clang-uml
-        if: steps.cache-doc.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Enter to TInvestor-source folder
-          Set-Location -Path "TInvestor-source"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}\TInvestor-source\3rdparty\clang-uml-0.6.1;${Env:PATH}"
-
-                  & ./make_clang_uml.bat --ci
-              }
-              "Linux" {
-                  & ./make_clang_uml.sh --ci
-              }
-          }
-
       # Upload artifacts
       - name: Upload artifacts
-        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: doc-${{ matrix.config.name }}
-          path: ./
+          path: ./TInvestor-source/build/Desktop-Debug
           retention-days: 1
           compression-level: 9
 
