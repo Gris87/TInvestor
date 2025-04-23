@@ -1074,6 +1074,8 @@ jobs:
           # Enter to TInvestor-source folder
           Set-Location -Path "TInvestor-source"
 
+          Set-PSDebug -Trace 2
+
           switch ("${{ runner.os }}")
           {
             "Windows" {
