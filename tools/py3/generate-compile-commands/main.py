@@ -90,7 +90,7 @@ def _get_arguments_for_file(args, file_path, duplicate_for_tests):
 def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res = []
 
-    app_or_test = "/app/src/" in file_path or "/app/build/gen/" or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+    app_or_test = "/app/src/" in file_path or "/test/main.cpp" in file_path or "/app/build/gen/" in file_path or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
 
     res.append("clang")
     res.append("-Wno-documentation-unknown-command")
@@ -296,7 +296,198 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res = []
 
+    app_or_test = "/app/src/" in file_path or "/test/main.cpp" in file_path or "/app/build/gen/" in file_path or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
+
     res.append("clang")
+    res.append("-Wno-documentation-unknown-command")
+    res.append("-Wno-unknown-warning-option")
+    res.append("-Wno-unknown-pragmas")
+    res.append("-nostdinc")
+    res.append("-nostdinc++")
+    res.append("-pipe")
+
+    if app_or_test and "/libs/" not in file_path:
+        res.append("-Wall")
+        res.append("-Wextra")
+        res.append("-Werror")
+
+    if duplicate_for_tests:
+        res.append("--coverage")
+
+    res.append("-g")
+
+    if not(app_or_test and "/libs/" not in file_path):
+        res.append("-fPIC")
+
+    res.append("-std=gnu++2a")
+    res.append("-Wall")
+    res.append("-Wextra")
+
+    if app_or_test and "/libs/" not in file_path:
+        res.append("-fPIC")
+        res.append("-D_REENTRANT")
+    else:
+        res.append("-w")
+
+    if "/libs/simplecrypt/" in file_path:
+        res.append("-D_REENTRANT")
+
+    if "/libs/verticallabel/" in file_path:
+        res.append("-D_REENTRANT")
+
+    if "/libs/waitingspinner/" in file_path:
+        res.append("-D_REENTRANT")
+
+    res.append("-fsyntax-only")
+    res.append("-m64")
+    res.append("--target=x86_64-linux-gnu")
+
+    if app_or_test and "/libs/" not in file_path:
+        res.append("-DUSE_SANDBOX")
+
+    res.append("-DQT_QML_DEBUG")
+
+    if app_or_test and "/libs/" not in file_path:
+        res.append("-DQT_WIDGETS_LIB")
+        res.append("-DQT_GUI_LIB")
+        res.append("-DQT_NETWORK_LIB")
+        res.append("-DQT_SQL_LIB")
+        res.append("-DQT_CORE_LIB")
+
+    if "/libs/simplecrypt/" in file_path:
+        res.append("-DQT_GUI_LIB")
+        res.append("-DQT_CORE_LIB")
+
+    if "/libs/verticallabel/" in file_path:
+        res.append("-DQT_WIDGETS_LIB")
+        res.append("-DQT_GUI_LIB")
+        res.append("-DQT_CORE_LIB")
+
+    if "/libs/waitingspinner/" in file_path:
+        res.append("-DQT_WIDGETS_LIB")
+        res.append("-DQT_GUI_LIB")
+        res.append("-DQT_CORE_LIB")
+
+    res.append("-DQ_CREATOR_RUN")
+
+    if app_or_test and "/libs/" not in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        if duplicate_for_tests:
+            res.append(f"-I{cwd}/test")
+
+        res.append(f"-I{cwd}/app")
+
+        if duplicate_for_tests:
+            res.append(f"-I{args.google_test_path}/googletest")
+            res.append(f"-I{args.google_test_path}/googletest/include")
+            res.append(f"-I{args.google_test_path}/googlemock")
+            res.append(f"-I{args.google_test_path}/googlemock/include")
+
+        res.append(f"-I{cwd}/libs/investapi")
+        res.append(f"-I{cwd}/libs/investapi/messages/generated")
+        res.append(f"-I{args.vcpkg_path}/installed/x64-linux/include")
+        res.append(f"-I{args.quazip_path}")
+        res.append(f"-I{cwd}/libs/simplecrypt")
+        res.append(f"-I{cwd}/libs/verticallabel")
+        res.append(f"-I{cwd}/libs/waitingspinner")
+        res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtWidgets")
+
+        if duplicate_for_tests:
+            res.append(f"-I{args.qt_path}/include/QtGui/6.9.0")
+            res.append(f"-I{args.qt_path}/include/QtGui/6.9.0/QtGui")
+
+        res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtNetwork")
+        res.append(f"-I{args.qt_path}/include/QtSql")
+
+        if duplicate_for_tests:
+            res.append(f"-I{args.qt_path}/include/QtCore/6.9.0")
+            res.append(f"-I{args.qt_path}/include/QtCore/6.9.0/QtCore")
+
+        res.append(f"-I{args.qt_path}/include/QtCore")
+
+        if duplicate_for_tests:
+            res.append(f"-I{cwd}/build/Desktop-Debug/test/build/gen/tests/moc")
+            res.append(f"-I{cwd}/build/Desktop-Debug/test/build/gen/tests/ui")
+            res.append(f"-I{cwd}/build/Desktop-Debug/test")
+        else:
+            res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/moc")
+            res.append(f"-I{cwd}/build/Desktop-Debug/app/build/gen/TInvestor/ui")
+            res.append(f"-I{cwd}/build/Desktop-Debug/app")
+
+    if "/libs/investapi/" in file_path:
+        res.append(f"-I{cwd}/libs/investapi")
+        res.append(f"-I{cwd}/libs/investapi/messages/generated")
+        res.append(f"-I{args.vcpkg_path}/installed/x64-linux/include")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/investapi")
+
+    if "/libs/simplecrypt/" in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+        res.append(f"-I{cwd}/libs/simplecrypt")
+        res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtCore")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/simplecrypt/build/gen/simplecrypt/moc")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/simplecrypt")
+
+    if "/libs/verticallabel/" in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+        res.append(f"-I{cwd}/libs/verticallabel")
+        res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtWidgets")
+        res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtCore")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/verticallabel/build/gen/verticallabel/moc")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/verticallabel")
+
+    if "/libs/waitingspinner/" in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+        res.append(f"-I{cwd}/libs/waitingspinner")
+        res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtWidgets")
+        res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtCore")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/waitingspinner/build/gen/waitingspinner/moc")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/waitingspinner")
+
+    res.append(f"-I{args.qt_path}/mkspecs/linux-g++")
+    res.append("-isystem")
+    res.append("/usr/include/c++/13")
+    res.append("-isystem")
+    res.append("/usr/include/x86_64-linux-gnu/c++/13")
+    res.append("-isystem")
+    res.append("/usr/include/c++/13/backward")
+    res.append("-isystem")
+    res.append("/usr/local/include")
+    res.append("-isystem")
+    res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/19/include")
+    res.append("-isystem")
+    res.append("/usr/include/x86_64-linux-gnu")
+    res.append("-isystem")
+    res.append("/usr/include")
+    res.append("-fmessage-length=0")
+    res.append("-fdiagnostics-show-note-include-stack")
+    res.append("-fretain-comments-from-system-headers")
+    res.append("-fmacro-backtrace-limit=0")
+    res.append("-ferror-limit=1000")
+    res.append("-x")
+
+    if file_path.endswith(".h"):
+        res.append("c++-header")
+    else:
+        res.append("c++")
+
+    res.append(file_path)
 
     return res
 
