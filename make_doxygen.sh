@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-mkdir build
+mkdir -p build
 
 doxygen
 

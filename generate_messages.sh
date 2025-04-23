@@ -33,8 +33,8 @@ done
 
 for file in `find -name \*.grpc.pb.\*`
 do
-    sed -i "s/namespace public/namespace public_/g" ${file}
-    sed -i "s/tinkoff::public::/tinkoff::public_::/g"   ${file}
+    sed -i "s/namespace public/namespace public_/g"   ${file}
+    sed -i "s/tinkoff::public::/tinkoff::public_::/g" ${file}
 done
 
 
