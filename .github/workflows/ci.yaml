@@ -1129,3 +1129,106 @@ jobs:
           path: ./release_upload_url.txt
           retention-days: 1
           compression-level: 9
+
+  # Publish Release
+  publish-release:
+    needs: [build-release, doc]
+    name: Publish Release [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Download build artifacts (Release)
+      - name: Download build artifacts (Release)
+        uses: thebrowsercompany/gha-download-tar-artifact@main
+        with:
+          name: build-release-${{ matrix.config.name }}
+          path: ./build-release
+
+      # Download documentation artifacts
+      - name: Download documentation artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: doc-${{ matrix.config.name }}
+          path: ./doc
+
+      # Archive result biraries
+      - name: Archive result biraries
+        shell: pwsh
+        run: |
+          switch ("${{ runner.os }}")
+          {
+              "Windows" {
+                  ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.zip"
+                  ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.zip"
+                  
+                  Push-Location build-release
+                  7z a "../${RELEASE_ARCHIVE_NAME}" *
+                  Pop-Location
+
+                  Push-Location doc
+                  7z a "../${DOCS_ARCHIVE_NAME}" *
+                  Pop-Location
+              }
+              "Linux" {
+                  ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.tar.xz"
+                  ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.tar.xz"
+              
+                  Push-Location build-release
+                  tar -c -f "../${RELEASE_ARCHIVE_NAME}" --xz -v *
+                  Pop-Location
+
+                  Push-Location doc
+                  tar -c -f "../${DOCS_ARCHIVE_NAME}" --xz -v *
+                  Pop-Location
+              }
+
+              Write-Output "RELEASE_ARCHIVE_NAME=${RELEASE_ARCHIVE_NAME}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+              Write-Output "DOCS_ARCHIVE_NAME=${DOCS_ARCHIVE_NAME}"       | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+          }
+
+      # Download release_upload_url.txt artifact
+      - name: Download release url
+        if: contains(github.ref, '/tags/')
+        uses: actions/download-artifact@v4
+        with:
+          name: release_upload_url.txt
+          path: ./
+
+      # Set RELEASE_URL environment variable
+      - name: Set RELEASE_URL environment variable
+        if: contains(github.ref, '/tags/')
+        shell: pwsh
+        run: |
+          ${RELEASE_URL} = Get-Content ./release_upload_url.txt
+          Write-Output "Release URL: ${RELEASE_URL}"
+          Write-Output "RELEASE_URL=${RELEASE_URL}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+
+      # Upload release artifacts
+      - name: Upload release artifacts
+        if: contains(github.ref, '/tags/')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.RELEASE_URL }}
+          asset_path: ./${{ env.RELEASE_ARCHIVE_NAME }}
+          asset_name: ${{ env.RELEASE_ARCHIVE_NAME }}
+          asset_content_type: application/zip
+
+      # Upload documentation artifacts
+      - name: Upload documentation artifacts
+        if: contains(github.ref, '/tags/')
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ env.RELEASE_URL }}
+          asset_path: ./${{ env.DOCS_ARCHIVE_NAME }}
+          asset_name: ${{ env.DOCS_ARCHIVE_NAME }}
+          asset_content_type: application/zip
