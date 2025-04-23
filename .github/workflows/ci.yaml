@@ -1096,7 +1096,8 @@ jobs:
   # Provides meta information for release.
   # This job is only used when github.ref contains /tags/
   # It should be first in order to upload release artifacts.
-  release:
+  create-release:
+    needs: [check-style, test, doc]
     name: Create release
     if: contains(github.ref, '/tags/')
     runs-on: ubuntu-latest
@@ -1132,8 +1133,9 @@ jobs:
 
   # Publish Release
   publish-release:
-    needs: [build-release, doc]
+    needs: [build-release, doc, create-release]
     name: Publish Release [${{ matrix.config.name }}]
+    if: contains(github.ref, '/tags/')
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -1187,14 +1189,13 @@ jobs:
                   tar -c -f "../${DOCS_ARCHIVE_NAME}" --xz -v *
                   Pop-Location
               }
-
-              Write-Output "RELEASE_ARCHIVE_NAME=${RELEASE_ARCHIVE_NAME}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-              Write-Output "DOCS_ARCHIVE_NAME=${DOCS_ARCHIVE_NAME}"       | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
           }
+
+          Write-Output "RELEASE_ARCHIVE_NAME=${RELEASE_ARCHIVE_NAME}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
+          Write-Output "DOCS_ARCHIVE_NAME=${DOCS_ARCHIVE_NAME}"       | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
 
       # Download release_upload_url.txt artifact
       - name: Download release url
-        if: contains(github.ref, '/tags/')
         uses: actions/download-artifact@v4
         with:
           name: release_upload_url.txt
@@ -1202,7 +1203,6 @@ jobs:
 
       # Set RELEASE_URL environment variable
       - name: Set RELEASE_URL environment variable
-        if: contains(github.ref, '/tags/')
         shell: pwsh
         run: |
           ${RELEASE_URL} = Get-Content ./release_upload_url.txt
@@ -1211,7 +1211,6 @@ jobs:
 
       # Upload release artifacts
       - name: Upload release artifacts
-        if: contains(github.ref, '/tags/')
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1223,7 +1222,6 @@ jobs:
 
       # Upload documentation artifacts
       - name: Upload documentation artifacts
-        if: contains(github.ref, '/tags/')
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
