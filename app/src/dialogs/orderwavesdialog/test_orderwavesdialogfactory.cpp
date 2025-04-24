@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/threads/orderbook/iorderbookthread_mock.h"
+#include "src/widgets/orderwaveswidget/iorderwaveswidget_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 
 
@@ -10,6 +11,7 @@
 using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::NotNull;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 
@@ -30,10 +32,13 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     Stock                                   stock;
 
+    StrictMock<OrderWavesWidgetMock>* orderWavesWidgetMock =
+        new StrictMock<OrderWavesWidgetMock>(); // Will be deleted in OrderWavesDialog constructor
+
     stock.meta.minPriceIncrement.units = 1;
     stock.meta.minPriceIncrement.nano  = 500000000;
 
-    EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull()));
+    EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull())).WillOnce(Return(orderWavesWidgetMock));
     EXPECT_CALL(orderBookThreadMock, setStock(&stock));
     EXPECT_CALL(orderBookThreadMock, run());
     EXPECT_CALL(orderBookThreadMock, terminateThread());

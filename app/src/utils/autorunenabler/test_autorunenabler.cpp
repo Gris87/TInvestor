@@ -4,13 +4,17 @@
 #include <QDir>
 #include <gtest/gtest.h>
 
+#include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
+#include "src/utils/fs/file/ifile_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
+using ::testing::Mock;
 using ::testing::Return;
 using ::testing::StrictMock;
 
@@ -71,5 +75,25 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
 #else
 TEST_F(Test_AutorunEnabler, Test_setEnabled)
 {
+    const InSequence seq;
+
+    StrictMock<DirMock>*  dirMock   = new StrictMock<DirMock>();  // Will be deleted in enable function
+    StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in enable function
+    StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in disable function
+
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
+    EXPECT_CALL(*dirMock, mkpath(QDir::homePath() + "/.config/autostart")).WillOnce(Return(true));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
+    EXPECT_CALL(*fileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock1, write(_)).WillOnce(Return(1));
+    EXPECT_CALL(*fileMock1, close());
+    enabler->setEnabled(true);
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
+    EXPECT_CALL(*fileMock2, exists()).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock2, remove()).WillOnce(Return(true));
+    enabler->setEnabled(false);
 }
 #endif

@@ -1,3 +1,6 @@
+Ubuntu:
+- Maximize dialogs
+- Double click on tray
 WTF with coverage on Windows
 WTF with release on Windows
 100% coverage
