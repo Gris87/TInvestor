@@ -63,6 +63,14 @@ using ::testing::StrictMock;
 
 
 
+#ifdef Q_OS_WINDOWS
+constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
+#else
+constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::Trigger;
+#endif
+
+
+
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, cppcoreguidelines-pro-type-static-cast-downcast, readability-function-cognitive-complexity)
 class Test_MainWindow : public ::testing::Test
 {
@@ -377,7 +385,7 @@ TEST_F(Test_MainWindow, Test_closeEvent)
 
 TEST_F(Test_MainWindow, Test_trayIconClicked)
 {
-    mainWindow->trayIconClicked(QSystemTrayIcon::DoubleClick);
+    mainWindow->trayIconClicked(DOUBLE_CLICK_REASON);
 
     ASSERT_EQ(mainWindow->isVisible(), true);
 }

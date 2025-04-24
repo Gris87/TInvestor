@@ -20,6 +20,12 @@ constexpr qint64 CLEANUP_INTERVAL                         = ONE_DAY;           /
 constexpr qint64 STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
 constexpr qint64 STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
 
+#ifdef Q_OS_WINDOWS
+constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
+#else
+constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::Trigger;
+#endif
+
 
 
 MainWindow::MainWindow(
@@ -233,7 +239,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::trayIconClicked(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::DoubleClick)
+    if (reason == DOUBLE_CLICK_REASON)
     {
         qDebug() << "Tray icon double clicked";
 
