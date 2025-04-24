@@ -138,4 +138,27 @@ TEST(Test_Stock, Test_assign)
     ASSERT_NEAR(stock2.data.at(0).price,                       13.0f, 0.0001f);
     // clang-format on
 }
+
+TEST(Test_Stock, Test_lastPrice)
+{
+    Stock stock;
+
+    ASSERT_NEAR(stock.lastPrice(), 0.0f, 0.0001f);
+
+    StockData            stockData1;
+    StockOperationalData stockData2;
+
+    stockData1.timestamp = 1;
+    stockData1.quantity  = 2;
+    stockData1.price     = 3.0f;
+    stockData2.timestamp = 4;
+    stockData2.price     = 5.0f;
+
+    stock.data.append(stockData1);
+    ASSERT_NEAR(stock.lastPrice(), 3.0f, 0.0001f);
+
+    stock.operational.detailedData.append(stockData2);
+    ASSERT_NEAR(stock.lastPrice(), 5.0f, 0.0001f);
+}
+
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)

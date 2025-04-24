@@ -18,6 +18,8 @@ struct Stock
 
     Stock& operator=(const Stock& another);
 
+    float lastPrice() const;
+
     QMutex*          mutex;
     StockMeta        meta;
     StockOperational operational;

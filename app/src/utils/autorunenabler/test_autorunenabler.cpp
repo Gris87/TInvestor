@@ -14,7 +14,6 @@
 
 using ::testing::_;
 using ::testing::InSequence;
-using ::testing::Mock;
 using ::testing::Return;
 using ::testing::StrictMock;
 
@@ -36,6 +35,8 @@ protected:
     {
         delete enabler;
         delete autorunSettingsEditorMock;
+        delete dirFactoryMock;
+        delete fileFactoryMock;
     }
 
     AutorunEnabler*                 enabler;

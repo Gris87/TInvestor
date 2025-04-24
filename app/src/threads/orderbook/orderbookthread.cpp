@@ -85,9 +85,7 @@ void OrderBookThread::handleGetOrderBookResponse(const std::shared_ptr<tinkoff::
     OrderBook orderBook;
 
     orderBook.timestamp = QDateTime::currentMSecsSinceEpoch();
-    orderBook.price     = !mStock->operational.detailedData.isEmpty()
-                              ? mStock->operational.detailedData.constLast().price
-                              : (!mStock->data.isEmpty() ? mStock->data.constLast().price : 0);
+    orderBook.price     = mStock->lastPrice();
 
     orderBook.bids.reserve(tinkoffOrderBook->bids_size());
     orderBook.bids.resizeForOverwrite(tinkoffOrderBook->bids_size());
@@ -121,9 +119,7 @@ void OrderBookThread::handleOrderBook(const tinkoff::OrderBook& tinkoffOrderBook
     OrderBook orderBook;
 
     orderBook.timestamp = timeToTimestamp(tinkoffOrderBook.time());
-    orderBook.price     = !mStock->operational.detailedData.isEmpty()
-                              ? mStock->operational.detailedData.constLast().price
-                              : (!mStock->data.isEmpty() ? mStock->data.constLast().price : 0);
+    orderBook.price     = mStock->lastPrice();
 
     orderBook.bids.reserve(tinkoffOrderBook.bids_size());
     orderBook.bids.resizeForOverwrite(tinkoffOrderBook.bids_size());

@@ -34,3 +34,9 @@ Stock& Stock::operator=(const Stock& another)
 
     return *this;
 }
+
+float Stock::lastPrice() const
+{
+    return !operational.detailedData.isEmpty() ? operational.detailedData.constLast().price
+                                               : (!data.isEmpty() ? data.constLast().price : 0);
+}
