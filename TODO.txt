@@ -1,8 +1,5 @@
-Ubuntu:
-- Maximize dialogs
 WTF with coverage on Windows
 WTF with release on Windows
-100% coverage
 Tidy nightly
 Double check what was done since 2f582a69db891bdf1f5171c7293251a9e8f753ae
 

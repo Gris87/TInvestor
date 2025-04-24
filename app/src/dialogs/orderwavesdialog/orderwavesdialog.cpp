@@ -29,9 +29,10 @@ OrderWavesDialog::OrderWavesDialog(
     ui->setupUi(this);
 
     setWindowFlags(
-        Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMaximizeButtonHint |
+        Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMaximizeButtonHint |
         Qt::WindowCloseButtonHint
     );
+    setWindowModality(Qt::ApplicationModal);
 
     ui->nameLabel->setText(mStock->meta.name);
 

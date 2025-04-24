@@ -30,7 +30,7 @@ StockTableItemWidget::~StockTableItemWidget()
 void StockTableItemWidget::enterEvent(QEnterEvent* event)
 {
     hoverTextWidget = new QLabel();
-    hoverTextWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::WindowTransparentForInput);
+    hoverTextWidget->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
     hoverTextWidget->setText(mFullText);
 
     const QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
