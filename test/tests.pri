@@ -68,8 +68,6 @@ SOURCES += \
     src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
     src/utils/messagebox/test_messagebox.cpp \
-    src/utils/processrunner/test_processrunner.cpp \
-    src/utils/processrunner/test_processrunnerfactory.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
@@ -159,8 +157,6 @@ HEADERS += \
     src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
     src/utils/http/ihttpclient_mock.h \
     src/utils/messagebox/imessagebox_mock.h \
-    src/utils/processrunner/iprocessrunner_mock.h \
-    src/utils/processrunner/iprocessrunnerfactory_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidget_mock.h \
