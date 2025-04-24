@@ -17,22 +17,27 @@
 <context>
     <name>AuthDialog</name>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="26"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="14"/>
         <source>Authorization</source>
         <translation>Авторизация</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="47"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You have to provide full access token (for a single account or all accounts). Please check &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;for more information&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ты должен предоставить токен с полным доступом (для отдельного счёта или для всех счетов). Почитай &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;для получения информации&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="35"/>
+        <source>You have to provide full access token (for a single account or all accounts).</source>
+        <translation>Ты должен предоставить токен с полным доступом (для отдельного счёта или для всех счетов).</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="62"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="45"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Please check &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;for more information&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Почитай &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;для получения информации&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="60"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="96"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="94"/>
         <source>Login</source>
         <translation>Войти</translation>
     </message>
@@ -164,13 +169,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="227"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="481"/>
+        <location filename="../../src/main/mainwindow.cpp" line="495"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -181,7 +186,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="515"/>
+        <location filename="../../src/main/mainwindow.cpp" line="529"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -242,40 +247,40 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="221"/>
+        <location filename="../../src/main/mainwindow.cpp" line="228"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="279"/>
+        <location filename="../../src/main/mainwindow.cpp" line="293"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="368"/>
-        <location filename="../../src/main/mainwindow.cpp" line="553"/>
+        <location filename="../../src/main/mainwindow.cpp" line="382"/>
+        <location filename="../../src/main/mainwindow.cpp" line="567"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="467"/>
-        <location filename="../../src/main/mainwindow.cpp" line="474"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
+        <location filename="../../src/main/mainwindow.cpp" line="488"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="474"/>
+        <location filename="../../src/main/mainwindow.cpp" line="488"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="501"/>
-        <location filename="../../src/main/mainwindow.cpp" line="508"/>
+        <location filename="../../src/main/mainwindow.cpp" line="515"/>
+        <location filename="../../src/main/mainwindow.cpp" line="522"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="508"/>
+        <location filename="../../src/main/mainwindow.cpp" line="522"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -392,22 +397,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="102"/>
+        <location filename="../../src/main.cpp" line="101"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="102"/>
+        <location filename="../../src/main.cpp" line="101"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="114"/>
+        <location filename="../../src/main.cpp" line="113"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="114"/>
+        <location filename="../../src/main.cpp" line="113"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -723,12 +728,12 @@
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="312"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
         <source>Filter active</source>
         <translation>Фильтр активен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="317"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="323"/>
         <source>Filter inactive</source>
         <translation>Фильтр неактивен</translation>
     </message>
