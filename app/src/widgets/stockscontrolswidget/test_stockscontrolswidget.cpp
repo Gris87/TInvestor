@@ -8,6 +8,14 @@
 
 
 
+#ifdef Q_OS_WINDOWS
+const QSize DEFAULT_MAXIMUM_SIZE = QSize(250, 16777215);
+#else
+const QSize DEFAULT_MAXIMUM_SIZE = QSize(270, 16777215);
+#endif
+
+
+
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -584,7 +592,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_paybackToDoubleSpinBox_valueChanged)
 
 TEST_F(Test_StocksControlsWidget, Test_on_hideButton_clicked)
 {
-    ASSERT_EQ(stocksControlsWidget->maximumSize(), QSize(250, 16777215));
+    ASSERT_EQ(stocksControlsWidget->maximumSize(), DEFAULT_MAXIMUM_SIZE);
     ASSERT_EQ(stocksControlsWidget->ui->stackedWidget->currentWidget(), stocksControlsWidget->ui->controlsVisiblePage);
 
     stocksControlsWidget->ui->hideButton->click();
@@ -598,7 +606,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_hideButton_clicked)
 
     stocksControlsWidget->ui->hideButton->click();
 
-    ASSERT_EQ(stocksControlsWidget->maximumSize(), QSize(250, 16777215));
+    ASSERT_EQ(stocksControlsWidget->maximumSize(), DEFAULT_MAXIMUM_SIZE);
     ASSERT_EQ(stocksControlsWidget->ui->stackedWidget->currentWidget(), stocksControlsWidget->ui->controlsVisiblePage);
 
     stocksControlsWidget->ui->priceCheckBox->setChecked(true);
