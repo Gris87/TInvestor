@@ -12,6 +12,7 @@ if [ ${RESULT_CODE} -eq 0 ]; then
         --capture \
         --include app/src/* \
         --exclude */test_* \
+        --exclude */*_mock.h \
         --exclude */messagebox.cpp \
         --exclude */httpclient.cpp \
         --directory gen/tests/objs \

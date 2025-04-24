@@ -312,7 +312,10 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append("-Werror")
 
     if duplicate_for_tests:
-        res.append("--coverage")
+        res.append("-fprofile-arcs")
+        res.append("-ftest-coverage")
+        res.append("-fno-elide-constructors")
+        res.append("-fno-default-inline")
 
     res.append("-g")
 

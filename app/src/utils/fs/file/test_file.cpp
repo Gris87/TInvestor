@@ -184,4 +184,19 @@ TEST_F(Test_File, Test_exists)
 
     ASSERT_EQ(file->exists(), true);
 }
+
+TEST_F(Test_File, Test_remove)
+{
+    ASSERT_EQ(file->exists(), false);
+    ASSERT_EQ(file->remove(), false);
+
+    ASSERT_TRUE(qFile->open(QIODevice::WriteOnly));
+    ASSERT_EQ(qFile->write("TEST"), 4);
+    qFile->close();
+
+    ASSERT_EQ(file->exists(), true);
+
+    ASSERT_EQ(file->remove(), true);
+    ASSERT_EQ(file->exists(), false);
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

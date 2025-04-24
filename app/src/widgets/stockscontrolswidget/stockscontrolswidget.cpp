@@ -33,6 +33,7 @@ StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, ISetti
     qDebug() << "Create StocksControlsWidget";
 
     ui->setupUi(this);
+    setMaximumSize(VISIBLE_WIDTH, MAXIMUM_HEIGHT);
 
     dateChangeDelayTimer.setInterval(DATE_CHANGE_DELAY);
     filterChangeDelayTimer.setInterval(FILTER_CHANGE_DELAY);

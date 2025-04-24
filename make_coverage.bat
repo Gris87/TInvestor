@@ -7,6 +7,7 @@ if %RESULT_CODE% EQU 0 (
     OpenCppCoverage ^
         --sources app\src\ ^
         --excluded_sources test_* ^
+        --excluded_sources *_mock.h ^
         --excluded_sources messagebox.cpp ^
         --excluded_sources httpclient.cpp ^
         --export_type html:..\..\..\CoverageReport ^

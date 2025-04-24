@@ -29,7 +29,7 @@ win32-msvc* {
 # Compile with coverage - BEGIN
 linux* {
     CONFIG (debug, debug|release) {
-        QMAKE_CXXFLAGS += "--coverage"
+        QMAKE_CXXFLAGS += "-fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline"
         LIBS           += "-lgcov"
     }
 }
