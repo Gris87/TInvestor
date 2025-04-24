@@ -18,6 +18,7 @@ echo "Type=Application"                                    >> ${DESKTOP_FILE}
 echo "Version=1.0"                                         >> ${DESKTOP_FILE}
 echo "Name=TInvestor"                                      >> ${DESKTOP_FILE}
 echo "GenericName=T-Bank Investment trading robot"         >> ${DESKTOP_FILE}
+echo "Comment=T-Bank Investment trading robot"             >> ${DESKTOP_FILE}
 echo "Path=${CURRENT_DIR}"                                 >> ${DESKTOP_FILE}
 echo "Exec=env LD_LIBRARY_PATH=${CURRENT_DIR} ./TInvestor" >> ${DESKTOP_FILE}
 echo "Icon=TInvestor"                                      >> ${DESKTOP_FILE}

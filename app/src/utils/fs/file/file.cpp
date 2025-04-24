@@ -55,3 +55,8 @@ bool File::exists()
 {
     return mFile.exists();
 }
+
+bool File::remove()
+{
+    return mFile.remove();
+}

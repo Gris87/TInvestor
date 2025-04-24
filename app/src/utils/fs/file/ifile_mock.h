@@ -28,4 +28,5 @@ public:
     MOCK_METHOD(qint64, size, (), (override));
     MOCK_METHOD(void, close, (), (override));
     MOCK_METHOD(bool, exists, (), (override));
+    MOCK_METHOD(bool, remove, (), (override));
 };

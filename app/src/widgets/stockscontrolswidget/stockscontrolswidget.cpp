@@ -13,8 +13,13 @@ constexpr qint64 DATE_CHANGE_DELAY   = MS_IN_SECOND; // 1 second
 constexpr qint64 FILTER_CHANGE_DELAY = MS_IN_SECOND; // 1 second
 constexpr qint64 TURNOVER_KILOS      = 1000;         // 1K rubles
 constexpr int    HIDDEN_WIDTH        = 24;
-constexpr int    VISIBLE_WIDTH       = 250;
 constexpr int    MAXIMUM_HEIGHT      = 16777215;
+
+#ifdef Q_OS_WINDOWS
+constexpr int VISIBLE_WIDTH = 240;
+#else
+constexpr int VISIBLE_WIDTH = 270;
+#endif
 
 
 

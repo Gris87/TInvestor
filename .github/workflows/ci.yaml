@@ -1168,8 +1168,8 @@ jobs:
               "Windows" {
                   ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.zip"
                   ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.zip"
-                  
-                  Push-Location build-release
+
+                  Push-Location build-release/app/build
                   7z a "../${RELEASE_ARCHIVE_NAME}" *
                   Pop-Location
 
@@ -1180,8 +1180,8 @@ jobs:
               "Linux" {
                   ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.tar.xz"
                   ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.tar.xz"
-              
-                  Push-Location build-release
+
+                  Push-Location build-release/app/build
                   tar -c -f "../${RELEASE_ARCHIVE_NAME}" --xz -v *
                   Pop-Location
 

@@ -25,6 +25,7 @@ public:
     qint64     size() override;
     void       close() override;
     bool       exists() override;
+    bool       remove() override;
 
 private:
     QFile mFile;

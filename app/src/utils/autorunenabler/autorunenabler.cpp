@@ -10,12 +10,10 @@ const QString AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
 
 
 
-AutorunEnabler::AutorunEnabler(
-    ISettingsEditor* autorunSettingsEditor, IProcessRunnerFactory* processRunnerFactory, IFileFactory* fileFactory
-) :
+AutorunEnabler::AutorunEnabler(ISettingsEditor* autorunSettingsEditor, IDirFactory* dirFactory, IFileFactory* fileFactory) :
     IAutorunEnabler(),
     mAutorunSettingsEditor(autorunSettingsEditor),
-    mProcessRunnerFactory(processRunnerFactory),
+    mDirFactory(dirFactory),
     mFileFactory(fileFactory)
 {
     qDebug() << "Create AutorunEnabler";
@@ -54,106 +52,45 @@ void AutorunEnabler::disable()
 #else
 void AutorunEnabler::enable()
 {
-    const QString rebootLine =
-        QString("@reboot sh -c \"cd %1 && LD_LIBRARY_PATH=%1 ./TInvestor --autorun\"").arg(qApp->applicationDirPath());
+    const QString appDir = qApp->applicationDirPath();
 
-    const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
-    process1->setStandardOutputFile("/tmp/TInvestor_autorun_cron");
-    process1->start("crontab", QStringList() << "-l");
+    bool ok = dir->mkpath(QDir::homePath() + "/.config/autostart");
+    Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to create dir");
 
-    if (process1->waitForFinished())
-    {
-        const std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
+    const std::shared_ptr<IFile> file = mFileFactory->newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop");
 
-        if (cronFile->open(QIODevice::ReadOnly))
-        {
-            QString content = QString::fromUtf8(cronFile->readAll());
-            cronFile->close();
+    ok = file->open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to create file");
 
-            if (content == "")
-            {
-                content =
-                    "# Edit this file to introduce tasks to be run by cron.\n# \n# Each task to run has to be defined through a "
-                    "single line\n# indicating with different fields when the task will be run\n# and what command to run for "
-                    "the task\n# \n# To define the time you can provide concrete values for\n# minute (m), hour (h), day of "
-                    "month (dom), month (mon),\n# and day of week (dow) or use '*' in these fields (for 'any').\n# \n# Notice "
-                    "that tasks will be started based on the cron's system\n# daemon's notion of time and timezones.\n# \n# "
-                    "Output of the crontab jobs (including errors) is sent through\n# email to the user the crontab file belongs "
-                    "to (unless redirected).\n# \n# For example, you can run a backup of all your user accounts\n# at 5 a.m "
-                    "every week with:\n# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/\n# \n# For more information see the "
-                    "manual pages of crontab(5) and cron(8)\n# \n# m h  dom mon dow   command\n";
-            }
-            else
-            {
-                const QStringList lines = content.split('\n');
+    QString content = "";
 
-                if (lines.contains(rebootLine))
-                {
-                    return;
-                }
-            }
+    content += "[Desktop Entry]\n";
+    content += "Type=Application\n";
+    content += "Version=1.0\n";
+    content += "Name=TInvestor\n";
+    content += "GenericName=T-Bank Investment trading robot\n";
+    content += "Comment=T-Bank Investment trading robot\n";
+    content += QString("Path=%1\n").arg(appDir);
+    content += QString("Exec=env LD_LIBRARY_PATH=%1 ./TInvestor --autorun\n").arg(appDir);
+    content += "Icon=TInvestor\n";
+    content += "Terminal=false\n";
+    content += "Categories=Investment;\n";
+    content += "X-GNOME-Autostart-enabled=true\n";
 
-            content += rebootLine;
-            content += "\n";
-
-            bool ok = cronFile->open(QIODevice::WriteOnly);
-            Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to open file");
-
-            cronFile->write(content.toUtf8());
-            cronFile->close();
-
-            const std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
-
-            process2->start("crontab", QStringList() << "/tmp/TInvestor_autorun_cron");
-
-            ok = process2->waitForFinished();
-            Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to update cron");
-        }
-    }
+    file->write(content.toUtf8());
+    file->close();
 }
 
 void AutorunEnabler::disable()
 {
-    const QString rebootLine =
-        QString("@reboot sh -c \"cd %1 && LD_LIBRARY_PATH=%1 ./TInvestor --autorun\"").arg(qApp->applicationDirPath());
+    const std::shared_ptr<IFile> file = mFileFactory->newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop");
 
-    const std::shared_ptr<IProcessRunner> process1 = mProcessRunnerFactory->newInstance();
-
-    process1->setStandardOutputFile("/tmp/TInvestor_autorun_cron");
-    process1->start("crontab", QStringList() << "-l");
-
-    if (process1->waitForFinished())
+    if (file->exists())
     {
-        const std::shared_ptr<IFile> cronFile = mFileFactory->newInstance("/tmp/TInvestor_autorun_cron");
-
-        if (cronFile->open(QIODevice::ReadOnly))
-        {
-            QString content = QString::fromUtf8(cronFile->readAll());
-            cronFile->close();
-
-            QStringList lines = content.split('\n');
-
-            if (lines.removeAll(rebootLine) == 0)
-            {
-                return;
-            }
-
-            content = lines.join('\n');
-
-            bool ok = cronFile->open(QIODevice::WriteOnly);
-            Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to open file");
-
-            cronFile->write(content.toUtf8());
-            cronFile->close();
-
-            const std::shared_ptr<IProcessRunner> process2 = mProcessRunnerFactory->newInstance();
-
-            process2->start("crontab", QStringList() << "/tmp/TInvestor_autorun_cron");
-
-            ok = process2->waitForFinished();
-            Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to update cron");
-        }
+        const bool ok = file->remove();
+        Q_ASSERT_X(ok, "AutorunEnabler::disable()", "Failed to delete file");
     }
 }
 #endif

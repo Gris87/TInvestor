@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
-    <height>660</height>
+    <width>270</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="maximumSize">
    <size>
-    <width>250</width>
+    <width>270</width>
     <height>16777215</height>
    </size>
   </property>
@@ -64,8 +64,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>249</width>
-            <height>614</height>
+            <width>313</width>
+            <height>554</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
