@@ -111,7 +111,8 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Zc:externConstexpr")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-WX")
+        if args.target == "build":
+            res.append("-WX")
 
     res.append("-bigobj")
     res.append("-Zi")
@@ -119,17 +120,18 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-clang:-std=c++20")
     res.append("-utf-8")
 
-    if app_or_test and "/libs/" not in file_path:
-        res.append("-W3")
-        res.append("-w34100")
-        res.append("-w34189")
-        res.append("-w44456")
-        res.append("-w44457")
-        res.append("-w44458")
-        res.append("-wd4577")
-        res.append("-wd4467")
-    else:
-        res.append("-w")
+    if args.target == "build":
+        if app_or_test and "/libs/" not in file_path:
+            res.append("-W3")
+            res.append("-w34100")
+            res.append("-w34189")
+            res.append("-w44456")
+            res.append("-w44457")
+            res.append("-w44458")
+            res.append("-wd4577")
+            res.append("-wd4467")
+        else:
+            res.append("-w")
 
     res.append("-EHsc")
     res.append("/Zs")
@@ -170,15 +172,19 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_CORE_LIB")
 
-    res.append("-DQ_CREATOR_RUN")
+    if args.target == "build":
+        res.append("-DQ_CREATOR_RUN")
+
     res.append("-D__FUNCSIG__=\"void __cdecl someLegalAndLongishFunctionNameThatWorksAroundQTCREATORBUG-24580(void)\"")
     res.append("-D__FUNCTION__=\"someLegalAndLongishFunctionNameThatWorksAroundQTCREATORBUG-24580\"")
     res.append("-D__FUNCDNAME__=\"?someLegalAndLongishFunctionNameThatWorksAroundQTCREATORBUG-24580@@YAXXZ\"")
 
     if app_or_test and "/libs/" not in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         if duplicate_for_tests:
             res.append(f"-I{cwd}\\test")
@@ -232,8 +238,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
         res.append(f"-I{cwd}\\libs\\simplecrypt")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtGui")
@@ -243,8 +252,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     if "/libs/verticallabel/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
         res.append(f"-I{cwd}\\libs\\verticallabel")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtWidgets")
@@ -255,8 +267,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     if "/libs/waitingspinner/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
         res.append(f"-I{cwd}\\libs\\waitingspinner")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtWidgets")
@@ -282,12 +297,20 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append(f"/clang:{args.windows_kits_path}\\winrt")
     res.append("/clang:-isystem")
     res.append(f"/clang:{args.windows_kits_path}\\cppwinrt")
-    res.append("/clang:-fmessage-length=0")
-    res.append("/clang:-fdiagnostics-show-note-include-stack")
-    res.append("/clang:-fretain-comments-from-system-headers")
-    res.append("-fmacro-backtrace-limit=0")
-    res.append("-ferror-limit=1000")
+
+    if args.target == "build":
+        res.append("/clang:-fmessage-length=0")
+        res.append("/clang:-fdiagnostics-show-note-include-stack")
+        res.append("/clang:-fretain-comments-from-system-headers")
+        res.append("-fmacro-backtrace-limit=0")
+        res.append("-ferror-limit=1000")
+
     res.append("/TP")
+
+    if file_path.endswith(".h"):
+        if args.target != "build":
+            res.append("-Wno-pragma-once-outside-header")
+
     res.append(file_path.replace("/", "\\"))
 
     return res
@@ -307,9 +330,10 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("-pipe")
 
     if app_or_test and "/libs/" not in file_path:
-        res.append("-Wall")
-        res.append("-Wextra")
-        res.append("-Werror")
+        if args.target == "build":
+            res.append("-Wall")
+            res.append("-Wextra")
+            res.append("-Werror")
 
     if duplicate_for_tests:
         res.append("-fprofile-arcs")
@@ -323,14 +347,17 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append("-fPIC")
 
     res.append("-std=gnu++2a")
-    res.append("-Wall")
-    res.append("-Wextra")
+
+    if args.target == "build":
+        res.append("-Wall")
+        res.append("-Wextra")
 
     if app_or_test and "/libs/" not in file_path:
         res.append("-fPIC")
         res.append("-D_REENTRANT")
     else:
-        res.append("-w")
+        if args.target == "build":
+            res.append("-w")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-D_REENTRANT")
@@ -371,12 +398,15 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_CORE_LIB")
 
-    res.append("-DQ_CREATOR_RUN")
+    if args.target == "build":
+        res.append("-DQ_CREATOR_RUN")
 
     if app_or_test and "/libs/" not in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         if duplicate_for_tests:
             res.append(f"-I{cwd}/test")
@@ -430,8 +460,11 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
         res.append(f"-I{cwd}/libs/simplecrypt")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtGui")
@@ -441,8 +474,11 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     if "/libs/verticallabel/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
         res.append(f"-I{cwd}/libs/verticallabel")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtWidgets")
@@ -453,8 +489,11 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     if "/libs/waitingspinner/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
-        res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
         res.append(f"-I{cwd}/libs/waitingspinner")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtWidgets")
@@ -464,29 +503,40 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/waitingspinner")
 
     res.append(f"-I{args.qt_path}/mkspecs/linux-g++")
-    res.append("-isystem")
-    res.append("/usr/include/c++/13")
-    res.append("-isystem")
-    res.append("/usr/include/x86_64-linux-gnu/c++/13")
-    res.append("-isystem")
-    res.append("/usr/include/c++/13/backward")
-    res.append("-isystem")
-    res.append("/usr/local/include")
+
+    if not duplicate_for_tests:
+        res.append("-isystem")
+        res.append("/usr/include/c++/13")
+        res.append("-isystem")
+        res.append("/usr/include/x86_64-linux-gnu/c++/13")
+        res.append("-isystem")
+        res.append("/usr/include/c++/13/backward")
+        res.append("-isystem")
+        res.append("/usr/local/include")
+
     res.append("-isystem")
     res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/19/include")
-    res.append("-isystem")
-    res.append("/usr/include/x86_64-linux-gnu")
-    res.append("-isystem")
-    res.append("/usr/include")
-    res.append("-fmessage-length=0")
-    res.append("-fdiagnostics-show-note-include-stack")
-    res.append("-fretain-comments-from-system-headers")
-    res.append("-fmacro-backtrace-limit=0")
-    res.append("-ferror-limit=1000")
+
+    if not duplicate_for_tests:
+        res.append("-isystem")
+        res.append("/usr/include/x86_64-linux-gnu")
+        res.append("-isystem")
+        res.append("/usr/include")
+
+    if args.target == "build":
+        res.append("-fmessage-length=0")
+        res.append("-fdiagnostics-show-note-include-stack")
+        res.append("-fretain-comments-from-system-headers")
+        res.append("-fmacro-backtrace-limit=0")
+        res.append("-ferror-limit=1000")
+
     res.append("-x")
 
     if file_path.endswith(".h"):
         res.append("c++-header")
+
+        if args.target != "build":
+            res.append("-Wno-pragma-once-outside-header")
     else:
         res.append("c++")
 
@@ -543,6 +593,14 @@ def main():
         choices=["Windows", "Linux"],
         default="Windows",
         help="Operation system",
+    )
+    parser.add_argument(
+        "--target",
+        dest="target",
+        type=str,
+        choices=["build", "clang-tidy", "clazy"],
+        default="build",
+        help="Target",
     )
     parser.add_argument(
         "--qt-path",
