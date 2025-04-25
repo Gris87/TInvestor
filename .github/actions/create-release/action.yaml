@@ -1,5 +1,9 @@
 name: create-release
 description: Create release
+inputs:
+  github-token:
+    description: GitHub REST API access token.
+    required: true
 runs:
   using: "composite"
   steps:
@@ -8,7 +12,7 @@ runs:
       id: create-release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}

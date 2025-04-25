@@ -1,5 +1,9 @@
 name: test
 description: Test
+inputs:
+  gist-token:
+    description: GitHub REST API access token.
+    required: true
 runs:
   using: "composite"
   steps:
@@ -123,7 +127,7 @@ runs:
       uses: gaelgirodon/ci-badges-action@v1
       with:
         gist-id: ${{ env.GIST_ID }}
-        token: ${{ secrets.GIST_TOKEN }}
+        token: ${{ inputs.gist-token }}
         prefix: TInvestor-${{ runner.os }}
 
     # Upload artifacts

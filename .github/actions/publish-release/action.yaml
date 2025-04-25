@@ -1,5 +1,9 @@
 name: publish-release
 description: Publish Release
+inputs:
+  github-token:
+    description: GitHub REST API access token.
+    required: true
 runs:
   using: "composite"
   steps:
@@ -71,7 +75,7 @@ runs:
     - name: Upload release artifacts
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         upload_url: ${{ env.RELEASE_URL }}
         asset_path: ./${{ env.RELEASE_ARCHIVE_NAME }}
@@ -82,7 +86,7 @@ runs:
     - name: Upload documentation artifacts
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
       with:
         upload_url: ${{ env.RELEASE_URL }}
         asset_path: ./${{ env.DOCS_ARCHIVE_NAME }}
