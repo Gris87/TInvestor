@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-from colorama import just_fix_windows_console
+from colorama import just_fix_windows_console, Fore, Style
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -36,11 +36,17 @@ def _execute_commands(commands):
     res = True
 
     with ThreadPoolExecutor(os.cpu_count()) as executor:
-        for result, lines in executor.map(_execute_command, commands):
-            res &= result
+        for file_path, result, lines in executor.map(_execute_command, commands):
+            print(f"Analyzed {file_path}")
 
-            for line in lines:
-                print(line)
+            if result:
+                for line in lines:
+                    print(line)
+            else:
+                res = False
+
+                for line in lines:
+                    print(Fore.RED + line + Style.RESET_ALL)
 
     return res
 
@@ -63,7 +69,7 @@ def _execute_command(command):
 
     process.wait()
 
-    return process.returncode == 0, lines
+    return command[-1], process.returncode == 0, lines
 
 
 def main():
