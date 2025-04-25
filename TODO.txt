@@ -1,11 +1,13 @@
 WTF with release on Windows
 Tidy nightly
+Clazy nightly
+README
 Double check what was done since 2f582a69db891bdf1f5171c7293251a9e8f753ae
 
 Buy less than 1% from turnover
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes
-Sellf if raise more than 2% and price change in range 0-1% during 30 minutes
+Sell if raise more than 2% and price change in range 0-1% during 30 minutes
 Put buy ticket always with -5% price (for unexpected selling) each minute
 Put tratiling tickets on market start/end (There are ~4 times - 00:00 02:00 07:00 10:00)
 Buy if there is a big fall from 24h ago (at the end of the day)
