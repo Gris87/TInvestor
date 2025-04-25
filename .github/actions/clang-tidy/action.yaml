@@ -46,6 +46,16 @@ runs:
       if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-windows-x64-msvc-${Env:QTC_VERSION}/bin/clang/bin;${Env:PATH}"
+            }
+            "Linux" {
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-${Env:QTC_VERSION/libexec/qtcreator/clang/bin:${Env:PATH}"
+            }
+        }
+
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
 

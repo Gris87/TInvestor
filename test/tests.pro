@@ -27,7 +27,7 @@ win32-msvc* {
 # Extend number of sections - END
 
 # Compile with coverage - BEGIN
-linux* {
+linux-g++* {
     CONFIG (debug, debug|release) {
         QMAKE_CXXFLAGS += "-fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline"
         LIBS           += "-lgcov"
