@@ -26,14 +26,12 @@ jobs:
       fail-fast: false
 
     steps:
-      # Install required packages
-      - name: System packages
-        if: steps.cache-env.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-            "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update }
-            "macOS"   { brew update }
-          }
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-actions
+
+      # Use local env-qt-zlib-quazip action
+      - name: Use local env-qt-zlib-quazip action
+        uses: TInvestor-actions/.github/actions/env-qt-zlib-quazip
