@@ -49,6 +49,8 @@ runs:
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
 
+        & python tools/py3/run-clang-tidy
+
     # Finish
     - name: Finish
       shell: pwsh
