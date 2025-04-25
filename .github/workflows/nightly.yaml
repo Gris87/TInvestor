@@ -34,4 +34,4 @@ jobs:
 
       # Use local env-qt-zlib-quazip action
       - name: Use local env-qt-zlib-quazip action
-        uses: TInvestor-actions/.github/actions/env-qt-zlib-quazip
+        uses: ./TInvestor-actions/.github/actions/env-qt-zlib-quazip
