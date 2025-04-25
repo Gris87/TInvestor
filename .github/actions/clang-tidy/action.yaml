@@ -66,6 +66,46 @@ runs:
         name: build-debug-${{ matrix.config.name }}
         path: ./TInvestor-source/build/Desktop-Debug
 
+    # Generate compile_commands.json
+    - name: Generate compile_commands.json
+      if: steps.cache-doc.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to TInvestor-source folder
+        Set-Location -Path "TInvestor-source"
+
+        switch ("${{ runner.os }}")
+        {
+          "Windows" {
+                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\" -Recurse -Force
+                Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\" -Recurse -Force
+
+                & python tools/py3/generate-compile-commands `
+                    --os Windows `
+                    --target clang-tidy `
+                    --qt-path "${Env:GITHUB_WORKSPACE}\Qt\${Env:QT_VERSION}\msvc2022_64" `
+                    --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator-windows-x64-msvc-15.0.0" `
+                    --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip-1.5\install\include\QuaZip-Qt6-1.5" `
+                    --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
+                    --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-1.16.0" `
+                    --msvc-tools-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433" `
+                    --msvc-auxiliary-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary" `
+                    --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0" `
+                    --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
+            }
+            "Linux" {
+                & python tools/py3/generate-compile-commands `
+                    --os Linux `
+                    --target clang-tidy `
+                    --qt-path "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64" `
+                    --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-16.0.1" `
+                    --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip-1.5/install/include/QuaZip-Qt6-1.5" `
+                    --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
+                    --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-1.16.0" `
+                    --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
+            }
+        }
+
     # Test TInvestor
     - name: Test TInvestor
       if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
