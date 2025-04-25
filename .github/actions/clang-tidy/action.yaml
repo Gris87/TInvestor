@@ -77,9 +77,6 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
-                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\" -Recurse -Force
-                Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\" -Recurse -Force
-
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
                     --target clang-tidy `
@@ -88,9 +85,9 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip-1.5\install\include\QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-1.16.0" `
-                    --msvc-tools-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433" `
-                    --msvc-auxiliary-path "E:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary" `
-                    --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\include\10.0.22621.0" `
+                    --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.43.34808" `
+                    --msvc-auxiliary-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary" `
+                    --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0" `
                     --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
             }
             "Linux" {
@@ -106,6 +103,32 @@ runs:
             }
         }
 
+    # Download clang
+    - name: Download clang
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: cmake -P {0}
+      run: |
+        # Setup several platform-dependent variables
+        if ("${{ runner.os }}" STREQUAL "Windows")
+          set(os_tar_url "clang+llvm-${{ env.CLANG_VERSION }}-x86_64-pc-windows-msvc.tar.xz")
+        elseif ("${{ runner.os }}" STREQUAL "Linux")
+          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-Linux-X64.tar.xz")
+        elseif ("${{ runner.os }}" STREQUAL "macOS")
+          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-macOS-X64.tar.xz")
+        endif()
+
+        # Set clang_release_url
+        set(clang_release_url "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ env.CLANG_VERSION }}/${os_tar_url}")
+
+        # Download clang_release_url
+        cmake_language(EVAL CODE "
+          message(\"Downloading: ${clang_release_url}\")
+          file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
+        ")
+
+        file(MAKE_DIRECTORY Qt/clang)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
+
     # Test TInvestor
     - name: Test TInvestor
       if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
@@ -115,9 +138,11 @@ runs:
         {
             "Windows" {
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-windows-x64-msvc-${Env:QTC_VERSION}/bin/clang/bin;${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-${Env:CLANG_VERSION}-x86_64-pc-windows-msvc/bin;${Env:PATH}"
             }
             "Linux" {
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-${Env:QTC_VERSION}/libexec/qtcreator/clang/bin:${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
             }
         }
 
@@ -125,6 +150,8 @@ runs:
         Set-Location -Path "TInvestor-source"
 
         & python tools/py3/run-clang-tidy
+
+        New-Item -Path . -Name "../success" -ItemType "File"
 
     # Finish
     - name: Finish
