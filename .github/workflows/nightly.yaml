@@ -85,7 +85,7 @@ jobs:
 
   # Run clang-tidy
   clang-tidy:
-    needs: [build-debug]
+    needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
     name: Clang-Tidy [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -108,7 +108,7 @@ jobs:
 
   # Run clazy
   clazy:
-    needs: [build-debug]
+    needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
     name: Clazy [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:

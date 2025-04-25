@@ -33,6 +33,31 @@ runs:
         path: ./success
         key: ${{ runner.os }}-clazy-${{ steps.folders-hash.outputs.hash }}
 
+    # Download environment artifacts
+    - name: Download environment artifacts (Qt/ZLib/Quazip)
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: env-qt-zlib-quazip-${{ matrix.config.name }}
+        path: ./Qt
+
+    # Download environment artifacts
+    - name: Download environment artifacts (vcpkg)
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: env-vcpkg-${{ matrix.config.name }}
+        path: ./Qt
+
+    # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
+    - name: Checkout googletest
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: actions/checkout@v4
+      with:
+        repository: google/googletest
+        path: Qt/googletest-source
+        ref: ${{ env.GOOGLE_TEST_VERSION }}
+
     # Download build artifacts (Debug)
     - name: Download build artifacts (Debug)
       if: steps.cache-clazy.outputs.cache-hit != 'true'
