@@ -1,0 +1,6 @@
+name: check-style
+description: Check style
+runs:
+  using: "composite"
+  steps:
+    #

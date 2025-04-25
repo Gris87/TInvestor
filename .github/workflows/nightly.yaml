@@ -35,3 +35,25 @@ jobs:
       # Use local env-qt-zlib-quazip action
       - name: Use local env-qt-zlib-quazip action
         uses: ./TInvestor-actions/.github/actions/env-qt-zlib-quazip
+
+  # Setup environment and upload artifacts
+  env-vcpkg:
+    name: Environment vcpkg [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
+      - name: Checkout TInvestor
+        uses: actions/checkout@v4
+        with:
+          path: TInvestor-actions
+
+      # Use local env-vcpkg action
+      - name: Use local env-vcpkg action
+        uses: ./TInvestor-actions/.github/actions/env-vcpkg

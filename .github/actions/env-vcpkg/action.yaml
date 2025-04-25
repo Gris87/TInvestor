@@ -1,0 +1,149 @@
+name: env-vcpkg
+description: Environment vcpkg
+runs:
+  using: "composite"
+  steps:
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-env
+      with:
+        path: ./Qt
+        key: ${{ runner.os }}-env-vcpkg-${{ env.VCPKG_VERSION }}
+
+    # Checkout vcpkg repository with specific version to $GITHUB_WORKSPACE/vcpkg-source
+    - name: Checkout vcpkg
+      if: steps.cache-env.outputs.cache-hit != 'true'
+      uses: actions/checkout@v4
+      with:
+        repository: microsoft/vcpkg
+        path: vcpkg-source
+        ref: ${{ env.VCPKG_VERSION }}
+
+    # Build grpc with specified version
+    - name: Build grpc
+      if: steps.cache-env.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to vcpkg-source folder
+        Set-Location -Path "vcpkg-source"
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ./bootstrap-vcpkg.bat
+            }
+            "Linux" {
+                ./bootstrap-vcpkg.sh
+            }
+        }
+
+        ./vcpkg integrate install
+        ./vcpkg install grpc
+
+        # Cleanup
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ${PACKAGE_NAME} = "x64-windows"
+                Remove-Item "installed/${PACKAGE_NAME}/debug/bin/*.pdb" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_decode_rust_punycode.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_demangle_rust.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_flags_parse.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_flags_usage.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_flags_usage_internal.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_log_flags.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_log_internal_structured_proto.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_poison.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_tracing_internal.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/absl_utf8_for_code_point.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc++_alts.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc++_error_details.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc++_unsecure.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc_plugin_support.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpc_unsecure.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/grpcpp_channelz.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotobuf-lited.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotocd.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/utf8_validity.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/bin/*.pdb" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_decode_rust_punycode.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_demangle_rust.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_parse.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_flags_usage_internal.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_flags.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_log_internal_structured_proto.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_poison.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_tracing_internal.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/absl_utf8_for_code_point.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_alts.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_error_details.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpc++_unsecure.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_plugin_support.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpc_unsecure.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/grpcpp_channelz.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.lib" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/utf8_validity.lib" -Force
+            }
+            "Linux" {
+                ${PACKAGE_NAME} = "x64-linux"
+                Remove-Item "installed/${PACKAGE_NAME}/etc" -Recurse -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_bad_any_cast_impl.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_cordz_sample_token.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_failure_signal_handler.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_flags_parse.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_flags_usage.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_flags_usage_internal.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_log_flags.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_periodic_sampler.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_poison.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_random_internal_distribution_test_util.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libabsl_scoped_set_env.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc++_alts.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc++_error_details.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc++_unsecure.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc_authorization_provider.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc_plugin_support.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpc_unsecure.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libgrpcpp_channelz.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotobuf-lited.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/debug/lib/libprotocd.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_bad_any_cast_impl.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_cordz_sample_token.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_failure_signal_handler.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_parse.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_flags_usage_internal.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_log_flags.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_periodic_sampler.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_poison.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_random_internal_distribution_test_util.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libabsl_scoped_set_env.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_alts.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_error_details.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc++_unsecure.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_authorization_provider.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_plugin_support.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpc_unsecure.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libgrpcpp_channelz.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libprotobuf-lite.a" -Force
+                Remove-Item "installed/${PACKAGE_NAME}/lib/libprotoc.a" -Force
+            }
+        }
+
+        Remove-Item "installed/vcpkg" -Recurse -Force
+        Remove-Item "installed/${PACKAGE_NAME}/lib/pkgconfig" -Recurse -Force
+        Remove-Item "installed/${PACKAGE_NAME}/share" -Recurse -Force
+        Remove-Item "installed/${PACKAGE_NAME}/tools" -Recurse -Force
+
+        Copy-Item installed -Destination "${Env:GITHUB_WORKSPACE}/Qt/vcpkg/installed" -Recurse
+
+    # Upload environment artifacts
+    - name: Upload environment artifacts
+      uses: thebrowsercompany/gha-upload-tar-artifact@main
+      with:
+        name: env-vcpkg-${{ matrix.config.name }}
+        path: ./Qt
+        retention-days: 1
