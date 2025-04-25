@@ -3,4 +3,31 @@ description: Create release
 runs:
   using: "composite"
   steps:
-    #
+    # Create release
+    - name: Create release
+      id: create-release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        body: |
+          Release for TInvestor.
+
+        draft: false
+        prerelease: false
+
+    # Create file with url to release page
+    - name: Store release url
+      shell: pwsh
+      run: Write-Output "${{ steps.create-release.outputs.upload_url }}" > ./release_upload_url.txt
+
+    # Upload file with url to release page
+    - name: Upload release url
+      uses: actions/upload-artifact@v4
+      with:
+        name: release_upload_url.txt
+        path: ./release_upload_url.txt
+        retention-days: 1
+        compression-level: 9

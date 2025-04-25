@@ -1,0 +1,55 @@
+name: clang-tidy
+description: Clang-Tidy
+runs:
+  using: "composite"
+  steps:
+    # Set git to disable line endings conversion
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v4
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/test
+
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-clang-tidy
+      with:
+        path: ./success
+        key: ${{ runner.os }}-clang-tidy-${{ steps.folders-hash.outputs.hash }}
+
+    # Download build artifacts (Debug)
+    - name: Download build artifacts (Debug)
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: build-debug-${{ matrix.config.name }}
+        path: ./TInvestor-source/build/Desktop-Debug
+
+    # Test TInvestor
+    - name: Test TInvestor
+      if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to TInvestor-source folder
+        Set-Location -Path "TInvestor-source"
+
+    # Finish
+    - name: Finish
+      shell: pwsh
+      run: |
+        Write-Output "Finished"

@@ -27,15 +27,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-actions
+          sparse-checkout: .github
 
       # Use local env-qt-zlib-quazip action
       - name: Use local env-qt-zlib-quazip action
-        uses: ./TInvestor-actions/.github/actions/env-qt-zlib-quazip
+        uses: ./.github/actions/env-qt-zlib-quazip
 
   # Setup environment and upload artifacts
   env-vcpkg:
@@ -49,15 +49,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-actions
+          sparse-checkout: .github
 
       # Use local env-vcpkg action
       - name: Use local env-vcpkg action
-        uses: ./TInvestor-actions/.github/actions/env-vcpkg
+        uses: ./.github/actions/env-vcpkg
 
   # Check style
   check-style:
@@ -71,96 +71,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-source
+          sparse-checkout: .github
 
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-            ./TInvestor-source/tools/py3/check-style
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-style
-        with:
-          path: ./success
-          key: ${{ runner.os }}-check-style-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-style.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          pip install loguru
-
-      # Download clang
-      - name: Download clang
-        if: steps.cache-style.outputs.cache-hit != 'true'
-        shell: cmake -P {0}
-        run: |
-          # Setup several platform-dependent variables
-          if ("${{ runner.os }}" STREQUAL "Windows")
-            set(os_tar_url "clang+llvm-${{ env.CLANG_VERSION }}-x86_64-pc-windows-msvc.tar.xz")
-          elseif ("${{ runner.os }}" STREQUAL "Linux")
-            set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-Linux-X64.tar.xz")
-          elseif ("${{ runner.os }}" STREQUAL "macOS")
-            set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-macOS-X64.tar.xz")
-          endif()
-
-          # Set clang_release_url
-          set(clang_release_url "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ env.CLANG_VERSION }}/${os_tar_url}")
-
-          # Download clang_release_url
-          cmake_language(EVAL CODE "
-            message(\"Downloading: ${clang_release_url}\")
-            file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
-          ")
-
-          file(MAKE_DIRECTORY Qt/clang)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
-
-      # Check style
-      - name: Check style
-        if: steps.cache-style.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-20.1.3-x86_64-pc-windows-msvc/bin;${Env:PATH}"
-              }
-              "Linux" {
-                  ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
-              }
-          }
-
-          # Enter to TInvestor-source folder
-          Set-Location -Path "TInvestor-source"
-
-          & python tools/py3/check-style
-
-          New-Item -Path . -Name "../success" -ItemType "File"
-
-      # Finish
-      - name: Finish
-        shell: pwsh
-        run: |
-          Write-Output "Finished"
+      # Use local check-style action
+      - name: Use local check-style action
+        uses: ./.github/actions/check-style
 
   # Build project in Debug
   build-debug:
@@ -175,163 +94,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-source
+          sparse-checkout: .github
 
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-build
-        with:
-          path: ./artifacts
-          key: ${{ runner.os }}-build-debug-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-            "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1 }
-            "macOS"   { brew update }
-          }
-
-      # Download environment artifacts
-      - name: Download environment artifacts (Qt/ZLib/Quazip)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-qt-zlib-quazip-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Download environment artifacts
-      - name: Download environment artifacts (vcpkg)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-vcpkg-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - name: Checkout googletest
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: google/googletest
-          path: Qt/googletest-source
-          ref: ${{ env.GOOGLE_TEST_VERSION }}
-
-      # Build TInvestor
-      - name: Build TInvestor
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Setup Developer PowerShell for Windows
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Write-Output "Setup Developer PowerShell"
-                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
-                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
-                  # see: https://github.com/microsoft/setup-msbuild/issues/24
-                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
-                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
-                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
-                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
-              }
-          }
-
-          ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
-          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
-          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
-          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
-
-          # Create TInvestor-source/build/Desktop-Debug folder and enter into it
-          New-Item -Path "TInvestor-source/build/Desktop-Debug" -ItemType "directory" -Force
-          Set-Location -Path "TInvestor-source/build/Desktop-Debug"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
-                  & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
-                  & chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  & chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
-              }
-              "Linux" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
-                  & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
-                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug/Makefile" qmake_all
-                  & make -j4
-              }
-          }
-
-      # Prepare artifacts
-      - name: Prepare artifacts
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Debug" -Destination artifacts -Recurse
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/app/debug" -Recurse -Force
-                  Remove-Item "artifacts/app/release" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Debug" -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Release" -Force
-                  Remove-Item "artifacts/libs" -Recurse -Force
-                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/test/debug" -Recurse -Force
-                  Remove-Item "artifacts/test/release" -Recurse -Force
-                  Remove-Item "artifacts/test/Makefile.tests" -Force
-                  Remove-Item "artifacts/test/Makefile.tests.Debug" -Force
-                  Remove-Item "artifacts/test/Makefile.tests.Release" -Force
-                  Remove-Item "artifacts/.qmake.stash" -Force
-                  Remove-Item "artifacts/Makefile" -Force
-              }
-              "Linux" {
-                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
-                  Remove-Item "artifacts/libs" -Recurse -Force
-                  # Remove-Item "artifacts/test/build/gen" -Recurse -Force # Do not delete. Needed for coverage
-                  Remove-Item "artifacts/test/Makefile.tests" -Force
-                  Remove-Item "artifacts/.qmake.stash" -Force
-                  Remove-Item "artifacts/Makefile" -Force
-              }
-          }
-
-      # Upload artifacts
-      - name: Upload artifacts
-        uses: thebrowsercompany/gha-upload-tar-artifact@main
-        with:
-          name: build-debug-${{ matrix.config.name }}
-          path: ./artifacts
-          retention-days: 1
+      # Use local build-debug action
+      - name: Use local build-debug action
+        uses: ./.github/actions/build-debug
 
   # Build project in Release
   build-release:
@@ -346,163 +117,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-source
+          sparse-checkout: .github
 
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-build
-        with:
-          path: ./artifacts
-          key: ${{ runner.os }}-build-release-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-            "Windows" { choco install bzip2 }
-            "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1 }
-            "macOS"   { brew update }
-          }
-
-      # Download environment artifacts
-      - name: Download environment artifacts (Qt/ZLib/Quazip)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-qt-zlib-quazip-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Download environment artifacts
-      - name: Download environment artifacts (vcpkg)
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: env-vcpkg-${{ matrix.config.name }}
-          path: ./Qt
-
-      # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
-      - name: Checkout googletest
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: google/googletest
-          path: Qt/googletest-source
-          ref: ${{ env.GOOGLE_TEST_VERSION }}
-
-      # Build TInvestor
-      - name: Build TInvestor
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Setup Developer PowerShell for Windows
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Write-Output "Setup Developer PowerShell"
-                  # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
-                  # The setup-msbuild action is not used since it does not set up the path to 'cl'
-                  # see: https://github.com/microsoft/setup-msbuild/issues/24
-                  ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
-                  Write-Output "VS Installation Path: ${VS_INST_PATH}"
-                  Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
-                  Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
-              }
-          }
-
-          ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
-          ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
-          ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
-          ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
-
-          # Create TInvestor-source/build/Desktop-Release folder and enter into it
-          New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory" -Force
-          Set-Location -Path "TInvestor-source/build/Desktop-Release"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
-                  & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
-                  & chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
-                  & chcp 65001
-                  & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
-              }
-              "Linux" {
-                  ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
-                  & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
-                  & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
-                  & make -j4
-              }
-          }
-
-      # Prepare artifacts
-      - name: Prepare artifacts
-        if: steps.cache-build.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release" -Destination artifacts -Recurse
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/app/debug" -Recurse -Force
-                  Remove-Item "artifacts/app/release" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Debug" -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor.Release" -Force
-                  Remove-Item "artifacts/libs" -Recurse -Force
-                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/test/debug" -Recurse -Force
-                  Remove-Item "artifacts/test/release" -Recurse -Force
-                  Remove-Item "artifacts/test/Makefile.tests" -Force
-                  Remove-Item "artifacts/test/Makefile.tests.Debug" -Force
-                  Remove-Item "artifacts/test/Makefile.tests.Release" -Force
-                  Remove-Item "artifacts/.qmake.stash" -Force
-                  Remove-Item "artifacts/Makefile" -Force
-              }
-              "Linux" {
-                  Remove-Item "artifacts/app/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/app/Makefile.TInvestor" -Force
-                  Remove-Item "artifacts/libs" -Recurse -Force
-                  Remove-Item "artifacts/test/build/gen" -Recurse -Force
-                  Remove-Item "artifacts/test/Makefile.tests" -Force
-                  Remove-Item "artifacts/.qmake.stash" -Force
-                  Remove-Item "artifacts/Makefile" -Force
-              }
-          }
-
-      # Upload artifacts
-      - name: Upload artifacts
-        uses: thebrowsercompany/gha-upload-tar-artifact@main
-        with:
-          name: build-release-${{ matrix.config.name }}
-          path: ./artifacts
-          retention-days: 1
+      # Use local build-release action
+      - name: Use local build-release action
+        uses: ./.github/actions/build-release
 
   # Test project
   test:
@@ -517,136 +140,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-source
+          sparse-checkout: .github
 
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-test
-        with:
-          path: ./TInvestor-source/build/CoverageReport
-          key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-              "Windows" { choco install opencppcoverage }
-              "Linux"   { sudo apt-get update; sudo apt-get install -y lcov }
-          }
-
-      # Download build artifacts (Debug)
-      - name: Download build artifacts (Debug)
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: build-debug-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Debug
-
-      # Download build artifacts (Release)
-      - name: Download build artifacts (Release)
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        uses: thebrowsercompany/gha-download-tar-artifact@main
-        with:
-          name: build-release-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/Desktop-Release
-
-      # Test TInvestor
-      - name: Test TInvestor
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Enter to TInvestor-source/build/Desktop-Release/test/build folder
-          Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  & tzutil /s "Russian Standard Time"
-
-                  & ./tests.exe
-                  Start-Sleep -Seconds 10
-              }
-              "Linux" {
-                  & sudo timedatectl set-timezone Europe/Moscow
-
-                  ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build:${Env:LD_LIBRARY_PATH}"
-                  ${Env:DISPLAY} = ":99"
-
-                  & sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-                  Start-Sleep -Seconds 3
-
-                  & ./tests
-              }
-          }
-
-      # Collect coverage
-      - name: Collect coverage
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Enter to TInvestor-source folder
-          Set-Location -Path "TInvestor-source"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  & tzutil /s "Russian Standard Time"
-                  ${Env:PATH} = "C:\Program Files\OpenCppCoverage;${Env:PATH}"
-
-                  & ./make_coverage.bat --ci
-              }
-              "Linux" {
-                  & sudo timedatectl set-timezone Europe/Moscow
-
-                  ${Env:DISPLAY} = ":99"
-
-                  & sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
-                  Start-Sleep -Seconds 3
-
-                  & ./make_coverage.sh --ci
-              }
-          }
-
-      # Upload coverage badge
-      - name: Upload coverage badge
-        if: steps.cache-test.outputs.cache-hit != 'true'
-        uses: gaelgirodon/ci-badges-action@v1
-        with:
-          gist-id: ${{ env.GIST_ID }}
-          token: ${{ secrets.GIST_TOKEN }}
-          prefix: TInvestor-${{ runner.os }}
-
-      # Upload artifacts
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.config.name }}
-          path: ./TInvestor-source/build/CoverageReport
-          retention-days: 1
-          compression-level: 9
+      # Use local test action
+      - name: Use local test action
+        uses: ./.github/actions/test
 
   # Generate documentation
   doc:
@@ -660,82 +162,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Set git to disable line endings conversion
-      - name: Configure git
-        run: |
-          git config --global core.autocrlf false
-
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-source
+          sparse-checkout: .github
 
-      # Calculate TInvestor hash on sources
-      - name: Calculate TInvestor hash
-        id: folders-hash
-        uses: theowenyoung/folder-hash@v3
-        with:
-          path: |
-            ./TInvestor-source/app
-            ./TInvestor-source/libs
-            ./TInvestor-source/test
-
-      # Download/upload cache
-      - name: Caching
-        uses: actions/cache@v4
-        id: cache-doc
-        with:
-          path: ./TInvestor-source/build
-          key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
-
-      # Install required packages
-      - name: System packages
-        if: steps.cache-doc.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  choco install doxygen.install
-                  choco install graphviz
-              }
-              "Linux" {
-                  sudo add-apt-repository ppa:bkryza/clang-uml
-                  sudo apt-get update
-                  sudo apt-get install -y doxygen graphviz
-              }
-          }
-
-      # Generate doxygen
-      - name: Generate doxygen
-        if: steps.cache-doc.outputs.cache-hit != 'true'
-        shell: pwsh
-        run: |
-          # Enter to TInvestor-source folder
-          Set-Location -Path "TInvestor-source"
-
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
-                  ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
-
-                  & ./make_doxygen.bat --ci
-              }
-              "Linux" {
-                  & ./make_doxygen.sh --ci
-              }
-          }
-
-      # Upload artifacts
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: doc-${{ matrix.config.name }}
-          path: ./TInvestor-source/build
-          retention-days: 1
-          compression-level: 9
+      # Use local doc action
+      - name: Use local doc action
+        uses: ./.github/actions/doc
 
   # Release job.
   # Provides meta information for release.
@@ -746,35 +181,17 @@ jobs:
     name: Create release
     if: contains(github.ref, '/tags/')
     runs-on: ubuntu-latest
+
     steps:
-      # Create release
-      - name: Create release
-        id: create-release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v4
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          body: |
-            Release for TInvestor.
+          sparse-checkout: .github
 
-          draft: false
-          prerelease: false
-
-      # Create file with url to release page
-      - name: Store release url
-        shell: pwsh
-        run: Write-Output "${{ steps.create-release.outputs.upload_url }}" > ./release_upload_url.txt
-
-      # Upload file with url to release page
-      - name: Upload release url
-        uses: actions/upload-artifact@v4
-        with:
-          name: release_upload_url.txt
-          path: ./release_upload_url.txt
-          retention-days: 1
-          compression-level: 9
+      # Use local create-release action
+      - name: Use local create-release action
+        uses: ./.github/actions/create-release
 
   # Publish Release
   publish-release:
@@ -790,88 +207,12 @@ jobs:
       fail-fast: false
 
     steps:
-      # Download build artifacts (Release)
-      - name: Download build artifacts (Release)
-        uses: thebrowsercompany/gha-download-tar-artifact@main
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v4
         with:
-          name: build-release-${{ matrix.config.name }}
-          path: ./build-release
+          sparse-checkout: .github
 
-      # Download documentation artifacts
-      - name: Download documentation artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: doc-${{ matrix.config.name }}
-          path: ./doc
-
-      # Archive result biraries
-      - name: Archive result biraries
-        shell: pwsh
-        run: |
-          switch ("${{ runner.os }}")
-          {
-              "Windows" {
-                  ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.zip"
-                  ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.zip"
-
-                  Push-Location build-release/app/build
-                  7z a "../${RELEASE_ARCHIVE_NAME}" *
-                  Pop-Location
-
-                  Push-Location doc
-                  7z a "../${DOCS_ARCHIVE_NAME}" *
-                  Pop-Location
-              }
-              "Linux" {
-                  ${RELEASE_ARCHIVE_NAME} = "TInvestor-${{ github.ref_name }}-${{ runner.os }}.tar.xz"
-                  ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.tar.xz"
-
-                  Push-Location build-release/app/build
-                  tar -c -f "../${RELEASE_ARCHIVE_NAME}" --xz -v *
-                  Pop-Location
-
-                  Push-Location doc
-                  tar -c -f "../${DOCS_ARCHIVE_NAME}" --xz -v *
-                  Pop-Location
-              }
-          }
-
-          Write-Output "RELEASE_ARCHIVE_NAME=${RELEASE_ARCHIVE_NAME}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-          Write-Output "DOCS_ARCHIVE_NAME=${DOCS_ARCHIVE_NAME}"       | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-
-      # Download release_upload_url.txt artifact
-      - name: Download release url
-        uses: actions/download-artifact@v4
-        with:
-          name: release_upload_url.txt
-          path: ./
-
-      # Set RELEASE_URL environment variable
-      - name: Set RELEASE_URL environment variable
-        shell: pwsh
-        run: |
-          ${RELEASE_URL} = Get-Content ./release_upload_url.txt
-          Write-Output "Release URL: ${RELEASE_URL}"
-          Write-Output "RELEASE_URL=${RELEASE_URL}" | Out-File -FilePath ${env:GITHUB_ENV} -Encoding utf8 -Append
-
-      # Upload release artifacts
-      - name: Upload release artifacts
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.RELEASE_URL }}
-          asset_path: ./${{ env.RELEASE_ARCHIVE_NAME }}
-          asset_name: ${{ env.RELEASE_ARCHIVE_NAME }}
-          asset_content_type: application/zip
-
-      # Upload documentation artifacts
-      - name: Upload documentation artifacts
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ env.RELEASE_URL }}
-          asset_path: ./${{ env.DOCS_ARCHIVE_NAME }}
-          asset_name: ${{ env.DOCS_ARCHIVE_NAME }}
-          asset_content_type: application/zip
+      # Use local publish-release action
+      - name: Use local publish-release action
+        uses: ./.github/actions/publish-release

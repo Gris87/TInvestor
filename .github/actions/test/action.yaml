@@ -3,4 +3,133 @@ description: Test
 runs:
   using: "composite"
   steps:
-    #
+    # Set git to disable line endings conversion
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v4
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/test
+
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-test
+      with:
+        path: ./TInvestor-source/build/CoverageReport
+        key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
+
+    # Install required packages
+    - name: System packages
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" { choco install opencppcoverage }
+            "Linux"   { sudo apt-get update; sudo apt-get install -y lcov }
+        }
+
+    # Download build artifacts (Debug)
+    - name: Download build artifacts (Debug)
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: build-debug-${{ matrix.config.name }}
+        path: ./TInvestor-source/build/Desktop-Debug
+
+    # Download build artifacts (Release)
+    - name: Download build artifacts (Release)
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: build-release-${{ matrix.config.name }}
+        path: ./TInvestor-source/build/Desktop-Release
+
+    # Test TInvestor
+    - name: Test TInvestor
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to TInvestor-source/build/Desktop-Release/test/build folder
+        Set-Location -Path "TInvestor-source/build/Desktop-Release/test/build"
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                & tzutil /s "Russian Standard Time"
+
+                & ./tests.exe
+                Start-Sleep -Seconds 10
+            }
+            "Linux" {
+                & sudo timedatectl set-timezone Europe/Moscow
+
+                ${Env:LD_LIBRARY_PATH} = "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/test/build:${Env:LD_LIBRARY_PATH}"
+                ${Env:DISPLAY} = ":99"
+
+                & sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+                Start-Sleep -Seconds 3
+
+                & ./tests
+            }
+        }
+
+    # Collect coverage
+    - name: Collect coverage
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to TInvestor-source folder
+        Set-Location -Path "TInvestor-source"
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                & tzutil /s "Russian Standard Time"
+                ${Env:PATH} = "C:\Program Files\OpenCppCoverage;${Env:PATH}"
+
+                & ./make_coverage.bat --ci
+            }
+            "Linux" {
+                & sudo timedatectl set-timezone Europe/Moscow
+
+                ${Env:DISPLAY} = ":99"
+
+                & sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
+                Start-Sleep -Seconds 3
+
+                & ./make_coverage.sh --ci
+            }
+        }
+
+    # Upload coverage badge
+    - name: Upload coverage badge
+      if: steps.cache-test.outputs.cache-hit != 'true'
+      uses: gaelgirodon/ci-badges-action@v1
+      with:
+        gist-id: ${{ env.GIST_ID }}
+        token: ${{ secrets.GIST_TOKEN }}
+        prefix: TInvestor-${{ runner.os }}
+
+    # Upload artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-${{ matrix.config.name }}
+        path: ./TInvestor-source/build/CoverageReport
+        retention-days: 1
+        compression-level: 9

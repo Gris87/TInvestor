@@ -3,4 +3,73 @@ description: Documentation
 runs:
   using: "composite"
   steps:
-    #
+    # Set git to disable line endings conversion
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v4
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/test
+
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-doc
+      with:
+        path: ./TInvestor-source/build
+        key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
+
+    # Install required packages
+    - name: System packages
+      if: steps.cache-doc.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                choco install doxygen.install
+                choco install graphviz
+            }
+            "Linux" {
+                sudo add-apt-repository ppa:bkryza/clang-uml
+                sudo apt-get update
+                sudo apt-get install -y doxygen graphviz
+            }
+        }
+
+    # Generate doxygen
+    - name: Generate doxygen
+      if: steps.cache-doc.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Enter to TInvestor-source folder
+        Set-Location -Path "TInvestor-source"
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
+                ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
+
+                & ./make_doxygen.bat --ci
+            }
+            "Linux" {
+                & ./make_doxygen.sh --ci
+            }
+        }
+
+    # Upload artifacts
+    - name: Upload artifacts

@@ -3,4 +3,93 @@ description: Check style
 runs:
   using: "composite"
   steps:
-    #
+    # Set git to disable line endings conversion
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v4
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/test
+          ./TInvestor-source/tools/py3/check-style
+
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-style
+      with:
+        path: ./success
+        key: ${{ runner.os }}-check-style-${{ steps.folders-hash.outputs.hash }}
+
+    # Install required packages
+    - name: System packages
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        pip install loguru
+
+    # Download clang
+    - name: Download clang
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: cmake -P {0}
+      run: |
+        # Setup several platform-dependent variables
+        if ("${{ runner.os }}" STREQUAL "Windows")
+          set(os_tar_url "clang+llvm-${{ env.CLANG_VERSION }}-x86_64-pc-windows-msvc.tar.xz")
+        elseif ("${{ runner.os }}" STREQUAL "Linux")
+          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-Linux-X64.tar.xz")
+        elseif ("${{ runner.os }}" STREQUAL "macOS")
+          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-macOS-X64.tar.xz")
+        endif()
+
+        # Set clang_release_url
+        set(clang_release_url "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ env.CLANG_VERSION }}/${os_tar_url}")
+
+        # Download clang_release_url
+        cmake_language(EVAL CODE "
+          message(\"Downloading: ${clang_release_url}\")
+          file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
+        ")
+
+        file(MAKE_DIRECTORY Qt/clang)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
+
+    # Check style
+    - name: Check style
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-20.1.3-x86_64-pc-windows-msvc/bin;${Env:PATH}"
+            }
+            "Linux" {
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
+            }
+        }
+
+        # Enter to TInvestor-source folder
+        Set-Location -Path "TInvestor-source"
+
+        & python tools/py3/check-style
+
+        New-Item -Path . -Name "../success" -ItemType "File"
+
+    # Finish
+    - name: Finish
+      shell: pwsh
+      run: |
+        Write-Output "Finished"

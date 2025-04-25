@@ -3,4 +3,160 @@ description: Build Release
 runs:
   using: "composite"
   steps:
-    #
+    # Set git to disable line endings conversion
+    - name: Configure git
+      run: |
+        git config --global core.autocrlf false
+
+    # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
+    - name: Checkout TInvestor
+      uses: actions/checkout@v4
+      with:
+        path: TInvestor-source
+
+    # Calculate TInvestor hash on sources
+    - name: Calculate TInvestor hash
+      id: folders-hash
+      uses: theowenyoung/folder-hash@v3
+      with:
+        path: |
+          ./TInvestor-source/app
+          ./TInvestor-source/libs
+          ./TInvestor-source/test
+
+    # Download/upload cache
+    - name: Caching
+      uses: actions/cache@v4
+      id: cache-build
+      with:
+        path: ./artifacts
+        key: ${{ runner.os }}-build-release-${{ steps.folders-hash.outputs.hash }}
+
+    # Install required packages
+    - name: System packages
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+          "Windows" { choco install bzip2 }
+          "Linux"   { sudo apt-get update; sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1 }
+          "macOS"   { brew update }
+        }
+
+    # Download environment artifacts
+    - name: Download environment artifacts (Qt/ZLib/Quazip)
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: env-qt-zlib-quazip-${{ matrix.config.name }}
+        path: ./Qt
+
+    # Download environment artifacts
+    - name: Download environment artifacts (vcpkg)
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: thebrowsercompany/gha-download-tar-artifact@main
+      with:
+        name: env-vcpkg-${{ matrix.config.name }}
+        path: ./Qt
+
+    # Checkout googletest repository with specific version to $GITHUB_WORKSPACE/googletest-source
+    - name: Checkout googletest
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      uses: actions/checkout@v4
+      with:
+        repository: google/googletest
+        path: Qt/googletest-source
+        ref: ${{ env.GOOGLE_TEST_VERSION }}
+
+    # Build TInvestor
+    - name: Build TInvestor
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        # Setup Developer PowerShell for Windows
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                Write-Output "Setup Developer PowerShell"
+                # https://github.com/microsoft/terminal/issues/3821#issuecomment-651506501
+                # The setup-msbuild action is not used since it does not set up the path to 'cl'
+                # see: https://github.com/microsoft/setup-msbuild/issues/24
+                ${VS_INST_PATH} = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+                Write-Output "VS Installation Path: ${VS_INST_PATH}"
+                Import-Module ${VS_INST_PATH}/Common7/Tools/Microsoft.VisualStudio.DevShell.dll
+                Enter-VsDevShell -VsInstallPath ${VS_INST_PATH} -SkipAutomaticLocation -DevCmdArguments '-arch=x64 -no_logo'
+            }
+        }
+
+        ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
+        ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
+        ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
+        ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
+
+        # Create TInvestor-source/build/Desktop-Release folder and enter into it
+        New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory" -Force
+        Set-Location -Path "TInvestor-source/build/Desktop-Release"
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/msvc2022_64"
+                & "${Env:QTDIR}/bin/qmake.exe" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec win32-msvc "CONFIG+=qtquickcompiler"
+                & chcp 65001
+                & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe" -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                & chcp 65001
+                & "${Env:GITHUB_WORKSPACE}/Qt/jom/jom.exe"
+            }
+            "Linux" {
+                ${Env:QTDIR} = "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64"
+                & "${Env:QTDIR}/bin/qmake" "${Env:GITHUB_WORKSPACE}/TInvestor-source/TInvestor.pro" -spec linux-g++ CONFIG+=qtquickcompiler
+                & make -f "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release/Makefile" qmake_all
+                & make -j4
+            }
+        }
+
+    # Prepare artifacts
+    - name: Prepare artifacts
+      if: steps.cache-build.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        Copy-Item "${Env:GITHUB_WORKSPACE}/TInvestor-source/build/Desktop-Release" -Destination artifacts -Recurse
+
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                Remove-Item "artifacts/app/build/gen" -Recurse -Force
+                Remove-Item "artifacts/app/debug" -Recurse -Force
+                Remove-Item "artifacts/app/release" -Recurse -Force
+                Remove-Item "artifacts/app/Makefile.TInvestor" -Force
+                Remove-Item "artifacts/app/Makefile.TInvestor.Debug" -Force
+                Remove-Item "artifacts/app/Makefile.TInvestor.Release" -Force
+                Remove-Item "artifacts/libs" -Recurse -Force
+                Remove-Item "artifacts/test/build/gen" -Recurse -Force
+                Remove-Item "artifacts/test/debug" -Recurse -Force
+                Remove-Item "artifacts/test/release" -Recurse -Force
+                Remove-Item "artifacts/test/Makefile.tests" -Force
+                Remove-Item "artifacts/test/Makefile.tests.Debug" -Force
+                Remove-Item "artifacts/test/Makefile.tests.Release" -Force
+                Remove-Item "artifacts/.qmake.stash" -Force
+                Remove-Item "artifacts/Makefile" -Force
+            }
+            "Linux" {
+                Remove-Item "artifacts/app/build/gen" -Recurse -Force
+                Remove-Item "artifacts/app/Makefile.TInvestor" -Force
+                Remove-Item "artifacts/libs" -Recurse -Force
+                Remove-Item "artifacts/test/build/gen" -Recurse -Force
+                Remove-Item "artifacts/test/Makefile.tests" -Force
+                Remove-Item "artifacts/.qmake.stash" -Force
+                Remove-Item "artifacts/Makefile" -Force
+            }
+        }
+
+    # Upload artifacts
+    - name: Upload artifacts
+      uses: thebrowsercompany/gha-upload-tar-artifact@main
+      with:
+        name: build-release-${{ matrix.config.name }}
+        path: ./artifacts
+        retention-days: 1

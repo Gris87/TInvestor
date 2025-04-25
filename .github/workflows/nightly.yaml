@@ -26,15 +26,15 @@ jobs:
       fail-fast: false
 
     steps:
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-actions
+          sparse-checkout: .github
 
       # Use local env-qt-zlib-quazip action
       - name: Use local env-qt-zlib-quazip action
-        uses: ./TInvestor-actions/.github/actions/env-qt-zlib-quazip
+        uses: ./.github/actions/env-qt-zlib-quazip
 
   # Setup environment and upload artifacts
   env-vcpkg:
@@ -48,12 +48,81 @@ jobs:
       fail-fast: false
 
     steps:
-      # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-actions
-      - name: Checkout TInvestor
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
         uses: actions/checkout@v4
         with:
-          path: TInvestor-actions
+          sparse-checkout: .github
 
       # Use local env-vcpkg action
       - name: Use local env-vcpkg action
-        uses: ./TInvestor-actions/.github/actions/env-vcpkg
+        uses: ./.github/actions/env-vcpkg
+
+  # Build project in Debug
+  build-debug:
+    needs: [env-qt-zlib-quazip, env-vcpkg]
+    name: Build Debug [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
+      # Use local build-debug action
+      - name: Use local build-debug action
+        uses: ./.github/actions/build-debug
+
+  # Run clang-tidy
+  clang-tidy:
+    needs: [build-debug]
+    name: Clang-Tidy [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
+      # Use local clang-tidy action
+      - name: Use local clang-tidy action
+        uses: ./.github/actions/clang-tidy
+
+  # Run clazy
+  clazy:
+    needs: [build-debug]
+    name: Clazy [${{ matrix.config.name }}]
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - { name: "win64", os: windows-latest }
+          - { name: "linux", os: ubuntu-latest }
+      fail-fast: false
+
+    steps:
+      # Checkout actions from latest commit
+      - name: Checkout actions from latest commit
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
+      # Use local clazy action
+      - name: Use local clazy action
+        uses: ./.github/actions/clazy
