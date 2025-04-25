@@ -1,3 +1,5 @@
+import sys
+
 def run_clang_tidy():
     print("run_clang_tidy")
 

@@ -128,6 +128,35 @@ runs:
         file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/Qt/${qt_dir_prefix}" qt_dir)
         file(APPEND "$ENV{GITHUB_OUTPUT}" "qt_dir=${qt_dir}")
 
+    # Download Qt Creator with specified version
+    - name: Download Qt Creator
+      if: steps.cache-env.outputs.cache-hit != 'true'
+      shell: cmake -P {0}
+      run: |
+        # Setup several platform-dependent variables
+        if ("${{ runner.os }}" STREQUAL "Windows")
+          set(url_os "windows-x64")
+          set(qt_package_arch_suffix "-msvc")
+        elseif ("${{ runner.os }}" STREQUAL "Linux")
+          set(url_os "linux-x64")
+          set(qt_package_arch_suffix "")
+        elseif ("${{ runner.os }}" STREQUAL "macOS")
+          set(url_os "macos-universal")
+          set(qt_package_arch_suffix "")
+        endif()
+
+        # Set qtc_url
+        set(archive_name "qtcreator-${url_os}${qt_package_arch_suffix}-${{ env.QTC_VERSION }}")
+        set(qtc_url "https://github.com/qt-creator/qt-creator/releases/download/v${{ env.QTC_VERSION }}/${archive_name}.7z")
+
+        cmake_language(EVAL CODE "
+          message(\"Downloading: ${qtc_url}\")
+          file(DOWNLOAD \"${qtc_url}\" qtcreator.7z)
+        ")
+
+        file(MAKE_DIRECTORY Qt/${archive_name})
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/qtcreator.7z WORKING_DIRECTORY Qt/${archive_name})
+
     # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
     - name: Checkout zlib
       if: steps.cache-env.outputs.cache-hit != 'true'

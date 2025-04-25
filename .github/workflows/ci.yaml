@@ -6,6 +6,7 @@ on: [push]
 env:
   QT_MIRRORS:          "download.qt.io;mirrors.ocf.berkeley.edu/qt;ftp.fau.de/qtproject;mirror.bit.edu.cn/qtproject"
   QT_VERSION:          "6.9.0"
+  QTC_VERSION:         "16.0.1"
   ZLIB_VERSION:        "v1.3.1"
   QUAZIP_VERSION:      "v1.5"
   VCPKG_VERSION:       "2025.04.09"
