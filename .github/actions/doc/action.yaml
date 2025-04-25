@@ -5,8 +5,9 @@ runs:
   steps:
     # Set git to disable line endings conversion
     - name: Configure git
+      shell: pwsh
       run: |
-        git config --global core.autocrlf false
+        & git config --global core.autocrlf false
 
     # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
     - name: Checkout TInvestor
@@ -73,3 +74,9 @@ runs:
 
     # Upload artifacts
     - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: doc-${{ matrix.config.name }}
+        path: ./TInvestor-source/build
+        retention-days: 1
+        compression-level: 9

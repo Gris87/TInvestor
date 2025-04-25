@@ -5,8 +5,9 @@ runs:
   steps:
     # Set git to disable line endings conversion
     - name: Configure git
+      shell: pwsh
       run: |
-        git config --global core.autocrlf false
+        & git config --global core.autocrlf false
 
     # Checkout latest commit for this repository to $GITHUB_WORKSPACE/TInvestor-source
     - name: Checkout TInvestor
