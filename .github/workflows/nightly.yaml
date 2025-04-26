@@ -86,10 +86,11 @@ jobs:
   # Run clang-tidy
   clang-tidy:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
-    name: Clang-Tidy [${{ matrix.config.name }}]
+    name: Clang-Tidy [${{ matrix.config.name }}] (${{ matrix.part }}/10)
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }
@@ -109,10 +110,11 @@ jobs:
   # Run clazy
   clazy:
     needs: [env-qt-zlib-quazip, env-vcpkg, build-debug]
-    name: Clazy [${{ matrix.config.name }}]
+    name: Clazy [${{ matrix.config.name }}] (${{ matrix.part }}/10)
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }

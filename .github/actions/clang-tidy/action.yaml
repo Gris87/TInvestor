@@ -31,7 +31,7 @@ runs:
       id: cache-clang-tidy
       with:
         path: ./success
-        key: ${{ runner.os }}-clang-tidy-${{ steps.folders-hash.outputs.hash }}
+        key: ${{ runner.os }}-clang-tidy-${{ matrix.part }}-${{ steps.folders-hash.outputs.hash }}
 
     # Download environment artifacts
     - name: Download environment artifacts (Qt/ZLib/Quazip)
@@ -149,7 +149,7 @@ runs:
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
 
-        & python tools/py3/run-clang-tidy
+        & python tools/py3/run-clang-tidy --part ${{ matrix.part }} --number-of-parts 10
 
         New-Item -Path . -Name "../success" -ItemType "File"
 
