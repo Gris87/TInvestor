@@ -522,11 +522,11 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     if not duplicate_for_tests:
         res.append("-isystem")
-        res.append("/usr/include/c++/13")
+        res.append(f"{args.gcc_path}")
         res.append("-isystem")
         res.append("/usr/include/x86_64-linux-gnu/c++/13")
         res.append("-isystem")
-        res.append("/usr/include/c++/13/backward")
+        res.append(f"{args.gcc_path}/backward")
         res.append("-isystem")
         res.append("/usr/local/include")
 
@@ -679,6 +679,13 @@ def main():
         type=str,
         default="C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.22621.0",
         help="Path to Windows Kits",
+    )
+    parser.add_argument(
+        "--gcc-path",
+        dest="gcc_path",
+        type=str,
+        default="/usr/include/c++/13",
+        help="Path to gcc includes",
     )
     parser.add_argument(
         "--directory",

@@ -42,7 +42,7 @@ public:
 
         while (running)
         {
-            grpc::Status status = action(mRawGrpcClient, service, context, req, resp);
+            const grpc::Status status = action(mRawGrpcClient, service, context, req, resp);
 
             if (!parentThread->isInterruptionRequested() && !status.ok())
             {

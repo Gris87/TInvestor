@@ -26,7 +26,7 @@ const QColor& VerticalLabel::color() const
     return mColor;
 }
 
-void VerticalLabel::paintEvent(QPaintEvent*)
+void VerticalLabel::paintEvent(QPaintEvent* /*event*/)
 {
     QPainter painter(this);
 

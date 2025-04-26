@@ -36,16 +36,18 @@ class WaitingSpinnerWidget : public QWidget
 public:
     /*! Constructor for "standard" widget behaviour - use this
    * constructor if you wish to, e.g. embed your widget in another. */
-    WaitingSpinnerWidget(QWidget* parent = 0, bool centerOnParent = true, bool disableParentWhenSpinning = true);
+    explicit WaitingSpinnerWidget(QWidget* parent = nullptr, bool centerOnParent = true, bool disableParentWhenSpinning = true);
 
     /*! Constructor - use this constructor to automatically create a modal
    * ("blocking") spinner on top of the calling widget/window.  If a valid
    * parent widget is provided, "centreOnParent" will ensure that
    * QtWaitingSpinner automatically centres itself on it, if not,
    * "centreOnParent" is ignored. */
-    WaitingSpinnerWidget(
-        Qt::WindowModality modality, QWidget* parent = 0, bool centerOnParent = true, bool disableParentWhenSpinning = true
+    explicit WaitingSpinnerWidget(
+        Qt::WindowModality modality, QWidget* parent = nullptr, bool centerOnParent = true, bool disableParentWhenSpinning = true
     );
+
+    ~WaitingSpinnerWidget() = default;
 
     Q_DISABLE_COPY(WaitingSpinnerWidget)
 
@@ -66,18 +68,40 @@ public:
     void setText(QString text);
     void setTextColor(QColor color);
 
-    QColor  color() const;
-    QString text() const;
-    QColor  textColor() const;
-    qreal   roundness() const;
-    qreal   minimumTrailOpacity() const;
-    qreal   trailFadePercentage() const;
-    qreal   revolutionsPersSecond() const;
-    int     numberOfLines() const;
-    int     lineLength() const;
-    int     lineWidth() const;
-    int     innerRadius() const;
+    [[nodiscard]]
+    QColor color() const;
 
+    [[nodiscard]]
+    QString text() const;
+
+    [[nodiscard]]
+    QColor textColor() const;
+
+    [[nodiscard]]
+    qreal roundness() const;
+
+    [[nodiscard]]
+    qreal minimumTrailOpacity() const;
+
+    [[nodiscard]]
+    qreal trailFadePercentage() const;
+
+    [[nodiscard]]
+    qreal revolutionsPersSecond() const;
+
+    [[nodiscard]]
+    int numberOfLines() const;
+
+    [[nodiscard]]
+    int lineLength() const;
+
+    [[nodiscard]]
+    int lineWidth() const;
+
+    [[nodiscard]]
+    int innerRadius() const;
+
+    [[nodiscard]]
     bool isSpinning() const;
 
 private slots:

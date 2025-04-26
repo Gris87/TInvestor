@@ -237,7 +237,6 @@ public:
         CryptoFlagChecksum    = 0x02,
         CryptoFlagHash        = 0x04
     };
-    Q_DECLARE_FLAGS(CryptoFlags, CryptoFlag);
 
 private:
     void splitKey();
@@ -249,6 +248,5 @@ private:
     Error                   m_lastError;
     QRandomGenerator        m_randomGenerator;
 };
-Q_DECLARE_OPERATORS_FOR_FLAGS(SimpleCrypt::CryptoFlags)
 
 #endif // SimpleCrypt_H

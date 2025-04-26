@@ -19,7 +19,7 @@ public:
     const QColor& color() const;
 
 protected:
-    void paintEvent(QPaintEvent*) override;
+    void paintEvent(QPaintEvent* event) override;
 
     [[nodiscard]]
     QSize sizeHint() const override;

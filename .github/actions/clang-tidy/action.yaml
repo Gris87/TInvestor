@@ -92,6 +92,8 @@ runs:
                     --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
             }
             "Linux" {
+                Get-ChildItem -Path /usr/include/c++ -Recurse -Force
+
                 & python tools/py3/generate-compile-commands `
                     --os Linux `
                     --target clang-tidy `
@@ -101,6 +103,7 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/include/QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-source" `
+                    --gcc-path "/usr/include/c++/12" `
                     --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
             }
         }
