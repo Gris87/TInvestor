@@ -47,7 +47,7 @@ public:
         Qt::WindowModality modality, QWidget* parent = nullptr, bool centerOnParent = true, bool disableParentWhenSpinning = true
     );
 
-    ~WaitingSpinnerWidget() = default;
+    ~WaitingSpinnerWidget() override = default;
 
     Q_DISABLE_COPY(WaitingSpinnerWidget)
 

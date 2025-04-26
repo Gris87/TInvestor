@@ -351,7 +351,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append("-Wextra")
             res.append("-Werror")
 
-    if duplicate_for_tests:
+    if duplicate_for_tests and not args.ci:
         res.append("-fprofile-arcs")
         res.append("-ftest-coverage")
         res.append("-fno-elide-constructors")
@@ -520,7 +520,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     res.append(f"-I{args.qt_path}/mkspecs/linux-g++")
 
-    if not duplicate_for_tests:
+    if not duplicate_for_tests or args.ci:
         res.append("-isystem")
         res.append(f"{args.gcc_path}")
         res.append("-isystem")
@@ -533,7 +533,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     res.append("-isystem")
     res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/19/include")
 
-    if not duplicate_for_tests:
+    if not duplicate_for_tests or args.ci:
         res.append("-isystem")
         res.append("/usr/include/x86_64-linux-gnu")
         res.append("-isystem")
