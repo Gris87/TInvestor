@@ -10,6 +10,12 @@
 
 struct HttpResult
 {
+    HttpResult() :
+        statusCode(),
+        body()
+    {
+    }
+
     int        statusCode;
     QByteArray body;
 };

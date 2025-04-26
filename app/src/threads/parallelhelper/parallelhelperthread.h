@@ -61,10 +61,10 @@ void processInParallel(
 {
     QThread* parentThread = QThread::currentThread();
 
-    int cpuCount = QThread::idealThreadCount();
+    const int cpuCount = QThread::idealThreadCount();
 
-    int partSize = array.size() / cpuCount;
-    int partTail = array.size() % cpuCount;
+    const int partSize = array.size() / cpuCount;
+    const int partTail = array.size() % cpuCount;
 
     int start = 0;
     int end   = 0;

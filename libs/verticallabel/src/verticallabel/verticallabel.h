@@ -10,16 +10,22 @@ class VerticalLabel : public QLabel
     Q_OBJECT
 
 public:
-    explicit VerticalLabel(QWidget* parent = 0);
-    explicit VerticalLabel(const QString& text, QWidget* parent = 0);
+    explicit VerticalLabel(QWidget* parent = nullptr);
+    explicit VerticalLabel(const QString& text, QWidget* parent = nullptr);
 
-    void          setColor(const QColor& color);
+    void setColor(const QColor& color);
+
+    [[nodiscard]]
     const QColor& color() const;
 
 protected:
-    void  paintEvent(QPaintEvent*);
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
+    void paintEvent(QPaintEvent*) override;
+
+    [[nodiscard]]
+    QSize sizeHint() const override;
+
+    [[nodiscard]]
+    QSize minimumSizeHint() const override;
 
 private:
     QColor mColor;

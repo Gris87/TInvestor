@@ -62,7 +62,7 @@ public:
       CompressionMode describes if compression will be applied to the data to be
       encrypted.
       */
-    enum CompressionMode
+    enum CompressionMode : quint8
     {
         CompressionAuto,   /*!< Only apply compression if that results in a shorter plaintext. */
         CompressionAlways, /*!< Always apply compression. Note that for short inputs, a compression may result in longer data */
@@ -76,7 +76,7 @@ public:
       increases the length of the resulting cypertext, but makes it possible to check if the plaintext
       appears to be valid after decryption.
     */
-    enum IntegrityProtectionMode
+    enum IntegrityProtectionMode : quint8
     {
         ProtectionNone, /*!< The integerity of the encrypted data is not protected. It is not really possible to detect a wrong key, for instance. */
         ProtectionChecksum, /*!< A simple checksum is used to verify that the data is in order. If not, an empty string is returned. */
@@ -85,7 +85,7 @@ public:
     /**
       Error describes the type of error that occured.
       */
-    enum Error
+    enum Error : quint8
     {
         ErrorNoError,         /*!< No error occurred. */
         ErrorNoKeySet,        /*!< No key was set. You can not encrypt or decrypt without a valid key. */
@@ -113,6 +113,7 @@ public:
     /**
       Returns true if SimpleCrypt has been initialized with a key.
       */
+    [[nodiscard]]
     bool hasKey() const
     {
         return !m_keyParts.isEmpty();
@@ -131,6 +132,7 @@ public:
     /**
       Returns the CompressionMode that is currently in use.
       */
+    [[nodiscard]]
     CompressionMode compressionMode() const
     {
         return m_compressionMode;
@@ -149,6 +151,7 @@ public:
     /**
       Returns the IntegrityProtectionMode that is currently in use.
       */
+    [[nodiscard]]
     IntegrityProtectionMode integrityProtectionMode() const
     {
         return m_protectionMode;
@@ -157,6 +160,7 @@ public:
     /**
       Returns the last error that occurred.
       */
+    [[nodiscard]]
     Error lastError() const
     {
         return m_lastError;
@@ -226,7 +230,7 @@ public:
 
     //enum to describe options that have been used for the encryption. Currently only one, but
     //that only leaves room for future extensions like adding a cryptographic hash...
-    enum CryptoFlag
+    enum CryptoFlag : quint8
     {
         CryptoFlagNone        = 0,
         CryptoFlagCompression = 0x01,
