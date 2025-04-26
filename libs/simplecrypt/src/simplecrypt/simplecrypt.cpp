@@ -92,7 +92,7 @@ QByteArray SimpleCrypt::encryptToByteArray(QByteArray plaintext)
 
     QByteArray ba = plaintext;
 
-    CryptoFlags flags = CryptoFlagNone;
+    quint8 flags = CryptoFlagNone;
     if (m_compressionMode == CompressionAlways)
     {
         ba     = qCompress(ba, 9); //maximum compression
@@ -214,7 +214,7 @@ QByteArray SimpleCrypt::decryptToByteArray(QByteArray cypher)
         return QByteArray();
     }
 
-    CryptoFlags flags = CryptoFlags(ba.at(1));
+    quint8 flags = ba.at(1);
 
     ba = ba.mid(2);
     int  pos(0);
@@ -232,7 +232,7 @@ QByteArray SimpleCrypt::decryptToByteArray(QByteArray cypher)
     ba = ba.mid(1); //chop off the random number at the start
 
     bool integrityOk(true);
-    if (flags.testFlag(CryptoFlagChecksum))
+    if (flags & CryptoFlagChecksum)
     {
         if (ba.length() < 2)
         {
@@ -248,7 +248,7 @@ QByteArray SimpleCrypt::decryptToByteArray(QByteArray cypher)
         quint16 checksum = qChecksum(ba.constData(), ba.length());
         integrityOk      = (checksum == storedChecksum);
     }
-    else if (flags.testFlag(CryptoFlagHash))
+    else if (flags & CryptoFlagHash)
     {
         if (ba.length() < 20)
         {
@@ -268,7 +268,7 @@ QByteArray SimpleCrypt::decryptToByteArray(QByteArray cypher)
         return QByteArray();
     }
 
-    if (flags.testFlag(CryptoFlagCompression))
+    if (flags & CryptoFlagCompression)
     {
         ba = qUncompress(ba);
     }
