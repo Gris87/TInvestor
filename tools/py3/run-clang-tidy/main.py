@@ -9,7 +9,11 @@ from pathlib import Path
 
 
 files_pattern = ["*.h", "*.cpp"]
-extra_args = ["-p", Path(Path(os.getcwd()) / "build/Desktop-Debug/.qtc_clangd").absolute()]
+extra_args = [
+    "-header-filter=.*",
+    "-p",
+    Path(Path(os.getcwd()) / "build/Desktop-Debug/.qtc_clangd").absolute(),
+]
 
 
 def run_clang_tidy(args):

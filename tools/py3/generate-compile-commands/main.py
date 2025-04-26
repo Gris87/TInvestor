@@ -97,7 +97,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Wno-unknown-warning-option")
     res.append("-Wno-unknown-pragmas")
     res.append("-nostdinc")
-    res.append("-nostdinc++")
+
+    # Not used on CI
+    if args.target == "build":
+        res.append("-nostdinc++")
+
     res.append("--driver-mode=cl")
     res.append("-nologo")
     res.append("-Zc:wchar_t")
@@ -105,10 +109,17 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Zc:rvalueCast")
     res.append("-Zc:inline")
     res.append("-Zc:strictStrings")
-    res.append("-Zc:throwingNew")
+
+    # Not used on CI
+    if args.target == "build":
+        res.append("-Zc:throwingNew")
+
     res.append("-permissive-")
     res.append("-Zc:__cplusplus")
-    res.append("-Zc:externConstexpr")
+
+    # Not used on CI
+    if args.target == "build":
+        res.append("-Zc:externConstexpr")
 
     if app_or_test and "/libs/" not in file_path:
         if args.target == "build":
@@ -137,8 +148,12 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("/Zs")
     res.append("-m64")
     res.append("--target=x86_64-pc-windows-msvc")
-    res.append("-fcxx-exceptions")
-    res.append("-fexceptions")
+
+    # Not used on CI
+    if args.target == "build":
+        res.append("-fcxx-exceptions")
+        res.append("-fexceptions")
+
     res.append("-fms-compatibility-version=19.42")
     res.append("-DUNICODE")
     res.append("-D_UNICODE")
