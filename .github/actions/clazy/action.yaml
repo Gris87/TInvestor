@@ -81,10 +81,10 @@ runs:
                     --os Windows `
                     --target clazy `
                     --qt-path "${Env:GITHUB_WORKSPACE}\Qt\${Env:QT_VERSION}\msvc2022_64" `
-                    --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator-windows-x64-msvc-15.0.0" `
-                    --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip-1.5\install\include\QuaZip-Qt6-1.5" `
+                    --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator" `
+                    --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip\install\include\QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
-                    --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-1.16.0" `
+                    --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-source" `
                     --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.43.34808" `
                     --msvc-auxiliary-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary" `
                     --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0" `
@@ -95,10 +95,10 @@ runs:
                     --os Linux `
                     --target clazy `
                     --qt-path "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64" `
-                    --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-16.0.1" `
-                    --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip-1.5/install/include/QuaZip-Qt6-1.5" `
+                    --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator" `
+                    --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/include/QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
-                    --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-1.16.0" `
+                    --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-source" `
                     --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
             }
         }
@@ -137,12 +137,12 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-windows-x64-msvc-${Env:QTC_VERSION}/bin/clang/bin;${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-${Env:CLANG_VERSION}-x86_64-pc-windows-msvc/bin;${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/bin/clang/bin;${Env:PATH}"
             }
             "Linux" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator-linux-x64-${Env:QTC_VERSION}/libexec/qtcreator/clang/bin:${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/libexec/qtcreator/clang/bin:${Env:PATH}"
             }
         }
 

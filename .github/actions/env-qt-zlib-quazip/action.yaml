@@ -146,16 +146,15 @@ runs:
         endif()
 
         # Set qtc_url
-        set(archive_name "qtcreator-${url_os}${qt_package_arch_suffix}-${{ env.QTC_VERSION }}")
-        set(qtc_url "https://github.com/qt-creator/qt-creator/releases/download/v${{ env.QTC_VERSION }}/${archive_name}.7z")
+        set(qtc_url "https://github.com/qt-creator/qt-creator/releases/download/v${{ env.QTC_VERSION }}/qtcreator-${url_os}${qt_package_arch_suffix}-${{ env.QTC_VERSION }}.7z")
 
         cmake_language(EVAL CODE "
           message(\"Downloading: ${qtc_url}\")
           file(DOWNLOAD \"${qtc_url}\" qtcreator.7z)
         ")
 
-        file(MAKE_DIRECTORY Qt/${archive_name})
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/qtcreator.7z WORKING_DIRECTORY Qt/${archive_name})
+        file(MAKE_DIRECTORY Qt/qtcreator)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/qtcreator.7z WORKING_DIRECTORY Qt/qtcreator)
 
     # Checkout zlib repository with specific version to $GITHUB_WORKSPACE/zlib-source
     - name: Checkout zlib
