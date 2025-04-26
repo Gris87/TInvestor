@@ -77,7 +77,7 @@ runs:
         switch ("${{ runner.os }}")
         {
           "Windows" {
-                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\" -Filter "type_traits"
+                Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022" -Filter "type_traits" -Recurse -Force
 
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
