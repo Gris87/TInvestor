@@ -339,6 +339,7 @@ static int getCandlesFromZipFile(
     return indexOffset;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 static void getCandlesWithHttp(
     QThread*          parentThread,
     IUserStorage*     userStorage,
@@ -423,6 +424,7 @@ static void getCandlesWithHttp(
 
     stocksStorage->appendStockData(stock, dataArray, indexOffset);
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 struct GetCandlesInfo
 {

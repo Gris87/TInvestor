@@ -7,6 +7,7 @@
 
 
 
+// NOLINTBEGIN(readability-magic-numbers)
 TEST(Test_HttpClient, Test_constructor_and_destructor)
 {
     const HttpClient client;
@@ -51,3 +52,4 @@ TEST(Test_HttpClient, Test_openInBrowser)
 {
     // Nothing
 }
+// NOLINTEND(readability-magic-numbers)

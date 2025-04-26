@@ -23,7 +23,7 @@ def run_clang_tidy(args):
         paths.extend(Path("app").rglob(pattern))
         paths.extend(Path("test").rglob(pattern))
 
-    matched_files = sorted([str(path.absolute()) for path in paths if path.is_file()])
+    matched_files = sorted([str(path.absolute()) for path in paths if path.is_file() and not path.name.startswith("test_")])
 
     number_of_parts = min(max(args.number_of_parts, 1), len(matched_files))
     part = min(max(args.part, 1), number_of_parts)

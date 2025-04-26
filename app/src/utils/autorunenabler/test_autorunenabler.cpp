@@ -12,13 +12,14 @@
 
 
 
-using ::testing::_;
+using ::testing::_; // NOLINT(misc-unused-using-decls)
 using ::testing::InSequence;
-using ::testing::Return;
+using ::testing::Return; // NOLINT(misc-unused-using-decls)
 using ::testing::StrictMock;
 
 
 
+// NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
 class Test_AutorunEnabler : public ::testing::Test
 {
 protected:
@@ -98,3 +99,4 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
     enabler->setEnabled(false);
 }
 #endif
+// NOLINTEND(cppcoreguidelines-pro-type-member-init)
