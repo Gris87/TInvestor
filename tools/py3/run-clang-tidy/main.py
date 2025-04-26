@@ -10,7 +10,6 @@ from pathlib import Path
 
 files_pattern = ["*.h", "*.cpp"]
 extra_args = [
-    "-header-filter=.*",
     "-p",
     Path(Path(os.getcwd()) / "build/Desktop-Debug/.qtc_clangd").absolute(),
 ]
