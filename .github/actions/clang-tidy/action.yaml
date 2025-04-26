@@ -80,6 +80,7 @@ runs:
                 & python tools/py3/generate-compile-commands `
                     --os Windows `
                     --target clang-tidy `
+                    --ci `
                     --qt-path "${Env:GITHUB_WORKSPACE}\Qt\${Env:QT_VERSION}\msvc2022_64" `
                     --qt-creator-path "${Env:GITHUB_WORKSPACE}\Qt\qtcreator" `
                     --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip\install\include\QuaZip-Qt6-1.5" `
@@ -94,6 +95,7 @@ runs:
                 & python tools/py3/generate-compile-commands `
                     --os Linux `
                     --target clang-tidy `
+                    --ci `
                     --qt-path "${Env:GITHUB_WORKSPACE}/Qt/${Env:QT_VERSION}/gcc_64" `
                     --qt-creator-path "${Env:GITHUB_WORKSPACE}/Qt/qtcreator" `
                     --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/include/QuaZip-Qt6-1.5" `

@@ -18,6 +18,7 @@ struct Stock
 
     Stock& operator=(const Stock& another);
 
+    [[nodiscard]]
     float lastPrice() const;
 
     QMutex*          mutex;

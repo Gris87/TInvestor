@@ -14,7 +14,6 @@
 
 
 
-using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;

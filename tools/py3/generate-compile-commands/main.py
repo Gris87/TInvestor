@@ -31,7 +31,12 @@ def _generate_compile_commands(args):
     for path in paths:
         file_path = str(path.absolute()).replace("\\", "/")
 
-        if "/build/gen/" in file_path:
+        need_to_skip = "/build/gen/" in file_path
+
+        if not need_to_skip and args.ci:
+            need_to_skip = "/libs/" in file_path or "/test_" in file_path
+
+        if need_to_skip:
             continue
 
         if "_mock.h" not in file_path and "/test_" not in file_path and "/test/main.cpp" not in file_path:
@@ -98,8 +103,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Wno-unknown-pragmas")
     res.append("-nostdinc")
 
-    # Not used on CI
-    if args.target == "build":
+    if not args.ci:
         res.append("-nostdinc++")
 
     res.append("--driver-mode=cl")
@@ -110,15 +114,13 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Zc:inline")
     res.append("-Zc:strictStrings")
 
-    # Not used on CI
-    if args.target == "build":
+    if not args.ci:
         res.append("-Zc:throwingNew")
 
     res.append("-permissive-")
     res.append("-Zc:__cplusplus")
 
-    # Not used on CI
-    if args.target == "build":
+    if not args.ci:
         res.append("-Zc:externConstexpr")
 
     if app_or_test and "/libs/" not in file_path:
@@ -149,8 +151,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-m64")
     res.append("--target=x86_64-pc-windows-msvc")
 
-    # Not used on CI
-    if args.target == "build":
+    if not args.ci:
         res.append("-fcxx-exceptions")
         res.append("-fexceptions")
 
@@ -616,6 +617,12 @@ def main():
         choices=["build", "clang-tidy", "clazy"],
         default="build",
         help="Target",
+    )
+    parser.add_argument(
+        "--ci",
+        default=False,
+        action="store_true",
+        help="Flag for CI",
     )
     parser.add_argument(
         "--qt-path",

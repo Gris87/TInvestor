@@ -22,7 +22,6 @@ def run_clazy(args):
     paths = []
     for pattern in files_pattern:
         paths.extend(Path("app").rglob(pattern))
-        paths.extend(Path("test").rglob(pattern))
 
     matched_files = sorted([str(path.absolute()) for path in paths if path.is_file() and not path.name.startswith("test_")])
 
@@ -31,6 +30,8 @@ def run_clazy(args):
 
     chunk_size = math.ceil(len(matched_files) / number_of_parts);
     file_chunks = [matched_files[i : i + chunk_size] for i in range(0, len(matched_files), chunk_size)]
+
+    print(f"Files in chunks: {chunk_size}")
 
     commands = []
 
