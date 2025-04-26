@@ -90,10 +90,10 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
-        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       fail-fast: false
 
     steps:
@@ -114,10 +114,10 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
-        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         config:
           - { name: "win64", os: windows-latest }
           - { name: "linux", os: ubuntu-latest }
+        part: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       fail-fast: false
 
     steps:

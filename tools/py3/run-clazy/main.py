@@ -27,7 +27,7 @@ def run_clazy(args):
     matched_files = sorted([str(path.absolute()) for path in paths if path.is_file()])
 
     number_of_parts = min(max(args.number_of_parts, 1), len(matched_files))
-    part = min(max(args.part, 1), number_of_parts))
+    part = min(max(args.part, 1), number_of_parts)
 
     chunk_size = math.ceil(len(matched_files) / number_of_parts);
     file_chunks = [matched_files[i : i + chunk_size] for i in range(0, len(matched_files), chunk_size)]
