@@ -22,6 +22,11 @@ win32* {
         DEBUG_SUFFIX =
     }
 
+    # Workaround for clang build
+    linux-clang* {
+        QMAKE_CXXFLAGS += "-fclang-abi-compat=17"
+    }
+
     LIBS += \
         -L$${VCPKG_LIBS} \
         -labseil_dll \

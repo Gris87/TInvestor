@@ -351,11 +351,8 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append("-Wextra")
             res.append("-Werror")
 
-    if duplicate_for_tests and not args.ci:
-        res.append("-fprofile-arcs")
-        res.append("-ftest-coverage")
-        res.append("-fno-elide-constructors")
-        res.append("-fno-default-inline")
+    if app_or_test or "/libs/investapi/" in file_path:
+        res.append("-fclang-abi-compat=17")
 
     res.append("-g")
 
@@ -386,7 +383,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
 
     res.append("-fsyntax-only")
     res.append("-m64")
-    res.append("--target=x86_64-linux-gnu")
+    res.append("--target=x86_64-pc-linux-gnu")
 
     if app_or_test and "/libs/" not in file_path:
         res.append("-DUSE_SANDBOX")
@@ -518,26 +515,21 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/waitingspinner/build/gen/waitingspinner/moc")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/waitingspinner")
 
-    res.append(f"-I{args.qt_path}/mkspecs/linux-g++")
-
-    if not duplicate_for_tests or args.ci:
-        res.append("-isystem")
-        res.append(f"{args.gcc_path}")
-        res.append("-isystem")
-        res.append("/usr/include/x86_64-linux-gnu/c++/13")
-        res.append("-isystem")
-        res.append(f"{args.gcc_path}/backward")
-        res.append("-isystem")
-        res.append("/usr/local/include")
-
+    res.append(f"-I{args.qt_path}/mkspecs/linux-clang")
+    res.append("-isystem")
+    res.append(f"{args.gcc_path}")
+    res.append("-isystem")
+    res.append("/usr/include/x86_64-linux-gnu/c++/13")
+    res.append("-isystem")
+    res.append(f"{args.gcc_path}/backward")
+    res.append("-isystem")
+    res.append("/usr/local/include")
     res.append("-isystem")
     res.append(f"{args.qt_creator_path}/libexec/qtcreator/clang/lib/clang/19/include")
-
-    if not duplicate_for_tests or args.ci:
-        res.append("-isystem")
-        res.append("/usr/include/x86_64-linux-gnu")
-        res.append("-isystem")
-        res.append("/usr/include")
+    res.append("-isystem")
+    res.append("/usr/include/x86_64-linux-gnu")
+    res.append("-isystem")
+    res.append("/usr/include")
 
     if args.target == "build":
         res.append("-fmessage-length=0")
