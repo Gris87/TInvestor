@@ -101,7 +101,7 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}/Qt/quazip/install/include/QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}/Qt/vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}/Qt/googletest-source" `
-                    --gcc-path "/usr/include/c++/14" `
+                    --gcc-path "/usr/include/c++/13" `
                     --output build/Desktop-Debug/.qtc_clangd/compile_commands.json
             }
         }
