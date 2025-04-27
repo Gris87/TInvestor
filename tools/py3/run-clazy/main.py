@@ -104,8 +104,8 @@ def _execute_command(command):
 
 
 def _get_checks():
-    res = ",".join([x for x in all_checks if f"-{x}" not in disabled_checks])
-    # print(res) # For debug only
+    res = [x for x in all_checks if f"-{x}" not in disabled_checks]
+    # print(",".join(res)) # For debug only
 
     return res
 
