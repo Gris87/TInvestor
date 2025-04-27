@@ -6,19 +6,19 @@
 
 
 
-const QColor     GREY_COLOR                               = QColor("#AFC2D7");
-const QString    DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
-constexpr int    SMALL_SPINNER_INNER_RADIUS               = 6;
-constexpr int    SMALL_SPINNER_LINE_LENGTH                = 6;
-constexpr qint64 MS_IN_SECOND                             = 1000LL;
-constexpr qint64 ONE_MINUTE                               = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR                                 = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY                                  = 24LL * ONE_HOUR;
-constexpr qint64 USER_UPDATE_INTERVAL                     = 15LL * ONE_MINUTE; // 15 minutes
-constexpr qint64 PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          // 1 hour
-constexpr qint64 CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
-constexpr qint64 STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
-constexpr qint64 STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
+const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=clazy-non-pod-global-static
+const char* const DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
+constexpr int     SMALL_SPINNER_INNER_RADIUS               = 6;
+constexpr int     SMALL_SPINNER_LINE_LENGTH                = 6;
+constexpr qint64  MS_IN_SECOND                             = 1000LL;
+constexpr qint64  ONE_MINUTE                               = 60LL * MS_IN_SECOND;
+constexpr qint64  ONE_HOUR                                 = 60LL * ONE_MINUTE;
+constexpr qint64  ONE_DAY                                  = 24LL * ONE_HOUR;
+constexpr qint64  USER_UPDATE_INTERVAL                     = 15LL * ONE_MINUTE; // 15 minutes
+constexpr qint64  PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          // 1 hour
+constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
+constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
+constexpr qint64  STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
 
 #ifdef Q_OS_WINDOWS
 constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;

@@ -7,9 +7,9 @@
 constexpr QChar RUBLE      = QChar(0x20BD);
 constexpr float ZERO_LIMIT = 0.0001f;
 
-const QColor GREEN_COLOR  = QColor("#2BD793");
-const QColor RED_COLOR    = QColor("#ED6F7E");
-const QColor NORMAL_COLOR = QColor("#97AEC4");
+const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=clazy-non-pod-global-static
+const QColor RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=clazy-non-pod-global-static
+const QColor NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=clazy-non-pod-global-static
 
 
 

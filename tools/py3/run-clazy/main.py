@@ -10,7 +10,7 @@ from pathlib import Path
 
 files_pattern = ["*.h", "*.cpp"]
 extra_args = [
-    "-checks=signal-with-return-value,heap-allocated-small-trivial-type,ifndef-define-typo,isempty-vs-count,qrequiredresult-candidates,qstring-varargs,qt6-qlatin1stringchar-to-u,qt6-qhash-signature,qt6-header-fixes,qt6-deprecated-api-fixes,qt6-fwd-fixes,tr-non-literal,raw-environment-function,container-inside-loop,qhash-with-char-pointer-key,qvariant-template-instantiation,qproperty-type-mismatch,unneeded-cast,assert-with-side-effects,detaching-member,thread-with-slots,reserve-candidates,jni-signatures,use-arrow-operator-instead-of-data,unexpected-flag-enumerator-value,overloaded-signal,connect-non-signal,qstring-comparison-to-implicit-char,wrong-qevent-cast,lambda-in-connect,lambda-unique-connection,qdatetime-utc,qgetenv,qstring-insensitive-allocation,fully-qualified-moc-types,unused-non-trivial-variable,mutable-container-key,qenums,qmap-with-pointer-key,qstring-ref,strict-iterators,writing-to-temporary,container-anti-pattern,qfileinfo-exists,qstring-arg,empty-qstringliteral,qt-macros,temporary-iterator,wrong-qglobalstatic,lowercase-qml-type-name,no-module-include,use-static-qregularexpression,auto-unexpected-qstringbuilder,connect-3arg-lambda,const-signal-or-slot,detaching-temporary,foreach,install-event-filter,non-pod-global-static,post-event,qdeleteall,qlatin1string-non-ascii,qproperty-without-notify,qstring-left,range-loop-detach,range-loop-reference,returning-data-from-temporary,rule-of-two-soft,child-event-qobject-cast,virtual-signal,overridden-signal,qhash-namespace,skipped-base-method,ctor-missing-parent-argument",
+    "-checks=signal-with-return-value,heap-allocated-small-trivial-type,ifndef-define-typo,isempty-vs-count,qrequiredresult-candidates,qstring-varargs,qt6-qlatin1stringchar-to-u,qt6-qhash-signature,qt6-header-fixes,qt6-deprecated-api-fixes,qt6-fwd-fixes,tr-non-literal,raw-environment-function,container-inside-loop,qhash-with-char-pointer-key,qproperty-type-mismatch,unneeded-cast,assert-with-side-effects,detaching-member,thread-with-slots,jni-signatures,use-arrow-operator-instead-of-data,unexpected-flag-enumerator-value,overloaded-signal,connect-non-signal,qstring-comparison-to-implicit-char,wrong-qevent-cast,lambda-in-connect,lambda-unique-connection,qdatetime-utc,qgetenv,qstring-insensitive-allocation,fully-qualified-moc-types,unused-non-trivial-variable,mutable-container-key,qenums,qmap-with-pointer-key,qstring-ref,strict-iterators,writing-to-temporary,container-anti-pattern,qfileinfo-exists,qstring-arg,empty-qstringliteral,qt-macros,temporary-iterator,wrong-qglobalstatic,lowercase-qml-type-name,no-module-include,use-static-qregularexpression,auto-unexpected-qstringbuilder,connect-3arg-lambda,const-signal-or-slot,detaching-temporary,foreach,install-event-filter,non-pod-global-static,post-event,qdeleteall,qlatin1string-non-ascii,qproperty-without-notify,qstring-left,range-loop-detach,range-loop-reference,returning-data-from-temporary,rule-of-two-soft,child-event-qobject-cast,virtual-signal,overridden-signal,qhash-namespace,skipped-base-method,ctor-missing-parent-argument",
     "-p",
     Path(Path(os.getcwd()) / "build/Desktop-Debug/.qtc_clangd").absolute(),
     '--header-filter="/app/src/.*"',
@@ -52,13 +52,14 @@ def _execute_commands(commands):
 
     with ThreadPoolExecutor(os.cpu_count()) as executor:
         for file_path, result, lines in executor.map(_execute_command, commands):
-            print(f"Analyzed {file_path}")
-
             if result:
+                print(f"Analyzed {file_path}")
+
                 for line in lines:
                     print(line)
             else:
                 res = False
+                print(f"Analyzed {file_path} [FAILED]")
 
                 for line in lines:
                     print(Fore.RED + line + Style.RESET_ALL)

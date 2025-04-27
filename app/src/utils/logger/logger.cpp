@@ -18,7 +18,8 @@ constexpr int HEX_DIGITS = 16;
 
 const QtMsgType logLevel = QtInfoMsg;
 
-static const QMap<QtMsgType, QString> logLevelToString{
+// clang-format off
+static const QMap<QtMsgType, QString> logLevelToString{ // clazy:exclude=clazy-non-pod-global-static
     {QtDebugMsg,    "DEBUG   "},
     {QtInfoMsg,     "INFO    "},
     {QtWarningMsg,  "WARNING "},
@@ -27,13 +28,14 @@ static const QMap<QtMsgType, QString> logLevelToString{
 };
 
 // HACK for bad QtInfoMsg (Remove on Qt 7)
-static const QMap<QtMsgType, int> logLevelToInteger{
+static const QMap<QtMsgType, int> logLevelToInteger{ // clazy:exclude=clazy-non-pod-global-static
     {QtDebugMsg,    0},
     {QtInfoMsg,     1},
     {QtWarningMsg,  2},
     {QtCriticalMsg, 3},
     {QtFatalMsg,    4}
 };
+// clang-format on
 
 
 

@@ -11,9 +11,9 @@ constexpr double BILLIONS     = 1000000000.0;
 constexpr double MILLIONS     = 1000000.0;
 constexpr double KILOS        = 1000.0;
 
-const QColor GREEN_COLOR  = QColor("#2BD793");
-const QColor RED_COLOR    = QColor("#ED6F7E");
-const QColor NORMAL_COLOR = QColor("#97AEC4");
+const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=clazy-non-pod-global-static
+const QColor RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=clazy-non-pod-global-static
+const QColor NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=clazy-non-pod-global-static
 
 
 

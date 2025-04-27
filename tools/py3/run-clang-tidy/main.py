@@ -58,13 +58,14 @@ def _execute_commands(commands):
 
     with ThreadPoolExecutor(os.cpu_count()) as executor:
         for file_path, result, lines in executor.map(_execute_command, commands):
-            print(f"Analyzed {file_path}")
-
             if result:
+                print(f"Analyzed {file_path}")
+
                 for line in lines:
                     print(line)
             else:
                 res = False
+                print(f"Analyzed {file_path} [FAILED]")
 
                 for line in lines:
                     print(Fore.RED + line + Style.RESET_ALL)
