@@ -100,7 +100,7 @@ def _execute_command(command):
 
     process.wait()
 
-    return command[0].split("=")[1], command[-1], process.returncode == 0, lines
+    return command[1].split("=")[1], command[-1], process.returncode == 0, lines
 
 
 def _get_checks():
