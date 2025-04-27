@@ -5,7 +5,7 @@
 
 
 
-const QString    DATETIME_FORMAT     = "yyyy-MM-dd hh:mm:ss";
+const char*      DATETIME_FORMAT     = "yyyy-MM-dd hh:mm:ss";
 const QColor     GREY_COLOR          = QColor("#AFC2D7");
 const QColor     GREEN_COLOR         = QColor("#2BD793");
 constexpr qint64 MS_IN_SECOND        = 1000LL;

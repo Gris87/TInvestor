@@ -6,7 +6,7 @@
 
 
 
-const char* SANDBOX_TOKEN = "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ";
+extern const char* SANDBOX_TOKEN;
 
 
 

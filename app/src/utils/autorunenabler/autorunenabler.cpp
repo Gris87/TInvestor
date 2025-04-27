@@ -6,7 +6,7 @@
 
 
 
-const QString AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
+const char* AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
 
 
 
