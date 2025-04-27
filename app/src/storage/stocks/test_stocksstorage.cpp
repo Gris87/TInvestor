@@ -104,9 +104,9 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     stock2->data << stockData2 << stockData3;
     stock3->data << stockData1 << stockData3 << stockData4;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 
@@ -254,9 +254,9 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stock2->data << stockData2 << stockData3;
     stock3->data << stockData1 << stockData3 << stockData4;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 
@@ -542,9 +542,9 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
         }
     }
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     EXPECT_CALL(*stocksDatabaseMock, readStocksMeta()).WillOnce(Return(stocksDB));
     EXPECT_CALL(*stocksDatabaseMock, readStocksData(Ne(QList<Stock*>())));
@@ -1170,9 +1170,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
     stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 
@@ -1426,9 +1426,9 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
     stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 
@@ -1682,9 +1682,9 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
     stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 
@@ -1943,9 +1943,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     stock2->data << stockData2 << stockData3 << stockData6 << stockData7;
     stock3->data << stockData1 << stockData3 << stockData4 << stockData5;
 
-    stock1->operational.lastStoredTimestamp = stock1->data.last().timestamp;
-    stock2->operational.lastStoredTimestamp = stock2->data.last().timestamp;
-    stock3->operational.lastStoredTimestamp = stock3->data.last().timestamp;
+    stock1->operational.lastStoredTimestamp = stock1->data.constLast().timestamp;
+    stock2->operational.lastStoredTimestamp = stock2->data.constLast().timestamp;
+    stock3->operational.lastStoredTimestamp = stock3->data.constLast().timestamp;
 
     stocksDB << stock1 << stock2 << stock3;
 

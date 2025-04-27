@@ -317,7 +317,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
         if (!stock->data.isEmpty())
         {
             memcpy(stock->data.data(), testStockData[i].constData(), testStockData[i].size());
-            stock->operational.lastStoredTimestamp = stock->data.last().timestamp;
+            stock->operational.lastStoredTimestamp = stock->data.constLast().timestamp;
         }
     }
 
@@ -451,7 +451,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
         if (!stock->data.isEmpty())
         {
             memcpy(stock->data.data(), testStockData[i].constData(), testStockData[i].size());
-            stock->operational.lastStoredTimestamp = stock->data.last().timestamp;
+            stock->operational.lastStoredTimestamp = stock->data.constLast().timestamp;
         }
     }
 

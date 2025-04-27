@@ -13,13 +13,13 @@ files_pattern = ["*.h", "*.cpp"]
 extra_args = [
     "-p",
     Path(Path(os.getcwd()) / "build/Desktop-Debug/.qtc_clangd").absolute(),
-    '--header-filter="/app/src/.*"',
+    '--header-filter=".*src/.*"',
 ]
 
 ignored_output = [
-#    re.compile(r"\d+ warnings generated\."),
-#    re.compile(r"Suppressed \d+ warnings \(.*\)\."),
-#    re.compile(r"Use -header-filter=\.\* to display errors from all non-system headers\. Use -system-headers to display errors from system headers as well\."),
+    re.compile(r"\d+ warnings generated\."),
+    re.compile(r"Suppressed \d+ warnings \(.*\)\."),
+    re.compile(r"Use -header-filter=\.\* to display errors from all non-system headers\. Use -system-headers to display errors from system headers as well\."),
 ]
 
 

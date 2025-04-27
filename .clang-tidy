@@ -127,5 +127,5 @@ WarningsAsErrors: '-*,*'
 CheckOptions:
     cppcoreguidelines-special-member-functions.AllowMissingMoveFunctions: true
     cppcoreguidelines-explicit-virtual-functions.IgnoreDestructors: true
-HeaderFilterRegex:        '.*src.*'
+HeaderFilterRegex:        '.*src/.*'
 ExcludeHeaderFilterRegex: '.*(gtest|gmock).*'

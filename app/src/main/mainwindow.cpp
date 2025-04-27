@@ -6,7 +6,7 @@
 
 
 
-const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=clazy-non-pod-global-static
+const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
 const char* const DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
 constexpr int     SMALL_SPINNER_INNER_RADIUS               = 6;
 constexpr int     SMALL_SPINNER_LINE_LENGTH                = 6;

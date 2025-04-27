@@ -22,14 +22,14 @@ constexpr int    ARROW_OFFSET       = 80;
 constexpr int    ARROW_SIZE         = 20;
 constexpr double ZOOM_FACTOR_BASE   = 1.001;
 
-const QColor LINE_COLOR        = QColor("#FFFFFF"); // clazy:exclude=clazy-non-pod-global-static
-const QColor AXIS_LINE_COLOR   = QColor("#FFFFFF"); // clazy:exclude=clazy-non-pod-global-static
-const QColor AXIS_MARKER_COLOR = QColor("#FFFFFF"); // clazy:exclude=clazy-non-pod-global-static
-const QColor BAR_MARKER_COLOR  = QColor("#FFFFFF"); // clazy:exclude=clazy-non-pod-global-static
-const QColor GREEN_COLOR       = QColor("#2CE89C"); // clazy:exclude=clazy-non-pod-global-static
-const QColor RED_COLOR         = QColor("#FF7584"); // clazy:exclude=clazy-non-pod-global-static
-const QColor GREY_COLOR        = QColor("#E5E5E5"); // clazy:exclude=clazy-non-pod-global-static
-const QColor ARROW_COLOR       = QColor("#FFFFFF"); // clazy:exclude=clazy-non-pod-global-static
+const QColor LINE_COLOR        = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor AXIS_LINE_COLOR   = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor AXIS_MARKER_COLOR = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor BAR_MARKER_COLOR  = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor GREEN_COLOR       = QColor("#2CE89C"); // clazy:exclude=non-pod-global-static
+const QColor RED_COLOR         = QColor("#FF7584"); // clazy:exclude=non-pod-global-static
+const QColor GREY_COLOR        = QColor("#E5E5E5"); // clazy:exclude=non-pod-global-static
+const QColor ARROW_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
 
 
 
