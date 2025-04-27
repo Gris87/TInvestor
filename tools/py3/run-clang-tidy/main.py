@@ -36,12 +36,13 @@ def run_clang_tidy(args):
 
     chunk_size = math.ceil(len(matched_files) / number_of_parts);
     file_chunks = [matched_files[i : i + chunk_size] for i in range(0, len(matched_files), chunk_size)]
+    chunk = file_chunks[part - 1]
 
-    print(f"Files in chunks: {chunk_size}")
+    print(f"Files in chunk: {len(chunk)}")
 
     commands = []
 
-    for file_path in file_chunks[part - 1]:
+    for file_path in chunk:
         command = ["clang-tidy"]
         command.extend(extra_args)
         command.append(file_path)

@@ -221,10 +221,18 @@ void UserDatabase::writeAccounts(const QList<Account>& accounts)
     QVariantList ids;
     QVariantList names;
 
-    for (const Account& account : accounts)
+    ids.reserve(accounts.size());
+    names.reserve(accounts.size());
+
+    ids.resizeForOverwrite(accounts.size());
+    names.resizeForOverwrite(accounts.size());
+
+    for (int i = 0; i < accounts.size(); ++i)
     {
-        ids << mSimpleCrypt.encryptToString(account.id);
-        names << account.name;
+        const Account& account = accounts.at(i);
+
+        ids[i]   = mSimpleCrypt.encryptToString(account.id);
+        names[i] = account.name;
     }
 
     QSqlQuery query2(db);

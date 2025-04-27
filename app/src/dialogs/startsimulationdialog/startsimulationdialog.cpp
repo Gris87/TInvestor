@@ -5,7 +5,7 @@
 
 
 
-const QString DATE_FORMAT = "yyyy-MM-dd";
+const char*   DATE_FORMAT = "yyyy-MM-dd";
 constexpr int START_MONEY = 100000;
 
 
