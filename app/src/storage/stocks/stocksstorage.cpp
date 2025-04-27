@@ -27,7 +27,7 @@ StocksStorage::~StocksStorage()
 
     delete mMutex;
 
-    for (Stock* stock : mStocks)
+    for (Stock* stock : std::as_const(mStocks))
     {
         delete stock;
     }
@@ -58,7 +58,7 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 
     newMetas.reserve(stocksMeta.size());
 
-    for (Stock* stock : mStocks)
+    for (Stock* stock : std::as_const(mStocks))
     {
         StockMeta* existingMeta          = &stock->meta;
         existingMetas[existingMeta->uid] = existingMeta;

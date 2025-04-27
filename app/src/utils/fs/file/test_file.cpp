@@ -41,7 +41,7 @@ TEST_F(Test_File, Test_constructor_and_destructor)
 
 TEST_F(Test_File, Test_write)
 {
-    const char* bytes = "BLAH";
+    const char* const bytes = "BLAH";
 
     ASSERT_TRUE(file->open(QIODevice::WriteOnly));
     ASSERT_EQ(file->write(bytes, strlen(bytes)), 4);
@@ -88,7 +88,7 @@ TEST_F(Test_File, Test_append)
 
     ASSERT_EQ(file->size(), 4);
 
-    const char* bytes = "BLAH";
+    const char* const bytes = "BLAH";
 
     ASSERT_TRUE(file->open(QIODevice::Append));
     ASSERT_EQ(file->write(bytes, strlen(bytes)), static_cast<qint64>(strlen(bytes)));

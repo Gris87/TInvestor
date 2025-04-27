@@ -4,7 +4,7 @@
 
 
 
-const char* SANDBOX_TOKEN = "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ";
+const char* const SANDBOX_TOKEN = "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ";
 
 static const QMap<QString, float> TARIFF_TO_COMMISSION{
     {"fees",    0.3f },

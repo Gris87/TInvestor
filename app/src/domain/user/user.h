@@ -6,7 +6,7 @@
 
 
 
-extern const char* SANDBOX_TOKEN;
+extern const char* const SANDBOX_TOKEN;
 
 
 

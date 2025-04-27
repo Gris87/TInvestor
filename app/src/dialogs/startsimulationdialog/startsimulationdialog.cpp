@@ -5,8 +5,8 @@
 
 
 
-const char*   DATE_FORMAT = "yyyy-MM-dd";
-constexpr int START_MONEY = 100000;
+const char* const DATE_FORMAT = "yyyy-MM-dd";
+constexpr int     START_MONEY = 100000;
 
 
 

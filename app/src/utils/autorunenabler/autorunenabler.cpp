@@ -6,7 +6,7 @@
 
 
 
-const char* AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
+const char* const AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
 
 
 

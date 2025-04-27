@@ -7,9 +7,9 @@
 
 
 #ifdef Q_OS_WINDOWS
-const char* appPrefixPath = R"(..\..\..\app\)";
+const char* const appPrefixPath = R"(..\..\..\app\)";
 #else
-const char* appPrefixPath = "../../../app/";
+const char* const appPrefixPath = "../../../app/";
 #endif
 
 constexpr int HEX_DIGITS = 16;
