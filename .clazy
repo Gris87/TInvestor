@@ -1,17 +1,33 @@
 # Disabled checks:
 # =============================================================================================================
-# connect-by-name     - Slots named on_foo_bar are error prone
-# qcolor-from-literal - The QColor ctor taking RGB int value is cheaper than one taking string literals
-# qt-keywords         - Using a Qt keyword (slots)
-# qt-keyword-emit     - Using Qt (emit) keyword
+# connect-by-name           - Slots named on_foo_bar are error prone
+# connect-not-normalized    - Signature is not normalized. Use orderBookChanged(OrderBook) instead of orderBookChanged(const OrderBook&)
+# function-args-by-value    - Pass small and trivially-copyable type by value (const Qt::CheckState &)
+# old-style-connect         - Old Style Connect
+# qcolor-from-literal       - The QColor ctor taking RGB int value is cheaper than one taking string literals
+# qstring-allocations       - QString(const char*) being called
+# qt-keyword-emit           - Using Qt (emit) keyword
+# qt-keywords               - Using a Qt keyword (slots)
+# qt6-qhash-signature       - qHash returns size_t
+# reserve-candidates        - Clazy crash
+# returning-void-expression - Returning a void expression
+# unused-result-check       - Clazy crash
 Checks:
     '
         -*,
         *,
         -connect-by-name,
+        -connect-not-normalized,
+        -function-args-by-value,
+        -old-style-connect,
         -qcolor-from-literal,
+        -qstring-allocations,
+        -qt-keyword-emit,
         -qt-keywords,
-        -qt-keyword-emit
+        -qt6-qhash-signature,
+        -reserve-candidates,
+        -returning-void-expression,
+        -unused-result-check
     '
 WarningsAsErrors: '-*,*'
 HeaderFilterRegex:        '.*src/.*'

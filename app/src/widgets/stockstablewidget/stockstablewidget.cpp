@@ -105,7 +105,7 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
         ui->tableWidget->setUpdatesEnabled(false);
         ui->tableWidget->setSortingEnabled(false);
 
-        for (const QString& lastPricesUpdate : lastPricesUpdates)
+        for (const QString& lastPricesUpdate : std::as_const(lastPricesUpdates))
         {
             IStocksTableRecord* record = tableRecords[lastPricesUpdate]; // clazy:exclude=detaching-member
 

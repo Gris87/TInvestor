@@ -14,9 +14,17 @@ disabled_checks = """
 -*,
 *,
 -connect-by-name,
+-connect-not-normalized,
+-function-args-by-value,
+-old-style-connect,
 -qcolor-from-literal,
+-qstring-allocations,
+-qt-keyword-emit,
 -qt-keywords,
--qt-keyword-emit
+-qt6-qhash-signature,
+-reserve-candidates,
+-returning-void-expression,
+-unused-result-check
 """.replace("\n", "").replace(" ", "").split(",")
 
 
@@ -83,10 +91,14 @@ def _execute_commands(commands):
 
 
 def _execute_command(command):
+    env = os.environ.copy()
+    env["CLAZY_CHECKS_AS_ERRORS"] = "-*,*"
+
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        env=env,
     )
 
     lines = []
