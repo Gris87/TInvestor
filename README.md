@@ -86,6 +86,43 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
+5. Install grpc via vcpkg
+
+- Run commands below
+```
+VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
+
+git clone git@github.com:microsoft/vcpkg.git %VCPKG_PATH%
+cd %VCPKG_PATH%
+git checkout 2025.04.09 -b temp
+bootstrap-vcpkg.bat
+vcpkg integrate install
+vcpkg install grpc
+```
+
+6. Install googletest 1.16.0
+
+- Run commands below
+```
+GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\googletest)
+
+git clone git@github.com:google/googletest.git %GOOGLETEST_PATH%
+cd %GOOGLETEST_PATH%
+git checkout v1.16.0 -b temp
+```
+
+7. Setup environment variables
+
+- Add environment variables to your system
+```
+ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
+QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: C:\Qt\quazip)
+VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
+GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\googletest)
+```
+
+8. Run QT Creator and compile project
+
 ### Install prerequisites on Ubuntu
 
 1. Install Qt 6.9.0
@@ -155,6 +192,43 @@ cmake \
 cmake --build . --config Release
 cmake --install . --config Release
 ```
+
+4. Install grpc via vcpkg
+
+- Run commands below
+```
+VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
+
+git clone git@github.com:microsoft/vcpkg.git ${VCPKG_PATH}
+cd ${VCPKG_PATH}
+git checkout 2025.04.09 -b temp
+./bootstrap-vcpkg.sh
+./vcpkg integrate install
+./vcpkg install grpc
+```
+
+5. Install googletest 1.16.0
+
+- Run commands below
+```
+GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/googletest)
+
+git clone git@github.com:google/googletest.git ${GOOGLETEST_PATH}
+cd ${GOOGLETEST_PATH}
+git checkout v1.16.0 -b temp
+```
+
+6. Setup environment variables
+
+- Add environment variables to your .bashrc
+```
+ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
+QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: /home/user/Qt/quazip)
+VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
+GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/googletest)
+```
+
+7. Run QT Creator and compile project
 
 ---
 

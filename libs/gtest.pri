@@ -1,21 +1,21 @@
-isEmpty(GOOGLETEST_DIR):GOOGLETEST_DIR=$$(GOOGLETEST_DIR)
+isEmpty(GOOGLETEST_PATH):GOOGLETEST_PATH=$$(GOOGLETEST_PATH)
 
-isEmpty(GOOGLETEST_DIR) {
+isEmpty(GOOGLETEST_PATH) {
     win32* {
-        GOOGLETEST_DIR = "E:/Qt/googletest-1.16.0"
+        GOOGLETEST_PATH = "E:/Qt/googletest-1.16.0"
     } else {
-        GOOGLETEST_DIR = "/home/gris/Qt/googletest-1.16.0"
+        GOOGLETEST_PATH = "/home/gris/Qt/googletest-1.16.0"
     }
 
-    !isEmpty(GOOGLETEST_DIR) {
+    !isEmpty(GOOGLETEST_PATH) {
         warning("Using googletest src dir specified at Qt Creator wizard")
-        message("set GOOGLETEST_DIR as environment variable or qmake variable to get rid of this message")
+        message("set GOOGLETEST_PATH as environment variable or qmake variable to get rid of this message")
     }
 }
 
-!isEmpty(GOOGLETEST_DIR): {
-    GTEST_SRCDIR = "$${GOOGLETEST_DIR}/googletest"
-    GMOCK_SRCDIR = "$${GOOGLETEST_DIR}/googlemock"
+!isEmpty(GOOGLETEST_PATH): {
+    GTEST_SRCDIR = "$${GOOGLETEST_PATH}/googletest"
+    GMOCK_SRCDIR = "$${GOOGLETEST_PATH}/googlemock"
 } else: unix {
     exists(/usr/src/gtest):GTEST_SRCDIR=/usr/src/gtest
     exists(/usr/src/gmock):GMOCK_SRCDIR=/usr/src/gmock

@@ -93,7 +93,7 @@ runs:
         ${Env:ZLIB_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/zlib"
         ${Env:QUAZIP_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/quazip"
         ${Env:VCPKG_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/vcpkg"
-        ${Env:GOOGLETEST_DIR} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
+        ${Env:GOOGLETEST_PATH} = "${Env:GITHUB_WORKSPACE}/Qt/googletest-source"
 
         # Create TInvestor-source/build/Desktop-Release folder and enter into it
         New-Item -Path "TInvestor-source/build/Desktop-Release" -ItemType "directory" -Force
