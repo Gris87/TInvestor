@@ -30,5 +30,8 @@ public:
         return grpc::Status::OK;
     }
 
+    Q_DISABLE_COPY(InvestApiAuthenticator)
+
+private:
     IUserStorage* mUserStorage;
 };

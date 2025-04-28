@@ -1,8 +1,4 @@
 WTF with release on Windows
-Make .clazy the same as .clang-tidy
-Try to reduce amount of workers
-Tidy nightly
-Clazy nightly
 README
 Double check what was done since 2f582a69db891bdf1f5171c7293251a9e8f753ae
 

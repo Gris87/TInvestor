@@ -49,7 +49,7 @@ def run_clazy(args):
     number_of_parts = min(max(args.number_of_parts, 1), len(checks))
     part = min(max(args.part, 1), number_of_parts)
 
-    chunk_size = math.ceil(len(checks) / number_of_parts);
+    chunk_size = math.ceil(len(checks) / number_of_parts)
     check_chunks = [checks[i : i + chunk_size] for i in range(0, len(checks), chunk_size)]
     chunk = check_chunks[part - 1]
 
