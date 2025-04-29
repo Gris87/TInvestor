@@ -1,4 +1,7 @@
 WTF with release on Windows
+Different column widths on Ubuntu
+Check what if too many requests on another running instance
+How to move toolbar to right
 Double check what was done since 2f582a69db891bdf1f5171c7293251a9e8f753ae
 
 Buy less than 1% from turnover
