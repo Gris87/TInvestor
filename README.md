@@ -25,6 +25,7 @@ You have to install prerequisites in order to build TInvestor.
 3. Install zlib 1.3.1
 
 - Run commands below
+
 ```
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
 
@@ -54,6 +55,7 @@ cmake --install . --config Release
 4. Install quazip 1.5
 
 - Run commands below
+
 ```
 QTDIR=SET_PATH_TO_QT (for example: C:\Qt\6.9.0\msvc2022_64)
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
@@ -89,6 +91,7 @@ cmake --install . --config Release
 5. Install grpc via vcpkg
 
 - Run commands below
+
 ```
 VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
 
@@ -103,8 +106,9 @@ vcpkg install grpc
 6. Install googletest 1.16.0
 
 - Run commands below
+
 ```
-GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\googletest)
+GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 
 git clone git@github.com:google/googletest.git %GOOGLETEST_PATH%
 cd %GOOGLETEST_PATH%
@@ -114,24 +118,40 @@ git checkout v1.16.0 -b temp
 7. Setup environment variables
 
 - Add environment variables to your system
+
 ```
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
 QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: C:\Qt\quazip)
 VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
-GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\googletest)
+GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 ```
 
 8. Run QT Creator and compile project
 
 ### Install prerequisites on Ubuntu
 
-1. Install Qt 6.9.0
+1. Install packages
+
+- Run commands below
+
+```
+sudo apt-get update
+sudo apt-get install -y \
+    bzip2 curl gcc g++ perl cmake make pkg-config \
+    libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-dev \
+    libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 \
+    libxcb-randr0 libxcb-render-util0 libxcb-shape0 libxcb-shm0 \
+    libxcb-sync1 libxcb-util1 libxcb-xfixes0 libxcb-xkb1 libxcb1
+```
+
+2. Install Qt 6.9.0
 
 - Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.0. Please also install addons qt5compat and qtcharts
 
-2. Install zlib 1.3.1
+3. Install zlib 1.3.1
 
 - Run commands below
+
 ```
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
 
@@ -158,9 +178,10 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
-3. Install quazip 1.5
+4. Install quazip 1.5
 
 - Run commands below
+
 ```
 QTDIR=SET_PATH_TO_QT (for example: /home/user/Qt/6.9.0/gcc_64)
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
@@ -193,9 +214,10 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
-4. Install grpc via vcpkg
+5. Install grpc via vcpkg
 
 - Run commands below
+
 ```
 VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
 
@@ -207,28 +229,30 @@ git checkout 2025.04.09 -b temp
 ./vcpkg install grpc
 ```
 
-5. Install googletest 1.16.0
+6. Install googletest 1.16.0
 
 - Run commands below
+
 ```
-GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/googletest)
+GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 
 git clone git@github.com:google/googletest.git ${GOOGLETEST_PATH}
 cd ${GOOGLETEST_PATH}
 git checkout v1.16.0 -b temp
 ```
 
-6. Setup environment variables
+7. Setup environment variables
 
-- Add environment variables to your .bashrc
+- Add environment variables to your /etc/environment
+
 ```
 ZLIB_PATH=SET_PATH_TO_ZLIB (for example: /home/user/Qt/zlib)
 QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: /home/user/Qt/quazip)
 VCPKG_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/vcpkg)
-GOOGLETEST_PATH=SET_PATH_TO_VCPKG (for example: /home/user/Qt/googletest)
+GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 ```
 
-7. Run QT Creator and compile project
+8. Run QT Creator and compile project
 
 ---
 

@@ -15,6 +15,7 @@ public:
         mUserStorage(userStorage)
     {
     }
+    ~InvestApiAuthenticator() = default;
 
     grpc::Status GetMetadata(
         grpc::string_ref /*serviceUrl*/, // clazy:exclude=function-args-by-ref
