@@ -18,16 +18,20 @@ You have to install prerequisites in order to build TInvestor.
 
 - Please visit [Microsoft Visual Studio free downloads](https://visualstudio.microsoft.com/ru/free-developer-offers) and install Visual Studio Community with VC compiler
 
-2. Install Qt 6.9.0
+2. Install CMake
+
+- Please visit [CMake download page](https://cmake.org/download) and install CMake 4.0.1
+
+3. Install Qt 6.9.0
 
 - Just go to [official Qt download page](https://www.qt.io/download-qt-installer-oss) and install Qt 6.9.0. Please also install addons qt5compat and qtcharts
 
-3. Install zlib 1.3.1
+4. Install zlib 1.3.1
 
 - Run commands below
 
 ```
-ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
+set ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
 
 git clone git@github.com:madler/zlib.git %ZLIB_PATH%
 cd %ZLIB_PATH%
@@ -52,14 +56,14 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
-4. Install quazip 1.5
+5. Install quazip 1.5
 
 - Run commands below
 
 ```
-QTDIR=SET_PATH_TO_QT (for example: C:\Qt\6.9.0\msvc2022_64)
-ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
-QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: C:\Qt\quazip)
+set QTDIR=SET_PATH_TO_QT (for example: C:\Qt\6.9.0\msvc2022_64)
+set ZLIB_PATH=SET_PATH_TO_ZLIB (for example: C:\Qt\zlib)
+set QUAZIP_PATH=SET_PATH_TO_QUAZIP (for example: C:\Qt\quazip)
 
 git clone git@github.com:stachenov/quazip.git %QUAZIP_PATH%
 cd %QUAZIP_PATH%
@@ -88,12 +92,12 @@ cmake --build . --config Release
 cmake --install . --config Release
 ```
 
-5. Install grpc via vcpkg
+6. Install grpc via vcpkg
 
 - Run commands below
 
 ```
-VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
+set VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
 
 git clone git@github.com:microsoft/vcpkg.git %VCPKG_PATH%
 cd %VCPKG_PATH%
@@ -103,19 +107,19 @@ vcpkg integrate install
 vcpkg install grpc
 ```
 
-6. Install googletest 1.16.0
+7. Install googletest 1.16.0
 
 - Run commands below
 
 ```
-GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
+set GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 
 git clone git@github.com:google/googletest.git %GOOGLETEST_PATH%
 cd %GOOGLETEST_PATH%
 git checkout v1.16.0 -b temp
 ```
 
-7. Setup environment variables
+8. Setup environment variables
 
 - Add environment variables to your system
 
@@ -126,7 +130,7 @@ VCPKG_PATH=SET_PATH_TO_VCPKG (for example: C:\Qt\vcpkg)
 GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: C:\Qt\googletest)
 ```
 
-8. Run QT Creator and compile project
+9. Run QT Creator and compile project
 
 ### Install prerequisites on Ubuntu
 
