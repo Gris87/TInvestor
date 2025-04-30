@@ -19,7 +19,11 @@ win32* {
     copy_qt_files.commands += $(CHK_DIR_EXISTS) "$$shell_path($${OUT_PWD}/build/tls)" $(MKDIR) "$$shell_path($${OUT_PWD}/build/tls)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/platforms/qwindows$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/platforms)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/sqldrivers/qsqlite$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/sqldrivers)" &&
-    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/tls/qopensslbackend$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/tls)"
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/tls/qopensslbackend$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/tls)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/ucrtbase$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/msvcp140$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140_1$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     # TODO: Specify required libraries
     copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
@@ -28,15 +32,16 @@ win32* {
 
     copy_quazip_files.commands = $(COPY_FILE) "$$shell_path($${QUAZIP_PATH}/install/bin/quazip1-qt6$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
-    first.depends = $(first) copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files
+    first.depends = $(first) copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files copy_dist_files
 
     export(first.depends)
     export(copy_qt_files.commands)
     export(copy_grpc_files.commands)
     export(copy_zlib_files.commands)
     export(copy_quazip_files.commands)
+    export(copy_dist_files.commands)
 
-    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files
+    QMAKE_EXTRA_TARGETS += first copy_qt_files copy_grpc_files copy_zlib_files copy_quazip_files copy_dist_files
 } else {
     copy_qt_files.commands =  $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Core.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Gui.so*)" "$$shell_path($${OUT_PWD}/build)" &&

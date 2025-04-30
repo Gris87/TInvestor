@@ -1,8 +1,3 @@
-WTF with release on Windows
-ucrtbased.dll
-MSVCP140D.DLL
-VCRUNTIME140D.DLL
-VCRUNTIME140_1D.DLL
 Different column widths on Ubuntu
 Check what if too many requests on another running instance
 How to move toolbar to right

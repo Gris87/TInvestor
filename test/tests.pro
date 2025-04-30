@@ -45,9 +45,7 @@ UI_DIR      = build/gen/$${TARGET}/ui
 
 
 
-linux* {
-    copy_dist_files.commands = echo "Nothing to copy from dist folder"
-}
+copy_dist_files.commands = echo "Nothing to copy from dist folder"
 
 
 
