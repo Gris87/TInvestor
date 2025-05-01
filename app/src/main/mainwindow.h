@@ -152,7 +152,12 @@ public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
     void trayIconShowClicked();
     void trayIconExitClicked();
-    void authFailed(grpc::StatusCode errorCode, const std::string& errorMessage, const std::string& errorDetails);
+    void authFailed(
+        grpc::StatusCode   errorCode,
+        const QString&     errorCodeString,
+        const std::string& errorMessage,
+        const std::string& errorDetails
+    );
     void userUpdateTimerTicked();
     void priceCollectTimerTicked();
     void cleanupTimerTicked();

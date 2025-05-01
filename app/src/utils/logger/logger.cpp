@@ -7,19 +7,19 @@
 
 
 #ifdef Q_OS_WINDOWS
-const char* const appPrefixPath = R"(..\..\..\app\)";
+const char* const APP_PREFIX_PATH = R"(..\..\..\app\)";
 #else
-const char* const appPrefixPath = "../../../app/";
+const char* const APP_PREFIX_PATH = "../../../app/";
 #endif
 
 constexpr int HEX_DIGITS = 16;
 
 
 
-const QtMsgType logLevel = QtInfoMsg;
+const QtMsgType LOG_LEVEL = QtInfoMsg;
 
 // clang-format off
-static const QMap<QtMsgType, QString> logLevelToString{ // clazy:exclude=non-pod-global-static
+static const QMap<QtMsgType, QString> LOG_LEVEL_TO_STRING{ // clazy:exclude=non-pod-global-static
     {QtDebugMsg,    "DEBUG   "},
     {QtInfoMsg,     "INFO    "},
     {QtWarningMsg,  "WARNING "},
@@ -28,7 +28,7 @@ static const QMap<QtMsgType, QString> logLevelToString{ // clazy:exclude=non-pod
 };
 
 // HACK for bad QtInfoMsg (Remove on Qt 7)
-static const QMap<QtMsgType, int> logLevelToInteger{ // clazy:exclude=non-pod-global-static
+static const QMap<QtMsgType, int> LOG_LEVEL_TO_INTEGER{ // clazy:exclude=non-pod-global-static
     {QtDebugMsg,    0},
     {QtInfoMsg,     1},
     {QtWarningMsg,  2},
@@ -45,7 +45,7 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
 {
     Q_ASSERT_X(QtInfoMsg != 1, "messageHandler()", "It's time to remove hack");
 
-    if (logLevelToInteger[type] < logLevelToInteger[logLevel])
+    if (LOG_LEVEL_TO_INTEGER[type] < LOG_LEVEL_TO_INTEGER[LOG_LEVEL])
     {
         return;
     }
@@ -56,11 +56,11 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
         QString("%1 %2 0x%3 %4:%5 %6: %7")
             .arg(
                 QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
-                logLevelToString[type],
+                LOG_LEVEL_TO_STRING[type],
                 QString::number(reinterpret_cast<qint64>(QThread::currentThreadId()), HEX_DIGITS)
                     .toUpper()
                     .rightJustified(4, '0'),
-                QString(context.file).remove(appPrefixPath),
+                QString(context.file).remove(APP_PREFIX_PATH),
                 QString::number(context.line),
                 QString(context.function),
                 msg

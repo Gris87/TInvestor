@@ -41,5 +41,10 @@ public:
     virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
 
 signals:
-    void authFailed(grpc::StatusCode errorCode, const std::string& errorMessage, const std::string& errorDetails);
+    void authFailed(
+        grpc::StatusCode   errorCode,
+        const QString&     errorCodeString,
+        const std::string& errorMessage,
+        const std::string& errorDetails
+    );
 };

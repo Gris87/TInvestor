@@ -58,7 +58,7 @@ public:
 
                 if (status.error_code() != grpc::StatusCode::CANCELLED)
                 {
-                    emit authFailed(status.error_code(), status.error_message(), status.error_details());
+                    emitAuthFailed(status);
                 }
 
                 return nullptr;
@@ -85,6 +85,8 @@ public:
          readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
+
+    void emitAuthFailed(const grpc::Status& status);
 
 private:
     IRawGrpcClient*                                         mRawGrpcClient;

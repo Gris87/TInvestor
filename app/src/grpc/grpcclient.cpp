@@ -20,6 +20,31 @@ constexpr qint64 MS_IN_SECOND                 = 1000LL;
 
 
 
+// clang-format off
+static const QMap<grpc::StatusCode, QString> GRPC_STATUS_CODE_TO_STRING{ // clazy:exclude=non-pod-global-static
+    {grpc::StatusCode::OK,                  "OK"                 },
+    {grpc::StatusCode::CANCELLED,           "CANCELLED"          },
+    {grpc::StatusCode::UNKNOWN,             "UNKNOWN"            },
+    {grpc::StatusCode::INVALID_ARGUMENT,    "INVALID_ARGUMENT"   },
+    {grpc::StatusCode::DEADLINE_EXCEEDED,   "DEADLINE_EXCEEDED"  },
+    {grpc::StatusCode::NOT_FOUND,           "NOT_FOUND"          },
+    {grpc::StatusCode::ALREADY_EXISTS,      "ALREADY_EXISTS"     },
+    {grpc::StatusCode::PERMISSION_DENIED,   "PERMISSION_DENIED"  },
+    {grpc::StatusCode::UNAUTHENTICATED,     "UNAUTHENTICATED"    },
+    {grpc::StatusCode::RESOURCE_EXHAUSTED,  "RESOURCE_EXHAUSTED" },
+    {grpc::StatusCode::FAILED_PRECONDITION, "FAILED_PRECONDITION"},
+    {grpc::StatusCode::ABORTED,             "ABORTED"            },
+    {grpc::StatusCode::OUT_OF_RANGE,        "OUT_OF_RANGE"       },
+    {grpc::StatusCode::UNIMPLEMENTED,       "UNIMPLEMENTED"      },
+    {grpc::StatusCode::INTERNAL,            "INTERNAL"           },
+    {grpc::StatusCode::UNAVAILABLE,         "UNAVAILABLE"        },
+    {grpc::StatusCode::DATA_LOSS,           "DATA_LOSS"          },
+    {grpc::StatusCode::DO_NOT_USE,          "DO_NOT_USE"         },
+};
+// clang-format on
+
+
+
 GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient, ITimeUtils* timeUtils, QObject* parent) :
     IGrpcClient(parent),
     mRawGrpcClient(rawGrpcClient),
@@ -204,7 +229,7 @@ bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     if (!res)
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::subscribeLastPrices()");
     }
 
     return res;
@@ -224,7 +249,7 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
 
     if (!res)
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::unsubscribeLastPrices()");
     }
 
     return res;
@@ -249,7 +274,7 @@ bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDat
 
     if (!res)
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::subscribeOrderBook()");
     }
 
     return res;
@@ -269,7 +294,7 @@ bool GrpcClient::unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketD
 
     if (!res)
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::unsubscribeOrderBook()");
     }
 
     return res;
@@ -281,7 +306,7 @@ std::shared_ptr<tinkoff::MarketDataResponse> GrpcClient::readMarketDataStream(st
 
     if (!mRawGrpcClient->readMarketDataStream(marketDataStream, resp.get()))
     {
-        // emit authFailed(grpc::StatusCode::UNKNOWN, "", ""); // Not a problem
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readMarketDataStream()"); // Not a problem
 
         return nullptr;
     }
@@ -295,7 +320,7 @@ bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& m
 
     if (!res)
     {
-        emit authFailed(grpc::StatusCode::UNKNOWN, "", "");
+        emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::closeWriteMarketDataStream()");
     }
 
     return res;
@@ -307,6 +332,13 @@ void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marke
 
     if (!status.ok())
     {
-        emit authFailed(status.error_code(), status.error_message(), status.error_details());
+        emitAuthFailed(status);
     }
+}
+
+void GrpcClient::emitAuthFailed(const grpc::Status& status)
+{
+    emit authFailed(
+        status.error_code(), GRPC_STATUS_CODE_TO_STRING[status.error_code()], status.error_message(), status.error_details()
+    );
 }

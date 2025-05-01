@@ -163,23 +163,23 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,                        SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,                        SIGNAL(trayIconShowClicked()),                                                this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,                        SIGNAL(trayIconExitClicked()),                                                this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,                      SIGNAL(authFailed(grpc::StatusCode, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const std::string&, const std::string&)));
-    connect(userUpdateTimer,                  SIGNAL(timeout()),                                                            this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer,                SIGNAL(timeout()),                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,                     SIGNAL(timeout()),                                                            this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer,                SIGNAL(timeout()),                                                            this, SLOT(makeDecisionTimerTicked()));
-    connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
-    connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(mPriceCollectThread,              SIGNAL(notifyStocksProgress(const QString&)),                                 this, SLOT(notifyStocksProgress(const QString&)));
-    connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                      this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                this, SLOT(periodicDataChanged()));
-    connect(mLastPriceThread,                 SIGNAL(lastPriceChanged(const QString&)),                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
-    connect(mStocksControlsWidget,            SIGNAL(filterChanged(const Filter&)),                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mTrayIcon,                        SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,                        SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,                        SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,                      SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
+    connect(userUpdateTimer,                  SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
+    connect(priceCollectTimer,                SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
+    connect(cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
+    connect(makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
+    connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
+    connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(mPriceCollectThread,              SIGNAL(notifyStocksProgress(const QString&)),                                                 this, SLOT(notifyStocksProgress(const QString&)));
+    connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
+    connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
+    connect(mLastPriceThread,                 SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
+    connect(mStocksControlsWidget,            SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -261,10 +261,12 @@ void MainWindow::trayIconExitClicked()
     QCoreApplication::quit();
 }
 
-void MainWindow::authFailed(grpc::StatusCode errorCode, const std::string& errorMessage, const std::string& errorDetails)
+void MainWindow::authFailed(
+    grpc::StatusCode errorCode, const QString& errorCodeString, const std::string& errorMessage, const std::string& errorDetails
+)
 {
-    qWarning() << "Authorization failed with code:" << errorCode << "message:" << QString::fromStdString(errorMessage)
-               << "details:" << QString::fromStdString(errorDetails);
+    qWarning() << "Authorization failed with code:" << errorCode << errorCodeString
+               << "message:" << QString::fromStdString(errorMessage) << "details:" << QString::fromStdString(errorDetails);
 
     if (authFailedDialogShown)
     {
