@@ -65,15 +65,15 @@ TEST_F(Test_PortfolioTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),          QVariant(60))).WillOnce(Return(QVariant(60)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Available"),     QVariant(58))).WillOnce(Return(QVariant(58)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),         QVariant(34))).WillOnce(Return(QVariant(34)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPrice"),      QVariant(84))).WillOnce(Return(QVariant(84)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Cost"),          QVariant(65))).WillOnce(Return(QVariant(65)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Part"),          QVariant(34))).WillOnce(Return(QVariant(34)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Income"),        QVariant(41))).WillOnce(Return(QVariant(41)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_IncomePercent"), QVariant(57))).WillOnce(Return(QVariant(57)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_InADay"),        QVariant(64))).WillOnce(Return(QVariant(64)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),          _)).WillOnce(Return(QVariant(82)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Available"),     _)).WillOnce(Return(QVariant(80)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),         _)).WillOnce(Return(QVariant(56)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPrice"),      _)).WillOnce(Return(QVariant(106)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Cost"),          _)).WillOnce(Return(QVariant(87)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Part"),          _)).WillOnce(Return(QVariant(56)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Income"),        _)).WillOnce(Return(QVariant(63)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_IncomePercent"), _)).WillOnce(Return(QVariant(79)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_InADay"),        _)).WillOnce(Return(QVariant(86)));
     // clang-format on
 
     portfolioTableWidget->loadWindowState("AAAAA");

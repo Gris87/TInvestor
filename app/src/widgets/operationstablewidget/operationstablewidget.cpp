@@ -14,7 +14,16 @@ enum OperationsTableColumns : qint8
     OPERATIONS_PRICE_COLUMN,
     OPERATIONS_QUANTITY_COLUMN,
     OPERATIONS_COST_COLUMN,
+    COLUMN_COUNT,
 };
+
+
+
+#ifdef Q_OS_WINDOWS
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {64, 82, 85, 56, 95, 87};
+#else
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
+#endif
 
 
 
@@ -51,12 +60,12 @@ void OperationsTableWidget::saveWindowState(const QString& type)
 void OperationsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableWidget->setColumnWidth(OPERATIONS_TIME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Time",      42).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Name",      60).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_OPERATION_COLUMN, mSettingsEditor->value(type + "/columnWidth_Operation", 63).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Price",     34).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,  mSettingsEditor->value(type + "/columnWidth_Quantity",  73).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Cost",      65).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_TIME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Time",      COLUMN_WIDTHS[OPERATIONS_TIME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_OPERATION_COLUMN, mSettingsEditor->value(type + "/columnWidth_Operation", COLUMN_WIDTHS[OPERATIONS_OPERATION_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Price",     COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,  mSettingsEditor->value(type + "/columnWidth_Quantity",  COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Cost",      COLUMN_WIDTHS[OPERATIONS_COST_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)

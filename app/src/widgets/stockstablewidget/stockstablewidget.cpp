@@ -5,6 +5,14 @@
 
 
 
+#ifdef Q_OS_WINDOWS
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {99, 61, 139, 157, 86, 120, 83};
+#else
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {100, 69, 150, 170, 91, 129, 88};
+#endif
+
+
+
 StocksTableWidget::StocksTableWidget(
     IStocksTableRecordFactory*      stockTableRecordFactory,
     IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
@@ -192,13 +200,13 @@ void StocksTableWidget::saveWindowState(const QString& type)
 void StocksTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      99).toInt());
-    ui->tableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      61).toInt());
-    ui->tableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  139).toInt());
-    ui->tableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", 157).toInt());
-    ui->tableWidget->setColumnWidth(TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   86).toInt());
-    ui->tableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    120).toInt());
-    ui->tableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    83).toInt());
+    ui->tableWidget->setColumnWidth(STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      COLUMN_WIDTHS[STOCK_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[DAY_CHANGE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[DATE_CHANGE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   COLUMN_WIDTHS[TURNOVER_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    COLUMN_WIDTHS[PAYBACK_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[ACTIONS_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)

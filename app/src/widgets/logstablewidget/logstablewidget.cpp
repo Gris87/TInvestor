@@ -10,7 +10,16 @@ enum LogsTableColumns : qint8
 {
     LOGS_TIME_COLUMN,
     LOGS_MESSAGE_COLUMN,
+    COLUMN_COUNT,
 };
+
+
+
+#ifdef Q_OS_WINDOWS
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {64, 94};
+#else
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {67, 100};
+#endif
 
 
 
@@ -43,8 +52,8 @@ void LogsTableWidget::saveWindowState(const QString& type)
 void LogsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableWidget->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    42).toInt());
-    ui->tableWidget->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", 72).toInt());
+    ui->tableWidget->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    COLUMN_WIDTHS[LOGS_TIME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)

@@ -58,8 +58,8 @@ TEST_F(Test_LogsTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    QVariant(42))).WillOnce(Return(QVariant(42)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), QVariant(72))).WillOnce(Return(QVariant(72)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    _)).WillOnce(Return(QVariant(64)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), _)).WillOnce(Return(QVariant(94)));
     // clang-format on
 
     logsTableWidget->loadWindowState("AAAAA");

@@ -1,4 +1,3 @@
-Different column widths on Ubuntu
 Check what if too many requests on another running instance
 How to move toolbar to right
 Log to file

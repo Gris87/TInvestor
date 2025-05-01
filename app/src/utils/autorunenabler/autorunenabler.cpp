@@ -6,7 +6,9 @@
 
 
 
+#ifdef Q_OS_WINDOWS
 const char* const AUTORUN_PATH = "CurrentVersion/Run/TInvestor";
+#endif
 
 
 

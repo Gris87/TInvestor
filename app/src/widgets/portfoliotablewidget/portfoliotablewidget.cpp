@@ -17,7 +17,16 @@ enum PortfolioTableColumns : qint8
     PORTFOLIO_INCOME_COLUMN,
     PORTFOLIO_INCOME_PERCENT_COLUMN,
     PORTFOLIO_IN_A_DAY_COLUMN,
+    COLUMN_COUNT,
 };
+
+
+
+#ifdef Q_OS_WINDOWS
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {82, 80, 56, 106, 87, 56, 63, 79, 86};
+#else
+const int COLUMN_WIDTHS[COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 83, 93};
+#endif
 
 
 
@@ -57,15 +66,15 @@ void PortfolioTableWidget::saveWindowState(const QString& type)
 void PortfolioTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableWidget->setColumnWidth(PORTFOLIO_NAME_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Name",          60).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_AVAILABLE_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Available",     58).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_PRICE_COLUMN,          mSettingsEditor->value(type + "/columnWidth_Price",         34).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_AVG_PRICE_COLUMN,      mSettingsEditor->value(type + "/columnWidth_AvgPrice",      84).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_COST_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Cost",          65).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_PART_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Part",          34).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_INCOME_COLUMN,         mSettingsEditor->value(type + "/columnWidth_Income",        41).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_INCOME_PERCENT_COLUMN, mSettingsEditor->value(type + "/columnWidth_IncomePercent", 57).toInt());
-    ui->tableWidget->setColumnWidth(PORTFOLIO_IN_A_DAY_COLUMN,       mSettingsEditor->value(type + "/columnWidth_InADay",        64).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_NAME_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Name",          COLUMN_WIDTHS[PORTFOLIO_NAME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_AVAILABLE_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Available",     COLUMN_WIDTHS[PORTFOLIO_AVAILABLE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_PRICE_COLUMN,          mSettingsEditor->value(type + "/columnWidth_Price",         COLUMN_WIDTHS[PORTFOLIO_PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_AVG_PRICE_COLUMN,      mSettingsEditor->value(type + "/columnWidth_AvgPrice",      COLUMN_WIDTHS[PORTFOLIO_AVG_PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_COST_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Cost",          COLUMN_WIDTHS[PORTFOLIO_COST_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_PART_COLUMN,           mSettingsEditor->value(type + "/columnWidth_Part",          COLUMN_WIDTHS[PORTFOLIO_PART_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_INCOME_COLUMN,         mSettingsEditor->value(type + "/columnWidth_Income",        COLUMN_WIDTHS[PORTFOLIO_INCOME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_INCOME_PERCENT_COLUMN, mSettingsEditor->value(type + "/columnWidth_IncomePercent", COLUMN_WIDTHS[PORTFOLIO_INCOME_PERCENT_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(PORTFOLIO_IN_A_DAY_COLUMN,       mSettingsEditor->value(type + "/columnWidth_InADay",        COLUMN_WIDTHS[PORTFOLIO_IN_A_DAY_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)
