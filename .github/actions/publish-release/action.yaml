@@ -16,7 +16,7 @@ runs:
 
     # Download documentation artifacts
     - name: Download documentation artifacts
-      uses: actions/download-artifact@v4
+      uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: doc-${{ matrix.config.name }}
         path: ./doc
