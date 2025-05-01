@@ -7,5 +7,5 @@ if [ -z "$1" ]; then
 fi
 
 git add .
-git commit -a -m "$1"
+git commit -m "$1"
 ./push.sh
