@@ -69,28 +69,23 @@
 
 
 
-static int runApplication(int argc, char* argv[]);
-
-
-
-int main(int argc, char* argv[])
+bool isLogToFileEnabled(int argc, char* argv[])
 {
-    Logger::init();
+    for (int i = 0; i < argc; ++i)
+    {
+        if (QString(argv[i]) == "--log-to-file")
+        {
+            return true;
+        }
+    }
 
-    qInfo() << "START";
-
-    const int res = runApplication(argc, argv);
-
-    qInfo() << "END";
-
-    return res;
+    return false;
 }
 
-int runApplication(int argc, char* argv[])
+int runApplication(QApplication* app)
 {
-    const QApplication app(argc, argv);
-    app.setStyle(QStyleFactory::create("Fusion"));
-    app.setPalette(DarkPalette());
+    app->setStyle(QStyleFactory::create("Fusion"));
+    app->setPalette(DarkPalette());
 
     Q_INIT_RESOURCE(Resources);
 
@@ -104,7 +99,7 @@ int runApplication(int argc, char* argv[])
         return 1;
     }
 
-    app.installTranslator(&translator);
+    app->installTranslator(&translator);
     qDebug() << "Localization applied";
 
     if (!QSystemTrayIcon::isSystemTrayAvailable())
@@ -328,5 +323,25 @@ int runApplication(int argc, char* argv[])
         mainWindow.show();
     }
 
-    return app.exec();
+    return app->exec();
+}
+
+int main(int argc, char* argv[])
+{
+    Logger::init();
+
+    if (isLogToFileEnabled(argc, argv))
+    {
+        Logger::enableLogToFile();
+    }
+
+    QApplication app(argc, argv);
+
+    qInfo() << "START";
+
+    const int res = runApplication(&app);
+
+    qInfo() << "END";
+
+    return res;
 }

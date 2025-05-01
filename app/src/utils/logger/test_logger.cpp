@@ -31,4 +31,11 @@ TEST_F(Test_Logger, Test_messageHandler)
     qInfo() << "Test";
     qWarning() << "Test";
     qCritical() << "Test";
+
+    Logger::enableLogToFile();
+
+    qDebug() << "Test";
+    qInfo() << "Test";
+    qWarning() << "Test";
+    qCritical() << "Test";
 }
