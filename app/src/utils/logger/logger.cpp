@@ -70,7 +70,7 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
     {
         msgText += "\n";
 
-        QFile logFile(qApp->applicationDirPath() + "/log.txt");
+        QFile logFile(qApp->applicationDirPath() + "/logs.txt");
 
         const bool ok = logFile.open(QIODevice::Append);
         Q_ASSERT_X(ok, "messageHandler()", "Failed to open log file");

@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QStyleFactory>
 #include <QSystemTrayIcon>
+#include <QTextStream>
 #include <QTranslator>
 
 #include "src/config/config.h"
@@ -69,7 +70,22 @@
 
 
 
-bool isLogToFileEnabled(int argc, char* argv[])
+bool isHelpNeeded(int argc, char* argv[])
+{
+    QStringList helpArguments{"--help", "-h", "-?"};
+
+    for (int i = 0; i < argc; ++i)
+    {
+        if (helpArguments.contains(argv[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool isLogToFileNeeded(int argc, char* argv[])
 {
     for (int i = 0; i < argc; ++i)
     {
@@ -328,9 +344,26 @@ int runApplication(QApplication* app)
 
 int main(int argc, char* argv[])
 {
+    if (isHelpNeeded(argc, argv))
+    {
+        QTextStream out(stdout);
+
+        out << "Usage:\n";
+        out << "  TInvestor [OPTIONS]\n";
+        out << "\n";
+        out << "Options:\n";
+        out << "  -h            - Display this message\n";
+        out << "  --help        - Display this message\n";
+        out << "  -?            - Display this message\n";
+        out << "  --log-to-file - Write logs to logs.txt file\n";
+        out << "  --autorun     - Run application in hidden mode\n";
+
+        return 0;
+    }
+
     Logger::init();
 
-    if (isLogToFileEnabled(argc, argv))
+    if (isLogToFileNeeded(argc, argv))
     {
         Logger::enableLogToFile();
     }
