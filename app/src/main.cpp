@@ -70,6 +70,10 @@
 
 
 
+const char* const VERSION = "v0.1.0";
+
+
+
 bool isHelpNeeded(int argc, char* argv[])
 {
     QStringList helpArguments{"--help", "-h", "-?"};
@@ -77,6 +81,19 @@ bool isHelpNeeded(int argc, char* argv[])
     for (int i = 0; i < argc; ++i)
     {
         if (helpArguments.contains(argv[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool isVersionNeeded(int argc, char* argv[])
+{
+    for (int i = 0; i < argc; ++i)
+    {
+        if (QString(argv[i]) == "--version")
         {
             return true;
         }
@@ -357,6 +374,15 @@ int main(int argc, char* argv[])
         out << "  -?            - Display this message\n";
         out << "  --log-to-file - Write logs to logs.txt file\n";
         out << "  --autorun     - Run application in hidden mode\n";
+
+        return 0;
+    }
+
+    if (isVersionNeeded(argc, argv))
+    {
+        QTextStream out(stdout);
+
+        out << VERSION << Qt::endl;
 
         return 0;
     }
