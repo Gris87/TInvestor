@@ -1,5 +1,5 @@
 name: build-release
-description: Build Release
+description: Build release
 runs:
   using: "composite"
   steps:

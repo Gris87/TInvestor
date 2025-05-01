@@ -1,5 +1,5 @@
 name: publish-release
-description: Publish Release
+description: Publish release
 inputs:
   github-token:
     description: GitHub REST API access token.

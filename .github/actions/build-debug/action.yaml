@@ -1,5 +1,5 @@
 name: build-debug
-description: Build Debug
+description: Build debug
 runs:
   using: "composite"
   steps:

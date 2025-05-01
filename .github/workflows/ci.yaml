@@ -85,7 +85,7 @@ jobs:
   # Build project in Debug
   build-debug:
     needs: [env-qt-zlib-quazip, env-vcpkg]
-    name: Build Debug [${{ matrix.config.name }}]
+    name: Build debug [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -108,7 +108,7 @@ jobs:
   # Build project in Release
   build-release:
     needs: [env-qt-zlib-quazip, env-vcpkg]
-    name: Build Release [${{ matrix.config.name }}]
+    name: Build release [${{ matrix.config.name }}]
     runs-on: ${{ matrix.config.os }}
     strategy:
       matrix:
@@ -198,10 +198,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-  # Publish Release
+  # Publish release
   publish-release:
     needs: [build-release, doc, create-release]
-    name: Publish Release [${{ matrix.config.name }}]
+    name: Publish release [${{ matrix.config.name }}]
     if: contains(github.ref, '/tags/')
     runs-on: ${{ matrix.config.os }}
     strategy:
