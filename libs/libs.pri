@@ -22,6 +22,8 @@ win32* {
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/plugins/tls/qopensslbackend$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build/tls)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/ucrtbase$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/msvcp140$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/msvcp140_1$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/msvcp140_2$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140_1$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
