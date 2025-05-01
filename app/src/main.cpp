@@ -372,6 +372,7 @@ int main(int argc, char* argv[])
         out << "  -h            - Display this message\n";
         out << "  --help        - Display this message\n";
         out << "  -?            - Display this message\n";
+        out << "  --version     - Prints version info\n";
         out << "  --log-to-file - Write logs to logs.txt file\n";
         out << "  --autorun     - Run application in hidden mode\n";
 
