@@ -82,7 +82,7 @@ jobs:
       - name: Use local check-style action
         uses: ./.github/actions/check-style
 
-  # Build project in Debug
+  # Build project in debug
   build-debug:
     needs: [env-qt-zlib-quazip, env-vcpkg]
     name: Build debug [${{ matrix.config.name }}]
@@ -105,7 +105,7 @@ jobs:
       - name: Use local build-debug action
         uses: ./.github/actions/build-debug
 
-  # Build project in Release
+  # Build project in release
   build-release:
     needs: [env-qt-zlib-quazip, env-vcpkg]
     name: Build release [${{ matrix.config.name }}]

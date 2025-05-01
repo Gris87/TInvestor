@@ -32,7 +32,7 @@ runs:
                 ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.zip"
 
                 Push-Location build-release/app/build
-                7z a "../${RELEASE_ARCHIVE_NAME}" *
+                7z a "../../../${RELEASE_ARCHIVE_NAME}" *
                 Pop-Location
 
                 Push-Location doc
@@ -44,7 +44,7 @@ runs:
                 ${DOCS_ARCHIVE_NAME}    = "TInvestor-${{ github.ref_name }}-${{ runner.os }}-doc.tar.xz"
 
                 Push-Location build-release/app/build
-                tar -c -f "../${RELEASE_ARCHIVE_NAME}" --xz -v *
+                tar -c -f "../../../${RELEASE_ARCHIVE_NAME}" --xz -v *
                 Pop-Location
 
                 Push-Location doc

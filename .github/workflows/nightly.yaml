@@ -62,7 +62,7 @@ jobs:
       - name: Use local env-vcpkg action
         uses: ./.github/actions/env-vcpkg
 
-  # Build project in Debug
+  # Build project in debug
   build-debug:
     needs: [env-qt-zlib-quazip, env-vcpkg]
     name: Build debug [${{ matrix.config.name }}]
