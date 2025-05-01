@@ -103,7 +103,6 @@ void WaitingSpinnerWidget::paintEvent(QPaintEvent*)
         int    distance = lineCountDistanceFromPrimary(i, _currentCounter, _numberOfLines);
         QColor color    = currentLineColor(distance, _numberOfLines, _trailFadePercentage, _minimumTrailOpacity, _color);
         painter.setBrush(color);
-        // TODO improve the way rounded rect is painted
         painter.drawRoundedRect(QRect(0, -_lineWidth / 2, _lineLength, _lineWidth), _roundness, _roundness, Qt::RelativeSize);
         painter.restore();
     }

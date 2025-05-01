@@ -13,7 +13,7 @@ AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUt
     IAuthDialog(parent),
     ui(new Ui::AuthDialog),
     mMessageBoxUtils(messageBoxUtils),
-    mTokenRegexp("t\\.[\\w_-]+")
+    mTokenRegexp("t\\.[\\w_\\-]+")
 {
     qDebug() << "Create AuthDialog";
 

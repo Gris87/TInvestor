@@ -27,8 +27,13 @@ win32* {
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(WINDIR)/System32/vcruntime140_1$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 
-    # TODO: Specify required libraries
-    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/*.dll)" "$$shell_path($${OUT_PWD}/build)"
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/abseil_dll.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/cares.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/libcrypto-3-x64.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/libprotobuf$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/libssl-3-x64.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/re2.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_grpc_files.commands = $(COPY_FILE) "$$shell_path($${VCPKG_DLLS}/zlib$${DEBUG_SUFFIX}1.dll)" "$$shell_path($${OUT_PWD}/build)"
 
     copy_zlib_files.commands = $(COPY_FILE) "$$shell_path($${ZLIB_PATH}/install/bin/zlib$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)"
 

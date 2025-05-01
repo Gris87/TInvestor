@@ -266,7 +266,7 @@ GOOGLETEST_PATH=SET_PATH_TO_GOOGLETEST (for example: /home/user/Qt/googletest)
 
 - Please go to [release page](https://github.com/Gris87/TInvestor/releases)
 - Download and extract latest release
-- Execute `post_install.bat` script (It will install certificate for tbank.ru server)
+- Execute `post_install.bat` script with admin rights (It will install certificate for tbank.ru server)
 - Run TInvestor.exe
 
 ### Installing on Ubuntu
