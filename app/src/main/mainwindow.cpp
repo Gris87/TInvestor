@@ -112,6 +112,10 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
 
+    removeToolBar(ui->toolBar);
+    addToolBar(Qt::RightToolBarArea, ui->toolBar);
+    ui->toolBar->show();
+
     ui->waitingSpinnerWidget->setColor(GREY_COLOR);
     ui->waitingSpinnerWidget->setTextColor(GREY_COLOR);
 
