@@ -10,5 +10,7 @@ fi
 
 sed -i "s/VERSION *= *\".*\"/VERSION = \"${VERSION}\"/g" app/src/main.cpp
 
-git tag -a ${VERSION} -m "Release ${VERSION}" || exit 1
-./commit.sh "Release ${VERSION}"
+git add .
+git commit -m "Release ${VERSION}"
+git tag -a ${VERSION} -m "Release ${VERSION}"
+./push.sh
