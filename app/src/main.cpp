@@ -74,9 +74,9 @@ const char* const VERSION = "v0.2.4";
 
 
 
-bool isHelpNeeded(int argc, char* argv[])
+static bool isHelpNeeded(int argc, char* argv[])
 {
-    QStringList helpArguments{"--help", "-h", "-?"};
+    const QStringList helpArguments{"--help", "-h", "-?"};
 
     for (int i = 0; i < argc; ++i)
     {
@@ -89,7 +89,7 @@ bool isHelpNeeded(int argc, char* argv[])
     return false;
 }
 
-bool isVersionNeeded(int argc, char* argv[])
+static bool isVersionNeeded(int argc, char* argv[])
 {
     for (int i = 0; i < argc; ++i)
     {
@@ -102,7 +102,7 @@ bool isVersionNeeded(int argc, char* argv[])
     return false;
 }
 
-bool isLogToFileNeeded(int argc, char* argv[])
+static bool isLogToFileNeeded(int argc, char* argv[])
 {
     for (int i = 0; i < argc; ++i)
     {
@@ -115,7 +115,7 @@ bool isLogToFileNeeded(int argc, char* argv[])
     return false;
 }
 
-int runApplication(QApplication* app)
+static int runApplication(QApplication* app)
 {
     app->setStyle(QStyleFactory::create("Fusion"));
     app->setPalette(DarkPalette());

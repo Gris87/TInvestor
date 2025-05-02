@@ -29,8 +29,9 @@ SET /A tries=5
 
 :loop
 IF %tries% LEQ 0 EXIT /B 1
-
 SET /A tries-=1
+
+if exist ..\..\..\CoverageReport rmdir ..\..\..\CoverageReport /q /s
 OpenCppCoverage ^
     --sources app\src\ ^
     --excluded_sources test_* ^

@@ -42,7 +42,7 @@ static const QMap<QtMsgType, int> LOG_LEVEL_TO_INTEGER{ // clazy:exclude=non-pod
 
 
 static QtMessageHandler oldMessageHandler; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
-static bool             isLogToFile;
+static bool             isLogToFile;       // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 
 static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
