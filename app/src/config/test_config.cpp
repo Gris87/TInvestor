@@ -43,23 +43,27 @@ TEST(Test_Config, Test_assign)
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
     config.setAmountOfStockPurchase(50000);
+    config.setLimitByTurnover(false);
+    config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                false);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   5);
-    ASSERT_EQ(config.isUseSchedule(),            false);
-    ASSERT_EQ(config.getScheduleStartHour(),     8);
-    ASSERT_EQ(config.getScheduleStartMinute(),   15);
-    ASSERT_EQ(config.getScheduleEndHour(),       20);
-    ASSERT_EQ(config.getScheduleEndMinute(),     50);
-    ASSERT_EQ(config.isLimitStockPurchase(),     false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 50000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     36);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  false);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  true);
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
     // clang-format on
 
     config2.setAutorun(true);
@@ -71,23 +75,27 @@ TEST(Test_Config, Test_assign)
     config2.setScheduleEndMinute(37);
     config2.setLimitStockPurchase(true);
     config2.setAmountOfStockPurchase(75000);
+    config2.setLimitByTurnover(true);
+    config2.setLimitByTurnoverPercent(7.5f);
     config2.setStorageMonthLimit(12);
     config2.setSimulatorConfigCommon(true);
     config2.setAutoPilotConfigCommon(false);
 
     // clang-format off
-    ASSERT_EQ(config2.isAutorun(),                true);
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),   30);
-    ASSERT_EQ(config2.isUseSchedule(),            true);
-    ASSERT_EQ(config2.getScheduleStartHour(),     7);
-    ASSERT_EQ(config2.getScheduleStartMinute(),   5);
-    ASSERT_EQ(config2.getScheduleEndHour(),       21);
-    ASSERT_EQ(config2.getScheduleEndMinute(),     37);
-    ASSERT_EQ(config2.isLimitStockPurchase(),     true);
-    ASSERT_EQ(config2.getAmountOfStockPurchase(), 75000);
-    ASSERT_EQ(config2.getStorageMonthLimit(),     12);
-    ASSERT_EQ(config2.isSimulatorConfigCommon(),  true);
-    ASSERT_EQ(config2.isAutoPilotConfigCommon(),  false);
+    ASSERT_EQ(config2.isAutorun(),                   true);
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
+    ASSERT_EQ(config2.isUseSchedule(),               true);
+    ASSERT_EQ(config2.getScheduleStartHour(),        7);
+    ASSERT_EQ(config2.getScheduleStartMinute(),      5);
+    ASSERT_EQ(config2.getScheduleEndHour(),          21);
+    ASSERT_EQ(config2.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config2.isLimitStockPurchase(),        true);
+    ASSERT_EQ(config2.getAmountOfStockPurchase(),    75000);
+    ASSERT_EQ(config2.isLimitByTurnover(),           true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
+    ASSERT_EQ(config2.getStorageMonthLimit(),        12);
+    ASSERT_EQ(config2.isSimulatorConfigCommon(),     true);
+    ASSERT_EQ(config2.isAutoPilotConfigCommon(),     false);
     // clang-format on
 
     EXPECT_CALL(simulatorConfigMock, assign(&simulatorConfigMock2));
@@ -96,33 +104,37 @@ TEST(Test_Config, Test_assign)
     config.assign(&config2);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                true);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   30);
-    ASSERT_EQ(config.isUseSchedule(),            true);
-    ASSERT_EQ(config.getScheduleStartHour(),     7);
-    ASSERT_EQ(config.getScheduleStartMinute(),   5);
-    ASSERT_EQ(config.getScheduleEndHour(),       21);
-    ASSERT_EQ(config.getScheduleEndMinute(),     37);
-    ASSERT_EQ(config.isLimitStockPurchase(),     true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 75000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     12);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  true);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  false);
+    ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      30);
+    ASSERT_EQ(config.isUseSchedule(),               true);
+    ASSERT_EQ(config.getScheduleStartHour(),        7);
+    ASSERT_EQ(config.getScheduleStartMinute(),      5);
+    ASSERT_EQ(config.getScheduleEndHour(),          21);
+    ASSERT_EQ(config.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config.isLimitStockPurchase(),        true);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    75000);
+    ASSERT_EQ(config.isLimitByTurnover(),           true);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        12);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     true);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     false);
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(config2.isAutorun(),                true);
-    ASSERT_EQ(config2.getMakeDecisionTimeout(),   30);
-    ASSERT_EQ(config2.isUseSchedule(),            true);
-    ASSERT_EQ(config2.getScheduleStartHour(),     7);
-    ASSERT_EQ(config2.getScheduleStartMinute(),   5);
-    ASSERT_EQ(config2.getScheduleEndHour(),       21);
-    ASSERT_EQ(config2.getScheduleEndMinute(),     37);
-    ASSERT_EQ(config2.isLimitStockPurchase(),     true);
-    ASSERT_EQ(config2.getAmountOfStockPurchase(), 75000);
-    ASSERT_EQ(config2.getStorageMonthLimit(),     12);
-    ASSERT_EQ(config2.isSimulatorConfigCommon(),  true);
-    ASSERT_EQ(config2.isAutoPilotConfigCommon(),  false);
+    ASSERT_EQ(config2.isAutorun(),                   true);
+    ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
+    ASSERT_EQ(config2.isUseSchedule(),               true);
+    ASSERT_EQ(config2.getScheduleStartHour(),        7);
+    ASSERT_EQ(config2.getScheduleStartMinute(),      5);
+    ASSERT_EQ(config2.getScheduleEndHour(),          21);
+    ASSERT_EQ(config2.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config2.isLimitStockPurchase(),        true);
+    ASSERT_EQ(config2.getAmountOfStockPurchase(),    75000);
+    ASSERT_EQ(config2.isLimitByTurnover(),           true);
+    ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
+    ASSERT_EQ(config2.getStorageMonthLimit(),        12);
+    ASSERT_EQ(config2.isSimulatorConfigCommon(),     true);
+    ASSERT_EQ(config2.isAutoPilotConfigCommon(),     false);
     // clang-format on
 }
 
@@ -144,23 +156,27 @@ TEST(Test_Config, Test_makeDefault)
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
     config.setAmountOfStockPurchase(50000);
+    config.setLimitByTurnover(false);
+    config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                false);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   5);
-    ASSERT_EQ(config.isUseSchedule(),            false);
-    ASSERT_EQ(config.getScheduleStartHour(),     8);
-    ASSERT_EQ(config.getScheduleStartMinute(),   15);
-    ASSERT_EQ(config.getScheduleEndHour(),       20);
-    ASSERT_EQ(config.getScheduleEndMinute(),     50);
-    ASSERT_EQ(config.isLimitStockPurchase(),     false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 50000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     36);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  false);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  true);
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
     // clang-format on
 
     EXPECT_CALL(simulatorConfigMock, makeDefault());
@@ -169,18 +185,20 @@ TEST(Test_Config, Test_makeDefault)
     config.makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                true);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   1);
-    ASSERT_EQ(config.isUseSchedule(),            true);
-    ASSERT_EQ(config.getScheduleStartHour(),     10);
-    ASSERT_EQ(config.getScheduleStartMinute(),   0);
-    ASSERT_EQ(config.getScheduleEndHour(),       18);
-    ASSERT_EQ(config.getScheduleEndMinute(),     40);
-    ASSERT_EQ(config.isLimitStockPurchase(),     true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 10000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     12);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  true);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  false);
+    ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      1);
+    ASSERT_EQ(config.isUseSchedule(),               true);
+    ASSERT_EQ(config.getScheduleStartHour(),        10);
+    ASSERT_EQ(config.getScheduleStartMinute(),      0);
+    ASSERT_EQ(config.getScheduleEndHour(),          18);
+    ASSERT_EQ(config.getScheduleEndMinute(),        40);
+    ASSERT_EQ(config.isLimitStockPurchase(),        true);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    10000);
+    ASSERT_EQ(config.isLimitByTurnover(),           true);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 1.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        12);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     true);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     false);
     // clang-format on
 }
 
@@ -202,23 +220,27 @@ TEST(Test_Config, Test_save)
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
     config.setAmountOfStockPurchase(50000);
+    config.setLimitByTurnover(false);
+    config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                false);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   5);
-    ASSERT_EQ(config.isUseSchedule(),            false);
-    ASSERT_EQ(config.getScheduleStartHour(),     8);
-    ASSERT_EQ(config.getScheduleStartMinute(),   15);
-    ASSERT_EQ(config.getScheduleEndHour(),       20);
-    ASSERT_EQ(config.getScheduleEndMinute(),     50);
-    ASSERT_EQ(config.isLimitStockPurchase(),     false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 50000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     36);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  false);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  true);
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -227,18 +249,20 @@ TEST(Test_Config, Test_save)
     EXPECT_CALL(autoPilotConfigMock, save(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),               QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),   QVariant(5)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),           QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartHour"),     QVariant(8)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartMinute"),   QVariant(15)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndHour"),       QVariant(20)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndMinute"),     QVariant(50)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),    QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AmountOfStockPurchase"), QVariant(50000)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),     QVariant(36)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"), QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"), QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),    QVariant(5)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),            QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartHour"),      QVariant(8)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartMinute"),    QVariant(15)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndHour"),        QVariant(20)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndMinute"),      QVariant(50)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),     QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AmountOfStockPurchase"),  QVariant(50000)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),        QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),      QVariant(36)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/SimulatorConfigCommon"),  QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AutoPilotConfigCommon"),  QVariant(true)));
     // clang-format on
 
     config.save(&settingsEditorMock);
@@ -262,23 +286,27 @@ TEST(Test_Config, Test_load)
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
     config.setAmountOfStockPurchase(50000);
+    config.setLimitByTurnover(false);
+    config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
     config.setSimulatorConfigCommon(false);
     config.setAutoPilotConfigCommon(true);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                false);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   5);
-    ASSERT_EQ(config.isUseSchedule(),            false);
-    ASSERT_EQ(config.getScheduleStartHour(),     8);
-    ASSERT_EQ(config.getScheduleStartMinute(),   15);
-    ASSERT_EQ(config.getScheduleEndHour(),       20);
-    ASSERT_EQ(config.getScheduleEndMinute(),     50);
-    ASSERT_EQ(config.isLimitStockPurchase(),     false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 50000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     36);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  false);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  true);
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
@@ -287,35 +315,39 @@ TEST(Test_Config, Test_load)
     EXPECT_CALL(autoPilotConfigMock, load(&settingsEditorMock, QString("Config/AutoPilot")));
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),               QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),   QVariant(5))).WillOnce(Return(QVariant(30)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),           QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartHour"),     QVariant(8))).WillOnce(Return(QVariant(7)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartMinute"),   QVariant(15))).WillOnce(Return(QVariant(5)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndHour"),       QVariant(20))).WillOnce(Return(QVariant(21)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndMinute"),     QVariant(50))).WillOnce(Return(QVariant(37)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),    QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/AmountOfStockPurchase"), QVariant(50000))).WillOnce(Return(QVariant(75000)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),     QVariant(36))).WillOnce(Return(QVariant(12)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"), QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"), QVariant(true))).WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),    QVariant(5))).WillOnce(Return(QVariant(30)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),            QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartHour"),      QVariant(8))).WillOnce(Return(QVariant(7)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartMinute"),    QVariant(15))).WillOnce(Return(QVariant(5)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndHour"),        QVariant(20))).WillOnce(Return(QVariant(21)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndMinute"),      QVariant(50))).WillOnce(Return(QVariant(37)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),     QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/AmountOfStockPurchase"),  QVariant(50000))).WillOnce(Return(QVariant(75000)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),        QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f))).WillOnce(Return(QVariant(7.5f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),      QVariant(36))).WillOnce(Return(QVariant(12)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/SimulatorConfigCommon"),  QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/AutoPilotConfigCommon"),  QVariant(true))).WillOnce(Return(QVariant(false)));
     // clang-format on
 
     config.load(&settingsEditorMock);
 
     // clang-format off
-    ASSERT_EQ(config.isAutorun(),                true);
-    ASSERT_EQ(config.getMakeDecisionTimeout(),   30);
-    ASSERT_EQ(config.isUseSchedule(),            true);
-    ASSERT_EQ(config.getScheduleStartHour(),     7);
-    ASSERT_EQ(config.getScheduleStartMinute(),   5);
-    ASSERT_EQ(config.getScheduleEndHour(),       21);
-    ASSERT_EQ(config.getScheduleEndMinute(),     37);
-    ASSERT_EQ(config.isLimitStockPurchase(),     true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 75000);
-    ASSERT_EQ(config.getStorageMonthLimit(),     12);
-    ASSERT_EQ(config.isSimulatorConfigCommon(),  true);
-    ASSERT_EQ(config.isAutoPilotConfigCommon(),  false);
+    ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      30);
+    ASSERT_EQ(config.isUseSchedule(),               true);
+    ASSERT_EQ(config.getScheduleStartHour(),        7);
+    ASSERT_EQ(config.getScheduleStartMinute(),      5);
+    ASSERT_EQ(config.getScheduleEndHour(),          21);
+    ASSERT_EQ(config.getScheduleEndMinute(),        37);
+    ASSERT_EQ(config.isLimitStockPurchase(),        true);
+    ASSERT_EQ(config.getAmountOfStockPurchase(),    75000);
+    ASSERT_EQ(config.isLimitByTurnover(),           true);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        12);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     true);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     false);
     // clang-format on
 }
 
@@ -463,6 +495,34 @@ TEST(Test_Config, Test_setAmountOfStockPurchase_and_getAmountOfStockPurchase)
 
     config.setAmountOfStockPurchase(5000);
     ASSERT_EQ(config.getAmountOfStockPurchase(), 5000);
+}
+
+TEST(Test_Config, Test_setLimitByTurnover_and_isLimitByTurnover)
+{
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
+
+    Config config(&simulatorConfigMock, &autoPilotConfigMock);
+
+    config.setLimitByTurnover(false);
+    ASSERT_EQ(config.isLimitByTurnover(), false);
+
+    config.setLimitByTurnover(true);
+    ASSERT_EQ(config.isLimitByTurnover(), true);
+}
+
+TEST(Test_Config, Test_setLimitByTurnoverPercent_and_getLimitByTurnoverPercent)
+{
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
+
+    Config config(&simulatorConfigMock, &autoPilotConfigMock);
+
+    config.setLimitByTurnoverPercent(10.0f);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 10.0f, 0.0001f);
+
+    config.setLimitByTurnoverPercent(50.0f);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 50.0f, 0.0001f);
 }
 
 TEST(Test_Config, Test_setStorageMonthLimit_and_getStorageMonthLimit)

@@ -52,6 +52,12 @@ public:
     virtual void setAmountOfStockPurchase(int value) = 0;
     virtual int  getAmountOfStockPurchase()          = 0;
 
+    virtual void setLimitByTurnover(bool value) = 0;
+    virtual bool isLimitByTurnover()            = 0;
+
+    virtual void  setLimitByTurnoverPercent(float value) = 0;
+    virtual float getLimitByTurnoverPercent()            = 0;
+
     virtual void setStorageMonthLimit(int value) = 0;
     virtual int  getStorageMonthLimit()          = 0;
 

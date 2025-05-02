@@ -78,6 +78,8 @@ void SettingsDialog::updateUiFromConfig()
     ui->scheduleEndTimeEdit->setTime(QTime(scheduleEndHour, scheduleEndMinute));
     ui->limitStockPurchaseCheckBox->setChecked(mConfig->isLimitStockPurchase());
     ui->amountOfStockPurchaseSpinBox->setValue(mConfig->getAmountOfStockPurchase());
+    ui->limitByTurnoverCheckBox->setChecked(mConfig->isLimitByTurnover());
+    ui->limitByTurnoverPercentDoubleSpinBox->setValue(mConfig->getLimitByTurnoverPercent());
     ui->storageMonthLimitSpinBox->setValue(mConfig->getStorageMonthLimit());
     ui->simulatorConfigCommonCheckBox->setChecked(mConfig->isSimulatorConfigCommon());
     ui->autoPilotConfigCommonCheckBox->setChecked(mConfig->isAutoPilotConfigCommon());
@@ -133,12 +135,26 @@ void SettingsDialog::on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::C
 
     mConfig->setLimitStockPurchase(checked);
 
-    ui->amountOfStockPurchaseSpinBox->setEnabled(checked);
+    ui->limitStockPurchaseWidget->setEnabled(checked);
 }
 
 void SettingsDialog::on_amountOfStockPurchaseSpinBox_valueChanged(int value)
 {
     mConfig->setAmountOfStockPurchase(value);
+}
+
+void SettingsDialog::on_limitByTurnoverCheckBox_checkStateChanged(const Qt::CheckState& value)
+{
+    const bool checked = value == Qt::Checked;
+
+    mConfig->setLimitByTurnover(checked);
+
+    ui->limitByTurnoverPercentDoubleSpinBox->setEnabled(checked);
+}
+
+void SettingsDialog::on_limitByTurnoverPercentDoubleSpinBox_valueChanged(double value)
+{
+    mConfig->setLimitByTurnoverPercent(value);
 }
 
 void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value)

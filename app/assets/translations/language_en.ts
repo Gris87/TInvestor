@@ -17,27 +17,27 @@
 <context>
     <name>AuthDialog</name>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="14"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="26"/>
         <source>Authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="35"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="47"/>
         <source>You have to provide full access token (for a single account or all accounts).</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="45"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="57"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Please check &lt;a href=&quot;https://russianinvestments.github.io/investAPI/token/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;for more information&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="60"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="72"/>
         <source>Token:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="94"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.ui" line="106"/>
         <source>Login</source>
         <translation></translation>
     </message>
@@ -169,13 +169,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="227"/>
+        <location filename="../../src/main/mainwindow.cpp" line="231"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="495"/>
+        <location filename="../../src/main/mainwindow.cpp" line="501"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -186,7 +186,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="529"/>
+        <location filename="../../src/main/mainwindow.cpp" line="535"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -247,40 +247,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="228"/>
+        <location filename="../../src/main/mainwindow.cpp" line="232"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="293"/>
+        <location filename="../../src/main/mainwindow.cpp" line="299"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="382"/>
-        <location filename="../../src/main/mainwindow.cpp" line="567"/>
+        <location filename="../../src/main/mainwindow.cpp" line="388"/>
+        <location filename="../../src/main/mainwindow.cpp" line="573"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="481"/>
-        <location filename="../../src/main/mainwindow.cpp" line="488"/>
+        <location filename="../../src/main/mainwindow.cpp" line="487"/>
+        <location filename="../../src/main/mainwindow.cpp" line="494"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="488"/>
+        <location filename="../../src/main/mainwindow.cpp" line="494"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="515"/>
-        <location filename="../../src/main/mainwindow.cpp" line="522"/>
+        <location filename="../../src/main/mainwindow.cpp" line="521"/>
+        <location filename="../../src/main/mainwindow.cpp" line="528"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="522"/>
+        <location filename="../../src/main/mainwindow.cpp" line="528"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -388,8 +388,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="522"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="530"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="524"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="532"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -397,22 +397,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="101"/>
+        <location filename="../../src/main.cpp" line="129"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="101"/>
+        <location filename="../../src/main.cpp" line="129"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="113"/>
+        <location filename="../../src/main.cpp" line="141"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="113"/>
+        <location filename="../../src/main.cpp" line="141"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -519,58 +519,68 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="184"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="202"/>
         <source> rubles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="220"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="218"/>
+        <source>and more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
+        <source>of average daily turnover</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="271"/>
         <source>Store stocks data for</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="227"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
         <source> months</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="272"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="163"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="185"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="323"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="179"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="201"/>
         <source>Simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="293"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="329"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="344"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="380"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="308"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="162"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="186"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="359"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="178"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="365"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="416"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="388"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="439"/>
         <source>Cancel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="408"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="459"/>
         <source>Default</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="157"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="180"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="173"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="196"/>
         <source>Decision maker</source>
         <translation></translation>
     </message>

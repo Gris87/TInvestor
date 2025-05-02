@@ -53,6 +53,12 @@ public:
     void setAmountOfStockPurchase(int value) override;
     int  getAmountOfStockPurchase() override;
 
+    void setLimitByTurnover(bool value) override;
+    bool isLimitByTurnover() override;
+
+    void  setLimitByTurnoverPercent(float value) override;
+    float getLimitByTurnoverPercent() override;
+
     void setStorageMonthLimit(int value) override;
     int  getStorageMonthLimit() override;
 
@@ -68,16 +74,18 @@ private:
     IDecisionMakerConfig* mSimulatorConfig;
     IDecisionMakerConfig* mAutoPilotConfig;
 
-    bool mAutorun;
-    int  mMakeDecisionTimeout;
-    bool mUseSchedule;
-    int  mScheduleStartHour;
-    int  mScheduleStartMinute;
-    int  mScheduleEndHour;
-    int  mScheduleEndMinute;
-    bool mLimitStockPurchase;
-    int  mAmountOfStockPurchase;
-    int  mStorageMonthLimit;
-    bool mSimulatorConfigCommon;
-    bool mAutoPilotConfigCommon;
+    bool  mAutorun;
+    int   mMakeDecisionTimeout;
+    bool  mUseSchedule;
+    int   mScheduleStartHour;
+    int   mScheduleStartMinute;
+    int   mScheduleEndHour;
+    int   mScheduleEndMinute;
+    bool  mLimitStockPurchase;
+    int   mAmountOfStockPurchase;
+    bool  mLimitByTurnover;
+    float mLimitByTurnoverPercent;
+    int   mStorageMonthLimit;
+    bool  mSimulatorConfigCommon;
+    bool  mAutoPilotConfigCommon;
 };
