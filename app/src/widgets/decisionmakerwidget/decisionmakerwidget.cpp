@@ -21,6 +21,8 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->setupUi(this);
 
+    ui->splitter->setSizes(QList<int>() << 400 << 100);
+
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(mSettingsEditor, this);
     mAccountChartWidget    = accountChartWidgetFactory->newInstance(this);
     mLogsTableWidget       = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
