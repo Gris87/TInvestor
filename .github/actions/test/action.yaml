@@ -31,8 +31,8 @@ runs:
 
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-test
+      uses: actions/cache@v4
       with:
         path: ./TInvestor-source/build/CoverageReport
         key: ${{ runner.os }}-test-${{ steps.folders-hash.outputs.hash }}
@@ -48,16 +48,16 @@ runs:
             "Linux"   { sudo apt-get update; sudo apt-get install -y lcov }
         }
 
-    # Download build artifacts (Debug)
-    - name: Download build artifacts (Debug)
+    # Download build artifacts (debug)
+    - name: Download build artifacts (debug)
       if: steps.cache-test.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: build-debug-${{ matrix.config.name }}
         path: ./TInvestor-source/build/Desktop-Debug
 
-    # Download build artifacts (Release)
-    - name: Download build artifacts (Release)
+    # Download build artifacts (release)
+    - name: Download build artifacts (release)
       if: steps.cache-test.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:

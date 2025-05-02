@@ -5,8 +5,8 @@ runs:
   steps:
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-env
+      uses: actions/cache@v4
       with:
         path: ./Qt
         key: ${{ runner.os }}-env-vcpkg-${{ env.VCPKG_VERSION }}

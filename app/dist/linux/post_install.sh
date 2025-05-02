@@ -25,7 +25,6 @@ echo "Icon=TInvestor"                                      >> ${DESKTOP_FILE}
 echo "Terminal=false"                                      >> ${DESKTOP_FILE}
 echo "Categories=Investment;"                              >> ${DESKTOP_FILE}
 
-rm -f $HOME/Desktop/TInvestor.desktop
 cp ${DESKTOP_FILE} $HOME/Desktop/TInvestor.desktop
 
 chmod 755 ${DESKTOP_FILE}

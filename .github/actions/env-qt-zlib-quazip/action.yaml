@@ -5,8 +5,8 @@ runs:
   steps:
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-env
+      uses: actions/cache@v4
       with:
         path: ./Qt
         key: ${{ runner.os }}-env-qt-zlib-quazip-${{ env.QT_VERSION }}-${{ env.ZLIB_VERSION }}-${{ env.QUAZIP_VERSION }}

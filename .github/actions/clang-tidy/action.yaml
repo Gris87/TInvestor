@@ -27,8 +27,8 @@ runs:
 
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-clang-tidy
+      uses: actions/cache@v4
       with:
         path: ./success
         key: ${{ runner.os }}-clang-tidy-${{ matrix.part }}-${{ steps.folders-hash.outputs.hash }}
@@ -58,8 +58,8 @@ runs:
         path: Qt/googletest-source
         ref: ${{ env.GOOGLE_TEST_VERSION }}
 
-    # Download build artifacts (Debug)
-    - name: Download build artifacts (Debug)
+    # Download build artifacts (debug)
+    - name: Download build artifacts (debug)
       if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:

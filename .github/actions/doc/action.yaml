@@ -27,8 +27,8 @@ runs:
 
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-doc
+      uses: actions/cache@v4
       with:
         path: ./TInvestor-source/build
         key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
@@ -45,7 +45,6 @@ runs:
                 choco install graphviz
             }
             "Linux" {
-                sudo add-apt-repository ppa:bkryza/clang-uml
                 sudo apt-get update
                 sudo apt-get install -y doxygen graphviz
             }

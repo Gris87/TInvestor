@@ -7,8 +7,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # Download build artifacts (Release)
-    - name: Download build artifacts (Release)
+    # Download build artifacts (release)
+    - name: Download build artifacts (release)
       uses: thebrowsercompany/gha-download-tar-artifact@main
       with:
         name: build-release-${{ matrix.config.name }}

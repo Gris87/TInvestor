@@ -28,8 +28,8 @@ runs:
 
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-style
+      uses: actions/cache@v4
       with:
         path: ./success
         key: ${{ runner.os }}-check-style-${{ steps.folders-hash.outputs.hash }}

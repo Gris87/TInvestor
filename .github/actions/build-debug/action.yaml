@@ -27,8 +27,8 @@ runs:
 
     # Download/upload cache
     - name: Caching
-      uses: actions/cache@v4
       id: cache-build
+      uses: actions/cache@v4
       with:
         path: ./artifacts
         key: ${{ runner.os }}-build-debug-${{ steps.folders-hash.outputs.hash }}
