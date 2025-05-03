@@ -278,10 +278,10 @@ static int runApplication(QApplication* app)
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
     Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
-    UserDatabase   userDatabase;
-    UserStorage    userStorage(&userDatabase);
-    StocksDatabase stocksDatabase(&dirFactory, &fileFactory);
-    StocksStorage  stocksStorage(&stocksDatabase, &userStorage);
+    UserDatabase        userDatabase;
+    UserStorage         userStorage(&userDatabase);
+    StocksDatabase      stocksDatabase(&dirFactory, &fileFactory);
+    StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
 

@@ -18,6 +18,20 @@
 
 
 
+struct UidAndLogo
+{
+    explicit UidAndLogo(QString _uid, QString _logo) :
+        uid(_uid),
+        logo(_logo)
+    {
+    }
+
+    QString uid;
+    QString logo;
+};
+
+
+
 class PriceCollectThread : public IPriceCollectThread
 {
     Q_OBJECT
@@ -48,13 +62,14 @@ public:
     bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     // UID => InstrumentInfo
-    Instruments convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void        obtainStocksData();
-    void        cleanupOperationalData();
-    bool        obtainStocksDayStartPrice();
-    void        obtainTurnover();
-    void        obtainPayback();
-    void        notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
+    Instruments       convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    QList<UidAndLogo> convertStocksToLogos(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void              obtainStocksData();
+    void              cleanupOperationalData();
+    bool              obtainStocksDayStartPrice();
+    void              obtainTurnover();
+    void              obtainPayback();
+    void              notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
     IConfig*             mConfig;
