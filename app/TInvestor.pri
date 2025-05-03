@@ -28,6 +28,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3config.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.cpp \
+    src/db/instruments/instrumentsdatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/db/user/userdatabase.cpp \
     src/dialogs/authdialog/authdialog.cpp \
@@ -151,6 +152,8 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h \
     src/config/iconfig.h \
+    src/db/instruments/iinstrumentsdatabase.h \
+    src/db/instruments/instrumentsdatabase.h \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/db/user/iuserdatabase.h \
