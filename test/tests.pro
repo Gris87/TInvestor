@@ -8,7 +8,8 @@ TEMPLATE = app
 
 
 DEFINES += \
-    USE_SANDBOX
+    USE_SANDBOX \
+    TESTING_MODE
 
 
 

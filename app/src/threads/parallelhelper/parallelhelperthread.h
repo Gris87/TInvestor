@@ -59,6 +59,7 @@ void processInParallel(
     void*     additionalArgs = nullptr
 )
 {
+#ifndef TESTING_MODE
     QThread* parentThread = QThread::currentThread();
 
     const int cpuCount = QThread::idealThreadCount();
@@ -95,4 +96,7 @@ void processInParallel(
         thread->wait();
         delete thread;
     }
+#else
+    action(QThread::currentThread(), array, 0, array.size(), additionalArgs);
+#endif
 }

@@ -375,14 +375,12 @@ static void downloadLogosForParallel(QThread* parentThread, QList<UidAndLogo>& l
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        UidAndLogo logo = logosArray[i];
-
         const std::shared_ptr<IFile> logoFile =
-            fileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(appDir, logo.uid));
+            fileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(appDir, logosArray[i].uid));
 
         if (forceToDownload || !logoFile->exists())
         {
-            const QString logoName = logo.logo.replace(".png", "x160.png"); // 160 pixels
+            const QString logoName = logosArray[i].logo.replace(".png", "x160.png"); // 160 pixels
             const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
 
             thread->downloadLogo(url, logoFile);
