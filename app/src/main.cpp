@@ -340,6 +340,7 @@ static int runApplication(QApplication* app)
         &trayIconFactory,
         &userStorage,
         &stocksStorage,
+        &instrumentsStorage,
         &httpClient,
         &grpcClient,
         &userUpdateThread,

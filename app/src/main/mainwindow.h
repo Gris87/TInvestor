@@ -13,6 +13,7 @@
 #include "src/dialogs/startautopilotdialog/istartautopilotdialogfactory.h"
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
@@ -76,6 +77,7 @@ public:
         ITrayIconFactory*                  trayIconFactory,
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
+        IInstrumentsStorage*               instrumentsStorage,
         IHttpClient*                       httpClient,
         IGrpcClient*                       grpcClient,
         IUserUpdateThread*                 userUpdateThread,
@@ -136,6 +138,7 @@ private:
     ITrayIcon*                         mTrayIcon;
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
+    IInstrumentsStorage*               mInstrumentsStorage;
     IHttpClient*                       mHttpClient;
     IGrpcClient*                       mGrpcClient;
     IUserUpdateThread*                 mUserUpdateThread;

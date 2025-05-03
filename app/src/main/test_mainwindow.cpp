@@ -22,6 +22,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialog_mock.h"
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
@@ -108,6 +109,7 @@ protected:
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
+        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
@@ -217,6 +219,7 @@ protected:
             trayIconFactoryMock,
             userStorageMock,
             stocksStorageMock,
+            instrumentsStorageMock,
             httpClientMock,
             grpcClientMock,
             userUpdateThreadMock,
@@ -278,6 +281,7 @@ protected:
         delete trayIconFactoryMock;
         delete userStorageMock;
         delete stocksStorageMock;
+        delete instrumentsStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
         delete userUpdateThreadMock;
@@ -329,6 +333,7 @@ protected:
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
+    StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
@@ -817,6 +822,7 @@ TEST_F(Test_MainWindow, Test_init)
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
+    EXPECT_CALL(*instrumentsStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*cleanupThreadMock, run());

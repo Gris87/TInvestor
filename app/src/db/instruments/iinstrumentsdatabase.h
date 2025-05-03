@@ -15,5 +15,6 @@ public:
     IInstrumentsDatabase(const IInstrumentsDatabase& another)            = delete;
     IInstrumentsDatabase& operator=(const IInstrumentsDatabase& another) = delete;
 
-    virtual Instruments readInstruments() = 0;
+    virtual Instruments readInstruments()                                = 0;
+    virtual void        writeInstruments(const Instruments& instruments) = 0;
 };

@@ -19,6 +19,7 @@ public:
     InstrumentsDatabase& operator=(const InstrumentsDatabase& another) = delete;
 
     Instruments readInstruments() override;
+    void        writeInstruments(const Instruments& instruments) override;
 
 private:
     IFileFactory* mFileFactory;

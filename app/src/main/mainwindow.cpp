@@ -58,6 +58,7 @@ MainWindow::MainWindow(
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
+    IInstrumentsStorage*               instrumentsStorage,
     IHttpClient*                       httpClient,
     IGrpcClient*                       grpcClient,
     IUserUpdateThread*                 userUpdateThread,
@@ -96,6 +97,7 @@ MainWindow::MainWindow(
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
+    mInstrumentsStorage(instrumentsStorage),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mUserUpdateThread(userUpdateThread),
@@ -545,6 +547,7 @@ void MainWindow::init()
 
     mUserStorage->readFromDatabase();
     mStocksStorage->readFromDatabase();
+    mInstrumentsStorage->readFromDatabase();
 
     updateStocksTableWidget();
 
