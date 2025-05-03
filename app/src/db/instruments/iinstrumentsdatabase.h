@@ -2,6 +2,10 @@
 
 
 
+#include "src/domain/instruments/instrumentinfo.h"
+
+
+
 class IInstrumentsDatabase
 {
 public:
@@ -10,4 +14,6 @@ public:
 
     IInstrumentsDatabase(const IInstrumentsDatabase& another)            = delete;
     IInstrumentsDatabase& operator=(const IInstrumentsDatabase& another) = delete;
+
+    virtual Instruments readInstruments() = 0;
 };

@@ -22,6 +22,7 @@
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
+#include "src/db/instruments/instrumentsdatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
@@ -32,6 +33,7 @@
 #include "src/grpc/grpcclient.h"
 #include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
+#include "src/storage/instruments/instrumentsstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
@@ -280,6 +282,8 @@ static int runApplication(QApplication* app)
     UserStorage    userStorage(&userDatabase);
     StocksDatabase stocksDatabase(&dirFactory, &fileFactory);
     StocksStorage  stocksStorage(&stocksDatabase, &userStorage);
+    InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
+    InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
 
     TimeUtils       timeUtils;
     MessageBoxUtils messageBoxUtils;
@@ -292,6 +296,7 @@ static int runApplication(QApplication* app)
         &config,
         &userStorage,
         &stocksStorage,
+        &instrumentsStorage,
         &dirFactory,
         &fileFactory,
         &qZipFactory,

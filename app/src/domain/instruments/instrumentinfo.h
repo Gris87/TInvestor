@@ -23,6 +23,8 @@ struct InstrumentInfo
     QString name;
 };
 
+using Instruments = QMap<QString, InstrumentInfo>; // UID => InstrumentInfo
+
 
 
 bool operator==(const InstrumentInfo& lhs, const InstrumentInfo& rhs);

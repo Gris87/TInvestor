@@ -3,6 +3,8 @@ Control portfolio
 Control operations
 Display portfolio items
 Follow for the strategy
+Add check-style on imports groups
+const for `QList<Stock*>& getStocks()`?
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

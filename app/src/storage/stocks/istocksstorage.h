@@ -2,9 +2,9 @@
 
 
 
-#include "src/domain/stocks/stock.h"
-
 #include <QMutex>
+
+#include "src/domain/stocks/stock.h"
 
 
 

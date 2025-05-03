@@ -5,6 +5,7 @@
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
@@ -44,6 +45,7 @@ protected:
         configMock                   = new StrictMock<ConfigMock>();
         userStorageMock              = new StrictMock<UserStorageMock>();
         stocksStorageMock            = new StrictMock<StocksStorageMock>();
+        instrumentsStorageMock       = new StrictMock<InstrumentsStorageMock>();
         dirFactoryMock               = new StrictMock<DirFactoryMock>();
         fileFactoryMock              = new StrictMock<FileFactoryMock>();
         qZipFactoryMock              = new StrictMock<QZipFactoryMock>();
@@ -59,6 +61,7 @@ protected:
             configMock,
             userStorageMock,
             stocksStorageMock,
+            instrumentsStorageMock,
             dirFactoryMock,
             fileFactoryMock,
             qZipFactoryMock,
@@ -75,6 +78,7 @@ protected:
         delete configMock;
         delete userStorageMock;
         delete stocksStorageMock;
+        delete instrumentsStorageMock;
         delete dirFactoryMock;
         delete fileFactoryMock;
         delete qZipFactoryMock;
@@ -84,18 +88,19 @@ protected:
         delete grpcClientMock;
     }
 
-    PriceCollectThread*              thread;
-    StrictMock<ConfigMock>*          configMock;
-    StrictMock<UserStorageMock>*     userStorageMock;
-    StrictMock<StocksStorageMock>*   stocksStorageMock;
-    StrictMock<DirFactoryMock>*      dirFactoryMock;
-    StrictMock<FileFactoryMock>*     fileFactoryMock;
-    StrictMock<QZipFactoryMock>*     qZipFactoryMock;
-    StrictMock<QZipFileFactoryMock>* qZipFileFactoryMock;
-    StrictMock<TimeUtilsMock>*       timeUtilsMock;
-    StrictMock<HttpClientMock>*      httpClientMock;
-    StrictMock<GrpcClientMock>*      grpcClientMock;
-    QString                          appDir;
+    PriceCollectThread*                 thread;
+    StrictMock<ConfigMock>*             configMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
+    StrictMock<StocksStorageMock>*      stocksStorageMock;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<DirFactoryMock>*         dirFactoryMock;
+    StrictMock<FileFactoryMock>*        fileFactoryMock;
+    StrictMock<QZipFactoryMock>*        qZipFactoryMock;
+    StrictMock<QZipFileFactoryMock>*    qZipFileFactoryMock;
+    StrictMock<TimeUtilsMock>*          timeUtilsMock;
+    StrictMock<HttpClientMock>*         httpClientMock;
+    StrictMock<GrpcClientMock>*         grpcClientMock;
+    QString                             appDir;
 };
 
 

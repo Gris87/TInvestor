@@ -38,22 +38,24 @@ enum CsvField : qint8
 
 
 PriceCollectThread::PriceCollectThread(
-    IConfig*          config,
-    IUserStorage*     userStorage,
-    IStocksStorage*   stocksStorage,
-    IDirFactory*      dirFactory,
-    IFileFactory*     fileFactory,
-    IQZipFactory*     qZipFactory,
-    IQZipFileFactory* qZipFileFactory,
-    ITimeUtils*       timeUtils,
-    IHttpClient*      httpClient,
-    IGrpcClient*      grpcClient,
-    QObject*          parent
+    IConfig*             config,
+    IUserStorage*        userStorage,
+    IStocksStorage*      stocksStorage,
+    IInstrumentsStorage* instrumentsStorage,
+    IDirFactory*         dirFactory,
+    IFileFactory*        fileFactory,
+    IQZipFactory*        qZipFactory,
+    IQZipFileFactory*    qZipFileFactory,
+    ITimeUtils*          timeUtils,
+    IHttpClient*         httpClient,
+    IGrpcClient*         grpcClient,
+    QObject*             parent
 ) :
     IPriceCollectThread(parent),
     mConfig(config),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
+    mInstrumentsStorage(instrumentsStorage),
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
     mQZipFileFactory(qZipFileFactory),
@@ -176,7 +178,7 @@ downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& st
         downloadLogosInfo->finished++;
 
         emit thread->notifyStocksProgress(
-            PriceCollectThread::tr("Downloading stocks logos") +
+            PriceCollectThread::tr("Downloading logos") +
             QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(stocks.size()))
         );
     }
@@ -210,7 +212,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         }
     }
 
-    emit notifyStocksProgress(tr("Downloading stocks logos"));
+    emit notifyStocksProgress(tr("Downloading logos"));
 
     static int lastDownloadHour = -1;
     const int  currentHour      = QDateTime::currentDateTime().time().hour();
@@ -227,7 +229,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     return mStocksStorage->mergeStocksMeta(stocksMeta);
 }
 
-static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
+static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcClient, Instruments& res)
 {
     const std::shared_ptr<tinkoff::BondsResponse> tinkoffBonds = grpcClient->findBonds(parentThread);
 
@@ -252,7 +254,7 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
     }
 }
 
-static void obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
+static void obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, Instruments& res)
 {
     const std::shared_ptr<tinkoff::CurrenciesResponse> tinkoffCurrencies = grpcClient->findCurrencies(parentThread);
 
@@ -277,7 +279,7 @@ static void obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* 
     }
 }
 
-static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
+static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, Instruments& res)
 {
     const std::shared_ptr<tinkoff::EtfsResponse> tinkoffEtfs = grpcClient->findEtfs(parentThread);
 
@@ -302,7 +304,7 @@ static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcCl
     }
 }
 
-static void obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
+static void obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Instruments& res)
 {
     const std::shared_ptr<tinkoff::FuturesResponse> tinkoffFutures = grpcClient->findFutures(parentThread);
 
@@ -335,8 +337,8 @@ struct ObtainInstrumentsInfo
         results.resize(instrumentTypes.size());
     }
 
-    IGrpcClient*                         grpcClient;
-    QList<QMap<QString, InstrumentInfo>> results; // UID => InstrumentInfo
+    IGrpcClient*       grpcClient;
+    QList<Instruments> results; // UID => InstrumentInfo
 };
 
 static void obtainInstrumentsForParallel(
@@ -401,21 +403,21 @@ void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::
     ObtainInstrumentsInfo obtainInstrumentsInfo(mGrpcClient, instrumentTypes);
     processInParallel(instrumentTypes, obtainInstrumentsForParallel, &obtainInstrumentsInfo);
 
-    QMap<QString, InstrumentInfo> instruments = convertStocksToInstrumentsInfo(tinkoffStocks); // UID => InstrumentInfo
+    Instruments instruments = convertStocksToInstrumentsInfo(tinkoffStocks); // UID => InstrumentInfo
 
     for (int i = 0; i < obtainInstrumentsInfo.results.size(); ++i)
     {
         instruments.insert(obtainInstrumentsInfo.results.at(i));
     }
 
-    qInfo() << instruments.size(); // TODO: Continue
+    const QMutexLocker lock(mInstrumentsStorage->getMutex());
+    mInstrumentsStorage->mergeInstruments(instruments);
 }
 
 // UID => InstrumentInfo
-QMap<QString, InstrumentInfo>
-PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
+Instruments PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
-    QMap<QString, InstrumentInfo> res; // UID => InstrumentInfo
+    Instruments res; // UID => InstrumentInfo
 
     for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {

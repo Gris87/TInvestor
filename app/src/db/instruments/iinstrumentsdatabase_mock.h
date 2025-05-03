@@ -19,4 +19,6 @@ public:
 
     InstrumentsDatabaseMock(const InstrumentsDatabaseMock& another)            = delete;
     InstrumentsDatabaseMock& operator=(const InstrumentsDatabaseMock& another) = delete;
+
+    MOCK_METHOD(Instruments, readInstruments, (), (override));
 };

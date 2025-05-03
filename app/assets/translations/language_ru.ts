@@ -384,8 +384,8 @@
     <message>
         <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="178"/>
         <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="211"/>
-        <source>Downloading stocks logos</source>
-        <translation>Скачивание логотипов акций</translation>
+        <source>Downloading logos</source>
+        <translation>Скачивание логотипов</translation>
     </message>
     <message>
         <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="524"/>

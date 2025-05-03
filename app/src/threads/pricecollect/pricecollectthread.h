@@ -5,8 +5,8 @@
 #include "src/threads/pricecollect/ipricecollectthread.h"
 
 #include "src/config/iconfig.h"
-#include "src/domain/instruments/instrumentinfo.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
@@ -24,17 +24,18 @@ class PriceCollectThread : public IPriceCollectThread
 
 public:
     explicit PriceCollectThread(
-        IConfig*          config,
-        IUserStorage*     userStorage,
-        IStocksStorage*   stocksStorage,
-        IDirFactory*      dirFactory,
-        IFileFactory*     fileFactory,
-        IQZipFactory*     qZipFactory,
-        IQZipFileFactory* qZipFileFactory,
-        ITimeUtils*       timeUtils,
-        IHttpClient*      httpClient,
-        IGrpcClient*      grpcClient,
-        QObject*          parent = nullptr
+        IConfig*             config,
+        IUserStorage*        userStorage,
+        IStocksStorage*      stocksStorage,
+        IInstrumentsStorage* instrumentsStorage,
+        IDirFactory*         dirFactory,
+        IFileFactory*        fileFactory,
+        IQZipFactory*        qZipFactory,
+        IQZipFileFactory*    qZipFileFactory,
+        ITimeUtils*          timeUtils,
+        IHttpClient*         httpClient,
+        IGrpcClient*         grpcClient,
+        QObject*             parent = nullptr
     );
     ~PriceCollectThread() override;
 
@@ -47,23 +48,24 @@ public:
     bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     // UID => InstrumentInfo
-    QMap<QString, InstrumentInfo> convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void                          obtainStocksData();
-    void                          cleanupOperationalData();
-    bool                          obtainStocksDayStartPrice();
-    void                          obtainTurnover();
-    void                          obtainPayback();
-    void                          notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
+    Instruments convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void        obtainStocksData();
+    void        cleanupOperationalData();
+    bool        obtainStocksDayStartPrice();
+    void        obtainTurnover();
+    void        obtainPayback();
+    void        notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
-    IConfig*          mConfig;
-    IUserStorage*     mUserStorage;
-    IStocksStorage*   mStocksStorage;
-    IFileFactory*     mFileFactory;
-    IQZipFactory*     mQZipFactory;
-    IQZipFileFactory* mQZipFileFactory;
-    ITimeUtils*       mTimeUtils;
-    IHttpClient*      mHttpClient;
-    IGrpcClient*      mGrpcClient;
-    qint64            mDayStartTimestamp;
+    IConfig*             mConfig;
+    IUserStorage*        mUserStorage;
+    IStocksStorage*      mStocksStorage;
+    IInstrumentsStorage* mInstrumentsStorage;
+    IFileFactory*        mFileFactory;
+    IQZipFactory*        mQZipFactory;
+    IQZipFileFactory*    mQZipFileFactory;
+    ITimeUtils*          mTimeUtils;
+    IHttpClient*         mHttpClient;
+    IGrpcClient*         mGrpcClient;
+    qint64               mDayStartTimestamp;
 };

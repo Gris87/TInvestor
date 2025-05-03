@@ -2,7 +2,7 @@
 
 
 
-#include "src/storage/instruments/iinstrumentssstorage.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 
 #include <gmock/gmock.h>
 
@@ -22,4 +22,6 @@ public:
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
     MOCK_METHOD(QMutex*, getMutex, (), (override));
+    MOCK_METHOD(const Instruments&, getInstruments, (), (override));
+    MOCK_METHOD(void, mergeInstruments, (const Instruments& instruments), (override));
 };
