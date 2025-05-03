@@ -52,6 +52,7 @@ SOURCES += \
     src/grpc/rawgrpcclient.cpp \
     src/grpc/utils.cpp \
     src/main/mainwindow.cpp \
+    src/storage/instruments/instrumentssstorage.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
@@ -191,6 +192,8 @@ HEADERS += \
     src/grpc/rawgrpcclient.h \
     src/grpc/utils.h \
     src/main/mainwindow.h \
+    src/storage/instruments/iinstrumentssstorage.h \
+    src/storage/instruments/instrumentssstorage.h \
     src/storage/stocks/istocksstorage.h \
     src/storage/stocks/stocksstorage.h \
     src/storage/user/iuserstorage.h \

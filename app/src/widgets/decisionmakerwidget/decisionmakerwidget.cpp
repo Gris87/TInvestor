@@ -21,7 +21,7 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->setupUi(this);
 
-    ui->splitter->setSizes(QList<int>() << 400 << 100);
+    ui->splitter->setSizes(QList<int>() << 400 << 100); // NOLINT(readability-magic-numbers)
 
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(mSettingsEditor, this);
     mAccountChartWidget    = accountChartWidgetFactory->newInstance(this);

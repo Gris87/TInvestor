@@ -17,6 +17,9 @@ public:
     }
     ~InvestApiAuthenticator() override = default;
 
+    InvestApiAuthenticator(const InvestApiAuthenticator& another)            = delete;
+    InvestApiAuthenticator& operator=(const InvestApiAuthenticator& another) = delete;
+
     grpc::Status GetMetadata(
         grpc::string_ref /*serviceUrl*/, // clazy:exclude=function-args-by-ref
         grpc::string_ref /*methodName*/, // clazy:exclude=function-args-by-ref
@@ -30,8 +33,6 @@ public:
 
         return grpc::Status::OK;
     }
-
-    Q_DISABLE_COPY(InvestApiAuthenticator)
 
 private:
     IUserStorage* mUserStorage;

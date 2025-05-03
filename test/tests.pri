@@ -47,6 +47,7 @@ SOURCES += \
     src/grpc/test_rawgrpcclient.cpp \
     src/grpc/test_utils.cpp \
     src/main/test_mainwindow.cpp \
+    src/storage/instruments/test_instrumentssstorage.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
@@ -138,6 +139,7 @@ HEADERS += \
     src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h \
     src/grpc/igrpcclient_mock.h \
     src/grpc/irawgrpcclient_mock.h \
+    src/storage/instruments/iinstrumentssstorage_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
