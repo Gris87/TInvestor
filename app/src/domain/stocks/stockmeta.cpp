@@ -2,16 +2,6 @@
 
 
 
-StockMeta::StockMeta() :
-    uid(),
-    ticker(),
-    name(),
-    forQualInvestorFlag(),
-    lot(),
-    minPriceIncrement()
-{
-}
-
 void StockMeta::fromJsonObject(const QJsonObject& jsonObject)
 {
     uid                 = jsonObject.value("uid").toString("");

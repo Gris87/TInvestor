@@ -42,6 +42,7 @@ SOURCES += \
     src/dialogs/startsimulationdialog/startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
     src/domain/filter/filter.cpp \
+    src/domain/instruments/instrumentinfo.cpp \
     src/domain/orderbook/orderbook.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stocks/stock.cpp \
@@ -179,6 +180,7 @@ HEADERS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.h \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
     src/domain/filter/filter.h \
+    src/domain/instruments/instrumentinfo.h \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
     src/domain/quotation/quotation.h \
