@@ -179,7 +179,7 @@ MainWindow::MainWindow(
     connect(makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
     connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(mPriceCollectThread,              SIGNAL(notifyStocksProgress(const QString&)),                                                 this, SLOT(notifyStocksProgress(const QString&)));
+    connect(mPriceCollectThread,              SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
     connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
     connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
@@ -357,7 +357,7 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
     mStocksTableWidget->updateLastPrices(mStocksControlsWidget->getFilter());
 }
 
-void MainWindow::notifyStocksProgress(const QString& message) const
+void MainWindow::notifyInstrumentsProgress(const QString& message) const
 {
     ui->waitingSpinnerWidget->setText(message);
 }

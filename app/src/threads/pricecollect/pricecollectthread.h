@@ -58,12 +58,11 @@ public:
 
     void run() override;
 
-    void downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
-    bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    // UID => InstrumentInfo
+    bool              storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void              storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     Instruments       convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     QList<UidAndLogo> convertStocksToLogos(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void              downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
     void              obtainStocksData();
     void              cleanupOperationalData();
     bool              obtainStocksDayStartPrice();

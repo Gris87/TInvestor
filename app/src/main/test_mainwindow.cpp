@@ -504,14 +504,14 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
     mainWindow->stocksTableUpdateLastPricesTimerTicked();
 }
 
-TEST_F(Test_MainWindow, Test_notifyStocksProgress)
+TEST_F(Test_MainWindow, Test_notifyInstrumentsProgress)
 {
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->text(), "");
 
-    mainWindow->notifyStocksProgress("Step one");
+    mainWindow->notifyInstrumentsProgress("Step one");
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->text(), "Step one");
 
-    mainWindow->notifyStocksProgress("Step two");
+    mainWindow->notifyInstrumentsProgress("Step two");
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->text(), "Step two");
 }
 

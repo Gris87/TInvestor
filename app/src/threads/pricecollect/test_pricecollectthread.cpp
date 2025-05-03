@@ -193,7 +193,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     const std::shared_ptr<tinkoff::GetCandlesResponse> emptyCandlesResponse(new tinkoff::GetCandlesResponse());
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread())).WillOnce(Return(sharesResponse));
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/stocks/logos/aaaaa.png").arg(appDir)))
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/aaaaa.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock)));
     EXPECT_CALL(
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/WAGAx160.png")), IHttpClient::Headers())

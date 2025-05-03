@@ -22,7 +22,7 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
 
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
-    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/stocks/logos");
+    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/stocks");
     Q_ASSERT_X(ok, "StocksDatabase::StocksDatabase()", "Failed to create dir");
 }
 

@@ -167,7 +167,7 @@ public slots:
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();
-    void notifyStocksProgress(const QString& message) const;
+    void notifyInstrumentsProgress(const QString& message) const;
     void stocksChanged();
     void pricesChanged();
     void periodicDataChanged();

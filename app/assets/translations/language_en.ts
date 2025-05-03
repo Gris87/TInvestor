@@ -169,13 +169,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="231"/>
+        <location filename="../../src/main/mainwindow.cpp" line="233"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="501"/>
+        <location filename="../../src/main/mainwindow.cpp" line="503"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -186,7 +186,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="535"/>
+        <location filename="../../src/main/mainwindow.cpp" line="537"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -247,40 +247,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="232"/>
+        <location filename="../../src/main/mainwindow.cpp" line="234"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="299"/>
+        <location filename="../../src/main/mainwindow.cpp" line="301"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="388"/>
-        <location filename="../../src/main/mainwindow.cpp" line="573"/>
+        <location filename="../../src/main/mainwindow.cpp" line="390"/>
+        <location filename="../../src/main/mainwindow.cpp" line="576"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="487"/>
-        <location filename="../../src/main/mainwindow.cpp" line="494"/>
+        <location filename="../../src/main/mainwindow.cpp" line="489"/>
+        <location filename="../../src/main/mainwindow.cpp" line="496"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="494"/>
+        <location filename="../../src/main/mainwindow.cpp" line="496"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="521"/>
-        <location filename="../../src/main/mainwindow.cpp" line="528"/>
+        <location filename="../../src/main/mainwindow.cpp" line="523"/>
+        <location filename="../../src/main/mainwindow.cpp" line="530"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="528"/>
+        <location filename="../../src/main/mainwindow.cpp" line="530"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -377,19 +377,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="82"/>
-        <source>Downloading stocks metadata</source>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="84"/>
+        <source>Downloading metadata</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="178"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="211"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="132"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="409"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="524"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="532"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="779"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="787"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -397,22 +397,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="129"/>
+        <location filename="../../src/main.cpp" line="131"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="129"/>
+        <location filename="../../src/main.cpp" line="131"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="141"/>
+        <location filename="../../src/main.cpp" line="143"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="141"/>
+        <location filename="../../src/main.cpp" line="143"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>

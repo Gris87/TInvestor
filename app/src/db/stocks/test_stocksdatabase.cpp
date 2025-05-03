@@ -40,7 +40,7 @@ protected:
         fileFactoryMock              = new StrictMock<FileFactoryMock>();
 
         EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
-        EXPECT_CALL(*dirMock, mkpath(appDir + "/data/stocks/logos")).WillOnce(Return(true));
+        EXPECT_CALL(*dirMock, mkpath(appDir + "/data/stocks")).WillOnce(Return(true));
 
         database = new StocksDatabase(dirFactoryMock, fileFactoryMock);
 

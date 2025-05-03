@@ -81,7 +81,7 @@ void PriceCollectThread::run()
 {
     qDebug() << "Running PriceCollectThread";
 
-    emit notifyStocksProgress(tr("Downloading stocks metadata"));
+    emit notifyInstrumentsProgress(tr("Downloading metadata"));
 
     const std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
 
@@ -101,93 +101,9 @@ void PriceCollectThread::run()
     qDebug() << "Finish PriceCollectThread";
 }
 
-void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile)
-{
-    const IHttpClient::Headers headers;
-
-    const HttpResult httpResult = mHttpClient->download(url, headers);
-
-    if (httpResult.statusCode == HTTP_STATUS_CODE_OK && httpResult.body.size() > 0)
-    {
-        const bool ok = stockLogoFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
-
-        stockLogoFile->write(httpResult.body);
-        stockLogoFile->close();
-    }
-    else
-    {
-        const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
-        noImageFile->open(QIODevice::ReadOnly);
-
-        const bool ok = stockLogoFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
-
-        stockLogoFile->write(noImageFile->readAll());
-        stockLogoFile->close();
-
-        noImageFile->close();
-    }
-}
-
-struct DownloadLogosInfo
-{
-    explicit DownloadLogosInfo(PriceCollectThread* _thread, IFileFactory* _fileFactory, bool _forceToDownload) :
-        thread(_thread),
-        fileFactory(_fileFactory),
-        forceToDownload(_forceToDownload),
-        finished()
-    {
-    }
-
-    PriceCollectThread* thread;
-    IFileFactory*       fileFactory;
-    bool                forceToDownload;
-    QAtomicInt          finished;
-};
-
-static void
-downloadLogosForParallel(QThread* parentThread, QList<const tinkoff::Share*>& stocks, int start, int end, void* additionalArgs)
-{
-    DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
-    PriceCollectThread* thread            = downloadLogosInfo->thread;
-    IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
-    const bool          forceToDownload   = downloadLogosInfo->forceToDownload;
-
-    const QString appDir = qApp->applicationDirPath();
-
-    const tinkoff::Share** stockArray = stocks.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        const tinkoff::Share* stock = stockArray[i];
-
-        const QString uid = QString::fromStdString(stock->uid());
-
-        const std::shared_ptr<IFile> stockLogoFile =
-            fileFactory->newInstance(QString("%1/data/stocks/logos/%2.png").arg(appDir, uid));
-
-        if (forceToDownload || !stockLogoFile->exists())
-        {
-            const QString logoName = QString::fromStdString(stock->brand().logo_name()).replace(".png", "x160.png"); // 160 pixels
-            const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
-
-            thread->downloadLogo(url, stockLogoFile);
-        }
-
-        downloadLogosInfo->finished++;
-
-        emit thread->notifyStocksProgress(
-            PriceCollectThread::tr("Downloading logos") +
-            QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(stocks.size()))
-        );
-    }
-}
-
 bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
-    QList<const tinkoff::Share*> qtTinkoffStocks;
-    QList<StockMeta>             stocksMeta;
+    QList<StockMeta> stocksMeta;
 
     stocksMeta.reserve(tinkoffStocks->instruments_size());
 
@@ -207,23 +123,9 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
             stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
 
-            qtTinkoffStocks.append(&tinkoffStock);
             stocksMeta.append(stockMeta);
         }
     }
-
-    emit notifyStocksProgress(tr("Downloading logos"));
-
-    static int lastDownloadHour = -1;
-    const int  currentHour      = QDateTime::currentDateTime().time().hour();
-
-    if (lastDownloadHour < 0)
-    {
-        lastDownloadHour = currentHour;
-    }
-
-    DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
-    processInParallel(qtTinkoffStocks, downloadLogosForParallel, &downloadLogosInfo);
 
     const QMutexLocker lock(mStocksStorage->getMutex());
     return mStocksStorage->mergeStocksMeta(stocksMeta);
@@ -413,6 +315,88 @@ static void obtainInstrumentsForParallel(
     }
 }
 
+void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& logoFile)
+{
+    const IHttpClient::Headers headers;
+
+    const HttpResult httpResult = mHttpClient->download(url, headers);
+
+    if (httpResult.statusCode == HTTP_STATUS_CODE_OK && httpResult.body.size() > 0)
+    {
+        const bool ok = logoFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+
+        logoFile->write(httpResult.body);
+        logoFile->close();
+    }
+    else
+    {
+        const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
+
+        bool ok = noImageFile->open(QIODevice::ReadOnly);
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+
+        ok = logoFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+
+        logoFile->write(noImageFile->readAll());
+        logoFile->close();
+
+        noImageFile->close();
+    }
+}
+
+struct DownloadLogosInfo
+{
+    explicit DownloadLogosInfo(PriceCollectThread* _thread, IFileFactory* _fileFactory, bool _forceToDownload) :
+        thread(_thread),
+        fileFactory(_fileFactory),
+        forceToDownload(_forceToDownload),
+        finished()
+    {
+    }
+
+    PriceCollectThread* thread;
+    IFileFactory*       fileFactory;
+    bool                forceToDownload;
+    QAtomicInt          finished;
+};
+
+static void downloadLogosForParallel(QThread* parentThread, QList<UidAndLogo>& logos, int start, int end, void* additionalArgs)
+{
+    DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
+    PriceCollectThread* thread            = downloadLogosInfo->thread;
+    IFileFactory*       fileFactory       = downloadLogosInfo->fileFactory;
+    const bool          forceToDownload   = downloadLogosInfo->forceToDownload;
+
+    const QString appDir = qApp->applicationDirPath();
+
+    UidAndLogo* logosArray = logos.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        UidAndLogo logo = logosArray[i];
+
+        const std::shared_ptr<IFile> logoFile =
+            fileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(appDir, logo.uid));
+
+        if (forceToDownload || !logoFile->exists())
+        {
+            const QString logoName = logo.logo.replace(".png", "x160.png"); // 160 pixels
+            const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
+
+            thread->downloadLogo(url, logoFile);
+        }
+
+        downloadLogosInfo->finished++;
+
+        emit thread->notifyInstrumentsProgress(
+            PriceCollectThread::tr("Downloading logos") +
+            QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(logos.size()))
+        );
+    }
+}
+
 void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
     QList<tinkoff::InstrumentType> instrumentTypes{
@@ -433,6 +417,19 @@ void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::
         instruments.insert(obtainInstrumentsInfo.results.at(i));
         logos.append(obtainInstrumentsInfo.logos.at(i));
     }
+
+    emit notifyInstrumentsProgress(tr("Downloading logos"));
+
+    static int lastDownloadHour = -1;
+    const int  currentHour      = QDateTime::currentDateTime().time().hour();
+
+    if (lastDownloadHour < 0)
+    {
+        lastDownloadHour = currentHour;
+    }
+
+    DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
+    processInParallel(logos, downloadLogosForParallel, &downloadLogosInfo);
 
     const QMutexLocker lock(mInstrumentsStorage->getMutex());
     mInstrumentsStorage->mergeInstruments(instruments);
@@ -776,7 +773,7 @@ static void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, 
 
         getCandlesInfo->finished++;
 
-        emit thread->notifyStocksProgress(
+        emit thread->notifyInstrumentsProgress(
             PriceCollectThread::tr("Obtain stocks data") +
             QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(stocks.size()))
         );
@@ -785,7 +782,7 @@ static void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, 
 
 void PriceCollectThread::obtainStocksData()
 {
-    emit notifyStocksProgress(tr("Obtain stocks data"));
+    emit notifyInstrumentsProgress(tr("Obtain stocks data"));
 
     GetCandlesInfo getCandlesInfo(
         this,
