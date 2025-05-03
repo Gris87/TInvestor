@@ -85,15 +85,6 @@ public:
     );
     MOCK_METHOD(
         grpc::Status,
-        findOptions,
-        (const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-         grpc::ClientContext*                                      context,
-         const tinkoff::InstrumentsRequest&                        req,
-         tinkoff::OptionsResponse*                                 resp),
-        (override)
-    );
-    MOCK_METHOD(
-        grpc::Status,
         getCandles,
         (const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
          grpc::ClientContext*                                     context,

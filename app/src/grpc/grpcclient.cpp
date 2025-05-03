@@ -226,28 +226,6 @@ std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* paren
     return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp);
 }
 
-static grpc::Status findOptionsAction(
-    IRawGrpcClient*                                           rawGrpcClient,
-    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
-    const tinkoff::InstrumentsRequest&                        req,
-    const std::shared_ptr<tinkoff::OptionsResponse>&          resp
-)
-{
-    return rawGrpcClient->findOptions(service, context, req, resp.get());
-}
-
-std::shared_ptr<tinkoff::OptionsResponse> GrpcClient::findOptions(QThread* parentThread)
-{
-    grpc::ClientContext                             context;
-    const tinkoff::InstrumentsRequest               req;
-    const std::shared_ptr<tinkoff::OptionsResponse> resp = std::make_shared<tinkoff::OptionsResponse>();
-
-    context.set_credentials(mCreds);
-
-    return repeatRequest(parentThread, findOptionsAction, mInstrumentsService, &context, req, resp);
-}
-
 static grpc::Status getCandlesAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,

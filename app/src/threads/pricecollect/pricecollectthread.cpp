@@ -193,8 +193,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
-            QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
+        if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
         {
             StockMeta stockMeta;
 
@@ -238,8 +237,7 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
         {
             const tinkoff::Bond& tinkoffBond = tinkoffBonds->instruments(i);
 
-            if (QString::fromStdString(tinkoffBond.currency()) == "rub" &&
-                QString::fromStdString(tinkoffBond.country_of_risk()) == "RU" && tinkoffBond.api_trade_available_flag())
+            if (QString::fromStdString(tinkoffBond.currency()) == "rub" && tinkoffBond.api_trade_available_flag())
             {
                 InstrumentInfo instrument;
 
@@ -254,24 +252,79 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
     }
 }
 
-static void
-obtainInstrumentsFromCurrencies(QThread* /*parentThread*/, IGrpcClient* /*grpcClient*/, QMap<QString, InstrumentInfo>& /*res*/)
+static void obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
 {
+    const std::shared_ptr<tinkoff::CurrenciesResponse> tinkoffCurrencies = grpcClient->findCurrencies(parentThread);
+
+    if (tinkoffCurrencies != nullptr && !parentThread->isInterruptionRequested())
+    {
+        for (int i = 0; i < tinkoffCurrencies->instruments_size(); ++i)
+        {
+            const tinkoff::Currency& tinkoffCurrency = tinkoffCurrencies->instruments(i);
+
+            if (QString::fromStdString(tinkoffCurrency.currency()) == "rub" && tinkoffCurrency.api_trade_available_flag())
+            {
+                InstrumentInfo instrument;
+
+                QString uid = QString::fromStdString(tinkoffCurrency.uid());
+
+                instrument.ticker = QString::fromStdString(tinkoffCurrency.ticker());
+                instrument.name   = QString::fromStdString(tinkoffCurrency.name());
+
+                res[uid] = instrument;
+            }
+        }
+    }
 }
 
-static void
-obtainInstrumentsFromEtfs(QThread* /*parentThread*/, IGrpcClient* /*grpcClient*/, QMap<QString, InstrumentInfo>& /*res*/)
+static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
 {
+    const std::shared_ptr<tinkoff::EtfsResponse> tinkoffEtfs = grpcClient->findEtfs(parentThread);
+
+    if (tinkoffEtfs != nullptr && !parentThread->isInterruptionRequested())
+    {
+        for (int i = 0; i < tinkoffEtfs->instruments_size(); ++i)
+        {
+            const tinkoff::Etf& tinkoffEtf = tinkoffEtfs->instruments(i);
+
+            if (QString::fromStdString(tinkoffEtf.currency()) == "rub" && tinkoffEtf.api_trade_available_flag())
+            {
+                InstrumentInfo instrument;
+
+                QString uid = QString::fromStdString(tinkoffEtf.uid());
+
+                instrument.ticker = QString::fromStdString(tinkoffEtf.ticker());
+                instrument.name   = QString::fromStdString(tinkoffEtf.name());
+
+                res[uid] = instrument;
+            }
+        }
+    }
 }
 
-static void
-obtainInstrumentsFromFutures(QThread* /*parentThread*/, IGrpcClient* /*grpcClient*/, QMap<QString, InstrumentInfo>& /*res*/)
+static void obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, QMap<QString, InstrumentInfo>& res)
 {
-}
+    const std::shared_ptr<tinkoff::FuturesResponse> tinkoffFutures = grpcClient->findFutures(parentThread);
 
-static void
-obtainInstrumentsFromOptions(QThread* /*parentThread*/, IGrpcClient* /*grpcClient*/, QMap<QString, InstrumentInfo>& /*res*/)
-{
+    if (tinkoffFutures != nullptr && !parentThread->isInterruptionRequested())
+    {
+        for (int i = 0; i < tinkoffFutures->instruments_size(); ++i)
+        {
+            const tinkoff::Future& tinkoffFuture = tinkoffFutures->instruments(i);
+
+            if (QString::fromStdString(tinkoffFuture.currency()) == "rub" && tinkoffFuture.api_trade_available_flag())
+            {
+                InstrumentInfo instrument;
+
+                QString uid = QString::fromStdString(tinkoffFuture.uid());
+
+                instrument.ticker = QString::fromStdString(tinkoffFuture.ticker());
+                instrument.name   = QString::fromStdString(tinkoffFuture.name());
+
+                res[uid] = instrument;
+            }
+        }
+    }
 }
 
 struct ObtainInstrumentsInfo
@@ -326,13 +379,6 @@ static void obtainInstrumentsForParallel(
                 break;
             }
 
-            case tinkoff::INSTRUMENT_TYPE_OPTION:
-            {
-                obtainInstrumentsFromOptions(parentThread, obtainInstrumentsInfo->grpcClient, obtainInstrumentsInfo->results[i]);
-
-                break;
-            }
-
             default:
             {
                 qCritical() << "Unexpected instrument type:" << instrumentTypes.at(i);
@@ -350,7 +396,6 @@ void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::
         tinkoff::INSTRUMENT_TYPE_CURRENCY,
         tinkoff::INSTRUMENT_TYPE_ETF,
         tinkoff::INSTRUMENT_TYPE_FUTURES,
-        tinkoff::INSTRUMENT_TYPE_OPTION,
     };
 
     ObtainInstrumentsInfo obtainInstrumentsInfo(mGrpcClient, instrumentTypes);
@@ -376,8 +421,7 @@ PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
-            QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
+        if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
         {
             InstrumentInfo instrument;
 

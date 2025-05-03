@@ -102,12 +102,6 @@ public:
         const tinkoff::InstrumentsRequest&                        req,
         tinkoff::FuturesResponse*                                 resp
     ) = 0;
-    virtual grpc::Status findOptions(
-        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-        grpc::ClientContext*                                      context,
-        const tinkoff::InstrumentsRequest&                        req,
-        tinkoff::OptionsResponse*                                 resp
-    ) = 0;
     virtual grpc::Status getCandles(
         const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
         grpc::ClientContext*                                     context,

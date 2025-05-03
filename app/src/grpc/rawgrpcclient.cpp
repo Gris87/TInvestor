@@ -102,18 +102,6 @@ grpc::Status RawGrpcClient::findFutures(
     return service->Futures(context, req, resp);
 }
 
-grpc::Status RawGrpcClient::findOptions(
-    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
-    const tinkoff::InstrumentsRequest&                        req,
-    tinkoff::OptionsResponse*                                 resp
-)
-{
-    const QMutexLocker lock(mMutex);
-
-    return service->Options(context, req, resp);
-}
-
 grpc::Status RawGrpcClient::getCandles(
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
     grpc::ClientContext*                                     context,
