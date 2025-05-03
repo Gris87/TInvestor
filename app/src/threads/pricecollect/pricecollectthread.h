@@ -48,12 +48,12 @@ public:
     void storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     // UID => InstrumentInfo
     QMap<QString, InstrumentInfo> convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void obtainStocksData();
-    void cleanupOperationalData();
-    bool obtainStocksDayStartPrice();
-    void obtainTurnover();
-    void obtainPayback();
-    void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
+    void                          obtainStocksData();
+    void                          cleanupOperationalData();
+    bool                          obtainStocksDayStartPrice();
+    void                          obtainTurnover();
+    void                          obtainPayback();
+    void                          notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
     IConfig*          mConfig;

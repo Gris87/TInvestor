@@ -78,6 +78,36 @@ public:
         const tinkoff::InstrumentsRequest&                        req,
         tinkoff::SharesResponse*                                  resp
     ) = 0;
+    virtual grpc::Status findBonds(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::BondsResponse*                                   resp
+    ) = 0;
+    virtual grpc::Status findCurrencies(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::CurrenciesResponse*                              resp
+    ) = 0;
+    virtual grpc::Status findEtfs(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::EtfsResponse*                                    resp
+    ) = 0;
+    virtual grpc::Status findFutures(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::FuturesResponse*                                 resp
+    ) = 0;
+    virtual grpc::Status findOptions(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::OptionsResponse*                                 resp
+    ) = 0;
     virtual grpc::Status getCandles(
         const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
         grpc::ClientContext*                                     context,

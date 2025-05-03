@@ -35,6 +35,36 @@ public:
         const tinkoff::InstrumentsRequest&                        req,
         tinkoff::SharesResponse*                                  resp
     ) override;
+    grpc::Status findBonds(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::BondsResponse*                                   resp
+    ) override;
+    grpc::Status findCurrencies(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::CurrenciesResponse*                              resp
+    ) override;
+    grpc::Status findEtfs(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::EtfsResponse*                                    resp
+    ) override;
+    grpc::Status findFutures(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::FuturesResponse*                                 resp
+    ) override;
+    grpc::Status findOptions(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentsRequest&                        req,
+        tinkoff::OptionsResponse*                                 resp
+    ) override;
     grpc::Status getCandles(
         const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
         grpc::ClientContext*                                     context,

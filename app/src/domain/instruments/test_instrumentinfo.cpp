@@ -79,7 +79,7 @@ TEST(Test_InstrumentInfo, Test_toJsonObject)
     const QJsonObject   jsonObject = info.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
-    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent = R"({"name":"b","ticker":"a"})";
 
     ASSERT_EQ(content, expectedContent);

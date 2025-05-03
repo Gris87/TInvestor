@@ -138,6 +138,116 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
     return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp);
 }
 
+static grpc::Status findBondsAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    const std::shared_ptr<tinkoff::BondsResponse>&            resp
+)
+{
+    return rawGrpcClient->findBonds(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::BondsResponse> GrpcClient::findBonds(QThread* parentThread)
+{
+    grpc::ClientContext                           context;
+    const tinkoff::InstrumentsRequest             req;
+    const std::shared_ptr<tinkoff::BondsResponse> resp = std::make_shared<tinkoff::BondsResponse>();
+
+    context.set_credentials(mCreds);
+
+    return repeatRequest(parentThread, findBondsAction, mInstrumentsService, &context, req, resp);
+}
+
+static grpc::Status findCurrenciesAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    const std::shared_ptr<tinkoff::CurrenciesResponse>&       resp
+)
+{
+    return rawGrpcClient->findCurrencies(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread* parentThread)
+{
+    grpc::ClientContext                                context;
+    const tinkoff::InstrumentsRequest                  req;
+    const std::shared_ptr<tinkoff::CurrenciesResponse> resp = std::make_shared<tinkoff::CurrenciesResponse>();
+
+    context.set_credentials(mCreds);
+
+    return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp);
+}
+
+static grpc::Status findEtfsAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    const std::shared_ptr<tinkoff::EtfsResponse>&             resp
+)
+{
+    return rawGrpcClient->findEtfs(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::EtfsResponse> GrpcClient::findEtfs(QThread* parentThread)
+{
+    grpc::ClientContext                          context;
+    const tinkoff::InstrumentsRequest            req;
+    const std::shared_ptr<tinkoff::EtfsResponse> resp = std::make_shared<tinkoff::EtfsResponse>();
+
+    context.set_credentials(mCreds);
+
+    return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, &context, req, resp);
+}
+
+static grpc::Status findFuturesAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    const std::shared_ptr<tinkoff::FuturesResponse>&          resp
+)
+{
+    return rawGrpcClient->findFutures(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* parentThread)
+{
+    grpc::ClientContext                             context;
+    const tinkoff::InstrumentsRequest               req;
+    const std::shared_ptr<tinkoff::FuturesResponse> resp = std::make_shared<tinkoff::FuturesResponse>();
+
+    context.set_credentials(mCreds);
+
+    return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp);
+}
+
+static grpc::Status findOptionsAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    const std::shared_ptr<tinkoff::OptionsResponse>&          resp
+)
+{
+    return rawGrpcClient->findOptions(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::OptionsResponse> GrpcClient::findOptions(QThread* parentThread)
+{
+    grpc::ClientContext                             context;
+    const tinkoff::InstrumentsRequest               req;
+    const std::shared_ptr<tinkoff::OptionsResponse> resp = std::make_shared<tinkoff::OptionsResponse>();
+
+    context.set_credentials(mCreds);
+
+    return repeatRequest(parentThread, findOptionsAction, mInstrumentsService, &context, req, resp);
+}
+
 static grpc::Status getCandlesAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,

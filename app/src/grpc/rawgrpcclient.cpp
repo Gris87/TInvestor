@@ -54,6 +54,66 @@ grpc::Status RawGrpcClient::findStocks(
     return service->Shares(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::findBonds(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    tinkoff::BondsResponse*                                   resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->Bonds(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::findCurrencies(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    tinkoff::CurrenciesResponse*                              resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->Currencies(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::findEtfs(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    tinkoff::EtfsResponse*                                    resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->Etfs(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::findFutures(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    tinkoff::FuturesResponse*                                 resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->Futures(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::findOptions(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentsRequest&                        req,
+    tinkoff::OptionsResponse*                                 resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->Options(context, req, resp);
+}
+
 grpc::Status RawGrpcClient::getCandles(
     const std::unique_ptr<tinkoff::MarketDataService::Stub>& service,
     grpc::ClientContext*                                     context,
