@@ -221,9 +221,6 @@ void UserDatabase::writeAccounts(const QList<Account>& accounts)
     QVariantList ids;
     QVariantList names;
 
-    ids.reserve(accounts.size());
-    names.reserve(accounts.size());
-
     ids.resizeForOverwrite(accounts.size());
     names.resizeForOverwrite(accounts.size());
 

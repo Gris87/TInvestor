@@ -51,7 +51,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     ASSERT_EQ(sumResult.result, 6);
 
     const int datasize = 1000;
-    array.resize(datasize);
+    array.resizeForOverwrite(datasize);
 
     int* arrayData = array.data();
 

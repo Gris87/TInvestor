@@ -86,6 +86,7 @@ void PriceCollectThread::run()
     if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
     {
         const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
+        storeNewInstrumentsInfo(tinkoffStocks);
         obtainStocksData();
         cleanupOperationalData();
         const bool needPricesUpdate = obtainStocksDayStartPrice();
@@ -186,6 +187,8 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     QList<const tinkoff::Share*> qtTinkoffStocks;
     QList<StockMeta>             stocksMeta;
 
+    stocksMeta.reserve(tinkoffStocks->instruments_size());
+
     for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
@@ -223,6 +226,181 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
 
     const QMutexLocker lock(mStocksStorage->getMutex());
     return mStocksStorage->mergeStocksMeta(stocksMeta);
+}
+
+static void obtainInstrumentsFromBonds(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromCurrencies(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromEtf(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromFutures(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromSP(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromOptions(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromClearingCertificates(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromIndecies(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+static void obtainInstrumentsFromCommodities(QThread* /*parentThread*/, QMap<QString, InstrumentInfo>& /*res*/)
+{
+}
+
+struct ObtainInstrumentsInfo
+{
+    ObtainInstrumentsInfo(const QList<tinkoff::InstrumentType>& instrumentTypes)
+    {
+        results.resize(instrumentTypes.size());
+    }
+
+    QList<QMap<QString, InstrumentInfo>> results; // UID => InstrumentInfo
+};
+
+static void obtainInstrumentsForParallel(
+    QThread* parentThread, QList<tinkoff::InstrumentType>& instrumentTypes, int start, int end, void* additionalArgs
+)
+{
+    ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        switch (instrumentTypes.at(i))
+        {
+            case tinkoff::INSTRUMENT_TYPE_BOND:
+            {
+                obtainInstrumentsFromBonds(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_CURRENCY:
+            {
+                obtainInstrumentsFromCurrencies(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_ETF:
+            {
+                obtainInstrumentsFromEtf(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_FUTURES:
+            {
+                obtainInstrumentsFromFutures(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_SP:
+            {
+                obtainInstrumentsFromSP(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_OPTION:
+            {
+                obtainInstrumentsFromOptions(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_CLEARING_CERTIFICATE:
+            {
+                obtainInstrumentsFromClearingCertificates(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_INDEX:
+            {
+                obtainInstrumentsFromIndecies(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+            case tinkoff::INSTRUMENT_TYPE_COMMODITY:
+            {
+                obtainInstrumentsFromCommodities(parentThread, obtainInstrumentsInfo->results[i]);
+
+                break;
+            }
+
+            default:
+            {
+                qCritical() << "Unexpected instrument type:" << instrumentTypes.at(i);
+
+                break;
+            }
+        }
+    }
+}
+
+void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
+{
+    QList<tinkoff::InstrumentType> instrumentTypes{
+        tinkoff::INSTRUMENT_TYPE_BOND,
+        tinkoff::INSTRUMENT_TYPE_CURRENCY,
+        tinkoff::INSTRUMENT_TYPE_ETF,
+        tinkoff::INSTRUMENT_TYPE_FUTURES,
+        tinkoff::INSTRUMENT_TYPE_SP,
+        tinkoff::INSTRUMENT_TYPE_OPTION,
+        tinkoff::INSTRUMENT_TYPE_CLEARING_CERTIFICATE,
+        tinkoff::INSTRUMENT_TYPE_INDEX,
+        tinkoff::INSTRUMENT_TYPE_COMMODITY,
+    };
+
+    ObtainInstrumentsInfo obtainInstrumentsInfo(instrumentTypes);
+    processInParallel(instrumentTypes, obtainInstrumentsForParallel, &obtainInstrumentsInfo);
+
+    QMap<QString, InstrumentInfo> instruments = convertStocksToInstrumentsInfo(tinkoffStocks); // UID => InstrumentInfo
+
+    for (int i = 0; i < obtainInstrumentsInfo.results.size(); ++i)
+    {
+        instruments.insert(obtainInstrumentsInfo.results.at(i));
+    }
+
+    qInfo() << instruments.size(); // TODO: Continue
+}
+
+// UID => InstrumentInfo
+QMap<QString, InstrumentInfo>
+PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
+{
+    QMap<QString, InstrumentInfo> res; // UID => InstrumentInfo
+
+    for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
+    {
+        const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
+
+        if (QString::fromStdString(tinkoffStock.currency()) == "rub" &&
+            QString::fromStdString(tinkoffStock.country_of_risk()) == "RU" && tinkoffStock.api_trade_available_flag())
+        {
+            InstrumentInfo instrument;
+
+            QString uid = QString::fromStdString(tinkoffStock.uid());
+
+            instrument.ticker = QString::fromStdString(tinkoffStock.ticker());
+            instrument.name   = QString::fromStdString(tinkoffStock.name());
+
+            res[uid] = instrument;
+        }
+    }
+
+    return res;
 }
 
 static void getCandlesWithGrpc(

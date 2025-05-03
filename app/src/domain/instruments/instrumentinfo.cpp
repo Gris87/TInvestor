@@ -2,6 +2,12 @@
 
 
 
+InstrumentInfo::InstrumentInfo() :
+    ticker(),
+    name()
+{
+}
+
 void InstrumentInfo::fromJsonObject(const QJsonObject& jsonObject)
 {
     ticker = jsonObject.value("ticker").toString("");

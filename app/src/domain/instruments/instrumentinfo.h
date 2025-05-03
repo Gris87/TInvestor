@@ -8,7 +8,7 @@
 
 struct InstrumentInfo
 {
-    InstrumentInfo()                              = default;
+    InstrumentInfo();
     InstrumentInfo(const InstrumentInfo& another) = default;
     ~InstrumentInfo()                             = default;
 

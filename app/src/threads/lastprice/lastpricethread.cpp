@@ -111,7 +111,6 @@ QStringList LastPriceThread::getStockUIDs()
     const QMutexLocker   lock(mStocksStorage->getMutex());
     const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
-    res.reserve(stocks.size());
     res.resizeForOverwrite(stocks.size());
 
     for (int i = 0; i < stocks.size(); ++i)

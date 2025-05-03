@@ -10,7 +10,7 @@
 
 struct StockMeta
 {
-    StockMeta()                         = default;
+    StockMeta();
     StockMeta(const StockMeta& another) = default;
     ~StockMeta()                        = default;
 

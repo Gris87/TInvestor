@@ -51,7 +51,6 @@ QList<Stock*> StocksDatabase::readStocksMeta()
         {
             const QJsonArray jsonStocks = jsonDoc.array();
 
-            res.reserve(jsonStocks.size());
             res.resizeForOverwrite(jsonStocks.size());
 
             for (int i = 0; i < jsonStocks.size(); ++i)

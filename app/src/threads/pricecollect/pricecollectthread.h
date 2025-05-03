@@ -5,6 +5,7 @@
 #include "src/threads/pricecollect/ipricecollectthread.h"
 
 #include "src/config/iconfig.h"
+#include "src/domain/instruments/instrumentinfo.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
@@ -44,6 +45,9 @@ public:
 
     void downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
     bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    // UID => InstrumentInfo
+    QMap<QString, InstrumentInfo> convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void obtainStocksData();
     void cleanupOperationalData();
     bool obtainStocksDayStartPrice();
