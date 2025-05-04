@@ -143,7 +143,7 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
 
             if (QString::fromStdString(tinkoffBond.currency()) == "rub" && tinkoffBond.api_trade_available_flag())
             {
-                QString uid = QString::fromStdString(tinkoffBond.uid());
+                const QString uid = QString::fromStdString(tinkoffBond.uid());
 
                 InstrumentInfo instrument;
                 instrument.ticker = QString::fromStdString(tinkoffBond.ticker());
@@ -169,7 +169,7 @@ obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, 
 
             if (QString::fromStdString(tinkoffCurrency.currency()) == "rub" && tinkoffCurrency.api_trade_available_flag())
             {
-                QString uid = QString::fromStdString(tinkoffCurrency.uid());
+                const QString uid = QString::fromStdString(tinkoffCurrency.uid());
 
                 InstrumentInfo instrument;
                 instrument.ticker = QString::fromStdString(tinkoffCurrency.ticker());
@@ -194,7 +194,7 @@ static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcCl
 
             if (QString::fromStdString(tinkoffEtf.currency()) == "rub" && tinkoffEtf.api_trade_available_flag())
             {
-                QString uid = QString::fromStdString(tinkoffEtf.uid());
+                const QString uid = QString::fromStdString(tinkoffEtf.uid());
 
                 InstrumentInfo instrument;
                 instrument.ticker = QString::fromStdString(tinkoffEtf.ticker());
@@ -220,7 +220,7 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
 
             if (QString::fromStdString(tinkoffFuture.currency()) == "rub" && tinkoffFuture.api_trade_available_flag())
             {
-                QString uid = QString::fromStdString(tinkoffFuture.uid());
+                const QString uid = QString::fromStdString(tinkoffFuture.uid());
 
                 InstrumentInfo instrument;
                 instrument.ticker = QString::fromStdString(tinkoffFuture.ticker());
@@ -232,6 +232,17 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
         }
     }
 }
+
+using InstrumentHandler = void (*)(QThread* parentThread, IGrpcClient* grpcClient, Instruments& res, QList<UidAndLogo>& logos);
+
+// clang-format off
+static const QMap<tinkoff::InstrumentType, InstrumentHandler> INSTRUMENT_TYPE_TO_HANDLER{ // clazy:exclude=non-pod-global-static
+    {tinkoff::INSTRUMENT_TYPE_BOND,     obtainInstrumentsFromBonds},
+    {tinkoff::INSTRUMENT_TYPE_CURRENCY, obtainInstrumentsFromCurrencies},
+    {tinkoff::INSTRUMENT_TYPE_ETF,      obtainInstrumentsFromEtfs},
+    {tinkoff::INSTRUMENT_TYPE_FUTURES,  obtainInstrumentsFromFutures}
+};
+// clang-format on
 
 struct ObtainInstrumentsInfo
 {
@@ -253,65 +264,17 @@ static void obtainInstrumentsForParallel(
 {
     ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
 
+    IGrpcClient*       grpcClient   = obtainInstrumentsInfo->grpcClient;
+    Instruments*       resultsArray = obtainInstrumentsInfo->results.data();
+    QList<UidAndLogo>* logosArray   = obtainInstrumentsInfo->logos.data();
+
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        switch (instrumentTypes.at(i))
-        {
-            case tinkoff::INSTRUMENT_TYPE_BOND:
-            {
-                obtainInstrumentsFromBonds(
-                    parentThread,
-                    obtainInstrumentsInfo->grpcClient,
-                    obtainInstrumentsInfo->results[i],
-                    obtainInstrumentsInfo->logos[i]
-                );
+        Q_ASSERT_X(
+            INSTRUMENT_TYPE_TO_HANDLER.contains(instrumentTypes.at(i)), "obtainInstrumentsForParallel()", "Unexpected behaviour"
+        );
 
-                break;
-            }
-
-            case tinkoff::INSTRUMENT_TYPE_CURRENCY:
-            {
-                obtainInstrumentsFromCurrencies(
-                    parentThread,
-                    obtainInstrumentsInfo->grpcClient,
-                    obtainInstrumentsInfo->results[i],
-                    obtainInstrumentsInfo->logos[i]
-                );
-
-                break;
-            }
-
-            case tinkoff::INSTRUMENT_TYPE_ETF:
-            {
-                obtainInstrumentsFromEtfs(
-                    parentThread,
-                    obtainInstrumentsInfo->grpcClient,
-                    obtainInstrumentsInfo->results[i],
-                    obtainInstrumentsInfo->logos[i]
-                );
-
-                break;
-            }
-
-            case tinkoff::INSTRUMENT_TYPE_FUTURES:
-            {
-                obtainInstrumentsFromFutures(
-                    parentThread,
-                    obtainInstrumentsInfo->grpcClient,
-                    obtainInstrumentsInfo->results[i],
-                    obtainInstrumentsInfo->logos[i]
-                );
-
-                break;
-            }
-
-            default:
-            {
-                qCritical() << "Unexpected instrument type:" << instrumentTypes.at(i);
-
-                break;
-            }
-        }
+        INSTRUMENT_TYPE_TO_HANDLER[instrumentTypes.at(i)](parentThread, grpcClient, resultsArray[i], logosArray[i]);
     }
 }
 
@@ -444,7 +407,7 @@ Instruments PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared
 
         if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
         {
-            QString uid = QString::fromStdString(tinkoffStock.uid());
+            const QString uid = QString::fromStdString(tinkoffStock.uid());
 
             InstrumentInfo instrument;
             instrument.ticker = QString::fromStdString(tinkoffStock.ticker());
@@ -467,7 +430,7 @@ QList<UidAndLogo> PriceCollectThread::convertStocksToLogos(const std::shared_ptr
 
         if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
         {
-            QString uid = QString::fromStdString(tinkoffStock.uid());
+            const QString uid = QString::fromStdString(tinkoffStock.uid());
 
             res.append(UidAndLogo(uid, QString::fromStdString(tinkoffStock.brand().logo_name())));
         }

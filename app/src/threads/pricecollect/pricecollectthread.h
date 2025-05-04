@@ -20,7 +20,7 @@
 
 struct UidAndLogo
 {
-    explicit UidAndLogo(QString _uid, QString _logo) :
+    explicit UidAndLogo(const QString& _uid, const QString& _logo) :
         uid(_uid),
         logo(_logo)
     {

@@ -118,6 +118,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<FileMock>*     logoFileMock3 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     logoFileMock4 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     logoFileMock5 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     noImageFileMock = new StrictMock<FileMock>();     // Will be deleted in downloadLogo
     StrictMock<FileMock>*     zipFileMock1  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
     StrictMock<FileMock>*     zipFileMock2  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
     StrictMock<FileMock>*     zipFileMock3  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
@@ -307,10 +308,15 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/GOLDx160.png")), IHttpClient::Headers())
     )
-        .WillOnce(Return(httpResult));
+        .WillOnce(Return(internalServerErrorHttpResult));
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/images/no_image.png")))
+        .WillOnce(Return(std::shared_ptr<IFile>(noImageFileMock)));
+    EXPECT_CALL(*noImageFileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*logoFileMock5, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock5, write(httpResult.body)).WillOnce(Return(1));
+    EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(internalServerErrorHttpResult.body));
+    EXPECT_CALL(*logoFileMock5, write(internalServerErrorHttpResult.body)).WillOnce(Return(1));
     EXPECT_CALL(*logoFileMock5, close());
+    EXPECT_CALL(*noImageFileMock, close());
 
     EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
@@ -387,43 +393,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, obtainPayback(Gt(1704056400000)));
 
     thread->run();
-}
-
-TEST_F(Test_PriceCollectThread, Test_downloadLogo) // TODO: Do we need it? Maybe in Test_run
-{
-    const InSequence seq;
-
-    StrictMock<FileMock>*        logoFileMock    = new StrictMock<FileMock>();
-    StrictMock<FileMock>*        noImageFileMock = new StrictMock<FileMock>(); // Will be deleted in downloadLogo
-    const std::shared_ptr<IFile> sharedLogoFile(logoFileMock);
-
-    HttpResult httpResult;
-    httpResult.statusCode = 200;
-    httpResult.body       = QString("What are doing here?").toUtf8();
-
-    HttpResult internalServerErrorHttpResult;
-    internalServerErrorHttpResult.statusCode = 500;
-    internalServerErrorHttpResult.body       = QString("Something uninteresting").toUtf8();
-
-    EXPECT_CALL(*httpClientMock, download(QUrl("https://yandex.ru"), IHttpClient::Headers())).WillOnce(Return(httpResult));
-    EXPECT_CALL(*logoFileMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock, write(httpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock, close());
-
-    thread->downloadLogo(QUrl("https://yandex.ru"), sharedLogoFile);
-
-    EXPECT_CALL(*httpClientMock, download(QUrl("https://hooyandex.ru"), IHttpClient::Headers()))
-        .WillOnce(Return(internalServerErrorHttpResult));
-    EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/images/no_image.png")))
-        .WillOnce(Return(std::shared_ptr<IFile>(noImageFileMock)));
-    EXPECT_CALL(*noImageFileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(internalServerErrorHttpResult.body));
-    EXPECT_CALL(*logoFileMock, write(internalServerErrorHttpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock, close());
-    EXPECT_CALL(*noImageFileMock, close());
-
-    thread->downloadLogo(QUrl("https://hooyandex.ru"), sharedLogoFile);
 }
 
 TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)

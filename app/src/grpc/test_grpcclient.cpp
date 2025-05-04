@@ -121,6 +121,102 @@ TEST_F(Test_GrpcClient, Test_findStocks)
     ASSERT_EQ(client->findStocks(QThread::currentThread()), nullptr);
 }
 
+TEST_F(Test_GrpcClient, Test_findBonds)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->findBonds(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->findBonds(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findBonds(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->findBonds(QThread::currentThread()), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_findCurrencies)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->findCurrencies(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->findCurrencies(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findCurrencies(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->findCurrencies(QThread::currentThread()), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_findEtfs)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->findEtfs(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->findEtfs(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findEtfs(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->findEtfs(QThread::currentThread()), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_findFutures)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->findFutures(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->findFutures(QThread::currentThread()), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, findFutures(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->findFutures(QThread::currentThread()), nullptr);
+}
+
 TEST_F(Test_GrpcClient, Test_getCandles)
 {
     const InSequence seq;
