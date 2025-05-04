@@ -183,7 +183,7 @@ TEST_F(Test_StocksTableRecord, Test_updatePeriodicData)
 
 TEST_F(Test_StocksTableRecord, Test_filter)
 {
-    // const InSequence seq;
+    const InSequence seq;
 
     Filter filter;
 

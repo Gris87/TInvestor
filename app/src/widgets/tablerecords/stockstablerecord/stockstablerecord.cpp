@@ -122,10 +122,15 @@ void StocksTableRecord::updatePeriodicData()
 void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
     const int  row    = mPriceTableWidgetItem->row();
+
+    const QString text                = mStockTableItemWidget->text();
+    const QString fullText            = mStockTableItemWidget->fullText();
+    const bool    forQualInvestorFlag = mStockTableItemWidget->forQualInvestorFlag();
+
     const bool hidden = !filter.isFiltered(
-        mStockTableItemWidget->text(),
-        mStockTableItemWidget->fullText(),
-        mStockTableItemWidget->forQualInvestorFlag(),
+        text,
+        fullText,
+        forQualInvestorFlag,
         mPriceTableWidgetItem->getValue(),
         mDayChangeTableWidgetItem->getValue(),
         mDateChangeTableWidgetItem->getValue(),

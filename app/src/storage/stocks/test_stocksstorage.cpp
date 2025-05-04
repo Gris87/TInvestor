@@ -1613,7 +1613,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
 TEST_F(Test_StocksStorage, Test_obtainTurnover)
 {
-    // const InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -1778,11 +1778,6 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_EQ(stocks.at(2)->data.at(3).quantity,              5);
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
-
-    QMutex mutex;
-
-    EXPECT_CALL(*userStorageMock, getMutex()).WillRepeatedly(Return(&mutex));
-    EXPECT_CALL(*userStorageMock, getCommission()).WillRepeatedly(Return(0.3f));
 
     storage->obtainTurnover(200);
 
@@ -1874,7 +1869,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
 TEST_F(Test_StocksStorage, Test_obtainPayback)
 {
-    // const InSequence seq;
+    const InSequence seq;
 
     QList<Stock*>& stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
@@ -2042,8 +2037,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 
     QMutex mutex;
 
-    EXPECT_CALL(*userStorageMock, getMutex()).WillRepeatedly(Return(&mutex));
-    EXPECT_CALL(*userStorageMock, getCommission()).WillRepeatedly(Return(0.3f));
+    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.3f));
+    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
 
     storage->obtainPayback(200);
 

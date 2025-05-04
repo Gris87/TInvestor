@@ -223,7 +223,7 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 
 TEST_F(Test_StocksDatabase, Test_readStocksData)
 {
-    // const InSequence seq;
+    const InSequence seq;
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 

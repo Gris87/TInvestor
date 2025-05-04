@@ -1,12 +1,15 @@
+const for `QList<Stock*>& getStocks()`?
 Auto-login
 Delete stocks cache on success
-Control portfolio
+Add check-style on imports groups
+Save/auto-start auto-pilot
+Save amount of money to keep for auto-pilot
 Control operations
+Display operations
+Build chart based on operations
+Control portfolio
 Display portfolio items
 Follow for the strategy
-Add check-style on imports groups
-const for `QList<Stock*>& getStocks()`?
-Reenable InSequence
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

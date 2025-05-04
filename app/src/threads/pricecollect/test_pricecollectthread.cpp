@@ -322,7 +322,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
 
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*configMock, getStorageMonthLimit()).WillRepeatedly(Return(24));
+    EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(24));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/cache/stocks/aaaaa_2023.zip").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(zipFileMock1)));
