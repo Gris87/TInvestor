@@ -79,13 +79,14 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
 {
     const InSequence seq;
 
-    StrictMock<DirMock>*  dirMock   = new StrictMock<DirMock>();  // Will be deleted in enable function
+    StrictMock<DirMock>*  dirMock1  = new StrictMock<DirMock>();  // Will be deleted in enable function
+    StrictMock<DirMock>*  dirMock2  = new StrictMock<DirMock>();  // Will be deleted in enable function
     StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in enable function
     StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in enable function
     StrictMock<FileMock>* fileMock3 = new StrictMock<FileMock>(); // Will be deleted in disable function
 
-    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
-    EXPECT_CALL(*dirMock, mkpath(QDir::homePath() + "/.config/autostart")).WillOnce(Return(true));
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
+    EXPECT_CALL(*dirMock1, mkpath(QDir::homePath() + "/.config/autostart")).WillOnce(Return(true));
     EXPECT_CALL(*fileFactoryMock, newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop"))
         .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
     EXPECT_CALL(*fileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
@@ -93,8 +94,8 @@ TEST_F(Test_AutorunEnabler, Test_setEnabled)
     EXPECT_CALL(*fileMock1, close());
     enabler->setEnabled(true);
 
-    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
-    EXPECT_CALL(*dirMock, mkpath(QDir::homePath() + "/.config/autostart")).WillOnce(Return(true));
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock2)));
+    EXPECT_CALL(*dirMock2, mkpath(QDir::homePath() + "/.config/autostart")).WillOnce(Return(true));
     EXPECT_CALL(*fileFactoryMock, newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop"))
         .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
     EXPECT_CALL(*fileMock2, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
