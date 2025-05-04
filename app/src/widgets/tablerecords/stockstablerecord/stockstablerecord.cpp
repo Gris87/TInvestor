@@ -121,7 +121,7 @@ void StocksTableRecord::updatePeriodicData()
 
 void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
-    const int  row    = mPriceTableWidgetItem->row();
+    const int row = mPriceTableWidgetItem->row();
 
     const QString text                = mStockTableItemWidget->text();
     const QString fullText            = mStockTableItemWidget->fullText();

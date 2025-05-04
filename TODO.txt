@@ -1,4 +1,3 @@
-const for `QList<Stock*>& getStocks()`?
 Auto-login
 Delete stocks cache on success
 Add check-style on imports groups
@@ -25,6 +24,9 @@ Rezko rastet, znachit budet rezko padat (2-3 times)
 Buy and sell on extremums (AI assisted)
 Sell if price extrimely fall (>5% in 5 minutes)
 Buy if price is less than average for last n days
+
+Double check mutexes
+Check for maximum memory requirements (With all limits)
 
 
 

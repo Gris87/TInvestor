@@ -759,7 +759,7 @@ void PriceCollectThread::obtainStocksData()
         QDateTime::currentMSecsSinceEpoch()
     );
 
-    QList<Stock*>& stocks = mStocksStorage->getStocks();
+    QList<Stock*> stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
 }
 

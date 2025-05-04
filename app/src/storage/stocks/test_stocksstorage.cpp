@@ -49,7 +49,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -199,7 +199,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -476,7 +476,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -811,7 +811,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -1103,7 +1103,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -1359,7 +1359,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -1615,7 +1615,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;
@@ -1871,7 +1871,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 {
     const InSequence seq;
 
-    QList<Stock*>& stocks = storage->getStocks();
+    QList<Stock*> stocks = storage->getStocks();
     ASSERT_EQ(stocks.size(), 0);
 
     QList<Stock*> stocksDB;

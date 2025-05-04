@@ -44,7 +44,7 @@ QMutex* StocksStorage::getMutex()
     return mMutex;
 }
 
-QList<Stock*>& StocksStorage::getStocks()
+const QList<Stock*>& StocksStorage::getStocks()
 {
     return mStocks;
 }
