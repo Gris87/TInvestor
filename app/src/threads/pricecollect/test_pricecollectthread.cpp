@@ -113,19 +113,19 @@ TEST_F(Test_PriceCollectThread, Test_run)
 {
     const InSequence seq;
 
-    StrictMock<FileMock>*     logoFileMock1 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
-    StrictMock<FileMock>*     logoFileMock2 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
-    StrictMock<FileMock>*     logoFileMock3 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
-    StrictMock<FileMock>*     logoFileMock4 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
-    StrictMock<FileMock>*     logoFileMock5 = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock1   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock2   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock3   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock4   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock5   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     noImageFileMock = new StrictMock<FileMock>();     // Will be deleted in downloadLogo
-    StrictMock<FileMock>*     zipFileMock1  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
-    StrictMock<FileMock>*     zipFileMock2  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
-    StrictMock<FileMock>*     zipFileMock3  = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
-    StrictMock<QZipMock>*     qZipMock1     = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
-    StrictMock<QZipMock>*     qZipMock2     = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
-    StrictMock<QZipMock>*     qZipMock3     = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
-    StrictMock<QZipFileMock>* qZipFileMock1 = new StrictMock<QZipFileMock>(); // Will be deleted in getCandlesFromZipFile
+    StrictMock<FileMock>*     zipFileMock1    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
+    StrictMock<FileMock>*     zipFileMock2    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
+    StrictMock<FileMock>*     zipFileMock3    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
+    StrictMock<QZipMock>*     qZipMock1       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
+    StrictMock<QZipMock>*     qZipMock2       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
+    StrictMock<QZipMock>*     qZipMock3       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
+    StrictMock<QZipFileMock>* qZipFileMock1   = new StrictMock<QZipFileMock>(); // Will be deleted in getCandlesFromZipFile
 
     QMutex mutex;
 
