@@ -1,4 +1,5 @@
 Auto-login
+Delete stocks cache on success
 Control portfolio
 Control operations
 Display portfolio items
