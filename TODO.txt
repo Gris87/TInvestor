@@ -1,4 +1,3 @@
-Auto-login
 Delete stocks cache on success
 Add check-style on imports groups
 Save/auto-start auto-pilot

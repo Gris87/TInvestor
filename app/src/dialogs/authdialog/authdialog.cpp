@@ -4,8 +4,16 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QScreen>
+#include <QTimer>
 
 #include "src/domain/user/user.h"
+
+
+
+constexpr qint64 MS_IN_SECOND        = 1000LL;
+constexpr qint64 ONE_MINUTE          = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR            = 60LL * ONE_MINUTE;
+constexpr qint64 AUTO_LOGIN_INTERVAL = ONE_HOUR; // 1 hour
 
 
 
@@ -25,6 +33,11 @@ AuthDialog::AuthDialog(IUserStorage* userStorage, IMessageBoxUtils* messageBoxUt
     Q_UNUSED(userStorage);
     ui->tokenLineEdit->setText(SANDBOX_TOKEN);
 #endif
+
+    if (ui->tokenLineEdit->text() != "")
+    {
+        QTimer::singleShot(AUTO_LOGIN_INTERVAL, this, SLOT(on_loginButton_clicked()));
+    }
 
     move(screen()->availableGeometry().center() - frameGeometry().center());
 }

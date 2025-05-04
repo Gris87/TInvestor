@@ -233,11 +233,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
     const QString title = tr("TInvestor");
     const QString msg   = tr("TInvestor is working in background");
 
-    Q_UNUSED(title);
-    Q_UNUSED(msg);
-
 #ifdef Q_OS_WINDOWS
     mTrayIcon->showMessage(title, msg);
+#else
+    Q_UNUSED(title);
+    Q_UNUSED(msg);
 #endif
 
     qDebug() << "Main window moved to tray";
