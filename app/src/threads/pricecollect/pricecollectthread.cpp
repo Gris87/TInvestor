@@ -66,11 +66,6 @@ PriceCollectThread::PriceCollectThread(
     mDayStartTimestamp()
 {
     qDebug() << "Create PriceCollectThread";
-
-    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
-
-    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
-    Q_ASSERT_X(ok, "PriceCollectThread::PriceCollectThread()", "Failed to create dir");
 }
 
 PriceCollectThread::~PriceCollectThread()
@@ -746,6 +741,11 @@ void PriceCollectThread::obtainStocksData()
 {
     emit notifyInstrumentsProgress(tr("Obtain stocks data"));
 
+    const std::shared_ptr<IDir> createDir = mDirFactory->newInstance();
+
+    bool ok = createDir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
+    Q_ASSERT_X(ok, "PriceCollectThread::PriceCollectThread()", "Failed to create dir");
+
     GetCandlesInfo getCandlesInfo(
         this,
         mConfig,
@@ -763,9 +763,9 @@ void PriceCollectThread::obtainStocksData()
     QList<Stock*> stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
 
-    const std::shared_ptr<IDir> dir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
+    const std::shared_ptr<IDir> deleteDir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
 
-    const bool ok = dir->removeRecursively();
+    ok = deleteDir->removeRecursively();
     Q_ASSERT_X(ok, "PriceCollectThread::obtainStocksData()", "Failed to delete dir");
 }
 

@@ -41,21 +41,17 @@ protected:
 
         appDir = qApp->applicationDirPath();
 
-        StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in PriceCollectThread constructor
-        configMock                   = new StrictMock<ConfigMock>();
-        userStorageMock              = new StrictMock<UserStorageMock>();
-        stocksStorageMock            = new StrictMock<StocksStorageMock>();
-        instrumentsStorageMock       = new StrictMock<InstrumentsStorageMock>();
-        dirFactoryMock               = new StrictMock<DirFactoryMock>();
-        fileFactoryMock              = new StrictMock<FileFactoryMock>();
-        qZipFactoryMock              = new StrictMock<QZipFactoryMock>();
-        qZipFileFactoryMock          = new StrictMock<QZipFileFactoryMock>();
-        timeUtilsMock                = new StrictMock<TimeUtilsMock>();
-        httpClientMock               = new StrictMock<HttpClientMock>();
-        grpcClientMock               = new StrictMock<GrpcClientMock>();
-
-        EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
-        EXPECT_CALL(*dirMock, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));
+        configMock             = new StrictMock<ConfigMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
+        stocksStorageMock      = new StrictMock<StocksStorageMock>();
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        dirFactoryMock         = new StrictMock<DirFactoryMock>();
+        fileFactoryMock        = new StrictMock<FileFactoryMock>();
+        qZipFactoryMock        = new StrictMock<QZipFactoryMock>();
+        qZipFileFactoryMock    = new StrictMock<QZipFileFactoryMock>();
+        timeUtilsMock          = new StrictMock<TimeUtilsMock>();
+        httpClientMock         = new StrictMock<HttpClientMock>();
+        grpcClientMock         = new StrictMock<GrpcClientMock>();
 
         thread = new PriceCollectThread(
             configMock,
@@ -119,6 +115,8 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<FileMock>*     logoFileMock4   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     logoFileMock5   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     noImageFileMock = new StrictMock<FileMock>();     // Will be deleted in downloadLogo
+    StrictMock<DirMock>*      dirMock1        = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
+    StrictMock<DirMock>*      dirMock2        = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
     StrictMock<FileMock>*     zipFileMock1    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
     StrictMock<FileMock>*     zipFileMock2    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
     StrictMock<FileMock>*     zipFileMock3    = new StrictMock<FileMock>();     // Will be deleted in getCandlesWithHttp
@@ -126,7 +124,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<QZipMock>*     qZipMock2       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
     StrictMock<QZipMock>*     qZipMock3       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
     StrictMock<QZipFileMock>* qZipFileMock1   = new StrictMock<QZipFileMock>(); // Will be deleted in getCandlesFromZipFile
-    StrictMock<DirMock>*      dirMock         = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
 
     QMutex mutex;
 
@@ -322,6 +319,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
 
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
+    EXPECT_CALL(*dirMock1, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));
+
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(24));
 
@@ -388,8 +388,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
         .WillOnce(Return(emptyCandlesResponse));
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
 
-    EXPECT_CALL(*dirFactoryMock, newInstance(QString(appDir + "/cache/stocks"))).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
-    EXPECT_CALL(*dirMock, removeRecursively()).WillOnce(Return(true));
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString(appDir + "/cache/stocks")))
+        .WillOnce(Return(std::shared_ptr<IDir>(dirMock2)));
+    EXPECT_CALL(*dirMock2, removeRecursively()).WillOnce(Return(true));
 
     EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
