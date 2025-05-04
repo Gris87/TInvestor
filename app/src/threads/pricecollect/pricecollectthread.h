@@ -75,6 +75,7 @@ private:
     IUserStorage*        mUserStorage;
     IStocksStorage*      mStocksStorage;
     IInstrumentsStorage* mInstrumentsStorage;
+    IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
     IQZipFactory*        mQZipFactory;
     IQZipFileFactory*    mQZipFileFactory;

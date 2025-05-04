@@ -10,7 +10,7 @@ TEST(Test_Dir, Test_constructor_and_destructor)
     const Dir dir;
 }
 
-TEST(Test_Dir, Test_mkpath)
+TEST(Test_Dir, Test_mkpath_and_removeRecursively)
 {
     Dir dir;
 
@@ -22,5 +22,6 @@ TEST(Test_Dir, Test_mkpath)
     ASSERT_TRUE(dir.mkpath(appDir + "/test/some_dir"));
     ASSERT_TRUE(qDir.exists());
 
-    ASSERT_TRUE(qDir.removeRecursively());
+    ASSERT_TRUE(Dir(appDir + "/test/some_dir").removeRecursively());
+    ASSERT_TRUE(!qDir.exists());
 }

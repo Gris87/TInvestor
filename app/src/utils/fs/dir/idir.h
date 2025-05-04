@@ -16,4 +16,5 @@ public:
     IDir& operator=(const IDir& another) = delete;
 
     virtual bool mkpath(const QString& dirPath) = 0;
+    virtual bool removeRecursively()            = 0;
 };

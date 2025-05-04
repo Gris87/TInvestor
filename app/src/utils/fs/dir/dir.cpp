@@ -20,3 +20,8 @@ bool Dir::mkpath(const QString& dirPath)
 {
     return mDir.mkpath(dirPath);
 }
+
+bool Dir::removeRecursively()
+{
+    return mDir.removeRecursively();
+}

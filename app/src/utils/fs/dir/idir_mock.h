@@ -21,4 +21,5 @@ public:
     DirMock& operator=(const DirMock& another) = delete;
 
     MOCK_METHOD(bool, mkpath, (const QString& dirPath), (override));
+    MOCK_METHOD(bool, removeRecursively, (), (override));
 };

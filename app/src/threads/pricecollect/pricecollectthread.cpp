@@ -56,6 +56,7 @@ PriceCollectThread::PriceCollectThread(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mDirFactory(dirFactory),
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
     mQZipFileFactory(qZipFileFactory),
@@ -66,7 +67,7 @@ PriceCollectThread::PriceCollectThread(
 {
     qDebug() << "Create PriceCollectThread";
 
-    const std::shared_ptr<IDir> dir = dirFactory->newInstance();
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
     const bool ok = dir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
     Q_ASSERT_X(ok, "PriceCollectThread::PriceCollectThread()", "Failed to create dir");
@@ -761,6 +762,11 @@ void PriceCollectThread::obtainStocksData()
 
     QList<Stock*> stocks = mStocksStorage->getStocks();
     processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
+
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
+
+    const bool ok = dir->removeRecursively();
+    Q_ASSERT_X(ok, "PriceCollectThread::obtainStocksData()", "Failed to delete dir");
 }
 
 void PriceCollectThread::cleanupOperationalData()

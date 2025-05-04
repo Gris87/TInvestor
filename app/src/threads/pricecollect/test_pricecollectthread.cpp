@@ -126,6 +126,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<QZipMock>*     qZipMock2       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
     StrictMock<QZipMock>*     qZipMock3       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
     StrictMock<QZipFileMock>* qZipFileMock1   = new StrictMock<QZipFileMock>(); // Will be deleted in getCandlesFromZipFile
+    StrictMock<DirMock>*      dirMock         = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
 
     QMutex mutex;
 
@@ -386,6 +387,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*grpcClientMock, getCandles(QThread::currentThread(), QString("aaaaa"), 60000, 1000000))
         .WillOnce(Return(emptyCandlesResponse));
     EXPECT_CALL(*stocksStorageMock, appendStockData(&stock, NotNull(), 1));
+
+    EXPECT_CALL(*dirFactoryMock, newInstance(QString(appDir + "/cache/stocks"))).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
+    EXPECT_CALL(*dirMock, removeRecursively()).WillOnce(Return(true));
 
     EXPECT_CALL(*stocksStorageMock, cleanupOperationalData(Gt(1704056400000)));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDayStartPrice(Gt(1704056400000)));
