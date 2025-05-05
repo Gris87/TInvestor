@@ -20,6 +20,7 @@
 
 struct UidAndLogo
 {
+    // NOLINTNEXTLINE(modernize-pass-by-value)
     explicit UidAndLogo(const QString& _uid, const QString& _logo) :
         uid(_uid),
         logo(_logo)

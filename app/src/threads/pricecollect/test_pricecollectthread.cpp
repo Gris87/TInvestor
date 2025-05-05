@@ -37,8 +37,6 @@ class Test_PriceCollectThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        const InSequence seq;
-
         appDir = qApp->applicationDirPath();
 
         configMock             = new StrictMock<ConfigMock>();
