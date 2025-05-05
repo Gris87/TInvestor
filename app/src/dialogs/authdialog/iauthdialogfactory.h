@@ -5,7 +5,7 @@
 #include "src/dialogs/authdialog/iauthdialog.h"
 
 #include "src/storage/user/iuserstorage.h"
-#include "src/utils/messagebox/imessagebox.h"
+#include "src/utils/messagebox/imessageboxutils.h"
 
 
 

@@ -13,7 +13,7 @@ if [ ${RESULT_CODE} -eq 0 ]; then
         --include app/src/* \
         --exclude */test_* \
         --exclude */*_mock.h \
-        --exclude */messagebox.cpp \
+        --exclude */messageboxutils.cpp \
         --exclude */httpclient.cpp \
         --directory gen/tests/objs \
         --output-file lcov.info

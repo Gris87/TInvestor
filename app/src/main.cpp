@@ -49,7 +49,7 @@
 #include "src/utils/fs/zip/qzipfile/qzipfilefactory.h"
 #include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
-#include "src/utils/messagebox/messagebox.h"
+#include "src/utils/messagebox/messageboxutils.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"

@@ -2,8 +2,6 @@
 
 
 
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord.h"
-
 #include <QTableWidget>
 
 #include "src/domain/stocks/stock.h"
@@ -11,6 +9,7 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord.h"
 
 
 

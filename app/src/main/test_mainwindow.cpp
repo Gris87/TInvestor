@@ -33,7 +33,7 @@
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
-#include "src/utils/messagebox/imessagebox_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"

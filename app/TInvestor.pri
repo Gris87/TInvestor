@@ -74,7 +74,7 @@ SOURCES += \
     src/utils/fs/zip/qzipfile/qzipfilefactory.cpp \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
-    src/utils/messagebox/messagebox.cpp \
+    src/utils/messagebox/messageboxutils.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
@@ -237,8 +237,8 @@ HEADERS += \
     src/utils/http/httpclient.h \
     src/utils/http/ihttpclient.h \
     src/utils/logger/logger.h \
-    src/utils/messagebox/imessagebox.h \
-    src/utils/messagebox/messagebox.h \
+    src/utils/messagebox/imessageboxutils.h \
+    src/utils/messagebox/messageboxutils.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \

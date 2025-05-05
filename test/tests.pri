@@ -70,7 +70,7 @@ SOURCES += \
     src/utils/fs/zip/qzipfile/test_qzipfilefactory.cpp \
     src/utils/http/test_httpclient.cpp \
     src/utils/logger/test_logger.cpp \
-    src/utils/messagebox/test_messagebox.cpp \
+    src/utils/messagebox/test_messageboxutils.cpp \
     src/utils/settingseditor/test_settingseditor.cpp \
     src/utils/style/test_darkpalette.cpp \
     src/utils/timeutils/test_timeutils.cpp \
@@ -161,7 +161,7 @@ HEADERS += \
     src/utils/fs/zip/qzipfile/iqzipfile_mock.h \
     src/utils/fs/zip/qzipfile/iqzipfilefactory_mock.h \
     src/utils/http/ihttpclient_mock.h \
-    src/utils/messagebox/imessagebox_mock.h \
+    src/utils/messagebox/imessageboxutils_mock.h \
     src/utils/settingseditor/isettingseditor_mock.h \
     src/utils/timeutils/itimeutils_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidget_mock.h \

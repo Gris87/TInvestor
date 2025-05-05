@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/user/iuserstorage_mock.h"
-#include "src/utils/messagebox/imessagebox_mock.h"
+#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
