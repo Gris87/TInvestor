@@ -23,4 +23,10 @@ public:
     StartSimulationDialogMock& operator=(const StartSimulationDialogMock& another) = delete;
 
     MOCK_METHOD(int, exec, (), (override));
+
+    MOCK_METHOD(int, startMoney, (), (const, override));
+    MOCK_METHOD(QString, mode, (), (const, override));
+    MOCK_METHOD(QDate, fromDate, (), (const, override));
+    MOCK_METHOD(QDate, toDate, (), (const, override));
+    MOCK_METHOD(bool, bestConfig, (), (const, override));
 };

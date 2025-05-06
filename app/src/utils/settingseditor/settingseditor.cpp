@@ -11,6 +11,13 @@ SettingsEditor::SettingsEditor(const QString& organization, const QString& appli
     qDebug() << "Create SettingsEditor";
 }
 
+SettingsEditor::SettingsEditor(const QString& fileName, QSettings::Format format) :
+    ISettingsEditor(),
+    mSettings(QSettings(fileName, format))
+{
+    qDebug() << "Create SettingsEditor";
+}
+
 SettingsEditor::~SettingsEditor()
 {
     qDebug() << "Destroy SettingsEditor";

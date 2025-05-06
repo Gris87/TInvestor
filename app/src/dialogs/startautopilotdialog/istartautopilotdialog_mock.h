@@ -23,4 +23,7 @@ public:
     StartAutoPilotDialogMock& operator=(const StartAutoPilotDialogMock& another) = delete;
 
     MOCK_METHOD(int, exec, (), (override));
+    MOCK_METHOD(QString, account, (), (const, override));
+    MOCK_METHOD(QString, mode, (), (const, override));
+    MOCK_METHOD(QString, anotherAccount, (), (const, override));
 };

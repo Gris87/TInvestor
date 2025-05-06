@@ -120,6 +120,8 @@ protected:
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+        simulatorSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
+        autoPilotSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
         autorunEnablerMock                   = new StrictMock<AutorunEnablerMock>();
         stocksControlsWidgetMock             = new StrictMock<StocksControlsWidgetMock>();
         stocksTableWidgetMock                = new StrictMock<StocksTableWidgetMock>();
@@ -230,6 +232,8 @@ protected:
             orderBookThreadMock,
             messageBoxUtilsMock,
             settingsEditorMock,
+            simulatorSettingsEditorMock,
+            autoPilotSettingsEditorMock,
             autorunEnablerMock
         );
     }
@@ -292,6 +296,8 @@ protected:
         delete orderBookThreadMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
+        delete simulatorSettingsEditorMock;
+        delete autoPilotSettingsEditorMock;
         delete autorunEnablerMock;
         // It will be deleted by `delete ui;`
         /*
@@ -344,6 +350,8 @@ protected:
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
+    StrictMock<SettingsEditorMock>*                   simulatorSettingsEditorMock;
+    StrictMock<SettingsEditorMock>*                   autoPilotSettingsEditorMock;
     StrictMock<AutorunEnablerMock>*                   autorunEnablerMock;
     StrictMock<StocksControlsWidgetMock>*             stocksControlsWidgetMock;
     StrictMock<StocksTableWidgetMock>*                stocksTableWidgetMock;

@@ -180,6 +180,8 @@ static int runApplication(QApplication* app)
     QZipFileFactory          qZipFileFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
+    SettingsEditor simulatorSettingsEditor(qApp->applicationDirPath() + "/data/simulator/config.ini", QSettings::IniFormat);
+    SettingsEditor autoPilotSettingsEditor(qApp->applicationDirPath() + "/data/autopilot/config.ini", QSettings::IniFormat);
     SettingsEditor autorunSettingsEditor("Microsoft", "Windows");
     AutorunEnabler autorunEnabler(&autorunSettingsEditor, &dirFactory, &fileFactory);
 
@@ -351,6 +353,8 @@ static int runApplication(QApplication* app)
         &orderBookThread,
         &messageBoxUtils,
         &settingsEditor,
+        &simulatorSettingsEditor,
+        &autoPilotSettingsEditor,
         &autorunEnabler
     );
     mainWindow.init();

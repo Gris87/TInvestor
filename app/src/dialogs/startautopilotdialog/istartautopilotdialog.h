@@ -19,4 +19,8 @@ public:
 
     IStartAutoPilotDialog(const IStartAutoPilotDialog& another)            = delete;
     IStartAutoPilotDialog& operator=(const IStartAutoPilotDialog& another) = delete;
+
+    virtual QString account() const        = 0;
+    virtual QString mode() const           = 0;
+    virtual QString anotherAccount() const = 0;
 };

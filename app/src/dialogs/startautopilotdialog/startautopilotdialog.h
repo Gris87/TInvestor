@@ -30,6 +30,10 @@ public:
     StartAutoPilotDialog(const StartAutoPilotDialog& another)            = delete;
     StartAutoPilotDialog& operator=(const StartAutoPilotDialog& another) = delete;
 
+    QString account() const override;
+    QString mode() const override;
+    QString anotherAccount() const override;
+
     Ui::StartAutoPilotDialog* ui;
 
 private:

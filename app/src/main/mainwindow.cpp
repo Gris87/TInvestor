@@ -7,6 +7,7 @@
 
 
 const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
+const char* const DATE_FORMAT                              = "yyyy-MM-dd";
 const char* const DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
 constexpr int     SMALL_SPINNER_INNER_RADIUS               = 6;
 constexpr int     SMALL_SPINNER_LINE_LENGTH                = 6;
@@ -69,6 +70,8 @@ MainWindow::MainWindow(
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
+    ISettingsEditor*                   simulatorSettingsEditor,
+    ISettingsEditor*                   autoPilotSettingsEditor,
     IAutorunEnabler*                   autorunEnabler,
     QWidget*                           parent
 ) :
@@ -108,6 +111,8 @@ MainWindow::MainWindow(
     mOrderBookThread(orderBookThread),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
+    mSimulatorSettingsEditor(simulatorSettingsEditor),
+    mAutoPilotSettingsEditor(autoPilotSettingsEditor),
     mAutorunEnabler(autorunEnabler)
 {
     qDebug() << "Create MainWindow";
@@ -482,6 +487,15 @@ void MainWindow::on_startSimulationButton_clicked()
 
         if (dialog->exec() == QDialog::Accepted)
         {
+            // clang-format off
+            mSimulatorSettingsEditor->setValue("General/Enabled",    true);
+            mSimulatorSettingsEditor->setValue("Options/StartMoney", dialog->startMoney());
+            mSimulatorSettingsEditor->setValue("Options/Mode",       dialog->mode());
+            mSimulatorSettingsEditor->setValue("Options/FromDate",   dialog->fromDate().toString(DATE_FORMAT));
+            mSimulatorSettingsEditor->setValue("Options/ToDate",     dialog->toDate().toString(DATE_FORMAT));
+            mSimulatorSettingsEditor->setValue("Options/BestConfig", dialog->bestConfig());
+            // clang-format on
+
             ui->simulationActiveWidget->show();
             ui->simulationActiveSpinnerWidget->start();
 
@@ -496,6 +510,8 @@ void MainWindow::on_startSimulationButton_clicked()
         if (mMessageBoxUtils->question(this, tr("Stop simulation"), tr("Do you really want to stop simulation?")) ==
             QMessageBox::Yes)
         {
+            mSimulatorSettingsEditor->setValue("General/Enabled", false);
+
             ui->simulationActiveWidget->hide();
             ui->simulationActiveSpinnerWidget->stop();
 
@@ -516,6 +532,13 @@ void MainWindow::on_startAutoPilotButton_clicked()
 
         if (dialog->exec() == QDialog::Accepted)
         {
+            // clang-format off
+            mAutoPilotSettingsEditor->setValue("General/Enabled",        true);
+            mAutoPilotSettingsEditor->setValue("Options/Account",        dialog->account());
+            mAutoPilotSettingsEditor->setValue("Options/Mode",           dialog->mode());
+            mAutoPilotSettingsEditor->setValue("Options/AnotherAccount", dialog->anotherAccount());
+            // clang-format on
+
             ui->autoPilotActiveWidget->show();
             ui->autoPilotActiveSpinnerWidget->start();
 
@@ -530,6 +553,8 @@ void MainWindow::on_startAutoPilotButton_clicked()
         if (mMessageBoxUtils->question(this, tr("Stop auto-pilot"), tr("Do you really want to stop auto-pilot?")) ==
             QMessageBox::Yes)
         {
+            mAutoPilotSettingsEditor->setValue("General/Enabled", false);
+
             ui->autoPilotActiveWidget->hide();
             ui->autoPilotActiveSpinnerWidget->stop();
 

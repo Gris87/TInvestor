@@ -88,6 +88,8 @@ public:
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
+        ISettingsEditor*                   simulatorSettingsEditor,
+        ISettingsEditor*                   autoPilotSettingsEditor,
         IAutorunEnabler*                   autorunEnabler,
         QWidget*                           parent = nullptr
     );
@@ -149,6 +151,8 @@ private:
     IOrderBookThread*                  mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
+    ISettingsEditor*                   mSimulatorSettingsEditor;
+    ISettingsEditor*                   mAutoPilotSettingsEditor;
     IAutorunEnabler*                   mAutorunEnabler;
 
 public slots:

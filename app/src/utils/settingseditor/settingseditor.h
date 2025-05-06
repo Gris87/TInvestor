@@ -12,6 +12,7 @@ class SettingsEditor : public ISettingsEditor
 {
 public:
     explicit SettingsEditor(const QString& organization, const QString& application);
+    explicit SettingsEditor(const QString& fileName, QSettings::Format format);
     ~SettingsEditor() override;
 
     SettingsEditor(const SettingsEditor& another)            = delete;

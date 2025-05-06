@@ -29,6 +29,31 @@ StartSimulationDialog::~StartSimulationDialog()
     delete ui;
 }
 
+int StartSimulationDialog::startMoney() const
+{
+    return ui->startMoneySpinBox->value();
+}
+
+QString StartSimulationDialog::mode() const
+{
+    return ui->dateRangeRadioButton->isChecked() ? "DATERANGE" : "REALTIME";
+}
+
+QDate StartSimulationDialog::fromDate() const
+{
+    return ui->fromDateEdit->date();
+}
+
+QDate StartSimulationDialog::toDate() const
+{
+    return ui->toDateEdit->date();
+}
+
+bool StartSimulationDialog::bestConfig() const
+{
+    return ui->bestConfigCheckBox->isChecked();
+}
+
 void StartSimulationDialog::on_dateRangeRadioButton_toggled(bool checked) const
 {
     ui->dateRangeWidget->setEnabled(checked);

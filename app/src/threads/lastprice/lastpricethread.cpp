@@ -7,8 +7,9 @@
 
 
 
-constexpr qint64 MS_IN_SECOND = 1000LL;
-constexpr qint64 SLEEP_DELAY  = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 MS_IN_SECOND      = 1000LL;
+constexpr qint64 SLEEP_DELAY       = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64 UNSUBSCRIBE_DELAY = MS_IN_SECOND;       // 1 second
 
 
 
@@ -153,6 +154,7 @@ void LastPriceThread::terminateThread()
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->unsubscribeLastPrices(mMarketDataStream);
+        QThread::msleep(UNSUBSCRIBE_DELAY);
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
     }
 

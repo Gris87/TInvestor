@@ -30,6 +30,21 @@ StartAutoPilotDialog::~StartAutoPilotDialog()
     delete ui;
 }
 
+QString StartAutoPilotDialog::account() const
+{
+    return ui->accountComboBox->currentText();
+}
+
+QString StartAutoPilotDialog::mode() const
+{
+    return ui->followRadioButton->isChecked() ? "FOLLOW" : "INTERNAL";
+}
+
+QString StartAutoPilotDialog::anotherAccount() const
+{
+    return ui->anotherAccountComboBox->currentText();
+}
+
 void StartAutoPilotDialog::on_accountComboBox_currentIndexChanged(int index) const
 {
     QStringList items;
