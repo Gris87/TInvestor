@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from utils import prepare_linter
 
 
-major_include_regexp = re.compile(r'#include [<"](?:src\/(?:\w+\/)*)?(\w+)(?:.h)?[">]')
+major_include_regexp = re.compile(r'#include [<"](?:src\/(?:\w+\/)*)?(\w+)(?:\.h)?[">]')
 
 
 class GroupType(IntEnum):
@@ -42,7 +42,7 @@ def _validate_file(args, file_path, lines):
     end_index = -1
 
     for i, line in enumerate(lines):
-        if line.startswith("#include"):
+        if line.strip().startswith("#include"):
             if start_index < 0:
                 start_index = i
 
@@ -116,7 +116,7 @@ def _get_group_type(group, file_path, lines):
             if include_type != group_type:
                 logger.error(f"{file_path}: Mixing different include types in include group")
 
-                return GroupType.UNSPECIFIED, False
+                res = False
 
     return group_type, res
 
@@ -126,6 +126,9 @@ def _get_include_type(line, file_path, lines):
     simplified_include = line.replace('#include "', "").replace('"', "")
 
     if simplified_include in simplified_file_path:
+        return GroupType.MAJOR
+
+    if line.startswith('#include "ui_'):
         return GroupType.MAJOR
 
     match = major_include_regexp.match(line)
@@ -146,9 +149,6 @@ def _get_include_type(line, file_path, lines):
 
         if found:
             return GroupType.MAJOR
-
-    if line.startswith('#include "ui_'):
-        return GroupType.MAJOR
 
     if line.startswith("#include <"):
         return GroupType.SYSTEM
