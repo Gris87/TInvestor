@@ -79,13 +79,6 @@ MainWindow::MainWindow(
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     authFailedDialogShown(false),
-    userUpdateTimer(new QTimer(this)),
-    priceCollectTimer(new QTimer(this)),
-    cleanupTimer(new QTimer(this)),
-    makeDecisionTimer(new QTimer(this)),
-    stocksTableUpdateAllTimer(new QTimer(this)),
-    stocksTableUpdateLastPricesTimer(new QTimer(this)),
-    keepMoneyChangeDelayTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -176,24 +169,24 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,                        SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,                        SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,                        SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,                      SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
-    connect(userUpdateTimer,                  SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
-    connect(priceCollectTimer,                SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
-    connect(makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
-    connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
-    connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(keepMoneyChangeDelayTimer,        SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
-    connect(mPriceCollectThread,              SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
-    connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,              SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
-    connect(mLastPriceThread,                 SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mStocksControlsWidget,            SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
-    connect(mStocksControlsWidget,            SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mTrayIcon,                         SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,                         SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,                         SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,                       SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
+    connect(&userUpdateTimer,                  SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
+    connect(&priceCollectTimer,                SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
+    connect(&cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
+    connect(&makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
+    connect(&stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
+    connect(&stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(&keepMoneyChangeDelayTimer,        SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
+    connect(mPriceCollectThread,               SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
+    connect(mPriceCollectThread,               SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
+    connect(mPriceCollectThread,               SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,               SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
+    connect(mLastPriceThread,                  SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
+    connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -287,23 +280,23 @@ void MainWindow::authFailed(
         return;
     }
 
-    userUpdateTimer->stop();
+    userUpdateTimer.stop();
     mUserUpdateThread->requestInterruption();
     mUserUpdateThread->wait();
 
-    priceCollectTimer->stop();
+    priceCollectTimer.stop();
     mPriceCollectThread->requestInterruption();
     mPriceCollectThread->wait();
 
     mLastPriceThread->terminateThread();
     mLastPriceThread->wait();
 
-    makeDecisionTimer->stop();
+    makeDecisionTimer.stop();
     mMakeDecisionThread->requestInterruption();
     mMakeDecisionThread->wait();
 
-    stocksTableUpdateAllTimer->stop();
-    stocksTableUpdateLastPricesTimer->stop();
+    stocksTableUpdateAllTimer.stop();
+    stocksTableUpdateLastPricesTimer.stop();
 
     stopSimulator();
     stopAutoPilot();
@@ -416,19 +409,19 @@ void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
 
-    userUpdateTimer->start();
+    userUpdateTimer.start();
     userUpdateTimerTicked();
 
-    priceCollectTimer->start();
+    priceCollectTimer.start();
     priceCollectTimerTicked();
 
     mLastPriceThread->start();
 
-    makeDecisionTimer->start();
+    makeDecisionTimer.start();
     makeDecisionTimerTicked();
 
-    stocksTableUpdateAllTimer->start();
-    stocksTableUpdateLastPricesTimer->start();
+    stocksTableUpdateAllTimer.start();
+    stocksTableUpdateLastPricesTimer.start();
 
     if (mSimulatorSettingsEditor->value("General/Enabled", false).toBool())
     {
@@ -565,7 +558,7 @@ void MainWindow::on_startAutoPilotButton_clicked()
 
 void MainWindow::on_keepMoneySpinBox_valueChanged(int /*value*/)
 {
-    keepMoneyChangeDelayTimer->start(KEEP_MONEY_CHANGE_DELAY);
+    keepMoneyChangeDelayTimer.start(KEEP_MONEY_CHANGE_DELAY);
 }
 
 void MainWindow::init()
@@ -578,14 +571,14 @@ void MainWindow::init()
 
     updateStocksTableWidget();
 
-    userUpdateTimer->setInterval(USER_UPDATE_INTERVAL);
-    priceCollectTimer->setInterval(PRICE_COLLECT_INTERVAL);
+    userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
+    priceCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
 
-    cleanupTimer->start(CLEANUP_INTERVAL);
+    cleanupTimer.start(CLEANUP_INTERVAL);
     cleanupTimerTicked();
 
-    stocksTableUpdateAllTimer->setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
-    stocksTableUpdateLastPricesTimer->setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
+    stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
+    stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
 
     on_actionAuth_triggered();
 }
@@ -682,7 +675,7 @@ void MainWindow::stopAutoPilot()
 
 void MainWindow::applyConfig()
 {
-    makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
+    makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
 }
 

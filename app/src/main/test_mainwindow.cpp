@@ -186,6 +186,8 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
         // clang-format on
 
+        EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
+
         EXPECT_CALL(*stocksControlsWidgetMock, loadWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*stocksTableWidgetMock, loadWindowState(QString("MainWindow/StocksTableWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/Simulator")));
@@ -373,14 +375,14 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
     // clang-format on
 
     // clang-format off
-    ASSERT_EQ(mainWindow->userUpdateTimer->interval(),   0);
-    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(),   false);
-    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(),      0);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(),      false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
+    ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
+    ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 }
 
@@ -427,6 +429,10 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*authDialogMock, getToken()).WillOnce(Return("CoolToken"));
     EXPECT_CALL(*userStorageMock, setToken(QString("CoolToken")));
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
     EXPECT_CALL(*lastPriceThreadMock, run());
@@ -601,14 +607,21 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
-    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
+    // clang-format off
+    ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
+    ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
+    // clang-format on
+
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(true)));
 
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
@@ -619,14 +632,16 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), false);
 
-    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
+    // clang-format off
+    ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   true);
+    ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
+    // clang-format on
 
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
@@ -709,7 +724,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
     mainWindow->ui->actionSettings->trigger();
 
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 120000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 120000);
 }
 
 TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
@@ -731,6 +746,17 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*startSimulationDialogFactoryMock, newInstance(settingsEditorMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IStartSimulationDialog>(startSimulationDialogMock)));
     EXPECT_CALL(*startSimulationDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
+    EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
+    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return("DATERANGE"));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("DATERANGE")));
+    EXPECT_CALL(*startSimulationDialogMock, fromDate()).WillOnce(Return(QDate(2024, 1, 1)));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/FromDate"), QVariant("2024-01-01")));
+    EXPECT_CALL(*startSimulationDialogMock, toDate()).WillOnce(Return(QDate(2025, 1, 1)));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/ToDate"), QVariant("2025-01-01")));
+    EXPECT_CALL(*startSimulationDialogMock, bestConfig()).WillOnce(Return(true));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/BestConfig"), QVariant(true)));
 
     mainWindow->ui->startSimulationButton->click();
 
@@ -751,6 +777,7 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
         )
     )
         .WillOnce(Return(QMessageBox::Yes));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
 
     mainWindow->ui->startSimulationButton->click();
 
@@ -782,6 +809,13 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     )
         .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
     EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
+    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("aaaaaa"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("aaaaaa")));
+    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return("DATERANGE"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("DATERANGE")));
+    EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("bbbbbb"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("bbbbbb")));
 
     mainWindow->ui->startAutoPilotButton->click();
 
@@ -802,6 +836,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         )
     )
         .WillOnce(Return(QMessageBox::Yes));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
 
     mainWindow->ui->startAutoPilotButton->click();
 
@@ -819,20 +854,26 @@ TEST_F(Test_MainWindow, Test_init)
     QMutex        mutex;
     QList<Stock*> stocks;
 
-    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 0);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), false);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), false);
+    // clang-format off
+    ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
+    ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
+    // clang-format on
 
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
     EXPECT_CALL(*instrumentsStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(false)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
+        .WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*cleanupThreadMock, run());
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
@@ -841,14 +882,16 @@ TEST_F(Test_MainWindow, Test_init)
 
     mainWindow->init();
 
-    ASSERT_EQ(mainWindow->userUpdateTimer->interval(), 15 * 60 * 1000);
-    ASSERT_EQ(mainWindow->userUpdateTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->priceCollectTimer->interval(), 1 * 60 * 60 * 1000);
-    ASSERT_EQ(mainWindow->priceCollectTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->cleanupTimer->interval(), 24 * 60 * 60 * 1000);
-    ASSERT_EQ(mainWindow->cleanupTimer->isActive(), true);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->interval(), 60000);
-    ASSERT_EQ(mainWindow->makeDecisionTimer->isActive(), true);
+    // clang-format off
+    ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   15 * 60 * 1000);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   true);
+    ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 1 * 60 * 60 * 1000);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      24 * 60 * 60 * 1000);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      true);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
+    // clang-format on
 
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();

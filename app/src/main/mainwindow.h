@@ -105,14 +105,14 @@ public:
 
     Ui::MainWindow* ui;
 
-    bool    authFailedDialogShown;
-    QTimer* userUpdateTimer;
-    QTimer* priceCollectTimer;
-    QTimer* cleanupTimer;
-    QTimer* makeDecisionTimer;
-    QTimer* stocksTableUpdateAllTimer;
-    QTimer* stocksTableUpdateLastPricesTimer;
-    QTimer* keepMoneyChangeDelayTimer;
+    bool   authFailedDialogShown;
+    QTimer userUpdateTimer;
+    QTimer priceCollectTimer;
+    QTimer cleanupTimer;
+    QTimer makeDecisionTimer;
+    QTimer stocksTableUpdateAllTimer;
+    QTimer stocksTableUpdateLastPricesTimer;
+    QTimer keepMoneyChangeDelayTimer;
 
 private:
     void updateStackWidgetToolbar() const;
