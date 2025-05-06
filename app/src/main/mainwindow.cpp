@@ -20,6 +20,7 @@ constexpr qint64  PRICE_COLLECT_INTERVAL                   = ONE_HOUR;          
 constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
+constexpr qint64  KEEP_MONEY_CHANGE_DELAY                  = MS_IN_SECOND;      // 1 second
 
 #ifdef Q_OS_WINDOWS
 constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
@@ -84,6 +85,7 @@ MainWindow::MainWindow(
     makeDecisionTimer(new QTimer(this)),
     stocksTableUpdateAllTimer(new QTimer(this)),
     stocksTableUpdateLastPricesTimer(new QTimer(this)),
+    keepMoneyChangeDelayTimer(new QTimer(this)),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -184,6 +186,7 @@ MainWindow::MainWindow(
     connect(makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
     connect(stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(keepMoneyChangeDelayTimer,        SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
     connect(mPriceCollectThread,              SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
     connect(mPriceCollectThread,              SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
     connect(mPriceCollectThread,              SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
@@ -302,6 +305,9 @@ void MainWindow::authFailed(
     stocksTableUpdateAllTimer->stop();
     stocksTableUpdateLastPricesTimer->stop();
 
+    stopSimulator();
+    stopAutoPilot();
+
     ui->actionAuth->setEnabled(true);
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
     trayIconShowClicked();
@@ -362,6 +368,11 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
     mStocksTableWidget->updateLastPrices(mStocksControlsWidget->getFilter());
 }
 
+void MainWindow::keepMoneyChangeDelayTimerTicked()
+{
+    mAutoPilotSettingsEditor->setValue("Options/KeepMoney", ui->keepMoneySpinBox->value());
+}
+
 void MainWindow::notifyInstrumentsProgress(const QString& message) const
 {
     ui->waitingSpinnerWidget->setText(message);
@@ -418,6 +429,16 @@ void MainWindow::on_actionAuth_triggered()
 
     stocksTableUpdateAllTimer->start();
     stocksTableUpdateLastPricesTimer->start();
+
+    if (mSimulatorSettingsEditor->value("General/Enabled", false).toBool())
+    {
+        startSimulator();
+    }
+
+    if (mAutoPilotSettingsEditor->value("General/Enabled", false).toBool())
+    {
+        startAutoPilot();
+    }
 }
 
 void MainWindow::on_actionStocksPage_toggled(bool checked)
@@ -496,13 +517,7 @@ void MainWindow::on_startSimulationButton_clicked()
             mSimulatorSettingsEditor->setValue("Options/BestConfig", dialog->bestConfig());
             // clang-format on
 
-            ui->simulationActiveWidget->show();
-            ui->simulationActiveSpinnerWidget->start();
-
-            ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
-            ui->startSimulationButton->setText(tr("Stop simulation"));
-
-            // TODO: Start simulation
+            startSimulator();
         }
     }
     else
@@ -512,13 +527,7 @@ void MainWindow::on_startSimulationButton_clicked()
         {
             mSimulatorSettingsEditor->setValue("General/Enabled", false);
 
-            ui->simulationActiveWidget->hide();
-            ui->simulationActiveSpinnerWidget->stop();
-
-            ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
-            ui->startSimulationButton->setText(tr("Start simulation"));
-
-            // TODO: Stop simulation
+            stopSimulator();
         }
     }
 }
@@ -539,13 +548,7 @@ void MainWindow::on_startAutoPilotButton_clicked()
             mAutoPilotSettingsEditor->setValue("Options/AnotherAccount", dialog->anotherAccount());
             // clang-format on
 
-            ui->autoPilotActiveWidget->show();
-            ui->autoPilotActiveSpinnerWidget->start();
-
-            ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
-            ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
-
-            // TODO: Start auto-pilot
+            startAutoPilot();
         }
     }
     else
@@ -555,15 +558,14 @@ void MainWindow::on_startAutoPilotButton_clicked()
         {
             mAutoPilotSettingsEditor->setValue("General/Enabled", false);
 
-            ui->autoPilotActiveWidget->hide();
-            ui->autoPilotActiveSpinnerWidget->stop();
-
-            ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
-            ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
-
-            // TODO: Stop auto-pilot
+            stopAutoPilot();
         }
     }
+}
+
+void MainWindow::on_keepMoneySpinBox_valueChanged(int /*value*/)
+{
+    keepMoneyChangeDelayTimer->start(KEEP_MONEY_CHANGE_DELAY);
 }
 
 void MainWindow::init()
@@ -634,6 +636,50 @@ void MainWindow::updateStackWidgetToolbar() const
     ));
 }
 
+void MainWindow::startSimulator()
+{
+    ui->simulationActiveWidget->show();
+    ui->simulationActiveSpinnerWidget->start();
+
+    ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
+    ui->startSimulationButton->setText(tr("Stop simulation"));
+
+    // TODO: Start simulation
+}
+
+void MainWindow::stopSimulator()
+{
+    ui->simulationActiveWidget->hide();
+    ui->simulationActiveSpinnerWidget->stop();
+
+    ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
+    ui->startSimulationButton->setText(tr("Start simulation"));
+
+    // TODO: Stop simulation
+}
+
+void MainWindow::startAutoPilot()
+{
+    ui->autoPilotActiveWidget->show();
+    ui->autoPilotActiveSpinnerWidget->start();
+
+    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
+    ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
+
+    // TODO: Start auto-pilot
+}
+
+void MainWindow::stopAutoPilot()
+{
+    ui->autoPilotActiveWidget->hide();
+    ui->autoPilotActiveSpinnerWidget->stop();
+
+    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
+    ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
+
+    // TODO: Stop auto-pilot
+}
+
 void MainWindow::applyConfig()
 {
     makeDecisionTimer->setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
@@ -663,6 +709,8 @@ void MainWindow::loadWindowState()
     restoreGeometry(mSettingsEditor->value("MainWindow/geometry", QByteArray()).toByteArray());
     restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
     ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
+
+    ui->keepMoneySpinBox->setValue(mAutoPilotSettingsEditor->value("Options/KeepMoney", 0).toInt());
 
     mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
