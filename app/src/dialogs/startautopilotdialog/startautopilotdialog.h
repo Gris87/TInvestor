@@ -30,16 +30,21 @@ public:
     StartAutoPilotDialog(const StartAutoPilotDialog& another)            = delete;
     StartAutoPilotDialog& operator=(const StartAutoPilotDialog& another) = delete;
 
+    [[nodiscard]]
     QString account() const override;
+
+    [[nodiscard]]
     QString mode() const override;
+
+    [[nodiscard]]
     QString anotherAccount() const override;
 
     Ui::StartAutoPilotDialog* ui;
 
 private:
-    QStringList getAccounts();
-    void        saveWindowState();
-    void        loadWindowState();
+    void fillAccounts();
+    void saveWindowState();
+    void loadWindowState();
 
     IUserStorage*     mUserStorage;
     IMessageBoxUtils* mMessageBoxUtils;

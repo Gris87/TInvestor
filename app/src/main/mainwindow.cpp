@@ -629,7 +629,7 @@ void MainWindow::updateStackWidgetToolbar() const
     ));
 }
 
-void MainWindow::startSimulator()
+void MainWindow::startSimulator() const
 {
     ui->simulationActiveWidget->show();
     ui->simulationActiveSpinnerWidget->start();
@@ -640,7 +640,7 @@ void MainWindow::startSimulator()
     // TODO: Start simulation
 }
 
-void MainWindow::stopSimulator()
+void MainWindow::stopSimulator() const
 {
     ui->simulationActiveWidget->hide();
     ui->simulationActiveSpinnerWidget->stop();
@@ -651,7 +651,7 @@ void MainWindow::stopSimulator()
     // TODO: Stop simulation
 }
 
-void MainWindow::startAutoPilot()
+void MainWindow::startAutoPilot() const
 {
     ui->autoPilotActiveWidget->show();
     ui->autoPilotActiveSpinnerWidget->start();
@@ -662,7 +662,7 @@ void MainWindow::startAutoPilot()
     // TODO: Start auto-pilot
 }
 
-void MainWindow::stopAutoPilot()
+void MainWindow::stopAutoPilot() const
 {
     ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->stop();

@@ -26,11 +26,20 @@ public:
     StartSimulationDialog(const StartSimulationDialog& another)            = delete;
     StartSimulationDialog& operator=(const StartSimulationDialog& another) = delete;
 
-    int     startMoney() const override;
+    [[nodiscard]]
+    int startMoney() const override;
+
+    [[nodiscard]]
     QString mode() const override;
-    QDate   fromDate() const override;
-    QDate   toDate() const override;
-    bool    bestConfig() const override;
+
+    [[nodiscard]]
+    QDate fromDate() const override;
+
+    [[nodiscard]]
+    QDate toDate() const override;
+
+    [[nodiscard]]
+    bool bestConfig() const override;
 
     Ui::StartSimulationDialog* ui;
 

@@ -116,10 +116,10 @@ public:
 
 private:
     void updateStackWidgetToolbar() const;
-    void startSimulator();
-    void stopSimulator();
-    void startAutoPilot();
-    void stopAutoPilot();
+    void startSimulator() const;
+    void stopSimulator() const;
+    void startAutoPilot() const;
+    void stopAutoPilot() const;
     void applyConfig();
     void saveWindowState();
     void loadWindowState();

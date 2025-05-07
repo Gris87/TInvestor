@@ -1,5 +1,3 @@
-Save/auto-start auto-pilot
-Save amount of money to keep for auto-pilot
 Fix freeze on doc generation (by restarting)
 Control operations
 Display operations

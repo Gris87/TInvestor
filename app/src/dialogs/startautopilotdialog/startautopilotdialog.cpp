@@ -17,8 +17,7 @@ StartAutoPilotDialog::StartAutoPilotDialog(
     qDebug() << "Create StartAutoPilotDialog";
 
     ui->setupUi(this);
-
-    ui->accountComboBox->addItems(getAccounts());
+    fillAccounts();
 
     loadWindowState();
 }
@@ -32,7 +31,7 @@ StartAutoPilotDialog::~StartAutoPilotDialog()
 
 QString StartAutoPilotDialog::account() const
 {
-    return ui->accountComboBox->currentText();
+    return ui->accountComboBox->currentData().toString();
 }
 
 QString StartAutoPilotDialog::mode() const
@@ -42,29 +41,25 @@ QString StartAutoPilotDialog::mode() const
 
 QString StartAutoPilotDialog::anotherAccount() const
 {
-    return ui->anotherAccountComboBox->currentText();
+    return ui->anotherAccountComboBox->currentData().toString();
 }
 
 void StartAutoPilotDialog::on_accountComboBox_currentIndexChanged(int index) const
 {
-    QStringList items;
+    ui->anotherAccountComboBox->clear();
 
     for (int i = 0; i < ui->accountComboBox->count(); ++i)
     {
         if (i != index)
         {
-            items.append(ui->accountComboBox->itemText(i));
+            ui->anotherAccountComboBox->addItem(ui->accountComboBox->itemText(i), ui->accountComboBox->itemData(i));
         }
     }
 
-    if (items.isEmpty())
+    if (ui->anotherAccountComboBox->count() == 0)
     {
-        items.append(tr("No another account"));
+        ui->anotherAccountComboBox->addItem(tr("No another account"), "");
     }
-
-    ui->anotherAccountComboBox->clear();
-    ui->anotherAccountComboBox->addItems(items);
-    ui->anotherAccountComboBox->setCurrentIndex(0);
 }
 
 void StartAutoPilotDialog::on_followRadioButton_toggled(bool checked) const
@@ -86,23 +81,21 @@ void StartAutoPilotDialog::on_startButton_clicked()
     accept();
 }
 
-QStringList StartAutoPilotDialog::getAccounts()
+void StartAutoPilotDialog::fillAccounts()
 {
-    QStringList res;
+    ui->accountComboBox->blockSignals(true);
 
     const QMutexLocker    lock(mUserStorage->getMutex());
     const QList<Account>& accounts = mUserStorage->getAccounts();
 
-    res.resizeForOverwrite(accounts.size());
-
-    QString* resData = res.data();
-
     for (int i = 0; i < accounts.size(); ++i)
     {
-        resData[i] = accounts.at(i).name;
+        ui->accountComboBox->addItem(accounts.at(i).name, accounts.at(i).idHash);
     }
 
-    return res;
+    ui->accountComboBox->blockSignals(false);
+
+    on_accountComboBox_currentIndexChanged(ui->accountComboBox->currentIndex());
 }
 
 void StartAutoPilotDialog::saveWindowState()
@@ -110,9 +103,9 @@ void StartAutoPilotDialog::saveWindowState()
     qDebug() << "Saving window state";
 
     // clang-format off
-    mSettingsEditor->setValue("StartAutoPilotDialog/account",        ui->accountComboBox->currentText());
+    mSettingsEditor->setValue("StartAutoPilotDialog/account",        ui->accountComboBox->currentData());
     mSettingsEditor->setValue("StartAutoPilotDialog/follow",         ui->followRadioButton->isChecked());
-    mSettingsEditor->setValue("StartAutoPilotDialog/anotherAccount", ui->anotherAccountComboBox->currentText());
+    mSettingsEditor->setValue("StartAutoPilotDialog/anotherAccount", ui->anotherAccountComboBox->currentData());
     // clang-format on
 }
 
@@ -121,8 +114,28 @@ void StartAutoPilotDialog::loadWindowState()
     qDebug() << "Loading window state";
 
     // clang-format off
-    ui->accountComboBox->setCurrentText(mSettingsEditor->value("StartAutoPilotDialog/account",               "").toString());
-    ui->followRadioButton->setChecked(mSettingsEditor->value("StartAutoPilotDialog/follow",                  false).toBool());
-    ui->anotherAccountComboBox->setCurrentText(mSettingsEditor->value("StartAutoPilotDialog/anotherAccount", "").toString());
+    QString account = mSettingsEditor->value("StartAutoPilotDialog/account",                "").toString();
+    ui->followRadioButton->setChecked(mSettingsEditor->value("StartAutoPilotDialog/follow", false).toBool());
+    QString anotherAccount = mSettingsEditor->value("StartAutoPilotDialog/anotherAccount",  "").toString();
     // clang-format on
+
+    for (int i = 0; i < ui->accountComboBox->count(); ++i)
+    {
+        if (ui->accountComboBox->itemData(i) == account)
+        {
+            ui->accountComboBox->setCurrentIndex(i);
+
+            break;
+        }
+    }
+
+    for (int i = 0; i < ui->anotherAccountComboBox->count(); ++i)
+    {
+        if (ui->anotherAccountComboBox->itemData(i) == anotherAccount)
+        {
+            ui->anotherAccountComboBox->setCurrentIndex(i);
+
+            break;
+        }
+    }
 }
