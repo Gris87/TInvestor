@@ -83,6 +83,8 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 2);
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Matreshka");
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(1), "Balalayka");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(1), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
 
     dialog->ui->anotherAccountComboBox->setCurrentIndex(1);
@@ -93,6 +95,8 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 2);
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Babushka");
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(1), "Balalayka");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(1), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
 
     dialog->ui->accountComboBox->setCurrentIndex(2);
@@ -100,12 +104,15 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 2);
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Babushka");
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(1), "Matreshka");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(1), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
 
     dialog->ui->accountComboBox->clear();
 
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 1);
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "No another account");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant(""));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
 }
 
@@ -125,9 +132,9 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("Babushka")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("74b87337454200d4d33f80c4663dc5e5")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/follow"),         QVariant(false)));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("Matreshka")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
     // clang-format on
 
     dialog->ui->startButton->click();
