@@ -88,9 +88,9 @@ void StartAutoPilotDialog::fillAccounts()
     const QMutexLocker    lock(mUserStorage->getMutex());
     const QList<Account>& accounts = mUserStorage->getAccounts();
 
-    for (int i = 0; i < accounts.size(); ++i)
+    for (const Account& account : accounts)
     {
-        ui->accountComboBox->addItem(accounts.at(i).name, accounts.at(i).idHash);
+        ui->accountComboBox->addItem(account.name, account.idHash);
     }
 
     ui->accountComboBox->blockSignals(false);
@@ -114,9 +114,9 @@ void StartAutoPilotDialog::loadWindowState()
     qDebug() << "Loading window state";
 
     // clang-format off
-    QString account = mSettingsEditor->value("StartAutoPilotDialog/account",                "").toString();
-    ui->followRadioButton->setChecked(mSettingsEditor->value("StartAutoPilotDialog/follow", false).toBool());
-    QString anotherAccount = mSettingsEditor->value("StartAutoPilotDialog/anotherAccount",  "").toString();
+    const QString account = mSettingsEditor->value("StartAutoPilotDialog/account",               "").toString();
+    ui->followRadioButton->setChecked(mSettingsEditor->value("StartAutoPilotDialog/follow",      false).toBool());
+    const QString anotherAccount = mSettingsEditor->value("StartAutoPilotDialog/anotherAccount", "").toString();
     // clang-format on
 
     for (int i = 0; i < ui->accountComboBox->count(); ++i)

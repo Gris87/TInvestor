@@ -1,4 +1,5 @@
 Fix freeze on doc generation (by restarting)
+Store accounts as map Hash => Account
 Control operations
 Display operations
 Build chart based on operations
