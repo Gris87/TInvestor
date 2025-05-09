@@ -63,6 +63,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
     mInstrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
     mMarketDataService       = tinkoff::MarketDataService::NewStub(channel);
     mMarketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
+    mOperationsService       = tinkoff::OperationsService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -286,6 +287,31 @@ std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread*
     req.set_depth(ORDER_BOOK_DEPTH);
 
     return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
+}
+
+static grpc::Status getOperationsAction(
+    IRawGrpcClient*                                          rawGrpcClient,
+    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::OperationsRequest&                        req,
+    const std::shared_ptr<tinkoff::OperationsResponse>&      resp
+)
+{
+    return rawGrpcClient->getOperations(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::OperationsResponse> GrpcClient::getOperations(QThread* parentThread, const QString& accountId)
+{
+    grpc::ClientContext                                context;
+    tinkoff::OperationsRequest                         req;
+    const std::shared_ptr<tinkoff::OperationsResponse> resp = std::make_shared<tinkoff::OperationsResponse>();
+
+    context.set_credentials(mCreds);
+
+    req.set_account_id(accountId.toStdString());
+    req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
+
+    return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()

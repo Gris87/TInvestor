@@ -71,6 +71,12 @@ public:
         const tinkoff::GetOrderBookRequest&                      req,
         tinkoff::GetOrderBookResponse*                           resp
     ) override;
+    grpc::Status getOperations(
+        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::OperationsRequest&                        req,
+        tinkoff::OperationsResponse*                             resp
+    ) override;
 
     MarketDataStream::Stream createMarketDataStream(
         const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context

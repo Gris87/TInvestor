@@ -80,7 +80,9 @@ public:
     std::shared_ptr<tinkoff::GetCandlesResponse>
     getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to) override;
     std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid) override;
-    std::shared_ptr<MarketDataStream>              createMarketDataStream() override;
+    std::shared_ptr<tinkoff::OperationsResponse>   getOperations(QThread* parentThread, const QString& accountId) override;
+
+    std::shared_ptr<MarketDataStream> createMarketDataStream() override;
     bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids) override;
     bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& uid) override;
@@ -100,4 +102,5 @@ private:
     std::unique_ptr<tinkoff::InstrumentsService::Stub>      mInstrumentsService;
     std::unique_ptr<tinkoff::MarketDataService::Stub>       mMarketDataService;
     std::unique_ptr<tinkoff::MarketDataStreamService::Stub> mMarketDataStreamService;
+    std::unique_ptr<tinkoff::OperationsService::Stub>       mOperationsService;
 };

@@ -38,6 +38,13 @@ public:
     MOCK_METHOD(
         std::shared_ptr<tinkoff::GetOrderBookResponse>, getOrderBook, (QThread * parentThread, const QString& uid), (override)
     );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::OperationsResponse>,
+        getOperations,
+        (QThread * parentThread, const QString& accountId),
+        (override)
+    );
+
     MOCK_METHOD(std::shared_ptr<MarketDataStream>, createMarketDataStream, (), (override));
     MOCK_METHOD(
         bool, subscribeLastPrices, (std::shared_ptr<MarketDataStream> & marketDataStream, const QStringList& uids), (override)

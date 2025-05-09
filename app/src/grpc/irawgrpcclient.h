@@ -20,6 +20,7 @@
 
 #include "messages/generated/instruments.grpc.pb.h"
 #include "messages/generated/marketdata.grpc.pb.h"
+#include "messages/generated/operations.grpc.pb.h"
 #include "messages/generated/users.grpc.pb.h"
 
 #if defined(Q_OS_WINDOWS)
@@ -113,6 +114,12 @@ public:
         grpc::ClientContext*                                     context,
         const tinkoff::GetOrderBookRequest&                      req,
         tinkoff::GetOrderBookResponse*                           resp
+    ) = 0;
+    virtual grpc::Status getOperations(
+        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::OperationsRequest&                        req,
+        tinkoff::OperationsResponse*                             resp
     ) = 0;
 
     virtual MarketDataStream::Stream createMarketDataStream(
