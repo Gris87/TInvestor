@@ -293,6 +293,7 @@ static int runApplication(QApplication* app)
     RawGrpcClient   rawGrpcClient;
     GrpcClient      grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
 
+    CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
     PriceCollectThread priceCollectThread(
         &config,
@@ -308,7 +309,6 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    CleanupThread      cleanupThread(&config, &stocksStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
     OrderBookThread    orderBookThread(&grpcClient);
 
@@ -345,10 +345,10 @@ static int runApplication(QApplication* app)
         &instrumentsStorage,
         &httpClient,
         &grpcClient,
+        &cleanupThread,
         &userUpdateThread,
         &priceCollectThread,
         &lastPriceThread,
-        &cleanupThread,
         &makeDecisionThread,
         &orderBookThread,
         &messageBoxUtils,

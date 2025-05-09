@@ -63,10 +63,10 @@ MainWindow::MainWindow(
     IInstrumentsStorage*               instrumentsStorage,
     IHttpClient*                       httpClient,
     IGrpcClient*                       grpcClient,
+    ICleanupThread*                    cleanupThread,
     IUserUpdateThread*                 userUpdateThread,
     IPriceCollectThread*               priceCollectThread,
     ILastPriceThread*                  lastPriceThread,
-    ICleanupThread*                    cleanupThread,
     IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
@@ -98,10 +98,10 @@ MainWindow::MainWindow(
     mInstrumentsStorage(instrumentsStorage),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
+    mCleanupThread(cleanupThread),
     mUserUpdateThread(userUpdateThread),
     mPriceCollectThread(priceCollectThread),
     mLastPriceThread(lastPriceThread),
-    mCleanupThread(cleanupThread),
     mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
     mMessageBoxUtils(messageBoxUtils),
@@ -173,9 +173,9 @@ MainWindow::MainWindow(
     connect(mTrayIcon,                         SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
     connect(mTrayIcon,                         SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
     connect(mGrpcClient,                       SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
+    connect(&cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
     connect(&userUpdateTimer,                  SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
     connect(&priceCollectTimer,                SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(&cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
     connect(&makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
     connect(&stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
     connect(&stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
@@ -202,16 +202,16 @@ MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
 
+    mCleanupThread->requestInterruption();
     mUserUpdateThread->requestInterruption();
     mPriceCollectThread->requestInterruption();
     mLastPriceThread->terminateThread();
-    mCleanupThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
+    mCleanupThread->wait();
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
     mLastPriceThread->wait();
-    mCleanupThread->wait();
     mMakeDecisionThread->wait();
 
     saveWindowState();
@@ -280,26 +280,24 @@ void MainWindow::authFailed(
         return;
     }
 
-    userUpdateTimer.stop();
     mUserUpdateThread->requestInterruption();
-    mUserUpdateThread->wait();
-
-    priceCollectTimer.stop();
     mPriceCollectThread->requestInterruption();
-    mPriceCollectThread->wait();
-
     mLastPriceThread->terminateThread();
-    mLastPriceThread->wait();
-
-    makeDecisionTimer.stop();
     mMakeDecisionThread->requestInterruption();
-    mMakeDecisionThread->wait();
 
+    userUpdateTimer.stop();
+    priceCollectTimer.stop();
+    makeDecisionTimer.stop();
     stocksTableUpdateAllTimer.stop();
     stocksTableUpdateLastPricesTimer.stop();
 
     stopSimulator();
     stopAutoPilot();
+
+    mUserUpdateThread->wait();
+    mPriceCollectThread->wait();
+    mLastPriceThread->wait();
+    mMakeDecisionThread->wait();
 
     ui->actionAuth->setEnabled(true);
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
@@ -319,6 +317,13 @@ void MainWindow::authFailed(
     authFailedDialogShown = false;
 }
 
+void MainWindow::cleanupTimerTicked()
+{
+    qInfo() << "Cleanup timer ticked";
+
+    mCleanupThread->start();
+}
+
 void MainWindow::userUpdateTimerTicked()
 {
     qDebug() << "User update timer ticked";
@@ -331,13 +336,6 @@ void MainWindow::priceCollectTimerTicked()
     qDebug() << "Price collect timer ticked";
 
     mPriceCollectThread->start();
-}
-
-void MainWindow::cleanupTimerTicked()
-{
-    qInfo() << "Cleanup timer ticked";
-
-    mCleanupThread->start();
 }
 
 void MainWindow::makeDecisionTimerTicked()
@@ -409,17 +407,15 @@ void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
 
-    userUpdateTimer.start();
     userUpdateTimerTicked();
-
-    priceCollectTimer.start();
     priceCollectTimerTicked();
+    makeDecisionTimerTicked();
 
     mLastPriceThread->start();
 
+    userUpdateTimer.start();
+    priceCollectTimer.start();
     makeDecisionTimer.start();
-    makeDecisionTimerTicked();
-
     stocksTableUpdateAllTimer.start();
     stocksTableUpdateLastPricesTimer.start();
 
@@ -571,12 +567,11 @@ void MainWindow::init()
 
     updateStocksTableWidget();
 
-    userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
-    priceCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
-
     cleanupTimer.start(CLEANUP_INTERVAL);
     cleanupTimerTicked();
 
+    userUpdateTimer.setInterval(USER_UPDATE_INTERVAL);
+    priceCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
     stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
     stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
 

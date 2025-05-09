@@ -112,10 +112,10 @@ protected:
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
+        cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
         priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
-        cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
@@ -226,10 +226,10 @@ protected:
             instrumentsStorageMock,
             httpClientMock,
             grpcClientMock,
+            cleanupThreadMock,
             userUpdateThreadMock,
             priceCollectThreadMock,
             lastPriceThreadMock,
-            cleanupThreadMock,
             makeDecisionThreadMock,
             orderBookThreadMock,
             messageBoxUtilsMock,
@@ -290,10 +290,10 @@ protected:
         delete instrumentsStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
+        delete cleanupThreadMock;
         delete userUpdateThreadMock;
         delete priceCollectThreadMock;
         delete lastPriceThreadMock;
-        delete cleanupThreadMock;
         delete makeDecisionThreadMock;
         delete orderBookThreadMock;
         delete messageBoxUtilsMock;
@@ -344,10 +344,10 @@ protected:
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
+    StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
     StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
-    StrictMock<CleanupThreadMock>*                    cleanupThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
@@ -893,10 +893,10 @@ TEST_F(Test_MainWindow, Test_init)
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
     // clang-format on
 
+    cleanupThreadMock->wait();
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
     lastPriceThreadMock->wait();
-    cleanupThreadMock->wait();
     makeDecisionThreadMock->wait();
 }
 

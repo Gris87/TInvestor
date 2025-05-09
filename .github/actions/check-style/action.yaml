@@ -45,7 +45,7 @@ runs:
       if: steps.cache-style.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        pip install loguru
+        pip install loguru colorama
 
     # Download clang
     - name: Download clang

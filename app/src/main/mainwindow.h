@@ -80,10 +80,10 @@ public:
         IInstrumentsStorage*               instrumentsStorage,
         IHttpClient*                       httpClient,
         IGrpcClient*                       grpcClient,
+        ICleanupThread*                    cleanupThread,
         IUserUpdateThread*                 userUpdateThread,
         IPriceCollectThread*               priceCollectThread,
         ILastPriceThread*                  lastPriceThread,
-        ICleanupThread*                    cleanupThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
@@ -106,9 +106,9 @@ public:
     Ui::MainWindow* ui;
 
     bool   authFailedDialogShown;
+    QTimer cleanupTimer;
     QTimer userUpdateTimer;
     QTimer priceCollectTimer;
-    QTimer cleanupTimer;
     QTimer makeDecisionTimer;
     QTimer stocksTableUpdateAllTimer;
     QTimer stocksTableUpdateLastPricesTimer;
@@ -148,10 +148,10 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     IHttpClient*                       mHttpClient;
     IGrpcClient*                       mGrpcClient;
+    ICleanupThread*                    mCleanupThread;
     IUserUpdateThread*                 mUserUpdateThread;
     IPriceCollectThread*               mPriceCollectThread;
     ILastPriceThread*                  mLastPriceThread;
-    ICleanupThread*                    mCleanupThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;
@@ -170,9 +170,9 @@ public slots:
         const std::string& errorMessage,
         const std::string& errorDetails
     );
+    void cleanupTimerTicked();
     void userUpdateTimerTicked();
     void priceCollectTimerTicked();
-    void cleanupTimerTicked();
     void makeDecisionTimerTicked();
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();

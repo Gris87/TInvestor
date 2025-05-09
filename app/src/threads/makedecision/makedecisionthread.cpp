@@ -24,5 +24,7 @@ void MakeDecisionThread::run()
 {
     qDebug() << "Running MakeDecisionThread";
 
+    // TODO: Do we need it?
+
     qDebug() << "Finish MakeDecisionThread";
 }
