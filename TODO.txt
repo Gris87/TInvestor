@@ -1,4 +1,3 @@
-Mix crypt key with username and hostname
 Control operations
 Display operations
 Build chart based on operations

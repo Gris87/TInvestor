@@ -28,6 +28,7 @@ public:
     QSqlDatabase db;
 
 private:
+    void initSimpleCrypt();
     void createUserTable() const;
     void createAccountsTable() const;
 

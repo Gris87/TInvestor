@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QHostInfo>
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSqlRecord>
@@ -16,7 +17,7 @@ constexpr quint64 CRYPT_KEY = 0x5EBEB228C0D4D48FULL;
 UserDatabase::UserDatabase() :
     IUserDatabase(),
     db(QSqlDatabase::addDatabase("QSQLITE")),
-    mSimpleCrypt(CRYPT_KEY)
+    mSimpleCrypt()
 {
     qDebug() << "Create UserDatabase";
 
@@ -33,6 +34,7 @@ UserDatabase::UserDatabase() :
 
     qInfo() << "User database" << dbPath << "created";
 
+    initSimpleCrypt();
     createUserTable();
     createAccountsTable();
 }
@@ -42,6 +44,41 @@ UserDatabase::~UserDatabase()
     qDebug() << "Destroy UserDatabase";
 
     db.close();
+}
+
+void UserDatabase::initSimpleCrypt()
+{
+    quint64 key      = CRYPT_KEY;
+    quint8* keyBytes = reinterpret_cast<quint8*>(&key);
+
+#ifdef Q_OS_WINDOWS
+    QString user = qgetenv("USERNAME");
+#else
+    QString user = qgetenv("USER");
+#endif
+    QString host = QHostInfo::localHostName();
+
+    if (user != "")
+    {
+        QByteArray bytes = user.toUtf8();
+
+        for (int i = 0; i < sizeof(key); ++i)
+        {
+            keyBytes[i] ^= bytes.at(i % bytes.size());
+        }
+    }
+
+    if (host != "")
+    {
+        QByteArray bytes = host.toUtf8();
+
+        for (int i = 0; i < sizeof(key); ++i)
+        {
+            keyBytes[sizeof(key) - i - 1] ^= bytes.at(i % bytes.size());
+        }
+    }
+
+    mSimpleCrypt.setKey(key);
 }
 
 void UserDatabase::createUserTable() const
