@@ -5,7 +5,6 @@
 #include "src/threads/makedecision/imakedecisionthread.h"
 
 #include "src/config/iconfig.h"
-#include "src/db/stocks/istocksdatabase.h"
 #include "src/storage/stocks/istocksstorage.h"
 
 
@@ -15,9 +14,7 @@ class MakeDecisionThread : public IMakeDecisionThread
     Q_OBJECT
 
 public:
-    explicit MakeDecisionThread(
-        IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent = nullptr
-    );
+    explicit MakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
     ~MakeDecisionThread() override;
 
     MakeDecisionThread(const MakeDecisionThread& another)            = delete;
@@ -27,6 +24,5 @@ public:
 
 private:
     IConfig*         mConfig;
-    IStocksDatabase* mStocksDatabase;
     IStocksStorage*  mStocksStorage;
 };

@@ -309,7 +309,7 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    MakeDecisionThread makeDecisionThread(&config, &stocksDatabase, &stocksStorage);
+    MakeDecisionThread makeDecisionThread(&config, &stocksStorage);
     OrderBookThread    orderBookThread(&grpcClient);
 
     MainWindow mainWindow(

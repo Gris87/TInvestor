@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 
 #include "src/config/iconfig_mock.h"
-#include "src/db/stocks/istocksdatabase_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 
 
@@ -19,23 +18,20 @@ protected:
     void SetUp() override
     {
         configMock         = new StrictMock<ConfigMock>();
-        stocksDatabaseMock = new StrictMock<StocksDatabaseMock>();
         stocksStorageMock  = new StrictMock<StocksStorageMock>();
 
-        thread = new MakeDecisionThread(configMock, stocksDatabaseMock, stocksStorageMock);
+        thread = new MakeDecisionThread(configMock, stocksStorageMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete configMock;
-        delete stocksDatabaseMock;
         delete stocksStorageMock;
     }
 
     MakeDecisionThread*             thread;
     StrictMock<ConfigMock>*         configMock;
-    StrictMock<StocksDatabaseMock>* stocksDatabaseMock;
     StrictMock<StocksStorageMock>*  stocksStorageMock;
 };
 

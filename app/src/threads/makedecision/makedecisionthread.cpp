@@ -4,12 +4,9 @@
 
 
 
-MakeDecisionThread::MakeDecisionThread(
-    IConfig* config, IStocksDatabase* stocksDatabase, IStocksStorage* stocksStorage, QObject* parent
-) :
+MakeDecisionThread::MakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent) :
     IMakeDecisionThread(parent),
     mConfig(config),
-    mStocksDatabase(stocksDatabase),
     mStocksStorage(stocksStorage)
 {
     qDebug() << "Create MakeDecisionThread";

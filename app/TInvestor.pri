@@ -60,7 +60,9 @@ SOURCES += \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
+    src/threads/operations/operationsthread.cpp \
     src/threads/orderbook/orderbookthread.cpp \
+    src/threads/portfolio/portfoliothread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
@@ -209,9 +211,13 @@ HEADERS += \
     src/threads/lastprice/lastpricethread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
+    src/threads/operations/ioperationsthread.h \
+    src/threads/operations/operationsthread.h \
     src/threads/orderbook/iorderbookthread.h \
     src/threads/orderbook/orderbookthread.h \
     src/threads/parallelhelper/parallelhelperthread.h \
+    src/threads/portfolio/iportfoliothread.h \
+    src/threads/portfolio/portfoliothread.h \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
     src/threads/userupdate/iuserupdatethread.h \
