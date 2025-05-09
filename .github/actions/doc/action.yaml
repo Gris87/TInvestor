@@ -44,6 +44,9 @@ runs:
                 choco install python3
                 choco install doxygen.install
                 choco install graphviz
+
+                Import-Module "$ENV:{ChocolateyInstall}/helpers/chocolateyInstaller.psm1"
+                refreshenv
             }
             "Linux" {
                 sudo apt-get update
@@ -58,20 +61,6 @@ runs:
       run: |
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
-
-        switch ("${{ runner.os }}")
-        {
-            "Windows" {
-                Get-ChildItem -Path "C:\python313"
-                Get-ChildItem -Path "C:\ProgramData\chocolatey\bin"
-                Get-ChildItem -Path "C:\hostedtoolcache\windows\Python\3.13.3\x64"
-                Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\python3"
-
-                ${Env:PATH} = "C:\python313;${Env:PATH}"
-                ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
-                ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
-            }
-        }
 
         New-Item -Path "build" -ItemType "directory" -Force
         & python --version
