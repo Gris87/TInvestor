@@ -62,10 +62,10 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                Get-ChildItem -Path "C:\python313" -Recurse -Force
-                Get-ChildItem -Path "C:\ProgramData\chocolatey\bin" -Recurse -Force
-                Get-ChildItem -Path "C:\hostedtoolcache\windows\Python\3.13.3\x64" -Recurse -Force
-                Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\python3" -Recurse -Force
+                Get-ChildItem -Path "C:\python313"
+                Get-ChildItem -Path "C:\ProgramData\chocolatey\bin"
+                Get-ChildItem -Path "C:\hostedtoolcache\windows\Python\3.13.3\x64"
+                Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\python3"
 
                 ${Env:PATH} = "C:\python313;${Env:PATH}"
                 ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
