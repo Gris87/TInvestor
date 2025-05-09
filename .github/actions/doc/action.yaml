@@ -41,12 +41,13 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
+                choco install python3
                 choco install doxygen.install
                 choco install graphviz
             }
             "Linux" {
                 sudo apt-get update
-                sudo apt-get install -y doxygen graphviz
+                sudo apt-get install -y python3 doxygen graphviz
             }
         }
 

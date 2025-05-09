@@ -66,6 +66,22 @@ runs:
         name: build-debug-${{ matrix.config.name }}
         path: ./TInvestor-source/build/Desktop-Debug
 
+    # Install required packages
+    - name: System packages
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        switch ("${{ runner.os }}")
+        {
+            "Windows" {
+                choco install python3
+            }
+            "Linux" {
+                sudo apt-get update
+                sudo apt-get install -y python3
+            }
+        }
+
     # Generate compile_commands.json
     - name: Generate compile_commands.json
       if: steps.cache-doc.outputs.cache-hit != 'true'
