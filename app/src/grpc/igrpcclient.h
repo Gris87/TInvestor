@@ -32,11 +32,11 @@ public:
     virtual std::shared_ptr<tinkoff::EtfsResponse>        findEtfs(QThread* parentThread)       = 0;
     virtual std::shared_ptr<tinkoff::FuturesResponse>     findFutures(QThread* parentThread)    = 0;
     virtual std::shared_ptr<tinkoff::GetCandlesResponse>
-    getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to)                                  = 0;
-    virtual std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid) = 0;
+    getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to)                                         = 0;
+    virtual std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid)        = 0;
     virtual std::shared_ptr<tinkoff::OperationsResponse>   getOperations(QThread* parentThread, const QString& accountId) = 0;
 
-    virtual std::shared_ptr<MarketDataStream>              createMarketDataStream()                                = 0;
+    virtual std::shared_ptr<MarketDataStream> createMarketDataStream()                                             = 0;
     virtual bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids) = 0;
     virtual bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)                        = 0;
     virtual bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& uid)       = 0;
