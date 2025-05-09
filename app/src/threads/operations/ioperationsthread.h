@@ -21,4 +21,7 @@ public:
     IOperationsThread& operator=(const IOperationsThread& another) = delete;
 
     virtual void setAccount(const QString& account) = 0;
+
+signals:
+    void accountNotFound();
 };

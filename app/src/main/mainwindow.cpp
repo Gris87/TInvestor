@@ -189,6 +189,8 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,               SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,               SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,                  SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mOperationsThread,                 SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mPortfolioThread,                  SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -411,6 +413,60 @@ void MainWindow::filterChanged(const Filter& filter)
     mStocksTableWidget->filterChanged(filter);
 }
 
+void MainWindow::startSimulator() const
+{
+    ui->simulationActiveWidget->show();
+    ui->simulationActiveSpinnerWidget->start();
+
+    ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
+    ui->startSimulationButton->setText(tr("Stop simulation"));
+
+    // TODO: Start simulation
+}
+
+void MainWindow::stopSimulator() const
+{
+    ui->simulationActiveWidget->hide();
+    ui->simulationActiveSpinnerWidget->stop();
+
+    ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
+    ui->startSimulationButton->setText(tr("Start simulation"));
+
+    // TODO: Stop simulation
+}
+
+void MainWindow::startAutoPilot() const
+{
+    ui->autoPilotActiveWidget->show();
+    ui->autoPilotActiveSpinnerWidget->start();
+
+    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
+    ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
+
+    const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
+
+    mOperationsThread->setAccount(account);
+    mPortfolioThread->setAccount(account);
+
+    mOperationsThread->start();
+    mPortfolioThread->start();
+}
+
+void MainWindow::stopAutoPilot() const
+{
+    ui->autoPilotActiveWidget->hide();
+    ui->autoPilotActiveSpinnerWidget->stop();
+
+    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
+    ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
+
+    mOperationsThread->requestInterruption();
+    mPortfolioThread->requestInterruption();
+
+    mOperationsThread->wait();
+    mPortfolioThread->wait();
+}
+
 void MainWindow::on_actionAuth_triggered()
 {
     ui->actionAuth->setEnabled(false);
@@ -630,60 +686,6 @@ void MainWindow::updateStackWidgetToolbar() const
         ui->stackedWidget->currentWidget() == ui->autoPilotPage ? ":/assets/images/auto_pilot_selected.png"
                                                                 : ":/assets/images/auto_pilot.png"
     ));
-}
-
-void MainWindow::startSimulator() const
-{
-    ui->simulationActiveWidget->show();
-    ui->simulationActiveSpinnerWidget->start();
-
-    ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
-    ui->startSimulationButton->setText(tr("Stop simulation"));
-
-    // TODO: Start simulation
-}
-
-void MainWindow::stopSimulator() const
-{
-    ui->simulationActiveWidget->hide();
-    ui->simulationActiveSpinnerWidget->stop();
-
-    ui->startSimulationButton->setIcon(QIcon(":/assets/images/start.png"));
-    ui->startSimulationButton->setText(tr("Start simulation"));
-
-    // TODO: Stop simulation
-}
-
-void MainWindow::startAutoPilot() const
-{
-    ui->autoPilotActiveWidget->show();
-    ui->autoPilotActiveSpinnerWidget->start();
-
-    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
-    ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
-
-    const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
-
-    mOperationsThread->setAccount(account);
-    mPortfolioThread->setAccount(account);
-
-    mOperationsThread->start();
-    mPortfolioThread->start();
-}
-
-void MainWindow::stopAutoPilot() const
-{
-    ui->autoPilotActiveWidget->hide();
-    ui->autoPilotActiveSpinnerWidget->stop();
-
-    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
-    ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
-
-    mOperationsThread->requestInterruption();
-    mPortfolioThread->requestInterruption();
-
-    mOperationsThread->wait();
-    mPortfolioThread->wait();
 }
 
 void MainWindow::applyConfig()

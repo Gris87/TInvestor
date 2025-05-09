@@ -21,7 +21,14 @@ void PortfolioThread::run()
 {
     qDebug() << "Running PortfolioThread";
 
-    qInfo() << mAccountId;
+    if (mAccountId != "")
+    {
+        qInfo() << mAccountId;
+    }
+    else
+    {
+        emit accountNotFound();
+    }
 
     qDebug() << "Finish PortfolioThread";
 }

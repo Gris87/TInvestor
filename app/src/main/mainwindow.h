@@ -120,10 +120,6 @@ public:
 
 private:
     void updateStackWidgetToolbar() const;
-    void startSimulator() const;
-    void stopSimulator() const;
-    void startAutoPilot() const;
-    void stopAutoPilot() const;
     void applyConfig();
     void saveWindowState();
     void loadWindowState();
@@ -190,6 +186,10 @@ public slots:
     void lastPriceChanged(const QString& uid);
     void dateChangeDateTimeChanged(const QDateTime& dateTime);
     void filterChanged(const Filter& filter);
+    void startSimulator() const;
+    void stopSimulator() const;
+    void startAutoPilot() const;
+    void stopAutoPilot() const;
 
 private slots:
     void on_actionAuth_triggered();

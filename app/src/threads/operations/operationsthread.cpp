@@ -21,7 +21,14 @@ void OperationsThread::run()
 {
     qDebug() << "Running OperationsThread";
 
-    qInfo() << mAccountId;
+    if (mAccountId != "")
+    {
+        qInfo() << mAccountId;
+    }
+    else
+    {
+        emit accountNotFound();
+    }
 
     qDebug() << "Finish OperationsThread";
 }
