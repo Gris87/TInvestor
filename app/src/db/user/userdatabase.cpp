@@ -48,8 +48,9 @@ UserDatabase::~UserDatabase()
 
 void UserDatabase::initSimpleCrypt()
 {
-    quint64 key      = CRYPT_KEY;
-    quint8* keyBytes = reinterpret_cast<quint8*>(&key);
+    quint64 key       = CRYPT_KEY;
+    quint8* keyBytes  = reinterpret_cast<quint8*>(&key);
+    const int keySize = sizeof(key);
 
 #ifdef Q_OS_WINDOWS
     QString user = qgetenv("USERNAME");
@@ -62,7 +63,7 @@ void UserDatabase::initSimpleCrypt()
     {
         QByteArray bytes = user.toUtf8();
 
-        for (int i = 0; i < sizeof(key); ++i)
+        for (int i = 0; i < keySize; ++i)
         {
             keyBytes[i] ^= bytes.at(i % bytes.size());
         }
@@ -72,9 +73,9 @@ void UserDatabase::initSimpleCrypt()
     {
         QByteArray bytes = host.toUtf8();
 
-        for (int i = 0; i < sizeof(key); ++i)
+        for (int i = 0; i < keySize; ++i)
         {
-            keyBytes[sizeof(key) - i - 1] ^= bytes.at(i % bytes.size());
+            keyBytes[keySize - i - 1] ^= bytes.at(i % bytes.size());
         }
     }
 
