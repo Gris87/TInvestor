@@ -45,7 +45,7 @@ runs:
                 choco install doxygen.install
                 choco install graphviz
 
-                Import-Module "$ENV:{ChocolateyInstall}/helpers/chocolateyInstaller.psm1"
+                Import-Module "${Env:ChocolateyInstall}/helpers/chocolateyInstaller.psm1"
                 refreshenv
             }
             "Linux" {
