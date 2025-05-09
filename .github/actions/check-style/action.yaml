@@ -86,7 +86,7 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${Env:PATH} = "C:\ProgramData\chocolatey\lib\python3;${Env:PATH}"
+                ${Env:PATH} = "C:\python313;${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-${Env:CLANG_VERSION}-x86_64-pc-windows-msvc/bin;${Env:PATH}"
             }
             "Linux" {

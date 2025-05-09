@@ -62,9 +62,14 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${Env:PATH} = "C:\ProgramData\chocolatey\lib\python3;${Env:PATH}"
+                ${Env:PATH} = "C:\python313;${Env:PATH}"
                 ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
                 ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
+
+                Get-ChildItem -Path "C:\python313" -Recurse -Force
+                Get-ChildItem -Path "C:\ProgramData\chocolatey\bin" -Recurse -Force
+                Get-ChildItem -Path "C:\hostedtoolcache\windows\Python\3.13.3\x64" -Recurse -Force
+                Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\python3" -Recurse -Force
             }
         }
 
