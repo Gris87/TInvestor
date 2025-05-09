@@ -39,7 +39,9 @@
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
+#include "src/threads/operations/operationsthread.h"
 #include "src/threads/orderbook/orderbookthread.h"
+#include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
@@ -309,6 +311,8 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
+    OperationsThread   operationsThread(&userStorage);
+    PortfolioThread    portfolioThread(&userStorage);
     MakeDecisionThread makeDecisionThread(&config, &stocksStorage);
     OrderBookThread    orderBookThread(&grpcClient);
 
@@ -349,6 +353,8 @@ static int runApplication(QApplication* app)
         &userUpdateThread,
         &priceCollectThread,
         &lastPriceThread,
+        &operationsThread,
+        &portfolioThread,
         &makeDecisionThread,
         &orderBookThread,
         &messageBoxUtils,

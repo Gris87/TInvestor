@@ -6,7 +6,8 @@
 
 OperationsThread::OperationsThread(IUserStorage* userStorage, QObject* parent) :
     IOperationsThread(parent),
-    mUserStorage(userStorage)
+    mUserStorage(userStorage),
+    mAccountId()
 {
     qDebug() << "Create OperationsThread";
 }
@@ -20,5 +21,15 @@ void OperationsThread::run()
 {
     qDebug() << "Running OperationsThread";
 
+    qInfo() << mAccountId;
+
     qDebug() << "Finish OperationsThread";
+}
+
+void OperationsThread::setAccount(const QString& account)
+{
+    const QMutexLocker lock(mUserStorage->getMutex());
+    Accounts           accounts = mUserStorage->getAccounts();
+
+    mAccountId = accounts[account].id;
 }

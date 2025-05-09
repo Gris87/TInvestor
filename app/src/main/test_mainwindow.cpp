@@ -28,7 +28,9 @@
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
+#include "src/threads/operations/ioperationsthread_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
+#include "src/threads/portfolio/iportfoliothread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
@@ -116,6 +118,8 @@ protected:
         userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
         priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
+        operationsThreadMock                 = new StrictMock<OperationsThreadMock>();
+        portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
@@ -230,6 +234,8 @@ protected:
             userUpdateThreadMock,
             priceCollectThreadMock,
             lastPriceThreadMock,
+            operationsThreadMock,
+            portfolioThreadMock,
             makeDecisionThreadMock,
             orderBookThreadMock,
             messageBoxUtilsMock,
@@ -294,6 +300,8 @@ protected:
         delete userUpdateThreadMock;
         delete priceCollectThreadMock;
         delete lastPriceThreadMock;
+        delete operationsThreadMock;
+        delete portfolioThreadMock;
         delete makeDecisionThreadMock;
         delete orderBookThreadMock;
         delete messageBoxUtilsMock;
@@ -348,6 +356,8 @@ protected:
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
     StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
+    StrictMock<OperationsThreadMock>*                 operationsThreadMock;
+    StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
@@ -375,12 +385,12 @@ TEST_F(Test_MainWindow, Test_constructor_and_destructor)
     // clang-format on
 
     // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
-    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
@@ -450,6 +460,17 @@ TEST_F(Test_MainWindow, Test_authFailed)
     mainWindow->authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "Test_authFailed");
 }
 
+TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*cleanupThreadMock, run());
+
+    mainWindow->cleanupTimerTicked();
+
+    cleanupThreadMock->wait();
+}
+
 TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 {
     const InSequence seq;
@@ -470,17 +491,6 @@ TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
     mainWindow->priceCollectTimerTicked();
 
     priceCollectThreadMock->wait();
-}
-
-TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
-{
-    const InSequence seq;
-
-    EXPECT_CALL(*cleanupThreadMock, run());
-
-    mainWindow->cleanupTimerTicked();
-
-    cleanupThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
@@ -608,12 +618,12 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), true);
 
     // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
-    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
@@ -622,10 +632,17 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
+        .WillOnce(Return(QVariant("aaaaaa")));
+
+    EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
+    EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
 
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
     EXPECT_CALL(*lastPriceThreadMock, run());
+    EXPECT_CALL(*operationsThreadMock, run());
+    EXPECT_CALL(*portfolioThreadMock, run());
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->ui->actionAuth->trigger();
@@ -633,12 +650,12 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->ui->actionAuth->isEnabled(), false);
 
     // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   true);
     ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
-    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
-    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
     // clang-format on
@@ -646,6 +663,8 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
     lastPriceThreadMock->wait();
+    operationsThreadMock->wait();
+    portfolioThreadMock->wait();
     makeDecisionThreadMock->wait();
 }
 
@@ -790,7 +809,7 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 
 TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 {
-    const InSequence seq;
+    // const InSequence seq;
 
     StrictMock<StartAutoPilotDialogMock>* startAutoPilotDialogMock =
         new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
@@ -817,6 +836,15 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("bbbbbb"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("bbbbbb")));
 
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
+        .WillOnce(Return(QVariant("aaaaaa")));
+
+    EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
+    EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
+
+    EXPECT_CALL(*operationsThreadMock, run());
+    EXPECT_CALL(*portfolioThreadMock, run());
+
     mainWindow->ui->startAutoPilotButton->click();
 
     // clang-format off
@@ -824,6 +852,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), true);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Stop auto-pilot");
     // clang-format on
+
+    operationsThreadMock->wait();
+    portfolioThreadMock->wait();
 
     EXPECT_CALL(
         *messageBoxUtilsMock,
@@ -855,12 +886,12 @@ TEST_F(Test_MainWindow, Test_init)
     QList<Stock*> stocks;
 
     // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   0);
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   false);
     ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 0);
     ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), false);
-    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      0);
-    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      false);
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
@@ -883,12 +914,12 @@ TEST_F(Test_MainWindow, Test_init)
     mainWindow->init();
 
     // clang-format off
+    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      24 * 60 * 60 * 1000);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      true);
     ASSERT_EQ(mainWindow->userUpdateTimer.interval(),   15 * 60 * 1000);
     ASSERT_EQ(mainWindow->userUpdateTimer.isActive(),   true);
     ASSERT_EQ(mainWindow->priceCollectTimer.interval(), 1 * 60 * 60 * 1000);
     ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
-    ASSERT_EQ(mainWindow->cleanupTimer.interval(),      24 * 60 * 60 * 1000);
-    ASSERT_EQ(mainWindow->cleanupTimer.isActive(),      true);
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
     // clang-format on

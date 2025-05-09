@@ -23,4 +23,5 @@ public:
     OperationsThreadMock& operator=(const OperationsThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
+    MOCK_METHOD(void, setAccount, (const QString& account), (override));
 };

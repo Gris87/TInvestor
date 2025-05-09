@@ -19,4 +19,6 @@ public:
 
     IOperationsThread(const IOperationsThread& another)            = delete;
     IOperationsThread& operator=(const IOperationsThread& another) = delete;
+
+    virtual void setAccount(const QString& account) = 0;
 };

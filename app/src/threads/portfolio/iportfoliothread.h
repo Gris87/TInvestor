@@ -19,4 +19,6 @@ public:
 
     IPortfolioThread(const IPortfolioThread& another)            = delete;
     IPortfolioThread& operator=(const IPortfolioThread& another) = delete;
+
+    virtual void setAccount(const QString& account) = 0;
 };

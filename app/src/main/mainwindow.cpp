@@ -67,6 +67,8 @@ MainWindow::MainWindow(
     IUserUpdateThread*                 userUpdateThread,
     IPriceCollectThread*               priceCollectThread,
     ILastPriceThread*                  lastPriceThread,
+    IOperationsThread*                 operationsThread,
+    IPortfolioThread*                  portfolioThread,
     IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
     IMessageBoxUtils*                  messageBoxUtils,
@@ -102,6 +104,8 @@ MainWindow::MainWindow(
     mUserUpdateThread(userUpdateThread),
     mPriceCollectThread(priceCollectThread),
     mLastPriceThread(lastPriceThread),
+    mOperationsThread(operationsThread),
+    mPortfolioThread(portfolioThread),
     mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
     mMessageBoxUtils(messageBoxUtils),
@@ -206,12 +210,16 @@ MainWindow::~MainWindow()
     mUserUpdateThread->requestInterruption();
     mPriceCollectThread->requestInterruption();
     mLastPriceThread->terminateThread();
+    mOperationsThread->requestInterruption();
+    mPortfolioThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
     mCleanupThread->wait();
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
     mLastPriceThread->wait();
+    mOperationsThread->wait();
+    mPortfolioThread->wait();
     mMakeDecisionThread->wait();
 
     saveWindowState();
@@ -654,7 +662,13 @@ void MainWindow::startAutoPilot() const
     ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
     ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
 
-    // TODO: Start auto-pilot
+    const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
+
+    mOperationsThread->setAccount(account);
+    mPortfolioThread->setAccount(account);
+
+    mOperationsThread->start();
+    mPortfolioThread->start();
 }
 
 void MainWindow::stopAutoPilot() const
@@ -665,7 +679,11 @@ void MainWindow::stopAutoPilot() const
     ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
     ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
 
-    // TODO: Stop auto-pilot
+    mOperationsThread->requestInterruption();
+    mPortfolioThread->requestInterruption();
+
+    mOperationsThread->wait();
+    mPortfolioThread->wait();
 }
 
 void MainWindow::applyConfig()

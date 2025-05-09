@@ -19,7 +19,9 @@
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
+#include "src/threads/operations/ioperationsthread.h"
 #include "src/threads/orderbook/iorderbookthread.h"
+#include "src/threads/portfolio/iportfoliothread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
@@ -84,6 +86,8 @@ public:
         IUserUpdateThread*                 userUpdateThread,
         IPriceCollectThread*               priceCollectThread,
         ILastPriceThread*                  lastPriceThread,
+        IOperationsThread*                 operationsThread,
+        IPortfolioThread*                  portfolioThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
         IMessageBoxUtils*                  messageBoxUtils,
@@ -152,6 +156,8 @@ private:
     IUserUpdateThread*                 mUserUpdateThread;
     IPriceCollectThread*               mPriceCollectThread;
     ILastPriceThread*                  mLastPriceThread;
+    IOperationsThread*                 mOperationsThread;
+    IPortfolioThread*                  mPortfolioThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
     IMessageBoxUtils*                  mMessageBoxUtils;

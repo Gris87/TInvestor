@@ -17,8 +17,8 @@ class Test_MakeDecisionThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        configMock         = new StrictMock<ConfigMock>();
-        stocksStorageMock  = new StrictMock<StocksStorageMock>();
+        configMock        = new StrictMock<ConfigMock>();
+        stocksStorageMock = new StrictMock<StocksStorageMock>();
 
         thread = new MakeDecisionThread(configMock, stocksStorageMock);
     }
@@ -30,9 +30,9 @@ protected:
         delete stocksStorageMock;
     }
 
-    MakeDecisionThread*             thread;
-    StrictMock<ConfigMock>*         configMock;
-    StrictMock<StocksStorageMock>*  stocksStorageMock;
+    MakeDecisionThread*            thread;
+    StrictMock<ConfigMock>*        configMock;
+    StrictMock<StocksStorageMock>* stocksStorageMock;
 };
 
 

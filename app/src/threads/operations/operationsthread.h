@@ -21,6 +21,9 @@ public:
 
     void run() override;
 
+    void setAccount(const QString& account) override;
+
 private:
     IUserStorage* mUserStorage;
+    QString       mAccountId;
 };
