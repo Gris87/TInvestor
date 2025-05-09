@@ -48,9 +48,9 @@ UserDatabase::~UserDatabase()
 
 void UserDatabase::initSimpleCrypt()
 {
-    quint64 key       = CRYPT_KEY;
-    quint8* keyBytes  = reinterpret_cast<quint8*>(&key);
-    const int keySize = sizeof(key);
+    quint64   key      = CRYPT_KEY;
+    quint8*   keyBytes = reinterpret_cast<quint8*>(&key);
+    const int keySize  = sizeof(key);
 
 #ifdef Q_OS_WINDOWS
     QString user = qgetenv("USERNAME");
