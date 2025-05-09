@@ -72,23 +72,17 @@ float UserStorage::getCommission()
     return mUser.commission;
 }
 
-void UserStorage::setAccounts(const QList<Account>& accounts)
+void UserStorage::setAccounts(const Accounts& accounts)
 {
     if (mAccounts != accounts)
     {
-        mAccounts            = accounts;
-        Account* accountData = mAccounts.data();
-
-        for (int i = 0; i < mAccounts.size(); ++i)
-        {
-            accountData[i].setId(accountData[i].id);
-        }
+        mAccounts = accounts;
 
         mUserDatabase->writeAccounts(mAccounts);
     }
 }
 
-const QList<Account>& UserStorage::getAccounts()
+const Accounts& UserStorage::getAccounts()
 {
     return mAccounts;
 }

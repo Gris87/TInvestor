@@ -27,6 +27,6 @@ public:
     MOCK_METHOD(void, setUserInfo, (const User& user), (override));
     MOCK_METHOD(bool, isQualified, (), (override));
     MOCK_METHOD(float, getCommission, (), (override));
-    MOCK_METHOD(void, setAccounts, (const QList<Account>& accounts), (override));
-    MOCK_METHOD(const QList<Account>&, getAccounts, (), (override));
+    MOCK_METHOD(void, setAccounts, (const Accounts& accounts), (override));
+    MOCK_METHOD(const Accounts&, getAccounts, (), (override));
 };

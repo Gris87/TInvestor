@@ -39,28 +39,28 @@ void InstrumentsStorage::mergeInstruments(const Instruments& instruments)
 {
     bool changed = false;
 
-    for (auto i = mInstruments.cbegin(), end = mInstruments.cend(); i != end; ++i)
+    for (auto it = mInstruments.cbegin(), end = mInstruments.cend(); it != end; ++it)
     {
-        if (instruments.contains(i.key()))
+        if (instruments.contains(it.key()))
         {
-            const InstrumentInfo& info = instruments[i.key()];
+            const InstrumentInfo& info = instruments[it.key()];
 
-            if (i.value() != info)
+            if (it.value() != info)
             {
                 changed = true;
 
-                mInstruments[i.key()] = info;
+                mInstruments[it.key()] = info;
             }
         }
     }
 
-    for (auto i = instruments.cbegin(), end = instruments.cend(); i != end; ++i)
+    for (auto it = instruments.cbegin(), end = instruments.cend(); it != end; ++it)
     {
-        if (!mInstruments.contains(i.key()))
+        if (!mInstruments.contains(it.key()))
         {
             changed = true;
 
-            mInstruments[i.key()] = i.value();
+            mInstruments[it.key()] = it.value();
         }
     }
 

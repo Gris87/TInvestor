@@ -40,7 +40,7 @@ void UserUpdateThread::run()
 
         if (tinkoffAccounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
         {
-            QList<Account> accounts;
+            Accounts accounts;
 
             for (int i = 0; i < tinkoffAccounts->accounts_size(); ++i)
             {
@@ -52,10 +52,11 @@ void UserUpdateThread::run()
                 {
                     Account account;
 
-                    account.id   = QString::fromStdString(tinkoffAccount.id());
-                    account.name = QString::fromStdString(tinkoffAccount.name());
+                    account.index = i;
+                    account.id    = QString::fromStdString(tinkoffAccount.id());
+                    account.name  = QString::fromStdString(tinkoffAccount.name());
 
-                    accounts.append(account);
+                    accounts[account.hash()] = account;
                 }
             }
 

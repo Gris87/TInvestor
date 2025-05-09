@@ -49,22 +49,25 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     QMutex mutex;
 
-    User           user;
-    QList<Account> accounts;
-    Account        account1;
-    Account        account2;
+    User     user;
+    Accounts accounts;
+    Account  account1;
+    Account  account2;
 
     user.qualified = true;
     user.tariff    = "premium";
     user.qualifiedForWorkWith << "blah" << "disintegration gun";
 
-    account1.id   = "aaaaa";
-    account1.name = "For the black day";
+    account1.index = 0;
+    account1.id    = "aaaaa";
+    account1.name  = "For the black day";
 
-    account2.id   = "bbbbb";
-    account2.name = "Everyday party";
+    account2.index = 1;
+    account2.id    = "bbbbb";
+    account2.name  = "Everyday party";
 
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     const std::shared_ptr<tinkoff::GetInfoResponse> getInfoResponse(new tinkoff::GetInfoResponse());
 

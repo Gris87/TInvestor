@@ -5,19 +5,23 @@
 
 
 Account::Account() :
+    index(),
     id(),
-    idHash(),
     name()
 {
 }
 
-void Account::setId(const QString& value)
+QString Account::hash() const
 {
-    id     = value;
-    idHash = QString::fromUtf8(QCryptographicHash::hash(value.toUtf8(), QCryptographicHash::Md5).toHex());
+    return QString::fromUtf8(QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
 bool operator==(const Account& lhs, const Account& rhs)
 {
-    return lhs.id == rhs.id && lhs.name == rhs.name;
+    return lhs.index == rhs.index && lhs.id == rhs.id && lhs.name == rhs.name;
+}
+
+bool operator<(const Account& lhs, const Account& rhs)
+{
+    return lhs.index < rhs.index;
 }

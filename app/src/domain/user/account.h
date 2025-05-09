@@ -2,7 +2,7 @@
 
 
 
-#include <QString>
+#include <QMap>
 
 
 
@@ -14,13 +14,16 @@ struct Account
 
     Account& operator=(const Account& another) = default;
 
-    void setId(const QString& value);
+    QString hash() const;
 
+    int     index;
     QString id;
-    QString idHash;
     QString name;
 };
+
+using Accounts = QMap<QString, Account>; // Hash => Account
 
 
 
 bool operator==(const Account& lhs, const Account& rhs);
+bool operator<(const Account& lhs, const Account& rhs);

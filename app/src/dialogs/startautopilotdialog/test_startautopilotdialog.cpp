@@ -30,21 +30,27 @@ protected:
 
         QMutex mutex;
 
-        QList<Account> accounts;
+        Accounts accounts;
 
         Account account1;
         Account account2;
         Account account3;
 
-        account1.setId("aaaa");
-        account2.setId("bbbb");
-        account3.setId("cccc");
+        account1.index = 0;
+        account1.id    = "aaaa";
+        account1.name  = "Babushka";
 
-        account1.name = "Babushka";
-        account2.name = "Matreshka";
-        account3.name = "Balalayka";
+        account2.index = 1;
+        account2.id    = "bbbb";
+        account2.name  = "Matreshka";
 
-        accounts << account1 << account2 << account3;
+        account3.index = 2;
+        account3.id    = "cccc";
+        account3.name  = "Balalayka";
+
+        accounts[account1.hash()] = account1;
+        accounts[account2.hash()] = account2;
+        accounts[account3.hash()] = account3;
 
         EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
         EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
@@ -76,6 +82,13 @@ protected:
 
 TEST_F(Test_StartAutoPilotDialog, Test_constructor_and_destructor)
 {
+    ASSERT_EQ(dialog->ui->accountComboBox->count(), 3);
+    ASSERT_EQ(dialog->ui->accountComboBox->itemText(0), "Babushka");
+    ASSERT_EQ(dialog->ui->accountComboBox->itemText(1), "Matreshka");
+    ASSERT_EQ(dialog->ui->accountComboBox->itemText(2), "Balalayka");
+    ASSERT_EQ(dialog->ui->accountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
+    ASSERT_EQ(dialog->ui->accountComboBox->itemData(1), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
+    ASSERT_EQ(dialog->ui->accountComboBox->itemData(2), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)

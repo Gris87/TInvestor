@@ -69,7 +69,8 @@ void UserDatabase::createAccountsTable() const
 
     const QString str =
         "CREATE TABLE IF NOT EXISTS accounts ("
-        "    id   TEXT NOT NULL PRIMARY KEY, "
+        "    id   INTEGER NOT NULL PRIMARY KEY, "
+        "    uid  TEXT NOT NULL, "
         "    name TEXT NOT NULL"
         ");";
 
@@ -138,14 +139,14 @@ User UserDatabase::readUserInfo()
     return res;
 }
 
-QList<Account> UserDatabase::readAccounts()
+Accounts UserDatabase::readAccounts()
 {
     qDebug() << "Reading accounts";
 
-    QList<Account> res;
+    Accounts res;
 
     const QString str =
-        "SELECT id, name "
+        "SELECT id, uid, name "
         "FROM accounts;";
 
     QSqlQuery query(db);
@@ -156,16 +157,18 @@ QList<Account> UserDatabase::readAccounts()
     const QSqlRecord rec = query.record();
 
     const int idIndex   = rec.indexOf("id");
+    const int uidIndex  = rec.indexOf("uid");
     const int nameIndex = rec.indexOf("name");
 
     while (query.next())
     {
         Account account;
 
-        account.setId(mSimpleCrypt.decryptToString(query.value(idIndex).toString()));
-        account.name = query.value(nameIndex).toString();
+        account.index = query.value(idIndex).toInt();
+        account.id    = mSimpleCrypt.decryptToString(query.value(uidIndex).toString());
+        account.name  = query.value(nameIndex).toString();
 
-        res.append(account);
+        res[account.hash()] = account;
     }
 
     return res;
@@ -204,7 +207,7 @@ void UserDatabase::writeUserInfo(const User& user)
     Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
 }
 
-void UserDatabase::writeAccounts(const QList<Account>& accounts)
+void UserDatabase::writeAccounts(const Accounts& accounts)
 {
     bool ok = db.transaction();
     Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
@@ -219,28 +222,34 @@ void UserDatabase::writeAccounts(const QList<Account>& accounts)
     Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", query1.lastError().text().toLocal8Bit().constData());
 
     QVariantList ids;
+    QVariantList uids;
     QVariantList names;
 
     ids.resizeForOverwrite(accounts.size());
+    uids.resizeForOverwrite(accounts.size());
     names.resizeForOverwrite(accounts.size());
 
-    for (int i = 0; i < accounts.size(); ++i)
-    {
-        const Account& account = accounts.at(i);
+    int i = 0;
 
-        ids[i]   = mSimpleCrypt.encryptToString(account.id);
-        names[i] = account.name;
+    for (auto it = accounts.cbegin(), end = accounts.cend(); it != end; ++it)
+    {
+        ids[i]   = it.value().index;
+        uids[i]  = mSimpleCrypt.encryptToString(it.value().id);
+        names[i] = it.value().name;
+
+        ++i;
     }
 
     QSqlQuery query2(db);
 
     query2.prepare(
         "INSERT INTO accounts "
-        "(id, name) "
+        "(id, uid, name) "
         "VALUES "
-        "(:id, :name);"
+        "(:id, :uid, :name);"
     );
     query2.bindValue(":id", ids);
+    query2.bindValue(":uid", uids);
     query2.bindValue(":name", names);
 
     ok = query2.execBatch();

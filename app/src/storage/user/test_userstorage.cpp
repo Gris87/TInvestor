@@ -49,17 +49,21 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_
     user.qualified  = true;
     user.commission = 0.99f;
 
+    Accounts accounts;
+
     Account account1;
     Account account2;
 
-    account1.setId("aaaa-aaaa");
-    account1.name = "Bill";
+    account1.index = 0;
+    account1.id    = "aaaa-aaaa";
+    account1.name  = "Bill";
 
-    account2.setId("bbb-bbb-bbb");
-    account2.name = "John";
+    account2.index = 1;
+    account2.id    = "bbb-bbb-bbb";
+    account2.name  = "John";
 
-    QList<Account> accounts;
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     EXPECT_CALL(*userDatabaseMock, readUserInfo()).WillOnce(Return(user));
     EXPECT_CALL(*userDatabaseMock, readAccounts()).WillOnce(Return(accounts));
@@ -86,17 +90,21 @@ TEST_F(Test_UserStorage, Test_setToken)
     User user;
     user.token = "someToken";
 
+    Accounts accounts;
+
     Account account1;
     Account account2;
 
-    account1.setId("aaaa-aaaa");
-    account1.name = "Bill";
+    account1.index = 0;
+    account1.id    = "aaaa-aaaa";
+    account1.name  = "Bill";
 
-    account2.setId("bbb-bbb-bbb");
-    account2.name = "John";
+    account2.index = 1;
+    account2.id    = "bbb-bbb-bbb";
+    account2.name  = "John";
 
-    QList<Account> accounts;
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     EXPECT_CALL(*userDatabaseMock, readUserInfo()).WillOnce(Return(user));
     EXPECT_CALL(*userDatabaseMock, readAccounts()).WillOnce(Return(accounts));
@@ -131,17 +139,21 @@ TEST_F(Test_UserStorage, Test_setAccounts)
     User user;
     user.token = "someToken";
 
+    Accounts accounts;
+
     Account account1;
     Account account2;
 
-    account1.setId("aaaa-aaaa");
-    account1.name = "Bill";
+    account1.index = 0;
+    account1.id    = "aaaa-aaaa";
+    account1.name  = "Bill";
 
-    account2.setId("bbb-bbb-bbb");
-    account2.name = "John";
+    account2.index = 1;
+    account2.id    = "bbb-bbb-bbb";
+    account2.name  = "John";
 
-    QList<Account> accounts;
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     EXPECT_CALL(*userDatabaseMock, readUserInfo()).WillOnce(Return(user));
     EXPECT_CALL(*userDatabaseMock, readAccounts()).WillOnce(Return(accounts));
@@ -151,7 +163,7 @@ TEST_F(Test_UserStorage, Test_setAccounts)
     ASSERT_EQ(storage->getToken(), "someToken");
     ASSERT_EQ(storage->getAccounts(), accounts);
 
-    accounts[0].setId("cccccccccccc");
+    accounts[account2.hash()].name = "Vasya";
 
     EXPECT_CALL(*userDatabaseMock, writeAccounts(accounts));
 

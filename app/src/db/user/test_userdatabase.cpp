@@ -102,39 +102,42 @@ TEST_F(Test_UserDatabase, Test_writeUserInfo)
 
 TEST_F(Test_UserDatabase, Test_readAccounts)
 {
-    const QList<Account> accounts = database->readAccounts();
+    const Accounts accounts = database->readAccounts();
 
     ASSERT_EQ(accounts.size(), 0);
 }
 
 TEST_F(Test_UserDatabase, Test_writeAccounts)
 {
-    QList<Account> accounts = database->readAccounts();
+    Accounts accounts = database->readAccounts();
 
     ASSERT_EQ(accounts.size(), 0);
 
     Account account1;
     Account account2;
 
-    account1.setId("aaaaa");
-    account1.name = "WATA";
+    account1.index = 0;
+    account1.id    = "aaaaa";
+    account1.name  = "WATA";
 
-    account2.setId("bbbbb");
-    account2.name = "Zorro";
+    account2.index = 1;
+    account2.id    = "bbbbb";
+    account2.name  = "Zorro";
 
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     database->writeAccounts(accounts);
     accounts = database->readAccounts();
 
     // clang-format off
-    ASSERT_EQ(accounts.size(),       2);
-    ASSERT_EQ(accounts.at(0).id,     "aaaaa");
-    ASSERT_EQ(accounts.at(0).idHash, "594f803b380a41396ed63dca39503542");
-    ASSERT_EQ(accounts.at(0).name,   "WATA");
-    ASSERT_EQ(accounts.at(1).id,     "bbbbb");
-    ASSERT_EQ(accounts.at(1).idHash, "a21075a36eeddd084e17611a238c7101");
-    ASSERT_EQ(accounts.at(1).name,   "Zorro");
+    ASSERT_EQ(accounts.size(),                                    2);
+    ASSERT_EQ(accounts["594f803b380a41396ed63dca39503542"].index, 0);
+    ASSERT_EQ(accounts["594f803b380a41396ed63dca39503542"].id,    "aaaaa");
+    ASSERT_EQ(accounts["594f803b380a41396ed63dca39503542"].name,  "WATA");
+    ASSERT_EQ(accounts["a21075a36eeddd084e17611a238c7101"].index, 1);
+    ASSERT_EQ(accounts["a21075a36eeddd084e17611a238c7101"].id,    "bbbbb");
+    ASSERT_EQ(accounts["a21075a36eeddd084e17611a238c7101"].name,  "Zorro");
     // clang-format on
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

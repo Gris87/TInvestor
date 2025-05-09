@@ -32,18 +32,21 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 
     QMutex mutex;
 
-    QList<Account> accounts;
+    Accounts accounts;
 
     Account account1;
     Account account2;
 
-    account1.setId("aaaa");
-    account2.setId("bbbb");
+    account1.index = 0;
+    account1.id    = "aaaa";
+    account1.name  = "Babushka";
 
-    account1.name = "Babushka";
-    account2.name = "Matreshka";
+    account2.index = 1;
+    account2.id    = "bbbb";
+    account2.name  = "Matreshka";
 
-    accounts << account1 << account2;
+    accounts[account1.hash()] = account1;
+    accounts[account2.hash()] = account2;
 
     EXPECT_CALL(userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));

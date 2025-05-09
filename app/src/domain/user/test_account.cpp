@@ -10,9 +10,9 @@ TEST(Test_Account, Test_constructor_and_destructor)
     const Account account;
 
     // clang-format off
-    ASSERT_EQ(account.id,     "");
-    ASSERT_EQ(account.idHash, "");
-    ASSERT_EQ(account.name,   "");
+    ASSERT_EQ(account.index, 0);
+    ASSERT_EQ(account.id,    "");
+    ASSERT_EQ(account.name,  "");
     // clang-format on
 }
 
@@ -20,16 +20,16 @@ TEST(Test_Account, Test_copy_constructor)
 {
     Account account;
 
-    account.id     = "a";
-    account.idHash = "b";
-    account.name   = "c";
+    account.index = 1;
+    account.id    = "a";
+    account.name  = "b";
 
     const Account account2(account);
 
     // clang-format off
-    ASSERT_EQ(account2.id,     "a");
-    ASSERT_EQ(account2.idHash, "b");
-    ASSERT_EQ(account2.name,   "c");
+    ASSERT_EQ(account2.index, 1);
+    ASSERT_EQ(account2.id,    "a");
+    ASSERT_EQ(account2.name,  "b");
     // clang-format on
 }
 
@@ -38,35 +38,30 @@ TEST(Test_Account, Test_assign)
     Account account;
     Account account2;
 
-    account.id     = "a";
-    account.idHash = "b";
-    account.name   = "c";
+    account.index = 1;
+    account.id    = "a";
+    account.name  = "b";
 
     account2 = account;
 
     // clang-format off
-    ASSERT_EQ(account2.id,     "a");
-    ASSERT_EQ(account2.idHash, "b");
-    ASSERT_EQ(account2.name,   "c");
+    ASSERT_EQ(account2.index, 1);
+    ASSERT_EQ(account2.id,    "a");
+    ASSERT_EQ(account2.name,  "b");
     // clang-format on
 }
 
-TEST(Test_Account, Test_setId)
+TEST(Test_Account, Test_hash)
 {
     Account account;
 
-    ASSERT_EQ(account.id, "");
-    ASSERT_EQ(account.idHash, "");
+    account.id = "aaaaa";
 
-    account.setId("aaaaa");
+    ASSERT_EQ(account.hash(), "594f803b380a41396ed63dca39503542");
 
-    ASSERT_EQ(account.id, "aaaaa");
-    ASSERT_EQ(account.idHash, "594f803b380a41396ed63dca39503542");
+    account.id = "bbbbb";
 
-    account.setId("bbbbb");
-
-    ASSERT_EQ(account.id, "bbbbb");
-    ASSERT_EQ(account.idHash, "a21075a36eeddd084e17611a238c7101");
+    ASSERT_EQ(account.hash(), "a21075a36eeddd084e17611a238c7101");
 }
 
 TEST(Test_Account, Test_equals)
@@ -74,14 +69,19 @@ TEST(Test_Account, Test_equals)
     Account account;
     Account account2;
 
-    account.id     = "a";
-    account.idHash = "b";
-    account.name   = "c";
+    account.index = 1;
+    account.id    = "a";
+    account.name  = "b";
 
-    account2.id     = "a";
-    account2.idHash = "b";
-    account2.name   = "c";
+    account2.index = 1;
+    account2.id    = "a";
+    account2.name  = "b";
 
+    ASSERT_EQ(account, account2);
+
+    account2.index = 1111;
+    ASSERT_NE(account, account2);
+    account2.index = 1;
     ASSERT_EQ(account, account2);
 
     account2.id = "aaaa";
@@ -89,14 +89,9 @@ TEST(Test_Account, Test_equals)
     account2.id = "a";
     ASSERT_EQ(account, account2);
 
-    account2.idHash = "bbbb";
-    ASSERT_EQ(account, account2);
-    account2.idHash = "b";
-    ASSERT_EQ(account, account2);
-
-    account2.name = "cccc";
+    account2.name = "bbbb";
     ASSERT_NE(account, account2);
-    account2.name = "c";
+    account2.name = "b";
     ASSERT_EQ(account, account2);
 }
 // NOLINTEND(readability-function-cognitive-complexity)

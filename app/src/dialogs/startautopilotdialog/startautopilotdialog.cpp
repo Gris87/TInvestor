@@ -85,12 +85,14 @@ void StartAutoPilotDialog::fillAccounts()
 {
     ui->accountComboBox->blockSignals(true);
 
-    const QMutexLocker    lock(mUserStorage->getMutex());
-    const QList<Account>& accounts = mUserStorage->getAccounts();
+    const QMutexLocker lock(mUserStorage->getMutex());
+    QList<Account>     accounts = mUserStorage->getAccounts().values();
+
+    std::sort(accounts.begin(), accounts.end());
 
     for (const Account& account : accounts)
     {
-        ui->accountComboBox->addItem(account.name, account.idHash);
+        ui->accountComboBox->addItem(account.name, account.hash());
     }
 
     ui->accountComboBox->blockSignals(false);

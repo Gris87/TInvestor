@@ -65,9 +65,9 @@ void InstrumentsDatabase::writeInstruments(const Instruments& instruments)
 
     QJsonObject jsonInstruments;
 
-    for (auto i = instruments.cbegin(), end = instruments.cend(); i != end; ++i)
+    for (auto it = instruments.cbegin(), end = instruments.cend(); it != end; ++it)
     {
-        jsonInstruments.insert(i.key(), i.value().toJsonObject());
+        jsonInstruments.insert(it.key(), it.value().toJsonObject());
     }
 
     const QJsonDocument jsonDoc(jsonInstruments);
