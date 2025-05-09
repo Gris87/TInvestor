@@ -73,7 +73,6 @@ runs:
         }
 
         New-Item -Path "build" -ItemType "directory" -Force
-        & python --version
         & python tools/py3/generate-doc
 
     # Upload artifacts
