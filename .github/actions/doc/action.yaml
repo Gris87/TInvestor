@@ -63,13 +63,10 @@ runs:
             "Windows" {
                 ${Env:PATH} = "C:\Program Files\doxygen\bin;${Env:PATH}"
                 ${Env:PATH} = "C:\Program Files\Graphviz\bin;${Env:PATH}"
-
-                & ./make_doxygen.bat --ci
-            }
-            "Linux" {
-                & ./make_doxygen.sh --ci
             }
         }
+
+        & python tools/py3/generate-doc
 
     # Upload artifacts
     - name: Upload artifacts
