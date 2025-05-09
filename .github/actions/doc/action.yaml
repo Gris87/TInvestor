@@ -33,6 +33,12 @@ runs:
         path: ./TInvestor-source/build
         key: ${{ runner.os }}-doc-${{ steps.folders-hash.outputs.hash }}
 
+    # Setup python
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
     # Install required packages
     - name: System packages
       if: steps.cache-doc.outputs.cache-hit != 'true'
@@ -41,7 +47,6 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                choco install python3
                 choco install doxygen.install
                 choco install graphviz
 
@@ -50,7 +55,7 @@ runs:
             }
             "Linux" {
                 sudo apt-get update
-                sudo apt-get install -y python3 doxygen graphviz
+                sudo apt-get install -y doxygen graphviz
             }
         }
 

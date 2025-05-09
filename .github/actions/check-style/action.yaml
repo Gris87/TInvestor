@@ -34,22 +34,17 @@ runs:
         path: ./success
         key: ${{ runner.os }}-check-style-${{ steps.folders-hash.outputs.hash }}
 
+    # Setup python
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
     # Install required packages
     - name: System packages
       if: steps.cache-style.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-        switch ("${{ runner.os }}")
-        {
-            "Windows" {
-                choco install python3
-            }
-            "Linux" {
-                sudo apt-get update
-                sudo apt-get install -y python3
-            }
-        }
-
         pip install loguru
 
     # Download clang
