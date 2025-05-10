@@ -27,11 +27,11 @@ public:
 
     void      createPortfolioStream();
     Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void requestOperations();
+    void      requestOperations();
 
 private:
-    IUserStorage* mUserStorage;
-    IGrpcClient*  mGrpcClient;
-    QString       mAccountId;
+    IUserStorage*                    mUserStorage;
+    IGrpcClient*                     mGrpcClient;
+    QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
 };
