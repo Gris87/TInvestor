@@ -248,8 +248,8 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
 
     context.set_credentials(mCreds);
 
-    ::google::protobuf::Timestamp* fromTimestamp = new ::google::protobuf::Timestamp(); // req will take ownership
-    ::google::protobuf::Timestamp* toTimestamp   = new ::google::protobuf::Timestamp(); // req will take ownership
+    google::protobuf::Timestamp* fromTimestamp = new google::protobuf::Timestamp(); // req will take ownership
+    google::protobuf::Timestamp* toTimestamp   = new google::protobuf::Timestamp(); // req will take ownership
 
     fromTimestamp->set_seconds(from / MS_IN_SECOND);
     fromTimestamp->set_nanos(0);
@@ -325,7 +325,8 @@ static grpc::Status getOperationsAction(
     return rawGrpcClient->getOperations(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::OperationsResponse> GrpcClient::getOperations(QThread* parentThread, const QString& accountId)
+std::shared_ptr<tinkoff::OperationsResponse>
+GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to)
 {
     grpc::ClientContext                                context;
     tinkoff::OperationsRequest                         req;
@@ -333,7 +334,17 @@ std::shared_ptr<tinkoff::OperationsResponse> GrpcClient::getOperations(QThread* 
 
     context.set_credentials(mCreds);
 
+    google::protobuf::Timestamp* fromTimestamp = new google::protobuf::Timestamp(); // req will take ownership
+    google::protobuf::Timestamp* toTimestamp   = new google::protobuf::Timestamp(); // req will take ownership
+
+    fromTimestamp->set_seconds(from / MS_IN_SECOND);
+    fromTimestamp->set_nanos(0);
+    toTimestamp->set_seconds(to / MS_IN_SECOND);
+    toTimestamp->set_nanos(0);
+
     req.set_account_id(accountId.toStdString());
+    req.set_allocated_from(fromTimestamp);
+    req.set_allocated_to(toTimestamp);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);

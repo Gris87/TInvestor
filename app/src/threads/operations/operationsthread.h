@@ -34,4 +34,5 @@ private:
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
+    qint64                           mLastRequestTimestamp;
 };

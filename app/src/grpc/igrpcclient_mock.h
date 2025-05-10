@@ -44,7 +44,7 @@ public:
     MOCK_METHOD(
         std::shared_ptr<tinkoff::OperationsResponse>,
         getOperations,
-        (QThread * parentThread, const QString& accountId),
+        (QThread * parentThread, const QString& accountId, qint64 from, qint64 to),
         (override)
     );
 

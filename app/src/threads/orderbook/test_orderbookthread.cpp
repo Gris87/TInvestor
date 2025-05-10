@@ -79,7 +79,7 @@ TEST_F(Test_OrderBookThread, Test_run)
 
     tinkoff::OrderBook* orderBook = new tinkoff::OrderBook(); // marketDataResponse will take ownership
 
-    ::google::protobuf::Timestamp* time = new ::google::protobuf::Timestamp(); // marketDataResponse will take ownership
+    google::protobuf::Timestamp* time = new google::protobuf::Timestamp(); // marketDataResponse will take ownership
 
     time->set_seconds(1000);
     time->set_nanos(123000000);

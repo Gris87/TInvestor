@@ -70,7 +70,7 @@ TEST_F(Test_LastPriceThread, Test_run)
     price->set_units(100);
     price->set_nano(500000000);
 
-    ::google::protobuf::Timestamp* time = new ::google::protobuf::Timestamp(); // marketDataResponse will take ownership
+    google::protobuf::Timestamp* time = new google::protobuf::Timestamp(); // marketDataResponse will take ownership
 
     time->set_seconds(1000);
     time->set_nanos(123000000);

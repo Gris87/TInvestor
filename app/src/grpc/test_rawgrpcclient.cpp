@@ -612,8 +612,8 @@ TEST_F(Test_RawGrpcClient, Test_getCandles)
 
     context.set_credentials(creds);
 
-    ::google::protobuf::Timestamp* fromTimestamp = new ::google::protobuf::Timestamp(); // req will take ownership
-    ::google::protobuf::Timestamp* toTimestamp   = new ::google::protobuf::Timestamp(); // req will take ownership
+    google::protobuf::Timestamp* fromTimestamp = new google::protobuf::Timestamp(); // req will take ownership
+    google::protobuf::Timestamp* toTimestamp   = new google::protobuf::Timestamp(); // req will take ownership
 
     fromTimestamp->set_seconds(1741935600);
     fromTimestamp->set_nanos(0);
