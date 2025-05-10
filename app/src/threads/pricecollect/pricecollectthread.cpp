@@ -107,7 +107,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
+        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
         {
             StockMeta stockMeta;
 
@@ -137,7 +137,7 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
         {
             const tinkoff::Bond& tinkoffBond = tinkoffBonds->instruments(i);
 
-            if (QString::fromStdString(tinkoffBond.currency()) == "rub" && tinkoffBond.api_trade_available_flag())
+            if (tinkoffBond.currency() == "rub" && tinkoffBond.api_trade_available_flag())
             {
                 const QString uid = QString::fromStdString(tinkoffBond.uid());
 
@@ -163,7 +163,7 @@ obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, 
         {
             const tinkoff::Currency& tinkoffCurrency = tinkoffCurrencies->instruments(i);
 
-            if (QString::fromStdString(tinkoffCurrency.currency()) == "rub" && tinkoffCurrency.api_trade_available_flag())
+            if (tinkoffCurrency.currency() == "rub" && tinkoffCurrency.api_trade_available_flag())
             {
                 const QString uid = QString::fromStdString(tinkoffCurrency.uid());
 
@@ -188,7 +188,7 @@ static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcCl
         {
             const tinkoff::Etf& tinkoffEtf = tinkoffEtfs->instruments(i);
 
-            if (QString::fromStdString(tinkoffEtf.currency()) == "rub" && tinkoffEtf.api_trade_available_flag())
+            if (tinkoffEtf.currency() == "rub" && tinkoffEtf.api_trade_available_flag())
             {
                 const QString uid = QString::fromStdString(tinkoffEtf.uid());
 
@@ -214,7 +214,7 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
         {
             const tinkoff::Future& tinkoffFuture = tinkoffFutures->instruments(i);
 
-            if (QString::fromStdString(tinkoffFuture.currency()) == "rub" && tinkoffFuture.api_trade_available_flag())
+            if (tinkoffFuture.currency() == "rub" && tinkoffFuture.api_trade_available_flag())
             {
                 const QString uid = QString::fromStdString(tinkoffFuture.uid());
 
@@ -401,7 +401,7 @@ Instruments PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
+        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
         {
             const QString uid = QString::fromStdString(tinkoffStock.uid());
 
@@ -424,7 +424,7 @@ QList<UidAndLogo> PriceCollectThread::convertStocksToLogos(const std::shared_ptr
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
 
-        if (QString::fromStdString(tinkoffStock.currency()) == "rub" && tinkoffStock.api_trade_available_flag())
+        if (tinkoffStock.currency() == "rub" && tinkoffStock.api_trade_available_flag())
         {
             const QString uid = QString::fromStdString(tinkoffStock.uid());
 

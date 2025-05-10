@@ -4,6 +4,7 @@
 
 #include "src/threads/operations/ioperationsthread.h"
 
+#include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/user/iuserstorage.h"
 
@@ -24,10 +25,13 @@ public:
 
     void setAccount(const QString& account) override;
 
+    void      createPortfolioStream();
+    Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void requestOperations();
 
 private:
     IUserStorage* mUserStorage;
     IGrpcClient*  mGrpcClient;
     QString       mAccountId;
+    std::shared_ptr<PortfolioStream> mPortfolioStream;
 };
