@@ -289,6 +289,30 @@ std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread*
     return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
 }
 
+static grpc::Status getPortfolioAction(
+    IRawGrpcClient*                                          rawGrpcClient,
+    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::PortfolioRequest&                         req,
+    const std::shared_ptr<tinkoff::PortfolioResponse>&       resp
+)
+{
+    return rawGrpcClient->getPortfolio(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* parentThread, const QString& accountId)
+{
+    grpc::ClientContext                               context;
+    tinkoff::PortfolioRequest                         req;
+    const std::shared_ptr<tinkoff::PortfolioResponse> resp = std::make_shared<tinkoff::PortfolioResponse>();
+
+    context.set_credentials(mCreds);
+
+    req.set_account_id(accountId.toStdString());
+
+    return repeatRequest(parentThread, getPortfolioAction, mOperationsService, &context, req, resp);
+}
+
 static grpc::Status getOperationsAction(
     IRawGrpcClient*                                          rawGrpcClient,
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,

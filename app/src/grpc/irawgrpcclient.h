@@ -115,6 +115,12 @@ public:
         const tinkoff::GetOrderBookRequest&                      req,
         tinkoff::GetOrderBookResponse*                           resp
     ) = 0;
+    virtual grpc::Status getPortfolio(
+        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::PortfolioRequest&                         req,
+        tinkoff::PortfolioResponse*                              resp
+    ) = 0;
     virtual grpc::Status getOperations(
         const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
         grpc::ClientContext*                                     context,

@@ -126,6 +126,18 @@ grpc::Status RawGrpcClient::getOrderBook(
     return service->GetOrderBook(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::getPortfolio(
+    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::PortfolioRequest&                         req,
+    tinkoff::PortfolioResponse*                              resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->GetPortfolio(context, req, resp);
+}
+
 grpc::Status RawGrpcClient::getOperations(
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
     grpc::ClientContext*                                     context,

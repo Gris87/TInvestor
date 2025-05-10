@@ -39,6 +39,9 @@ public:
         std::shared_ptr<tinkoff::GetOrderBookResponse>, getOrderBook, (QThread * parentThread, const QString& uid), (override)
     );
     MOCK_METHOD(
+        std::shared_ptr<tinkoff::PortfolioResponse>, getPortfolio, (QThread * parentThread, const QString& accountId), (override)
+    );
+    MOCK_METHOD(
         std::shared_ptr<tinkoff::OperationsResponse>,
         getOperations,
         (QThread * parentThread, const QString& accountId),

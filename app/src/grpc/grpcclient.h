@@ -80,6 +80,7 @@ public:
     std::shared_ptr<tinkoff::GetCandlesResponse>
     getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to) override;
     std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid) override;
+    std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::OperationsResponse>   getOperations(QThread* parentThread, const QString& accountId) override;
 
     std::shared_ptr<MarketDataStream> createMarketDataStream() override;

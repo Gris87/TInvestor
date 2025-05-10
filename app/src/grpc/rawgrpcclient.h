@@ -71,6 +71,12 @@ public:
         const tinkoff::GetOrderBookRequest&                      req,
         tinkoff::GetOrderBookResponse*                           resp
     ) override;
+    grpc::Status getPortfolio(
+        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::PortfolioRequest&                         req,
+        tinkoff::PortfolioResponse*                              resp
+    ) override;
     grpc::Status getOperations(
         const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
         grpc::ClientContext*                                     context,

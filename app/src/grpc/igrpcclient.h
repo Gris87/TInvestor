@@ -34,6 +34,7 @@ public:
     virtual std::shared_ptr<tinkoff::GetCandlesResponse>
     getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to)                                         = 0;
     virtual std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& uid)        = 0;
+    virtual std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId)  = 0;
     virtual std::shared_ptr<tinkoff::OperationsResponse>   getOperations(QThread* parentThread, const QString& accountId) = 0;
 
     virtual std::shared_ptr<MarketDataStream> createMarketDataStream()                                             = 0;
