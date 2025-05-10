@@ -4,9 +4,10 @@
 
 
 
-PortfolioThread::PortfolioThread(IUserStorage* userStorage, QObject* parent) :
+PortfolioThread::PortfolioThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
     IPortfolioThread(parent),
     mUserStorage(userStorage),
+    mGrpcClient(grpcClient),
     mAccountId()
 {
     qDebug() << "Create PortfolioThread";

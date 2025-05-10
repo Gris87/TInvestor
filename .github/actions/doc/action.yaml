@@ -56,6 +56,8 @@ runs:
             }
         }
 
+        pip install colorama loguru
+
     # Generate doxygen
     - name: Generate doxygen
       if: steps.cache-doc.outputs.cache-hit != 'true'

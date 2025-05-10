@@ -4,6 +4,7 @@
 
 #include "src/threads/portfolio/iportfoliothread.h"
 
+#include "src/grpc/igrpcclient.h"
 #include "src/storage/user/iuserstorage.h"
 
 
@@ -13,7 +14,7 @@ class PortfolioThread : public IPortfolioThread
     Q_OBJECT
 
 public:
-    explicit PortfolioThread(IUserStorage* userStorage, QObject* parent = nullptr);
+    explicit PortfolioThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~PortfolioThread() override;
 
     PortfolioThread(const PortfolioThread& another)            = delete;
@@ -25,5 +26,6 @@ public:
 
 private:
     IUserStorage* mUserStorage;
+    IGrpcClient*  mGrpcClient;
     QString       mAccountId;
 };

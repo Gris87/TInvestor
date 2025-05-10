@@ -72,6 +72,13 @@ runs:
       with:
         python-version: "3.13"
 
+    # Install required packages
+    - name: System packages
+      if: steps.cache-style.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        pip install colorama loguru
+
     # Generate compile_commands.json
     - name: Generate compile_commands.json
       if: steps.cache-doc.outputs.cache-hit != 'true'

@@ -311,8 +311,8 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread   operationsThread(&userStorage);
-    PortfolioThread    portfolioThread(&userStorage);
+    OperationsThread   operationsThread(&userStorage, &grpcClient);
+    PortfolioThread    portfolioThread(&userStorage, &grpcClient);
     MakeDecisionThread makeDecisionThread(&config, &stocksStorage);
     OrderBookThread    orderBookThread(&grpcClient);
 

@@ -4,9 +4,10 @@
 
 
 
-OperationsThread::OperationsThread(IUserStorage* userStorage, QObject* parent) :
+OperationsThread::OperationsThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
     IOperationsThread(parent),
     mUserStorage(userStorage),
+    mGrpcClient(grpcClient),
     mAccountId()
 {
     qDebug() << "Create OperationsThread";
@@ -23,7 +24,7 @@ void OperationsThread::run()
 
     if (mAccountId != "")
     {
-        qInfo() << mAccountId;
+        requestOperations();
     }
     else
     {
@@ -39,4 +40,15 @@ void OperationsThread::setAccount(const QString& account)
     Accounts           accounts = mUserStorage->getAccounts();
 
     mAccountId = accounts[account].id;
+}
+
+void OperationsThread::requestOperations()
+{
+    const std::shared_ptr<tinkoff::OperationsResponse> tinkoffOperations =
+        mGrpcClient->getOperations(QThread::currentThread(), mAccountId);
+
+    if (tinkoffOperations != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    {
+        qInfo() << tinkoffOperations->operations_size();
+    }
 }
