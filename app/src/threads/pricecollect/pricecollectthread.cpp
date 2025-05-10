@@ -81,7 +81,7 @@ void PriceCollectThread::run()
 
     const std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks = mGrpcClient->findStocks(QThread::currentThread());
 
-    if (tinkoffStocks != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffStocks != nullptr)
     {
         const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         storeNewInstrumentsInfo(tinkoffStocks);
@@ -131,7 +131,7 @@ static void obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcC
 {
     const std::shared_ptr<tinkoff::BondsResponse> tinkoffBonds = grpcClient->findBonds(parentThread);
 
-    if (tinkoffBonds != nullptr && !parentThread->isInterruptionRequested())
+    if (!parentThread->isInterruptionRequested() && tinkoffBonds != nullptr)
     {
         for (int i = 0; i < tinkoffBonds->instruments_size(); ++i)
         {
@@ -157,7 +157,7 @@ obtainInstrumentsFromCurrencies(QThread* parentThread, IGrpcClient* grpcClient, 
 {
     const std::shared_ptr<tinkoff::CurrenciesResponse> tinkoffCurrencies = grpcClient->findCurrencies(parentThread);
 
-    if (tinkoffCurrencies != nullptr && !parentThread->isInterruptionRequested())
+    if (!parentThread->isInterruptionRequested() && tinkoffCurrencies != nullptr)
     {
         for (int i = 0; i < tinkoffCurrencies->instruments_size(); ++i)
         {
@@ -182,7 +182,7 @@ static void obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcCl
 {
     const std::shared_ptr<tinkoff::EtfsResponse> tinkoffEtfs = grpcClient->findEtfs(parentThread);
 
-    if (tinkoffEtfs != nullptr && !parentThread->isInterruptionRequested())
+    if (!parentThread->isInterruptionRequested() && tinkoffEtfs != nullptr)
     {
         for (int i = 0; i < tinkoffEtfs->instruments_size(); ++i)
         {
@@ -208,7 +208,7 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
 {
     const std::shared_ptr<tinkoff::FuturesResponse> tinkoffFutures = grpcClient->findFutures(parentThread);
 
-    if (tinkoffFutures != nullptr && !parentThread->isInterruptionRequested())
+    if (!parentThread->isInterruptionRequested() && tinkoffFutures != nullptr)
     {
         for (int i = 0; i < tinkoffFutures->instruments_size(); ++i)
         {

@@ -80,8 +80,8 @@ public:
     grpc::Status getOperations(
         const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
         grpc::ClientContext*                                     context,
-        const tinkoff::OperationsRequest&                        req,
-        tinkoff::OperationsResponse*                             resp
+        const tinkoff::GetOperationsByCursorRequest&             req,
+        tinkoff::GetOperationsByCursorResponse*                  resp
     ) override;
 
     MarketDataStream::Stream createMarketDataStream(

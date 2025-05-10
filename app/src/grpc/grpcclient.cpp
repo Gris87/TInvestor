@@ -315,22 +315,23 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* pa
 }
 
 static grpc::Status getOperationsAction(
-    IRawGrpcClient*                                          rawGrpcClient,
-    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
-    grpc::ClientContext*                                     context,
-    const tinkoff::OperationsRequest&                        req,
-    const std::shared_ptr<tinkoff::OperationsResponse>&      resp
+    IRawGrpcClient*                                                rawGrpcClient,
+    const std::unique_ptr<tinkoff::OperationsService::Stub>&       service,
+    grpc::ClientContext*                                           context,
+    const tinkoff::GetOperationsByCursorRequest&                   req,
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& resp
 )
 {
     return rawGrpcClient->getOperations(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::OperationsResponse>
-GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to)
+std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
+GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor)
 {
-    grpc::ClientContext                                context;
-    tinkoff::OperationsRequest                         req;
-    const std::shared_ptr<tinkoff::OperationsResponse> resp = std::make_shared<tinkoff::OperationsResponse>();
+    grpc::ClientContext                                           context;
+    tinkoff::GetOperationsByCursorRequest                         req;
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> resp =
+        std::make_shared<tinkoff::GetOperationsByCursorResponse>();
 
     context.set_credentials(mCreds);
 
@@ -345,7 +346,11 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_account_id(accountId.toStdString());
     req.set_allocated_from(fromTimestamp);
     req.set_allocated_to(toTimestamp);
+    req.set_cursor(cursor.toStdString());
+    req.set_limit(1000);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
+    req.set_without_commissions(true);
+    req.set_without_trades(true);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);
 }

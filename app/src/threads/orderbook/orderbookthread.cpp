@@ -27,7 +27,7 @@ void OrderBookThread::run()
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid);
 
-    if (tinkoffOrderBook != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
     {
         handleGetOrderBookResponse(tinkoffOrderBook);
 

@@ -24,7 +24,7 @@ void UserUpdateThread::run()
 
     const std::shared_ptr<tinkoff::GetInfoResponse> userInfo = mGrpcClient->getUserInfo(QThread::currentThread());
 
-    if (userInfo != nullptr && !QThread::currentThread()->isInterruptionRequested())
+    if (!QThread::currentThread()->isInterruptionRequested() && userInfo != nullptr)
     {
         User user;
 
@@ -38,7 +38,7 @@ void UserUpdateThread::run()
 
         const std::shared_ptr<tinkoff::GetAccountsResponse> tinkoffAccounts = mGrpcClient->getAccounts(QThread::currentThread());
 
-        if (tinkoffAccounts != nullptr && !QThread::currentThread()->isInterruptionRequested())
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffAccounts != nullptr)
         {
             Accounts accounts;
 
