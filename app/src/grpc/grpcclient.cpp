@@ -64,6 +64,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
     mMarketDataService       = tinkoff::MarketDataService::NewStub(channel);
     mMarketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
     mOperationsService       = tinkoff::OperationsService::NewStub(channel);
+    mOperationsStreamService = tinkoff::OperationsStreamService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -340,7 +341,7 @@ std::shared_ptr<tinkoff::OperationsResponse> GrpcClient::getOperations(QThread* 
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
 {
-    std::shared_ptr<MarketDataStream> res(new MarketDataStream());
+    std::shared_ptr<MarketDataStream> res = std::make_shared<MarketDataStream>();
 
     res->context.set_credentials(mCreds);
     res->stream = mRawGrpcClient->createMarketDataStream(mMarketDataStreamService, &res->context);
@@ -467,6 +468,44 @@ bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& m
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
     const grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
+
+    if (!status.ok())
+    {
+        emitAuthFailed(status);
+    }
+}
+
+std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId)
+{
+    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+
+    tinkoff::PortfolioStreamRequest req;
+    req.add_accounts(accountId.toStdString());
+
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+
+    return res;
+}
+
+std::shared_ptr<tinkoff::PortfolioStreamResponse>
+GrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
+{
+    std::shared_ptr<tinkoff::PortfolioStreamResponse> resp = std::make_shared<tinkoff::PortfolioStreamResponse>();
+
+    if (!mRawGrpcClient->readPortfolioStream(portfolioStream, resp.get()))
+    {
+        // emit authFailed(grpc::StatusCode::UNKNOWN, "UNKNOWN", "", "GrpcClient::readPortfolioStream()"); // Not a problem
+
+        return nullptr;
+    }
+
+    return resp;
+}
+
+void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
+{
+    const grpc::Status status = mRawGrpcClient->finishPortfolioStream(portfolioStream);
 
     if (!status.ok())
     {

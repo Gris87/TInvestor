@@ -185,3 +185,26 @@ grpc::Status RawGrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStr
 
     return marketDataStream->stream->Finish();
 }
+
+PortfolioStream::Stream RawGrpcClient::createPortfolioStream(
+    const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+    grpc::ClientContext*                                           context,
+    const tinkoff::PortfolioStreamRequest&                         req
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->PortfolioStream(context, req);
+}
+
+bool RawGrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream, tinkoff::PortfolioStreamResponse* resp)
+{
+    return portfolioStream->stream->Read(resp);
+}
+
+grpc::Status RawGrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
+{
+    const QMutexLocker lock(mMutex);
+
+    return portfolioStream->stream->Finish();
+}

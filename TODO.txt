@@ -21,6 +21,7 @@ Buy and sell on extremums (AI assisted)
 Sell if price extrimely fall (>5% in 5 minutes)
 Buy if price is less than average for last n days
 
+Use readonly grpc streams
 Double check mutexes
 Check for maximum memory requirements (With all limits)
 

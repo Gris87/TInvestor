@@ -93,6 +93,11 @@ public:
     bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
+    std::shared_ptr<PortfolioStream>                  createPortfolioStream(const QString& accountId) override;
+    std::shared_ptr<tinkoff::PortfolioStreamResponse> readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream
+    ) override;
+    void finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
+
     void emitAuthFailed(const grpc::Status& status);
 
 private:
@@ -104,4 +109,5 @@ private:
     std::unique_ptr<tinkoff::MarketDataService::Stub>       mMarketDataService;
     std::unique_ptr<tinkoff::MarketDataStreamService::Stub> mMarketDataStreamService;
     std::unique_ptr<tinkoff::OperationsService::Stub>       mOperationsService;
+    std::unique_ptr<tinkoff::OperationsStreamService::Stub> mOperationsStreamService;
 };

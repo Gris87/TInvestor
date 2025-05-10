@@ -140,4 +140,20 @@ public:
     );
     MOCK_METHOD(bool, closeWriteMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(grpc::Status, finishMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
+
+    MOCK_METHOD(
+        PortfolioStream::Stream,
+        createPortfolioStream,
+        (const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+         grpc::ClientContext*                                           context,
+         const tinkoff::PortfolioStreamRequest&                         req),
+        (override)
+    );
+    MOCK_METHOD(
+        bool,
+        readPortfolioStream,
+        (std::shared_ptr<PortfolioStream> & portfolioStream, tinkoff::PortfolioStreamResponse* resp),
+        (override)
+    );
+    MOCK_METHOD(grpc::Status, finishPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
 };

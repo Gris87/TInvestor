@@ -50,6 +50,14 @@ struct MarketDataStream
     Stream              stream;
 };
 
+struct PortfolioStream
+{
+    using Stream = std::unique_ptr<grpc::ClientReader<tinkoff::PortfolioStreamResponse>>;
+
+    grpc::ClientContext context;
+    Stream              stream;
+};
+
 
 
 class IRawGrpcClient
@@ -136,4 +144,13 @@ public:
     virtual bool readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream, tinkoff::MarketDataResponse* resp) = 0;
     virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                              = 0;
     virtual grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                          = 0;
+
+    virtual PortfolioStream::Stream createPortfolioStream(
+        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::PortfolioStreamRequest&                         req
+    ) = 0;
+    virtual bool
+    readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream, tinkoff::PortfolioStreamResponse* resp) = 0;
+    virtual grpc::Status finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)                  = 0;
 };

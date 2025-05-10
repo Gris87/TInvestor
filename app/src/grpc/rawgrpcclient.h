@@ -93,6 +93,14 @@ public:
     bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     grpc::Status finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
+    PortfolioStream::Stream createPortfolioStream(
+        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::PortfolioStreamRequest&                         req
+    ) override;
+    bool readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream, tinkoff::PortfolioStreamResponse* resp) override;
+    grpc::Status finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
+
 private:
     QMutex* mMutex;
 };
