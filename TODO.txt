@@ -1,4 +1,3 @@
-uid => instrumentId, accountId
 Control operations
 Display operations
 Build chart based on operations

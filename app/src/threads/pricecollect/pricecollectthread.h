@@ -18,16 +18,16 @@
 
 
 
-struct UidAndLogo
+struct InstrumentIdAndLogo
 {
     // NOLINTNEXTLINE(modernize-pass-by-value)
-    explicit UidAndLogo(const QString& _uid, const QString& _logo) :
-        uid(_uid),
+    explicit InstrumentIdAndLogo(const QString& _instrumentId, const QString& _logo) :
+        instrumentId(_instrumentId),
         logo(_logo)
     {
     }
 
-    QString uid;
+    QString instrumentId;
     QString logo;
 };
 
@@ -59,17 +59,17 @@ public:
 
     void run() override;
 
-    bool              storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void              storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    Instruments       convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    QList<UidAndLogo> convertStocksToLogos(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void              downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
-    void              obtainStocksData();
-    void              cleanupOperationalData();
-    bool              obtainStocksDayStartPrice();
-    void              obtainTurnover();
-    void              obtainPayback();
-    void              notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
+    bool                       storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void                       storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    Instruments                convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    QList<InstrumentIdAndLogo> convertStocksToLogos(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void                       downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
+    void                       obtainStocksData();
+    void                       cleanupOperationalData();
+    bool                       obtainStocksDayStartPrice();
+    void                       obtainTurnover();
+    void                       obtainPayback();
+    void                       notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
     IConfig*             mConfig;

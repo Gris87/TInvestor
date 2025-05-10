@@ -87,14 +87,14 @@ void LastPriceThread::run()
                 stockData.timestamp = timeToTimestamp(lastPriceResp.time());
                 stockData.price     = quotationToFloat(lastPriceResp.price());
 
-                const QString uid = QString::fromStdString(lastPriceResp.instrument_uid());
+                const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
 
-                Stock* stock = stocksMap[uid];
+                Stock* stock = stocksMap[instrumentId];
 
                 const QMutexLocker lock(stock->mutex);
                 stock->operational.detailedData.append(stockData);
 
-                emit lastPriceChanged(uid);
+                emit lastPriceChanged(instrumentId);
             }
         }
     }

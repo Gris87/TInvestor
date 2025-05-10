@@ -59,7 +59,7 @@ public:
 
     void setDateChangeTooltip(const QString& tooltip) override;
 
-    void lastPriceChanged(const QString& uid) override;
+    void lastPriceChanged(const QString& instrumentId) override;
     void filterChanged(const Filter& filter) override;
 
     void saveWindowState(const QString& type) override;

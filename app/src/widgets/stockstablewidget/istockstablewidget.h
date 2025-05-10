@@ -32,8 +32,8 @@ public:
 
     virtual void setDateChangeTooltip(const QString& tooltip) = 0;
 
-    virtual void lastPriceChanged(const QString& uid) = 0;
-    virtual void filterChanged(const Filter& filter)  = 0;
+    virtual void lastPriceChanged(const QString& instrumentId) = 0;
+    virtual void filterChanged(const Filter& filter)           = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;

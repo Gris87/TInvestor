@@ -240,7 +240,7 @@ static grpc::Status getCandlesAction(
 }
 
 std::shared_ptr<tinkoff::GetCandlesResponse>
-GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, qint64 to)
+GrpcClient::getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to)
 {
     grpc::ClientContext                                context;
     tinkoff::GetCandlesRequest                         req;
@@ -256,7 +256,7 @@ GrpcClient::getCandles(QThread* parentThread, const QString& uid, qint64 from, q
     toTimestamp->set_seconds(to / MS_IN_SECOND);
     toTimestamp->set_nanos(0);
 
-    req.set_instrument_id(uid.toStdString());
+    req.set_instrument_id(instrumentId.toStdString());
     req.set_allocated_from(fromTimestamp);
     req.set_allocated_to(toTimestamp);
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
@@ -276,7 +276,7 @@ static grpc::Status getOrderBookAction(
     return rawGrpcClient->getOrderBook(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread* parentThread, const QString& uid)
+std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId)
 {
     grpc::ClientContext                                  context;
     tinkoff::GetOrderBookRequest                         req;
@@ -284,7 +284,7 @@ std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread*
 
     context.set_credentials(mCreds);
 
-    req.set_instrument_id(uid.toStdString());
+    req.set_instrument_id(instrumentId.toStdString());
     req.set_depth(ORDER_BOOK_DEPTH);
 
     return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
@@ -365,7 +365,7 @@ std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
     return res;
 }
 
-bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& uids)
+bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds)
 {
     tinkoff::MarketDataRequest          req;
     tinkoff::SubscribeLastPriceRequest* subscribeLastPriceRequest =
@@ -373,9 +373,9 @@ bool GrpcClient::subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDa
 
     subscribeLastPriceRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
 
-    for (const QString& uid : uids)
+    for (const QString& instrumentId : instrumentIds)
     {
-        subscribeLastPriceRequest->add_instruments()->set_instrument_id(uid.toStdString());
+        subscribeLastPriceRequest->add_instruments()->set_instrument_id(instrumentId.toStdString());
     }
 
     req.set_allocated_subscribe_last_price_request(subscribeLastPriceRequest);
@@ -410,7 +410,7 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
     return res;
 }
 
-bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& uid)
+bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId)
 {
     tinkoff::MarketDataRequest          req;
     tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
@@ -419,7 +419,7 @@ bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDat
     subscribeOrderBookRequest->set_subscription_action(tinkoff::SUBSCRIPTION_ACTION_SUBSCRIBE);
     tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
 
-    orderBook->set_instrument_id(uid.toStdString());
+    orderBook->set_instrument_id(instrumentId.toStdString());
     orderBook->set_depth(ORDER_BOOK_DEPTH);
     orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
 

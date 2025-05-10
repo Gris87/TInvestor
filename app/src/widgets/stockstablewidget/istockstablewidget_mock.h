@@ -31,7 +31,7 @@ public:
 
     MOCK_METHOD(void, setDateChangeTooltip, (const QString& tooltip), (override));
 
-    MOCK_METHOD(void, lastPriceChanged, (const QString& uid), (override));
+    MOCK_METHOD(void, lastPriceChanged, (const QString& instrumentId), (override));
     MOCK_METHOD(void, filterChanged, (const Filter& filter), (override));
 
     MOCK_METHOD(void, saveWindowState, (const QString& type), (override));

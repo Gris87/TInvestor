@@ -61,10 +61,10 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
     for (Stock* stock : stocks)
     {
         stock->mutex->lock();
-        const QString uid = stock->meta.uid;
+        const QString instrumentId = stock->meta.uid;
         stock->mutex->unlock();
 
-        IStocksTableRecord* record = tableRecords[uid]; // clazy:exclude=detaching-member
+        IStocksTableRecord* record = tableRecords[instrumentId]; // clazy:exclude=detaching-member
 
         if (record == nullptr)
         {
@@ -80,7 +80,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
                 stock,
                 this
             );
-            tableRecords[uid] = record;
+            tableRecords[instrumentId] = record;
         }
 
         record->updateAll();
@@ -166,9 +166,9 @@ void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
     ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->setToolTip(tooltip);
 }
 
-void StocksTableWidget::lastPriceChanged(const QString& uid)
+void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
 {
-    lastPricesUpdates.insert(uid);
+    lastPricesUpdates.insert(instrumentId);
 }
 
 void StocksTableWidget::filterChanged(const Filter& filter)

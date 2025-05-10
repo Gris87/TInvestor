@@ -279,8 +279,8 @@ TEST_F(Test_GrpcClient, Test_subscribeLastPrices)
 {
     const InSequence seq;
 
-    QStringList uids;
-    uids << "aaaaa";
+    QStringList instrumentIds;
+    instrumentIds << "aaaaa";
 
     EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
 
@@ -289,11 +289,11 @@ TEST_F(Test_GrpcClient, Test_subscribeLastPrices)
 
     EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(false));
 
-    ASSERT_EQ(client->subscribeLastPrices(marketDataStream, uids), false);
+    ASSERT_EQ(client->subscribeLastPrices(marketDataStream, instrumentIds), false);
 
     EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(true));
 
-    ASSERT_EQ(client->subscribeLastPrices(marketDataStream, uids), true);
+    ASSERT_EQ(client->subscribeLastPrices(marketDataStream, instrumentIds), true);
 }
 
 TEST_F(Test_GrpcClient, Test_unsubscribeLastPrices)

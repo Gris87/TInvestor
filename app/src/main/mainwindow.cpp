@@ -397,9 +397,9 @@ void MainWindow::periodicDataChanged()
     mStocksTableWidget->updatePeriodicData(mStocksControlsWidget->getFilter());
 }
 
-void MainWindow::lastPriceChanged(const QString& uid)
+void MainWindow::lastPriceChanged(const QString& instrumentId)
 {
-    mStocksTableWidget->lastPriceChanged(uid);
+    mStocksTableWidget->lastPriceChanged(instrumentId);
 }
 
 void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)

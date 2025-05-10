@@ -183,7 +183,7 @@ public slots:
     void stocksChanged();
     void pricesChanged();
     void periodicDataChanged();
-    void lastPriceChanged(const QString& uid);
+    void lastPriceChanged(const QString& instrumentId);
     void dateChangeDateTimeChanged(const QDateTime& dateTime);
     void filterChanged(const Filter& filter);
     void startSimulator() const;

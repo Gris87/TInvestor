@@ -24,5 +24,5 @@ public:
     virtual void terminateThread() = 0;
 
 signals:
-    void lastPriceChanged(const QString& uid);
+    void lastPriceChanged(const QString& instrumentId);
 };
