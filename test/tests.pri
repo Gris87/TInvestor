@@ -24,6 +24,7 @@ SOURCES += \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/test_config.cpp \
     src/db/instruments/test_instrumentsdatabase.cpp \
+    src/db/operations/test_operationsdatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
     src/db/instruments/iinstrumentsdatabase_mock.h \
+    src/db/operations/ioperationsdatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \

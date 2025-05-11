@@ -198,6 +198,6 @@ void OperationsThread::writeOperations()
 {
 }
 
-void OperationsThread::appendOperations(int lastIndex)
+void OperationsThread::appendOperations(int /*lastIndex*/)
 {
 }

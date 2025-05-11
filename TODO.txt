@@ -1,4 +1,5 @@
 Store operations locally
+Rename instruments => instrument in domain
 Control operations
 Display operations
 Build chart based on operations
