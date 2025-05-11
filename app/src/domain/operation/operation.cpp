@@ -3,28 +3,25 @@
 
 
 Operation::Operation() :
-    units(),
-    nano()
+    timestamp()
 {
 }
 
 void Operation::fromJsonObject(const QJsonObject& jsonObject)
 {
-    units = jsonObject.value("units").toInt(0);
-    nano  = jsonObject.value("nano").toInt(0);
+    timestamp = jsonObject.value("timestamp").toInt(0);
 }
 
 QJsonObject Operation::toJsonObject() const
 {
     QJsonObject res;
 
-    res.insert("units", units);
-    res.insert("nano", nano);
+    res.insert("timestamp", timestamp);
 
     return res;
 }
 
 bool operator==(const Operation& lhs, const Operation& rhs)
 {
-    return lhs.units == rhs.units && lhs.nano == rhs.nano;
+    return lhs.timestamp == rhs.timestamp;
 }

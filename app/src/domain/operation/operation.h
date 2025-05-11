@@ -19,8 +19,7 @@ struct Operation
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    qint64 units;
-    qint32 nano;
+    qint64 timestamp;
 };
 
 

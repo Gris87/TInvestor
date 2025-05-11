@@ -4,6 +4,7 @@
 
 #include "src/threads/operations/ioperationsthread.h"
 
+#include "src/domain/operation/operation.h"
 #include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/user/iuserstorage.h"
@@ -31,9 +32,15 @@ public:
     void      requestOperations();
 
 private:
+    void readOperations();
+    void writeOperations();
+    void appendOperations(int lastIndex);
+
     IUserStorage*                    mUserStorage;
     IGrpcClient*                     mGrpcClient;
+    QString                          mAccountHash;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
     qint64                           mLastRequestTimestamp;
+    QList<Operation>                 mOperations;
 };

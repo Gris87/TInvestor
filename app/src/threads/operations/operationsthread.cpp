@@ -18,6 +18,7 @@ OperationsThread::OperationsThread(IUserStorage* userStorage, IGrpcClient* grpcC
     IOperationsThread(parent),
     mUserStorage(userStorage),
     mGrpcClient(grpcClient),
+    mAccountHash(),
     mAccountId(),
     mLastRequestTimestamp()
 {
@@ -35,6 +36,8 @@ void OperationsThread::run()
 
     if (mAccountId != "")
     {
+        readOperations();
+
         const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
@@ -82,10 +85,12 @@ void OperationsThread::run()
 
 void OperationsThread::setAccount(const QString& account)
 {
+    mAccountHash = account;
+
     const QMutexLocker lock(mUserStorage->getMutex());
     Accounts           accounts = mUserStorage->getAccounts();
 
-    mAccountId = accounts[account].id;
+    mAccountId = accounts[mAccountHash].id;
 }
 
 void OperationsThread::terminateThread()
@@ -155,63 +160,44 @@ void OperationsThread::requestOperations()
 
     if (!QThread::currentThread()->isInterruptionRequested() && !allTinkoffOperations.isEmpty())
     {
-        mLastRequestTimestamp = timeToTimestamp(allTinkoffOperations.first()->items(0).date()) + MS_IN_SECOND;
-
-        qInfo() << "=======================================";
-        qInfo() << allTinkoffOperations.size();
-        qInfo() << "=======================================";
+        int lastIndex = mOperations.size();
 
         for (int i = allTinkoffOperations.size() - 1; i >= 0; --i)
         {
             const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& tinkoffOperations = allTinkoffOperations.at(i);
 
-            qInfo() << "---------------------------------------";
-            qInfo() << tinkoffOperations->items_size();
-            qInfo() << "---------------------------------------";
-
             for (int j = tinkoffOperations->items_size() - 1; j >= 0; --j)
             {
-                const tinkoff::OperationItem& operation = tinkoffOperations->items(j);
+                const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
+                Operation                     operation;
 
-                qInfo() << QString::fromStdString(operation.cursor());
-                qInfo() << QString::fromStdString(operation.broker_account_id());
-                qInfo() << QString::fromStdString(operation.id());
-                qInfo() << QString::fromStdString(operation.parent_operation_id());
-                qInfo() << QString::fromStdString(operation.name());
-                qInfo() << operation.date().seconds();
-                qInfo() << operation.type();
-                qInfo() << QString::fromStdString(operation.description());
-                qInfo() << operation.state();
-                qInfo() << QString::fromStdString(operation.instrument_uid());
-                qInfo() << QString::fromStdString(operation.figi());
-                qInfo() << QString::fromStdString(operation.instrument_type());
-                qInfo() << operation.instrument_kind();
-                qInfo() << QString::fromStdString(operation.position_uid());
-                qInfo() << QString::fromStdString(operation.payment().currency());
-                qInfo() << operation.payment().units();
-                qInfo() << operation.payment().nano();
-                qInfo() << QString::fromStdString(operation.price().currency());
-                qInfo() << operation.price().units();
-                qInfo() << operation.price().nano();
-                qInfo() << QString::fromStdString(operation.commission().currency());
-                qInfo() << operation.commission().units();
-                qInfo() << operation.commission().nano();
-                qInfo() << QString::fromStdString(operation.yield().currency());
-                qInfo() << operation.yield().units();
-                qInfo() << operation.yield().nano();
-                qInfo() << operation.yield_relative().units();
-                qInfo() << operation.yield_relative().nano();
-                qInfo() << QString::fromStdString(operation.accrued_int().currency());
-                qInfo() << operation.accrued_int().units();
-                qInfo() << operation.accrued_int().nano();
-                qInfo() << operation.quantity();
-                qInfo() << operation.quantity_rest();
-                qInfo() << operation.quantity_done();
-                qInfo() << operation.cancel_date_time().seconds();
-                qInfo() << QString::fromStdString(operation.cancel_reason());
-                qInfo() << QString::fromStdString(operation.asset_uid());
-                qInfo() << ".......................................";
+                operation.timestamp = timeToTimestamp(tinkoffOperation.date());
+
+                mOperations.append(operation);
             }
         }
+
+        if (lastIndex == 0)
+        {
+            writeOperations();
+        }
+        else
+        {
+            appendOperations(lastIndex);
+        }
+
+        mLastRequestTimestamp = mOperations.constLast().timestamp + MS_IN_SECOND;
     }
+}
+
+void OperationsThread::readOperations()
+{
+}
+
+void OperationsThread::writeOperations()
+{
+}
+
+void OperationsThread::appendOperations(int lastIndex)
+{
 }
