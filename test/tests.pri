@@ -38,6 +38,7 @@ SOURCES += \
     src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
     src/domain/instruments/test_instrumentinfo.cpp \
+    src/domain/operation/test_operation.cpp \
     src/domain/orderbook/test_orderbook.cpp \
     src/domain/quotation/test_quotation.cpp \
     src/domain/stocks/test_stock.cpp \
