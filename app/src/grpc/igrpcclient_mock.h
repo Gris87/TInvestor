@@ -70,6 +70,7 @@ public:
         (override)
     );
     MOCK_METHOD(bool, closeWriteMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
+    MOCK_METHOD(void, cancelMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
     MOCK_METHOD(void, finishMarketDataStream, (std::shared_ptr<MarketDataStream> & marketDataStream), (override));
 
     MOCK_METHOD(std::shared_ptr<PortfolioStream>, createPortfolioStream, (const QString& accountId), (override));
@@ -79,5 +80,6 @@ public:
         (std::shared_ptr<PortfolioStream> & portfolioStream),
         (override)
     );
+    MOCK_METHOD(void, cancelPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
     MOCK_METHOD(void, finishPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
 };

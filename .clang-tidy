@@ -3,6 +3,7 @@
 # altera-id-dependent-backward-branch                       - backward branch (for loop) is ID-dependent due to variable reference to 'jsonStocks' and may cause performance degradation
 # altera-struct-pack-align                                  - accessing fields in struct 'Filter' is inefficient due to padding; only needs 80 bytes but is using 104 bytes
 # altera-unroll-loops                                       - kernel performance could be improved by unrolling this loop with a '#pragma unroll' directive
+# boost-use-ranges                                          - use a boost version of this algorithm
 # bugprone-easily-swappable-parameters                      - 2 adjacent parameters of 'Config' of similar type ('IDecisionMakerConfig *') are easily swapped by mistake
 # bugprone-narrowing-conversions                            - alias of `cppcoreguidelines-narrowing-conversions`
 # bugprone-reserved-identifier                              - declaration uses identifier '_', which is reserved in the global namespace; cannot be fixed automatically
@@ -51,6 +52,7 @@
 # modernize-type-traits                                     - use c++17 style variable templates
 # modernize-use-auto                                        - use auto when initializing with new to avoid duplicating the type name
 # modernize-use-default-member-init                         - alias of `cppcoreguidelines-use-default-member-init`
+# modernize-use-ranges                                      - use a ranges version of this algorithm
 # modernize-use-trailing-return-type                        - use a trailing return type for this function
 # readability-avoid-nested-conditional-operator             - conditional operator is used as sub-expression of parent conditional operator, refrain from using nested conditional operators
 # readability-convert-member-functions-to-static            - method 'trayIconExitClicked' can be made static
@@ -66,6 +68,7 @@ Checks:
         -altera-id-dependent-backward-branch,
         -altera-struct-pack-align,
         -altera-unroll-loops,
+        -boost-use-ranges,
         -bugprone-easily-swappable-parameters,
         -bugprone-narrowing-conversions,
         -bugprone-reserved-identifier,
@@ -114,6 +117,7 @@ Checks:
         -modernize-type-traits,
         -modernize-use-auto,
         -modernize-use-default-member-init,
+        -modernize-use-ranges,
         -modernize-use-trailing-return-type,
         -readability-avoid-nested-conditional-operator,
         -readability-convert-member-functions-to-static,

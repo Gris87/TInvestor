@@ -53,29 +53,29 @@ void UserDatabase::initSimpleCrypt()
     const int keySize  = sizeof(key);
 
 #ifdef Q_OS_WINDOWS
-    QString user = qgetenv("USERNAME");
+    const QString user = qgetenv("USERNAME");
 #else
-    QString user = qgetenv("USER");
+    const QString user = qgetenv("USER");
 #endif
-    QString host = QHostInfo::localHostName();
+    const QString host = QHostInfo::localHostName();
 
     if (user != "")
     {
-        QByteArray bytes = user.toUtf8();
+        const QByteArray bytes = user.toUtf8();
 
         for (int i = 0; i < keySize; ++i)
         {
-            keyBytes[i] ^= bytes.at(i % bytes.size());
+            keyBytes[i] ^= static_cast<quint8>(bytes.at(i % bytes.size()));
         }
     }
 
     if (host != "")
     {
-        QByteArray bytes = host.toUtf8();
+        const QByteArray bytes = host.toUtf8();
 
         for (int i = 0; i < keySize; ++i)
         {
-            keyBytes[keySize - i - 1] ^= bytes.at(i % bytes.size());
+            keyBytes[keySize - i - 1] ^= static_cast<quint8>(bytes.at(i % bytes.size()));
         }
     }
 

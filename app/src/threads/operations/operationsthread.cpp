@@ -57,7 +57,7 @@ void OperationsThread::run()
 
                 if (portfolioStreamResponse->has_portfolio())
                 {
-                    Quotation newMoney = handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                    const Quotation newMoney = handlePortfolioResponse(portfolioStreamResponse->portfolio());
 
                     if (money != newMoney)
                     {
@@ -86,6 +86,16 @@ void OperationsThread::setAccount(const QString& account)
     Accounts           accounts = mUserStorage->getAccounts();
 
     mAccountId = accounts[account].id;
+}
+
+void OperationsThread::terminateThread()
+{
+    if (mPortfolioStream != nullptr)
+    {
+        mGrpcClient->cancelPortfolioStream(mPortfolioStream);
+    }
+
+    requestInterruption();
 }
 
 void OperationsThread::createPortfolioStream()
@@ -153,7 +163,7 @@ void OperationsThread::requestOperations()
 
         for (int i = allTinkoffOperations.size() - 1; i >= 0; --i)
         {
-            const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> tinkoffOperations = allTinkoffOperations.at(i);
+            const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& tinkoffOperations = allTinkoffOperations.at(i);
 
             qInfo() << "---------------------------------------";
             qInfo() << tinkoffOperations->items_size();

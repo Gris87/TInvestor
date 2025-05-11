@@ -16,6 +16,7 @@ const char* const GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
 
 constexpr int    MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
 constexpr int    ORDER_BOOK_DEPTH             = 50;
+constexpr int    OPERATIONS_LIMIT             = 1000;
 constexpr qint64 MS_IN_SECOND                 = 1000LL;
 
 
@@ -347,7 +348,7 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_allocated_from(fromTimestamp);
     req.set_allocated_to(toTimestamp);
     req.set_cursor(cursor.toStdString());
-    req.set_limit(1000);
+    req.set_limit(OPERATIONS_LIMIT);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_commissions(true);
     req.set_without_trades(true);
@@ -481,6 +482,11 @@ bool GrpcClient::closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& m
     return res;
 }
 
+void GrpcClient::cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
+{
+    marketDataStream->context.TryCancel();
+}
+
 void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)
 {
     const grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
@@ -517,6 +523,11 @@ GrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStrea
     }
 
     return resp;
+}
+
+void GrpcClient::cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
+{
+    portfolioStream->context.TryCancel();
 }
 
 void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)

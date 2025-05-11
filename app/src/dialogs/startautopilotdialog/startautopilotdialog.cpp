@@ -90,7 +90,7 @@ void StartAutoPilotDialog::fillAccounts()
 
     std::sort(accounts.begin(), accounts.end());
 
-    for (const Account& account : accounts)
+    for (const Account& account : std::as_const(accounts))
     {
         ui->accountComboBox->addItem(account.name, account.hash());
     }

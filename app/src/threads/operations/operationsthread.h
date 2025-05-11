@@ -24,6 +24,7 @@ public:
     void run() override;
 
     void setAccount(const QString& account) override;
+    void terminateThread() override;
 
     void      createPortfolioStream();
     Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);

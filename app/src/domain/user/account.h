@@ -14,6 +14,7 @@ struct Account
 
     Account& operator=(const Account& another) = default;
 
+    [[nodiscard]]
     QString hash() const;
 
     int     index;

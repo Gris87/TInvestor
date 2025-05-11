@@ -212,7 +212,7 @@ MainWindow::~MainWindow()
     mUserUpdateThread->requestInterruption();
     mPriceCollectThread->requestInterruption();
     mLastPriceThread->terminateThread();
-    mOperationsThread->requestInterruption();
+    mOperationsThread->terminateThread();
     mPortfolioThread->requestInterruption();
     mMakeDecisionThread->requestInterruption();
 
@@ -460,7 +460,7 @@ void MainWindow::stopAutoPilot() const
     ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/start.png"));
     ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
 
-    mOperationsThread->requestInterruption();
+    mOperationsThread->terminateThread();
     mPortfolioThread->requestInterruption();
 
     mOperationsThread->wait();
