@@ -1,4 +1,4 @@
-#include "src/domain/stocks/stock.h"
+#include "src/domain/stock/stock.h"
 
 
 

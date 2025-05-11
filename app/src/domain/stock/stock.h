@@ -5,8 +5,8 @@
 #include <QList>
 #include <QMutex>
 
-#include "src/domain/stocks/stockmeta.h"
-#include "src/domain/stocks/stockoperational.h"
+#include "src/domain/stock/stockmeta.h"
+#include "src/domain/stock/stockoperational.h"
 
 
 

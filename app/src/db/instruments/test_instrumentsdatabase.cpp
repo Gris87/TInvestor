@@ -102,9 +102,9 @@ TEST_F(Test_InstrumentsDatabase, Test_writeInstruments)
 
     Instruments instruments;
 
-    InstrumentInfo instrument1;
-    InstrumentInfo instrument2;
-    InstrumentInfo instrument3;
+    Instrument instrument1;
+    Instrument instrument2;
+    Instrument instrument3;
 
     instrument1.ticker = "BANA";
     instrument1.name   = "Banana";

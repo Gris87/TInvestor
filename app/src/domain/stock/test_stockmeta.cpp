@@ -1,4 +1,4 @@
-#include "src/domain/stocks/stockmeta.h"
+#include "src/domain/stock/stockmeta.h"
 
 #include <QDebug>
 #include <QJsonDocument>

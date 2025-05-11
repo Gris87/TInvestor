@@ -5,7 +5,7 @@
 #include "src/widgets/tableitems/actions/iactionstableitemwidget.h"
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
-#include "src/domain/stocks/stock.h"
+#include "src/domain/stock/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"

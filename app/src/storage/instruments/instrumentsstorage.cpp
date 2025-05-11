@@ -43,13 +43,13 @@ void InstrumentsStorage::mergeInstruments(const Instruments& instruments)
     {
         if (instruments.contains(it.key()))
         {
-            const InstrumentInfo& info = instruments[it.key()];
+            const Instrument& instrument = instruments[it.key()];
 
-            if (it.value() != info)
+            if (it.value() != instrument)
             {
                 changed = true;
 
-                mInstruments[it.key()] = info;
+                mInstruments[it.key()] = instrument;
             }
         }
     }

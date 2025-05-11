@@ -4,7 +4,7 @@
 
 #include <QMutex>
 
-#include "src/domain/instruments/instrumentinfo.h"
+#include "src/domain/instrument/instrument.h"
 
 
 

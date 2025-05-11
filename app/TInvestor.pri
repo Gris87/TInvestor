@@ -43,13 +43,13 @@ SOURCES += \
     src/dialogs/startsimulationdialog/startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
     src/domain/filter/filter.cpp \
-    src/domain/instruments/instrumentinfo.cpp \
+    src/domain/instrument/instrument.cpp \
     src/domain/operation/operation.cpp \
     src/domain/orderbook/orderbook.cpp \
     src/domain/quotation/quotation.cpp \
-    src/domain/stocks/stock.cpp \
-    src/domain/stocks/stockmeta.cpp \
-    src/domain/stocks/stockoperational.cpp \
+    src/domain/stock/stock.cpp \
+    src/domain/stock/stockmeta.cpp \
+    src/domain/stock/stockoperational.cpp \
     src/domain/user/account.cpp \
     src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
@@ -186,15 +186,15 @@ HEADERS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.h \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
     src/domain/filter/filter.h \
-    src/domain/instruments/instrumentinfo.h \
+    src/domain/instrument/instrument.h \
     src/domain/operation/operation.h \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
     src/domain/quotation/quotation.h \
-    src/domain/stocks/stock.h \
-    src/domain/stocks/stockdata.h \
-    src/domain/stocks/stockmeta.h \
-    src/domain/stocks/stockoperational.h \
+    src/domain/stock/stock.h \
+    src/domain/stock/stockdata.h \
+    src/domain/stock/stockmeta.h \
+    src/domain/stock/stockoperational.h \
     src/domain/user/account.h \
     src/domain/user/user.h \
     src/grpc/grpcclient.h \

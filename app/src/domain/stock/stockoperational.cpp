@@ -1,4 +1,4 @@
-#include "src/domain/stocks/stockoperational.h"
+#include "src/domain/stock/stockoperational.h"
 
 
 

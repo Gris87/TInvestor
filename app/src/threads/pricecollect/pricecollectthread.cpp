@@ -147,7 +147,7 @@ obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcClient, Instr
             {
                 const QString instrumentId = QString::fromStdString(tinkoffBond.uid());
 
-                InstrumentInfo instrument;
+                Instrument instrument;
                 instrument.ticker = QString::fromStdString(tinkoffBond.ticker());
                 instrument.name   = QString::fromStdString(tinkoffBond.name());
 
@@ -174,7 +174,7 @@ static void obtainInstrumentsFromCurrencies(
             {
                 const QString instrumentId = QString::fromStdString(tinkoffCurrency.uid());
 
-                InstrumentInfo instrument;
+                Instrument instrument;
                 instrument.ticker = QString::fromStdString(tinkoffCurrency.ticker());
                 instrument.name   = QString::fromStdString(tinkoffCurrency.name());
 
@@ -200,7 +200,7 @@ obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, Instru
             {
                 const QString instrumentId = QString::fromStdString(tinkoffEtf.uid());
 
-                InstrumentInfo instrument;
+                Instrument instrument;
                 instrument.ticker = QString::fromStdString(tinkoffEtf.ticker());
                 instrument.name   = QString::fromStdString(tinkoffEtf.name());
 
@@ -226,7 +226,7 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
             {
                 const QString instrumentId = QString::fromStdString(tinkoffFuture.uid());
 
-                InstrumentInfo instrument;
+                Instrument instrument;
                 instrument.ticker = QString::fromStdString(tinkoffFuture.ticker());
                 instrument.name   = QString::fromStdString(tinkoffFuture.name());
 
@@ -259,7 +259,7 @@ struct ObtainInstrumentsInfo
     }
 
     IGrpcClient*                      grpcClient;
-    QList<Instruments>                results; // UID => InstrumentInfo
+    QList<Instruments>                results; // UID => Instrument
     QList<QList<InstrumentIdAndLogo>> logos;   // UID => Logo
 };
 
@@ -376,7 +376,7 @@ void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::
     ObtainInstrumentsInfo obtainInstrumentsInfo(mGrpcClient, instrumentTypes);
     processInParallel(instrumentTypes, obtainInstrumentsForParallel, &obtainInstrumentsInfo);
 
-    Instruments                instruments = convertStocksToInstrumentsInfo(tinkoffStocks); // UID => InstrumentInfo
+    Instruments                instruments = convertStocksToInstrumentsInfo(tinkoffStocks); // UID => Instrument
     QList<InstrumentIdAndLogo> logos       = convertStocksToLogos(tinkoffStocks);
 
     for (int i = 0; i < instrumentTypes.size(); ++i)
@@ -402,10 +402,10 @@ void PriceCollectThread::storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::
     mInstrumentsStorage->mergeInstruments(instruments);
 }
 
-// UID => InstrumentInfo
+// UID => Instrument
 Instruments PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
-    Instruments res; // UID => InstrumentInfo
+    Instruments res; // UID => Instrument
 
     for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {
@@ -415,7 +415,7 @@ Instruments PriceCollectThread::convertStocksToInstrumentsInfo(const std::shared
         {
             const QString instrumentId = QString::fromStdString(tinkoffStock.uid());
 
-            InstrumentInfo instrument;
+            Instrument instrument;
             instrument.ticker = QString::fromStdString(tinkoffStock.ticker());
             instrument.name   = QString::fromStdString(tinkoffStock.name());
 

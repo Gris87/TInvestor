@@ -47,11 +47,11 @@ Instruments InstrumentsDatabase::readInstruments()
 
             for (auto i = jsonInstruments.constBegin(), end = jsonInstruments.constEnd(); i != end; ++i)
             {
-                InstrumentInfo info;
+                Instrument instrument;
 
-                info.fromJsonObject(i.value().toObject());
+                instrument.fromJsonObject(i.value().toObject());
 
-                res[i.key()] = info;
+                res[i.key()] = instrument;
             }
         }
     }

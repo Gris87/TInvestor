@@ -38,13 +38,13 @@ SOURCES += \
     src/dialogs/startsimulationdialog/test_startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
-    src/domain/instruments/test_instrumentinfo.cpp \
+    src/domain/instrument/test_instrument.cpp \
     src/domain/operation/test_operation.cpp \
     src/domain/orderbook/test_orderbook.cpp \
     src/domain/quotation/test_quotation.cpp \
-    src/domain/stocks/test_stock.cpp \
-    src/domain/stocks/test_stockmeta.cpp \
-    src/domain/stocks/test_stockoperational.cpp \
+    src/domain/stock/test_stock.cpp \
+    src/domain/stock/test_stockmeta.cpp \
+    src/domain/stock/test_stockoperational.cpp \
     src/domain/user/test_account.cpp \
     src/domain/user/test_user.cpp \
     src/grpc/test_grpcclient.cpp \

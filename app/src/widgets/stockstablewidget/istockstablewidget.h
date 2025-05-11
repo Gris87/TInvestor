@@ -5,7 +5,7 @@
 #include <QWidget>
 
 #include "src/domain/filter/filter.h"
-#include "src/domain/stocks/stock.h"
+#include "src/domain/stock/stock.h"
 
 
 

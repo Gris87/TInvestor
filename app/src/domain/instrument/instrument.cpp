@@ -1,20 +1,20 @@
-#include "src/domain/instruments/instrumentinfo.h"
+#include "src/domain/instrument/instrument.h"
 
 
 
-InstrumentInfo::InstrumentInfo() :
+Instrument::Instrument() :
     ticker(),
     name()
 {
 }
 
-void InstrumentInfo::fromJsonObject(const QJsonObject& jsonObject)
+void Instrument::fromJsonObject(const QJsonObject& jsonObject)
 {
     ticker = jsonObject.value("ticker").toString("");
     name   = jsonObject.value("name").toString("");
 }
 
-QJsonObject InstrumentInfo::toJsonObject() const
+QJsonObject Instrument::toJsonObject() const
 {
     QJsonObject res;
 
@@ -24,7 +24,7 @@ QJsonObject InstrumentInfo::toJsonObject() const
     return res;
 }
 
-bool operator==(const InstrumentInfo& lhs, const InstrumentInfo& rhs)
+bool operator==(const Instrument& lhs, const Instrument& rhs)
 {
     return lhs.ticker == rhs.ticker && lhs.name == rhs.name;
 }

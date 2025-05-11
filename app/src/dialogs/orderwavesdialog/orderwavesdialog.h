@@ -4,7 +4,7 @@
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialog.h"
 
-#include "src/domain/stocks/stock.h"
+#include "src/domain/stock/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 

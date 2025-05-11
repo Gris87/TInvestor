@@ -4,7 +4,7 @@
 
 #include <QList>
 
-#include "src/domain/stocks/stockdata.h"
+#include "src/domain/stock/stockdata.h"
 
 
 

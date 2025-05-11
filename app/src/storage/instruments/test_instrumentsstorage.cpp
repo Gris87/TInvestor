@@ -47,9 +47,9 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     Instruments instruments = storage->getInstruments();
     ASSERT_EQ(instruments.size(), 0);
 
-    InstrumentInfo instrument1;
-    InstrumentInfo instrument2;
-    InstrumentInfo instrument3;
+    Instrument instrument1;
+    Instrument instrument2;
+    Instrument instrument3;
 
     instrument1.ticker = "BANA";
     instrument1.name   = "Banana";
@@ -92,9 +92,9 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     Instruments instruments = storage->getInstruments();
     ASSERT_EQ(instruments.size(), 0);
 
-    InstrumentInfo instrument1;
-    InstrumentInfo instrument2;
-    InstrumentInfo instrument3;
+    Instrument instrument1;
+    Instrument instrument2;
+    Instrument instrument3;
 
     instrument1.ticker = "BANA";
     instrument1.name   = "Banana";
@@ -126,8 +126,8 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
 
     Instruments newInstruments;
 
-    InstrumentInfo newInstrument1;
-    InstrumentInfo newInstrument2;
+    Instrument newInstrument1;
+    Instrument newInstrument2;
 
     newInstrument1.ticker = "WADA";
     newInstrument1.name   = "Awada kedabra";
