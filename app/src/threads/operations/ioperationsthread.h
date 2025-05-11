@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/operation/operation.h"
+
 
 
 class IOperationsThread : public QThread
@@ -25,4 +27,6 @@ public:
 
 signals:
     void accountNotFound();
+    void operationsRead(const QList<Operation> operations);
+    void operationsAdded(const QList<Operation> operations);
 };

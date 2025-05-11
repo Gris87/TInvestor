@@ -9,7 +9,7 @@ Operation::Operation() :
 
 void Operation::fromJsonObject(const QJsonObject& jsonObject)
 {
-    timestamp = jsonObject.value("timestamp").toInt(0);
+    timestamp = jsonObject.value("timestamp").toInteger(0);
 }
 
 QJsonObject Operation::toJsonObject() const

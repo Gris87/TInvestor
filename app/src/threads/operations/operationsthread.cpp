@@ -14,13 +14,17 @@ constexpr qint64  ONE_DAY      = 24LL * ONE_HOUR;
 
 
 
-OperationsThread::OperationsThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
+OperationsThread::OperationsThread(
+    IUserStorage* userStorage, IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent
+) :
     IOperationsThread(parent),
     mUserStorage(userStorage),
+    mOperationsDatabase(operationsDatabase),
     mGrpcClient(grpcClient),
-    mAccountHash(),
     mAccountId(),
-    mLastRequestTimestamp()
+    mPortfolioStream(),
+    mLastRequestTimestamp(),
+    mOperations()
 {
     qDebug() << "Create OperationsThread";
 }
@@ -36,7 +40,10 @@ void OperationsThread::run()
 
     if (mAccountId != "")
     {
-        readOperations();
+        mOperations           = mOperationsDatabase->readOperations();
+        mLastRequestTimestamp = !mOperations.isEmpty() ? mOperations.constLast().timestamp + MS_IN_SECOND : 0;
+
+        emit operationsRead(mOperations);
 
         const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
@@ -85,12 +92,12 @@ void OperationsThread::run()
 
 void OperationsThread::setAccount(const QString& account)
 {
-    mAccountHash = account;
+    mOperationsDatabase->setAccount(account);
 
     const QMutexLocker lock(mUserStorage->getMutex());
     Accounts           accounts = mUserStorage->getAccounts();
 
-    mAccountId = accounts[mAccountHash].id;
+    mAccountId = accounts[account].id;
 }
 
 void OperationsThread::terminateThread()
@@ -179,25 +186,18 @@ void OperationsThread::requestOperations()
 
         if (lastIndex == 0)
         {
-            writeOperations();
+            mOperationsDatabase->writeOperations(mOperations);
+
+            emit operationsRead(mOperations);
         }
         else
         {
-            appendOperations(lastIndex);
+            QList<Operation> newOperations = mOperations.mid(lastIndex);
+
+            mOperationsDatabase->appendOperations(newOperations);
+            emit operationsAdded(newOperations);
         }
 
         mLastRequestTimestamp = mOperations.constLast().timestamp + MS_IN_SECOND;
     }
-}
-
-void OperationsThread::readOperations()
-{
-}
-
-void OperationsThread::writeOperations()
-{
-}
-
-void OperationsThread::appendOperations(int /*lastIndex*/)
-{
 }

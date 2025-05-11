@@ -76,7 +76,7 @@ void InstrumentsDatabase::writeInstruments(const Instruments& instruments)
         mFileFactory->newInstance(qApp->applicationDirPath() + "/data/instruments/instruments.json");
 
     const bool ok = instrumentsFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, "InstrumentsDatabase::writeInstrumentsMeta()", "Failed to open file");
+    Q_ASSERT_X(ok, "InstrumentsDatabase::writeInstruments()", "Failed to open file");
 
     instrumentsFile->write(jsonDoc.toJson(QJsonDocument::Compact));
     instrumentsFile->close();

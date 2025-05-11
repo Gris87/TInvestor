@@ -23,6 +23,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/db/instruments/instrumentsdatabase.h"
+#include "src/db/operations/operationsdatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
@@ -288,6 +289,7 @@ static int runApplication(QApplication* app)
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
+    OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
 
     TimeUtils       timeUtils;
     MessageBoxUtils messageBoxUtils;
@@ -311,7 +313,7 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread   operationsThread(&userStorage, &grpcClient);
+    OperationsThread   operationsThread(&userStorage, &autoPilotOperationsDatabase, &grpcClient);
     PortfolioThread    portfolioThread(&userStorage, &grpcClient);
     MakeDecisionThread makeDecisionThread(&config, &stocksStorage);
     OrderBookThread    orderBookThread(&grpcClient);

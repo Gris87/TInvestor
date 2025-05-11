@@ -25,7 +25,7 @@ protected:
         dirFactoryMock  = new StrictMock<DirFactoryMock>();
         fileFactoryMock = new StrictMock<FileFactoryMock>();
 
-        database = new OperationsDatabase(dirFactoryMock, fileFactoryMock);
+        database = new OperationsDatabase(dirFactoryMock, fileFactoryMock, true);
     }
 
     void TearDown() override

@@ -202,7 +202,7 @@ Accounts UserDatabase::readAccounts()
     {
         Account account;
 
-        account.index = query.value(idIndex).toInt();
+        account.index = query.value(idIndex).toInt() - 1;
         account.id    = mSimpleCrypt.decryptToString(query.value(uidIndex).toString());
         account.name  = query.value(nameIndex).toString();
 
@@ -271,7 +271,7 @@ void UserDatabase::writeAccounts(const Accounts& accounts)
 
     for (auto it = accounts.cbegin(), end = accounts.cend(); it != end; ++it)
     {
-        ids[i]   = it.value().index;
+        ids[i]   = it.value().index + 1;
         uids[i]  = mSimpleCrypt.encryptToString(it.value().id);
         names[i] = it.value().name;
 
