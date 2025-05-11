@@ -19,4 +19,6 @@ public:
 
     ICleanupThread(const ICleanupThread& another)            = delete;
     ICleanupThread& operator=(const ICleanupThread& another) = delete;
+
+    virtual void terminateThread() = 0;
 };

@@ -154,8 +154,8 @@ TEST_F(Test_LastPriceThread, Test_terminateThread)
 
     thread->createMarketDataStream();
 
-    EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
     EXPECT_CALL(*grpcClientMock, closeWriteMarketDataStream(marketDataStream)).WillOnce(Return(true));
+    EXPECT_CALL(*grpcClientMock, cancelMarketDataStream(marketDataStream));
 
     thread->terminateThread();
 }

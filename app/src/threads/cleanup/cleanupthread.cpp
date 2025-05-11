@@ -38,3 +38,8 @@ void CleanupThread::run()
 
     qDebug() << "Finish CleanupThread";
 }
+
+void CleanupThread::terminateThread()
+{
+    requestInterruption();
+}

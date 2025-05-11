@@ -19,4 +19,6 @@ public:
 
     IUserUpdateThread(const IUserUpdateThread& another)            = delete;
     IUserUpdateThread& operator=(const IUserUpdateThread& another) = delete;
+
+    virtual void terminateThread() = 0;
 };

@@ -69,3 +69,8 @@ void UserUpdateThread::run()
 
     qDebug() << "Finish UserUpdateThread";
 }
+
+void UserUpdateThread::terminateThread()
+{
+    requestInterruption();
+}

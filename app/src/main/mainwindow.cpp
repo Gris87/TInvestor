@@ -208,13 +208,13 @@ MainWindow::~MainWindow()
 {
     qDebug() << "Destroy MainWindow";
 
-    mCleanupThread->requestInterruption();
-    mUserUpdateThread->requestInterruption();
-    mPriceCollectThread->requestInterruption();
+    mCleanupThread->terminateThread();
+    mUserUpdateThread->terminateThread();
+    mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
     mOperationsThread->terminateThread();
-    mPortfolioThread->requestInterruption();
-    mMakeDecisionThread->requestInterruption();
+    mPortfolioThread->terminateThread();
+    mMakeDecisionThread->terminateThread();
 
     mCleanupThread->wait();
     mUserUpdateThread->wait();
@@ -290,10 +290,10 @@ void MainWindow::authFailed(
         return;
     }
 
-    mUserUpdateThread->requestInterruption();
-    mPriceCollectThread->requestInterruption();
+    mUserUpdateThread->terminateThread();
+    mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
-    mMakeDecisionThread->requestInterruption();
+    mMakeDecisionThread->terminateThread();
 
     userUpdateTimer.stop();
     priceCollectTimer.stop();
@@ -461,7 +461,7 @@ void MainWindow::stopAutoPilot() const
     ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
 
     mOperationsThread->terminateThread();
-    mPortfolioThread->requestInterruption();
+    mPortfolioThread->terminateThread();
 
     mOperationsThread->wait();
     mPortfolioThread->wait();

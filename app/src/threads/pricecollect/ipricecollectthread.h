@@ -20,6 +20,8 @@ public:
     IPriceCollectThread(const IPriceCollectThread& another)            = delete;
     IPriceCollectThread& operator=(const IPriceCollectThread& another) = delete;
 
+    virtual void terminateThread() = 0;
+
 signals:
     void notifyInstrumentsProgress(const QString& message);
     void stocksChanged();

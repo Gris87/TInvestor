@@ -22,6 +22,8 @@ public:
 
     void run() override;
 
+    void terminateThread() override;
+
 private:
     IUserStorage* mUserStorage;
     IGrpcClient*  mGrpcClient;

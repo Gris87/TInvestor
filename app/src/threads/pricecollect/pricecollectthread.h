@@ -59,6 +59,8 @@ public:
 
     void run() override;
 
+    void terminateThread() override;
+
     bool                       storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void                       storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     Instruments                convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);

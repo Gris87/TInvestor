@@ -25,3 +25,8 @@ void MakeDecisionThread::run()
 
     qDebug() << "Finish MakeDecisionThread";
 }
+
+void MakeDecisionThread::terminateThread()
+{
+    requestInterruption();
+}

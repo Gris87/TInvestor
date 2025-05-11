@@ -41,3 +41,8 @@ void PortfolioThread::setAccount(const QString& account)
 
     mAccountId = accounts[account].id;
 }
+
+void PortfolioThread::terminateThread()
+{
+    requestInterruption();
+}

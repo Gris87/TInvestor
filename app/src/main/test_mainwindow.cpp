@@ -250,7 +250,13 @@ protected:
     {
         const InSequence seq;
 
+        EXPECT_CALL(*cleanupThreadMock, terminateThread());
+        EXPECT_CALL(*userUpdateThreadMock, terminateThread());
+        EXPECT_CALL(*priceCollectThreadMock, terminateThread());
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+        EXPECT_CALL(*operationsThreadMock, terminateThread());
+        EXPECT_CALL(*portfolioThreadMock, terminateThread());
+        EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, setValue(QString("MainWindow/geometry"),    _));
@@ -433,7 +439,12 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
+    EXPECT_CALL(*userUpdateThreadMock, terminateThread());
+    EXPECT_CALL(*priceCollectThreadMock, terminateThread());
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*operationsThreadMock, terminateThread());
+    EXPECT_CALL(*portfolioThreadMock, terminateThread());
+    EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
@@ -868,6 +879,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     )
         .WillOnce(Return(QMessageBox::Yes));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
+
+    EXPECT_CALL(*operationsThreadMock, terminateThread());
+    EXPECT_CALL(*portfolioThreadMock, terminateThread());
 
     mainWindow->ui->startAutoPilotButton->click();
 

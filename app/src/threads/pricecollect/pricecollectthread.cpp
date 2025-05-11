@@ -97,6 +97,11 @@ void PriceCollectThread::run()
     qDebug() << "Finish PriceCollectThread";
 }
 
+void PriceCollectThread::terminateThread()
+{
+    requestInterruption();
+}
+
 bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks)
 {
     QList<StockMeta> stocksMeta;

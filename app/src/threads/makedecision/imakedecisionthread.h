@@ -19,4 +19,6 @@ public:
 
     IMakeDecisionThread(const IMakeDecisionThread& another)            = delete;
     IMakeDecisionThread& operator=(const IMakeDecisionThread& another) = delete;
+
+    virtual void terminateThread() = 0;
 };

@@ -23,6 +23,7 @@ public:
     void run() override;
 
     void setAccount(const QString& account) override;
+    void terminateThread() override;
 
 private:
     IUserStorage* mUserStorage;
