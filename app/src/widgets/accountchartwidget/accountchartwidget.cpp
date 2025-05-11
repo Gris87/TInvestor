@@ -22,10 +22,10 @@ AccountChartWidget::~AccountChartWidget()
 
 void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 {
-    qInfo() << operations.size();
+    qInfo() << operations.size(); // TODO: Implement
 }
 
 void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 {
-    qInfo() << operations.size();
+    qInfo() << operations.size(); // TODO: Implement
 }

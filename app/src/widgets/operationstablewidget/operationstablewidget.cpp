@@ -46,12 +46,12 @@ OperationsTableWidget::~OperationsTableWidget()
 
 void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 {
-    qInfo() << operations.size();
+    qInfo() << operations.size(); // TODO: Implement
 }
 
 void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 {
-    qInfo() << operations.size();
+    qInfo() << operations.size(); // TODO: Implement
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)

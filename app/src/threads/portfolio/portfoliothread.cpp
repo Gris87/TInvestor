@@ -24,7 +24,7 @@ void PortfolioThread::run()
 
     if (mAccountId != "")
     {
-        qInfo() << mAccountId;
+        qInfo() << mAccountId; // TODO: Implement
     }
     else
     {
