@@ -22,6 +22,9 @@ public:
     OperationsTableWidgetMock(const OperationsTableWidgetMock& another)            = delete;
     OperationsTableWidgetMock& operator=(const OperationsTableWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
+    MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
+
     MOCK_METHOD(void, saveWindowState, (const QString& type), (override));
     MOCK_METHOD(void, loadWindowState, (const QString& type), (override));
 };

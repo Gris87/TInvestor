@@ -190,6 +190,8 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,               SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,                  SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
     connect(mOperationsThread,                 SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mOperationsThread,                 SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
+    connect(mOperationsThread,                 SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
     connect(mPortfolioThread,                  SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
@@ -465,6 +467,16 @@ void MainWindow::stopAutoPilot() const
 
     mOperationsThread->wait();
     mPortfolioThread->wait();
+}
+
+void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
+{
+    mAutoPilotDecisionMakerWidget->operationsRead(operations);
+}
+
+void MainWindow::autoPilotOperationsAdded(const QList<Operation>& operations)
+{
+    mAutoPilotDecisionMakerWidget->operationsAdded(operations);
 }
 
 void MainWindow::on_actionAuth_triggered()

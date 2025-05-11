@@ -27,6 +27,6 @@ public:
 
 signals:
     void accountNotFound();
-    void operationsRead(const QList<Operation> operations);
-    void operationsAdded(const QList<Operation> operations);
+    void operationsRead(const QList<Operation>& operations);
+    void operationsAdded(const QList<Operation>& operations);
 };

@@ -37,6 +37,9 @@ public:
     DecisionMakerWidget(const DecisionMakerWidget& another)            = delete;
     DecisionMakerWidget& operator=(const DecisionMakerWidget& another) = delete;
 
+    void operationsRead(const QList<Operation>& operations) override;
+    void operationsAdded(const QList<Operation>& operations) override;
+
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
 

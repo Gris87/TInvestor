@@ -43,6 +43,18 @@ DecisionMakerWidget::~DecisionMakerWidget()
     delete ui;
 }
 
+void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
+{
+    mOperationsTableWidget->operationsRead(operations);
+    mAccountChartWidget->operationsRead(operations);
+}
+
+void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
+{
+    mOperationsTableWidget->operationsAdded(operations);
+    mAccountChartWidget->operationsAdded(operations);
+}
+
 void DecisionMakerWidget::saveWindowState(const QString& type)
 {
     mSettingsEditor->setValue(type + "/splitter", ui->splitter->saveState());

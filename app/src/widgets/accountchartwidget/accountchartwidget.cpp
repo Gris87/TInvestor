@@ -19,3 +19,13 @@ AccountChartWidget::~AccountChartWidget()
 {
     qDebug() << "Destroy AccountChartWidget";
 }
+
+void AccountChartWidget::operationsRead(const QList<Operation>& operations)
+{
+    qInfo() << operations.size();
+}
+
+void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
+{
+    qInfo() << operations.size();
+}

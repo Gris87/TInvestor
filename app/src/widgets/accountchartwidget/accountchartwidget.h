@@ -17,6 +17,9 @@ public:
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;
 
+    void operationsRead(const QList<Operation>& operations) override;
+    void operationsAdded(const QList<Operation>& operations) override;
+
 private:
     QGraphicsScene mScene;
 };

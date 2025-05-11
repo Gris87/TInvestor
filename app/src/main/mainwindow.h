@@ -190,6 +190,8 @@ public slots:
     void stopSimulator() const;
     void startAutoPilot() const;
     void stopAutoPilot() const;
+    void autoPilotOperationsRead(const QList<Operation>& operations);
+    void autoPilotOperationsAdded(const QList<Operation>& operations);
 
 private slots:
     void on_actionAuth_triggered();

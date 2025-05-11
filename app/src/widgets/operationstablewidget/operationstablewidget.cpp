@@ -44,6 +44,16 @@ OperationsTableWidget::~OperationsTableWidget()
     delete ui;
 }
 
+void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
+{
+    qInfo() << operations.size();
+}
+
+void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
+{
+    qInfo() << operations.size();
+}
+
 void OperationsTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off

@@ -4,6 +4,8 @@
 
 #include <QGraphicsView>
 
+#include "src/domain/operation/operation.h"
+
 
 
 class IAccountChartWidget : public QGraphicsView
@@ -19,4 +21,7 @@ public:
 
     IAccountChartWidget(const IAccountChartWidget& another)            = delete;
     IAccountChartWidget& operator=(const IAccountChartWidget& another) = delete;
+
+    virtual void operationsRead(const QList<Operation>& operations)  = 0;
+    virtual void operationsAdded(const QList<Operation>& operations) = 0;
 };

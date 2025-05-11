@@ -21,4 +21,7 @@ public:
 
     AccountChartWidgetMock(const AccountChartWidgetMock& another)            = delete;
     AccountChartWidgetMock& operator=(const AccountChartWidgetMock& another) = delete;
+
+    MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
+    MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
 };
