@@ -167,7 +167,7 @@ void OperationsThread::requestOperations()
 
     if (!QThread::currentThread()->isInterruptionRequested() && !allTinkoffOperations.isEmpty())
     {
-        int lastIndex = mOperations.size();
+        const int lastIndex = mOperations.size();
 
         for (int i = allTinkoffOperations.size() - 1; i >= 0; --i)
         {
@@ -192,7 +192,7 @@ void OperationsThread::requestOperations()
         }
         else
         {
-            QList<Operation> newOperations = mOperations.mid(lastIndex);
+            const QList<Operation> newOperations = mOperations.mid(lastIndex);
 
             mOperationsDatabase->appendOperations(newOperations);
             emit operationsAdded(newOperations);

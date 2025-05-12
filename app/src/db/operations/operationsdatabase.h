@@ -23,7 +23,9 @@ public:
     void             writeOperations(const QList<Operation>& operations) override;
     void             appendOperations(const QList<Operation>& operations) override;
 
-    void    setAutoPilotMode(bool autoPilotMode);
+    void setAutoPilotMode(bool autoPilotMode);
+
+    [[nodiscard]]
     QString operationsDirPath() const;
 
 private:

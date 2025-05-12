@@ -71,7 +71,7 @@ void OperationsDatabase::writeOperations(const QList<Operation>& operations)
 {
     qDebug() << "Writing operations to database";
 
-    QString dirPath = operationsDirPath();
+    const QString dirPath = operationsDirPath();
 
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
@@ -107,9 +107,9 @@ void OperationsDatabase::appendOperations(const QList<Operation>& operations)
     const bool ok = operationsFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, "OperationsDatabase::appendOperations()", "Failed to open file");
 
-    for (int i = 0; i < operations.size(); ++i)
+    for (const Operation& operation : operations)
     {
-        const QJsonDocument jsonDoc(operations.at(i).toJsonObject());
+        const QJsonDocument jsonDoc(operation.toJsonObject());
 
         operationsFile->write(",\n");
         operationsFile->write(jsonDoc.toJson(QJsonDocument::Compact));
