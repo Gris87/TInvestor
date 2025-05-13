@@ -15,7 +15,7 @@ TEST(Test_OperationsTableRecordFactory, Test_newInstance)
 
     QTableWidget tableWidget;
 
-    tableWidget.setColumnCount(COLUMN_COUNT);
+    tableWidget.setColumnCount(OPERATIONS_COLUMN_COUNT);
 
     const IOperationsTableRecord* record = factory.newInstance(&tableWidget, nullptr);
     ASSERT_TRUE(record != nullptr);

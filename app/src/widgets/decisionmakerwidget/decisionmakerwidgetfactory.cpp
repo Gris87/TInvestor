@@ -22,6 +22,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
     IAccountChartWidgetFactory*    accountChartWidgetFactory,
     ILogsTableWidgetFactory*       logsTableWidgetFactory,
     IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
+    IOperationsTableRecordFactory* operationsTableRecordFactory,
     ISettingsEditor*               settingsEditor,
     QWidget*                       parent
 ) const
@@ -31,6 +32,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
         accountChartWidgetFactory,
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
+        operationsTableRecordFactory,
         settingsEditor,
         parent
     );

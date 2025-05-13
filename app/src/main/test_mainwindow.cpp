@@ -50,6 +50,7 @@
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -107,6 +108,7 @@ protected:
         accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
         portfolioTableWidgetFactoryMock      = new StrictMock<PortfolioTableWidgetFactoryMock>();
+        operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -158,6 +160,7 @@ protected:
                 accountChartWidgetFactoryMock,
                 logsTableWidgetFactoryMock,
                 portfolioTableWidgetFactoryMock,
+                operationsTableRecordFactoryMock,
                 settingsEditorMock,
                 NotNull()
             )
@@ -170,6 +173,7 @@ protected:
                 accountChartWidgetFactoryMock,
                 logsTableWidgetFactoryMock,
                 portfolioTableWidgetFactoryMock,
+                operationsTableRecordFactoryMock,
                 settingsEditorMock,
                 NotNull()
             )
@@ -223,6 +227,7 @@ protected:
             accountChartWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTableWidgetFactoryMock,
+            operationsTableRecordFactoryMock,
             decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
@@ -295,6 +300,7 @@ protected:
         delete accountChartWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
         delete portfolioTableWidgetFactoryMock;
+        delete operationsTableRecordFactoryMock;
         delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
@@ -351,6 +357,7 @@ protected:
     StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTableWidgetFactoryMock>*      portfolioTableWidgetFactoryMock;
+    StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;

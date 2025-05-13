@@ -17,7 +17,9 @@ OperationsTableWidgetFactory::~OperationsTableWidgetFactory()
     qDebug() << "Destroy OperationsTableWidgetFactory";
 }
 
-IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const
+IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
+    IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+) const
 {
-    return new OperationsTableWidget(settingsEditor, parent);
+    return new OperationsTableWidget(operationsTableRecordFactory, settingsEditor, parent);
 }

@@ -42,7 +42,7 @@ protected:
         tableWidget                       = new QTableWidget();
         stock                             = new Stock();
 
-        tableWidget->setColumnCount(COLUMN_COUNT);
+        tableWidget->setColumnCount(STOCKS_COLUMN_COUNT);
 
         StockOperationalData stockData;
         stockData.timestamp = 100;
@@ -148,11 +148,11 @@ TEST_F(Test_StocksTableRecord, Test_updateAll)
     record->updateAll();
 
     // clang-format off
-    ASSERT_EQ(tableWidget->item(0, PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
-    ASSERT_EQ(tableWidget->item(0, DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
-    ASSERT_EQ(tableWidget->item(0, DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
-    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole),    QString("1.50B ") + QChar(0x20BD));
-    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole),     "90.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
+    ASSERT_EQ(tableWidget->item(0, STOCKS_DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_TURNOVER_COLUMN)->data(Qt::DisplayRole),    QString("1.50B ") + QChar(0x20BD));
+    ASSERT_EQ(tableWidget->item(0, STOCKS_PAYBACK_COLUMN)->data(Qt::DisplayRole),     "90.00%");
     // clang-format on
 }
 
@@ -161,24 +161,24 @@ TEST_F(Test_StocksTableRecord, Test_updatePrice)
     record->updatePrice();
 
     // clang-format off
-    ASSERT_EQ(tableWidget->item(0, PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
-    ASSERT_EQ(tableWidget->item(0, DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
-    ASSERT_EQ(tableWidget->item(0, DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_PRICE_COLUMN)->data(Qt::DisplayRole),       QString("50.00000 ") + QChar(0x20BD));
+    ASSERT_EQ(tableWidget->item(0, STOCKS_DAY_CHANGE_COLUMN)->data(Qt::DisplayRole),  "+25.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_DATE_CHANGE_COLUMN)->data(Qt::DisplayRole), "+150.00%");
     // clang-format on
 }
 
 TEST_F(Test_StocksTableRecord, Test_updatePeriodicData)
 {
-    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
-    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.50B ") + QChar(0x20BD));
+    ASSERT_EQ(tableWidget->item(0, STOCKS_PAYBACK_COLUMN)->data(Qt::DisplayRole), "90.00%");
 
     stock->operational.turnover = 1250000;
     stock->operational.payback  = 60;
 
     record->updatePeriodicData();
 
-    ASSERT_EQ(tableWidget->item(0, TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.25M ") + QChar(0x20BD));
-    ASSERT_EQ(tableWidget->item(0, PAYBACK_COLUMN)->data(Qt::DisplayRole), "60.00%");
+    ASSERT_EQ(tableWidget->item(0, STOCKS_TURNOVER_COLUMN)->data(Qt::DisplayRole), QString("1.25M ") + QChar(0x20BD));
+    ASSERT_EQ(tableWidget->item(0, STOCKS_PAYBACK_COLUMN)->data(Qt::DisplayRole), "60.00%");
 }
 
 TEST_F(Test_StocksTableRecord, Test_filter)

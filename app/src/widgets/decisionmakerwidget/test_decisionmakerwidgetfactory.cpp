@@ -11,6 +11,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -36,6 +37,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<AccountChartWidgetFactoryMock>    accountChartWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>       logsTableWidgetFactoryMock;
     StrictMock<PortfolioTableWidgetFactoryMock>  portfolioTableWidgetFactoryMock;
+    StrictMock<OperationsTableRecordFactoryMock> operationsTableRecordFactoryMock;
     StrictMock<SettingsEditorMock>               settingsEditorMock;
 
     // It will be deleted by `delete ui;`
@@ -44,7 +46,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogsTableWidgetMock>*       logsTableWidgetMock       = new StrictMock<LogsTableWidgetMock>();
     StrictMock<PortfolioTableWidgetMock>*  portfolioTableWidgetMock  = new StrictMock<PortfolioTableWidgetMock>();
 
-    EXPECT_CALL(operationsTableWidgetFactoryMock, newInstance(&settingsEditorMock, NotNull()))
+    EXPECT_CALL(operationsTableWidgetFactoryMock, newInstance(&operationsTableRecordFactoryMock, &settingsEditorMock, NotNull()))
         .WillOnce(Return(operationsTableWidgetMock));
     EXPECT_CALL(accountChartWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(accountChartWidgetMock));
     EXPECT_CALL(logsTableWidgetFactoryMock, newInstance(&settingsEditorMock, NotNull())).WillOnce(Return(logsTableWidgetMock));
@@ -56,6 +58,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         &accountChartWidgetFactoryMock,
         &logsTableWidgetFactoryMock,
         &portfolioTableWidgetFactoryMock,
+        &operationsTableRecordFactoryMock,
         &settingsEditorMock,
         nullptr
     );

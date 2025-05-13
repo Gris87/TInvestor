@@ -5,6 +5,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
 
 
@@ -17,5 +18,7 @@ public:
     IOperationsTableWidgetFactory(const IOperationsTableWidgetFactory& another)            = delete;
     IOperationsTableWidgetFactory& operator=(const IOperationsTableWidgetFactory& another) = delete;
 
-    virtual IOperationsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
+    virtual IOperationsTableWidget* newInstance(
+        IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+    ) const = 0;
 };

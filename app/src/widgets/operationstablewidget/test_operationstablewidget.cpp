@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -20,19 +21,22 @@ class Test_OperationsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+        operationsTableRecordFactoryMock = new StrictMock<OperationsTableRecordFactoryMock>();
+        settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
-        operationsTableWidget = new OperationsTableWidget(settingsEditorMock);
+        operationsTableWidget = new OperationsTableWidget(operationsTableRecordFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete operationsTableWidget;
+        delete operationsTableRecordFactoryMock;
         delete settingsEditorMock;
     }
 
-    OperationsTableWidget*          operationsTableWidget;
-    StrictMock<SettingsEditorMock>* settingsEditorMock;
+    OperationsTableWidget*                        operationsTableWidget;
+    StrictMock<OperationsTableRecordFactoryMock>* operationsTableRecordFactoryMock;
+    StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };
 
 

@@ -456,13 +456,13 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
 
 TEST_F(Test_StocksTableWidget, Test_setDateChangeTooltip)
 {
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "");
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "");
 
     stocksTableWidget->setDateChangeTooltip("AAAAA");
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "AAAAA");
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "AAAAA");
 
     stocksTableWidget->setDateChangeTooltip("BBBBB");
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(DATE_CHANGE_COLUMN)->toolTip(), "BBBBB");
+    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "BBBBB");
 }
 
 TEST_F(Test_StocksTableWidget, Test_filterChanged)

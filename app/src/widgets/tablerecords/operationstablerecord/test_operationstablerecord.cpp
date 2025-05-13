@@ -11,7 +11,7 @@ protected:
     {
         tableWidget = new QTableWidget();
 
-        tableWidget->setColumnCount(COLUMN_COUNT);
+        tableWidget->setColumnCount(OPERATIONS_COLUMN_COUNT);
 
         record = new OperationsTableRecord(tableWidget);
     }

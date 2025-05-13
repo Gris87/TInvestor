@@ -66,6 +66,7 @@
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/stock/stocktableitemwidgetfactory.h"
+#include "src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
@@ -175,7 +176,9 @@ static int runApplication(QApplication* app)
     PortfolioTableWidgetFactory      portfolioTableWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
-    StocksTableRecordFactory stockTableRecordFactory;
+    StocksTableRecordFactory     stocksTableRecordFactory;
+    OperationsTableRecordFactory operationsTableRecordFactory;
+
     TrayIconFactory          trayIconFactory;
     DirFactory               dirFactory;
     FileFactory              fileFactory;
@@ -337,13 +340,14 @@ static int runApplication(QApplication* app)
         &stockTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
-        &stockTableRecordFactory,
+        &stocksTableRecordFactory,
         &stocksControlsWidgetFactory,
         &stocksTableWidgetFactory,
         &operationsTableWidgetFactory,
         &accountChartWidgetFactory,
         &logsTableWidgetFactory,
         &portfolioTableWidgetFactory,
+        &operationsTableRecordFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,

@@ -5,6 +5,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
 
 
@@ -20,7 +21,9 @@ class OperationsTableWidget : public IOperationsTableWidget
     Q_OBJECT
 
 public:
-    explicit OperationsTableWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    explicit OperationsTableWidget(
+        IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent = nullptr
+    );
     ~OperationsTableWidget() override;
 
     OperationsTableWidget(const OperationsTableWidget& another)            = delete;
@@ -35,5 +38,6 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    ISettingsEditor* mSettingsEditor;
+    IOperationsTableRecordFactory* mOperationsTableRecordFactory;
+    ISettingsEditor*               mSettingsEditor;
 };

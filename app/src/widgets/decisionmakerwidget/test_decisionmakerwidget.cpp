@@ -12,6 +12,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -39,9 +40,12 @@ protected:
         accountChartWidgetMock           = new StrictMock<AccountChartWidgetMock>();
         logsTableWidgetMock              = new StrictMock<LogsTableWidgetMock>();
         portfolioTableWidgetMock         = new StrictMock<PortfolioTableWidgetMock>();
+        operationsTableRecordFactoryMock = new StrictMock<OperationsTableRecordFactoryMock>();
         settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
-        EXPECT_CALL(*operationsTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
+        EXPECT_CALL(
+            *operationsTableWidgetFactoryMock, newInstance(operationsTableRecordFactoryMock, settingsEditorMock, NotNull())
+        )
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(accountChartWidgetMock));
         EXPECT_CALL(*logsTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
@@ -54,6 +58,7 @@ protected:
             accountChartWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTableWidgetFactoryMock,
+            operationsTableRecordFactoryMock,
             settingsEditorMock
         );
     }
@@ -65,13 +70,7 @@ protected:
         delete accountChartWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
         delete portfolioTableWidgetFactoryMock;
-        // It will be deleted by `delete ui;`
-        /*
-        delete stocksControlsWidgetMock;
-        delete stocksTableWidgetMock;
-        delete simulatorDecisionMakerWidgetMock;
-        delete autoPilotDecisionMakerWidgetMock;
-        */
+        delete operationsTableRecordFactoryMock;
         delete settingsEditorMock;
     }
 
@@ -84,6 +83,7 @@ protected:
     StrictMock<AccountChartWidgetMock>*           accountChartWidgetMock;
     StrictMock<LogsTableWidgetMock>*              logsTableWidgetMock;
     StrictMock<PortfolioTableWidgetMock>*         portfolioTableWidgetMock;
+    StrictMock<OperationsTableRecordFactoryMock>* operationsTableRecordFactoryMock;
     StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };
 

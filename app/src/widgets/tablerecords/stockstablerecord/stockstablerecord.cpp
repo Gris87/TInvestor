@@ -61,14 +61,14 @@ StocksTableRecord::StocksTableRecord(
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
-    tableWidget->setCellWidget(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
-    tableWidget->setItem(rowIndex, STOCK_COLUMN, mStockTableItemWidget);
-    tableWidget->setItem(rowIndex, PRICE_COLUMN, mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex, DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex, DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex, TURNOVER_COLUMN, mTurnoverTableWidgetItem);
-    tableWidget->setItem(rowIndex, PAYBACK_COLUMN, mPaybackTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, ACTIONS_COLUMN, actionsTableItemWidget);
+    tableWidget->setCellWidget(rowIndex, STOCKS_STOCK_COLUMN, mStockTableItemWidget);
+    tableWidget->setItem(rowIndex, STOCKS_STOCK_COLUMN, mStockTableItemWidget);
+    tableWidget->setItem(rowIndex, STOCKS_PRICE_COLUMN, mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex, STOCKS_DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex, STOCKS_DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex, STOCKS_TURNOVER_COLUMN, mTurnoverTableWidgetItem);
+    tableWidget->setItem(rowIndex, STOCKS_PAYBACK_COLUMN, mPaybackTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, STOCKS_ACTIONS_COLUMN, actionsTableItemWidget);
 }
 
 StocksTableRecord::~StocksTableRecord()

@@ -5,31 +5,20 @@
 
 
 
-// TODO: Move to OperationsTableRecord
-enum OperationsTableColumns : qint8
-{
-    OPERATIONS_TIME_COLUMN,
-    OPERATIONS_NAME_COLUMN,
-    OPERATIONS_OPERATION_COLUMN,
-    OPERATIONS_PRICE_COLUMN,
-    OPERATIONS_QUANTITY_COLUMN,
-    OPERATIONS_COST_COLUMN,
-    COLUMN_COUNT,
-};
-
-
-
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[COLUMN_COUNT] = {64, 82, 85, 56, 95, 87};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {64, 82, 85, 56, 95, 87};
 #else
-const int COLUMN_WIDTHS[COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
 #endif
 
 
 
-OperationsTableWidget::OperationsTableWidget(ISettingsEditor* settingsEditor, QWidget* parent) :
+OperationsTableWidget::OperationsTableWidget(
+    IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+) :
     IOperationsTableWidget(parent),
     ui(new Ui::OperationsTableWidget),
+    mOperationsTableRecordFactory(operationsTableRecordFactory),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create OperationsTableWidget";

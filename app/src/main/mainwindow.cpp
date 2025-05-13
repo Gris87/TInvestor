@@ -56,6 +56,7 @@ MainWindow::MainWindow(
     IAccountChartWidgetFactory*        accountChartWidgetFactory,
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+    IOperationsTableRecordFactory*     operationsTableRecordFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
     ITrayIconFactory*                  trayIconFactory,
     IUserStorage*                      userStorage,
@@ -153,6 +154,7 @@ MainWindow::MainWindow(
         accountChartWidgetFactory,
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
+        operationsTableRecordFactory,
         mSettingsEditor,
         this
     );
@@ -161,6 +163,7 @@ MainWindow::MainWindow(
         accountChartWidgetFactory,
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
+        operationsTableRecordFactory,
         mSettingsEditor,
         this
     );

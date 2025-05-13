@@ -29,7 +29,7 @@ class StocksTableWidget : public IStocksTableWidget
 
 public:
     explicit StocksTableWidget(
-        IStocksTableRecordFactory*      stockTableRecordFactory,
+        IStocksTableRecordFactory*      stocksTableRecordFactory,
         IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,

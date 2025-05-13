@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -19,9 +20,10 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
 {
     const OperationsTableWidgetFactory factory;
 
-    StrictMock<SettingsEditorMock> settingsEditorMock;
+    StrictMock<OperationsTableRecordFactoryMock> operationsTableRecordFactoryMock;
+    StrictMock<SettingsEditorMock>               settingsEditorMock;
 
-    const IOperationsTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
+    const IOperationsTableWidget* widget = factory.newInstance(&operationsTableRecordFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

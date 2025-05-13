@@ -20,5 +20,10 @@ public:
     OperationsTableWidgetFactoryMock(const OperationsTableWidgetFactoryMock& another)            = delete;
     OperationsTableWidgetFactoryMock& operator=(const OperationsTableWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IOperationsTableWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (const, override));
+    MOCK_METHOD(
+        IOperationsTableWidget*,
+        newInstance,
+        (IOperationsTableRecordFactory * operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent),
+        (const, override)
+    );
 };

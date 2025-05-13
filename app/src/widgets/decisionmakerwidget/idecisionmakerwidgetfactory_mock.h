@@ -24,11 +24,12 @@ public:
         IDecisionMakerWidget*,
         newInstance,
         (IOperationsTableWidgetFactory * operationsTableWidgetFactory,
-         IAccountChartWidgetFactory*   accountChartWidgetFactory,
-         ILogsTableWidgetFactory*      logsTableWidgetFactory,
-         IPortfolioTableWidgetFactory* portfolioTableWidgetFactory,
-         ISettingsEditor*              settingsEditor,
-         QWidget*                      parent),
+         IAccountChartWidgetFactory*    accountChartWidgetFactory,
+         ILogsTableWidgetFactory*       logsTableWidgetFactory,
+         IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
+         IOperationsTableRecordFactory* operationsTableRecordFactory,
+         ISettingsEditor*               settingsEditor,
+         QWidget*                       parent),
         (const, override)
     );
 };

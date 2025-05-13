@@ -29,6 +29,7 @@ public:
         IAccountChartWidgetFactory*    accountChartWidgetFactory,
         ILogsTableWidgetFactory*       logsTableWidgetFactory,
         IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
+        IOperationsTableRecordFactory* operationsTableRecordFactory,
         ISettingsEditor*               settingsEditor,
         QWidget*                       parent = nullptr
     );
