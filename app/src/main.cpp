@@ -179,11 +179,11 @@ static int runApplication(QApplication* app)
     StocksTableRecordFactory     stocksTableRecordFactory;
     OperationsTableRecordFactory operationsTableRecordFactory;
 
-    TrayIconFactory          trayIconFactory;
-    DirFactory               dirFactory;
-    FileFactory              fileFactory;
-    QZipFactory              qZipFactory;
-    QZipFileFactory          qZipFileFactory;
+    TrayIconFactory trayIconFactory;
+    DirFactory      dirFactory;
+    FileFactory     fileFactory;
+    QZipFactory     qZipFactory;
+    QZipFileFactory qZipFileFactory;
 
     SettingsEditor settingsEditor("GrisCom", "TInvestor");
     SettingsEditor simulatorSettingsEditor(app->applicationDirPath() + "/data/simulator/config.ini", QSettings::IniFormat);

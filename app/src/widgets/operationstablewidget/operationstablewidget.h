@@ -40,4 +40,5 @@ public:
 private:
     IOperationsTableRecordFactory* mOperationsTableRecordFactory;
     ISettingsEditor*               mSettingsEditor;
+    QList<IOperationsTableRecord*> mTableRecords;
 };

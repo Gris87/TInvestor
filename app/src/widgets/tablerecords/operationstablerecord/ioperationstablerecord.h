@@ -4,6 +4,8 @@
 
 #include <QObject>
 
+#include "src/domain/operation/operation.h"
+
 
 
 enum OperationsTableColumns : qint8
@@ -32,4 +34,6 @@ public:
 
     IOperationsTableRecord(const IOperationsTableRecord& another)            = delete;
     IOperationsTableRecord& operator=(const IOperationsTableRecord& another) = delete;
+
+    virtual void setOperation(const Operation& operation) = 0;
 };

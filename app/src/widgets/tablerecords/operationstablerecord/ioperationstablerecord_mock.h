@@ -21,4 +21,6 @@ public:
 
     OperationsTableRecordMock(const OperationsTableRecordMock& another)            = delete;
     OperationsTableRecordMock& operator=(const OperationsTableRecordMock& another) = delete;
+
+    MOCK_METHOD(void, setOperation, (const Operation& operation), (override));
 };

@@ -105,6 +105,7 @@ SOURCES += \
     src/widgets/tableitems/pricetableitem.cpp \
     src/widgets/tableitems/stock/stocktableitemwidget.cpp \
     src/widgets/tableitems/stock/stocktableitemwidgetfactory.cpp \
+    src/widgets/tableitems/timetableitem.cpp \
     src/widgets/tableitems/turnovertableitem.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
@@ -300,6 +301,7 @@ HEADERS += \
     src/widgets/tableitems/stock/istocktableitemwidgetfactory.h \
     src/widgets/tableitems/stock/stocktableitemwidget.h \
     src/widgets/tableitems/stock/stocktableitemwidgetfactory.h \
+    src/widgets/tableitems/timetableitem.h \
     src/widgets/tableitems/turnovertableitem.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \

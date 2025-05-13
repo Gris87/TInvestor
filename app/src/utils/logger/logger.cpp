@@ -14,6 +14,8 @@ const char* const APP_PREFIX_PATH = R"(..\..\..\app\)";
 const char* const APP_PREFIX_PATH = "../../../app/";
 #endif
 
+const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss.zzz";
+
 constexpr int HEX_DIGITS = 16;
 
 
@@ -55,7 +57,7 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
 
     QString msgText = QString("%1 %2 0x%3 %4:%5 %6: %7")
                           .arg(
-                              QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss.zzz"),
+                              QDateTime::currentDateTime().toString(DATETIME_FORMAT),
                               LOG_LEVEL_TO_STRING[type],
                               QString::number(reinterpret_cast<qint64>(QThread::currentThreadId()), HEX_DIGITS)
                                   .toUpper()

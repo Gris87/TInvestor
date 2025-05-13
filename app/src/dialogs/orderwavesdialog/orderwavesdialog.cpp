@@ -7,7 +7,8 @@
 
 
 
-constexpr QChar RUBLE = QChar(0x20BD);
+const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+constexpr QChar   RUBLE           = QChar(0x20BD);
 
 
 
@@ -57,7 +58,7 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
-    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString("yyyy-MM-dd hh:mm:ss"));
+    ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString(DATETIME_FORMAT));
     ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE);
 
     mOrderWavesWidget->orderBookChanged(orderBook);

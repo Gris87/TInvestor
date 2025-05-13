@@ -101,6 +101,7 @@ SOURCES += \
     src/widgets/tableitems/test_paybacktableitem.cpp \
     src/widgets/tableitems/test_pricechangetableitem.cpp \
     src/widgets/tableitems/test_pricetableitem.cpp \
+    src/widgets/tableitems/test_timetableitem.cpp \
     src/widgets/tableitems/test_turnovertableitem.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecordfactory.cpp \

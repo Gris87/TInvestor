@@ -6,6 +6,8 @@
 
 #include <QTableWidget>
 
+#include "src/widgets/tableitems/timetableitem.h"
+
 
 
 class OperationsTableRecord : public IOperationsTableRecord
@@ -18,4 +20,9 @@ public:
 
     OperationsTableRecord(const OperationsTableRecord& another)            = delete;
     OperationsTableRecord& operator=(const OperationsTableRecord& another) = delete;
+
+    void setOperation(const Operation& operation) override;
+
+private:
+    TimeTableItem* mTimeTableWidgetItem;
 };

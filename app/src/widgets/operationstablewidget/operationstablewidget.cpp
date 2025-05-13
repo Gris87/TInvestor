@@ -19,11 +19,14 @@ OperationsTableWidget::OperationsTableWidget(
     IOperationsTableWidget(parent),
     ui(new Ui::OperationsTableWidget),
     mOperationsTableRecordFactory(operationsTableRecordFactory),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mTableRecords()
 {
     qDebug() << "Create OperationsTableWidget";
 
     ui->setupUi(this);
+
+    ui->tableWidget->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::AscendingOrder);
 }
 
 OperationsTableWidget::~OperationsTableWidget()
@@ -35,12 +38,49 @@ OperationsTableWidget::~OperationsTableWidget()
 
 void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 {
-    qInfo() << operations.size(); // TODO: Implement
+    ui->tableWidget->setUpdatesEnabled(false);
+    ui->tableWidget->setSortingEnabled(false);
+
+    if (mTableRecords.size() > operations.size())
+    {
+        while (mTableRecords.size() > operations.size())
+        {
+            delete mTableRecords.takeLast();
+        }
+
+        ui->tableWidget->setRowCount(operations.size());
+    }
+
+    while (mTableRecords.size() < operations.size())
+    {
+        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(ui->tableWidget, this);
+        mTableRecords.append(record);
+    }
+
+    for (int i = 0; i < operations.size(); ++i)
+    {
+        mTableRecords.at(i)->setOperation(operations.at(i));
+    }
+
+    ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 {
-    qInfo() << operations.size(); // TODO: Implement
+    ui->tableWidget->setUpdatesEnabled(false);
+    ui->tableWidget->setSortingEnabled(false);
+
+    for (const Operation& operation : operations)
+    {
+        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(ui->tableWidget, this);
+        record->setOperation(operation);
+
+        mTableRecords.append(record);
+    }
+
+    ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)
