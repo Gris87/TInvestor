@@ -102,6 +102,8 @@ SOURCES += \
     src/widgets/tableitems/test_pricechangetableitem.cpp \
     src/widgets/tableitems/test_pricetableitem.cpp \
     src/widgets/tableitems/test_turnovertableitem.cpp \
+    src/widgets/tablerecords/operationstablerecord/test_operationstablerecord.cpp \
+    src/widgets/tablerecords/operationstablerecord/test_operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
@@ -191,6 +193,8 @@ HEADERS += \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tableitems/stock/istocktableitemwidget_mock.h \
     src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h \
+    src/widgets/tablerecords/operationstablerecord/ioperationstablerecord_mock.h \
+    src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \

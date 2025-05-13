@@ -65,12 +65,7 @@ void StocksControlsWidget::dateChangeDelayTimerTicked()
 {
     dateChangeDelayTimer.stop();
 
-    const QDateTime dateTime = ui->dateChangeTimeEdit->dateTime();
-
-    const QMutexLocker lock(mStocksStorage->getMutex());
-    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
-
-    emit dateChangeDateTimeChanged(dateTime);
+    emit dateChangeDateTimeChanged(ui->dateChangeTimeEdit->dateTime());
 }
 
 void StocksControlsWidget::filterChangeDelayTimerTicked()

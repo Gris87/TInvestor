@@ -10,7 +10,7 @@
 
 
 
-enum StocksTableColums : qint8
+enum StocksTableColumns : qint8
 {
     STOCK_COLUMN,
     PRICE_COLUMN,

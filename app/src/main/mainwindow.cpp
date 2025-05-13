@@ -406,6 +406,9 @@ void MainWindow::lastPriceChanged(const QString& instrumentId)
 
 void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 {
+    const QMutexLocker lock(mStocksStorage->getMutex());
+
+    mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
     mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
     mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }

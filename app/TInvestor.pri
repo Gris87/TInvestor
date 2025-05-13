@@ -106,6 +106,8 @@ SOURCES += \
     src/widgets/tableitems/stock/stocktableitemwidget.cpp \
     src/widgets/tableitems/stock/stocktableitemwidgetfactory.cpp \
     src/widgets/tableitems/turnovertableitem.cpp \
+    src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
+    src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -299,6 +301,10 @@ HEADERS += \
     src/widgets/tableitems/stock/stocktableitemwidget.h \
     src/widgets/tableitems/stock/stocktableitemwidgetfactory.h \
     src/widgets/tableitems/turnovertableitem.h \
+    src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
+    src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \
+    src/widgets/tablerecords/operationstablerecord/operationstablerecord.h \
+    src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.h \

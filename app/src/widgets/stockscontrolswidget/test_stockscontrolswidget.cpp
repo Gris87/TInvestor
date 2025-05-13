@@ -95,16 +95,12 @@ TEST_F(Test_StocksControlsWidget, Test_dateChangeDelayTimerTicked)
 {
     const InSequence seq;
 
-    QMutex          mutex;
     const QDateTime dateTime(QDate(2024, 1, 1), QTime(0, 0, 0));
 
     ASSERT_EQ(stocksControlsWidget->dateChangeDelayTimer.isActive(), false);
 
     stocksControlsWidget->ui->dateChangeTimeEdit->setDateTime(dateTime);
     ASSERT_EQ(stocksControlsWidget->dateChangeDelayTimer.isActive(), true);
-
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
-    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1704056400000));
 
     stocksControlsWidget->dateChangeDelayTimerTicked();
 

@@ -601,9 +601,12 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 {
     const InSequence seq;
 
+    QMutex          mutex;
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
     Filter          filter;
 
+    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
