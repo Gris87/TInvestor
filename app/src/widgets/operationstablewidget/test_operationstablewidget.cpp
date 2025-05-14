@@ -68,12 +68,14 @@ TEST_F(Test_OperationsTableWidget, Test_saveWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Time"),      _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Name"),      _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Operation"), _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Price"),     _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Quantity"),  _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Cost"),      _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Time"),        _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Name"),        _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Description"), _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Price"),       _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Quantity"),    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Payment"),     _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Commission"),  _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Yield"),       _));
     // clang-format on
 
     operationsTableWidget->saveWindowState("AAAAA");
@@ -84,12 +86,14 @@ TEST_F(Test_OperationsTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),      _)).WillOnce(Return(QVariant(64)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),      _)).WillOnce(Return(QVariant(82)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Operation"), _)).WillOnce(Return(QVariant(85)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),     _)).WillOnce(Return(QVariant(56)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Quantity"),  _)).WillOnce(Return(QVariant(95)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Cost"),      _)).WillOnce(Return(QVariant(87)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),        _)).WillOnce(Return(QVariant(64)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),        _)).WillOnce(Return(QVariant(82)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Description"), _)).WillOnce(Return(QVariant(85)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),       _)).WillOnce(Return(QVariant(56)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Quantity"),    _)).WillOnce(Return(QVariant(95)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payment"),     _)).WillOnce(Return(QVariant(87)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Commission"),  _)).WillOnce(Return(QVariant(87)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Yield"),       _)).WillOnce(Return(QVariant(87)));
     // clang-format on
 
     operationsTableWidget->loadWindowState("AAAAA");

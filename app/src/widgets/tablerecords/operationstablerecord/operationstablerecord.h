@@ -8,6 +8,8 @@
 
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
+#include "src/widgets/tableitems/integertableitem.h"
+#include "src/widgets/tableitems/pricetableitem.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
 
@@ -35,5 +37,10 @@ private:
     TimeTableItem*              mTimeTableWidgetItem;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
     QTableWidgetItem*           mDescriptionTableWidgetItem;
+    PriceTableItem*             mPriceTableWidgetItem;
+    IntegerTableItem*           mQuantityTableWidgetItem;
+    PriceTableItem*             mPaymentTableWidgetItem;
+    PriceTableItem*             mCommissionTableWidgetItem;
+    PriceTableItem*             mYieldTableWidgetItem;
     IInstrumentsStorage*        mInstrumentsStorage;
 };

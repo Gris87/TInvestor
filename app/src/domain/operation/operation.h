@@ -23,7 +23,7 @@ struct Operation
     QString instrumentId;
     QString description;
     float   price;
-    int     quantity;
+    qint64  quantity;
     float   payment;
     float   commission;
     float   yield;

@@ -20,7 +20,7 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     instrumentId = jsonObject.value("instrumentId").toString();
     description  = jsonObject.value("description").toString();
     price        = jsonObject.value("price").toDouble();
-    quantity     = jsonObject.value("quantity").toInt();
+    quantity     = jsonObject.value("quantity").toInteger();
     payment      = jsonObject.value("payment").toDouble();
     commission   = jsonObject.value("commission").toDouble();
     yield        = jsonObject.value("yield").toDouble();

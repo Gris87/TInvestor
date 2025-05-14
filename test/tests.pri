@@ -98,6 +98,7 @@ SOURCES += \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
+    src/widgets/tableitems/test_integertableitem.cpp \
     src/widgets/tableitems/test_paybacktableitem.cpp \
     src/widgets/tableitems/test_pricechangetableitem.cpp \
     src/widgets/tableitems/test_pricetableitem.cpp \

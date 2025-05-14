@@ -307,8 +307,23 @@
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="58"/>
-        <source>Operation</source>
-        <translation>Операция</translation>
+        <source>Description</source>
+        <translation>Описание</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
+        <source>Payment</source>
+        <translation>Стомость</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <source>Commission</source>
+        <translation>Комиссия</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <source>Yield</source>
+        <translation>Доходность</translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="63"/>
@@ -319,11 +334,6 @@
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
         <source>Quantity</source>
         <translation>Количество</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
-        <source>Cost</source>
-        <translation>Стоимость</translation>
     </message>
 </context>
 <context>
@@ -385,19 +395,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="80"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="81"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="361"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="388"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="380"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="407"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="752"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="763"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="771"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>

@@ -38,7 +38,7 @@
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>6</number>
+      <number>8</number>
      </property>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -55,7 +55,7 @@
      </column>
      <column>
       <property name="text">
-       <string>Operation</string>
+       <string>Description</string>
       </property>
      </column>
      <column>
@@ -70,7 +70,17 @@
      </column>
      <column>
       <property name="text">
-       <string>Cost</string>
+       <string>Payment</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Commission</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Yield</string>
       </property>
      </column>
     </widget>

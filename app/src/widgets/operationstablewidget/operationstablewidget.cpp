@@ -6,9 +6,9 @@
 
 
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {64, 82, 85, 56, 95, 87};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {64, 82, 85, 56, 95, 87, 10, 10};
 #else
-const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {67, 89, 91, 59, 102, 95, 10, 10};
 #endif
 
 
@@ -103,7 +103,9 @@ void OperationsTableWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/columnWidth_Description", ui->tableWidget->columnWidth(OPERATIONS_DESCRIPTION_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Price",       ui->tableWidget->columnWidth(OPERATIONS_PRICE_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Quantity",    ui->tableWidget->columnWidth(OPERATIONS_QUANTITY_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Cost",        ui->tableWidget->columnWidth(OPERATIONS_COST_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Payment",     ui->tableWidget->columnWidth(OPERATIONS_PAYMENT_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Commission",  ui->tableWidget->columnWidth(OPERATIONS_COMMISSION_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Yield",       ui->tableWidget->columnWidth(OPERATIONS_YIELD_COLUMN));
     // clang-format on
 }
 
@@ -116,7 +118,9 @@ void OperationsTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(OPERATIONS_DESCRIPTION_COLUMN, mSettingsEditor->value(type + "/columnWidth_Description", COLUMN_WIDTHS[OPERATIONS_DESCRIPTION_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",       COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Quantity",    COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Cost",        COLUMN_WIDTHS[OPERATIONS_COST_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_PAYMENT_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payment",     COLUMN_WIDTHS[OPERATIONS_PAYMENT_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_COMMISSION_COLUMN,  mSettingsEditor->value(type + "/columnWidth_Commission",  COLUMN_WIDTHS[OPERATIONS_COMMISSION_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_YIELD_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Yield",       COLUMN_WIDTHS[OPERATIONS_YIELD_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)

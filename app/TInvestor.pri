@@ -102,6 +102,7 @@ SOURCES += \
     src/widgets/tableitems/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
+    src/widgets/tableitems/integertableitem.cpp \
     src/widgets/tableitems/paybacktableitem.cpp \
     src/widgets/tableitems/pricechangetableitem.cpp \
     src/widgets/tableitems/pricetableitem.cpp \
@@ -298,6 +299,7 @@ HEADERS += \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.h \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
+    src/widgets/tableitems/integertableitem.h \
     src/widgets/tableitems/paybacktableitem.h \
     src/widgets/tableitems/pricechangetableitem.h \
     src/widgets/tableitems/pricetableitem.h \

@@ -16,6 +16,11 @@ OperationsTableRecord::OperationsTableRecord(
     mTimeTableWidgetItem(new TimeTableItem()),
     mInstrumentTableItemWidget(),
     mDescriptionTableWidgetItem(new QTableWidgetItem()),
+    mPriceTableWidgetItem(new PriceTableItem()),
+    mQuantityTableWidgetItem(new IntegerTableItem()),
+    mPaymentTableWidgetItem(new PriceTableItem()),
+    mCommissionTableWidgetItem(new PriceTableItem()),
+    mYieldTableWidgetItem(new PriceTableItem()),
     mInstrumentsStorage(instrumentsStorage)
 {
     qDebug() << "Create OperationsTableRecord";
@@ -26,10 +31,17 @@ OperationsTableRecord::OperationsTableRecord(
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
-    tableWidget->setItem(rowIndex, OPERATIONS_TIME_COLUMN, mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex, OPERATIONS_DESCRIPTION_COLUMN, mDescriptionTableWidgetItem);
+    // clang-format off
+    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,        mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,        mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,        mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN, mDescriptionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,       mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,    mQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,     mPaymentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,  mCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,       mYieldTableWidgetItem);
+    // clang-format on
 }
 
 OperationsTableRecord::~OperationsTableRecord()
@@ -62,4 +74,9 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
+    mPriceTableWidgetItem->setValue(operation.price, 2);
+    mQuantityTableWidgetItem->setValue(operation.quantity);
+    mPaymentTableWidgetItem->setValue(operation.payment, 2);
+    mCommissionTableWidgetItem->setValue(operation.commission, 2);
+    mYieldTableWidgetItem->setValue(operation.yield, 2);
 }

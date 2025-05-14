@@ -307,7 +307,22 @@
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="58"/>
-        <source>Operation</source>
+        <source>Description</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
+        <source>Payment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <source>Commission</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <source>Yield</source>
         <translation></translation>
     </message>
     <message>
@@ -318,11 +333,6 @@
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
         <source>Quantity</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
-        <source>Cost</source>
         <translation></translation>
     </message>
 </context>
@@ -385,19 +395,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="80"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="81"/>
         <source>Downloading metadata</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="361"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="388"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="380"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="407"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="752"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="763"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="771"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>

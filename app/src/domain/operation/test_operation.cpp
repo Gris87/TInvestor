@@ -130,7 +130,7 @@ TEST(Test_Operation, Test_toJsonObject)
     const QJsonObject   jsonObject = operation.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
-    const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
         R"({"commission":5,"description":"b","instrumentId":"a","payment":4,"price":2,"quantity":3,"timestamp":1,"yield":6})";
 
