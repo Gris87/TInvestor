@@ -23,15 +23,15 @@ public:
     IStocksTableRecordFactory& operator=(const IStocksTableRecordFactory& another) = delete;
 
     virtual IStocksTableRecord* newInstance(
-        QTableWidget*                   tableWidget,
-        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*       orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-        IUserStorage*                   userStorage,
-        IOrderBookThread*               orderBookThread,
-        IHttpClient*                    httpClient,
-        Stock*                          stock,
-        QObject*                        parent
+        QTableWidget*                      tableWidget,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*          orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+        IUserStorage*                      userStorage,
+        IOrderBookThread*                  orderBookThread,
+        IHttpClient*                       httpClient,
+        Stock*                             stock,
+        QObject*                           parent
     ) const = 0;
 };

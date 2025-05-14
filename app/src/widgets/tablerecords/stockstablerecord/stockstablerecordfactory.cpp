@@ -18,21 +18,21 @@ StocksTableRecordFactory::~StocksTableRecordFactory()
 }
 
 IStocksTableRecord* StocksTableRecordFactory::newInstance(
-    QTableWidget*                   tableWidget,
-    IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*       orderWavesDialogFactory,
-    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-    IUserStorage*                   userStorage,
-    IOrderBookThread*               orderBookThread,
-    IHttpClient*                    httpClient,
-    Stock*                          stock,
-    QObject*                        parent
+    QTableWidget*                      tableWidget,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+    IOrderWavesDialogFactory*          orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    IUserStorage*                      userStorage,
+    IOrderBookThread*                  orderBookThread,
+    IHttpClient*                       httpClient,
+    Stock*                             stock,
+    QObject*                           parent
 ) const
 {
     return new StocksTableRecord(
         tableWidget,
-        stockTableItemWidgetFactory,
+        instrumentTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,

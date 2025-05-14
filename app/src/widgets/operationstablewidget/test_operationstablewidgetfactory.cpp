@@ -23,15 +23,15 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
 {
     const OperationsTableWidgetFactory factory;
 
-    StrictMock<OperationsTableRecordFactoryMock> operationsTableRecordFactoryMock;
-    StrictMock<StockTableItemWidgetFactoryMock>  stockTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>                  userStorageMock;
-    StrictMock<InstrumentsStorageMock>           instrumentsStorageMock;
-    StrictMock<SettingsEditorMock>               settingsEditorMock;
+    StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
+    StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
+    StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
     const IOperationsTableWidget* widget = factory.newInstance(
         &operationsTableRecordFactoryMock,
-        &stockTableItemWidgetFactoryMock,
+        &instrumentTableItemWidgetFactoryMock,
         &userStorageMock,
         &instrumentsStorageMock,
         &settingsEditorMock,

@@ -27,19 +27,19 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 {
     const StocksTableWidgetFactory factory;
 
-    StrictMock<StocksTableRecordFactoryMock>      stockTableRecordFactoryMock;
-    StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>       orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>       orderWavesWidgetFactoryMock;
-    StrictMock<UserStorageMock>                   userStorageMock;
-    StrictMock<OrderBookThreadMock>               orderBookThreadMock;
-    StrictMock<HttpClientMock>                    httpClientMock;
-    StrictMock<SettingsEditorMock>                settingsEditorMock;
+    StrictMock<StocksTableRecordFactoryMock>         stockTableRecordFactoryMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>    actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>          orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>          orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
+    StrictMock<OrderBookThreadMock>                  orderBookThreadMock;
+    StrictMock<HttpClientMock>                       httpClientMock;
+    StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
     const IStocksTableWidget* widget = factory.newInstance(
         &stockTableRecordFactoryMock,
-        &stockTableItemWidgetFactoryMock,
+        &instrumentTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,

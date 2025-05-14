@@ -8,19 +8,19 @@
 
 
 
-class StockTableItemWidgetMock : public IStockTableItemWidget
+class InstrumentTableItemWidgetMock : public IInstrumentTableItemWidget
 {
     Q_OBJECT
 
 public:
-    explicit StockTableItemWidgetMock(QWidget* parent = nullptr) :
-        IStockTableItemWidget(parent)
+    explicit InstrumentTableItemWidgetMock(QWidget* parent = nullptr) :
+        IInstrumentTableItemWidget(parent)
     {
     }
-    ~StockTableItemWidgetMock() override = default;
+    ~InstrumentTableItemWidgetMock() override = default;
 
-    StockTableItemWidgetMock(const StockTableItemWidgetMock& another)            = delete;
-    StockTableItemWidgetMock& operator=(const StockTableItemWidgetMock& another) = delete;
+    InstrumentTableItemWidgetMock(const InstrumentTableItemWidgetMock& another)            = delete;
+    InstrumentTableItemWidgetMock& operator=(const InstrumentTableItemWidgetMock& another) = delete;
 
     MOCK_METHOD(void, setIcon, (const QIcon& icon), (override));
     MOCK_METHOD(void, setQualInvestor, (bool forQualInvestorFlag), (override));

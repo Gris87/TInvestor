@@ -178,7 +178,7 @@ void OperationsThread::requestOperations()
                 const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
                 Operation                     operation;
 
-                operation.timestamp = timeToTimestamp(tinkoffOperation.date());
+                operation.timestamp    = timeToTimestamp(tinkoffOperation.date());
                 operation.instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
 
                 mOperations.append(operation);

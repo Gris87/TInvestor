@@ -14,17 +14,17 @@ const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
 
 
 OperationsTableWidget::OperationsTableWidget(
-    IOperationsTableRecordFactory* operationsTableRecordFactory,
-    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
-    IUserStorage*                  userStorage,
-    IInstrumentsStorage*           instrumentsStorage,
-    ISettingsEditor*               settingsEditor,
-    QWidget*                       parent
+    IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) :
     IOperationsTableWidget(parent),
     ui(new Ui::OperationsTableWidget),
     mOperationsTableRecordFactory(operationsTableRecordFactory),
-    mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
+    mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
     mSettingsEditor(settingsEditor),
@@ -62,7 +62,7 @@ void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
     while (mTableRecords.size() < operations.size())
     {
         IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(
-            ui->tableWidget, mStockTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
+            ui->tableWidget, mInstrumentTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
         );
         mTableRecords.append(record);
     }
@@ -84,7 +84,7 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
     for (const Operation& operation : operations)
     {
         IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(
-            ui->tableWidget, mStockTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
+            ui->tableWidget, mInstrumentTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
         );
         record->setOperation(operation);
 

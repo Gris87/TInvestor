@@ -21,10 +21,10 @@ public:
     IOperationsTableRecordFactory& operator=(const IOperationsTableRecordFactory& another) = delete;
 
     virtual IOperationsTableRecord* newInstance(
-        QTableWidget*                 tableWidget,
-        IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-        IUserStorage*                 userStorage,
-        IInstrumentsStorage*          instrumentsStorage,
-        QObject*                      parent
+        QTableWidget*                      tableWidget,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        QObject*                           parent
     ) const = 0;
 };

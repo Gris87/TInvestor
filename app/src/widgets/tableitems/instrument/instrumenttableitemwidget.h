@@ -12,21 +12,21 @@
 
 namespace Ui
 {
-class StockTableItemWidget;
+class InstrumentTableItemWidget;
 }
 
 
 
-class StockTableItemWidget : public IStockTableItemWidget
+class InstrumentTableItemWidget : public IInstrumentTableItemWidget
 {
     Q_OBJECT
 
 public:
-    explicit StockTableItemWidget(IUserStorage* userStorage, QWidget* parent = nullptr);
-    ~StockTableItemWidget() override;
+    explicit InstrumentTableItemWidget(IUserStorage* userStorage, QWidget* parent = nullptr);
+    ~InstrumentTableItemWidget() override;
 
-    StockTableItemWidget(const StockTableItemWidget& another)            = delete;
-    StockTableItemWidget& operator=(const StockTableItemWidget& another) = delete;
+    InstrumentTableItemWidget(const InstrumentTableItemWidget& another)            = delete;
+    InstrumentTableItemWidget& operator=(const InstrumentTableItemWidget& another) = delete;
 
     void enterEvent(QEnterEvent* event) override;
     void leaveEvent(QEvent* event) override;
@@ -42,7 +42,7 @@ public:
 
     bool operator<(const QTableWidgetItem& another) const override;
 
-    Ui::StockTableItemWidget* ui;
+    Ui::InstrumentTableItemWidget* ui;
 
     QLabel* hoverTextWidget;
 

@@ -6,14 +6,14 @@
 
 
 
-class StockTableItemWidgetFactory : public IStockTableItemWidgetFactory
+class InstrumentTableItemWidgetFactory : public IInstrumentTableItemWidgetFactory
 {
 public:
-    StockTableItemWidgetFactory();
-    ~StockTableItemWidgetFactory() override;
+    InstrumentTableItemWidgetFactory();
+    ~InstrumentTableItemWidgetFactory() override;
 
-    StockTableItemWidgetFactory(const StockTableItemWidgetFactory& another)            = delete;
-    StockTableItemWidgetFactory& operator=(const StockTableItemWidgetFactory& another) = delete;
+    InstrumentTableItemWidgetFactory(const InstrumentTableItemWidgetFactory& another)            = delete;
+    InstrumentTableItemWidgetFactory& operator=(const InstrumentTableItemWidgetFactory& another) = delete;
 
-    IStockTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) const override;
+    IInstrumentTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) const override;
 };

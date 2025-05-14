@@ -24,11 +24,11 @@ public:
         IOperationsTableWidget*,
         newInstance,
         (IOperationsTableRecordFactory * operationsTableRecordFactory,
-         IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-         IUserStorage*                 userStorage,
-         IInstrumentsStorage*          instrumentsStorage,
-         ISettingsEditor*              settingsEditor,
-         QWidget*                      parent),
+         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+         IUserStorage*                      userStorage,
+         IInstrumentsStorage*               instrumentsStorage,
+         ISettingsEditor*                   settingsEditor,
+         QWidget*                           parent),
         (const, override)
     );
 };

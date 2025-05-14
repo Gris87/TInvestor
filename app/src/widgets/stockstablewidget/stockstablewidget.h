@@ -29,16 +29,16 @@ class StocksTableWidget : public IStocksTableWidget
 
 public:
     explicit StocksTableWidget(
-        IStocksTableRecordFactory*      stocksTableRecordFactory,
-        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*       orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-        IUserStorage*                   userStorage,
-        IOrderBookThread*               orderBookThread,
-        IHttpClient*                    httpClient,
-        ISettingsEditor*                settingsEditor,
-        QWidget*                        parent = nullptr
+        IStocksTableRecordFactory*         stocksTableRecordFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*          orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+        IUserStorage*                      userStorage,
+        IOrderBookThread*                  orderBookThread,
+        IHttpClient*                       httpClient,
+        ISettingsEditor*                   settingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~StocksTableWidget() override;
 
@@ -66,13 +66,13 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    IStocksTableRecordFactory*      mStocksTableRecordFactory;
-    IStockTableItemWidgetFactory*   mStockTableItemWidgetFactory;
-    IActionsTableItemWidgetFactory* mActionsTableItemWidgetFactory;
-    IOrderWavesDialogFactory*       mOrderWavesDialogFactory;
-    IOrderWavesWidgetFactory*       mOrderWavesWidgetFactory;
-    IUserStorage*                   mUserStorage;
-    IOrderBookThread*               mOrderBookThread;
-    IHttpClient*                    mHttpClient;
-    ISettingsEditor*                mSettingsEditor;
+    IStocksTableRecordFactory*         mStocksTableRecordFactory;
+    IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
+    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
+    IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
+    IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
+    IUserStorage*                      mUserStorage;
+    IOrderBookThread*                  mOrderBookThread;
+    IHttpClient*                       mHttpClient;
+    ISettingsEditor*                   mSettingsEditor;
 };

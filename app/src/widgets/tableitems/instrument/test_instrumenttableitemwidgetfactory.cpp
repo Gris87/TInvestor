@@ -10,18 +10,18 @@ using ::testing::StrictMock;
 
 
 
-TEST(Test_StockTableItemWidgetFactory, Test_constructor_and_destructor)
+TEST(Test_InstrumentTableItemWidgetFactory, Test_constructor_and_destructor)
 {
-    const StockTableItemWidgetFactory factory;
+    const InstrumentTableItemWidgetFactory factory;
 }
 
-TEST(Test_StockTableItemWidgetFactory, Test_newInstance)
+TEST(Test_InstrumentTableItemWidgetFactory, Test_newInstance)
 {
-    const StockTableItemWidgetFactory factory;
+    const InstrumentTableItemWidgetFactory factory;
 
     StrictMock<UserStorageMock> userStorageMock;
 
-    const IStockTableItemWidget* widget = factory.newInstance(&userStorageMock, nullptr);
+    const IInstrumentTableItemWidget* widget = factory.newInstance(&userStorageMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

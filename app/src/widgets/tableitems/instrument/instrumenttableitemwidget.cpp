@@ -1,35 +1,35 @@
 #include "src/widgets/tableitems/instrument/instrumenttableitemwidget.h"
-#include "ui_stocktableitemwidget.h"
+#include "ui_instrumenttableitemwidget.h"
 
 #include <QDebug>
 
 
 
-StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* parent) :
-    IStockTableItemWidget(parent),
-    ui(new Ui::StockTableItemWidget),
+InstrumentTableItemWidget::InstrumentTableItemWidget(IUserStorage* userStorage, QWidget* parent) :
+    IInstrumentTableItemWidget(parent),
+    ui(new Ui::InstrumentTableItemWidget),
     hoverTextWidget(),
     mUserStorage(userStorage),
     mForQualInvestorFlag(false),
     mFullText()
 {
-    qDebug() << "Create StockTableItemWidget";
+    qDebug() << "Create InstrumentTableItemWidget";
 
     ui->setupUi(this);
 
     ui->lockLabel->hide();
 }
 
-StockTableItemWidget::~StockTableItemWidget()
+InstrumentTableItemWidget::~InstrumentTableItemWidget()
 {
-    qDebug() << "Destroy StockTableItemWidget";
+    qDebug() << "Destroy InstrumentTableItemWidget";
 
     delete hoverTextWidget;
 
     delete ui;
 }
 
-void StockTableItemWidget::enterEvent(QEnterEvent* event)
+void InstrumentTableItemWidget::enterEvent(QEnterEvent* event)
 {
     hoverTextWidget = new QLabel();
     hoverTextWidget->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
@@ -41,59 +41,59 @@ void StockTableItemWidget::enterEvent(QEnterEvent* event)
     hoverTextWidget->show();
     ui->nameLabel->hide();
 
-    IStockTableItemWidget::enterEvent(event);
+    IInstrumentTableItemWidget::enterEvent(event);
 }
 
-void StockTableItemWidget::leaveEvent(QEvent* event)
+void InstrumentTableItemWidget::leaveEvent(QEvent* event)
 {
     delete hoverTextWidget;
     hoverTextWidget = nullptr;
 
     ui->nameLabel->show();
 
-    IStockTableItemWidget::leaveEvent(event);
+    IInstrumentTableItemWidget::leaveEvent(event);
 }
 
-void StockTableItemWidget::setIcon(const QIcon& icon)
+void InstrumentTableItemWidget::setIcon(const QIcon& icon)
 {
     ui->logoLabel->setPixmap(icon.pixmap(ui->logoLabel->size()));
 }
 
-void StockTableItemWidget::setQualInvestor(bool forQualInvestorFlag)
+void InstrumentTableItemWidget::setQualInvestor(bool forQualInvestorFlag)
 {
     mForQualInvestorFlag = forQualInvestorFlag;
 
     ui->lockLabel->setVisible(mForQualInvestorFlag && !mUserStorage->isQualified());
 }
 
-void StockTableItemWidget::setText(const QString& text)
+void InstrumentTableItemWidget::setText(const QString& text)
 {
     ui->nameLabel->setText(text);
 }
 
-void StockTableItemWidget::setFullText(const QString& text)
+void InstrumentTableItemWidget::setFullText(const QString& text)
 {
     mFullText = text;
 }
 
-bool StockTableItemWidget::forQualInvestorFlag()
+bool InstrumentTableItemWidget::forQualInvestorFlag()
 {
     return mForQualInvestorFlag;
 }
 
-QString StockTableItemWidget::text()
+QString InstrumentTableItemWidget::text()
 {
     return ui->nameLabel->text();
 }
 
-QString StockTableItemWidget::fullText()
+QString InstrumentTableItemWidget::fullText()
 {
     return mFullText;
 }
 
-bool StockTableItemWidget::operator<(const QTableWidgetItem& another) const
+bool InstrumentTableItemWidget::operator<(const QTableWidgetItem& another) const
 {
-    const QString anotherName = dynamic_cast<const StockTableItemWidget*>(&another)->ui->nameLabel->text();
+    const QString anotherName = dynamic_cast<const InstrumentTableItemWidget*>(&another)->ui->nameLabel->text();
 
     return ui->nameLabel->text() < anotherName;
 }

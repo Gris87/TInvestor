@@ -26,22 +26,23 @@ TEST(Test_OperationsTableRecordFactory, Test_newInstance)
 
     const OperationsTableRecordFactory factory;
 
-    StrictMock<StockTableItemWidgetFactoryMock> stockTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>                 userStorageMock;
-    StrictMock<InstrumentsStorageMock>          instrumentsStorageMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
+    StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
 
     // tableWidget will take ownership
-    StrictMock<StockTableItemWidgetMock>* stockTableItemWidgetMock = new StrictMock<StockTableItemWidgetMock>();
+    StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>();
 
     QTableWidget tableWidget;
 
     tableWidget.setColumnCount(OPERATIONS_COLUMN_COUNT);
 
-    EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
-        .WillOnce(Return(stockTableItemWidgetMock));
+    EXPECT_CALL(instrumentTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
+        .WillOnce(Return(instrumentTableItemWidgetMock));
 
-    const IOperationsTableRecord* record =
-        factory.newInstance(&tableWidget, &stockTableItemWidgetFactoryMock, &userStorageMock, &instrumentsStorageMock, nullptr);
+    const IOperationsTableRecord* record = factory.newInstance(
+        &tableWidget, &instrumentTableItemWidgetFactoryMock, &userStorageMock, &instrumentsStorageMock, nullptr
+    );
     ASSERT_TRUE(record != nullptr);
 
     delete record;

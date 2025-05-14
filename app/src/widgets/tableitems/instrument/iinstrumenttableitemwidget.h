@@ -7,21 +7,21 @@
 
 
 
-class IStockTableItemWidget : public QWidget,
-                              public QTableWidgetItem
+class IInstrumentTableItemWidget : public QWidget,
+                                   public QTableWidgetItem
 {
     Q_OBJECT
 
 public:
-    explicit IStockTableItemWidget(QWidget* parent = nullptr) :
+    explicit IInstrumentTableItemWidget(QWidget* parent = nullptr) :
         QWidget(parent),
         QTableWidgetItem()
     {
     }
-    ~IStockTableItemWidget() override = default;
+    ~IInstrumentTableItemWidget() override = default;
 
-    IStockTableItemWidget(const IStockTableItemWidget& another)            = delete;
-    IStockTableItemWidget& operator=(const IStockTableItemWidget& another) = delete;
+    IInstrumentTableItemWidget(const IInstrumentTableItemWidget& another)            = delete;
+    IInstrumentTableItemWidget& operator=(const IInstrumentTableItemWidget& another) = delete;
 
     virtual void setIcon(const QIcon& icon)                = 0;
     virtual void setQualInvestor(bool forQualInvestorFlag) = 0;

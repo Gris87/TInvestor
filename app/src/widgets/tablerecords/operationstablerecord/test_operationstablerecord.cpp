@@ -23,39 +23,40 @@ protected:
     {
         const InSequence seq;
 
-        stockTableItemWidgetFactoryMock = new StrictMock<StockTableItemWidgetFactoryMock>();
-        userStorageMock                 = new StrictMock<UserStorageMock>();
-        instrumentsStorageMock          = new StrictMock<InstrumentsStorageMock>();
-        stockTableItemWidgetMock        = new StrictMock<StockTableItemWidgetMock>(); // tableWidget will take ownership
-        tableWidget                     = new QTableWidget();
+        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
+        instrumentTableItemWidgetMock        = new StrictMock<InstrumentTableItemWidgetMock>(); // tableWidget will take ownership
+        tableWidget                          = new QTableWidget();
 
         tableWidget->setColumnCount(OPERATIONS_COLUMN_COUNT);
 
-        EXPECT_CALL(*stockTableItemWidgetFactoryMock, newInstance(userStorageMock, tableWidget))
-            .WillOnce(Return(stockTableItemWidgetMock));
+        EXPECT_CALL(*instrumentTableItemWidgetFactoryMock, newInstance(userStorageMock, tableWidget))
+            .WillOnce(Return(instrumentTableItemWidgetMock));
 
-        record = new OperationsTableRecord(tableWidget, stockTableItemWidgetFactoryMock, userStorageMock, instrumentsStorageMock);
+        record =
+            new OperationsTableRecord(tableWidget, instrumentTableItemWidgetFactoryMock, userStorageMock, instrumentsStorageMock);
     }
 
     void TearDown() override
     {
         delete record;
-        delete stockTableItemWidgetFactoryMock;
+        delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
         // It will be deleted by tableWidget
         /*
-        delete stockTableItemWidgetMock;
+        delete instrumentTableItemWidgetMock;
         */
         delete tableWidget;
     }
 
-    OperationsTableRecord*                       record;
-    StrictMock<StockTableItemWidgetFactoryMock>* stockTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                 userStorageMock;
-    StrictMock<InstrumentsStorageMock>*          instrumentsStorageMock;
-    StrictMock<StockTableItemWidgetMock>*        stockTableItemWidgetMock;
-    QTableWidget*                                tableWidget;
+    OperationsTableRecord*                            record;
+    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
+    StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
+    StrictMock<InstrumentTableItemWidgetMock>*        instrumentTableItemWidgetMock;
+    QTableWidget*                                     tableWidget;
 };
 
 

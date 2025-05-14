@@ -16,15 +16,15 @@ public:
     StocksTableRecordFactory& operator=(const StocksTableRecordFactory& another) = delete;
 
     IStocksTableRecord* newInstance(
-        QTableWidget*                   tableWidget,
-        IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*       orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-        IUserStorage*                   userStorage,
-        IOrderBookThread*               orderBookThread,
-        IHttpClient*                    httpClient,
-        Stock*                          stock,
-        QObject*                        parent
+        QTableWidget*                      tableWidget,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*          orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+        IUserStorage*                      userStorage,
+        IOrderBookThread*                  orderBookThread,
+        IHttpClient*                       httpClient,
+        Stock*                             stock,
+        QObject*                           parent
     ) const override;
 };

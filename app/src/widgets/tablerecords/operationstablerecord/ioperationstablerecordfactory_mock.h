@@ -24,10 +24,10 @@ public:
         IOperationsTableRecord*,
         newInstance,
         (QTableWidget * tableWidget,
-         IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-         IUserStorage*                 userStorage,
-         IInstrumentsStorage*          instrumentsStorage,
-         QObject*                      parent),
+         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+         IUserStorage*                      userStorage,
+         IInstrumentsStorage*               instrumentsStorage,
+         QObject*                           parent),
         (const, override)
     );
 };

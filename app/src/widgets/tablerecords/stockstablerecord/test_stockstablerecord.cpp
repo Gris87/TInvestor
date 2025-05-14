@@ -30,17 +30,17 @@ protected:
     {
         const InSequence seq;
 
-        stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
-        actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
-        orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
-        userStorageMock                   = new StrictMock<UserStorageMock>();
-        orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
-        httpClientMock                    = new StrictMock<HttpClientMock>();
-        stockTableItemWidgetMock          = new StrictMock<StockTableItemWidgetMock>();   // tableWidget will take ownership
-        actionsTableItemWidgetMock        = new StrictMock<ActionsTableItemWidgetMock>(); // tableWidget will take ownership
-        tableWidget                       = new QTableWidget();
-        stock                             = new Stock();
+        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
+        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
+        orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
+        httpClientMock                       = new StrictMock<HttpClientMock>();
+        instrumentTableItemWidgetMock        = new StrictMock<InstrumentTableItemWidgetMock>(); // tableWidget will take ownership
+        actionsTableItemWidgetMock           = new StrictMock<ActionsTableItemWidgetMock>();    // tableWidget will take ownership
+        tableWidget                          = new QTableWidget();
+        stock                                = new Stock();
 
         tableWidget->setColumnCount(STOCKS_COLUMN_COUNT);
 
@@ -60,8 +60,8 @@ protected:
         stock->operational.payback            = 90;
         stock->operational.detailedData.append(stockData);
 
-        EXPECT_CALL(*stockTableItemWidgetFactoryMock, newInstance(userStorageMock, tableWidget))
-            .WillOnce(Return(stockTableItemWidgetMock));
+        EXPECT_CALL(*instrumentTableItemWidgetFactoryMock, newInstance(userStorageMock, tableWidget))
+            .WillOnce(Return(instrumentTableItemWidgetMock));
 
         EXPECT_CALL(
             *actionsTableItemWidgetFactoryMock,
@@ -77,14 +77,14 @@ protected:
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
 
-        EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
-        EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
-        EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
-        EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setIcon(_));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setQualInvestor(true));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setText(QString("WAGA")));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
         record = new StocksTableRecord(
             tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -100,7 +100,7 @@ protected:
     void TearDown() override
     {
         delete record;
-        delete stockTableItemWidgetFactoryMock;
+        delete instrumentTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
@@ -109,25 +109,25 @@ protected:
         delete httpClientMock;
         // It will be deleted by tableWidget
         /*
-        delete stockTableItemWidgetMock;
+        delete instrumentTableItemWidgetMock;
         delete actionsTableItemWidgetMock;
         */
         delete tableWidget;
         delete stock;
     }
 
-    StocksTableRecord*                             record;
-    StrictMock<StockTableItemWidgetFactoryMock>*   stockTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                   userStorageMock;
-    StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
-    StrictMock<HttpClientMock>*                    httpClientMock;
-    StrictMock<StockTableItemWidgetMock>*          stockTableItemWidgetMock;
-    StrictMock<ActionsTableItemWidgetMock>*        actionsTableItemWidgetMock;
-    QTableWidget*                                  tableWidget;
-    Stock*                                         stock;
+    StocksTableRecord*                                record;
+    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
+    StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
+    StrictMock<HttpClientMock>*                       httpClientMock;
+    StrictMock<InstrumentTableItemWidgetMock>*        instrumentTableItemWidgetMock;
+    StrictMock<ActionsTableItemWidgetMock>*           actionsTableItemWidgetMock;
+    QTableWidget*                                     tableWidget;
+    Stock*                                            stock;
 };
 
 
@@ -140,10 +140,10 @@ TEST_F(Test_StocksTableRecord, Test_updateAll)
 {
     const InSequence seq;
 
-    EXPECT_CALL(*stockTableItemWidgetMock, setIcon(_));
-    EXPECT_CALL(*stockTableItemWidgetMock, setQualInvestor(true));
-    EXPECT_CALL(*stockTableItemWidgetMock, setText(QString("WAGA")));
-    EXPECT_CALL(*stockTableItemWidgetMock, setFullText(QString("Wata Giga")));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setIcon(_));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setQualInvestor(true));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setText(QString("WAGA")));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
     record->updateAll();
 
@@ -206,17 +206,17 @@ TEST_F(Test_StocksTableRecord, Test_filter)
 
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
 
-    EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
-    EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
-    EXPECT_CALL(*stockTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 
     record->filter(tableWidget, filter);
 
     ASSERT_EQ(tableWidget->isRowHidden(0), true);
 
-    EXPECT_CALL(*stockTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
-    EXPECT_CALL(*stockTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
-    EXPECT_CALL(*stockTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 
     filter.paybackTo = 95.0f;
     record->filter(tableWidget, filter);

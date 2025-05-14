@@ -18,16 +18,16 @@ DecisionMakerWidgetFactory::~DecisionMakerWidgetFactory()
 }
 
 IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
-    IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*    accountChartWidgetFactory,
-    ILogsTableWidgetFactory*       logsTableWidgetFactory,
-    IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
-    IOperationsTableRecordFactory* operationsTableRecordFactory,
-    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
-    IUserStorage*                  userStorage,
-    IInstrumentsStorage*           instrumentsStorage,
-    ISettingsEditor*               settingsEditor,
-    QWidget*                       parent
+    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*        accountChartWidgetFactory,
+    ILogsTableWidgetFactory*           logsTableWidgetFactory,
+    IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+    IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) const
 {
     return new DecisionMakerWidget(
@@ -36,7 +36,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
         operationsTableRecordFactory,
-        stockTableItemWidgetFactory,
+        instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
         settingsEditor,

@@ -6,16 +6,16 @@
 
 
 DecisionMakerWidget::DecisionMakerWidget(
-    IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*    accountChartWidgetFactory,
-    ILogsTableWidgetFactory*       logsTableWidgetFactory,
-    IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
-    IOperationsTableRecordFactory* operationsTableRecordFactory,
-    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
-    IUserStorage*                  userStorage,
-    IInstrumentsStorage*           instrumentsStorage,
-    ISettingsEditor*               settingsEditor,
-    QWidget*                       parent
+    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*        accountChartWidgetFactory,
+    ILogsTableWidgetFactory*           logsTableWidgetFactory,
+    IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+    IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) :
     IDecisionMakerWidget(parent),
     ui(new Ui::DecisionMakerWidget),
@@ -28,11 +28,11 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->splitter->setSizes(QList<int>() << 400 << 100); // NOLINT(readability-magic-numbers)
 
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
-        operationsTableRecordFactory, stockTableItemWidgetFactory, userStorage, instrumentsStorage, mSettingsEditor, this
+        operationsTableRecordFactory, instrumentTableItemWidgetFactory, userStorage, instrumentsStorage, mSettingsEditor, this
     );
-    mAccountChartWidget    = accountChartWidgetFactory->newInstance(this);
-    mLogsTableWidget       = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
-    mPortfolioTableWidget  = portfolioTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mAccountChartWidget   = accountChartWidgetFactory->newInstance(this);
+    mLogsTableWidget      = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mPortfolioTableWidget = portfolioTableWidgetFactory->newInstance(mSettingsEditor, this);
 
     ui->layoutForOperationsTableWidget->addWidget(mOperationsTableWidget);
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);

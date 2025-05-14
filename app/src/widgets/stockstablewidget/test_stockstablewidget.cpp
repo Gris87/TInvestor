@@ -29,19 +29,19 @@ class Test_StocksTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        stockTableRecordFactoryMock       = new StrictMock<StocksTableRecordFactoryMock>();
-        stockTableItemWidgetFactoryMock   = new StrictMock<StockTableItemWidgetFactoryMock>();
-        actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
-        orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
-        userStorageMock                   = new StrictMock<UserStorageMock>();
-        orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
-        httpClientMock                    = new StrictMock<HttpClientMock>();
-        settingsEditorMock                = new StrictMock<SettingsEditorMock>();
+        stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
+        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
+        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
+        orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
+        httpClientMock                       = new StrictMock<HttpClientMock>();
+        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         stocksTableWidget = new StocksTableWidget(
             stockTableRecordFactoryMock,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -56,7 +56,7 @@ protected:
     {
         delete stocksTableWidget;
         delete stockTableRecordFactoryMock;
-        delete stockTableItemWidgetFactoryMock;
+        delete instrumentTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
@@ -66,16 +66,16 @@ protected:
         delete settingsEditorMock;
     }
 
-    StocksTableWidget*                             stocksTableWidget;
-    StrictMock<StocksTableRecordFactoryMock>*      stockTableRecordFactoryMock;
-    StrictMock<StockTableItemWidgetFactoryMock>*   stockTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                   userStorageMock;
-    StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
-    StrictMock<HttpClientMock>*                    httpClientMock;
-    StrictMock<SettingsEditorMock>*                settingsEditorMock;
+    StocksTableWidget*                                stocksTableWidget;
+    StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
+    StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
+    StrictMock<HttpClientMock>*                       httpClientMock;
+    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 
 
@@ -107,7 +107,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -127,7 +127,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -174,7 +174,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -194,7 +194,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -248,7 +248,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -268,7 +268,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -329,7 +329,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -349,7 +349,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -403,7 +403,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -423,7 +423,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -488,7 +488,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
@@ -508,7 +508,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
         *stockTableRecordFactoryMock,
         newInstance(
             stocksTableWidget->ui->tableWidget,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,

@@ -36,15 +36,15 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 
     const DecisionMakerWidgetFactory factory;
 
-    StrictMock<OperationsTableWidgetFactoryMock> operationsTableWidgetFactoryMock;
-    StrictMock<AccountChartWidgetFactoryMock>    accountChartWidgetFactoryMock;
-    StrictMock<LogsTableWidgetFactoryMock>       logsTableWidgetFactoryMock;
-    StrictMock<PortfolioTableWidgetFactoryMock>  portfolioTableWidgetFactoryMock;
-    StrictMock<OperationsTableRecordFactoryMock> operationsTableRecordFactoryMock;
-    StrictMock<StockTableItemWidgetFactoryMock>  stockTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>                  userStorageMock;
-    StrictMock<InstrumentsStorageMock>           instrumentsStorageMock;
-    StrictMock<SettingsEditorMock>               settingsEditorMock;
+    StrictMock<OperationsTableWidgetFactoryMock>     operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>        accountChartWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>           logsTableWidgetFactoryMock;
+    StrictMock<PortfolioTableWidgetFactoryMock>      portfolioTableWidgetFactoryMock;
+    StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
+    StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
+    StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
     // It will be deleted by `delete ui;`
     StrictMock<OperationsTableWidgetMock>* operationsTableWidgetMock = new StrictMock<OperationsTableWidgetMock>();
@@ -56,7 +56,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         operationsTableWidgetFactoryMock,
         newInstance(
             &operationsTableRecordFactoryMock,
-            &stockTableItemWidgetFactoryMock,
+            &instrumentTableItemWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
             &settingsEditorMock,
@@ -75,7 +75,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         &logsTableWidgetFactoryMock,
         &portfolioTableWidgetFactoryMock,
         &operationsTableRecordFactoryMock,
-        &stockTableItemWidgetFactoryMock,
+        &instrumentTableItemWidgetFactoryMock,
         &userStorageMock,
         &instrumentsStorageMock,
         &settingsEditorMock,

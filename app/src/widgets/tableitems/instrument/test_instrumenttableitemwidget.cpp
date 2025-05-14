@@ -1,5 +1,5 @@
 #include "src/widgets/tableitems/instrument/instrumenttableitemwidget.h"
-#include "ui_stocktableitemwidget.h"
+#include "ui_instrumenttableitemwidget.h"
 
 #include <QEnterEvent>
 #include <gtest/gtest.h>
@@ -15,14 +15,14 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)
-class Test_StockTableItemWidget : public ::testing::Test
+class Test_InstrumentTableItemWidget : public ::testing::Test
 {
 protected:
     void SetUp() override
     {
         userStorageMock = new StrictMock<UserStorageMock>();
 
-        widget = new StockTableItemWidget(userStorageMock);
+        widget = new InstrumentTableItemWidget(userStorageMock);
     }
 
     void TearDown() override
@@ -31,17 +31,17 @@ protected:
         delete userStorageMock;
     }
 
-    StockTableItemWidget*        widget;
+    InstrumentTableItemWidget*   widget;
     StrictMock<UserStorageMock>* userStorageMock;
 };
 
 
 
-TEST_F(Test_StockTableItemWidget, Test_constructor_and_destructor)
+TEST_F(Test_InstrumentTableItemWidget, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_StockTableItemWidget, Test_enterEvent_and_leaveEvent)
+TEST_F(Test_InstrumentTableItemWidget, Test_enterEvent_and_leaveEvent)
 {
     const QPointF pos;
 
@@ -82,12 +82,12 @@ TEST_F(Test_StockTableItemWidget, Test_enterEvent_and_leaveEvent)
     // clang-format on
 }
 
-TEST_F(Test_StockTableItemWidget, Test_setIcon)
+TEST_F(Test_InstrumentTableItemWidget, Test_setIcon)
 {
     widget->setIcon(QIcon());
 }
 
-TEST_F(Test_StockTableItemWidget, Test_setQualInvestor_and_forQualInvestorFlag)
+TEST_F(Test_InstrumentTableItemWidget, Test_setQualInvestor_and_forQualInvestorFlag)
 {
     const InSequence seq;
 
@@ -95,7 +95,7 @@ TEST_F(Test_StockTableItemWidget, Test_setQualInvestor_and_forQualInvestorFlag)
 
     // clang-format off
     ASSERT_EQ(widget->forQualInvestorFlag(),      false);
-    ASSERT_EQ(widget->ui->lockLabel->isVisible(), true);
+    ASSERT_EQ(widget->ui->lockLabel->isVisible(), false);
     // clang-format on
 
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
@@ -124,7 +124,7 @@ TEST_F(Test_StockTableItemWidget, Test_setQualInvestor_and_forQualInvestorFlag)
     // clang-format on
 }
 
-TEST_F(Test_StockTableItemWidget, Test_setText_and_text)
+TEST_F(Test_InstrumentTableItemWidget, Test_setText_and_text)
 {
     // clang-format off
     ASSERT_EQ(widget->text(),                "Name");
@@ -146,7 +146,7 @@ TEST_F(Test_StockTableItemWidget, Test_setText_and_text)
     // clang-format on
 }
 
-TEST_F(Test_StockTableItemWidget, Test_setFullText_and_fullText)
+TEST_F(Test_InstrumentTableItemWidget, Test_setFullText_and_fullText)
 {
     ASSERT_EQ(widget->fullText(), "");
 
@@ -157,9 +157,9 @@ TEST_F(Test_StockTableItemWidget, Test_setFullText_and_fullText)
     ASSERT_EQ(widget->fullText(), "BBBBB");
 }
 
-TEST_F(Test_StockTableItemWidget, Test_less)
+TEST_F(Test_InstrumentTableItemWidget, Test_less)
 {
-    StockTableItemWidget widget2(userStorageMock);
+    InstrumentTableItemWidget widget2(userStorageMock);
 
     widget->setText("AAAAA");
     widget2.setText("BBBBB");

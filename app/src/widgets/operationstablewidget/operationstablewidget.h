@@ -22,12 +22,12 @@ class OperationsTableWidget : public IOperationsTableWidget
 
 public:
     explicit OperationsTableWidget(
-        IOperationsTableRecordFactory* operationsTableRecordFactory,
-        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
-        IUserStorage*                  userStorage,
-        IInstrumentsStorage*           instrumentsStorage,
-        ISettingsEditor*               settingsEditor,
-        QWidget*                       parent = nullptr
+        IOperationsTableRecordFactory*     operationsTableRecordFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        ISettingsEditor*                   settingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~OperationsTableWidget() override;
 
@@ -43,10 +43,10 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    IOperationsTableRecordFactory* mOperationsTableRecordFactory;
-    IStockTableItemWidgetFactory*  mStockTableItemWidgetFactory;
-    IUserStorage*                  mUserStorage;
-    IInstrumentsStorage*           mInstrumentsStorage;
-    ISettingsEditor*               mSettingsEditor;
-    QList<IOperationsTableRecord*> mTableRecords;
+    IOperationsTableRecordFactory*     mOperationsTableRecordFactory;
+    IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
+    IUserStorage*                      mUserStorage;
+    IInstrumentsStorage*               mInstrumentsStorage;
+    ISettingsEditor*                   mSettingsEditor;
+    QList<IOperationsTableRecord*>     mTableRecords;
 };

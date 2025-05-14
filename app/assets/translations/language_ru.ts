@@ -42,12 +42,12 @@
         <translation>Войти</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="50"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="63"/>
         <source>Token is invalid</source>
         <translation>Токен неправильный</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="50"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="63"/>
         <source>You should provide correct token</source>
         <translation>Ты должен предоставить корректный токен</translation>
     </message>
@@ -153,6 +153,14 @@
     </message>
 </context>
 <context>
+    <name>InstrumentTableItemWidget</name>
+    <message>
+        <location filename="../../src/widgets/tableitems/instrument/instrumenttableitemwidget.ui" line="66"/>
+        <source>For qual investor only</source>
+        <translation>Только для квал инвесторов</translation>
+    </message>
+</context>
+<context>
     <name>LogsTableWidget</name>
     <message>
         <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="48"/>
@@ -169,13 +177,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="233"/>
+        <location filename="../../src/main/mainwindow.cpp" line="255"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="503"/>
+        <location filename="../../src/main/mainwindow.cpp" line="447"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -186,7 +194,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="537"/>
+        <location filename="../../src/main/mainwindow.cpp" line="475"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -247,40 +255,40 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="234"/>
+        <location filename="../../src/main/mainwindow.cpp" line="256"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="301"/>
+        <location filename="../../src/main/mainwindow.cpp" line="324"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="390"/>
-        <location filename="../../src/main/mainwindow.cpp" line="576"/>
+        <location filename="../../src/main/mainwindow.cpp" line="421"/>
+        <location filename="../../src/main/mainwindow.cpp" line="679"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="489"/>
-        <location filename="../../src/main/mainwindow.cpp" line="496"/>
+        <location filename="../../src/main/mainwindow.cpp" line="436"/>
+        <location filename="../../src/main/mainwindow.cpp" line="602"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="496"/>
+        <location filename="../../src/main/mainwindow.cpp" line="602"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="523"/>
-        <location filename="../../src/main/mainwindow.cpp" line="530"/>
+        <location filename="../../src/main/mainwindow.cpp" line="458"/>
+        <location filename="../../src/main/mainwindow.cpp" line="633"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="530"/>
+        <location filename="../../src/main/mainwindow.cpp" line="633"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -377,19 +385,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="84"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="80"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="132"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="409"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="361"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="388"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="779"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="787"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="752"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -397,22 +405,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="131"/>
+        <location filename="../../src/main.cpp" line="135"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="131"/>
+        <location filename="../../src/main.cpp" line="135"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="143"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="143"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -618,13 +626,13 @@
         <translation>Запуск</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="47"/>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="64"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="61"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="74"/>
         <source>No another account</source>
         <translation>Нет другого счёта</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="64"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="74"/>
         <source>There is no any account to follow</source>
         <translation>Нет счёта, за которым можно было бы следовать</translation>
     </message>
@@ -660,14 +668,6 @@
         <location filename="../../src/dialogs/startsimulationdialog/startsimulationdialog.ui" line="223"/>
         <source>Start</source>
         <translation>Запуск</translation>
-    </message>
-</context>
-<context>
-    <name>StockTableItemWidget</name>
-    <message>
-        <location filename="../../src/widgets/tableitems/instrument/instrumenttableitemwidget.ui" line="66"/>
-        <source>For qual investor only</source>
-        <translation>Только для квал инвесторов</translation>
     </message>
 </context>
 <context>
@@ -738,12 +738,12 @@
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="313"/>
         <source>Filter active</source>
         <translation>Фильтр активен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="323"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
         <source>Filter inactive</source>
         <translation>Фильтр неактивен</translation>
     </message>

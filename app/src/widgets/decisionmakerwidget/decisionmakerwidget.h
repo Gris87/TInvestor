@@ -25,16 +25,16 @@ class DecisionMakerWidget : public IDecisionMakerWidget
 
 public:
     explicit DecisionMakerWidget(
-        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*    accountChartWidgetFactory,
-        ILogsTableWidgetFactory*       logsTableWidgetFactory,
-        IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
-        IOperationsTableRecordFactory* operationsTableRecordFactory,
-        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
-        IUserStorage*                  userStorage,
-        IInstrumentsStorage*           instrumentsStorage,
-        ISettingsEditor*               settingsEditor,
-        QWidget*                       parent = nullptr
+        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*        accountChartWidgetFactory,
+        ILogsTableWidgetFactory*           logsTableWidgetFactory,
+        IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+        IOperationsTableRecordFactory*     operationsTableRecordFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        ISettingsEditor*                   settingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~DecisionMakerWidget() override;
 

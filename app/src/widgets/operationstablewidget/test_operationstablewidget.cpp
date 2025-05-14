@@ -24,15 +24,15 @@ class Test_OperationsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        operationsTableRecordFactoryMock = new StrictMock<OperationsTableRecordFactoryMock>();
-        stockTableItemWidgetFactoryMock  = new StrictMock<StockTableItemWidgetFactoryMock>();
-        userStorageMock                  = new StrictMock<UserStorageMock>();
-        instrumentsStorageMock           = new StrictMock<InstrumentsStorageMock>();
-        settingsEditorMock               = new StrictMock<SettingsEditorMock>();
+        operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
+        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
+        userStorageMock                      = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
+        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         operationsTableWidget = new OperationsTableWidget(
             operationsTableRecordFactoryMock,
-            stockTableItemWidgetFactoryMock,
+            instrumentTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
             settingsEditorMock
@@ -43,18 +43,18 @@ protected:
     {
         delete operationsTableWidget;
         delete operationsTableRecordFactoryMock;
-        delete stockTableItemWidgetFactoryMock;
+        delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete settingsEditorMock;
     }
 
-    OperationsTableWidget*                        operationsTableWidget;
-    StrictMock<OperationsTableRecordFactoryMock>* operationsTableRecordFactoryMock;
-    StrictMock<StockTableItemWidgetFactoryMock>*  stockTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                  userStorageMock;
-    StrictMock<InstrumentsStorageMock>*           instrumentsStorageMock;
-    StrictMock<SettingsEditorMock>*               settingsEditorMock;
+    OperationsTableWidget*                            operationsTableWidget;
+    StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                      userStorageMock;
+    StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
+    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 
 

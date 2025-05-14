@@ -18,11 +18,11 @@ class OperationsTableRecord : public IOperationsTableRecord
 
 public:
     explicit OperationsTableRecord(
-        QTableWidget*                 tableWidget,
-        IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-        IUserStorage*                 userStorage,
-        IInstrumentsStorage*          instrumentsStorage,
-        QObject*                      parent = nullptr
+        QTableWidget*                      tableWidget,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        QObject*                           parent = nullptr
     );
     ~OperationsTableRecord() override;
 
@@ -32,7 +32,7 @@ public:
     void setOperation(const Operation& operation) override;
 
 private:
-    TimeTableItem* mTimeTableWidgetItem;
-    IStockTableItemWidget* mStockTableItemWidget;
-    IInstrumentsStorage*   mInstrumentsStorage;
+    TimeTableItem*              mTimeTableWidgetItem;
+    IInstrumentTableItemWidget* mInstrumentTableItemWidget;
+    IInstrumentsStorage*        mInstrumentsStorage;
 };

@@ -8,17 +8,17 @@
 
 
 
-class StockTableItemWidgetFactoryMock : public IStockTableItemWidgetFactory
+class InstrumentTableItemWidgetFactoryMock : public IInstrumentTableItemWidgetFactory
 {
 public:
-    StockTableItemWidgetFactoryMock() :
-        IStockTableItemWidgetFactory()
+    InstrumentTableItemWidgetFactoryMock() :
+        IInstrumentTableItemWidgetFactory()
     {
     }
-    ~StockTableItemWidgetFactoryMock() override = default;
+    ~InstrumentTableItemWidgetFactoryMock() override = default;
 
-    StockTableItemWidgetFactoryMock(const StockTableItemWidgetFactoryMock& another)            = delete;
-    StockTableItemWidgetFactoryMock& operator=(const StockTableItemWidgetFactoryMock& another) = delete;
+    InstrumentTableItemWidgetFactoryMock(const InstrumentTableItemWidgetFactoryMock& another)            = delete;
+    InstrumentTableItemWidgetFactoryMock& operator=(const InstrumentTableItemWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IStockTableItemWidget*, newInstance, (IUserStorage * userStorage, QWidget* parent), (const, override));
+    MOCK_METHOD(IInstrumentTableItemWidget*, newInstance, (IUserStorage * userStorage, QWidget* parent), (const, override));
 };

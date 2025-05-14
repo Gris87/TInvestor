@@ -13,20 +13,20 @@ constexpr float HUNDRED_PROCENT = 100.0f;
 
 
 StocksTableRecord::StocksTableRecord(
-    QTableWidget*                   tableWidget,
-    IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*       orderWavesDialogFactory,
-    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-    IUserStorage*                   userStorage,
-    IOrderBookThread*               orderBookThread,
-    IHttpClient*                    httpClient,
-    Stock*                          stock,
-    QObject*                        parent
+    QTableWidget*                      tableWidget,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+    IOrderWavesDialogFactory*          orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    IUserStorage*                      userStorage,
+    IOrderBookThread*                  orderBookThread,
+    IHttpClient*                       httpClient,
+    Stock*                             stock,
+    QObject*                           parent
 ) :
     IStocksTableRecord(parent),
     mStock(stock),
-    mStockTableItemWidget(),
+    mInstrumentTableItemWidget(),
     mPriceTableWidgetItem(new PriceTableItem()),
     mDayChangeTableWidgetItem(new PriceChangeTableItem()),
     mDateChangeTableWidgetItem(new PriceChangeTableItem()),
@@ -52,7 +52,8 @@ StocksTableRecord::StocksTableRecord(
         --mPrecision;
     }
 
-    mStockTableItemWidget = stockTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
+    mInstrumentTableItemWidget =
+        instrumentTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
 
     IActionsTableItemWidget* actionsTableItemWidget = actionsTableItemWidgetFactory->newInstance(
         orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, mStock, mPrecision, tableWidget
@@ -61,8 +62,8 @@ StocksTableRecord::StocksTableRecord(
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
-    tableWidget->setCellWidget(rowIndex, STOCKS_STOCK_COLUMN, mStockTableItemWidget);
-    tableWidget->setItem(rowIndex, STOCKS_STOCK_COLUMN, mStockTableItemWidget);
+    tableWidget->setCellWidget(rowIndex, STOCKS_STOCK_COLUMN, mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex, STOCKS_STOCK_COLUMN, mInstrumentTableItemWidget);
     tableWidget->setItem(rowIndex, STOCKS_PRICE_COLUMN, mPriceTableWidgetItem);
     tableWidget->setItem(rowIndex, STOCKS_DAY_CHANGE_COLUMN, mDayChangeTableWidgetItem);
     tableWidget->setItem(rowIndex, STOCKS_DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
@@ -82,10 +83,10 @@ void StocksTableRecord::updateAll()
 
     const QIcon stockLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
 
-    mStockTableItemWidget->setIcon(stockLogo);
-    mStockTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
-    mStockTableItemWidget->setText(mStock->meta.ticker);
-    mStockTableItemWidget->setFullText(mStock->meta.name);
+    mInstrumentTableItemWidget->setIcon(stockLogo);
+    mInstrumentTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
+    mInstrumentTableItemWidget->setText(mStock->meta.ticker);
+    mInstrumentTableItemWidget->setFullText(mStock->meta.name);
 
     mStock->mutex->unlock();
 
@@ -123,9 +124,9 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
     const int row = mPriceTableWidgetItem->row();
 
-    const QString text                = mStockTableItemWidget->text();
-    const QString fullText            = mStockTableItemWidget->fullText();
-    const bool    forQualInvestorFlag = mStockTableItemWidget->forQualInvestorFlag();
+    const QString text                = mInstrumentTableItemWidget->text();
+    const QString fullText            = mInstrumentTableItemWidget->fullText();
+    const bool    forQualInvestorFlag = mInstrumentTableItemWidget->forQualInvestorFlag();
 
     const bool hidden = !filter.isFiltered(
         text,

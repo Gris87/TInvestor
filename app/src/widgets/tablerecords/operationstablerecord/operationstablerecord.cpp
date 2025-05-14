@@ -6,27 +6,28 @@
 
 
 OperationsTableRecord::OperationsTableRecord(
-    QTableWidget*                 tableWidget,
-    IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-    IUserStorage*                 userStorage,
-    IInstrumentsStorage*          instrumentsStorage,
-    QObject*                      parent
+    QTableWidget*                      tableWidget,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    QObject*                           parent
 ) :
     IOperationsTableRecord(parent),
     mTimeTableWidgetItem(new TimeTableItem()),
-    mStockTableItemWidget(),
+    mInstrumentTableItemWidget(),
     mInstrumentsStorage(instrumentsStorage)
 {
     qDebug() << "Create OperationsTableRecord";
 
-    mStockTableItemWidget = stockTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
+    mInstrumentTableItemWidget =
+        instrumentTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
 
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
     tableWidget->setItem(rowIndex, OPERATIONS_TIME_COLUMN, mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN, mStockTableItemWidget);
-    tableWidget->setItem(rowIndex, OPERATIONS_NAME_COLUMN, mStockTableItemWidget);
+    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
 }
 
 OperationsTableRecord::~OperationsTableRecord()
@@ -55,7 +56,7 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     }
 
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(operation.timestamp));
-    mStockTableItemWidget->setIcon(instrumentLogo);
-    mStockTableItemWidget->setText(instrument.ticker);
-    mStockTableItemWidget->setFullText(instrument.name);
+    mInstrumentTableItemWidget->setIcon(instrumentLogo);
+    mInstrumentTableItemWidget->setText(instrument.ticker);
+    mInstrumentTableItemWidget->setFullText(instrument.name);
 }

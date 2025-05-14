@@ -8,14 +8,14 @@
 
 
 
-class IStockTableItemWidgetFactory
+class IInstrumentTableItemWidgetFactory
 {
 public:
-    IStockTableItemWidgetFactory()          = default;
-    virtual ~IStockTableItemWidgetFactory() = default;
+    IInstrumentTableItemWidgetFactory()          = default;
+    virtual ~IInstrumentTableItemWidgetFactory() = default;
 
-    IStockTableItemWidgetFactory(const IStockTableItemWidgetFactory& another)            = delete;
-    IStockTableItemWidgetFactory& operator=(const IStockTableItemWidgetFactory& another) = delete;
+    IInstrumentTableItemWidgetFactory(const IInstrumentTableItemWidgetFactory& another)            = delete;
+    IInstrumentTableItemWidgetFactory& operator=(const IInstrumentTableItemWidgetFactory& another) = delete;
 
-    virtual IStockTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) const = 0;
+    virtual IInstrumentTableItemWidget* newInstance(IUserStorage* userStorage, QWidget* parent) const = 0;
 };

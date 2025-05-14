@@ -14,23 +14,23 @@ const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {100, 69, 150, 170, 91, 129, 88};
 
 
 StocksTableWidget::StocksTableWidget(
-    IStocksTableRecordFactory*      stocksTableRecordFactory,
-    IStockTableItemWidgetFactory*   stockTableItemWidgetFactory,
-    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*       orderWavesDialogFactory,
-    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-    IUserStorage*                   userStorage,
-    IOrderBookThread*               orderBookThread,
-    IHttpClient*                    httpClient,
-    ISettingsEditor*                settingsEditor,
-    QWidget*                        parent
+    IStocksTableRecordFactory*         stocksTableRecordFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
+    IOrderWavesDialogFactory*          orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    IUserStorage*                      userStorage,
+    IOrderBookThread*                  orderBookThread,
+    IHttpClient*                       httpClient,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) :
     IStocksTableWidget(parent),
     ui(new Ui::StocksTableWidget),
     tableRecords(),
     lastPricesUpdates(),
     mStocksTableRecordFactory(stocksTableRecordFactory),
-    mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
+    mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
@@ -70,7 +70,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
         {
             record = mStocksTableRecordFactory->newInstance(
                 ui->tableWidget,
-                mStockTableItemWidgetFactory,
+                mInstrumentTableItemWidgetFactory,
                 mActionsTableItemWidgetFactory,
                 mOrderWavesDialogFactory,
                 mOrderWavesWidgetFactory,

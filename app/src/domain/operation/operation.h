@@ -19,7 +19,7 @@ struct Operation
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    qint64 timestamp;
+    qint64  timestamp;
     QString instrumentId;
 };
 

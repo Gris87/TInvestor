@@ -165,7 +165,7 @@ static int runApplication(QApplication* app)
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
-    StockTableItemWidgetFactory      stockTableItemWidgetFactory;
+    InstrumentTableItemWidgetFactory instrumentTableItemWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     StocksControlsWidgetFactory      stocksControlsWidgetFactory;
@@ -337,7 +337,7 @@ static int runApplication(QApplication* app)
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
-        &stockTableItemWidgetFactory,
+        &instrumentTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
         &stocksTableRecordFactory,

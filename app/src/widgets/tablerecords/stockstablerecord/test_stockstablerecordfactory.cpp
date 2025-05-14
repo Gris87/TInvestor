@@ -32,17 +32,17 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
 
     const StocksTableRecordFactory factory;
 
-    StrictMock<StockTableItemWidgetFactoryMock>   stockTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>       orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>       orderWavesWidgetFactoryMock;
-    StrictMock<UserStorageMock>                   userStorageMock;
-    StrictMock<OrderBookThreadMock>               orderBookThreadMock;
-    StrictMock<HttpClientMock>                    httpClientMock;
+    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>    actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>          orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>          orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>                      userStorageMock;
+    StrictMock<OrderBookThreadMock>                  orderBookThreadMock;
+    StrictMock<HttpClientMock>                       httpClientMock;
 
     // tableWidget will take ownership
-    StrictMock<StockTableItemWidgetMock>*   stockTableItemWidgetMock   = new StrictMock<StockTableItemWidgetMock>();
-    StrictMock<ActionsTableItemWidgetMock>* actionsTableItemWidgetMock = new StrictMock<ActionsTableItemWidgetMock>();
+    StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>();
+    StrictMock<ActionsTableItemWidgetMock>*    actionsTableItemWidgetMock    = new StrictMock<ActionsTableItemWidgetMock>();
 
     QTableWidget tableWidget;
     Stock        stock;
@@ -65,8 +65,8 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     stock.operational.payback            = 90;
     stock.operational.detailedData.append(stockData);
 
-    EXPECT_CALL(stockTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
-        .WillOnce(Return(stockTableItemWidgetMock));
+    EXPECT_CALL(instrumentTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
+        .WillOnce(Return(instrumentTableItemWidgetMock));
 
     EXPECT_CALL(
         actionsTableItemWidgetFactoryMock,
@@ -84,7 +84,7 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
 
     const IStocksTableRecord* record = factory.newInstance(
         &tableWidget,
-        &stockTableItemWidgetFactoryMock,
+        &instrumentTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,

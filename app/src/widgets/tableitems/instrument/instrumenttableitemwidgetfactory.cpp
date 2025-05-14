@@ -6,18 +6,18 @@
 
 
 
-StockTableItemWidgetFactory::StockTableItemWidgetFactory() :
-    IStockTableItemWidgetFactory()
+InstrumentTableItemWidgetFactory::InstrumentTableItemWidgetFactory() :
+    IInstrumentTableItemWidgetFactory()
 {
-    qDebug() << "Create StockTableItemWidgetFactory";
+    qDebug() << "Create InstrumentTableItemWidgetFactory";
 }
 
-StockTableItemWidgetFactory::~StockTableItemWidgetFactory()
+InstrumentTableItemWidgetFactory::~InstrumentTableItemWidgetFactory()
 {
-    qDebug() << "Destroy StockTableItemWidgetFactory";
+    qDebug() << "Destroy InstrumentTableItemWidgetFactory";
 }
 
-IStockTableItemWidget* StockTableItemWidgetFactory::newInstance(IUserStorage* userStorage, QWidget* parent) const
+IInstrumentTableItemWidget* InstrumentTableItemWidgetFactory::newInstance(IUserStorage* userStorage, QWidget* parent) const
 {
-    return new StockTableItemWidget(userStorage, parent);
+    return new InstrumentTableItemWidget(userStorage, parent);
 }

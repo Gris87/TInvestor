@@ -18,12 +18,12 @@ OperationsTableRecordFactory::~OperationsTableRecordFactory()
 }
 
 IOperationsTableRecord* OperationsTableRecordFactory::newInstance(
-    QTableWidget*                 tableWidget,
-    IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
-    IUserStorage*                 userStorage,
-    IInstrumentsStorage*          instrumentsStorage,
-    QObject*                      parent
+    QTableWidget*                      tableWidget,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    QObject*                           parent
 ) const
 {
-    return new OperationsTableRecord(tableWidget, stockTableItemWidgetFactory, userStorage, instrumentsStorage, parent);
+    return new OperationsTableRecord(tableWidget, instrumentTableItemWidgetFactory, userStorage, instrumentsStorage, parent);
 }
