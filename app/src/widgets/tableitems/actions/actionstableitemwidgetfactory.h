@@ -21,7 +21,7 @@ public:
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
         Stock*                    stock,
-        int                       precision,
+        qint8                     precision,
         QWidget*                  parent
     ) const override;
 };

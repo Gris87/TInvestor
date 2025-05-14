@@ -33,7 +33,7 @@ const QColor ARROW_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-glo
 
 
 
-OrderWavesWidget::OrderWavesWidget(int precision, float priceIncrement, QWidget* parent) :
+OrderWavesWidget::OrderWavesWidget(qint8 precision, float priceIncrement, QWidget* parent) :
     IOrderWavesWidget(parent),
     mScene(),
     mBottomLine(),

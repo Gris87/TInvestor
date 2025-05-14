@@ -16,7 +16,7 @@ class OrderWavesWidget : public IOrderWavesWidget
     Q_OBJECT
 
 public:
-    explicit OrderWavesWidget(int precision, float priceIncrement, QWidget* parent = nullptr);
+    explicit OrderWavesWidget(qint8 precision, float priceIncrement, QWidget* parent = nullptr);
     ~OrderWavesWidget() override;
 
     OrderWavesWidget(const OrderWavesWidget& another)            = delete;
@@ -57,7 +57,7 @@ private:
     QList<QGraphicsRectItem*>       mBars;
     QList<QGraphicsSimpleTextItem*> mBarsMarkers;
     QGraphicsItem*                  mArrow;
-    int                             mPrecision;
+    qint8                           mPrecision;
     float                           mPriceIncrement;
     float                           mMinPrice;
     float                           mMaxPrice;

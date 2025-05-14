@@ -27,6 +27,10 @@ struct Operation
     float   payment;
     float   commission;
     float   yield;
+    qint8   pricePrecision;
+    qint8   paymentPrecision;
+    qint8   commissionPrecision;
+    qint8   yieldPrecision;
 };
 
 

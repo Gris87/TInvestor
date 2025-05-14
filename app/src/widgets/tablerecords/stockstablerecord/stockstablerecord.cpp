@@ -4,11 +4,11 @@
 #include <QDebug>
 #include <QPushButton>
 
+#include "src/grpc/utils.h"
 
 
-constexpr int   START_PRECISION = 9;
-constexpr int   TENS            = 10;
-constexpr float HUNDRED_PROCENT = 100.0f;
+
+constexpr float HUNDRED_PERCENT = 100.0f;
 
 
 
@@ -36,21 +36,8 @@ StocksTableRecord::StocksTableRecord(
     qDebug() << "Create StocksTableRecord";
 
     mStock->mutex->lock();
-    qint32 priceNanos = mStock->meta.minPriceIncrement.nano;
+    mPrecision = quotationPrecision(mStock->meta.minPriceIncrement);
     mStock->mutex->unlock();
-
-    mPrecision = START_PRECISION;
-
-    while (mPrecision > 2)
-    {
-        if (priceNanos % TENS != 0)
-        {
-            break;
-        }
-
-        priceNanos /= TENS;
-        --mPrecision;
-    }
 
     mInstrumentTableItemWidget =
         instrumentTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
@@ -103,10 +90,10 @@ void StocksTableRecord::updatePrice()
     const float price = mStock->lastPrice();
 
     const float dayChange  = mStock->operational.dayStartPrice > 0
-                                 ? ((price / mStock->operational.dayStartPrice) * HUNDRED_PROCENT) - HUNDRED_PROCENT
+                                 ? ((price / mStock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                  : 0;
     const float dateChange = mStock->operational.specifiedDatePrice > 0
-                                 ? ((price / mStock->operational.specifiedDatePrice) * HUNDRED_PROCENT) - HUNDRED_PROCENT
+                                 ? ((price / mStock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                  : 0;
 
     mPriceTableWidgetItem->setValue(price, mPrecision);

@@ -15,5 +15,5 @@ public:
     IOrderWavesWidgetFactory(const IOrderWavesWidgetFactory& another)            = delete;
     IOrderWavesWidgetFactory& operator=(const IOrderWavesWidgetFactory& another) = delete;
 
-    virtual IOrderWavesWidget* newInstance(int precision, float priceIncrement, QWidget* parent) const = 0;
+    virtual IOrderWavesWidget* newInstance(qint8 precision, float priceIncrement, QWidget* parent) const = 0;
 };

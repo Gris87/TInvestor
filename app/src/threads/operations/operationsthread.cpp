@@ -178,14 +178,18 @@ void OperationsThread::requestOperations()
                 const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
                 Operation                     operation;
 
-                operation.timestamp    = timeToTimestamp(tinkoffOperation.date());
-                operation.instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
-                operation.description  = QString::fromStdString(tinkoffOperation.description());
-                operation.price        = moneyToFloat(tinkoffOperation.price());
-                operation.quantity     = tinkoffOperation.quantity();
-                operation.payment      = moneyToFloat(tinkoffOperation.payment());
-                operation.commission   = moneyToFloat(tinkoffOperation.commission());
-                operation.yield        = moneyToFloat(tinkoffOperation.yield());
+                operation.timestamp           = timeToTimestamp(tinkoffOperation.date());
+                operation.instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
+                operation.description         = QString::fromStdString(tinkoffOperation.description());
+                operation.price               = moneyToFloat(tinkoffOperation.price());
+                operation.quantity            = tinkoffOperation.quantity();
+                operation.payment             = moneyToFloat(tinkoffOperation.payment());
+                operation.commission          = moneyToFloat(tinkoffOperation.commission());
+                operation.yield               = moneyToFloat(tinkoffOperation.yield());
+                operation.pricePrecision      = moneyPrecision(tinkoffOperation.price());
+                operation.paymentPrecision    = moneyPrecision(tinkoffOperation.payment());
+                operation.commissionPrecision = moneyPrecision(tinkoffOperation.commission());
+                operation.yieldPrecision      = moneyPrecision(tinkoffOperation.yield());
 
                 mOperations.append(operation);
             }

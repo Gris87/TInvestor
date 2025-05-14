@@ -25,7 +25,7 @@ PriceChangeTableItem::~PriceChangeTableItem()
     qDebug() << "Destroy PriceChangeTableItem";
 }
 
-void PriceChangeTableItem::setValue(float value, float fromPrice, int precision)
+void PriceChangeTableItem::setValue(float value, float fromPrice, qint8 precision)
 {
     mValue               = value;
     const QString prefix = mValue > 0 ? "+" : "";

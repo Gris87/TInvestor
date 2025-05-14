@@ -20,7 +20,7 @@ PriceTableItem::~PriceTableItem()
     qDebug() << "Destroy PriceTableItem";
 }
 
-void PriceTableItem::setValue(float value, int precision)
+void PriceTableItem::setValue(float value, qint8 precision)
 {
     mValue = value;
 

@@ -16,7 +16,7 @@ OrderWavesDialog::OrderWavesDialog(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     Stock*                    stock,
-    int                       precision,
+    qint8                     precision,
     QWidget*                  parent
 ) :
     IOrderWavesDialog(parent),

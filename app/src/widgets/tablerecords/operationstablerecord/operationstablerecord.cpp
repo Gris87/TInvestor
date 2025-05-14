@@ -74,9 +74,9 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
-    mPriceTableWidgetItem->setValue(operation.price, 2);
+    mPriceTableWidgetItem->setValue(operation.price, operation.pricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
-    mPaymentTableWidgetItem->setValue(operation.payment, 2);
-    mCommissionTableWidgetItem->setValue(operation.commission, 2);
-    mYieldTableWidgetItem->setValue(operation.yield, 2);
+    mPaymentTableWidgetItem->setValue(operation.payment, operation.paymentPrecision);
+    mCommissionTableWidgetItem->setValue(operation.commission, operation.commissionPrecision);
+    mYieldTableWidgetItem->setValue(operation.yield, operation.yieldPrecision);
 }

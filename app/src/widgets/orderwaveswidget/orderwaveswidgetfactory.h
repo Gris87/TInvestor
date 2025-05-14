@@ -15,5 +15,5 @@ public:
     OrderWavesWidgetFactory(const OrderWavesWidgetFactory& another)            = delete;
     OrderWavesWidgetFactory& operator=(const OrderWavesWidgetFactory& another) = delete;
 
-    IOrderWavesWidget* newInstance(int precision, float priceIncrement, QWidget* parent) const override;
+    IOrderWavesWidget* newInstance(qint8 precision, float priceIncrement, QWidget* parent) const override;
 };

@@ -15,7 +15,7 @@ public:
     PriceTableItem(const PriceTableItem& another)            = delete;
     PriceTableItem& operator=(const PriceTableItem& another) = delete;
 
-    void setValue(float value, int precision);
+    void setValue(float value, qint8 precision);
 
     [[nodiscard]]
     float getValue() const;

@@ -51,5 +51,5 @@ private:
     PriceChangeTableItem*       mDateChangeTableWidgetItem;
     TurnoverTableItem*          mTurnoverTableWidgetItem;
     PaybackTableItem*           mPaybackTableWidgetItem;
-    int                         mPrecision;
+    qint8                       mPrecision;
 };

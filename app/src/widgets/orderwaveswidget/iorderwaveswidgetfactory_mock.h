@@ -20,5 +20,5 @@ public:
     OrderWavesWidgetFactoryMock(const OrderWavesWidgetFactoryMock& another)            = delete;
     OrderWavesWidgetFactoryMock& operator=(const OrderWavesWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IOrderWavesWidget*, newInstance, (int precision, float priceIncrement, QWidget* parent), (const, override));
+    MOCK_METHOD(IOrderWavesWidget*, newInstance, (qint8 precision, float priceIncrement, QWidget* parent), (const, override));
 };
