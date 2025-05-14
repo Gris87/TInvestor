@@ -22,3 +22,8 @@ float quotationToFloat(const Quotation& quotation)
 {
     return quotation.units + (quotation.nano / NANOS_FLOAT);
 }
+
+float moneyToFloat(const tinkoff::MoneyValue& money)
+{
+    return money.units() + (money.nano() / NANOS_FLOAT);
+}

@@ -21,6 +21,12 @@ struct Operation
 
     qint64  timestamp;
     QString instrumentId;
+    QString description;
+    float   price;
+    int     quantity;
+    float   payment;
+    float   commission;
+    float   yield;
 };
 
 

@@ -10,8 +10,8 @@ Instrument::Instrument() :
 
 void Instrument::fromJsonObject(const QJsonObject& jsonObject)
 {
-    ticker = jsonObject.value("ticker").toString("");
-    name   = jsonObject.value("name").toString("");
+    ticker = jsonObject.value("ticker").toString();
+    name   = jsonObject.value("name").toString();
 }
 
 QJsonObject Instrument::toJsonObject() const

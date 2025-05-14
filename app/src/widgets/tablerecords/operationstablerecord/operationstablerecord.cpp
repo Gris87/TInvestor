@@ -15,6 +15,7 @@ OperationsTableRecord::OperationsTableRecord(
     IOperationsTableRecord(parent),
     mTimeTableWidgetItem(new TimeTableItem()),
     mInstrumentTableItemWidget(),
+    mDescriptionTableWidgetItem(new QTableWidgetItem()),
     mInstrumentsStorage(instrumentsStorage)
 {
     qDebug() << "Create OperationsTableRecord";
@@ -28,6 +29,7 @@ OperationsTableRecord::OperationsTableRecord(
     tableWidget->setItem(rowIndex, OPERATIONS_TIME_COLUMN, mTimeTableWidgetItem);
     tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
     tableWidget->setItem(rowIndex, OPERATIONS_NAME_COLUMN, mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex, OPERATIONS_DESCRIPTION_COLUMN, mDescriptionTableWidgetItem);
 }
 
 OperationsTableRecord::~OperationsTableRecord()
@@ -59,4 +61,5 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mInstrumentTableItemWidget->setIcon(instrumentLogo);
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
+    mDescriptionTableWidgetItem->setText(operation.description);
 }

@@ -98,12 +98,12 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 void OperationsTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off
-    mSettingsEditor->setValue(type + "/columnWidth_Time",      ui->tableWidget->columnWidth(OPERATIONS_TIME_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Name",      ui->tableWidget->columnWidth(OPERATIONS_NAME_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Operation", ui->tableWidget->columnWidth(OPERATIONS_OPERATION_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Price",     ui->tableWidget->columnWidth(OPERATIONS_PRICE_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Quantity",  ui->tableWidget->columnWidth(OPERATIONS_QUANTITY_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Cost",      ui->tableWidget->columnWidth(OPERATIONS_COST_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Time",        ui->tableWidget->columnWidth(OPERATIONS_TIME_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Name",        ui->tableWidget->columnWidth(OPERATIONS_NAME_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Description", ui->tableWidget->columnWidth(OPERATIONS_DESCRIPTION_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Price",       ui->tableWidget->columnWidth(OPERATIONS_PRICE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Quantity",    ui->tableWidget->columnWidth(OPERATIONS_QUANTITY_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Cost",        ui->tableWidget->columnWidth(OPERATIONS_COST_COLUMN));
     // clang-format on
 }
 
@@ -111,12 +111,12 @@ void OperationsTableWidget::saveWindowState(const QString& type)
 void OperationsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableWidget->setColumnWidth(OPERATIONS_TIME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Time",      COLUMN_WIDTHS[OPERATIONS_TIME_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_OPERATION_COLUMN, mSettingsEditor->value(type + "/columnWidth_Operation", COLUMN_WIDTHS[OPERATIONS_OPERATION_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Price",     COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,  mSettingsEditor->value(type + "/columnWidth_Quantity",  COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,      mSettingsEditor->value(type + "/columnWidth_Cost",      COLUMN_WIDTHS[OPERATIONS_COST_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_TIME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Time",        COLUMN_WIDTHS[OPERATIONS_TIME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",        COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_DESCRIPTION_COLUMN, mSettingsEditor->value(type + "/columnWidth_Description", COLUMN_WIDTHS[OPERATIONS_DESCRIPTION_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",       COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Quantity",    COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_COST_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Cost",        COLUMN_WIDTHS[OPERATIONS_COST_COLUMN]).toInt());
     // clang-format on
 }
 // NOLINTEND(readability-magic-numbers)

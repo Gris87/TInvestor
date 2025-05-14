@@ -10,8 +10,8 @@ Quotation::Quotation() :
 
 void Quotation::fromJsonObject(const QJsonObject& jsonObject)
 {
-    units = jsonObject.value("units").toInteger(0);
-    nano  = jsonObject.value("nano").toInt(0);
+    units = jsonObject.value("units").toInteger();
+    nano  = jsonObject.value("nano").toInt();
 }
 
 QJsonObject Quotation::toJsonObject() const

@@ -34,5 +34,6 @@ public:
 private:
     TimeTableItem*              mTimeTableWidgetItem;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
+    QTableWidgetItem*           mDescriptionTableWidgetItem;
     IInstrumentsStorage*        mInstrumentsStorage;
 };

@@ -14,11 +14,11 @@ StockMeta::StockMeta() :
 
 void StockMeta::fromJsonObject(const QJsonObject& jsonObject)
 {
-    uid                 = jsonObject.value("uid").toString("");
-    ticker              = jsonObject.value("ticker").toString("");
-    name                = jsonObject.value("name").toString("");
-    forQualInvestorFlag = jsonObject.value("forQualInvestorFlag").toBool(false);
-    lot                 = jsonObject.value("lot").toInt(0);
+    uid                 = jsonObject.value("uid").toString();
+    ticker              = jsonObject.value("ticker").toString();
+    name                = jsonObject.value("name").toString();
+    forQualInvestorFlag = jsonObject.value("forQualInvestorFlag").toBool();
+    lot                 = jsonObject.value("lot").toInt();
     minPriceIncrement.fromJsonObject(jsonObject.value("minPriceIncrement").toObject());
 }
 

@@ -180,6 +180,12 @@ void OperationsThread::requestOperations()
 
                 operation.timestamp    = timeToTimestamp(tinkoffOperation.date());
                 operation.instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
+                operation.description  = QString::fromStdString(tinkoffOperation.description());
+                operation.price        = moneyToFloat(tinkoffOperation.price());
+                operation.quantity     = tinkoffOperation.quantity();
+                operation.payment      = moneyToFloat(tinkoffOperation.payment());
+                operation.commission   = moneyToFloat(tinkoffOperation.commission());
+                operation.yield        = moneyToFloat(tinkoffOperation.yield());
 
                 mOperations.append(operation);
             }
