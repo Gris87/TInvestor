@@ -27,6 +27,12 @@ public:
     MOCK_METHOD(std::shared_ptr<tinkoff::SharesResponse>, findStocks, (QThread * parentThread), (override));
     MOCK_METHOD(std::shared_ptr<tinkoff::BondsResponse>, findBonds, (QThread * parentThread), (override));
     MOCK_METHOD(std::shared_ptr<tinkoff::CurrenciesResponse>, findCurrencies, (QThread * parentThread), (override));
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::CurrencyResponse>,
+        findCurrency,
+        (QThread * parentThread, const QString& instrumentId),
+        (override)
+    );
     MOCK_METHOD(std::shared_ptr<tinkoff::EtfsResponse>, findEtfs, (QThread * parentThread), (override));
     MOCK_METHOD(std::shared_ptr<tinkoff::FuturesResponse>, findFutures, (QThread * parentThread), (override));
     MOCK_METHOD(

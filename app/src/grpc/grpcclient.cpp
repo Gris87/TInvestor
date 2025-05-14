@@ -185,6 +185,31 @@ std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread*
     return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp);
 }
 
+static grpc::Status findCurrencyAction(
+    IRawGrpcClient*                                           rawGrpcClient,
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentRequest&                         req,
+    const std::shared_ptr<tinkoff::CurrencyResponse>&         resp
+)
+{
+    return rawGrpcClient->findCurrency(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::CurrencyResponse> GrpcClient::findCurrency(QThread* parentThread, const QString& instrumentId)
+{
+    grpc::ClientContext                              context;
+    tinkoff::InstrumentRequest                       req;
+    const std::shared_ptr<tinkoff::CurrencyResponse> resp = std::make_shared<tinkoff::CurrencyResponse>();
+
+    context.set_credentials(mCreds);
+
+    req.set_id_type(tinkoff::INSTRUMENT_ID_TYPE_UID);
+    req.set_id(instrumentId.toStdString());
+
+    return repeatRequest(parentThread, findCurrencyAction, mInstrumentsService, &context, req, resp);
+}
+
 static grpc::Status findEtfsAction(
     IRawGrpcClient*                                           rawGrpcClient,
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,

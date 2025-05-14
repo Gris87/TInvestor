@@ -99,6 +99,12 @@ public:
         const tinkoff::InstrumentsRequest&                        req,
         tinkoff::CurrenciesResponse*                              resp
     ) = 0;
+    virtual grpc::Status findCurrency(
+        const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+        grpc::ClientContext*                                      context,
+        const tinkoff::InstrumentRequest&                         req,
+        tinkoff::CurrencyResponse*                                resp
+    ) = 0;
     virtual grpc::Status findEtfs(
         const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
         grpc::ClientContext*                                      context,

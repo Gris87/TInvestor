@@ -11,16 +11,17 @@
 
 
 
-constexpr qint64 MS_IN_SECOND                       = 1000LL;
-constexpr qint64 ONE_MINUTE                         = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR                           = 60LL * ONE_MINUTE;
-constexpr qint64 ONE_DAY                            = 24LL * ONE_HOUR;
-constexpr qint64 ONE_MONTH                          = 31LL * ONE_DAY;
-constexpr qint64 SLEEP_DELAY                        = 5LL * MS_IN_SECOND; // 5 seconds
-constexpr qint64 MOSCOW_TIME                        = 3 * ONE_HOUR;       // 3 hours
-constexpr qint64 MAX_GRPC_TIME_LIMIT                = ONE_MONTH;          // 1 month
-constexpr int    HTTP_STATUS_CODE_OK                = 200;
-constexpr int    HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
+const char* const RUBLE_UID                          = "a92e2e25-a698-45cc-a781-167cf465257c";
+constexpr qint64  MS_IN_SECOND                       = 1000LL;
+constexpr qint64  ONE_MINUTE                         = 60LL * MS_IN_SECOND;
+constexpr qint64  ONE_HOUR                           = 60LL * ONE_MINUTE;
+constexpr qint64  ONE_DAY                            = 24LL * ONE_HOUR;
+constexpr qint64  ONE_MONTH                          = 31LL * ONE_DAY;
+constexpr qint64  SLEEP_DELAY                        = 5LL * MS_IN_SECOND; // 5 seconds
+constexpr qint64  MOSCOW_TIME                        = 3 * ONE_HOUR;       // 3 hours
+constexpr qint64  MAX_GRPC_TIME_LIMIT                = ONE_MONTH;          // 1 month
+constexpr int     HTTP_STATUS_CODE_OK                = 200;
+constexpr int     HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
 
 
 
@@ -182,6 +183,24 @@ static void obtainInstrumentsFromCurrencies(
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffCurrency.brand().logo_name())));
             }
         }
+    }
+
+    // Ruble is absent in CurrenciesResponse
+    const std::shared_ptr<tinkoff::CurrencyResponse> tinkoffCurrencyResp = grpcClient->findCurrency(parentThread, RUBLE_UID);
+
+    if (!parentThread->isInterruptionRequested() && tinkoffCurrencyResp != nullptr)
+    {
+        const tinkoff::Currency& tinkoffCurrency = tinkoffCurrencyResp->instrument();
+
+        const QString instrumentId   = QString::fromStdString(tinkoffCurrency.uid());
+        const QString instrumentName = QString::fromStdString(tinkoffCurrency.name());
+
+        Instrument instrument;
+        instrument.ticker = instrumentName;
+        instrument.name   = instrumentName;
+
+        res[instrumentId] = instrument;
+        logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffCurrency.brand().logo_name())));
     }
 }
 

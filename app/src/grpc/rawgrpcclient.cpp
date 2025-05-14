@@ -78,6 +78,18 @@ grpc::Status RawGrpcClient::findCurrencies(
     return service->Currencies(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::findCurrency(
+    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
+    grpc::ClientContext*                                      context,
+    const tinkoff::InstrumentRequest&                         req,
+    tinkoff::CurrencyResponse*                                resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->CurrencyBy(context, req, resp);
+}
+
 grpc::Status RawGrpcClient::findEtfs(
     const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
     grpc::ClientContext*                                      context,

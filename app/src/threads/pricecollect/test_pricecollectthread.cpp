@@ -31,6 +31,10 @@ using ::testing::StrictMock;
 
 
 
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+
+
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_PriceCollectThread : public ::testing::Test
 {
@@ -112,6 +116,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<FileMock>*     logoFileMock3   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     logoFileMock4   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     logoFileMock5   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
+    StrictMock<FileMock>*     logoFileMock6   = new StrictMock<FileMock>();     // Will be deleted in downloadLogosForParallel
     StrictMock<FileMock>*     noImageFileMock = new StrictMock<FileMock>();     // Will be deleted in downloadLogo
     StrictMock<DirMock>*      dirMock1        = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
     StrictMock<DirMock>*      dirMock2        = new StrictMock<DirMock>();      // Will be deleted in obtainStocksData
@@ -174,6 +179,22 @@ TEST_F(Test_PriceCollectThread, Test_run)
     currency->set_name("USD to RUB");
     currency->set_allocated_brand(currencyBrand);
 
+    const std::shared_ptr<tinkoff::CurrencyResponse> currencyResponse(new tinkoff::CurrencyResponse());
+    tinkoff::Currency* rubleCurrency = new tinkoff::Currency(); // currencyResponse will take ownership
+
+    tinkoff::BrandData* rubleCurrencyBrand = new tinkoff::BrandData(); // currency will take ownership
+    rubleCurrencyBrand->set_logo_name("Ruble.png");
+
+    rubleCurrency->set_currency("rub");
+    rubleCurrency->set_country_of_risk("RU");
+    rubleCurrency->set_api_trade_available_flag(true);
+    rubleCurrency->set_uid("ddddd");
+    rubleCurrency->set_ticker("RUB");
+    rubleCurrency->set_name("RUB");
+    rubleCurrency->set_allocated_brand(rubleCurrencyBrand);
+
+    currencyResponse->set_allocated_instrument(rubleCurrency);
+
     const std::shared_ptr<tinkoff::EtfsResponse> etfsResponse(new tinkoff::EtfsResponse());
     tinkoff::Etf*                                etf = etfsResponse->add_instruments();
 
@@ -183,7 +204,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     etf->set_currency("rub");
     etf->set_country_of_risk("RU");
     etf->set_api_trade_available_flag(true);
-    etf->set_uid("ddddd");
+    etf->set_uid("eeeee");
     etf->set_ticker("Dogs");
     etf->set_name("Save dogs");
     etf->set_allocated_brand(etfBrand);
@@ -197,7 +218,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     future->set_currency("rub");
     future->set_country_of_risk("RU");
     future->set_api_trade_available_flag(true);
-    future->set_uid("eeeee");
+    future->set_uid("fffff");
     future->set_ticker("GOLD");
     future->set_name("Man, I am rich");
     future->set_allocated_brand(futureBrand);
@@ -256,6 +277,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, findBonds(QThread::currentThread())).WillOnce(Return(bondsResponse));
     EXPECT_CALL(*grpcClientMock, findCurrencies(QThread::currentThread())).WillOnce(Return(currenciesResponse));
+    EXPECT_CALL(*grpcClientMock, findCurrency(QThread::currentThread(), QString(RUBLE_UID))).WillOnce(Return(currencyResponse));
     EXPECT_CALL(*grpcClientMock, findEtfs(QThread::currentThread())).WillOnce(Return(etfsResponse));
     EXPECT_CALL(*grpcClientMock, findFutures(QThread::currentThread())).WillOnce(Return(futuresResponse));
 
@@ -292,7 +314,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ddddd.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock4)));
     EXPECT_CALL(
-        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers())
+        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/Rublex160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
     EXPECT_CALL(*logoFileMock4, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
@@ -302,16 +324,26 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/eeeee.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock5)));
     EXPECT_CALL(
+        *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers())
+    )
+        .WillOnce(Return(httpResult));
+    EXPECT_CALL(*logoFileMock5, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*logoFileMock5, write(httpResult.body)).WillOnce(Return(1));
+    EXPECT_CALL(*logoFileMock5, close());
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/fffff.png").arg(appDir)))
+        .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock6)));
+    EXPECT_CALL(
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/GOLDx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(internalServerErrorHttpResult));
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/images/no_image.png")))
         .WillOnce(Return(std::shared_ptr<IFile>(noImageFileMock)));
     EXPECT_CALL(*noImageFileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock5, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*logoFileMock6, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
     EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(internalServerErrorHttpResult.body));
-    EXPECT_CALL(*logoFileMock5, write(internalServerErrorHttpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock5, close());
+    EXPECT_CALL(*logoFileMock6, write(internalServerErrorHttpResult.body)).WillOnce(Return(1));
+    EXPECT_CALL(*logoFileMock6, close());
     EXPECT_CALL(*noImageFileMock, close());
 
     EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));

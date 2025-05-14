@@ -75,6 +75,7 @@ public:
     std::shared_ptr<tinkoff::SharesResponse>      findStocks(QThread* parentThread) override;
     std::shared_ptr<tinkoff::BondsResponse>       findBonds(QThread* parentThread) override;
     std::shared_ptr<tinkoff::CurrenciesResponse>  findCurrencies(QThread* parentThread) override;
+    std::shared_ptr<tinkoff::CurrencyResponse>    findCurrency(QThread* parentThread, const QString& instrumentId) override;
     std::shared_ptr<tinkoff::EtfsResponse>        findEtfs(QThread* parentThread) override;
     std::shared_ptr<tinkoff::FuturesResponse>     findFutures(QThread* parentThread) override;
     std::shared_ptr<tinkoff::GetCandlesResponse>
