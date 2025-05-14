@@ -3,6 +3,8 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
@@ -12,6 +14,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
+#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
@@ -41,10 +44,21 @@ protected:
         logsTableWidgetMock              = new StrictMock<LogsTableWidgetMock>();
         portfolioTableWidgetMock         = new StrictMock<PortfolioTableWidgetMock>();
         operationsTableRecordFactoryMock = new StrictMock<OperationsTableRecordFactoryMock>();
+        stockTableItemWidgetFactoryMock  = new StrictMock<StockTableItemWidgetFactoryMock>();
+        userStorageMock                  = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock           = new StrictMock<InstrumentsStorageMock>();
         settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
         EXPECT_CALL(
-            *operationsTableWidgetFactoryMock, newInstance(operationsTableRecordFactoryMock, settingsEditorMock, NotNull())
+            *operationsTableWidgetFactoryMock,
+            newInstance(
+                operationsTableRecordFactoryMock,
+                stockTableItemWidgetFactoryMock,
+                userStorageMock,
+                instrumentsStorageMock,
+                settingsEditorMock,
+                NotNull()
+            )
         )
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(accountChartWidgetMock));
@@ -59,6 +73,9 @@ protected:
             logsTableWidgetFactoryMock,
             portfolioTableWidgetFactoryMock,
             operationsTableRecordFactoryMock,
+            stockTableItemWidgetFactoryMock,
+            userStorageMock,
+            instrumentsStorageMock,
             settingsEditorMock
         );
     }
@@ -71,6 +88,9 @@ protected:
         delete logsTableWidgetFactoryMock;
         delete portfolioTableWidgetFactoryMock;
         delete operationsTableRecordFactoryMock;
+        delete stockTableItemWidgetFactoryMock;
+        delete userStorageMock;
+        delete instrumentsStorageMock;
         delete settingsEditorMock;
     }
 
@@ -84,6 +104,9 @@ protected:
     StrictMock<LogsTableWidgetMock>*              logsTableWidgetMock;
     StrictMock<PortfolioTableWidgetMock>*         portfolioTableWidgetMock;
     StrictMock<OperationsTableRecordFactoryMock>* operationsTableRecordFactoryMock;
+    StrictMock<StockTableItemWidgetFactoryMock>*  stockTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                  userStorageMock;
+    StrictMock<InstrumentsStorageMock>*           instrumentsStorageMock;
     StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };
 

@@ -6,6 +6,8 @@
 
 #include <QTableWidget>
 
+#include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
 
@@ -15,7 +17,13 @@ class OperationsTableRecord : public IOperationsTableRecord
     Q_OBJECT
 
 public:
-    explicit OperationsTableRecord(QTableWidget* tableWidget, QObject* parent = nullptr);
+    explicit OperationsTableRecord(
+        QTableWidget*                 tableWidget,
+        IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
+        IUserStorage*                 userStorage,
+        IInstrumentsStorage*          instrumentsStorage,
+        QObject*                      parent = nullptr
+    );
     ~OperationsTableRecord() override;
 
     OperationsTableRecord(const OperationsTableRecord& another)            = delete;
@@ -25,4 +33,6 @@ public:
 
 private:
     TimeTableItem* mTimeTableWidgetItem;
+    IStockTableItemWidget* mStockTableItemWidget;
+    IInstrumentsStorage*   mInstrumentsStorage;
 };

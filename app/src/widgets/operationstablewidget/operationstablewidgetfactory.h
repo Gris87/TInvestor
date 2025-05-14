@@ -16,6 +16,11 @@ public:
     OperationsTableWidgetFactory& operator=(const OperationsTableWidgetFactory& another) = delete;
 
     IOperationsTableWidget* newInstance(
-        IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+        IOperationsTableRecordFactory* operationsTableRecordFactory,
+        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+        IUserStorage*                  userStorage,
+        IInstrumentsStorage*           instrumentsStorage,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent
     ) const override;
 };

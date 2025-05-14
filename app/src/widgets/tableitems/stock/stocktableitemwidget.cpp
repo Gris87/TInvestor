@@ -16,6 +16,8 @@ StockTableItemWidget::StockTableItemWidget(IUserStorage* userStorage, QWidget* p
     qDebug() << "Create StockTableItemWidget";
 
     ui->setupUi(this);
+
+    ui->lockLabel->hide();
 }
 
 StockTableItemWidget::~StockTableItemWidget()

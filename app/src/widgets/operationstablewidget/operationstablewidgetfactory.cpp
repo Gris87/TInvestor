@@ -18,8 +18,15 @@ OperationsTableWidgetFactory::~OperationsTableWidgetFactory()
 }
 
 IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
-    IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+    IOperationsTableRecordFactory* operationsTableRecordFactory,
+    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+    IUserStorage*                  userStorage,
+    IInstrumentsStorage*           instrumentsStorage,
+    ISettingsEditor*               settingsEditor,
+    QWidget*                       parent
 ) const
 {
-    return new OperationsTableWidget(operationsTableRecordFactory, settingsEditor, parent);
+    return new OperationsTableWidget(
+        operationsTableRecordFactory, stockTableItemWidgetFactory, userStorage, instrumentsStorage, settingsEditor, parent
+    );
 }

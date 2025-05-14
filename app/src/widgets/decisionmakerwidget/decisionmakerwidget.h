@@ -30,6 +30,9 @@ public:
         ILogsTableWidgetFactory*       logsTableWidgetFactory,
         IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
         IOperationsTableRecordFactory* operationsTableRecordFactory,
+        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+        IUserStorage*                  userStorage,
+        IInstrumentsStorage*           instrumentsStorage,
         ISettingsEditor*               settingsEditor,
         QWidget*                       parent = nullptr
     );

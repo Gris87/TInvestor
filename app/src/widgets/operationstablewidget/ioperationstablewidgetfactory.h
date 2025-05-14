@@ -19,6 +19,11 @@ public:
     IOperationsTableWidgetFactory& operator=(const IOperationsTableWidgetFactory& another) = delete;
 
     virtual IOperationsTableWidget* newInstance(
-        IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+        IOperationsTableRecordFactory* operationsTableRecordFactory,
+        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+        IUserStorage*                  userStorage,
+        IInstrumentsStorage*           instrumentsStorage,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent
     ) const = 0;
 };

@@ -20,6 +20,7 @@ struct Operation
     QJsonObject toJsonObject() const;
 
     qint64 timestamp;
+    QString instrumentId;
 };
 
 

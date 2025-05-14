@@ -14,11 +14,19 @@ const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {67, 89, 91, 59, 102, 95};
 
 
 OperationsTableWidget::OperationsTableWidget(
-    IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent
+    IOperationsTableRecordFactory* operationsTableRecordFactory,
+    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+    IUserStorage*                  userStorage,
+    IInstrumentsStorage*           instrumentsStorage,
+    ISettingsEditor*               settingsEditor,
+    QWidget*                       parent
 ) :
     IOperationsTableWidget(parent),
     ui(new Ui::OperationsTableWidget),
     mOperationsTableRecordFactory(operationsTableRecordFactory),
+    mStockTableItemWidgetFactory(stockTableItemWidgetFactory),
+    mUserStorage(userStorage),
+    mInstrumentsStorage(instrumentsStorage),
     mSettingsEditor(settingsEditor),
     mTableRecords()
 {
@@ -26,7 +34,7 @@ OperationsTableWidget::OperationsTableWidget(
 
     ui->setupUi(this);
 
-    ui->tableWidget->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::AscendingOrder);
+    ui->tableWidget->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::DescendingOrder);
 }
 
 OperationsTableWidget::~OperationsTableWidget()
@@ -53,7 +61,9 @@ void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 
     while (mTableRecords.size() < operations.size())
     {
-        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(ui->tableWidget, this);
+        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(
+            ui->tableWidget, mStockTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
+        );
         mTableRecords.append(record);
     }
 
@@ -73,7 +83,9 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 
     for (const Operation& operation : operations)
     {
-        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(ui->tableWidget, this);
+        IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(
+            ui->tableWidget, mStockTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
+        );
         record->setOperation(operation);
 
         mTableRecords.append(record);

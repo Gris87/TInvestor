@@ -3,7 +3,10 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
@@ -22,20 +25,35 @@ protected:
     void SetUp() override
     {
         operationsTableRecordFactoryMock = new StrictMock<OperationsTableRecordFactoryMock>();
+        stockTableItemWidgetFactoryMock  = new StrictMock<StockTableItemWidgetFactoryMock>();
+        userStorageMock                  = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock           = new StrictMock<InstrumentsStorageMock>();
         settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
-        operationsTableWidget = new OperationsTableWidget(operationsTableRecordFactoryMock, settingsEditorMock);
+        operationsTableWidget = new OperationsTableWidget(
+            operationsTableRecordFactoryMock,
+            stockTableItemWidgetFactoryMock,
+            userStorageMock,
+            instrumentsStorageMock,
+            settingsEditorMock
+        );
     }
 
     void TearDown() override
     {
         delete operationsTableWidget;
         delete operationsTableRecordFactoryMock;
+        delete stockTableItemWidgetFactoryMock;
+        delete userStorageMock;
+        delete instrumentsStorageMock;
         delete settingsEditorMock;
     }
 
     OperationsTableWidget*                        operationsTableWidget;
     StrictMock<OperationsTableRecordFactoryMock>* operationsTableRecordFactoryMock;
+    StrictMock<StockTableItemWidgetFactoryMock>*  stockTableItemWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                  userStorageMock;
+    StrictMock<InstrumentsStorageMock>*           instrumentsStorageMock;
     StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };
 

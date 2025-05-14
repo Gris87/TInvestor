@@ -179,6 +179,7 @@ void OperationsThread::requestOperations()
                 Operation                     operation;
 
                 operation.timestamp = timeToTimestamp(tinkoffOperation.date());
+                operation.instrumentId = QString::fromStdString(tinkoffOperation.instrument_uid());
 
                 mOperations.append(operation);
             }

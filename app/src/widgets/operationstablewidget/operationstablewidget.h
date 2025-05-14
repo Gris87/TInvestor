@@ -22,7 +22,12 @@ class OperationsTableWidget : public IOperationsTableWidget
 
 public:
     explicit OperationsTableWidget(
-        IOperationsTableRecordFactory* operationsTableRecordFactory, ISettingsEditor* settingsEditor, QWidget* parent = nullptr
+        IOperationsTableRecordFactory* operationsTableRecordFactory,
+        IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+        IUserStorage*                  userStorage,
+        IInstrumentsStorage*           instrumentsStorage,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent = nullptr
     );
     ~OperationsTableWidget() override;
 
@@ -39,6 +44,9 @@ public:
 
 private:
     IOperationsTableRecordFactory* mOperationsTableRecordFactory;
+    IStockTableItemWidgetFactory*  mStockTableItemWidgetFactory;
+    IUserStorage*                  mUserStorage;
+    IInstrumentsStorage*           mInstrumentsStorage;
     ISettingsEditor*               mSettingsEditor;
     QList<IOperationsTableRecord*> mTableRecords;
 };

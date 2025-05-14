@@ -11,6 +11,9 @@ DecisionMakerWidget::DecisionMakerWidget(
     ILogsTableWidgetFactory*       logsTableWidgetFactory,
     IPortfolioTableWidgetFactory*  portfolioTableWidgetFactory,
     IOperationsTableRecordFactory* operationsTableRecordFactory,
+    IStockTableItemWidgetFactory*  stockTableItemWidgetFactory,
+    IUserStorage*                  userStorage,
+    IInstrumentsStorage*           instrumentsStorage,
     ISettingsEditor*               settingsEditor,
     QWidget*                       parent
 ) :
@@ -24,7 +27,9 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->splitter->setSizes(QList<int>() << 400 << 100); // NOLINT(readability-magic-numbers)
 
-    mOperationsTableWidget = operationsTableWidgetFactory->newInstance(operationsTableRecordFactory, mSettingsEditor, this);
+    mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
+        operationsTableRecordFactory, stockTableItemWidgetFactory, userStorage, instrumentsStorage, mSettingsEditor, this
+    );
     mAccountChartWidget    = accountChartWidgetFactory->newInstance(this);
     mLogsTableWidget       = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
     mPortfolioTableWidget  = portfolioTableWidgetFactory->newInstance(mSettingsEditor, this);

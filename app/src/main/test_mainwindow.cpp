@@ -161,6 +161,9 @@ protected:
                 logsTableWidgetFactoryMock,
                 portfolioTableWidgetFactoryMock,
                 operationsTableRecordFactoryMock,
+                stockTableItemWidgetFactoryMock,
+                userStorageMock,
+                instrumentsStorageMock,
                 settingsEditorMock,
                 NotNull()
             )
@@ -174,6 +177,9 @@ protected:
                 logsTableWidgetFactoryMock,
                 portfolioTableWidgetFactoryMock,
                 operationsTableRecordFactoryMock,
+                stockTableItemWidgetFactoryMock,
+                userStorageMock,
+                instrumentsStorageMock,
                 settingsEditorMock,
                 NotNull()
             )

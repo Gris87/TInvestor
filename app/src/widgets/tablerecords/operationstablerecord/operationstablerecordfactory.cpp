@@ -17,7 +17,13 @@ OperationsTableRecordFactory::~OperationsTableRecordFactory()
     qDebug() << "Destroy OperationsTableRecordFactory";
 }
 
-IOperationsTableRecord* OperationsTableRecordFactory::newInstance(QTableWidget* tableWidget, QObject* parent) const
+IOperationsTableRecord* OperationsTableRecordFactory::newInstance(
+    QTableWidget*                 tableWidget,
+    IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
+    IUserStorage*                 userStorage,
+    IInstrumentsStorage*          instrumentsStorage,
+    QObject*                      parent
+) const
 {
-    return new OperationsTableRecord(tableWidget, parent);
+    return new OperationsTableRecord(tableWidget, stockTableItemWidgetFactory, userStorage, instrumentsStorage, parent);
 }

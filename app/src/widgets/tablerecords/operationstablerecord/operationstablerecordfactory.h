@@ -15,5 +15,11 @@ public:
     OperationsTableRecordFactory(const OperationsTableRecordFactory& another)            = delete;
     OperationsTableRecordFactory& operator=(const OperationsTableRecordFactory& another) = delete;
 
-    IOperationsTableRecord* newInstance(QTableWidget* tableWidget, QObject* parent) const override;
+    IOperationsTableRecord* newInstance(
+        QTableWidget*                 tableWidget,
+        IStockTableItemWidgetFactory* stockTableItemWidgetFactory,
+        IUserStorage*                 userStorage,
+        IInstrumentsStorage*          instrumentsStorage,
+        QObject*                      parent
+    ) const override;
 };

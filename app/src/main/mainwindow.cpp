@@ -155,6 +155,9 @@ MainWindow::MainWindow(
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
         operationsTableRecordFactory,
+        stockTableItemWidgetFactory,
+        mUserStorage,
+        mInstrumentsStorage,
         mSettingsEditor,
         this
     );
@@ -164,6 +167,9 @@ MainWindow::MainWindow(
         logsTableWidgetFactory,
         portfolioTableWidgetFactory,
         operationsTableRecordFactory,
+        stockTableItemWidgetFactory,
+        mUserStorage,
+        mInstrumentsStorage,
         mSettingsEditor,
         this
     );
