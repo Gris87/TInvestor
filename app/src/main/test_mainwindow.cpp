@@ -49,7 +49,7 @@
 #include "src/widgets/stockstablewidget/istockstablewidget_mock.h"
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"

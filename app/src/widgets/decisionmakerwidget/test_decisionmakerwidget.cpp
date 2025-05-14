@@ -14,7 +14,7 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h"
 #include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 

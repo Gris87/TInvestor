@@ -1,4 +1,4 @@
-#include "src/widgets/tableitems/stock/stocktableitemwidget.h"
+#include "src/widgets/tableitems/instrument/instrumenttableitemwidget.h"
 #include "ui_stocktableitemwidget.h"
 
 #include <QEnterEvent>

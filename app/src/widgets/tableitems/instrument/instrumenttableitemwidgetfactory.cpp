@@ -1,8 +1,8 @@
-#include "src/widgets/tableitems/stock/stocktableitemwidgetfactory.h"
+#include "src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h"
 
 #include <QDebug>
 
-#include "src/widgets/tableitems/stock/stocktableitemwidget.h"
+#include "src/widgets/tableitems/instrument/instrumenttableitemwidget.h"
 
 
 

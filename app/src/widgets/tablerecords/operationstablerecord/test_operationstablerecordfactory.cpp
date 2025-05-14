@@ -4,8 +4,8 @@
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidget_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 
 
 

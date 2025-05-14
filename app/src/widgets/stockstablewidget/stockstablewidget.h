@@ -11,7 +11,7 @@
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 

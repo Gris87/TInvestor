@@ -6,7 +6,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 

@@ -665,7 +665,7 @@
 <context>
     <name>StockTableItemWidget</name>
     <message>
-        <location filename="../../src/widgets/tableitems/stock/stocktableitemwidget.ui" line="66"/>
+        <location filename="../../src/widgets/tableitems/instrument/instrumenttableitemwidget.ui" line="66"/>
         <source>For qual investor only</source>
         <translation>Только для квал инвесторов</translation>
     </message>

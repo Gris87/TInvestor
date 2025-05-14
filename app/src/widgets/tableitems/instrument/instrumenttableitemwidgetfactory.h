@@ -2,7 +2,7 @@
 
 
 
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 
 
 

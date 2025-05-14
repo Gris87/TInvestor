@@ -9,8 +9,8 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidget_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidget_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 
 
 

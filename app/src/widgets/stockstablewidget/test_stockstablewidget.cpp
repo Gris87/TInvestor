@@ -10,7 +10,7 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 

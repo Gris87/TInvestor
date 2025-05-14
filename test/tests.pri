@@ -96,8 +96,8 @@ SOURCES += \
     src/widgets/stockstablewidget/test_stockstablewidgetfactory.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidget.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
-    src/widgets/tableitems/stock/test_stocktableitemwidget.cpp \
-    src/widgets/tableitems/stock/test_stocktableitemwidgetfactory.cpp \
+    src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
+    src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/test_paybacktableitem.cpp \
     src/widgets/tableitems/test_pricechangetableitem.cpp \
     src/widgets/tableitems/test_pricetableitem.cpp \
@@ -192,8 +192,8 @@ HEADERS += \
     src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
     src/widgets/tableitems/actions/iactionstableitemwidget_mock.h \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
-    src/widgets/tableitems/stock/istocktableitemwidget_mock.h \
-    src/widgets/tableitems/stock/istocktableitemwidgetfactory_mock.h \
+    src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h \
+    src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \

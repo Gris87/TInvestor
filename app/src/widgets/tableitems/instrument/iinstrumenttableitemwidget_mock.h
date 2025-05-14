@@ -2,7 +2,7 @@
 
 
 
-#include "src/widgets/tableitems/stock/istocktableitemwidget.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidget.h"
 
 #include <gmock/gmock.h>
 
