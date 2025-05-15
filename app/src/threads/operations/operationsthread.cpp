@@ -23,7 +23,9 @@ OperationsThread::OperationsThread(
     mGrpcClient(grpcClient),
     mAccountId(),
     mPortfolioStream(),
-    mLastRequestTimestamp()
+    mLastRequestTimestamp(),
+    mMoneyOnAccountRemained(),
+    mMoneyOnAccountTotal()
 {
     qDebug() << "Create OperationsThread";
 }
@@ -114,7 +116,21 @@ void OperationsThread::createPortfolioStream()
 void OperationsThread::readOperations()
 {
     QList<Operation> operations = mOperationsDatabase->readOperations();
-    mLastRequestTimestamp       = !operations.isEmpty() ? operations.constLast().timestamp + MS_IN_SECOND : 0;
+
+    if (!operations.isEmpty())
+    {
+        const Operation& lastOperation = operations.constLast();
+
+        mLastRequestTimestamp   = lastOperation.timestamp + MS_IN_SECOND;
+        mMoneyOnAccountRemained = lastOperation.moneyOnAccountRemained;
+        mMoneyOnAccountTotal    = lastOperation.moneyOnAccountTotal;
+    }
+    else
+    {
+        mLastRequestTimestamp   = 0;
+        mMoneyOnAccountRemained = Quotation();
+        mMoneyOnAccountTotal    = Quotation();
+    }
 
     emit operationsRead(operations);
 }
@@ -202,18 +218,26 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 {
     Operation res;
 
-    res.timestamp           = timeToTimestamp(tinkoffOperation.date());
-    res.instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
-    res.description         = QString::fromStdString(tinkoffOperation.description());
-    res.price               = moneyToFloat(tinkoffOperation.price());
-    res.quantity            = tinkoffOperation.quantity();
-    res.payment             = moneyToFloat(tinkoffOperation.payment());
-    res.commission          = moneyToFloat(tinkoffOperation.commission());
-    res.yield               = moneyToFloat(tinkoffOperation.yield());
-    res.pricePrecision      = moneyPrecision(tinkoffOperation.price());
-    res.paymentPrecision    = moneyPrecision(tinkoffOperation.payment());
-    res.commissionPrecision = moneyPrecision(tinkoffOperation.commission());
-    res.yieldPrecision      = moneyPrecision(tinkoffOperation.yield());
+    mMoneyOnAccountRemained =
+        quotationSum(quotationSum(mMoneyOnAccountRemained, tinkoffOperation.payment()), tinkoffOperation.commission());
+    mMoneyOnAccountTotal = quotationSum(mMoneyOnAccountRemained, tinkoffOperation.commission());
+
+    res.timestamp                       = timeToTimestamp(tinkoffOperation.date());
+    res.instrumentId                    = QString::fromStdString(tinkoffOperation.instrument_uid());
+    res.description                     = QString::fromStdString(tinkoffOperation.description());
+    res.price                           = moneyToFloat(tinkoffOperation.price());
+    res.quantity                        = tinkoffOperation.quantity();
+    res.payment                         = moneyToFloat(tinkoffOperation.payment());
+    res.commission                      = moneyToFloat(tinkoffOperation.commission());
+    res.yield                           = moneyToFloat(tinkoffOperation.yield());
+    res.moneyOnAccountRemained          = mMoneyOnAccountRemained;
+    res.moneyOnAccountTotal             = mMoneyOnAccountTotal;
+    res.pricePrecision                  = moneyPrecision(tinkoffOperation.price());
+    res.paymentPrecision                = moneyPrecision(tinkoffOperation.payment());
+    res.commissionPrecision             = moneyPrecision(tinkoffOperation.commission());
+    res.yieldPrecision                  = moneyPrecision(tinkoffOperation.yield());
+    res.moneyOnAccountRemainedPrecision = quotationPrecision(mMoneyOnAccountRemained);
+    res.moneyOnAccountTotalPrecision    = quotationPrecision(mMoneyOnAccountTotal);
 
     return res;
 }

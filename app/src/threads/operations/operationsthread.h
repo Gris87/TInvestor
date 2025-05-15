@@ -43,4 +43,6 @@ private:
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
     qint64                           mLastRequestTimestamp;
+    Quotation                        mMoneyOnAccountRemained;
+    Quotation                        mMoneyOnAccountTotal;
 };

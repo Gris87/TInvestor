@@ -7,13 +7,13 @@
 
 
 
-qint64 timeToTimestamp(const google::protobuf::Timestamp& timestamp);
-float  quotationToFloat(const tinkoff::Quotation& quotation);
-float  quotationToFloat(const Quotation& quotation);
-float  moneyToFloat(const tinkoff::MoneyValue& money);
-qint8  quotationPrecision(const tinkoff::Quotation& quotation);
-qint8  quotationPrecision(const Quotation& quotation);
-qint8  moneyPrecision(const tinkoff::MoneyValue& money);
+qint64    timeToTimestamp(const google::protobuf::Timestamp& timestamp);
+float     quotationToFloat(const tinkoff::Quotation& quotation);
+float     quotationToFloat(const Quotation& quotation);
+float     moneyToFloat(const tinkoff::MoneyValue& money);
+qint8     quotationPrecision(const tinkoff::Quotation& quotation);
+qint8     quotationPrecision(const Quotation& quotation);
+qint8     moneyPrecision(const tinkoff::MoneyValue& money);
 Quotation quotationSum(const Quotation& quotation1, const tinkoff::Quotation& quotation2);
 Quotation quotationSum(const Quotation& quotation1, const Quotation& quotation2);
 Quotation quotationSum(const Quotation& quotation1, const tinkoff::MoneyValue& money);
