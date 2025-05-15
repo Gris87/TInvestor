@@ -19,10 +19,14 @@ OperationsTableRecord::OperationsTableRecord(
     mInstrumentTableItemWidget(),
     mDescriptionTableWidgetItem(new QTableWidgetItem()),
     mPriceTableWidgetItem(new PriceTableItem()),
+    mAvgPriceTableWidgetItem(new PriceTableItem()),
     mQuantityTableWidgetItem(new IntegerTableItem()),
+    mRemainedQuantityTableWidgetItem(new IntegerTableItem()),
     mPaymentTableWidgetItem(new PriceTableItem()),
     mCommissionTableWidgetItem(new PriceTableItem()),
     mYieldTableWidgetItem(new PriceTableItem()),
+    mYieldWithCommissionTableWidgetItem(new PriceTableItem()),
+    mYieldWithCommissionPercentTableWidgetItem(new PriceChangeTableItem()),
     mRemainedMoneyTableWidgetItem(new PriceTableItem()),
     mTotalMoneyTableWidgetItem(new PriceTableItem()),
     mInstrumentsStorage(instrumentsStorage)
@@ -36,17 +40,21 @@ OperationsTableRecord::OperationsTableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,           mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,           mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,           mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN,    mDescriptionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,          mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,       mQuantityTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,        mPaymentTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,     mCommissionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,          mYieldTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_MONEY_COLUMN, mRemainedMoneyTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_MONEY_COLUMN,    mTotalMoneyTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,                          mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,                          mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,                          mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN,                   mDescriptionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,                         mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_COLUMN,                     mAvgPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,                      mQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_QUANTITY_COLUMN,             mRemainedQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,                       mPaymentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,                    mCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,                         mYieldTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_WITH_COMMISSION_COLUMN,         mYieldWithCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN, mYieldWithCommissionPercentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_MONEY_COLUMN,                mRemainedMoneyTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_MONEY_COLUMN,                   mTotalMoneyTableWidgetItem);
     // clang-format on
 }
 
@@ -75,16 +83,24 @@ void OperationsTableRecord::setOperation(const Operation& operation)
         instrument.name = "?????";
     }
 
+    float avgPrice = quotationToFloat(operation.avgPrice);
+
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(operation.timestamp));
     mInstrumentTableItemWidget->setIcon(instrumentLogo);
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
     mPriceTableWidgetItem->setValue(operation.price, operation.pricePrecision);
+    mAvgPriceTableWidgetItem->setValue(avgPrice, operation.avgPricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
+    mRemainedQuantityTableWidgetItem->setValue(operation.remainedQuantity);
     mPaymentTableWidgetItem->setValue(operation.payment, operation.paymentPrecision);
     mCommissionTableWidgetItem->setValue(operation.commission, operation.commissionPrecision);
     mYieldTableWidgetItem->setValue(operation.yield, operation.yieldPrecision);
+    mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, operation.yieldWithCommissionPrecision);
+    mYieldWithCommissionPercentTableWidgetItem->setValue(
+        operation.yieldWithCommissionPercent, avgPrice, operation.avgPricePrecision
+    );
     mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), operation.remainedMoneyPrecision);
     mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
 }

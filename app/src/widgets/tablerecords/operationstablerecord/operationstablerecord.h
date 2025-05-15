@@ -9,6 +9,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tableitems/integertableitem.h"
+#include "src/widgets/tableitems/pricechangetableitem.h"
 #include "src/widgets/tableitems/pricetableitem.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
@@ -38,10 +39,14 @@ private:
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
     QTableWidgetItem*           mDescriptionTableWidgetItem;
     PriceTableItem*             mPriceTableWidgetItem;
+    PriceTableItem*             mAvgPriceTableWidgetItem;
     IntegerTableItem*           mQuantityTableWidgetItem;
+    IntegerTableItem*           mRemainedQuantityTableWidgetItem;
     PriceTableItem*             mPaymentTableWidgetItem;
     PriceTableItem*             mCommissionTableWidgetItem;
     PriceTableItem*             mYieldTableWidgetItem;
+    PriceTableItem*             mYieldWithCommissionTableWidgetItem;
+    PriceChangeTableItem*       mYieldWithCommissionPercentTableWidgetItem;
     PriceTableItem*             mRemainedMoneyTableWidgetItem;
     PriceTableItem*             mTotalMoneyTableWidgetItem;
     IInstrumentsStorage*        mInstrumentsStorage;

@@ -311,18 +311,48 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
-        <source>Payment</source>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
-        <source>Commission</source>
+        <source>Remained quantity</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <source>Payment</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="88"/>
+        <source>Commission</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="93"/>
         <source>Yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="98"/>
+        <source>Yield with commission</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="103"/>
+        <source>Yield with commission (%)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="108"/>
+        <source>Remained money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="113"/>
+        <source>Total money</source>
         <translation></translation>
     </message>
     <message>
@@ -331,7 +361,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
         <source>Quantity</source>
         <translation></translation>
     </message>

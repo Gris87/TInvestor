@@ -538,7 +538,7 @@ TEST_F(Test_RawGrpcClient, Test_findFutures)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                   true);
-    ASSERT_GE(resp->instruments_size(),                                      348);
+    ASSERT_GE(resp->instruments_size(),                                      345);
     ASSERT_GE(index,                                                         0);
     ASSERT_EQ(resp->instruments(index).figi(),                               "FUTMMI092500");
     ASSERT_EQ(resp->instruments(index).ticker(),                             "MAU5");

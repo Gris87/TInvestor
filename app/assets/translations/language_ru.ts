@@ -311,19 +311,49 @@
         <translation>Описание</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <source>Avg price</source>
+        <translation>Средняя цена</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <source>Remained quantity</source>
+        <translation>Оставшееся количество</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
         <source>Payment</source>
         <translation>Стомость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="88"/>
         <source>Commission</source>
         <translation>Комиссия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="93"/>
         <source>Yield</source>
         <translation>Доходность</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="98"/>
+        <source>Yield with commission</source>
+        <translation>Доходность с комиссией</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="103"/>
+        <source>Yield with commission (%)</source>
+        <translation>Доходность с комиссией (%)</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="108"/>
+        <source>Remained money</source>
+        <translation>Осталось денег</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="113"/>
+        <source>Total money</source>
+        <translation>Всего денег</translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="63"/>
@@ -331,7 +361,7 @@
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
         <source>Quantity</source>
         <translation>Количество</translation>
     </message>
