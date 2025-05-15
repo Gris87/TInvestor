@@ -29,16 +29,18 @@ public:
     void setAccount(const QString& account) override;
     void terminateThread() override;
 
-    void      createPortfolioStream();
-    Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
-    void      requestOperations();
+    void createPortfolioStream();
 
 private:
+    void      readOperations();
+    Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void      requestOperations();
+    Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
+
     IUserStorage*                    mUserStorage;
     IOperationsDatabase*             mOperationsDatabase;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
     qint64                           mLastRequestTimestamp;
-    QList<Operation>                 mOperations;
 };

@@ -23,8 +23,7 @@ OperationsThread::OperationsThread(
     mGrpcClient(grpcClient),
     mAccountId(),
     mPortfolioStream(),
-    mLastRequestTimestamp(),
-    mOperations()
+    mLastRequestTimestamp()
 {
     qDebug() << "Create OperationsThread";
 }
@@ -40,10 +39,7 @@ void OperationsThread::run()
 
     if (mAccountId != "")
     {
-        mOperations           = mOperationsDatabase->readOperations();
-        mLastRequestTimestamp = !mOperations.isEmpty() ? mOperations.constLast().timestamp + MS_IN_SECOND : 0;
-
-        emit operationsRead(mOperations);
+        readOperations();
 
         const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
@@ -115,6 +111,14 @@ void OperationsThread::createPortfolioStream()
     mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
 }
 
+void OperationsThread::readOperations()
+{
+    QList<Operation> operations = mOperationsDatabase->readOperations();
+    mLastRequestTimestamp       = !operations.isEmpty() ? operations.constLast().timestamp + MS_IN_SECOND : 0;
+
+    emit operationsRead(operations);
+}
+
 Quotation OperationsThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
 {
     Quotation res;
@@ -167,7 +171,7 @@ void OperationsThread::requestOperations()
 
     if (!QThread::currentThread()->isInterruptionRequested() && !allTinkoffOperations.isEmpty())
     {
-        const int lastIndex = mOperations.size();
+        QList<Operation> operations;
 
         for (int i = allTinkoffOperations.size() - 1; i >= 0; --i)
         {
@@ -175,40 +179,41 @@ void OperationsThread::requestOperations()
 
             for (int j = tinkoffOperations->items_size() - 1; j >= 0; --j)
             {
-                const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
-                Operation                     operation;
-
-                operation.timestamp           = timeToTimestamp(tinkoffOperation.date());
-                operation.instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
-                operation.description         = QString::fromStdString(tinkoffOperation.description());
-                operation.price               = moneyToFloat(tinkoffOperation.price());
-                operation.quantity            = tinkoffOperation.quantity();
-                operation.payment             = moneyToFloat(tinkoffOperation.payment());
-                operation.commission          = moneyToFloat(tinkoffOperation.commission());
-                operation.yield               = moneyToFloat(tinkoffOperation.yield());
-                operation.pricePrecision      = moneyPrecision(tinkoffOperation.price());
-                operation.paymentPrecision    = moneyPrecision(tinkoffOperation.payment());
-                operation.commissionPrecision = moneyPrecision(tinkoffOperation.commission());
-                operation.yieldPrecision      = moneyPrecision(tinkoffOperation.yield());
-
-                mOperations.append(operation);
+                operations.append(handleOperationItem(tinkoffOperations->items(j)));
             }
         }
 
-        if (lastIndex == 0)
+        if (mLastRequestTimestamp == 0)
         {
-            mOperationsDatabase->writeOperations(mOperations);
-
-            emit operationsRead(mOperations);
+            mOperationsDatabase->writeOperations(operations);
+            emit operationsRead(operations);
         }
         else
         {
-            const QList<Operation> newOperations = mOperations.mid(lastIndex);
-
-            mOperationsDatabase->appendOperations(newOperations);
-            emit operationsAdded(newOperations);
+            mOperationsDatabase->appendOperations(operations);
+            emit operationsAdded(operations);
         }
 
-        mLastRequestTimestamp = mOperations.constLast().timestamp + MS_IN_SECOND;
+        mLastRequestTimestamp = operations.constLast().timestamp + MS_IN_SECOND;
     }
+}
+
+Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation)
+{
+    Operation res;
+
+    res.timestamp           = timeToTimestamp(tinkoffOperation.date());
+    res.instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
+    res.description         = QString::fromStdString(tinkoffOperation.description());
+    res.price               = moneyToFloat(tinkoffOperation.price());
+    res.quantity            = tinkoffOperation.quantity();
+    res.payment             = moneyToFloat(tinkoffOperation.payment());
+    res.commission          = moneyToFloat(tinkoffOperation.commission());
+    res.yield               = moneyToFloat(tinkoffOperation.yield());
+    res.pricePrecision      = moneyPrecision(tinkoffOperation.price());
+    res.paymentPrecision    = moneyPrecision(tinkoffOperation.payment());
+    res.commissionPrecision = moneyPrecision(tinkoffOperation.commission());
+    res.yieldPrecision      = moneyPrecision(tinkoffOperation.yield());
+
+    return res;
 }
