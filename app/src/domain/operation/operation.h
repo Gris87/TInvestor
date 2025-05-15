@@ -29,14 +29,14 @@ struct Operation
     float     payment;
     float     commission;
     float     yield;
-    Quotation moneyOnAccountRemained;
-    Quotation moneyOnAccountTotal;
+    Quotation remainedMoney;
+    Quotation totalMoney;
     qint8     pricePrecision;
     qint8     paymentPrecision;
     qint8     commissionPrecision;
     qint8     yieldPrecision;
-    qint8     moneyOnAccountRemainedPrecision;
-    qint8     moneyOnAccountTotalPrecision;
+    qint8     remainedMoneyPrecision;
+    qint8     totalMoneyPrecision;
 };
 
 

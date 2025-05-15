@@ -3,6 +3,8 @@
 #include <QCoreApplication>
 #include <QDebug>
 
+#include "src/grpc/utils.h"
+
 
 
 OperationsTableRecord::OperationsTableRecord(
@@ -21,6 +23,8 @@ OperationsTableRecord::OperationsTableRecord(
     mPaymentTableWidgetItem(new PriceTableItem()),
     mCommissionTableWidgetItem(new PriceTableItem()),
     mYieldTableWidgetItem(new PriceTableItem()),
+    mRemainedMoneyTableWidgetItem(new PriceTableItem()),
+    mTotalMoneyTableWidgetItem(new PriceTableItem()),
     mInstrumentsStorage(instrumentsStorage)
 {
     qDebug() << "Create OperationsTableRecord";
@@ -32,15 +36,17 @@ OperationsTableRecord::OperationsTableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,        mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,        mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,        mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN, mDescriptionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,       mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,    mQuantityTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,     mPaymentTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,  mCommissionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,       mYieldTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,           mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,           mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,           mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN,    mDescriptionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,          mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,       mQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,        mPaymentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,     mCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,          mYieldTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_MONEY_COLUMN, mRemainedMoneyTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_MONEY_COLUMN,    mTotalMoneyTableWidgetItem);
     // clang-format on
 }
 
@@ -79,4 +85,6 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mPaymentTableWidgetItem->setValue(operation.payment, operation.paymentPrecision);
     mCommissionTableWidgetItem->setValue(operation.commission, operation.commissionPrecision);
     mYieldTableWidgetItem->setValue(operation.yield, operation.yieldPrecision);
+    mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), operation.remainedMoneyPrecision);
+    mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
 }

@@ -42,5 +42,7 @@ private:
     PriceTableItem*             mPaymentTableWidgetItem;
     PriceTableItem*             mCommissionTableWidgetItem;
     PriceTableItem*             mYieldTableWidgetItem;
+    PriceTableItem*             mRemainedMoneyTableWidgetItem;
+    PriceTableItem*             mTotalMoneyTableWidgetItem;
     IInstrumentsStorage*        mInstrumentsStorage;
 };

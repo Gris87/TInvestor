@@ -24,8 +24,8 @@ OperationsThread::OperationsThread(
     mAccountId(),
     mPortfolioStream(),
     mLastRequestTimestamp(),
-    mMoneyOnAccountRemained(),
-    mMoneyOnAccountTotal()
+    mRemainedMoney(),
+    mTotalMoney()
 {
     qDebug() << "Create OperationsThread";
 }
@@ -121,15 +121,15 @@ void OperationsThread::readOperations()
     {
         const Operation& lastOperation = operations.constLast();
 
-        mLastRequestTimestamp   = lastOperation.timestamp + MS_IN_SECOND;
-        mMoneyOnAccountRemained = lastOperation.moneyOnAccountRemained;
-        mMoneyOnAccountTotal    = lastOperation.moneyOnAccountTotal;
+        mLastRequestTimestamp = lastOperation.timestamp + MS_IN_SECOND;
+        mRemainedMoney        = lastOperation.remainedMoney;
+        mTotalMoney           = lastOperation.totalMoney;
     }
     else
     {
-        mLastRequestTimestamp   = 0;
-        mMoneyOnAccountRemained = Quotation();
-        mMoneyOnAccountTotal    = Quotation();
+        mLastRequestTimestamp = 0;
+        mRemainedMoney        = Quotation();
+        mTotalMoney           = Quotation();
     }
 
     emit operationsRead(operations);
@@ -218,26 +218,33 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 {
     Operation res;
 
-    mMoneyOnAccountRemained =
-        quotationSum(quotationSum(mMoneyOnAccountRemained, tinkoffOperation.payment()), tinkoffOperation.commission());
-    mMoneyOnAccountTotal = quotationSum(mMoneyOnAccountRemained, tinkoffOperation.commission());
+    mRemainedMoney = quotationSum(quotationSum(mRemainedMoney, tinkoffOperation.payment()), tinkoffOperation.commission());
 
-    res.timestamp                       = timeToTimestamp(tinkoffOperation.date());
-    res.instrumentId                    = QString::fromStdString(tinkoffOperation.instrument_uid());
-    res.description                     = QString::fromStdString(tinkoffOperation.description());
-    res.price                           = moneyToFloat(tinkoffOperation.price());
-    res.quantity                        = tinkoffOperation.quantity();
-    res.payment                         = moneyToFloat(tinkoffOperation.payment());
-    res.commission                      = moneyToFloat(tinkoffOperation.commission());
-    res.yield                           = moneyToFloat(tinkoffOperation.yield());
-    res.moneyOnAccountRemained          = mMoneyOnAccountRemained;
-    res.moneyOnAccountTotal             = mMoneyOnAccountTotal;
-    res.pricePrecision                  = moneyPrecision(tinkoffOperation.price());
-    res.paymentPrecision                = moneyPrecision(tinkoffOperation.payment());
-    res.commissionPrecision             = moneyPrecision(tinkoffOperation.commission());
-    res.yieldPrecision                  = moneyPrecision(tinkoffOperation.yield());
-    res.moneyOnAccountRemainedPrecision = quotationPrecision(mMoneyOnAccountRemained);
-    res.moneyOnAccountTotalPrecision    = quotationPrecision(mMoneyOnAccountTotal);
+    if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_INPUT)
+    {
+        mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
+    }
+    else
+    {
+        mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.commission());
+    }
+
+    res.timestamp              = timeToTimestamp(tinkoffOperation.date());
+    res.instrumentId           = QString::fromStdString(tinkoffOperation.instrument_uid());
+    res.description            = QString::fromStdString(tinkoffOperation.description());
+    res.price                  = moneyToFloat(tinkoffOperation.price());
+    res.quantity               = tinkoffOperation.quantity();
+    res.payment                = moneyToFloat(tinkoffOperation.payment());
+    res.commission             = moneyToFloat(tinkoffOperation.commission());
+    res.yield                  = moneyToFloat(tinkoffOperation.yield());
+    res.remainedMoney          = mRemainedMoney;
+    res.totalMoney             = mTotalMoney;
+    res.pricePrecision         = moneyPrecision(tinkoffOperation.price());
+    res.paymentPrecision       = moneyPrecision(tinkoffOperation.payment());
+    res.commissionPrecision    = moneyPrecision(tinkoffOperation.commission());
+    res.yieldPrecision         = moneyPrecision(tinkoffOperation.yield());
+    res.remainedMoneyPrecision = quotationPrecision(mRemainedMoney);
+    res.totalMoneyPrecision    = quotationPrecision(mTotalMoney);
 
     return res;
 }
