@@ -24,6 +24,7 @@ OperationsThread::OperationsThread(
     mAccountId(),
     mPortfolioStream(),
     mLastRequestTimestamp(),
+    mInstruments(),
     mRemainedMoney(),
     mTotalMoney()
 {
@@ -115,7 +116,7 @@ void OperationsThread::createPortfolioStream()
 
 void OperationsThread::readOperations()
 {
-    QList<Operation> operations = mOperationsDatabase->readOperations();
+    const QList<Operation> operations = mOperationsDatabase->readOperations();
 
     if (!operations.isEmpty())
     {
@@ -218,6 +219,24 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 {
     Operation res;
 
+    QString              instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
+    QuantityAndAvgPrice& quantityAndAvgPrice = mInstruments[instrumentId];
+
+    if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_BUY)
+    {
+        Quotation totalValue = quotationSum(
+            quotationMultiply(quantityAndAvgPrice.avgPrice, quantityAndAvgPrice.quantity),
+            quotationMultiply(tinkoffOperation.price(), tinkoffOperation.quantity())
+        );
+
+        quantityAndAvgPrice.quantity += tinkoffOperation.quantity();
+        quantityAndAvgPrice.avgPrice  = quotationDivide(totalValue, quantityAndAvgPrice.quantity);
+    }
+    else if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_SELL)
+    {
+        quantityAndAvgPrice.quantity -= tinkoffOperation.quantity();
+    }
+
     mRemainedMoney = quotationSum(quotationSum(mRemainedMoney, tinkoffOperation.payment()), tinkoffOperation.commission());
 
     if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_INPUT)
@@ -230,10 +249,12 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     }
 
     res.timestamp              = timeToTimestamp(tinkoffOperation.date());
-    res.instrumentId           = QString::fromStdString(tinkoffOperation.instrument_uid());
+    res.instrumentId           = instrumentId;
     res.description            = QString::fromStdString(tinkoffOperation.description());
     res.price                  = moneyToFloat(tinkoffOperation.price());
+    res.avgPrice               = quantityAndAvgPrice.avgPrice;
     res.quantity               = tinkoffOperation.quantity();
+    res.remainedQuantity       = quantityAndAvgPrice.quantity;
     res.payment                = moneyToFloat(tinkoffOperation.payment());
     res.commission             = moneyToFloat(tinkoffOperation.commission());
     res.yield                  = moneyToFloat(tinkoffOperation.yield());

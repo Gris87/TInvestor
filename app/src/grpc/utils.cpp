@@ -69,14 +69,14 @@ qint8 moneyPrecision(const tinkoff::MoneyValue& money)
     return nanoPrecision(money.nano());
 }
 
-Quotation unitsAndNanoSum(qint64 units, qint32 nano, qint64 units2, qint32 nano2)
+static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint64 nano2)
 {
     Quotation res;
 
-    res.nano = nano + nano2;
+    qint64 nano64 = nano + nano2;
 
-    res.units  = units + units2 + nano2 / NANOS_INT;
-    res.nano  %= NANOS_INT;
+    res.units = units + units2 + nano64 / NANOS_INT;
+    res.nano  = nano64 % NANOS_INT;
 
     return res;
 }
@@ -94,4 +94,56 @@ Quotation quotationSum(const Quotation& quotation1, const Quotation& quotation2)
 Quotation quotationSum(const Quotation& quotation1, const tinkoff::MoneyValue& money)
 {
     return unitsAndNanoSum(quotation1.units, quotation1.nano, money.units(), money.nano());
+}
+
+static Quotation unitsAndNanoMultiply(qint64 units, qint64 nano, qint64 coef)
+{
+    Quotation res;
+
+    qint64 nano64 = nano * coef;
+
+    res.units = units * coef + nano64 / NANOS_INT;
+    res.nano  = nano64 % NANOS_INT;
+
+    return res;
+}
+
+Quotation quotationMultiply(const tinkoff::Quotation& quotation, qint64 coef)
+{
+    return unitsAndNanoMultiply(quotation.units(), quotation.nano(), coef);
+}
+
+Quotation quotationMultiply(const Quotation& quotation, qint64 coef)
+{
+    return unitsAndNanoMultiply(quotation.units, quotation.nano, coef);
+}
+
+Quotation quotationMultiply(const tinkoff::MoneyValue& money, qint64 coef)
+{
+    return unitsAndNanoMultiply(money.units(), money.nano(), coef);
+}
+
+static Quotation unitsAndNanoDivide(qint64 units, qint32 nano, qint64 coef)
+{
+    Quotation res;
+
+    res.units = units / coef;
+    res.nano  = static_cast<double>(units % coef) / coef * NANOS_INT + nano / coef;
+
+    return res;
+}
+
+Quotation quotationDivide(const tinkoff::Quotation& quotation, qint64 coef)
+{
+    return unitsAndNanoDivide(quotation.units(), quotation.nano(), coef);
+}
+
+Quotation quotationDivide(const Quotation& quotation, qint64 coef)
+{
+    return unitsAndNanoDivide(quotation.units, quotation.nano, coef);
+}
+
+Quotation quotationDivide(const tinkoff::MoneyValue& money, qint64 coef)
+{
+    return unitsAndNanoDivide(money.units(), money.nano(), coef);
 }

@@ -24,6 +24,9 @@ Buy if price is less than average for last n days
 Use readonly grpc streams
 Double check mutexes
 Check for maximum memory requirements (With all limits)
+Shared strings
+Shared icons
+Export tables to Excel
 
 
 

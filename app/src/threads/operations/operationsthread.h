@@ -11,6 +11,20 @@
 
 
 
+struct QuantityAndAvgPrice
+{
+    explicit QuantityAndAvgPrice() :
+        quantity(),
+        avgPrice()
+    {
+    }
+
+    qint64    quantity;
+    Quotation avgPrice;
+};
+
+
+
 class OperationsThread : public IOperationsThread
 {
     Q_OBJECT
@@ -37,12 +51,13 @@ private:
     void      requestOperations();
     Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
 
-    IUserStorage*                    mUserStorage;
-    IOperationsDatabase*             mOperationsDatabase;
-    IGrpcClient*                     mGrpcClient;
-    QString                          mAccountId;
-    std::shared_ptr<PortfolioStream> mPortfolioStream;
-    qint64                           mLastRequestTimestamp;
-    Quotation                        mRemainedMoney;
-    Quotation                        mTotalMoney;
+    IUserStorage*                      mUserStorage;
+    IOperationsDatabase*               mOperationsDatabase;
+    IGrpcClient*                       mGrpcClient;
+    QString                            mAccountId;
+    std::shared_ptr<PortfolioStream>   mPortfolioStream;
+    qint64                             mLastRequestTimestamp;
+    QMap<QString, QuantityAndAvgPrice> mInstruments; // Instrument Id => QuantityAndAvgPrice
+    Quotation                          mRemainedMoney;
+    Quotation                          mTotalMoney;
 };

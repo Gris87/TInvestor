@@ -36,7 +36,6 @@ struct Operation
     Quotation remainedMoney;
     Quotation totalMoney;
     qint8     pricePrecision;
-    qint8     avgPricePrecision;
     qint8     paymentPrecision;
     qint8     commissionPrecision;
     qint8     yieldPrecision;

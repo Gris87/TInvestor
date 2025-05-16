@@ -18,7 +18,6 @@ Operation::Operation() :
     remainedMoney(),
     totalMoney(),
     pricePrecision(),
-    avgPricePrecision(),
     paymentPrecision(),
     commissionPrecision(),
     yieldPrecision(),
@@ -42,7 +41,6 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     yieldWithCommission          = jsonObject.value("yieldWithCommission").toDouble();
     yieldWithCommissionPercent   = jsonObject.value("yieldWithCommissionPercent").toDouble();
     pricePrecision               = jsonObject.value("pricePrecision").toInt();
-    avgPricePrecision            = jsonObject.value("avgPricePrecision").toInt();
     paymentPrecision             = jsonObject.value("paymentPrecision").toInt();
     commissionPrecision          = jsonObject.value("commissionPrecision").toInt();
     yieldPrecision               = jsonObject.value("yieldPrecision").toInt();
@@ -75,7 +73,6 @@ QJsonObject Operation::toJsonObject() const
     res.insert("remainedMoney",                remainedMoney.toJsonObject());
     res.insert("totalMoney",                   totalMoney.toJsonObject());
     res.insert("pricePrecision",               pricePrecision);
-    res.insert("avgPricePrecision",            avgPricePrecision);
     res.insert("paymentPrecision",             paymentPrecision);
     res.insert("commissionPrecision",          commissionPrecision);
     res.insert("yieldPrecision",               yieldPrecision);
@@ -95,8 +92,7 @@ bool operator==(const Operation& lhs, const Operation& rhs)
            lhs.yield == rhs.yield && lhs.yieldWithCommission == rhs.yieldWithCommission &&
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&
            lhs.totalMoney == rhs.totalMoney && lhs.pricePrecision == rhs.pricePrecision &&
-           lhs.avgPricePrecision == rhs.avgPricePrecision && lhs.paymentPrecision == rhs.paymentPrecision &&
-           lhs.commissionPrecision == rhs.commissionPrecision && lhs.yieldPrecision == rhs.yieldPrecision &&
-           lhs.yieldWithCommissionPrecision == rhs.yieldWithCommissionPrecision &&
+           lhs.paymentPrecision == rhs.paymentPrecision && lhs.commissionPrecision == rhs.commissionPrecision &&
+           lhs.yieldPrecision == rhs.yieldPrecision && lhs.yieldWithCommissionPrecision == rhs.yieldWithCommissionPrecision &&
            lhs.remainedMoneyPrecision == rhs.remainedMoneyPrecision && lhs.totalMoneyPrecision == rhs.totalMoneyPrecision;
 }
