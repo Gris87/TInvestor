@@ -61,17 +61,15 @@ public:
 
     void terminateThread() override;
 
-    bool                       storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void                       storeNewInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    Instruments                convertStocksToInstrumentsInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    QList<InstrumentIdAndLogo> convertStocksToLogos(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
-    void                       downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
-    void                       obtainStocksData();
-    void                       cleanupOperationalData();
-    bool                       obtainStocksDayStartPrice();
-    void                       obtainTurnover();
-    void                       obtainPayback();
-    void                       notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
+    bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
+    void storeNewInstrumentsInfo();
+    void downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
+    void obtainStocksData();
+    void cleanupOperationalData();
+    bool obtainStocksDayStartPrice();
+    void obtainTurnover();
+    void obtainPayback();
+    void notifyAboutChanges(bool needStocksUpdate, bool needPricesUpdate);
 
 private:
     IConfig*             mConfig;

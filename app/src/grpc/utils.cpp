@@ -73,7 +73,7 @@ static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint6
 {
     Quotation res;
 
-    qint64 nano64 = nano + nano2;
+    const qint64 nano64 = nano + nano2;
 
     res.units = units + units2 + nano64 / NANOS_INT;
     res.nano  = nano64 % NANOS_INT;
@@ -100,7 +100,7 @@ static Quotation unitsAndNanoMultiply(qint64 units, qint64 nano, qint64 coef)
 {
     Quotation res;
 
-    qint64 nano64 = nano * coef;
+    const qint64 nano64 = nano * coef;
 
     res.units = units * coef + nano64 / NANOS_INT;
     res.nano  = nano64 % NANOS_INT;
@@ -128,7 +128,7 @@ static Quotation unitsAndNanoDivide(qint64 units, qint32 nano, qint64 coef)
     Quotation res;
 
     res.units = units / coef;
-    res.nano  = static_cast<double>(units % coef) / coef * NANOS_INT + nano / coef;
+    res.nano  = static_cast<qint32>(static_cast<double>(units % coef) / coef * NANOS_INT) + nano / coef;
 
     return res;
 }

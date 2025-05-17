@@ -224,7 +224,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_BUY)
     {
-        Quotation totalValue = quotationSum(
+        const Quotation totalValue = quotationSum(
             quotationMultiply(quantityAndAvgPrice.avgPrice, quantityAndAvgPrice.quantity),
             quotationMultiply(tinkoffOperation.price(), tinkoffOperation.quantity())
         );
@@ -239,8 +239,10 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     mRemainedMoney = quotationSum(quotationSum(mRemainedMoney, tinkoffOperation.payment()), tinkoffOperation.commission());
 
-    if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_INPUT)
+    if (isOperationTypeWithMoney(tinkoffOperation.type()))
     {
+        instrumentId = RUBLE_UID; // Real server sends empty instrument_uid
+
         mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
     }
     else
@@ -268,4 +270,10 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.totalMoneyPrecision    = quotationPrecision(mTotalMoney);
 
     return res;
+}
+
+bool OperationsThread::isOperationTypeWithMoney(tinkoff::OperationType operationType) const
+{
+    return operationType == tinkoff::OPERATION_TYPE_INPUT || operationType == tinkoff::OPERATION_TYPE_OUTPUT ||
+           operationType == tinkoff::OPERATION_TYPE_TAX || operationType == tinkoff::OPERATION_TYPE_TAX_CORRECTION;
 }

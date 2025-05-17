@@ -24,14 +24,14 @@ public:
     IGrpcClient(const IGrpcClient& another)            = delete;
     IGrpcClient& operator=(const IGrpcClient& another) = delete;
 
-    virtual std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo(QThread* parentThread)                               = 0;
-    virtual std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts(QThread* parentThread)                               = 0;
-    virtual std::shared_ptr<tinkoff::SharesResponse>      findStocks(QThread* parentThread)                                = 0;
-    virtual std::shared_ptr<tinkoff::BondsResponse>       findBonds(QThread* parentThread)                                 = 0;
-    virtual std::shared_ptr<tinkoff::CurrenciesResponse>  findCurrencies(QThread* parentThread)                            = 0;
-    virtual std::shared_ptr<tinkoff::CurrencyResponse>    findCurrency(QThread* parentThread, const QString& instrumentId) = 0;
-    virtual std::shared_ptr<tinkoff::EtfsResponse>        findEtfs(QThread* parentThread)                                  = 0;
-    virtual std::shared_ptr<tinkoff::FuturesResponse>     findFutures(QThread* parentThread)                               = 0;
+    virtual std::shared_ptr<tinkoff::GetInfoResponse>     getUserInfo(QThread* parentThread) = 0;
+    virtual std::shared_ptr<tinkoff::GetAccountsResponse> getAccounts(QThread* parentThread) = 0;
+    virtual std::shared_ptr<tinkoff::SharesResponse>
+    findStocks(QThread* parentThread, tinkoff::InstrumentStatus instrumentStatus)              = 0;
+    virtual std::shared_ptr<tinkoff::BondsResponse>      findBonds(QThread* parentThread)      = 0;
+    virtual std::shared_ptr<tinkoff::CurrenciesResponse> findCurrencies(QThread* parentThread) = 0;
+    virtual std::shared_ptr<tinkoff::EtfsResponse>       findEtfs(QThread* parentThread)       = 0;
+    virtual std::shared_ptr<tinkoff::FuturesResponse>    findFutures(QThread* parentThread)    = 0;
     virtual std::shared_ptr<tinkoff::GetCandlesResponse>
     getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to)                                  = 0;
     virtual std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& instrumentId) = 0;

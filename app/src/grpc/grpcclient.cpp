@@ -130,13 +130,15 @@ static grpc::Status findStocksAction(
     return rawGrpcClient->findStocks(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread)
+std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentThread, tinkoff::InstrumentStatus instrumentStatus)
 {
     grpc::ClientContext                            context;
-    const tinkoff::InstrumentsRequest              req;
+    tinkoff::InstrumentsRequest                    req;
     const std::shared_ptr<tinkoff::SharesResponse> resp = std::make_shared<tinkoff::SharesResponse>();
 
     context.set_credentials(mCreds);
+
+    req.set_instrument_status(instrumentStatus);
 
     return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp);
 }
@@ -155,10 +157,12 @@ static grpc::Status findBondsAction(
 std::shared_ptr<tinkoff::BondsResponse> GrpcClient::findBonds(QThread* parentThread)
 {
     grpc::ClientContext                           context;
-    const tinkoff::InstrumentsRequest             req;
+    tinkoff::InstrumentsRequest                   req;
     const std::shared_ptr<tinkoff::BondsResponse> resp = std::make_shared<tinkoff::BondsResponse>();
 
     context.set_credentials(mCreds);
+
+    req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
     return repeatRequest(parentThread, findBondsAction, mInstrumentsService, &context, req, resp);
 }
@@ -177,37 +181,14 @@ static grpc::Status findCurrenciesAction(
 std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread* parentThread)
 {
     grpc::ClientContext                                context;
-    const tinkoff::InstrumentsRequest                  req;
+    tinkoff::InstrumentsRequest                        req;
     const std::shared_ptr<tinkoff::CurrenciesResponse> resp = std::make_shared<tinkoff::CurrenciesResponse>();
 
     context.set_credentials(mCreds);
 
+    req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
+
     return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp);
-}
-
-static grpc::Status findCurrencyAction(
-    IRawGrpcClient*                                           rawGrpcClient,
-    const std::unique_ptr<tinkoff::InstrumentsService::Stub>& service,
-    grpc::ClientContext*                                      context,
-    const tinkoff::InstrumentRequest&                         req,
-    const std::shared_ptr<tinkoff::CurrencyResponse>&         resp
-)
-{
-    return rawGrpcClient->findCurrency(service, context, req, resp.get());
-}
-
-std::shared_ptr<tinkoff::CurrencyResponse> GrpcClient::findCurrency(QThread* parentThread, const QString& instrumentId)
-{
-    grpc::ClientContext                              context;
-    tinkoff::InstrumentRequest                       req;
-    const std::shared_ptr<tinkoff::CurrencyResponse> resp = std::make_shared<tinkoff::CurrencyResponse>();
-
-    context.set_credentials(mCreds);
-
-    req.set_id_type(tinkoff::INSTRUMENT_ID_TYPE_UID);
-    req.set_id(instrumentId.toStdString());
-
-    return repeatRequest(parentThread, findCurrencyAction, mInstrumentsService, &context, req, resp);
 }
 
 static grpc::Status findEtfsAction(
@@ -224,10 +205,12 @@ static grpc::Status findEtfsAction(
 std::shared_ptr<tinkoff::EtfsResponse> GrpcClient::findEtfs(QThread* parentThread)
 {
     grpc::ClientContext                          context;
-    const tinkoff::InstrumentsRequest            req;
+    tinkoff::InstrumentsRequest                  req;
     const std::shared_ptr<tinkoff::EtfsResponse> resp = std::make_shared<tinkoff::EtfsResponse>();
 
     context.set_credentials(mCreds);
+
+    req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
     return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, &context, req, resp);
 }
@@ -246,10 +229,12 @@ static grpc::Status findFuturesAction(
 std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* parentThread)
 {
     grpc::ClientContext                             context;
-    const tinkoff::InstrumentsRequest               req;
+    tinkoff::InstrumentsRequest                     req;
     const std::shared_ptr<tinkoff::FuturesResponse> resp = std::make_shared<tinkoff::FuturesResponse>();
 
     context.set_credentials(mCreds);
+
+    req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
     return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp);
 }
