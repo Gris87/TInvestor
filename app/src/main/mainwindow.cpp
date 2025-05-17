@@ -72,6 +72,7 @@ MainWindow::MainWindow(
     IPortfolioThread*                  portfolioThread,
     IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
+    IFileDialog*                       fileDialog,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     ISettingsEditor*                   simulatorSettingsEditor,
@@ -109,6 +110,7 @@ MainWindow::MainWindow(
     mPortfolioThread(portfolioThread),
     mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
+    mFileDialog(fileDialog),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mSimulatorSettingsEditor(simulatorSettingsEditor),
@@ -158,6 +160,8 @@ MainWindow::MainWindow(
         instrumentTableItemWidgetFactory,
         mUserStorage,
         mInstrumentsStorage,
+        mFileDialog,
+        mMessageBoxUtils,
         mSettingsEditor,
         this
     );
@@ -170,6 +174,8 @@ MainWindow::MainWindow(
         instrumentTableItemWidgetFactory,
         mUserStorage,
         mInstrumentsStorage,
+        mFileDialog,
+        mMessageBoxUtils,
         mSettingsEditor,
         this
     );

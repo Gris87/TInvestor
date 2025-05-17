@@ -31,6 +31,8 @@ public:
          IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
          IUserStorage*                      userStorage,
          IInstrumentsStorage*               instrumentsStorage,
+         IFileDialog*                       fileDialog,
+         IMessageBoxUtils*                  messageBoxUtils,
          ISettingsEditor*                   settingsEditor,
          QWidget*                           parent),
         (const, override)

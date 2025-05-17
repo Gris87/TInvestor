@@ -22,11 +22,20 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    IFileDialog*                       fileDialog,
+    IMessageBoxUtils*                  mMessageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) const
 {
     return new OperationsTableWidget(
-        operationsTableRecordFactory, instrumentTableItemWidgetFactory, userStorage, instrumentsStorage, settingsEditor, parent
+        operationsTableRecordFactory,
+        instrumentTableItemWidgetFactory,
+        userStorage,
+        instrumentsStorage,
+        fileDialog,
+        mMessageBoxUtils,
+        settingsEditor,
+        parent
     );
 }

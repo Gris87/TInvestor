@@ -20,6 +20,8 @@ OperationsTableWidget::OperationsTableWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    IFileDialog*                       fileDialog,
+    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) :
@@ -29,6 +31,8 @@ OperationsTableWidget::OperationsTableWidget(
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mFileDialog(fileDialog),
+    mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mTableRecords()
 {

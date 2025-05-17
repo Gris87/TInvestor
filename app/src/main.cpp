@@ -46,6 +46,7 @@
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
+#include "src/utils/filedialog/filedialog.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
 #include "src/utils/fs/zip/qzip/qzipfactory.h"
@@ -295,6 +296,7 @@ static int runApplication(QApplication* app)
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
 
     TimeUtils       timeUtils;
+    FileDialog      fileDialog;
     MessageBoxUtils messageBoxUtils;
     HttpClient      httpClient;
     RawGrpcClient   rawGrpcClient;
@@ -363,6 +365,7 @@ static int runApplication(QApplication* app)
         &portfolioThread,
         &makeDecisionThread,
         &orderBookThread,
+        &fileDialog,
         &messageBoxUtils,
         &settingsEditor,
         &simulatorSettingsEditor,

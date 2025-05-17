@@ -64,6 +64,7 @@ SOURCES += \
     src/threads/pricecollect/test_pricecollectthread.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
+    src/utils/filedialog/test_filedialog.cpp \
     src/utils/fs/dir/test_dir.cpp \
     src/utils/fs/dir/test_dirfactory.cpp \
     src/utils/fs/file/test_file.cpp \
@@ -163,6 +164,7 @@ HEADERS += \
     src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \
+    src/utils/filedialog/ifiledialog_mock.h \
     src/utils/fs/dir/idir_mock.h \
     src/utils/fs/dir/idirfactory_mock.h \
     src/utils/fs/file/ifile_mock.h \

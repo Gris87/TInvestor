@@ -26,6 +26,8 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    IFileDialog*                       fileDialog,
+    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) const
@@ -39,6 +41,8 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
+        fileDialog,
+        messageBoxUtils,
         settingsEditor,
         parent
     );

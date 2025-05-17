@@ -4,6 +4,8 @@
 
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
+#include "src/utils/filedialog/ifiledialog.h"
+#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory.h"
@@ -33,6 +35,8 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
+        IFileDialog*                       fileDialog,
+        IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent = nullptr
     );

@@ -20,6 +20,8 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
+        IFileDialog*                       fileDialog,
+        IMessageBoxUtils*                  mMessageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent
     ) const override;
