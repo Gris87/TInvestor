@@ -196,22 +196,30 @@ void OperationsThread::requestOperations()
 
             for (int j = tinkoffOperations->items_size() - 1; j >= 0; --j)
             {
-                operations.append(handleOperationItem(tinkoffOperations->items(j)));
+                const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(j);
+
+                if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+                {
+                    operations.append(handleOperationItem(tinkoffOperation));
+                }
             }
         }
 
-        if (mLastRequestTimestamp == 0)
+        if (!operations.isEmpty())
         {
-            mOperationsDatabase->writeOperations(operations);
-            emit operationsRead(operations);
-        }
-        else
-        {
-            mOperationsDatabase->appendOperations(operations);
-            emit operationsAdded(operations);
-        }
+            if (mLastRequestTimestamp == 0)
+            {
+                mOperationsDatabase->writeOperations(operations);
+                emit operationsRead(operations);
+            }
+            else
+            {
+                mOperationsDatabase->appendOperations(operations);
+                emit operationsAdded(operations);
+            }
 
-        mLastRequestTimestamp = operations.constLast().timestamp + MS_IN_SECOND;
+            mLastRequestTimestamp = operations.constLast().timestamp + MS_IN_SECOND;
+        }
     }
 }
 
@@ -241,6 +249,9 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     if (isOperationTypeWithMoney(tinkoffOperation.type()))
     {
+        Q_ASSERT_X(
+            instrumentId == "" || instrumentId == RUBLE_UID, "OperationsThread::handleOperationItem()", "Expecting for ruble"
+        );
         instrumentId = RUBLE_UID; // Real server sends empty instrument_uid
 
         mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
@@ -275,5 +286,6 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 bool OperationsThread::isOperationTypeWithMoney(tinkoff::OperationType operationType) const
 {
     return operationType == tinkoff::OPERATION_TYPE_INPUT || operationType == tinkoff::OPERATION_TYPE_OUTPUT ||
-           operationType == tinkoff::OPERATION_TYPE_TAX || operationType == tinkoff::OPERATION_TYPE_TAX_CORRECTION;
+           operationType == tinkoff::OPERATION_TYPE_TAX || operationType == tinkoff::OPERATION_TYPE_TAX_CORRECTION ||
+           operationType == tinkoff::OPERATION_TYPE_TRACK_MFEE;
 }

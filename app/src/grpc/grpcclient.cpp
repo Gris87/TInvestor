@@ -360,7 +360,6 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_cursor(cursor.toStdString());
     req.set_limit(OPERATIONS_LIMIT);
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
-    req.set_without_commissions(true);
     req.set_without_trades(true);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);
