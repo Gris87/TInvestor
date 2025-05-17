@@ -91,7 +91,7 @@ public:
         IPortfolioThread*                  portfolioThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
-        IFileDialog*                       fileDialog,
+        IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   simulatorSettingsEditor,
@@ -158,7 +158,7 @@ private:
     IPortfolioThread*                  mPortfolioThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
-    IFileDialog*                       mFileDialog;
+    IFileDialogFactory*                mFileDialogFactory;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mSimulatorSettingsEditor;

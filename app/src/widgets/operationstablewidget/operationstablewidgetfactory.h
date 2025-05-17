@@ -20,7 +20,7 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
-        IFileDialog*                       fileDialog,
+        IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  mMessageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent

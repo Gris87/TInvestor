@@ -14,7 +14,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
-    IFileDialog*                       fileDialog,
+    IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -34,7 +34,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
-        fileDialog,
+        fileDialogFactory,
         messageBoxUtils,
         mSettingsEditor,
         this

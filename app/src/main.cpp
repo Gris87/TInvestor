@@ -46,7 +46,7 @@
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
-#include "src/utils/filedialog/filedialog.h"
+#include "src/utils/filedialog/filedialogfactory.h"
 #include "src/utils/fs/dir/dirfactory.h"
 #include "src/utils/fs/file/filefactory.h"
 #include "src/utils/fs/zip/qzip/qzipfactory.h"
@@ -295,12 +295,12 @@ static int runApplication(QApplication* app)
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
 
-    TimeUtils       timeUtils;
-    FileDialog      fileDialog;
-    MessageBoxUtils messageBoxUtils;
-    HttpClient      httpClient;
-    RawGrpcClient   rawGrpcClient;
-    GrpcClient      grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+    TimeUtils         timeUtils;
+    FileDialogFactory fileDialogFactory;
+    MessageBoxUtils   messageBoxUtils;
+    HttpClient        httpClient;
+    RawGrpcClient     rawGrpcClient;
+    GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
@@ -365,7 +365,7 @@ static int runApplication(QApplication* app)
         &portfolioThread,
         &makeDecisionThread,
         &orderBookThread,
-        &fileDialog,
+        &fileDialogFactory,
         &messageBoxUtils,
         &settingsEditor,
         &simulatorSettingsEditor,

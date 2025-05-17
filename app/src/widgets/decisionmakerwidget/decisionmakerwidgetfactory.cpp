@@ -26,7 +26,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
-    IFileDialog*                       fileDialog,
+    IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -41,7 +41,7 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
-        fileDialog,
+        fileDialogFactory,
         messageBoxUtils,
         settingsEditor,
         parent

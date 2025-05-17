@@ -5,7 +5,7 @@
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
-#include "src/utils/filedialog/ifiledialog_mock.h"
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
@@ -49,7 +49,7 @@ protected:
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
-        fileDialogMock                       = new StrictMock<FileDialogMock>();
+        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
@@ -60,7 +60,7 @@ protected:
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
-                fileDialogMock,
+                fileDialogFactoryMock,
                 messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
@@ -82,7 +82,7 @@ protected:
             instrumentTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
-            fileDialogMock,
+            fileDialogFactoryMock,
             messageBoxUtilsMock,
             settingsEditorMock
         );
@@ -99,7 +99,7 @@ protected:
         delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
-        delete fileDialogMock;
+        delete fileDialogFactoryMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
     }
@@ -117,7 +117,7 @@ protected:
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
-    StrictMock<FileDialogMock>*                       fileDialogMock;
+    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };

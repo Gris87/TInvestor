@@ -34,7 +34,7 @@
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
-#include "src/utils/filedialog/ifiledialog_mock.h"
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -125,7 +125,7 @@ protected:
         portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
-        fileDialogMock                       = new StrictMock<FileDialogMock>();
+        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         simulatorSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
@@ -166,7 +166,7 @@ protected:
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
-                fileDialogMock,
+                fileDialogFactoryMock,
                 messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
@@ -184,7 +184,7 @@ protected:
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
-                fileDialogMock,
+                fileDialogFactoryMock,
                 messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
@@ -255,7 +255,7 @@ protected:
             portfolioThreadMock,
             makeDecisionThreadMock,
             orderBookThreadMock,
-            fileDialogMock,
+            fileDialogFactoryMock,
             messageBoxUtilsMock,
             settingsEditorMock,
             simulatorSettingsEditorMock,
@@ -329,7 +329,7 @@ protected:
         delete portfolioThreadMock;
         delete makeDecisionThreadMock;
         delete orderBookThreadMock;
-        delete fileDialogMock;
+        delete fileDialogFactoryMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete simulatorSettingsEditorMock;
@@ -387,7 +387,7 @@ protected:
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
-    StrictMock<FileDialogMock>*                       fileDialogMock;
+    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   simulatorSettingsEditorMock;

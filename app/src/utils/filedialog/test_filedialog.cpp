@@ -6,5 +6,4 @@
 
 TEST(Test_FileDialog, Test_constructor_and_destructor)
 {
-    const FileDialog messageBoxUtils;
 }

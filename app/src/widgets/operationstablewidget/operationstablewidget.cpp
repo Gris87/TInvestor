@@ -20,7 +20,7 @@ OperationsTableWidget::OperationsTableWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
-    IFileDialog*                       fileDialog,
+    IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -31,7 +31,7 @@ OperationsTableWidget::OperationsTableWidget(
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
-    mFileDialog(fileDialog),
+    mFileDialogFactory(fileDialogFactory),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mTableRecords()
@@ -112,7 +112,42 @@ void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoi
 
 void OperationsTableWidget::actionExportToExcelTriggered()
 {
-    qInfo() << "EXPORT"; // TODO: TBD
+    /*
+    QFileDialogFactory dialog(this, QString(), QString(), tr("Excel file") + " (*.xlsx)");
+    dialog.setAcceptMode(QFileDialogFactory::AcceptSave);
+    dialog.setWindowTitle("Export");
+    dialog.setConfirmOverwrite(false);
+
+    QString aFileName;
+
+    while (true)
+    {
+        if (dialog.exec())
+        {
+            aFileName = dialog.selectedFiles().at(0);
+
+            if (QFile::exists(aFileName))
+            {
+                if (QMessageBox::question(
+                        this,
+                        "Export",
+                        "Do you want to replace \"" + QDir::toNativeSeparators(aFileName) + ".xlsx\"?",
+                        QMessageBox::Yes | QMessageBox::Default,
+                        QMessageBox::No | QMessageBox::Escape
+                    ) == QMessageBox::No)
+                {
+                    continue;
+                }
+            }
+
+            break;
+        }
+        else
+        {
+            return;
+        }
+    }
+*/
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)

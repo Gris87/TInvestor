@@ -4,7 +4,7 @@
 
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
-#include "src/utils/filedialog/ifiledialog.h"
+#include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
@@ -25,7 +25,7 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
-        IFileDialog*                       fileDialog,
+        IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent

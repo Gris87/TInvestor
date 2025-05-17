@@ -22,7 +22,7 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
-    IFileDialog*                       fileDialog,
+    IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  mMessageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -33,7 +33,7 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
-        fileDialog,
+        fileDialogFactory,
         mMessageBoxUtils,
         settingsEditor,
         parent

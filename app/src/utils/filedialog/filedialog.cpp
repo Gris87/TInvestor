@@ -4,8 +4,9 @@
 
 
 
-FileDialog::FileDialog() :
-    IFileDialog()
+FileDialog::FileDialog(QWidget* parent) :
+    IFileDialog(),
+    mFileDialog(parent)
 {
     qDebug() << "Create FileDialog";
 }
