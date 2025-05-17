@@ -2,6 +2,8 @@
 #include "ui_operationstablewidget.h"
 
 #include <QDebug>
+#include <QMenu>
+#include <QScreen>
 
 
 
@@ -93,6 +95,20 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 
     ui->tableWidget->setSortingEnabled(true);
     ui->tableWidget->setUpdatesEnabled(true);
+}
+
+void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& pos)
+{
+    QMenu* contextMenu = new QMenu(this);
+
+    contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
+
+    contextMenu->popup(ui->tableWidget->viewport()->mapToGlobal(pos));
+}
+
+void OperationsTableWidget::actionExportToExcelTriggered()
+{
+    qInfo() << "EXPORT"; // TODO: TBD
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)

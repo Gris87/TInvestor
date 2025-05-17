@@ -49,4 +49,8 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     ISettingsEditor*                   mSettingsEditor;
     QList<IOperationsTableRecord*>     mTableRecords;
+
+public slots:
+    void on_tableWidget_customContextMenuRequested(const QPoint& pos);
+    void actionExportToExcelTriggered();
 };
