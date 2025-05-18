@@ -5,6 +5,7 @@
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
 #include "src/utils/filedialog/ifiledialogfactory.h"
+#include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
@@ -32,6 +33,7 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
+        IFileFactory*                      fileFactory,
         IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,

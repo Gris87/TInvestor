@@ -365,6 +365,7 @@ static int runApplication(QApplication* app)
         &portfolioThread,
         &makeDecisionThread,
         &orderBookThread,
+        &fileFactory,
         &fileDialogFactory,
         &messageBoxUtils,
         &settingsEditor,

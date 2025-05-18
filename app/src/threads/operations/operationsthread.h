@@ -50,7 +50,9 @@ private:
     Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
     void      requestOperations();
     Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
-    bool      isOperationTypeWithMoney(tinkoff::OperationType operationType) const;
+
+    [[nodiscard]]
+    bool isOperationTypeWithMoney(tinkoff::OperationType operationType) const;
 
     IUserStorage*                      mUserStorage;
     IOperationsDatabase*               mOperationsDatabase;

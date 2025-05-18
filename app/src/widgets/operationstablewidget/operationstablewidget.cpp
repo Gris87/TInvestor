@@ -20,6 +20,7 @@ OperationsTableWidget::OperationsTableWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    IFileFactory*                      fileFactory,
     IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
@@ -31,6 +32,7 @@ OperationsTableWidget::OperationsTableWidget(
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mFileFactory(fileFactory),
     mFileDialogFactory(fileDialogFactory),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
@@ -112,6 +114,40 @@ void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoi
 
 void OperationsTableWidget::actionExportToExcelTriggered()
 {
+    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(this);
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setWindowTitle("Export");
+    /*
+    QString fileName;
+
+    while (true)
+    {
+        if (fileDialog->exec())
+        {
+            fileName = fileDialog->selectedFiles().at(0);
+
+            if (QFile::exists(fileName))
+            {
+                if (QMessageBox::question(
+                        this,
+                        "Export",
+                        "Do you want to replace \"" + QDir::toNativeSeparators(fileName) + ".xlsx\"?",
+                        QMessageBox::Yes | QMessageBox::Default,
+                        QMessageBox::No | QMessageBox::Escape
+                    ) == QMessageBox::No)
+                {
+                    continue;
+                }
+            }
+
+            break;
+        }
+        else
+        {
+            return;
+        }
+    }
+*/
     /*
     QFileDialogFactory dialog(this, QString(), QString(), tr("Excel file") + " (*.xlsx)");
     dialog.setAcceptMode(QFileDialogFactory::AcceptSave);

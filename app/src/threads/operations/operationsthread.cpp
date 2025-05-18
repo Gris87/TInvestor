@@ -228,7 +228,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     Operation res;
 
     QString              instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
-    QuantityAndAvgPrice& quantityAndAvgPrice = mInstruments[instrumentId];
+    QuantityAndAvgPrice& quantityAndAvgPrice = mInstruments[instrumentId]; // clazy:exclude=detaching-member
 
     if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_BUY)
     {

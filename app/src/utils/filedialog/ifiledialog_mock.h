@@ -19,4 +19,7 @@ public:
 
     FileDialogMock(const FileDialogMock& another)            = delete;
     FileDialogMock& operator=(const FileDialogMock& another) = delete;
+
+    MOCK_METHOD(void, setWindowTitle, (const QString& title), (override));
+    MOCK_METHOD(void, setAcceptMode, (QFileDialog::AcceptMode mode), (override));
 };

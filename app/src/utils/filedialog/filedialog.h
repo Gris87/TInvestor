@@ -17,6 +17,9 @@ public:
     FileDialog(const FileDialog& another)            = delete;
     FileDialog& operator=(const FileDialog& another) = delete;
 
+    void setWindowTitle(const QString& title) override;
+    void setAcceptMode(QFileDialog::AcceptMode mode) override;
+
 private:
     QFileDialog mFileDialog;
 };

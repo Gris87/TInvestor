@@ -15,3 +15,13 @@ FileDialog::~FileDialog()
 {
     qDebug() << "Destroy FileDialog";
 }
+
+void FileDialog::setWindowTitle(const QString& title)
+{
+    mFileDialog.setWindowTitle(title);
+}
+
+void FileDialog::setAcceptMode(QFileDialog::AcceptMode mode)
+{
+    mFileDialog.setAcceptMode(mode);
+}
