@@ -20,5 +20,10 @@ public:
     FileDialogFactoryMock(const FileDialogFactoryMock& another)            = delete;
     FileDialogFactoryMock& operator=(const FileDialogFactoryMock& another) = delete;
 
-    MOCK_METHOD(std::shared_ptr<IFileDialog>, newInstance, (QWidget * parent), (const, override));
+    MOCK_METHOD(
+        std::shared_ptr<IFileDialog>,
+        newInstance,
+        (QWidget * parent, const QString& caption, const QString& directory, const QString& filter),
+        (const, override)
+    );
 };

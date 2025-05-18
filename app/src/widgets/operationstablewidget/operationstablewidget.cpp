@@ -20,7 +20,6 @@ OperationsTableWidget::OperationsTableWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
-    IFileFactory*                      fileFactory,
     IFileDialogFactory*                fileDialogFactory,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
@@ -32,7 +31,6 @@ OperationsTableWidget::OperationsTableWidget(
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
-    mFileFactory(fileFactory),
     mFileDialogFactory(fileDialogFactory),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
@@ -114,76 +112,20 @@ void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoi
 
 void OperationsTableWidget::actionExportToExcelTriggered()
 {
-    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(this);
+    QString lastFile = mSettingsEditor->value("MainWindow/OperationsTableWidget/exportToExcelFile", "").toString();
+
+    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+        this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
+    );
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog->setWindowTitle("Export");
-    /*
-    QString fileName;
 
-    while (true)
+    fileDialog->selectFile(lastFile);
+
+    if (fileDialog->exec())
     {
-        if (fileDialog->exec())
-        {
-            fileName = fileDialog->selectedFiles().at(0);
-
-            if (QFile::exists(fileName))
-            {
-                if (QMessageBox::question(
-                        this,
-                        "Export",
-                        "Do you want to replace \"" + QDir::toNativeSeparators(fileName) + ".xlsx\"?",
-                        QMessageBox::Yes | QMessageBox::Default,
-                        QMessageBox::No | QMessageBox::Escape
-                    ) == QMessageBox::No)
-                {
-                    continue;
-                }
-            }
-
-            break;
-        }
-        else
-        {
-            return;
-        }
+        QString fileName = fileDialog->selectedFiles().at(0);
+        mSettingsEditor->setValue("MainWindow/OperationsTableWidget/exportToExcelFile", fileName);
     }
-*/
-    /*
-    QFileDialogFactory dialog(this, QString(), QString(), tr("Excel file") + " (*.xlsx)");
-    dialog.setAcceptMode(QFileDialogFactory::AcceptSave);
-    dialog.setWindowTitle("Export");
-    dialog.setConfirmOverwrite(false);
-
-    QString aFileName;
-
-    while (true)
-    {
-        if (dialog.exec())
-        {
-            aFileName = dialog.selectedFiles().at(0);
-
-            if (QFile::exists(aFileName))
-            {
-                if (QMessageBox::question(
-                        this,
-                        "Export",
-                        "Do you want to replace \"" + QDir::toNativeSeparators(aFileName) + ".xlsx\"?",
-                        QMessageBox::Yes | QMessageBox::Default,
-                        QMessageBox::No | QMessageBox::Escape
-                    ) == QMessageBox::No)
-                {
-                    continue;
-                }
-            }
-
-            break;
-        }
-        else
-        {
-            return;
-        }
-    }
-*/
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)

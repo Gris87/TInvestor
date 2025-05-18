@@ -20,7 +20,6 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
-        IFileFactory*                      fileFactory,
         IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  mMessageBoxUtils,
         ISettingsEditor*                   settingsEditor,

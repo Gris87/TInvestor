@@ -13,6 +13,6 @@ TEST(Test_FileDialogFactory, Test_newInstance)
 {
     const FileDialogFactory factory;
 
-    const std::shared_ptr<IFileDialog> dialog = factory.newInstance(nullptr);
+    const std::shared_ptr<IFileDialog> dialog = factory.newInstance(nullptr, "", "", "");
     ASSERT_TRUE(dialog != nullptr);
 }

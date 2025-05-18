@@ -15,5 +15,6 @@ public:
     FileDialogFactory(const FileDialogFactory& another)            = delete;
     FileDialogFactory& operator=(const FileDialogFactory& another) = delete;
 
-    std::shared_ptr<IFileDialog> newInstance(QWidget* parent) const override;
+    std::shared_ptr<IFileDialog>
+    newInstance(QWidget* parent, const QString& caption, const QString& directory, const QString& filter) const override;
 };

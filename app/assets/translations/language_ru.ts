@@ -177,13 +177,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="255"/>
+        <location filename="../../src/main/mainwindow.cpp" line="261"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="447"/>
+        <location filename="../../src/main/mainwindow.cpp" line="453"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="475"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -255,40 +255,40 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="256"/>
+        <location filename="../../src/main/mainwindow.cpp" line="262"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="324"/>
+        <location filename="../../src/main/mainwindow.cpp" line="330"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="421"/>
-        <location filename="../../src/main/mainwindow.cpp" line="679"/>
+        <location filename="../../src/main/mainwindow.cpp" line="427"/>
+        <location filename="../../src/main/mainwindow.cpp" line="685"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="436"/>
-        <location filename="../../src/main/mainwindow.cpp" line="602"/>
+        <location filename="../../src/main/mainwindow.cpp" line="442"/>
+        <location filename="../../src/main/mainwindow.cpp" line="608"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="602"/>
+        <location filename="../../src/main/mainwindow.cpp" line="608"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="458"/>
-        <location filename="../../src/main/mainwindow.cpp" line="633"/>
+        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <location filename="../../src/main/mainwindow.cpp" line="639"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="633"/>
+        <location filename="../../src/main/mainwindow.cpp" line="639"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -296,74 +296,89 @@
 <context>
     <name>OperationsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="48"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="51"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="53"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="56"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="58"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="61"/>
         <source>Description</source>
         <translation>Описание</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="71"/>
         <source>Avg price</source>
         <translation>Средняя цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="81"/>
         <source>Remained quantity</source>
         <translation>Оставшееся количество</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="86"/>
         <source>Payment</source>
         <translation>Стомость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="88"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="91"/>
         <source>Commission</source>
         <translation>Комиссия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="93"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="96"/>
         <source>Yield</source>
         <translation>Доходность</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="98"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="101"/>
         <source>Yield with commission</source>
         <translation>Доходность с комиссией</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="103"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="106"/>
         <source>Yield with commission (%)</source>
         <translation>Доходность с комиссией (%)</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="108"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
         <source>Remained money</source>
         <translation>Осталось денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="113"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
         <source>Total money</source>
         <translation>Всего денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="63"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="66"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="76"/>
         <source>Quantity</source>
         <translation>Количество</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="108"/>
+        <source>Export to Excel</source>
+        <translation>Экспортировать в Excel</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="116"/>
+        <source>Export</source>
+        <translation>Экспорт</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="116"/>
+        <source>Excel file</source>
+        <translation>Файл Excel</translation>
     </message>
 </context>
 <context>
@@ -430,14 +445,14 @@
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="380"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="407"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="395"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="423"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="763"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="771"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="736"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -445,22 +460,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="135"/>
+        <location filename="../../src/main.cpp" line="136"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="135"/>
+        <location filename="../../src/main.cpp" line="136"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>

@@ -177,13 +177,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="255"/>
+        <location filename="../../src/main/mainwindow.cpp" line="261"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="447"/>
+        <location filename="../../src/main/mainwindow.cpp" line="453"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="475"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -255,40 +255,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="256"/>
+        <location filename="../../src/main/mainwindow.cpp" line="262"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="324"/>
+        <location filename="../../src/main/mainwindow.cpp" line="330"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="421"/>
-        <location filename="../../src/main/mainwindow.cpp" line="679"/>
+        <location filename="../../src/main/mainwindow.cpp" line="427"/>
+        <location filename="../../src/main/mainwindow.cpp" line="685"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="436"/>
-        <location filename="../../src/main/mainwindow.cpp" line="602"/>
+        <location filename="../../src/main/mainwindow.cpp" line="442"/>
+        <location filename="../../src/main/mainwindow.cpp" line="608"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="602"/>
+        <location filename="../../src/main/mainwindow.cpp" line="608"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="458"/>
-        <location filename="../../src/main/mainwindow.cpp" line="633"/>
+        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <location filename="../../src/main/mainwindow.cpp" line="639"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="633"/>
+        <location filename="../../src/main/mainwindow.cpp" line="639"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -296,73 +296,88 @@
 <context>
     <name>OperationsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="48"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="51"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="53"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="56"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="58"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="61"/>
         <source>Description</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="68"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="71"/>
         <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="78"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="81"/>
         <source>Remained quantity</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="83"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="86"/>
         <source>Payment</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="88"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="91"/>
         <source>Commission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="93"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="96"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="98"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="101"/>
         <source>Yield with commission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="103"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="106"/>
         <source>Yield with commission (%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="108"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
         <source>Remained money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="113"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
         <source>Total money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="63"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="66"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="73"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="76"/>
         <source>Quantity</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="108"/>
+        <source>Export to Excel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="116"/>
+        <source>Export</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="116"/>
+        <source>Excel file</source>
         <translation></translation>
     </message>
 </context>
@@ -430,14 +445,14 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="380"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="407"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="395"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="423"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="763"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="771"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="736"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -445,22 +460,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="135"/>
+        <location filename="../../src/main.cpp" line="136"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="135"/>
+        <location filename="../../src/main.cpp" line="136"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>

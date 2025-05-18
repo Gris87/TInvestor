@@ -15,6 +15,8 @@ public:
     IFileDialog(const IFileDialog& another)            = delete;
     IFileDialog& operator=(const IFileDialog& another) = delete;
 
-    virtual void setWindowTitle(const QString& title)        = 0;
-    virtual void setAcceptMode(QFileDialog::AcceptMode mode) = 0;
+    virtual void        setAcceptMode(QFileDialog::AcceptMode mode) = 0;
+    virtual void        selectFile(const QString& filename)         = 0;
+    virtual int         exec()                                      = 0;
+    virtual QStringList selectedFiles() const                       = 0;
 };

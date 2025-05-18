@@ -17,5 +17,6 @@ public:
     IFileDialogFactory(const IFileDialogFactory& another)            = delete;
     IFileDialogFactory& operator=(const IFileDialogFactory& another) = delete;
 
-    virtual std::shared_ptr<IFileDialog> newInstance(QWidget* parent) const = 0;
+    virtual std::shared_ptr<IFileDialog>
+    newInstance(QWidget* parent, const QString& caption, const QString& directory, const QString& filter) const = 0;
 };

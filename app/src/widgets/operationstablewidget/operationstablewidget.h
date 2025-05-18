@@ -5,7 +5,6 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
 #include "src/utils/filedialog/ifiledialogfactory.h"
-#include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
@@ -29,7 +28,6 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
-        IFileFactory*                      fileFactory,
         IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
@@ -53,7 +51,6 @@ private:
     IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
     IUserStorage*                      mUserStorage;
     IInstrumentsStorage*               mInstrumentsStorage;
-    IFileFactory*                      mFileFactory;
     IFileDialogFactory*                mFileDialogFactory;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
