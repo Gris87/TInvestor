@@ -64,7 +64,6 @@ bool DateType::getValue(QDateTime* pQdt)
 
 }
 
-
 bool DateType::getValue(QDate* pQd)
 {
 

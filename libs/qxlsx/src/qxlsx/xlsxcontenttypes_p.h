@@ -17,8 +17,8 @@ class ContentTypes : public AbstractOOXmlFile
 public:
     ContentTypes(CreateFlag flag);
 
-    void addDefault(const QString &key, const QString &value);
-    void addOverride(const QString &key, const QString &value);
+    void addDefault(const QString& key, const QString& value);
+    void addOverride(const QString& key, const QString& value);
 
     // Convenient function for addOverride()
     void addDocPropCore();
@@ -26,13 +26,13 @@ public:
     void addStyles();
     void addTheme();
     void addWorkbook();
-    void addWorksheetName(const QString &name);
-    void addChartsheetName(const QString &name);
-    void addChartName(const QString &name);
-    void addDrawingName(const QString &name);
-    void addCommentName(const QString &name);
-    void addTableName(const QString &name);
-    void addExternalLinkName(const QString &name);
+    void addWorksheetName(const QString& name);
+    void addChartsheetName(const QString& name);
+    void addChartName(const QString& name);
+    void addDrawingName(const QString& name);
+    void addCommentName(const QString& name);
+    void addTableName(const QString& name);
+    void addExternalLinkName(const QString& name);
     void addSharedString();
     void addVmlName();
     void addCalcChain();
@@ -40,8 +40,8 @@ public:
 
     void clearOverrides();
 
-    void saveToXmlFile(QIODevice *device) const override;
-    bool loadFromXmlFile(QIODevice *device) override;
+    void saveToXmlFile(QIODevice* device) const override;
+    bool loadFromXmlFile(QIODevice* device) override;
 
 private:
     QMap<QString, QString> m_defaults;

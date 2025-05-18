@@ -7,8 +7,8 @@
 
 QT_BEGIN_NAMESPACE_XLSX
 
-AbstractSheetPrivate::AbstractSheetPrivate(AbstractSheet *p, AbstractSheet::CreateFlag flag)
-    : AbstractOOXmlFilePrivate(p, flag)
+AbstractSheetPrivate::AbstractSheetPrivate(AbstractSheet* p, AbstractSheet::CreateFlag flag) :
+    AbstractOOXmlFilePrivate(p, flag)
 {
     type       = AbstractSheet::ST_WorkSheet;
     sheetState = AbstractSheet::SS_Visible;
@@ -51,11 +51,8 @@ AbstractSheetPrivate::~AbstractSheetPrivate()
 /*!
  * \internal
  */
-AbstractSheet::AbstractSheet(const QString &name,
-                             int id,
-                             Workbook *workbook,
-                             AbstractSheetPrivate *d)
-    : AbstractOOXmlFile(d)
+AbstractSheet::AbstractSheet(const QString& name, int id, Workbook* workbook, AbstractSheetPrivate* d) :
+    AbstractOOXmlFile(d)
 {
     d_func()->name     = name;
     d_func()->id       = id;
@@ -74,7 +71,7 @@ QString AbstractSheet::sheetName() const
 /*!
  * \internal
  */
-void AbstractSheet::setSheetName(const QString &sheetName)
+void AbstractSheet::setSheetName(const QString& sheetName)
 {
     Q_D(AbstractSheet);
     d->name = sheetName;
@@ -144,7 +141,9 @@ void AbstractSheet::setHidden(bool hidden)
 {
     Q_D(AbstractSheet);
     if (hidden == isHidden())
+    {
         return;
+    }
 
     d->sheetState = hidden ? SS_Hidden : SS_Visible;
 }
@@ -169,7 +168,7 @@ int AbstractSheet::sheetId() const
 /*!
  * \internal
  */
-Drawing *AbstractSheet::drawing() const
+Drawing* AbstractSheet::drawing() const
 {
     Q_D(const AbstractSheet);
     return d->drawing.get();
@@ -178,7 +177,7 @@ Drawing *AbstractSheet::drawing() const
 /*!
  * Return the workbook
  */
-Workbook *AbstractSheet::workbook() const
+Workbook* AbstractSheet::workbook() const
 {
     Q_D(const AbstractSheet);
     return d->workbook;

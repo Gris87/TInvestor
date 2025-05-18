@@ -47,10 +47,10 @@ class SimpleOOXmlFile : public AbstractOOXmlFile
 public:
     SimpleOOXmlFile(CreateFlag flag);
 
-    void saveToXmlFile(QIODevice *device) const override;
+    void       saveToXmlFile(QIODevice* device) const override;
     QByteArray saveToXmlData() const override;
-    bool loadFromXmlData(const QByteArray &data) override;
-    bool loadFromXmlFile(QIODevice *device) override;
+    bool       loadFromXmlData(const QByteArray& data) override;
+    bool       loadFromXmlFile(QIODevice* device) override;
 
     QByteArray xmlData;
 };

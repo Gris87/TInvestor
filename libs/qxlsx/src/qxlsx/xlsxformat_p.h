@@ -13,7 +13,8 @@ QT_BEGIN_NAMESPACE_XLSX
 class FormatPrivate : public QSharedData
 {
 public:
-    enum FormatType {
+    enum FormatType
+    {
         FT_Invalid    = 0,
         FT_NumFmt     = 0x01,
         FT_Font       = 0x02,
@@ -23,7 +24,8 @@ public:
         FT_Protection = 0x20
     };
 
-    enum Property {
+    enum Property
+    {
         P_STARTID,
 
         // numFmt
@@ -89,32 +91,32 @@ public:
     };
 
     FormatPrivate();
-    FormatPrivate(const FormatPrivate &other);
+    FormatPrivate(const FormatPrivate& other);
     ~FormatPrivate();
 
-    bool dirty; // The key re-generation is need.
+    bool       dirty; // The key re-generation is need.
     QByteArray formatKey;
 
-    bool font_dirty;
-    bool font_index_valid;
+    bool       font_dirty;
+    bool       font_index_valid;
     QByteArray font_key;
-    int font_index;
+    int        font_index;
 
-    bool fill_dirty;
-    bool fill_index_valid;
+    bool       fill_dirty;
+    bool       fill_index_valid;
     QByteArray fill_key;
-    int fill_index;
+    int        fill_index;
 
-    bool border_dirty;
-    bool border_index_valid;
+    bool       border_dirty;
+    bool       border_index_valid;
     QByteArray border_key;
-    int border_index;
+    int        border_index;
 
-    int xf_index;
+    int  xf_index;
     bool xf_indexValid;
 
     bool is_dxf_fomat;
-    int dxf_index;
+    int  dxf_index;
     bool dxf_indexValid;
 
     int theme;

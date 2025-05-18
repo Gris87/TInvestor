@@ -9,41 +9,54 @@
 
 QT_BEGIN_NAMESPACE_XLSX
 
-namespace {
+namespace
+{
 
 int intPow(int x, int p)
 {
     if (p == 0)
+    {
         return 1;
+    }
     if (p == 1)
+    {
         return x;
+    }
 
     int tmp = intPow(x, p / 2);
     if (p % 2 == 0)
+    {
         return tmp * tmp;
+    }
     else
+    {
         return x * tmp * tmp;
+    }
 }
 
 QString col_to_name(int col_num)
 {
     QString col_str;
-    int remainder;
-    while (col_num) {
+    int     remainder;
+    while (col_num)
+    {
         remainder = col_num % 26;
         if (remainder == 0)
+        {
             remainder = 26;
+        }
         col_str.prepend(QChar('A' + remainder - 1));
         col_num = (col_num - 1) / 26;
     }
     return col_str;
 }
 
-int col_from_name(const QString &col_str)
+int col_from_name(const QString& col_str)
 {
     int col  = 0;
     int expn = 0;
-    for (int i = col_str.size() - 1; i > -1; --i) {
+    for (int i = col_str.size() - 1; i > -1; --i)
+    {
         col += (col_str[i].unicode() - 'A' + 1) * intPow(26, expn);
         expn++;
     }
@@ -69,7 +82,7 @@ CellReference::CellReference() = default;
     \overload
     Constructs the Reference form the given \a cell string.
 */
-CellReference::CellReference(const QString &cell)
+CellReference::CellReference(const QString& cell)
 {
     init(cell);
 }
@@ -78,16 +91,17 @@ CellReference::CellReference(const QString &cell)
     \overload
     Constructs the Reference form the given \a cell string.
 */
-CellReference::CellReference(const char *cell)
+CellReference::CellReference(const char* cell)
 {
     init(QString::fromLatin1(cell));
 }
 
-void CellReference::init(const QString &cell_str)
+void CellReference::init(const QString& cell_str)
 {
     static const QRegularExpression re(QStringLiteral("^\\$?([A-Z]{1,3})\\$?(\\d+)$"));
-    QRegularExpressionMatch match = re.match(cell_str);
-    if (match.hasMatch()) {
+    QRegularExpressionMatch         match = re.match(cell_str);
+    if (match.hasMatch())
+    {
         const QString col_str = match.captured(1);
         const QString row_str = match.captured(2);
         _row                  = row_str.toInt();
@@ -99,9 +113,9 @@ void CellReference::init(const QString &cell_str)
     Constructs a Reference by copying the given \a
     other Reference.
 */
-CellReference::CellReference(const CellReference &other)
-    : _row(other._row)
-    , _column(other._column)
+CellReference::CellReference(const CellReference& other) :
+    _row(other._row),
+    _column(other._column)
 {
 }
 
@@ -119,14 +133,20 @@ CellReference::~CellReference()
 QString CellReference::toString(bool row_abs, bool col_abs) const
 {
     if (!isValid())
+    {
         return {};
+    }
 
     QString cell_str;
     if (col_abs)
+    {
         cell_str.append(QLatin1Char('$'));
+    }
     cell_str.append(col_to_name(_column));
     if (row_abs)
+    {
         cell_str.append(QLatin1Char('$'));
+    }
     cell_str.append(QString::number(_row));
     return cell_str;
 }

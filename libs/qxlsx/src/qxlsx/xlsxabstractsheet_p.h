@@ -17,17 +17,18 @@ QT_BEGIN_NAMESPACE_XLSX
 class AbstractSheetPrivate : public AbstractOOXmlFilePrivate
 {
     Q_DECLARE_PUBLIC(AbstractSheet)
+
 public:
-    AbstractSheetPrivate(AbstractSheet *p, AbstractSheet::CreateFlag flag);
+    AbstractSheetPrivate(AbstractSheet* p, AbstractSheet::CreateFlag flag);
     ~AbstractSheetPrivate();
 
-    Workbook *workbook;
+    Workbook*                workbook;
     std::shared_ptr<Drawing> drawing;
 
-    QString name;
-    int id;
+    QString                   name;
+    int                       id;
     AbstractSheet::SheetState sheetState;
-    AbstractSheet::SheetType type;
+    AbstractSheet::SheetType  type;
 };
 
 QT_END_NAMESPACE_XLSX

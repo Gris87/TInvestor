@@ -15,27 +15,31 @@ class QXLSX_EXPORT AbstractOOXmlFile
     Q_DECLARE_PRIVATE(AbstractOOXmlFile)
 
 public:
-    enum CreateFlag { F_NewFromScratch, F_LoadFromExists };
+    enum CreateFlag
+    {
+        F_NewFromScratch,
+        F_LoadFromExists
+    };
 
 public:
     virtual ~AbstractOOXmlFile();
 
-    virtual void saveToXmlFile(QIODevice *device) const = 0;
-    virtual bool loadFromXmlFile(QIODevice *device)     = 0;
+    virtual void saveToXmlFile(QIODevice* device) const = 0;
+    virtual bool loadFromXmlFile(QIODevice* device)     = 0;
 
     virtual QByteArray saveToXmlData() const;
-    virtual bool loadFromXmlData(const QByteArray &data);
+    virtual bool       loadFromXmlData(const QByteArray& data);
 
-    Relationships *relationships() const;
+    Relationships* relationships() const;
 
-    void setFilePath(const QString path);
+    void    setFilePath(const QString path);
     QString filePath() const;
 
 protected:
     AbstractOOXmlFile(CreateFlag flag);
-    AbstractOOXmlFile(AbstractOOXmlFilePrivate *d);
+    AbstractOOXmlFile(AbstractOOXmlFilePrivate* d);
 
-    AbstractOOXmlFilePrivate *d_ptr;
+    AbstractOOXmlFilePrivate* d_ptr;
 };
 
 QT_END_NAMESPACE_XLSX

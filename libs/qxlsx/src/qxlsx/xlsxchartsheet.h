@@ -20,17 +20,17 @@ class QXLSX_EXPORT Chartsheet : public AbstractSheet
 
 public:
     ~Chartsheet();
-    Chart *chart();
+    Chart* chart();
 
 private:
     friend class DocumentPrivate;
     friend class Workbook;
 
-    Chartsheet(const QString &sheetName, int sheetId, Workbook *book, CreateFlag flag);
-    Chartsheet *copy(const QString &distName, int distId) const override;
+    Chartsheet(const QString& sheetName, int sheetId, Workbook* book, CreateFlag flag);
+    Chartsheet* copy(const QString& distName, int distId) const override;
 
-    void saveToXmlFile(QIODevice *device) const override;
-    bool loadFromXmlFile(QIODevice *device) override;
+    void saveToXmlFile(QIODevice* device) const override;
+    bool loadFromXmlFile(QIODevice* device) override;
 };
 
 QT_END_NAMESPACE_XLSX

@@ -15,9 +15,9 @@
 
 QT_BEGIN_NAMESPACE_XLSX
 
-ChartsheetPrivate::ChartsheetPrivate(Chartsheet *p, Chartsheet::CreateFlag flag)
-    : AbstractSheetPrivate(p, flag)
-    , chart(nullptr)
+ChartsheetPrivate::ChartsheetPrivate(Chartsheet* p, Chartsheet::CreateFlag flag) :
+    AbstractSheetPrivate(p, flag),
+    chart(nullptr)
 {
 }
 
@@ -34,12 +34,13 @@ ChartsheetPrivate::~ChartsheetPrivate()
 /*!
  * \internal
  */
-Chartsheet::Chartsheet(const QString &name, int id, Workbook *workbook, CreateFlag flag)
-    : AbstractSheet(name, id, workbook, new ChartsheetPrivate(this, flag))
+Chartsheet::Chartsheet(const QString& name, int id, Workbook* workbook, CreateFlag flag) :
+    AbstractSheet(name, id, workbook, new ChartsheetPrivate(this, flag))
 {
     setSheetType(ST_ChartSheet);
 
-    if (flag == Chartsheet::F_NewFromScratch) {
+    if (flag == Chartsheet::F_NewFromScratch)
+    {
         d_func()->drawing = std::make_shared<Drawing>(this, flag);
 
         auto anchor = new DrawingAbsoluteAnchor(drawing(), DrawingAnchor::Picture);
@@ -61,7 +62,7 @@ Chartsheet::Chartsheet(const QString &name, int id, Workbook *workbook, CreateFl
  * Make a copy of this sheet.
  */
 
-Chartsheet *Chartsheet::copy(const QString &distName, int distId) const
+Chartsheet* Chartsheet::copy(const QString& distName, int distId) const
 {
     //: Todo
     Q_UNUSED(distName)
@@ -79,14 +80,14 @@ Chartsheet::~Chartsheet()
 /*!
  * Returns the chart object of the sheet.
  */
-Chart *Chartsheet::chart()
+Chart* Chartsheet::chart()
 {
     Q_D(Chartsheet);
 
     return d->chart;
 }
 
-void Chartsheet::saveToXmlFile(QIODevice *device) const
+void Chartsheet::saveToXmlFile(QIODevice* device) const
 {
     Q_D(const Chartsheet);
     d->relationships->clear();
@@ -94,11 +95,10 @@ void Chartsheet::saveToXmlFile(QIODevice *device) const
     QXmlStreamWriter writer(device);
 
     writer.writeStartDocument(QStringLiteral("1.0"), true);
-    writer.writeDefaultNamespace(
-        QStringLiteral("http://schemas.openxmlformats.org/spreadsheetml/2006/main"));
+    writer.writeDefaultNamespace(QStringLiteral("http://schemas.openxmlformats.org/spreadsheetml/2006/main"));
     writer.writeNamespace(
-        QStringLiteral("http://schemas.openxmlformats.org/officeDocument/2006/relationships"),
-        QStringLiteral("r"));
+        QStringLiteral("http://schemas.openxmlformats.org/officeDocument/2006/relationships"), QStringLiteral("r")
+    );
     writer.writeStartElement(QStringLiteral("chartsheet"));
 
     writer.writeStartElement(QStringLiteral("sheetViews"));
@@ -109,30 +109,33 @@ void Chartsheet::saveToXmlFile(QIODevice *device) const
 
     int idx = d->workbook->drawings().indexOf(d->drawing.get());
     d->relationships->addWorksheetRelationship(
-        QStringLiteral("/drawing"), QStringLiteral("../drawings/drawing%1.xml").arg(idx + 1));
+        QStringLiteral("/drawing"), QStringLiteral("../drawings/drawing%1.xml").arg(idx + 1)
+    );
 
     writer.writeEmptyElement(QStringLiteral("drawing"));
-    writer.writeAttribute(QStringLiteral("r:id"),
-                          QStringLiteral("rId%1").arg(d->relationships->count()));
+    writer.writeAttribute(QStringLiteral("r:id"), QStringLiteral("rId%1").arg(d->relationships->count()));
 
     writer.writeEndElement(); // chartsheet
     writer.writeEndDocument();
 }
 
-bool Chartsheet::loadFromXmlFile(QIODevice *device)
+bool Chartsheet::loadFromXmlFile(QIODevice* device)
 {
     Q_D(Chartsheet);
 
     QXmlStreamReader reader(device);
-    while (!reader.atEnd()) {
+    while (!reader.atEnd())
+    {
         reader.readNextStartElement();
-        if (reader.tokenType() == QXmlStreamReader::StartElement) {
-            if (reader.name() == QLatin1String("drawing")) {
+        if (reader.tokenType() == QXmlStreamReader::StartElement)
+        {
+            if (reader.name() == QLatin1String("drawing"))
+            {
                 QString rId  = reader.attributes().value(QStringLiteral("r:id")).toString();
                 QString name = d->relationships->getRelationshipById(rId).target;
 
                 const auto parts = splitPath(filePath());
-                QString path     = QDir::cleanPath(parts.first() + QLatin1String("/") + name);
+                QString    path  = QDir::cleanPath(parts.first() + QLatin1String("/") + name);
 
                 d->drawing = std::make_shared<Drawing>(this, F_LoadFromExists);
                 d->drawing->setFilePath(path);

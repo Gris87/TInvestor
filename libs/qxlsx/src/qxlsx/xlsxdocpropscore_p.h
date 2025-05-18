@@ -18,12 +18,12 @@ class DocPropsCore : public AbstractOOXmlFile
 public:
     explicit DocPropsCore(CreateFlag flag);
 
-    bool setProperty(const QString &name, const QString &value);
-    QString property(const QString &name) const;
+    bool        setProperty(const QString& name, const QString& value);
+    QString     property(const QString& name) const;
     QStringList propertyNames() const;
 
-    void saveToXmlFile(QIODevice *device) const override;
-    bool loadFromXmlFile(QIODevice *device) override;
+    void saveToXmlFile(QIODevice* device) const override;
+    bool loadFromXmlFile(QIODevice* device) override;
 
 private:
     QMap<QString, QString> m_properties;

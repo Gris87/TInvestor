@@ -6,7 +6,7 @@
 
 QT_BEGIN_NAMESPACE_XLSX
 
-const char *defaultXmlData =
+const char* defaultXmlData =
     "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
     "<a:theme xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" name=\"Office "
     "\xe4\xb8\xbb\xe9\xa2\x98\">"
@@ -197,34 +197,42 @@ const char *defaultXmlData =
     "<a:extraClrSchemeLst/>"
     "</a:theme>";
 
-Theme::Theme(CreateFlag flag)
-    : AbstractOOXmlFile(flag)
+Theme::Theme(CreateFlag flag) :
+    AbstractOOXmlFile(flag)
 {
 }
 
-void Theme::saveToXmlFile(QIODevice *device) const
+void Theme::saveToXmlFile(QIODevice* device) const
 {
     if (xmlData.isEmpty())
+    {
         device->write(defaultXmlData);
+    }
     else
+    {
         device->write(xmlData);
+    }
 }
 
 QByteArray Theme::saveToXmlData() const
 {
     if (xmlData.isEmpty())
+    {
         return defaultXmlData;
+    }
     else
+    {
         return xmlData;
+    }
 }
 
-bool Theme::loadFromXmlData(const QByteArray &data)
+bool Theme::loadFromXmlData(const QByteArray& data)
 {
     xmlData = data;
     return true;
 }
 
-bool Theme::loadFromXmlFile(QIODevice *device)
+bool Theme::loadFromXmlFile(QIODevice* device)
 {
     xmlData = device->readAll();
     return true;

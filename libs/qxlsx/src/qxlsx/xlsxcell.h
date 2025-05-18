@@ -1,4 +1,4 @@
-﻿// xlsxcell.h
+// xlsxcell.h
 
 #ifndef QXLSX_XLSXCELL_H
 #define QXLSX_XLSXCELL_H
@@ -45,34 +45,36 @@ public:
     };
 
 public:
-    Cell(const QVariant &data = QVariant(),
-         CellType type        = NumberType,
-         const Format &format = Format(),
-         Worksheet *parent    = nullptr,
-         qint32 styleIndex    = (-1));
-    Cell(const Cell *const cell);
+    Cell(
+        const QVariant& data       = QVariant(),
+        CellType        type       = NumberType,
+        const Format&   format     = Format(),
+        Worksheet*      parent     = nullptr,
+        qint32          styleIndex = (-1)
+    );
+    Cell(const Cell* const cell);
     ~Cell();
 
 public:
-    CellPrivate *const d_ptr; // See D-pointer and Q-pointer of Qt, for more information.
+    CellPrivate* const d_ptr; // See D-pointer and Q-pointer of Qt, for more information.
 
 public:
     CellType cellType() const;
     QVariant value() const;
     QVariant readValue() const;
-    Format format() const;
+    Format   format() const;
 
-    bool hasFormula() const;
+    bool        hasFormula() const;
     CellFormula formula() const;
 
-    bool isDateTime() const;
+    bool     isDateTime() const;
     QVariant dateTime() const; // QDateTime, QDate, QTime
 
     bool isRichString() const;
 
     qint32 styleNumber() const;
 
-    static bool isDateType(CellType cellType, const Format &format);
+    static bool isDateType(CellType cellType, const Format& format);
 };
 
 QT_END_NAMESPACE_XLSX

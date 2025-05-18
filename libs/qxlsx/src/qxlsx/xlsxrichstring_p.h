@@ -44,15 +44,15 @@ class RichStringPrivate : public QSharedData
 {
 public:
     RichStringPrivate();
-    RichStringPrivate(const RichStringPrivate &other);
+    RichStringPrivate(const RichStringPrivate& other);
     ~RichStringPrivate();
 
     QByteArray idKey() const;
 
-    QStringList fragmentTexts;
+    QStringList   fragmentTexts;
     QList<Format> fragmentFormats;
-    QByteArray _idKey;
-    bool _dirty;
+    QByteArray    _idKey;
+    bool          _dirty;
 };
 
 QT_END_NAMESPACE_XLSX

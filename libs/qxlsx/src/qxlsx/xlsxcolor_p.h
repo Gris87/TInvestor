@@ -17,8 +17,8 @@ class Styles;
 class XlsxColor
 {
 public:
-    explicit XlsxColor(const QColor &color = QColor());
-    explicit XlsxColor(const QString &theme, const QString &tint = QString());
+    explicit XlsxColor(const QColor& color = QColor());
+    explicit XlsxColor(const QString& theme, const QString& tint = QString());
     explicit XlsxColor(int index);
 
     bool isThemeColor() const;
@@ -26,29 +26,29 @@ public:
     bool isRgbColor() const;
     bool isInvalid() const;
 
-    QColor rgbColor() const;
-    int indexedColor() const;
+    QColor      rgbColor() const;
+    int         indexedColor() const;
     QStringList themeColor() const;
 
     operator QVariant() const;
 
-    static QColor fromARGBString(const QString &c);
-    static QString toARGBString(const QColor &c);
+    static QColor  fromARGBString(const QString& c);
+    static QString toARGBString(const QColor& c);
 
-    bool saveToXml(QXmlStreamWriter &writer, const QString &node = QString()) const;
-    bool loadFromXml(QXmlStreamReader &reader);
+    bool saveToXml(QXmlStreamWriter& writer, const QString& node = QString()) const;
+    bool loadFromXml(QXmlStreamReader& reader);
 
 private:
     QVariant val;
 };
 
 #if !defined(QT_NO_DATASTREAM)
-QDataStream &operator<<(QDataStream &, const XlsxColor &);
-QDataStream &operator>>(QDataStream &, XlsxColor &);
+QDataStream& operator<<(QDataStream&, const XlsxColor&);
+QDataStream& operator>>(QDataStream&, XlsxColor&);
 #endif
 
 #ifndef QT_NO_DEBUG_STREAM
-QDebug operator<<(QDebug dbg, const XlsxColor &c);
+QDebug operator<<(QDebug dbg, const XlsxColor& c);
 #endif
 
 QT_END_NAMESPACE_XLSX

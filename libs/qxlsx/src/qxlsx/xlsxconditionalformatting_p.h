@@ -17,27 +17,28 @@ QT_BEGIN_NAMESPACE_XLSX
 class XlsxCfVoData
 {
 public:
-    XlsxCfVoData()
-        : gte(true)
+    XlsxCfVoData() :
+        gte(true)
     {
     }
 
-    XlsxCfVoData(ConditionalFormatting::ValueObjectType type, const QString &value, bool gte = true)
-        : type(type)
-        , value(value)
-        , gte(gte)
+    XlsxCfVoData(ConditionalFormatting::ValueObjectType type, const QString& value, bool gte = true) :
+        type(type),
+        value(value),
+        gte(gte)
     {
     }
 
     ConditionalFormatting::ValueObjectType type;
-    QString value;
-    bool gte;
+    QString                                value;
+    bool                                   gte;
 };
 
 class XlsxCfRuleData
 {
 public:
-    enum Attribute {
+    enum Attribute
+    {
         A_type,
         A_dxfId,
         // A_priority,
@@ -69,13 +70,13 @@ public:
         A_hideData
     };
 
-    XlsxCfRuleData()
-        : priority(1)
+    XlsxCfRuleData() :
+        priority(1)
     {
     }
 
-    int priority;
-    Format dxfFormat;
+    int                 priority;
+    Format              dxfFormat;
     QMap<int, QVariant> attrs;
 };
 
@@ -83,17 +84,17 @@ class ConditionalFormattingPrivate : public QSharedData
 {
 public:
     ConditionalFormattingPrivate();
-    ConditionalFormattingPrivate(const ConditionalFormattingPrivate &other);
+    ConditionalFormattingPrivate(const ConditionalFormattingPrivate& other);
     ~ConditionalFormattingPrivate();
 
-    void writeCfVo(QXmlStreamWriter &writer, const XlsxCfVoData &cfvo) const;
-    bool readCfVo(QXmlStreamReader &reader, XlsxCfVoData &cfvo);
-    bool readCfRule(QXmlStreamReader &reader, XlsxCfRuleData *cfRule, Styles *styles);
-    bool readCfDataBar(QXmlStreamReader &reader, XlsxCfRuleData *cfRule);
-    bool readCfColorScale(QXmlStreamReader &reader, XlsxCfRuleData *cfRule);
+    void writeCfVo(QXmlStreamWriter& writer, const XlsxCfVoData& cfvo) const;
+    bool readCfVo(QXmlStreamReader& reader, XlsxCfVoData& cfvo);
+    bool readCfRule(QXmlStreamReader& reader, XlsxCfRuleData* cfRule, Styles* styles);
+    bool readCfDataBar(QXmlStreamReader& reader, XlsxCfRuleData* cfRule);
+    bool readCfColorScale(QXmlStreamReader& reader, XlsxCfRuleData* cfRule);
 
     QList<std::shared_ptr<XlsxCfRuleData>> cfRules;
-    QList<CellRange> ranges;
+    QList<CellRange>                       ranges;
 };
 
 QT_END_NAMESPACE_XLSX

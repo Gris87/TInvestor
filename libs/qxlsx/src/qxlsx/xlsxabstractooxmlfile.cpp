@@ -10,11 +10,11 @@
 QT_BEGIN_NAMESPACE_XLSX
 
 AbstractOOXmlFilePrivate::AbstractOOXmlFilePrivate(
-    AbstractOOXmlFile *q,
-    AbstractOOXmlFile::CreateFlag flag = AbstractOOXmlFile::F_NewFromScratch)
-    : relationships(new Relationships)
-    , flag(flag)
-    , q_ptr(q)
+    AbstractOOXmlFile* q, AbstractOOXmlFile::CreateFlag flag = AbstractOOXmlFile::F_NewFromScratch
+) :
+    relationships(new Relationships),
+    flag(flag),
+    q_ptr(q)
 {
 }
 
@@ -31,13 +31,13 @@ AbstractOOXmlFilePrivate::~AbstractOOXmlFilePrivate()
  * Base class of all the ooxml part file.
  */
 
-AbstractOOXmlFile::AbstractOOXmlFile(CreateFlag flag)
-    : d_ptr(new AbstractOOXmlFilePrivate(this, flag))
+AbstractOOXmlFile::AbstractOOXmlFile(CreateFlag flag) :
+    d_ptr(new AbstractOOXmlFilePrivate(this, flag))
 {
 }
 
-AbstractOOXmlFile::AbstractOOXmlFile(AbstractOOXmlFilePrivate *d)
-    : d_ptr(d)
+AbstractOOXmlFile::AbstractOOXmlFile(AbstractOOXmlFilePrivate* d) :
+    d_ptr(d)
 {
 }
 
@@ -49,14 +49,14 @@ AbstractOOXmlFile::~AbstractOOXmlFile()
 QByteArray AbstractOOXmlFile::saveToXmlData() const
 {
     QByteArray data;
-    QBuffer buffer(&data);
+    QBuffer    buffer(&data);
     buffer.open(QIODevice::WriteOnly);
     saveToXmlFile(&buffer);
 
     return data;
 }
 
-bool AbstractOOXmlFile::loadFromXmlData(const QByteArray &data)
+bool AbstractOOXmlFile::loadFromXmlData(const QByteArray& data)
 {
     QBuffer buffer;
     buffer.setData(data);
@@ -86,7 +86,7 @@ QString AbstractOOXmlFile::filePath() const
 /*!
  * \internal
  */
-Relationships *AbstractOOXmlFile::relationships() const
+Relationships* AbstractOOXmlFile::relationships() const
 {
     Q_D(const AbstractOOXmlFile);
     return d->relationships;

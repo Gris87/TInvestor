@@ -22,14 +22,14 @@ class MediaFile;
 class Drawing : public AbstractOOXmlFile
 {
 public:
-    Drawing(AbstractSheet *sheet, CreateFlag flag);
+    Drawing(AbstractSheet* sheet, CreateFlag flag);
     ~Drawing();
-    void saveToXmlFile(QIODevice *device) const override;
-    bool loadFromXmlFile(QIODevice *device) override;
+    void saveToXmlFile(QIODevice* device) const override;
+    bool loadFromXmlFile(QIODevice* device) override;
 
-    AbstractSheet *sheet;
-    Workbook *workbook;
-    QList<DrawingAnchor *> anchors;
+    AbstractSheet*        sheet;
+    Workbook*             workbook;
+    QList<DrawingAnchor*> anchors;
 };
 
 QT_END_NAMESPACE_XLSX

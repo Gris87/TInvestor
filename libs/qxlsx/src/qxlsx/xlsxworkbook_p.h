@@ -13,19 +13,17 @@
 
 QT_BEGIN_NAMESPACE_XLSX
 
-struct XlsxDefineNameData {
-    XlsxDefineNameData()
-        : sheetId(-1)
+struct XlsxDefineNameData
+{
+    XlsxDefineNameData() :
+        sheetId(-1)
     {
     }
-    XlsxDefineNameData(const QString &name,
-                       const QString &formula,
-                       const QString &comment,
-                       int sheetId = -1)
-        : name(name)
-        , formula(formula)
-        , comment(comment)
-        , sheetId(sheetId)
+    XlsxDefineNameData(const QString& name, const QString& formula, const QString& comment, int sheetId = -1) :
+        name(name),
+        formula(formula),
+        comment(comment),
+        sheetId(sheetId)
     {
     }
     QString name;
@@ -38,23 +36,24 @@ struct XlsxDefineNameData {
 class WorkbookPrivate : public AbstractOOXmlFilePrivate
 {
     Q_DECLARE_PUBLIC(Workbook)
+
 public:
-    WorkbookPrivate(Workbook *q, Workbook::CreateFlag flag);
+    WorkbookPrivate(Workbook* q, Workbook::CreateFlag flag);
 
-    std::shared_ptr<SharedStrings> sharedStrings;
-    QList<std::shared_ptr<AbstractSheet>> sheets;
+    std::shared_ptr<SharedStrings>          sharedStrings;
+    QList<std::shared_ptr<AbstractSheet>>   sheets;
     QList<std::shared_ptr<SimpleOOXmlFile>> externalLinks;
-    QStringList sheetNames;
-    std::shared_ptr<Styles> styles;
-    std::shared_ptr<Theme> theme;
-    QList<std::shared_ptr<MediaFile>> mediaFiles;
-    QList<std::shared_ptr<Chart>> chartFiles;
-    QList<XlsxDefineNameData> definedNamesList;
+    QStringList                             sheetNames;
+    std::shared_ptr<Styles>                 styles;
+    std::shared_ptr<Theme>                  theme;
+    QList<std::shared_ptr<MediaFile>>       mediaFiles;
+    QList<std::shared_ptr<Chart>>           chartFiles;
+    QList<XlsxDefineNameData>               definedNamesList;
 
-    bool strings_to_numbers_enabled;
-    bool strings_to_hyperlinks_enabled;
-    bool html_to_richstring_enabled;
-    bool date1904;
+    bool    strings_to_numbers_enabled;
+    bool    strings_to_hyperlinks_enabled;
+    bool    html_to_richstring_enabled;
+    bool    date1904;
     QString defaultDateFormat;
 
     int x_window;
