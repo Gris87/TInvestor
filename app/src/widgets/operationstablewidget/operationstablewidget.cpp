@@ -5,6 +5,8 @@
 #include <QMenu>
 #include <QScreen>
 
+#include "src/qxlsx/xlsxdocument.h"
+
 
 
 #ifdef Q_OS_WINDOWS
@@ -123,9 +125,18 @@ void OperationsTableWidget::actionExportToExcelTriggered()
 
     if (fileDialog->exec())
     {
-        QString fileName = fileDialog->selectedFiles().at(0);
-        mSettingsEditor->setValue("MainWindow/OperationsTableWidget/exportToExcelFile", fileName);
+        QString path = fileDialog->selectedFiles().at(0);
+        mSettingsEditor->setValue("MainWindow/OperationsTableWidget/exportToExcelFile", path);
+
+        exportToFile(path);
     }
+}
+
+void OperationsTableWidget::exportToFile(const QString& path)
+{
+    QXlsx::Document doc;
+    doc.write(1, 1, "Hello");
+    doc.saveAs(path);
 }
 
 void OperationsTableWidget::saveWindowState(const QString& type)

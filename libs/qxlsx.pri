@@ -1,9 +1,9 @@
 DEPENDPATH += \
-    $${PWD}/../libs/qxslx
+    $${PWD}/../libs/qxlsx
 
 INCLUDEPATH += \
-    $${PWD}/../libs/qxslx
+    $${PWD}/../libs/qxlsx
 
 LIBS += \
-    -L$${OUT_PWD}/../libs/qxslx/build \
-    -lqxslx
+    -L$${OUT_PWD}/../libs/qxlsx/build \
+    -lqxlsx

@@ -47,6 +47,8 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
+    void exportToFile(const QString& path);
+
     IOperationsTableRecordFactory*     mOperationsTableRecordFactory;
     IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
     IUserStorage*                      mUserStorage;

@@ -3,7 +3,7 @@ QT += core gui-private
 CONFIG += c++20
 CONFIG += staticlib
 
-TARGET = qxslx
+TARGET = qxlsx
 TEMPLATE = lib
 
 
