@@ -27,10 +27,10 @@ OperationsTableRecord::OperationsTableRecord(
     mAvgPriceTableWidgetItem(new MoneyTableItem()),
     mQuantityTableWidgetItem(new IntegerTableItem()),
     mRemainedQuantityTableWidgetItem(new IntegerTableItem()),
-    mPaymentTableWidgetItem(new MoneyTableItem()),
-    mCommissionTableWidgetItem(new MoneyTableItem()),
-    mYieldTableWidgetItem(new MoneyTableItem()),
-    mYieldWithCommissionTableWidgetItem(new MoneyTableItem()),
+    mPaymentTableWidgetItem(new MoneyChangeTableItem()),
+    mCommissionTableWidgetItem(new MoneyChangeTableItem()),
+    mYieldTableWidgetItem(new MoneyChangeTableItem()),
+    mYieldWithCommissionTableWidgetItem(new MoneyChangeTableItem()),
     mYieldWithCommissionPercentTableWidgetItem(new MoneyChangePercentTableItem()),
     mRemainedMoneyTableWidgetItem(new MoneyTableItem()),
     mTotalMoneyTableWidgetItem(new MoneyTableItem()),
@@ -99,10 +99,10 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mAvgPriceTableWidgetItem->setValue(avgPrice, operation.pricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
     mRemainedQuantityTableWidgetItem->setValue(operation.remainedQuantity);
-    mPaymentTableWidgetItem->setValue(operation.payment, operation.paymentPrecision);
-    mCommissionTableWidgetItem->setValue(operation.commission, operation.commissionPrecision);
-    mYieldTableWidgetItem->setValue(operation.yield, operation.yieldPrecision);
-    mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, operation.yieldWithCommissionPrecision);
+    mPaymentTableWidgetItem->setValue(operation.payment, false, operation.paymentPrecision);
+    mCommissionTableWidgetItem->setValue(operation.commission, false, operation.commissionPrecision);
+    mYieldTableWidgetItem->setValue(operation.yield, false, operation.yieldPrecision);
+    mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, true, operation.yieldWithCommissionPrecision);
     mYieldWithCommissionPercentTableWidgetItem->setValue(
         operation.yieldWithCommissionPercent, avgPrice, operation.pricePrecision
     );

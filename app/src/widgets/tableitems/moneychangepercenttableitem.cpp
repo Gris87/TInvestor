@@ -27,7 +27,8 @@ MoneyChangePercentTableItem::~MoneyChangePercentTableItem()
 
 void MoneyChangePercentTableItem::setValue(float value, float fromPrice, qint8 precision)
 {
-    mValue               = value;
+    mValue = value;
+
     const QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");

@@ -9,9 +9,9 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
-#include "src/widgets/tableitems/paybacktableitem.h"
 #include "src/widgets/tableitems/moneychangepercenttableitem.h"
 #include "src/widgets/tableitems/moneytableitem.h"
+#include "src/widgets/tableitems/paybacktableitem.h"
 #include "src/widgets/tableitems/turnovertableitem.h"
 
 
@@ -51,12 +51,12 @@ private:
     [[nodiscard]]
     QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
 
-    Stock*                      mStock;
-    IInstrumentTableItemWidget* mInstrumentTableItemWidget;
-    MoneyTableItem*             mPriceTableWidgetItem;
-    MoneyChangePercentTableItem*       mDayChangeTableWidgetItem;
-    MoneyChangePercentTableItem*       mDateChangeTableWidgetItem;
-    TurnoverTableItem*          mTurnoverTableWidgetItem;
-    PaybackTableItem*           mPaybackTableWidgetItem;
-    qint8                       mPrecision;
+    Stock*                       mStock;
+    IInstrumentTableItemWidget*  mInstrumentTableItemWidget;
+    MoneyTableItem*              mPriceTableWidgetItem;
+    MoneyChangePercentTableItem* mDayChangeTableWidgetItem;
+    MoneyChangePercentTableItem* mDateChangeTableWidgetItem;
+    TurnoverTableItem*           mTurnoverTableWidgetItem;
+    PaybackTableItem*            mPaybackTableWidgetItem;
+    qint8                        mPrecision;
 };
