@@ -17,7 +17,7 @@ const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {100, 69, 150, 170, 91, 129, 88};
 const QColor HEADER_BACKGROUND_COLOR = QColor("#4F81BD"); // clazy:exclude=non-pod-global-static
 const QColor HEADER_FONT_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
 
-// constexpr double COLUMN_GAP = 0.71;
+constexpr double COLUMN_GAP = 0.71;
 
 
 
@@ -237,10 +237,28 @@ void StocksTableWidget::exportToExcel(const QString& path)
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    for (int i = 0; i < ui->tableWidget->columnCount(); ++i)
+    doc.write(1, STOCKS_STOCK_COLUMN + 1, ui->tableWidget->horizontalHeaderItem(STOCKS_STOCK_COLUMN)->text(), headerStyle);
+    doc.write(1, STOCKS_STOCK_COLUMN + 2, tr("Qual investor"));
+
+    for (int i = STOCKS_PRICE_COLUMN; i < STOCKS_ACTIONS_COLUMN; ++i)
     {
-        doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+        doc.write(1, i + 2, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
     }
+
+    for (auto it = tableRecords.constBegin(), end = tableRecords.constEnd(); it != end; ++it)
+    {
+        it.value()->exportToExcel(doc);
+    }
+
+    // clang-format off
+    doc.autosizeColumnWidth(STOCKS_STOCK_COLUMN + 1);
+    doc.setColumnWidth(STOCKS_STOCK_COLUMN + 2,       13.57 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_PRICE_COLUMN + 2,       9.86  + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_DAY_CHANGE_COLUMN + 2,  18.57 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_DATE_CHANGE_COLUMN + 2, 18.86 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_TURNOVER_COLUMN + 2,    12.43 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 2,     12.57 + COLUMN_GAP);
+    // clang-format on
 
     doc.saveAs(path);
 }

@@ -137,7 +137,7 @@ QXlsx::Format OperationsTableRecord::createRubleFormat(int precision) const
 {
     QXlsx::Format res;
 
-    res.setNumberFormat(QString("# ##0.%1 \u20BD").arg("", precision, '0'));
+    res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
 
     return res;
 }

@@ -111,7 +111,7 @@ void StocksTableRecord::updatePeriodicData()
 
 void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
-    const int row = mPriceTableWidgetItem->row();
+    const int row = mInstrumentTableItemWidget->row();
 
     const QString text                = mInstrumentTableItemWidget->text();
     const QString fullText            = mInstrumentTableItemWidget->fullText();
@@ -129,4 +129,55 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
     );
 
     tableWidget->setRowHidden(row, hidden);
+}
+
+void StocksTableRecord::exportToExcel(QXlsx::Document& doc)
+{
+    int row = mInstrumentTableItemWidget->row() + 2; // Header and start index from 1
+
+    // clang-format off
+    doc.write(row, STOCKS_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText());
+    doc.write(row, STOCKS_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag());
+    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->getValue(), createRubleFormat(mPriceTableWidgetItem->foreground().color(), mPriceTableWidgetItem->getPrecision()));
+    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->getValue(), createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->getValue(), createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->getValue(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
+    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->getValue(), createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
+    // clang-format on
+}
+
+QXlsx::Format StocksTableRecord::createRubleFormat(const QColor& color, int precision) const
+{
+    QXlsx::Format res;
+
+    if (precision > 0)
+    {
+        res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    }
+    else
+    {
+        res.setNumberFormat("0 \u20BD");
+    }
+
+    res.setFontColor(color);
+
+    return res;
+}
+
+QXlsx::Format StocksTableRecord::createPercentFormat(const QColor& color, bool withPlus) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat("+0.00%;-0.00%;0.00%");
+    }
+    else
+    {
+        res.setNumberFormat("0.00%");
+    }
+
+    res.setFontColor(color);
+
+    return res;
 }

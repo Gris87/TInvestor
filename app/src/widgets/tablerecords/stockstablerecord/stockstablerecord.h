@@ -42,8 +42,15 @@ public:
     void updatePrice() override;
     void updatePeriodicData() override;
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
+    void exportToExcel(QXlsx::Document& doc) override;
 
 private:
+    [[nodiscard]]
+    QXlsx::Format createRubleFormat(const QColor& color, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+
     Stock*                      mStock;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
     PriceTableItem*             mPriceTableWidgetItem;

@@ -26,4 +26,5 @@ public:
     MOCK_METHOD(void, updatePrice, (), (override));
     MOCK_METHOD(void, updatePeriodicData, (), (override));
     MOCK_METHOD(void, filter, (QTableWidget * tableWidget, const Filter& filter), (override));
+    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (override));
 };
