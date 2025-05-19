@@ -7,6 +7,11 @@
 
 
 
+const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+
+
+
 OperationsTableRecord::OperationsTableRecord(
     QTableWidget*                      tableWidget,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
@@ -109,35 +114,76 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc)
 {
     int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
 
+    QXlsx::Format cellStyle;
     QXlsx::Format dateFormat;
-    QXlsx::Format percentFormat;
+
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
 
     dateFormat.setNumberFormat("yyyy-mm-dd hh:mm:ss");
-    percentFormat.setNumberFormat("0.00%");
+    dateFormat.setFillPattern(QXlsx::Format::PatternSolid);
+    dateFormat.setBorderStyle(QXlsx::Format::BorderThin);
+    dateFormat.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    dateFormat.setFontColor(CELL_FONT_COLOR);
 
     // clang-format off
     doc.write(row, OPERATIONS_TIME_COLUMN + 1,                          mTimeTableWidgetItem->getValue(), dateFormat);
-    doc.write(row, OPERATIONS_NAME_COLUMN + 1,                          mInstrumentTableItemWidget->fullText());
-    doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                   mDescriptionTableWidgetItem->text());
-    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                         mPriceTableWidgetItem->getValue(), createRubleFormat(mPriceTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                     mAvgPriceTableWidgetItem->getValue(), createRubleFormat(mAvgPriceTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                      mQuantityTableWidgetItem->getValue());
-    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,             mRemainedQuantityTableWidgetItem->getValue());
-    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                       mPaymentTableWidgetItem->getValue(), createRubleFormat(mPaymentTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                    mCommissionTableWidgetItem->getValue(), createRubleFormat(mCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                         mYieldTableWidgetItem->getValue(), createRubleFormat(mYieldTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,         mYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mYieldWithCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mYieldWithCommissionPercentTableWidgetItem->getValue(), percentFormat);
-    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                mRemainedMoneyTableWidgetItem->getValue(), createRubleFormat(mRemainedMoneyTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   mTotalMoneyTableWidgetItem->getValue(), createRubleFormat(mTotalMoneyTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_NAME_COLUMN + 1,                          mInstrumentTableItemWidget->fullText(), cellStyle);
+    doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                   mDescriptionTableWidgetItem->text(), cellStyle);
+    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                         mPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                     mAvgPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                      mQuantityTableWidgetItem->getValue(), cellStyle);
+    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,             mRemainedQuantityTableWidgetItem->getValue(), cellStyle);
+    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                       mPaymentTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                    mCommissionTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                         mYieldTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,         mYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mYieldWithCommissionPercentTableWidgetItem->getValue(), createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                mRemainedMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   mTotalMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->getPrecision()));
     // clang-format on
 }
 
-QXlsx::Format OperationsTableRecord::createRubleFormat(int precision) const
+QXlsx::Format OperationsTableRecord::createRubleFormat(const QColor& color, bool withPlus, int precision) const
 {
     QXlsx::Format res;
 
-    res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    if (withPlus)
+    {
+        res.setNumberFormat(QString("+0.%1 \u20BD;-0.%1 \u20BD;0.%1 \u20BD").arg("", precision, '0'));
+    }
+    else
+    {
+        res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
+}
+
+QXlsx::Format OperationsTableRecord::createPercentFormat(const QColor& color, bool withPlus) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat("+0.00%;-0.00%;0.00%");
+    }
+    else
+    {
+        res.setNumberFormat("0.00%");
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
 
     return res;
 }

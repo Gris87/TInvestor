@@ -323,7 +323,7 @@
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="86"/>
         <source>Payment</source>
-        <translation>Стомость</translation>
+        <translation>Стоимость</translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="91"/>

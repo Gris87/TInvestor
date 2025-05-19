@@ -8,6 +8,9 @@
 
 
 
+const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+
 constexpr float HUNDRED_PERCENT = 100.0f;
 
 
@@ -135,14 +138,20 @@ void StocksTableRecord::exportToExcel(QXlsx::Document& doc)
 {
     int row = mInstrumentTableItemWidget->row() + 2; // Header and start index from 1
 
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
     // clang-format off
-    doc.write(row, STOCKS_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText());
-    doc.write(row, STOCKS_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag());
-    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->getValue(), createRubleFormat(mPriceTableWidgetItem->foreground().color(), mPriceTableWidgetItem->getPrecision()));
-    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->getValue(), createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
-    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->getValue(), createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText(), cellStyle);
+    doc.write(row, STOCKS_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag(), cellStyle);
+    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, mPriceTableWidgetItem->getPrecision()));
+    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
     doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->getValue(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
-    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->getValue(), createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
+    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
     // clang-format on
 }
 
@@ -159,6 +168,9 @@ QXlsx::Format StocksTableRecord::createRubleFormat(const QColor& color, int prec
         res.setNumberFormat("0 \u20BD");
     }
 
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     res.setFontColor(color);
 
     return res;
@@ -177,6 +189,9 @@ QXlsx::Format StocksTableRecord::createPercentFormat(const QColor& color, bool w
         res.setNumberFormat("0.00%");
     }
 
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     res.setFontColor(color);
 
     return res;

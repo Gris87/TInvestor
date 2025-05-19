@@ -14,8 +14,10 @@ const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {99, 61, 139, 157, 86, 120, 83};
 const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {100, 69, 150, 170, 91, 129, 88};
 #endif
 
-const QColor HEADER_BACKGROUND_COLOR = QColor("#4F81BD"); // clazy:exclude=non-pod-global-static
-const QColor HEADER_FONT_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_FONT_COLOR       = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
+const QColor CELL_BACKGROUND_COLOR   = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor CELL_FONT_COLOR         = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
 constexpr double COLUMN_GAP = 0.71;
 
@@ -234,16 +236,30 @@ void StocksTableWidget::exportToExcel(const QString& path)
     headerStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
     headerStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
     headerStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    headerStyle.setBorderStyle(QXlsx::Format::BorderThin);
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
     doc.write(1, STOCKS_STOCK_COLUMN + 1, ui->tableWidget->horizontalHeaderItem(STOCKS_STOCK_COLUMN)->text(), headerStyle);
-    doc.write(1, STOCKS_STOCK_COLUMN + 2, tr("Qual investor"));
+    doc.write(1, STOCKS_STOCK_COLUMN + 2, tr("Qual investor"), headerStyle);
 
     for (int i = STOCKS_PRICE_COLUMN; i < STOCKS_ACTIONS_COLUMN; ++i)
     {
         doc.write(1, i + 2, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
     }
+
+    doc.write(
+        1, STOCKS_PAYBACK_COLUMN + 4, ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->text(), headerStyle
+    );
+    doc.write(
+        2, STOCKS_PAYBACK_COLUMN + 4, ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), cellStyle
+    );
 
     for (auto it = tableRecords.constBegin(), end = tableRecords.constEnd(); it != end; ++it)
     {
@@ -253,11 +269,12 @@ void StocksTableWidget::exportToExcel(const QString& path)
     // clang-format off
     doc.autosizeColumnWidth(STOCKS_STOCK_COLUMN + 1);
     doc.setColumnWidth(STOCKS_STOCK_COLUMN + 2,       13.57 + COLUMN_GAP);
-    doc.setColumnWidth(STOCKS_PRICE_COLUMN + 2,       9.86  + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_PRICE_COLUMN + 2,       9.43  + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DAY_CHANGE_COLUMN + 2,  18.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DATE_CHANGE_COLUMN + 2, 18.86 + COLUMN_GAP);
-    doc.setColumnWidth(STOCKS_TURNOVER_COLUMN + 2,    12.43 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_TURNOVER_COLUMN + 2,    11.86 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 2,     12.57 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 4,     21    + COLUMN_GAP);
     // clang-format on
 
     doc.saveAs(path);

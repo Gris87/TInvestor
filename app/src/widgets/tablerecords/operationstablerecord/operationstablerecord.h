@@ -37,7 +37,10 @@ public:
 
 private:
     [[nodiscard]]
-    QXlsx::Format createRubleFormat(int precision) const;
+    QXlsx::Format createRubleFormat(const QColor& color, bool withPlus, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
 
     TimeTableItem*              mTimeTableWidgetItem;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
