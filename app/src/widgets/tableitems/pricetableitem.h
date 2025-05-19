@@ -20,8 +20,12 @@ public:
     [[nodiscard]]
     float getValue() const;
 
+    [[nodiscard]]
+    qint8 getPrecision() const;
+
     bool operator<(const QTableWidgetItem& another) const override;
 
 private:
     float mValue;
+    qint8 mPrecision;
 };

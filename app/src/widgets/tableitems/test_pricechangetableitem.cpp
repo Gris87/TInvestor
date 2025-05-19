@@ -17,7 +17,7 @@ TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
     item.setValue(-1, 100, 2);
     ASSERT_EQ(item.getValue(), -1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "-1.00%");
-    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 ") + QChar(0x20BD));
+    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 
     item.setValue(0, -1, 2);
@@ -29,7 +29,7 @@ TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
     item.setValue(1, 100, 2);
     ASSERT_EQ(item.getValue(), 1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "+1.00%");
-    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 ") + QChar(0x20BD));
+    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
 }
 

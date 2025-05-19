@@ -15,6 +15,11 @@ const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {10, 10, 10, 10, 10, 10, 10, 
 const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 #endif
 
+const QColor HEADER_BACKGROUND_COLOR = QColor("#4F81BD"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_FONT_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+
+constexpr double COLUMN_GAP = 0.71;
+
 
 
 OperationsTableWidget::OperationsTableWidget(
@@ -128,14 +133,48 @@ void OperationsTableWidget::actionExportToExcelTriggered()
         QString path = fileDialog->selectedFiles().at(0);
         mSettingsEditor->setValue("MainWindow/OperationsTableWidget/exportToExcelFile", path);
 
-        exportToFile(path);
+        exportToExcel(path);
     }
 }
 
-void OperationsTableWidget::exportToFile(const QString& path)
+void OperationsTableWidget::exportToExcel(const QString& path)
 {
     QXlsx::Document doc;
-    doc.write(1, 1, "Hello");
+    doc.addSheet(tr("Operations"));
+
+    QXlsx::Format headerStyle;
+    headerStyle.setFontBold(true);
+    headerStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    headerStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    headerStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
+    headerStyle.setFontColor(HEADER_FONT_COLOR);
+
+    for (int i = 0; i < ui->tableWidget->columnCount(); ++i)
+    {
+        doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+    }
+
+    for (IOperationsTableRecord* record : mTableRecords)
+    {
+        record->exportToExcel(doc);
+    }
+
+    doc.setColumnWidth(1, 17.57 + COLUMN_GAP);
+    doc.autosizeColumnWidth(2);
+    doc.autosizeColumnWidth(3);
+    doc.setColumnWidth(4, 7.86 + COLUMN_GAP);
+    doc.setColumnWidth(5, 13.14 + COLUMN_GAP);
+    doc.setColumnWidth(6, 10.86 + COLUMN_GAP);
+    doc.setColumnWidth(7, 22.43 + COLUMN_GAP);
+    doc.setColumnWidth(8, 10.86 + COLUMN_GAP);
+    doc.setColumnWidth(9, 9.57 + COLUMN_GAP);
+    doc.setColumnWidth(10, 11.29 + COLUMN_GAP);
+    doc.setColumnWidth(11, 23.43 + COLUMN_GAP);
+    doc.setColumnWidth(12, 27 + COLUMN_GAP);
+    doc.setColumnWidth(13, 14.57 + COLUMN_GAP);
+    doc.setColumnWidth(14, 14 + COLUMN_GAP);
+
     doc.saveAs(path);
 }
 

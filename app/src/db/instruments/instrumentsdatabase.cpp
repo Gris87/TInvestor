@@ -45,13 +45,13 @@ Instruments InstrumentsDatabase::readInstruments()
         {
             const QJsonObject jsonInstruments = jsonDoc.object();
 
-            for (auto i = jsonInstruments.constBegin(), end = jsonInstruments.constEnd(); i != end; ++i)
+            for (auto it = jsonInstruments.constBegin(), end = jsonInstruments.constEnd(); it != end; ++it)
             {
                 Instrument instrument;
 
-                instrument.fromJsonObject(i.value().toObject());
+                instrument.fromJsonObject(it.value().toObject());
 
-                res[i.key()] = instrument;
+                res[it.key()] = instrument;
             }
         }
     }

@@ -5,6 +5,7 @@
 #include <QObject>
 
 #include "src/domain/operation/operation.h"
+#include "src/qxlsx/xlsxdocument.h"
 
 
 
@@ -44,4 +45,5 @@ public:
     IOperationsTableRecord& operator=(const IOperationsTableRecord& another) = delete;
 
     virtual void setOperation(const Operation& operation) = 0;
+    virtual void exportToExcel(QXlsx::Document& doc)      = 0;
 };

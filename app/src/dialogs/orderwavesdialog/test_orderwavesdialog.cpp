@@ -90,7 +90,7 @@ TEST_F(Test_OrderWavesDialog, Test_orderBookChanged)
 
     // clang-format off
     ASSERT_EQ(dialog->ui->timeLabel->text(),  "2024-01-01 00:00:00");
-    ASSERT_EQ(dialog->ui->priceLabel->text(), QString("1500.75 ") + QChar(0x20BD));
+    ASSERT_EQ(dialog->ui->priceLabel->text(), QString("1500.75 \u20BD"));
     // clang-format on
 }
 

@@ -23,4 +23,5 @@ public:
     OperationsTableRecordMock& operator=(const OperationsTableRecordMock& another) = delete;
 
     MOCK_METHOD(void, setOperation, (const Operation& operation), (override));
+    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (override));
 };

@@ -104,3 +104,40 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), operation.remainedMoneyPrecision);
     mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
 }
+
+void OperationsTableRecord::exportToExcel(QXlsx::Document& doc)
+{
+    int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
+
+    QXlsx::Format dateFormat;
+    QXlsx::Format percentFormat;
+
+    dateFormat.setNumberFormat("yyyy-mm-dd hh:mm:ss");
+    percentFormat.setNumberFormat("0.00%");
+
+    // clang-format off
+    doc.write(row, OPERATIONS_TIME_COLUMN + 1,                          mTimeTableWidgetItem->getValue(), dateFormat);
+    doc.write(row, OPERATIONS_NAME_COLUMN + 1,                          mInstrumentTableItemWidget->fullText());
+    doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                   mDescriptionTableWidgetItem->text());
+    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                         mPriceTableWidgetItem->getValue(), createRubleFormat(mPriceTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                     mAvgPriceTableWidgetItem->getValue(), createRubleFormat(mAvgPriceTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                      mQuantityTableWidgetItem->getValue());
+    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,             mRemainedQuantityTableWidgetItem->getValue());
+    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                       mPaymentTableWidgetItem->getValue(), createRubleFormat(mPaymentTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                    mCommissionTableWidgetItem->getValue(), createRubleFormat(mCommissionTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                         mYieldTableWidgetItem->getValue(), createRubleFormat(mYieldTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,         mYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mYieldWithCommissionTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mYieldWithCommissionPercentTableWidgetItem->getValue(), percentFormat);
+    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                mRemainedMoneyTableWidgetItem->getValue(), createRubleFormat(mRemainedMoneyTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   mTotalMoneyTableWidgetItem->getValue(), createRubleFormat(mTotalMoneyTableWidgetItem->getPrecision()));
+    // clang-format on
+}
+
+QXlsx::Format OperationsTableRecord::createRubleFormat(int precision) const
+{
+    QXlsx::Format res;
+
+    res.setNumberFormat(QString("# ##0.%1 \u20BD").arg("", precision, '0'));
+
+    return res;
+}
