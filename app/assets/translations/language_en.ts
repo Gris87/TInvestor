@@ -485,8 +485,8 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/pricechangetableitem.cpp" line="34"/>
-        <source>From price: %1</source>
+        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="34"/>
+        <source>From: %1</source>
         <translation></translation>
     </message>
 </context>
@@ -856,27 +856,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="202"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="204"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="230"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="232"/>
         <source>Stocks</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="241"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="250"/>
         <source>Qual investor</source>
         <translation></translation>
     </message>

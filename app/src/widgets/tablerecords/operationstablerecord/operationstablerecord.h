@@ -9,8 +9,8 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tableitems/integertableitem.h"
-#include "src/widgets/tableitems/pricechangetableitem.h"
-#include "src/widgets/tableitems/pricetableitem.h"
+#include "src/widgets/tableitems/moneychangepercenttableitem.h"
+#include "src/widgets/tableitems/moneytableitem.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
 
@@ -45,16 +45,16 @@ private:
     TimeTableItem*              mTimeTableWidgetItem;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
     QTableWidgetItem*           mDescriptionTableWidgetItem;
-    PriceTableItem*             mPriceTableWidgetItem;
-    PriceTableItem*             mAvgPriceTableWidgetItem;
+    MoneyTableItem*             mPriceTableWidgetItem;
+    MoneyTableItem*             mAvgPriceTableWidgetItem;
     IntegerTableItem*           mQuantityTableWidgetItem;
     IntegerTableItem*           mRemainedQuantityTableWidgetItem;
-    PriceTableItem*             mPaymentTableWidgetItem;
-    PriceTableItem*             mCommissionTableWidgetItem;
-    PriceTableItem*             mYieldTableWidgetItem;
-    PriceTableItem*             mYieldWithCommissionTableWidgetItem;
-    PriceChangeTableItem*       mYieldWithCommissionPercentTableWidgetItem;
-    PriceTableItem*             mRemainedMoneyTableWidgetItem;
-    PriceTableItem*             mTotalMoneyTableWidgetItem;
+    MoneyTableItem*             mPaymentTableWidgetItem;
+    MoneyTableItem*             mCommissionTableWidgetItem;
+    MoneyTableItem*             mYieldTableWidgetItem;
+    MoneyTableItem*             mYieldWithCommissionTableWidgetItem;
+    MoneyChangePercentTableItem*       mYieldWithCommissionPercentTableWidgetItem;
+    MoneyTableItem*             mRemainedMoneyTableWidgetItem;
+    MoneyTableItem*             mTotalMoneyTableWidgetItem;
     IInstrumentsStorage*        mInstrumentsStorage;
 };

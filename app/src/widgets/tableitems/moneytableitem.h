@@ -6,14 +6,14 @@
 
 
 
-class PriceTableItem : public QTableWidgetItem
+class MoneyTableItem : public QTableWidgetItem
 {
 public:
-    explicit PriceTableItem(int type = Type);
-    ~PriceTableItem() override;
+    explicit MoneyTableItem(int type = Type);
+    ~MoneyTableItem() override;
 
-    PriceTableItem(const PriceTableItem& another)            = delete;
-    PriceTableItem& operator=(const PriceTableItem& another) = delete;
+    MoneyTableItem(const MoneyTableItem& another)            = delete;
+    MoneyTableItem& operator=(const MoneyTableItem& another) = delete;
 
     void setValue(float value, qint8 precision);
 

@@ -101,9 +101,9 @@ SOURCES += \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/test_integertableitem.cpp \
+    src/widgets/tableitems/test_moneychangepercenttableitem.cpp \
+    src/widgets/tableitems/test_moneytableitem.cpp \
     src/widgets/tableitems/test_paybacktableitem.cpp \
-    src/widgets/tableitems/test_pricechangetableitem.cpp \
-    src/widgets/tableitems/test_pricetableitem.cpp \
     src/widgets/tableitems/test_timetableitem.cpp \
     src/widgets/tableitems/test_turnovertableitem.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecord.cpp \

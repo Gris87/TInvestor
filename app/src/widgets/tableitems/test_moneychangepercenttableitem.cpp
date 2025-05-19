@@ -1,23 +1,23 @@
-#include "src/widgets/tableitems/pricechangetableitem.h"
+#include "src/widgets/tableitems/moneychangepercenttableitem.h"
 
 #include <gtest/gtest.h>
 
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_PriceChangeTableItem, Test_constructor_and_destructor)
+TEST(Test_MoneyChangePercentTableItem, Test_constructor_and_destructor)
 {
-    const PriceChangeTableItem item;
+    const MoneyChangePercentTableItem item;
 }
 
-TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
+TEST(Test_MoneyChangePercentTableItem, Test_setValue_and_getValue)
 {
-    PriceChangeTableItem item;
+    MoneyChangePercentTableItem item;
 
     item.setValue(-1, 100, 2);
     ASSERT_EQ(item.getValue(), -1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "-1.00%");
-    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 \u20BD"));
+    ASSERT_EQ(item.toolTip(), QString("From: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 
     item.setValue(0, -1, 2);
@@ -29,14 +29,14 @@ TEST(Test_PriceChangeTableItem, Test_setValue_and_getValue)
     item.setValue(1, 100, 2);
     ASSERT_EQ(item.getValue(), 1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "+1.00%");
-    ASSERT_EQ(item.toolTip(), QString("From price: 100.00 \u20BD"));
+    ASSERT_EQ(item.toolTip(), QString("From: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
 }
 
-TEST(Test_PriceChangeTableItem, Test_less)
+TEST(Test_MoneyChangePercentTableItem, Test_less)
 {
-    PriceChangeTableItem item;
-    PriceChangeTableItem item2;
+    MoneyChangePercentTableItem item;
+    MoneyChangePercentTableItem item2;
 
     item.setValue(10, 100, 2);
     item2.setValue(20, 100, 2);

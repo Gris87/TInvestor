@@ -485,9 +485,9 @@
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/pricechangetableitem.cpp" line="34"/>
-        <source>From price: %1</source>
-        <translation>От цены: %1</translation>
+        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="34"/>
+        <source>From: %1</source>
+        <translation>От: %1</translation>
     </message>
 </context>
 <context>
@@ -856,27 +856,27 @@
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="202"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="204"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="230"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="232"/>
         <source>Stocks</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="241"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="250"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>

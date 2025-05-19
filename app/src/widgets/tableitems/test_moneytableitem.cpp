@@ -1,18 +1,18 @@
-#include "src/widgets/tableitems/pricetableitem.h"
+#include "src/widgets/tableitems/moneytableitem.h"
 
 #include <gtest/gtest.h>
 
 
 
 // NOLINTBEGIN(readability-magic-numbers)
-TEST(Test_PriceTableItem, Test_constructor_and_destructor)
+TEST(Test_MoneyTableItem, Test_constructor_and_destructor)
 {
-    const PriceTableItem item;
+    const MoneyTableItem item;
 }
 
-TEST(Test_PriceTableItem, Test_setValue_and_getValue)
+TEST(Test_MoneyTableItem, Test_setValue_and_getValue)
 {
-    PriceTableItem item;
+    MoneyTableItem item;
 
     item.setValue(10, 2);
     ASSERT_EQ(item.getValue(), 10);
@@ -23,10 +23,10 @@ TEST(Test_PriceTableItem, Test_setValue_and_getValue)
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("20.000 \u20BD"));
 }
 
-TEST(Test_PriceTableItem, Test_less)
+TEST(Test_MoneyTableItem, Test_less)
 {
-    PriceTableItem item;
-    PriceTableItem item2;
+    MoneyTableItem item;
+    MoneyTableItem item2;
 
     item.setValue(10, 2);
     item2.setValue(20, 2);

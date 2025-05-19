@@ -10,8 +10,8 @@
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tableitems/paybacktableitem.h"
-#include "src/widgets/tableitems/pricechangetableitem.h"
-#include "src/widgets/tableitems/pricetableitem.h"
+#include "src/widgets/tableitems/moneychangepercenttableitem.h"
+#include "src/widgets/tableitems/moneytableitem.h"
 #include "src/widgets/tableitems/turnovertableitem.h"
 
 
@@ -53,9 +53,9 @@ private:
 
     Stock*                      mStock;
     IInstrumentTableItemWidget* mInstrumentTableItemWidget;
-    PriceTableItem*             mPriceTableWidgetItem;
-    PriceChangeTableItem*       mDayChangeTableWidgetItem;
-    PriceChangeTableItem*       mDateChangeTableWidgetItem;
+    MoneyTableItem*             mPriceTableWidgetItem;
+    MoneyChangePercentTableItem*       mDayChangeTableWidgetItem;
+    MoneyChangePercentTableItem*       mDateChangeTableWidgetItem;
     TurnoverTableItem*          mTurnoverTableWidgetItem;
     PaybackTableItem*           mPaybackTableWidgetItem;
     qint8                       mPrecision;

@@ -1,4 +1,4 @@
-#include "src/widgets/tableitems/pricechangetableitem.h"
+#include "src/widgets/tableitems/moneychangepercenttableitem.h"
 
 #include <QDebug>
 
@@ -13,25 +13,25 @@ const QColor NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-s
 
 
 
-PriceChangeTableItem::PriceChangeTableItem(int type) :
+MoneyChangePercentTableItem::MoneyChangePercentTableItem(int type) :
     QTableWidgetItem(type),
     mValue()
 {
-    qDebug() << "Create PriceChangeTableItem";
+    qDebug() << "Create MoneyChangePercentTableItem";
 }
 
-PriceChangeTableItem::~PriceChangeTableItem()
+MoneyChangePercentTableItem::~MoneyChangePercentTableItem()
 {
-    qDebug() << "Destroy PriceChangeTableItem";
+    qDebug() << "Destroy MoneyChangePercentTableItem";
 }
 
-void PriceChangeTableItem::setValue(float value, float fromPrice, qint8 precision)
+void MoneyChangePercentTableItem::setValue(float value, float fromPrice, qint8 precision)
 {
     mValue               = value;
     const QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");
-    setToolTip(fromPrice > 0 ? QObject::tr("From price: %1").arg(fromPrice, 0, 'f', precision) + " " + RUBLE : "");
+    setToolTip(fromPrice > 0 ? QObject::tr("From: %1").arg(fromPrice, 0, 'f', precision) + " " + RUBLE : "");
 
     QColor color;
 
@@ -54,14 +54,14 @@ void PriceChangeTableItem::setValue(float value, float fromPrice, qint8 precisio
     setForeground(QBrush(color));
 }
 
-float PriceChangeTableItem::getValue() const
+float MoneyChangePercentTableItem::getValue() const
 {
     return mValue;
 }
 
-bool PriceChangeTableItem::operator<(const QTableWidgetItem& another) const
+bool MoneyChangePercentTableItem::operator<(const QTableWidgetItem& another) const
 {
-    const float anotherFloat = dynamic_cast<const PriceChangeTableItem*>(&another)->mValue;
+    const float anotherFloat = dynamic_cast<const MoneyChangePercentTableItem*>(&another)->mValue;
 
     return mValue < anotherFloat;
 }

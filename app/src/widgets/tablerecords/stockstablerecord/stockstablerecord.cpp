@@ -30,9 +30,9 @@ StocksTableRecord::StocksTableRecord(
     IStocksTableRecord(parent),
     mStock(stock),
     mInstrumentTableItemWidget(),
-    mPriceTableWidgetItem(new PriceTableItem()),
-    mDayChangeTableWidgetItem(new PriceChangeTableItem()),
-    mDateChangeTableWidgetItem(new PriceChangeTableItem()),
+    mPriceTableWidgetItem(new MoneyTableItem()),
+    mDayChangeTableWidgetItem(new MoneyChangePercentTableItem()),
+    mDateChangeTableWidgetItem(new MoneyChangePercentTableItem()),
     mTurnoverTableWidgetItem(new TurnoverTableItem()),
     mPaybackTableWidgetItem(new PaybackTableItem())
 {

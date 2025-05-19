@@ -105,9 +105,9 @@ SOURCES += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/integertableitem.cpp \
+    src/widgets/tableitems/moneychangepercenttableitem.cpp \
+    src/widgets/tableitems/moneytableitem.cpp \
     src/widgets/tableitems/paybacktableitem.cpp \
-    src/widgets/tableitems/pricechangetableitem.cpp \
-    src/widgets/tableitems/pricetableitem.cpp \
     src/widgets/tableitems/timetableitem.cpp \
     src/widgets/tableitems/turnovertableitem.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
@@ -306,9 +306,9 @@ HEADERS += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.h \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
     src/widgets/tableitems/integertableitem.h \
+    src/widgets/tableitems/moneychangepercenttableitem.h \
+    src/widgets/tableitems/moneytableitem.h \
     src/widgets/tableitems/paybacktableitem.h \
-    src/widgets/tableitems/pricechangetableitem.h \
-    src/widgets/tableitems/pricetableitem.h \
     src/widgets/tableitems/timetableitem.h \
     src/widgets/tableitems/turnovertableitem.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
