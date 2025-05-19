@@ -3,7 +3,6 @@
 
 #include <QDebug>
 #include <QMenu>
-#include <QScreen>
 
 #include "src/qxlsx/xlsxdocument.h"
 

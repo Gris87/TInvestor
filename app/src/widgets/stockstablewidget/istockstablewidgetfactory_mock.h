@@ -31,6 +31,8 @@ public:
          IUserStorage*                      userStorage,
          IOrderBookThread*                  orderBookThread,
          IHttpClient*                       httpClient,
+         IFileDialogFactory*                fileDialogFactory,
+         IMessageBoxUtils*                  mMessageBoxUtils,
          ISettingsEditor*                   settingsEditor,
          QWidget*                           parent),
         (const, override)

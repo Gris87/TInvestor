@@ -2,6 +2,9 @@
 #include "ui_stockstablewidget.h"
 
 #include <QDebug>
+#include <QMenu>
+
+#include "src/qxlsx/xlsxdocument.h"
 
 
 
@@ -10,6 +13,11 @@ const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {99, 61, 139, 157, 86, 120, 83};
 #else
 const int COLUMN_WIDTHS[STOCKS_COLUMN_COUNT] = {100, 69, 150, 170, 91, 129, 88};
 #endif
+
+const QColor HEADER_BACKGROUND_COLOR = QColor("#4F81BD"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_FONT_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+
+// constexpr double COLUMN_GAP = 0.71;
 
 
 
@@ -22,6 +30,8 @@ StocksTableWidget::StocksTableWidget(
     IUserStorage*                      userStorage,
     IOrderBookThread*                  orderBookThread,
     IHttpClient*                       httpClient,
+    IFileDialogFactory*                fileDialogFactory,
+    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) :
@@ -37,6 +47,8 @@ StocksTableWidget::StocksTableWidget(
     mUserStorage(userStorage),
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
+    mFileDialogFactory(fileDialogFactory),
+    mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create StocksTableWidget";
@@ -181,6 +193,56 @@ void StocksTableWidget::filterChanged(const Filter& filter)
     }
 
     ui->tableWidget->setUpdatesEnabled(true);
+}
+
+void StocksTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& pos)
+{
+    QMenu* contextMenu = new QMenu(this);
+
+    contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
+
+    contextMenu->popup(ui->tableWidget->viewport()->mapToGlobal(pos));
+}
+
+void StocksTableWidget::actionExportToExcelTriggered()
+{
+    QString lastFile = mSettingsEditor->value("MainWindow/StocksTableWidget/exportToExcelFile", "").toString();
+
+    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+        this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
+    );
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+
+    fileDialog->selectFile(lastFile);
+
+    if (fileDialog->exec())
+    {
+        QString path = fileDialog->selectedFiles().at(0);
+        mSettingsEditor->setValue("MainWindow/StocksTableWidget/exportToExcelFile", path);
+
+        exportToExcel(path);
+    }
+}
+
+void StocksTableWidget::exportToExcel(const QString& path)
+{
+    QXlsx::Document doc;
+    doc.addSheet(tr("Stocks"));
+
+    QXlsx::Format headerStyle;
+    headerStyle.setFontBold(true);
+    headerStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    headerStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    headerStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
+    headerStyle.setFontColor(HEADER_FONT_COLOR);
+
+    for (int i = 0; i < ui->tableWidget->columnCount(); ++i)
+    {
+        doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+    }
+
+    doc.saveAs(path);
 }
 
 void StocksTableWidget::saveWindowState(const QString& type)

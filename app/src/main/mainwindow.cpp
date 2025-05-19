@@ -148,6 +148,8 @@ MainWindow::MainWindow(
         mUserStorage,
         mOrderBookThread,
         mHttpClient,
+        mFileDialogFactory,
+        mMessageBoxUtils,
         mSettingsEditor,
         this
     );

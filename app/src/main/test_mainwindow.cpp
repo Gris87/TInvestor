@@ -150,6 +150,8 @@ protected:
                 userStorageMock,
                 orderBookThreadMock,
                 httpClientMock,
+                fileDialogFactoryMock,
+                messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
             )

@@ -174,6 +174,10 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append("-DQT_SQL_LIB")
         res.append("-DQT_CORE_LIB")
 
+    if "/libs/qxlsx/" in file_path:
+        res.append("-DQT_GUI_LIB")
+        res.append("-DQT_CORE_LIB")
+
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_CORE_LIB")
@@ -217,6 +221,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}\\libs\\investapi\\messages\\generated")
         res.append(f"-I{args.vcpkg_path}\\installed\\x64-windows\\include")
         res.append(f"-I{args.quazip_path}")
+        res.append(f"-I{cwd}\\libs\\qxlsx")
         res.append(f"-I{cwd}\\libs\\simplecrypt")
         res.append(f"-I{cwd}\\libs\\verticallabel")
         res.append(f"-I{cwd}\\libs\\waitingspinner")
@@ -251,6 +256,20 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}\\libs\\investapi\\messages\\generated")
         res.append(f"-I{args.vcpkg_path}\\installed\\x64-windows\\include")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\investapi")
+
+    if "/libs/qxlsx/" in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
+
+        res.append(f"-I{cwd}\\libs\\qxlsx")
+        res.append(f"-I{args.qt_path}\\include")
+        res.append(f"-I{args.qt_path}\\include\\QtGui")
+        res.append(f"-I{args.qt_path}\\include\\QtCore")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx\\build\\gen\\qxlsx\\moc")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
@@ -372,6 +391,9 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         if args.target == "build":
             res.append("-w")
 
+    if "/libs/qxlsx/" in file_path:
+        res.append("-D_REENTRANT")
+
     if "/libs/simplecrypt/" in file_path:
         res.append("-D_REENTRANT")
 
@@ -395,6 +417,10 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_NETWORK_LIB")
         res.append("-DQT_SQL_LIB")
+        res.append("-DQT_CORE_LIB")
+
+    if "/libs/qxlsx/" in file_path:
+        res.append("-DQT_GUI_LIB")
         res.append("-DQT_CORE_LIB")
 
     if "/libs/simplecrypt/" in file_path:
@@ -436,6 +462,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/libs/investapi/messages/generated")
         res.append(f"-I{args.vcpkg_path}/installed/x64-linux/include")
         res.append(f"-I{args.quazip_path}")
+        res.append(f"-I{cwd}/libs/qxlsx")
         res.append(f"-I{cwd}/libs/simplecrypt")
         res.append(f"-I{cwd}/libs/verticallabel")
         res.append(f"-I{cwd}/libs/waitingspinner")
@@ -470,6 +497,20 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/libs/investapi/messages/generated")
         res.append(f"-I{args.vcpkg_path}/installed/x64-linux/include")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/investapi")
+
+    if "/libs/qxlsx/" in file_path:
+        res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
+
+        if args.target == "build":
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders")
+            res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
+
+        res.append(f"-I{cwd}/libs/qxlsx")
+        res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtCore")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx/build/gen/qxlsx/moc")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")

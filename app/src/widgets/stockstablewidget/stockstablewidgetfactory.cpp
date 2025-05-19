@@ -26,6 +26,8 @@ IStocksTableWidget* StocksTableWidgetFactory::newInstance(
     IUserStorage*                      userStorage,
     IOrderBookThread*                  orderBookThread,
     IHttpClient*                       httpClient,
+    IFileDialogFactory*                fileDialogFactory,
+    IMessageBoxUtils*                  mMessageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) const
@@ -39,6 +41,8 @@ IStocksTableWidget* StocksTableWidgetFactory::newInstance(
         userStorage,
         orderBookThread,
         httpClient,
+        fileDialogFactory,
+        mMessageBoxUtils,
         settingsEditor,
         parent
     );
