@@ -35,12 +35,12 @@ TEST(Test_MoneyChangeTableItem, Test_less)
     MoneyChangeTableItem item;
     MoneyChangeTableItem item2;
 
-    item.setValue(10, 100, 2);
-    item2.setValue(20, 100, 2);
+    item.setValue(10, true, 2);
+    item2.setValue(20, false, 2);
 
     ASSERT_LT(item, item2);
 
-    item.setValue(30, 100, 2);
+    item.setValue(30, true, 2);
 
     ASSERT_LT(item2, item);
 }
