@@ -102,6 +102,7 @@ SOURCES += \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/test_integertableitem.cpp \
     src/widgets/tableitems/test_moneychangepercenttableitem.cpp \
+    src/widgets/tableitems/test_moneychangetableitem.cpp \
     src/widgets/tableitems/test_moneytableitem.cpp \
     src/widgets/tableitems/test_paybacktableitem.cpp \
     src/widgets/tableitems/test_timetableitem.cpp \

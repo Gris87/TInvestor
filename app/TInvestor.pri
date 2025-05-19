@@ -106,6 +106,7 @@ SOURCES += \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/integertableitem.cpp \
     src/widgets/tableitems/moneychangepercenttableitem.cpp \
+    src/widgets/tableitems/moneychangetableitem.cpp \
     src/widgets/tableitems/moneytableitem.cpp \
     src/widgets/tableitems/paybacktableitem.cpp \
     src/widgets/tableitems/timetableitem.cpp \
@@ -307,6 +308,7 @@ HEADERS += \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
     src/widgets/tableitems/integertableitem.h \
     src/widgets/tableitems/moneychangepercenttableitem.h \
+    src/widgets/tableitems/moneychangetableitem.h \
     src/widgets/tableitems/moneytableitem.h \
     src/widgets/tableitems/paybacktableitem.h \
     src/widgets/tableitems/timetableitem.h \
