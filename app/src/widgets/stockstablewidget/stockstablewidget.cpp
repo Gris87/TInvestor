@@ -208,25 +208,25 @@ void StocksTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& 
 
 void StocksTableWidget::actionExportToExcelTriggered()
 {
-    QString lastFile = mSettingsEditor->value("MainWindow/StocksTableWidget/exportToExcelFile", "").toString();
+    const QString lastFile = mSettingsEditor->value("MainWindow/StocksTableWidget/exportToExcelFile", "").toString();
 
-    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+    const std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
         this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
     );
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
 
     fileDialog->selectFile(lastFile);
 
-    if (fileDialog->exec())
+    if (fileDialog->exec() == QDialog::Accepted)
     {
-        QString path = fileDialog->selectedFiles().at(0);
+        const QString path = fileDialog->selectedFiles().at(0);
         mSettingsEditor->setValue("MainWindow/StocksTableWidget/exportToExcelFile", path);
 
         exportToExcel(path);
     }
 }
 
-void StocksTableWidget::exportToExcel(const QString& path)
+void StocksTableWidget::exportToExcel(const QString& path) const
 {
     QXlsx::Document doc;
     doc.addSheet(tr("Stocks"));
@@ -266,6 +266,7 @@ void StocksTableWidget::exportToExcel(const QString& path)
         it.value()->exportToExcel(doc);
     }
 
+    // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
     doc.autosizeColumnWidth(STOCKS_STOCK_COLUMN + 1);
     doc.setColumnWidth(STOCKS_STOCK_COLUMN + 2,       13.57 + COLUMN_GAP);
@@ -276,6 +277,7 @@ void StocksTableWidget::exportToExcel(const QString& path)
     doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 2,     12.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_PAYBACK_COLUMN + 4,     21    + COLUMN_GAP);
     // clang-format on
+    // NOLINTEND(readability-magic-numbers)
 
     doc.saveAs(path);
 }

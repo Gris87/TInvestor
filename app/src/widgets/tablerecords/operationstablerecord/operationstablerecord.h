@@ -34,7 +34,7 @@ public:
     OperationsTableRecord& operator=(const OperationsTableRecord& another) = delete;
 
     void setOperation(const Operation& operation) override;
-    void exportToExcel(QXlsx::Document& doc) override;
+    void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
     [[nodiscard]]

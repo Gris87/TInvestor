@@ -44,6 +44,6 @@ public:
     IOperationsTableRecord(const IOperationsTableRecord& another)            = delete;
     IOperationsTableRecord& operator=(const IOperationsTableRecord& another) = delete;
 
-    virtual void setOperation(const Operation& operation) = 0;
-    virtual void exportToExcel(QXlsx::Document& doc)      = 0;
+    virtual void setOperation(const Operation& operation)  = 0;
+    virtual void exportToExcel(QXlsx::Document& doc) const = 0;
 };

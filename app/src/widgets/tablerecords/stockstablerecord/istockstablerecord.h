@@ -43,5 +43,5 @@ public:
     virtual void updatePrice()                                           = 0;
     virtual void updatePeriodicData()                                    = 0;
     virtual void filter(QTableWidget* tableWidget, const Filter& filter) = 0;
-    virtual void exportToExcel(QXlsx::Document& doc)                     = 0;
+    virtual void exportToExcel(QXlsx::Document& doc) const               = 0;
 };

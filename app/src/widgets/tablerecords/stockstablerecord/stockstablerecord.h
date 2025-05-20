@@ -42,7 +42,7 @@ public:
     void updatePrice() override;
     void updatePeriodicData() override;
     void filter(QTableWidget* tableWidget, const Filter& filter) override;
-    void exportToExcel(QXlsx::Document& doc) override;
+    void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
     [[nodiscard]]

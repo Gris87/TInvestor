@@ -118,25 +118,25 @@ void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoi
 
 void OperationsTableWidget::actionExportToExcelTriggered()
 {
-    QString lastFile = mSettingsEditor->value("MainWindow/OperationsTableWidget/exportToExcelFile", "").toString();
+    const QString lastFile = mSettingsEditor->value("MainWindow/OperationsTableWidget/exportToExcelFile", "").toString();
 
-    std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+    const std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
         this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
     );
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
 
     fileDialog->selectFile(lastFile);
 
-    if (fileDialog->exec())
+    if (fileDialog->exec() == QDialog::Accepted)
     {
-        QString path = fileDialog->selectedFiles().at(0);
+        const QString path = fileDialog->selectedFiles().at(0);
         mSettingsEditor->setValue("MainWindow/OperationsTableWidget/exportToExcelFile", path);
 
         exportToExcel(path);
     }
 }
 
-void OperationsTableWidget::exportToExcel(const QString& path)
+void OperationsTableWidget::exportToExcel(const QString& path) const
 {
     QXlsx::Document doc;
     doc.addSheet(tr("Operations"));
@@ -155,11 +155,12 @@ void OperationsTableWidget::exportToExcel(const QString& path)
         doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
     }
 
-    for (IOperationsTableRecord* record : mTableRecords)
+    for (IOperationsTableRecord* record : std::as_const(mTableRecords))
     {
         record->exportToExcel(doc);
     }
 
+    // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
     doc.setColumnWidth(OPERATIONS_TIME_COLUMN + 1,                          17.57 + COLUMN_GAP);
     doc.autosizeColumnWidth(OPERATIONS_NAME_COLUMN + 1);
@@ -176,6 +177,7 @@ void OperationsTableWidget::exportToExcel(const QString& path)
     doc.setColumnWidth(OPERATIONS_REMAINED_MONEY_COLUMN + 1,                14.57 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   13.57 + COLUMN_GAP);
     // clang-format on
+    // NOLINTEND(readability-magic-numbers)
 
     doc.saveAs(path);
 }

@@ -134,9 +134,9 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
     tableWidget->setRowHidden(row, hidden);
 }
 
-void StocksTableRecord::exportToExcel(QXlsx::Document& doc)
+void StocksTableRecord::exportToExcel(QXlsx::Document& doc) const
 {
-    int row = mInstrumentTableItemWidget->row() + 2; // Header and start index from 1
+    const int row = mInstrumentTableItemWidget->row() + 2; // Header and start index from 1
 
     QXlsx::Format cellStyle;
     cellStyle.setFillPattern(QXlsx::Format::PatternSolid);

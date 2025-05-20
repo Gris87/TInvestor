@@ -110,9 +110,9 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
 }
 
-void OperationsTableRecord::exportToExcel(QXlsx::Document& doc)
+void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
 {
-    int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
+    const int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
 
     QXlsx::Format cellStyle;
     QXlsx::Format dateFormat;
