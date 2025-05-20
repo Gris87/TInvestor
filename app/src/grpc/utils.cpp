@@ -21,6 +21,11 @@ static float unitsAndNanoToFloat(qint64 units, qint32 nano)
     return units + (nano / NANOS_FLOAT);
 }
 
+float quotationToFloat(const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoToFloat(money.units(), money.nano());
+}
+
 float quotationToFloat(const tinkoff::Quotation& quotation)
 {
     return unitsAndNanoToFloat(quotation.units(), quotation.nano());
@@ -29,11 +34,6 @@ float quotationToFloat(const tinkoff::Quotation& quotation)
 float quotationToFloat(const Quotation& quotation)
 {
     return unitsAndNanoToFloat(quotation.units, quotation.nano);
-}
-
-float moneyToFloat(const tinkoff::MoneyValue& money)
-{
-    return unitsAndNanoToFloat(money.units(), money.nano());
 }
 
 static qint8 nanoPrecision(qint32 nano)
@@ -54,6 +54,11 @@ static qint8 nanoPrecision(qint32 nano)
     return res;
 }
 
+qint8 quotationPrecision(const tinkoff::MoneyValue& money)
+{
+    return nanoPrecision(money.nano());
+}
+
 qint8 quotationPrecision(const tinkoff::Quotation& quotation)
 {
     return nanoPrecision(quotation.nano());
@@ -62,11 +67,6 @@ qint8 quotationPrecision(const tinkoff::Quotation& quotation)
 qint8 quotationPrecision(const Quotation& quotation)
 {
     return nanoPrecision(quotation.nano);
-}
-
-qint8 moneyPrecision(const tinkoff::MoneyValue& money)
-{
-    return nanoPrecision(money.nano());
 }
 
 static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint64 nano2)
@@ -81,9 +81,24 @@ static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint6
     return res;
 }
 
+Quotation quotationSum(const Quotation& quotation1, const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoSum(quotation1.units, quotation1.nano, money.units(), money.nano());
+}
+
 Quotation quotationSum(const Quotation& quotation1, const tinkoff::Quotation& quotation2)
 {
     return unitsAndNanoSum(quotation1.units, quotation1.nano, quotation2.units(), quotation2.nano());
+}
+
+Quotation quotationSum(const tinkoff::MoneyValue& money, const Quotation& quotation2)
+{
+    return unitsAndNanoSum(money.units(), money.nano(), quotation2.units, quotation2.nano);
+}
+
+Quotation quotationSum(const tinkoff::Quotation& quotation1, const Quotation& quotation2)
+{
+    return unitsAndNanoSum(quotation1.units(), quotation1.nano(), quotation2.units, quotation2.nano);
 }
 
 Quotation quotationSum(const Quotation& quotation1, const Quotation& quotation2)
@@ -91,9 +106,41 @@ Quotation quotationSum(const Quotation& quotation1, const Quotation& quotation2)
     return unitsAndNanoSum(quotation1.units, quotation1.nano, quotation2.units, quotation2.nano);
 }
 
-Quotation quotationSum(const Quotation& quotation1, const tinkoff::MoneyValue& money)
+static Quotation unitsAndNanoDiff(qint64 units, qint64 nano, qint64 units2, qint64 nano2)
 {
-    return unitsAndNanoSum(quotation1.units, quotation1.nano, money.units(), money.nano());
+    Quotation res;
+
+    const qint64 nano64 = nano - nano2;
+
+    res.units = units - units2 + nano64 / NANOS_INT;
+    res.nano  = nano64 % NANOS_INT;
+
+    return res;
+}
+
+Quotation quotationDiff(const Quotation& quotation1, const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoDiff(quotation1.units, quotation1.nano, money.units(), money.nano());
+}
+
+Quotation quotationDiff(const Quotation& quotation1, const tinkoff::Quotation& quotation2)
+{
+    return unitsAndNanoDiff(quotation1.units, quotation1.nano, quotation2.units(), quotation2.nano());
+}
+
+Quotation quotationDiff(const tinkoff::MoneyValue& money, const Quotation& quotation2)
+{
+    return unitsAndNanoDiff(money.units(), money.nano(), quotation2.units, quotation2.nano);
+}
+
+Quotation quotationDiff(const tinkoff::Quotation& quotation1, const Quotation& quotation2)
+{
+    return unitsAndNanoDiff(quotation1.units(), quotation1.nano(), quotation2.units, quotation2.nano);
+}
+
+Quotation quotationDiff(const Quotation& quotation1, const Quotation& quotation2)
+{
+    return unitsAndNanoDiff(quotation1.units, quotation1.nano, quotation2.units, quotation2.nano);
 }
 
 static Quotation unitsAndNanoMultiply(qint64 units, qint64 nano, qint64 coef)
@@ -108,6 +155,11 @@ static Quotation unitsAndNanoMultiply(qint64 units, qint64 nano, qint64 coef)
     return res;
 }
 
+Quotation quotationMultiply(const tinkoff::MoneyValue& money, qint64 coef)
+{
+    return unitsAndNanoMultiply(money.units(), money.nano(), coef);
+}
+
 Quotation quotationMultiply(const tinkoff::Quotation& quotation, qint64 coef)
 {
     return unitsAndNanoMultiply(quotation.units(), quotation.nano(), coef);
@@ -116,11 +168,6 @@ Quotation quotationMultiply(const tinkoff::Quotation& quotation, qint64 coef)
 Quotation quotationMultiply(const Quotation& quotation, qint64 coef)
 {
     return unitsAndNanoMultiply(quotation.units, quotation.nano, coef);
-}
-
-Quotation quotationMultiply(const tinkoff::MoneyValue& money, qint64 coef)
-{
-    return unitsAndNanoMultiply(money.units(), money.nano(), coef);
 }
 
 static Quotation unitsAndNanoDivide(qint64 units, qint32 nano, qint64 coef)
@@ -133,6 +180,11 @@ static Quotation unitsAndNanoDivide(qint64 units, qint32 nano, qint64 coef)
     return res;
 }
 
+Quotation quotationDivide(const tinkoff::MoneyValue& money, qint64 coef)
+{
+    return unitsAndNanoDivide(money.units(), money.nano(), coef);
+}
+
 Quotation quotationDivide(const tinkoff::Quotation& quotation, qint64 coef)
 {
     return unitsAndNanoDivide(quotation.units(), quotation.nano(), coef);
@@ -141,9 +193,4 @@ Quotation quotationDivide(const tinkoff::Quotation& quotation, qint64 coef)
 Quotation quotationDivide(const Quotation& quotation, qint64 coef)
 {
     return unitsAndNanoDivide(quotation.units, quotation.nano, coef);
-}
-
-Quotation quotationDivide(const tinkoff::MoneyValue& money, qint64 coef)
-{
-    return unitsAndNanoDivide(money.units(), money.nano(), coef);
 }

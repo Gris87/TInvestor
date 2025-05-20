@@ -238,6 +238,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     const QString          positionUid   = QString::fromStdString(tinkoffOperation.position_uid());
     const qint64           timestamp     = timeToTimestamp(tinkoffOperation.date());
     tinkoff::OperationType operationType = tinkoffOperation.type();
+    Quotation              yield;
 
     if (timestamp == mLastOperationTimestamp)
     {
@@ -265,7 +266,9 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     {
         quantityAndAvgPrice.quantity -= tinkoffOperation.quantity();
 
-        // TODO: Calculate yield
+        yield = quotationDiff(
+            tinkoffOperation.payment(), quotationMultiply(quantityAndAvgPrice.avgPrice, tinkoffOperation.quantity())
+        );
     }
 
     if (!isOperationTypeWithExtAccount(operationType, positionUid))
@@ -274,9 +277,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
         if (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL)
         {
-            // TODO: Need to sum with yield
-
-            mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.commission());
+            mTotalMoney = quotationSum(quotationSum(mTotalMoney, yield), tinkoffOperation.commission());
         }
         else
         {
@@ -297,19 +298,19 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.timestamp              = timestamp + mAmountOfOperationsWithSameTimestamp;
     res.instrumentId           = instrumentId;
     res.description            = QString::fromStdString(tinkoffOperation.description());
-    res.price                  = moneyToFloat(tinkoffOperation.price());
+    res.price                  = quotationToFloat(tinkoffOperation.price());
     res.avgPrice               = quantityAndAvgPrice.avgPrice;
     res.quantity               = tinkoffOperation.quantity();
     res.remainedQuantity       = quantityAndAvgPrice.quantity;
-    res.payment                = moneyToFloat(tinkoffOperation.payment());
-    res.commission             = moneyToFloat(tinkoffOperation.commission());
-    res.yield                  = moneyToFloat(tinkoffOperation.yield());
+    res.payment                = quotationToFloat(tinkoffOperation.payment());
+    res.commission             = quotationToFloat(tinkoffOperation.commission());
+    res.yield                  = quotationToFloat(yield);
     res.remainedMoney          = mRemainedMoney;
     res.totalMoney             = mTotalMoney;
-    res.pricePrecision         = moneyPrecision(tinkoffOperation.price());
-    res.paymentPrecision       = moneyPrecision(tinkoffOperation.payment());
-    res.commissionPrecision    = moneyPrecision(tinkoffOperation.commission());
-    res.yieldPrecision         = moneyPrecision(tinkoffOperation.yield());
+    res.pricePrecision         = quotationPrecision(tinkoffOperation.price());
+    res.paymentPrecision       = quotationPrecision(tinkoffOperation.payment());
+    res.commissionPrecision    = quotationPrecision(tinkoffOperation.commission());
+    res.yieldPrecision         = quotationPrecision(yield);
     res.remainedMoneyPrecision = quotationPrecision(mRemainedMoney);
     res.totalMoneyPrecision    = quotationPrecision(mTotalMoney);
 
