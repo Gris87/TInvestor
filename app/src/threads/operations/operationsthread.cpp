@@ -24,6 +24,9 @@ OperationsThread::OperationsThread(
     mAccountId(),
     mPortfolioStream(),
     mLastRequestTimestamp(),
+    mLastOperationTimestamp(),
+    mAmountOfOperationsWithSameTimestamp(),
+    mLastPositionUidForExtAccount(),
     mInstruments(),
     mRemainedMoney(),
     mTotalMoney()
@@ -133,6 +136,10 @@ void OperationsThread::readOperations()
         mTotalMoney           = Quotation();
     }
 
+    mLastOperationTimestamp              = 0;
+    mAmountOfOperationsWithSameTimestamp = 0;
+    mLastPositionUidForExtAccount        = "";
+
     emit operationsRead(operations);
 }
 
@@ -227,10 +234,24 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 {
     Operation res;
 
-    QString              instrumentId        = QString::fromStdString(tinkoffOperation.instrument_uid());
+    QString                instrumentId  = QString::fromStdString(tinkoffOperation.instrument_uid());
+    const QString          positionUid   = QString::fromStdString(tinkoffOperation.position_uid());
+    const qint64           timestamp     = timeToTimestamp(tinkoffOperation.date());
+    tinkoff::OperationType operationType = tinkoffOperation.type();
+
+    if (timestamp == mLastOperationTimestamp)
+    {
+        ++mAmountOfOperationsWithSameTimestamp;
+    }
+    else
+    {
+        mLastOperationTimestamp              = timestamp;
+        mAmountOfOperationsWithSameTimestamp = 0;
+    }
+
     QuantityAndAvgPrice& quantityAndAvgPrice = mInstruments[instrumentId]; // clazy:exclude=detaching-member
 
-    if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_BUY)
+    if (operationType == tinkoff::OPERATION_TYPE_BUY)
     {
         const Quotation totalValue = quotationSum(
             quotationMultiply(quantityAndAvgPrice.avgPrice, quantityAndAvgPrice.quantity),
@@ -240,28 +261,40 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         quantityAndAvgPrice.quantity += tinkoffOperation.quantity();
         quantityAndAvgPrice.avgPrice  = quotationDivide(totalValue, quantityAndAvgPrice.quantity);
     }
-    else if (tinkoffOperation.type() == tinkoff::OPERATION_TYPE_SELL)
+    else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
         quantityAndAvgPrice.quantity -= tinkoffOperation.quantity();
+
+        // TODO: Calculate yield
     }
 
-    mRemainedMoney = quotationSum(quotationSum(mRemainedMoney, tinkoffOperation.payment()), tinkoffOperation.commission());
-
-    if (isOperationTypeWithMoney(tinkoffOperation.type()))
+    if (!isOperationTypeWithExtAccount(operationType, positionUid))
     {
-        Q_ASSERT_X(
-            instrumentId == "" || instrumentId == RUBLE_UID, "OperationsThread::handleOperationItem()", "Expecting for ruble"
-        );
-        instrumentId = RUBLE_UID; // Real server sends empty instrument_uid
+        mRemainedMoney = quotationSum(quotationSum(mRemainedMoney, tinkoffOperation.payment()), tinkoffOperation.commission());
 
-        mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
+        if (operationType == tinkoff::OPERATION_TYPE_BUY || operationType == tinkoff::OPERATION_TYPE_SELL)
+        {
+            // TODO: Need to sum with yield
+
+            mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.commission());
+        }
+        else
+        {
+            // Real server sends empty instrument_uid for some operations with ruble
+            if (instrumentId == "")
+            {
+                instrumentId = RUBLE_UID;
+            }
+
+            mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
+        }
     }
     else
     {
-        mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.commission());
+        mLastPositionUidForExtAccount = positionUid;
     }
 
-    res.timestamp              = timeToTimestamp(tinkoffOperation.date());
+    res.timestamp              = timestamp + mAmountOfOperationsWithSameTimestamp;
     res.instrumentId           = instrumentId;
     res.description            = QString::fromStdString(tinkoffOperation.description());
     res.price                  = moneyToFloat(tinkoffOperation.price());
@@ -283,9 +316,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     return res;
 }
 
-bool OperationsThread::isOperationTypeWithMoney(tinkoff::OperationType operationType) const
+bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const
 {
-    return operationType == tinkoff::OPERATION_TYPE_INPUT || operationType == tinkoff::OPERATION_TYPE_OUTPUT ||
-           operationType == tinkoff::OPERATION_TYPE_TAX || operationType == tinkoff::OPERATION_TYPE_TAX_CORRECTION ||
-           operationType == tinkoff::OPERATION_TYPE_TRACK_MFEE;
+    return operationType == tinkoff::OPERATION_TYPE_DIV_EXT ||
+           (operationType == tinkoff::OPERATION_TYPE_DIVIDEND_TAX && positionUid == mLastPositionUidForExtAccount);
 }

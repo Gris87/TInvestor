@@ -52,7 +52,7 @@ private:
     Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
 
     [[nodiscard]]
-    bool isOperationTypeWithMoney(tinkoff::OperationType operationType) const;
+    bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
     IUserStorage*                      mUserStorage;
     IOperationsDatabase*               mOperationsDatabase;
@@ -60,6 +60,9 @@ private:
     QString                            mAccountId;
     std::shared_ptr<PortfolioStream>   mPortfolioStream;
     qint64                             mLastRequestTimestamp;
+    qint64                             mLastOperationTimestamp;
+    qint8                              mAmountOfOperationsWithSameTimestamp;
+    QString                            mLastPositionUidForExtAccount;
     QMap<QString, QuantityAndAvgPrice> mInstruments; // Instrument Id => QuantityAndAvgPrice
     Quotation                          mRemainedMoney;
     Quotation                          mTotalMoney;
