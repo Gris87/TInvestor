@@ -25,10 +25,12 @@ struct Operation
     QString   instrumentId;
     QString   description;
     float     price;
-    Quotation avgPrice;
+    float     avgPrice;
     qint64    quantity;
     qint64    remainedQuantity;
     float     payment;
+    float     avgCost;
+    Quotation cost;
     float     commission;
     float     yield;
     float     yieldWithCommission;

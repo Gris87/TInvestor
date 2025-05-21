@@ -6,6 +6,7 @@ constexpr qint64 MS_IN_SECOND    = 1000LL;
 constexpr qint32 NANOS_IN_MS     = 1000000;
 constexpr qint32 NANOS_INT       = 1000000000;
 constexpr float  NANOS_FLOAT     = 1000000000.0f;
+constexpr double NANOS_DOUBLE    = 1000000000.0;
 constexpr qint8  START_PRECISION = 9;
 constexpr qint8  TENS            = 10;
 
@@ -34,6 +35,26 @@ float quotationToFloat(const tinkoff::Quotation& quotation)
 float quotationToFloat(const Quotation& quotation)
 {
     return unitsAndNanoToFloat(quotation.units, quotation.nano);
+}
+
+static double unitsAndNanoToDouble(qint64 units, qint32 nano)
+{
+    return units + (nano / NANOS_DOUBLE);
+}
+
+double quotationToDouble(const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoToDouble(money.units(), money.nano());
+}
+
+double quotationToDouble(const tinkoff::Quotation& quotation)
+{
+    return unitsAndNanoToDouble(quotation.units(), quotation.nano());
+}
+
+double quotationToDouble(const Quotation& quotation)
+{
+    return unitsAndNanoToDouble(quotation.units, quotation.nano);
 }
 
 static qint8 nanoPrecision(qint32 nano)
@@ -67,6 +88,36 @@ qint8 quotationPrecision(const tinkoff::Quotation& quotation)
 qint8 quotationPrecision(const Quotation& quotation)
 {
     return nanoPrecision(quotation.nano);
+}
+
+static Quotation unitsAndNanoConvert(qint64 units, qint32 nano)
+{
+    Quotation res;
+
+    res.units = units;
+    res.nano  = nano;
+
+    return res;
+}
+
+Quotation quotationConvert(const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoConvert(money.units(), money.nano());
+}
+
+Quotation quotationConvert(const tinkoff::Quotation& quotation)
+{
+    return unitsAndNanoConvert(quotation.units(), quotation.nano());
+}
+
+Quotation quotationFromDouble(double value)
+{
+    Quotation res;
+
+    res.units = value;
+    res.nano  = (value - res.units) * NANOS_INT;
+
+    return res;
 }
 
 static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint64 nano2)

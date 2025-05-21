@@ -11,6 +11,8 @@ Operation::Operation() :
     quantity(),
     remainedQuantity(),
     payment(),
+    avgCost(),
+    cost(),
     commission(),
     yield(),
     yieldWithCommission(),
@@ -33,9 +35,11 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     instrumentId                 = jsonObject.value("instrumentId").toString();
     description                  = jsonObject.value("description").toString();
     price                        = jsonObject.value("price").toDouble();
+    avgPrice                     = jsonObject.value("avgPrice").toDouble();
     quantity                     = jsonObject.value("quantity").toInteger();
     remainedQuantity             = jsonObject.value("remainedQuantity").toInteger();
     payment                      = jsonObject.value("payment").toDouble();
+    avgCost                      = jsonObject.value("avgCost").toDouble();
     commission                   = jsonObject.value("commission").toDouble();
     yield                        = jsonObject.value("yield").toDouble();
     yieldWithCommission          = jsonObject.value("yieldWithCommission").toDouble();
@@ -48,7 +52,7 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     remainedMoneyPrecision       = jsonObject.value("remainedMoneyPrecision").toInt();
     totalMoneyPrecision          = jsonObject.value("totalMoneyPrecision").toInt();
 
-    avgPrice.fromJsonObject(jsonObject.value("avgPrice").toObject());
+    cost.fromJsonObject(jsonObject.value("cost").toObject());
     remainedMoney.fromJsonObject(jsonObject.value("remainedMoney").toObject());
     totalMoney.fromJsonObject(jsonObject.value("totalMoney").toObject());
 }
@@ -62,10 +66,12 @@ QJsonObject Operation::toJsonObject() const
     res.insert("instrumentId",                 instrumentId);
     res.insert("description",                  description);
     res.insert("price",                        price);
-    res.insert("avgPrice",                     avgPrice.toJsonObject());
+    res.insert("avgPrice",                     avgPrice);
     res.insert("quantity",                     quantity);
     res.insert("remainedQuantity",             remainedQuantity);
     res.insert("payment",                      payment);
+    res.insert("avgCost",                      avgCost);
+    res.insert("cost",                         cost.toJsonObject());
     res.insert("commission",                   commission);
     res.insert("yield",                        yield);
     res.insert("yieldWithCommission",          yieldWithCommission);
@@ -88,8 +94,9 @@ bool operator==(const Operation& lhs, const Operation& rhs)
 {
     return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId && lhs.description == rhs.description &&
            lhs.price == rhs.price && lhs.avgPrice == rhs.avgPrice && lhs.quantity == rhs.quantity &&
-           lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.commission == rhs.commission &&
-           lhs.yield == rhs.yield && lhs.yieldWithCommission == rhs.yieldWithCommission &&
+           lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.avgCost == rhs.avgCost &&
+           lhs.cost == rhs.cost && lhs.commission == rhs.commission && lhs.yield == rhs.yield &&
+           lhs.yieldWithCommission == rhs.yieldWithCommission &&
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&
            lhs.totalMoney == rhs.totalMoney && lhs.pricePrecision == rhs.pricePrecision &&
            lhs.paymentPrecision == rhs.paymentPrecision && lhs.commissionPrecision == rhs.commissionPrecision &&

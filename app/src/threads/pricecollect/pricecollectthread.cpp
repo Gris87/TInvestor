@@ -118,13 +118,12 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         {
             StockMeta stockMeta;
 
-            stockMeta.uid                     = QString::fromStdString(tinkoffStock.uid());
-            stockMeta.ticker                  = QString::fromStdString(tinkoffStock.ticker());
-            stockMeta.name                    = QString::fromStdString(tinkoffStock.name());
-            stockMeta.forQualInvestorFlag     = tinkoffStock.for_qual_investor_flag();
-            stockMeta.lot                     = tinkoffStock.lot();
-            stockMeta.minPriceIncrement.units = tinkoffStock.min_price_increment().units();
-            stockMeta.minPriceIncrement.nano  = tinkoffStock.min_price_increment().nano();
+            stockMeta.uid                 = QString::fromStdString(tinkoffStock.uid());
+            stockMeta.ticker              = QString::fromStdString(tinkoffStock.ticker());
+            stockMeta.name                = QString::fromStdString(tinkoffStock.name());
+            stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
+            stockMeta.lot                 = tinkoffStock.lot();
+            stockMeta.minPriceIncrement   = quotationConvert(tinkoffStock.min_price_increment());
 
             stocksMeta.append(stockMeta);
         }

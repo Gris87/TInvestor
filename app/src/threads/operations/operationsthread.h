@@ -11,16 +11,16 @@
 
 
 
-struct QuantityAndAvgPrice
+struct QuantityAndCost
 {
-    explicit QuantityAndAvgPrice() :
+    explicit QuantityAndCost() :
         quantity(),
-        avgPrice()
+        cost()
     {
     }
 
     qint64    quantity;
-    Quotation avgPrice;
+    Quotation cost;
 };
 
 
@@ -54,16 +54,16 @@ private:
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
-    IUserStorage*                      mUserStorage;
-    IOperationsDatabase*               mOperationsDatabase;
-    IGrpcClient*                       mGrpcClient;
-    QString                            mAccountId;
-    std::shared_ptr<PortfolioStream>   mPortfolioStream;
-    qint64                             mLastRequestTimestamp;
-    qint64                             mLastOperationTimestamp;
-    qint8                              mAmountOfOperationsWithSameTimestamp;
-    QString                            mLastPositionUidForExtAccount;
-    QMap<QString, QuantityAndAvgPrice> mInstruments; // Instrument Id => QuantityAndAvgPrice
-    Quotation                          mRemainedMoney;
-    Quotation                          mTotalMoney;
+    IUserStorage*                    mUserStorage;
+    IOperationsDatabase*             mOperationsDatabase;
+    IGrpcClient*                     mGrpcClient;
+    QString                          mAccountId;
+    std::shared_ptr<PortfolioStream> mPortfolioStream;
+    qint64                           mLastRequestTimestamp;
+    qint64                           mLastOperationTimestamp;
+    qint8                            mAmountOfOperationsWithSameTimestamp;
+    QString                          mLastPositionUidForExtAccount;
+    QMap<QString, QuantityAndCost>   mInstruments; // Instrument Id => QuantityAndCost
+    Quotation                        mRemainedMoney;
+    Quotation                        mTotalMoney;
 };

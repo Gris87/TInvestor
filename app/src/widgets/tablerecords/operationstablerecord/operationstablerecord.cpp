@@ -88,15 +88,13 @@ void OperationsTableRecord::setOperation(const Operation& operation)
         instrument.name = "?????";
     }
 
-    const float avgPrice = quotationToFloat(operation.avgPrice);
-
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(operation.timestamp));
     mInstrumentTableItemWidget->setIcon(instrumentLogo);
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
     mPriceTableWidgetItem->setValue(operation.price, operation.pricePrecision);
-    mAvgPriceTableWidgetItem->setValue(avgPrice, operation.pricePrecision);
+    mAvgPriceTableWidgetItem->setValue(operation.avgPrice, operation.pricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
     mRemainedQuantityTableWidgetItem->setValue(operation.remainedQuantity);
     mPaymentTableWidgetItem->setValue(operation.payment, false, operation.paymentPrecision);
@@ -104,7 +102,7 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mYieldTableWidgetItem->setValue(operation.yield, false, operation.yieldPrecision);
     mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, true, operation.yieldWithCommissionPrecision);
     mYieldWithCommissionPercentTableWidgetItem->setValue(
-        operation.yieldWithCommissionPercent, avgPrice, operation.pricePrecision
+        operation.yieldWithCommissionPercent, operation.avgCost, operation.pricePrecision
     );
     mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), operation.remainedMoneyPrecision);
     mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
