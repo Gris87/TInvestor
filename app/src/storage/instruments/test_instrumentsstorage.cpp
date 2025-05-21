@@ -51,14 +51,17 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     Instrument instrument2;
     Instrument instrument3;
 
-    instrument1.ticker = "BANA";
-    instrument1.name   = "Banana";
+    instrument1.ticker         = "BANA";
+    instrument1.name           = "Banana";
+    instrument1.pricePrecision = 2;
 
-    instrument2.ticker = "BODO";
-    instrument2.name   = "BODO NE BODO";
+    instrument2.ticker         = "BODO";
+    instrument2.name           = "BODO NE BODO";
+    instrument2.pricePrecision = 3;
 
-    instrument3.ticker = "ZARA";
-    instrument3.name   = "Zaraza";
+    instrument3.ticker         = "ZARA";
+    instrument3.name           = "Zaraza";
+    instrument3.pricePrecision = 4;
 
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;
@@ -70,13 +73,16 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     instruments = storage->getInstruments();
 
     // clang-format off
-    ASSERT_EQ(instruments.size(),          3);
-    ASSERT_EQ(instruments["aaaaa"].ticker, "BANA");
-    ASSERT_EQ(instruments["aaaaa"].name,   "Banana");
-    ASSERT_EQ(instruments["bbbbb"].ticker, "BODO");
-    ASSERT_EQ(instruments["bbbbb"].name,   "BODO NE BODO");
-    ASSERT_EQ(instruments["ccccc"].ticker, "ZARA");
-    ASSERT_EQ(instruments["ccccc"].name,   "Zaraza");
+    ASSERT_EQ(instruments.size(),                  3);
+    ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
+    ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
+    ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
+    ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
+    ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
+    ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     // clang-format on
 }
 
@@ -96,14 +102,17 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     Instrument instrument2;
     Instrument instrument3;
 
-    instrument1.ticker = "BANA";
-    instrument1.name   = "Banana";
+    instrument1.ticker         = "BANA";
+    instrument1.name           = "Banana";
+    instrument1.pricePrecision = 2;
 
-    instrument2.ticker = "BODO";
-    instrument2.name   = "BODO NE BODO";
+    instrument2.ticker         = "BODO";
+    instrument2.name           = "BODO NE BODO";
+    instrument2.pricePrecision = 3;
 
-    instrument3.ticker = "ZARA";
-    instrument3.name   = "Zaraza";
+    instrument3.ticker         = "ZARA";
+    instrument3.name           = "Zaraza";
+    instrument3.pricePrecision = 4;
 
     instruments["aaaaa"] = instrument1;
     instruments["bbbbb"] = instrument2;
@@ -115,13 +124,16 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     instruments = storage->getInstruments();
 
     // clang-format off
-    ASSERT_EQ(instruments.size(),          3);
-    ASSERT_EQ(instruments["aaaaa"].ticker, "BANA");
-    ASSERT_EQ(instruments["aaaaa"].name,   "Banana");
-    ASSERT_EQ(instruments["bbbbb"].ticker, "BODO");
-    ASSERT_EQ(instruments["bbbbb"].name,   "BODO NE BODO");
-    ASSERT_EQ(instruments["ccccc"].ticker, "ZARA");
-    ASSERT_EQ(instruments["ccccc"].name,   "Zaraza");
+    ASSERT_EQ(instruments.size(),                  3);
+    ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
+    ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
+    ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
+    ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
+    ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
+    ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     // clang-format on
 
     Instruments newInstruments;
@@ -129,11 +141,13 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     Instrument newInstrument1;
     Instrument newInstrument2;
 
-    newInstrument1.ticker = "WADA";
-    newInstrument1.name   = "Awada kedabra";
+    newInstrument1.ticker         = "WADA";
+    newInstrument1.name           = "Awada kedabra";
+    newInstrument1.pricePrecision = 5;
 
-    newInstrument2.ticker = "NIGA";
-    newInstrument2.name   = "Read my kniga";
+    newInstrument2.ticker         = "NIGA";
+    newInstrument2.name           = "Read my kniga";
+    newInstrument2.pricePrecision = 6;
 
     newInstruments["bbbbb"] = newInstrument1;
     newInstruments["ddddd"] = newInstrument2;
@@ -146,14 +160,18 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     instruments = storage->getInstruments();
 
     // clang-format off
-    ASSERT_EQ(instruments.size(),          4);
-    ASSERT_EQ(instruments["aaaaa"].ticker, "BANA");
-    ASSERT_EQ(instruments["aaaaa"].name,   "Banana");
-    ASSERT_EQ(instruments["bbbbb"].ticker, "WADA");
-    ASSERT_EQ(instruments["bbbbb"].name,   "Awada kedabra");
-    ASSERT_EQ(instruments["ccccc"].ticker, "ZARA");
-    ASSERT_EQ(instruments["ccccc"].name,   "Zaraza");
-    ASSERT_EQ(instruments["ddddd"].ticker, "NIGA");
-    ASSERT_EQ(instruments["ddddd"].name,   "Read my kniga");
+    ASSERT_EQ(instruments.size(),                  4);
+    ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
+    ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
+    ASSERT_EQ(instruments["bbbbb"].ticker,         "WADA");
+    ASSERT_EQ(instruments["bbbbb"].name,           "Awada kedabra");
+    ASSERT_EQ(instruments["bbbbb"].pricePrecision, 5);
+    ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
+    ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
+    ASSERT_EQ(instruments["ddddd"].ticker,         "NIGA");
+    ASSERT_EQ(instruments["ddddd"].name,           "Read my kniga");
+    ASSERT_EQ(instruments["ddddd"].pricePrecision, 6);
     // clang-format on
 }

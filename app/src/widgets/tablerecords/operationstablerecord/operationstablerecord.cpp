@@ -88,24 +88,29 @@ void OperationsTableRecord::setOperation(const Operation& operation)
         instrument.name = "?????";
     }
 
+    if (instrument.pricePrecision < 2)
+    {
+        instrument.pricePrecision = 2;
+    }
+
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(operation.timestamp));
     mInstrumentTableItemWidget->setIcon(instrumentLogo);
     mInstrumentTableItemWidget->setText(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
-    mPriceTableWidgetItem->setValue(operation.price, operation.pricePrecision);
-    mAvgPriceTableWidgetItem->setValue(operation.avgPrice, operation.pricePrecision);
+    mPriceTableWidgetItem->setValue(operation.price, instrument.pricePrecision);
+    mAvgPriceTableWidgetItem->setValue(operation.avgPrice, instrument.pricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
     mRemainedQuantityTableWidgetItem->setValue(operation.remainedQuantity);
     mPaymentTableWidgetItem->setValue(operation.payment, false, operation.paymentPrecision);
     mCommissionTableWidgetItem->setValue(operation.commission, false, operation.commissionPrecision);
-    mYieldTableWidgetItem->setValue(operation.yield, false, operation.yieldPrecision);
-    mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, true, operation.yieldWithCommissionPrecision);
+    mYieldTableWidgetItem->setValue(operation.yield, false, 2);
+    mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, true, 2);
     mYieldWithCommissionPercentTableWidgetItem->setValue(
-        operation.yieldWithCommissionPercent, operation.avgCost, operation.pricePrecision
+        operation.yieldWithCommissionPercent, operation.avgCost, instrument.pricePrecision
     );
-    mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), operation.remainedMoneyPrecision);
-    mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), operation.totalMoneyPrecision);
+    mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), 2);
+    mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), 2);
 }
 
 void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const

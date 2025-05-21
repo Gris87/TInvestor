@@ -150,8 +150,9 @@ obtainInstrumentsFromShares(QThread* parentThread, IGrpcClient* grpcClient, Inst
                 const QString instrumentId = QString::fromStdString(tinkoffShare.uid());
 
                 Instrument instrument;
-                instrument.ticker = QString::fromStdString(tinkoffShare.ticker());
-                instrument.name   = QString::fromStdString(tinkoffShare.name());
+                instrument.ticker         = QString::fromStdString(tinkoffShare.ticker());
+                instrument.name           = QString::fromStdString(tinkoffShare.name());
+                instrument.pricePrecision = quotationPrecision(tinkoffShare.min_price_increment());
 
                 res[instrumentId] = instrument;
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffShare.brand().logo_name())));
@@ -176,8 +177,9 @@ obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcClient, Instr
                 const QString instrumentId = QString::fromStdString(tinkoffBond.uid());
 
                 Instrument instrument;
-                instrument.ticker = QString::fromStdString(tinkoffBond.ticker());
-                instrument.name   = QString::fromStdString(tinkoffBond.name());
+                instrument.ticker         = QString::fromStdString(tinkoffBond.ticker());
+                instrument.name           = QString::fromStdString(tinkoffBond.name());
+                instrument.pricePrecision = quotationPrecision(tinkoffBond.min_price_increment());
 
                 res[instrumentId] = instrument;
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffBond.brand().logo_name())));
@@ -203,8 +205,9 @@ static void obtainInstrumentsFromCurrencies(
                 const QString instrumentId = QString::fromStdString(tinkoffCurrency.uid());
 
                 Instrument instrument;
-                instrument.ticker = QString::fromStdString(tinkoffCurrency.ticker());
-                instrument.name   = QString::fromStdString(tinkoffCurrency.name());
+                instrument.ticker         = QString::fromStdString(tinkoffCurrency.ticker());
+                instrument.name           = QString::fromStdString(tinkoffCurrency.name());
+                instrument.pricePrecision = quotationPrecision(tinkoffCurrency.min_price_increment());
 
                 res[instrumentId] = instrument;
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffCurrency.brand().logo_name())));
@@ -233,8 +236,9 @@ obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, Instru
                 const QString instrumentId = QString::fromStdString(tinkoffEtf.uid());
 
                 Instrument instrument;
-                instrument.ticker = QString::fromStdString(tinkoffEtf.ticker());
-                instrument.name   = QString::fromStdString(tinkoffEtf.name());
+                instrument.ticker         = QString::fromStdString(tinkoffEtf.ticker());
+                instrument.name           = QString::fromStdString(tinkoffEtf.name());
+                instrument.pricePrecision = quotationPrecision(tinkoffEtf.min_price_increment());
 
                 res[instrumentId] = instrument;
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffEtf.brand().logo_name())));
@@ -259,8 +263,9 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
                 const QString instrumentId = QString::fromStdString(tinkoffFuture.uid());
 
                 Instrument instrument;
-                instrument.ticker = QString::fromStdString(tinkoffFuture.ticker());
-                instrument.name   = QString::fromStdString(tinkoffFuture.name());
+                instrument.ticker         = QString::fromStdString(tinkoffFuture.ticker());
+                instrument.name           = QString::fromStdString(tinkoffFuture.name());
+                instrument.pricePrecision = quotationPrecision(tinkoffFuture.min_price_increment());
 
                 res[instrumentId] = instrument;
                 logos.append(InstrumentIdAndLogo(instrumentId, QString::fromStdString(tinkoffFuture.brand().logo_name())));

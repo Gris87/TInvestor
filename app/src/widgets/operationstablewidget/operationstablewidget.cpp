@@ -9,7 +9,7 @@
 
 
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {110, 133, 309, 56, 106, 95, 167, 87, 85, 95, 173, 194, 115, 95};
 #else
 const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
 #endif
@@ -165,8 +165,8 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     doc.setColumnWidth(OPERATIONS_TIME_COLUMN + 1,                          17.57 + COLUMN_GAP);
     doc.autosizeColumnWidth(OPERATIONS_NAME_COLUMN + 1);
     doc.autosizeColumnWidth(OPERATIONS_DESCRIPTION_COLUMN + 1);
-    doc.setColumnWidth(OPERATIONS_PRICE_COLUMN + 1,                         14.57 + COLUMN_GAP);
-    doc.setColumnWidth(OPERATIONS_AVG_PRICE_COLUMN + 1,                     14.57 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_PRICE_COLUMN + 1,                         7.43  + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_AVG_PRICE_COLUMN + 1,                     13.14 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_QUANTITY_COLUMN + 1,                      10.86 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,             22.43 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_PAYMENT_COLUMN + 1,                       11.43 + COLUMN_GAP);
@@ -175,7 +175,7 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     doc.setColumnWidth(OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,         23.43 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, 27    + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_REMAINED_MONEY_COLUMN + 1,                14.57 + COLUMN_GAP);
-    doc.setColumnWidth(OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   13.57 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   11.14 + COLUMN_GAP);
     // clang-format on
     // NOLINTEND(readability-magic-numbers)
 

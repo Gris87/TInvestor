@@ -21,6 +21,7 @@ struct Instrument
 
     QString ticker;
     QString name;
+    qint8   pricePrecision;
 };
 
 using Instruments = QMap<QString, Instrument>; // UID => Instrument

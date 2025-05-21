@@ -31,13 +31,8 @@ TEST(Test_Operation, Test_constructor_and_destructor)
     ASSERT_EQ(operation.remainedMoney.nano,           0);
     ASSERT_EQ(operation.totalMoney.units,             0);
     ASSERT_EQ(operation.totalMoney.nano,              0);
-    ASSERT_EQ(operation.pricePrecision,               0);
     ASSERT_EQ(operation.paymentPrecision,             0);
     ASSERT_EQ(operation.commissionPrecision,          0);
-    ASSERT_EQ(operation.yieldPrecision,               0);
-    ASSERT_EQ(operation.yieldWithCommissionPrecision, 0);
-    ASSERT_EQ(operation.remainedMoneyPrecision,       0);
-    ASSERT_EQ(operation.totalMoneyPrecision,          0);
     // clang-format on
 }
 
@@ -45,32 +40,27 @@ TEST(Test_Operation, Test_copy_constructor)
 {
     Operation operation;
 
-    operation.timestamp                    = 1;
-    operation.instrumentId                 = "a";
-    operation.description                  = "b";
-    operation.price                        = 2.0f;
-    operation.avgPrice                     = 3;
-    operation.quantity                     = 4;
-    operation.remainedQuantity             = 5;
-    operation.payment                      = 6.0f;
-    operation.avgCost                      = 7.0f;
-    operation.cost.units                   = 8;
-    operation.cost.nano                    = 9;
-    operation.commission                   = 10.0f;
-    operation.yield                        = 11.0f;
-    operation.yieldWithCommission          = 12.0f;
-    operation.yieldWithCommissionPercent   = 13.0f;
-    operation.remainedMoney.units          = 14;
-    operation.remainedMoney.nano           = 15;
-    operation.totalMoney.units             = 16;
-    operation.totalMoney.nano              = 17;
-    operation.pricePrecision               = 18;
-    operation.paymentPrecision             = 19;
-    operation.commissionPrecision          = 20;
-    operation.yieldPrecision               = 21;
-    operation.yieldWithCommissionPrecision = 22;
-    operation.remainedMoneyPrecision       = 23;
-    operation.totalMoneyPrecision          = 24;
+    operation.timestamp                  = 1;
+    operation.instrumentId               = "a";
+    operation.description                = "b";
+    operation.price                      = 2.0f;
+    operation.avgPrice                   = 3;
+    operation.quantity                   = 4;
+    operation.remainedQuantity           = 5;
+    operation.payment                    = 6.0f;
+    operation.avgCost                    = 7.0f;
+    operation.cost.units                 = 8;
+    operation.cost.nano                  = 9;
+    operation.commission                 = 10.0f;
+    operation.yield                      = 11.0f;
+    operation.yieldWithCommission        = 12.0f;
+    operation.yieldWithCommissionPercent = 13.0f;
+    operation.remainedMoney.units        = 14;
+    operation.remainedMoney.nano         = 15;
+    operation.totalMoney.units           = 16;
+    operation.totalMoney.nano            = 17;
+    operation.paymentPrecision           = 18;
+    operation.commissionPrecision        = 19;
 
     const Operation operation2(operation);
 
@@ -94,13 +84,8 @@ TEST(Test_Operation, Test_copy_constructor)
     ASSERT_EQ(operation2.remainedMoney.nano,           15);
     ASSERT_EQ(operation2.totalMoney.units,             16);
     ASSERT_EQ(operation2.totalMoney.nano,              17);
-    ASSERT_EQ(operation2.pricePrecision,               18);
-    ASSERT_EQ(operation2.paymentPrecision,             19);
-    ASSERT_EQ(operation2.commissionPrecision,          20);
-    ASSERT_EQ(operation2.yieldPrecision,               21);
-    ASSERT_EQ(operation2.yieldWithCommissionPrecision, 22);
-    ASSERT_EQ(operation2.remainedMoneyPrecision,       23);
-    ASSERT_EQ(operation2.totalMoneyPrecision,          24);
+    ASSERT_EQ(operation2.paymentPrecision,             18);
+    ASSERT_EQ(operation2.commissionPrecision,          19);
     // clang-format on
 }
 
@@ -109,32 +94,27 @@ TEST(Test_Operation, Test_assign)
     Operation operation;
     Operation operation2;
 
-    operation.timestamp                    = 1;
-    operation.instrumentId                 = "a";
-    operation.description                  = "b";
-    operation.price                        = 2.0f;
-    operation.avgPrice                     = 3;
-    operation.quantity                     = 4;
-    operation.remainedQuantity             = 5;
-    operation.payment                      = 6.0f;
-    operation.avgCost                      = 7.0f;
-    operation.cost.units                   = 8;
-    operation.cost.nano                    = 9;
-    operation.commission                   = 10.0f;
-    operation.yield                        = 11.0f;
-    operation.yieldWithCommission          = 12.0f;
-    operation.yieldWithCommissionPercent   = 13.0f;
-    operation.remainedMoney.units          = 14;
-    operation.remainedMoney.nano           = 15;
-    operation.totalMoney.units             = 16;
-    operation.totalMoney.nano              = 17;
-    operation.pricePrecision               = 18;
-    operation.paymentPrecision             = 19;
-    operation.commissionPrecision          = 20;
-    operation.yieldPrecision               = 21;
-    operation.yieldWithCommissionPrecision = 22;
-    operation.remainedMoneyPrecision       = 23;
-    operation.totalMoneyPrecision          = 24;
+    operation.timestamp                  = 1;
+    operation.instrumentId               = "a";
+    operation.description                = "b";
+    operation.price                      = 2.0f;
+    operation.avgPrice                   = 3;
+    operation.quantity                   = 4;
+    operation.remainedQuantity           = 5;
+    operation.payment                    = 6.0f;
+    operation.avgCost                    = 7.0f;
+    operation.cost.units                 = 8;
+    operation.cost.nano                  = 9;
+    operation.commission                 = 10.0f;
+    operation.yield                      = 11.0f;
+    operation.yieldWithCommission        = 12.0f;
+    operation.yieldWithCommissionPercent = 13.0f;
+    operation.remainedMoney.units        = 14;
+    operation.remainedMoney.nano         = 15;
+    operation.totalMoney.units           = 16;
+    operation.totalMoney.nano            = 17;
+    operation.paymentPrecision           = 18;
+    operation.commissionPrecision        = 19;
 
     operation2 = operation;
 
@@ -158,13 +138,8 @@ TEST(Test_Operation, Test_assign)
     ASSERT_EQ(operation2.remainedMoney.nano,           15);
     ASSERT_EQ(operation2.totalMoney.units,             16);
     ASSERT_EQ(operation2.totalMoney.nano,              17);
-    ASSERT_EQ(operation2.pricePrecision,               18);
-    ASSERT_EQ(operation2.paymentPrecision,             19);
-    ASSERT_EQ(operation2.commissionPrecision,          20);
-    ASSERT_EQ(operation2.yieldPrecision,               21);
-    ASSERT_EQ(operation2.yieldWithCommissionPrecision, 22);
-    ASSERT_EQ(operation2.remainedMoneyPrecision,       23);
-    ASSERT_EQ(operation2.totalMoneyPrecision,          24);
+    ASSERT_EQ(operation2.paymentPrecision,             18);
+    ASSERT_EQ(operation2.commissionPrecision,          19);
     // clang-format on
 }
 
@@ -192,17 +167,12 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(operation.remainedMoney.nano,           0);
     ASSERT_EQ(operation.totalMoney.units,             0);
     ASSERT_EQ(operation.totalMoney.nano,              0);
-    ASSERT_EQ(operation.pricePrecision,               0);
     ASSERT_EQ(operation.paymentPrecision,             0);
     ASSERT_EQ(operation.commissionPrecision,          0);
-    ASSERT_EQ(operation.yieldPrecision,               0);
-    ASSERT_EQ(operation.yieldWithCommissionPrecision, 0);
-    ASSERT_EQ(operation.remainedMoneyPrecision,       0);
-    ASSERT_EQ(operation.totalMoneyPrecision,          0);
     // clang-format on
 
     const QString content =
-        R"({"avgCost":7,"avgPrice":3,"commission":10,"commissionPrecision":20,"cost":{"nano":9,"units":8},"description":"b","instrumentId":"a","payment":6,"paymentPrecision":19,"price":2,"pricePrecision":18,"quantity":4,"remainedMoney":{"nano":15,"units":14},"remainedMoneyPrecision":23,"remainedQuantity":5,"timestamp":1,"totalMoney":{"nano":17,"units":16},"totalMoneyPrecision":24,"yield":11,"yieldPrecision":21,"yieldWithCommission":12,"yieldWithCommissionPercent":13,"yieldWithCommissionPrecision":22})";
+        R"({"avgCost":7,"avgPrice":3,"commission":10,"commissionPrecision":19,"cost":{"nano":9,"units":8},"description":"b","instrumentId":"a","payment":6,"paymentPrecision":18,"price":2,"quantity":4,"remainedMoney":{"nano":15,"units":14},"remainedQuantity":5,"timestamp":1,"totalMoney":{"nano":17,"units":16},"yield":11,"yieldWithCommission":12,"yieldWithCommissionPercent":13})";
 
     QJsonParseError     parseError;
     const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
@@ -230,13 +200,8 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(operation.remainedMoney.nano,           15);
     ASSERT_EQ(operation.totalMoney.units,             16);
     ASSERT_EQ(operation.totalMoney.nano,              17);
-    ASSERT_EQ(operation.pricePrecision,               18);
-    ASSERT_EQ(operation.paymentPrecision,             19);
-    ASSERT_EQ(operation.commissionPrecision,          20);
-    ASSERT_EQ(operation.yieldPrecision,               21);
-    ASSERT_EQ(operation.yieldWithCommissionPrecision, 22);
-    ASSERT_EQ(operation.remainedMoneyPrecision,       23);
-    ASSERT_EQ(operation.totalMoneyPrecision,          24);
+    ASSERT_EQ(operation.paymentPrecision,             18);
+    ASSERT_EQ(operation.commissionPrecision,          19);
     // clang-format on
 }
 
@@ -244,41 +209,34 @@ TEST(Test_Operation, Test_toJsonObject)
 {
     Operation operation;
 
-    operation.timestamp                    = 1;
-    operation.instrumentId                 = "a";
-    operation.description                  = "b";
-    operation.price                        = 2.0f;
-    operation.avgPrice                     = 3;
-    operation.quantity                     = 4;
-    operation.remainedQuantity             = 5;
-    operation.payment                      = 6.0f;
-    operation.avgCost                      = 7.0f;
-    operation.cost.units                   = 8;
-    operation.cost.nano                    = 9;
-    operation.commission                   = 10.0f;
-    operation.yield                        = 11.0f;
-    operation.yieldWithCommission          = 12.0f;
-    operation.yieldWithCommissionPercent   = 13.0f;
-    operation.remainedMoney.units          = 14;
-    operation.remainedMoney.nano           = 15;
-    operation.totalMoney.units             = 16;
-    operation.totalMoney.nano              = 17;
-    operation.pricePrecision               = 18;
-    operation.paymentPrecision             = 19;
-    operation.commissionPrecision          = 20;
-    operation.yieldPrecision               = 21;
-    operation.yieldWithCommissionPrecision = 22;
-    operation.remainedMoneyPrecision       = 23;
-    operation.totalMoneyPrecision          = 24;
+    operation.timestamp                  = 1;
+    operation.instrumentId               = "a";
+    operation.description                = "b";
+    operation.price                      = 2.0f;
+    operation.avgPrice                   = 3;
+    operation.quantity                   = 4;
+    operation.remainedQuantity           = 5;
+    operation.payment                    = 6.0f;
+    operation.avgCost                    = 7.0f;
+    operation.cost.units                 = 8;
+    operation.cost.nano                  = 9;
+    operation.commission                 = 10.0f;
+    operation.yield                      = 11.0f;
+    operation.yieldWithCommission        = 12.0f;
+    operation.yieldWithCommissionPercent = 13.0f;
+    operation.remainedMoney.units        = 14;
+    operation.remainedMoney.nano         = 15;
+    operation.totalMoney.units           = 16;
+    operation.totalMoney.nano            = 17;
+    operation.paymentPrecision           = 18;
+    operation.commissionPrecision        = 19;
 
     const QJsonObject   jsonObject = operation.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"avgCost":7,"avgPrice":3,"commission":10,"commissionPrecision":20,"cost":{"nano":9,"units":8},"description":"b","instrumentId":"a","payment":6,"paymentPrecision":19,"price":2,"pricePrecision":18,"quantity":4,"remainedMoney":{"nano":15,"units":14},"remainedMoneyPrecision":23,"remainedQuantity":5,"timestamp":1,"totalMoney":{"nano":17,"units":16},"totalMoneyPrecision":24,"yield":11,"yieldPrecision":21,"yieldWithCommission":12,"yieldWithCommissionPercent":13,"yieldWithCommissionPrecision":22})";
-
-    qInfo() << content;
+        R"({"avgCost":7,"avgPrice":3,"commission":10,"commissionPrecision":19,"cost":{"nano":9,"units":8},"description":"b","instrumentId":"a","payment":6,"paymentPrecision":18,"price":2,"quantity":4,"remainedMoney":{"nano":15,"units":14},"remainedQuantity":5,"timestamp":1,"totalMoney":{"nano":17,"units":16},"yield":11,"yieldWithCommission":12,"yieldWithCommissionPercent":13})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -288,59 +246,49 @@ TEST(Test_Operation, Test_equals)
     Operation operation;
     Operation operation2;
 
-    operation.timestamp                    = 1;
-    operation.instrumentId                 = "a";
-    operation.description                  = "b";
-    operation.price                        = 2.0f;
-    operation.avgPrice                     = 3;
-    operation.quantity                     = 4;
-    operation.remainedQuantity             = 5;
-    operation.payment                      = 6.0f;
-    operation.avgCost                      = 7.0f;
-    operation.cost.units                   = 8;
-    operation.cost.nano                    = 9;
-    operation.commission                   = 10.0f;
-    operation.yield                        = 11.0f;
-    operation.yieldWithCommission          = 12.0f;
-    operation.yieldWithCommissionPercent   = 13.0f;
-    operation.remainedMoney.units          = 14;
-    operation.remainedMoney.nano           = 15;
-    operation.totalMoney.units             = 16;
-    operation.totalMoney.nano              = 17;
-    operation.pricePrecision               = 18;
-    operation.paymentPrecision             = 19;
-    operation.commissionPrecision          = 20;
-    operation.yieldPrecision               = 21;
-    operation.yieldWithCommissionPrecision = 22;
-    operation.remainedMoneyPrecision       = 23;
-    operation.totalMoneyPrecision          = 24;
+    operation.timestamp                  = 1;
+    operation.instrumentId               = "a";
+    operation.description                = "b";
+    operation.price                      = 2.0f;
+    operation.avgPrice                   = 3;
+    operation.quantity                   = 4;
+    operation.remainedQuantity           = 5;
+    operation.payment                    = 6.0f;
+    operation.avgCost                    = 7.0f;
+    operation.cost.units                 = 8;
+    operation.cost.nano                  = 9;
+    operation.commission                 = 10.0f;
+    operation.yield                      = 11.0f;
+    operation.yieldWithCommission        = 12.0f;
+    operation.yieldWithCommissionPercent = 13.0f;
+    operation.remainedMoney.units        = 14;
+    operation.remainedMoney.nano         = 15;
+    operation.totalMoney.units           = 16;
+    operation.totalMoney.nano            = 17;
+    operation.paymentPrecision           = 18;
+    operation.commissionPrecision        = 19;
 
-    operation2.timestamp                    = 1;
-    operation2.instrumentId                 = "a";
-    operation2.description                  = "b";
-    operation2.price                        = 2.0f;
-    operation2.avgPrice                     = 3;
-    operation2.quantity                     = 4;
-    operation2.remainedQuantity             = 5;
-    operation2.payment                      = 6.0f;
-    operation2.avgCost                      = 7.0f;
-    operation2.cost.units                   = 8;
-    operation2.cost.nano                    = 9;
-    operation2.commission                   = 10.0f;
-    operation2.yield                        = 11.0f;
-    operation2.yieldWithCommission          = 12.0f;
-    operation2.yieldWithCommissionPercent   = 13.0f;
-    operation2.remainedMoney.units          = 14;
-    operation2.remainedMoney.nano           = 15;
-    operation2.totalMoney.units             = 16;
-    operation2.totalMoney.nano              = 17;
-    operation2.pricePrecision               = 18;
-    operation2.paymentPrecision             = 19;
-    operation2.commissionPrecision          = 20;
-    operation2.yieldPrecision               = 21;
-    operation2.yieldWithCommissionPrecision = 22;
-    operation2.remainedMoneyPrecision       = 23;
-    operation2.totalMoneyPrecision          = 24;
+    operation2.timestamp                  = 1;
+    operation2.instrumentId               = "a";
+    operation2.description                = "b";
+    operation2.price                      = 2.0f;
+    operation2.avgPrice                   = 3;
+    operation2.quantity                   = 4;
+    operation2.remainedQuantity           = 5;
+    operation2.payment                    = 6.0f;
+    operation2.avgCost                    = 7.0f;
+    operation2.cost.units                 = 8;
+    operation2.cost.nano                  = 9;
+    operation2.commission                 = 10.0f;
+    operation2.yield                      = 11.0f;
+    operation2.yieldWithCommission        = 12.0f;
+    operation2.yieldWithCommissionPercent = 13.0f;
+    operation2.remainedMoney.units        = 14;
+    operation2.remainedMoney.nano         = 15;
+    operation2.totalMoney.units           = 16;
+    operation2.totalMoney.nano            = 17;
+    operation2.paymentPrecision           = 18;
+    operation2.commissionPrecision        = 19;
 
     ASSERT_EQ(operation, operation2);
 
@@ -439,39 +387,14 @@ TEST(Test_Operation, Test_equals)
     operation2.totalMoney.nano = 17;
     ASSERT_EQ(operation, operation2);
 
-    operation2.pricePrecision = -18;
+    operation2.paymentPrecision = -18;
     ASSERT_NE(operation, operation2);
-    operation2.pricePrecision = 18;
+    operation2.paymentPrecision = 18;
     ASSERT_EQ(operation, operation2);
 
-    operation2.paymentPrecision = -19;
+    operation2.commissionPrecision = -19;
     ASSERT_NE(operation, operation2);
-    operation2.paymentPrecision = 19;
-    ASSERT_EQ(operation, operation2);
-
-    operation2.commissionPrecision = -20;
-    ASSERT_NE(operation, operation2);
-    operation2.commissionPrecision = 20;
-    ASSERT_EQ(operation, operation2);
-
-    operation2.yieldPrecision = -21;
-    ASSERT_NE(operation, operation2);
-    operation2.yieldPrecision = 21;
-    ASSERT_EQ(operation, operation2);
-
-    operation2.yieldWithCommissionPrecision = -22;
-    ASSERT_NE(operation, operation2);
-    operation2.yieldWithCommissionPrecision = 22;
-    ASSERT_EQ(operation, operation2);
-
-    operation2.remainedMoneyPrecision = -23;
-    ASSERT_NE(operation, operation2);
-    operation2.remainedMoneyPrecision = 23;
-    ASSERT_EQ(operation, operation2);
-
-    operation2.totalMoneyPrecision = -24;
-    ASSERT_NE(operation, operation2);
-    operation2.totalMoneyPrecision = 24;
+    operation2.commissionPrecision = 19;
     ASSERT_EQ(operation, operation2);
 }
 // NOLINTEND(readability-magic-numbers)
