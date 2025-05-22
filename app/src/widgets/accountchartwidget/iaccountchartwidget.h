@@ -2,19 +2,19 @@
 
 
 
-#include <QGraphicsView>
+#include <QChartView>
 
 #include "src/domain/operation/operation.h"
 
 
 
-class IAccountChartWidget : public QGraphicsView
+class IAccountChartWidget : public QChartView
 {
     Q_OBJECT
 
 public:
     explicit IAccountChartWidget(QWidget* parent = nullptr) :
-        QGraphicsView(parent)
+        QChartView(parent)
     {
     }
     ~IAccountChartWidget() override = default;

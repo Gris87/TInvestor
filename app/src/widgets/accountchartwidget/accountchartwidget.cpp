@@ -5,14 +5,9 @@
 
 
 AccountChartWidget::AccountChartWidget(QWidget* parent) :
-    IAccountChartWidget(parent),
-    mScene()
+    IAccountChartWidget(parent)
 {
     qDebug() << "Create AccountChartWidget";
-
-    setScene(&mScene);
-
-    setDragMode(DragMode::ScrollHandDrag);
 }
 
 AccountChartWidget::~AccountChartWidget()

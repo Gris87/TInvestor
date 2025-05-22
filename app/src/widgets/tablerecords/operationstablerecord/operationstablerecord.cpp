@@ -78,18 +78,10 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), operation.instrumentId)
     );
 
-    if (instrument.ticker == "")
+    if (instrument.ticker == "" || instrument.name == "")
     {
-        instrument.ticker = operation.instrumentId;
-    }
-
-    if (instrument.name == "")
-    {
-        instrument.name = "?????";
-    }
-
-    if (instrument.pricePrecision < 2)
-    {
+        instrument.ticker         = operation.instrumentId;
+        instrument.name           = "?????";
         instrument.pricePrecision = 2;
     }
 

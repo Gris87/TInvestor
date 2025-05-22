@@ -19,7 +19,4 @@ public:
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
-
-private:
-    QGraphicsScene mScene;
 };

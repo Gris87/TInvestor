@@ -12,6 +12,7 @@ win32* {
     copy_qt_files.commands =  $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Gui$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Widgets$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Charts$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Network$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Sql$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) "$$shell_path($$(QTDIR)/bin/Qt6Core5Compat$${DEBUG_SUFFIX}.dll)" "$$shell_path($${OUT_PWD}/build)" &&
@@ -54,6 +55,7 @@ win32* {
     copy_qt_files.commands =  $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Core.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Gui.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Widgets.so*)" "$$shell_path($${OUT_PWD}/build)" &&
+    copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Charts.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Network.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Sql.so*)" "$$shell_path($${OUT_PWD}/build)" &&
     copy_qt_files.commands += $(COPY_FILE) --no-dereference "$$shell_path($$(QTDIR)/lib/libQt6Core5Compat.so*)" "$$shell_path($${OUT_PWD}/build)" &&
