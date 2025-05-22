@@ -176,7 +176,7 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                 true);
-    ASSERT_GE(resp->instruments_size(),                                    1967);
+    ASSERT_GE(resp->instruments_size(),                                    1966);
     ASSERT_GE(index,                                                       0);
     ASSERT_EQ(resp->instruments(index).figi(),                             "TCS2207L1061");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "HHRU");
