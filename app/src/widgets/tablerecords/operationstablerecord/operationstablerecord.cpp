@@ -10,6 +10,8 @@
 const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
+constexpr float HUNDRED_PERCENT = 100.0f;
+
 
 
 OperationsTableRecord::OperationsTableRecord(
@@ -135,7 +137,7 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
     doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                    mCommissionTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->getPrecision()));
     doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                         mYieldTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->getPrecision()));
     doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,         mYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mYieldWithCommissionPercentTableWidgetItem->getValue(), createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mYieldWithCommissionPercentTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
     doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                mRemainedMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->getPrecision()));
     doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                   mTotalMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->getPrecision()));
     // clang-format on

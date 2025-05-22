@@ -18,6 +18,7 @@ public:
     FileDialog& operator=(const FileDialog& another) = delete;
 
     void setAcceptMode(QFileDialog::AcceptMode mode) override;
+    void setDefaultSuffix(const QString& suffix) override;
     void selectFile(const QString& filename) override;
     int  exec() override;
 

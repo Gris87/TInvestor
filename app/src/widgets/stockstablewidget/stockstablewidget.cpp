@@ -214,6 +214,7 @@ void StocksTableWidget::actionExportToExcelTriggered()
         this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
     );
     fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setDefaultSuffix("xlsx");
 
     fileDialog->selectFile(lastFile);
 

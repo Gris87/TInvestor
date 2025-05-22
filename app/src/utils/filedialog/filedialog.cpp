@@ -21,6 +21,11 @@ void FileDialog::setAcceptMode(QFileDialog::AcceptMode mode)
     mFileDialog.setAcceptMode(mode);
 }
 
+void FileDialog::setDefaultSuffix(const QString& suffix)
+{
+    mFileDialog.setDefaultSuffix(suffix);
+}
+
 void FileDialog::selectFile(const QString& filename)
 {
     mFileDialog.selectFile(filename);

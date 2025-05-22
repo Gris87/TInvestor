@@ -16,6 +16,7 @@ public:
     IFileDialog& operator=(const IFileDialog& another) = delete;
 
     virtual void setAcceptMode(QFileDialog::AcceptMode mode) = 0;
+    virtual void setDefaultSuffix(const QString& suffix)     = 0;
     virtual void selectFile(const QString& filename)         = 0;
     virtual int  exec()                                      = 0;
 
