@@ -7,7 +7,14 @@
 
 
 
-const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+const char* const DATETIME_FORMAT  = "yyyy-MM-dd hh:mm:ss";
+const QColor      BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      PLOT_AREA_COLOR  = QColor("#344759"); // clazy:exclude=non-pod-global-static
+const QColor      TITLE_COLOR      = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor      LABEL_COLOR      = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
+const QColor      AXIS_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor      GRID_COLOR       = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      SERIES_COLOR     = QColor("#6D85FF"); // clazy:exclude=non-pod-global-static
 
 
 
@@ -22,6 +29,7 @@ AccountChartWidget::AccountChartWidget(QWidget* parent) :
     initTotalMoneyChart();
 
     setChart(&mYieldChart);
+    setRenderHint(QPainter::Antialiasing, true);
 }
 
 AccountChartWidget::~AccountChartWidget()
@@ -31,82 +39,120 @@ AccountChartWidget::~AccountChartWidget()
 
 void AccountChartWidget::initYieldChart()
 {
-    mYieldChart.layout()->setContentsMargins(0, 0, 0, 0);
-    mYieldChart.setBackgroundRoundness(0);
-
     mYieldChart.setTitle(tr("Yield"));
     mYieldChart.addSeries(&mYieldSeries);
-    mYieldChart.legend()->hide();
 
     mYieldAxisX.setFormat(DATETIME_FORMAT);
     mYieldAxisX.setTitleText(tr("Time"));
-    mYieldChart.addAxis(&mYieldAxisX, Qt::AlignBottom);
-    mYieldSeries.attachAxis(&mYieldAxisX);
-
     mYieldAxisY.setLabelFormat("%g");
     mYieldAxisY.setTitleText("%");
+
+    mYieldChart.addAxis(&mYieldAxisX, Qt::AlignBottom);
     mYieldChart.addAxis(&mYieldAxisY, Qt::AlignLeft);
+    mYieldSeries.attachAxis(&mYieldAxisX);
     mYieldSeries.attachAxis(&mYieldAxisY);
+
+    QPen pen(SERIES_COLOR);
+    pen.setWidth(3);
+    mYieldSeries.setPen(pen);
+
+    initChartStyle(&mYieldChart, &mYieldAxisX, &mYieldAxisY);
 }
 
 void AccountChartWidget::initMonthlyYieldChart()
 {
-    mMonthlyYieldChart.layout()->setContentsMargins(0, 0, 0, 0);
-    mMonthlyYieldChart.setBackgroundRoundness(0);
-
     mMonthlyYieldChart.setTitle(tr("Yield per month"));
     mMonthlyYieldChart.addSeries(&mMonthlyYieldSeries);
-    mMonthlyYieldChart.legend()->hide();
 
     mMonthlyYieldAxisX.setFormat(DATETIME_FORMAT);
     mMonthlyYieldAxisX.setTitleText(tr("Time"));
-    mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisX, Qt::AlignBottom);
-    mMonthlyYieldSeries.attachAxis(&mMonthlyYieldAxisX);
-
     mMonthlyYieldAxisY.setLabelFormat("%g");
     mMonthlyYieldAxisY.setTitleText("%");
+
+    mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisX, Qt::AlignBottom);
     mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisY, Qt::AlignLeft);
+    mMonthlyYieldSeries.attachAxis(&mMonthlyYieldAxisX);
     mMonthlyYieldSeries.attachAxis(&mMonthlyYieldAxisY);
+
+    QPen pen(SERIES_COLOR);
+    pen.setWidth(3);
+    mMonthlyYieldSeries.setPen(pen);
+
+    initChartStyle(&mMonthlyYieldChart, &mMonthlyYieldAxisX, &mMonthlyYieldAxisY);
 }
 
 void AccountChartWidget::initRemainedMoneyChart()
 {
-    mRemainedMoneyChart.layout()->setContentsMargins(0, 0, 0, 0);
-    mRemainedMoneyChart.setBackgroundRoundness(0);
-
     mRemainedMoneyChart.setTitle(tr("Remained money on account"));
     mRemainedMoneyChart.addSeries(&mRemainedMoneySeries);
-    mRemainedMoneyChart.legend()->hide();
 
     mRemainedMoneyAxisX.setFormat(DATETIME_FORMAT);
     mRemainedMoneyAxisX.setTitleText(tr("Time"));
-    mRemainedMoneyChart.addAxis(&mRemainedMoneyAxisX, Qt::AlignBottom);
-    mRemainedMoneySeries.attachAxis(&mRemainedMoneyAxisX);
-
     mRemainedMoneyAxisY.setLabelFormat("%g");
     mRemainedMoneyAxisY.setTitleText(tr("Money") + ", \u20BD");
+
+    mRemainedMoneyChart.addAxis(&mRemainedMoneyAxisX, Qt::AlignBottom);
     mRemainedMoneyChart.addAxis(&mRemainedMoneyAxisY, Qt::AlignLeft);
+    mRemainedMoneySeries.attachAxis(&mRemainedMoneyAxisX);
     mRemainedMoneySeries.attachAxis(&mRemainedMoneyAxisY);
+
+    QPen pen(SERIES_COLOR);
+    pen.setWidth(3);
+    mRemainedMoneySeries.setPen(pen);
+
+    initChartStyle(&mRemainedMoneyChart, &mRemainedMoneyAxisX, &mRemainedMoneyAxisY);
 }
 
 void AccountChartWidget::initTotalMoneyChart()
 {
-    mTotalMoneyChart.layout()->setContentsMargins(0, 0, 0, 0);
-    mTotalMoneyChart.setBackgroundRoundness(0);
-
     mTotalMoneyChart.setTitle(tr("Total money on account"));
     mTotalMoneyChart.addSeries(&mTotalMoneySeries);
-    mTotalMoneyChart.legend()->hide();
 
     mTotalMoneyAxisX.setFormat(DATETIME_FORMAT);
     mTotalMoneyAxisX.setTitleText(tr("Time"));
-    mTotalMoneyChart.addAxis(&mTotalMoneyAxisX, Qt::AlignBottom);
-    mTotalMoneySeries.attachAxis(&mTotalMoneyAxisX);
-
     mTotalMoneyAxisY.setLabelFormat("%g");
     mTotalMoneyAxisY.setTitleText(tr("Money") + ", \u20BD");
+
+    mTotalMoneyChart.addAxis(&mTotalMoneyAxisX, Qt::AlignBottom);
     mTotalMoneyChart.addAxis(&mTotalMoneyAxisY, Qt::AlignLeft);
+    mTotalMoneySeries.attachAxis(&mTotalMoneyAxisX);
     mTotalMoneySeries.attachAxis(&mTotalMoneyAxisY);
+
+    QPen pen(SERIES_COLOR);
+    pen.setWidth(3);
+    mTotalMoneySeries.setPen(pen);
+
+    initChartStyle(&mTotalMoneyChart, &mTotalMoneyAxisX, &mTotalMoneyAxisY);
+}
+
+void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY)
+{
+    chart->layout()->setContentsMargins(0, 0, 0, 0);
+    chart->setMargins(QMargins(0, 0, 0, 0));
+    chart->setBackgroundRoundness(0);
+
+    chart->legend()->hide();
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+
+    chart->setBackgroundBrush(QBrush(BACKGROUND_COLOR));
+    chart->setPlotAreaBackgroundBrush(QBrush(PLOT_AREA_COLOR));
+    chart->setPlotAreaBackgroundVisible(true);
+
+    QFont font;
+    font.setPixelSize(16);
+    chart->setTitleFont(font);
+    chart->setTitleBrush(QBrush(TITLE_COLOR));
+
+    axisX->setLinePenColor(AXIS_COLOR);
+    axisY->setLinePenColor(AXIS_COLOR);
+    axisX->setGridLineColor(GRID_COLOR);
+    axisY->setGridLineColor(GRID_COLOR);
+
+    axisX->setLabelsColor(LABEL_COLOR);
+    axisY->setLabelsColor(LABEL_COLOR);
+
+    axisX->setTitleBrush(QBrush(TITLE_COLOR));
+    axisY->setTitleBrush(QBrush(TITLE_COLOR));
 }
 
 void AccountChartWidget::switchToYieldChart()

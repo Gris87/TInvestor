@@ -35,6 +35,7 @@ private:
     void initMonthlyYieldChart();
     void initRemainedMoneyChart();
     void initTotalMoneyChart();
+    void initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
     void handleOperation(const Operation& operation);
 
     QChart        mYieldChart;

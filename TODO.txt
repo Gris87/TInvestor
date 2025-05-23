@@ -1,6 +1,9 @@
-Control operations
-Display operations
 Build chart based on operations
+Zoom charts
+Drag mode for charts
+Chart tooltip
+Calculate yield for chart
+Export charts to excel
 Control portfolio
 Display portfolio items
 Follow for the strategy
