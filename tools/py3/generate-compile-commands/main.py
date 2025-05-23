@@ -165,10 +165,16 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     if app_or_test and "/libs/" not in file_path:
         res.append("-DUSE_SANDBOX")
 
+        if duplicate_for_tests:
+            res.append("-DTESTING_MODE")
+
     res.append("-DQT_QML_DEBUG")
 
     if app_or_test and "/libs/" not in file_path:
+        res.append("-DQT_CHARTS_LIB")
+        res.append("-DQT_OPENGLWIDGETS_LIB")
         res.append("-DQT_WIDGETS_LIB")
+        res.append("-DQT_OPENGL_LIB")
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_NETWORK_LIB")
         res.append("-DQT_SQL_LIB")
@@ -226,7 +232,10 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}\\libs\\verticallabel")
         res.append(f"-I{cwd}\\libs\\waitingspinner")
         res.append(f"-I{args.qt_path}\\include")
+        res.append(f"-I{args.qt_path}\\include\\QtCharts")
+        res.append(f"-I{args.qt_path}\\include\\QtOpenGLWidgets")
         res.append(f"-I{args.qt_path}\\include\\QtWidgets")
+        res.append(f"-I{args.qt_path}\\include\\QtOpenGL")
 
         if duplicate_for_tests:
             res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0")
@@ -265,8 +274,12 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}\\share\\qtcreator\\cplusplus\\wrappedQtHeaders\\QtCore")
 
         res.append(f"-I{cwd}\\libs\\qxlsx")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0")
+        res.append(f"-I{args.qt_path}\\include\\QtGui\\6.9.0\\QtGui")
         res.append(f"-I{args.qt_path}\\include")
         res.append(f"-I{args.qt_path}\\include\\QtGui")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0")
+        res.append(f"-I{args.qt_path}\\include\\QtCore\\6.9.0\\QtCore")
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx\\build\\gen\\qxlsx\\moc")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx")
@@ -410,10 +423,16 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
     if app_or_test and "/libs/" not in file_path:
         res.append("-DUSE_SANDBOX")
 
+        if duplicate_for_tests:
+            res.append("-DTESTING_MODE")
+
     res.append("-DQT_QML_DEBUG")
 
     if app_or_test and "/libs/" not in file_path:
+        res.append("-DQT_CHARTS_LIB")
+        res.append("-DQT_OPENGLWIDGETS_LIB")
         res.append("-DQT_WIDGETS_LIB")
+        res.append("-DQT_OPENGL_LIB")
         res.append("-DQT_GUI_LIB")
         res.append("-DQT_NETWORK_LIB")
         res.append("-DQT_SQL_LIB")
@@ -467,7 +486,10 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{cwd}/libs/verticallabel")
         res.append(f"-I{cwd}/libs/waitingspinner")
         res.append(f"-I{args.qt_path}/include")
+        res.append(f"-I{args.qt_path}/include/QtCharts")
+        res.append(f"-I{args.qt_path}/include/QtOpenGLWidgets")
         res.append(f"-I{args.qt_path}/include/QtWidgets")
+        res.append(f"-I{args.qt_path}/include/QtOpenGL")
 
         if duplicate_for_tests:
             res.append(f"-I{args.qt_path}/include/QtGui/6.9.0")
@@ -506,8 +528,12 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
             res.append(f"-I{args.qt_creator_path}/share/qtcreator/cplusplus/wrappedQtHeaders/QtCore")
 
         res.append(f"-I{cwd}/libs/qxlsx")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.9.0")
+        res.append(f"-I{args.qt_path}/include/QtGui/6.9.0/QtGui")
         res.append(f"-I{args.qt_path}/include")
         res.append(f"-I{args.qt_path}/include/QtGui")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.9.0")
+        res.append(f"-I{args.qt_path}/include/QtCore/6.9.0/QtCore")
         res.append(f"-I{args.qt_path}/include/QtCore")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx/build/gen/qxlsx/moc")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx")
@@ -668,7 +694,7 @@ def main():
         "--qt-creator-path",
         dest="qt_creator_path",
         type=str,
-        default="E:\\Qt\\qtcreator-windows-x64-msvc-15.0.0",
+        default="E:\\Qt\\qtcreator-windows-x64-msvc-16.0.2",
         help="Path to Qt Creator",
     )
     parser.add_argument(

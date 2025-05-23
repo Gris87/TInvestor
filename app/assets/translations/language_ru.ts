@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AccountChartWidget</name>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="16"/>
+        <source>Total money on account</source>
+        <translation>Всего денег на счёте</translation>
+    </message>
+</context>
+<context>
     <name>ActionsTableItemWidget</name>
     <message>
         <location filename="../../src/widgets/tableitems/actions/actionstableitemwidget.ui" line="51"/>
@@ -381,7 +389,7 @@
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="142"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="143"/>
         <source>Operations</source>
         <translation>Операции</translation>
     </message>
@@ -450,14 +458,14 @@
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="395"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="423"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="399"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="427"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="736"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="740"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="748"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -485,7 +493,7 @@
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="34"/>
+        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="35"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
@@ -871,12 +879,12 @@
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="232"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="233"/>
         <source>Stocks</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="250"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="251"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>

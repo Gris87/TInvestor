@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>AccountChartWidget</name>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="16"/>
+        <source>Total money on account</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>ActionsTableItemWidget</name>
     <message>
         <location filename="../../src/widgets/tableitems/actions/actionstableitemwidget.ui" line="51"/>
@@ -381,7 +389,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="142"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="143"/>
         <source>Operations</source>
         <translation></translation>
     </message>
@@ -450,14 +458,14 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="395"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="423"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="399"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="427"/>
         <source>Downloading logos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="736"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="744"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="740"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="748"/>
         <source>Obtain stocks data</source>
         <translation></translation>
     </message>
@@ -485,7 +493,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="34"/>
+        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="35"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
@@ -871,12 +879,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="232"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="233"/>
         <source>Stocks</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="250"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="251"/>
         <source>Qual investor</source>
         <translation></translation>
     </message>
