@@ -4,7 +4,36 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="16"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="77"/>
+        <source>Remained money on account</source>
+        <translation>Остаток денег на счёте</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="42"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="62"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="102"/>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="37"/>
+        <source>Yield</source>
+        <translation>Доходность</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="57"/>
+        <source>Yield per month</source>
+        <translation>Доходность по месяцам</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="87"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="107"/>
+        <source>Money</source>
+        <translation>Денег</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="97"/>
         <source>Total money on account</source>
         <translation>Всего денег на счёте</translation>
     </message>
@@ -155,7 +184,27 @@
         <translation>График</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="98"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="102"/>
+        <source>Yield</source>
+        <translation>Доходность</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="115"/>
+        <source>Monthly yield</source>
+        <translation>Месячная доходность</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="128"/>
+        <source>Remained money</source>
+        <translation>Остаток денег</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="141"/>
+        <source>Total money</source>
+        <translation>Всего денег</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="170"/>
         <source>Logs</source>
         <translation>Логи</translation>
     </message>
@@ -356,7 +405,7 @@
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
         <source>Remained money</source>
-        <translation>Осталось денег</translation>
+        <translation>Остаток денег</translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>

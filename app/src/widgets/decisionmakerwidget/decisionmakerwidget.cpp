@@ -70,6 +70,46 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
     mAccountChartWidget->operationsAdded(operations);
 }
 
+void DecisionMakerWidget::on_yieldButton_clicked()
+{
+    mAccountChartWidget->switchToYieldChart();
+
+    ui->yieldButton->setChecked(true);
+    ui->monthlyYieldButton->setChecked(false);
+    ui->remainedMoneyButton->setChecked(false);
+    ui->totalMoneyButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_monthlyYieldButton_clicked()
+{
+    mAccountChartWidget->switchToMonthlyYieldChart();
+
+    ui->yieldButton->setChecked(false);
+    ui->monthlyYieldButton->setChecked(true);
+    ui->remainedMoneyButton->setChecked(false);
+    ui->totalMoneyButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_remainedMoneyButton_clicked()
+{
+    mAccountChartWidget->switchToRemainedMoneyChart();
+
+    ui->yieldButton->setChecked(false);
+    ui->monthlyYieldButton->setChecked(false);
+    ui->remainedMoneyButton->setChecked(true);
+    ui->totalMoneyButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_totalMoneyButton_clicked()
+{
+    mAccountChartWidget->switchToTotalMoneyChart();
+
+    ui->yieldButton->setChecked(false);
+    ui->monthlyYieldButton->setChecked(false);
+    ui->remainedMoneyButton->setChecked(false);
+    ui->totalMoneyButton->setChecked(true);
+}
+
 void DecisionMakerWidget::saveWindowState(const QString& type)
 {
     mSettingsEditor->setValue(type + "/splitter", ui->splitter->saveState());

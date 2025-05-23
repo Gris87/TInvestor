@@ -4,7 +4,36 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="16"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="77"/>
+        <source>Remained money on account</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="42"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="62"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="102"/>
+        <source>Time</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="37"/>
+        <source>Yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="57"/>
+        <source>Yield per month</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="87"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="107"/>
+        <source>Money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="97"/>
         <source>Total money on account</source>
         <translation></translation>
     </message>
@@ -155,7 +184,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="98"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="102"/>
+        <source>Yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="115"/>
+        <source>Monthly yield</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="128"/>
+        <source>Remained money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="141"/>
+        <source>Total money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="170"/>
         <source>Logs</source>
         <translation></translation>
     </message>

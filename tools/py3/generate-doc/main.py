@@ -15,7 +15,7 @@ def generate_doc():
     result_code = 0
 
     while True:
-        shutil.rmtree("build/doxygen")
+        shutil.rmtree("build/doxygen", ignore_errors=True)
         process = subprocess.Popen("doxygen", stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         os.set_blocking(process.stdout.fileno(), False)

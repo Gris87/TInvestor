@@ -22,14 +22,29 @@ public:
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;
 
+    void switchToYieldChart() override;
+    void switchToMonthlyYieldChart() override;
+    void switchToRemainedMoneyChart() override;
+    void switchToTotalMoneyChart() override;
+
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
 
 private:
+    void initYieldChart();
+    void initMonthlyYieldChart();
     void initRemainedMoneyChart();
     void initTotalMoneyChart();
     void handleOperation(const Operation& operation);
 
+    QChart        mYieldChart;
+    QLineSeries   mYieldSeries;
+    QDateTimeAxis mYieldAxisX;
+    QValueAxis    mYieldAxisY;
+    QChart        mMonthlyYieldChart;
+    QLineSeries   mMonthlyYieldSeries;
+    QDateTimeAxis mMonthlyYieldAxisX;
+    QValueAxis    mMonthlyYieldAxisY;
     QChart        mRemainedMoneyChart;
     QLineSeries   mRemainedMoneySeries;
     QDateTimeAxis mRemainedMoneyAxisX;
@@ -40,6 +55,10 @@ private:
     QValueAxis    mTotalMoneyAxisY;
     qint64        mAxisXMin;
     qint64        mAxisXMax;
+    float         mYieldAxisYMin;
+    float         mYieldAxisYMax;
+    float         mMonthlyYieldAxisYMin;
+    float         mMonthlyYieldAxisYMax;
     float         mRemainedMoneyAxisYMin;
     float         mRemainedMoneyAxisYMax;
     float         mTotalMoneyAxisYMin;

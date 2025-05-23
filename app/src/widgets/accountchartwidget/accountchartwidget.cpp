@@ -16,15 +16,57 @@ AccountChartWidget::AccountChartWidget(QWidget* parent) :
 {
     qDebug() << "Create AccountChartWidget";
 
+    initYieldChart();
+    initMonthlyYieldChart();
     initRemainedMoneyChart();
     initTotalMoneyChart();
 
-    setChart(&mRemainedMoneyChart);
+    setChart(&mYieldChart);
 }
 
 AccountChartWidget::~AccountChartWidget()
 {
     qDebug() << "Destroy AccountChartWidget";
+}
+
+void AccountChartWidget::initYieldChart()
+{
+    mYieldChart.layout()->setContentsMargins(0, 0, 0, 0);
+    mYieldChart.setBackgroundRoundness(0);
+
+    mYieldChart.setTitle(tr("Yield"));
+    mYieldChart.addSeries(&mYieldSeries);
+    mYieldChart.legend()->hide();
+
+    mYieldAxisX.setFormat(DATETIME_FORMAT);
+    mYieldAxisX.setTitleText(tr("Time"));
+    mYieldChart.addAxis(&mYieldAxisX, Qt::AlignBottom);
+    mYieldSeries.attachAxis(&mYieldAxisX);
+
+    mYieldAxisY.setLabelFormat("%g");
+    mYieldAxisY.setTitleText("%");
+    mYieldChart.addAxis(&mYieldAxisY, Qt::AlignLeft);
+    mYieldSeries.attachAxis(&mYieldAxisY);
+}
+
+void AccountChartWidget::initMonthlyYieldChart()
+{
+    mMonthlyYieldChart.layout()->setContentsMargins(0, 0, 0, 0);
+    mMonthlyYieldChart.setBackgroundRoundness(0);
+
+    mMonthlyYieldChart.setTitle(tr("Yield per month"));
+    mMonthlyYieldChart.addSeries(&mMonthlyYieldSeries);
+    mMonthlyYieldChart.legend()->hide();
+
+    mMonthlyYieldAxisX.setFormat(DATETIME_FORMAT);
+    mMonthlyYieldAxisX.setTitleText(tr("Time"));
+    mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisX, Qt::AlignBottom);
+    mMonthlyYieldSeries.attachAxis(&mMonthlyYieldAxisX);
+
+    mMonthlyYieldAxisY.setLabelFormat("%g");
+    mMonthlyYieldAxisY.setTitleText("%");
+    mMonthlyYieldChart.addAxis(&mMonthlyYieldAxisY, Qt::AlignLeft);
+    mMonthlyYieldSeries.attachAxis(&mMonthlyYieldAxisY);
 }
 
 void AccountChartWidget::initRemainedMoneyChart()
@@ -67,13 +109,39 @@ void AccountChartWidget::initTotalMoneyChart()
     mTotalMoneySeries.attachAxis(&mTotalMoneyAxisY);
 }
 
+void AccountChartWidget::switchToYieldChart()
+{
+    setChart(&mYieldChart);
+}
+
+void AccountChartWidget::switchToMonthlyYieldChart()
+{
+    setChart(&mMonthlyYieldChart);
+}
+
+void AccountChartWidget::switchToRemainedMoneyChart()
+{
+    setChart(&mRemainedMoneyChart);
+}
+
+void AccountChartWidget::switchToTotalMoneyChart()
+{
+    setChart(&mTotalMoneyChart);
+}
+
 void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 {
+    mYieldSeries.clear();
+    mMonthlyYieldSeries.clear();
     mRemainedMoneySeries.clear();
     mTotalMoneySeries.clear();
 
     mAxisXMin              = std::numeric_limits<qint64>::max();
     mAxisXMax              = std::numeric_limits<qint64>::min();
+    mYieldAxisYMin         = std::numeric_limits<float>::max();
+    mYieldAxisYMax         = std::numeric_limits<float>::min();
+    mMonthlyYieldAxisYMin  = std::numeric_limits<float>::max();
+    mMonthlyYieldAxisYMax  = std::numeric_limits<float>::min();
     mRemainedMoneyAxisYMin = 0.0f;
     mRemainedMoneyAxisYMax = std::numeric_limits<float>::min();
     mTotalMoneyAxisYMin    = 0.0f;
@@ -86,6 +154,10 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
             handleOperation(operation);
         }
 
+        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+        mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
+        mMonthlyYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+        mMonthlyYieldAxisY.setRange(mMonthlyYieldAxisYMin, mMonthlyYieldAxisYMax);
         mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
         mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin, mRemainedMoneyAxisYMax);
         mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
@@ -93,6 +165,10 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
     }
     else
     {
+        mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
+        mYieldAxisY.setRange(0, 0);
+        mMonthlyYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
+        mMonthlyYieldAxisY.setRange(0, 0);
         mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
         mRemainedMoneyAxisY.setRange(0, 0);
         mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(0), QDateTime::fromMSecsSinceEpoch(0));
@@ -109,6 +185,10 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
         handleOperation(operation);
     }
 
+    mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+    mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
+    mMonthlyYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
+    mMonthlyYieldAxisY.setRange(mMonthlyYieldAxisYMin, mMonthlyYieldAxisYMax);
     mRemainedMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
     mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin, mRemainedMoneyAxisYMax);
     mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
@@ -119,17 +199,25 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 
 void AccountChartWidget::handleOperation(const Operation& operation)
 {
+    const float yield         = mYieldSeries.count(); // TODO: Calculate
+    const float monthlyYield  = -mMonthlyYieldSeries.count(); // TODO: Calculate
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
     const float totalMoney    = quotationToFloat(operation.totalMoney);
 
     mAxisXMin = qMin(mAxisXMin, operation.timestamp);
     mAxisXMax = qMax(mAxisXMax, operation.timestamp);
 
+    mYieldAxisYMin         = qMin(mYieldAxisYMin, yield);
+    mYieldAxisYMax         = qMax(mYieldAxisYMax, yield);
+    mMonthlyYieldAxisYMin  = qMin(mMonthlyYieldAxisYMin, monthlyYield);
+    mMonthlyYieldAxisYMax  = qMax(mMonthlyYieldAxisYMax, monthlyYield);
     mRemainedMoneyAxisYMin = qMin(mRemainedMoneyAxisYMin, remainedMoney);
     mRemainedMoneyAxisYMax = qMax(mRemainedMoneyAxisYMax, remainedMoney);
     mTotalMoneyAxisYMin    = qMin(mTotalMoneyAxisYMin, totalMoney);
     mTotalMoneyAxisYMax    = qMax(mTotalMoneyAxisYMax, totalMoney);
 
+    mYieldSeries.append(operation.timestamp, yield);
+    mMonthlyYieldSeries.append(operation.timestamp, monthlyYield);
     mRemainedMoneySeries.append(operation.timestamp, remainedMoney);
     mTotalMoneySeries.append(operation.timestamp, totalMoney);
 }

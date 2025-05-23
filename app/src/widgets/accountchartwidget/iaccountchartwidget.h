@@ -22,6 +22,11 @@ public:
     IAccountChartWidget(const IAccountChartWidget& another)            = delete;
     IAccountChartWidget& operator=(const IAccountChartWidget& another) = delete;
 
+    virtual void switchToYieldChart()         = 0;
+    virtual void switchToMonthlyYieldChart()  = 0;
+    virtual void switchToRemainedMoneyChart() = 0;
+    virtual void switchToTotalMoneyChart()    = 0;
+
     virtual void operationsRead(const QList<Operation>& operations)  = 0;
     virtual void operationsAdded(const QList<Operation>& operations) = 0;
 };

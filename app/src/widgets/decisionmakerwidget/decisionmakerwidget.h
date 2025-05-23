@@ -59,4 +59,10 @@ private:
     ILogsTableWidget*       mLogsTableWidget;
     IPortfolioTableWidget*  mPortfolioTableWidget;
     ISettingsEditor*        mSettingsEditor;
+
+private slots:
+    void on_yieldButton_clicked();
+    void on_monthlyYieldButton_clicked();
+    void on_remainedMoneyButton_clicked();
+    void on_totalMoneyButton_clicked();
 };
