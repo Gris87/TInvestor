@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -14,7 +15,8 @@ def generate_doc():
     result_code = 0
 
     while True:
-        process = subprocess.Popen("doxygen", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        shutil.rmtree("build/doxygen")
+        process = subprocess.Popen("doxygen", stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         os.set_blocking(process.stdout.fileno(), False)
 
@@ -45,11 +47,14 @@ def generate_doc():
         if not timeout_expired:
             break
 
-        print("")
-        print(f"{LIGHT_MAGENTA_COLOR}======================================={END_COLOR}")
-        print(f"{LIGHT_MAGENTA_COLOR}Timeout expired! Restarting...{END_COLOR}")
-        print(f"{LIGHT_MAGENTA_COLOR}======================================={END_COLOR}")
-        print("")
+        timeout_str = "\n"
+        timeout_str += f"{LIGHT_MAGENTA_COLOR}======================================={END_COLOR}\n"
+        timeout_str += f"{LIGHT_MAGENTA_COLOR}Timeout expired! Restarting...{END_COLOR}\n"
+        timeout_str += f"{LIGHT_MAGENTA_COLOR}======================================={END_COLOR}\n"
+        timeout_str += "\n"
+
+        sys.stdout.buffer.write(timeout_str.encode("utf-8"))
+        sys.stdout.buffer.flush()
 
     return result_code == 0
 
