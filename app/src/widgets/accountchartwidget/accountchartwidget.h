@@ -5,7 +5,9 @@
 #include "src/widgets/accountchartwidget/iaccountchartwidget.h"
 
 #include <QChart>
+#include <QDateTimeAxis>
 #include <QLineSeries>
+#include <QValueAxis>
 
 
 
@@ -24,8 +26,22 @@ public:
     void operationsAdded(const QList<Operation>& operations) override;
 
 private:
+    void initRemainedMoneyChart();
+    void initTotalMoneyChart();
     void handleOperation(const Operation& operation);
 
-    QChart      mTotalMoneyChart;
-    QLineSeries mTotalMoneySeries;
+    QChart        mRemainedMoneyChart;
+    QLineSeries   mRemainedMoneySeries;
+    QDateTimeAxis mRemainedMoneyAxisX;
+    QValueAxis    mRemainedMoneyAxisY;
+    QChart        mTotalMoneyChart;
+    QLineSeries   mTotalMoneySeries;
+    QDateTimeAxis mTotalMoneyAxisX;
+    QValueAxis    mTotalMoneyAxisY;
+    qint64        mAxisXMin;
+    qint64        mAxisXMax;
+    float         mRemainedMoneyAxisYMin;
+    float         mRemainedMoneyAxisYMax;
+    float         mTotalMoneyAxisYMin;
+    float         mTotalMoneyAxisYMax;
 };
