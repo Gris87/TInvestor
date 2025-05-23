@@ -22,6 +22,10 @@ public:
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;
 
+    void zoom(double factor);
+
+    bool eventFilter(QObject* object, QEvent* event) override;
+
     void switchToYieldChart() override;
     void switchToMonthlyYieldChart() override;
     void switchToRemainedMoneyChart() override;
@@ -64,4 +68,6 @@ private:
     float         mRemainedMoneyAxisYMax;
     float         mTotalMoneyAxisYMin;
     float         mTotalMoneyAxisYMax;
+    QPointF       mTargetScenePos;
+    QPointF       mTargetViewportPos;
 };

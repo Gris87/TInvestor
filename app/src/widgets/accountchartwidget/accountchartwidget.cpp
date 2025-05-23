@@ -7,6 +7,8 @@
 
 
 
+constexpr double ZOOM_FACTOR_BASE = 1.001;
+
 const char* const DATETIME_FORMAT  = "yyyy-MM-dd hh:mm:ss";
 const QColor      BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      PLOT_AREA_COLOR  = QColor("#344759"); // clazy:exclude=non-pod-global-static
@@ -29,12 +31,53 @@ AccountChartWidget::AccountChartWidget(QWidget* parent) :
     initTotalMoneyChart();
 
     setChart(&mYieldChart);
-    setRenderHint(QPainter::Antialiasing, true);
+    setRenderHint(QPainter::Antialiasing);
+
+    setDragMode(DragMode::ScrollHandDrag);
+
+    viewport()->installEventFilter(this);
+    setMouseTracking(true);
 }
 
 AccountChartWidget::~AccountChartWidget()
 {
     qDebug() << "Destroy AccountChartWidget";
+}
+
+void AccountChartWidget::zoom(double factor)
+{
+    scale(factor, factor);
+    centerOn(mTargetScenePos);
+
+    // NOLINTNEXTLINE(readability-magic-numbers)
+    const QPointF deltaViewportPos = mTargetViewportPos - QPointF(viewport()->width() / 2.0, viewport()->height() / 2.0);
+    const QPointF viewportCenter   = mapFromScene(mTargetScenePos) - deltaViewportPos;
+
+    centerOn(mapToScene(viewportCenter.toPoint()));
+}
+
+bool AccountChartWidget::eventFilter(QObject* object, QEvent* event)
+{
+    if (event->type() == QEvent::MouseMove)
+    {
+        QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
+
+        mTargetViewportPos = mouseEvent->pos();
+        mTargetScenePos    = mapToScene(mouseEvent->pos());
+    }
+    else if (event->type() == QEvent::Wheel)
+    {
+        QWheelEvent* wheelEvent = dynamic_cast<QWheelEvent*>(event);
+
+        const double angle  = wheelEvent->angleDelta().y();
+        const double factor = qPow(ZOOM_FACTOR_BASE, angle);
+
+        zoom(factor);
+
+        return true;
+    }
+
+    return IAccountChartWidget::eventFilter(object, event);
 }
 
 void AccountChartWidget::initYieldChart()
@@ -245,7 +288,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 
 void AccountChartWidget::handleOperation(const Operation& operation)
 {
-    const float yield         = mYieldSeries.count(); // TODO: Calculate
+    const float yield         = mYieldSeries.count();         // TODO: Calculate
     const float monthlyYield  = -mMonthlyYieldSeries.count(); // TODO: Calculate
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
     const float totalMoney    = quotationToFloat(operation.totalMoney);

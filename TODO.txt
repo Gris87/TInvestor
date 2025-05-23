@@ -1,6 +1,4 @@
 Build chart based on operations
-Zoom charts
-Drag mode for charts
 Chart tooltip
 Calculate yield for chart
 Export charts to excel

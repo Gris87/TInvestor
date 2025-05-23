@@ -53,6 +53,7 @@ OrderWavesWidget::OrderWavesWidget(qint8 precision, float priceIncrement, QWidge
     qDebug() << "Create OrderWavesWidget";
 
     setScene(&mScene);
+    setRenderHint(QPainter::Antialiasing);
 
     setDragMode(DragMode::ScrollHandDrag);
 
