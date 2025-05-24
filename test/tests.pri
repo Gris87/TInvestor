@@ -82,6 +82,7 @@ SOURCES += \
     src/utils/timeutils/test_timeutils.cpp \
     src/widgets/accountchartwidget/test_accountchartwidget.cpp \
     src/widgets/accountchartwidget/test_accountchartwidgetfactory.cpp \
+    src/widgets/accountchartwidget/test_charttooltip.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
     src/widgets/logstablewidget/test_logstablewidget.cpp \

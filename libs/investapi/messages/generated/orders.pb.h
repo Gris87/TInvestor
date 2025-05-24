@@ -2356,6 +2356,7 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
     kPriceFieldNumber = 12,
     kQuantityFieldNumber = 11,
     kPriceTypeFieldNumber = 13,
+    kConfirmMarginTradeFieldNumber = 14,
   };
   // string account_id = 1 [(.google.api.field_behavior) = REQUIRED];
   void clear_account_id() ;
@@ -2441,12 +2442,22 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
   void _internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value);
 
   public:
+  // bool confirm_margin_trade = 14;
+  void clear_confirm_margin_trade() ;
+  bool confirm_margin_trade() const;
+  void set_confirm_margin_trade(bool value);
+
+  private:
+  bool _internal_confirm_margin_trade() const;
+  void _internal_set_confirm_margin_trade(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 6, 1,
+      3, 7, 1,
       99, 2>
       _table_;
 
@@ -2472,6 +2483,7 @@ class ReplaceOrderRequest final : public ::google::protobuf::Message
     ::tinkoff::public_::invest::api::contract::v1::Quotation* price_;
     ::int64_t quantity_;
     int price_type_;
+    bool confirm_margin_trade_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2635,6 +2647,7 @@ class PostOrderRequest final : public ::google::protobuf::Message
     kOrderTypeFieldNumber = 6,
     kTimeInForceFieldNumber = 9,
     kPriceTypeFieldNumber = 10,
+    kConfirmMarginTradeFieldNumber = 11,
   };
   // optional string figi = 1 [deprecated = true];
   [[deprecated]]  bool has_figi() const;
@@ -2766,12 +2779,22 @@ class PostOrderRequest final : public ::google::protobuf::Message
   void _internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value);
 
   public:
+  // bool confirm_margin_trade = 11;
+  void clear_confirm_margin_trade() ;
+  bool confirm_margin_trade() const;
+  void set_confirm_margin_trade(bool value);
+
+  private:
+  bool _internal_confirm_margin_trade() const;
+  void _internal_set_confirm_margin_trade(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PostOrderRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 10, 1,
+      4, 11, 1,
       106, 2>
       _table_;
 
@@ -2801,6 +2824,7 @@ class PostOrderRequest final : public ::google::protobuf::Message
     int order_type_;
     int time_in_force_;
     int price_type_;
+    bool confirm_margin_trade_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2963,6 +2987,7 @@ class PostOrderAsyncRequest final : public ::google::protobuf::Message
     kOrderTypeFieldNumber = 6,
     kTimeInForceFieldNumber = 8,
     kPriceTypeFieldNumber = 9,
+    kConfirmMarginTradeFieldNumber = 10,
   };
   // string instrument_id = 1 [(.google.api.field_behavior) = REQUIRED];
   void clear_instrument_id() ;
@@ -3079,12 +3104,22 @@ class PostOrderAsyncRequest final : public ::google::protobuf::Message
   void _internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value);
 
   public:
+  // bool confirm_margin_trade = 10;
+  void clear_confirm_margin_trade() ;
+  bool confirm_margin_trade() const;
+  void set_confirm_margin_trade(bool value);
+
+  private:
+  bool _internal_confirm_margin_trade() const;
+  void _internal_set_confirm_margin_trade(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PostOrderAsyncRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 9, 1,
+      4, 10, 1,
       107, 2>
       _table_;
 
@@ -3113,6 +3148,7 @@ class PostOrderAsyncRequest final : public ::google::protobuf::Message
     int order_type_;
     int time_in_force_;
     int price_type_;
+    bool confirm_margin_trade_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -9580,6 +9616,28 @@ inline void PostOrderRequest::_internal_set_price_type(::tinkoff::public_::inves
   _impl_.price_type_ = value;
 }
 
+// bool confirm_margin_trade = 11;
+inline void PostOrderRequest::clear_confirm_margin_trade() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = false;
+}
+inline bool PostOrderRequest::confirm_margin_trade() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostOrderRequest.confirm_margin_trade)
+  return _internal_confirm_margin_trade();
+}
+inline void PostOrderRequest::set_confirm_margin_trade(bool value) {
+  _internal_set_confirm_margin_trade(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostOrderRequest.confirm_margin_trade)
+}
+inline bool PostOrderRequest::_internal_confirm_margin_trade() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.confirm_margin_trade_;
+}
+inline void PostOrderRequest::_internal_set_confirm_margin_trade(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // PostOrderResponse
@@ -11112,6 +11170,28 @@ inline ::tinkoff::public_::invest::api::contract::v1::PriceType PostOrderAsyncRe
 inline void PostOrderAsyncRequest::_internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.price_type_ = value;
+}
+
+// bool confirm_margin_trade = 10;
+inline void PostOrderAsyncRequest::clear_confirm_margin_trade() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = false;
+}
+inline bool PostOrderAsyncRequest::confirm_margin_trade() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostOrderAsyncRequest.confirm_margin_trade)
+  return _internal_confirm_margin_trade();
+}
+inline void PostOrderAsyncRequest::set_confirm_margin_trade(bool value) {
+  _internal_set_confirm_margin_trade(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostOrderAsyncRequest.confirm_margin_trade)
+}
+inline bool PostOrderAsyncRequest::_internal_confirm_margin_trade() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.confirm_margin_trade_;
+}
+inline void PostOrderAsyncRequest::_internal_set_confirm_margin_trade(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -13591,6 +13671,28 @@ inline ::tinkoff::public_::invest::api::contract::v1::PriceType ReplaceOrderRequ
 inline void ReplaceOrderRequest::_internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.price_type_ = value;
+}
+
+// bool confirm_margin_trade = 14;
+inline void ReplaceOrderRequest::clear_confirm_margin_trade() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = false;
+}
+inline bool ReplaceOrderRequest::confirm_margin_trade() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.confirm_margin_trade)
+  return _internal_confirm_margin_trade();
+}
+inline void ReplaceOrderRequest::set_confirm_margin_trade(bool value) {
+  _internal_set_confirm_margin_trade(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.ReplaceOrderRequest.confirm_margin_trade)
+}
+inline bool ReplaceOrderRequest::_internal_confirm_margin_trade() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.confirm_margin_trade_;
+}
+inline void ReplaceOrderRequest::_internal_set_confirm_margin_trade(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = value;
 }
 
 // -------------------------------------------------------------------

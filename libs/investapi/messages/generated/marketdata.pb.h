@@ -164,6 +164,9 @@ extern MarketDataResponseDefaultTypeInternal _MarketDataResponse_default_instanc
 class MarketDataServerSideStreamRequest;
 struct MarketDataServerSideStreamRequestDefaultTypeInternal;
 extern MarketDataServerSideStreamRequestDefaultTypeInternal _MarketDataServerSideStreamRequest_default_instance_;
+class OpenInterest;
+struct OpenInterestDefaultTypeInternal;
+extern OpenInterestDefaultTypeInternal _OpenInterest_default_instance_;
 class Order;
 struct OrderDefaultTypeInternal;
 extern OrderDefaultTypeInternal _Order_default_instance_;
@@ -886,6 +889,8 @@ class TradeSubscription final : public ::google::protobuf::Message
     kStreamIdFieldNumber = 4,
     kSubscriptionIdFieldNumber = 5,
     kSubscriptionStatusFieldNumber = 2,
+    kWithOpenInterestFieldNumber = 6,
+    kSubscriptionActionFieldNumber = 7,
   };
   // string figi = 1;
   void clear_figi() ;
@@ -961,12 +966,32 @@ class TradeSubscription final : public ::google::protobuf::Message
   void _internal_set_subscription_status(::tinkoff::public_::invest::api::contract::v1::SubscriptionStatus value);
 
   public:
+  // bool with_open_interest = 6;
+  void clear_with_open_interest() ;
+  bool with_open_interest() const;
+  void set_with_open_interest(bool value);
+
+  private:
+  bool _internal_with_open_interest() const;
+  void _internal_set_with_open_interest(bool value);
+
+  public:
+  // .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 7;
+  void clear_subscription_action() ;
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction subscription_action() const;
+  void set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction _internal_subscription_action() const;
+  void _internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.TradeSubscription)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 5, 0,
+      3, 7, 0,
       106, 2>
       _table_;
 
@@ -989,6 +1014,8 @@ class TradeSubscription final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr stream_id_;
     ::google::protobuf::internal::ArenaStringPtr subscription_id_;
     int subscription_status_;
+    bool with_open_interest_;
+    int subscription_action_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1364,6 +1391,7 @@ class OrderBookSubscription final : public ::google::protobuf::Message
     kDepthFieldNumber = 2,
     kSubscriptionStatusFieldNumber = 3,
     kOrderBookTypeFieldNumber = 7,
+    kSubscriptionActionFieldNumber = 8,
   };
   // string figi = 1;
   void clear_figi() ;
@@ -1459,13 +1487,23 @@ class OrderBookSubscription final : public ::google::protobuf::Message
   void _internal_set_order_book_type(::tinkoff::public_::invest::api::contract::v1::OrderBookType value);
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 8;
+  void clear_subscription_action() ;
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction subscription_action() const;
+  void set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction _internal_subscription_action() const;
+  void _internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.OrderBookSubscription)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 7, 0,
-      110, 2>
+      3, 8, 0,
+      118, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -1489,6 +1527,7 @@ class OrderBookSubscription final : public ::google::protobuf::Message
     ::int32_t depth_;
     int subscription_status_;
     int order_book_type_;
+    int subscription_action_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -1886,6 +1925,7 @@ class LastPriceSubscription final : public ::google::protobuf::Message
     kStreamIdFieldNumber = 4,
     kSubscriptionIdFieldNumber = 5,
     kSubscriptionStatusFieldNumber = 2,
+    kSubscriptionActionFieldNumber = 6,
   };
   // string figi = 1;
   void clear_figi() ;
@@ -1961,12 +2001,22 @@ class LastPriceSubscription final : public ::google::protobuf::Message
   void _internal_set_subscription_status(::tinkoff::public_::invest::api::contract::v1::SubscriptionStatus value);
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 6;
+  void clear_subscription_action() ;
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction subscription_action() const;
+  void set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction _internal_subscription_action() const;
+  void _internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.LastPriceSubscription)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 5, 0,
+      3, 6, 0,
       110, 2>
       _table_;
 
@@ -1989,6 +2039,7 @@ class LastPriceSubscription final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr stream_id_;
     ::google::protobuf::internal::ArenaStringPtr subscription_id_;
     int subscription_status_;
+    int subscription_action_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2270,7 +2321,7 @@ class InstrumentClosePriceRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const InstrumentClosePriceRequest*>(
         &_InstrumentClosePriceRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 44;
+  static constexpr int kIndexInFileMessages = 45;
   friend void swap(InstrumentClosePriceRequest& a, InstrumentClosePriceRequest& b) { a.Swap(&b); }
   inline void Swap(InstrumentClosePriceRequest* other) {
     if (other == this) return;
@@ -2558,6 +2609,7 @@ class InfoSubscription final : public ::google::protobuf::Message
     kStreamIdFieldNumber = 4,
     kSubscriptionIdFieldNumber = 5,
     kSubscriptionStatusFieldNumber = 2,
+    kSubscriptionActionFieldNumber = 6,
   };
   // string figi = 1;
   void clear_figi() ;
@@ -2633,12 +2685,22 @@ class InfoSubscription final : public ::google::protobuf::Message
   void _internal_set_subscription_status(::tinkoff::public_::invest::api::contract::v1::SubscriptionStatus value);
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 6;
+  void clear_subscription_action() ;
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction subscription_action() const;
+  void set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction _internal_subscription_action() const;
+  void _internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.InfoSubscription)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 5, 0,
+      3, 6, 0,
       105, 2>
       _table_;
 
@@ -2661,6 +2723,7 @@ class InfoSubscription final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr stream_id_;
     ::google::protobuf::internal::ArenaStringPtr subscription_id_;
     int subscription_status_;
+    int subscription_action_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -2942,7 +3005,7 @@ class GetTradingStatusesRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTradingStatusesRequest*>(
         &_GetTradingStatusesRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 37;
+  static constexpr int kIndexInFileMessages = 38;
   friend void swap(GetTradingStatusesRequest& a, GetTradingStatusesRequest& b) { a.Swap(&b); }
   inline void Swap(GetTradingStatusesRequest* other) {
     if (other == this) return;
@@ -3144,7 +3207,7 @@ class GetTradingStatusResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTradingStatusResponse*>(
         &_GetTradingStatusResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 39;
+  static constexpr int kIndexInFileMessages = 40;
   friend void swap(GetTradingStatusResponse& a, GetTradingStatusResponse& b) { a.Swap(&b); }
   inline void Swap(GetTradingStatusResponse* other) {
     if (other == this) return;
@@ -3430,7 +3493,7 @@ class GetTradingStatusRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTradingStatusRequest*>(
         &_GetTradingStatusRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 36;
+  static constexpr int kIndexInFileMessages = 37;
   friend void swap(GetTradingStatusRequest& a, GetTradingStatusRequest& b) { a.Swap(&b); }
   inline void Swap(GetTradingStatusRequest* other) {
     if (other == this) return;
@@ -3647,7 +3710,7 @@ class GetTechAnalysisRequest_Smoothing final : public ::google::protobuf::Messag
     return reinterpret_cast<const GetTechAnalysisRequest_Smoothing*>(
         &_GetTechAnalysisRequest_Smoothing_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 47;
+  static constexpr int kIndexInFileMessages = 48;
   friend void swap(GetTechAnalysisRequest_Smoothing& a, GetTechAnalysisRequest_Smoothing& b) { a.Swap(&b); }
   inline void Swap(GetTechAnalysisRequest_Smoothing* other) {
     if (other == this) return;
@@ -3861,7 +3924,7 @@ class GetOrderBookRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetOrderBookRequest*>(
         &_GetOrderBookRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 34;
+  static constexpr int kIndexInFileMessages = 35;
   friend void swap(GetOrderBookRequest& a, GetOrderBookRequest& b) { a.Swap(&b); }
   inline void Swap(GetOrderBookRequest* other) {
     if (other == this) return;
@@ -4089,7 +4152,7 @@ class GetMySubscriptions final : public ::google::protobuf::internal::ZeroFields
     return reinterpret_cast<const GetMySubscriptions*>(
         &_GetMySubscriptions_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 42;
+  static constexpr int kIndexInFileMessages = 43;
   friend void swap(GetMySubscriptions& a, GetMySubscriptions& b) { a.Swap(&b); }
   inline void Swap(GetMySubscriptions* other) {
     if (other == this) return;
@@ -4581,6 +4644,7 @@ class CandleSubscription final : public ::google::protobuf::Message
     kIntervalFieldNumber = 2,
     kSubscriptionStatusFieldNumber = 3,
     kWaitingCloseFieldNumber = 5,
+    kSubscriptionActionFieldNumber = 8,
     kCandleSourceTypeFieldNumber = 9,
   };
   // string figi = 1;
@@ -4677,6 +4741,16 @@ class CandleSubscription final : public ::google::protobuf::Message
   void _internal_set_waiting_close(bool value);
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 8;
+  void clear_subscription_action() ;
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction subscription_action() const;
+  void set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction _internal_subscription_action() const;
+  void _internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value);
+
+  public:
   // optional .tinkoff.public.invest.api.contract.v1.GetCandlesRequest.CandleSource candle_source_type = 9;
   bool has_candle_source_type() const;
   void clear_candle_source_type() ;
@@ -4693,7 +4767,7 @@ class CandleSubscription final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 8, 0,
+      4, 9, 0,
       115, 2>
       _table_;
 
@@ -4720,6 +4794,7 @@ class CandleSubscription final : public ::google::protobuf::Message
     int interval_;
     int subscription_status_;
     bool waiting_close_;
+    int subscription_action_;
     int candle_source_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -5883,6 +5958,7 @@ class SubscribeTradesRequest final : public ::google::protobuf::Message
     kInstrumentsFieldNumber = 2,
     kSubscriptionActionFieldNumber = 1,
     kTradeSourceFieldNumber = 3,
+    kWithOpenInterestFieldNumber = 4,
   };
   // repeated .tinkoff.public.invest.api.contract.v1.TradeInstrument instruments = 2;
   int instruments_size() const;
@@ -5921,12 +5997,22 @@ class SubscribeTradesRequest final : public ::google::protobuf::Message
   void _internal_set_trade_source(::tinkoff::public_::invest::api::contract::v1::TradeSourceType value);
 
   public:
+  // bool with_open_interest = 4;
+  void clear_with_open_interest() ;
+  bool with_open_interest() const;
+  void set_with_open_interest(bool value);
+
+  private:
+  bool _internal_with_open_interest() const;
+  void _internal_set_with_open_interest(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.SubscribeTradesRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      2, 3, 1,
+      2, 4, 1,
       0, 2>
       _table_;
 
@@ -5947,6 +6033,7 @@ class SubscribeTradesRequest final : public ::google::protobuf::Message
     ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::TradeInstrument > instruments_;
     int subscription_action_;
     int trade_source_;
+    bool with_open_interest_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -7885,6 +7972,232 @@ class Order final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
+class OpenInterest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.OpenInterest) */ {
+ public:
+  inline OpenInterest() : OpenInterest(nullptr) {}
+  ~OpenInterest() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(OpenInterest* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(OpenInterest));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR OpenInterest(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline OpenInterest(const OpenInterest& from) : OpenInterest(nullptr, from) {}
+  inline OpenInterest(OpenInterest&& from) noexcept
+      : OpenInterest(nullptr, std::move(from)) {}
+  inline OpenInterest& operator=(const OpenInterest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline OpenInterest& operator=(OpenInterest&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const OpenInterest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const OpenInterest* internal_default_instance() {
+    return reinterpret_cast<const OpenInterest*>(
+        &_OpenInterest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 34;
+  friend void swap(OpenInterest& a, OpenInterest& b) { a.Swap(&b); }
+  inline void Swap(OpenInterest* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(OpenInterest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  OpenInterest* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<OpenInterest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const OpenInterest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const OpenInterest& from) { OpenInterest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(OpenInterest* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.OpenInterest"; }
+
+ protected:
+  explicit OpenInterest(::google::protobuf::Arena* arena);
+  OpenInterest(::google::protobuf::Arena* arena, const OpenInterest& from);
+  OpenInterest(::google::protobuf::Arena* arena, OpenInterest&& from) noexcept
+      : OpenInterest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kInstrumentUidFieldNumber = 1,
+    kTimeFieldNumber = 2,
+    kOpenInterestFieldNumber = 3,
+  };
+  // string instrument_uid = 1;
+  void clear_instrument_uid() ;
+  const std::string& instrument_uid() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_instrument_uid(Arg_&& arg, Args_... args);
+  std::string* mutable_instrument_uid();
+  PROTOBUF_NODISCARD std::string* release_instrument_uid();
+  void set_allocated_instrument_uid(std::string* value);
+
+  private:
+  const std::string& _internal_instrument_uid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_uid(
+      const std::string& value);
+  std::string* _internal_mutable_instrument_uid();
+
+  public:
+  // .google.protobuf.Timestamp time = 2;
+  bool has_time() const;
+  void clear_time() ;
+  const ::google::protobuf::Timestamp& time() const;
+  PROTOBUF_NODISCARD ::google::protobuf::Timestamp* release_time();
+  ::google::protobuf::Timestamp* mutable_time();
+  void set_allocated_time(::google::protobuf::Timestamp* value);
+  void unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value);
+  ::google::protobuf::Timestamp* unsafe_arena_release_time();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_time() const;
+  ::google::protobuf::Timestamp* _internal_mutable_time();
+
+  public:
+  // int64 open_interest = 3;
+  void clear_open_interest() ;
+  ::int64_t open_interest() const;
+  void set_open_interest(::int64_t value);
+
+  private:
+  ::int64_t _internal_open_interest() const;
+  void _internal_set_open_interest(::int64_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.OpenInterest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      2, 3, 1,
+      73, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const OpenInterest& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::Timestamp* time_;
+    ::int64_t open_interest_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_marketdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class LastPrice final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.LastPrice) */ {
  public:
@@ -8205,7 +8518,7 @@ class InstrumentClosePriceResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const InstrumentClosePriceResponse*>(
         &_InstrumentClosePriceResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 46;
+  static constexpr int kIndexInFileMessages = 47;
   friend void swap(InstrumentClosePriceResponse& a, InstrumentClosePriceResponse& b) { a.Swap(&b); }
   inline void Swap(InstrumentClosePriceResponse* other) {
     if (other == this) return;
@@ -8297,6 +8610,7 @@ class InstrumentClosePriceResponse final : public ::google::protobuf::Message
     kPriceFieldNumber = 11,
     kEveningSessionPriceFieldNumber = 12,
     kTimeFieldNumber = 21,
+    kEveningSessionPriceTimeFieldNumber = 23,
   };
   // string figi = 1;
   void clear_figi() ;
@@ -8375,12 +8689,27 @@ class InstrumentClosePriceResponse final : public ::google::protobuf::Message
   ::google::protobuf::Timestamp* _internal_mutable_time();
 
   public:
+  // .google.protobuf.Timestamp evening_session_price_time = 23;
+  bool has_evening_session_price_time() const;
+  void clear_evening_session_price_time() ;
+  const ::google::protobuf::Timestamp& evening_session_price_time() const;
+  PROTOBUF_NODISCARD ::google::protobuf::Timestamp* release_evening_session_price_time();
+  ::google::protobuf::Timestamp* mutable_evening_session_price_time();
+  void set_allocated_evening_session_price_time(::google::protobuf::Timestamp* value);
+  void unsafe_arena_set_allocated_evening_session_price_time(::google::protobuf::Timestamp* value);
+  ::google::protobuf::Timestamp* unsafe_arena_release_evening_session_price_time();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_evening_session_price_time() const;
+  ::google::protobuf::Timestamp* _internal_mutable_evening_session_price_time();
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      3, 5, 3,
+      3, 6, 4,
       93, 2>
       _table_;
 
@@ -8405,6 +8734,7 @@ class InstrumentClosePriceResponse final : public ::google::protobuf::Message
     ::tinkoff::public_::invest::api::contract::v1::Quotation* price_;
     ::tinkoff::public_::invest::api::contract::v1::Quotation* evening_session_price_;
     ::google::protobuf::Timestamp* time_;
+    ::google::protobuf::Timestamp* evening_session_price_time_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -8771,7 +9101,7 @@ class GetTradingStatusesResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTradingStatusesResponse*>(
         &_GetTradingStatusesResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 38;
+  static constexpr int kIndexInFileMessages = 39;
   friend void swap(GetTradingStatusesResponse& a, GetTradingStatusesResponse& b) { a.Swap(&b); }
   inline void Swap(GetTradingStatusesResponse* other) {
     if (other == this) return;
@@ -8968,7 +9298,7 @@ class GetTechAnalysisResponse_TechAnalysisItem final : public ::google::protobuf
     return reinterpret_cast<const GetTechAnalysisResponse_TechAnalysisItem*>(
         &_GetTechAnalysisResponse_TechAnalysisItem_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 50;
+  static constexpr int kIndexInFileMessages = 51;
   friend void swap(GetTechAnalysisResponse_TechAnalysisItem& a, GetTechAnalysisResponse_TechAnalysisItem& b) { a.Swap(&b); }
   inline void Swap(GetTechAnalysisResponse_TechAnalysisItem* other) {
     if (other == this) return;
@@ -9249,7 +9579,7 @@ class GetTechAnalysisRequest_Deviation final : public ::google::protobuf::Messag
     return reinterpret_cast<const GetTechAnalysisRequest_Deviation*>(
         &_GetTechAnalysisRequest_Deviation_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 48;
+  static constexpr int kIndexInFileMessages = 49;
   friend void swap(GetTechAnalysisRequest_Deviation& a, GetTechAnalysisRequest_Deviation& b) { a.Swap(&b); }
   inline void Swap(GetTechAnalysisRequest_Deviation* other) {
     if (other == this) return;
@@ -9445,7 +9775,7 @@ class GetLastTradesRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetLastTradesRequest*>(
         &_GetLastTradesRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 40;
+  static constexpr int kIndexInFileMessages = 41;
   friend void swap(GetLastTradesRequest& a, GetLastTradesRequest& b) { a.Swap(&b); }
   inline void Swap(GetLastTradesRequest* other) {
     if (other == this) return;
@@ -9708,7 +10038,7 @@ class GetClosePricesRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetClosePricesRequest*>(
         &_GetClosePricesRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 43;
+  static constexpr int kIndexInFileMessages = 44;
   friend void swap(GetClosePricesRequest& a, GetClosePricesRequest& b) { a.Swap(&b); }
   inline void Swap(GetClosePricesRequest* other) {
     if (other == this) return;
@@ -11576,7 +11906,7 @@ class GetTechAnalysisResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTechAnalysisResponse*>(
         &_GetTechAnalysisResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 51;
+  static constexpr int kIndexInFileMessages = 52;
   friend void swap(GetTechAnalysisResponse& a, GetTechAnalysisResponse& b) { a.Swap(&b); }
   inline void Swap(GetTechAnalysisResponse* other) {
     if (other == this) return;
@@ -11774,7 +12104,7 @@ class GetTechAnalysisRequest final : public ::google::protobuf::Message
     return reinterpret_cast<const GetTechAnalysisRequest*>(
         &_GetTechAnalysisRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 49;
+  static constexpr int kIndexInFileMessages = 50;
   friend void swap(GetTechAnalysisRequest& a, GetTechAnalysisRequest& b) { a.Swap(&b); }
   inline void Swap(GetTechAnalysisRequest* other) {
     if (other == this) return;
@@ -12166,7 +12496,7 @@ class GetOrderBookResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetOrderBookResponse*>(
         &_GetOrderBookResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 35;
+  static constexpr int kIndexInFileMessages = 36;
   friend void swap(GetOrderBookResponse& a, GetOrderBookResponse& b) { a.Swap(&b); }
   inline void Swap(GetOrderBookResponse* other) {
     if (other == this) return;
@@ -12550,7 +12880,7 @@ class GetLastTradesResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetLastTradesResponse*>(
         &_GetLastTradesResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 41;
+  static constexpr int kIndexInFileMessages = 42;
   friend void swap(GetLastTradesResponse& a, GetLastTradesResponse& b) { a.Swap(&b); }
   inline void Swap(GetLastTradesResponse* other) {
     if (other == this) return;
@@ -12944,7 +13274,7 @@ class GetClosePricesResponse final : public ::google::protobuf::Message
     return reinterpret_cast<const GetClosePricesResponse*>(
         &_GetClosePricesResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 45;
+  static constexpr int kIndexInFileMessages = 46;
   friend void swap(GetClosePricesResponse& a, GetClosePricesResponse& b) { a.Swap(&b); }
   inline void Swap(GetClosePricesResponse* other) {
     if (other == this) return;
@@ -13346,6 +13676,7 @@ class MarketDataResponse final : public ::google::protobuf::Message
     kPing = 9,
     kSubscribeLastPriceResponse = 10,
     kLastPrice = 11,
+    kOpenInterest = 12,
     PAYLOAD_NOT_SET = 0,
   };
   static inline const MarketDataResponse* internal_default_instance() {
@@ -13450,6 +13781,7 @@ class MarketDataResponse final : public ::google::protobuf::Message
     kPingFieldNumber = 9,
     kSubscribeLastPriceResponseFieldNumber = 10,
     kLastPriceFieldNumber = 11,
+    kOpenInterestFieldNumber = 12,
   };
   // .tinkoff.public.invest.api.contract.v1.SubscribeCandlesResponse subscribe_candles_response = 1;
   bool has_subscribe_candles_response() const;
@@ -13660,6 +13992,25 @@ class MarketDataResponse final : public ::google::protobuf::Message
   ::tinkoff::public_::invest::api::contract::v1::LastPrice* _internal_mutable_last_price();
 
   public:
+  // .tinkoff.public.invest.api.contract.v1.OpenInterest open_interest = 12;
+  bool has_open_interest() const;
+  private:
+  bool _internal_has_open_interest() const;
+
+  public:
+  void clear_open_interest() ;
+  const ::tinkoff::public_::invest::api::contract::v1::OpenInterest& open_interest() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::OpenInterest* release_open_interest();
+  ::tinkoff::public_::invest::api::contract::v1::OpenInterest* mutable_open_interest();
+  void set_allocated_open_interest(::tinkoff::public_::invest::api::contract::v1::OpenInterest* value);
+  void unsafe_arena_set_allocated_open_interest(::tinkoff::public_::invest::api::contract::v1::OpenInterest* value);
+  ::tinkoff::public_::invest::api::contract::v1::OpenInterest* unsafe_arena_release_open_interest();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::OpenInterest& _internal_open_interest() const;
+  ::tinkoff::public_::invest::api::contract::v1::OpenInterest* _internal_mutable_open_interest();
+
+  public:
   void clear_payload();
   PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.MarketDataResponse)
@@ -13676,11 +14027,12 @@ class MarketDataResponse final : public ::google::protobuf::Message
   void set_has_ping();
   void set_has_subscribe_last_price_response();
   void set_has_last_price();
+  void set_has_open_interest();
   inline bool has_payload() const;
   inline void clear_has_payload();
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      0, 11, 11,
+      0, 12, 12,
       0, 2>
       _table_;
 
@@ -13712,6 +14064,7 @@ class MarketDataResponse final : public ::google::protobuf::Message
       ::tinkoff::public_::invest::api::contract::v1::Ping* ping_;
       ::tinkoff::public_::invest::api::contract::v1::SubscribeLastPriceResponse* subscribe_last_price_response_;
       ::tinkoff::public_::invest::api::contract::v1::LastPrice* last_price_;
+      ::tinkoff::public_::invest::api::contract::v1::OpenInterest* open_interest_;
     } payload_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
@@ -15793,6 +16146,85 @@ inline ::tinkoff::public_::invest::api::contract::v1::LastPrice* MarketDataRespo
   return _msg;
 }
 
+// .tinkoff.public.invest.api.contract.v1.OpenInterest open_interest = 12;
+inline bool MarketDataResponse::has_open_interest() const {
+  return payload_case() == kOpenInterest;
+}
+inline bool MarketDataResponse::_internal_has_open_interest() const {
+  return payload_case() == kOpenInterest;
+}
+inline void MarketDataResponse::set_has_open_interest() {
+  _impl_._oneof_case_[0] = kOpenInterest;
+}
+inline void MarketDataResponse::clear_open_interest() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (payload_case() == kOpenInterest) {
+    if (GetArena() == nullptr) {
+      delete _impl_.payload_.open_interest_;
+    } else if (::google::protobuf::internal::DebugHardenClearOneofMessageOnArena()) {
+      ::google::protobuf::internal::MaybePoisonAfterClear(_impl_.payload_.open_interest_);
+    }
+    clear_has_payload();
+  }
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OpenInterest* MarketDataResponse::release_open_interest() {
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.MarketDataResponse.open_interest)
+  if (payload_case() == kOpenInterest) {
+    clear_has_payload();
+    auto* temp = _impl_.payload_.open_interest_;
+    if (GetArena() != nullptr) {
+      temp = ::google::protobuf::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.payload_.open_interest_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::OpenInterest& MarketDataResponse::_internal_open_interest() const {
+  return payload_case() == kOpenInterest ? *_impl_.payload_.open_interest_ : reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::OpenInterest&>(::tinkoff::public_::invest::api::contract::v1::_OpenInterest_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::OpenInterest& MarketDataResponse::open_interest() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketDataResponse.open_interest)
+  return _internal_open_interest();
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OpenInterest* MarketDataResponse::unsafe_arena_release_open_interest() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:tinkoff.public.invest.api.contract.v1.MarketDataResponse.open_interest)
+  if (payload_case() == kOpenInterest) {
+    clear_has_payload();
+    auto* temp = _impl_.payload_.open_interest_;
+    _impl_.payload_.open_interest_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void MarketDataResponse::unsafe_arena_set_allocated_open_interest(::tinkoff::public_::invest::api::contract::v1::OpenInterest* value) {
+  // We rely on the oneof clear method to free the earlier contents
+  // of this oneof. We can directly use the pointer we're given to
+  // set the new value.
+  clear_payload();
+  if (value) {
+    set_has_open_interest();
+    _impl_.payload_.open_interest_ = value;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.MarketDataResponse.open_interest)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OpenInterest* MarketDataResponse::_internal_mutable_open_interest() {
+  if (payload_case() != kOpenInterest) {
+    clear_payload();
+    set_has_open_interest();
+    _impl_.payload_.open_interest_ =
+        ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::OpenInterest>(GetArena());
+  }
+  return _impl_.payload_.open_interest_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::OpenInterest* MarketDataResponse::mutable_open_interest() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::tinkoff::public_::invest::api::contract::v1::OpenInterest* _msg = _internal_mutable_open_interest();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.MarketDataResponse.open_interest)
+  return _msg;
+}
+
 inline bool MarketDataResponse::has_payload() const {
   return payload_case() != PAYLOAD_NOT_SET;
 }
@@ -16412,6 +16844,28 @@ inline void CandleSubscription::set_allocated_subscription_id(std::string* value
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.CandleSubscription.subscription_id)
 }
 
+// .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 8;
+inline void CandleSubscription::clear_subscription_action() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = 0;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction CandleSubscription::subscription_action() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.CandleSubscription.subscription_action)
+  return _internal_subscription_action();
+}
+inline void CandleSubscription::set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  _internal_set_subscription_action(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.CandleSubscription.subscription_action)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction CandleSubscription::_internal_subscription_action() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SubscriptionAction>(_impl_.subscription_action_);
+}
+inline void CandleSubscription::_internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = value;
+}
+
 // optional .tinkoff.public.invest.api.contract.v1.GetCandlesRequest.CandleSource candle_source_type = 9;
 inline bool CandleSubscription::has_candle_source_type() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
@@ -17022,6 +17476,28 @@ inline void OrderBookSubscription::_internal_set_order_book_type(::tinkoff::publ
   _impl_.order_book_type_ = value;
 }
 
+// .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 8;
+inline void OrderBookSubscription::clear_subscription_action() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = 0;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction OrderBookSubscription::subscription_action() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OrderBookSubscription.subscription_action)
+  return _internal_subscription_action();
+}
+inline void OrderBookSubscription::set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  _internal_set_subscription_action(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OrderBookSubscription.subscription_action)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction OrderBookSubscription::_internal_subscription_action() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SubscriptionAction>(_impl_.subscription_action_);
+}
+inline void OrderBookSubscription::_internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // SubscribeTradesRequest
@@ -17117,6 +17593,28 @@ inline ::tinkoff::public_::invest::api::contract::v1::TradeSourceType SubscribeT
 inline void SubscribeTradesRequest::_internal_set_trade_source(::tinkoff::public_::invest::api::contract::v1::TradeSourceType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.trade_source_ = value;
+}
+
+// bool with_open_interest = 4;
+inline void SubscribeTradesRequest::clear_with_open_interest() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.with_open_interest_ = false;
+}
+inline bool SubscribeTradesRequest::with_open_interest() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.SubscribeTradesRequest.with_open_interest)
+  return _internal_with_open_interest();
+}
+inline void SubscribeTradesRequest::set_with_open_interest(bool value) {
+  _internal_set_with_open_interest(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.SubscribeTradesRequest.with_open_interest)
+}
+inline bool SubscribeTradesRequest::_internal_with_open_interest() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.with_open_interest_;
+}
+inline void SubscribeTradesRequest::_internal_set_with_open_interest(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.with_open_interest_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -17558,6 +18056,50 @@ inline void TradeSubscription::set_allocated_subscription_id(std::string* value)
     _impl_.subscription_id_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.TradeSubscription.subscription_id)
+}
+
+// bool with_open_interest = 6;
+inline void TradeSubscription::clear_with_open_interest() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.with_open_interest_ = false;
+}
+inline bool TradeSubscription::with_open_interest() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.TradeSubscription.with_open_interest)
+  return _internal_with_open_interest();
+}
+inline void TradeSubscription::set_with_open_interest(bool value) {
+  _internal_set_with_open_interest(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.TradeSubscription.with_open_interest)
+}
+inline bool TradeSubscription::_internal_with_open_interest() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.with_open_interest_;
+}
+inline void TradeSubscription::_internal_set_with_open_interest(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.with_open_interest_ = value;
+}
+
+// .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 7;
+inline void TradeSubscription::clear_subscription_action() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = 0;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction TradeSubscription::subscription_action() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.TradeSubscription.subscription_action)
+  return _internal_subscription_action();
+}
+inline void TradeSubscription::set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  _internal_set_subscription_action(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.TradeSubscription.subscription_action)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction TradeSubscription::_internal_subscription_action() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SubscriptionAction>(_impl_.subscription_action_);
+}
+inline void TradeSubscription::_internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -18054,6 +18596,28 @@ inline void InfoSubscription::set_allocated_subscription_id(std::string* value) 
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.InfoSubscription.subscription_id)
 }
 
+// .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 6;
+inline void InfoSubscription::clear_subscription_action() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = 0;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction InfoSubscription::subscription_action() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.InfoSubscription.subscription_action)
+  return _internal_subscription_action();
+}
+inline void InfoSubscription::set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  _internal_set_subscription_action(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.InfoSubscription.subscription_action)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction InfoSubscription::_internal_subscription_action() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SubscriptionAction>(_impl_.subscription_action_);
+}
+inline void InfoSubscription::_internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // SubscribeLastPriceRequest
@@ -18546,6 +19110,28 @@ inline void LastPriceSubscription::set_allocated_subscription_id(std::string* va
     _impl_.subscription_id_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.LastPriceSubscription.subscription_id)
+}
+
+// .tinkoff.public.invest.api.contract.v1.SubscriptionAction subscription_action = 6;
+inline void LastPriceSubscription::clear_subscription_action() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = 0;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction LastPriceSubscription::subscription_action() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.LastPriceSubscription.subscription_action)
+  return _internal_subscription_action();
+}
+inline void LastPriceSubscription::set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  _internal_set_subscription_action(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.LastPriceSubscription.subscription_action)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::SubscriptionAction LastPriceSubscription::_internal_subscription_action() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::SubscriptionAction>(_impl_.subscription_action_);
+}
+inline void LastPriceSubscription::_internal_set_subscription_action(::tinkoff::public_::invest::api::contract::v1::SubscriptionAction value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.subscription_action_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -22040,6 +22626,171 @@ inline void LastPrice::_internal_set_last_price_type(::tinkoff::public_::invest:
 
 // -------------------------------------------------------------------
 
+// OpenInterest
+
+// string instrument_uid = 1;
+inline void OpenInterest::clear_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.ClearToEmpty();
+}
+inline const std::string& OpenInterest::instrument_uid() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OpenInterest.instrument_uid)
+  return _internal_instrument_uid();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void OpenInterest::set_instrument_uid(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OpenInterest.instrument_uid)
+}
+inline std::string* OpenInterest::mutable_instrument_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_instrument_uid();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OpenInterest.instrument_uid)
+  return _s;
+}
+inline const std::string& OpenInterest::_internal_instrument_uid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instrument_uid_.Get();
+}
+inline void OpenInterest::_internal_set_instrument_uid(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.Set(value, GetArena());
+}
+inline std::string* OpenInterest::_internal_mutable_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.instrument_uid_.Mutable( GetArena());
+}
+inline std::string* OpenInterest::release_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OpenInterest.instrument_uid)
+  return _impl_.instrument_uid_.Release();
+}
+inline void OpenInterest::set_allocated_instrument_uid(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
+    _impl_.instrument_uid_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OpenInterest.instrument_uid)
+}
+
+// .google.protobuf.Timestamp time = 2;
+inline bool OpenInterest::has_time() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.time_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& OpenInterest::_internal_time() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.time_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& OpenInterest::time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OpenInterest.time)
+  return _internal_time();
+}
+inline void OpenInterest::unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+  }
+  _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.OpenInterest.time)
+}
+inline ::google::protobuf::Timestamp* OpenInterest::release_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::google::protobuf::Timestamp* released = _impl_.time_;
+  _impl_.time_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::google::protobuf::Timestamp* OpenInterest::unsafe_arena_release_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.OpenInterest.time)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::google::protobuf::Timestamp* temp = _impl_.time_;
+  _impl_.time_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* OpenInterest::_internal_mutable_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.time_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.time_;
+}
+inline ::google::protobuf::Timestamp* OpenInterest::mutable_time() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_time();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.OpenInterest.time)
+  return _msg;
+}
+inline void OpenInterest::set_allocated_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.OpenInterest.time)
+}
+
+// int64 open_interest = 3;
+inline void OpenInterest::clear_open_interest() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.open_interest_ = ::int64_t{0};
+}
+inline ::int64_t OpenInterest::open_interest() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.OpenInterest.open_interest)
+  return _internal_open_interest();
+}
+inline void OpenInterest::set_open_interest(::int64_t value) {
+  _internal_set_open_interest(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.OpenInterest.open_interest)
+}
+inline ::int64_t OpenInterest::_internal_open_interest() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.open_interest_;
+}
+inline void OpenInterest::_internal_set_open_interest(::int64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.open_interest_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // GetOrderBookRequest
 
 // optional string figi = 1 [deprecated = true];
@@ -24514,6 +25265,97 @@ inline void InstrumentClosePriceResponse::set_allocated_time(::google::protobuf:
 
   _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.time)
+}
+
+// .google.protobuf.Timestamp evening_session_price_time = 23;
+inline bool InstrumentClosePriceResponse::has_evening_session_price_time() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000008u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.evening_session_price_time_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& InstrumentClosePriceResponse::_internal_evening_session_price_time() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.evening_session_price_time_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& InstrumentClosePriceResponse::evening_session_price_time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.evening_session_price_time)
+  return _internal_evening_session_price_time();
+}
+inline void InstrumentClosePriceResponse::unsafe_arena_set_allocated_evening_session_price_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.evening_session_price_time_);
+  }
+  _impl_.evening_session_price_time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000008u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000008u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.evening_session_price_time)
+}
+inline ::google::protobuf::Timestamp* InstrumentClosePriceResponse::release_evening_session_price_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::google::protobuf::Timestamp* released = _impl_.evening_session_price_time_;
+  _impl_.evening_session_price_time_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::google::protobuf::Timestamp* InstrumentClosePriceResponse::unsafe_arena_release_evening_session_price_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.evening_session_price_time)
+
+  _impl_._has_bits_[0] &= ~0x00000008u;
+  ::google::protobuf::Timestamp* temp = _impl_.evening_session_price_time_;
+  _impl_.evening_session_price_time_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* InstrumentClosePriceResponse::_internal_mutable_evening_session_price_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.evening_session_price_time_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.evening_session_price_time_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.evening_session_price_time_;
+}
+inline ::google::protobuf::Timestamp* InstrumentClosePriceResponse::mutable_evening_session_price_time() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000008u;
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_evening_session_price_time();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.evening_session_price_time)
+  return _msg;
+}
+inline void InstrumentClosePriceResponse::set_allocated_evening_session_price_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.evening_session_price_time_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000008u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000008u;
+  }
+
+  _impl_.evening_session_price_time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.InstrumentClosePriceResponse.evening_session_price_time)
 }
 
 // -------------------------------------------------------------------

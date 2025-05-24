@@ -7,7 +7,10 @@
 #include <QChart>
 #include <QDateTimeAxis>
 #include <QLineSeries>
+#include <QTimer>
 #include <QValueAxis>
+
+#include "src/widgets/accountchartwidget/charttooltip.h"
 
 
 
@@ -22,17 +25,20 @@ public:
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;
 
+    QTimer tooltipHideTimer;
+
     void zoom(double factor);
 
     bool eventFilter(QObject* object, QEvent* event) override;
 
-    void switchToYieldChart() override;
-    void switchToMonthlyYieldChart() override;
-    void switchToRemainedMoneyChart() override;
-    void switchToTotalMoneyChart() override;
+    void switchChart(ChartType chartType) override;
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
+
+public slots:
+    void seriesHovered(QPointF point, bool state);
+    void tooltipHideTimerTicked();
 
 private:
     void initYieldChart();
@@ -70,4 +76,5 @@ private:
     float         mTotalMoneyAxisYMax;
     QPointF       mTargetScenePos;
     QPointF       mTargetViewportPos;
+    ChartTooltip* mTooltip;
 };

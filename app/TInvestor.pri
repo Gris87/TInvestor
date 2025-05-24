@@ -86,6 +86,7 @@ SOURCES += \
     src/utils/timeutils/timeutils.cpp \
     src/widgets/accountchartwidget/accountchartwidget.cpp \
     src/widgets/accountchartwidget/accountchartwidgetfactory.cpp \
+    src/widgets/accountchartwidget/charttooltip.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
     src/widgets/logstablewidget/logstablewidget.cpp \
@@ -268,6 +269,7 @@ HEADERS += \
     src/utils/timeutils/timeutils.h \
     src/widgets/accountchartwidget/accountchartwidget.h \
     src/widgets/accountchartwidget/accountchartwidgetfactory.h \
+    src/widgets/accountchartwidget/charttooltip.h \
     src/widgets/accountchartwidget/iaccountchartwidget.h \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory.h \
     src/widgets/decisionmakerwidget/decisionmakerwidget.h \

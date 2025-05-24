@@ -7500,6 +7500,7 @@ class Share final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 38,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -7546,6 +7547,28 @@ class Share final : public ::google::protobuf::Message
     kBlockedTcaFlagFieldNumber = 49,
     kLiquidityFlagFieldNumber = 50,
   };
+  // repeated string required_tests = 38;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -8149,8 +8172,8 @@ class Share final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 45, 14,
-      201, 13>
+      5, 46, 14,
+      215, 13>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -8169,6 +8192,7 @@ class Share final : public ::google::protobuf::Message
                           const Share& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -8581,6 +8605,7 @@ class Option final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 410,
     kUidFieldNumber = 1,
     kPositionUidFieldNumber = 2,
     kTickerFieldNumber = 3,
@@ -8629,6 +8654,28 @@ class Option final : public ::google::protobuf::Message
     kBlockedTcaFlagFieldNumber = 408,
     kApiTradeAvailableFlagFieldNumber = 409,
   };
+  // repeated string required_tests = 410;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string uid = 1;
   void clear_uid() ;
   const std::string& uid() const;
@@ -9273,8 +9320,8 @@ class Option final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 47, 17,
-      249, 53>
+      5, 48, 17,
+      271, 53>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -9293,6 +9340,7 @@ class Option final : public ::google::protobuf::Message
                           const Option& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr uid_;
     ::google::protobuf::internal::ArenaStringPtr position_uid_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
@@ -9934,6 +9982,7 @@ class Instrument final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 29,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -9973,6 +10022,28 @@ class Instrument final : public ::google::protobuf::Message
     kBlockedTcaFlagFieldNumber = 39,
     kInstrumentKindFieldNumber = 40,
   };
+  // repeated string required_tests = 29;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -10496,8 +10567,8 @@ class Instrument final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 38, 12,
-      207, 14>
+      5, 39, 12,
+      221, 14>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -10516,6 +10587,7 @@ class Instrument final : public ::google::protobuf::Message
                           const Instrument& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -16369,6 +16441,7 @@ class Future final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 35,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -16416,6 +16489,28 @@ class Future final : public ::google::protobuf::Message
     kWeekendFlagFieldNumber = 43,
     kBlockedTcaFlagFieldNumber = 44,
   };
+  // repeated string required_tests = 35;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -17066,8 +17161,8 @@ class Future final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 46, 19,
-      246, 13>
+      5, 47, 19,
+      260, 13>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -17086,6 +17181,7 @@ class Future final : public ::google::protobuf::Message
                           const Future& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -17285,6 +17381,7 @@ class Etf final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 36,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -17330,6 +17427,28 @@ class Etf final : public ::google::protobuf::Message
     kBlockedTcaFlagFieldNumber = 44,
     kLiquidityFlagFieldNumber = 45,
   };
+  // repeated string required_tests = 36;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -17940,8 +18059,8 @@ class Etf final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 44, 15,
-      225, 13>
+      5, 45, 15,
+      239, 13>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -17960,6 +18079,7 @@ class Etf final : public ::google::protobuf::Message
                           const Etf& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -18954,6 +19074,7 @@ class Currency final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 30,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -18992,6 +19113,28 @@ class Currency final : public ::google::protobuf::Message
     kWeekendFlagFieldNumber = 53,
     kBlockedTcaFlagFieldNumber = 54,
   };
+  // repeated string required_tests = 30;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -19504,8 +19647,8 @@ class Currency final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 37, 13,
-      198, 13>
+      5, 38, 13,
+      212, 13>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -19524,6 +19667,7 @@ class Currency final : public ::google::protobuf::Message
                           const Currency& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -20032,6 +20176,7 @@ class Bond final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
+    kRequiredTestsFieldNumber = 44,
     kFigiFieldNumber = 1,
     kTickerFieldNumber = 2,
     kClassCodeFieldNumber = 3,
@@ -20089,6 +20234,28 @@ class Bond final : public ::google::protobuf::Message
     kRiskLevelFieldNumber = 63,
     kBondTypeFieldNumber = 65,
   };
+  // repeated string required_tests = 44;
+  int required_tests_size() const;
+  private:
+  int _internal_required_tests_size() const;
+
+  public:
+  void clear_required_tests() ;
+  const std::string& required_tests(int index) const;
+  std::string* mutable_required_tests(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_required_tests(int index, Arg_&& value, Args_... args);
+  std::string* add_required_tests();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_required_tests(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_required_tests();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_required_tests() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_required_tests();
+
+  public:
   // string figi = 1;
   void clear_figi() ;
   const std::string& figi() const;
@@ -20838,8 +21005,8 @@ class Bond final : public ::google::protobuf::Message
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      5, 56, 20,
-      226, 13>
+      5, 57, 20,
+      240, 13>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -20858,6 +21025,7 @@ class Bond final : public ::google::protobuf::Message
                           const Bond& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField<std::string> required_tests_;
     ::google::protobuf::internal::ArenaStringPtr figi_;
     ::google::protobuf::internal::ArenaStringPtr ticker_;
     ::google::protobuf::internal::ArenaStringPtr class_code_;
@@ -39350,6 +39518,70 @@ inline void Option::_internal_set_api_trade_available_flag(bool value) {
   _impl_.api_trade_available_flag_ = value;
 }
 
+// repeated string required_tests = 410;
+inline int Option::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Option::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Option::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Option::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+  return _s;
+}
+inline const std::string& Option::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Option::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Option::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Option::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Option::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Option::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Option.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Option::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Option::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
+}
+
 // -------------------------------------------------------------------
 
 // ShareResponse
@@ -41761,6 +41993,70 @@ inline void Bond::set_allocated_asset_uid(std::string* value) {
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Bond.asset_uid)
 }
 
+// repeated string required_tests = 44;
+inline int Bond::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Bond::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Bond::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Bond::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+  return _s;
+}
+inline const std::string& Bond::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Bond::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Bond::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Bond::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Bond::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Bond::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Bond.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Bond::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Bond::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
+}
+
 // bool for_iis_flag = 51;
 inline void Bond::clear_for_iis_flag() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
@@ -43965,6 +44261,70 @@ inline void Currency::set_allocated_position_uid(std::string* value) {
     _impl_.position_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Currency.position_uid)
+}
+
+// repeated string required_tests = 30;
+inline int Currency::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Currency::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Currency::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Currency::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+  return _s;
+}
+inline const std::string& Currency::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Currency::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Currency::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Currency::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Currency::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Currency::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Currency.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Currency::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Currency::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
 }
 
 // bool for_iis_flag = 41;
@@ -46340,6 +46700,70 @@ inline ::tinkoff::public_::invest::api::contract::v1::InstrumentExchangeType Etf
 inline void Etf::_internal_set_instrument_exchange(::tinkoff::public_::invest::api::contract::v1::InstrumentExchangeType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.instrument_exchange_ = value;
+}
+
+// repeated string required_tests = 36;
+inline int Etf::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Etf::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Etf::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Etf::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+  return _s;
+}
+inline const std::string& Etf::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Etf::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Etf::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Etf::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Etf::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Etf::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Etf.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Etf::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Etf::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
 }
 
 // bool for_iis_flag = 41;
@@ -48806,6 +49230,70 @@ inline void Future::set_allocated_basic_asset_position_uid(std::string* value) {
     _impl_.basic_asset_position_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Future.basic_asset_position_uid)
+}
+
+// repeated string required_tests = 35;
+inline int Future::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Future::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Future::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Future::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+  return _s;
+}
+inline const std::string& Future::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Future::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Future::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Future::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Future::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Future::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Future.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Future::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Future::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
 }
 
 // bool for_iis_flag = 41;
@@ -51355,6 +51843,70 @@ inline ::tinkoff::public_::invest::api::contract::v1::InstrumentExchangeType Sha
 inline void Share::_internal_set_instrument_exchange(::tinkoff::public_::invest::api::contract::v1::InstrumentExchangeType value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.instrument_exchange_ = value;
+}
+
+// repeated string required_tests = 38;
+inline int Share::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Share::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Share::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Share::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+  return _s;
+}
+inline const std::string& Share::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Share::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Share::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Share::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Share::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Share::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Share.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Share::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Share::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
 }
 
 // bool for_iis_flag = 46;
@@ -54632,6 +55184,70 @@ inline void Instrument::set_allocated_asset_uid(std::string* value) {
     _impl_.asset_uid_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.Instrument.asset_uid)
+}
+
+// repeated string required_tests = 29;
+inline int Instrument::_internal_required_tests_size() const {
+  return _internal_required_tests().size();
+}
+inline int Instrument::required_tests_size() const {
+  return _internal_required_tests_size();
+}
+inline void Instrument::clear_required_tests() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.required_tests_.Clear();
+}
+inline std::string* Instrument::add_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_required_tests()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+  return _s;
+}
+inline const std::string& Instrument::required_tests(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+  return _internal_required_tests().Get(index);
+}
+inline std::string* Instrument::mutable_required_tests(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+  return _internal_mutable_required_tests()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void Instrument::set_required_tests(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_required_tests()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+}
+template <typename Arg_, typename... Args_>
+inline void Instrument::add_required_tests(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_required_tests(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Instrument::required_tests() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+  return _internal_required_tests();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Instrument::mutable_required_tests() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.Instrument.required_tests)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_required_tests();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+Instrument::_internal_required_tests() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.required_tests_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+Instrument::_internal_mutable_required_tests() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.required_tests_;
 }
 
 // bool for_iis_flag = 36;

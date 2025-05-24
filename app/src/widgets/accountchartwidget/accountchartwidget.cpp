@@ -7,8 +7,6 @@
 
 
 
-constexpr double ZOOM_FACTOR_BASE = 1.001;
-
 const char* const DATETIME_FORMAT  = "yyyy-MM-dd hh:mm:ss";
 const QColor      BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      PLOT_AREA_COLOR  = QColor("#344759"); // clazy:exclude=non-pod-global-static
@@ -17,11 +15,46 @@ const QColor      LABEL_COLOR      = QColor("#AFC2D7"); // clazy:exclude=non-pod
 const QColor      AXIS_COLOR       = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
 const QColor      GRID_COLOR       = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      SERIES_COLOR     = QColor("#6D85FF"); // clazy:exclude=non-pod-global-static
+constexpr qint64  MS_IN_SECOND       = 1000LL;
+constexpr qint64  TOOLTIP_HIDE_DELAY = MS_IN_SECOND; // 1 second
+constexpr double  ZOOM_FACTOR_BASE   = 1.001;
+constexpr int     TITLE_FONT_SIZE    = 16;
+constexpr qreal   TOOLTIP_Z_VALUE    = 11;
 
 
 
 AccountChartWidget::AccountChartWidget(QWidget* parent) :
-    IAccountChartWidget(parent)
+    IAccountChartWidget(parent),
+    tooltipHideTimer(),
+    mYieldChart(),
+    mYieldSeries(),
+    mYieldAxisX(),
+    mYieldAxisY(),
+    mMonthlyYieldChart(),
+    mMonthlyYieldSeries(),
+    mMonthlyYieldAxisX(),
+    mMonthlyYieldAxisY(),
+    mRemainedMoneyChart(),
+    mRemainedMoneySeries(),
+    mRemainedMoneyAxisX(),
+    mRemainedMoneyAxisY(),
+    mTotalMoneyChart(),
+    mTotalMoneySeries(),
+    mTotalMoneyAxisX(),
+    mTotalMoneyAxisY(),
+    mAxisXMin(),
+    mAxisXMax(),
+    mYieldAxisYMin(),
+    mYieldAxisYMax(),
+    mMonthlyYieldAxisYMin(),
+    mMonthlyYieldAxisYMax(),
+    mRemainedMoneyAxisYMin(),
+    mRemainedMoneyAxisYMax(),
+    mTotalMoneyAxisYMin(),
+    mTotalMoneyAxisYMax(),
+    mTargetScenePos(),
+    mTargetViewportPos(),
+    mTooltip()
 {
     qDebug() << "Create AccountChartWidget";
 
@@ -37,6 +70,14 @@ AccountChartWidget::AccountChartWidget(QWidget* parent) :
 
     viewport()->installEventFilter(this);
     setMouseTracking(true);
+
+    // clang-format off
+    connect(&mYieldSeries,         SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
+    connect(&mMonthlyYieldSeries,  SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
+    connect(&mRemainedMoneySeries, SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
+    connect(&mTotalMoneySeries,    SIGNAL(hovered(QPointF, bool)), this, SLOT(seriesHovered(QPointF, bool)));
+    connect(&tooltipHideTimer,     SIGNAL(timeout()),              this, SLOT(tooltipHideTimerTicked()));
+    // clang-format on
 }
 
 AccountChartWidget::~AccountChartWidget()
@@ -175,6 +216,7 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
     chart->setBackgroundRoundness(0);
 
     chart->legend()->hide();
+    chart->setAcceptHoverEvents(true);
     chart->setAnimationOptions(QChart::SeriesAnimations);
 
     chart->setBackgroundBrush(QBrush(BACKGROUND_COLOR));
@@ -182,7 +224,7 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
     chart->setPlotAreaBackgroundVisible(true);
 
     QFont font;
-    font.setPixelSize(16);
+    font.setPixelSize(TITLE_FONT_SIZE);
     chart->setTitleFont(font);
     chart->setTitleBrush(QBrush(TITLE_COLOR));
 
@@ -198,24 +240,39 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
     axisY->setTitleBrush(QBrush(TITLE_COLOR));
 }
 
-void AccountChartWidget::switchToYieldChart()
+void AccountChartWidget::switchChart(ChartType chartType)
 {
-    setChart(&mYieldChart);
-}
+    switch (chartType)
+    {
+        case CHART_TYPE_YIELD:
+        {
+            setChart(&mYieldChart);
+            break;
+        }
+        case CHART_TYPE_MONTHLY_YIELD:
+        {
+            setChart(&mMonthlyYieldChart);
+            break;
+        }
+        case CHART_TYPE_REMAINED_MONEY:
+        {
+            setChart(&mRemainedMoneyChart);
+            break;
+        }
+        case CHART_TYPE_TOTAL_MONEY:
+        {
+            setChart(&mTotalMoneyChart);
+            break;
+        }
+    }
 
-void AccountChartWidget::switchToMonthlyYieldChart()
-{
-    setChart(&mMonthlyYieldChart);
-}
+    if (mTooltip != nullptr)
+    {
+        tooltipHideTimer.stop();
 
-void AccountChartWidget::switchToRemainedMoneyChart()
-{
-    setChart(&mRemainedMoneyChart);
-}
-
-void AccountChartWidget::switchToTotalMoneyChart()
-{
-    setChart(&mTotalMoneyChart);
+        delete mTooltip;
+        mTooltip = nullptr;
+    }
 }
 
 void AccountChartWidget::operationsRead(const QList<Operation>& operations)
@@ -309,4 +366,32 @@ void AccountChartWidget::handleOperation(const Operation& operation)
     mMonthlyYieldSeries.append(operation.timestamp, monthlyYield);
     mRemainedMoneySeries.append(operation.timestamp, remainedMoney);
     mTotalMoneySeries.append(operation.timestamp, totalMoney);
+}
+
+void AccountChartWidget::seriesHovered(QPointF point, bool state)
+{
+    if (mTooltip == nullptr)
+    {
+        mTooltip = new ChartTooltip(chart());
+        mTooltip->setZValue(TOOLTIP_Z_VALUE);
+    }
+
+    if (state)
+    {
+        tooltipHideTimer.stop();
+
+        mTooltip->setText(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
+        mTooltip->setAnchor(point);
+        mTooltip->updateGeometry();
+        mTooltip->show();
+    }
+    else
+    {
+        tooltipHideTimer.start(TOOLTIP_HIDE_DELAY);
+    }
+}
+
+void AccountChartWidget::tooltipHideTimerTicked()
+{
+    mTooltip->hide();
 }

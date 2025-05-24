@@ -72,7 +72,7 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
 
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
-    mAccountChartWidget->switchToYieldChart();
+    mAccountChartWidget->switchChart(CHART_TYPE_YIELD);
 
     ui->yieldButton->setChecked(true);
     ui->monthlyYieldButton->setChecked(false);
@@ -82,7 +82,7 @@ void DecisionMakerWidget::on_yieldButton_clicked()
 
 void DecisionMakerWidget::on_monthlyYieldButton_clicked()
 {
-    mAccountChartWidget->switchToMonthlyYieldChart();
+    mAccountChartWidget->switchChart(CHART_TYPE_MONTHLY_YIELD);
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(true);
@@ -92,7 +92,7 @@ void DecisionMakerWidget::on_monthlyYieldButton_clicked()
 
 void DecisionMakerWidget::on_remainedMoneyButton_clicked()
 {
-    mAccountChartWidget->switchToRemainedMoneyChart();
+    mAccountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
@@ -102,7 +102,7 @@ void DecisionMakerWidget::on_remainedMoneyButton_clicked()
 
 void DecisionMakerWidget::on_totalMoneyButton_clicked()
 {
-    mAccountChartWidget->switchToTotalMoneyChart();
+    mAccountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);
 
     ui->yieldButton->setChecked(false);
     ui->monthlyYieldButton->setChecked(false);
