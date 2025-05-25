@@ -32,7 +32,6 @@ public:
          IUserStorage*                      userStorage,
          IInstrumentsStorage*               instrumentsStorage,
          IFileDialogFactory*                fileDialogFactory,
-         IMessageBoxUtils*                  messageBoxUtils,
          ISettingsEditor*                   settingsEditor,
          QWidget*                           parent),
         (const, override)

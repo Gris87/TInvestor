@@ -2,6 +2,8 @@
 
 
 
+#include "src/utils/filedialog/ifiledialogfactory.h"
+#include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget.h"
 
 
@@ -15,5 +17,6 @@ public:
     IAccountChartWidgetFactory(const IAccountChartWidgetFactory& another)            = delete;
     IAccountChartWidgetFactory& operator=(const IAccountChartWidgetFactory& another) = delete;
 
-    virtual IAccountChartWidget* newInstance(QWidget* parent) const = 0;
+    virtual IAccountChartWidget*
+    newInstance(IFileDialogFactory* fileDialogFactory, ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };

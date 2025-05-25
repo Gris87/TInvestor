@@ -2,6 +2,13 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
+
+
+
+using ::testing::StrictMock;
+
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
@@ -10,15 +17,22 @@ class Test_AccountChartWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        accountChartWidget = new AccountChartWidget();
+        fileDialogFactoryMock = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock    = new StrictMock<SettingsEditorMock>();
+
+        accountChartWidget = new AccountChartWidget(fileDialogFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete accountChartWidget;
+        delete fileDialogFactoryMock;
+        delete settingsEditorMock;
     }
 
-    AccountChartWidget* accountChartWidget;
+    AccountChartWidget*                accountChartWidget;
+    StrictMock<FileDialogFactoryMock>* fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*    settingsEditorMock;
 };
 
 

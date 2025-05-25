@@ -15,5 +15,6 @@ public:
     AccountChartWidgetFactory(const AccountChartWidgetFactory& another)            = delete;
     AccountChartWidgetFactory& operator=(const AccountChartWidgetFactory& another) = delete;
 
-    IAccountChartWidget* newInstance(QWidget* parent) const override;
+    IAccountChartWidget*
+    newInstance(IFileDialogFactory* fileDialogFactory, ISettingsEditor* settingsEditor, QWidget* parent) const override;
 };

@@ -15,7 +15,6 @@ DecisionMakerWidget::DecisionMakerWidget(
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
     IFileDialogFactory*                fileDialogFactory,
-    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) :
@@ -35,11 +34,10 @@ DecisionMakerWidget::DecisionMakerWidget(
         userStorage,
         instrumentsStorage,
         fileDialogFactory,
-        messageBoxUtils,
         mSettingsEditor,
         this
     );
-    mAccountChartWidget   = accountChartWidgetFactory->newInstance(this);
+    mAccountChartWidget   = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsTableWidget      = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
     mPortfolioTableWidget = portfolioTableWidgetFactory->newInstance(mSettingsEditor, this);
 

@@ -5,7 +5,6 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
 #include "src/utils/filedialog/ifiledialogfactory.h"
-#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
@@ -29,7 +28,6 @@ public:
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
         IFileDialogFactory*                fileDialogFactory,
-        IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent = nullptr
     );
@@ -54,7 +52,6 @@ private:
     IUserStorage*                      mUserStorage;
     IInstrumentsStorage*               mInstrumentsStorage;
     IFileDialogFactory*                mFileDialogFactory;
-    IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     QList<IOperationsTableRecord*>     mTableRecords;
 

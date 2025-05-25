@@ -21,7 +21,6 @@ public:
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
         IFileDialogFactory*                fileDialogFactory,
-        IMessageBoxUtils*                  mMessageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent
     ) const override;

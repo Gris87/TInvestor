@@ -6,7 +6,6 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
-#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
@@ -31,7 +30,6 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         operationsTableWidget = new OperationsTableWidget(
@@ -40,7 +38,6 @@ protected:
             userStorageMock,
             instrumentsStorageMock,
             fileDialogFactoryMock,
-            messageBoxUtilsMock,
             settingsEditorMock
         );
     }
@@ -53,7 +50,6 @@ protected:
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete fileDialogFactoryMock;
-        delete messageBoxUtilsMock;
         delete settingsEditorMock;
     }
 
@@ -63,7 +59,6 @@ protected:
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 

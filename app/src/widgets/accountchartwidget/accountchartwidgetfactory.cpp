@@ -17,7 +17,9 @@ AccountChartWidgetFactory::~AccountChartWidgetFactory()
     qDebug() << "Destroy AccountChartWidgetFactory";
 }
 
-IAccountChartWidget* AccountChartWidgetFactory::newInstance(QWidget* parent) const
+IAccountChartWidget* AccountChartWidgetFactory::newInstance(
+    IFileDialogFactory* fileDialogFactory, ISettingsEditor* settingsEditor, QWidget* parent
+) const
 {
-    return new AccountChartWidget(parent);
+    return new AccountChartWidget(fileDialogFactory, settingsEditor, parent);
 }

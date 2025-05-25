@@ -33,7 +33,6 @@ StocksTableWidget::StocksTableWidget(
     IOrderBookThread*                  orderBookThread,
     IHttpClient*                       httpClient,
     IFileDialogFactory*                fileDialogFactory,
-    IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) :
@@ -50,7 +49,6 @@ StocksTableWidget::StocksTableWidget(
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
     mFileDialogFactory(fileDialogFactory),
-    mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create StocksTableWidget";

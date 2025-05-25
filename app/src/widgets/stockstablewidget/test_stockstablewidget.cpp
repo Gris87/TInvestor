@@ -8,7 +8,6 @@
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
-#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
@@ -40,7 +39,6 @@ protected:
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         stocksTableWidget = new StocksTableWidget(
@@ -53,7 +51,6 @@ protected:
             orderBookThreadMock,
             httpClientMock,
             fileDialogFactoryMock,
-            messageBoxUtilsMock,
             settingsEditorMock
         );
     }
@@ -70,7 +67,6 @@ protected:
         delete orderBookThreadMock;
         delete httpClientMock;
         delete fileDialogFactoryMock;
-        delete messageBoxUtilsMock;
         delete settingsEditorMock;
     }
 
@@ -84,7 +80,6 @@ protected:
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 

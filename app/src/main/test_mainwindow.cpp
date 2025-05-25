@@ -151,7 +151,6 @@ protected:
                 orderBookThreadMock,
                 httpClientMock,
                 fileDialogFactoryMock,
-                messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
             )
@@ -169,7 +168,6 @@ protected:
                 userStorageMock,
                 instrumentsStorageMock,
                 fileDialogFactoryMock,
-                messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
             )
@@ -187,7 +185,6 @@ protected:
                 userStorageMock,
                 instrumentsStorageMock,
                 fileDialogFactoryMock,
-                messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
             )

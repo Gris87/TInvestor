@@ -2,6 +2,13 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
+
+
+
+using ::testing::StrictMock;
+
 
 
 TEST(Test_AccountChartWidgetFactory, Test_constructor_and_destructor)
@@ -13,7 +20,10 @@ TEST(Test_AccountChartWidgetFactory, Test_newInstance)
 {
     const AccountChartWidgetFactory factory;
 
-    const IAccountChartWidget* widget = factory.newInstance(nullptr);
+    StrictMock<FileDialogFactoryMock> fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>    settingsEditorMock;
+
+    const IAccountChartWidget* widget = factory.newInstance(&fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

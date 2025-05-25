@@ -23,7 +23,6 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
     IFileDialogFactory*                fileDialogFactory,
-    IMessageBoxUtils*                  mMessageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
 ) const
@@ -34,7 +33,6 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
         userStorage,
         instrumentsStorage,
         fileDialogFactory,
-        mMessageBoxUtils,
         settingsEditor,
         parent
     );

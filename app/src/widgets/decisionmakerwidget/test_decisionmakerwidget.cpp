@@ -6,7 +6,6 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
-#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
@@ -50,7 +49,6 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         EXPECT_CALL(
@@ -61,13 +59,13 @@ protected:
                 userStorageMock,
                 instrumentsStorageMock,
                 fileDialogFactoryMock,
-                messageBoxUtilsMock,
                 settingsEditorMock,
                 NotNull()
             )
         )
             .WillOnce(Return(operationsTableWidgetMock));
-        EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(accountChartWidgetMock));
+        EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(fileDialogFactoryMock, settingsEditorMock, NotNull()))
+            .WillOnce(Return(accountChartWidgetMock));
         EXPECT_CALL(*logsTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
             .WillOnce(Return(logsTableWidgetMock));
         EXPECT_CALL(*portfolioTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
@@ -83,7 +81,6 @@ protected:
             userStorageMock,
             instrumentsStorageMock,
             fileDialogFactoryMock,
-            messageBoxUtilsMock,
             settingsEditorMock
         );
     }
@@ -100,7 +97,6 @@ protected:
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete fileDialogFactoryMock;
-        delete messageBoxUtilsMock;
         delete settingsEditorMock;
     }
 
@@ -118,7 +114,6 @@ protected:
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 

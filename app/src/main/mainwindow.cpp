@@ -149,7 +149,6 @@ MainWindow::MainWindow(
         mOrderBookThread,
         mHttpClient,
         mFileDialogFactory,
-        mMessageBoxUtils,
         mSettingsEditor,
         this
     );
@@ -163,7 +162,6 @@ MainWindow::MainWindow(
         mUserStorage,
         mInstrumentsStorage,
         mFileDialogFactory,
-        mMessageBoxUtils,
         mSettingsEditor,
         this
     );
@@ -177,7 +175,6 @@ MainWindow::MainWindow(
         mUserStorage,
         mInstrumentsStorage,
         mFileDialogFactory,
-        mMessageBoxUtils,
         mSettingsEditor,
         this
     );

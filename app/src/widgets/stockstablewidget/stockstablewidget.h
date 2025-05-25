@@ -9,7 +9,6 @@
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/http/ihttpclient.h"
-#include "src/utils/messagebox/imessageboxutils.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
@@ -40,7 +39,6 @@ public:
         IOrderBookThread*                  orderBookThread,
         IHttpClient*                       httpClient,
         IFileDialogFactory*                fileDialogFactory,
-        IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent = nullptr
     );
@@ -81,7 +79,6 @@ private:
     IOrderBookThread*                  mOrderBookThread;
     IHttpClient*                       mHttpClient;
     IFileDialogFactory*                mFileDialogFactory;
-    IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
 
 public slots:

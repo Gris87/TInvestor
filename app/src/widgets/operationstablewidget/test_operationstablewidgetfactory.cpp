@@ -5,7 +5,6 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
-#include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
@@ -30,7 +29,6 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
     StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
-    StrictMock<MessageBoxUtilsMock>                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
     const IOperationsTableWidget* widget = factory.newInstance(
@@ -39,7 +37,6 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
         &userStorageMock,
         &instrumentsStorageMock,
         &fileDialogFactoryMock,
-        &messageBoxUtilsMock,
         &settingsEditorMock,
         nullptr
     );
