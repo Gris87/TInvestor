@@ -5,22 +5,31 @@
 #include <QMenu>
 
 #include "src/grpc/utils.h"
+#include "src/qxlsx/xlsxchart.h"
+#include "src/qxlsx/xlsxchartsheet.h"
+#include "src/qxlsx/xlsxdocument.h"
 
 
 
-const char* const DATETIME_FORMAT    = "yyyy-MM-dd hh:mm:ss";
-const QColor      BACKGROUND_COLOR   = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-const QColor      PLOT_AREA_COLOR    = QColor("#344759"); // clazy:exclude=non-pod-global-static
-const QColor      TITLE_COLOR        = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
-const QColor      LABEL_COLOR        = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
-const QColor      AXIS_COLOR         = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
-const QColor      GRID_COLOR         = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-const QColor      SERIES_COLOR       = QColor("#6D85FF"); // clazy:exclude=non-pod-global-static
-constexpr qint64  MS_IN_SECOND       = 1000LL;
-constexpr qint64  TOOLTIP_HIDE_DELAY = MS_IN_SECOND; // 1 second
-constexpr double  ZOOM_FACTOR_BASE   = 1.001;
-constexpr int     TITLE_FONT_SIZE    = 16;
-constexpr qreal   TOOLTIP_Z_VALUE    = 11;
+const char* const DATETIME_FORMAT         = "yyyy-MM-dd hh:mm:ss";
+const QColor      BACKGROUND_COLOR        = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      PLOT_AREA_COLOR         = QColor("#344759"); // clazy:exclude=non-pod-global-static
+const QColor      TITLE_COLOR             = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor      LABEL_COLOR             = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
+const QColor      AXIS_COLOR              = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor      GRID_COLOR              = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      SERIES_COLOR            = QColor("#6D85FF"); // clazy:exclude=non-pod-global-static
+const QColor      HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
+const QColor      HEADER_FONT_COLOR       = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_BACKGROUND_COLOR   = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_FONT_COLOR         = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+
+constexpr qint64 MS_IN_SECOND       = 1000LL;
+constexpr qint64 TOOLTIP_HIDE_DELAY = MS_IN_SECOND; // 1 second
+constexpr double ZOOM_FACTOR_BASE   = 1.001;
+constexpr int    TITLE_FONT_SIZE    = 16;
+constexpr qreal  TOOLTIP_Z_VALUE    = 11;
+constexpr double COLUMN_GAP         = 0.71;
 
 
 
@@ -409,7 +418,159 @@ void AccountChartWidget::actionExportToExcelTriggered()
 
 void AccountChartWidget::exportToExcel(const QString& path) const
 {
-    qInfo() << path;
+    QXlsx::Document doc;
+
+    QXlsx::Format headerStyle;
+    headerStyle.setFontBold(true);
+    headerStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    headerStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    headerStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    headerStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
+    headerStyle.setFontColor(HEADER_FONT_COLOR);
+
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
+    QXlsx::Format dateFormat;
+    dateFormat.setNumberFormat(DATETIME_FORMAT);
+    dateFormat.setFillPattern(QXlsx::Format::PatternSolid);
+    dateFormat.setBorderStyle(QXlsx::Format::BorderThin);
+    dateFormat.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    dateFormat.setFontColor(CELL_FONT_COLOR);
+
+    doc.addSheet(mYieldChart.title() + " (Data)");
+    doc.write(1, 1, mYieldAxisX.titleText(), headerStyle);
+    doc.write(1, 2, mYieldAxisY.titleText(), headerStyle);
+
+    const QList<QPointF>& yieldSeriesPoints = mYieldSeries.points();
+
+    for (int i = 0; i < yieldSeriesPoints.size(); ++i)
+    {
+        const QPointF& point = yieldSeriesPoints.at(i);
+
+        doc.write(i + 2, 1, QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(point.x())), dateFormat);
+        doc.write(i + 2, 2, point.y(), cellStyle);
+    }
+
+    // NOLINTBEGIN(readability-magic-numbers)
+    // clang-format off
+    doc.setColumnWidth(1, 17.57 + COLUMN_GAP);
+    doc.setColumnWidth(2, 12    + COLUMN_GAP);
+    // clang-format on
+    // NOLINTEND(readability-magic-numbers)
+
+    doc.addSheet(mMonthlyYieldChart.title() + " (Data)");
+    doc.write(1, 1, mMonthlyYieldAxisX.titleText(), headerStyle);
+    doc.write(1, 2, mMonthlyYieldAxisY.titleText(), headerStyle);
+
+    const QList<QPointF>& monthlyYieldSeriesPoints = mMonthlyYieldSeries.points();
+
+    for (int i = 0; i < monthlyYieldSeriesPoints.size(); ++i)
+    {
+        const QPointF& point = monthlyYieldSeriesPoints.at(i);
+
+        doc.write(i + 2, 1, QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(point.x())), dateFormat);
+        doc.write(i + 2, 2, point.y(), cellStyle);
+    }
+
+    // NOLINTBEGIN(readability-magic-numbers)
+    // clang-format off
+    doc.setColumnWidth(1, 17.57 + COLUMN_GAP);
+    doc.setColumnWidth(2, 12    + COLUMN_GAP);
+    // clang-format on
+    // NOLINTEND(readability-magic-numbers)
+
+    doc.addSheet(mRemainedMoneyChart.title() + " (Data)");
+    doc.write(1, 1, mRemainedMoneyAxisX.titleText(), headerStyle);
+    doc.write(1, 2, mRemainedMoneyAxisY.titleText(), headerStyle);
+
+    const QList<QPointF>& remainedMoneySeriesPoints = mRemainedMoneySeries.points();
+
+    for (int i = 0; i < remainedMoneySeriesPoints.size(); ++i)
+    {
+        const QPointF& point = remainedMoneySeriesPoints.at(i);
+
+        doc.write(i + 2, 1, QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(point.x())), dateFormat);
+        doc.write(i + 2, 2, point.y(), cellStyle);
+    }
+
+    // NOLINTBEGIN(readability-magic-numbers)
+    // clang-format off
+    doc.setColumnWidth(1, 17.57 + COLUMN_GAP);
+    doc.setColumnWidth(2, 12    + COLUMN_GAP);
+    // clang-format on
+    // NOLINTEND(readability-magic-numbers)
+
+    doc.addSheet(mTotalMoneyChart.title() + " (Data)");
+    doc.write(1, 1, mTotalMoneyAxisX.titleText(), headerStyle);
+    doc.write(1, 2, mTotalMoneyAxisY.titleText(), headerStyle);
+
+    const QList<QPointF>& totalMoneySeriesPoints = mTotalMoneySeries.points();
+
+    for (int i = 0; i < totalMoneySeriesPoints.size(); ++i)
+    {
+        const QPointF& point = totalMoneySeriesPoints.at(i);
+
+        doc.write(i + 2, 1, QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(point.x())), dateFormat);
+        doc.write(i + 2, 2, point.y(), cellStyle);
+    }
+
+    // NOLINTBEGIN(readability-magic-numbers)
+    // clang-format off
+    doc.setColumnWidth(1, 17.57 + COLUMN_GAP);
+    doc.setColumnWidth(2, 12    + COLUMN_GAP);
+    // clang-format on
+    // NOLINTEND(readability-magic-numbers)
+
+    doc.insertSheet(0, mTotalMoneyChart.title(), QXlsx::AbstractSheet::ST_ChartSheet);
+    QXlsx::Chartsheet* totalMoneySheet = dynamic_cast<QXlsx::Chartsheet*>(doc.currentSheet());
+    QXlsx::Chart*      totalMoneyChart = totalMoneySheet->chart();
+    totalMoneyChart->setChartType(QXlsx::Chart::CT_LineChart);
+    totalMoneyChart->setChartTitle(mTotalMoneyChart.title());
+    totalMoneyChart->setAxisTitle(QXlsx::Chart::Bottom, mTotalMoneyAxisX.titleText());
+    totalMoneyChart->setAxisTitle(QXlsx::Chart::Left, mTotalMoneyAxisY.titleText());
+    totalMoneyChart->addSeries(
+        QXlsx::CellRange(2, 1, totalMoneySeriesPoints.size() + 1, 2), doc.sheet(mTotalMoneyChart.title() + " (Data)"), true
+    );
+
+    doc.insertSheet(0, mRemainedMoneyChart.title(), QXlsx::AbstractSheet::ST_ChartSheet);
+    QXlsx::Chartsheet* remainedMoneySheet = dynamic_cast<QXlsx::Chartsheet*>(doc.currentSheet());
+    QXlsx::Chart*      remainedMoneyChart = remainedMoneySheet->chart();
+    remainedMoneyChart->setChartType(QXlsx::Chart::CT_LineChart);
+    remainedMoneyChart->setChartTitle(mRemainedMoneyChart.title());
+    remainedMoneyChart->setAxisTitle(QXlsx::Chart::Bottom, mRemainedMoneyAxisX.titleText());
+    remainedMoneyChart->setAxisTitle(QXlsx::Chart::Left, mRemainedMoneyAxisY.titleText());
+    remainedMoneyChart->addSeries(
+        QXlsx::CellRange(2, 1, remainedMoneySeriesPoints.size() + 1, 2), doc.sheet(mRemainedMoneyChart.title() + " (Data)"), true
+    );
+
+    doc.insertSheet(0, mMonthlyYieldChart.title(), QXlsx::AbstractSheet::ST_ChartSheet);
+    QXlsx::Chartsheet* monthlyYieldSheet = dynamic_cast<QXlsx::Chartsheet*>(doc.currentSheet());
+    QXlsx::Chart*      monthlyYieldChart = monthlyYieldSheet->chart();
+    monthlyYieldChart->setChartType(QXlsx::Chart::CT_LineChart);
+    monthlyYieldChart->setChartTitle(mMonthlyYieldChart.title());
+    monthlyYieldChart->setAxisTitle(QXlsx::Chart::Bottom, mMonthlyYieldAxisX.titleText());
+    monthlyYieldChart->setAxisTitle(QXlsx::Chart::Left, mMonthlyYieldAxisY.titleText());
+    monthlyYieldChart->addSeries(
+        QXlsx::CellRange(2, 1, monthlyYieldSeriesPoints.size() + 1, 2), doc.sheet(mMonthlyYieldChart.title() + " (Data)"), true
+    );
+
+    doc.insertSheet(0, mYieldChart.title(), QXlsx::AbstractSheet::ST_ChartSheet);
+    QXlsx::Chartsheet* yieldSheet = dynamic_cast<QXlsx::Chartsheet*>(doc.currentSheet());
+    QXlsx::Chart*      yieldChart = yieldSheet->chart();
+    yieldChart->setChartType(QXlsx::Chart::CT_LineChart);
+    yieldChart->setChartTitle(mYieldChart.title());
+    yieldChart->setAxisTitle(QXlsx::Chart::Bottom, mYieldAxisX.titleText());
+    yieldChart->setAxisTitle(QXlsx::Chart::Left, mYieldAxisY.titleText());
+    yieldChart->addSeries(
+        QXlsx::CellRange(2, 1, yieldSeriesPoints.size() + 1, 2), doc.sheet(mYieldChart.title() + " (Data)"), true
+    );
+
+    doc.saveAs(path);
 }
 
 void AccountChartWidget::seriesHovered(QPointF point, bool state)

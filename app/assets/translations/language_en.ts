@@ -4,37 +4,52 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="77"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="186"/>
         <source>Remained money on account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="42"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="62"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="102"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="146"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="168"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="190"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="212"/>
         <source>Time</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="37"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="142"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="57"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="164"/>
         <source>Yield per month</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="87"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="107"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="192"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="214"/>
         <source>Money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="97"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="208"/>
         <source>Total money on account</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="393"/>
+        <source>Export to Excel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="403"/>
+        <source>Export</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="403"/>
+        <source>Excel file</source>
         <translation></translation>
     </message>
 </context>
@@ -234,13 +249,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="263"/>
+        <location filename="../../src/main/mainwindow.cpp" line="260"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="455"/>
+        <location filename="../../src/main/mainwindow.cpp" line="452"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -251,7 +266,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="483"/>
+        <location filename="../../src/main/mainwindow.cpp" line="480"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -312,40 +327,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="264"/>
+        <location filename="../../src/main/mainwindow.cpp" line="261"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="332"/>
+        <location filename="../../src/main/mainwindow.cpp" line="329"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="429"/>
-        <location filename="../../src/main/mainwindow.cpp" line="687"/>
+        <location filename="../../src/main/mainwindow.cpp" line="426"/>
+        <location filename="../../src/main/mainwindow.cpp" line="684"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="444"/>
-        <location filename="../../src/main/mainwindow.cpp" line="610"/>
+        <location filename="../../src/main/mainwindow.cpp" line="441"/>
+        <location filename="../../src/main/mainwindow.cpp" line="607"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="610"/>
+        <location filename="../../src/main/mainwindow.cpp" line="607"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="466"/>
-        <location filename="../../src/main/mainwindow.cpp" line="641"/>
+        <location filename="../../src/main/mainwindow.cpp" line="463"/>
+        <location filename="../../src/main/mainwindow.cpp" line="638"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="641"/>
+        <location filename="../../src/main/mainwindow.cpp" line="638"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -423,22 +438,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="114"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="112"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="124"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="124"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="143"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="141"/>
         <source>Operations</source>
         <translation></translation>
     </message>
@@ -913,27 +928,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="204"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="202"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="214"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="212"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="233"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="231"/>
         <source>Stocks</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="251"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="249"/>
         <source>Qual investor</source>
         <translation></translation>
     </message>

@@ -7,6 +7,7 @@
 
 
 
+const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
 const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
@@ -112,14 +113,13 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
     const int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
 
     QXlsx::Format cellStyle;
-    QXlsx::Format dateFormat;
-
     cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
     cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
     cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     cellStyle.setFontColor(CELL_FONT_COLOR);
 
-    dateFormat.setNumberFormat("yyyy-mm-dd hh:mm:ss");
+    QXlsx::Format dateFormat;
+    dateFormat.setNumberFormat(DATETIME_FORMAT);
     dateFormat.setFillPattern(QXlsx::Format::PatternSolid);
     dateFormat.setBorderStyle(QXlsx::Format::BorderThin);
     dateFormat.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);

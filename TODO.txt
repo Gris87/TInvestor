@@ -1,6 +1,5 @@
 Build chart based on operations
 Calculate yield for chart
-Export charts to excel
 Control portfolio
 Display portfolio items
 Follow for the strategy

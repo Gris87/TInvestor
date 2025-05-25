@@ -93,11 +93,15 @@ void Chart::addSeries(const CellRange& range, AbstractSheet* sheet, bool headerH
 
         if (headerH)
         {
-            firstDataRow += 1;
+            // TInvestor fix
+            // firstDataRow += 1;
+            firstDataColumn += 1;
         }
         if (headerV)
         {
-            firstDataColumn += 1;
+            // TInvestor fix
+            // firstDataColumn += 1;
+            firstDataRow += 1;
         }
 
         for (int col = firstDataColumn; col <= range.lastColumn(); ++col)
@@ -109,7 +113,9 @@ void Chart::addSeries(const CellRange& range, AbstractSheet* sheet, bool headerH
 
             if (headerH)
             {
-                CellRange subRange(range.firstRow(), col, range.firstRow(), col);
+                // TInvestor fix
+                // CellRange subRange(range.firstRow(), col, range.firstRow(), col);
+                CellRange subRange(firstDataRow, range.firstColumn(), range.lastRow(), range.firstColumn());
                 series->headerH_numRef = sheetName + QLatin1String("!") + subRange.toString(true, true);
             }
             else
