@@ -64,6 +64,8 @@ private:
     qint8                            mAmountOfOperationsWithSameTimestamp;
     QString                          mLastPositionUidForExtAccount;
     QMap<QString, QuantityAndCost>   mInstruments; // Instrument Id => QuantityAndCost
+    Quotation                        mTotalCost;
+    Quotation                        mTotalYieldWithCommission;
     Quotation                        mRemainedMoney;
     Quotation                        mTotalMoney;
 };

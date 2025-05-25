@@ -29,6 +29,8 @@ OperationsThread::OperationsThread(
     mAmountOfOperationsWithSameTimestamp(),
     mLastPositionUidForExtAccount(),
     mInstruments(),
+    mTotalCost(),
+    mTotalYieldWithCommission(),
     mRemainedMoney(),
     mTotalMoney()
 {
@@ -126,15 +128,19 @@ void OperationsThread::readOperations()
     {
         const Operation& lastOperation = operations.constLast();
 
-        mLastRequestTimestamp = lastOperation.timestamp + MS_IN_SECOND;
-        mRemainedMoney        = lastOperation.remainedMoney;
-        mTotalMoney           = lastOperation.totalMoney;
+        mLastRequestTimestamp     = lastOperation.timestamp + MS_IN_SECOND;
+        mTotalCost                = lastOperation.totalCost;
+        mTotalYieldWithCommission = lastOperation.totalYieldWithCommission;
+        mRemainedMoney            = lastOperation.remainedMoney;
+        mTotalMoney               = lastOperation.totalMoney;
     }
     else
     {
-        mLastRequestTimestamp = 0;
-        mRemainedMoney        = Quotation();
-        mTotalMoney           = Quotation();
+        mLastRequestTimestamp     = 0;
+        mTotalCost                = Quotation();
+        mTotalYieldWithCommission = Quotation();
+        mRemainedMoney            = Quotation();
+        mTotalMoney               = Quotation();
     }
 
     mLastOperationTimestamp              = 0;
@@ -253,7 +259,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     double    avgCost  = 0.0;
     Quotation yield;
     Quotation yieldWithCommission;
-    float     yieldWithCommissionPercent = 0.0f;
+    float     yieldWithCommissionPercent      = 0.0f;
+    float     totalYieldWithCommissionPercent = 0.0f;
 
     if (timestamp == mLastOperationTimestamp)
     {
@@ -278,26 +285,40 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
         yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
         yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
+
+        mTotalCost                = quotationDiff(mTotalCost, tinkoffOperation.payment()); // Diff == Sum with negative payment
+        mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
     }
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
         avgPrice = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
         avgCost  = avgPrice * tinkoffOperation.quantity();
 
+        const Quotation avgCostQuotation = quotationFromDouble(avgCost);
+
         quantityAndCost.quantity -= tinkoffOperation.quantity();
 
         if (quantityAndCost.quantity > 0)
         {
-            quantityAndCost.cost = quotationDiff(quantityAndCost.cost, quotationFromDouble(avgCost));
+            quantityAndCost.cost = quotationDiff(quantityAndCost.cost, avgCostQuotation);
         }
         else
         {
             quantityAndCost.cost = Quotation();
         }
 
-        yield                      = quotationDiff(tinkoffOperation.payment(), quotationFromDouble(avgCost));
+        yield                      = quotationDiff(tinkoffOperation.payment(), avgCostQuotation);
         yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
         yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
+
+        mTotalCost                = quotationSum(mTotalCost, avgCostQuotation);
+        mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
+    }
+
+    if (mTotalCost.units != 0 || mTotalCost.nano != 0)
+    {
+        totalYieldWithCommissionPercent =
+            quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mTotalCost) * HUNDRED_PERCENT;
     }
 
     if (!isOperationTypeWithExtAccount(operationType, positionUid))
@@ -324,24 +345,27 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         mLastPositionUidForExtAccount = positionUid;
     }
 
-    res.timestamp                  = timestamp + mAmountOfOperationsWithSameTimestamp;
-    res.instrumentId               = instrumentId;
-    res.description                = QString::fromStdString(tinkoffOperation.description());
-    res.price                      = quotationToFloat(tinkoffOperation.price());
-    res.avgPrice                   = avgPrice;
-    res.quantity                   = tinkoffOperation.quantity();
-    res.remainedQuantity           = quantityAndCost.quantity;
-    res.payment                    = quotationToFloat(tinkoffOperation.payment());
-    res.avgCost                    = avgCost;
-    res.cost                       = quantityAndCost.cost;
-    res.commission                 = quotationToFloat(tinkoffOperation.commission());
-    res.yield                      = quotationToFloat(yield);
-    res.yieldWithCommission        = quotationToFloat(yieldWithCommission);
-    res.yieldWithCommissionPercent = yieldWithCommissionPercent;
-    res.remainedMoney              = mRemainedMoney;
-    res.totalMoney                 = mTotalMoney;
-    res.paymentPrecision           = quotationPrecision(tinkoffOperation.payment());
-    res.commissionPrecision        = quotationPrecision(tinkoffOperation.commission());
+    res.timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
+    res.instrumentId                    = instrumentId;
+    res.description                     = QString::fromStdString(tinkoffOperation.description());
+    res.price                           = quotationToFloat(tinkoffOperation.price());
+    res.avgPrice                        = avgPrice;
+    res.quantity                        = tinkoffOperation.quantity();
+    res.remainedQuantity                = quantityAndCost.quantity;
+    res.payment                         = quotationToFloat(tinkoffOperation.payment());
+    res.avgCost                         = avgCost;
+    res.cost                            = quantityAndCost.cost;
+    res.commission                      = quotationToFloat(tinkoffOperation.commission());
+    res.yield                           = quotationToFloat(yield);
+    res.yieldWithCommission             = quotationToFloat(yieldWithCommission);
+    res.yieldWithCommissionPercent      = yieldWithCommissionPercent;
+    res.totalCost                       = mTotalCost;
+    res.totalYieldWithCommission        = mTotalYieldWithCommission;
+    res.totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
+    res.remainedMoney                   = mRemainedMoney;
+    res.totalMoney                      = mTotalMoney;
+    res.paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
+    res.commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
 
     return res;
 }
