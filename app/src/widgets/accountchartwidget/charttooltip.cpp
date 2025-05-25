@@ -2,6 +2,19 @@
 
 #include <QDebug>
 #include <QPainter>
+#include <QPen>
+
+
+
+constexpr int TEXT_BOX_WIDTH         = 150;
+constexpr int TEXT_BOX_HEIGHT        = 150;
+constexpr int MARGIN                 = 5;
+constexpr int BUBBLE_CONNECT_WIDTH_1 = 30;
+constexpr int BUBBLE_CONNECT_WIDTH_2 = 40;
+constexpr int BUBBLE_POS_X           = -30;
+constexpr int BUBBLE_POS_Y           = 20;
+const QColor  BUBBLE_COLOR           = QColor("#FFFFFF"); // clazy:exclude=non-pod-global-static
+const QColor  TEXT_COLOR             = QColor("#000000"); // clazy:exclude=non-pod-global-static
 
 
 
@@ -34,64 +47,66 @@ QRectF ChartTooltip::boundingRect() const
 void ChartTooltip::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
     QPainterPath path;
-    path.addRoundedRect(mRect, 5, 5);
+    path.addRoundedRect(mRect, MARGIN, MARGIN);
 
-    QPointF anchor = mapFromParent(mChart->mapToPosition(mAnchor));
+    const QPointF anchor = mapFromParent(mChart->mapToPosition(mAnchor));
 
-    if (!mRect.contains(anchor) && !mAnchor.isNull())
-    {
-        QPointF point1;
-        QPointF point2;
+    QPointF point1;
+    QPointF point2;
 
-        // establish the position of the anchor point in relation to mRect
-        bool above       = anchor.y() <= mRect.top();
-        bool aboveCenter = anchor.y() > mRect.top() && anchor.y() <= mRect.center().y();
-        bool belowCenter = anchor.y() > mRect.center().y() && anchor.y() <= mRect.bottom();
-        bool below       = anchor.y() > mRect.bottom();
+    // establish the position of the anchor point in relation to mRect
+    const bool above       = anchor.y() <= mRect.top();
+    const bool aboveCenter = anchor.y() > mRect.top() && anchor.y() <= mRect.center().y();
+    const bool belowCenter = anchor.y() > mRect.center().y() && anchor.y() <= mRect.bottom();
+    const bool below       = anchor.y() > mRect.bottom();
 
-        bool onLeft        = anchor.x() <= mRect.left();
-        bool leftOfCenter  = anchor.x() > mRect.left() && anchor.x() <= mRect.center().x();
-        bool rightOfCenter = anchor.x() > mRect.center().x() && anchor.x() <= mRect.right();
-        bool onRight       = anchor.x() > mRect.right();
+    const bool onLeft        = anchor.x() <= mRect.left();
+    const bool leftOfCenter  = anchor.x() > mRect.left() && anchor.x() <= mRect.center().x();
+    const bool rightOfCenter = anchor.x() > mRect.center().x() && anchor.x() <= mRect.right();
+    const bool onRight       = anchor.x() > mRect.right();
 
-        // get the nearest mRect corner.
-        qreal x          = (onRight + rightOfCenter) * mRect.width();
-        qreal y          = (below + belowCenter) * mRect.height();
-        bool  cornerCase = (above && onLeft) || (above && onRight) || (below && onLeft) || (below && onRight);
-        bool  vertical   = qAbs(anchor.x() - x) > qAbs(anchor.y() - y);
+    // get the nearest mRect corner.
+    const qreal x          = (onRight + rightOfCenter) * mRect.width();
+    const qreal y          = (below + belowCenter) * mRect.height();
+    const bool  cornerCase = (above && onLeft) || (above && onRight) || (below && onLeft) || (below && onRight);
+    const bool  vertical   = qAbs(anchor.x() - x) > qAbs(anchor.y() - y);
 
-        qreal x1 = x + leftOfCenter * 10 - rightOfCenter * 20 + cornerCase * !vertical * (onLeft * 10 - onRight * 20);
-        qreal y1 = y + aboveCenter * 10 - belowCenter * 20 + cornerCase * vertical * (above * 10 - below * 20);
-        ;
-        point1.setX(x1);
-        point1.setY(y1);
+    const qreal x1 = x + leftOfCenter * BUBBLE_CONNECT_WIDTH_1 - rightOfCenter * BUBBLE_CONNECT_WIDTH_2 +
+                     cornerCase * !vertical * (onLeft * BUBBLE_CONNECT_WIDTH_1 - onRight * BUBBLE_CONNECT_WIDTH_2);
+    const qreal y1 = y + aboveCenter * BUBBLE_CONNECT_WIDTH_1 - belowCenter * BUBBLE_CONNECT_WIDTH_2 +
+                     cornerCase * vertical * (above * BUBBLE_CONNECT_WIDTH_1 - below * BUBBLE_CONNECT_WIDTH_2);
+    const qreal x2 = x + leftOfCenter * BUBBLE_CONNECT_WIDTH_2 - rightOfCenter * BUBBLE_CONNECT_WIDTH_1 +
+                     cornerCase * !vertical * (onLeft * BUBBLE_CONNECT_WIDTH_2 - onRight * BUBBLE_CONNECT_WIDTH_1);
+    const qreal y2 = y + aboveCenter * BUBBLE_CONNECT_WIDTH_2 - belowCenter * BUBBLE_CONNECT_WIDTH_1 +
+                     cornerCase * vertical * (above * BUBBLE_CONNECT_WIDTH_2 - below * BUBBLE_CONNECT_WIDTH_1);
 
-        qreal x2 = x + leftOfCenter * 20 - rightOfCenter * 10 + cornerCase * !vertical * (onLeft * 20 - onRight * 10);
-        ;
-        qreal y2 = y + aboveCenter * 20 - belowCenter * 10 + cornerCase * vertical * (above * 20 - below * 10);
-        ;
-        point2.setX(x2);
-        point2.setY(y2);
+    point1.setX(x1);
+    point1.setY(y1);
+    point2.setX(x2);
+    point2.setY(y2);
 
-        path.moveTo(point1);
-        path.lineTo(anchor);
-        path.lineTo(point2);
-        path = path.simplified();
-    }
+    path.moveTo(point1);
+    path.lineTo(anchor);
+    path.lineTo(point2);
+    path = path.simplified();
 
-    painter->setBrush(QColor(255, 255, 255));
+    painter->setBrush(BUBBLE_COLOR);
+    painter->setPen(QPen(TEXT_COLOR));
     painter->drawPath(path);
     painter->drawText(mTextRect, mText);
 }
 
 void ChartTooltip::setText(const QString& text)
 {
-    mText = text;
     QFontMetrics metrics(mFont);
-    mTextRect = metrics.boundingRect(QRect(0, 0, 150, 150), Qt::AlignLeft, mText);
-    mTextRect.translate(5, 5);
+
+    mText = text;
+
+    mTextRect = metrics.boundingRect(QRect(0, 0, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT), Qt::AlignLeft, mText);
+    mTextRect.translate(MARGIN, MARGIN);
+    mRect = mTextRect.adjusted(-MARGIN, -MARGIN, MARGIN, MARGIN);
+
     prepareGeometryChange();
-    mRect = mTextRect.adjusted(-5, -5, 5, 5);
 }
 
 void ChartTooltip::setAnchor(QPointF point)
@@ -102,5 +117,5 @@ void ChartTooltip::setAnchor(QPointF point)
 void ChartTooltip::updateGeometry()
 {
     prepareGeometryChange();
-    setPos(mChart->mapToPosition(mAnchor) + QPoint(10, -50));
+    setPos(mChart->mapToPosition(mAnchor) + QPoint(BUBBLE_POS_X, BUBBLE_POS_Y));
 }

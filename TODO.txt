@@ -1,5 +1,4 @@
 Build chart based on operations
-Chart tooltip
 Calculate yield for chart
 Export charts to excel
 Control portfolio

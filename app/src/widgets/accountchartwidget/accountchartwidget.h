@@ -47,7 +47,9 @@ private:
     void initTotalMoneyChart();
     void initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
     void handleOperation(const Operation& operation);
+    QPointF findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints);
 
+    ChartType     mChartType;
     QChart        mYieldChart;
     QLineSeries   mYieldSeries;
     QDateTimeAxis mYieldAxisX;

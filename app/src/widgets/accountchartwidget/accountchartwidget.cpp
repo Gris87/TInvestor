@@ -26,6 +26,7 @@ constexpr qreal   TOOLTIP_Z_VALUE    = 11;
 AccountChartWidget::AccountChartWidget(QWidget* parent) :
     IAccountChartWidget(parent),
     tooltipHideTimer(),
+    mChartType(),
     mYieldChart(),
     mYieldSeries(),
     mYieldAxisX(),
@@ -242,7 +243,9 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
 
 void AccountChartWidget::switchChart(ChartType chartType)
 {
-    switch (chartType)
+    mChartType = chartType;
+
+    switch (mChartType)
     {
         case CHART_TYPE_YIELD:
         {
@@ -380,8 +383,16 @@ void AccountChartWidget::seriesHovered(QPointF point, bool state)
     {
         tooltipHideTimer.stop();
 
-        mTooltip->setText(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
-        mTooltip->setAnchor(point);
+        const QPointF nearestPoint = findNearestPoint(point, qobject_cast<QLineSeries*>(sender())->points());
+
+        const QString prefix =
+            (mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD) && nearestPoint.y() > 0 ? "+" : "";
+        const QString suffix = mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : "\u20BD";
+        const QString xDescription =
+            QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(nearestPoint.x())).toString(DATETIME_FORMAT);
+
+        mTooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
+        mTooltip->setAnchor(nearestPoint);
         mTooltip->updateGeometry();
         mTooltip->show();
     }
@@ -394,4 +405,41 @@ void AccountChartWidget::seriesHovered(QPointF point, bool state)
 void AccountChartWidget::tooltipHideTimerTicked()
 {
     mTooltip->hide();
+}
+
+QPointF AccountChartWidget::findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints)
+{
+    QPointF res = seriesPoints.constLast();
+
+    // TODO: Use binary search and try to store last found point
+    for (int i = 0; i < seriesPoints.size(); ++i)
+    {
+        const QPointF& seriesPoint = seriesPoints.at(i);
+        const qreal    distance    = seriesPoint.x() - point.x();
+
+        if (distance > 0)
+        {
+            if (i <= 0)
+            {
+                res = seriesPoint;
+
+                break;
+            }
+
+            const qreal prevDistance = point.x() - seriesPoints.at(i - 1).x();
+
+            if (prevDistance < distance)
+            {
+                res = seriesPoints.at(i - 1);
+            }
+            else
+            {
+                res = seriesPoint;
+            }
+
+            break;
+        }
+    }
+
+    return res;
 }
