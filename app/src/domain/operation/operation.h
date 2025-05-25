@@ -37,6 +37,9 @@ struct Operation
     float     yieldWithCommissionPercent;
     Quotation remainedMoney;
     Quotation totalMoney;
+    Quotation totalCost;
+    Quotation totalYieldWithCommission;
+    float     totalYieldWithCommissionPercent;
     qint8     paymentPrecision;
     qint8     commissionPrecision;
 };

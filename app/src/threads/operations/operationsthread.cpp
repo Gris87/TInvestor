@@ -277,7 +277,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         avgCost  = -quotationToDouble(tinkoffOperation.payment());
 
         yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
-        yieldWithCommissionPercent = quotationToFloat(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
+        yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
     }
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
@@ -297,7 +297,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
         yield                      = quotationDiff(tinkoffOperation.payment(), quotationFromDouble(avgCost));
         yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
-        yieldWithCommissionPercent = quotationToFloat(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
+        yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
     }
 
     if (!isOperationTypeWithExtAccount(operationType, positionUid))

@@ -8,8 +8,8 @@
 
 
 const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
-const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
 constexpr float HUNDRED_PERCENT = 100.0f;
 
