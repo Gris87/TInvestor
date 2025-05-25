@@ -419,11 +419,21 @@
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
-        <source>Remained money</source>
+        <source>Total yield</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
+        <source>Total yield (%)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="121"/>
+        <source>Remained money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="126"/>
         <source>Total money</source>
         <translation></translation>
     </message>
@@ -438,22 +448,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="112"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="113"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="141"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="142"/>
         <source>Operations</source>
         <translation></translation>
     </message>

@@ -41,7 +41,7 @@
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>14</number>
+      <number>16</number>
      </property>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -104,6 +104,16 @@
      <column>
       <property name="text">
        <string>Yield with commission (%)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Total yield</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Total yield (%)</string>
       </property>
      </column>
      <column>

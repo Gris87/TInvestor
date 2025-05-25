@@ -55,6 +55,8 @@ private:
     MoneyChangeTableItem*        mYieldTableWidgetItem;
     MoneyChangeTableItem*        mYieldWithCommissionTableWidgetItem;
     MoneyChangePercentTableItem* mYieldWithCommissionPercentTableWidgetItem;
+    MoneyChangeTableItem*        mTotalYieldWithCommissionTableWidgetItem;
+    MoneyChangePercentTableItem* mTotalYieldWithCommissionPercentTableWidgetItem;
     MoneyTableItem*              mRemainedMoneyTableWidgetItem;
     MoneyTableItem*              mTotalMoneyTableWidgetItem;
     IInstrumentsStorage*         mInstrumentsStorage;

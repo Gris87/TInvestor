@@ -419,11 +419,21 @@
     </message>
     <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
+        <source>Total yield</source>
+        <translation>Общая доходность</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
+        <source>Total yield (%)</source>
+        <translation>Общая доходность (%)</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="121"/>
         <source>Remained money</source>
         <translation>Остаток денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="126"/>
         <source>Total money</source>
         <translation>Всего денег</translation>
     </message>
@@ -438,22 +448,22 @@
         <translation>Количество</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="112"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="113"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="122"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="141"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="142"/>
         <source>Operations</source>
         <translation>Операции</translation>
     </message>
