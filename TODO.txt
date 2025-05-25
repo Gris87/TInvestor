@@ -1,5 +1,4 @@
-Build chart based on operations
-Calculate yield for chart
+Calculate monthly yield for chart
 Control portfolio
 Display portfolio items
 Follow for the strategy

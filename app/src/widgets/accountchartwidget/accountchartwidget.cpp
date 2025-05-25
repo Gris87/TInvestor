@@ -363,7 +363,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 
 void AccountChartWidget::handleOperation(const Operation& operation)
 {
-    const float yield         = mYieldSeries.count();         // TODO: Calculate
+    const float yield         = operation.totalYieldWithCommissionPercent;
     const float monthlyYield  = -mMonthlyYieldSeries.count(); // TODO: Calculate
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
     const float totalMoney    = quotationToFloat(operation.totalMoney);
