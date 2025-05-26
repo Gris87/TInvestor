@@ -2,7 +2,7 @@ name: Nightly
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 21 * * *"
 
 # Setup environment variables
 env:

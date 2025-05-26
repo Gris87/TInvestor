@@ -66,19 +66,27 @@ void ChartTooltip::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     const bool onRight       = anchor.x() > mRect.right();
 
     // get the nearest mRect corner.
-    const qreal x          = (onRight + rightOfCenter) * mRect.width();
-    const qreal y          = (below + belowCenter) * mRect.height();
+    const qreal x          = (static_cast<int>(onRight) + static_cast<int>(rightOfCenter)) * mRect.width();
+    const qreal y          = (static_cast<int>(below) + static_cast<int>(belowCenter)) * mRect.height();
     const bool  cornerCase = (above && onLeft) || (above && onRight) || (below && onLeft) || (below && onRight);
     const bool  vertical   = qAbs(anchor.x() - x) > qAbs(anchor.y() - y);
 
-    const qreal x1 = x + leftOfCenter * BUBBLE_CONNECT_WIDTH_1 - rightOfCenter * BUBBLE_CONNECT_WIDTH_2 +
-                     cornerCase * !vertical * (onLeft * BUBBLE_CONNECT_WIDTH_1 - onRight * BUBBLE_CONNECT_WIDTH_2);
-    const qreal y1 = y + aboveCenter * BUBBLE_CONNECT_WIDTH_1 - belowCenter * BUBBLE_CONNECT_WIDTH_2 +
-                     cornerCase * vertical * (above * BUBBLE_CONNECT_WIDTH_1 - below * BUBBLE_CONNECT_WIDTH_2);
-    const qreal x2 = x + leftOfCenter * BUBBLE_CONNECT_WIDTH_2 - rightOfCenter * BUBBLE_CONNECT_WIDTH_1 +
-                     cornerCase * !vertical * (onLeft * BUBBLE_CONNECT_WIDTH_2 - onRight * BUBBLE_CONNECT_WIDTH_1);
-    const qreal y2 = y + aboveCenter * BUBBLE_CONNECT_WIDTH_2 - belowCenter * BUBBLE_CONNECT_WIDTH_1 +
-                     cornerCase * vertical * (above * BUBBLE_CONNECT_WIDTH_2 - below * BUBBLE_CONNECT_WIDTH_1);
+    const qreal x1 = x + (static_cast<int>(leftOfCenter) * BUBBLE_CONNECT_WIDTH_1) -
+                     (static_cast<int>(rightOfCenter) * BUBBLE_CONNECT_WIDTH_2) +
+                     (static_cast<int>(cornerCase) * static_cast<int>(!vertical) *
+                      (static_cast<int>(onLeft) * BUBBLE_CONNECT_WIDTH_1 - static_cast<int>(onRight) * BUBBLE_CONNECT_WIDTH_2));
+    const qreal y1 = y + (static_cast<int>(aboveCenter) * BUBBLE_CONNECT_WIDTH_1) -
+                     (static_cast<int>(belowCenter) * BUBBLE_CONNECT_WIDTH_2) +
+                     (static_cast<int>(cornerCase) * static_cast<int>(vertical) *
+                      (static_cast<int>(above) * BUBBLE_CONNECT_WIDTH_1 - static_cast<int>(below) * BUBBLE_CONNECT_WIDTH_2));
+    const qreal x2 = x + (static_cast<int>(leftOfCenter) * BUBBLE_CONNECT_WIDTH_2) -
+                     (static_cast<int>(rightOfCenter) * BUBBLE_CONNECT_WIDTH_1) +
+                     (static_cast<int>(cornerCase) * static_cast<int>(!vertical) *
+                      (static_cast<int>(onLeft) * BUBBLE_CONNECT_WIDTH_2 - static_cast<int>(onRight) * BUBBLE_CONNECT_WIDTH_1));
+    const qreal y2 = y + (static_cast<int>(aboveCenter) * BUBBLE_CONNECT_WIDTH_2) -
+                     (static_cast<int>(belowCenter) * BUBBLE_CONNECT_WIDTH_1) +
+                     (static_cast<int>(cornerCase) * static_cast<int>(vertical) *
+                      (static_cast<int>(above) * BUBBLE_CONNECT_WIDTH_2 - static_cast<int>(below) * BUBBLE_CONNECT_WIDTH_1));
 
     point1.setX(x1);
     point1.setY(y1);
@@ -98,7 +106,7 @@ void ChartTooltip::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
 
 void ChartTooltip::setText(const QString& text)
 {
-    QFontMetrics metrics(mFont);
+    const QFontMetrics metrics(mFont);
 
     mText = text;
 

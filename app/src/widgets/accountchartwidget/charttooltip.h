@@ -21,8 +21,10 @@ public:
     void setAnchor(QPointF point);
     void updateGeometry();
 
+    [[nodiscard]]
     QRectF boundingRect() const override;
-    void   paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
     QChart* mChart;
