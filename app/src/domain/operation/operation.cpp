@@ -17,7 +17,8 @@ Operation::Operation() :
     yield(),
     yieldWithCommission(),
     yieldWithCommissionPercent(),
-    totalCost(),
+    inputMoney(),
+    maxInputMoney(),
     totalYieldWithCommission(),
     totalYieldWithCommissionPercent(),
     remainedMoney(),
@@ -47,7 +48,8 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     commissionPrecision             = jsonObject.value("commissionPrecision").toInt();
 
     cost.fromJsonObject(jsonObject.value("cost").toObject());
-    totalCost.fromJsonObject(jsonObject.value("totalCost").toObject());
+    inputMoney.fromJsonObject(jsonObject.value("inputMoney").toObject());
+    maxInputMoney.fromJsonObject(jsonObject.value("maxInputMoney").toObject());
     totalYieldWithCommission.fromJsonObject(jsonObject.value("totalYieldWithCommission").toObject());
     remainedMoney.fromJsonObject(jsonObject.value("remainedMoney").toObject());
     totalMoney.fromJsonObject(jsonObject.value("totalMoney").toObject());
@@ -72,7 +74,8 @@ QJsonObject Operation::toJsonObject() const
     res.insert("yield",                           yield);
     res.insert("yieldWithCommission",             yieldWithCommission);
     res.insert("yieldWithCommissionPercent",      yieldWithCommissionPercent);
-    res.insert("totalCost",                       totalCost.toJsonObject());
+    res.insert("inputMoney",                      inputMoney.toJsonObject());
+    res.insert("maxInputMoney",                   maxInputMoney.toJsonObject());
     res.insert("totalYieldWithCommission",        totalYieldWithCommission.toJsonObject());
     res.insert("totalYieldWithCommissionPercent", totalYieldWithCommissionPercent);
     res.insert("remainedMoney",                   remainedMoney.toJsonObject());
@@ -91,8 +94,8 @@ bool operator==(const Operation& lhs, const Operation& rhs)
            lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.avgCost == rhs.avgCost &&
            lhs.cost == rhs.cost && lhs.commission == rhs.commission && lhs.yield == rhs.yield &&
            lhs.yieldWithCommission == rhs.yieldWithCommission &&
-           lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.totalCost == rhs.totalCost &&
-           lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
+           lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&
+           lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
            lhs.totalYieldWithCommissionPercent == rhs.totalYieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&
            lhs.totalMoney == rhs.totalMoney && lhs.paymentPrecision == rhs.paymentPrecision &&
            lhs.commissionPrecision == rhs.commissionPrecision;

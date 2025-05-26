@@ -28,3 +28,8 @@ bool operator==(const Quotation& lhs, const Quotation& rhs)
 {
     return lhs.units == rhs.units && lhs.nano == rhs.nano;
 }
+
+bool operator>(const Quotation& lhs, const Quotation& rhs)
+{
+    return lhs.units > rhs.units || (lhs.units == rhs.units && lhs.nano > rhs.nano);
+}

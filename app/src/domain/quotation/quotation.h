@@ -26,3 +26,4 @@ struct Quotation
 
 
 bool operator==(const Quotation& lhs, const Quotation& rhs);
+bool operator>(const Quotation& lhs, const Quotation& rhs);

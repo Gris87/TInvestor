@@ -1,4 +1,3 @@
-Calculate monthly yield for chart
 Control portfolio
 Display portfolio items
 Follow for the strategy

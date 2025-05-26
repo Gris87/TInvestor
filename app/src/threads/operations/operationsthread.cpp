@@ -29,7 +29,8 @@ OperationsThread::OperationsThread(
     mAmountOfOperationsWithSameTimestamp(),
     mLastPositionUidForExtAccount(),
     mInstruments(),
-    mTotalCost(),
+    mInputMoney(),
+    mMaxInputMoney(),
     mTotalYieldWithCommission(),
     mRemainedMoney(),
     mTotalMoney()
@@ -129,7 +130,8 @@ void OperationsThread::readOperations()
         const Operation& lastOperation = operations.constLast();
 
         mLastRequestTimestamp     = lastOperation.timestamp + MS_IN_SECOND;
-        mTotalCost                = lastOperation.totalCost;
+        mInputMoney               = lastOperation.inputMoney;
+        mMaxInputMoney            = lastOperation.maxInputMoney;
         mTotalYieldWithCommission = lastOperation.totalYieldWithCommission;
         mRemainedMoney            = lastOperation.remainedMoney;
         mTotalMoney               = lastOperation.totalMoney;
@@ -137,7 +139,8 @@ void OperationsThread::readOperations()
     else
     {
         mLastRequestTimestamp     = 0;
-        mTotalCost                = Quotation();
+        mInputMoney               = Quotation();
+        mMaxInputMoney            = Quotation();
         mTotalYieldWithCommission = Quotation();
         mRemainedMoney            = Quotation();
         mTotalMoney               = Quotation();
@@ -286,7 +289,6 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
         yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
 
-        mTotalCost                = quotationDiff(mTotalCost, tinkoffOperation.payment()); // Diff == Sum with negative payment
         mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
     }
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
@@ -311,14 +313,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         yieldWithCommission        = quotationSum(yield, tinkoffOperation.commission());
         yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
 
-        mTotalCost                = quotationSum(mTotalCost, avgCostQuotation);
         mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
-    }
-
-    if (mTotalCost.units != 0 || mTotalCost.nano != 0)
-    {
-        totalYieldWithCommissionPercent =
-            quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mTotalCost) * HUNDRED_PERCENT;
     }
 
     if (!isOperationTypeWithExtAccount(operationType, positionUid))
@@ -337,12 +332,32 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
                 instrumentId = RUBLE_UID;
             }
 
+            if (operationType == tinkoff::OPERATION_TYPE_INPUT)
+            {
+                mInputMoney = quotationSum(mInputMoney, tinkoffOperation.payment());
+
+                if (mInputMoney > mMaxInputMoney)
+                {
+                    mMaxInputMoney = mInputMoney;
+                }
+            }
+            else if (operationType == tinkoff::OPERATION_TYPE_OUTPUT)
+            {
+                mInputMoney = quotationSum(mInputMoney, tinkoffOperation.payment());
+            }
+
             mTotalMoney = quotationSum(mTotalMoney, tinkoffOperation.payment());
         }
     }
     else
     {
         mLastPositionUidForExtAccount = positionUid;
+    }
+
+    if (mMaxInputMoney.units != 0 || mMaxInputMoney.nano != 0)
+    {
+        totalYieldWithCommissionPercent =
+            quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
     }
 
     res.timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
@@ -359,7 +374,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.yield                           = quotationToFloat(yield);
     res.yieldWithCommission             = quotationToFloat(yieldWithCommission);
     res.yieldWithCommissionPercent      = yieldWithCommissionPercent;
-    res.totalCost                       = mTotalCost;
+    res.inputMoney                      = mInputMoney;
+    res.maxInputMoney                   = mMaxInputMoney;
     res.totalYieldWithCommission        = mTotalYieldWithCommission;
     res.totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
     res.remainedMoney                   = mRemainedMoney;
