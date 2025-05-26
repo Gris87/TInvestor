@@ -4,9 +4,12 @@
 
 #include "src/widgets/accountchartwidget/iaccountchartwidget.h"
 
+#include <QBarCategoryAxis>
+#include <QBarSet>
 #include <QChart>
 #include <QDateTimeAxis>
 #include <QLineSeries>
+#include <QStackedBarSeries>
 #include <QTimer>
 #include <QValueAxis>
 
@@ -44,6 +47,7 @@ public slots:
     void contextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
     void lineSeriesHovered(QPointF point, bool state);
+    void barSeriesHovered(bool status, int index, QBarSet* barSet);
     void tooltipHideTimerTicked();
 
 private:
@@ -64,8 +68,10 @@ private:
     QDateTimeAxis       mYieldAxisX;
     QValueAxis          mYieldAxisY;
     QChart              mMonthlyYieldChart;
-    QLineSeries         mMonthlyYieldSeries;
-    QDateTimeAxis       mMonthlyYieldAxisX;
+    QStackedBarSeries   mMonthlyYieldSeries;
+    QBarSet             mMonthlyYieldPositiveBarSet;
+    QBarSet             mMonthlyYieldNegativeBarSet;
+    QBarCategoryAxis    mMonthlyYieldAxisX;
     QValueAxis          mMonthlyYieldAxisY;
     QChart              mRemainedMoneyChart;
     QLineSeries         mRemainedMoneySeries;
@@ -75,6 +81,7 @@ private:
     QLineSeries         mTotalMoneySeries;
     QDateTimeAxis       mTotalMoneyAxisX;
     QValueAxis          mTotalMoneyAxisY;
+    QStringList         mMonthNames;
     int                 mLastMonthlyCategory;
     float               mLastMonthlyYield;
     qint64              mAxisXMin;

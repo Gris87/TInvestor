@@ -4,51 +4,111 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="186"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="199"/>
         <source>Remained money on account</source>
         <translation>Остаток денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="146"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="168"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="190"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="212"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="156"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="177"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="203"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="225"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="142"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Jan</source>
+        <translation>Янв</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Feb</source>
+        <translation>Фев</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Mar</source>
+        <translation>Мар</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Apr</source>
+        <translation>Апр</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>May</source>
+        <translation>Май</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Jun</source>
+        <translation>Июн</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Jul</source>
+        <translation>Июл</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="81"/>
+        <source>Aug</source>
+        <translation>Авг</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <source>Sep</source>
+        <translation>Сен</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <source>Oct</source>
+        <translation>Окт</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <source>Nov</source>
+        <translation>Ноя</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="82"/>
+        <source>Dec</source>
+        <translation>Дек</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="152"/>
         <source>Yield</source>
         <translation>Доходность</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="164"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="174"/>
         <source>Yield per month</source>
         <translation>Доходность по месяцам</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="192"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="214"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="205"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="227"/>
         <source>Money</source>
         <translation>Денег</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="208"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="221"/>
         <source>Total money on account</source>
         <translation>Всего денег на счёте</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="393"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="430"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="403"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="440"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="403"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="440"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
