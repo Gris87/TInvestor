@@ -55,6 +55,8 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mTotalMoneySeries(),
     mTotalMoneyAxisX(),
     mTotalMoneyAxisY(),
+    mLastMonthlyCategory(),
+    mLastMonthlyYield(),
     mAxisXMin(),
     mAxisXMax(),
     mYieldAxisYMin(),
@@ -88,10 +90,10 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
 
     // clang-format off
     connect(this,                  SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenuRequested(QPoint)));
-    connect(&mYieldSeries,         SIGNAL(hovered(QPointF, bool)),             this, SLOT(seriesHovered(QPointF, bool)));
-    connect(&mMonthlyYieldSeries,  SIGNAL(hovered(QPointF, bool)),             this, SLOT(seriesHovered(QPointF, bool)));
-    connect(&mRemainedMoneySeries, SIGNAL(hovered(QPointF, bool)),             this, SLOT(seriesHovered(QPointF, bool)));
-    connect(&mTotalMoneySeries,    SIGNAL(hovered(QPointF, bool)),             this, SLOT(seriesHovered(QPointF, bool)));
+    connect(&mYieldSeries,         SIGNAL(hovered(QPointF, bool)),             this, SLOT(lineSeriesHovered(QPointF, bool)));
+    connect(&mMonthlyYieldSeries,  SIGNAL(hovered(QPointF, bool)),             this, SLOT(lineSeriesHovered(QPointF, bool)));
+    connect(&mRemainedMoneySeries, SIGNAL(hovered(QPointF, bool)),             this, SLOT(lineSeriesHovered(QPointF, bool)));
+    connect(&mTotalMoneySeries,    SIGNAL(hovered(QPointF, bool)),             this, SLOT(lineSeriesHovered(QPointF, bool)));
     connect(&tooltipHideTimer,     SIGNAL(timeout()),                          this, SLOT(tooltipHideTimerTicked()));
     // clang-format on
 }
@@ -300,6 +302,9 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
     mRemainedMoneySeries.clear();
     mTotalMoneySeries.clear();
 
+    mLastMonthlyCategory = 0;
+    mLastMonthlyYield    = 0.0f;
+
     mAxisXMin              = std::numeric_limits<qint64>::max();
     mAxisXMax              = std::numeric_limits<qint64>::min();
     mYieldAxisYMin         = std::numeric_limits<float>::max();
@@ -364,9 +369,21 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 void AccountChartWidget::handleOperation(const Operation& operation)
 {
     const float yield         = operation.totalYieldWithCommissionPercent;
-    const float monthlyYield  = -mMonthlyYieldSeries.count(); // TODO: Calculate
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
     const float totalMoney    = quotationToFloat(operation.totalMoney);
+
+    const QDate operationDate   = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
+    const int   monthlyCategory = operationDate.year() * 100 + operationDate.month();
+
+    if (mLastMonthlyCategory != monthlyCategory)
+    {
+        mLastMonthlyCategory = monthlyCategory;
+
+        mLastMonthlyYield += mMonthlyYieldSeries.count() > 0 ? mMonthlyYieldSeries.at(mMonthlyYieldSeries.count() - 1).y() : 0.0f;
+        mMonthlyYieldSeries.append(operation.timestamp, 0.0f);
+    }
+
+    const float monthlyYield = yield - mLastMonthlyYield;
 
     mAxisXMin = qMin(mAxisXMin, operation.timestamp);
     mAxisXMax = qMax(mAxisXMax, operation.timestamp);
@@ -381,7 +398,7 @@ void AccountChartWidget::handleOperation(const Operation& operation)
     mTotalMoneyAxisYMax    = qMax(mTotalMoneyAxisYMax, totalMoney);
 
     mYieldSeries.append(operation.timestamp, yield);
-    mMonthlyYieldSeries.append(operation.timestamp, monthlyYield);
+    mMonthlyYieldSeries.replace(mMonthlyYieldSeries.count() - 1, operation.timestamp, monthlyYield);
     mRemainedMoneySeries.append(operation.timestamp, remainedMoney);
     mTotalMoneySeries.append(operation.timestamp, totalMoney);
 }
@@ -573,7 +590,7 @@ void AccountChartWidget::exportToExcel(const QString& path) const
     doc.saveAs(path);
 }
 
-void AccountChartWidget::seriesHovered(QPointF point, bool state)
+void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
 {
     if (mTooltip == nullptr)
     {

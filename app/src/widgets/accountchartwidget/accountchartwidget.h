@@ -43,7 +43,7 @@ public:
 public slots:
     void contextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
-    void seriesHovered(QPointF point, bool state);
+    void lineSeriesHovered(QPointF point, bool state);
     void tooltipHideTimerTicked();
 
 private:
@@ -75,6 +75,8 @@ private:
     QLineSeries         mTotalMoneySeries;
     QDateTimeAxis       mTotalMoneyAxisX;
     QValueAxis          mTotalMoneyAxisY;
+    int                 mLastMonthlyCategory;
+    float               mLastMonthlyYield;
     qint64              mAxisXMin;
     qint64              mAxisXMax;
     float               mYieldAxisYMin;

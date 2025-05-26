@@ -110,7 +110,7 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     );
     mTotalYieldWithCommissionTableWidgetItem->setValue(quotationToFloat(operation.totalYieldWithCommission), true, 2);
     mTotalYieldWithCommissionPercentTableWidgetItem->setValue(
-        operation.totalYieldWithCommissionPercent, operation.avgCost, instrument.pricePrecision
+        operation.totalYieldWithCommissionPercent, quotationToFloat(operation.totalCost), 2
     );
     mRemainedMoneyTableWidgetItem->setValue(quotationToFloat(operation.remainedMoney), 2);
     mTotalMoneyTableWidgetItem->setValue(quotationToFloat(operation.totalMoney), 2);

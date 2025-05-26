@@ -276,7 +276,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     if (operationType == tinkoff::OPERATION_TYPE_BUY)
     {
-        quantityAndCost.quantity += tinkoffOperation.quantity();
+        quantityAndCost.quantity += tinkoffOperation.quantity_done();
         quantityAndCost.cost =
             quotationDiff(quantityAndCost.cost, tinkoffOperation.payment()); // Diff == Sum with negative payment
 
@@ -292,11 +292,11 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
         avgPrice = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
-        avgCost  = avgPrice * tinkoffOperation.quantity();
+        avgCost  = avgPrice * tinkoffOperation.quantity_done();
 
         const Quotation avgCostQuotation = quotationFromDouble(avgCost);
 
-        quantityAndCost.quantity -= tinkoffOperation.quantity();
+        quantityAndCost.quantity -= tinkoffOperation.quantity_done();
 
         if (quantityAndCost.quantity > 0)
         {
@@ -350,7 +350,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.description                     = QString::fromStdString(tinkoffOperation.description());
     res.price                           = quotationToFloat(tinkoffOperation.price());
     res.avgPrice                        = avgPrice;
-    res.quantity                        = tinkoffOperation.quantity();
+    res.quantity                        = tinkoffOperation.quantity_done();
     res.remainedQuantity                = quantityAndCost.quantity;
     res.payment                         = quotationToFloat(tinkoffOperation.payment());
     res.avgCost                         = avgCost;
