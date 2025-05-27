@@ -121,6 +121,8 @@ SOURCES += \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
     src/widgets/treeitems/categorytreeitem.cpp \
+    src/widgets/treerecords/portfoliotreerecord/portfoliotreerecord.cpp \
+    src/widgets/treerecords/portfoliotreerecord/portfoliotreerecordfactory.cpp \
 
 # find app/ -name \*.h | sort | grep -ve _mock.h | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
@@ -333,6 +335,10 @@ HEADERS += \
     src/widgets/trayicon/trayicon.h \
     src/widgets/trayicon/trayiconfactory.h \
     src/widgets/treeitems/categorytreeitem.h \
+    src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h \
+    src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h \
+    src/widgets/treerecords/portfoliotreerecord/portfoliotreerecord.h \
+    src/widgets/treerecords/portfoliotreerecord/portfoliotreerecordfactory.h \
 
 # find app/ -name \*.ui | sort | sed "s/app\///g" | sed "s/\.ui/\.ui \\\/g"
 FORMS += \

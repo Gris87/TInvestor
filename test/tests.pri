@@ -117,6 +117,8 @@ SOURCES += \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
     src/widgets/treeitems/test_categorytreeitem.cpp \
+    src/widgets/treerecords/portfoliotreerecord/test_portfoliotreerecord.cpp \
+    src/widgets/treerecords/portfoliotreerecord/test_portfoliotreerecordfactory.cpp \
 
 # find app/ -name \*_mock.h | sort | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
@@ -210,3 +212,5 @@ HEADERS += \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \
+    src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord_mock.h \
+    src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h \

@@ -43,6 +43,7 @@ private:
     [[nodiscard]]
     QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
 
+    IInstrumentsStorage*         mInstrumentsStorage;
     TimeTableItem*               mTimeTableWidgetItem;
     IInstrumentTableItemWidget*  mInstrumentTableItemWidget;
     QTableWidgetItem*            mDescriptionTableWidgetItem;
@@ -59,5 +60,4 @@ private:
     MoneyChangePercentTableItem* mTotalYieldWithCommissionPercentTableWidgetItem;
     MoneyTableItem*              mRemainedMoneyTableWidgetItem;
     MoneyTableItem*              mTotalMoneyTableWidgetItem;
-    IInstrumentsStorage*         mInstrumentsStorage;
 };

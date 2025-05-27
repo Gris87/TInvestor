@@ -5,6 +5,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
 
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h"
 
 
 

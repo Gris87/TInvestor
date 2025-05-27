@@ -23,6 +23,7 @@ OperationsTableRecord::OperationsTableRecord(
     QObject*                           parent
 ) :
     IOperationsTableRecord(parent),
+    mInstrumentsStorage(instrumentsStorage),
     mTimeTableWidgetItem(new TimeTableItem()),
     mInstrumentTableItemWidget(),
     mDescriptionTableWidgetItem(new QTableWidgetItem()),
@@ -38,8 +39,7 @@ OperationsTableRecord::OperationsTableRecord(
     mTotalYieldWithCommissionTableWidgetItem(new MoneyChangeTableItem()),
     mTotalYieldWithCommissionPercentTableWidgetItem(new MoneyChangePercentTableItem()),
     mRemainedMoneyTableWidgetItem(new MoneyTableItem()),
-    mTotalMoneyTableWidgetItem(new MoneyTableItem()),
-    mInstrumentsStorage(instrumentsStorage)
+    mTotalMoneyTableWidgetItem(new MoneyTableItem())
 {
     qDebug() << "Create OperationsTableRecord";
 
