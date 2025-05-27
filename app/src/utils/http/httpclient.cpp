@@ -31,7 +31,7 @@ HttpResult HttpClient::download(const QUrl& url, const Headers& headers)
     QNetworkAccessManager manager;
     QNetworkRequest       request(url);
 
-    for (auto it = headers.cbegin(), end = headers.cend(); it != end; ++it)
+    for (auto it = headers.constBegin(), end = headers.constEnd(); it != end; ++it)
     {
         request.setRawHeader(it.key().toUtf8(), it.value().toUtf8());
     }

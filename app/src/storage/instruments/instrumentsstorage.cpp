@@ -39,7 +39,7 @@ void InstrumentsStorage::mergeInstruments(const Instruments& instruments)
 {
     bool changed = false;
 
-    for (auto it = mInstruments.cbegin(), end = mInstruments.cend(); it != end; ++it)
+    for (auto it = mInstruments.constBegin(), end = mInstruments.constEnd(); it != end; ++it)
     {
         if (instruments.contains(it.key()))
         {
@@ -54,7 +54,7 @@ void InstrumentsStorage::mergeInstruments(const Instruments& instruments)
         }
     }
 
-    for (auto it = instruments.cbegin(), end = instruments.cend(); it != end; ++it)
+    for (auto it = instruments.constBegin(), end = instruments.constEnd(); it != end; ++it)
     {
         if (!mInstruments.contains(it.key()))
         {

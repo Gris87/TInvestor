@@ -108,7 +108,7 @@ void StocksTableWidget::updateAll(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
+    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
     {
         it.value()->updateAll();
         it.value()->filter(ui->tableWidget, filter);
@@ -148,7 +148,7 @@ void StocksTableWidget::updatePrices(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
+    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
     {
         it.value()->updatePrice();
         it.value()->filter(ui->tableWidget, filter);
@@ -163,7 +163,7 @@ void StocksTableWidget::updatePeriodicData(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
+    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
     {
         it.value()->updatePeriodicData();
         it.value()->filter(ui->tableWidget, filter);
@@ -187,7 +187,7 @@ void StocksTableWidget::filterChanged(const Filter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
 
-    for (auto it = tableRecords.cbegin(); it != tableRecords.cend(); ++it)
+    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
     {
         it.value()->filter(ui->tableWidget, filter);
     }

@@ -269,7 +269,7 @@ void UserDatabase::writeAccounts(const Accounts& accounts)
 
     int i = 0;
 
-    for (auto it = accounts.cbegin(), end = accounts.cend(); it != end; ++it)
+    for (auto it = accounts.constBegin(), end = accounts.constEnd(); it != end; ++it)
     {
         ids[i]   = it.value().index + 1;
         uids[i]  = mSimpleCrypt.encryptToString(it.value().id);

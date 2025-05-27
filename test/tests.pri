@@ -116,6 +116,7 @@ SOURCES += \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
+    src/widgets/treeitems/test_categorytreeitem.cpp \
 
 # find app/ -name \*_mock.h | sort | sed "s/app\///g" | sed "s/\.h/\.h \\\/g"
 HEADERS += \
