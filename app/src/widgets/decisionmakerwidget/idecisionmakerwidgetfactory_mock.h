@@ -26,7 +26,7 @@ public:
         (IOperationsTableWidgetFactory * operationsTableWidgetFactory,
          IAccountChartWidgetFactory*        accountChartWidgetFactory,
          ILogsTableWidgetFactory*           logsTableWidgetFactory,
-         IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
          IOperationsTableRecordFactory*     operationsTableRecordFactory,
          IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
          IUserStorage*                      userStorage,

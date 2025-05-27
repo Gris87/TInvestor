@@ -1,5 +1,5 @@
-#include "src/widgets/portfoliotablewidget/portfoliotablewidget.h"
-#include "ui_portfoliotablewidget.h"
+#include "src/widgets/portfoliotreewidget/portfoliotreewidget.h"
+#include "ui_portfoliotreewidget.h"
 
 #include <gtest/gtest.h>
 
@@ -15,33 +15,33 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
-class Test_PortfolioTableWidget : public ::testing::Test
+class Test_PortfolioTreeWidget : public ::testing::Test
 {
 protected:
     void SetUp() override
     {
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
-        portfolioTableWidget = new PortfolioTableWidget(settingsEditorMock);
+        portfolioTreeWidget = new PortfolioTreeWidget(settingsEditorMock);
     }
 
     void TearDown() override
     {
-        delete portfolioTableWidget;
+        delete portfolioTreeWidget;
         delete settingsEditorMock;
     }
 
-    PortfolioTableWidget*           portfolioTableWidget;
+    PortfolioTreeWidget*            portfolioTreeWidget;
     StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 
 
 
-TEST_F(Test_PortfolioTableWidget, Test_constructor_and_destructor)
+TEST_F(Test_PortfolioTreeWidget, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_PortfolioTableWidget, Test_saveWindowState)
+TEST_F(Test_PortfolioTreeWidget, Test_saveWindowState)
 {
     const InSequence seq;
 
@@ -57,10 +57,10 @@ TEST_F(Test_PortfolioTableWidget, Test_saveWindowState)
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_InADay"),        _));
     // clang-format on
 
-    portfolioTableWidget->saveWindowState("AAAAA");
+    portfolioTreeWidget->saveWindowState("AAAAA");
 }
 
-TEST_F(Test_PortfolioTableWidget, Test_loadWindowState)
+TEST_F(Test_PortfolioTreeWidget, Test_loadWindowState)
 {
     const InSequence seq;
 
@@ -76,6 +76,6 @@ TEST_F(Test_PortfolioTableWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_InADay"),        _)).WillOnce(Return(QVariant(86)));
     // clang-format on
 
-    portfolioTableWidget->loadWindowState("AAAAA");
+    portfolioTreeWidget->loadWindowState("AAAAA");
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

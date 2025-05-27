@@ -74,7 +74,7 @@ public:
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
         IAccountChartWidgetFactory*        accountChartWidgetFactory,
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
-        IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
         IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,

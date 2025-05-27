@@ -93,8 +93,8 @@ SOURCES += \
     src/widgets/operationstablewidget/test_operationstablewidgetfactory.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/test_orderwaveswidgetfactory.cpp \
-    src/widgets/portfoliotablewidget/test_portfoliotablewidget.cpp \
-    src/widgets/portfoliotablewidget/test_portfoliotablewidgetfactory.cpp \
+    src/widgets/portfoliotreewidget/test_portfoliotreewidget.cpp \
+    src/widgets/portfoliotreewidget/test_portfoliotreewidgetfactory.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/test_stockstablewidget.cpp \
@@ -193,8 +193,8 @@ HEADERS += \
     src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidget_mock.h \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h \
-    src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h \
-    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h \
+    src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h \
+    src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget_mock.h \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
     src/widgets/stockstablewidget/istockstablewidget_mock.h \

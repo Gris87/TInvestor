@@ -62,7 +62,7 @@
 #include "src/widgets/logstablewidget/logstablewidgetfactory.h"
 #include "src/widgets/operationstablewidget/operationstablewidgetfactory.h"
 #include "src/widgets/orderwaveswidget/orderwaveswidgetfactory.h"
-#include "src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.h"
+#include "src/widgets/portfoliotreewidget/portfoliotreewidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
@@ -174,7 +174,7 @@ static int runApplication(QApplication* app)
     OperationsTableWidgetFactory     operationsTableWidgetFactory;
     AccountChartWidgetFactory        accountChartWidgetFactory;
     LogsTableWidgetFactory           logsTableWidgetFactory;
-    PortfolioTableWidgetFactory      portfolioTableWidgetFactory;
+    PortfolioTreeWidgetFactory       portfolioTreeWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
     StocksTableRecordFactory     stocksTableRecordFactory;
@@ -348,7 +348,7 @@ static int runApplication(QApplication* app)
         &operationsTableWidgetFactory,
         &accountChartWidgetFactory,
         &logsTableWidgetFactory,
-        &portfolioTableWidgetFactory,
+        &portfolioTreeWidgetFactory,
         &operationsTableRecordFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,

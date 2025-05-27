@@ -8,19 +8,19 @@
 
 
 
-class IPortfolioTableWidget : public QWidget
+class IPortfolioTreeWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit IPortfolioTableWidget(QWidget* parent = nullptr) :
+    explicit IPortfolioTreeWidget(QWidget* parent = nullptr) :
         QWidget(parent)
     {
     }
-    ~IPortfolioTableWidget() override = default;
+    ~IPortfolioTreeWidget() override = default;
 
-    IPortfolioTableWidget(const IPortfolioTableWidget& another)            = delete;
-    IPortfolioTableWidget& operator=(const IPortfolioTableWidget& another) = delete;
+    IPortfolioTreeWidget(const IPortfolioTreeWidget& another)            = delete;
+    IPortfolioTreeWidget& operator=(const IPortfolioTreeWidget& another) = delete;
 
     virtual void portfolioChanged(const Portfolio& portfolio) = 0;
 

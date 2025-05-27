@@ -97,8 +97,8 @@ SOURCES += \
     src/widgets/operationstablewidget/operationstablewidgetfactory.cpp \
     src/widgets/orderwaveswidget/orderwaveswidget.cpp \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.cpp \
-    src/widgets/portfoliotablewidget/portfoliotablewidget.cpp \
-    src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.cpp \
+    src/widgets/portfoliotreewidget/portfoliotreewidget.cpp \
+    src/widgets/portfoliotreewidget/portfoliotreewidgetfactory.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidget.cpp \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/stockstablewidget.cpp \
@@ -292,10 +292,10 @@ HEADERS += \
     src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h \
     src/widgets/orderwaveswidget/orderwaveswidget.h \
     src/widgets/orderwaveswidget/orderwaveswidgetfactory.h \
-    src/widgets/portfoliotablewidget/iportfoliotablewidget.h \
-    src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory.h \
-    src/widgets/portfoliotablewidget/portfoliotablewidget.h \
-    src/widgets/portfoliotablewidget/portfoliotablewidgetfactory.h \
+    src/widgets/portfoliotreewidget/iportfoliotreewidget.h \
+    src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory.h \
+    src/widgets/portfoliotreewidget/portfoliotreewidget.h \
+    src/widgets/portfoliotreewidget/portfoliotreewidgetfactory.h \
     src/widgets/stockscontrolswidget/istockscontrolswidget.h \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h \
     src/widgets/stockscontrolswidget/stockscontrolswidget.h \
@@ -350,7 +350,7 @@ FORMS += \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/logstablewidget/logstablewidget.ui \
     src/widgets/operationstablewidget/operationstablewidget.ui \
-    src/widgets/portfoliotablewidget/portfoliotablewidget.ui \
+    src/widgets/portfoliotreewidget/portfoliotreewidget.ui \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tableitems/actions/actionstableitemwidget.ui \

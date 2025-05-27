@@ -13,8 +13,8 @@
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidget_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
-#include "src/widgets/portfoliotablewidget/iportfoliotablewidget_mock.h"
-#include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory_mock.h"
+#include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
+#include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
@@ -39,11 +39,11 @@ protected:
         operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
         accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
-        portfolioTableWidgetFactoryMock      = new StrictMock<PortfolioTableWidgetFactoryMock>();
+        portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableWidgetMock            = new StrictMock<OperationsTableWidgetMock>();
         accountChartWidgetMock               = new StrictMock<AccountChartWidgetMock>();
         logsTableWidgetMock                  = new StrictMock<LogsTableWidgetMock>();
-        portfolioTableWidgetMock             = new StrictMock<PortfolioTableWidgetMock>();
+        portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -68,14 +68,14 @@ protected:
             .WillOnce(Return(accountChartWidgetMock));
         EXPECT_CALL(*logsTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
             .WillOnce(Return(logsTableWidgetMock));
-        EXPECT_CALL(*portfolioTableWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
-            .WillOnce(Return(portfolioTableWidgetMock));
+        EXPECT_CALL(*portfolioTreeWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
+            .WillOnce(Return(portfolioTreeWidgetMock));
 
         decisionMakerWidget = new DecisionMakerWidget(
             operationsTableWidgetFactoryMock,
             accountChartWidgetFactoryMock,
             logsTableWidgetFactoryMock,
-            portfolioTableWidgetFactoryMock,
+            portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
             instrumentTableItemWidgetFactoryMock,
             userStorageMock,
@@ -91,7 +91,7 @@ protected:
         delete operationsTableWidgetFactoryMock;
         delete accountChartWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
-        delete portfolioTableWidgetFactoryMock;
+        delete portfolioTreeWidgetFactoryMock;
         delete operationsTableRecordFactoryMock;
         delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
@@ -104,11 +104,11 @@ protected:
     StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
-    StrictMock<PortfolioTableWidgetFactoryMock>*      portfolioTableWidgetFactoryMock;
+    StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableWidgetMock>*            operationsTableWidgetMock;
     StrictMock<AccountChartWidgetMock>*               accountChartWidgetMock;
     StrictMock<LogsTableWidgetMock>*                  logsTableWidgetMock;
-    StrictMock<PortfolioTableWidgetMock>*             portfolioTableWidgetMock;
+    StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
@@ -131,7 +131,7 @@ TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)
     EXPECT_CALL(*settingsEditorMock,        setValue(QString("AAAAA/splitter"), _));
     EXPECT_CALL(*operationsTableWidgetMock, saveWindowState(QString("AAAAA/OperationsTableWidget")));
     EXPECT_CALL(*logsTableWidgetMock,       saveWindowState(QString("AAAAA/LogsTableWidget")));
-    EXPECT_CALL(*portfolioTableWidgetMock,  saveWindowState(QString("AAAAA/PortfolioTableWidget")));
+    EXPECT_CALL(*portfolioTreeWidgetMock,   saveWindowState(QString("AAAAA/PortfolioTreeWidget")));
     // clang-format on
 
     decisionMakerWidget->saveWindowState("AAAAA");
@@ -145,7 +145,7 @@ TEST_F(Test_DecisionMakerWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock,        value(QString("AAAAA/splitter"), QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
     EXPECT_CALL(*operationsTableWidgetMock, loadWindowState(QString("AAAAA/OperationsTableWidget")));
     EXPECT_CALL(*logsTableWidgetMock,       loadWindowState(QString("AAAAA/LogsTableWidget")));
-    EXPECT_CALL(*portfolioTableWidgetMock,  loadWindowState(QString("AAAAA/PortfolioTableWidget")));
+    EXPECT_CALL(*portfolioTreeWidgetMock,   loadWindowState(QString("AAAAA/PortfolioTreeWidget")));
     // clang-format on
 
     decisionMakerWidget->loadWindowState("AAAAA");

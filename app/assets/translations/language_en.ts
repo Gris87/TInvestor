@@ -4,15 +4,15 @@
 <context>
     <name>AccountChartWidget</name>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="199"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="204"/>
         <source>Remained money on account</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="156"/>
         <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="177"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="203"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="225"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="208"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="230"/>
         <source>Time</source>
         <translation></translation>
     </message>
@@ -87,28 +87,28 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="205"/>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="227"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="210"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="232"/>
         <source>Money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="221"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="226"/>
         <source>Total money on account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="430"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="435"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="440"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="445"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="440"/>
+        <location filename="../../src/widgets/accountchartwidget/accountchartwidget.cpp" line="445"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
@@ -309,13 +309,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="260"/>
+        <location filename="../../src/main/mainwindow.cpp" line="261"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="452"/>
+        <location filename="../../src/main/mainwindow.cpp" line="453"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -326,7 +326,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="480"/>
+        <location filename="../../src/main/mainwindow.cpp" line="481"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -387,40 +387,40 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="261"/>
+        <location filename="../../src/main/mainwindow.cpp" line="262"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="329"/>
+        <location filename="../../src/main/mainwindow.cpp" line="330"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="426"/>
-        <location filename="../../src/main/mainwindow.cpp" line="684"/>
+        <location filename="../../src/main/mainwindow.cpp" line="427"/>
+        <location filename="../../src/main/mainwindow.cpp" line="690"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="441"/>
-        <location filename="../../src/main/mainwindow.cpp" line="607"/>
+        <location filename="../../src/main/mainwindow.cpp" line="442"/>
+        <location filename="../../src/main/mainwindow.cpp" line="613"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="607"/>
+        <location filename="../../src/main/mainwindow.cpp" line="613"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="463"/>
-        <location filename="../../src/main/mainwindow.cpp" line="638"/>
+        <location filename="../../src/main/mainwindow.cpp" line="464"/>
+        <location filename="../../src/main/mainwindow.cpp" line="644"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="638"/>
+        <location filename="../../src/main/mainwindow.cpp" line="644"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -537,50 +537,50 @@
     </message>
 </context>
 <context>
-    <name>PortfolioTableWidget</name>
+    <name>PortfolioTreeWidget</name>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="48"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="45"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="53"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="50"/>
         <source>Available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="58"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="55"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="63"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="60"/>
         <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="68"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="65"/>
         <source>Cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="73"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="70"/>
         <source>Part</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="78"/>
-        <source>Income</source>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="75"/>
+        <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="83"/>
-        <source>Income, %</source>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="80"/>
+        <source>Yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotablewidget/portfoliotablewidget.ui" line="88"/>
-        <source>In a day, %</source>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="85"/>
+        <source>Daily yield, %</source>
         <translation></translation>
     </message>
 </context>

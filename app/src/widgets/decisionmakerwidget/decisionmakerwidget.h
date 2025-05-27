@@ -9,7 +9,7 @@
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory.h"
-#include "src/widgets/portfoliotablewidget/iportfoliotablewidgetfactory.h"
+#include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory.h"
 
 
 
@@ -29,7 +29,7 @@ public:
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
         IAccountChartWidgetFactory*        accountChartWidgetFactory,
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
-        IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
@@ -56,7 +56,7 @@ private:
     IOperationsTableWidget* mOperationsTableWidget;
     IAccountChartWidget*    mAccountChartWidget;
     ILogsTableWidget*       mLogsTableWidget;
-    IPortfolioTableWidget*  mPortfolioTableWidget;
+    IPortfolioTreeWidget*   mPortfolioTreeWidget;
     ISettingsEditor*        mSettingsEditor;
 
 private slots:

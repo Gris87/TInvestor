@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PortfolioTableWidget</class>
- <widget class="QWidget" name="PortfolioTableWidget">
+ <class>PortfolioTreeWidget</class>
+ <widget class="QWidget" name="PortfolioTreeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -27,22 +27,19 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTreeWidget" name="treeWidget">
      <property name="editTriggers">
       <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-     </property>
-     <property name="columnCount">
-      <number>9</number>
-     </property>
-     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <property name="sortingEnabled">
       <bool>true</bool>
-     </attribute>
+     </property>
+     <property name="animated">
+      <bool>true</bool>
+     </property>
      <column>
       <property name="text">
        <string>Name</string>
@@ -75,17 +72,17 @@
      </column>
      <column>
       <property name="text">
-       <string>Income</string>
+       <string>Yield</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Income, %</string>
+       <string>Yield, %</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>In a day, %</string>
+       <string>Daily yield, %</string>
       </property>
      </column>
     </widget>

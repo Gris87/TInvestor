@@ -196,7 +196,7 @@
       </widget>
      </widget>
      <widget class="QWidget" name="verticalLayoutWidget">
-      <layout class="QVBoxLayout" name="layoutForPortfolioTableWidget">
+      <layout class="QVBoxLayout" name="layoutForPortfolioTreeWidget">
        <property name="spacing">
         <number>4</number>
        </property>

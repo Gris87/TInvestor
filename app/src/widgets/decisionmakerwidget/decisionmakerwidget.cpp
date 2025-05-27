@@ -9,7 +9,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
     IAccountChartWidgetFactory*        accountChartWidgetFactory,
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
-    IPortfolioTableWidgetFactory*      portfolioTableWidgetFactory,
+    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
@@ -39,12 +39,12 @@ DecisionMakerWidget::DecisionMakerWidget(
     );
     mAccountChartWidget   = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsTableWidget      = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
-    mPortfolioTableWidget = portfolioTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mPortfolioTreeWidget  = portfolioTreeWidgetFactory->newInstance(mSettingsEditor, this);
 
     ui->layoutForOperationsTableWidget->addWidget(mOperationsTableWidget);
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);
     ui->layoutForLogsTableWidget->addWidget(mLogsTableWidget);
-    ui->layoutForPortfolioTableWidget->addWidget(mPortfolioTableWidget);
+    ui->layoutForPortfolioTreeWidget->addWidget(mPortfolioTreeWidget);
 
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
 }
@@ -70,7 +70,7 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
 
 void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
 {
-    mPortfolioTableWidget->portfolioChanged(portfolio);
+    mPortfolioTreeWidget->portfolioChanged(portfolio);
 }
 
 void DecisionMakerWidget::on_yieldButton_clicked()
@@ -119,7 +119,7 @@ void DecisionMakerWidget::saveWindowState(const QString& type)
 
     mOperationsTableWidget->saveWindowState(type + "/OperationsTableWidget");
     mLogsTableWidget->saveWindowState(type + "/LogsTableWidget");
-    mPortfolioTableWidget->saveWindowState(type + "/PortfolioTableWidget");
+    mPortfolioTreeWidget->saveWindowState(type + "/PortfolioTreeWidget");
 }
 
 void DecisionMakerWidget::loadWindowState(const QString& type)
@@ -128,5 +128,5 @@ void DecisionMakerWidget::loadWindowState(const QString& type)
 
     mOperationsTableWidget->loadWindowState(type + "/OperationsTableWidget");
     mLogsTableWidget->loadWindowState(type + "/LogsTableWidget");
-    mPortfolioTableWidget->loadWindowState(type + "/PortfolioTableWidget");
+    mPortfolioTreeWidget->loadWindowState(type + "/PortfolioTreeWidget");
 }
