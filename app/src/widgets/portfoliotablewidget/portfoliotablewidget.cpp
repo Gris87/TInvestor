@@ -47,6 +47,11 @@ PortfolioTableWidget::~PortfolioTableWidget()
     delete ui;
 }
 
+void PortfolioTableWidget::portfolioChanged(const Portfolio& portfolio)
+{
+    qInfo() << portfolio.positions.size();
+}
+
 void PortfolioTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off

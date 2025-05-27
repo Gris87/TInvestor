@@ -68,6 +68,11 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
     mAccountChartWidget->operationsAdded(operations);
 }
 
+void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
+{
+    mPortfolioTableWidget->portfolioChanged(portfolio);
+}
+
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
     mAccountChartWidget->switchChart(CHART_TYPE_YIELD);

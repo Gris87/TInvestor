@@ -22,6 +22,8 @@ public:
     PortfolioTableWidgetMock(const PortfolioTableWidgetMock& another)            = delete;
     PortfolioTableWidgetMock& operator=(const PortfolioTableWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, portfolioChanged, (const Portfolio& portfolio), (override));
+
     MOCK_METHOD(void, saveWindowState, (const QString& type), (override));
     MOCK_METHOD(void, loadWindowState, (const QString& type), (override));
 };

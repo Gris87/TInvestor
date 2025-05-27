@@ -207,6 +207,7 @@ MainWindow::MainWindow(
     connect(mOperationsThread,                 SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
     connect(mOperationsThread,                 SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
     connect(mPortfolioThread,                  SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mPortfolioThread,                  SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -494,6 +495,11 @@ void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
 void MainWindow::autoPilotOperationsAdded(const QList<Operation>& operations)
 {
     mAutoPilotDecisionMakerWidget->operationsAdded(operations);
+}
+
+void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
+{
+    mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
 }
 
 void MainWindow::on_actionAuth_triggered()

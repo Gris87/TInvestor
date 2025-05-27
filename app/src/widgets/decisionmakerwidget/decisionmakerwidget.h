@@ -45,6 +45,7 @@ public:
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
+    void portfolioChanged(const Portfolio& portfolio) override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

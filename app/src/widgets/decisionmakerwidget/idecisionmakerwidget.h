@@ -5,6 +5,7 @@
 #include <QWidget>
 
 #include "src/domain/operation/operation.h"
+#include "src/domain/portfolio/portfolio.h"
 
 
 
@@ -24,6 +25,7 @@ public:
 
     virtual void operationsRead(const QList<Operation>& operations)  = 0;
     virtual void operationsAdded(const QList<Operation>& operations) = 0;
+    virtual void portfolioChanged(const Portfolio& portfolio)        = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;

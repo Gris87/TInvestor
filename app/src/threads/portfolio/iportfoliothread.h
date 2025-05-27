@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include "src/domain/portfolio/portfolio.h"
+
 
 
 class IPortfolioThread : public QThread
@@ -25,4 +27,5 @@ public:
 
 signals:
     void accountNotFound();
+    void portfolioChanged(const Portfolio& portfolio);
 };

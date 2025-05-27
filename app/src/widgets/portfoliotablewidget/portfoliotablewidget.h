@@ -28,6 +28,8 @@ public:
 
     Ui::PortfolioTableWidget* ui;
 
+    void portfolioChanged(const Portfolio& portfolio) override;
+
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
 

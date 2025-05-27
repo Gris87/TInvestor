@@ -195,6 +195,7 @@ public slots:
     void stopAutoPilot() const;
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
+    void autoPilotPortfolioChanged(const Portfolio& portfolio);
 
 private slots:
     void on_actionAuth_triggered();

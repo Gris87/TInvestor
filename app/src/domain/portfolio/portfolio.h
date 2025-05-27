@@ -16,7 +16,7 @@ struct Portfolio
 
     Portfolio& operator=(const Portfolio& another) = default;
 
-    QMap<QString, PortfolioItems> positions;
+    QMap<QString, PortfolioItems> positions; // Instrument type => positions
 };
 
 

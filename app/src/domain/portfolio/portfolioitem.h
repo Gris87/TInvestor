@@ -14,9 +14,16 @@ struct PortfolioItem
 
     PortfolioItem& operator=(const PortfolioItem& another) = default;
 
-    qint64 quantity;
+    bool   showPrices;
+    double quantity;
     float  price;
     float  avgPrice;
+    double cost;
+    float  part;
+    float  yield;
+    float  yieldPercent;
+    float  priceForDailyYield;
+    float  dailyYieldPercent;
 };
 
 using PortfolioItems = QMap<QString, PortfolioItem>; // UID => PortfolioItem

@@ -3,13 +3,23 @@
 
 
 PortfolioItem::PortfolioItem() :
+    showPrices(),
     quantity(),
     price(),
-    avgPrice()
+    avgPrice(),
+    cost(),
+    part(),
+    yield(),
+    yieldPercent(),
+    priceForDailyYield(),
+    dailyYieldPercent()
 {
 }
 
 bool operator==(const PortfolioItem& lhs, const PortfolioItem& rhs)
 {
-    return lhs.quantity == rhs.quantity && lhs.price == rhs.price && lhs.avgPrice == rhs.avgPrice;
+    return lhs.showPrices == rhs.showPrices && lhs.quantity == rhs.quantity && lhs.price == rhs.price &&
+           lhs.avgPrice == rhs.avgPrice && lhs.cost == rhs.cost && lhs.part == rhs.part && lhs.yield == rhs.yield &&
+           lhs.yieldPercent == rhs.yieldPercent && lhs.priceForDailyYield == rhs.priceForDailyYield &&
+           lhs.dailyYieldPercent == rhs.dailyYieldPercent;
 }
