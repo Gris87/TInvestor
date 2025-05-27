@@ -5,6 +5,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
 
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/treeitems/categorytreeitem.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h"
 
 
@@ -35,5 +36,10 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    ISettingsEditor* mSettingsEditor;
+    void deleteObsoleteCategories(const Portfolio& portfolio);
+
+    ISettingsEditor*                 mSettingsEditor;
+    QStringList                      mSortedCategories;
+    QMap<QString, QString>           mCategoryNames; // Category => Localized name
+    QMap<QString, CategoryTreeItem*> mCategories;    // Category => CategoryTreeItem
 };

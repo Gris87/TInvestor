@@ -16,11 +16,19 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 
 PortfolioTreeWidget::PortfolioTreeWidget(ISettingsEditor* settingsEditor, QWidget* parent) :
     IPortfolioTreeWidget(parent),
     ui(new Ui::PortfolioTreeWidget),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mSortedCategories(),
+    mCategoryNames(),
+    mCategories()
 {
     qDebug() << "Create PortfolioTreeWidget";
 
     ui->setupUi(this);
+
+    mSortedCategories << "currency" << "share";
+
+    mCategoryNames["currency"] = tr("Currency and metals");
+    mCategoryNames["share"]    = tr("Share");
 }
 
 PortfolioTreeWidget::~PortfolioTreeWidget()
@@ -32,11 +40,49 @@ PortfolioTreeWidget::~PortfolioTreeWidget()
 
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
-    for (auto it = portfolio.positions.constBegin(), end = portfolio.positions.constEnd(); it != end; ++it)
-    {
-        const QString& category = it.key();
+    deleteObsoleteCategories(portfolio);
 
-        qInfo() << category;
+    for (const QString& category : mSortedCategories)
+    {
+        if (!portfolio.positions.contains(category))
+        {
+            continue;
+        }
+
+        CategoryTreeItem* categoryTreeItem = mCategories[category];
+
+        if (categoryTreeItem == nullptr)
+        {
+            Q_ASSERT_X(mCategoryNames.contains(category), "PortfolioTreeWidget::portfolioChanged()", "Missing translation");
+            categoryTreeItem = new CategoryTreeItem(ui->treeWidget, mCategoryNames[category]);
+
+            mCategories[category] = categoryTreeItem;
+        }
+
+        const PortfolioItems& portfolioItems = portfolio.positions[category];
+        const PortfolioItem&  categoryTotal  = portfolioItems["total"];
+
+        categoryTreeItem->setCost(categoryTotal.cost);
+        categoryTreeItem->setPart(categoryTotal.part);
+    }
+}
+
+void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
+{
+    QStringList categoriesToDelete;
+
+    for (auto it = mCategories.constBegin(), end = mCategories.constEnd(); it != end; ++it)
+    {
+        if (!portfolio.positions.contains(it.key()))
+        {
+            categoriesToDelete.append(it.key());
+        }
+    }
+
+    for (const QString& category : categoriesToDelete)
+    {
+        CategoryTreeItem* categoryTreeItem = mCategories.take(category);
+        delete categoryTreeItem;
     }
 }
 

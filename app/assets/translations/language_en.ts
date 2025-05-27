@@ -583,6 +583,16 @@
         <source>Daily yield, %</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="30"/>
+        <source>Currency and metals</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="31"/>
+        <source>Share</source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>PriceCollectThread</name>

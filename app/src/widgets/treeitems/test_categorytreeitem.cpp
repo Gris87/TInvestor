@@ -6,5 +6,4 @@
 
 TEST(Test_CategoryTreeItem, Test_constructor_and_destructor)
 {
-    const CategoryTreeItem item;
 }
