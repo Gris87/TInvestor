@@ -41,6 +41,8 @@ SOURCES += \
     src/domain/instrument/test_instrument.cpp \
     src/domain/operation/test_operation.cpp \
     src/domain/orderbook/test_orderbook.cpp \
+    src/domain/portfolio/test_portfolio.cpp \
+    src/domain/portfolio/test_portfolioitem.cpp \
     src/domain/quotation/test_quotation.cpp \
     src/domain/stock/test_stock.cpp \
     src/domain/stock/test_stockmeta.cpp \

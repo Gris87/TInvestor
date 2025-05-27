@@ -1,6 +1,10 @@
 Control portfolio
 Display portfolio items
+Export portfolio to Excel
+Double check for operations accuracy
 Follow for the strategy
+Add logs to logs table
+Export logs to Excel
 Center order wave in dialog
 Long startup
 Tray icon popup too long
@@ -25,6 +29,7 @@ Double check mutexes
 Check for maximum memory requirements (With all limits)
 Shared strings
 Shared icons
+Improve all readability-function-cognitive-complexity
 
 
 

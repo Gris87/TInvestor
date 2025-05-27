@@ -8,7 +8,8 @@ PortfolioThread::PortfolioThread(IUserStorage* userStorage, IGrpcClient* grpcCli
     IPortfolioThread(parent),
     mUserStorage(userStorage),
     mGrpcClient(grpcClient),
-    mAccountId()
+    mAccountId(),
+    mPortfolioStream()
 {
     qDebug() << "Create PortfolioThread";
 }
@@ -24,7 +25,34 @@ void PortfolioThread::run()
 
     if (mAccountId != "")
     {
-        qInfo() << mAccountId; // TODO: Implement
+        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        {
+            handlePortfolioResponse(*tinkoffPortfolio);
+
+            createPortfolioStream();
+
+            while (true)
+            {
+                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                    mGrpcClient->readPortfolioStream(mPortfolioStream);
+
+                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                {
+                    break;
+                }
+
+                if (portfolioStreamResponse->has_portfolio())
+                {
+                    handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                }
+            }
+
+            mGrpcClient->finishPortfolioStream(mPortfolioStream);
+            mPortfolioStream = nullptr;
+        }
     }
     else
     {
@@ -44,5 +72,20 @@ void PortfolioThread::setAccount(const QString& account)
 
 void PortfolioThread::terminateThread()
 {
+    if (mPortfolioStream != nullptr)
+    {
+        mGrpcClient->cancelPortfolioStream(mPortfolioStream);
+    }
+
     requestInterruption();
+}
+
+void PortfolioThread::createPortfolioStream()
+{
+    mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
+}
+
+void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+{
+    qInfo() << tinkoffPortfolio.positions_size();
 }

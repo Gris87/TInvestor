@@ -25,8 +25,13 @@ public:
     void setAccount(const QString& account) override;
     void terminateThread() override;
 
+    void createPortfolioStream();
+
 private:
-    IUserStorage* mUserStorage;
-    IGrpcClient*  mGrpcClient;
-    QString       mAccountId;
+    void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+
+    IUserStorage*                    mUserStorage;
+    IGrpcClient*                     mGrpcClient;
+    QString                          mAccountId;
+    std::shared_ptr<PortfolioStream> mPortfolioStream;
 };

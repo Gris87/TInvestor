@@ -249,6 +249,7 @@ void OperationsThread::requestOperations()
     }
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation)
 {
     Operation res;
@@ -385,6 +386,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     return res;
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const
 {

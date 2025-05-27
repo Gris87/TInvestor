@@ -46,6 +46,8 @@ SOURCES += \
     src/domain/instrument/instrument.cpp \
     src/domain/operation/operation.cpp \
     src/domain/orderbook/orderbook.cpp \
+    src/domain/portfolio/portfolio.cpp \
+    src/domain/portfolio/portfolioitem.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stock/stock.cpp \
     src/domain/stock/stockmeta.cpp \
@@ -198,6 +200,8 @@ HEADERS += \
     src/domain/operation/operation.h \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
+    src/domain/portfolio/portfolio.h \
+    src/domain/portfolio/portfolioitem.h \
     src/domain/quotation/quotation.h \
     src/domain/stock/stock.h \
     src/domain/stock/stockdata.h \

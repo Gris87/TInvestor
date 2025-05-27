@@ -2399,6 +2399,7 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
     kExchangeOrderTypeFieldNumber = 11,
     kTakeProfitTypeFieldNumber = 12,
     kPriceTypeFieldNumber = 14,
+    kConfirmMarginTradeFieldNumber = 16,
   };
   // optional string figi = 1 [deprecated = true];
   [[deprecated]]  bool has_figi() const;
@@ -2595,13 +2596,23 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
   void _internal_set_price_type(::tinkoff::public_::invest::api::contract::v1::PriceType value);
 
   public:
+  // bool confirm_margin_trade = 16;
+  void clear_confirm_margin_trade() ;
+  bool confirm_margin_trade() const;
+  void set_confirm_margin_trade(bool value);
+
+  private:
+  bool _internal_confirm_margin_trade() const;
+  void _internal_set_confirm_margin_trade(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<
-      4, 15, 4,
-      110, 2>
+      4, 16, 4,
+      118, 2>
       _table_;
 
   friend class ::google::protobuf::MessageLite;
@@ -2635,6 +2646,7 @@ class PostStopOrderRequest final : public ::google::protobuf::Message
     int exchange_order_type_;
     int take_profit_type_;
     int price_type_;
+    bool confirm_margin_trade_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -3818,6 +3830,28 @@ inline void PostStopOrderRequest::set_allocated_order_id(std::string* value) {
     _impl_.order_id_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest.order_id)
+}
+
+// bool confirm_margin_trade = 16;
+inline void PostStopOrderRequest::clear_confirm_margin_trade() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = false;
+}
+inline bool PostStopOrderRequest::confirm_margin_trade() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest.confirm_margin_trade)
+  return _internal_confirm_margin_trade();
+}
+inline void PostStopOrderRequest::set_confirm_margin_trade(bool value) {
+  _internal_set_confirm_margin_trade(value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest.confirm_margin_trade)
+}
+inline bool PostStopOrderRequest::_internal_confirm_margin_trade() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.confirm_margin_trade_;
+}
+inline void PostStopOrderRequest::_internal_set_confirm_margin_trade(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.confirm_margin_trade_ = value;
 }
 
 // -------------------------------------------------------------------

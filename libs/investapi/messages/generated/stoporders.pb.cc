@@ -282,7 +282,8 @@ inline constexpr PostStopOrderRequest::Impl_::Impl_(
         stop_order_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::StopOrderType >(0)},
         exchange_order_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::ExchangeOrderType >(0)},
         take_profit_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::TakeProfitType >(0)},
-        price_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::PriceType >(0)} {}
+        price_type_{static_cast< ::tinkoff::public_::invest::api::contract::v1::PriceType >(0)},
+        confirm_margin_trade_{false} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR PostStopOrderRequest::PostStopOrderRequest(::_pbi::ConstantInitialized)
@@ -379,6 +380,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, _impl_.trailing_data_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, _impl_.price_type_),
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, _impl_.order_id_),
+        PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest, _impl_.confirm_margin_trade_),
         0,
         ~0u,
         1,
@@ -392,6 +394,7 @@ const ::uint32_t
         ~0u,
         ~0u,
         4,
+        ~0u,
         ~0u,
         ~0u,
         PROTOBUF_FIELD_OFFSET(::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse, _impl_._has_bits_),
@@ -522,14 +525,14 @@ const ::uint32_t
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, 12, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest_TrailingData)},
-        {16, 39, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest)},
-        {54, 65, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse)},
-        {68, 80, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest)},
-        {84, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse)},
-        {93, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest)},
-        {103, 112, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse)},
-        {113, 128, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::StopOrder_TrailingData)},
-        {135, 160, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::StopOrder)},
+        {16, 40, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest)},
+        {56, 67, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::PostStopOrderResponse)},
+        {70, 82, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStopOrdersRequest)},
+        {86, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::GetStopOrdersResponse)},
+        {95, -1, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelStopOrderRequest)},
+        {105, 114, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::CancelStopOrderResponse)},
+        {115, 130, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::StopOrder_TrailingData)},
+        {137, 162, -1, sizeof(::tinkoff::public_::invest::api::contract::v1::StopOrder)},
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::tinkoff::public_::invest::api::contract::v1::_PostStopOrderRequest_TrailingData_default_instance_._instance,
@@ -547,7 +550,7 @@ const char descriptor_table_protodef_stoporders_2eproto[] ABSL_ATTRIBUTE_SECTION
     "\n\020stoporders.proto\022%tinkoff.public.inves"
     "t.api.contract.v1\032\037google/protobuf/times"
     "tamp.proto\032\037google/api/field_behavior.pr"
-    "oto\032\014common.proto\"\227\n\n\024PostStopOrderReque"
+    "oto\032\014common.proto\"\265\n\n\024PostStopOrderReque"
     "st\022\025\n\004figi\030\001 \001(\tB\002\030\001H\000\210\001\001\022\026\n\010quantity\030\002 "
     "\001(\003B\004\342A\001\002\022D\n\005price\030\003 \001(\01320.tinkoff.publi"
     "c.invest.api.contract.v1.QuotationH\001\210\001\001\022"
@@ -571,109 +574,110 @@ const char descriptor_table_protodef_stoporders_2eproto[] ABSL_ATTRIBUTE_SECTION
     "ostStopOrderRequest.TrailingData\022D\n\npric"
     "e_type\030\016 \001(\01620.tinkoff.public.invest.api"
     ".contract.v1.PriceType\022\026\n\010order_id\030\017 \001(\t"
-    "B\004\342A\001\002\032\260\002\n\014TrailingData\022@\n\006indent\030\001 \001(\0132"
-    "0.tinkoff.public.invest.api.contract.v1."
-    "Quotation\022M\n\013indent_type\030\002 \001(\01628.tinkoff"
-    ".public.invest.api.contract.v1.TrailingV"
-    "alueType\022@\n\006spread\030\003 \001(\01320.tinkoff.publi"
-    "c.invest.api.contract.v1.Quotation\022M\n\013sp"
-    "read_type\030\004 \001(\01628.tinkoff.public.invest."
-    "api.contract.v1.TrailingValueTypeB\007\n\005_fi"
-    "giB\010\n\006_priceB\r\n\013_stop_priceB\016\n\014_expire_d"
-    "ate\"\235\001\n\025PostStopOrderResponse\022\025\n\rstop_or"
-    "der_id\030\001 \001(\t\022\030\n\020order_request_id\030\002 \001(\t\022S"
-    "\n\021response_metadata\030\376\001 \001(\01327.tinkoff.pub"
-    "lic.invest.api.contract.v1.ResponseMetad"
-    "ata\"\320\001\n\024GetStopOrdersRequest\022\030\n\naccount_"
-    "id\030\001 \001(\tB\004\342A\001\002\022L\n\006status\030\002 \001(\0162<.tinkoff"
-    ".public.invest.api.contract.v1.StopOrder"
-    "StatusOption\022(\n\004from\030\003 \001(\0132\032.google.prot"
-    "obuf.Timestamp\022&\n\002to\030\004 \001(\0132\032.google.prot"
-    "obuf.Timestamp\"^\n\025GetStopOrdersResponse\022"
-    "E\n\013stop_orders\030\001 \003(\01320.tinkoff.public.in"
-    "vest.api.contract.v1.StopOrder\"O\n\026Cancel"
-    "StopOrderRequest\022\030\n\naccount_id\030\001 \001(\tB\004\342A"
-    "\001\002\022\033\n\rstop_order_id\030\002 \001(\tB\004\342A\001\002\"C\n\027Cance"
-    "lStopOrderResponse\022(\n\004time\030\001 \001(\0132\032.googl"
-    "e.protobuf.Timestamp\"\264\013\n\tStopOrder\022\025\n\rst"
-    "op_order_id\030\001 \001(\t\022\026\n\016lots_requested\030\002 \001("
-    "\003\022\014\n\004figi\030\003 \001(\t\022L\n\tdirection\030\004 \001(\01629.tin"
-    "koff.public.invest.api.contract.v1.StopO"
-    "rderDirection\022\020\n\010currency\030\005 \001(\t\022H\n\norder"
-    "_type\030\006 \001(\01624.tinkoff.public.invest.api."
-    "contract.v1.StopOrderType\022/\n\013create_date"
-    "\030\007 \001(\0132\032.google.protobuf.Timestamp\0228\n\024ac"
-    "tivation_date_time\030\010 \001(\0132\032.google.protob"
-    "uf.Timestamp\0223\n\017expiration_time\030\t \001(\0132\032."
-    "google.protobuf.Timestamp\022@\n\005price\030\n \001(\013"
-    "21.tinkoff.public.invest.api.contract.v1"
-    ".MoneyValue\022E\n\nstop_price\030\013 \001(\01321.tinkof"
-    "f.public.invest.api.contract.v1.MoneyVal"
-    "ue\022\026\n\016instrument_uid\030\014 \001(\t\022O\n\020take_profi"
-    "t_type\030\r \001(\01625.tinkoff.public.invest.api"
-    ".contract.v1.TakeProfitType\022T\n\rtrailing_"
-    "data\030\016 \001(\0132=.tinkoff.public.invest.api.c"
-    "ontract.v1.StopOrder.TrailingData\022L\n\006sta"
-    "tus\030\017 \001(\0162<.tinkoff.public.invest.api.co"
-    "ntract.v1.StopOrderStatusOption\022U\n\023excha"
-    "nge_order_type\030\020 \001(\01628.tinkoff.public.in"
-    "vest.api.contract.v1.ExchangeOrderType\022\036"
-    "\n\021exchange_order_id\030\021 \001(\tH\000\210\001\001\032\374\003\n\014Trail"
-    "ingData\022@\n\006indent\030\001 \001(\01320.tinkoff.public"
-    ".invest.api.contract.v1.Quotation\022M\n\013ind"
-    "ent_type\030\002 \001(\01628.tinkoff.public.invest.a"
-    "pi.contract.v1.TrailingValueType\022@\n\006spre"
-    "ad\030\003 \001(\01320.tinkoff.public.invest.api.con"
-    "tract.v1.Quotation\022M\n\013spread_type\030\004 \001(\0162"
-    "8.tinkoff.public.invest.api.contract.v1."
-    "TrailingValueType\022I\n\006status\030\005 \001(\01629.tink"
-    "off.public.invest.api.contract.v1.Traili"
-    "ngStopStatus\022\?\n\005price\030\007 \001(\01320.tinkoff.pu"
-    "blic.invest.api.contract.v1.Quotation\022>\n"
-    "\004extr\030\010 \001(\01320.tinkoff.public.invest.api."
-    "contract.v1.QuotationB\024\n\022_exchange_order"
-    "_id*w\n\022StopOrderDirection\022$\n STOP_ORDER_"
-    "DIRECTION_UNSPECIFIED\020\000\022\034\n\030STOP_ORDER_DI"
-    "RECTION_BUY\020\001\022\035\n\031STOP_ORDER_DIRECTION_SE"
-    "LL\020\002*\245\001\n\027StopOrderExpirationType\022*\n&STOP"
-    "_ORDER_EXPIRATION_TYPE_UNSPECIFIED\020\000\022/\n+"
-    "STOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_CAN"
-    "CEL\020\001\022-\n)STOP_ORDER_EXPIRATION_TYPE_GOOD"
-    "_TILL_DATE\020\002*\220\001\n\rStopOrderType\022\037\n\033STOP_O"
-    "RDER_TYPE_UNSPECIFIED\020\000\022\037\n\033STOP_ORDER_TY"
-    "PE_TAKE_PROFIT\020\001\022\035\n\031STOP_ORDER_TYPE_STOP"
-    "_LOSS\020\002\022\036\n\032STOP_ORDER_TYPE_STOP_LIMIT\020\003*"
-    "\322\001\n\025StopOrderStatusOption\022!\n\035STOP_ORDER_"
-    "STATUS_UNSPECIFIED\020\000\022\031\n\025STOP_ORDER_STATU"
-    "S_ALL\020\001\022\034\n\030STOP_ORDER_STATUS_ACTIVE\020\002\022\036\n"
-    "\032STOP_ORDER_STATUS_EXECUTED\020\003\022\036\n\032STOP_OR"
-    "DER_STATUS_CANCELED\020\004\022\035\n\031STOP_ORDER_STAT"
-    "US_EXPIRED\020\005*w\n\021ExchangeOrderType\022#\n\037EXC"
-    "HANGE_ORDER_TYPE_UNSPECIFIED\020\000\022\036\n\032EXCHAN"
-    "GE_ORDER_TYPE_MARKET\020\001\022\035\n\031EXCHANGE_ORDER"
-    "_TYPE_LIMIT\020\002*o\n\016TakeProfitType\022 \n\034TAKE_"
-    "PROFIT_TYPE_UNSPECIFIED\020\000\022\034\n\030TAKE_PROFIT"
-    "_TYPE_REGULAR\020\001\022\035\n\031TAKE_PROFIT_TYPE_TRAI"
-    "LING\020\002*m\n\021TrailingValueType\022\036\n\032TRAILING_"
-    "VALUE_UNSPECIFIED\020\000\022\033\n\027TRAILING_VALUE_AB"
-    "SOLUTE\020\001\022\033\n\027TRAILING_VALUE_RELATIVE\020\002*j\n"
-    "\022TrailingStopStatus\022\035\n\031TRAILING_STOP_UNS"
-    "PECIFIED\020\000\022\030\n\024TRAILING_STOP_ACTIVE\020\001\022\033\n\027"
-    "TRAILING_STOP_ACTIVATED\020\0022\300\003\n\021StopOrders"
-    "Service\022\212\001\n\rPostStopOrder\022;.tinkoff.publ"
-    "ic.invest.api.contract.v1.PostStopOrderR"
-    "equest\032<.tinkoff.public.invest.api.contr"
-    "act.v1.PostStopOrderResponse\022\212\001\n\rGetStop"
-    "Orders\022;.tinkoff.public.invest.api.contr"
-    "act.v1.GetStopOrdersRequest\032<.tinkoff.pu"
-    "blic.invest.api.contract.v1.GetStopOrder"
-    "sResponse\022\220\001\n\017CancelStopOrder\022=.tinkoff."
-    "public.invest.api.contract.v1.CancelStop"
-    "OrderRequest\032>.tinkoff.public.invest.api"
-    ".contract.v1.CancelStopOrderResponseBa\n\034"
-    "ru.tinkoff.piapi.contract.v1P\001Z\014./;inves"
-    "tapi\242\002\005TIAPI\252\002\024Tinkoff.InvestApi.V1\312\002\021Ti"
-    "nkoff\\Invest\\V1b\006proto3"
+    "B\004\342A\001\002\022\034\n\024confirm_margin_trade\030\020 \001(\010\032\260\002\n"
+    "\014TrailingData\022@\n\006indent\030\001 \001(\01320.tinkoff."
+    "public.invest.api.contract.v1.Quotation\022"
+    "M\n\013indent_type\030\002 \001(\01628.tinkoff.public.in"
+    "vest.api.contract.v1.TrailingValueType\022@"
+    "\n\006spread\030\003 \001(\01320.tinkoff.public.invest.a"
+    "pi.contract.v1.Quotation\022M\n\013spread_type\030"
+    "\004 \001(\01628.tinkoff.public.invest.api.contra"
+    "ct.v1.TrailingValueTypeB\007\n\005_figiB\010\n\006_pri"
+    "ceB\r\n\013_stop_priceB\016\n\014_expire_date\"\235\001\n\025Po"
+    "stStopOrderResponse\022\025\n\rstop_order_id\030\001 \001"
+    "(\t\022\030\n\020order_request_id\030\002 \001(\t\022S\n\021response"
+    "_metadata\030\376\001 \001(\01327.tinkoff.public.invest"
+    ".api.contract.v1.ResponseMetadata\"\320\001\n\024Ge"
+    "tStopOrdersRequest\022\030\n\naccount_id\030\001 \001(\tB\004"
+    "\342A\001\002\022L\n\006status\030\002 \001(\0162<.tinkoff.public.in"
+    "vest.api.contract.v1.StopOrderStatusOpti"
+    "on\022(\n\004from\030\003 \001(\0132\032.google.protobuf.Times"
+    "tamp\022&\n\002to\030\004 \001(\0132\032.google.protobuf.Times"
+    "tamp\"^\n\025GetStopOrdersResponse\022E\n\013stop_or"
+    "ders\030\001 \003(\01320.tinkoff.public.invest.api.c"
+    "ontract.v1.StopOrder\"O\n\026CancelStopOrderR"
+    "equest\022\030\n\naccount_id\030\001 \001(\tB\004\342A\001\002\022\033\n\rstop"
+    "_order_id\030\002 \001(\tB\004\342A\001\002\"C\n\027CancelStopOrder"
+    "Response\022(\n\004time\030\001 \001(\0132\032.google.protobuf"
+    ".Timestamp\"\264\013\n\tStopOrder\022\025\n\rstop_order_i"
+    "d\030\001 \001(\t\022\026\n\016lots_requested\030\002 \001(\003\022\014\n\004figi\030"
+    "\003 \001(\t\022L\n\tdirection\030\004 \001(\01629.tinkoff.publi"
+    "c.invest.api.contract.v1.StopOrderDirect"
+    "ion\022\020\n\010currency\030\005 \001(\t\022H\n\norder_type\030\006 \001("
+    "\01624.tinkoff.public.invest.api.contract.v"
+    "1.StopOrderType\022/\n\013create_date\030\007 \001(\0132\032.g"
+    "oogle.protobuf.Timestamp\0228\n\024activation_d"
+    "ate_time\030\010 \001(\0132\032.google.protobuf.Timesta"
+    "mp\0223\n\017expiration_time\030\t \001(\0132\032.google.pro"
+    "tobuf.Timestamp\022@\n\005price\030\n \001(\01321.tinkoff"
+    ".public.invest.api.contract.v1.MoneyValu"
+    "e\022E\n\nstop_price\030\013 \001(\01321.tinkoff.public.i"
+    "nvest.api.contract.v1.MoneyValue\022\026\n\016inst"
+    "rument_uid\030\014 \001(\t\022O\n\020take_profit_type\030\r \001"
+    "(\01625.tinkoff.public.invest.api.contract."
+    "v1.TakeProfitType\022T\n\rtrailing_data\030\016 \001(\013"
+    "2=.tinkoff.public.invest.api.contract.v1"
+    ".StopOrder.TrailingData\022L\n\006status\030\017 \001(\0162"
+    "<.tinkoff.public.invest.api.contract.v1."
+    "StopOrderStatusOption\022U\n\023exchange_order_"
+    "type\030\020 \001(\01628.tinkoff.public.invest.api.c"
+    "ontract.v1.ExchangeOrderType\022\036\n\021exchange"
+    "_order_id\030\021 \001(\tH\000\210\001\001\032\374\003\n\014TrailingData\022@\n"
+    "\006indent\030\001 \001(\01320.tinkoff.public.invest.ap"
+    "i.contract.v1.Quotation\022M\n\013indent_type\030\002"
+    " \001(\01628.tinkoff.public.invest.api.contrac"
+    "t.v1.TrailingValueType\022@\n\006spread\030\003 \001(\01320"
+    ".tinkoff.public.invest.api.contract.v1.Q"
+    "uotation\022M\n\013spread_type\030\004 \001(\01628.tinkoff."
+    "public.invest.api.contract.v1.TrailingVa"
+    "lueType\022I\n\006status\030\005 \001(\01629.tinkoff.public"
+    ".invest.api.contract.v1.TrailingStopStat"
+    "us\022\?\n\005price\030\007 \001(\01320.tinkoff.public.inves"
+    "t.api.contract.v1.Quotation\022>\n\004extr\030\010 \001("
+    "\01320.tinkoff.public.invest.api.contract.v"
+    "1.QuotationB\024\n\022_exchange_order_id*w\n\022Sto"
+    "pOrderDirection\022$\n STOP_ORDER_DIRECTION_"
+    "UNSPECIFIED\020\000\022\034\n\030STOP_ORDER_DIRECTION_BU"
+    "Y\020\001\022\035\n\031STOP_ORDER_DIRECTION_SELL\020\002*\245\001\n\027S"
+    "topOrderExpirationType\022*\n&STOP_ORDER_EXP"
+    "IRATION_TYPE_UNSPECIFIED\020\000\022/\n+STOP_ORDER"
+    "_EXPIRATION_TYPE_GOOD_TILL_CANCEL\020\001\022-\n)S"
+    "TOP_ORDER_EXPIRATION_TYPE_GOOD_TILL_DATE"
+    "\020\002*\220\001\n\rStopOrderType\022\037\n\033STOP_ORDER_TYPE_"
+    "UNSPECIFIED\020\000\022\037\n\033STOP_ORDER_TYPE_TAKE_PR"
+    "OFIT\020\001\022\035\n\031STOP_ORDER_TYPE_STOP_LOSS\020\002\022\036\n"
+    "\032STOP_ORDER_TYPE_STOP_LIMIT\020\003*\322\001\n\025StopOr"
+    "derStatusOption\022!\n\035STOP_ORDER_STATUS_UNS"
+    "PECIFIED\020\000\022\031\n\025STOP_ORDER_STATUS_ALL\020\001\022\034\n"
+    "\030STOP_ORDER_STATUS_ACTIVE\020\002\022\036\n\032STOP_ORDE"
+    "R_STATUS_EXECUTED\020\003\022\036\n\032STOP_ORDER_STATUS"
+    "_CANCELED\020\004\022\035\n\031STOP_ORDER_STATUS_EXPIRED"
+    "\020\005*w\n\021ExchangeOrderType\022#\n\037EXCHANGE_ORDE"
+    "R_TYPE_UNSPECIFIED\020\000\022\036\n\032EXCHANGE_ORDER_T"
+    "YPE_MARKET\020\001\022\035\n\031EXCHANGE_ORDER_TYPE_LIMI"
+    "T\020\002*o\n\016TakeProfitType\022 \n\034TAKE_PROFIT_TYP"
+    "E_UNSPECIFIED\020\000\022\034\n\030TAKE_PROFIT_TYPE_REGU"
+    "LAR\020\001\022\035\n\031TAKE_PROFIT_TYPE_TRAILING\020\002*m\n\021"
+    "TrailingValueType\022\036\n\032TRAILING_VALUE_UNSP"
+    "ECIFIED\020\000\022\033\n\027TRAILING_VALUE_ABSOLUTE\020\001\022\033"
+    "\n\027TRAILING_VALUE_RELATIVE\020\002*j\n\022TrailingS"
+    "topStatus\022\035\n\031TRAILING_STOP_UNSPECIFIED\020\000"
+    "\022\030\n\024TRAILING_STOP_ACTIVE\020\001\022\033\n\027TRAILING_S"
+    "TOP_ACTIVATED\020\0022\300\003\n\021StopOrdersService\022\212\001"
+    "\n\rPostStopOrder\022;.tinkoff.public.invest."
+    "api.contract.v1.PostStopOrderRequest\032<.t"
+    "inkoff.public.invest.api.contract.v1.Pos"
+    "tStopOrderResponse\022\212\001\n\rGetStopOrders\022;.t"
+    "inkoff.public.invest.api.contract.v1.Get"
+    "StopOrdersRequest\032<.tinkoff.public.inves"
+    "t.api.contract.v1.GetStopOrdersResponse\022"
+    "\220\001\n\017CancelStopOrder\022=.tinkoff.public.inv"
+    "est.api.contract.v1.CancelStopOrderReque"
+    "st\032>.tinkoff.public.invest.api.contract."
+    "v1.CancelStopOrderResponseBa\n\034ru.tinkoff"
+    ".piapi.contract.v1P\001Z\014./;investapi\242\002\005TIA"
+    "PI\252\002\024Tinkoff.InvestApi.V1\312\002\021Tinkoff\\Inve"
+    "st\\V1b\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_stoporders_2eproto_deps[3] =
     {
@@ -685,7 +689,7 @@ static ::absl::once_flag descriptor_table_stoporders_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_stoporders_2eproto = {
     false,
     false,
-    5183,
+    5213,
     descriptor_table_protodef_stoporders_2eproto,
     "stoporders.proto",
     &descriptor_table_stoporders_2eproto_once,
@@ -1215,9 +1219,9 @@ PostStopOrderRequest::PostStopOrderRequest(
                offsetof(Impl_, quantity_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, quantity_),
-           offsetof(Impl_, price_type_) -
+           offsetof(Impl_, confirm_margin_trade_) -
                offsetof(Impl_, quantity_) +
-               sizeof(Impl_::price_type_));
+               sizeof(Impl_::confirm_margin_trade_));
 
   // @@protoc_insertion_point(copy_constructor:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest)
 }
@@ -1235,9 +1239,9 @@ inline void PostStopOrderRequest::SharedCtor(::_pb::Arena* arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, price_),
            0,
-           offsetof(Impl_, price_type_) -
+           offsetof(Impl_, confirm_margin_trade_) -
                offsetof(Impl_, price_) +
-               sizeof(Impl_::price_type_));
+               sizeof(Impl_::confirm_margin_trade_));
 }
 PostStopOrderRequest::~PostStopOrderRequest() {
   // @@protoc_insertion_point(destructor:tinkoff.public.invest.api.contract.v1.PostStopOrderRequest)
@@ -1294,15 +1298,15 @@ const ::google::protobuf::internal::ClassData* PostStopOrderRequest::GetClassDat
   return _class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 15, 4, 110, 2> PostStopOrderRequest::_table_ = {
+const ::_pbi::TcParseTable<4, 16, 4, 118, 2> PostStopOrderRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_._has_bits_),
     0, // no _extensions_
-    15, 120,  // max_field_number, fast_idx_mask
+    16, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294934528,  // skipmap
+    4294901760,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    15,  // num_field_entries
+    16,  // num_field_entries
     4,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
     _class_data_.base(),
@@ -1312,7 +1316,9 @@ const ::_pbi::TcParseTable<4, 15, 4, 110, 2> PostStopOrderRequest::_table_ = {
     ::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    {::_pbi::TcParser::MiniParse, {}},
+    // bool confirm_margin_trade = 16;
+    {::_pbi::TcParser::FastV8S2,
+     {384, 63, 0, PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.confirm_margin_trade_)}},
     // optional string figi = 1 [deprecated = true];
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.figi_)}},
@@ -1406,13 +1412,16 @@ const ::_pbi::TcParseTable<4, 15, 4, 110, 2> PostStopOrderRequest::_table_ = {
     // string order_id = 15 [(.google.api.field_behavior) = REQUIRED];
     {PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.order_id_), -1, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // bool confirm_margin_trade = 16;
+    {PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.confirm_margin_trade_), -1, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kBool)},
   }}, {{
     {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
     {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::Quotation>()},
     {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
     {::_pbi::TcParser::GetTable<::tinkoff::public_::invest::api::contract::v1::PostStopOrderRequest_TrailingData>()},
   }}, {{
-    "\72\4\0\0\0\0\12\0\0\0\15\0\0\0\0\10"
+    "\72\4\0\0\0\0\12\0\0\0\15\0\0\0\0\10\0\0\0\0\0\0\0\0"
     "tinkoff.public.invest.api.contract.v1.PostStopOrderRequest"
     "figi"
     "account_id"
@@ -1454,8 +1463,8 @@ PROTOBUF_NOINLINE void PostStopOrderRequest::Clear() {
     }
   }
   ::memset(&_impl_.quantity_, 0, static_cast<::size_t>(
-      reinterpret_cast<char*>(&_impl_.price_type_) -
-      reinterpret_cast<char*>(&_impl_.quantity_)) + sizeof(_impl_.price_type_));
+      reinterpret_cast<char*>(&_impl_.confirm_margin_trade_) -
+      reinterpret_cast<char*>(&_impl_.quantity_)) + sizeof(_impl_.confirm_margin_trade_));
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -1585,6 +1594,13 @@ PROTOBUF_NOINLINE void PostStopOrderRequest::Clear() {
             target = stream->WriteStringMaybeAliased(15, _s, target);
           }
 
+          // bool confirm_margin_trade = 16;
+          if (this_._internal_confirm_margin_trade() != 0) {
+            target = stream->EnsureSpace(target);
+            target = ::_pbi::WireFormatLite::WriteBoolToArray(
+                16, this_._internal_confirm_margin_trade(), target);
+          }
+
           if (PROTOBUF_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
             target =
                 ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -1692,6 +1708,10 @@ PROTOBUF_NOINLINE void PostStopOrderRequest::Clear() {
               total_size += 1 +
                             ::_pbi::WireFormatLite::EnumSize(this_._internal_price_type());
             }
+            // bool confirm_margin_trade = 16;
+            if (this_._internal_confirm_margin_trade() != 0) {
+              total_size += 3;
+            }
           }
           return this_.MaybeComputeUnknownFieldsSize(total_size,
                                                      &this_._impl_._cached_size_);
@@ -1778,6 +1798,9 @@ void PostStopOrderRequest::MergeImpl(::google::protobuf::MessageLite& to_msg, co
   if (from._internal_price_type() != 0) {
     _this->_impl_.price_type_ = from._impl_.price_type_;
   }
+  if (from._internal_confirm_margin_trade() != 0) {
+    _this->_impl_.confirm_margin_trade_ = from._impl_.confirm_margin_trade_;
+  }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1801,8 +1824,8 @@ void PostStopOrderRequest::InternalSwap(PostStopOrderRequest* PROTOBUF_RESTRICT 
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.instrument_id_, &other->_impl_.instrument_id_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.price_type_)
-      + sizeof(PostStopOrderRequest::_impl_.price_type_)
+      PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.confirm_margin_trade_)
+      + sizeof(PostStopOrderRequest::_impl_.confirm_margin_trade_)
       - PROTOBUF_FIELD_OFFSET(PostStopOrderRequest, _impl_.price_)>(
           reinterpret_cast<char*>(&_impl_.price_),
           reinterpret_cast<char*>(&other->_impl_.price_));
