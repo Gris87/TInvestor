@@ -172,3 +172,35 @@ void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
 
     setForeground(PORTFOLIO_DAILY_YIELD_COLUMN, QBrush(color));
 }
+
+bool PortfolioTreeItem::operator<(const QTreeWidgetItem& another) const
+{
+    const PortfolioTreeItem* anotherItem = dynamic_cast<const PortfolioTreeItem*>(&another);
+    const int                column      = treeWidget()->sortColumn();
+
+    switch (column)
+    {
+        case PORTFOLIO_NAME_COLUMN:
+            return text(column) < anotherItem->text(column);
+        case PORTFOLIO_AVAILABLE_COLUMN:
+            return mAvailable < anotherItem->mAvailable;
+        case PORTFOLIO_PRICE_COLUMN:
+            return mPrice < anotherItem->mPrice;
+        case PORTFOLIO_AVG_PRICE_COLUMN:
+            return mAvgPrice < anotherItem->mAvgPrice;
+        case PORTFOLIO_COST_COLUMN:
+            return mCost < anotherItem->mCost;
+        case PORTFOLIO_PART_COLUMN:
+            return mPart < anotherItem->mPart;
+        case PORTFOLIO_YIELD_COLUMN:
+            return mYield < anotherItem->mYield;
+        case PORTFOLIO_YIELD_PERCENT_COLUMN:
+            return mYieldPercent < anotherItem->mYieldPercent;
+        case PORTFOLIO_DAILY_YIELD_COLUMN:
+            return mDailyYieldPercent < anotherItem->mDailyYieldPercent;
+        default:
+            break;
+    }
+
+    return false;
+}

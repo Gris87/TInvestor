@@ -27,6 +27,8 @@ public:
     void setYieldPercent(float value, float fromPrice);
     void setDailyYieldPercent(float value, float fromPrice);
 
+    bool operator<(const QTreeWidgetItem& another) const override;
+
 private:
     QString mInstrumentId;
     double  mAvailable;

@@ -38,8 +38,8 @@ DecisionMakerWidget::DecisionMakerWidget(
         mSettingsEditor,
         this
     );
-    mAccountChartWidget  = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
-    mLogsTableWidget     = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
+    mLogsTableWidget    = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
     mPortfolioTreeWidget =
         portfolioTreeWidgetFactory->newInstance(portfolioTreeRecordFactory, instrumentsStorage, mSettingsEditor, this);
 
