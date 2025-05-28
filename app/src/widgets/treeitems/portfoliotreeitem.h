@@ -24,9 +24,17 @@ public:
     void setCost(double value);
     void setPart(float value);
     void setYield(float value);
-    void setYieldPercent(float value);
-    void setDailyYieldPercent(float value);
+    void setYieldPercent(float value, float fromPrice);
+    void setDailyYieldPercent(float value, float fromPrice);
 
 private:
     QString mInstrumentId;
+    double  mAvailable;
+    float   mPrice;
+    float   mAvgPrice;
+    double  mCost;
+    float   mPart;
+    float   mYield;
+    float   mYieldPercent;
+    float   mDailyYieldPercent;
 };

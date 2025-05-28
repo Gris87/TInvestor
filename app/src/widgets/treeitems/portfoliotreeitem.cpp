@@ -6,9 +6,26 @@
 
 
 
+constexpr QChar RUBLE      = QChar(0x20BD);
+constexpr float ZERO_LIMIT = 0.0001f;
+
+const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
+const QColor RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
+const QColor NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+
+
+
 PortfolioTreeItem::PortfolioTreeItem(QTreeWidgetItem* parent, const QString& instrumentId, int type) :
     QTreeWidgetItem(parent, type),
-    mInstrumentId(instrumentId)
+    mInstrumentId(instrumentId),
+    mAvailable(),
+    mPrice(),
+    mAvgPrice(),
+    mCost(),
+    mPart(),
+    mYield(),
+    mYieldPercent(),
+    mDailyYieldPercent()
 {
     qDebug() << "Create PortfolioTreeItem";
 
@@ -27,40 +44,131 @@ const QString& PortfolioTreeItem::getInstrumentId() const
 
 void PortfolioTreeItem::setAvailable(double value)
 {
-    setText(PORTFOLIO_AVAILABLE_COLUMN, QString::number(value, 'f', 2));
+    mAvailable = value;
+
+    if (static_cast<qint64>(mAvailable) * 1000 == static_cast<qint64>(mAvailable * 1000))
+    {
+        setText(PORTFOLIO_AVAILABLE_COLUMN, QString::number(static_cast<qint64>(mAvailable)));
+    }
+    else
+    {
+        setText(PORTFOLIO_AVAILABLE_COLUMN, QString::number(mAvailable, 'f', 2));
+    }
 }
 
 void PortfolioTreeItem::setPrice(float value)
 {
-    setText(PORTFOLIO_PRICE_COLUMN, QString("%1 \u20BD").arg(value, 0, 'f', 2));
+    mPrice = value;
+
+    setText(PORTFOLIO_PRICE_COLUMN, QString::number(mPrice, 'f', 2) + " " + RUBLE);
 }
 
 void PortfolioTreeItem::setAvgPrice(float value)
 {
-    setText(PORTFOLIO_AVG_PRICE_COLUMN, QString("%1 \u20BD").arg(value, 0, 'f', 2));
+    mAvgPrice = value;
+
+    setText(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', 2) + " " + RUBLE);
 }
 
 void PortfolioTreeItem::setCost(double value)
 {
-    setText(PORTFOLIO_COST_COLUMN, QString("%1 \u20BD").arg(value, 0, 'f', 2));
+    mCost = value;
+
+    setText(PORTFOLIO_COST_COLUMN, QString::number(mCost, 'f', 2) + " " + RUBLE);
 }
 
 void PortfolioTreeItem::setPart(float value)
 {
-    setText(PORTFOLIO_PART_COLUMN, QString("%1 %").arg(value, 0, 'f', 2));
+    mPart = value;
+
+    setText(PORTFOLIO_PART_COLUMN, QString::number(mPart, 'f', 2) + "%");
 }
 
 void PortfolioTreeItem::setYield(float value)
 {
-    setText(PORTFOLIO_YIELD_COLUMN, QString("%1 \u20BD").arg(value, 0, 'f', 2));
+    mYield = value;
+
+    const QString prefix = mYield > 0 ? "+" : "";
+
+    setText(PORTFOLIO_YIELD_COLUMN, prefix + QString::number(mYield, 'f', 2) + " " + RUBLE);
+
+    QColor color;
+
+    if (mYield > -ZERO_LIMIT && mYield < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (mYield > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    setForeground(PORTFOLIO_YIELD_COLUMN, QBrush(color));
 }
 
-void PortfolioTreeItem::setYieldPercent(float value)
+void PortfolioTreeItem::setYieldPercent(float value, float fromPrice)
 {
-    setText(PORTFOLIO_YIELD_PERCENT_COLUMN, QString("%1 %").arg(value, 0, 'f', 2));
+    mYieldPercent = value;
+
+    const QString prefix = mYieldPercent > 0 ? "+" : "";
+
+    setText(PORTFOLIO_YIELD_PERCENT_COLUMN, prefix + QString::number(mYieldPercent, 'f', 2) + "%");
+    setToolTip(PORTFOLIO_YIELD_PERCENT_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE);
+
+    QColor color;
+
+    if (mYieldPercent > -ZERO_LIMIT && mYieldPercent < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (mYieldPercent > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    setForeground(PORTFOLIO_YIELD_PERCENT_COLUMN, QBrush(color));
 }
 
-void PortfolioTreeItem::setDailyYieldPercent(float value)
+void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
 {
-    setText(PORTFOLIO_DAILY_YIELD_COLUMN, QString("%1 %").arg(value, 0, 'f', 2));
+    mDailyYieldPercent = value;
+
+    const QString prefix = mDailyYieldPercent > 0 ? "+" : "";
+
+    setText(PORTFOLIO_DAILY_YIELD_COLUMN, prefix + QString::number(mDailyYieldPercent, 'f', 2) + "%");
+    setToolTip(PORTFOLIO_DAILY_YIELD_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE);
+
+    QColor color;
+
+    if (mDailyYieldPercent > -ZERO_LIMIT && mDailyYieldPercent < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (mDailyYieldPercent > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    setForeground(PORTFOLIO_DAILY_YIELD_COLUMN, QBrush(color));
 }
