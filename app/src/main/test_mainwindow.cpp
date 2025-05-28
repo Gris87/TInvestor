@@ -56,6 +56,7 @@
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
 
@@ -110,6 +111,7 @@ protected:
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
+        portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
@@ -164,6 +166,7 @@ protected:
                 logsTableWidgetFactoryMock,
                 portfolioTreeWidgetFactoryMock,
                 operationsTableRecordFactoryMock,
+                portfolioTreeRecordFactoryMock,
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
@@ -181,6 +184,7 @@ protected:
                 logsTableWidgetFactoryMock,
                 portfolioTreeWidgetFactoryMock,
                 operationsTableRecordFactoryMock,
+                portfolioTreeRecordFactoryMock,
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
@@ -239,6 +243,7 @@ protected:
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
+            portfolioTreeRecordFactoryMock,
             decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
             userStorageMock,
@@ -313,6 +318,7 @@ protected:
         delete logsTableWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
         delete operationsTableRecordFactoryMock;
+        delete portfolioTreeRecordFactoryMock;
         delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
         delete userStorageMock;
@@ -371,6 +377,7 @@ protected:
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
+    StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;

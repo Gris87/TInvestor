@@ -123,16 +123,19 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         portfolio.positions[instrumentType][instrumentId] = item;
     }
 
-    for (auto it = portfolio.positions.begin(), end = portfolio.positions.end(); it != end; ++it)
+    for (auto it = portfolio.positions.begin(), // clazy:exclude=detaching-member
+         end     = portfolio.positions.end();   // clazy:exclude=detaching-member
+         it != end;
+         ++it)
     {
         PortfolioItems& items = it.value();
         PortfolioItem   categoryItem;
 
-        for (auto it2 = items.begin(), end = items.end(); it2 != end; ++it2)
+        for (PortfolioItem& item : items)
         {
-            it2->part = (it2->cost / totalCost) * HUNDRED_PERCENT;
+            item.part = (item.cost / totalCost) * HUNDRED_PERCENT;
 
-            categoryItem.cost += it2->cost;
+            categoryItem.cost += item.cost;
         }
 
         categoryItem.part = (categoryItem.cost / totalCost) * HUNDRED_PERCENT;

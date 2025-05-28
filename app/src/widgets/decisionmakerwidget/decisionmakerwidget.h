@@ -31,6 +31,7 @@ public:
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
+        IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,

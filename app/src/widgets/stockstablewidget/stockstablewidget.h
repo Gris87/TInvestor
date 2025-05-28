@@ -49,7 +49,7 @@ public:
 
     Ui::StocksTableWidget* ui;
 
-    QMap<QString, IStocksTableRecord*> tableRecords;
+    QMap<QString, IStocksTableRecord*> records;
     QSet<QString>                      lastPricesUpdates;
 
     void updateTable(const QList<Stock*>& stocks, const Filter& filter) override;

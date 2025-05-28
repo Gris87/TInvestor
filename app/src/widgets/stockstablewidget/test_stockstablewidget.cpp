@@ -150,9 +150,9 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 }
 
@@ -217,9 +217,9 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 
     EXPECT_CALL(stocksTableRecordMock1, updateAll());
@@ -291,9 +291,9 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 
     stocksTableWidget->lastPriceChanged("aaaaa");
@@ -372,9 +372,9 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 
     EXPECT_CALL(stocksTableRecordMock1, updatePrice());
@@ -446,9 +446,9 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 
     EXPECT_CALL(stocksTableRecordMock1, updatePeriodicData());
@@ -531,9 +531,9 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
     stocksTableWidget->updateTable(stocks, filter);
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->tableRecords.size(),   2);
-    ASSERT_EQ(stocksTableWidget->tableRecords["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->tableRecords["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(stocksTableWidget->records.size(),   2);
+    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
+    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
     // clang-format on
 
     EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));

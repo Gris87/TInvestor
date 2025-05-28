@@ -6,7 +6,7 @@
 
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
-#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h"
 
 
 
@@ -22,7 +22,12 @@ class PortfolioTreeWidget : public IPortfolioTreeWidget
     Q_OBJECT
 
 public:
-    explicit PortfolioTreeWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    explicit PortfolioTreeWidget(
+        IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+        IInstrumentsStorage*         instrumentsStorage,
+        ISettingsEditor*             settingsEditor,
+        QWidget*                     parent = nullptr
+    );
     ~PortfolioTreeWidget() override;
 
     PortfolioTreeWidget(const PortfolioTreeWidget& another)            = delete;
@@ -37,9 +42,13 @@ public:
 
 private:
     void deleteObsoleteCategories(const Portfolio& portfolio);
+    void updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
 
-    ISettingsEditor*                 mSettingsEditor;
-    QStringList                      mSortedCategories;
-    QMap<QString, QString>           mCategoryNames; // Category => Localized name
-    QMap<QString, CategoryTreeItem*> mCategories;    // Category => CategoryTreeItem
+    IPortfolioTreeRecordFactory*         mPortfolioTreeRecordFactory;
+    IInstrumentsStorage*                 mInstrumentsStorage;
+    ISettingsEditor*                     mSettingsEditor;
+    QStringList                          mSortedCategories;
+    QMap<QString, QString>               mCategoryNames; // Category => Localized name
+    QMap<QString, CategoryTreeItem*>     mCategories;    // Category => CategoryTreeItem
+    QMap<QString, IPortfolioTreeRecord*> mRecords;       // UID => PortfolioTreeRecord
 };

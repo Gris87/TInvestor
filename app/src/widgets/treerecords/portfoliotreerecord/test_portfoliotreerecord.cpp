@@ -17,17 +17,29 @@ protected:
     {
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
 
-        record = new PortfolioTreeRecord(instrumentsStorageMock);
+        treeWidget = new QTreeWidget();
+        treeWidget->setColumnCount(PORTFOLIO_COLUMN_COUNT);
+
+        categoryTreeItem = new CategoryTreeItem(treeWidget, "Hello");
+
+        record = new PortfolioTreeRecord(instrumentsStorageMock, categoryTreeItem);
     }
 
     void TearDown() override
     {
         delete record;
         delete instrumentsStorageMock;
+        delete treeWidget;
+        // It will be deleted by treeWidget
+        /*
+        delete categoryTreeItem;
+        */
     }
 
     PortfolioTreeRecord*                record;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    QTreeWidget*                        treeWidget;
+    CategoryTreeItem*                   categoryTreeItem;
 };
 
 

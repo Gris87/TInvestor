@@ -3,7 +3,9 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
 
@@ -20,19 +22,25 @@ class Test_PortfolioTreeWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+        portfolioTreeRecordFactoryMock = new StrictMock<PortfolioTreeRecordFactoryMock>();
+        instrumentsStorageMock         = new StrictMock<InstrumentsStorageMock>();
+        settingsEditorMock             = new StrictMock<SettingsEditorMock>();
 
-        portfolioTreeWidget = new PortfolioTreeWidget(settingsEditorMock);
+        portfolioTreeWidget = new PortfolioTreeWidget(portfolioTreeRecordFactoryMock, instrumentsStorageMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete portfolioTreeWidget;
+        delete portfolioTreeRecordFactoryMock;
+        delete instrumentsStorageMock;
         delete settingsEditorMock;
     }
 
-    PortfolioTreeWidget*            portfolioTreeWidget;
-    StrictMock<SettingsEditorMock>* settingsEditorMock;
+    PortfolioTreeWidget*                        portfolioTreeWidget;
+    StrictMock<PortfolioTreeRecordFactoryMock>* portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentsStorageMock>*         instrumentsStorageMock;
+    StrictMock<SettingsEditorMock>*             settingsEditorMock;
 };
 
 

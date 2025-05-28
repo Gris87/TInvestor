@@ -38,7 +38,7 @@ StocksTableWidget::StocksTableWidget(
 ) :
     IStocksTableWidget(parent),
     ui(new Ui::StocksTableWidget),
-    tableRecords(),
+    records(),
     lastPricesUpdates(),
     mStocksTableRecordFactory(stocksTableRecordFactory),
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
@@ -76,7 +76,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
         const QString instrumentId = stock->meta.uid;
         stock->mutex->unlock();
 
-        IStocksTableRecord* record = tableRecords[instrumentId]; // clazy:exclude=detaching-member
+        IStocksTableRecord* record = records[instrumentId]; // clazy:exclude=detaching-member
 
         if (record == nullptr)
         {
@@ -92,7 +92,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
                 stock,
                 this
             );
-            tableRecords[instrumentId] = record;
+            records[instrumentId] = record;
         }
 
         record->updateAll();
@@ -108,7 +108,7 @@ void StocksTableWidget::updateAll(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
+    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
     {
         it.value()->updateAll();
         it.value()->filter(ui->tableWidget, filter);
@@ -127,7 +127,7 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
 
         for (const QString& lastPricesUpdate : std::as_const(lastPricesUpdates))
         {
-            IStocksTableRecord* record = tableRecords[lastPricesUpdate]; // clazy:exclude=detaching-member
+            IStocksTableRecord* record = records[lastPricesUpdate]; // clazy:exclude=detaching-member
 
             if (record != nullptr)
             {
@@ -148,7 +148,7 @@ void StocksTableWidget::updatePrices(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
+    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
     {
         it.value()->updatePrice();
         it.value()->filter(ui->tableWidget, filter);
@@ -163,7 +163,7 @@ void StocksTableWidget::updatePeriodicData(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
+    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
     {
         it.value()->updatePeriodicData();
         it.value()->filter(ui->tableWidget, filter);
@@ -187,7 +187,7 @@ void StocksTableWidget::filterChanged(const Filter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
 
-    for (auto it = tableRecords.constBegin(); it != tableRecords.constEnd(); ++it)
+    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
     {
         it.value()->filter(ui->tableWidget, filter);
     }
@@ -260,7 +260,7 @@ void StocksTableWidget::exportToExcel(const QString& path) const
         2, STOCKS_PAYBACK_COLUMN + 4, ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), cellStyle
     );
 
-    for (auto it = tableRecords.constBegin(), end = tableRecords.constEnd(); it != end; ++it)
+    for (auto it = records.constBegin(), end = records.constEnd(); it != end; ++it)
     {
         it.value()->exportToExcel(doc);
     }

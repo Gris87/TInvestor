@@ -20,5 +20,13 @@ public:
     PortfolioTreeWidgetFactoryMock(const PortfolioTreeWidgetFactoryMock& another)            = delete;
     PortfolioTreeWidgetFactoryMock& operator=(const PortfolioTreeWidgetFactoryMock& another) = delete;
 
-    MOCK_METHOD(IPortfolioTreeWidget*, newInstance, (ISettingsEditor * settingsEditor, QWidget* parent), (const, override));
+    MOCK_METHOD(
+        IPortfolioTreeWidget*,
+        newInstance,
+        (IPortfolioTreeRecordFactory * portfolioTreeRecordFactory,
+         IInstrumentsStorage* instrumentsStorage,
+         ISettingsEditor*     settingsEditor,
+         QWidget*             parent),
+        (const, override)
+    );
 };

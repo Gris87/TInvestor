@@ -53,7 +53,7 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     IFileDialogFactory*                mFileDialogFactory;
     ISettingsEditor*                   mSettingsEditor;
-    QList<IOperationsTableRecord*>     mTableRecords;
+    QList<IOperationsTableRecord*>     mRecords;
 
 public slots:
     void on_tableWidget_customContextMenuRequested(const QPoint& pos);

@@ -17,7 +17,9 @@ PortfolioTreeRecordFactory::~PortfolioTreeRecordFactory()
     qDebug() << "Destroy PortfolioTreeRecordFactory";
 }
 
-IPortfolioTreeRecord* PortfolioTreeRecordFactory::newInstance(IInstrumentsStorage* instrumentsStorage, QObject* parent) const
+IPortfolioTreeRecord* PortfolioTreeRecordFactory::newInstance(
+    IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent
+) const
 {
-    return new PortfolioTreeRecord(instrumentsStorage, parent);
+    return new PortfolioTreeRecord(instrumentsStorage, categoryTreeItem, parent);
 }

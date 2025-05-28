@@ -2,7 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
 
@@ -19,9 +21,12 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
 {
     const PortfolioTreeWidgetFactory factory;
 
-    StrictMock<SettingsEditorMock> settingsEditorMock;
+    StrictMock<PortfolioTreeRecordFactoryMock> portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentsStorageMock>         instrumentsStorageMock;
+    StrictMock<SettingsEditorMock>             settingsEditorMock;
 
-    const IPortfolioTreeWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
+    const IPortfolioTreeWidget* widget =
+        factory.newInstance(&portfolioTreeRecordFactoryMock, &instrumentsStorageMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

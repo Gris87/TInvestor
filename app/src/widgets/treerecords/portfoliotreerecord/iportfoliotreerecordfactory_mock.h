@@ -21,6 +21,9 @@ public:
     PortfolioTreeRecordFactoryMock& operator=(const PortfolioTreeRecordFactoryMock& another) = delete;
 
     MOCK_METHOD(
-        IPortfolioTreeRecord*, newInstance, (IInstrumentsStorage * instrumentsStorage, QObject* parent), (const, override)
+        IPortfolioTreeRecord*,
+        newInstance,
+        (IInstrumentsStorage * instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent),
+        (const, override)
     );
 };

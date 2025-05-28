@@ -17,7 +17,12 @@ PortfolioTreeWidgetFactory::~PortfolioTreeWidgetFactory()
     qDebug() << "Destroy PortfolioTreeWidgetFactory";
 }
 
-IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const
+IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
+    IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+    IInstrumentsStorage*         instrumentsStorage,
+    ISettingsEditor*             settingsEditor,
+    QWidget*                     parent
+) const
 {
-    return new PortfolioTreeWidget(settingsEditor, parent);
+    return new PortfolioTreeWidget(portfolioTreeRecordFactory, instrumentsStorage, settingsEditor, parent);
 }

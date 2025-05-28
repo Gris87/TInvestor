@@ -70,6 +70,7 @@
 #include "src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
+#include "src/widgets/treerecords/portfoliotreerecord/portfoliotreerecordfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -179,6 +180,7 @@ static int runApplication(QApplication* app)
 
     StocksTableRecordFactory     stocksTableRecordFactory;
     OperationsTableRecordFactory operationsTableRecordFactory;
+    PortfolioTreeRecordFactory   portfolioTreeRecordFactory;
 
     TrayIconFactory trayIconFactory;
     DirFactory      dirFactory;
@@ -350,6 +352,7 @@ static int runApplication(QApplication* app)
         &logsTableWidgetFactory,
         &portfolioTreeWidgetFactory,
         &operationsTableRecordFactory,
+        &portfolioTreeRecordFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,

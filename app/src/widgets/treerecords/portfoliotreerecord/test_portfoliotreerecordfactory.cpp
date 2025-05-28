@@ -21,7 +21,12 @@ TEST(Test_PortfolioTreeRecordFactory, Test_newInstance)
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
 
-    const IPortfolioTreeRecord* record = factory.newInstance(&instrumentsStorageMock, nullptr);
+    QTreeWidget treeWidget;
+    treeWidget.setColumnCount(PORTFOLIO_COLUMN_COUNT);
+
+    CategoryTreeItem categoryTreeItem(&treeWidget, "Hello");
+
+    const IPortfolioTreeRecord* record = factory.newInstance(&instrumentsStorageMock, &categoryTreeItem, nullptr);
     ASSERT_TRUE(record != nullptr);
 
     delete record;

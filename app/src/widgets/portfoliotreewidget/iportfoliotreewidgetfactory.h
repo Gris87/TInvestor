@@ -2,9 +2,9 @@
 
 
 
-#include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
-
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
+#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h"
 
 
 
@@ -17,5 +17,10 @@ public:
     IPortfolioTreeWidgetFactory(const IPortfolioTreeWidgetFactory& another)            = delete;
     IPortfolioTreeWidgetFactory& operator=(const IPortfolioTreeWidgetFactory& another) = delete;
 
-    virtual IPortfolioTreeWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
+    virtual IPortfolioTreeWidget* newInstance(
+        IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+        IInstrumentsStorage*         instrumentsStorage,
+        ISettingsEditor*             settingsEditor,
+        QWidget*                     parent
+    ) const = 0;
 };

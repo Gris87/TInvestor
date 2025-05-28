@@ -4,7 +4,9 @@
 
 
 
-PortfolioTreeRecord::PortfolioTreeRecord(IInstrumentsStorage* instrumentsStorage, QObject* parent) :
+PortfolioTreeRecord::PortfolioTreeRecord(
+    IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* /*categoryTreeItem*/, QObject* parent
+) :
     IPortfolioTreeRecord(parent),
     mInstrumentsStorage(instrumentsStorage)
 {

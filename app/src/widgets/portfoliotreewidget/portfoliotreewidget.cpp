@@ -13,13 +13,21 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 
 
 
 
-PortfolioTreeWidget::PortfolioTreeWidget(ISettingsEditor* settingsEditor, QWidget* parent) :
+PortfolioTreeWidget::PortfolioTreeWidget(
+    IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+    IInstrumentsStorage*         instrumentsStorage,
+    ISettingsEditor*             settingsEditor,
+    QWidget*                     parent
+) :
     IPortfolioTreeWidget(parent),
     ui(new Ui::PortfolioTreeWidget),
+    mPortfolioTreeRecordFactory(portfolioTreeRecordFactory),
+    mInstrumentsStorage(instrumentsStorage),
     mSettingsEditor(settingsEditor),
     mSortedCategories(),
     mCategoryNames(),
-    mCategories()
+    mCategories(),
+    mRecords()
 {
     qDebug() << "Create PortfolioTreeWidget";
 
@@ -42,28 +50,24 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
     deleteObsoleteCategories(portfolio);
 
-    for (const QString& category : mSortedCategories)
+    for (const QString& category : std::as_const(mSortedCategories))
     {
         if (!portfolio.positions.contains(category))
         {
             continue;
         }
 
-        CategoryTreeItem* categoryTreeItem = mCategories[category];
+        CategoryTreeItem* categoryTreeItem = mCategories.value(category, nullptr);
 
         if (categoryTreeItem == nullptr)
         {
             Q_ASSERT_X(mCategoryNames.contains(category), "PortfolioTreeWidget::portfolioChanged()", "Missing translation");
-            categoryTreeItem = new CategoryTreeItem(ui->treeWidget, mCategoryNames[category]);
+            categoryTreeItem = new CategoryTreeItem(ui->treeWidget, mCategoryNames.value(category, "UNKNOWN"));
 
             mCategories[category] = categoryTreeItem;
         }
 
-        const PortfolioItems& portfolioItems = portfolio.positions[category];
-        const PortfolioItem&  categoryTotal  = portfolioItems["total"];
-
-        categoryTreeItem->setCost(categoryTotal.cost);
-        categoryTreeItem->setPart(categoryTotal.part);
+        updateCategory(categoryTreeItem, portfolio.positions[category]);
     }
 }
 
@@ -82,7 +86,36 @@ void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
     for (const QString& category : categoriesToDelete)
     {
         CategoryTreeItem* categoryTreeItem = mCategories.take(category);
+
+        // TODO: Remove children
         delete categoryTreeItem;
+    }
+}
+
+void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems)
+{
+    const PortfolioItem& categoryTotal = portfolioItems["total"];
+
+    categoryTreeItem->setCost(categoryTotal.cost);
+    categoryTreeItem->setPart(categoryTotal.part);
+
+    for (auto it = portfolioItems.constBegin(), end = portfolioItems.constEnd(); it != end; ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        if (instrumentId == "total")
+        {
+            continue;
+        }
+
+        IPortfolioTreeRecord* record = mRecords[instrumentId];
+
+        if (record == nullptr)
+        {
+            record = mPortfolioTreeRecordFactory->newInstance(mInstrumentsStorage, categoryTreeItem, this);
+
+            mRecords[instrumentId] = record;
+        }
     }
 }
 

@@ -39,7 +39,7 @@ OperationsTableWidget::OperationsTableWidget(
     mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
-    mTableRecords()
+    mRecords()
 {
     qDebug() << "Create OperationsTableWidget";
 
@@ -60,27 +60,27 @@ void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    if (mTableRecords.size() > operations.size())
+    if (mRecords.size() > operations.size())
     {
-        while (mTableRecords.size() > operations.size())
+        while (mRecords.size() > operations.size())
         {
-            delete mTableRecords.takeLast();
+            delete mRecords.takeLast();
         }
 
         ui->tableWidget->setRowCount(operations.size());
     }
 
-    while (mTableRecords.size() < operations.size())
+    while (mRecords.size() < operations.size())
     {
         IOperationsTableRecord* record = mOperationsTableRecordFactory->newInstance(
             ui->tableWidget, mInstrumentTableItemWidgetFactory, mUserStorage, mInstrumentsStorage, this
         );
-        mTableRecords.append(record);
+        mRecords.append(record);
     }
 
     for (int i = 0; i < operations.size(); ++i)
     {
-        mTableRecords.at(i)->setOperation(operations.at(i));
+        mRecords.at(i)->setOperation(operations.at(i));
     }
 
     ui->tableWidget->setSortingEnabled(true);
@@ -99,7 +99,7 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
         );
         record->setOperation(operation);
 
-        mTableRecords.append(record);
+        mRecords.append(record);
     }
 
     ui->tableWidget->setSortingEnabled(true);
@@ -155,7 +155,7 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
         doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
     }
 
-    for (IOperationsTableRecord* record : std::as_const(mTableRecords))
+    for (IOperationsTableRecord* record : std::as_const(mRecords))
     {
         record->exportToExcel(doc);
     }
