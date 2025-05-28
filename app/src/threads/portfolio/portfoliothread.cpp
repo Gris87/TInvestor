@@ -109,13 +109,13 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         item.showPrices = instrumentId != RUBLE_UID;
 
-        item.quantity           = quotationToDouble(position.quantity());
+        item.available          = quotationToDouble(position.quantity());
         item.price              = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
-        item.avgPrice           = item.showPrices ? quotationToFloat(position.average_position_price()) : 1.0f;
-        item.cost               = item.quantity * item.avgPrice;
-        item.yield              = (item.quantity * item.price) - item.cost;
+        item.avgPrice           = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
+        item.cost               = item.available * item.avgPrice;
+        item.yield              = (item.available * item.price) - item.cost;
         item.yieldPercent       = (item.yield / item.cost) * HUNDRED_PERCENT;
-        item.priceForDailyYield = item.price - (quotationToFloat(position.daily_yield()) / item.quantity);
+        item.priceForDailyYield = item.price - (quotationToFloat(position.daily_yield()) / item.available);
         item.dailyYieldPercent  = ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
         totalCost += item.cost;

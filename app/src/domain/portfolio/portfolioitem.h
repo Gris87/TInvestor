@@ -15,7 +15,7 @@ struct PortfolioItem
     PortfolioItem& operator=(const PortfolioItem& another) = default;
 
     bool   showPrices;
-    double quantity;
+    double available;
     float  price;
     float  avgPrice;
     double cost;

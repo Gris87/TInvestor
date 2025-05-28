@@ -112,10 +112,12 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
 
         if (record == nullptr)
         {
-            record = mPortfolioTreeRecordFactory->newInstance(mInstrumentsStorage, categoryTreeItem, this);
+            record = mPortfolioTreeRecordFactory->newInstance(mInstrumentsStorage, categoryTreeItem, instrumentId, this);
 
             mRecords[instrumentId] = record;
         }
+
+        record->setPortfolioItem(it.value());
     }
 }
 

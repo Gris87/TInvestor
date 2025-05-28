@@ -20,7 +20,7 @@ TEST(Test_Portfolio, Test_copy_constructor)
     PortfolioItem item;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -38,7 +38,7 @@ TEST(Test_Portfolio, Test_copy_constructor)
     ASSERT_EQ(portfolio2.positions.size(),                                 1);
     ASSERT_EQ(portfolio2.positions["share"].size(),                        1);
     ASSERT_EQ(portfolio2.positions["share"]["aaaaa"].showPrices,           true);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].quantity,           1.0,  0.0001);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].available,          1.0,  0.0001);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].price,              2.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].avgPrice,           3.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].cost,               4.0,  0.0001);
@@ -58,7 +58,7 @@ TEST(Test_Portfolio, Test_assign)
     PortfolioItem item;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -76,7 +76,7 @@ TEST(Test_Portfolio, Test_assign)
     ASSERT_EQ(portfolio2.positions.size(),                                 1);
     ASSERT_EQ(portfolio2.positions["share"].size(),                        1);
     ASSERT_EQ(portfolio2.positions["share"]["aaaaa"].showPrices,           true);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].quantity,           1.0,  0.0001);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].available,          1.0,  0.0001);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].price,              2.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].avgPrice,           3.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].cost,               4.0,  0.0001);
@@ -97,7 +97,7 @@ TEST(Test_Portfolio, Test_equals)
     PortfolioItem item2;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -108,7 +108,7 @@ TEST(Test_Portfolio, Test_equals)
     item.dailyYieldPercent  = 9.0f;
 
     item2.showPrices         = true;
-    item2.quantity           = 1.0;
+    item2.available          = 1.0;
     item2.price              = 2.0f;
     item2.avgPrice           = 3.0f;
     item2.cost               = 4.0;

@@ -117,6 +117,7 @@ SOURCES += \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
     src/widgets/treeitems/test_categorytreeitem.cpp \
+    src/widgets/treeitems/test_portfoliotreeitem.cpp \
     src/widgets/treerecords/portfoliotreerecord/test_portfoliotreerecord.cpp \
     src/widgets/treerecords/portfoliotreerecord/test_portfoliotreerecordfactory.cpp \
 

@@ -21,4 +21,6 @@ public:
 
     PortfolioTreeRecordMock(const PortfolioTreeRecordMock& another)            = delete;
     PortfolioTreeRecordMock& operator=(const PortfolioTreeRecordMock& another) = delete;
+
+    MOCK_METHOD(void, setPortfolioItem, (const PortfolioItem& item), (override));
 };

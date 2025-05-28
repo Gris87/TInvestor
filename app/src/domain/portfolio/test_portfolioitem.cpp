@@ -12,7 +12,7 @@ TEST(Test_PortfolioItem, Test_constructor_and_destructor)
 
     // clang-format off
     ASSERT_EQ(item.showPrices,           false);
-    ASSERT_NEAR(item.quantity,           0, 0.0001);
+    ASSERT_NEAR(item.available,          0, 0.0001);
     ASSERT_NEAR(item.price,              0, 0.0001f);
     ASSERT_NEAR(item.avgPrice,           0, 0.0001f);
     ASSERT_NEAR(item.cost,               0, 0.0001);
@@ -29,7 +29,7 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
     PortfolioItem item;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -43,7 +43,7 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
 
     // clang-format off
     ASSERT_EQ(item2.showPrices,           true);
-    ASSERT_NEAR(item2.quantity,           1.0,  0.0001);
+    ASSERT_NEAR(item2.available,          1.0,  0.0001);
     ASSERT_NEAR(item2.price,              2.0f, 0.0001f);
     ASSERT_NEAR(item2.avgPrice,           3.0f, 0.0001f);
     ASSERT_NEAR(item2.cost,               4.0,  0.0001);
@@ -61,7 +61,7 @@ TEST(Test_PortfolioItem, Test_assign)
     PortfolioItem item2;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -75,7 +75,7 @@ TEST(Test_PortfolioItem, Test_assign)
 
     // clang-format off
     ASSERT_EQ(item2.showPrices,           true);
-    ASSERT_NEAR(item2.quantity,           1.0,  0.0001);
+    ASSERT_NEAR(item2.available,          1.0,  0.0001);
     ASSERT_NEAR(item2.price,              2.0f, 0.0001f);
     ASSERT_NEAR(item2.avgPrice,           3.0f, 0.0001f);
     ASSERT_NEAR(item2.cost,               4.0,  0.0001);
@@ -93,7 +93,7 @@ TEST(Test_PortfolioItem, Test_equals)
     PortfolioItem item2;
 
     item.showPrices         = true;
-    item.quantity           = 1.0;
+    item.available          = 1.0;
     item.price              = 2.0f;
     item.avgPrice           = 3.0f;
     item.cost               = 4.0;
@@ -104,7 +104,7 @@ TEST(Test_PortfolioItem, Test_equals)
     item.dailyYieldPercent  = 9.0f;
 
     item2.showPrices         = true;
-    item2.quantity           = 1.0;
+    item2.available          = 1.0;
     item2.price              = 2.0f;
     item2.avgPrice           = 3.0f;
     item2.cost               = 4.0;
@@ -121,9 +121,9 @@ TEST(Test_PortfolioItem, Test_equals)
     item2.showPrices = true;
     ASSERT_EQ(item, item2);
 
-    item2.quantity = 1000.0;
+    item2.available = 1000.0;
     ASSERT_NE(item, item2);
-    item2.quantity = 1.0;
+    item2.available = 1.0;
     ASSERT_EQ(item, item2);
 
     item2.price = 2000.0f;

@@ -4,7 +4,7 @@
 
 PortfolioItem::PortfolioItem() :
     showPrices(),
-    quantity(),
+    available(),
     price(),
     avgPrice(),
     cost(),
@@ -18,7 +18,7 @@ PortfolioItem::PortfolioItem() :
 
 bool operator==(const PortfolioItem& lhs, const PortfolioItem& rhs)
 {
-    return lhs.showPrices == rhs.showPrices && lhs.quantity == rhs.quantity && lhs.price == rhs.price &&
+    return lhs.showPrices == rhs.showPrices && lhs.available == rhs.available && lhs.price == rhs.price &&
            lhs.avgPrice == rhs.avgPrice && lhs.cost == rhs.cost && lhs.part == rhs.part && lhs.yield == rhs.yield &&
            lhs.yieldPercent == rhs.yieldPercent && lhs.priceForDailyYield == rhs.priceForDailyYield &&
            lhs.dailyYieldPercent == rhs.dailyYieldPercent;

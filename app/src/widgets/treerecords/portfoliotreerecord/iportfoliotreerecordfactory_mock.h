@@ -23,7 +23,10 @@ public:
     MOCK_METHOD(
         IPortfolioTreeRecord*,
         newInstance,
-        (IInstrumentsStorage * instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent),
+        (IInstrumentsStorage * instrumentsStorage,
+         CategoryTreeItem* categoryTreeItem,
+         const QString&    instrumentId,
+         QObject*          parent),
         (const, override)
     );
 };

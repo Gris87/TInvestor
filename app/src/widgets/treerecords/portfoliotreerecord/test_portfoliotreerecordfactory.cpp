@@ -26,7 +26,7 @@ TEST(Test_PortfolioTreeRecordFactory, Test_newInstance)
 
     CategoryTreeItem categoryTreeItem(&treeWidget, "Hello");
 
-    const IPortfolioTreeRecord* record = factory.newInstance(&instrumentsStorageMock, &categoryTreeItem, nullptr);
+    const IPortfolioTreeRecord* record = factory.newInstance(&instrumentsStorageMock, &categoryTreeItem, "aaaaa", nullptr);
     ASSERT_TRUE(record != nullptr);
 
     delete record;

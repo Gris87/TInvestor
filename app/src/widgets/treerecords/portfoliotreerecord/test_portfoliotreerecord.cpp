@@ -22,7 +22,7 @@ protected:
 
         categoryTreeItem = new CategoryTreeItem(treeWidget, "Hello");
 
-        record = new PortfolioTreeRecord(instrumentsStorageMock, categoryTreeItem);
+        record = new PortfolioTreeRecord(instrumentsStorageMock, categoryTreeItem, "aaaaa");
     }
 
     void TearDown() override

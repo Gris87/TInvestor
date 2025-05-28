@@ -17,6 +17,7 @@ public:
     IPortfolioTreeRecordFactory(const IPortfolioTreeRecordFactory& another)            = delete;
     IPortfolioTreeRecordFactory& operator=(const IPortfolioTreeRecordFactory& another) = delete;
 
-    virtual IPortfolioTreeRecord*
-    newInstance(IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent) const = 0;
+    virtual IPortfolioTreeRecord* newInstance(
+        IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, const QString& instrumentId, QObject* parent
+    ) const = 0;
 };

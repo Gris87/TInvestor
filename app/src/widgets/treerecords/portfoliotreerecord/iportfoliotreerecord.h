@@ -4,6 +4,8 @@
 
 #include <QObject>
 
+#include "src/domain/portfolio/portfolioitem.h"
+
 
 
 enum PortfolioTreeColumns : qint8
@@ -35,4 +37,6 @@ public:
 
     IPortfolioTreeRecord(const IPortfolioTreeRecord& another)            = delete;
     IPortfolioTreeRecord& operator=(const IPortfolioTreeRecord& another) = delete;
+
+    virtual void setPortfolioItem(const PortfolioItem& item) = 0;
 };

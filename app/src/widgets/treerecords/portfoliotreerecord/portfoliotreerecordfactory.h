@@ -15,6 +15,7 @@ public:
     PortfolioTreeRecordFactory(const PortfolioTreeRecordFactory& another)            = delete;
     PortfolioTreeRecordFactory& operator=(const PortfolioTreeRecordFactory& another) = delete;
 
-    IPortfolioTreeRecord*
-    newInstance(IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent) const override;
+    IPortfolioTreeRecord* newInstance(
+        IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, const QString& instrumentId, QObject* parent
+    ) const override;
 };

@@ -6,6 +6,7 @@
 
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
+#include "src/widgets/treeitems/portfoliotreeitem.h"
 
 
 
@@ -15,13 +16,19 @@ class PortfolioTreeRecord : public IPortfolioTreeRecord
 
 public:
     explicit PortfolioTreeRecord(
-        IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, QObject* parent = nullptr
+        IInstrumentsStorage* instrumentsStorage,
+        CategoryTreeItem*    categoryTreeItem,
+        const QString&       instrumentId,
+        QObject*             parent = nullptr
     );
     ~PortfolioTreeRecord() override;
 
     PortfolioTreeRecord(const PortfolioTreeRecord& another)            = delete;
     PortfolioTreeRecord& operator=(const PortfolioTreeRecord& another) = delete;
 
+    void setPortfolioItem(const PortfolioItem& item) override;
+
 private:
     IInstrumentsStorage* mInstrumentsStorage;
+    PortfolioTreeItem*   mPortfolioTreeItem;
 };
