@@ -91,6 +91,8 @@ SOURCES += \
     src/widgets/accountchartwidget/charttooltip.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
+    src/widgets/instrumentwidget/instrumentwidget.cpp \
+    src/widgets/instrumentwidget/instrumentwidgetfactory.cpp \
     src/widgets/logstablewidget/logstablewidget.cpp \
     src/widgets/logstablewidget/logstablewidgetfactory.cpp \
     src/widgets/operationstablewidget/operationstablewidget.cpp \
@@ -284,6 +286,10 @@ HEADERS += \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
+    src/widgets/instrumentwidget/iinstrumentwidget.h \
+    src/widgets/instrumentwidget/iinstrumentwidgetfactory.h \
+    src/widgets/instrumentwidget/instrumentwidget.h \
+    src/widgets/instrumentwidget/instrumentwidgetfactory.h \
     src/widgets/logstablewidget/ilogstablewidget.h \
     src/widgets/logstablewidget/ilogstablewidgetfactory.h \
     src/widgets/logstablewidget/logstablewidget.h \
@@ -358,6 +364,7 @@ FORMS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
+    src/widgets/instrumentwidget/instrumentwidget.ui \
     src/widgets/logstablewidget/logstablewidget.ui \
     src/widgets/operationstablewidget/operationstablewidget.ui \
     src/widgets/portfoliotreewidget/portfoliotreewidget.ui \

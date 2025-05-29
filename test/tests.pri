@@ -87,6 +87,8 @@ SOURCES += \
     src/widgets/accountchartwidget/test_charttooltip.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
+    src/widgets/instrumentwidget/test_instrumentwidget.cpp \
+    src/widgets/instrumentwidget/test_instrumentwidgetfactory.cpp \
     src/widgets/logstablewidget/test_logstablewidget.cpp \
     src/widgets/logstablewidget/test_logstablewidgetfactory.cpp \
     src/widgets/operationstablewidget/test_operationstablewidget.cpp \
@@ -191,6 +193,8 @@ HEADERS += \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
+    src/widgets/instrumentwidget/iinstrumentwidget_mock.h \
+    src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h \
     src/widgets/logstablewidget/ilogstablewidget_mock.h \
     src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h \
     src/widgets/operationstablewidget/ioperationstablewidget_mock.h \
