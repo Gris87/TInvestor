@@ -1,5 +1,4 @@
 Double check grpc stream testing (cancel probably???)
-Buy different instrument types
 Dynamic price change on portfolio
 Export portfolio to Excel
 Double check for operations accuracy

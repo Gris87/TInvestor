@@ -39,10 +39,14 @@ PortfolioTreeWidget::PortfolioTreeWidget(
 
     ui->setupUi(this);
 
-    mSortedCategories << "currency" << "share";
+    mSortedCategories << "currency" << "share" << "etf" << "bond" << "futures" << "options";
 
     mCategoryNames["currency"] = tr("Currency and metals");
     mCategoryNames["share"]    = tr("Share");
+    mCategoryNames["etf"]      = tr("ETF");
+    mCategoryNames["bond"]     = tr("Bond");
+    mCategoryNames["futures"]  = tr("Futures");
+    mCategoryNames["options"]  = tr("Options");
 }
 
 PortfolioTreeWidget::~PortfolioTreeWidget()

@@ -285,9 +285,9 @@
     </message>
 </context>
 <context>
-    <name>InstrumentTableItemWidget</name>
+    <name>InstrumentWidget</name>
     <message>
-        <location filename="../../src/widgets/tableitems/instrument/instrumenttableitemwidget.ui" line="66"/>
+        <location filename="../../src/widgets/instrumentwidget/instrumentwidget.ui" line="66"/>
         <source>For qual investor only</source>
         <translation>Только для квал инвесторов</translation>
     </message>
@@ -309,13 +309,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="261"/>
+        <location filename="../../src/main/mainwindow.cpp" line="267"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="453"/>
+        <location filename="../../src/main/mainwindow.cpp" line="459"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -326,7 +326,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="481"/>
+        <location filename="../../src/main/mainwindow.cpp" line="487"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -387,40 +387,40 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="262"/>
+        <location filename="../../src/main/mainwindow.cpp" line="268"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="330"/>
+        <location filename="../../src/main/mainwindow.cpp" line="336"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="427"/>
-        <location filename="../../src/main/mainwindow.cpp" line="690"/>
+        <location filename="../../src/main/mainwindow.cpp" line="433"/>
+        <location filename="../../src/main/mainwindow.cpp" line="696"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="442"/>
-        <location filename="../../src/main/mainwindow.cpp" line="613"/>
+        <location filename="../../src/main/mainwindow.cpp" line="448"/>
+        <location filename="../../src/main/mainwindow.cpp" line="619"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="613"/>
+        <location filename="../../src/main/mainwindow.cpp" line="619"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="464"/>
-        <location filename="../../src/main/mainwindow.cpp" line="644"/>
+        <location filename="../../src/main/mainwindow.cpp" line="470"/>
+        <location filename="../../src/main/mainwindow.cpp" line="650"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="644"/>
+        <location filename="../../src/main/mainwindow.cpp" line="650"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -584,14 +584,34 @@
         <translation>За день, %</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="30"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="44"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="31"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="45"/>
         <source>Share</source>
         <translation>Акции</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="46"/>
+        <source>ETF</source>
+        <translation>Фонды</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="47"/>
+        <source>Bond</source>
+        <translation>Облигации</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="48"/>
+        <source>Futures</source>
+        <translation>Фьючерсы</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="49"/>
+        <source>Options</source>
+        <translation>Опционы</translation>
     </message>
 </context>
 <context>
@@ -617,27 +637,29 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="136"/>
+        <location filename="../../src/main.cpp" line="138"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="136"/>
+        <location filename="../../src/main.cpp" line="138"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="148"/>
+        <location filename="../../src/main.cpp" line="150"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="148"/>
+        <location filename="../../src/main.cpp" line="150"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
     <message>
         <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="35"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="153"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="183"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
