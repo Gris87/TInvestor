@@ -8,6 +8,7 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
+#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidget_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidget_mock.h"
@@ -44,6 +45,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
@@ -74,7 +76,14 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(logsTableWidgetFactoryMock, newInstance(&settingsEditorMock, NotNull())).WillOnce(Return(logsTableWidgetMock));
     EXPECT_CALL(
         portfolioTreeWidgetFactoryMock,
-        newInstance(&portfolioTreeRecordFactoryMock, &instrumentsStorageMock, &settingsEditorMock, NotNull())
+        newInstance(
+            &portfolioTreeRecordFactoryMock,
+            &instrumentWidgetFactoryMock,
+            &userStorageMock,
+            &instrumentsStorageMock,
+            &settingsEditorMock,
+            NotNull()
+        )
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -85,6 +94,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         &portfolioTreeWidgetFactoryMock,
         &operationsTableRecordFactoryMock,
         &portfolioTreeRecordFactoryMock,
+        &instrumentWidgetFactoryMock,
         &instrumentTableItemWidgetFactoryMock,
         &userStorageMock,
         &instrumentsStorageMock,

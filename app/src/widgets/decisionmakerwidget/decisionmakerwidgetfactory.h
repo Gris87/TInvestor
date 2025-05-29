@@ -22,6 +22,7 @@ public:
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
         IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
+        IInstrumentWidgetFactory*          instrumentWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,

@@ -17,6 +17,8 @@ public:
 
     IPortfolioTreeWidget* newInstance(
         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+        IInstrumentWidgetFactory*    instrumentWidgetFactory,
+        IUserStorage*                userStorage,
         IInstrumentsStorage*         instrumentsStorage,
         ISettingsEditor*             settingsEditor,
         QWidget*                     parent

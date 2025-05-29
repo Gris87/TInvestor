@@ -24,9 +24,11 @@ public:
         IPortfolioTreeWidget*,
         newInstance,
         (IPortfolioTreeRecordFactory * portfolioTreeRecordFactory,
-         IInstrumentsStorage* instrumentsStorage,
-         ISettingsEditor*     settingsEditor,
-         QWidget*             parent),
+         IInstrumentWidgetFactory* instrumentWidgetFactory,
+         IUserStorage*             userStorage,
+         IInstrumentsStorage*      instrumentsStorage,
+         ISettingsEditor*          settingsEditor,
+         QWidget*                  parent),
         (const, override)
     );
 };

@@ -4,12 +4,22 @@
 
 #include <QTreeWidgetItem>
 
+#include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory.h"
+
 
 
 class PortfolioTreeItem : public QTreeWidgetItem
 {
 public:
-    explicit PortfolioTreeItem(QTreeWidgetItem* parent, const QString& instrumentId, int type = Type);
+    explicit PortfolioTreeItem(
+        QTreeWidgetItem*          parent,
+        IInstrumentWidgetFactory* instrumentWidgetFactory,
+        IUserStorage*             userStorage,
+        IInstrumentsStorage*      instrumentsStorage,
+        const QString&            instrumentId,
+        int                       type = Type
+    );
     ~PortfolioTreeItem() override;
 
     PortfolioTreeItem(const PortfolioTreeItem& another)            = delete;
@@ -39,4 +49,5 @@ private:
     float   mYield;
     float   mYieldPercent;
     float   mDailyYieldPercent;
+    qint8   mPricePrecision;
 };

@@ -5,11 +5,17 @@
 
 
 PortfolioTreeRecord::PortfolioTreeRecord(
-    IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, const QString& instrumentId, QObject* parent
+    IInstrumentWidgetFactory* instrumentWidgetFactory,
+    IUserStorage*             userStorage,
+    IInstrumentsStorage*      instrumentsStorage,
+    CategoryTreeItem*         categoryTreeItem,
+    const QString&            instrumentId,
+    QObject*                  parent
 ) :
     IPortfolioTreeRecord(parent),
-    mInstrumentsStorage(instrumentsStorage),
-    mPortfolioTreeItem(new PortfolioTreeItem(categoryTreeItem, instrumentId))
+    mPortfolioTreeItem(
+        new PortfolioTreeItem(categoryTreeItem, instrumentWidgetFactory, userStorage, instrumentsStorage, instrumentId)
+    )
 {
     qDebug() << "Create PortfolioTreeRecord";
 }

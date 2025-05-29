@@ -16,10 +16,12 @@ class PortfolioTreeRecord : public IPortfolioTreeRecord
 
 public:
     explicit PortfolioTreeRecord(
-        IInstrumentsStorage* instrumentsStorage,
-        CategoryTreeItem*    categoryTreeItem,
-        const QString&       instrumentId,
-        QObject*             parent = nullptr
+        IInstrumentWidgetFactory* instrumentWidgetFactory,
+        IUserStorage*             userStorage,
+        IInstrumentsStorage*      instrumentsStorage,
+        CategoryTreeItem*         categoryTreeItem,
+        const QString&            instrumentId,
+        QObject*                  parent = nullptr
     );
     ~PortfolioTreeRecord() override;
 
@@ -29,6 +31,5 @@ public:
     void setPortfolioItem(const PortfolioItem& item) override;
 
 private:
-    IInstrumentsStorage* mInstrumentsStorage;
     PortfolioTreeItem*   mPortfolioTreeItem;
 };

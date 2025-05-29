@@ -24,6 +24,8 @@ class PortfolioTreeWidget : public IPortfolioTreeWidget
 public:
     explicit PortfolioTreeWidget(
         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+        IInstrumentWidgetFactory*    instrumentWidgetFactory,
+        IUserStorage*                userStorage,
         IInstrumentsStorage*         instrumentsStorage,
         ISettingsEditor*             settingsEditor,
         QWidget*                     parent = nullptr
@@ -46,6 +48,8 @@ private:
     void deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
 
     IPortfolioTreeRecordFactory*         mPortfolioTreeRecordFactory;
+    IInstrumentWidgetFactory*            mInstrumentWidgetFactory;
+    IUserStorage*                        mUserStorage;
     IInstrumentsStorage*                 mInstrumentsStorage;
     ISettingsEditor*                     mSettingsEditor;
     QStringList                          mSortedCategories;

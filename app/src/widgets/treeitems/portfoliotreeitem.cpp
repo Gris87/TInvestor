@@ -1,5 +1,6 @@
 #include "src/widgets/treeitems/portfoliotreeitem.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h"
@@ -15,7 +16,14 @@ const QColor NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-s
 
 
 
-PortfolioTreeItem::PortfolioTreeItem(QTreeWidgetItem* parent, const QString& instrumentId, int type) :
+PortfolioTreeItem::PortfolioTreeItem(
+    QTreeWidgetItem*          parent,
+    IInstrumentWidgetFactory* instrumentWidgetFactory,
+    IUserStorage*             userStorage,
+    IInstrumentsStorage*      instrumentsStorage,
+    const QString&            instrumentId,
+    int                       type
+) :
     QTreeWidgetItem(parent, type),
     mInstrumentId(instrumentId),
     mAvailable(),
@@ -25,11 +33,33 @@ PortfolioTreeItem::PortfolioTreeItem(QTreeWidgetItem* parent, const QString& ins
     mPart(),
     mYield(),
     mYieldPercent(),
-    mDailyYieldPercent()
+    mDailyYieldPercent(),
+    mPricePrecision()
 {
     qDebug() << "Create PortfolioTreeItem";
 
-    setText(PORTFOLIO_NAME_COLUMN, mInstrumentId);
+    IInstrumentWidget* instrumentWidget = instrumentWidgetFactory->newInstance(userStorage, treeWidget());
+    treeWidget()->setItemWidget(this, PORTFOLIO_NAME_COLUMN, instrumentWidget);
+
+    const QMutexLocker lock(instrumentsStorage->getMutex());
+
+    const Instruments& instruments = instrumentsStorage->getInstruments();
+    Instrument         instrument  = instruments[mInstrumentId];
+
+    const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mInstrumentId));
+
+    if (instrument.ticker == "" || instrument.name == "")
+    {
+        instrument.ticker         = mInstrumentId;
+        instrument.name           = "?????";
+        instrument.pricePrecision = 2;
+    }
+
+    mPricePrecision = instrument.pricePrecision;
+
+    instrumentWidget->setIcon(instrumentLogo);
+    instrumentWidget->setText(instrument.ticker);
+    instrumentWidget->setFullText(instrument.name);
 }
 
 PortfolioTreeItem::~PortfolioTreeItem()
@@ -60,14 +90,14 @@ void PortfolioTreeItem::setPrice(float value)
 {
     mPrice = value;
 
-    setText(PORTFOLIO_PRICE_COLUMN, QString::number(mPrice, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_PRICE_COLUMN, QString::number(mPrice, 'f', mPricePrecision) + " " + RUBLE);
 }
 
 void PortfolioTreeItem::setAvgPrice(float value)
 {
     mAvgPrice = value;
 
-    setText(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
 }
 
 void PortfolioTreeItem::setCost(double value)
@@ -120,7 +150,7 @@ void PortfolioTreeItem::setYieldPercent(float value, float fromPrice)
     const QString prefix = mYieldPercent > 0 ? "+" : "";
 
     setText(PORTFOLIO_YIELD_PERCENT_COLUMN, prefix + QString::number(mYieldPercent, 'f', 2) + "%");
-    setToolTip(PORTFOLIO_YIELD_PERCENT_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE);
+    setToolTip(PORTFOLIO_YIELD_PERCENT_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " " + RUBLE);
 
     QColor color;
 
@@ -150,7 +180,7 @@ void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
     const QString prefix = mDailyYieldPercent > 0 ? "+" : "";
 
     setText(PORTFOLIO_DAILY_YIELD_COLUMN, prefix + QString::number(mDailyYieldPercent, 'f', 2) + "%");
-    setToolTip(PORTFOLIO_DAILY_YIELD_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE);
+    setToolTip(PORTFOLIO_DAILY_YIELD_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " " + RUBLE);
 
     QColor color;
 

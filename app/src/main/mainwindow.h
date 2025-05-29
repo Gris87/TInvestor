@@ -65,6 +65,7 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        IInstrumentWidgetFactory*          instrumentWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,

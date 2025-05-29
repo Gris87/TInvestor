@@ -4,7 +4,9 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
@@ -23,22 +25,34 @@ protected:
     void SetUp() override
     {
         portfolioTreeRecordFactoryMock = new StrictMock<PortfolioTreeRecordFactoryMock>();
+        instrumentWidgetFactoryMock    = new StrictMock<InstrumentWidgetFactoryMock>();
+        userStorageMock                = new StrictMock<UserStorageMock>();
         instrumentsStorageMock         = new StrictMock<InstrumentsStorageMock>();
         settingsEditorMock             = new StrictMock<SettingsEditorMock>();
 
-        portfolioTreeWidget = new PortfolioTreeWidget(portfolioTreeRecordFactoryMock, instrumentsStorageMock, settingsEditorMock);
+        portfolioTreeWidget = new PortfolioTreeWidget(
+            portfolioTreeRecordFactoryMock,
+            instrumentWidgetFactoryMock,
+            userStorageMock,
+            instrumentsStorageMock,
+            settingsEditorMock
+        );
     }
 
     void TearDown() override
     {
         delete portfolioTreeWidget;
         delete portfolioTreeRecordFactoryMock;
+        delete instrumentWidgetFactoryMock;
+        delete userStorageMock;
         delete instrumentsStorageMock;
         delete settingsEditorMock;
     }
 
     PortfolioTreeWidget*                        portfolioTreeWidget;
     StrictMock<PortfolioTreeRecordFactoryMock>* portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentWidgetFactoryMock>*    instrumentWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                userStorageMock;
     StrictMock<InstrumentsStorageMock>*         instrumentsStorageMock;
     StrictMock<SettingsEditorMock>*             settingsEditorMock;
 };

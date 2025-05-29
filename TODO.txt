@@ -1,7 +1,5 @@
 Extract widget from InstrumentTableItemWidget
-Price precision
 Double check grpc stream testing (cancel probably???)
-Remove ActionsTableItemWidgetFactory and InstrumentTableItemWidgetFactory
 Control portfolio
 Display portfolio items
 Export portfolio to Excel

@@ -18,8 +18,15 @@ PortfolioTreeRecordFactory::~PortfolioTreeRecordFactory()
 }
 
 IPortfolioTreeRecord* PortfolioTreeRecordFactory::newInstance(
-    IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, const QString& instrumentId, QObject* parent
+    IInstrumentWidgetFactory* instrumentWidgetFactory,
+    IUserStorage*             userStorage,
+    IInstrumentsStorage*      instrumentsStorage,
+    CategoryTreeItem*         categoryTreeItem,
+    const QString&            instrumentId,
+    QObject*                  parent
 ) const
 {
-    return new PortfolioTreeRecord(instrumentsStorage, categoryTreeItem, instrumentId, parent);
+    return new PortfolioTreeRecord(
+        instrumentWidgetFactory, userStorage, instrumentsStorage, categoryTreeItem, instrumentId, parent
+    );
 }

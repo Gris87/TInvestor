@@ -19,10 +19,14 @@ PortfolioTreeWidgetFactory::~PortfolioTreeWidgetFactory()
 
 IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
     IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+    IInstrumentWidgetFactory*    instrumentWidgetFactory,
+    IUserStorage*                userStorage,
     IInstrumentsStorage*         instrumentsStorage,
     ISettingsEditor*             settingsEditor,
     QWidget*                     parent
 ) const
 {
-    return new PortfolioTreeWidget(portfolioTreeRecordFactory, instrumentsStorage, settingsEditor, parent);
+    return new PortfolioTreeWidget(
+        portfolioTreeRecordFactory, instrumentWidgetFactory, userStorage, instrumentsStorage, settingsEditor, parent
+    );
 }

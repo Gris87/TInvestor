@@ -17,6 +17,8 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 
 
 PortfolioTreeWidget::PortfolioTreeWidget(
     IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+    IInstrumentWidgetFactory*    instrumentWidgetFactory,
+    IUserStorage*                userStorage,
     IInstrumentsStorage*         instrumentsStorage,
     ISettingsEditor*             settingsEditor,
     QWidget*                     parent
@@ -24,6 +26,8 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     IPortfolioTreeWidget(parent),
     ui(new Ui::PortfolioTreeWidget),
     mPortfolioTreeRecordFactory(portfolioTreeRecordFactory),
+    mInstrumentWidgetFactory(instrumentWidgetFactory),
+    mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
     mSettingsEditor(settingsEditor),
     mSortedCategories(),
@@ -127,8 +131,9 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
 
         if (record == nullptr)
         {
-            record = mPortfolioTreeRecordFactory->newInstance(mInstrumentsStorage, categoryTreeItem, instrumentId, this);
-
+            record = mPortfolioTreeRecordFactory->newInstance(
+                mInstrumentWidgetFactory, mUserStorage, mInstrumentsStorage, categoryTreeItem, instrumentId, this
+            );
             mRecords[instrumentId] = record;
         }
 

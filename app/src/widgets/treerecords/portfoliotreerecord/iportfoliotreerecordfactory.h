@@ -3,6 +3,7 @@
 
 
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecord.h"
 
@@ -18,6 +19,11 @@ public:
     IPortfolioTreeRecordFactory& operator=(const IPortfolioTreeRecordFactory& another) = delete;
 
     virtual IPortfolioTreeRecord* newInstance(
-        IInstrumentsStorage* instrumentsStorage, CategoryTreeItem* categoryTreeItem, const QString& instrumentId, QObject* parent
+        IInstrumentWidgetFactory* instrumentWidgetFactory,
+        IUserStorage*             userStorage,
+        IInstrumentsStorage*      instrumentsStorage,
+        CategoryTreeItem*         categoryTreeItem,
+        const QString&            instrumentId,
+        QObject*                  parent
     ) const = 0;
 };
