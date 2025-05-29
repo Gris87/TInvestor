@@ -31,5 +31,5 @@ public:
     void setPortfolioItem(const PortfolioItem& item) override;
 
 private:
-    PortfolioTreeItem*   mPortfolioTreeItem;
+    PortfolioTreeItem* mPortfolioTreeItem;
 };

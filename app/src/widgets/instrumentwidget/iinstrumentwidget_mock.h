@@ -22,12 +22,12 @@ public:
     InstrumentWidgetMock(const InstrumentWidgetMock& another)            = delete;
     InstrumentWidgetMock& operator=(const InstrumentWidgetMock& another) = delete;
 
-    MOCK_METHOD(void, setIcon, (const QIcon& icon), (override));
+    MOCK_METHOD(void, setInstrumentLogo, (const QIcon& icon), (override));
     MOCK_METHOD(void, setQualInvestor, (bool forQualInvestorFlag), (override));
-    MOCK_METHOD(void, setText, (const QString& text), (override));
+    MOCK_METHOD(void, setTicker, (const QString& text), (override));
     MOCK_METHOD(void, setFullText, (const QString& text), (override));
 
-    MOCK_METHOD(bool, forQualInvestorFlag, (), (override));
-    MOCK_METHOD(QString, text, (), (override));
-    MOCK_METHOD(QString, fullText, (), (override));
+    MOCK_METHOD(bool, forQualInvestorFlag, (), (const, override));
+    MOCK_METHOD(QString, ticker, (), (const, override));
+    MOCK_METHOD(QString, fullText, (), (const, override));
 };

@@ -75,9 +75,9 @@ void StocksTableRecord::updateAll()
 
     const QIcon stockLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
 
-    mInstrumentTableItemWidget->setIcon(stockLogo);
+    mInstrumentTableItemWidget->setInstrumentLogo(stockLogo);
     mInstrumentTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
-    mInstrumentTableItemWidget->setText(mStock->meta.ticker);
+    mInstrumentTableItemWidget->setTicker(mStock->meta.ticker);
     mInstrumentTableItemWidget->setFullText(mStock->meta.name);
 
     mStock->mutex->unlock();

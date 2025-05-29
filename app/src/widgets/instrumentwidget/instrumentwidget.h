@@ -31,14 +31,14 @@ public:
     void enterEvent(QEnterEvent* event) override;
     void leaveEvent(QEvent* event) override;
 
-    void setIcon(const QIcon& icon) override;
+    void setInstrumentLogo(const QIcon& icon) override;
     void setQualInvestor(bool forQualInvestorFlag) override;
-    void setText(const QString& text) override;
+    void setTicker(const QString& text) override;
     void setFullText(const QString& text) override;
 
-    bool    forQualInvestorFlag() override;
-    QString text() override;
-    QString fullText() override;
+    bool    forQualInvestorFlag() const override;
+    QString ticker() const override;
+    QString fullText() const override;
 
     Ui::InstrumentWidget* ui;
 

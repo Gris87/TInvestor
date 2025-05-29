@@ -82,9 +82,9 @@ TEST_F(Test_InstrumentWidget, Test_enterEvent_and_leaveEvent)
     // clang-format on
 }
 
-TEST_F(Test_InstrumentWidget, Test_setIcon)
+TEST_F(Test_InstrumentWidget, Test_setInstrumentLogo)
 {
-    widget->setIcon(QIcon());
+    widget->setInstrumentLogo(QIcon());
 }
 
 TEST_F(Test_InstrumentWidget, Test_setQualInvestor_and_forQualInvestorFlag)
@@ -124,24 +124,24 @@ TEST_F(Test_InstrumentWidget, Test_setQualInvestor_and_forQualInvestorFlag)
     // clang-format on
 }
 
-TEST_F(Test_InstrumentWidget, Test_setText_and_text)
+TEST_F(Test_InstrumentWidget, Test_setTicker_and_ticker)
 {
     // clang-format off
-    ASSERT_EQ(widget->text(),                "Name");
+    ASSERT_EQ(widget->ticker(),              "Name");
     ASSERT_EQ(widget->ui->nameLabel->text(), "Name");
     // clang-format on
 
-    widget->setText("AAAAA");
+    widget->setTicker("AAAAA");
 
     // clang-format off
-    ASSERT_EQ(widget->text(),                "AAAAA");
+    ASSERT_EQ(widget->ticker(),              "AAAAA");
     ASSERT_EQ(widget->ui->nameLabel->text(), "AAAAA");
     // clang-format on
 
-    widget->setText("BBBBB");
+    widget->setTicker("BBBBB");
 
     // clang-format off
-    ASSERT_EQ(widget->text(),                "BBBBB");
+    ASSERT_EQ(widget->ticker(),              "BBBBB");
     ASSERT_EQ(widget->ui->nameLabel->text(), "BBBBB");
     // clang-format on
 }

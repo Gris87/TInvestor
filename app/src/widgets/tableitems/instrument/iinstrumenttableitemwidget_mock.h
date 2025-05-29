@@ -13,8 +13,8 @@ class InstrumentTableItemWidgetMock : public IInstrumentTableItemWidget
     Q_OBJECT
 
 public:
-    explicit InstrumentTableItemWidgetMock(QWidget* parent = nullptr) :
-        IInstrumentTableItemWidget(parent)
+    explicit InstrumentTableItemWidgetMock(IUserStorage* userStorage, QWidget* parent = nullptr) :
+        IInstrumentTableItemWidget(userStorage, parent)
     {
     }
     ~InstrumentTableItemWidgetMock() override = default;
@@ -22,12 +22,12 @@ public:
     InstrumentTableItemWidgetMock(const InstrumentTableItemWidgetMock& another)            = delete;
     InstrumentTableItemWidgetMock& operator=(const InstrumentTableItemWidgetMock& another) = delete;
 
-    MOCK_METHOD(void, setIcon, (const QIcon& icon), (override));
+    MOCK_METHOD(void, setInstrumentLogo, (const QIcon& icon), (override));
     MOCK_METHOD(void, setQualInvestor, (bool forQualInvestorFlag), (override));
-    MOCK_METHOD(void, setText, (const QString& text), (override));
+    MOCK_METHOD(void, setTicker, (const QString& text), (override));
     MOCK_METHOD(void, setFullText, (const QString& text), (override));
 
-    MOCK_METHOD(bool, forQualInvestorFlag, (), (override));
-    MOCK_METHOD(QString, text, (), (override));
-    MOCK_METHOD(QString, fullText, (), (override));
+    MOCK_METHOD(bool, forQualInvestorFlag, (), (const, override));
+    MOCK_METHOD(QString, ticker, (), (const, override));
+    MOCK_METHOD(QString, fullText, (), (const, override));
 };

@@ -1,7 +1,6 @@
-Extract widget from InstrumentTableItemWidget
 Double check grpc stream testing (cancel probably???)
-Control portfolio
-Display portfolio items
+Buy different instrument types
+Dynamic price change on portfolio
 Export portfolio to Excel
 Double check for operations accuracy
 Follow for the strategy

@@ -57,8 +57,8 @@ PortfolioTreeItem::PortfolioTreeItem(
 
     mPricePrecision = instrument.pricePrecision;
 
-    instrumentWidget->setIcon(instrumentLogo);
-    instrumentWidget->setText(instrument.ticker);
+    instrumentWidget->setInstrumentLogo(instrumentLogo);
+    instrumentWidget->setTicker(instrument.ticker);
     instrumentWidget->setFullText(instrument.name);
 }
 

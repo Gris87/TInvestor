@@ -37,7 +37,7 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
-        instrumentTableItemWidgetMock        = new StrictMock<InstrumentTableItemWidgetMock>(); // tableWidget will take ownership
+        instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>(nullptr); // tableWidget will take ownership
         actionsTableItemWidgetMock           = new StrictMock<ActionsTableItemWidgetMock>();    // tableWidget will take ownership
         tableWidget                          = new QTableWidget();
         stock                                = new Stock();
@@ -77,9 +77,9 @@ protected:
         )
             .WillOnce(Return(actionsTableItemWidgetMock));
 
-        EXPECT_CALL(*instrumentTableItemWidgetMock, setIcon(_));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setInstrumentLogo(_));
         EXPECT_CALL(*instrumentTableItemWidgetMock, setQualInvestor(true));
-        EXPECT_CALL(*instrumentTableItemWidgetMock, setText(QString("WAGA")));
+        EXPECT_CALL(*instrumentTableItemWidgetMock, setTicker(QString("WAGA")));
         EXPECT_CALL(*instrumentTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
         record = new StocksTableRecord(
@@ -140,9 +140,9 @@ TEST_F(Test_StocksTableRecord, Test_updateAll)
 {
     const InSequence seq;
 
-    EXPECT_CALL(*instrumentTableItemWidgetMock, setIcon(_));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setInstrumentLogo(_));
     EXPECT_CALL(*instrumentTableItemWidgetMock, setQualInvestor(true));
-    EXPECT_CALL(*instrumentTableItemWidgetMock, setText(QString("WAGA")));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, setTicker(QString("WAGA")));
     EXPECT_CALL(*instrumentTableItemWidgetMock, setFullText(QString("Wata Giga")));
 
     record->updateAll();
@@ -206,7 +206,7 @@ TEST_F(Test_StocksTableRecord, Test_filter)
 
     ASSERT_EQ(tableWidget->isRowHidden(0), false);
 
-    EXPECT_CALL(*instrumentTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, ticker()).WillOnce(Return("WAGA"));
     EXPECT_CALL(*instrumentTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
     EXPECT_CALL(*instrumentTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 
@@ -214,7 +214,7 @@ TEST_F(Test_StocksTableRecord, Test_filter)
 
     ASSERT_EQ(tableWidget->isRowHidden(0), true);
 
-    EXPECT_CALL(*instrumentTableItemWidgetMock, text()).WillOnce(Return("WAGA"));
+    EXPECT_CALL(*instrumentTableItemWidgetMock, ticker()).WillOnce(Return("WAGA"));
     EXPECT_CALL(*instrumentTableItemWidgetMock, fullText()).WillOnce(Return("Wata Giga"));
     EXPECT_CALL(*instrumentTableItemWidgetMock, forQualInvestorFlag()).WillOnce(Return(true));
 

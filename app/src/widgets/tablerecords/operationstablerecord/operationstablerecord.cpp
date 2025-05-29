@@ -93,8 +93,8 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     }
 
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(operation.timestamp));
-    mInstrumentTableItemWidget->setIcon(instrumentLogo);
-    mInstrumentTableItemWidget->setText(instrument.ticker);
+    mInstrumentTableItemWidget->setInstrumentLogo(instrumentLogo);
+    mInstrumentTableItemWidget->setTicker(instrument.ticker);
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
     mPriceTableWidgetItem->setValue(operation.price, instrument.pricePrecision);

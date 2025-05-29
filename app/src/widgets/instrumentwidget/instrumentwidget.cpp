@@ -54,7 +54,7 @@ void InstrumentWidget::leaveEvent(QEvent* event)
     IInstrumentWidget::leaveEvent(event);
 }
 
-void InstrumentWidget::setIcon(const QIcon& icon)
+void InstrumentWidget::setInstrumentLogo(const QIcon& icon)
 {
     ui->logoLabel->setPixmap(icon.pixmap(ui->logoLabel->size()));
 }
@@ -66,7 +66,7 @@ void InstrumentWidget::setQualInvestor(bool forQualInvestorFlag)
     ui->lockLabel->setVisible(mForQualInvestorFlag && !mUserStorage->isQualified());
 }
 
-void InstrumentWidget::setText(const QString& text)
+void InstrumentWidget::setTicker(const QString& text)
 {
     ui->nameLabel->setText(text);
 }
@@ -76,17 +76,17 @@ void InstrumentWidget::setFullText(const QString& text)
     mFullText = text;
 }
 
-bool InstrumentWidget::forQualInvestorFlag()
+bool InstrumentWidget::forQualInvestorFlag() const
 {
     return mForQualInvestorFlag;
 }
 
-QString InstrumentWidget::text()
+QString InstrumentWidget::ticker() const
 {
     return ui->nameLabel->text();
 }
 
-QString InstrumentWidget::fullText()
+QString InstrumentWidget::fullText() const
 {
     return mFullText;
 }

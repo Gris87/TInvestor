@@ -3,18 +3,19 @@
 
 
 #include <QTableWidgetItem>
-#include <QWidget>
+
+#include "src/widgets/instrumentwidget/instrumentwidget.h"
 
 
 
-class IInstrumentTableItemWidget : public QWidget,
+class IInstrumentTableItemWidget : public InstrumentWidget,
                                    public QTableWidgetItem
 {
     Q_OBJECT
 
 public:
-    explicit IInstrumentTableItemWidget(QWidget* parent = nullptr) :
-        QWidget(parent),
+    explicit IInstrumentTableItemWidget(IUserStorage* userStorage, QWidget* parent = nullptr) :
+        InstrumentWidget(userStorage, parent),
         QTableWidgetItem()
     {
     }
@@ -22,13 +23,4 @@ public:
 
     IInstrumentTableItemWidget(const IInstrumentTableItemWidget& another)            = delete;
     IInstrumentTableItemWidget& operator=(const IInstrumentTableItemWidget& another) = delete;
-
-    virtual void setIcon(const QIcon& icon)                = 0;
-    virtual void setQualInvestor(bool forQualInvestorFlag) = 0;
-    virtual void setText(const QString& text)              = 0;
-    virtual void setFullText(const QString& text)          = 0;
-
-    virtual bool    forQualInvestorFlag() = 0;
-    virtual QString text()                = 0;
-    virtual QString fullText()            = 0;
 };

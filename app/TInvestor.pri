@@ -371,4 +371,3 @@ FORMS += \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tableitems/actions/actionstableitemwidget.ui \
-    src/widgets/tableitems/instrument/instrumenttableitemwidget.ui \

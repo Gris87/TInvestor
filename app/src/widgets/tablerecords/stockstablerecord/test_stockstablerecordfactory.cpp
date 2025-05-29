@@ -41,7 +41,8 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     StrictMock<HttpClientMock>                       httpClientMock;
 
     // tableWidget will take ownership
-    StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>();
+    StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock =
+        new StrictMock<InstrumentTableItemWidgetMock>(nullptr);
     StrictMock<ActionsTableItemWidgetMock>*    actionsTableItemWidgetMock    = new StrictMock<ActionsTableItemWidgetMock>();
 
     QTableWidget tableWidget;
