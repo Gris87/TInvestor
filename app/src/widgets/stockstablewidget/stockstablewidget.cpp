@@ -294,7 +294,6 @@ void StocksTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
-// NOLINTBEGIN(readability-magic-numbers)
 void StocksTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -307,4 +306,3 @@ void StocksTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(STOCKS_ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[STOCKS_ACTIONS_COLUMN]).toInt());
     // clang-format on
 }
-// NOLINTEND(readability-magic-numbers)

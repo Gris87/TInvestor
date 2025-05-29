@@ -48,7 +48,6 @@ void LogsTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
-// NOLINTBEGIN(readability-magic-numbers)
 void LogsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -56,4 +55,3 @@ void LogsTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
     // clang-format on
 }
-// NOLINTEND(readability-magic-numbers)

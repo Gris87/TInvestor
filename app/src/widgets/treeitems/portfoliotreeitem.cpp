@@ -46,7 +46,7 @@ void PortfolioTreeItem::setAvailable(double value)
 {
     mAvailable = value;
 
-    if (static_cast<qint64>(mAvailable) * 1000 == static_cast<qint64>(mAvailable * 1000))
+    if (static_cast<qint64>(mAvailable) * 1000 == static_cast<qint64>(mAvailable * 1000)) // NOLINT(readability-magic-numbers)
     {
         setText(PORTFOLIO_AVAILABLE_COLUMN, QString::number(static_cast<qint64>(mAvailable)));
     }

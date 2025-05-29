@@ -206,7 +206,6 @@ void OperationsTableWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
-// NOLINTBEGIN(readability-magic-numbers)
 void OperationsTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -228,4 +227,3 @@ void OperationsTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(OPERATIONS_TOTAL_MONEY_COLUMN,                         mSettingsEditor->value(type + "/columnWidth_TotalMoney",                      COLUMN_WIDTHS[OPERATIONS_TOTAL_MONEY_COLUMN]).toInt());
     // clang-format on
 }
-// NOLINTEND(readability-magic-numbers)

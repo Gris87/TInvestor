@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include "src/widgets/treeitems/portfoliotreeitem.h"
+
 
 
 #ifdef Q_OS_WINDOWS
@@ -48,6 +50,9 @@ PortfolioTreeWidget::~PortfolioTreeWidget()
 
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
+    ui->treeWidget->setUpdatesEnabled(false);
+    ui->treeWidget->setSortingEnabled(false);
+
     deleteObsoleteCategories(portfolio);
 
     for (const QString& category : std::as_const(mSortedCategories))
@@ -69,6 +74,9 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
         updateCategory(categoryTreeItem, portfolio.positions[category]);
     }
+
+    ui->treeWidget->setSortingEnabled(true);
+    ui->treeWidget->setUpdatesEnabled(true);
 }
 
 void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
@@ -87,7 +95,12 @@ void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
     {
         CategoryTreeItem* categoryTreeItem = mCategories.take(category);
 
-        // TODO: Remove children
+        for (int i = 0; i < categoryTreeItem->childCount(); ++i)
+        {
+            PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
+            delete mRecords.take(portfolioTreeItem->getInstrumentId());
+        }
+
         delete categoryTreeItem;
     }
 }
@@ -99,6 +112,8 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
     categoryTreeItem->setCost(categoryTotal.cost);
     categoryTreeItem->setPart(categoryTotal.part);
 
+    deleteObsoleteRecords(categoryTreeItem, portfolioItems);
+
     for (auto it = portfolioItems.constBegin(), end = portfolioItems.constEnd(); it != end; ++it)
     {
         const QString& instrumentId = it.key();
@@ -108,7 +123,7 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
             continue;
         }
 
-        IPortfolioTreeRecord* record = mRecords[instrumentId];
+        IPortfolioTreeRecord* record = mRecords.value(instrumentId, nullptr);
 
         if (record == nullptr)
         {
@@ -118,6 +133,29 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
         }
 
         record->setPortfolioItem(it.value());
+    }
+}
+
+void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems)
+{
+    QList<PortfolioTreeItem*> itemsToDelete;
+
+    itemsToDelete.reserve(categoryTreeItem->childCount());
+
+    for (int i = 0; i < categoryTreeItem->childCount(); ++i)
+    {
+        PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
+
+        if (!portfolioItems.contains(portfolioTreeItem->getInstrumentId()))
+        {
+            itemsToDelete.append(portfolioTreeItem);
+        }
+    }
+
+    for (PortfolioTreeItem* item : itemsToDelete)
+    {
+        delete mRecords.take(item->getInstrumentId());
+        delete item;
     }
 }
 
@@ -136,7 +174,6 @@ void PortfolioTreeWidget::saveWindowState(const QString& type)
     // clang-format on
 }
 
-// NOLINTBEGIN(readability-magic-numbers)
 void PortfolioTreeWidget::loadWindowState(const QString& type)
 {
     // clang-format off
@@ -151,4 +188,3 @@ void PortfolioTreeWidget::loadWindowState(const QString& type)
     ui->treeWidget->setColumnWidth(PORTFOLIO_DAILY_YIELD_COLUMN,   mSettingsEditor->value(type + "/columnWidth_DailyYield",   COLUMN_WIDTHS[PORTFOLIO_DAILY_YIELD_COLUMN]).toInt());
     // clang-format on
 }
-// NOLINTEND(readability-magic-numbers)
