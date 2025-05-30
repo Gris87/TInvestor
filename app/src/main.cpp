@@ -43,6 +43,7 @@
 #include "src/threads/operations/operationsthread.h"
 #include "src/threads/orderbook/orderbookthread.h"
 #include "src/threads/portfolio/portfoliothread.h"
+#include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
@@ -321,11 +322,12 @@ static int runApplication(QApplication* app)
         &httpClient,
         &grpcClient
     );
-    LastPriceThread    lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread   operationsThread(&userStorage, &autoPilotOperationsDatabase, &grpcClient);
-    PortfolioThread    portfolioThread(&userStorage, &grpcClient);
-    MakeDecisionThread makeDecisionThread(&config, &stocksStorage);
-    OrderBookThread    orderBookThread(&grpcClient);
+    LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
+    OperationsThread         operationsThread(&userStorage, &autoPilotOperationsDatabase, &grpcClient);
+    PortfolioThread          portfolioThread(&userStorage, &grpcClient);
+    PortfolioLastPriceThread portfolioLastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
+    MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
+    OrderBookThread          orderBookThread(&grpcClient);
 
     MainWindow mainWindow(
         &config,
@@ -369,6 +371,7 @@ static int runApplication(QApplication* app)
         &lastPriceThread,
         &operationsThread,
         &portfolioThread,
+        &portfolioLastPriceThread,
         &makeDecisionThread,
         &orderBookThread,
         &fileDialogFactory,

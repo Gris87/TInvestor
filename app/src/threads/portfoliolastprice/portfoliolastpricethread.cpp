@@ -83,19 +83,10 @@ void PortfolioLastPriceThread::run()
             {
                 const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
 
-                StockOperationalData stockData; // NOLINT(cppcoreguidelines-pro-type-member-init)
-
-                stockData.timestamp = timeToTimestamp(lastPriceResp.time());
-                stockData.price     = quotationToFloat(lastPriceResp.price());
-
                 const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
+                float         price        = quotationToFloat(lastPriceResp.price());
 
-                Stock* stock = stocksMap[instrumentId];
-
-                const QMutexLocker lock(stock->mutex);
-                stock->operational.detailedData.append(stockData);
-
-                emit lastPriceChanged(instrumentId);
+                emit lastPriceChanged(instrumentId, price);
             }
         }
     }

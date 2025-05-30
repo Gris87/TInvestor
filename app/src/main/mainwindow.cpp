@@ -72,6 +72,7 @@ MainWindow::MainWindow(
     ILastPriceThread*                  lastPriceThread,
     IOperationsThread*                 operationsThread,
     IPortfolioThread*                  portfolioThread,
+    IPortfolioLastPriceThread*         portfolioLastPriceThread,
     IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
     IFileDialogFactory*                fileDialogFactory,
@@ -110,6 +111,7 @@ MainWindow::MainWindow(
     mLastPriceThread(lastPriceThread),
     mOperationsThread(operationsThread),
     mPortfolioThread(portfolioThread),
+    mPortfolioLastPriceThread(portfolioLastPriceThread),
     mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
     mFileDialogFactory(fileDialogFactory),
@@ -214,6 +216,7 @@ MainWindow::MainWindow(
     connect(mOperationsThread,                 SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
     connect(mPortfolioThread,                  SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mPortfolioThread,                  SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
+    connect(mPortfolioLastPriceThread,         SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
     connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -237,6 +240,7 @@ MainWindow::~MainWindow()
     mLastPriceThread->terminateThread();
     mOperationsThread->terminateThread();
     mPortfolioThread->terminateThread();
+    mPortfolioLastPriceThread->terminateThread();
     mMakeDecisionThread->terminateThread();
 
     mCleanupThread->wait();
@@ -245,6 +249,7 @@ MainWindow::~MainWindow()
     mLastPriceThread->wait();
     mOperationsThread->wait();
     mPortfolioThread->wait();
+    mPortfolioLastPriceThread->wait();
     mMakeDecisionThread->wait();
 
     saveWindowState();
@@ -476,6 +481,7 @@ void MainWindow::startAutoPilot() const
 
     mOperationsThread->start();
     mPortfolioThread->start();
+    mPortfolioLastPriceThread->start();
 }
 
 void MainWindow::stopAutoPilot() const
@@ -488,9 +494,11 @@ void MainWindow::stopAutoPilot() const
 
     mOperationsThread->terminateThread();
     mPortfolioThread->terminateThread();
+    mPortfolioLastPriceThread->terminateThread();
 
     mOperationsThread->wait();
     mPortfolioThread->wait();
+    mPortfolioLastPriceThread->wait();
 }
 
 void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
@@ -506,6 +514,11 @@ void MainWindow::autoPilotOperationsAdded(const QList<Operation>& operations)
 void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
 {
     mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
+}
+
+void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price)
+{
+    qInfo() << instrumentId << price;
 }
 
 void MainWindow::on_actionAuth_triggered()

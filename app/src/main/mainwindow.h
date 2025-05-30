@@ -22,6 +22,7 @@
 #include "src/threads/operations/ioperationsthread.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/threads/portfolio/iportfoliothread.h"
+#include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
@@ -91,6 +92,7 @@ public:
         ILastPriceThread*                  lastPriceThread,
         IOperationsThread*                 operationsThread,
         IPortfolioThread*                  portfolioThread,
+        IPortfolioLastPriceThread*         portfolioLastPriceThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
         IFileDialogFactory*                fileDialogFactory,
@@ -158,6 +160,7 @@ private:
     ILastPriceThread*                  mLastPriceThread;
     IOperationsThread*                 mOperationsThread;
     IPortfolioThread*                  mPortfolioThread;
+    IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
     IFileDialogFactory*                mFileDialogFactory;
@@ -198,6 +201,7 @@ public slots:
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);
+    void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
 
 private slots:
     void on_actionAuth_triggered();
