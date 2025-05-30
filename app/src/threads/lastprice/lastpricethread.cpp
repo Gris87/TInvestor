@@ -38,7 +38,7 @@ void LastPriceThread::run()
     {
         stocks = getStockUIDs();
 
-        if (!stocks.empty())
+        if (!stocks.isEmpty())
         {
             break;
         }
@@ -49,7 +49,7 @@ void LastPriceThread::run()
         }
     }
 
-    if (stocks.empty())
+    if (stocks.isEmpty())
     {
         return;
     }

@@ -23,9 +23,10 @@ public:
     IDecisionMakerWidget(const IDecisionMakerWidget& another)            = delete;
     IDecisionMakerWidget& operator=(const IDecisionMakerWidget& another) = delete;
 
-    virtual void operationsRead(const QList<Operation>& operations)  = 0;
-    virtual void operationsAdded(const QList<Operation>& operations) = 0;
-    virtual void portfolioChanged(const Portfolio& portfolio)        = 0;
+    virtual void operationsRead(const QList<Operation>& operations)         = 0;
+    virtual void operationsAdded(const QList<Operation>& operations)        = 0;
+    virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
+    virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;

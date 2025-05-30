@@ -23,6 +23,6 @@ public:
     PortfolioLastPriceThreadMock& operator=(const PortfolioLastPriceThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
-    MOCK_METHOD(void, stocksChanged, (), (override));
+    MOCK_METHOD(void, portfolioChanged, (const Portfolio& portfolio), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

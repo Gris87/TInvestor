@@ -514,11 +514,12 @@ void MainWindow::autoPilotOperationsAdded(const QList<Operation>& operations)
 void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
 {
     mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
+    mPortfolioLastPriceThread->portfolioChanged(portfolio);
 }
 
 void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price)
 {
-    qInfo() << instrumentId << price;
+    mAutoPilotDecisionMakerWidget->lastPriceChanged(instrumentId, price);
 }
 
 void MainWindow::on_actionAuth_triggered()

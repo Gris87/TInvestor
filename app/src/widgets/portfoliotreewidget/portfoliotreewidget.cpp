@@ -99,6 +99,11 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     ui->treeWidget->setUpdatesEnabled(true);
 }
 
+void PortfolioTreeWidget::lastPriceChanged(const QString& instrumentId, float price)
+{
+    qInfo() << instrumentId << price;
+}
+
 void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
 {
     QStringList categoriesToDelete;
