@@ -27,7 +27,7 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>(nullptr); // tableWidget will take ownership
-        tableWidget                          = new QTableWidget();
+        tableWidget                   = new QTableWidget();
 
         tableWidget->setColumnCount(OPERATIONS_COLUMN_COUNT);
 

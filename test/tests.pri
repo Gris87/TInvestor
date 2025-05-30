@@ -63,6 +63,7 @@ SOURCES += \
     src/threads/orderbook/test_orderbookthread.cpp \
     src/threads/parallelhelper/test_parallelhelperthread.cpp \
     src/threads/portfolio/test_portfoliothread.cpp \
+    src/threads/portfoliolastprice/test_portfoliolastpricethread.cpp \
     src/threads/pricecollect/test_pricecollectthread.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
@@ -172,6 +173,7 @@ HEADERS += \
     src/threads/operations/ioperationsthread_mock.h \
     src/threads/orderbook/iorderbookthread_mock.h \
     src/threads/portfolio/iportfoliothread_mock.h \
+    src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \

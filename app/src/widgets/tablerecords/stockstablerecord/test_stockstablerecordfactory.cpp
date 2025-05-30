@@ -43,7 +43,7 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     // tableWidget will take ownership
     StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock =
         new StrictMock<InstrumentTableItemWidgetMock>(nullptr);
-    StrictMock<ActionsTableItemWidgetMock>*    actionsTableItemWidgetMock    = new StrictMock<ActionsTableItemWidgetMock>();
+    StrictMock<ActionsTableItemWidgetMock>* actionsTableItemWidgetMock = new StrictMock<ActionsTableItemWidgetMock>();
 
     QTableWidget tableWidget;
     Stock        stock;

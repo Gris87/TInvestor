@@ -68,7 +68,7 @@ void PortfolioTreeRecord::exportToExcel(QXlsx::Document& doc, int row) const
         doc.write(row, PORTFOLIO_YIELD_COLUMN + 1,         mPortfolioTreeItem->yield(),                               createRubleFormat(mPortfolioTreeItem->foreground(PORTFOLIO_YIELD_COLUMN).color(), true, 2));
         doc.write(row, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, mPortfolioTreeItem->yieldPercent() / HUNDRED_PERCENT,      createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_YIELD_PERCENT_COLUMN).color(), true));
         doc.write(row, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   mPortfolioTreeItem->dailyYieldPercent() / HUNDRED_PERCENT, createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_DAILY_YIELD_COLUMN).color(), true));
-        // clang-format onS
+        // clang-format on
     }
     else
     {
