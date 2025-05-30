@@ -18,10 +18,10 @@ public:
     void setValue(float value, qint8 precision);
 
     [[nodiscard]]
-    float getValue() const;
+    float value() const;
 
     [[nodiscard]]
-    qint8 getPrecision() const;
+    qint8 precision() const;
 
     bool operator<(const QTableWidgetItem& another) const override;
 

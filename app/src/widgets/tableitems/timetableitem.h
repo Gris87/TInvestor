@@ -20,7 +20,7 @@ public:
     void setValue(const QDateTime& value);
 
     [[nodiscard]]
-    QDateTime getValue() const;
+    QDateTime value() const;
 
     bool operator<(const QTableWidgetItem& another) const override;
 

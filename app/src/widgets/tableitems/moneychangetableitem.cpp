@@ -59,12 +59,12 @@ void MoneyChangeTableItem::setValue(float value, bool withColor, qint8 precision
     }
 }
 
-float MoneyChangeTableItem::getValue() const
+float MoneyChangeTableItem::value() const
 {
     return mValue;
 }
 
-qint8 MoneyChangeTableItem::getPrecision() const
+qint8 MoneyChangeTableItem::precision() const
 {
     return mPrecision;
 }

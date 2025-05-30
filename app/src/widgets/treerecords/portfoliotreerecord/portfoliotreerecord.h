@@ -29,7 +29,14 @@ public:
     PortfolioTreeRecord& operator=(const PortfolioTreeRecord& another) = delete;
 
     void setPortfolioItem(const PortfolioItem& item) override;
+    void exportToExcel(QXlsx::Document& doc, int row) const override;
 
 private:
+    [[nodiscard]]
+    QXlsx::Format createRubleFormat(const QColor& color, bool withPlus, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+
     PortfolioTreeItem* mPortfolioTreeItem;
 };

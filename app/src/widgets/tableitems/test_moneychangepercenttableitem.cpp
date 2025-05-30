@@ -10,24 +10,24 @@ TEST(Test_MoneyChangePercentTableItem, Test_constructor_and_destructor)
     const MoneyChangePercentTableItem item;
 }
 
-TEST(Test_MoneyChangePercentTableItem, Test_setValue_and_getValue)
+TEST(Test_MoneyChangePercentTableItem, Test_setValue_and_value)
 {
     MoneyChangePercentTableItem item;
 
     item.setValue(-1, 100, 2);
-    ASSERT_EQ(item.getValue(), -1);
+    ASSERT_EQ(item.value(), -1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "-1.00%");
     ASSERT_EQ(item.toolTip(), QString("From: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 
     item.setValue(0, -1, 2);
-    ASSERT_EQ(item.getValue(), 0);
+    ASSERT_EQ(item.value(), 0);
     ASSERT_EQ(item.data(Qt::DisplayRole), "0.00%");
     ASSERT_EQ(item.toolTip(), "");
     ASSERT_EQ(item.foreground().color(), QColor("#97AEC4"));
 
     item.setValue(1, 100, 2);
-    ASSERT_EQ(item.getValue(), 1);
+    ASSERT_EQ(item.value(), 1);
     ASSERT_EQ(item.data(Qt::DisplayRole), "+1.00%");
     ASSERT_EQ(item.toolTip(), QString("From: 100.00 \u20BD"));
     ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));

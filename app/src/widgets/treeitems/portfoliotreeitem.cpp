@@ -68,11 +68,6 @@ PortfolioTreeItem::~PortfolioTreeItem()
     qDebug() << "Destroy PortfolioTreeItem";
 }
 
-const QString& PortfolioTreeItem::getInstrumentId() const
-{
-    return mInstrumentId;
-}
-
 void PortfolioTreeItem::setAvailable(double value)
 {
     mAvailable = value;
@@ -202,6 +197,61 @@ void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
     }
 
     setForeground(PORTFOLIO_DAILY_YIELD_COLUMN, QBrush(color));
+}
+
+const QString& PortfolioTreeItem::instrumentId() const
+{
+    return mInstrumentId;
+}
+
+QString PortfolioTreeItem::name() const
+{
+    return mInstrumentWidget->fullText();
+}
+
+double PortfolioTreeItem::available() const
+{
+    return mAvailable;
+}
+
+float PortfolioTreeItem::price() const
+{
+    return mPrice;
+}
+
+float PortfolioTreeItem::avgPrice() const
+{
+    return mAvgPrice;
+}
+
+double PortfolioTreeItem::cost() const
+{
+    return mCost;
+}
+
+float PortfolioTreeItem::part() const
+{
+    return mPart;
+}
+
+float PortfolioTreeItem::yield() const
+{
+    return mYield;
+}
+
+float PortfolioTreeItem::yieldPercent() const
+{
+    return mYieldPercent;
+}
+
+float PortfolioTreeItem::dailyYieldPercent() const
+{
+    return mDailyYieldPercent;
+}
+
+qint8 PortfolioTreeItem::pricePrecision() const
+{
+    return mPricePrecision;
 }
 
 bool PortfolioTreeItem::operator<(const QTreeWidgetItem& another) const

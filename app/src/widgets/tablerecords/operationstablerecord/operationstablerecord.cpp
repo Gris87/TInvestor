@@ -134,22 +134,22 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
     dateFormat.setFontColor(CELL_FONT_COLOR);
 
     // clang-format off
-    doc.write(row, OPERATIONS_TIME_COLUMN + 1,                                mTimeTableWidgetItem->getValue(), dateFormat);
+    doc.write(row, OPERATIONS_TIME_COLUMN + 1,                                mTimeTableWidgetItem->value(), dateFormat);
     doc.write(row, OPERATIONS_NAME_COLUMN + 1,                                mInstrumentTableItemWidget->fullText(), cellStyle);
     doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                         mDescriptionTableWidgetItem->text(), cellStyle);
-    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                               mPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                           mAvgPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                            mQuantityTableWidgetItem->getValue(), cellStyle);
-    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   mRemainedQuantityTableWidgetItem->getValue(), cellStyle);
-    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                             mPaymentTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                          mCommissionTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                               mYieldTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,               mYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       mYieldWithCommissionPercentTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
-    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         mTotalYieldWithCommissionTableWidgetItem->getValue(), createRubleFormat(mTotalYieldWithCommissionTableWidgetItem->foreground().color(), true, mTotalYieldWithCommissionTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mTotalYieldWithCommissionPercentTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mTotalYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
-    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                      mRemainedMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->getPrecision()));
-    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                         mTotalMoneyTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->getPrecision()));
+    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                               mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                           mAvgPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                            mQuantityTableWidgetItem->value(), cellStyle);
+    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   mRemainedQuantityTableWidgetItem->value(), cellStyle);
+    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                             mPaymentTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                          mCommissionTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                               mYieldTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,               mYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       mYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         mTotalYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mTotalYieldWithCommissionTableWidgetItem->foreground().color(), true, mTotalYieldWithCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mTotalYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mTotalYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                      mRemainedMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                         mTotalMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->precision()));
     // clang-format on
 }
 

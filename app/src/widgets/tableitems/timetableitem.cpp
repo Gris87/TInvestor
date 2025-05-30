@@ -27,7 +27,7 @@ void TimeTableItem::setValue(const QDateTime& value)
     setData(Qt::DisplayRole, value.toString(DATETIME_FORMAT));
 }
 
-QDateTime TimeTableItem::getValue() const
+QDateTime TimeTableItem::value() const
 {
     return mValue;
 }

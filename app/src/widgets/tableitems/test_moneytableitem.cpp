@@ -10,16 +10,16 @@ TEST(Test_MoneyTableItem, Test_constructor_and_destructor)
     const MoneyTableItem item;
 }
 
-TEST(Test_MoneyTableItem, Test_setValue_and_getValue)
+TEST(Test_MoneyTableItem, Test_setValue_and_value)
 {
     MoneyTableItem item;
 
     item.setValue(10, 2);
-    ASSERT_EQ(item.getValue(), 10);
+    ASSERT_EQ(item.value(), 10);
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("10.00 \u20BD"));
 
     item.setValue(20, 3);
-    ASSERT_EQ(item.getValue(), 20);
+    ASSERT_EQ(item.value(), 20);
     ASSERT_EQ(item.data(Qt::DisplayRole), QString("20.000 \u20BD"));
 }
 

@@ -289,7 +289,7 @@
     <message>
         <location filename="../../src/widgets/instrumentwidget/instrumentwidget.ui" line="66"/>
         <source>For qual investor only</source>
-        <translation ></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -539,79 +539,99 @@
 <context>
     <name>PortfolioTreeWidget</name>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="45"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="48"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="50"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="53"/>
         <source>Available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="55"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="58"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="60"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="63"/>
         <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="65"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="68"/>
         <source>Cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="70"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="73"/>
         <source>Part</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="75"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="78"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="80"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="83"/>
         <source>Yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="85"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="88"/>
         <source>Daily yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="44"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="48"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="45"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="49"/>
         <source>Share</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="46"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="50"/>
         <source>ETF</source>
-        <translation ></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="47"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="51"/>
         <source>Bond</source>
-        <translation ></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="48"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="52"/>
         <source>Futures</source>
-        <translation ></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="49"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="53"/>
         <source>Options</source>
-        <translation ></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="179"/>
+        <source>Export to Excel</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="189"/>
+        <source>Export</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="189"/>
+        <source>Excel file</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="208"/>
+        <source>Portfolio</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -658,8 +678,8 @@
     </message>
     <message>
         <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="35"/>
-        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="153"/>
-        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="183"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="154"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="184"/>
         <source>From: %1</source>
         <translation></translation>
     </message>

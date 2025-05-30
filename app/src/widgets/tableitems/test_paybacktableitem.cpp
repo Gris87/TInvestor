@@ -10,22 +10,22 @@ TEST(Test_PaybackTableItem, Test_constructor_and_destructor)
     const PaybackTableItem item;
 }
 
-TEST(Test_PaybackTableItem, Test_setValue_and_getValue)
+TEST(Test_PaybackTableItem, Test_setValue_and_value)
 {
     PaybackTableItem item;
 
     item.setValue(90);
-    ASSERT_EQ(item.getValue(), 90);
+    ASSERT_EQ(item.value(), 90);
     ASSERT_EQ(item.data(Qt::DisplayRole), "90.00%");
     ASSERT_EQ(item.foreground().color(), QColor("#2BD793"));
 
     item.setValue(50);
-    ASSERT_EQ(item.getValue(), 50);
+    ASSERT_EQ(item.value(), 50);
     ASSERT_EQ(item.data(Qt::DisplayRole), "50.00%");
     ASSERT_EQ(item.foreground().color(), QColor("#97AEC4"));
 
     item.setValue(10);
-    ASSERT_EQ(item.getValue(), 10);
+    ASSERT_EQ(item.value(), 10);
     ASSERT_EQ(item.data(Qt::DisplayRole), "10.00%");
     ASSERT_EQ(item.foreground().color(), QColor("#ED6F7E"));
 }

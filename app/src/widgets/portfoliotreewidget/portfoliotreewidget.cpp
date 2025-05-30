@@ -2,7 +2,9 @@
 #include "ui_portfoliotreewidget.h"
 
 #include <QDebug>
+#include <QMenu>
 
+#include "src/qxlsx/xlsxdocument.h"
 #include "src/widgets/treeitems/portfoliotreeitem.h"
 
 
@@ -12,6 +14,14 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {82, 80, 56, 106, 87, 56, 63, 
 #else
 const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 83, 93};
 #endif
+
+const QColor HEADER_BACKGROUND_COLOR   = QColor("#354450"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_FONT_COLOR         = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
+const QColor CATEGORY_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
+const QColor CATEGORY_FONT_COLOR       = QColor("#BFBFBF"); // clazy:exclude=non-pod-global-static
+
+constexpr float  HUNDRED_PERCENT = 100.0f;
+constexpr double COLUMN_GAP      = 0.71;
 
 
 
@@ -108,7 +118,7 @@ void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
         for (int i = 0; i < categoryTreeItem->childCount(); ++i)
         {
             PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
-            delete mRecords.take(portfolioTreeItem->getInstrumentId());
+            delete mRecords.take(portfolioTreeItem->instrumentId());
         }
 
         delete categoryTreeItem;
@@ -157,7 +167,7 @@ void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeIt
     {
         PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
 
-        if (!portfolioItems.contains(portfolioTreeItem->getInstrumentId()))
+        if (!portfolioItems.contains(portfolioTreeItem->instrumentId()))
         {
             itemsToDelete.append(portfolioTreeItem);
         }
@@ -165,17 +175,132 @@ void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeIt
 
     for (PortfolioTreeItem* item : itemsToDelete)
     {
-        delete mRecords.take(item->getInstrumentId());
+        delete mRecords.take(item->instrumentId());
         delete item;
     }
 }
 
-void PortfolioTreeWidget::on_treeWidget_customContextMenuRequested(const QPoint& /*pos*/)
+void PortfolioTreeWidget::on_treeWidget_customContextMenuRequested(const QPoint& pos)
 {
+    QMenu* contextMenu = new QMenu(this);
+
+    contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
+
+    contextMenu->popup(ui->treeWidget->viewport()->mapToGlobal(pos));
 }
 
 void PortfolioTreeWidget::actionExportToExcelTriggered()
 {
+    const QString lastFile = mSettingsEditor->value("MainWindow/PortfolioTreeWidget/exportToExcelFile", "").toString();
+
+    const std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+        this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
+    );
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setDefaultSuffix("xlsx");
+
+    fileDialog->selectFile(lastFile);
+
+    if (fileDialog->exec() == QDialog::Accepted)
+    {
+        const QString path = fileDialog->selectedFiles().at(0);
+        mSettingsEditor->setValue("MainWindow/PortfolioTreeWidget/exportToExcelFile", path);
+
+        exportToExcel(path);
+    }
+}
+
+void PortfolioTreeWidget::exportToExcel(const QString& path) const
+{
+    QXlsx::Document doc;
+    doc.addSheet(tr("Portfolio"));
+
+    QXlsx::Format headerStyle;
+    headerStyle.setFontBold(true);
+    headerStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    headerStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    headerStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    headerStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
+    headerStyle.setFontColor(HEADER_FONT_COLOR);
+
+    QXlsx::Format categoryStyle;
+    categoryStyle.setFontBold(true);
+    categoryStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    QXlsx::Format categoryRubleStyle;
+    categoryRubleStyle.setFontBold(true);
+    categoryRubleStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryRubleStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryRubleStyle.setNumberFormat("0.00 \u20BD");
+    categoryRubleStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryRubleStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryRubleStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    QXlsx::Format categoryPercentStyle;
+    categoryPercentStyle.setFontBold(true);
+    categoryPercentStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryPercentStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryPercentStyle.setNumberFormat("0.00%");
+    categoryPercentStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryPercentStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryPercentStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    for (int i = 0; i < ui->treeWidget->columnCount(); ++i)
+    {
+        doc.write(1, i + 1, ui->treeWidget->headerItem()->text(i), headerStyle);
+    }
+
+    int curRow = 2;
+
+    for (int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
+    {
+        CategoryTreeItem* categoryTreeItem = dynamic_cast<CategoryTreeItem*>(ui->treeWidget->topLevelItem(i));
+
+        // clang-format off
+        doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          categoryTreeItem->name(), categoryStyle);
+        doc.write(curRow, PORTFOLIO_AVAILABLE_COLUMN + 1,     "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_PRICE_COLUMN + 1,         "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_AVG_PRICE_COLUMN + 1,     "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_COST_COLUMN + 1,          categoryTreeItem->cost(), categoryRubleStyle);
+        doc.write(curRow, PORTFOLIO_PART_COLUMN + 1,          categoryTreeItem->part() / HUNDRED_PERCENT, categoryPercentStyle);
+        doc.write(curRow, PORTFOLIO_YIELD_COLUMN + 1,         "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   "", categoryStyle);
+        // clang-format on
+
+        ++curRow;
+
+        for (int j = 0; j < categoryTreeItem->childCount(); ++j)
+        {
+            PortfolioTreeItem*    portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(j));
+            IPortfolioTreeRecord* record            = mRecords.value(portfolioTreeItem->instrumentId(), nullptr);
+
+            record->exportToExcel(doc, curRow);
+
+            ++curRow;
+        }
+    }
+
+    // NOLINTBEGIN(readability-magic-numbers)
+    // clang-format off
+    doc.autosizeColumnWidth(PORTFOLIO_NAME_COLUMN + 1);
+    doc.setColumnWidth(PORTFOLIO_AVAILABLE_COLUMN + 1,     11.29 + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_PRICE_COLUMN + 1,         8.43  + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_AVG_PRICE_COLUMN + 1,     13.14 + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_COST_COLUMN + 1,          10.43 + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_PART_COLUMN + 1,          6.43  + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_YIELD_COLUMN + 1,         10.43 + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_YIELD_PERCENT_COLUMN + 1, 8.86  + COLUMN_GAP);
+    doc.setColumnWidth(PORTFOLIO_DAILY_YIELD_COLUMN + 1,   9.86  + COLUMN_GAP);
+    // clang-format on
+    // NOLINTEND(readability-magic-numbers)
+
+    doc.saveAs(path);
 }
 
 void PortfolioTreeWidget::saveWindowState(const QString& type)

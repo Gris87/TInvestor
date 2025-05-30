@@ -29,12 +29,12 @@ void MoneyTableItem::setValue(float value, qint8 precision)
     setData(Qt::DisplayRole, QString::number(mValue, 'f', mPrecision) + " " + RUBLE);
 }
 
-float MoneyTableItem::getValue() const
+float MoneyTableItem::value() const
 {
     return mValue;
 }
 
-qint8 MoneyTableItem::getPrecision() const
+qint8 MoneyTableItem::precision() const
 {
     return mPrecision;
 }

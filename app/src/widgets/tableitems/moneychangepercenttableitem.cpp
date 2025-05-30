@@ -55,7 +55,7 @@ void MoneyChangePercentTableItem::setValue(float value, float fromPrice, qint8 p
     setForeground(QBrush(color));
 }
 
-float MoneyChangePercentTableItem::getValue() const
+float MoneyChangePercentTableItem::value() const
 {
     return mValue;
 }

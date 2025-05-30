@@ -18,7 +18,7 @@ public:
     void setValue(float value);
 
     [[nodiscard]]
-    float getValue() const;
+    float value() const;
 
     bool operator<(const QTableWidgetItem& another) const override;
 

@@ -48,6 +48,7 @@ private:
     void deleteObsoleteCategories(const Portfolio& portfolio);
     void updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
     void deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
+    void exportToExcel(const QString& path) const;
 
     IPortfolioTreeRecordFactory*         mPortfolioTreeRecordFactory;
     IInstrumentWidgetFactory*            mInstrumentWidgetFactory;

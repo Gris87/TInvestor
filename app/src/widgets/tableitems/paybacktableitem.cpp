@@ -49,7 +49,7 @@ void PaybackTableItem::setValue(float value)
     setForeground(QBrush(color));
 }
 
-float PaybackTableItem::getValue() const
+float PaybackTableItem::value() const
 {
     return mValue;
 }

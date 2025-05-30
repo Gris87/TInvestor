@@ -18,7 +18,7 @@ public:
     void setValue(qint64 value);
 
     [[nodiscard]]
-    qint64 getValue() const;
+    qint64 value() const;
 
     bool operator<(const QTableWidgetItem& another) const override;
 

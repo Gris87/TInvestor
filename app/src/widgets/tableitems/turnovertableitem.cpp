@@ -57,7 +57,7 @@ void TurnoverTableItem::setValue(qint64 value)
     setForeground(QBrush(color));
 }
 
-qint64 TurnoverTableItem::getValue() const
+qint64 TurnoverTableItem::value() const
 {
     return mValue;
 }

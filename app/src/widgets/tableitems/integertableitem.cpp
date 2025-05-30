@@ -23,7 +23,7 @@ void IntegerTableItem::setValue(qint64 value)
     setData(Qt::DisplayRole, QString::number(mValue));
 }
 
-qint64 IntegerTableItem::getValue() const
+qint64 IntegerTableItem::value() const
 {
     return mValue;
 }

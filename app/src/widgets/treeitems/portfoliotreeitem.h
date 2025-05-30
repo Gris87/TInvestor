@@ -25,9 +25,6 @@ public:
     PortfolioTreeItem(const PortfolioTreeItem& another)            = delete;
     PortfolioTreeItem& operator=(const PortfolioTreeItem& another) = delete;
 
-    [[nodiscard]]
-    const QString& getInstrumentId() const;
-
     void setAvailable(double value);
     void setPrice(float value);
     void setAvgPrice(float value);
@@ -36,6 +33,39 @@ public:
     void setYield(float value);
     void setYieldPercent(float value, float fromPrice);
     void setDailyYieldPercent(float value, float fromPrice);
+
+    [[nodiscard]]
+    const QString& instrumentId() const;
+
+    [[nodiscard]]
+    QString name() const;
+
+    [[nodiscard]]
+    double available() const;
+
+    [[nodiscard]]
+    float price() const;
+
+    [[nodiscard]]
+    float avgPrice() const;
+
+    [[nodiscard]]
+    double cost() const;
+
+    [[nodiscard]]
+    float part() const;
+
+    [[nodiscard]]
+    float yield() const;
+
+    [[nodiscard]]
+    float yieldPercent() const;
+
+    [[nodiscard]]
+    float dailyYieldPercent() const;
+
+    [[nodiscard]]
+    qint8 pricePrecision() const;
 
     bool operator<(const QTreeWidgetItem& another) const override;
 

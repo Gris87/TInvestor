@@ -124,11 +124,11 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
         ticker,
         fullText,
         forQualInvestorFlag,
-        mPriceTableWidgetItem->getValue(),
-        mDayChangeTableWidgetItem->getValue(),
-        mDateChangeTableWidgetItem->getValue(),
-        mTurnoverTableWidgetItem->getValue(),
-        mPaybackTableWidgetItem->getValue()
+        mPriceTableWidgetItem->value(),
+        mDayChangeTableWidgetItem->value(),
+        mDateChangeTableWidgetItem->value(),
+        mTurnoverTableWidgetItem->value(),
+        mPaybackTableWidgetItem->value()
     );
 
     tableWidget->setRowHidden(row, hidden);
@@ -147,11 +147,11 @@ void StocksTableRecord::exportToExcel(QXlsx::Document& doc) const
     // clang-format off
     doc.write(row, STOCKS_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText(), cellStyle);
     doc.write(row, STOCKS_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag(), cellStyle);
-    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->getValue(), createRubleFormat(CELL_FONT_COLOR, mPriceTableWidgetItem->getPrecision()));
-    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
-    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
-    doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->getValue(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
-    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->getValue() / HUNDRED_PERCENT, createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
+    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, mPriceTableWidgetItem->precision()));
+    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->value(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
+    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
     // clang-format on
 }
 

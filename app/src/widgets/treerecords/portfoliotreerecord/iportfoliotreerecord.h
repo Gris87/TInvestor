@@ -5,6 +5,7 @@
 #include <QObject>
 
 #include "src/domain/portfolio/portfolioitem.h"
+#include "src/qxlsx/xlsxdocument.h"
 
 
 
@@ -39,4 +40,5 @@ public:
     IPortfolioTreeRecord& operator=(const IPortfolioTreeRecord& another) = delete;
 
     virtual void setPortfolioItem(const PortfolioItem& item) = 0;
+    virtual void exportToExcel(QXlsx::Document& doc, int row) const = 0;
 };

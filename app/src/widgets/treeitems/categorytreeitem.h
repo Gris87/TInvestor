@@ -18,5 +18,19 @@ public:
     void setCost(double value);
     void setPart(float value);
 
+    [[nodiscard]]
+    QString name() const;
+
+    [[nodiscard]]
+    double cost() const;
+
+    [[nodiscard]]
+    float part() const;
+
     bool operator<(const QTreeWidgetItem& another) const override;
+
+private:
+    QString mName;
+    double  mCost;
+    float   mPart;
 };
