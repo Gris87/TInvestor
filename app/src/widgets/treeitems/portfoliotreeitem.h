@@ -40,14 +40,15 @@ public:
     bool operator<(const QTreeWidgetItem& another) const override;
 
 private:
-    QString mInstrumentId;
-    double  mAvailable;
-    float   mPrice;
-    float   mAvgPrice;
-    double  mCost;
-    float   mPart;
-    float   mYield;
-    float   mYieldPercent;
-    float   mDailyYieldPercent;
-    qint8   mPricePrecision;
+    IInstrumentWidget* mInstrumentWidget;
+    QString            mInstrumentId;
+    double             mAvailable;
+    float              mPrice;
+    float              mAvgPrice;
+    double             mCost;
+    float              mPart;
+    float              mYield;
+    float              mYieldPercent;
+    float              mDailyYieldPercent;
+    qint8              mPricePrecision;
 };

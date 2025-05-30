@@ -1,6 +1,5 @@
-Double check grpc stream testing (cancel probably???)
-Dynamic price change on portfolio
 Export portfolio to Excel
+Dynamic price change on portfolio
 Double check for operations accuracy
 Follow for the strategy
 Add logs to logs table

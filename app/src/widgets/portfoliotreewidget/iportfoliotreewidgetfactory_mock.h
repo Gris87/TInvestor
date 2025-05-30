@@ -27,6 +27,7 @@ public:
          IInstrumentWidgetFactory* instrumentWidgetFactory,
          IUserStorage*             userStorage,
          IInstrumentsStorage*      instrumentsStorage,
+         IFileDialogFactory*       fileDialogFactory,
          ISettingsEditor*          settingsEditor,
          QWidget*                  parent),
         (const, override)

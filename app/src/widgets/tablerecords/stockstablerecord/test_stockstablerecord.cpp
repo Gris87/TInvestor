@@ -38,9 +38,9 @@ protected:
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         instrumentTableItemWidgetMock = new StrictMock<InstrumentTableItemWidgetMock>(nullptr); // tableWidget will take ownership
-        actionsTableItemWidgetMock           = new StrictMock<ActionsTableItemWidgetMock>();    // tableWidget will take ownership
-        tableWidget                          = new QTableWidget();
-        stock                                = new Stock();
+        actionsTableItemWidgetMock    = new StrictMock<ActionsTableItemWidgetMock>();           // tableWidget will take ownership
+        tableWidget                   = new QTableWidget();
+        stock                         = new Stock();
 
         tableWidget->setColumnCount(STOCKS_COLUMN_COUNT);
 

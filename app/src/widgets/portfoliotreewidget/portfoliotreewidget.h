@@ -4,6 +4,7 @@
 
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
 
+#include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h"
@@ -27,6 +28,7 @@ public:
         IInstrumentWidgetFactory*    instrumentWidgetFactory,
         IUserStorage*                userStorage,
         IInstrumentsStorage*         instrumentsStorage,
+        IFileDialogFactory*          fileDialogFactory,
         ISettingsEditor*             settingsEditor,
         QWidget*                     parent = nullptr
     );
@@ -51,9 +53,14 @@ private:
     IInstrumentWidgetFactory*            mInstrumentWidgetFactory;
     IUserStorage*                        mUserStorage;
     IInstrumentsStorage*                 mInstrumentsStorage;
+    IFileDialogFactory*                  mFileDialogFactory;
     ISettingsEditor*                     mSettingsEditor;
     QStringList                          mSortedCategories;
     QMap<QString, QString>               mCategoryNames; // Category => Localized name
     QMap<QString, CategoryTreeItem*>     mCategories;    // Category => CategoryTreeItem
     QMap<QString, IPortfolioTreeRecord*> mRecords;       // UID => PortfolioTreeRecord
+
+public slots:
+    void on_treeWidget_customContextMenuRequested(const QPoint& pos);
+    void actionExportToExcelTriggered();
 };

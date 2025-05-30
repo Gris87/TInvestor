@@ -25,7 +25,12 @@ public:
     virtual void setTicker(const QString& text)            = 0;
     virtual void setFullText(const QString& text)          = 0;
 
-    virtual bool    forQualInvestorFlag() const = 0;
-    virtual QString ticker() const              = 0;
-    virtual QString fullText() const            = 0;
+    [[nodiscard]]
+    virtual bool forQualInvestorFlag() const = 0;
+
+    [[nodiscard]]
+    virtual QString ticker() const = 0;
+
+    [[nodiscard]]
+    virtual QString fullText() const = 0;
 };

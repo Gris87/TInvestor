@@ -81,6 +81,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &instrumentWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
+            &fileDialogFactoryMock,
             &settingsEditorMock,
             NotNull()
         )

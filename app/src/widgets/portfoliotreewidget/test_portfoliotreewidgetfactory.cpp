@@ -4,6 +4,7 @@
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
@@ -27,6 +28,7 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     StrictMock<InstrumentWidgetFactoryMock>    instrumentWidgetFactoryMock;
     StrictMock<UserStorageMock>                userStorageMock;
     StrictMock<InstrumentsStorageMock>         instrumentsStorageMock;
+    StrictMock<FileDialogFactoryMock>          fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>             settingsEditorMock;
 
     const IPortfolioTreeWidget* widget = factory.newInstance(
@@ -34,6 +36,7 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
         &instrumentWidgetFactoryMock,
         &userStorageMock,
         &instrumentsStorageMock,
+        &fileDialogFactoryMock,
         &settingsEditorMock,
         nullptr
     );

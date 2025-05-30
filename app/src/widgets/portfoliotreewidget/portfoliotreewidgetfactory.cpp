@@ -22,11 +22,18 @@ IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
     IInstrumentWidgetFactory*    instrumentWidgetFactory,
     IUserStorage*                userStorage,
     IInstrumentsStorage*         instrumentsStorage,
+    IFileDialogFactory*          fileDialogFactory,
     ISettingsEditor*             settingsEditor,
     QWidget*                     parent
 ) const
 {
     return new PortfolioTreeWidget(
-        portfolioTreeRecordFactory, instrumentWidgetFactory, userStorage, instrumentsStorage, settingsEditor, parent
+        portfolioTreeRecordFactory,
+        instrumentWidgetFactory,
+        userStorage,
+        instrumentsStorage,
+        fileDialogFactory,
+        settingsEditor,
+        parent
     );
 }

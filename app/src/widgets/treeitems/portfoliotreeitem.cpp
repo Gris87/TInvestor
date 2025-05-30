@@ -25,6 +25,7 @@ PortfolioTreeItem::PortfolioTreeItem(
     int                       type
 ) :
     QTreeWidgetItem(parent, type),
+    mInstrumentWidget(),
     mInstrumentId(instrumentId),
     mAvailable(),
     mPrice(),
@@ -38,8 +39,8 @@ PortfolioTreeItem::PortfolioTreeItem(
 {
     qDebug() << "Create PortfolioTreeItem";
 
-    IInstrumentWidget* instrumentWidget = instrumentWidgetFactory->newInstance(userStorage, treeWidget());
-    treeWidget()->setItemWidget(this, PORTFOLIO_NAME_COLUMN, instrumentWidget);
+    mInstrumentWidget = instrumentWidgetFactory->newInstance(userStorage, treeWidget());
+    treeWidget()->setItemWidget(this, PORTFOLIO_NAME_COLUMN, mInstrumentWidget);
 
     const QMutexLocker lock(instrumentsStorage->getMutex());
 
@@ -57,9 +58,9 @@ PortfolioTreeItem::PortfolioTreeItem(
 
     mPricePrecision = instrument.pricePrecision;
 
-    instrumentWidget->setInstrumentLogo(instrumentLogo);
-    instrumentWidget->setTicker(instrument.ticker);
-    instrumentWidget->setFullText(instrument.name);
+    mInstrumentWidget->setInstrumentLogo(instrumentLogo);
+    mInstrumentWidget->setTicker(instrument.ticker);
+    mInstrumentWidget->setFullText(instrument.name);
 }
 
 PortfolioTreeItem::~PortfolioTreeItem()
@@ -211,7 +212,7 @@ bool PortfolioTreeItem::operator<(const QTreeWidgetItem& another) const
     switch (column)
     {
         case PORTFOLIO_NAME_COLUMN:
-            return text(column) < anotherItem->text(column);
+            return mInstrumentWidget->ticker() < anotherItem->mInstrumentWidget->ticker();
         case PORTFOLIO_AVAILABLE_COLUMN:
             return mAvailable < anotherItem->mAvailable;
         case PORTFOLIO_PRICE_COLUMN:

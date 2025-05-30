@@ -20,6 +20,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     IInstrumentWidgetFactory*    instrumentWidgetFactory,
     IUserStorage*                userStorage,
     IInstrumentsStorage*         instrumentsStorage,
+    IFileDialogFactory*          fileDialogFactory,
     ISettingsEditor*             settingsEditor,
     QWidget*                     parent
 ) :
@@ -29,6 +30,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mInstrumentWidgetFactory(instrumentWidgetFactory),
     mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
     mSortedCategories(),
     mCategoryNames(),
@@ -166,6 +168,14 @@ void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeIt
         delete mRecords.take(item->getInstrumentId());
         delete item;
     }
+}
+
+void PortfolioTreeWidget::on_treeWidget_customContextMenuRequested(const QPoint& /*pos*/)
+{
+}
+
+void PortfolioTreeWidget::actionExportToExcelTriggered()
+{
 }
 
 void PortfolioTreeWidget::saveWindowState(const QString& type)

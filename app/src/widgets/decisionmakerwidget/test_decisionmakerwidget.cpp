@@ -79,6 +79,7 @@ protected:
                 instrumentWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
+                fileDialogFactoryMock,
                 settingsEditorMock,
                 NotNull()
             )

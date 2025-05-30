@@ -116,12 +116,12 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
 {
     const int row = mInstrumentTableItemWidget->row();
 
-    const QString text                = mInstrumentTableItemWidget->text();
+    const QString ticker              = mInstrumentTableItemWidget->ticker();
     const QString fullText            = mInstrumentTableItemWidget->fullText();
     const bool    forQualInvestorFlag = mInstrumentTableItemWidget->forQualInvestorFlag();
 
     const bool hidden = !filter.isFiltered(
-        text,
+        ticker,
         fullText,
         forQualInvestorFlag,
         mPriceTableWidgetItem->getValue(),

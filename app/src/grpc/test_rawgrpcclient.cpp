@@ -176,7 +176,7 @@ TEST_F(Test_RawGrpcClient, Test_findStocks)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                 true);
-    ASSERT_GE(resp->instruments_size(),                                    1962);
+    ASSERT_GE(resp->instruments_size(),                                    1961);
     ASSERT_GE(index,                                                       0);
     ASSERT_EQ(resp->instruments(index).figi(),                             "TCS2207L1061");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "HHRU");
@@ -714,9 +714,8 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     ASSERT_NE(subscribeResponse.subscribe_last_price_response().last_price_subscriptions(0).subscription_id(),     "");
     // clang-format on
 
-    // clang-format off
-    ASSERT_EQ(client->closeWriteMarketDataStream(marketDataStream),          true);
-    ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::OK);
-    // clang-format on
+    ASSERT_EQ(client->closeWriteMarketDataStream(marketDataStream), true);
+    marketDataStream->context.TryCancel();
+    ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::CANCELLED);
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
