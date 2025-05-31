@@ -54,7 +54,7 @@ void PortfolioLastPriceThread::run()
                         const tinkoff::LastPrice& lastPriceResp = marketDataResponse->last_price();
 
                         const QString instrumentId = QString::fromStdString(lastPriceResp.instrument_uid());
-                        float         price        = quotationToFloat(lastPriceResp.price());
+                        const float   price        = quotationToFloat(lastPriceResp.price());
 
                         emit lastPriceChanged(instrumentId, price);
                     }

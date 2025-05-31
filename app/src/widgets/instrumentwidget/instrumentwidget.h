@@ -36,8 +36,13 @@ public:
     void setTicker(const QString& text) override;
     void setFullText(const QString& text) override;
 
-    bool    forQualInvestorFlag() const override;
+    [[nodiscard]]
+    bool forQualInvestorFlag() const override;
+
+    [[nodiscard]]
     QString ticker() const override;
+
+    [[nodiscard]]
     QString fullText() const override;
 
     Ui::InstrumentWidget* ui;
