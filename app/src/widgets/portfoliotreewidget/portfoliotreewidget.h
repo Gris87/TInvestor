@@ -41,6 +41,8 @@ public:
 
     Ui::PortfolioTreeWidget* ui;
 
+    void setAccountName(const QString& name) override;
+
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;

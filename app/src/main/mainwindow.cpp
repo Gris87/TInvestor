@@ -188,6 +188,9 @@ MainWindow::MainWindow(
         this
     );
 
+    mSimulatorDecisionMakerWidget->setAccountName(tr("Simulator"));
+    mAutoPilotDecisionMakerWidget->setAccountName(tr("Auto-pilot"));
+
     ui->layoutForStocksControlsWidget->addWidget(mStocksControlsWidget);
     ui->layoutForStocksTableWidget->addWidget(mStocksTableWidget);
     ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
@@ -487,6 +490,11 @@ void MainWindow::startAutoPilot()
 
     mOperationsThread->setAccount(account);
     mPortfolioThread->setAccount(account);
+
+    const QMutexLocker lock(mUserStorage->getMutex());
+    Accounts           accounts = mUserStorage->getAccounts();
+
+    mAutoPilotDecisionMakerWidget->setAccountName(accounts.value(account).name);
 
     mOperationsThread->start();
     mPortfolioThread->start();

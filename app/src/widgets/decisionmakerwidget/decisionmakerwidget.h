@@ -45,6 +45,8 @@ public:
     DecisionMakerWidget(const DecisionMakerWidget& another)            = delete;
     DecisionMakerWidget& operator=(const DecisionMakerWidget& another) = delete;
 
+    void setAccountName(const QString& name) override;
+
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
     void portfolioChanged(const Portfolio& portfolio) override;

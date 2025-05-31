@@ -1,6 +1,5 @@
 Python scripts with tinkoff api
 Double check for operations accuracy
-Add total price and daily price change
 Follow for the strategy
 Add logs to logs table
 Export logs to Excel

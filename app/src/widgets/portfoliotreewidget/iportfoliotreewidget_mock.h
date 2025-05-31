@@ -22,6 +22,8 @@ public:
     PortfolioTreeWidgetMock(const PortfolioTreeWidgetMock& another)            = delete;
     PortfolioTreeWidgetMock& operator=(const PortfolioTreeWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, setAccountName, (const QString& name), (override));
+
     MOCK_METHOD(void, portfolioChanged, (const Portfolio& portfolio), (override));
     MOCK_METHOD(void, lastPriceChanged, (const QString& instrumentId, float price), (override));
     MOCK_METHOD(void, updateLastPrices, (), (override));

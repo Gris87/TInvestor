@@ -22,6 +22,8 @@ public:
     DecisionMakerWidgetMock(const DecisionMakerWidgetMock& another)            = delete;
     DecisionMakerWidgetMock& operator=(const DecisionMakerWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, setAccountName, (const QString& name), (override));
+
     MOCK_METHOD(void, operationsRead, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, operationsAdded, (const QList<Operation>& operations), (override));
     MOCK_METHOD(void, portfolioChanged, (const Portfolio& portfolio), (override));

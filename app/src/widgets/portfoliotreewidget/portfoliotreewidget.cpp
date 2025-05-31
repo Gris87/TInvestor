@@ -78,6 +78,11 @@ PortfolioTreeWidget::~PortfolioTreeWidget()
     delete ui;
 }
 
+void PortfolioTreeWidget::setAccountName(const QString& name)
+{
+    ui->accountNameLabel->setText(name);
+}
+
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mTotalCost       = 0.0;
@@ -97,7 +102,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
             continue;
         }
 
-        CategoryTreeItem* categoryTreeItem = mCategories.value(category, nullptr);
+        CategoryTreeItem* categoryTreeItem = mCategories.value(category);
 
         if (categoryTreeItem == nullptr)
         {
@@ -132,7 +137,7 @@ void PortfolioTreeWidget::updateLastPrices()
 
         for (auto it = mLastPricesUpdates.constBegin(); it != mLastPricesUpdates.constEnd(); ++it)
         {
-            IPortfolioTreeRecord* record = mRecords.value(it.key(), nullptr);
+            IPortfolioTreeRecord* record = mRecords.value(it.key());
 
             if (record != nullptr)
             {
@@ -209,7 +214,7 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
 
         const PortfolioItem& portfolioItem = it.value();
 
-        IPortfolioTreeRecord* record = mRecords.value(instrumentId, nullptr);
+        IPortfolioTreeRecord* record = mRecords.value(instrumentId);
 
         if (record == nullptr)
         {
@@ -390,7 +395,7 @@ void PortfolioTreeWidget::exportToExcel(const QString& path) const
         for (int j = 0; j < categoryTreeItem->childCount(); ++j)
         {
             PortfolioTreeItem*    portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(j));
-            IPortfolioTreeRecord* record            = mRecords.value(portfolioTreeItem->instrumentId(), nullptr);
+            IPortfolioTreeRecord* record            = mRecords.value(portfolioTreeItem->instrumentId());
 
             record->exportToExcel(doc, curRow);
 

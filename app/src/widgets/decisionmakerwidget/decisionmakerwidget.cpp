@@ -66,6 +66,11 @@ DecisionMakerWidget::~DecisionMakerWidget()
     delete ui;
 }
 
+void DecisionMakerWidget::setAccountName(const QString& name)
+{
+    mPortfolioTreeWidget->setAccountName(name);
+}
+
 void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
 {
     mOperationsTableWidget->operationsRead(operations);
