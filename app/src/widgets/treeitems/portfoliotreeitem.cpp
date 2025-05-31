@@ -171,7 +171,8 @@ void PortfolioTreeItem::setYieldPercent(float value, float fromPrice)
 
 void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
 {
-    mDailyYieldPercent = value;
+    mDailyYieldPercent  = value;
+    mPriceForDailyYield = fromPrice;
 
     const QString prefix = mDailyYieldPercent > 0 ? "+" : "";
 
@@ -242,6 +243,11 @@ float PortfolioTreeItem::yield() const
 float PortfolioTreeItem::yieldPercent() const
 {
     return mYieldPercent;
+}
+
+float PortfolioTreeItem::priceForDailyYield() const
+{
+    return mPriceForDailyYield;
 }
 
 float PortfolioTreeItem::dailyYieldPercent() const

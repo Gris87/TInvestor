@@ -62,6 +62,9 @@ public:
     float yieldPercent() const;
 
     [[nodiscard]]
+    float priceForDailyYield() const;
+
+    [[nodiscard]]
     float dailyYieldPercent() const;
 
     [[nodiscard]]
@@ -79,6 +82,7 @@ private:
     float              mPart;
     float              mYield;
     float              mYieldPercent;
+    float              mPriceForDailyYield;
     float              mDailyYieldPercent;
     qint8              mPricePrecision;
 };

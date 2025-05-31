@@ -29,6 +29,7 @@ public:
     PortfolioTreeRecord& operator=(const PortfolioTreeRecord& another) = delete;
 
     void setPortfolioItem(const PortfolioItem& item) override;
+    void updatePrice(float price) override;
     void exportToExcel(QXlsx::Document& doc, int row) const override;
 
 private:

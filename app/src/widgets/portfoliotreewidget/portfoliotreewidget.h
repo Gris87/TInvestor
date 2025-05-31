@@ -41,6 +41,7 @@ public:
 
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
+    void updateLastPrices() override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
@@ -58,9 +59,10 @@ private:
     IFileDialogFactory*                  mFileDialogFactory;
     ISettingsEditor*                     mSettingsEditor;
     QStringList                          mSortedCategories;
-    QMap<QString, QString>               mCategoryNames; // Category => Localized name
-    QMap<QString, CategoryTreeItem*>     mCategories;    // Category => CategoryTreeItem
-    QMap<QString, IPortfolioTreeRecord*> mRecords;       // UID => PortfolioTreeRecord
+    QMap<QString, QString>               mCategoryNames;     // Category => Localized name
+    QMap<QString, CategoryTreeItem*>     mCategories;        // Category => CategoryTreeItem
+    QMap<QString, IPortfolioTreeRecord*> mRecords;           // UID => PortfolioTreeRecord
+    QMap<QString, float>                 mLastPricesUpdates; // UID => Price
 
 public slots:
     void on_treeWidget_customContextMenuRequested(const QPoint& pos);

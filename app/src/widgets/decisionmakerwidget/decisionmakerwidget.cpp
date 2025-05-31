@@ -88,6 +88,11 @@ void DecisionMakerWidget::lastPriceChanged(const QString& instrumentId, float pr
     mPortfolioTreeWidget->lastPriceChanged(instrumentId, price);
 }
 
+void DecisionMakerWidget::updateLastPrices()
+{
+    mPortfolioTreeWidget->updateLastPrices();
+}
+
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
     mAccountChartWidget->switchChart(CHART_TYPE_YIELD);

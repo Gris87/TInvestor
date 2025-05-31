@@ -45,7 +45,8 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mSortedCategories(),
     mCategoryNames(),
     mCategories(),
-    mRecords()
+    mRecords(),
+    mLastPricesUpdates()
 {
     qDebug() << "Create PortfolioTreeWidget";
 
@@ -101,7 +102,31 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
 void PortfolioTreeWidget::lastPriceChanged(const QString& instrumentId, float price)
 {
-    qInfo() << instrumentId << price;
+    mLastPricesUpdates[instrumentId] = price;
+}
+
+void PortfolioTreeWidget::updateLastPrices()
+{
+    if (!mLastPricesUpdates.isEmpty())
+    {
+        ui->treeWidget->setUpdatesEnabled(false);
+        ui->treeWidget->setSortingEnabled(false);
+
+        for (auto it = mLastPricesUpdates.constBegin(); it != mLastPricesUpdates.constEnd(); ++it)
+        {
+            IPortfolioTreeRecord* record = mRecords.value(it.key(), nullptr);
+
+            if (record != nullptr)
+            {
+                record->updatePrice(it.value());
+            }
+        }
+
+        mLastPricesUpdates.clear();
+
+        ui->treeWidget->setSortingEnabled(true);
+        ui->treeWidget->setUpdatesEnabled(true);
+    }
 }
 
 void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)

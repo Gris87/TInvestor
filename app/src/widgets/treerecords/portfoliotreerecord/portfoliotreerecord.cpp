@@ -48,6 +48,18 @@ void PortfolioTreeRecord::setPortfolioItem(const PortfolioItem& item)
     mPortfolioTreeItem->setPart(item.part);
 }
 
+void PortfolioTreeRecord::updatePrice(float price)
+{
+    float yield             = (mPortfolioTreeItem->available() * price) - mPortfolioTreeItem->cost();
+    float yieldPercent      = (yield / mPortfolioTreeItem->cost()) * HUNDRED_PERCENT;
+    float dailyYieldPercent = ((price / mPortfolioTreeItem->priceForDailyYield()) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+    mPortfolioTreeItem->setPrice(price);
+    mPortfolioTreeItem->setYield(yield);
+    mPortfolioTreeItem->setYieldPercent(yieldPercent, mPortfolioTreeItem->avgPrice());
+    mPortfolioTreeItem->setDailyYieldPercent(dailyYieldPercent, mPortfolioTreeItem->priceForDailyYield());
+}
+
 void PortfolioTreeRecord::exportToExcel(QXlsx::Document& doc, int row) const
 {
     QXlsx::Format cellStyle;

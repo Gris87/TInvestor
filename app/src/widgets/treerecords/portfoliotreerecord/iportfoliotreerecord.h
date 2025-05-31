@@ -40,5 +40,6 @@ public:
     IPortfolioTreeRecord& operator=(const IPortfolioTreeRecord& another) = delete;
 
     virtual void setPortfolioItem(const PortfolioItem& item)        = 0;
+    virtual void updatePrice(float price)                           = 0;
     virtual void exportToExcel(QXlsx::Document& doc, int row) const = 0;
 };

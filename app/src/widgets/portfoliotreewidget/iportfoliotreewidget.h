@@ -24,6 +24,7 @@ public:
 
     virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
     virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
+    virtual void updateLastPrices()                                         = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;

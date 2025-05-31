@@ -123,6 +123,7 @@ public:
     QTimer stocksTableUpdateAllTimer;
     QTimer stocksTableUpdateLastPricesTimer;
     QTimer keepMoneyChangeDelayTimer;
+    QTimer autoPilotPortfolioUpdateLastPricesTimer;
 
 private:
     void updateStackWidgetToolbar() const;
@@ -187,6 +188,7 @@ public slots:
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();
     void keepMoneyChangeDelayTimerTicked();
+    void autoPilotPortfolioUpdateLastPricesTimerTicked();
     void notifyInstrumentsProgress(const QString& message) const;
     void stocksChanged();
     void pricesChanged();
@@ -196,8 +198,8 @@ public slots:
     void filterChanged(const Filter& filter);
     void startSimulator() const;
     void stopSimulator() const;
-    void startAutoPilot() const;
-    void stopAutoPilot() const;
+    void startAutoPilot();
+    void stopAutoPilot();
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);

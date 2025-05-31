@@ -21,6 +21,7 @@ constexpr qint64  CLEANUP_INTERVAL                         = ONE_DAY;           
 constexpr qint64  STOCKS_TABLE_UPDATE_ALL_INTERVAL         = ONE_DAY;           // 1 day
 constexpr qint64  STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL = 3 * MS_IN_SECOND;  // 3 seconds
 constexpr qint64  KEEP_MONEY_CHANGE_DELAY                  = MS_IN_SECOND;      // 1 second
+constexpr qint64  PORTFOLIO_UPDATE_LAST_PRICES_INTERVAL    = 3 * MS_IN_SECOND;  // 3 seconds
 
 #ifdef Q_OS_WINDOWS
 constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIcon::DoubleClick;
@@ -195,30 +196,31 @@ MainWindow::MainWindow(
     mTrayIcon = trayIconFactory->newInstance(this);
 
     // clang-format off
-    connect(mTrayIcon,                         SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
-    connect(mTrayIcon,                         SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
-    connect(mTrayIcon,                         SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
-    connect(mGrpcClient,                       SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
-    connect(&cleanupTimer,                     SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
-    connect(&userUpdateTimer,                  SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
-    connect(&priceCollectTimer,                SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
-    connect(&makeDecisionTimer,                SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
-    connect(&stocksTableUpdateAllTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
-    connect(&stocksTableUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
-    connect(&keepMoneyChangeDelayTimer,        SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
-    connect(mPriceCollectThread,               SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
-    connect(mPriceCollectThread,               SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
-    connect(mPriceCollectThread,               SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
-    connect(mPriceCollectThread,               SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
-    connect(mLastPriceThread,                  SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mOperationsThread,                 SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
-    connect(mOperationsThread,                 SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
-    connect(mOperationsThread,                 SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
-    connect(mPortfolioThread,                  SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
-    connect(mPortfolioThread,                  SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
-    connect(mPortfolioLastPriceThread,         SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mStocksControlsWidget,             SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
-    connect(mStocksControlsWidget,             SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mTrayIcon,                                SIGNAL(activated(QSystemTrayIcon::ActivationReason)),                                         this, SLOT(trayIconClicked(QSystemTrayIcon::ActivationReason)));
+    connect(mTrayIcon,                                SIGNAL(trayIconShowClicked()),                                                                this, SLOT(trayIconShowClicked()));
+    connect(mTrayIcon,                                SIGNAL(trayIconExitClicked()),                                                                this, SLOT(trayIconExitClicked()));
+    connect(mGrpcClient,                              SIGNAL(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)), this, SLOT(authFailed(grpc::StatusCode, const QString&, const std::string&, const std::string&)));
+    connect(&cleanupTimer,                            SIGNAL(timeout()),                                                                            this, SLOT(cleanupTimerTicked()));
+    connect(&userUpdateTimer,                         SIGNAL(timeout()),                                                                            this, SLOT(userUpdateTimerTicked()));
+    connect(&priceCollectTimer,                       SIGNAL(timeout()),                                                                            this, SLOT(priceCollectTimerTicked()));
+    connect(&makeDecisionTimer,                       SIGNAL(timeout()),                                                                            this, SLOT(makeDecisionTimerTicked()));
+    connect(&stocksTableUpdateAllTimer,               SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateAllTimerTicked()));
+    connect(&stocksTableUpdateLastPricesTimer,        SIGNAL(timeout()),                                                                            this, SLOT(stocksTableUpdateLastPricesTimerTicked()));
+    connect(&keepMoneyChangeDelayTimer,               SIGNAL(timeout()),                                                                            this, SLOT(keepMoneyChangeDelayTimerTicked()));
+    connect(&autoPilotPortfolioUpdateLastPricesTimer, SIGNAL(timeout()),                                                                            this, SLOT(autoPilotPortfolioUpdateLastPricesTimerTicked()));
+    connect(mPriceCollectThread,                      SIGNAL(notifyInstrumentsProgress(const QString&)),                                            this, SLOT(notifyInstrumentsProgress(const QString&)));
+    connect(mPriceCollectThread,                      SIGNAL(stocksChanged()),                                                                      this, SLOT(stocksChanged()));
+    connect(mPriceCollectThread,                      SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
+    connect(mPriceCollectThread,                      SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
+    connect(mLastPriceThread,                         SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
+    connect(mOperationsThread,                        SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
+    connect(mOperationsThread,                        SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
+    connect(mPortfolioThread,                         SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
+    connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
+    connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
+    connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -402,6 +404,13 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", ui->keepMoneySpinBox->value());
 }
 
+void MainWindow::autoPilotPortfolioUpdateLastPricesTimerTicked()
+{
+    qDebug() << "Auto pilot portfolio update timer ticked";
+
+    mAutoPilotDecisionMakerWidget->updateLastPrices();
+}
+
 void MainWindow::notifyInstrumentsProgress(const QString& message) const
 {
     ui->waitingSpinnerWidget->setText(message);
@@ -466,7 +475,7 @@ void MainWindow::stopSimulator() const
     // TODO: Stop simulation
 }
 
-void MainWindow::startAutoPilot() const
+void MainWindow::startAutoPilot()
 {
     ui->autoPilotActiveWidget->show();
     ui->autoPilotActiveSpinnerWidget->start();
@@ -482,9 +491,11 @@ void MainWindow::startAutoPilot() const
     mOperationsThread->start();
     mPortfolioThread->start();
     mPortfolioLastPriceThread->start();
+
+    autoPilotPortfolioUpdateLastPricesTimer.start();
 }
 
-void MainWindow::stopAutoPilot() const
+void MainWindow::stopAutoPilot()
 {
     ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->stop();
@@ -495,6 +506,8 @@ void MainWindow::stopAutoPilot() const
     mOperationsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
+
+    autoPilotPortfolioUpdateLastPricesTimer.stop();
 
     mOperationsThread->wait();
     mPortfolioThread->wait();
@@ -693,6 +706,7 @@ void MainWindow::init()
     priceCollectTimer.setInterval(PRICE_COLLECT_INTERVAL);
     stocksTableUpdateAllTimer.setInterval(STOCKS_TABLE_UPDATE_ALL_INTERVAL);
     stocksTableUpdateLastPricesTimer.setInterval(STOCKS_TABLE_UPDATE_LAST_PRICES_INTERVAL);
+    autoPilotPortfolioUpdateLastPricesTimer.setInterval(PORTFOLIO_UPDATE_LAST_PRICES_INTERVAL);
 
     on_actionAuth_triggered();
 }

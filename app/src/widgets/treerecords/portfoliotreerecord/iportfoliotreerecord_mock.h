@@ -23,5 +23,6 @@ public:
     PortfolioTreeRecordMock& operator=(const PortfolioTreeRecordMock& another) = delete;
 
     MOCK_METHOD(void, setPortfolioItem, (const PortfolioItem& item), (override));
+    MOCK_METHOD(void, updatePrice, (float price), (override));
     MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc, int row), (const, override));
 };
