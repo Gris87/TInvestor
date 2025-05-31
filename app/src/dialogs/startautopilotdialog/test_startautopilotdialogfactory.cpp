@@ -53,8 +53,8 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));
-    EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/follow"),         QVariant(false))).WillOnce(Return(QVariant(false)));
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
+    EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL"))).WillOnce(Return(QVariant("INTERNAL")));
     // clang-format on
 
     const std::shared_ptr<IStartAutoPilotDialog> dialog =

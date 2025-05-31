@@ -57,8 +57,8 @@ protected:
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/follow"),         QVariant(false))).WillOnce(Return(QVariant(false)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL"))).WillOnce(Return(QVariant("INTERNAL")));
         // clang-format on
 
         dialog = new StartAutoPilotDialog(userStorageMock, messageBoxUtilsMock, settingsEditorMock);
@@ -146,8 +146,8 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("74b87337454200d4d33f80c4663dc5e5")));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/follow"),         QVariant(false)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL")));
     // clang-format on
 
     dialog->ui->startButton->click();

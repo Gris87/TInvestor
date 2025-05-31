@@ -500,7 +500,7 @@ void GrpcClient::finishMarketDataStream(std::shared_ptr<MarketDataStream>& marke
 {
     const grpc::Status status = mRawGrpcClient->finishMarketDataStream(marketDataStream);
 
-    if (!status.ok() && status.error_code() != grpc::StatusCode::CANCELLED)
+    if (!status.ok() && status.error_code() != grpc::StatusCode::RESOURCE_EXHAUSTED && status.error_code() != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);
     }
@@ -543,7 +543,7 @@ void GrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfol
 {
     const grpc::Status status = mRawGrpcClient->finishPortfolioStream(portfolioStream);
 
-    if (!status.ok() && status.error_code() != grpc::StatusCode::CANCELLED)
+    if (!status.ok() && status.error_code() != grpc::StatusCode::RESOURCE_EXHAUSTED && status.error_code() != grpc::StatusCode::CANCELLED)
     {
         emitAuthFailed(status);
     }
