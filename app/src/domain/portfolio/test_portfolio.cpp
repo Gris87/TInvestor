@@ -27,8 +27,10 @@ TEST(Test_Portfolio, Test_copy_constructor)
     item.part               = 5.0f;
     item.yield              = 6.0f;
     item.yieldPercent       = 7.0f;
-    item.priceForDailyYield = 8.0f;
-    item.dailyYieldPercent  = 9.0f;
+    item.dailyYield         = 8.0f;
+    item.priceForDailyYield = 9.0f;
+    item.costForDailyYield  = 10.0;
+    item.dailyYieldPercent  = 11.0f;
 
     portfolio.positions["share"]["aaaaa"] = item;
 
@@ -45,8 +47,10 @@ TEST(Test_Portfolio, Test_copy_constructor)
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].part,               5.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].yield,              6.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].yieldPercent,       7.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].priceForDailyYield, 8.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYieldPercent,  9.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYield,         8.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].priceForDailyYield, 9.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].costForDailyYield,  10.0, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYieldPercent,  11.0f, 0.0001f);
     // clang-format on
 }
 
@@ -65,8 +69,10 @@ TEST(Test_Portfolio, Test_assign)
     item.part               = 5.0f;
     item.yield              = 6.0f;
     item.yieldPercent       = 7.0f;
-    item.priceForDailyYield = 8.0f;
-    item.dailyYieldPercent  = 9.0f;
+    item.dailyYield         = 8.0f;
+    item.priceForDailyYield = 9.0f;
+    item.costForDailyYield  = 10.0;
+    item.dailyYieldPercent  = 11.0f;
 
     portfolio.positions["share"]["aaaaa"] = item;
 
@@ -83,8 +89,10 @@ TEST(Test_Portfolio, Test_assign)
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].part,               5.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].yield,              6.0f, 0.0001f);
     ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].yieldPercent,       7.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].priceForDailyYield, 8.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYieldPercent,  9.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYield,         8.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].priceForDailyYield, 9.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].costForDailyYield,  10.0, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions["share"]["aaaaa"].dailyYieldPercent,  11.0f, 0.0001f);
     // clang-format on
 }
 
@@ -104,8 +112,10 @@ TEST(Test_Portfolio, Test_equals)
     item.part               = 5.0f;
     item.yield              = 6.0f;
     item.yieldPercent       = 7.0f;
-    item.priceForDailyYield = 8.0f;
-    item.dailyYieldPercent  = 9.0f;
+    item.dailyYield         = 8.0f;
+    item.priceForDailyYield = 9.0f;
+    item.costForDailyYield  = 10.0;
+    item.dailyYieldPercent  = 11.0f;
 
     item2.showPrices         = true;
     item2.available          = 1.0;
@@ -115,8 +125,10 @@ TEST(Test_Portfolio, Test_equals)
     item2.part               = 5.0f;
     item2.yield              = 6.0f;
     item2.yieldPercent       = 7.0f;
-    item2.priceForDailyYield = 8.0f;
-    item2.dailyYieldPercent  = 9.0f;
+    item2.dailyYield         = 8.0f;
+    item2.priceForDailyYield = 9.0f;
+    item2.costForDailyYield  = 10.0;
+    item2.dailyYieldPercent  = 11.0f;
 
     portfolio.positions["share"]["aaaaa"]  = item;
     portfolio2.positions["share"]["aaaaa"] = item2;

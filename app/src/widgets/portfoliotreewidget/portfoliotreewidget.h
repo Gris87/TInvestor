@@ -4,6 +4,8 @@
 
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
 
+#include <QLabel>
+
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
@@ -50,6 +52,9 @@ private:
     void deleteObsoleteCategories(const Portfolio& portfolio);
     void updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
     void deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
+    void updateAllTimeLabel();
+    void updateForTodayLabel();
+    void updateYieldLabel(QLabel* label, double yield, double cost);
     void exportToExcel(const QString& path) const;
 
     IPortfolioTreeRecordFactory*         mPortfolioTreeRecordFactory;
@@ -63,6 +68,10 @@ private:
     QMap<QString, CategoryTreeItem*>     mCategories;        // Category => CategoryTreeItem
     QMap<QString, IPortfolioTreeRecord*> mRecords;           // UID => PortfolioTreeRecord
     QMap<QString, float>                 mLastPricesUpdates; // UID => Price
+    double                               mTotalCost;
+    double                               mTotalYield;
+    double                               mTotalDailyCost;
+    double                               mTotalDailyYield;
 
 public slots:
     void on_treeWidget_customContextMenuRequested(const QPoint& pos);

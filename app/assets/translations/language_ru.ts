@@ -539,47 +539,58 @@
 <context>
     <name>PortfolioTreeWidget</name>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="48"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="110"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="53"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="115"/>
         <source>Available</source>
         <translation>Доступно</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="58"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="120"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="63"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="125"/>
         <source>Avg price</source>
         <translation>Средняя цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="68"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="58"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="130"/>
         <source>Cost</source>
         <translation>Стоимость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="73"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="44"/>
+        <source>All the time</source>
+        <translation>Всё время</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="65"/>
+        <source>For today</source>
+        <translation>За сегодня</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="135"/>
         <source>Part</source>
         <translation>Доля</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="78"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="140"/>
         <source>Yield</source>
         <translation>Доход</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="83"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="145"/>
         <source>Yield, %</source>
         <translation>Доход, %</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="88"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="150"/>
         <source>Daily yield, %</source>
         <translation>За день, %</translation>
     </message>
@@ -885,13 +896,13 @@
         <translation>Запуск</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="61"/>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="74"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="71"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="84"/>
         <source>No another account</source>
         <translation>Нет другого счёта</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="74"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="84"/>
         <source>There is no any account to follow</source>
         <translation>Нет счёта, за которым можно было бы следовать</translation>
     </message>

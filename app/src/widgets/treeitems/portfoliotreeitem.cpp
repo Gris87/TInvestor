@@ -34,6 +34,9 @@ PortfolioTreeItem::PortfolioTreeItem(
     mPart(),
     mYield(),
     mYieldPercent(),
+    mDailyYield(),
+    mCostForDailyYield(),
+    mPriceForDailyYield(),
     mDailyYieldPercent(),
     mPricePrecision()
 {
@@ -169,6 +172,16 @@ void PortfolioTreeItem::setYieldPercent(float value, float fromPrice)
     setForeground(PORTFOLIO_YIELD_PERCENT_COLUMN, QBrush(color));
 }
 
+void PortfolioTreeItem::setDailyYield(float value)
+{
+    mDailyYield = value;
+}
+
+void PortfolioTreeItem::setCostForDailyYield(double value)
+{
+    mCostForDailyYield = value;
+}
+
 void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
 {
     mDailyYieldPercent  = value;
@@ -245,9 +258,19 @@ float PortfolioTreeItem::yieldPercent() const
     return mYieldPercent;
 }
 
+float PortfolioTreeItem::dailyYield() const
+{
+    return mDailyYield;
+}
+
 float PortfolioTreeItem::priceForDailyYield() const
 {
     return mPriceForDailyYield;
+}
+
+double PortfolioTreeItem::costForDailyYield() const
+{
+    return mCostForDailyYield;
 }
 
 float PortfolioTreeItem::dailyYieldPercent() const

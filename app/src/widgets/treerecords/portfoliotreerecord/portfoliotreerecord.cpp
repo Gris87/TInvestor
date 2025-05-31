@@ -40,6 +40,8 @@ void PortfolioTreeRecord::setPortfolioItem(const PortfolioItem& item)
         mPortfolioTreeItem->setAvgPrice(item.avgPrice);
         mPortfolioTreeItem->setYield(item.yield);
         mPortfolioTreeItem->setYieldPercent(item.yieldPercent, item.avgPrice);
+        mPortfolioTreeItem->setDailyYield(item.dailyYield);
+        mPortfolioTreeItem->setCostForDailyYield(item.costForDailyYield);
         mPortfolioTreeItem->setDailyYieldPercent(item.dailyYieldPercent, item.priceForDailyYield);
     }
 
@@ -50,14 +52,27 @@ void PortfolioTreeRecord::setPortfolioItem(const PortfolioItem& item)
 
 void PortfolioTreeRecord::updatePrice(float price)
 {
-    float yield             = (mPortfolioTreeItem->available() * price) - mPortfolioTreeItem->cost();
-    float yieldPercent      = (yield / mPortfolioTreeItem->cost()) * HUNDRED_PERCENT;
-    float dailyYieldPercent = ((price / mPortfolioTreeItem->priceForDailyYield()) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+    const double currentCost       = mPortfolioTreeItem->available() * price;
+    const float  yield             = currentCost - mPortfolioTreeItem->cost();
+    const float  yieldPercent      = (yield / mPortfolioTreeItem->cost()) * HUNDRED_PERCENT;
+    const float  dailyYield        = currentCost - mPortfolioTreeItem->costForDailyYield();
+    const float  dailyYieldPercent = (dailyYield / mPortfolioTreeItem->costForDailyYield()) * HUNDRED_PERCENT;
 
     mPortfolioTreeItem->setPrice(price);
     mPortfolioTreeItem->setYield(yield);
     mPortfolioTreeItem->setYieldPercent(yieldPercent, mPortfolioTreeItem->avgPrice());
+    mPortfolioTreeItem->setDailyYield(dailyYield);
     mPortfolioTreeItem->setDailyYieldPercent(dailyYieldPercent, mPortfolioTreeItem->priceForDailyYield());
+}
+
+float PortfolioTreeRecord::yield() const
+{
+    return mPortfolioTreeItem->yield();
+}
+
+float PortfolioTreeRecord::dailyYield() const
+{
+    return mPortfolioTreeItem->dailyYield();
 }
 
 void PortfolioTreeRecord::exportToExcel(QXlsx::Document& doc, int row) const

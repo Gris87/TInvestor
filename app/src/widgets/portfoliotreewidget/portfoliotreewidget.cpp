@@ -10,7 +10,7 @@
 
 
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {82, 80, 56, 106, 87, 56, 63, 79, 86};
+const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {178, 80, 56, 106, 87, 56, 68, 79, 1100};
 #else
 const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 83, 93};
 #endif
@@ -19,7 +19,12 @@ const QColor HEADER_BACKGROUND_COLOR   = QColor("#354450"); // clazy:exclude=non
 const QColor HEADER_FONT_COLOR         = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
 const QColor CATEGORY_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
 const QColor CATEGORY_FONT_COLOR       = QColor("#BFBFBF"); // clazy:exclude=non-pod-global-static
+const QColor GREEN_COLOR               = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
+const QColor RED_COLOR                 = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
+const QColor NORMAL_COLOR              = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
+constexpr QChar  RUBLE           = QChar(0x20BD);
+constexpr float  ZERO_LIMIT      = 0.0001f;
 constexpr float  HUNDRED_PERCENT = 100.0f;
 constexpr double COLUMN_GAP      = 0.71;
 
@@ -46,7 +51,11 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mCategoryNames(),
     mCategories(),
     mRecords(),
-    mLastPricesUpdates()
+    mLastPricesUpdates(),
+    mTotalCost(),
+    mTotalYield(),
+    mTotalDailyCost(),
+    mTotalDailyYield()
 {
     qDebug() << "Create PortfolioTreeWidget";
 
@@ -71,6 +80,11 @@ PortfolioTreeWidget::~PortfolioTreeWidget()
 
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
+    mTotalCost       = 0.0;
+    mTotalYield      = 0.0;
+    mTotalDailyCost  = 0.0;
+    mTotalDailyYield = 0.0;
+
     ui->treeWidget->setUpdatesEnabled(false);
     ui->treeWidget->setSortingEnabled(false);
 
@@ -98,6 +112,10 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
     ui->treeWidget->setSortingEnabled(true);
     ui->treeWidget->setUpdatesEnabled(true);
+
+    ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " " + RUBLE);
+    updateAllTimeLabel();
+    updateForTodayLabel();
 }
 
 void PortfolioTreeWidget::lastPriceChanged(const QString& instrumentId, float price)
@@ -126,6 +144,20 @@ void PortfolioTreeWidget::updateLastPrices()
 
         ui->treeWidget->setSortingEnabled(true);
         ui->treeWidget->setUpdatesEnabled(true);
+
+        mTotalYield      = 0.0;
+        mTotalDailyYield = 0.0;
+
+        for (auto it = mRecords.constBegin(); it != mRecords.constEnd(); ++it)
+        {
+            IPortfolioTreeRecord* record = it.value();
+
+            mTotalYield      += record->yield();
+            mTotalDailyYield += record->dailyYield();
+        }
+
+        updateAllTimeLabel();
+        updateForTodayLabel();
     }
 }
 
@@ -159,6 +191,8 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
 {
     const PortfolioItem& categoryTotal = portfolioItems["total"];
 
+    mTotalCost += categoryTotal.cost;
+
     categoryTreeItem->setCost(categoryTotal.cost);
     categoryTreeItem->setPart(categoryTotal.part);
 
@@ -173,6 +207,8 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
             continue;
         }
 
+        const PortfolioItem& portfolioItem = it.value();
+
         IPortfolioTreeRecord* record = mRecords.value(instrumentId, nullptr);
 
         if (record == nullptr)
@@ -183,7 +219,11 @@ void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, con
             mRecords[instrumentId] = record;
         }
 
-        record->setPortfolioItem(it.value());
+        record->setPortfolioItem(portfolioItem);
+
+        mTotalYield      += portfolioItem.yield;
+        mTotalDailyCost  += portfolioItem.costForDailyYield;
+        mTotalDailyYield += portfolioItem.dailyYield;
     }
 }
 
@@ -238,6 +278,48 @@ void PortfolioTreeWidget::actionExportToExcelTriggered()
 
         exportToExcel(path);
     }
+}
+
+void PortfolioTreeWidget::updateAllTimeLabel()
+{
+    updateYieldLabel(ui->allTimeLabel, mTotalYield, mTotalCost);
+}
+
+void PortfolioTreeWidget::updateForTodayLabel()
+{
+    updateYieldLabel(ui->forTodayLabel, mTotalDailyYield, mTotalDailyCost);
+}
+
+void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double cost)
+{
+    const QString prefix  = yield > 0 ? "+" : "";
+    const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
+
+    label->setText(
+        prefix + QString::number(yield, 'f', 2) + " " + RUBLE + "(" + prefix + QString::number(percent, 'f', 2) + "%)"
+    );
+
+    QColor color;
+
+    if (yield > -ZERO_LIMIT && yield < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (yield > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    label->setPalette(palette);
 }
 
 void PortfolioTreeWidget::exportToExcel(const QString& path) const

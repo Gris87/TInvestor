@@ -32,6 +32,8 @@ public:
     void setPart(float value);
     void setYield(float value);
     void setYieldPercent(float value, float fromPrice);
+    void setDailyYield(float value);
+    void setCostForDailyYield(double value);
     void setDailyYieldPercent(float value, float fromPrice);
 
     [[nodiscard]]
@@ -62,7 +64,13 @@ public:
     float yieldPercent() const;
 
     [[nodiscard]]
+    float dailyYield() const;
+
+    [[nodiscard]]
     float priceForDailyYield() const;
+
+    [[nodiscard]]
+    double costForDailyYield() const;
 
     [[nodiscard]]
     float dailyYieldPercent() const;
@@ -82,6 +90,8 @@ private:
     float              mPart;
     float              mYield;
     float              mYieldPercent;
+    float              mDailyYield;
+    double             mCostForDailyYield;
     float              mPriceForDailyYield;
     float              mDailyYieldPercent;
     qint8              mPricePrecision;

@@ -28,7 +28,7 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->setupUi(this);
 
-    ui->splitter->setSizes(QList<int>() << 400 << 100); // NOLINT(readability-magic-numbers)
+    ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
         operationsTableRecordFactory,

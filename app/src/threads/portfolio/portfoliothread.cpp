@@ -115,7 +115,9 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         item.cost               = item.available * item.avgPrice;
         item.yield              = (item.available * item.price) - item.cost;
         item.yieldPercent       = (item.yield / item.cost) * HUNDRED_PERCENT;
-        item.priceForDailyYield = item.price - (quotationToFloat(position.daily_yield()) / item.available);
+        item.dailyYield         = quotationToFloat(position.daily_yield());
+        item.priceForDailyYield = item.price - (item.dailyYield / item.available);
+        item.costForDailyYield  = item.available * item.priceForDailyYield;
         item.dailyYieldPercent  = ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
         totalCost += item.cost;

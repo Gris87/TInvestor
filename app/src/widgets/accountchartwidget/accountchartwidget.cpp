@@ -656,13 +656,14 @@ void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSe
     {
         tooltipHideTimer.stop();
 
-        const QPointF nearestPoint = QPointF(index, barSet->at(index));
+        const qreal   value        = barSet->at(index);
+        const QPointF nearestPoint = QPointF(index, qMax(value, 0.0f));
 
-        const QString prefix       = nearestPoint.y() > 0 ? "+" : "";
+        const QString prefix       = value > 0 ? "+" : "";
         const QString suffix       = "%";
         const QString xDescription = mMonthlyYieldAxisX.at(index);
 
-        mTooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
+        mTooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(value, 'f', 2), suffix));
         mTooltip->setAnchor(nearestPoint);
         mTooltip->updateGeometry();
         mTooltip->show();

@@ -22,7 +22,9 @@ struct PortfolioItem
     float  part;
     float  yield;
     float  yieldPercent;
+    float  dailyYield;
     float  priceForDailyYield;
+    double costForDailyYield;
     float  dailyYieldPercent;
 };
 

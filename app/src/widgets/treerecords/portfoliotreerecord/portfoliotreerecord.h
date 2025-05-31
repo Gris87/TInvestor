@@ -28,9 +28,11 @@ public:
     PortfolioTreeRecord(const PortfolioTreeRecord& another)            = delete;
     PortfolioTreeRecord& operator=(const PortfolioTreeRecord& another) = delete;
 
-    void setPortfolioItem(const PortfolioItem& item) override;
-    void updatePrice(float price) override;
-    void exportToExcel(QXlsx::Document& doc, int row) const override;
+    void  setPortfolioItem(const PortfolioItem& item) override;
+    void  updatePrice(float price) override;
+    float yield() const override;
+    float dailyYield() const override;
+    void  exportToExcel(QXlsx::Document& doc, int row) const override;
 
 private:
     [[nodiscard]]
