@@ -10,6 +10,9 @@ from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.schemas import OperationState
 
 
+RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
+
+
 def collect_tinkoff_data(args):
     Path(args.output).mkdir(parents=True, exist_ok=True)
 
@@ -17,6 +20,7 @@ def collect_tinkoff_data(args):
 
     with Client(args.token, target=INVEST_GRPC_API if args.official else INVEST_GRPC_API_SANDBOX) as client:
         accounts, portfolios, operations = _collect_data(client)
+        results = _handle_accounts(accounts, portfolios, operations)
 
         with open(f"{args.output}/accounts.json", "w", encoding='utf-8') as f:
             f.write(json.dumps(accounts, indent=4, ensure_ascii=False))
@@ -28,6 +32,10 @@ def collect_tinkoff_data(args):
         for i, operations_by_account in enumerate(operations):
             with open(f"{args.output}/operations_{i}.json", "w", encoding='utf-8') as f:
                 f.write(json.dumps(operations_by_account, indent=4, ensure_ascii=False))
+
+        for i, result_by_account in enumerate(results):
+            with open(f"{args.output}/result_{i}.json", "w", encoding='utf-8') as f:
+                f.write(json.dumps(result_by_account, indent=4, ensure_ascii=False))
 
 
 def _collect_data(client):
@@ -139,6 +147,7 @@ def _get_operations(client, accounts):
             operations_dict = client.operations.get_operations_by_cursor(req).__dict__
 
             items = operations_dict["items"]
+            new_items = []
 
             for i in range(len(items)):
                 item_dict = items[i].__dict__
@@ -156,11 +165,11 @@ def _get_operations(client, accounts):
                 item_dict["cancel_date_time"] = item_dict["cancel_date_time"].isoformat()
                 item_dict["trades_info"] = item_dict["trades_info"].__dict__
 
-                items[i] = item_dict
+                new_items.insert(0, item_dict)
 
-            operations_dict["items"] = items
+            operations_dict["items"] = new_items
 
-            group.append(operations_dict)
+            group.insert(0, operations_dict)
 
             if not operations_dict["has_next"]:
                 break
@@ -170,6 +179,100 @@ def _get_operations(client, accounts):
         res.append(group)
 
     return res
+
+
+def _handle_accounts(accounts, portfolios, operations):
+    res = []
+
+    for i in range(len(accounts)):
+        res.append(_handle_account(accounts[i], portfolios[i], operations[i]))
+
+    return res
+
+
+def _handle_account(account, portfolio, operations):
+    res = {}
+
+    portfolio_remained_money = 0
+    portfolio_total_money = 0
+
+    for position in portfolio["positions"]:
+        if position["instrument_uid"] == RUBLE_UID:
+            portfolio_remained_money = _quotation_to_float(position["quantity"])
+            portfolio_total_money += portfolio_remained_money
+        else:
+            portfolio_total_money += _quotation_to_float(position["quantity"]) * _quotation_to_float(position["average_position_price_fifo"])
+
+    last_position_uid_for_ext_account = ""
+    operations_remained_money = 0
+    operations_total_money = 0
+    operations_payment_by_type = {
+        "BUILT_IN_COMMISSION": 0,
+        "OPERATION_TYPE_BROKER_FEE": 0,
+    }
+
+    for operations_group in operations:
+        for operation in operations_group["items"]:
+            operation_type = operation["type"]
+            payment = _quotation_to_float(operation["payment"])
+
+            if not _is_operation_type_with_ext_account(operation_type, operation["position_uid"], last_position_uid_for_ext_account):
+                operations_remained_money += payment
+            else:
+                last_position_uid_for_ext_account = operation["position_uid"]
+
+            if operation_type not in operations_payment_by_type:
+                operations_payment_by_type[operation_type] = 0
+
+            operations_payment_by_type["BUILT_IN_COMMISSION"] += _quotation_to_float(operation["commission"])
+            operations_payment_by_type[operation_type] += payment
+
+    delta_between_remained_money = portfolio_remained_money - operations_remained_money;
+    delta_between_total_money = portfolio_total_money - operations_total_money;
+    operations_delta_between_commissions = operations_payment_by_type["OPERATION_TYPE_BROKER_FEE"] - operations_payment_by_type["BUILT_IN_COMMISSION"]
+
+    print("=========================================================")
+    print(account["name"])
+    print("=========================================================")
+    print("")
+    print(f"Remained money from portfolio:  {portfolio_remained_money}")
+    print(f"Total money from portfolio:     {portfolio_total_money}")
+    print("")
+    print(f"Remained money from operations: {operations_remained_money}")
+    print(f"Total money from operations:    {operations_total_money}")
+    print("")
+    print("---------------------------------------------------------")
+    print("Payment by operation types:")
+    print("---------------------------------------------------------")
+
+    for operation_type, payment in operations_payment_by_type.items():
+        print(f"{operation_type:30} = {payment}")
+
+    print("")
+    print(f"Detla between remained money: {delta_between_remained_money}")
+    print(f"Detla between total money:    {delta_between_total_money}")
+    print(f"Detla between commissions:    {operations_delta_between_commissions}")
+    print("")
+
+    res["portfolio_remained_money"] = portfolio_remained_money
+    res["portfolio_total_money"] = portfolio_total_money
+    res["operations_remained_money"] = operations_remained_money
+    res["operations_total_money"] = operations_total_money
+    res["operations_payment_by_type"] = operations_payment_by_type
+    res["delta_between_remained_money"] = delta_between_remained_money
+    res["delta_between_total_money"] = delta_between_total_money
+    res["operations_delta_between_commissions"] = operations_delta_between_commissions
+
+    return res
+
+
+def _is_operation_type_with_ext_account(operation_type, position_uid, last_position_uid_for_ext_account):
+    return operation_type == "OPERATION_TYPE_DIV_EXT" or \
+           (operation_type == "OPERATION_TYPE_DIVIDEND_TAX" and position_uid == last_position_uid_for_ext_account);
+
+
+def _quotation_to_float(quotation):
+    return quotation["units"] + quotation["nano"] / 1000000000
 
 
 def main():
