@@ -165,6 +165,17 @@ def _get_operations(client, accounts):
                 item_dict["cancel_date_time"] = item_dict["cancel_date_time"].isoformat()
                 item_dict["trades_info"] = item_dict["trades_info"].__dict__
 
+                child_operations = item_dict["child_operations"]
+
+                for j in range(len(child_operations)):
+                    child_operations_dict = child_operations[j].__dict__
+
+                    child_operations_dict["payment"] = child_operations_dict["payment"].__dict__
+
+                    child_operations[j] = child_operations_dict
+
+                item_dict["child_operations"] = child_operations
+
                 new_items.insert(0, item_dict)
 
             operations_dict["items"] = new_items
@@ -278,7 +289,7 @@ def _handle_account(account, portfolio, operations):
     print("---------------------------------------------------------")
 
     for operation_type, payment in operations_payment_by_type.items():
-        print(f"{operation_type:30} = {payment}")
+        print(f"{operation_type:40} = {payment}")
 
     print("")
     print(f"Detla between remained money: {delta_between_remained_money}")
