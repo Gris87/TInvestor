@@ -13,13 +13,19 @@ fi
 
 
 rm -rf /tmp/investAPI
+rm -rf /tmp/invest-python
 git clone git@github.com:RussianInvestments/investAPI.git /tmp/investAPI
+git clone git@github.com:RussianInvestments/invest-python.git /tmp/invest-python
 
 
 
 rm -rf libs/investapi/messages
 cp -r /tmp/investAPI/src/docs/contracts libs/investapi/messages
 rm -rf /tmp/investAPI
+
+rm -rf tools/py3/tinkoff-accounts/tinkoff
+cp -r /tmp/invest-python/tinkoff tools/py3/tinkoff-accounts/tinkoff
+rm -rf /tmp/invest-python
 
 
 
