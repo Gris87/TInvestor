@@ -325,6 +325,13 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         {
             mTotalMoney = quotationSum(mTotalMoney, yieldWithCommission);
         }
+        else if (operationType == tinkoff::OPERATION_TYPE_BOND_REPAYMENT_FULL)
+        {
+            mTotalMoney = quotationDiff(quotationSum(mTotalMoney, tinkoffOperation.payment()), quantityAndCost.cost);
+
+            quantityAndCost.quantity = 0;
+            quantityAndCost.cost     = Quotation();
+        }
         else
         {
             // Real server sends empty instrument_uid for some operations with ruble

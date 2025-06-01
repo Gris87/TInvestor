@@ -206,22 +206,34 @@ def _handle_account(account, portfolio, operations):
 
     portfolio_remained_money = 0
     portfolio_total_money = 0
+    portfolio_quantity_and_cost_map = {}
 
     for position in portfolio["positions"]:
-        if position["instrument_uid"] == RUBLE_UID:
+        instrument_uid = position["instrument_uid"]
+
+        if instrument_uid == RUBLE_UID:
             portfolio_remained_money = _quotation_to_float(position["quantity"])
             portfolio_total_money += portfolio_remained_money
         else:
-            portfolio_total_money += _quotation_to_float(position["quantity"]) * _quotation_to_float(position["average_position_price_fifo"])
+            quantity = _quotation_to_float(position["quantity"])
+            avg_price = _quotation_to_float(position["average_position_price_fifo"])
+            cost = quantity * avg_price
+
+            portfolio_quantity_and_cost_map[instrument_uid] = {
+                "quantity": quantity,
+                "cost": cost
+            }
+
+            portfolio_total_money += cost
 
     last_position_uid_for_ext_account = ""
     operations_remained_money = 0
     operations_total_money = 0
+    operations_quantity_and_cost_map = {}
     operations_payment_by_type = {
         "BUILT_IN_COMMISSION": 0,
         "OPERATION_TYPE_BROKER_FEE": 0,
     }
-    quantity_and_cost_map = {}
 
     for operations_group in operations:
         for operation in operations_group["items"]:
@@ -229,13 +241,13 @@ def _handle_account(account, portfolio, operations):
             instrument_uid = operation["instrument_uid"]
             payment = _quotation_to_float(operation["payment"])
 
-            if instrument_uid not in quantity_and_cost_map:
-                quantity_and_cost_map[instrument_uid] = {
+            if instrument_uid not in operations_quantity_and_cost_map:
+                operations_quantity_and_cost_map[instrument_uid] = {
                     "quantity": 0,
                     "cost": 0
                 }
 
-            quantity_and_cost = quantity_and_cost_map[instrument_uid]
+            quantity_and_cost = operations_quantity_and_cost_map[instrument_uid]
 
             if not _is_operation_type_with_ext_account(operation_type, operation["position_uid"], last_position_uid_for_ext_account):
                 operations_remained_money += payment
@@ -245,7 +257,7 @@ def _handle_account(account, portfolio, operations):
                         quantity_and_cost["quantity"] += operation["quantity_done"]
                         quantity_and_cost["cost"] -= payment  # Diff == Sum with negative payment
                     else:
-                        avg_price = quantity_and_cost["cost"] / quantity_and_cost["quantity"];
+                        avg_price = quantity_and_cost["cost"] / quantity_and_cost["quantity"]
                         avg_cost  = avg_price * operation["quantity_done"]
 
                         quantity_and_cost["quantity"] -= operation["quantity_done"]
@@ -256,13 +268,21 @@ def _handle_account(account, portfolio, operations):
                             quantity_and_cost["quantity"] = 0
                             quantity_and_cost["cost"] = 0
 
-                        operations_total_money += payment - avg_cost;
+                        operations_total_money += payment - avg_cost
+                elif operation_type == "OPERATION_TYPE_BOND_REPAYMENT_FULL":
+                    operations_total_money += payment - quantity_and_cost["cost"]
+
+                    quantity_and_cost["quantity"] = 0
+                    quantity_and_cost["cost"] = 0
                 else:
                     operations_total_money += payment
             else:
                 last_position_uid_for_ext_account = operation["position_uid"]
 
-            quantity_and_cost_map[instrument_uid] = quantity_and_cost
+            if quantity_and_cost["quantity"] > 0:
+                operations_quantity_and_cost_map[instrument_uid] = quantity_and_cost
+            else:
+                del operations_quantity_and_cost_map[instrument_uid]
 
             if operation_type not in operations_payment_by_type:
                 operations_payment_by_type[operation_type] = 0
@@ -270,9 +290,54 @@ def _handle_account(account, portfolio, operations):
             operations_payment_by_type["BUILT_IN_COMMISSION"] += _quotation_to_float(operation["commission"])
             operations_payment_by_type[operation_type] += payment
 
-    delta_between_remained_money = portfolio_remained_money - operations_remained_money;
-    delta_between_total_money = portfolio_total_money - operations_total_money;
-    operations_delta_between_commissions = operations_payment_by_type["OPERATION_TYPE_BROKER_FEE"] - operations_payment_by_type["BUILT_IN_COMMISSION"]
+    quantity_and_cost_map = {}
+
+    for instrument_uid, quantity_and_cost in portfolio_quantity_and_cost_map.items():
+        another_quantity_and_cost = {
+            "quantity": 0,
+            "cost": 0
+        }
+
+        if instrument_uid in operations_quantity_and_cost_map:
+            another_quantity_and_cost = operations_quantity_and_cost_map[instrument_uid]
+
+        quantity_and_cost_map[instrument_uid] = {
+            "quantity_from_portfolio": quantity_and_cost["quantity"],
+            "cost_from_portfolio": quantity_and_cost["cost"],
+            "quantity_from_operations": another_quantity_and_cost["quantity"],
+            "cost_from_operations": another_quantity_and_cost["cost"],
+            "delta_between_quantity": abs(quantity_and_cost["quantity"] - another_quantity_and_cost["quantity"]),
+            "delta_between_cost": quantity_and_cost["cost"] - another_quantity_and_cost["cost"],
+        }
+
+    for instrument_uid, quantity_and_cost in operations_quantity_and_cost_map.items():
+        another_quantity_and_cost = {
+            "quantity": 0,
+            "cost": 0
+        }
+
+        if instrument_uid in portfolio_quantity_and_cost_map:
+            another_quantity_and_cost = portfolio_quantity_and_cost_map[instrument_uid]
+
+        quantity_and_cost_map[instrument_uid] = {
+            "quantity_from_portfolio": another_quantity_and_cost["quantity"],
+            "cost_from_portfolio": another_quantity_and_cost["cost"],
+            "quantity_from_operations": quantity_and_cost["quantity"],
+            "cost_from_operations": quantity_and_cost["cost"],
+            "delta_between_quantity": abs(another_quantity_and_cost["quantity"] - quantity_and_cost["quantity"]),
+            "delta_between_cost": another_quantity_and_cost["cost"] - quantity_and_cost["cost"],
+        }
+
+    operations_delta_between_commissions = abs(operations_payment_by_type["OPERATION_TYPE_BROKER_FEE"] - operations_payment_by_type["BUILT_IN_COMMISSION"])
+    delta_between_remained_money = abs(portfolio_remained_money - operations_remained_money)
+    delta_between_total_money = abs(portfolio_total_money - operations_total_money)
+    delta_between_instruments_cost = 0
+
+    for quantity_and_cost in quantity_and_cost_map.values():
+        delta_between_instruments_cost += quantity_and_cost["delta_between_cost"]
+        quantity_and_cost["delta_between_cost"] = abs(quantity_and_cost["delta_between_cost"])
+
+    delta_between_instruments_cost = abs(delta_between_instruments_cost)
 
     print("=========================================================")
     print(account["name"])
@@ -292,9 +357,25 @@ def _handle_account(account, portfolio, operations):
         print(f"{operation_type:40} = {payment}")
 
     print("")
-    print(f"Detla between remained money: {delta_between_remained_money}")
-    print(f"Detla between total money:    {delta_between_total_money}")
-    print(f"Detla between commissions:    {operations_delta_between_commissions}")
+    print("---------------------------------------------------------")
+    print("Quantity and cost of instruments:")
+    print("---------------------------------------------------------")
+
+    for instrument_uid, quantity_and_cost in quantity_and_cost_map.items():
+        quantity_from_portfolio = quantity_and_cost["quantity_from_portfolio"]
+        cost_from_portfolio = quantity_and_cost["cost_from_portfolio"]
+        quantity_from_operations = quantity_and_cost["quantity_from_operations"]
+        cost_from_operations = quantity_and_cost["cost_from_operations"]
+        delta_between_quantity = quantity_and_cost["delta_between_quantity"]
+        delta_between_cost = quantity_and_cost["delta_between_cost"]
+
+        print(f"{instrument_uid:40} {quantity_from_portfolio:15.4f} {cost_from_portfolio:15.4f} {quantity_from_operations:15.4f} {cost_from_operations:15.4f} {delta_between_quantity:15.4f} {delta_between_cost:15.4f}")
+
+    print("")
+    print(f"Delta between commissions:      {operations_delta_between_commissions}")
+    print(f"Delta between remained money:   {delta_between_remained_money}")
+    print(f"Delta between total money:      {delta_between_total_money}")
+    print(f"Delta between instruments cost: {delta_between_instruments_cost}")
     print("")
 
     res["portfolio_remained_money"] = portfolio_remained_money
@@ -302,16 +383,18 @@ def _handle_account(account, portfolio, operations):
     res["operations_remained_money"] = operations_remained_money
     res["operations_total_money"] = operations_total_money
     res["operations_payment_by_type"] = operations_payment_by_type
+    res["quantity_and_cost"] = quantity_and_cost_map
+    res["operations_delta_between_commissions"] = operations_delta_between_commissions
     res["delta_between_remained_money"] = delta_between_remained_money
     res["delta_between_total_money"] = delta_between_total_money
-    res["operations_delta_between_commissions"] = operations_delta_between_commissions
+    res["delta_between_instruments_cost"] = delta_between_instruments_cost
 
     return res
 
 
 def _is_operation_type_with_ext_account(operation_type, position_uid, last_position_uid_for_ext_account):
     return operation_type == "OPERATION_TYPE_DIV_EXT" or \
-           (operation_type == "OPERATION_TYPE_DIVIDEND_TAX" and position_uid == last_position_uid_for_ext_account);
+           (operation_type == "OPERATION_TYPE_DIVIDEND_TAX" and position_uid == last_position_uid_for_ext_account)
 
 
 def _quotation_to_float(quotation):
