@@ -247,6 +247,7 @@ def is_file_skipped(file_path):
         "/.git/" in file_path or
         "/build/" in file_path or
         "/libs/investapi/messages/" in file_path or
+        "/tools/py3/tinkoff-accounts/tinkoff/" in file_path or
         "/TInvestor.pro.user" in file_path
     )
 
