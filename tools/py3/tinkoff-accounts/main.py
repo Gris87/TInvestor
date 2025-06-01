@@ -210,16 +210,48 @@ def _handle_account(account, portfolio, operations):
         "BUILT_IN_COMMISSION": 0,
         "OPERATION_TYPE_BROKER_FEE": 0,
     }
+    quantity_and_cost_map = {}
 
     for operations_group in operations:
         for operation in operations_group["items"]:
             operation_type = operation["type"]
+            instrument_uid = operation["instrument_uid"]
             payment = _quotation_to_float(operation["payment"])
+
+            if instrument_uid not in quantity_and_cost_map:
+                quantity_and_cost_map[instrument_uid] = {
+                    "quantity": 0,
+                    "cost": 0
+                }
+
+            quantity_and_cost = quantity_and_cost_map[instrument_uid]
 
             if not _is_operation_type_with_ext_account(operation_type, operation["position_uid"], last_position_uid_for_ext_account):
                 operations_remained_money += payment
+
+                if operation_type == "OPERATION_TYPE_BUY" or operation_type == "OPERATION_TYPE_SELL":
+                    if operation_type == "OPERATION_TYPE_BUY":
+                        quantity_and_cost["quantity"] += operation["quantity_done"]
+                        quantity_and_cost["cost"] -= payment  # Diff == Sum with negative payment
+                    else:
+                        avg_price = quantity_and_cost["cost"] / quantity_and_cost["quantity"];
+                        avg_cost  = avg_price * operation["quantity_done"]
+
+                        quantity_and_cost["quantity"] -= operation["quantity_done"]
+
+                        if quantity_and_cost["quantity"] > 0:
+                            quantity_and_cost["cost"] -= avg_cost
+                        else:
+                            quantity_and_cost["quantity"] = 0
+                            quantity_and_cost["cost"] = 0
+
+                        operations_total_money += payment - avg_cost;
+                else:
+                    operations_total_money += payment
             else:
                 last_position_uid_for_ext_account = operation["position_uid"]
+
+            quantity_and_cost_map[instrument_uid] = quantity_and_cost
 
             if operation_type not in operations_payment_by_type:
                 operations_payment_by_type[operation_type] = 0
