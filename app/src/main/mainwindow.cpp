@@ -492,7 +492,7 @@ void MainWindow::startAutoPilot()
     mPortfolioThread->setAccount(account);
 
     const QMutexLocker lock(mUserStorage->getMutex());
-    Accounts           accounts = mUserStorage->getAccounts();
+    const Accounts     accounts = mUserStorage->getAccounts();
 
     mAutoPilotDecisionMakerWidget->setAccountName(accounts.value(account).name);
 

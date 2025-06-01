@@ -101,7 +101,7 @@ void OperationsThread::setAccount(const QString& account)
     mOperationsDatabase->setAccount(account);
 
     const QMutexLocker lock(mUserStorage->getMutex());
-    Accounts           accounts = mUserStorage->getAccounts();
+    const Accounts     accounts = mUserStorage->getAccounts();
 
     mAccountId = accounts.value(account).id;
 }

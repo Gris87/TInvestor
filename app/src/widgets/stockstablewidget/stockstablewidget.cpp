@@ -76,7 +76,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
         const QString instrumentId = stock->meta.uid;
         stock->mutex->unlock();
 
-        IStocksTableRecord* record = records[instrumentId]; // clazy:exclude=detaching-member
+        IStocksTableRecord* record = records.value(instrumentId);
 
         if (record == nullptr)
         {
@@ -127,7 +127,7 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
 
         for (const QString& lastPricesUpdate : std::as_const(lastPricesUpdates))
         {
-            IStocksTableRecord* record = records[lastPricesUpdate]; // clazy:exclude=detaching-member
+            IStocksTableRecord* record = records.value(lastPricesUpdate);
 
             if (record != nullptr)
             {

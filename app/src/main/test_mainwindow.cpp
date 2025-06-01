@@ -199,6 +199,8 @@ protected:
             )
         )
             .WillOnce(Return(autoPilotDecisionMakerWidgetMock));
+        EXPECT_CALL(*simulatorDecisionMakerWidgetMock, setAccountName(QString("Simulator")));
+        EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Auto-pilot")));
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
@@ -683,6 +685,17 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
 
+    QMutex mutex;
+
+    Accounts accounts;
+    Account  account;
+
+    account.index = 0;
+    account.id    = "aaaaaa";
+    account.name  = "Sergio";
+
+    accounts["aaaaaa"] = account;
+
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
@@ -692,6 +705,10 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 
     EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
+
+    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
 
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
@@ -880,6 +897,17 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
     // clang-format on
 
+    QMutex mutex;
+
+    Accounts accounts;
+    Account  account;
+
+    account.index = 0;
+    account.id    = "aaaaaa";
+    account.name  = "Sergio";
+
+    accounts["aaaaaa"] = account;
+
     EXPECT_CALL(
         *startAutoPilotDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, settingsEditorMock, mainWindow)
     )
@@ -898,6 +926,10 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 
     EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
+
+    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
 
     EXPECT_CALL(*operationsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());

@@ -65,16 +65,6 @@ void PortfolioTreeRecord::updatePrice(float price)
     mPortfolioTreeItem->setDailyYieldPercent(dailyYieldPercent, mPortfolioTreeItem->priceForDailyYield());
 }
 
-float PortfolioTreeRecord::yield() const
-{
-    return mPortfolioTreeItem->yield();
-}
-
-float PortfolioTreeRecord::dailyYield() const
-{
-    return mPortfolioTreeItem->dailyYield();
-}
-
 void PortfolioTreeRecord::exportToExcel(QXlsx::Document& doc, int row) const
 {
     QXlsx::Format cellStyle;
@@ -153,4 +143,14 @@ QXlsx::Format PortfolioTreeRecord::createPercentFormat(const QColor& color, bool
     res.setFontColor(color);
 
     return res;
+}
+
+float PortfolioTreeRecord::yield() const
+{
+    return mPortfolioTreeItem->yield();
+}
+
+float PortfolioTreeRecord::dailyYield() const
+{
+    return mPortfolioTreeItem->dailyYield();
 }

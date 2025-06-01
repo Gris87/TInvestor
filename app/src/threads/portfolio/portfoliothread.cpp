@@ -72,9 +72,9 @@ void PortfolioThread::run()
 void PortfolioThread::setAccount(const QString& account)
 {
     const QMutexLocker lock(mUserStorage->getMutex());
-    Accounts           accounts = mUserStorage->getAccounts();
+    const Accounts     accounts = mUserStorage->getAccounts();
 
-    mAccountId = accounts[account].id;
+    mAccountId = accounts.value(account).id;
 }
 
 void PortfolioThread::terminateThread()

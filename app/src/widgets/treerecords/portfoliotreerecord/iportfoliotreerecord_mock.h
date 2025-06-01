@@ -24,7 +24,7 @@ public:
 
     MOCK_METHOD(void, setPortfolioItem, (const PortfolioItem& item), (override));
     MOCK_METHOD(void, updatePrice, (float price), (override));
+    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc, int row), (const, override));
     MOCK_METHOD(float, yield, (), (const, override));
     MOCK_METHOD(float, dailyYield, (), (const, override));
-    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc, int row), (const, override));
 };
