@@ -154,12 +154,19 @@ void OperationsThread::readOperations()
 
     for (const Operation& operation : operations)
     {
-        QuantityAndCost& quantityAndCost = mInstruments[operation.instrumentId]; // clazy:exclude=detaching-member
+        if (operation.remainedQuantity > 0)
+        {
+            QuantityAndCost& quantityAndCost = mInstruments[operation.instrumentId]; // clazy:exclude=detaching-member
 
-        quantityAndCost.quantity  = operation.remainedQuantity;
-        quantityAndCost.fifoItems = operation.fifoItems;
-        quantityAndCost.costFifo  = operation.costFifo;
-        quantityAndCost.costWavg  = operation.costWavg;
+            quantityAndCost.quantity  = operation.remainedQuantity;
+            quantityAndCost.fifoItems = operation.fifoItems;
+            quantityAndCost.costFifo  = operation.costFifo;
+            quantityAndCost.costWavg  = operation.costWavg;
+        }
+        else
+        {
+            mInstruments.remove(operation.instrumentId);
+        }
     }
 
     emit operationsRead(operations);
@@ -264,7 +271,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
     double    avgPriceFifo = 0.0;
     double    avgPriceWavg = 0.0;
-    double    avgCost  = 0.0;
+    double    avgCost      = 0.0;
     Quotation yield;
     Quotation yieldWithCommission;
     float     yieldWithCommissionPercent      = 0.0f;

@@ -97,7 +97,6 @@ void PortfolioTreeItem::setAvgPrice(float valueFifo, float valueWavg)
     mAvgPrice = valueFifo;
 
     setText(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
-    setToolTip(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
     setToolTip(
         PORTFOLIO_AVG_PRICE_COLUMN, QObject::tr("Average price by WAVG: %1").arg(valueWavg, 0, 'f', mPricePrecision) + " " + RUBLE
     );

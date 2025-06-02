@@ -89,7 +89,7 @@ TEST(Test_OperationFifoItem, Test_toJsonObject)
     const QJsonObject   jsonObject = item.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
 
-    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString content         = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent = R"({"cost":{"nano":3,"units":2},"quantity":1})";
 
     ASSERT_EQ(content, expectedContent);

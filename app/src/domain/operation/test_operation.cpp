@@ -356,8 +356,6 @@ TEST(Test_Operation, Test_toJsonObject)
     const QString expectedContent =
         R"({"avgCost":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
-    qInfo() << content;
-
     ASSERT_EQ(content, expectedContent);
 }
 
