@@ -28,7 +28,8 @@ OperationsTableRecord::OperationsTableRecord(
     mInstrumentTableItemWidget(),
     mDescriptionTableWidgetItem(new QTableWidgetItem()),
     mPriceTableWidgetItem(new MoneyTableItem()),
-    mAvgPriceTableWidgetItem(new MoneyTableItem()),
+    mAvgPriceFifoTableWidgetItem(new MoneyTableItem()),
+    mAvgPriceWavgTableWidgetItem(new MoneyTableItem()),
     mQuantityTableWidgetItem(new IntegerTableItem()),
     mRemainedQuantityTableWidgetItem(new IntegerTableItem()),
     mPaymentTableWidgetItem(new MoneyChangeTableItem()),
@@ -55,7 +56,8 @@ OperationsTableRecord::OperationsTableRecord(
     tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,                                mInstrumentTableItemWidget);
     tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN,                         mDescriptionTableWidgetItem);
     tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,                               mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_COLUMN,                           mAvgPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_FIFO_COLUMN,                      mAvgPriceFifoTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_WAVG_COLUMN,                      mAvgPriceWavgTableWidgetItem);
     tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,                            mQuantityTableWidgetItem);
     tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_QUANTITY_COLUMN,                   mRemainedQuantityTableWidgetItem);
     tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,                             mPaymentTableWidgetItem);
@@ -98,7 +100,8 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mInstrumentTableItemWidget->setFullText(instrument.name);
     mDescriptionTableWidgetItem->setText(operation.description);
     mPriceTableWidgetItem->setValue(operation.price, instrument.pricePrecision);
-    mAvgPriceTableWidgetItem->setValue(operation.avgPriceFifo, instrument.pricePrecision);
+    mAvgPriceFifoTableWidgetItem->setValue(operation.avgPriceFifo, instrument.pricePrecision);
+    mAvgPriceWavgTableWidgetItem->setValue(operation.avgPriceWavg, instrument.pricePrecision);
     mQuantityTableWidgetItem->setValue(operation.quantity);
     mRemainedQuantityTableWidgetItem->setValue(operation.remainedQuantity);
     mPaymentTableWidgetItem->setValue(operation.payment, false, operation.paymentPrecision);
@@ -138,7 +141,8 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
     doc.write(row, OPERATIONS_NAME_COLUMN + 1,                                mInstrumentTableItemWidget->fullText(), cellStyle);
     doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                         mDescriptionTableWidgetItem->text(), cellStyle);
     doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                               mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_AVG_PRICE_COLUMN + 1,                           mAvgPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      mAvgPriceFifoTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceFifoTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      mAvgPriceWavgTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceWavgTableWidgetItem->precision()));
     doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                            mQuantityTableWidgetItem->value(), cellStyle);
     doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   mRemainedQuantityTableWidgetItem->value(), cellStyle);
     doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                             mPaymentTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->precision()));

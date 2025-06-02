@@ -48,7 +48,8 @@ private:
     IInstrumentTableItemWidget*  mInstrumentTableItemWidget;
     QTableWidgetItem*            mDescriptionTableWidgetItem;
     MoneyTableItem*              mPriceTableWidgetItem;
-    MoneyTableItem*              mAvgPriceTableWidgetItem;
+    MoneyTableItem*              mAvgPriceFifoTableWidgetItem;
+    MoneyTableItem*              mAvgPriceWavgTableWidgetItem;
     IntegerTableItem*            mQuantityTableWidgetItem;
     IntegerTableItem*            mRemainedQuantityTableWidgetItem;
     MoneyChangeTableItem*        mPaymentTableWidgetItem;

@@ -10,9 +10,13 @@
 
 // TODO: Update widths
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {110, 133, 309, 61, 106, 95, 167, 87, 85, 69, 141, 162, 107, 128, 107, 95};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {
+    110, 133, 309, 61, 106, 106, 95, 167, 87, 85, 69, 141, 162, 107, 128, 107, 95
+};
 #else
-const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {121, 138, 154, 64, 114, 102, 180, 95, 90, 101, 184, 206, 10, 10, 125, 101};
+const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {
+    121, 138, 154, 64, 114, 114, 102, 180, 95, 90, 101, 184, 206, 10, 10, 125, 101
+};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
@@ -166,7 +170,8 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     doc.autosizeColumnWidth(OPERATIONS_NAME_COLUMN + 1);
     doc.autosizeColumnWidth(OPERATIONS_DESCRIPTION_COLUMN + 1);
     doc.setColumnWidth(OPERATIONS_PRICE_COLUMN + 1,                               7.43  + COLUMN_GAP);
-    doc.setColumnWidth(OPERATIONS_AVG_PRICE_COLUMN + 1,                           13.14 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      13.14 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      13.14 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_QUANTITY_COLUMN + 1,                            10.86 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   22.43 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_PAYMENT_COLUMN + 1,                             11.43 + COLUMN_GAP);
@@ -191,7 +196,8 @@ void OperationsTableWidget::saveWindowState(const QString& type)
     mSettingsEditor->setValue(type + "/columnWidth_Name",                            ui->tableWidget->columnWidth(OPERATIONS_NAME_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Description",                     ui->tableWidget->columnWidth(OPERATIONS_DESCRIPTION_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Price",                           ui->tableWidget->columnWidth(OPERATIONS_PRICE_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_AvgPrice",                        ui->tableWidget->columnWidth(OPERATIONS_AVG_PRICE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_AvgPriceFifo",                    ui->tableWidget->columnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_AvgPriceWavg",                    ui->tableWidget->columnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Quantity",                        ui->tableWidget->columnWidth(OPERATIONS_QUANTITY_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_RemainedQuantity",                ui->tableWidget->columnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Payment",                         ui->tableWidget->columnWidth(OPERATIONS_PAYMENT_COLUMN));
@@ -213,7 +219,8 @@ void OperationsTableWidget::loadWindowState(const QString& type)
     ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,                                mSettingsEditor->value(type + "/columnWidth_Name",                            COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_DESCRIPTION_COLUMN,                         mSettingsEditor->value(type + "/columnWidth_Description",                     COLUMN_WIDTHS[OPERATIONS_DESCRIPTION_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_PRICE_COLUMN,                               mSettingsEditor->value(type + "/columnWidth_Price",                           COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(OPERATIONS_AVG_PRICE_COLUMN,                           mSettingsEditor->value(type + "/columnWidth_AvgPrice",                        COLUMN_WIDTHS[OPERATIONS_AVG_PRICE_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN,                      mSettingsEditor->value(type + "/columnWidth_AvgPriceFifo",                    COLUMN_WIDTHS[OPERATIONS_AVG_PRICE_FIFO_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN,                      mSettingsEditor->value(type + "/columnWidth_AvgPriceWavg",                    COLUMN_WIDTHS[OPERATIONS_AVG_PRICE_WAVG_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,                            mSettingsEditor->value(type + "/columnWidth_Quantity",                        COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN,                   mSettingsEditor->value(type + "/columnWidth_RemainedQuantity",                COLUMN_WIDTHS[OPERATIONS_REMAINED_QUANTITY_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_PAYMENT_COLUMN,                             mSettingsEditor->value(type + "/columnWidth_Payment",                         COLUMN_WIDTHS[OPERATIONS_PAYMENT_COLUMN]).toInt());

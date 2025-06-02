@@ -41,7 +41,7 @@
       <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
      </property>
      <property name="columnCount">
-      <number>16</number>
+      <number>17</number>
      </property>
      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
       <bool>true</bool>
@@ -68,7 +68,12 @@
      </column>
      <column>
       <property name="text">
-       <string>Avg price</string>
+       <string>Avg price (FIFO)</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Avg price (WAVG)</string>
       </property>
      </column>
      <column>

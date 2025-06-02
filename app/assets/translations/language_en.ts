@@ -326,7 +326,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="507"/>
+        <location filename="../../src/main/mainwindow.cpp" line="512"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -398,24 +398,24 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="450"/>
-        <location filename="../../src/main/mainwindow.cpp" line="727"/>
+        <location filename="../../src/main/mainwindow.cpp" line="732"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="465"/>
-        <location filename="../../src/main/mainwindow.cpp" line="649"/>
+        <location filename="../../src/main/mainwindow.cpp" line="654"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="649"/>
+        <location filename="../../src/main/mainwindow.cpp" line="654"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="487"/>
-        <location filename="../../src/main/mainwindow.cpp" line="680"/>
+        <location filename="../../src/main/mainwindow.cpp" line="685"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
@@ -430,7 +430,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="680"/>
+        <location filename="../../src/main/mainwindow.cpp" line="685"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -453,57 +453,52 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="71"/>
-        <source>Avg price</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="81"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="86"/>
         <source>Remained quantity</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="86"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="91"/>
         <source>Payment</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="91"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="96"/>
         <source>Commission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="96"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="101"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="101"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="106"/>
         <source>Yield with commission</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="106"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
         <source>Yield with commission (%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="111"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
         <source>Total yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="116"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="121"/>
         <source>Total yield (%)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="121"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="126"/>
         <source>Remained money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="126"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="131"/>
         <source>Total money</source>
         <translation></translation>
     </message>
@@ -513,27 +508,37 @@
         <translation></translation>
     </message>
     <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="71"/>
+        <source>Avg price (FIFO)</source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="76"/>
+        <source>Avg price (WAVG)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.ui" line="81"/>
         <source>Quantity</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="113"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="117"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="127"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="123"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="127"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="142"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="146"/>
         <source>Operations</source>
         <translation></translation>
     </message>
@@ -570,7 +575,7 @@
     </message>
     <message>
         <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="60"/>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="144"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="151"/>
         <source>Cost</source>
         <translation></translation>
     </message>
@@ -585,22 +590,27 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="149"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="142"/>
+        <source>Average price by FIFO</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="156"/>
         <source>Part</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="154"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="161"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="159"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="166"/>
         <source>Yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="164"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.ui" line="171"/>
         <source>Daily yield, %</source>
         <translation></translation>
     </message>
@@ -699,9 +709,14 @@
     </message>
     <message>
         <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="35"/>
-        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="152"/>
-        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="193"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="156"/>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="197"/>
         <source>From: %1</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/treeitems/portfoliotreeitem.cpp" line="102"/>
+        <source>Average price by WAVG: %1</source>
         <translation></translation>
     </message>
 </context>
