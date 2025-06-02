@@ -27,7 +27,7 @@ public:
 
     void setAvailable(double value);
     void setPrice(float value);
-    void setAvgPrice(float value);
+    void setAvgPrice(float valueFifo, float valueWavg);
     void setCost(double value);
     void setPart(float value);
     void setYield(float value);

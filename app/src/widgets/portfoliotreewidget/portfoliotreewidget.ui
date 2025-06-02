@@ -138,6 +138,13 @@
       <property name="text">
        <string>Avg price</string>
       </property>
+      <property name="toolTip">
+       <string>Average price by FIFO</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../../../Resources.qrc">
+        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
+      </property>
      </column>
      <column>
       <property name="text">
@@ -168,6 +175,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

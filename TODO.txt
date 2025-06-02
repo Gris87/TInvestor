@@ -1,3 +1,4 @@
+WAVG/FIFO avg prices
 Python scripts with tinkoff api
 Double check for operations accuracy
 Follow for the strategy

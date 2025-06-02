@@ -17,7 +17,8 @@ struct PortfolioItem
     bool   showPrices;
     double available;
     float  price;
-    float  avgPrice;
+    float  avgPriceFifo;
+    float  avgPriceWavg;
     double cost;
     float  part;
     float  yield;

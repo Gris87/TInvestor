@@ -37,9 +37,9 @@ void PortfolioTreeRecord::setPortfolioItem(const PortfolioItem& item)
     if (item.showPrices)
     {
         mPortfolioTreeItem->setPrice(item.price);
-        mPortfolioTreeItem->setAvgPrice(item.avgPrice);
+        mPortfolioTreeItem->setAvgPrice(item.avgPriceFifo, item.avgPriceWavg);
         mPortfolioTreeItem->setYield(item.yield);
-        mPortfolioTreeItem->setYieldPercent(item.yieldPercent, item.avgPrice);
+        mPortfolioTreeItem->setYieldPercent(item.yieldPercent, item.avgPriceFifo);
         mPortfolioTreeItem->setDailyYield(item.dailyYield);
         mPortfolioTreeItem->setCostForDailyYield(item.costForDailyYield);
         mPortfolioTreeItem->setDailyYieldPercent(item.dailyYieldPercent, item.priceForDailyYield);

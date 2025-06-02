@@ -92,11 +92,15 @@ void PortfolioTreeItem::setPrice(float value)
     setText(PORTFOLIO_PRICE_COLUMN, QString::number(mPrice, 'f', mPricePrecision) + " " + RUBLE);
 }
 
-void PortfolioTreeItem::setAvgPrice(float value)
+void PortfolioTreeItem::setAvgPrice(float valueFifo, float valueWavg)
 {
-    mAvgPrice = value;
+    mAvgPrice = valueFifo;
 
     setText(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
+    setToolTip(PORTFOLIO_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
+    setToolTip(
+        PORTFOLIO_AVG_PRICE_COLUMN, QObject::tr("Average price by WAVG: %1").arg(valueWavg, 0, 'f', mPricePrecision) + " " + RUBLE
+    );
 }
 
 void PortfolioTreeItem::setCost(double value)

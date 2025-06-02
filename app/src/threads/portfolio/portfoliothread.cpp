@@ -111,8 +111,9 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         item.available          = quotationToDouble(position.quantity());
         item.price              = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
-        item.avgPrice           = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
-        item.cost               = item.available * item.avgPrice;
+        item.avgPriceFifo       = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
+        item.avgPriceWavg       = item.showPrices ? quotationToFloat(position.average_position_price()) : 1.0f;
+        item.cost               = item.available * item.avgPriceFifo;
         item.yield              = (item.available * item.price) - item.cost;
         item.yieldPercent       = (item.yield / item.cost) * HUNDRED_PERCENT;
         item.dailyYield         = quotationToFloat(position.daily_yield());
