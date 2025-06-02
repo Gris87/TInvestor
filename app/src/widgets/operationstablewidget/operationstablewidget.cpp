@@ -11,7 +11,7 @@
 // TODO: Update widths
 #ifdef Q_OS_WINDOWS
 const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {
-    110, 133, 309, 61, 106, 106, 95, 167, 87, 85, 69, 141, 162, 107, 128, 107, 95
+    110, 133, 309, 61, 142, 153, 95, 167, 87, 85, 69, 141, 162, 107, 128, 107, 95
 };
 #else
 const int COLUMN_WIDTHS[OPERATIONS_COLUMN_COUNT] = {
@@ -170,8 +170,8 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     doc.autosizeColumnWidth(OPERATIONS_NAME_COLUMN + 1);
     doc.autosizeColumnWidth(OPERATIONS_DESCRIPTION_COLUMN + 1);
     doc.setColumnWidth(OPERATIONS_PRICE_COLUMN + 1,                               7.43  + COLUMN_GAP);
-    doc.setColumnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      13.14 + COLUMN_GAP);
-    doc.setColumnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      13.14 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      19.14 + COLUMN_GAP);
+    doc.setColumnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      21.29 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_QUANTITY_COLUMN + 1,                            10.86 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   22.43 + COLUMN_GAP);
     doc.setColumnWidth(OPERATIONS_PAYMENT_COLUMN + 1,                             11.43 + COLUMN_GAP);

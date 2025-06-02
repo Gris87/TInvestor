@@ -77,7 +77,8 @@ TEST_F(Test_OperationsTableWidget, Test_saveWindowState)
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Name"),                            _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Description"),                     _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Price"),                           _));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_AvgPrice"),                        _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_AvgPriceFifo"),                    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_AvgPriceWavg"),                    _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Quantity"),                        _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_RemainedQuantity"),                _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Payment"),                         _));
@@ -104,7 +105,8 @@ TEST_F(Test_OperationsTableWidget, Test_loadWindowState)
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),                            _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Description"),                     _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),                           _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPrice"),                        _)).WillOnce(Return(QVariant(10)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPriceFifo"),                    _)).WillOnce(Return(QVariant(10)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPriceWavg"),                    _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Quantity"),                        _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_RemainedQuantity"),                _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payment"),                         _)).WillOnce(Return(QVariant(10)));

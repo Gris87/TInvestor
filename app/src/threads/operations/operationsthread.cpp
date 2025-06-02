@@ -156,8 +156,10 @@ void OperationsThread::readOperations()
     {
         QuantityAndCost& quantityAndCost = mInstruments[operation.instrumentId]; // clazy:exclude=detaching-member
 
-        quantityAndCost.quantity = operation.remainedQuantity;
-        quantityAndCost.cost     = operation.cost;
+        quantityAndCost.quantity  = operation.remainedQuantity;
+        quantityAndCost.fifoItems = operation.fifoItems;
+        quantityAndCost.costFifo  = operation.costFifo;
+        quantityAndCost.costWavg  = operation.costWavg;
     }
 
     emit operationsRead(operations);
@@ -258,6 +260,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     const QString                positionUid   = QString::fromStdString(tinkoffOperation.position_uid());
     const qint64                 timestamp     = timeToTimestamp(tinkoffOperation.date());
     const tinkoff::OperationType operationType = tinkoffOperation.type();
+    const double                 payment       = quotationToDouble(tinkoffOperation.payment());
 
     double    avgPriceFifo = 0.0;
     double    avgPriceWavg = 0.0;
@@ -282,12 +285,14 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     if (operationType == tinkoff::OPERATION_TYPE_BUY)
     {
         quantityAndCost.quantity += tinkoffOperation.quantity_done();
-        quantityAndCost.cost =
-            quotationDiff(quantityAndCost.cost, tinkoffOperation.payment()); // Diff == Sum with negative payment
+        quantityAndCost.costFifo =
+            quotationDiff(quantityAndCost.costFifo, tinkoffOperation.payment()); // Diff == Sum with negative payment
+        quantityAndCost.costWavg =
+            quotationDiff(quantityAndCost.costWavg, tinkoffOperation.payment()); // Diff == Sum with negative payment
 
-        avgPriceFifo = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
-        avgPriceWavg = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
-        avgCost  = -quotationToDouble(tinkoffOperation.payment());
+        avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+        avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+        avgCost      = -payment;
 
         yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
         yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCost * HUNDRED_PERCENT;
@@ -296,8 +301,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     }
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
-        avgPriceFifo = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
-        avgPriceWavg = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
+        avgPriceFifo = quotationToDouble(quantityAndCost.costFifo) / quantityAndCost.quantity;
+        avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
         avgCost      = avgPriceFifo * tinkoffOperation.quantity_done();
 
         const Quotation avgCostQuotation = quotationFromDouble(avgCost);
@@ -306,11 +311,14 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
         if (quantityAndCost.quantity > 0)
         {
-            quantityAndCost.cost = quotationDiff(quantityAndCost.cost, avgCostQuotation);
+            quantityAndCost.costFifo = quotationDiff(quantityAndCost.costFifo, avgCostQuotation);
+            quantityAndCost.costWavg = quotationDiff(quantityAndCost.costWavg, avgCostQuotation);
         }
         else
         {
-            quantityAndCost.cost = Quotation();
+            quantityAndCost.fifoItems.clear();
+            quantityAndCost.costFifo = Quotation();
+            quantityAndCost.costWavg = Quotation();
         }
 
         yield                      = quotationDiff(tinkoffOperation.payment(), avgCostQuotation);
@@ -330,10 +338,12 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         }
         else if (operationType == tinkoff::OPERATION_TYPE_BOND_REPAYMENT_FULL)
         {
-            mTotalMoney = quotationDiff(quotationSum(mTotalMoney, tinkoffOperation.payment()), quantityAndCost.cost);
+            mTotalMoney = quotationDiff(quotationSum(mTotalMoney, tinkoffOperation.payment()), quantityAndCost.costFifo);
 
             quantityAndCost.quantity = 0;
-            quantityAndCost.cost     = Quotation();
+            quantityAndCost.fifoItems.clear();
+            quantityAndCost.costFifo = Quotation();
+            quantityAndCost.costWavg = Quotation();
         }
         else
         {
@@ -375,13 +385,15 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.instrumentId                    = instrumentId;
     res.description                     = QString::fromStdString(tinkoffOperation.description());
     res.price                           = quotationToFloat(tinkoffOperation.price());
+    res.fifoItems                       = quantityAndCost.fifoItems;
     res.avgPriceFifo                    = avgPriceFifo;
     res.avgPriceWavg                    = avgPriceWavg;
     res.quantity                        = tinkoffOperation.quantity_done();
     res.remainedQuantity                = quantityAndCost.quantity;
-    res.payment                         = quotationToFloat(tinkoffOperation.payment());
+    res.payment                         = payment;
     res.avgCost                         = avgCost;
-    res.cost                            = quantityAndCost.cost;
+    res.costFifo                        = quantityAndCost.costFifo;
+    res.costWavg                        = quantityAndCost.costWavg;
     res.commission                      = quotationToFloat(tinkoffOperation.commission());
     res.yield                           = quotationToFloat(yield);
     res.yieldWithCommission             = quotationToFloat(yieldWithCommission);
@@ -394,6 +406,11 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.totalMoney                      = mTotalMoney;
     res.paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
     res.commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
+
+    if (quantityAndCost.quantity <= 0)
+    {
+        mInstruments.remove(instrumentId);
+    }
 
     return res;
 }

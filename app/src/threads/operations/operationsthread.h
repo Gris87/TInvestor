@@ -15,12 +15,16 @@ struct QuantityAndCost
 {
     explicit QuantityAndCost() :
         quantity(),
-        cost()
+        fifoItems(),
+        costFifo(),
+        costWavg()
     {
     }
 
-    qint64    quantity;
-    Quotation cost;
+    qint64                   quantity;
+    QList<OperationFifoItem> fifoItems;
+    Quotation                costFifo;
+    Quotation                costWavg;
 };
 
 
