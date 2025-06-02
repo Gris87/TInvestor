@@ -22,7 +22,7 @@ TEST(Test_Operation, Test_constructor_and_destructor)
     ASSERT_EQ(operation.quantity,                          0);
     ASSERT_EQ(operation.remainedQuantity,                  0);
     ASSERT_NEAR(operation.payment,                         0, 0.0001f);
-    ASSERT_NEAR(operation.avgCost,                         0, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     0, 0.0001f);
     ASSERT_EQ(operation.costFifo.units,                    0);
     ASSERT_EQ(operation.costFifo.nano,                     0);
     ASSERT_EQ(operation.costWavg.units,                    0);
@@ -60,7 +60,7 @@ TEST(Test_Operation, Test_copy_constructor)
     operation.quantity                        = 5;
     operation.remainedQuantity                = 6;
     operation.payment                         = 7.0f;
-    operation.avgCost                         = 8.0f;
+    operation.avgCostFifo                     = 8.0f;
     operation.costFifo.units                  = 9;
     operation.costFifo.nano                   = 10;
     operation.costWavg.units                  = 11;
@@ -107,7 +107,7 @@ TEST(Test_Operation, Test_copy_constructor)
     ASSERT_EQ(operation2.quantity,                          5);
     ASSERT_EQ(operation2.remainedQuantity,                  6);
     ASSERT_NEAR(operation2.payment,                         7, 0.0001f);
-    ASSERT_NEAR(operation2.avgCost,                         8, 0.0001f);
+    ASSERT_NEAR(operation2.avgCostFifo,                     8, 0.0001f);
     ASSERT_EQ(operation2.costFifo.units,                    9);
     ASSERT_EQ(operation2.costFifo.nano,                     10);
     ASSERT_EQ(operation2.costWavg.units,                    11);
@@ -146,7 +146,7 @@ TEST(Test_Operation, Test_assign)
     operation.quantity                        = 5;
     operation.remainedQuantity                = 6;
     operation.payment                         = 7.0f;
-    operation.avgCost                         = 8.0f;
+    operation.avgCostFifo                     = 8.0f;
     operation.costFifo.units                  = 9;
     operation.costFifo.nano                   = 10;
     operation.costWavg.units                  = 11;
@@ -193,7 +193,7 @@ TEST(Test_Operation, Test_assign)
     ASSERT_EQ(operation2.quantity,                          5);
     ASSERT_EQ(operation2.remainedQuantity,                  6);
     ASSERT_NEAR(operation2.payment,                         7, 0.0001f);
-    ASSERT_NEAR(operation2.avgCost,                         8, 0.0001f);
+    ASSERT_NEAR(operation2.avgCostFifo,                     8, 0.0001f);
     ASSERT_EQ(operation2.costFifo.units,                    9);
     ASSERT_EQ(operation2.costFifo.nano,                     10);
     ASSERT_EQ(operation2.costWavg.units,                    11);
@@ -233,7 +233,7 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(operation.quantity,                          0);
     ASSERT_EQ(operation.remainedQuantity,                  0);
     ASSERT_NEAR(operation.payment,                         0, 0.0001f);
-    ASSERT_NEAR(operation.avgCost,                         0, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     0, 0.0001f);
     ASSERT_EQ(operation.costFifo.units,                    0);
     ASSERT_EQ(operation.costFifo.nano,                     0);
     ASSERT_EQ(operation.costWavg.units,                    0);
@@ -258,7 +258,7 @@ TEST(Test_Operation, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"avgCost":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
+        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
     QJsonParseError     parseError;
     const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
@@ -280,7 +280,7 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(operation.quantity,                          5);
     ASSERT_EQ(operation.remainedQuantity,                  6);
     ASSERT_NEAR(operation.payment,                         7, 0.0001f);
-    ASSERT_NEAR(operation.avgCost,                         8, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     8, 0.0001f);
     ASSERT_EQ(operation.costFifo.units,                    9);
     ASSERT_EQ(operation.costFifo.nano,                     10);
     ASSERT_EQ(operation.costWavg.units,                    11);
@@ -318,7 +318,7 @@ TEST(Test_Operation, Test_toJsonObject)
     operation.quantity                        = 5;
     operation.remainedQuantity                = 6;
     operation.payment                         = 7.0f;
-    operation.avgCost                         = 8.0f;
+    operation.avgCostFifo                     = 8.0f;
     operation.costFifo.units                  = 9;
     operation.costFifo.nano                   = 10;
     operation.costWavg.units                  = 11;
@@ -354,7 +354,7 @@ TEST(Test_Operation, Test_toJsonObject)
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"avgCost":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
+        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -373,7 +373,7 @@ TEST(Test_Operation, Test_equals)
     operation.quantity                        = 5;
     operation.remainedQuantity                = 6;
     operation.payment                         = 7.0f;
-    operation.avgCost                         = 8.0f;
+    operation.avgCostFifo                     = 8.0f;
     operation.costFifo.units                  = 9;
     operation.costFifo.nano                   = 10;
     operation.costWavg.units                  = 11;
@@ -405,7 +405,7 @@ TEST(Test_Operation, Test_equals)
     operation2.quantity                        = 5;
     operation2.remainedQuantity                = 6;
     operation2.payment                         = 7.0f;
-    operation2.avgCost                         = 8.0f;
+    operation2.avgCostFifo                     = 8.0f;
     operation2.costFifo.units                  = 9;
     operation2.costFifo.nano                   = 10;
     operation2.costWavg.units                  = 11;
@@ -496,9 +496,9 @@ TEST(Test_Operation, Test_equals)
     operation2.payment = 7.0f;
     ASSERT_EQ(operation, operation2);
 
-    operation2.avgCost = 8888.0f;
+    operation2.avgCostFifo = 8888.0f;
     ASSERT_NE(operation, operation2);
-    operation2.avgCost = 8.0f;
+    operation2.avgCostFifo = 8.0f;
     ASSERT_EQ(operation, operation2);
 
     operation2.costFifo.units = 9999;

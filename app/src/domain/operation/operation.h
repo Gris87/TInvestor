@@ -32,7 +32,7 @@ struct Operation
     qint64                   quantity;
     qint64                   remainedQuantity;
     float                    payment;
-    float                    avgCost;
+    float                    avgCostFifo;
     Quotation                costFifo;
     Quotation                costWavg;
     float                    commission;

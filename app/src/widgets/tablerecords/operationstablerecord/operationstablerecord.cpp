@@ -109,7 +109,7 @@ void OperationsTableRecord::setOperation(const Operation& operation)
     mYieldTableWidgetItem->setValue(operation.yield, false, 2);
     mYieldWithCommissionTableWidgetItem->setValue(operation.yieldWithCommission, true, 2);
     mYieldWithCommissionPercentTableWidgetItem->setValue(
-        operation.yieldWithCommissionPercent, operation.avgCost, instrument.pricePrecision
+        operation.yieldWithCommissionPercent, operation.avgCostFifo, instrument.pricePrecision
     );
     mTotalYieldWithCommissionTableWidgetItem->setValue(quotationToFloat(operation.totalYieldWithCommission), true, 2);
     mTotalYieldWithCommissionPercentTableWidgetItem->setValue(

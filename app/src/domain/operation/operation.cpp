@@ -17,7 +17,7 @@ Operation::Operation() :
     quantity(),
     remainedQuantity(),
     payment(),
-    avgCost(),
+    avgCostFifo(),
     costFifo(),
     costWavg(),
     commission(),
@@ -46,7 +46,7 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     quantity                        = jsonObject.value("quantity").toInteger();
     remainedQuantity                = jsonObject.value("remainedQuantity").toInteger();
     payment                         = jsonObject.value("payment").toDouble();
-    avgCost                         = jsonObject.value("avgCost").toDouble();
+    avgCostFifo                     = jsonObject.value("avgCostFifo").toDouble();
     commission                      = jsonObject.value("commission").toDouble();
     yield                           = jsonObject.value("yield").toDouble();
     yieldWithCommission             = jsonObject.value("yieldWithCommission").toDouble();
@@ -94,7 +94,7 @@ QJsonObject Operation::toJsonObject() const
     res.insert("quantity",                        quantity);
     res.insert("remainedQuantity",                remainedQuantity);
     res.insert("payment",                         payment);
-    res.insert("avgCost",                         avgCost);
+    res.insert("avgCostFifo",                     avgCostFifo);
     res.insert("costFifo",                        costFifo.toJsonObject());
     res.insert("costWavg",                        costWavg.toJsonObject());
     res.insert("commission",                      commission);
@@ -119,7 +119,7 @@ bool operator==(const Operation& lhs, const Operation& rhs)
     return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId && lhs.description == rhs.description &&
            lhs.price == rhs.price && lhs.fifoItems == rhs.fifoItems && lhs.avgPriceFifo == rhs.avgPriceFifo &&
            lhs.avgPriceWavg == rhs.avgPriceWavg && lhs.quantity == rhs.quantity && lhs.remainedQuantity == rhs.remainedQuantity &&
-           lhs.payment == rhs.payment && lhs.avgCost == rhs.avgCost && lhs.costFifo == rhs.costFifo &&
+           lhs.payment == rhs.payment && lhs.avgCostFifo == rhs.avgCostFifo && lhs.costFifo == rhs.costFifo &&
            lhs.costWavg == rhs.costWavg && lhs.commission == rhs.commission && lhs.yield == rhs.yield &&
            lhs.yieldWithCommission == rhs.yieldWithCommission &&
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&

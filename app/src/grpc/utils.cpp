@@ -120,6 +120,31 @@ Quotation quotationFromDouble(double value)
     return res;
 }
 
+static Quotation unitsAndNanoNegative(qint64 units, qint32 nano)
+{
+    Quotation res;
+
+    res.units = -units;
+    res.nano  = -nano;
+
+    return res;
+}
+
+Quotation quotationNegative(const tinkoff::MoneyValue& money)
+{
+    return unitsAndNanoNegative(money.units(), money.nano());
+}
+
+Quotation quotationNegative(const tinkoff::Quotation& quotation)
+{
+    return unitsAndNanoNegative(quotation.units(), quotation.nano());
+}
+
+Quotation quotationNegative(const Quotation& quotation)
+{
+    return unitsAndNanoNegative(quotation.units, quotation.nano);
+}
+
 static Quotation unitsAndNanoSum(qint64 units, qint64 nano, qint64 units2, qint64 nano2)
 {
     Quotation res;
