@@ -259,7 +259,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     const qint64                 timestamp     = timeToTimestamp(tinkoffOperation.date());
     const tinkoff::OperationType operationType = tinkoffOperation.type();
 
-    double    avgPrice = 0.0;
+    double    avgPriceFifo = 0.0;
+    double    avgPriceWavg = 0.0;
     double    avgCost  = 0.0;
     Quotation yield;
     Quotation yieldWithCommission;
@@ -284,7 +285,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
         quantityAndCost.cost =
             quotationDiff(quantityAndCost.cost, tinkoffOperation.payment()); // Diff == Sum with negative payment
 
-        avgPrice = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
+        avgPriceFifo = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
+        avgPriceWavg = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
         avgCost  = -quotationToDouble(tinkoffOperation.payment());
 
         yieldWithCommission        = quotationConvert(tinkoffOperation.commission());
@@ -294,8 +296,9 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     }
     else if (operationType == tinkoff::OPERATION_TYPE_SELL)
     {
-        avgPrice = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
-        avgCost  = avgPrice * tinkoffOperation.quantity_done();
+        avgPriceFifo = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
+        avgPriceWavg = quotationToDouble(quantityAndCost.cost) / quantityAndCost.quantity;
+        avgCost      = avgPriceFifo * tinkoffOperation.quantity_done();
 
         const Quotation avgCostQuotation = quotationFromDouble(avgCost);
 
@@ -372,7 +375,8 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.instrumentId                    = instrumentId;
     res.description                     = QString::fromStdString(tinkoffOperation.description());
     res.price                           = quotationToFloat(tinkoffOperation.price());
-    res.avgPrice                        = avgPrice;
+    res.avgPriceFifo                    = avgPriceFifo;
+    res.avgPriceWavg                    = avgPriceWavg;
     res.quantity                        = tinkoffOperation.quantity_done();
     res.remainedQuantity                = quantityAndCost.quantity;
     res.payment                         = quotationToFloat(tinkoffOperation.payment());

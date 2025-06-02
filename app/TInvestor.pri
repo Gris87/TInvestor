@@ -45,6 +45,7 @@ SOURCES += \
     src/domain/filter/filter.cpp \
     src/domain/instrument/instrument.cpp \
     src/domain/operation/operation.cpp \
+    src/domain/operation/operationfifoitem.cpp \
     src/domain/orderbook/orderbook.cpp \
     src/domain/portfolio/portfolio.cpp \
     src/domain/portfolio/portfolioitem.cpp \
@@ -205,6 +206,7 @@ HEADERS += \
     src/domain/filter/filter.h \
     src/domain/instrument/instrument.h \
     src/domain/operation/operation.h \
+    src/domain/operation/operationfifoitem.h \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
     src/domain/portfolio/portfolio.h \

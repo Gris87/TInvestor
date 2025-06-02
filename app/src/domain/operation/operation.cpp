@@ -2,12 +2,18 @@
 
 
 
+#include <QJsonArray>
+
+
+
 Operation::Operation() :
     timestamp(),
     instrumentId(),
     description(),
     price(),
-    avgPrice(),
+    fifoItems(),
+    avgPriceFifo(),
+    avgPriceWavg(),
     quantity(),
     remainedQuantity(),
     payment(),
@@ -34,7 +40,8 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     instrumentId                    = jsonObject.value("instrumentId").toString();
     description                     = jsonObject.value("description").toString();
     price                           = jsonObject.value("price").toDouble();
-    avgPrice                        = jsonObject.value("avgPrice").toDouble();
+    avgPriceFifo                    = jsonObject.value("avgPriceFifo").toDouble();
+    avgPriceWavg                    = jsonObject.value("avgPriceWavg").toDouble();
     quantity                        = jsonObject.value("quantity").toInteger();
     remainedQuantity                = jsonObject.value("remainedQuantity").toInteger();
     payment                         = jsonObject.value("payment").toDouble();
@@ -53,18 +60,35 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     totalYieldWithCommission.fromJsonObject(jsonObject.value("totalYieldWithCommission").toObject());
     remainedMoney.fromJsonObject(jsonObject.value("remainedMoney").toObject());
     totalMoney.fromJsonObject(jsonObject.value("totalMoney").toObject());
+
+    const QJsonArray jsonFifoItems = jsonObject.value("fifoItems").toArray();
+    fifoItems.resizeForOverwrite(jsonFifoItems.size());
+
+    for (int i = 0; i < jsonFifoItems.size(); ++i)
+    {
+        fifoItems[i].fromJsonObject(jsonFifoItems.at(i).toObject());
+    }
 }
 
 QJsonObject Operation::toJsonObject() const
 {
     QJsonObject res;
 
+    QJsonArray jsonFifoItems;
+
+    for (const OperationFifoItem& fifoItem : fifoItems)
+    {
+        jsonFifoItems.append(fifoItem.toJsonObject());
+    }
+
     // clang-format off
     res.insert("timestamp",                       timestamp);
     res.insert("instrumentId",                    instrumentId);
     res.insert("description",                     description);
     res.insert("price",                           price);
-    res.insert("avgPrice",                        avgPrice);
+    res.insert("fifoItems",                       jsonFifoItems);
+    res.insert("avgPriceFifo",                    avgPriceFifo);
+    res.insert("avgPriceWavg",                    avgPriceWavg);
     res.insert("quantity",                        quantity);
     res.insert("remainedQuantity",                remainedQuantity);
     res.insert("payment",                         payment);
@@ -90,10 +114,10 @@ QJsonObject Operation::toJsonObject() const
 bool operator==(const Operation& lhs, const Operation& rhs)
 {
     return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId && lhs.description == rhs.description &&
-           lhs.price == rhs.price && lhs.avgPrice == rhs.avgPrice && lhs.quantity == rhs.quantity &&
-           lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.avgCost == rhs.avgCost &&
-           lhs.cost == rhs.cost && lhs.commission == rhs.commission && lhs.yield == rhs.yield &&
-           lhs.yieldWithCommission == rhs.yieldWithCommission &&
+           lhs.price == rhs.price && lhs.fifoItems == rhs.fifoItems && lhs.avgPriceFifo == rhs.avgPriceFifo &&
+           lhs.avgPriceWavg == rhs.avgPriceWavg && lhs.quantity == rhs.quantity && lhs.remainedQuantity == rhs.remainedQuantity &&
+           lhs.payment == rhs.payment && lhs.avgCost == rhs.avgCost && lhs.cost == rhs.cost && lhs.commission == rhs.commission &&
+           lhs.yield == rhs.yield && lhs.yieldWithCommission == rhs.yieldWithCommission &&
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&
            lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
            lhs.totalYieldWithCommissionPercent == rhs.totalYieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&

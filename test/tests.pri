@@ -40,6 +40,7 @@ SOURCES += \
     src/domain/filter/test_filter.cpp \
     src/domain/instrument/test_instrument.cpp \
     src/domain/operation/test_operation.cpp \
+    src/domain/operation/test_operationfifoitem.cpp \
     src/domain/orderbook/test_orderbook.cpp \
     src/domain/portfolio/test_portfolio.cpp \
     src/domain/portfolio/test_portfolioitem.cpp \
