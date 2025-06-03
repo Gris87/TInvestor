@@ -216,15 +216,18 @@ def _handle_account(account, portfolio, operations):
             portfolio_total_money += portfolio_remained_money
         else:
             quantity = _quotation_to_float(position["quantity"])
-            avg_price = _quotation_to_float(position["average_position_price_fifo"])
-            cost = quantity * avg_price
+            avg_price_fifo = _quotation_to_float(position["average_position_price_fifo"])
+            avg_price_wavg = _quotation_to_float(position["average_position_price"])
+            cost_fifo = quantity * avg_price_fifo
+            cost_wavg = quantity * avg_price_wavg
 
             portfolio_quantity_and_cost_map[instrument_uid] = {
                 "quantity": quantity,
-                "cost": cost
+                "cost_fifo": cost_fifo,
+                "cost_wavg": cost_wavg,
             }
 
-            portfolio_total_money += cost
+            portfolio_total_money += cost_fifo
 
     last_position_uid_for_ext_account = ""
     operations_remained_money = 0
@@ -244,7 +247,9 @@ def _handle_account(account, portfolio, operations):
             if instrument_uid not in operations_quantity_and_cost_map:
                 operations_quantity_and_cost_map[instrument_uid] = {
                     "quantity": 0,
-                    "cost": 0
+                    "fifo_items": [],
+                    "cost_fifo": 0,
+                    "cost_wavg": 0
                 }
 
             quantity_and_cost = operations_quantity_and_cost_map[instrument_uid]
@@ -254,26 +259,63 @@ def _handle_account(account, portfolio, operations):
 
                 if operation_type == "OPERATION_TYPE_BUY" or operation_type == "OPERATION_TYPE_SELL":
                     if operation_type == "OPERATION_TYPE_BUY":
-                        quantity_and_cost["quantity"] += operation["quantity_done"]
-                        quantity_and_cost["cost"] -= payment  # Diff == Sum with negative payment
+                        fifo_item = {
+                            "quantity": operation["quantity_done"],
+                            "cost": -payment,
+                        }
+
+                        quantity_and_cost["fifo_items"].append(fifo_item)
+
+                        quantity_and_cost["quantity"] += fifo_item["quantity"]
+                        quantity_and_cost["cost_fifo"] += fifo_item["cost"]
+                        quantity_and_cost["cost_wavg"] += fifo_item["cost"]
                     else:
-                        avg_price = quantity_and_cost["cost"] / quantity_and_cost["quantity"]
-                        avg_cost  = avg_price * operation["quantity_done"]
+                        if quantity_and_cost["quantity"] > operation["quantity_done"]:
+                            avg_price_wavg = quantity_and_cost["cost_wavg"] / quantity_and_cost["quantity"]
+                            avg_cost_wavg  = avg_price_wavg * operation["quantity_done"]
+                            avg_cost_fifo = 0
 
-                        quantity_and_cost["quantity"] -= operation["quantity_done"]
+                            quantity_for_calculation = operation["quantity_done"]
+                            fifo_items = quantity_and_cost["fifo_items"]
+                            fifo_index = 0
 
-                        if quantity_and_cost["quantity"] > 0:
-                            quantity_and_cost["cost"] -= avg_cost
+                            while quantity_for_calculation > 0:
+                                fifo_item = fifo_items[fifo_index]
+
+                                if quantity_for_calculation > fifo_item["quantity"]:
+                                    avg_cost_fifo += fifo_item["cost"]
+                                    quantity_for_calculation -= fifo_item["quantity"]
+
+                                    fifo_index += 1
+                                else:
+                                    delta_cost = fifo_item["cost"] * quantity_for_calculation / fifo_item["quantity"]
+
+                                    avg_cost_fifo += delta_cost
+                                    fifo_item["cost"] -= delta_cost
+                                    fifo_item["quantity"] -= quantity_for_calculation
+
+                                    break
+
+                            quantity_and_cost["fifo_items"] = fifo_items[fifo_index:]
+                            quantity_and_cost["quantity"] -= operation["quantity_done"]
+                            quantity_and_cost["cost_fifo"] -= avg_cost_fifo
+                            quantity_and_cost["cost_wavg"] -= avg_cost_wavg
                         else:
-                            quantity_and_cost["quantity"] = 0
-                            quantity_and_cost["cost"] = 0
+                            avg_cost_fifo = quantity_and_cost["cost_fifo"]
 
-                        operations_total_money += payment - avg_cost
+                            quantity_and_cost["quantity"] = 0
+                            quantity_and_cost["fifo_items"] = []
+                            quantity_and_cost["cost_fifo"] = 0
+                            quantity_and_cost["cost_wavg"] = 0
+
+                        operations_total_money += payment - avg_cost_fifo
                 elif operation_type == "OPERATION_TYPE_BOND_REPAYMENT_FULL":
-                    operations_total_money += payment - quantity_and_cost["cost"]
+                    operations_total_money += payment - quantity_and_cost["cost_fifo"]
 
                     quantity_and_cost["quantity"] = 0
-                    quantity_and_cost["cost"] = 0
+                    quantity_and_cost["fifo_items"] = []
+                    quantity_and_cost["cost_fifo"] = 0
+                    quantity_and_cost["cost_wavg"] = 0
                 else:
                     operations_total_money += payment
             else:
@@ -295,7 +337,8 @@ def _handle_account(account, portfolio, operations):
     for instrument_uid, quantity_and_cost in portfolio_quantity_and_cost_map.items():
         another_quantity_and_cost = {
             "quantity": 0,
-            "cost": 0
+            "cost_fifo": 0,
+            "cost_wavg": 0
         }
 
         if instrument_uid in operations_quantity_and_cost_map:
@@ -303,17 +346,21 @@ def _handle_account(account, portfolio, operations):
 
         quantity_and_cost_map[instrument_uid] = {
             "quantity_from_portfolio": quantity_and_cost["quantity"],
-            "cost_from_portfolio": quantity_and_cost["cost"],
+            "cost_fifo_from_portfolio": quantity_and_cost["cost_fifo"],
+            "cost_wavg_from_portfolio": quantity_and_cost["cost_wavg"],
             "quantity_from_operations": another_quantity_and_cost["quantity"],
-            "cost_from_operations": another_quantity_and_cost["cost"],
+            "cost_fifo_from_operations": another_quantity_and_cost["cost_fifo"],
+            "cost_wavg_from_operations": another_quantity_and_cost["cost_wavg"],
             "delta_between_quantity": abs(quantity_and_cost["quantity"] - another_quantity_and_cost["quantity"]),
-            "delta_between_cost": quantity_and_cost["cost"] - another_quantity_and_cost["cost"],
+            "delta_between_cost_fifo": quantity_and_cost["cost_fifo"] - another_quantity_and_cost["cost_fifo"],
+            "delta_between_cost_wavg": quantity_and_cost["cost_wavg"] - another_quantity_and_cost["cost_wavg"],
         }
 
     for instrument_uid, quantity_and_cost in operations_quantity_and_cost_map.items():
         another_quantity_and_cost = {
             "quantity": 0,
-            "cost": 0
+            "cost_fifo": 0,
+            "cost_wavg": 0
         }
 
         if instrument_uid in portfolio_quantity_and_cost_map:
@@ -321,11 +368,14 @@ def _handle_account(account, portfolio, operations):
 
         quantity_and_cost_map[instrument_uid] = {
             "quantity_from_portfolio": another_quantity_and_cost["quantity"],
-            "cost_from_portfolio": another_quantity_and_cost["cost"],
+            "cost_fifo_from_portfolio": another_quantity_and_cost["cost_fifo"],
+            "cost_wavg_from_portfolio": another_quantity_and_cost["cost_wavg"],
             "quantity_from_operations": quantity_and_cost["quantity"],
-            "cost_from_operations": quantity_and_cost["cost"],
+            "cost_fifo_from_operations": quantity_and_cost["cost_fifo"],
+            "cost_wavg_from_operations": quantity_and_cost["cost_wavg"],
             "delta_between_quantity": abs(another_quantity_and_cost["quantity"] - quantity_and_cost["quantity"]),
-            "delta_between_cost": another_quantity_and_cost["cost"] - quantity_and_cost["cost"],
+            "delta_between_cost_fifo": another_quantity_and_cost["cost_fifo"] - quantity_and_cost["cost_fifo"],
+            "delta_between_cost_wavg": another_quantity_and_cost["cost_wavg"] - quantity_and_cost["cost_wavg"],
         }
 
     operations_delta_between_commissions = abs(operations_payment_by_type["OPERATION_TYPE_BROKER_FEE"] - operations_payment_by_type["BUILT_IN_COMMISSION"])
@@ -334,8 +384,9 @@ def _handle_account(account, portfolio, operations):
     delta_between_instruments_cost = 0
 
     for quantity_and_cost in quantity_and_cost_map.values():
-        delta_between_instruments_cost += quantity_and_cost["delta_between_cost"]
-        quantity_and_cost["delta_between_cost"] = abs(quantity_and_cost["delta_between_cost"])
+        delta_between_instruments_cost += quantity_and_cost["delta_between_cost_fifo"]
+        quantity_and_cost["delta_between_cost_fifo"] = abs(quantity_and_cost["delta_between_cost_fifo"])
+        quantity_and_cost["delta_between_cost_wavg"] = abs(quantity_and_cost["delta_between_cost_wavg"])
 
     delta_between_instruments_cost = abs(delta_between_instruments_cost)
 
@@ -360,16 +411,20 @@ def _handle_account(account, portfolio, operations):
     print("---------------------------------------------------------")
     print("Quantity and cost of instruments:")
     print("---------------------------------------------------------")
+    print("Instrument                               | Quantity (portfolio) | Cost FIFO (portfolio) | Cost WAVG (portfolio) | Quantity (operations) | Cost FIFO (operations) | Cost WAVG (operations) | Quantity delta | Cost delta FIFO | Cost delta WAVG")
 
     for instrument_uid, quantity_and_cost in quantity_and_cost_map.items():
         quantity_from_portfolio = quantity_and_cost["quantity_from_portfolio"]
-        cost_from_portfolio = quantity_and_cost["cost_from_portfolio"]
+        cost_fifo_from_portfolio = quantity_and_cost["cost_fifo_from_portfolio"]
+        cost_wavg_from_portfolio = quantity_and_cost["cost_wavg_from_portfolio"]
         quantity_from_operations = quantity_and_cost["quantity_from_operations"]
-        cost_from_operations = quantity_and_cost["cost_from_operations"]
+        cost_fifo_from_operations = quantity_and_cost["cost_fifo_from_operations"]
+        cost_wavg_from_operations = quantity_and_cost["cost_wavg_from_operations"]
         delta_between_quantity = quantity_and_cost["delta_between_quantity"]
-        delta_between_cost = quantity_and_cost["delta_between_cost"]
+        delta_between_cost_fifo = quantity_and_cost["delta_between_cost_fifo"]
+        delta_between_cost_wavg = quantity_and_cost["delta_between_cost_wavg"]
 
-        print(f"{instrument_uid:40} {quantity_from_portfolio:15.4f} {cost_from_portfolio:15.4f} {quantity_from_operations:15.4f} {cost_from_operations:15.4f} {delta_between_quantity:15.4f} {delta_between_cost:15.4f}")
+        print(f"{instrument_uid:40} |{quantity_from_portfolio:21.4f} |{cost_fifo_from_portfolio:22.4f} |{cost_wavg_from_portfolio:22.4f} |{quantity_from_operations:22.4f} |{cost_fifo_from_operations:23.4f} |{cost_wavg_from_operations:23.4f} |{delta_between_quantity:15.4f} |{delta_between_cost_fifo:16.4f} |{delta_between_cost_wavg:16.4f}")
 
     print("")
     print(f"Delta between commissions:      {operations_delta_between_commissions}")

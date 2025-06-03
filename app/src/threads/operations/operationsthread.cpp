@@ -326,7 +326,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
 
             while (quantityForCalculation > 0)
             {
-                OperationFifoItem& fifoItem = quantityAndCost.fifoItems[fifoIndex];
+                OperationFifoItem& fifoItem = quantityAndCost.fifoItems[fifoIndex]; // clazy:exclude=detaching-member
 
                 if (quantityForCalculation >= fifoItem.quantity)
                 {
@@ -337,14 +337,11 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
                 }
                 else
                 {
-                    avgCostFifoQuotation = quotationSum(
-                        avgCostFifoQuotation,
-                        quotationDivide(quotationMultiply(fifoItem.cost, quantityForCalculation), fifoItem.quantity)
-                    );
+                    const Quotation deltaCost =
+                        quotationDivide(quotationMultiply(fifoItem.cost, quantityForCalculation), fifoItem.quantity);
 
-                    fifoItem.cost = quotationDivide(
-                        quotationMultiply(fifoItem.cost, fifoItem.quantity - quantityForCalculation), fifoItem.quantity
-                    );
+                    avgCostFifoQuotation = quotationSum(avgCostFifoQuotation, deltaCost);
+                    fifoItem.cost        = quotationDiff(fifoItem.cost, deltaCost);
 
                     fifoItem.quantity -= quantityForCalculation;
 

@@ -1,12 +1,13 @@
-WAVG/FIFO avg prices
-Python scripts with tinkoff api
 Double check for operations accuracy
 Follow for the strategy
 Add logs to logs table
+Log levels
+Add grpc errors to logs
 Export logs to Excel
 Center order wave in dialog
 Long startup
 Tray icon popup too long
+Optimization
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes
@@ -28,6 +29,7 @@ Double check mutexes
 Check for maximum memory requirements (With all limits)
 Shared strings
 Shared icons
+Resize icons
 Improve all readability-function-cognitive-complexity
 
 
