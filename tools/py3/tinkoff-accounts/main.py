@@ -204,6 +204,28 @@ def _handle_accounts(accounts, portfolios, operations):
 def _handle_account(account, portfolio, operations):
     res = {}
 
+    portfolio_remained_money, portfolio_total_money, portfolio_quantity_and_cost_map = _handle_portfolio(portfolio)
+    operations_remained_money, operations_total_money, operations_payment_by_type, operations_quantity_and_cost_map = _handle_operations(operations)
+    quantity_and_cost_map = _build_quantity_and_cost_map(portfolio_quantity_and_cost_map, operations_quantity_and_cost_map)
+    operations_delta_between_commissions, delta_between_remained_money, delta_between_total_money, delta_between_instruments_cost = _calculate_deltas(portfolio_remained_money, portfolio_total_money, operations_remained_money, operations_total_money, operations_payment_by_type, quantity_and_cost_map)
+
+    res["portfolio_remained_money"] = portfolio_remained_money
+    res["portfolio_total_money"] = portfolio_total_money
+    res["operations_remained_money"] = operations_remained_money
+    res["operations_total_money"] = operations_total_money
+    res["operations_payment_by_type"] = operations_payment_by_type
+    res["quantity_and_cost"] = quantity_and_cost_map
+    res["operations_delta_between_commissions"] = operations_delta_between_commissions
+    res["delta_between_remained_money"] = delta_between_remained_money
+    res["delta_between_total_money"] = delta_between_total_money
+    res["delta_between_instruments_cost"] = delta_between_instruments_cost
+
+    _display_results(account, res)
+
+    return res
+
+
+def _handle_portfolio(portfolio):
     portfolio_remained_money = 0
     portfolio_total_money = 0
     portfolio_quantity_and_cost_map = {}
@@ -229,14 +251,18 @@ def _handle_account(account, portfolio, operations):
 
             portfolio_total_money += cost_fifo
 
+    return portfolio_remained_money, portfolio_total_money, portfolio_quantity_and_cost_map
+
+
+def _handle_operations(operations):
     last_position_uid_for_ext_account = ""
     operations_remained_money = 0
     operations_total_money = 0
-    operations_quantity_and_cost_map = {}
     operations_payment_by_type = {
         "BUILT_IN_COMMISSION": 0,
         "OPERATION_TYPE_BROKER_FEE": 0,
     }
+    operations_quantity_and_cost_map = {}
 
     for operations_group in operations:
         for operation in operations_group["items"]:
@@ -332,6 +358,10 @@ def _handle_account(account, portfolio, operations):
             operations_payment_by_type["BUILT_IN_COMMISSION"] += _quotation_to_float(operation["commission"])
             operations_payment_by_type[operation_type] += payment
 
+    return operations_remained_money, operations_total_money, operations_payment_by_type, operations_quantity_and_cost_map
+
+
+def _build_quantity_and_cost_map(portfolio_quantity_and_cost_map, operations_quantity_and_cost_map):
     quantity_and_cost_map = {}
 
     for instrument_uid, quantity_and_cost in portfolio_quantity_and_cost_map.items():
@@ -378,6 +408,10 @@ def _handle_account(account, portfolio, operations):
             "delta_between_cost_wavg": another_quantity_and_cost["cost_wavg"] - quantity_and_cost["cost_wavg"],
         }
 
+    return quantity_and_cost_map
+
+
+def _calculate_deltas(portfolio_remained_money, portfolio_total_money, operations_remained_money, operations_total_money, operations_payment_by_type, quantity_and_cost_map):
     operations_delta_between_commissions = abs(operations_payment_by_type["OPERATION_TYPE_BROKER_FEE"] - operations_payment_by_type["BUILT_IN_COMMISSION"])
     delta_between_remained_money = abs(portfolio_remained_money - operations_remained_money)
     delta_between_total_money = abs(portfolio_total_money - operations_total_money)
@@ -389,6 +423,21 @@ def _handle_account(account, portfolio, operations):
         quantity_and_cost["delta_between_cost_wavg"] = abs(quantity_and_cost["delta_between_cost_wavg"])
 
     delta_between_instruments_cost = abs(delta_between_instruments_cost)
+
+    return operations_delta_between_commissions, delta_between_remained_money, delta_between_total_money, delta_between_instruments_cost
+
+
+def _display_results(account, result):
+    portfolio_remained_money = result["portfolio_remained_money"]
+    portfolio_total_money = result["portfolio_total_money"]
+    operations_remained_money = result["operations_remained_money"]
+    operations_total_money = result["operations_total_money"]
+    operations_payment_by_type = result["operations_payment_by_type"]
+    quantity_and_cost_map = result["quantity_and_cost"]
+    operations_delta_between_commissions = result["operations_delta_between_commissions"]
+    delta_between_remained_money = result["delta_between_remained_money"]
+    delta_between_total_money = result["delta_between_total_money"]
+    delta_between_instruments_cost = result["delta_between_instruments_cost"]
 
     print("=========================================================")
     print(account["name"])
@@ -432,19 +481,6 @@ def _handle_account(account, portfolio, operations):
     print(f"Delta between total money:      {delta_between_total_money}")
     print(f"Delta between instruments cost: {delta_between_instruments_cost}")
     print("")
-
-    res["portfolio_remained_money"] = portfolio_remained_money
-    res["portfolio_total_money"] = portfolio_total_money
-    res["operations_remained_money"] = operations_remained_money
-    res["operations_total_money"] = operations_total_money
-    res["operations_payment_by_type"] = operations_payment_by_type
-    res["quantity_and_cost"] = quantity_and_cost_map
-    res["operations_delta_between_commissions"] = operations_delta_between_commissions
-    res["delta_between_remained_money"] = delta_between_remained_money
-    res["delta_between_total_money"] = delta_between_total_money
-    res["delta_between_instruments_cost"] = delta_between_instruments_cost
-
-    return res
 
 
 def _is_operation_type_with_ext_account(operation_type, position_uid, last_position_uid_for_ext_account):
