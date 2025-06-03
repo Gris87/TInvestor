@@ -38,6 +38,7 @@ OrderWavesDialog::OrderWavesDialog(
     ui->nameLabel->setText(mStock->meta.name);
 
     mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mPrecision, quotationToFloat(mStock->meta.minPriceIncrement), this);
+    mOrderWavesWidget->hide();
     ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 
     connect(mOrderBookThread, SIGNAL(orderBookChanged(const OrderBook&)), this, SLOT(orderBookChanged(const OrderBook&)));
@@ -62,6 +63,8 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
     ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE);
 
     mOrderWavesWidget->orderBookChanged(orderBook);
+
+    mOrderWavesWidget->show();
 }
 
 void OrderWavesDialog::on_resetButton_clicked()

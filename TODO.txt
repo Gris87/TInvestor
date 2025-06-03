@@ -1,13 +1,12 @@
-Double check for operations accuracy
-Follow for the strategy
 Add logs to logs table
 Log levels
 Add grpc errors to logs
 Export logs to Excel
-Center order wave in dialog
-Long startup
-Tray icon popup too long
+Follow for the strategy
 Optimization
+Long startup
+Show spinners on portfolio and operations
+Tray icon popup too long
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

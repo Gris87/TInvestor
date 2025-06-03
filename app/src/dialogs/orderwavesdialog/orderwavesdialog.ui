@@ -81,7 +81,7 @@
      <item row="1" column="1">
       <widget class="QLabel" name="priceLabel">
        <property name="text">
-        <string notr="true">Price</string>
+        <string notr="true"/>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -91,7 +91,7 @@
      <item row="0" column="1">
       <widget class="QLabel" name="timeLabel">
        <property name="text">
-        <string notr="true">Time</string>
+        <string notr="true"/>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>

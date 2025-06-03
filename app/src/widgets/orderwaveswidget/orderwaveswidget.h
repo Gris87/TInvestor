@@ -69,5 +69,4 @@ private:
 
 private slots:
     void sliderMoved(int value);
-    void followToCurrentPrice();
 };

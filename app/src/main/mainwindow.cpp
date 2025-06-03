@@ -733,13 +733,11 @@ void MainWindow::updateStocksTableWidget()
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
         ui->stackedWidget->show();
-        ui->waitingSpinnerWidget->hide();
         ui->waitingSpinnerWidget->stop();
     }
     else
     {
         ui->stackedWidget->hide();
-        ui->waitingSpinnerWidget->show();
         ui->waitingSpinnerWidget->start();
     }
 }

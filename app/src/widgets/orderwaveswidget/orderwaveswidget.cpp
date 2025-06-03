@@ -344,7 +344,7 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
     if (mNeedToFollow)
     {
-        QTimer::singleShot(0, this, SLOT(followToCurrentPrice()));
+        centerOn(mCurrentPricePosX, 0);
     }
 }
 // NOLINTEND(readability-function-cognitive-complexity)
@@ -352,7 +352,8 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 void OrderWavesWidget::reset()
 {
     resetTransform();
-    followToCurrentPrice();
+    centerOn(mCurrentPricePosX, 0);
+    mNeedToFollow = true;
 }
 
 QGraphicsRectItem* OrderWavesWidget::getOrCreateBar(int* index)
@@ -556,10 +557,4 @@ float OrderWavesWidget::calculateCurrentPrice(float maxBidsPrice, float minAsksP
 void OrderWavesWidget::sliderMoved(int /*value*/)
 {
     mNeedToFollow = false;
-}
-
-void OrderWavesWidget::followToCurrentPrice()
-{
-    centerOn(mCurrentPricePosX, 0);
-    mNeedToFollow = true;
 }
