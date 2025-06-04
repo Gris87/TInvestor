@@ -23,6 +23,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/db/instruments/instrumentsdatabase.h"
+#include "src/db/logs/logsdatabase.h"
 #include "src/db/operations/operationsdatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
@@ -39,6 +40,7 @@
 #include "src/storage/user/userstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
+#include "src/threads/logs/logsthread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
 #include "src/threads/operations/operationsthread.h"
 #include "src/threads/orderbook/orderbookthread.h"
@@ -299,6 +301,7 @@ static int runApplication(QApplication* app)
     InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
+    LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, true);
 
     TimeUtils         timeUtils;
     FileDialogFactory fileDialogFactory;
@@ -324,6 +327,7 @@ static int runApplication(QApplication* app)
     );
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     OperationsThread         operationsThread(&userStorage, &autoPilotOperationsDatabase, &grpcClient);
+    LogsThread               logsThread(&userStorage, &autoPilotLogsDatabase);
     PortfolioThread          portfolioThread(&userStorage, &grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
     MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
@@ -370,6 +374,7 @@ static int runApplication(QApplication* app)
         &priceCollectThread,
         &lastPriceThread,
         &operationsThread,
+        &logsThread,
         &portfolioThread,
         &portfolioLastPriceThread,
         &makeDecisionThread,

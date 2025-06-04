@@ -72,6 +72,7 @@ MainWindow::MainWindow(
     IPriceCollectThread*               priceCollectThread,
     ILastPriceThread*                  lastPriceThread,
     IOperationsThread*                 operationsThread,
+    ILogsThread*                       logsThread,
     IPortfolioThread*                  portfolioThread,
     IPortfolioLastPriceThread*         portfolioLastPriceThread,
     IMakeDecisionThread*               makeDecisionThread,
@@ -111,6 +112,7 @@ MainWindow::MainWindow(
     mPriceCollectThread(priceCollectThread),
     mLastPriceThread(lastPriceThread),
     mOperationsThread(operationsThread),
+    mLogsThread(logsThread),
     mPortfolioThread(portfolioThread),
     mPortfolioLastPriceThread(portfolioLastPriceThread),
     mMakeDecisionThread(makeDecisionThread),
@@ -219,6 +221,9 @@ MainWindow::MainWindow(
     connect(mOperationsThread,                        SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
     connect(mOperationsThread,                        SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
+    connect(mLogsThread,                              SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
+    connect(mLogsThread,                              SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(autoPilotLogsRead(const QList<LogEntry>&)));
+    connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
@@ -244,6 +249,7 @@ MainWindow::~MainWindow()
     mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
     mOperationsThread->terminateThread();
+    mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
     mMakeDecisionThread->terminateThread();
@@ -253,6 +259,7 @@ MainWindow::~MainWindow()
     mPriceCollectThread->wait();
     mLastPriceThread->wait();
     mOperationsThread->wait();
+    mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
     mMakeDecisionThread->wait();
@@ -489,6 +496,7 @@ void MainWindow::startAutoPilot()
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
     mOperationsThread->setAccount(account);
+    mLogsThread->setAccount(account);
     mPortfolioThread->setAccount(account);
 
     const QMutexLocker lock(mUserStorage->getMutex());
@@ -497,17 +505,18 @@ void MainWindow::startAutoPilot()
     mAutoPilotDecisionMakerWidget->setAccountName(accounts.value(account).name);
 
     mOperationsThread->start();
+    mLogsThread->start();
     mPortfolioThread->start();
     mPortfolioLastPriceThread->start();
 
     autoPilotPortfolioUpdateLastPricesTimer.start();
 
-    autoPilotLogAdded(LOG_LEVEL_INFO, tr("Auto-pilot started"));
+    mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot started"));
 }
 
 void MainWindow::stopAutoPilot()
 {
-    autoPilotLogAdded(LOG_LEVEL_INFO, tr("Auto-pilot stopped"));
+    mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot stopped"));
 
     ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->stop();
@@ -516,12 +525,14 @@ void MainWindow::stopAutoPilot()
     ui->startAutoPilotButton->setText(tr("Start auto-pilot"));
 
     mOperationsThread->terminateThread();
+    mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
 
     autoPilotPortfolioUpdateLastPricesTimer.stop();
 
     mOperationsThread->wait();
+    mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
 }
@@ -547,14 +558,8 @@ void MainWindow::autoPilotLogsRead(const QList<LogEntry>& entries)
     mAutoPilotDecisionMakerWidget->logsRead(entries);
 }
 
-void MainWindow::autoPilotLogAdded(LogLevel level, const QString& message)
+void MainWindow::autoPilotLogAdded(const LogEntry& entry)
 {
-    LogEntry entry;
-
-    entry.timestamp = QDateTime::currentMSecsSinceEpoch();
-    entry.level     = level;
-    entry.message   = message;
-
     mAutoPilotDecisionMakerWidget->logAdded(entry);
 }
 

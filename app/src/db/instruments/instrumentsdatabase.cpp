@@ -47,11 +47,7 @@ Instruments InstrumentsDatabase::readInstruments()
 
             for (auto it = jsonInstruments.constBegin(), end = jsonInstruments.constEnd(); it != end; ++it)
             {
-                Instrument instrument;
-
-                instrument.fromJsonObject(it.value().toObject());
-
-                res[it.key()] = instrument;
+                res[it.key()].fromJsonObject(it.value().toObject());
             }
         }
     }

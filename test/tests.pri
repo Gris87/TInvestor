@@ -24,6 +24,7 @@ SOURCES += \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/test_config.cpp \
     src/db/instruments/test_instrumentsdatabase.cpp \
+    src/db/logs/test_logsdatabase.cpp \
     src/db/operations/test_operationsdatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
     src/storage/user/test_userstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
+    src/threads/logs/test_logsthread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
     src/threads/operations/test_operationsthread.cpp \
     src/threads/orderbook/test_orderbookthread.cpp \
@@ -151,6 +153,7 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
     src/db/instruments/iinstrumentsdatabase_mock.h \
+    src/db/logs/ilogsdatabase_mock.h \
     src/db/operations/ioperationsdatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
@@ -171,6 +174,7 @@ HEADERS += \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
+    src/threads/logs/ilogsthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \
     src/threads/operations/ioperationsthread_mock.h \
     src/threads/orderbook/iorderbookthread_mock.h \

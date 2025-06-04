@@ -55,11 +55,7 @@ QList<Operation> OperationsDatabase::readOperations()
 
             for (int i = 0; i < jsonOperations.size(); ++i)
             {
-                Operation operation;
-
-                operation.fromJsonObject(jsonOperations.at(i).toObject());
-
-                res[i] = operation;
+                res[i].fromJsonObject(jsonOperations.at(i).toObject());
             }
         }
     }

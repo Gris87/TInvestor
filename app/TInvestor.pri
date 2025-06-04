@@ -29,6 +29,7 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.cpp \
     src/db/instruments/instrumentsdatabase.cpp \
+    src/db/logs/logsdatabase.cpp \
     src/db/operations/operationsdatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/db/user/userdatabase.cpp \
@@ -65,6 +66,7 @@ SOURCES += \
     src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
+    src/threads/logs/logsthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
     src/threads/operations/operationsthread.cpp \
     src/threads/orderbook/orderbookthread.cpp \
@@ -178,6 +180,8 @@ HEADERS += \
     src/config/iconfig.h \
     src/db/instruments/iinstrumentsdatabase.h \
     src/db/instruments/instrumentsdatabase.h \
+    src/db/logs/ilogsdatabase.h \
+    src/db/logs/logsdatabase.h \
     src/db/operations/ioperationsdatabase.h \
     src/db/operations/operationsdatabase.h \
     src/db/stocks/istocksdatabase.h \
@@ -237,6 +241,8 @@ HEADERS += \
     src/threads/cleanup/icleanupthread.h \
     src/threads/lastprice/ilastpricethread.h \
     src/threads/lastprice/lastpricethread.h \
+    src/threads/logs/ilogsthread.h \
+    src/threads/logs/logsthread.h \
     src/threads/makedecision/imakedecisionthread.h \
     src/threads/makedecision/makedecisionthread.h \
     src/threads/operations/ioperationsthread.h \

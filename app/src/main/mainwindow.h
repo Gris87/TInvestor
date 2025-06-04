@@ -18,6 +18,7 @@
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
+#include "src/threads/logs/ilogsthread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
 #include "src/threads/operations/ioperationsthread.h"
 #include "src/threads/orderbook/iorderbookthread.h"
@@ -91,6 +92,7 @@ public:
         IPriceCollectThread*               priceCollectThread,
         ILastPriceThread*                  lastPriceThread,
         IOperationsThread*                 operationsThread,
+        ILogsThread*                       logsThread,
         IPortfolioThread*                  portfolioThread,
         IPortfolioLastPriceThread*         portfolioLastPriceThread,
         IMakeDecisionThread*               makeDecisionThread,
@@ -160,6 +162,7 @@ private:
     IPriceCollectThread*               mPriceCollectThread;
     ILastPriceThread*                  mLastPriceThread;
     IOperationsThread*                 mOperationsThread;
+    ILogsThread*                       mLogsThread;
     IPortfolioThread*                  mPortfolioThread;
     IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
     IMakeDecisionThread*               mMakeDecisionThread;
@@ -203,7 +206,7 @@ public slots:
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
     void autoPilotLogsRead(const QList<LogEntry>& entries);
-    void autoPilotLogAdded(LogLevel level, const QString& message);
+    void autoPilotLogAdded(const LogEntry& entry);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
 

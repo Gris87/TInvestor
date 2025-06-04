@@ -27,6 +27,7 @@
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
+#include "src/threads/logs/ilogsthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
 #include "src/threads/operations/ioperationsthread_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
@@ -126,6 +127,7 @@ protected:
         priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
         lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
         operationsThreadMock                 = new StrictMock<OperationsThreadMock>();
+        logsThreadMock                       = new StrictMock<LogsThreadMock>();
         portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         portfolioLastPriceThreadMock         = new StrictMock<PortfolioLastPriceThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
@@ -264,6 +266,7 @@ protected:
             priceCollectThreadMock,
             lastPriceThreadMock,
             operationsThreadMock,
+            logsThreadMock,
             portfolioThreadMock,
             portfolioLastPriceThreadMock,
             makeDecisionThreadMock,
@@ -286,6 +289,7 @@ protected:
         EXPECT_CALL(*priceCollectThreadMock, terminateThread());
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
         EXPECT_CALL(*operationsThreadMock, terminateThread());
+        EXPECT_CALL(*logsThreadMock, terminateThread());
         EXPECT_CALL(*portfolioThreadMock, terminateThread());
         EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
         EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
@@ -342,6 +346,7 @@ protected:
         delete priceCollectThreadMock;
         delete lastPriceThreadMock;
         delete operationsThreadMock;
+        delete logsThreadMock;
         delete portfolioThreadMock;
         delete portfolioLastPriceThreadMock;
         delete makeDecisionThreadMock;
@@ -403,6 +408,7 @@ protected:
     StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
     StrictMock<OperationsThreadMock>*                 operationsThreadMock;
+    StrictMock<LogsThreadMock>*                       logsThreadMock;
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<PortfolioLastPriceThreadMock>*         portfolioLastPriceThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
@@ -481,10 +487,13 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot stopped")));
+
     EXPECT_CALL(*userUpdateThreadMock, terminateThread());
     EXPECT_CALL(*priceCollectThreadMock, terminateThread());
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
     EXPECT_CALL(*operationsThreadMock, terminateThread());
+    EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
@@ -704,6 +713,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant("aaaaaa")));
 
     EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
+    EXPECT_CALL(*logsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
 
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
@@ -714,9 +724,12 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*priceCollectThreadMock, run());
     EXPECT_CALL(*lastPriceThreadMock, run());
     EXPECT_CALL(*operationsThreadMock, run());
+    EXPECT_CALL(*logsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());
     EXPECT_CALL(*portfolioLastPriceThreadMock, run());
     EXPECT_CALL(*makeDecisionThreadMock, run());
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot started")));
 
     mainWindow->ui->actionAuth->trigger();
 
@@ -737,6 +750,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     priceCollectThreadMock->wait();
     lastPriceThreadMock->wait();
     operationsThreadMock->wait();
+    logsThreadMock->wait();
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
     makeDecisionThreadMock->wait();
@@ -925,6 +939,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(QVariant("aaaaaa")));
 
     EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
+    EXPECT_CALL(*logsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
 
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
@@ -932,8 +947,11 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
 
     EXPECT_CALL(*operationsThreadMock, run());
+    EXPECT_CALL(*logsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());
     EXPECT_CALL(*portfolioLastPriceThreadMock, run());
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot started")));
 
     mainWindow->ui->startAutoPilotButton->click();
 
@@ -944,6 +962,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     // clang-format on
 
     operationsThreadMock->wait();
+    logsThreadMock->wait();
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
 
@@ -960,7 +979,10 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(QMessageBox::Yes));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
 
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot stopped")));
+
     EXPECT_CALL(*operationsThreadMock, terminateThread());
+    EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
 
