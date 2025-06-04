@@ -18,8 +18,10 @@ QJsonObject Quotation::toJsonObject() const
 {
     QJsonObject res;
 
+    // clang-format off
     res.insert("units", units);
-    res.insert("nano", nano);
+    res.insert("nano",  nano);
+    // clang-format on
 
     return res;
 }

@@ -44,6 +44,7 @@ SOURCES += \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
     src/domain/filter/filter.cpp \
     src/domain/instrument/instrument.cpp \
+    src/domain/log/logentry.cpp \
     src/domain/operation/operation.cpp \
     src/domain/operation/operationfifoitem.cpp \
     src/domain/orderbook/orderbook.cpp \
@@ -205,6 +206,7 @@ HEADERS += \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
     src/domain/filter/filter.h \
     src/domain/instrument/instrument.h \
+    src/domain/log/logentry.h \
     src/domain/operation/operation.h \
     src/domain/operation/operationfifoitem.h \
     src/domain/orderbook/orderbook.h \

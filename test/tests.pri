@@ -39,6 +39,7 @@ SOURCES += \
     src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
     src/domain/filter/test_filter.cpp \
     src/domain/instrument/test_instrument.cpp \
+    src/domain/log/test_logentry.cpp \
     src/domain/operation/test_operation.cpp \
     src/domain/operation/test_operationfifoitem.cpp \
     src/domain/orderbook/test_orderbook.cpp \
