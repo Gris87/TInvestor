@@ -83,6 +83,16 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
     mAccountChartWidget->operationsAdded(operations);
 }
 
+void DecisionMakerWidget::logsRead(const QList<LogEntry>& entries)
+{
+    mLogsTableWidget->logsRead(entries);
+}
+
+void DecisionMakerWidget::logAdded(const LogEntry& entry)
+{
+    mLogsTableWidget->logAdded(entry);
+}
+
 void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mPortfolioTreeWidget->portfolioChanged(portfolio);

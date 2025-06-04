@@ -49,6 +49,8 @@ public:
 
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
+    void logsRead(const QList<LogEntry>& entries) override;
+    void logAdded(const LogEntry& entry) override;
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;

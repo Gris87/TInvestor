@@ -40,6 +40,16 @@ LogsTableWidget::~LogsTableWidget()
     delete ui;
 }
 
+void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
+{
+    qInfo() << entries.size();
+}
+
+void LogsTableWidget::logAdded(const LogEntry& entry)
+{
+    qInfo() << entry.message;
+}
+
 void LogsTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off

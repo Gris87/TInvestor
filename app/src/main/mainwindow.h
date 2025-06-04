@@ -202,6 +202,8 @@ public slots:
     void stopAutoPilot();
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
+    void autoPilotLogsRead(const QList<LogEntry>& entries);
+    void autoPilotLogAdded(LogLevel level, const QString& message);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
 

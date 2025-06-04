@@ -501,10 +501,14 @@ void MainWindow::startAutoPilot()
     mPortfolioLastPriceThread->start();
 
     autoPilotPortfolioUpdateLastPricesTimer.start();
+
+    autoPilotLogAdded(LOG_LEVEL_INFO, tr("Auto-pilot started"));
 }
 
 void MainWindow::stopAutoPilot()
 {
+    autoPilotLogAdded(LOG_LEVEL_INFO, tr("Auto-pilot stopped"));
+
     ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->stop();
 
@@ -536,6 +540,22 @@ void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
 {
     mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
     mPortfolioLastPriceThread->portfolioChanged(portfolio);
+}
+
+void MainWindow::autoPilotLogsRead(const QList<LogEntry>& entries)
+{
+    mAutoPilotDecisionMakerWidget->logsRead(entries);
+}
+
+void MainWindow::autoPilotLogAdded(LogLevel level, const QString& message)
+{
+    LogEntry entry;
+
+    entry.timestamp = QDateTime::currentMSecsSinceEpoch();
+    entry.level     = level;
+    entry.message   = message;
+
+    mAutoPilotDecisionMakerWidget->logAdded(entry);
 }
 
 void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price)

@@ -28,6 +28,9 @@ public:
 
     Ui::LogsTableWidget* ui;
 
+    void logsRead(const QList<LogEntry>& entries) override;
+    void logAdded(const LogEntry& entry) override;
+
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
 
