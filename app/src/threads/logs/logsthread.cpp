@@ -67,19 +67,16 @@ void LogsThread::setAccount(const QString& account)
 
 void LogsThread::addLog(LogLevel level, const QString& message)
 {
-    if (!QThread::currentThread()->isInterruptionRequested())
-    {
-        LogEntry entry;
+    LogEntry entry;
 
-        entry.timestamp = QDateTime::currentMSecsSinceEpoch();
-        entry.level     = level;
-        entry.message   = message;
+    entry.timestamp = QDateTime::currentMSecsSinceEpoch();
+    entry.level     = level;
+    entry.message   = message;
 
-        const QMutexLocker lock(mMutex);
-        mEntries.append(entry);
+    const QMutexLocker lock(mMutex);
+    mEntries.append(entry);
 
-        mSemaphore.release();
-    }
+    mSemaphore.release();
 }
 
 void LogsThread::terminateThread()

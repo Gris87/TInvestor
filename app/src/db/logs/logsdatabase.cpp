@@ -39,7 +39,7 @@ QList<LogEntry> LogsDatabase::readLogs()
     if (logsFile->open(QIODevice::ReadOnly))
     {
         QByteArray content  = "[";
-        content             += logsFile->readAll();
+        content            += logsFile->readAll();
         content            += "]";
 
         logsFile->close();
@@ -69,12 +69,16 @@ void LogsDatabase::appendLog(const LogEntry& entry)
 
     const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(logsDirPath() + "/logs.json");
 
-    const bool ok = logsFile->open(QIODevice::Append);
+    const bool ok = logsFile->open(QIODevice::WriteOnly | QIODevice::Append);
     Q_ASSERT_X(ok, "LogsDatabase::appendLog()", "Failed to open file");
 
     const QJsonDocument jsonDoc(entry.toJsonObject());
 
-    logsFile->write(",\n");
+    if (logsFile->size() > 0)
+    {
+        logsFile->write(",\n");
+    }
+
     logsFile->write(jsonDoc.toJson(QJsonDocument::Compact));
     logsFile->close();
 }
