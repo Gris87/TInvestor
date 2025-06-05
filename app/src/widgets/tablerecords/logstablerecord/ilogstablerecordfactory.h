@@ -4,6 +4,7 @@
 
 #include <QTableWidget>
 
+#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecord.h"
 
 
@@ -17,5 +18,7 @@ public:
     ILogsTableRecordFactory(const ILogsTableRecordFactory& another)            = delete;
     ILogsTableRecordFactory& operator=(const ILogsTableRecordFactory& another) = delete;
 
-    virtual ILogsTableRecord* newInstance(QTableWidget* tableWidget, QObject* parent) const = 0;
+    virtual ILogsTableRecord* newInstance(
+        QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+    ) const = 0;
 };

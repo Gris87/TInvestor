@@ -23,10 +23,11 @@ class LogsTableWidget : public ILogsTableWidget
 
 public:
     explicit LogsTableWidget(
-        ILogsTableRecordFactory* logsTableRecordFactory,
-        IFileDialogFactory*      fileDialogFactory,
-        ISettingsEditor*         settingsEditor,
-        QWidget*                 parent = nullptr
+        ILogsTableRecordFactory*         logsTableRecordFactory,
+        ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
+        IFileDialogFactory*              fileDialogFactory,
+        ISettingsEditor*                 settingsEditor,
+        QWidget*                         parent = nullptr
     );
     ~LogsTableWidget() override;
 
@@ -44,10 +45,11 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
-    ILogsTableRecordFactory* mLogsTableRecordFactory;
-    IFileDialogFactory*      mFileDialogFactory;
-    ISettingsEditor*         mSettingsEditor;
-    QList<ILogsTableRecord*> mRecords;
+    ILogsTableRecordFactory*         mLogsTableRecordFactory;
+    ILogLevelTableItemWidgetFactory* mLogLevelTableItemWidgetFactory;
+    IFileDialogFactory*              mFileDialogFactory;
+    ISettingsEditor*                 mSettingsEditor;
+    QList<ILogsTableRecord*>         mRecords;
 
 public slots:
     void on_tableWidget_customContextMenuRequested(const QPoint& pos);

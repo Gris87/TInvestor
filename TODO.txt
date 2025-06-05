@@ -1,11 +1,9 @@
-Add logs to logs table
-Log levels
 Add grpc errors to logs
-Export logs to Excel
+Filter logs by level
+Show spinners on portfolio and operations
 Follow for the strategy
 Optimization
 Long startup
-Show spinners on portfolio and operations
 Tray icon popup too long
 
 Buy if it was sold during 24h and price is less than 1%

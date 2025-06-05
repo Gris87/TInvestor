@@ -5,6 +5,7 @@
 
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 
 
@@ -22,25 +23,30 @@ class Test_LogsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        logsTableRecordFactoryMock = new StrictMock<LogsTableRecordFactoryMock>();
-        fileDialogFactoryMock      = new StrictMock<FileDialogFactoryMock>();
-        settingsEditorMock         = new StrictMock<SettingsEditorMock>();
+        logsTableRecordFactoryMock         = new StrictMock<LogsTableRecordFactoryMock>();
+        logLevelTableItemWidgetFactoryMock = new StrictMock<LogLevelTableItemWidgetFactoryMock>();
+        fileDialogFactoryMock              = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock                 = new StrictMock<SettingsEditorMock>();
 
-        logsTableWidget = new LogsTableWidget(logsTableRecordFactoryMock, fileDialogFactoryMock, settingsEditorMock);
+        logsTableWidget = new LogsTableWidget(
+            logsTableRecordFactoryMock, logLevelTableItemWidgetFactoryMock, fileDialogFactoryMock, settingsEditorMock
+        );
     }
 
     void TearDown() override
     {
         delete logsTableWidget;
         delete logsTableRecordFactoryMock;
+        delete logLevelTableItemWidgetFactoryMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
     }
 
-    LogsTableWidget*                        logsTableWidget;
-    StrictMock<LogsTableRecordFactoryMock>* logsTableRecordFactoryMock;
-    StrictMock<FileDialogFactoryMock>*      fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>*         settingsEditorMock;
+    LogsTableWidget*                                logsTableWidget;
+    StrictMock<LogsTableRecordFactoryMock>*         logsTableRecordFactoryMock;
+    StrictMock<LogLevelTableItemWidgetFactoryMock>* logLevelTableItemWidgetFactoryMock;
+    StrictMock<FileDialogFactoryMock>*              fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*                 settingsEditorMock;
 };
 
 

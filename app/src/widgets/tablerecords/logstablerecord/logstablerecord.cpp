@@ -11,21 +11,26 @@ const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=no
 
 
 
-LogsTableRecord::LogsTableRecord(QTableWidget* tableWidget, QObject* parent) :
+LogsTableRecord::LogsTableRecord(
+    QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+) :
     ILogsTableRecord(parent),
     mTimeTableWidgetItem(new TimeTableItem()),
-    mLevelTableWidgetItem(new QTableWidgetItem()),
+    mLevelTableWidgetItem(),
     mMessageTableWidgetItem(new QTableWidgetItem())
 {
     qDebug() << "Create LogsTableRecord";
+
+    mLevelTableWidgetItem = logLevelTableItemWidgetFactory->newInstance(tableWidget); // tableWidget will take ownership
 
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex, LOGS_TIME_COLUMN,    mTimeTableWidgetItem);
-    tableWidget->setItem(rowIndex, LOGS_LEVEL_COLUMN,   mLevelTableWidgetItem);
-    tableWidget->setItem(rowIndex, LOGS_MESSAGE_COLUMN, mMessageTableWidgetItem);
+    tableWidget->setItem(rowIndex, LOGS_TIME_COLUMN,        mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LOGS_LEVEL_COLUMN, mLevelTableWidgetItem);
+    tableWidget->setItem(rowIndex, LOGS_LEVEL_COLUMN,       mLevelTableWidgetItem);
+    tableWidget->setItem(rowIndex, LOGS_MESSAGE_COLUMN,     mMessageTableWidgetItem);
     // clang-format on
 }
 
@@ -37,8 +42,7 @@ LogsTableRecord::~LogsTableRecord()
 void LogsTableRecord::setLogEntry(const LogEntry& entry)
 {
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(entry.timestamp));
-    mLevelTableWidgetItem->setIcon(QIcon(QString(":/assets/images/levels/%1.png").arg(LOG_LEVEL_NAMES_LOWERCASE[entry.level])));
-    mLevelTableWidgetItem->setData(Qt::UserRole, entry.level);
+    mLevelTableWidgetItem->setLogLevel(entry.level);
     mMessageTableWidgetItem->setText(entry.message);
 }
 
@@ -61,7 +65,7 @@ void LogsTableRecord::exportToExcel(QXlsx::Document& doc) const
 
     // clang-format off
     doc.write(row, LOGS_TIME_COLUMN + 1,    mTimeTableWidgetItem->value(), dateFormat);
-    doc.write(row, LOGS_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[mLevelTableWidgetItem->data(Qt::UserRole).toInt()], cellStyle);
+    doc.write(row, LOGS_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[mLevelTableWidgetItem->logLevel()], cellStyle);
     doc.write(row, LOGS_MESSAGE_COLUMN + 1, mMessageTableWidgetItem->text(), cellStyle);
     // clang-format on
 }

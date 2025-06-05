@@ -21,4 +21,7 @@ public:
 
     LogLevelTableItemWidgetMock(const LogLevelTableItemWidgetMock& another)            = delete;
     LogLevelTableItemWidgetMock& operator=(const LogLevelTableItemWidgetMock& another) = delete;
+
+    MOCK_METHOD(void, setLogLevel, (LogLevel level), (override));
+    MOCK_METHOD(LogLevel, logLevel, (), (const, override));
 };

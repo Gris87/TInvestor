@@ -25,4 +25,12 @@ public:
     LogLevelTableItemWidget& operator=(const LogLevelTableItemWidget& another) = delete;
 
     Ui::LogLevelTableItemWidget* ui;
+
+    void     setLogLevel(LogLevel level) override;
+    LogLevel logLevel() const override;
+
+    bool operator<(const QTableWidgetItem& another) const override;
+
+private:
+    LogLevel mLogLevel;
 };

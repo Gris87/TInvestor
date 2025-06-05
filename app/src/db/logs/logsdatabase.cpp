@@ -65,11 +65,16 @@ QList<LogEntry> LogsDatabase::readLogs()
 
 void LogsDatabase::appendLog(const LogEntry& entry)
 {
-    qDebug() << "Appending logs to database";
+    const QString dirPath = logsDirPath();
 
-    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(logsDirPath() + "/logs.json");
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
-    const bool ok = logsFile->open(QIODevice::WriteOnly | QIODevice::Append);
+    bool ok = dir->mkpath(dirPath);
+    Q_ASSERT_X(ok, "LogsDatabase::appendLog()", "Failed to create dir");
+
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(dirPath + "/logs.json");
+
+    ok = logsFile->open(QIODevice::WriteOnly | QIODevice::Append);
     Q_ASSERT_X(ok, "LogsDatabase::appendLog()", "Failed to open file");
 
     const QJsonDocument jsonDoc(entry.toJsonObject());

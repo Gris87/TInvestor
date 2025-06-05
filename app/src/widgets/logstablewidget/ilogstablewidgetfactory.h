@@ -20,9 +20,10 @@ public:
     ILogsTableWidgetFactory& operator=(const ILogsTableWidgetFactory& another) = delete;
 
     virtual ILogsTableWidget* newInstance(
-        ILogsTableRecordFactory* logsTableRecordFactory,
-        IFileDialogFactory*      fileDialogFactory,
-        ISettingsEditor*         settingsEditor,
-        QWidget*                 parent
+        ILogsTableRecordFactory*         logsTableRecordFactory,
+        ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
+        IFileDialogFactory*              fileDialogFactory,
+        ISettingsEditor*                 settingsEditor,
+        QWidget*                         parent
     ) const = 0;
 };

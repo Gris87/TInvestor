@@ -17,6 +17,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
@@ -52,6 +53,7 @@ protected:
         portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
         instrumentWidgetFactoryMock          = new StrictMock<InstrumentWidgetFactoryMock>();
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
+        logLevelTableItemWidgetFactoryMock   = new StrictMock<LogLevelTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
@@ -74,7 +76,13 @@ protected:
             .WillOnce(Return(accountChartWidgetMock));
         EXPECT_CALL(
             *logsTableWidgetFactoryMock,
-            newInstance(logsTableRecordFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(
+                logsTableRecordFactoryMock,
+                logLevelTableItemWidgetFactoryMock,
+                fileDialogFactoryMock,
+                settingsEditorMock,
+                NotNull()
+            )
         )
             .WillOnce(Return(logsTableWidgetMock));
         EXPECT_CALL(
@@ -101,6 +109,7 @@ protected:
             portfolioTreeRecordFactoryMock,
             instrumentWidgetFactoryMock,
             instrumentTableItemWidgetFactoryMock,
+            logLevelTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
             fileDialogFactoryMock,
@@ -120,6 +129,7 @@ protected:
         delete portfolioTreeRecordFactoryMock;
         delete instrumentWidgetFactoryMock;
         delete instrumentTableItemWidgetFactoryMock;
+        delete logLevelTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete fileDialogFactoryMock;
@@ -140,6 +150,7 @@ protected:
     StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>*          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
+    StrictMock<LogLevelTableItemWidgetFactoryMock>*   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;

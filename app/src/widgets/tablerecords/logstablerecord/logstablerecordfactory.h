@@ -15,5 +15,7 @@ public:
     LogsTableRecordFactory(const LogsTableRecordFactory& another)            = delete;
     LogsTableRecordFactory& operator=(const LogsTableRecordFactory& another) = delete;
 
-    ILogsTableRecord* newInstance(QTableWidget* tableWidget, QObject* parent) const override;
+    ILogsTableRecord* newInstance(
+        QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+    ) const override;
 };

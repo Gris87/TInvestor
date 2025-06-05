@@ -24,9 +24,10 @@ public:
         ILogsTableWidget*,
         newInstance,
         (ILogsTableRecordFactory * logsTableRecordFactory,
-         IFileDialogFactory* fileDialogFactory,
-         ISettingsEditor*    settingsEditor,
-         QWidget*            parent),
+         ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
+         IFileDialogFactory*              fileDialogFactory,
+         ISettingsEditor*                 settingsEditor,
+         QWidget*                         parent),
         (const, override)
     );
 };

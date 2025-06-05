@@ -69,6 +69,7 @@ public:
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
         IInstrumentWidgetFactory*          instrumentWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
         IStocksTableRecordFactory*         stockTableRecordFactory,

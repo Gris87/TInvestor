@@ -20,5 +20,10 @@ public:
     LogsTableRecordFactoryMock(const LogsTableRecordFactoryMock& another)            = delete;
     LogsTableRecordFactoryMock& operator=(const LogsTableRecordFactoryMock& another) = delete;
 
-    MOCK_METHOD(ILogsTableRecord*, newInstance, (QTableWidget * tableWidget, QObject* parent), (const, override));
+    MOCK_METHOD(
+        ILogsTableRecord*,
+        newInstance,
+        (QTableWidget * tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent),
+        (const, override)
+    );
 };

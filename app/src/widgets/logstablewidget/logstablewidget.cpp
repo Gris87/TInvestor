@@ -23,14 +23,16 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 LogsTableWidget::LogsTableWidget(
-    ILogsTableRecordFactory* logsTableRecordFactory,
-    IFileDialogFactory*      fileDialogFactory,
-    ISettingsEditor*         settingsEditor,
-    QWidget*                 parent
+    ILogsTableRecordFactory*         logsTableRecordFactory,
+    ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
+    IFileDialogFactory*              fileDialogFactory,
+    ISettingsEditor*                 settingsEditor,
+    QWidget*                         parent
 ) :
     ILogsTableWidget(parent),
     ui(new Ui::LogsTableWidget),
     mLogsTableRecordFactory(logsTableRecordFactory),
+    mLogLevelTableItemWidgetFactory(logLevelTableItemWidgetFactory),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
     mRecords()
@@ -66,7 +68,7 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
 
     while (mRecords.size() < entries.size())
     {
-        ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, this);
+        ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, mLogLevelTableItemWidgetFactory, this);
         mRecords.append(record);
     }
 
@@ -84,7 +86,7 @@ void LogsTableWidget::logAdded(const LogEntry& entry)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, this);
+    ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, mLogLevelTableItemWidgetFactory, this);
     record->setLogEntry(entry);
 
     mRecords.append(record);

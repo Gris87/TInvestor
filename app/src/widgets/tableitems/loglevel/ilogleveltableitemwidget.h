@@ -2,11 +2,15 @@
 
 
 
+#include <QTableWidgetItem>
 #include <QWidget>
 
+#include "src/domain/log/logentry.h"
 
 
-class ILogLevelTableItemWidget : public QWidget
+
+class ILogLevelTableItemWidget : public QWidget,
+                                 public QTableWidgetItem
 {
     Q_OBJECT
 
@@ -19,4 +23,7 @@ public:
 
     ILogLevelTableItemWidget(const ILogLevelTableItemWidget& another)            = delete;
     ILogLevelTableItemWidget& operator=(const ILogLevelTableItemWidget& another) = delete;
+
+    virtual void     setLogLevel(LogLevel level) = 0;
+    virtual LogLevel logLevel() const            = 0;
 };

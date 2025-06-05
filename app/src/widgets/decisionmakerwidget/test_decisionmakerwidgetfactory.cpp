@@ -16,6 +16,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
+#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
@@ -49,6 +50,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
+    StrictMock<LogLevelTableItemWidgetFactoryMock>   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
     StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
@@ -77,7 +79,13 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(accountChartWidgetMock));
     EXPECT_CALL(
         logsTableWidgetFactoryMock,
-        newInstance(&logsTableRecordFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
+        newInstance(
+            &logsTableRecordFactoryMock,
+            &logLevelTableItemWidgetFactoryMock,
+            &fileDialogFactoryMock,
+            &settingsEditorMock,
+            NotNull()
+        )
     )
         .WillOnce(Return(logsTableWidgetMock));
     EXPECT_CALL(
@@ -104,6 +112,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         &portfolioTreeRecordFactoryMock,
         &instrumentWidgetFactoryMock,
         &instrumentTableItemWidgetFactoryMock,
+        &logLevelTableItemWidgetFactoryMock,
         &userStorageMock,
         &instrumentsStorageMock,
         &fileDialogFactoryMock,

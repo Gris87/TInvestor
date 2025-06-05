@@ -6,6 +6,7 @@
 
 #include <QTableWidget>
 
+#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
 
@@ -15,7 +16,9 @@ class LogsTableRecord : public ILogsTableRecord
     Q_OBJECT
 
 public:
-    explicit LogsTableRecord(QTableWidget* tableWidget, QObject* parent = nullptr);
+    explicit LogsTableRecord(
+        QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent = nullptr
+    );
     ~LogsTableRecord() override;
 
     LogsTableRecord(const LogsTableRecord& another)            = delete;
@@ -25,7 +28,7 @@ public:
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
-    TimeTableItem*    mTimeTableWidgetItem;
-    QTableWidgetItem* mLevelTableWidgetItem;
-    QTableWidgetItem* mMessageTableWidgetItem;
+    TimeTableItem*            mTimeTableWidgetItem;
+    ILogLevelTableItemWidget* mLevelTableWidgetItem;
+    QTableWidgetItem*         mMessageTableWidgetItem;
 };

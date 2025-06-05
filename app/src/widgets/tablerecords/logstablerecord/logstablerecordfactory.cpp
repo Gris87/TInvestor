@@ -17,7 +17,9 @@ LogsTableRecordFactory::~LogsTableRecordFactory()
     qDebug() << "Destroy LogsTableRecordFactory";
 }
 
-ILogsTableRecord* LogsTableRecordFactory::newInstance(QTableWidget* tableWidget, QObject* parent) const
+ILogsTableRecord* LogsTableRecordFactory::newInstance(
+    QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+) const
 {
-    return new LogsTableRecord(tableWidget, parent);
+    return new LogsTableRecord(tableWidget, logLevelTableItemWidgetFactory, parent);
 }
