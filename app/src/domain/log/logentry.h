@@ -12,8 +12,12 @@ enum LogLevel : quint8
     LOG_LEVEL_DEBUG,
     LOG_LEVEL_INFO,
     LOG_LEVEL_WARNING,
-    LOG_LEVEL_ERROR
+    LOG_LEVEL_ERROR,
+    LOG_LEVEL_COUNT
 };
+
+extern const char* const LOG_LEVEL_NAMES[LOG_LEVEL_COUNT];
+extern const char* const LOG_LEVEL_NAMES_LOWERCASE[LOG_LEVEL_COUNT];
 
 
 

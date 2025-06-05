@@ -15,5 +15,10 @@ public:
     LogsTableWidgetFactory(const LogsTableWidgetFactory& another)            = delete;
     LogsTableWidgetFactory& operator=(const LogsTableWidgetFactory& another) = delete;
 
-    ILogsTableWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const override;
+    ILogsTableWidget* newInstance(
+        ILogsTableRecordFactory* logsTableRecordFactory,
+        IFileDialogFactory*      fileDialogFactory,
+        ISettingsEditor*         settingsEditor,
+        QWidget*                 parent
+    ) const override;
 };

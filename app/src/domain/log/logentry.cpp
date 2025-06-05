@@ -2,6 +2,24 @@
 
 
 
+const char* const LOG_LEVEL_NAMES[LOG_LEVEL_COUNT] = {
+    "VERBOSE",
+    "DEBUG",
+    "INFO",
+    "WARNING",
+    "ERROR",
+};
+
+const char* const LOG_LEVEL_NAMES_LOWERCASE[LOG_LEVEL_COUNT] = {
+    "verbose",
+    "debug",
+    "info",
+    "warning",
+    "error",
+};
+
+
+
 LogEntry::LogEntry() :
     timestamp(),
     level(),

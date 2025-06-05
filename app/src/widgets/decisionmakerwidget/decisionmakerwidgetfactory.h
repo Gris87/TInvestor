@@ -21,6 +21,7 @@ public:
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
+        ILogsTableRecordFactory*           logsTableRecordFactory,
         IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
         IInstrumentWidgetFactory*          instrumentWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,

@@ -11,6 +11,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    ILogsTableRecordFactory*           logsTableRecordFactory,
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
     IInstrumentWidgetFactory*          instrumentWidgetFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
@@ -40,7 +41,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         this
     );
     mAccountChartWidget  = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
-    mLogsTableWidget     = logsTableWidgetFactory->newInstance(mSettingsEditor, this);
+    mLogsTableWidget     = logsTableWidgetFactory->newInstance(logsTableRecordFactory, fileDialogFactory, mSettingsEditor, this);
     mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
         portfolioTreeRecordFactory,
         instrumentWidgetFactory,

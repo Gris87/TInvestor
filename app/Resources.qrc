@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
+        <file>assets/images/levels/debug.png</file>
+        <file>assets/images/levels/error.png</file>
+        <file>assets/images/levels/info.png</file>
+        <file>assets/images/levels/verbose.png</file>
+        <file>assets/images/levels/warning.png</file>
         <file>assets/images/auth.png</file>
         <file>assets/images/auth_disabled.png</file>
         <file>assets/images/auto_pilot.png</file>

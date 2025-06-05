@@ -3,7 +3,9 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 
 
 
@@ -20,19 +22,25 @@ class Test_LogsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        settingsEditorMock = new StrictMock<SettingsEditorMock>();
+        logsTableRecordFactoryMock = new StrictMock<LogsTableRecordFactoryMock>();
+        fileDialogFactoryMock      = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock         = new StrictMock<SettingsEditorMock>();
 
-        logsTableWidget = new LogsTableWidget(settingsEditorMock);
+        logsTableWidget = new LogsTableWidget(logsTableRecordFactoryMock, fileDialogFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete logsTableWidget;
+        delete logsTableRecordFactoryMock;
+        delete fileDialogFactoryMock;
         delete settingsEditorMock;
     }
 
-    LogsTableWidget*                logsTableWidget;
-    StrictMock<SettingsEditorMock>* settingsEditorMock;
+    LogsTableWidget*                        logsTableWidget;
+    StrictMock<LogsTableRecordFactoryMock>* logsTableRecordFactoryMock;
+    StrictMock<FileDialogFactoryMock>*      fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*         settingsEditorMock;
 };
 
 
@@ -47,6 +55,7 @@ TEST_F(Test_LogsTableWidget, Test_saveWindowState)
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Time"),    _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Level"),   _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Message"), _));
     // clang-format on
 
@@ -59,6 +68,7 @@ TEST_F(Test_LogsTableWidget, Test_loadWindowState)
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),    _)).WillOnce(Return(QVariant(64)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Level"),   _)).WillOnce(Return(QVariant(94)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Message"), _)).WillOnce(Return(QVariant(94)));
     // clang-format on
 

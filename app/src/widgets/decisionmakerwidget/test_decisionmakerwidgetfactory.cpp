@@ -16,6 +16,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
+#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
@@ -44,6 +45,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogsTableWidgetFactoryMock>           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
+    StrictMock<LogsTableRecordFactoryMock>           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
@@ -73,7 +75,11 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(operationsTableWidgetMock));
     EXPECT_CALL(accountChartWidgetFactoryMock, newInstance(&fileDialogFactoryMock, &settingsEditorMock, NotNull()))
         .WillOnce(Return(accountChartWidgetMock));
-    EXPECT_CALL(logsTableWidgetFactoryMock, newInstance(&settingsEditorMock, NotNull())).WillOnce(Return(logsTableWidgetMock));
+    EXPECT_CALL(
+        logsTableWidgetFactoryMock,
+        newInstance(&logsTableRecordFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
+    )
+        .WillOnce(Return(logsTableWidgetMock));
     EXPECT_CALL(
         portfolioTreeWidgetFactoryMock,
         newInstance(
@@ -94,6 +100,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         &logsTableWidgetFactoryMock,
         &portfolioTreeWidgetFactoryMock,
         &operationsTableRecordFactoryMock,
+        &logsTableRecordFactoryMock,
         &portfolioTreeRecordFactoryMock,
         &instrumentWidgetFactoryMock,
         &instrumentTableItemWidgetFactoryMock,

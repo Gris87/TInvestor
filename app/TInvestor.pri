@@ -121,6 +121,8 @@ SOURCES += \
     src/widgets/tableitems/paybacktableitem.cpp \
     src/widgets/tableitems/timetableitem.cpp \
     src/widgets/tableitems/turnovertableitem.cpp \
+    src/widgets/tablerecords/logstablerecord/logstablerecord.cpp \
+    src/widgets/tablerecords/logstablerecord/logstablerecordfactory.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
@@ -342,6 +344,10 @@ HEADERS += \
     src/widgets/tableitems/paybacktableitem.h \
     src/widgets/tableitems/timetableitem.h \
     src/widgets/tableitems/turnovertableitem.h \
+    src/widgets/tablerecords/logstablerecord/ilogstablerecord.h \
+    src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h \
+    src/widgets/tablerecords/logstablerecord/logstablerecord.h \
+    src/widgets/tablerecords/logstablerecord/logstablerecordfactory.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.h \

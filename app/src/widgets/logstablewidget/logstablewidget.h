@@ -4,7 +4,9 @@
 
 #include "src/widgets/logstablewidget/ilogstablewidget.h"
 
+#include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h"
 
 
 
@@ -20,7 +22,12 @@ class LogsTableWidget : public ILogsTableWidget
     Q_OBJECT
 
 public:
-    explicit LogsTableWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    explicit LogsTableWidget(
+        ILogsTableRecordFactory* logsTableRecordFactory,
+        IFileDialogFactory*      fileDialogFactory,
+        ISettingsEditor*         settingsEditor,
+        QWidget*                 parent = nullptr
+    );
     ~LogsTableWidget() override;
 
     LogsTableWidget(const LogsTableWidget& another)            = delete;
@@ -35,5 +42,14 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    ISettingsEditor* mSettingsEditor;
+    void exportToExcel(const QString& path) const;
+
+    ILogsTableRecordFactory* mLogsTableRecordFactory;
+    IFileDialogFactory*      mFileDialogFactory;
+    ISettingsEditor*         mSettingsEditor;
+    QList<ILogsTableRecord*> mRecords;
+
+public slots:
+    void on_tableWidget_customContextMenuRequested(const QPoint& pos);
+    void actionExportToExcelTriggered();
 };

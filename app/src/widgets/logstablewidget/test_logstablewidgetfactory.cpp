@@ -2,7 +2,9 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 
 
 
@@ -19,9 +21,12 @@ TEST(Test_LogsTableWidgetFactory, Test_newInstance)
 {
     const LogsTableWidgetFactory factory;
 
-    StrictMock<SettingsEditorMock> settingsEditorMock;
+    StrictMock<LogsTableRecordFactoryMock> logsTableRecordFactoryMock;
+    StrictMock<FileDialogFactoryMock>      fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>         settingsEditorMock;
 
-    const ILogsTableWidget* widget = factory.newInstance(&settingsEditorMock, nullptr);
+    const ILogsTableWidget* widget =
+        factory.newInstance(&logsTableRecordFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

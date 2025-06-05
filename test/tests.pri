@@ -117,6 +117,8 @@ SOURCES += \
     src/widgets/tableitems/test_paybacktableitem.cpp \
     src/widgets/tableitems/test_timetableitem.cpp \
     src/widgets/tableitems/test_turnovertableitem.cpp \
+    src/widgets/tablerecords/logstablerecord/test_logstablerecord.cpp \
+    src/widgets/tablerecords/logstablerecord/test_logstablerecordfactory.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
@@ -219,6 +221,8 @@ HEADERS += \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h \
+    src/widgets/tablerecords/logstablerecord/ilogstablerecord_mock.h \
+    src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
