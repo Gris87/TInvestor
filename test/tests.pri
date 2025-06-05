@@ -110,6 +110,8 @@ SOURCES += \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
+    src/widgets/tableitems/loglevel/test_logleveltableitemwidget.cpp \
+    src/widgets/tableitems/loglevel/test_logleveltableitemwidgetfactory.cpp \
     src/widgets/tableitems/test_integertableitem.cpp \
     src/widgets/tableitems/test_moneychangepercenttableitem.cpp \
     src/widgets/tableitems/test_moneychangetableitem.cpp \
@@ -221,6 +223,8 @@ HEADERS += \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h \
+    src/widgets/tableitems/loglevel/ilogleveltableitemwidget_mock.h \
+    src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h \
     src/widgets/tablerecords/logstablerecord/ilogstablerecord_mock.h \
     src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord_mock.h \

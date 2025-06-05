@@ -115,6 +115,8 @@ SOURCES += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/integertableitem.cpp \
+    src/widgets/tableitems/loglevel/logleveltableitemwidget.cpp \
+    src/widgets/tableitems/loglevel/logleveltableitemwidgetfactory.cpp \
     src/widgets/tableitems/moneychangepercenttableitem.cpp \
     src/widgets/tableitems/moneychangetableitem.cpp \
     src/widgets/tableitems/moneytableitem.cpp \
@@ -338,6 +340,10 @@ HEADERS += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.h \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
     src/widgets/tableitems/integertableitem.h \
+    src/widgets/tableitems/loglevel/ilogleveltableitemwidget.h \
+    src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory.h \
+    src/widgets/tableitems/loglevel/logleveltableitemwidget.h \
+    src/widgets/tableitems/loglevel/logleveltableitemwidgetfactory.h \
     src/widgets/tableitems/moneychangepercenttableitem.h \
     src/widgets/tableitems/moneychangetableitem.h \
     src/widgets/tableitems/moneytableitem.h \
@@ -390,3 +396,4 @@ FORMS += \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tableitems/actions/actionstableitemwidget.ui \
+    src/widgets/tableitems/loglevel/logleveltableitemwidget.ui \
