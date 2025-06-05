@@ -25,6 +25,7 @@ public:
     LogsTableRecord& operator=(const LogsTableRecord& another) = delete;
 
     void setLogEntry(const LogEntry& entry) override;
+    void filter(QTableWidget* tableWidget, LogLevel level) override;
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:

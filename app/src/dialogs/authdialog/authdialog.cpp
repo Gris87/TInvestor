@@ -12,8 +12,7 @@
 
 constexpr qint64 MS_IN_SECOND        = 1000LL;
 constexpr qint64 ONE_MINUTE          = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR            = 60LL * ONE_MINUTE;
-constexpr qint64 AUTO_LOGIN_INTERVAL = ONE_HOUR; // 1 hour
+constexpr qint64 AUTO_LOGIN_INTERVAL = 5 * ONE_MINUTE; // 5 * minutes
 
 
 

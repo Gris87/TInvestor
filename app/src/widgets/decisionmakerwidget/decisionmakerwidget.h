@@ -74,4 +74,9 @@ private slots:
     void on_monthlyYieldButton_clicked();
     void on_remainedMoneyButton_clicked();
     void on_totalMoneyButton_clicked();
+    void on_verboseButton_clicked();
+    void on_debugButton_clicked();
+    void on_infoButton_clicked();
+    void on_warningButton_clicked();
+    void on_errorButton_clicked();
 };

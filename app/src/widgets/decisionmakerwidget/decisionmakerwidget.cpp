@@ -152,6 +152,61 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->totalMoneyButton->setChecked(true);
 }
 
+void DecisionMakerWidget::on_verboseButton_clicked()
+{
+    mLogsTableWidget->setFilter(LOG_LEVEL_VERBOSE);
+
+    ui->verboseButton->setChecked(true);
+    ui->debugButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->warningButton->setChecked(false);
+    ui->errorButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_debugButton_clicked()
+{
+    mLogsTableWidget->setFilter(LOG_LEVEL_DEBUG);
+
+    ui->verboseButton->setChecked(false);
+    ui->debugButton->setChecked(true);
+    ui->infoButton->setChecked(false);
+    ui->warningButton->setChecked(false);
+    ui->errorButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_infoButton_clicked()
+{
+    mLogsTableWidget->setFilter(LOG_LEVEL_INFO);
+
+    ui->verboseButton->setChecked(false);
+    ui->debugButton->setChecked(false);
+    ui->infoButton->setChecked(true);
+    ui->warningButton->setChecked(false);
+    ui->errorButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_warningButton_clicked()
+{
+    mLogsTableWidget->setFilter(LOG_LEVEL_WARNING);
+
+    ui->verboseButton->setChecked(false);
+    ui->debugButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->warningButton->setChecked(true);
+    ui->errorButton->setChecked(false);
+}
+
+void DecisionMakerWidget::on_errorButton_clicked()
+{
+    mLogsTableWidget->setFilter(LOG_LEVEL_ERROR);
+
+    ui->verboseButton->setChecked(false);
+    ui->debugButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->warningButton->setChecked(false);
+    ui->errorButton->setChecked(true);
+}
+
 void DecisionMakerWidget::saveWindowState(const QString& type)
 {
     mSettingsEditor->setValue(type + "/splitter", ui->splitter->saveState());

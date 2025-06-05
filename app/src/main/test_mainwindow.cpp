@@ -501,6 +501,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_ERROR, QString("GRPC error happened with code UNKNOWN")));
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot stopped")));
 
     EXPECT_CALL(*userUpdateThreadMock, terminateThread());

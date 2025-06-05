@@ -336,6 +336,8 @@ void MainWindow::authFailed(
         return;
     }
 
+    mLogsThread->addLog(LOG_LEVEL_ERROR, tr("GRPC error happened with code %1").arg(errorCodeString));
+
     mUserUpdateThread->terminateThread();
     mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();

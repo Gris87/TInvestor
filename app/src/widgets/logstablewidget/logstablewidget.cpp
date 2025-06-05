@@ -35,6 +35,7 @@ LogsTableWidget::LogsTableWidget(
     mLogLevelTableItemWidgetFactory(logLevelTableItemWidgetFactory),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
+    mFilterLogLevel(),
     mRecords()
 {
     qDebug() << "Create LogsTableWidget";
@@ -49,6 +50,22 @@ LogsTableWidget::~LogsTableWidget()
     qDebug() << "Destroy LogsTableWidget";
 
     delete ui;
+}
+
+void LogsTableWidget::setFilter(LogLevel level)
+{
+    if (mFilterLogLevel != level)
+    {
+        ui->tableWidget->setUpdatesEnabled(false);
+        mFilterLogLevel = level;
+
+        for (ILogsTableRecord* record : mRecords)
+        {
+            record->filter(ui->tableWidget, mFilterLogLevel);
+        }
+
+        ui->tableWidget->setUpdatesEnabled(true);
+    }
 }
 
 void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
@@ -74,7 +91,10 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
 
     for (int i = 0; i < entries.size(); ++i)
     {
-        mRecords.at(i)->setLogEntry(entries.at(i));
+        ILogsTableRecord* record = mRecords.at(i);
+
+        record->setLogEntry(entries.at(i));
+        record->filter(ui->tableWidget, mFilterLogLevel);
     }
 
     ui->tableWidget->setSortingEnabled(true);
@@ -88,6 +108,7 @@ void LogsTableWidget::logAdded(const LogEntry& entry)
 
     ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, mLogLevelTableItemWidgetFactory, this);
     record->setLogEntry(entry);
+    record->filter(ui->tableWidget, mFilterLogLevel);
 
     mRecords.append(record);
 
@@ -153,7 +174,7 @@ void LogsTableWidget::exportToExcel(const QString& path) const
     // clang-format off
     doc.setColumnWidth(LOGS_TIME_COLUMN + 1,  17.57 + COLUMN_GAP);
     doc.setColumnWidth(LOGS_LEVEL_COLUMN + 1, 9.29  + COLUMN_GAP);
-    doc.autosizeColumnWidth(LOGS_MESSAGE_COLUMN);
+    doc.autosizeColumnWidth(LOGS_MESSAGE_COLUMN + 1);
     // clang-format on
     // NOLINTEND(readability-magic-numbers)
 

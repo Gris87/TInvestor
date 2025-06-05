@@ -36,6 +36,7 @@ public:
 
     Ui::LogsTableWidget* ui;
 
+    void setFilter(LogLevel level) override;
     void logsRead(const QList<LogEntry>& entries) override;
     void logAdded(const LogEntry& entry) override;
 
@@ -49,6 +50,7 @@ private:
     ILogLevelTableItemWidgetFactory* mLogLevelTableItemWidgetFactory;
     IFileDialogFactory*              mFileDialogFactory;
     ISettingsEditor*                 mSettingsEditor;
+    LogLevel                         mFilterLogLevel;
     QList<ILogsTableRecord*>         mRecords;
 
 public slots:

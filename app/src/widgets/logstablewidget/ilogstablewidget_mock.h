@@ -22,6 +22,7 @@ public:
     LogsTableWidgetMock(const LogsTableWidgetMock& another)            = delete;
     LogsTableWidgetMock& operator=(const LogsTableWidgetMock& another) = delete;
 
+    MOCK_METHOD(void, setFilter, (LogLevel level), (override));
     MOCK_METHOD(void, logsRead, (const QList<LogEntry>& entries), (override));
     MOCK_METHOD(void, logAdded, (const LogEntry& entry), (override));
 

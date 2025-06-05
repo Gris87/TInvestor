@@ -22,6 +22,7 @@ public:
     ILogsTableWidget(const ILogsTableWidget& another)            = delete;
     ILogsTableWidget& operator=(const ILogsTableWidget& another) = delete;
 
+    virtual void setFilter(LogLevel level)                = 0;
     virtual void logsRead(const QList<LogEntry>& entries) = 0;
     virtual void logAdded(const LogEntry& entry)          = 0;
 

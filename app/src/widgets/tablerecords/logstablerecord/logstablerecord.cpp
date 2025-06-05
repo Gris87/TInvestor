@@ -46,6 +46,14 @@ void LogsTableRecord::setLogEntry(const LogEntry& entry)
     mMessageTableWidgetItem->setText(entry.message);
 }
 
+void LogsTableRecord::filter(QTableWidget* tableWidget, LogLevel level)
+{
+    const int  row    = mTimeTableWidgetItem->row();
+    const bool hidden = mLevelTableWidgetItem->logLevel() < level;
+
+    tableWidget->setRowHidden(row, hidden);
+}
+
 void LogsTableRecord::exportToExcel(QXlsx::Document& doc) const
 {
     const int row = mTimeTableWidgetItem->row() + 2; // Header and start index from 1
