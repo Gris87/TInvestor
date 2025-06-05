@@ -39,6 +39,7 @@
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
+#include "src/threads/follow/followthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/logs/logsthread.h"
 #include "src/threads/makedecision/makedecisionthread.h"
@@ -334,6 +335,7 @@ static int runApplication(QApplication* app)
     LogsThread               logsThread(&userStorage, &autoPilotLogsDatabase);
     PortfolioThread          portfolioThread(&userStorage, &grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
+    FollowThread             followThread(&userStorage, &grpcClient);
     MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
     OrderBookThread          orderBookThread(&grpcClient);
 
@@ -383,6 +385,7 @@ static int runApplication(QApplication* app)
         &logsThread,
         &portfolioThread,
         &portfolioLastPriceThread,
+        &followThread,
         &makeDecisionThread,
         &orderBookThread,
         &fileDialogFactory,

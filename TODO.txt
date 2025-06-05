@@ -1,4 +1,6 @@
+FollowThread should subscibe on 2 accounts portfolios
 Follow for the strategy
+PositionsStream for OperationsThread
 Optimization
 Long startup
 Tray icon popup too long

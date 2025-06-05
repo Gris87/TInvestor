@@ -60,6 +60,7 @@ SOURCES += \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
+    src/threads/follow/test_followthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
     src/threads/logs/test_logsthread.cpp \
     src/threads/makedecision/test_makedecisionthread.cpp \
@@ -177,6 +178,7 @@ HEADERS += \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
+    src/threads/follow/ifollowthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
     src/threads/logs/ilogsthread_mock.h \
     src/threads/makedecision/imakedecisionthread_mock.h \

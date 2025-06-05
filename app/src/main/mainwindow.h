@@ -17,6 +17,7 @@
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
+#include "src/threads/follow/ifollowthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/threads/makedecision/imakedecisionthread.h"
@@ -97,6 +98,7 @@ public:
         ILogsThread*                       logsThread,
         IPortfolioThread*                  portfolioThread,
         IPortfolioLastPriceThread*         portfolioLastPriceThread,
+        IFollowThread*                     followThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
         IFileDialogFactory*                fileDialogFactory,
@@ -167,6 +169,7 @@ private:
     ILogsThread*                       mLogsThread;
     IPortfolioThread*                  mPortfolioThread;
     IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
+    IFollowThread*                     mFollowThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
     IFileDialogFactory*                mFileDialogFactory;

@@ -77,6 +77,7 @@ MainWindow::MainWindow(
     ILogsThread*                       logsThread,
     IPortfolioThread*                  portfolioThread,
     IPortfolioLastPriceThread*         portfolioLastPriceThread,
+    IFollowThread*                     followThread,
     IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
     IFileDialogFactory*                fileDialogFactory,
@@ -117,6 +118,7 @@ MainWindow::MainWindow(
     mLogsThread(logsThread),
     mPortfolioThread(portfolioThread),
     mPortfolioLastPriceThread(portfolioLastPriceThread),
+    mFollowThread(followThread),
     mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
     mFileDialogFactory(fileDialogFactory),
@@ -233,6 +235,7 @@ MainWindow::MainWindow(
     connect(mPortfolioThread,                         SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
+    connect(mFollowThread,                            SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -258,6 +261,7 @@ MainWindow::~MainWindow()
     mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
+    mFollowThread->terminateThread();
     mMakeDecisionThread->terminateThread();
 
     mCleanupThread->wait();
@@ -268,6 +272,7 @@ MainWindow::~MainWindow()
     mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
+    mFollowThread->wait();
     mMakeDecisionThread->wait();
 
     saveWindowState();
@@ -501,11 +506,19 @@ void MainWindow::startAutoPilot()
     ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
     ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
 
+    const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
     mOperationsThread->setAccount(account);
     mLogsThread->setAccount(account);
     mPortfolioThread->setAccount(account);
+
+    if (mode == "FOLLOW")
+    {
+        const QString anotherAccount = mAutoPilotSettingsEditor->value("Options/AnotherAccount", "").toString();
+
+        mFollowThread->setAccounts(account, anotherAccount);
+    }
 
     const QMutexLocker lock(mUserStorage->getMutex());
     const Accounts     accounts = mUserStorage->getAccounts();
@@ -517,6 +530,11 @@ void MainWindow::startAutoPilot()
     mLogsThread->start();
     mPortfolioThread->start();
     mPortfolioLastPriceThread->start();
+
+    if (mode == "FOLLOW")
+    {
+        mFollowThread->start();
+    }
 
     autoPilotPortfolioUpdateLastPricesTimer.start();
 
@@ -537,6 +555,7 @@ void MainWindow::stopAutoPilot()
     mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
+    mFollowThread->terminateThread();
 
     autoPilotPortfolioUpdateLastPricesTimer.stop();
 
@@ -544,6 +563,7 @@ void MainWindow::stopAutoPilot()
     mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
+    mFollowThread->wait();
 }
 
 void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)

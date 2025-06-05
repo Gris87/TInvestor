@@ -65,6 +65,7 @@ SOURCES += \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
     src/threads/cleanup/cleanupthread.cpp \
+    src/threads/follow/followthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/logs/logsthread.cpp \
     src/threads/makedecision/makedecisionthread.cpp \
@@ -243,6 +244,8 @@ HEADERS += \
     src/storage/user/userstorage.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
+    src/threads/follow/followthread.h \
+    src/threads/follow/ifollowthread.h \
     src/threads/lastprice/ilastpricethread.h \
     src/threads/lastprice/lastpricethread.h \
     src/threads/logs/ilogsthread.h \

@@ -154,12 +154,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="63"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="62"/>
         <source>Token is invalid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="63"/>
+        <location filename="../../src/dialogs/authdialog/authdialog.cpp" line="62"/>
         <source>You should provide correct token</source>
         <translation></translation>
     </message>
@@ -249,38 +249,44 @@
 <context>
     <name>DecisionMakerWidget</name>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="40"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="49"/>
         <source>Operations</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="69"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="78"/>
         <source>Chart</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="102"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="111"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="115"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="124"/>
         <source>Monthly yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="128"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="137"/>
         <source>Remained money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="141"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="150"/>
         <source>Total money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="170"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="179"/>
         <source>Logs</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="41"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="42"/>
+        <source>Loading</source>
         <translation></translation>
     </message>
 </context>
@@ -305,22 +311,22 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="102"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="123"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="112"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="133"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="112"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="133"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="131"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="152"/>
         <source>Logs</source>
         <translation></translation>
     </message>
@@ -329,13 +335,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="290"/>
+        <location filename="../../src/main/mainwindow.cpp" line="295"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="494"/>
+        <location filename="../../src/main/mainwindow.cpp" line="496"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -346,7 +352,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="536"/>
+        <location filename="../../src/main/mainwindow.cpp" line="552"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -407,65 +413,65 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="291"/>
+        <location filename="../../src/main/mainwindow.cpp" line="296"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="341"/>
+        <location filename="../../src/main/mainwindow.cpp" line="344"/>
         <source>GRPC error happened with code %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="364"/>
+        <location filename="../../src/main/mainwindow.cpp" line="366"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="468"/>
-        <location filename="../../src/main/mainwindow.cpp" line="768"/>
+        <location filename="../../src/main/mainwindow.cpp" line="470"/>
+        <location filename="../../src/main/mainwindow.cpp" line="786"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="483"/>
-        <location filename="../../src/main/mainwindow.cpp" line="690"/>
+        <location filename="../../src/main/mainwindow.cpp" line="485"/>
+        <location filename="../../src/main/mainwindow.cpp" line="708"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="525"/>
+        <location filename="../../src/main/mainwindow.cpp" line="541"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="530"/>
+        <location filename="../../src/main/mainwindow.cpp" line="546"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="690"/>
+        <location filename="../../src/main/mainwindow.cpp" line="708"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="505"/>
-        <location filename="../../src/main/mainwindow.cpp" line="721"/>
+        <location filename="../../src/main/mainwindow.cpp" line="507"/>
+        <location filename="../../src/main/mainwindow.cpp" line="739"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="199"/>
+        <location filename="../../src/main/mainwindow.cpp" line="201"/>
         <source>Simulator</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="200"/>
+        <location filename="../../src/main/mainwindow.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="721"/>
+        <location filename="../../src/main/mainwindow.cpp" line="739"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -723,22 +729,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="143"/>
+        <location filename="../../src/main.cpp" line="144"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="143"/>
+        <location filename="../../src/main.cpp" line="144"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="155"/>
+        <location filename="../../src/main.cpp" line="156"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="155"/>
+        <location filename="../../src/main.cpp" line="156"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>

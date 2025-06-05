@@ -26,6 +26,7 @@
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
+#include "src/threads/follow/ifollowthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
 #include "src/threads/makedecision/imakedecisionthread_mock.h"
@@ -134,6 +135,7 @@ protected:
         logsThreadMock                       = new StrictMock<LogsThreadMock>();
         portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         portfolioLastPriceThreadMock         = new StrictMock<PortfolioLastPriceThreadMock>();
+        followThreadMock                     = new StrictMock<FollowThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
@@ -279,6 +281,7 @@ protected:
             logsThreadMock,
             portfolioThreadMock,
             portfolioLastPriceThreadMock,
+            followThreadMock,
             makeDecisionThreadMock,
             orderBookThreadMock,
             fileDialogFactoryMock,
@@ -302,6 +305,7 @@ protected:
         EXPECT_CALL(*logsThreadMock, terminateThread());
         EXPECT_CALL(*portfolioThreadMock, terminateThread());
         EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
+        EXPECT_CALL(*followThreadMock, terminateThread());
         EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
 
         // clang-format off
@@ -361,6 +365,7 @@ protected:
         delete logsThreadMock;
         delete portfolioThreadMock;
         delete portfolioLastPriceThreadMock;
+        delete followThreadMock;
         delete makeDecisionThreadMock;
         delete orderBookThreadMock;
         delete fileDialogFactoryMock;
@@ -425,6 +430,7 @@ protected:
     StrictMock<LogsThreadMock>*                       logsThreadMock;
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<PortfolioLastPriceThreadMock>*         portfolioLastPriceThreadMock;
+    StrictMock<FollowThreadMock>*                     followThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
@@ -511,6 +517,7 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*makeDecisionThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
@@ -724,6 +731,8 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
+        .WillOnce(Return(QVariant("VIEW")));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("aaaaaa")));
 
@@ -946,17 +955,23 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("aaaaaa"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("aaaaaa")));
-    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return("DATERANGE"));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("DATERANGE")));
+    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return("FOLLOW"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("FOLLOW")));
     EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("bbbbbb"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("bbbbbb")));
 
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
+        .WillOnce(Return(QVariant("FOLLOW")));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("aaaaaa")));
 
     EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*logsThreadMock, setAccount(QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
+
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
+        .WillOnce(Return(QVariant("bbbbbb")));
+    EXPECT_CALL(*followThreadMock, setAccounts(QString("aaaaaa"), QString("bbbbbb")));
 
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
@@ -967,6 +982,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*logsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());
     EXPECT_CALL(*portfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*followThreadMock, run());
 
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot started")));
 
@@ -982,6 +998,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     logsThreadMock->wait();
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
+    followThreadMock->wait();
 
     EXPECT_CALL(
         *messageBoxUtilsMock,
@@ -1002,6 +1019,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*followThreadMock, terminateThread());
 
     mainWindow->ui->startAutoPilotButton->click();
 
