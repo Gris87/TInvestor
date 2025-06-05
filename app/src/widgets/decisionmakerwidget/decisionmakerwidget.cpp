@@ -5,6 +5,10 @@
 
 
 
+const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
+
+
+
 DecisionMakerWidget::DecisionMakerWidget(
     IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
     IAccountChartWidgetFactory*        accountChartWidgetFactory,
@@ -29,6 +33,13 @@ DecisionMakerWidget::DecisionMakerWidget(
     qDebug() << "Create DecisionMakerWidget";
 
     ui->setupUi(this);
+
+    ui->operationsWaitingSpinnerWidget->setColor(GREY_COLOR);
+    ui->operationsWaitingSpinnerWidget->setTextColor(GREY_COLOR);
+    ui->portfolioWaitingSpinnerWidget->setColor(GREY_COLOR);
+    ui->portfolioWaitingSpinnerWidget->setTextColor(GREY_COLOR);
+    ui->operationsWaitingSpinnerWidget->setText(tr("Loading"));
+    ui->portfolioWaitingSpinnerWidget->setText(tr("Loading"));
 
     ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
@@ -75,10 +86,22 @@ void DecisionMakerWidget::setAccountName(const QString& name)
     mPortfolioTreeWidget->setAccountName(name);
 }
 
+void DecisionMakerWidget::showSpinners()
+{
+    ui->tabWidget->hide();
+    mPortfolioTreeWidget->hide();
+
+    ui->operationsWaitingSpinnerWidget->start();
+    ui->portfolioWaitingSpinnerWidget->start();
+}
+
 void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
 {
     mOperationsTableWidget->operationsRead(operations);
     mAccountChartWidget->operationsRead(operations);
+
+    ui->tabWidget->show();
+    ui->operationsWaitingSpinnerWidget->stop();
 }
 
 void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
@@ -100,6 +123,9 @@ void DecisionMakerWidget::logAdded(const LogEntry& entry)
 void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mPortfolioTreeWidget->portfolioChanged(portfolio);
+
+    mPortfolioTreeWidget->show();
+    ui->portfolioWaitingSpinnerWidget->stop();
 }
 
 void DecisionMakerWidget::lastPriceChanged(const QString& instrumentId, float price)

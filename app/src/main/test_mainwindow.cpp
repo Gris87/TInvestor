@@ -734,6 +734,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
 
     EXPECT_CALL(*userUpdateThreadMock, run());
     EXPECT_CALL(*priceCollectThreadMock, run());
@@ -960,6 +961,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
 
     EXPECT_CALL(*operationsThreadMock, run());
     EXPECT_CALL(*logsThreadMock, run());

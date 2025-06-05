@@ -511,6 +511,7 @@ void MainWindow::startAutoPilot()
     const Accounts     accounts = mUserStorage->getAccounts();
 
     mAutoPilotDecisionMakerWidget->setAccountName(accounts.value(account).name);
+    mAutoPilotDecisionMakerWidget->showSpinners();
 
     mOperationsThread->start();
     mLogsThread->start();

@@ -26,6 +26,7 @@ public:
 
     virtual void setAccountName(const QString& name) = 0;
 
+    virtual void showSpinners()                                             = 0;
     virtual void operationsRead(const QList<Operation>& operations)         = 0;
     virtual void operationsAdded(const QList<Operation>& operations)        = 0;
     virtual void logsRead(const QList<LogEntry>& entries)                   = 0;
