@@ -2,6 +2,12 @@
 
 #include <QDebug>
 
+#include "src/grpc/utils.h"
+
+
+
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
 
 
 FollowThread::FollowThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
@@ -108,5 +114,88 @@ void FollowThread::handlePortfolios(
     std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
 )
 {
-    qInfo() << portfolio->account_id() << anotherPortfolio->account_id();
+    QMap<QString, double> instruments        = buildInstrumentToCostMap(portfolio);
+    QMap<QString, double> anotherInstruments = buildInstrumentToCostMap(anotherPortfolio);
+
+    double totalCost        = calculateTotalCost(instruments);
+    double anotherTotalCost = calculateTotalCost(anotherInstruments);
+
+    QMap<QString, double> instrumentsForSale =
+        buildInstrumentsForSaleMap(portfolio, anotherPortfolio, totalCost, anotherTotalCost);
+
+    if (!instrumentsForSale.isEmpty())
+    {
+        emit tradeInstruments(instrumentsForSale);
+
+        return;
+    }
+
+    QMap<QString, double> instrumentsForBuy = buildInstrumentsForBuyMap(portfolio, anotherPortfolio, totalCost, anotherTotalCost);
+
+    if (!instrumentsForBuy.isEmpty())
+    {
+        emit tradeInstruments(instrumentsForBuy);
+    }
+}
+
+QMap<QString, double> FollowThread::buildInstrumentToCostMap(std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio)
+{
+    QMap<QString, double> res;
+
+    for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position     = tinkoffPortfolio->positions(i);
+        const QString                     instrumentId = QString::fromStdString(position.instrument_uid());
+
+        if (instrumentId == RUBLE_UID)
+        {
+            res[instrumentId] = quotationToDouble(position.quantity());
+        }
+        else
+        {
+            res[instrumentId] = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+        }
+    }
+
+    return res;
+}
+
+double FollowThread::calculateTotalCost(const QMap<QString, double>& instruments)
+{
+    double res = 0.0;
+
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        res += it.value();
+    }
+
+    return res;
+}
+
+QMap<QString, double> FollowThread::buildInstrumentsForSaleMap(
+    std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
+    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
+    double                                      totalCost,
+    double                                      anotherTotalCost
+)
+{
+    QMap<QString, double> res;
+
+    qInfo() << portfolio->account_id() << anotherPortfolio->account_id() << totalCost << anotherTotalCost;
+
+    return res;
+}
+
+QMap<QString, double> FollowThread::buildInstrumentsForBuyMap(
+    std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
+    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
+    double                                      totalCost,
+    double                                      anotherTotalCost
+)
+{
+    QMap<QString, double> res;
+
+    qInfo() << portfolio->account_id() << anotherPortfolio->account_id() << totalCost << anotherTotalCost;
+
+    return res;
 }

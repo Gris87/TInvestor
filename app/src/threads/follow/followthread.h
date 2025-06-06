@@ -31,6 +31,20 @@ private:
     void handlePortfolios(
         std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
     );
+    QMap<QString, double> buildInstrumentToCostMap(std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio);
+    double                calculateTotalCost(const QMap<QString, double>& instruments);
+    QMap<QString, double> buildInstrumentsForSaleMap(
+        std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
+        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
+        double                                      totalCost,
+        double                                      anotherTotalCost
+    );
+    QMap<QString, double> buildInstrumentsForBuyMap(
+        std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
+        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
+        double                                      totalCost,
+        double                                      anotherTotalCost
+    );
 
     IUserStorage*                    mUserStorage;
     IGrpcClient*                     mGrpcClient;

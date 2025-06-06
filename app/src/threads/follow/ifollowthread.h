@@ -4,6 +4,8 @@
 
 #include <QThread>
 
+#include <QMap>
+
 
 
 class IFollowThread : public QThread
@@ -25,4 +27,5 @@ public:
 
 signals:
     void accountNotFound();
+    void tradeInstruments(QMap<QString, double> instruments); // Instrument UID => Expected cost
 };
