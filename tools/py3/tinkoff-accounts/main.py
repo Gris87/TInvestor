@@ -496,6 +496,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--official",
+        dest="official",
         default=False,
         action="store_true",
         help="Flag for using official server",

@@ -1,4 +1,4 @@
-FollowThread should subscibe on 2 accounts portfolios
+Python script for following
 Follow for the strategy
 PositionsStream for OperationsThread
 Optimization
