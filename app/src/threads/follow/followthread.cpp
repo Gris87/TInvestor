@@ -26,12 +26,13 @@ void FollowThread::run()
 
     if (mAccountId != "" || mAnotherAccountId != "")
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+        std::shared_ptr<tinkoff::PortfolioResponse> portfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
         {
-            handlePortfolioResponse(*tinkoffPortfolio);
+            handlePortfolios(portfolio, anotherPortfolio);
 
             createPortfolioStream();
 
@@ -47,7 +48,23 @@ void FollowThread::run()
 
                 if (portfolioStreamResponse->has_portfolio())
                 {
-                    handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                    tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
+                    QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
+
+                    Q_ASSERT_X(
+                        accountId == mAccountId || accountId == mAnotherAccountId, "FollowThread::run()", "Unexpected account ID"
+                    );
+
+                    if (accountId == mAccountId)
+                    {
+                        *portfolio = tinkoffPortfolio;
+                    }
+                    else
+                    {
+                        *anotherPortfolio = tinkoffPortfolio;
+                    }
+
+                    handlePortfolios(portfolio, anotherPortfolio);
                 }
             }
 
@@ -84,10 +101,12 @@ void FollowThread::terminateThread()
 
 void FollowThread::createPortfolioStream()
 {
-    mPortfolioStream = mGrpcClient->createPortfolioStream(mAnotherAccountId);
+    mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId, mAnotherAccountId);
 }
 
-void FollowThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& /*tinkoffPortfolio*/)
+void FollowThread::handlePortfolios(
+    std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
+)
 {
-    qInfo() << "TBD";
+    qInfo() << portfolio->account_id() << anotherPortfolio->account_id();
 }

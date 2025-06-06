@@ -80,6 +80,12 @@ public:
 
     MOCK_METHOD(std::shared_ptr<PortfolioStream>, createPortfolioStream, (const QString& accountId), (override));
     MOCK_METHOD(
+        std::shared_ptr<PortfolioStream>,
+        createPortfolioStream,
+        (const QString& accountId, const QString& anotherAccountId),
+        (override)
+    );
+    MOCK_METHOD(
         std::shared_ptr<tinkoff::PortfolioStreamResponse>,
         readPortfolioStream,
         (std::shared_ptr<PortfolioStream> & portfolioStream),

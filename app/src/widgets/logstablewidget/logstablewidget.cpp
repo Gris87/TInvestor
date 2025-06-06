@@ -59,7 +59,7 @@ void LogsTableWidget::setFilter(LogLevel level)
         ui->tableWidget->setUpdatesEnabled(false);
         mFilterLogLevel = level;
 
-        for (ILogsTableRecord* record : mRecords)
+        for (ILogsTableRecord* record : std::as_const(mRecords))
         {
             record->filter(ui->tableWidget, mFilterLogLevel);
         }

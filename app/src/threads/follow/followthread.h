@@ -28,7 +28,9 @@ public:
     void createPortfolioStream();
 
 private:
-    void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    void handlePortfolios(
+        std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
+    );
 
     IUserStorage*                    mUserStorage;
     IGrpcClient*                     mGrpcClient;

@@ -44,13 +44,14 @@ public:
     virtual bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)                                 = 0;
     virtual bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId)       = 0;
     virtual bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)                                  = 0;
-    virtual std::shared_ptr<tinkoff::MarketDataResponse>
-                 readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)       = 0;
-    virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;
-    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
-    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)     = 0;
+    virtual std::shared_ptr<tinkoff::MarketDataResponse> readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream
+    )                                                                                                                       = 0;
+    virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                            = 0;
+    virtual void cancelMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                                = 0;
+    virtual void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)                                = 0;
 
-    virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId) = 0;
+    virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId)                                  = 0;
+    virtual std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId, const QString& anotherAccountId) = 0;
     virtual std::shared_ptr<tinkoff::PortfolioStreamResponse>
                  readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)   = 0;
     virtual void cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) = 0;

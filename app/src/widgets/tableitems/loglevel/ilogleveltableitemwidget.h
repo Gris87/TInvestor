@@ -24,6 +24,8 @@ public:
     ILogLevelTableItemWidget(const ILogLevelTableItemWidget& another)            = delete;
     ILogLevelTableItemWidget& operator=(const ILogLevelTableItemWidget& another) = delete;
 
-    virtual void     setLogLevel(LogLevel level) = 0;
-    virtual LogLevel logLevel() const            = 0;
+    virtual void setLogLevel(LogLevel level) = 0;
+
+    [[nodiscard]]
+    virtual LogLevel logLevel() const = 0;
 };

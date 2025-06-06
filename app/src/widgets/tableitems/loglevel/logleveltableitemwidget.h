@@ -26,7 +26,9 @@ public:
 
     Ui::LogLevelTableItemWidget* ui;
 
-    void     setLogLevel(LogLevel level) override;
+    void setLogLevel(LogLevel level) override;
+
+    [[nodiscard]]
     LogLevel logLevel() const override;
 
     bool operator<(const QTableWidgetItem& another) const override;

@@ -26,7 +26,7 @@ void LogLevelTableItemWidget::setLogLevel(LogLevel level)
 {
     mLogLevel = level;
 
-    QIcon icon(QString(":/assets/images/levels/%1.png").arg(LOG_LEVEL_NAMES_LOWERCASE[level]));
+    const QIcon icon(QString(":/assets/images/levels/%1.png").arg(LOG_LEVEL_NAMES_LOWERCASE[level]));
     ui->iconLabel->setPixmap(icon.pixmap(ui->iconLabel->size()));
 }
 

@@ -520,6 +520,20 @@ std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString
     return res;
 }
 
+std::shared_ptr<PortfolioStream> GrpcClient::createPortfolioStream(const QString& accountId, const QString& anotherAccountId)
+{
+    std::shared_ptr<PortfolioStream> res = std::make_shared<PortfolioStream>();
+
+    tinkoff::PortfolioStreamRequest req;
+    req.add_accounts(accountId.toStdString());
+    req.add_accounts(anotherAccountId.toStdString());
+
+    res->context.set_credentials(mCreds);
+    res->stream = mRawGrpcClient->createPortfolioStream(mOperationsStreamService, &res->context, req);
+
+    return res;
+}
+
 std::shared_ptr<tinkoff::PortfolioStreamResponse>
 GrpcClient::readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)
 {

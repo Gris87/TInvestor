@@ -97,6 +97,7 @@ public:
     void finishMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;
 
     std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId) override;
+    std::shared_ptr<PortfolioStream> createPortfolioStream(const QString& accountId, const QString& anotherAccountId) override;
     std::shared_ptr<tinkoff::PortfolioStreamResponse>
          readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
     void cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
