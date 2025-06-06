@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 
 
@@ -16,22 +17,25 @@ class Test_FollowThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        userStorageMock = new StrictMock<UserStorageMock>();
-        grpcClientMock  = new StrictMock<GrpcClientMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        grpcClientMock         = new StrictMock<GrpcClientMock>();
 
-        thread = new FollowThread(userStorageMock, grpcClientMock);
+        thread = new FollowThread(userStorageMock, instrumentsStorageMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete userStorageMock;
+        delete instrumentsStorageMock;
         delete grpcClientMock;
     }
 
-    FollowThread*                thread;
-    StrictMock<UserStorageMock>* userStorageMock;
-    StrictMock<GrpcClientMock>*  grpcClientMock;
+    FollowThread*                       thread;
+    StrictMock<UserStorageMock>*        userStorageMock;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<GrpcClientMock>*         grpcClientMock;
 };
 
 

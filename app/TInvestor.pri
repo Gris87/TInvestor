@@ -51,6 +51,7 @@ SOURCES += \
     src/domain/orderbook/orderbook.cpp \
     src/domain/portfolio/portfolio.cpp \
     src/domain/portfolio/portfolioitem.cpp \
+    src/domain/portfolio/portfoliominitem.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stock/stock.cpp \
     src/domain/stock/stockmeta.cpp \
@@ -222,6 +223,7 @@ HEADERS += \
     src/domain/orderbook/orderbookdata.h \
     src/domain/portfolio/portfolio.h \
     src/domain/portfolio/portfolioitem.h \
+    src/domain/portfolio/portfoliominitem.h \
     src/domain/quotation/quotation.h \
     src/domain/stock/stock.h \
     src/domain/stock/stockdata.h \

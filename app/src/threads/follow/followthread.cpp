@@ -10,9 +10,12 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-FollowThread::FollowThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
+FollowThread::FollowThread(
+    IUserStorage* userStorage, IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent
+) :
     IFollowThread(parent),
     mUserStorage(userStorage),
+    mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
     mAnotherAccountId(),
@@ -111,17 +114,21 @@ void FollowThread::createPortfolioStream()
 }
 
 void FollowThread::handlePortfolios(
-    std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
+    const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
+    const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
 )
 {
-    QMap<QString, double> instruments        = buildInstrumentToCostMap(portfolio);
-    QMap<QString, double> anotherInstruments = buildInstrumentToCostMap(anotherPortfolio);
+    PortfolioMinItems instruments        = buildInstrumentToCostMap(portfolio);
+    PortfolioMinItems anotherInstruments = buildInstrumentToCostMap(anotherPortfolio);
 
-    double totalCost        = calculateTotalCost(instruments);
-    double anotherTotalCost = calculateTotalCost(anotherInstruments);
+    const double totalCost        = calculateTotalCost(instruments);
+    const double anotherTotalCost = calculateTotalCost(anotherInstruments);
 
-    QMap<QString, double> instrumentsForSale =
-        buildInstrumentsForSaleMap(portfolio, anotherPortfolio, totalCost, anotherTotalCost);
+    instruments.remove(RUBLE_UID);
+    anotherInstruments.remove(RUBLE_UID);
+
+    const QMap<QString, double> instrumentsForSale =
+        buildInstrumentsForSaleMap(instruments, anotherInstruments, totalCost, anotherTotalCost);
 
     if (!instrumentsForSale.isEmpty())
     {
@@ -130,7 +137,8 @@ void FollowThread::handlePortfolios(
         return;
     }
 
-    QMap<QString, double> instrumentsForBuy = buildInstrumentsForBuyMap(portfolio, anotherPortfolio, totalCost, anotherTotalCost);
+    const QMap<QString, double> instrumentsForBuy =
+        buildInstrumentsForBuyMap(instruments, anotherInstruments, totalCost, anotherTotalCost);
 
     if (!instrumentsForBuy.isEmpty())
     {
@@ -138,64 +146,124 @@ void FollowThread::handlePortfolios(
     }
 }
 
-QMap<QString, double> FollowThread::buildInstrumentToCostMap(std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio)
+PortfolioMinItems FollowThread::buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio)
 {
-    QMap<QString, double> res;
+    PortfolioMinItems res;
 
     for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
     {
         const tinkoff::PortfolioPosition& position     = tinkoffPortfolio->positions(i);
         const QString                     instrumentId = QString::fromStdString(position.instrument_uid());
 
+        PortfolioMinItem item;
+
         if (instrumentId == RUBLE_UID)
         {
-            res[instrumentId] = quotationToDouble(position.quantity());
+            item.price = 1.0f;
+            item.cost  = quotationToDouble(position.quantity());
         }
         else
         {
-            res[instrumentId] = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
+            item.price = quotationToFloat(position.current_price());
+            item.cost  = quotationToDouble(position.quantity()) * quotationToFloat(position.average_position_price_fifo());
         }
+
+        res[instrumentId] = item;
     }
 
     return res;
 }
 
-double FollowThread::calculateTotalCost(const QMap<QString, double>& instruments)
+double FollowThread::calculateTotalCost(const PortfolioMinItems& instruments)
 {
     double res = 0.0;
 
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        res += it.value();
+        res += it.value().cost;
     }
 
     return res;
 }
 
 QMap<QString, double> FollowThread::buildInstrumentsForSaleMap(
-    std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
-    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
-    double                                      totalCost,
-    double                                      anotherTotalCost
+    const PortfolioMinItems& instruments, const PortfolioMinItems& anotherInstruments, double totalCost, double anotherTotalCost
 )
 {
-    QMap<QString, double> res;
+    QMap<QString, double> res; // Instrument UID => Expected cost
 
-    qInfo() << portfolio->account_id() << anotherPortfolio->account_id() << totalCost << anotherTotalCost;
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        if (!anotherInstruments.contains(instrumentId))
+        {
+            res[instrumentId] = 0; // Need to sell all
+
+            continue;
+        }
+
+        mInstrumentsStorage->getMutex()->lock();
+        const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
+        Q_ASSERT_X(
+            instrumentsData.contains(instrumentId),
+            "FollowThread::buildInstrumentsForSaleMap()",
+            "Data about instrument not found"
+        );
+        const qint32 lot = instrumentsData.value(instrumentId).lot;
+        mInstrumentsStorage->getMutex()->unlock();
+
+        const PortfolioMinItem& anotherItem = anotherInstruments[instrumentId];
+        const double            anotherPart = anotherItem.cost / anotherTotalCost;
+
+        const double expectedCost = anotherPart * totalCost;
+        const double delta        = expectedCost - it.value().cost;
+
+        if (delta < -anotherItem.price * lot)
+        {
+            res[instrumentId] = expectedCost;
+        }
+    }
 
     return res;
 }
 
 QMap<QString, double> FollowThread::buildInstrumentsForBuyMap(
-    std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
-    std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
-    double                                      totalCost,
-    double                                      anotherTotalCost
+    const PortfolioMinItems& instruments, const PortfolioMinItems& anotherInstruments, double totalCost, double anotherTotalCost
 )
 {
-    QMap<QString, double> res;
+    QMap<QString, double> res; // Instrument UID => Expected cost
 
-    qInfo() << portfolio->account_id() << anotherPortfolio->account_id() << totalCost << anotherTotalCost;
+    for (auto it = anotherInstruments.constBegin(); it != anotherInstruments.constEnd(); ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        const double anotherPart  = it.value().cost / anotherTotalCost;
+        const double expectedCost = anotherPart * totalCost;
+
+        if (!instruments.contains(instrumentId))
+        {
+            res[instrumentId] = expectedCost;
+
+            continue;
+        }
+
+        mInstrumentsStorage->getMutex()->lock();
+        const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
+        Q_ASSERT_X(
+            instrumentsData.contains(instrumentId), "FollowThread::buildInstrumentsForBuyMap()", "Data about instrument not found"
+        );
+        const qint32 lot = instrumentsData.value(instrumentId).lot;
+        mInstrumentsStorage->getMutex()->unlock();
+
+        const PortfolioMinItem& item  = instruments[instrumentId];
+        const double            delta = expectedCost - item.cost;
+
+        if (delta > item.price * lot)
+        {
+            res[instrumentId] = expectedCost;
+        }
+    }
 
     return res;
 }

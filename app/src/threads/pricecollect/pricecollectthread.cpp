@@ -152,6 +152,7 @@ obtainInstrumentsFromShares(QThread* parentThread, IGrpcClient* grpcClient, Inst
                 Instrument instrument;
                 instrument.ticker         = QString::fromStdString(tinkoffShare.ticker());
                 instrument.name           = QString::fromStdString(tinkoffShare.name());
+                instrument.lot            = tinkoffShare.lot();
                 instrument.pricePrecision = quotationPrecision(tinkoffShare.min_price_increment());
 
                 res[instrumentId] = instrument;
@@ -179,6 +180,7 @@ obtainInstrumentsFromBonds(QThread* parentThread, IGrpcClient* grpcClient, Instr
                 Instrument instrument;
                 instrument.ticker         = QString::fromStdString(tinkoffBond.ticker());
                 instrument.name           = QString::fromStdString(tinkoffBond.name());
+                instrument.lot            = tinkoffBond.lot();
                 instrument.pricePrecision = quotationPrecision(tinkoffBond.min_price_increment());
 
                 res[instrumentId] = instrument;
@@ -207,6 +209,7 @@ static void obtainInstrumentsFromCurrencies(
                 Instrument instrument;
                 instrument.ticker         = QString::fromStdString(tinkoffCurrency.ticker());
                 instrument.name           = QString::fromStdString(tinkoffCurrency.name());
+                instrument.lot            = tinkoffCurrency.lot();
                 instrument.pricePrecision = quotationPrecision(tinkoffCurrency.min_price_increment());
 
                 res[instrumentId] = instrument;
@@ -238,6 +241,7 @@ obtainInstrumentsFromEtfs(QThread* parentThread, IGrpcClient* grpcClient, Instru
                 Instrument instrument;
                 instrument.ticker         = QString::fromStdString(tinkoffEtf.ticker());
                 instrument.name           = QString::fromStdString(tinkoffEtf.name());
+                instrument.lot            = tinkoffEtf.lot();
                 instrument.pricePrecision = quotationPrecision(tinkoffEtf.min_price_increment());
 
                 res[instrumentId] = instrument;
@@ -265,6 +269,7 @@ obtainInstrumentsFromFutures(QThread* parentThread, IGrpcClient* grpcClient, Ins
                 Instrument instrument;
                 instrument.ticker         = QString::fromStdString(tinkoffFuture.ticker());
                 instrument.name           = QString::fromStdString(tinkoffFuture.name());
+                instrument.lot            = tinkoffFuture.lot();
                 instrument.pricePrecision = quotationPrecision(tinkoffFuture.min_price_increment());
 
                 res[instrumentId] = instrument;

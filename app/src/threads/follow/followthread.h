@@ -4,7 +4,9 @@
 
 #include "src/threads/follow/ifollowthread.h"
 
+#include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 
 
@@ -14,7 +16,9 @@ class FollowThread : public IFollowThread
     Q_OBJECT
 
 public:
-    explicit FollowThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit FollowThread(
+        IUserStorage* userStorage, IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent = nullptr
+    );
     ~FollowThread() override;
 
     FollowThread(const FollowThread& another)            = delete;
@@ -29,24 +33,20 @@ public:
 
 private:
     void handlePortfolios(
-        std::shared_ptr<tinkoff::PortfolioResponse> portfolio, std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio
+        const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
+        const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
     );
-    QMap<QString, double> buildInstrumentToCostMap(std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio);
-    double                calculateTotalCost(const QMap<QString, double>& instruments);
+    PortfolioMinItems     buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
+    double                calculateTotalCost(const PortfolioMinItems& instruments);
     QMap<QString, double> buildInstrumentsForSaleMap(
-        std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
-        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
-        double                                      totalCost,
-        double                                      anotherTotalCost
+        const PortfolioMinItems& portfolio, const PortfolioMinItems& anotherPortfolio, double totalCost, double anotherTotalCost
     );
     QMap<QString, double> buildInstrumentsForBuyMap(
-        std::shared_ptr<tinkoff::PortfolioResponse> portfolio,
-        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio,
-        double                                      totalCost,
-        double                                      anotherTotalCost
+        const PortfolioMinItems& portfolio, const PortfolioMinItems& anotherPortfolio, double totalCost, double anotherTotalCost
     );
 
     IUserStorage*                    mUserStorage;
+    IInstrumentsStorage*             mInstrumentsStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     QString                          mAnotherAccountId;

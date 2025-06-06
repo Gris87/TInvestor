@@ -21,6 +21,7 @@ struct Instrument
 
     QString ticker;
     QString name;
+    qint32  lot;
     qint8   pricePrecision;
 };
 

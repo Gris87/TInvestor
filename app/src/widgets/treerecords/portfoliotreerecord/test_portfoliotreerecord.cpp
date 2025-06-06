@@ -37,6 +37,7 @@ protected:
 
         instrument.ticker         = "WAGA";
         instrument.name           = "Wata Giga";
+        instrument.lot            = 5;
         instrument.pricePrecision = 3;
 
         instruments["aaaaa"] = instrument;

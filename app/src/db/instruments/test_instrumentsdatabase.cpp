@@ -42,9 +42,9 @@ protected:
     {
         const QString instrumentsStr =
             "{"
-            "    \"aaaaa\": {\"ticker\": \"BANA\", \"name\": \"Banana\",       \"pricePrecision\": 2},"
-            "    \"bbbbb\": {\"ticker\": \"BODO\", \"name\": \"BODO NE BODO\", \"pricePrecision\": 3},"
-            "    \"ccccc\": {\"ticker\": \"ZARA\", \"name\": \"Zaraza\",       \"pricePrecision\": 4}"
+            "    \"aaaaa\": {\"ticker\": \"BANA\", \"name\": \"Banana\",       \"lot\": 1,  \"pricePrecision\": 2},"
+            "    \"bbbbb\": {\"ticker\": \"BODO\", \"name\": \"BODO NE BODO\", \"lot\": 5,  \"pricePrecision\": 3},"
+            "    \"ccccc\": {\"ticker\": \"ZARA\", \"name\": \"Zaraza\",       \"lot\": 10, \"pricePrecision\": 4}"
             "}";
 
         testInstruments = instrumentsStr.toUtf8();
@@ -89,12 +89,15 @@ TEST_F(Test_InstrumentsDatabase, Test_readInstruments)
     ASSERT_EQ(instruments.size(),                  3);
     ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
     ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].lot,            1);
     ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
     ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
     ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].lot,            5);
     ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
     ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
     ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].lot,            10);
     ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     // clang-format on
 }
@@ -111,14 +114,17 @@ TEST_F(Test_InstrumentsDatabase, Test_writeInstruments)
 
     instrument1.ticker         = "BANA";
     instrument1.name           = "Banana";
+    instrument1.lot            = 1;
     instrument1.pricePrecision = 2;
 
     instrument2.ticker         = "BODO";
     instrument2.name           = "BODO NE BODO";
+    instrument2.lot            = 5;
     instrument2.pricePrecision = 3;
 
     instrument3.ticker         = "ZARA";
     instrument3.name           = "Zaraza";
+    instrument3.lot            = 10;
     instrument3.pricePrecision = 4;
 
     instruments["aaaaa"] = instrument1;
@@ -126,9 +132,7 @@ TEST_F(Test_InstrumentsDatabase, Test_writeInstruments)
     instruments["ccccc"] = instrument3;
 
     const QString instrumentsStr =
-        "{\"aaaaa\":{\"name\":\"Banana\",\"pricePrecision\":2,\"ticker\":\"BANA\"},\"bbbbb\":{\"name\":\"BODO NE "
-        "BODO\",\"pricePrecision\":3,\"ticker\":\"BODO\"},\"ccccc\":{\"name\":\"Zaraza\",\"pricePrecision\":4,\"ticker\":"
-        "\"ZARA\"}}";
+        R"({"aaaaa":{"lot":1,"name":"Banana","pricePrecision":2,"ticker":"BANA"},"bbbbb":{"lot":5,"name":"BODO NE BODO","pricePrecision":3,"ticker":"BODO"},"ccccc":{"lot":10,"name":"Zaraza","pricePrecision":4,"ticker":"ZARA"}})";
     const QByteArray instrumentsBytes = instrumentsStr.toUtf8();
 
     StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in writeInstruments

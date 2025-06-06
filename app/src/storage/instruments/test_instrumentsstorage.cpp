@@ -53,14 +53,17 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
 
     instrument1.ticker         = "BANA";
     instrument1.name           = "Banana";
+    instrument1.lot            = 1;
     instrument1.pricePrecision = 2;
 
     instrument2.ticker         = "BODO";
     instrument2.name           = "BODO NE BODO";
+    instrument2.lot            = 5;
     instrument2.pricePrecision = 3;
 
     instrument3.ticker         = "ZARA";
     instrument3.name           = "Zaraza";
+    instrument3.lot            = 10;
     instrument3.pricePrecision = 4;
 
     instruments["aaaaa"] = instrument1;
@@ -76,12 +79,15 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     ASSERT_EQ(instruments.size(),                  3);
     ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
     ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].lot,            1);
     ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
     ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
     ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].lot,            5);
     ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
     ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
     ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].lot,            10);
     ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     // clang-format on
 }
@@ -104,14 +110,17 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
 
     instrument1.ticker         = "BANA";
     instrument1.name           = "Banana";
+    instrument1.lot            = 1;
     instrument1.pricePrecision = 2;
 
     instrument2.ticker         = "BODO";
     instrument2.name           = "BODO NE BODO";
+    instrument2.lot            = 5;
     instrument2.pricePrecision = 3;
 
     instrument3.ticker         = "ZARA";
     instrument3.name           = "Zaraza";
+    instrument3.lot            = 10;
     instrument3.pricePrecision = 4;
 
     instruments["aaaaa"] = instrument1;
@@ -127,12 +136,15 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     ASSERT_EQ(instruments.size(),                  3);
     ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
     ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].lot,            1);
     ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
     ASSERT_EQ(instruments["bbbbb"].ticker,         "BODO");
     ASSERT_EQ(instruments["bbbbb"].name,           "BODO NE BODO");
+    ASSERT_EQ(instruments["bbbbb"].lot,            5);
     ASSERT_EQ(instruments["bbbbb"].pricePrecision, 3);
     ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
     ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].lot,            10);
     ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     // clang-format on
 
@@ -143,10 +155,12 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
 
     newInstrument1.ticker         = "WADA";
     newInstrument1.name           = "Awada kedabra";
+    newInstrument1.lot            = 100;
     newInstrument1.pricePrecision = 5;
 
     newInstrument2.ticker         = "NIGA";
     newInstrument2.name           = "Read my kniga";
+    newInstrument2.lot            = 1000;
     newInstrument2.pricePrecision = 6;
 
     newInstruments["bbbbb"] = newInstrument1;
@@ -163,15 +177,19 @@ TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
     ASSERT_EQ(instruments.size(),                  4);
     ASSERT_EQ(instruments["aaaaa"].ticker,         "BANA");
     ASSERT_EQ(instruments["aaaaa"].name,           "Banana");
+    ASSERT_EQ(instruments["aaaaa"].lot,            1);
     ASSERT_EQ(instruments["aaaaa"].pricePrecision, 2);
     ASSERT_EQ(instruments["bbbbb"].ticker,         "WADA");
     ASSERT_EQ(instruments["bbbbb"].name,           "Awada kedabra");
+    ASSERT_EQ(instruments["bbbbb"].lot,            100);
     ASSERT_EQ(instruments["bbbbb"].pricePrecision, 5);
     ASSERT_EQ(instruments["ccccc"].ticker,         "ZARA");
     ASSERT_EQ(instruments["ccccc"].name,           "Zaraza");
+    ASSERT_EQ(instruments["ccccc"].lot,            10);
     ASSERT_EQ(instruments["ccccc"].pricePrecision, 4);
     ASSERT_EQ(instruments["ddddd"].ticker,         "NIGA");
     ASSERT_EQ(instruments["ddddd"].name,           "Read my kniga");
+    ASSERT_EQ(instruments["ddddd"].lot,            1000);
     ASSERT_EQ(instruments["ddddd"].pricePrecision, 6);
     // clang-format on
 }
