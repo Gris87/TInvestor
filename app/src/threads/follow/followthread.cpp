@@ -127,8 +127,12 @@ void FollowThread::handlePortfolios(
     instruments.remove(RUBLE_UID);
     anotherInstruments.remove(RUBLE_UID);
 
-    const QMap<QString, double> instrumentsForSale =
-        buildInstrumentsForSaleMap(instruments, anotherInstruments, totalCost, anotherTotalCost);
+    QMap<QString, double> instrumentsForSale; // Instrument UID => Expected cost
+    QMap<QString, double> instrumentsForBuy;  // Instrument UID => Expected cost
+
+    buildInstrumentsForTrading(
+        instruments, anotherInstruments, totalCost, anotherTotalCost, instrumentsForSale, instrumentsForBuy
+    );
 
     if (!instrumentsForSale.isEmpty())
     {
@@ -136,9 +140,6 @@ void FollowThread::handlePortfolios(
 
         return;
     }
-
-    const QMap<QString, double> instrumentsForBuy =
-        buildInstrumentsForBuyMap(instruments, anotherInstruments, totalCost, anotherTotalCost);
 
     if (!instrumentsForBuy.isEmpty())
     {
@@ -186,54 +187,15 @@ double FollowThread::calculateTotalCost(const PortfolioMinItems& instruments)
     return res;
 }
 
-QMap<QString, double> FollowThread::buildInstrumentsForSaleMap(
-    const PortfolioMinItems& instruments, const PortfolioMinItems& anotherInstruments, double totalCost, double anotherTotalCost
+void FollowThread::buildInstrumentsForTrading(
+    const PortfolioMinItems& instruments,
+    const PortfolioMinItems& anotherInstruments,
+    double                   totalCost,
+    double                   anotherTotalCost,
+    QMap<QString, double>&   instrumentsForSale,
+    QMap<QString, double>&   instrumentsForBuy
 )
 {
-    QMap<QString, double> res; // Instrument UID => Expected cost
-
-    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
-    {
-        const QString& instrumentId = it.key();
-
-        if (!anotherInstruments.contains(instrumentId))
-        {
-            res[instrumentId] = 0; // Need to sell all
-
-            continue;
-        }
-
-        mInstrumentsStorage->getMutex()->lock();
-        const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
-        Q_ASSERT_X(
-            instrumentsData.contains(instrumentId),
-            "FollowThread::buildInstrumentsForSaleMap()",
-            "Data about instrument not found"
-        );
-        const qint32 lot = instrumentsData.value(instrumentId).lot;
-        mInstrumentsStorage->getMutex()->unlock();
-
-        const PortfolioMinItem& anotherItem = anotherInstruments[instrumentId];
-        const double            anotherPart = anotherItem.cost / anotherTotalCost;
-
-        const double expectedCost = anotherPart * totalCost;
-        const double delta        = expectedCost - it.value().cost;
-
-        if (delta < -anotherItem.price * lot)
-        {
-            res[instrumentId] = expectedCost;
-        }
-    }
-
-    return res;
-}
-
-QMap<QString, double> FollowThread::buildInstrumentsForBuyMap(
-    const PortfolioMinItems& instruments, const PortfolioMinItems& anotherInstruments, double totalCost, double anotherTotalCost
-)
-{
-    QMap<QString, double> res; // Instrument UID => Expected cost
-
     for (auto it = anotherInstruments.constBegin(); it != anotherInstruments.constEnd(); ++it)
     {
         const QString& instrumentId = it.key();
@@ -243,7 +205,7 @@ QMap<QString, double> FollowThread::buildInstrumentsForBuyMap(
 
         if (!instruments.contains(instrumentId))
         {
-            res[instrumentId] = expectedCost;
+            instrumentsForBuy[instrumentId] = expectedCost;
 
             continue;
         }
@@ -258,12 +220,25 @@ QMap<QString, double> FollowThread::buildInstrumentsForBuyMap(
 
         const PortfolioMinItem& item  = instruments[instrumentId];
         const double            delta = expectedCost - item.cost;
+        const double            lotPrice = item.price * lot;
 
-        if (delta > item.price * lot)
+        if (delta < -lotPrice)
         {
-            res[instrumentId] = expectedCost;
+            instrumentsForSale[instrumentId] = expectedCost;
+        }
+        else if (delta > lotPrice)
+        {
+            instrumentsForBuy[instrumentId] = expectedCost;
         }
     }
 
-    return res;
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        const QString& instrumentId = it.key();
+
+        if (!anotherInstruments.contains(instrumentId))
+        {
+            instrumentsForSale[instrumentId] = 0; // Need to sell all
+        }
+    }
 }

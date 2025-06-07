@@ -38,12 +38,14 @@ private:
     );
     PortfolioMinItems     buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
     double                calculateTotalCost(const PortfolioMinItems& instruments);
-    QMap<QString, double> buildInstrumentsForSaleMap(
-        const PortfolioMinItems& portfolio, const PortfolioMinItems& anotherPortfolio, double totalCost, double anotherTotalCost
-    );
-    QMap<QString, double> buildInstrumentsForBuyMap(
-        const PortfolioMinItems& portfolio, const PortfolioMinItems& anotherPortfolio, double totalCost, double anotherTotalCost
-    );
+    void                  buildInstrumentsForTrading(
+                         const PortfolioMinItems& instruments,
+                         const PortfolioMinItems& anotherInstruments,
+                         double                   totalCost,
+                         double                   anotherTotalCost,
+                         QMap<QString, double>&   instrumentsForSale,
+                         QMap<QString, double>&   instrumentsForBuy
+                     );
 
     IUserStorage*                    mUserStorage;
     IInstrumentsStorage*             mInstrumentsStorage;
