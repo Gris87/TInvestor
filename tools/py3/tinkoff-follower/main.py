@@ -6,7 +6,7 @@ from aiostream import stream
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import InstrumentIdType
+from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
@@ -68,7 +68,7 @@ async def _start_follow(src_client, dest_client, src_account, dest_account):
     src_portfolio = await src_client.operations.get_portfolio(account_id=src_account)
     dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
 
-    await _handle_portfolios(dest_client, src_portfolio, dest_portfolio)
+    await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
 
     src_stream = src_client.operations_stream.portfolio_stream(accounts=[src_account])
     dest_stream = dest_client.operations_stream.portfolio_stream(accounts=[dest_account])
@@ -83,10 +83,10 @@ async def _start_follow(src_client, dest_client, src_account, dest_account):
                 else:
                     raise Exception(f"Unexpected account ID = {x.portfolio.account_id}")
 
-                await _handle_portfolios(dest_client, src_portfolio, dest_portfolio)
+                await _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio)
 
 
-async def _handle_portfolios(dest_client, src_portfolio, dest_portfolio):
+async def _handle_portfolios(dest_client, dest_account, src_portfolio, dest_portfolio):
     src_instrument_to_cost, src_total_cost = _build_instrument_to_cost_map(src_portfolio)
     dest_instrument_to_cost, dest_total_cost = _build_instrument_to_cost_map(dest_portfolio)
 
@@ -95,11 +95,13 @@ async def _handle_portfolios(dest_client, src_portfolio, dest_portfolio):
     if instruments_for_sale or instruments_for_buy:
         logger.info("Synchronization in progress")
 
-    if instruments_for_sale:
-        await _trade_instruments(dest_client, instruments_for_sale)
+        if instruments_for_sale:
+            await _trade_instruments(dest_client, dest_account, instruments_for_sale)
 
-    if instruments_for_buy:
-        await _trade_instruments(dest_client, instruments_for_buy)
+        if instruments_for_buy:
+            await _trade_instruments(dest_client, dest_account, instruments_for_buy)
+
+        logger.info("Synchronized")
 
 
 def _build_instrument_to_cost_map(portfolio):
@@ -157,8 +159,91 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
     return instruments_for_sale, instruments_for_buy
 
 
-async def _trade_instruments(dest_client, instruments):
-    print(instruments)
+async def _trade_instruments(dest_client, dest_account, instruments):
+    tasks = []
+
+    for instrument_id, expected_cost in instruments.items():
+        current_cost = Decimal(0)
+
+        dest_portfolio = await dest_client.operations.get_portfolio(account_id=dest_account)
+
+        for position in dest_portfolio.positions:
+            if position.instrument_uid == instrument_id:
+                current_cost = quotation_to_decimal(position.quantity) * quotation_to_decimal(position.average_position_price_fifo)
+
+                break
+
+        delta = expected_cost - current_cost
+
+        if delta < 0:
+            tasks.append(_sell_instrument(dest_client, dest_account, instrument_id, -delta, expected_cost == Decimal(0)))
+        else:
+            tasks.append(_buy_instrument(dest_client, dest_account, instrument_id, delta))
+
+    await asyncio.gather(*tasks)
+
+
+async def _sell_instrument(dest_client, dest_account, instrument_id, delta, sell_all):
+    lot = await _get_instrument_lot(dest_client, instrument_id)
+
+    while True:
+        order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+
+        if order_book.bids:
+            bid = order_book.bids[0]
+
+            lot_price = lot * quotation_to_decimal(bid.price)
+
+            req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
+            max_lots = await dest_client.orders.get_max_lots(req)
+
+            if sell_all:
+                amount_to_sell = min(bid.quantity, max_lots.sell_limits.sell_max_lots)
+            else:
+                delta_quantity = round(delta / lot_price)
+                amount_to_sell = min(min(delta_quantity, bid.quantity), max_lots.sell_limits.sell_max_lots)
+
+            if amount_to_sell > 0:
+                # TODO: Sell here
+
+                delta -= amount_to_sell * lot_price
+
+                if delta < lot_price:
+                    break
+            else:
+                break
+
+        await asyncio.sleep(30)
+
+
+async def _buy_instrument(dest_client, dest_account, instrument_id, delta):
+    lot = await _get_instrument_lot(dest_client, instrument_id)
+
+    while True:
+        order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
+
+        if order_book.asks:
+            ask = order_book.asks[0]
+
+            lot_price = lot * quotation_to_decimal(ask.price)
+
+            req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
+            max_lots = await dest_client.orders.get_max_lots(req)
+
+            delta_quantity = round(delta / lot_price)
+            amount_to_buy = min(min(delta_quantity, ask.quantity), max_lots.buy_limits.buy_max_lots)
+
+            if amount_to_buy > 0:
+                # TODO: Buy here
+
+                delta -= amount_to_buy * lot_price
+
+                if delta < lot_price:
+                    break
+            else:
+                break
+
+        await asyncio.sleep(30)
 
 
 _instrument_lot_cache = {}
