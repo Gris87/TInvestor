@@ -1,13 +1,19 @@
 import asyncio
 import argparse
+import logging
 import sys
 from aiostream import stream
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import AsyncClient
+from tinkoff.invest import InstrumentIdType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
+from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
+from tinkoff.invest.retrying.settings import RetryClientSettings
 from tinkoff.invest.utils import quotation_to_decimal
+
+
+#logging.basicConfig(level=logging.DEBUG)
 
 
 RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
@@ -22,8 +28,10 @@ async def follow(args):
 
     logger.info("Connecting to server")
 
-    async with AsyncClient(args.src_token, target=INVEST_GRPC_API if args.real_src else INVEST_GRPC_API_SANDBOX) as src_client:
-        async with AsyncClient(args.dest_token, target=INVEST_GRPC_API if args.real_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
+    retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
+
+    async with AsyncRetryingClient(args.src_token, settings=retry_settings, target=INVEST_GRPC_API if args.real_src else INVEST_GRPC_API_SANDBOX) as src_client:
+        async with AsyncRetryingClient(args.dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.real_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
             logger.info("Verifying accounts")
 
             if not await _validate_account(src_client, args.src_account, "Source"):
@@ -84,6 +92,9 @@ async def _handle_portfolios(dest_client, src_portfolio, dest_portfolio):
 
     instruments_for_sale, instruments_for_buy = await _build_instruments_for_trading(dest_client, src_instrument_to_cost, dest_instrument_to_cost, src_total_cost, dest_total_cost)
 
+    if instruments_for_sale or instruments_for_buy:
+        logger.info("Synchronization in progress")
+
     if instruments_for_sale:
         await _trade_instruments(dest_client, instruments_for_sale)
 
@@ -124,16 +135,24 @@ async def _build_instruments_for_trading(dest_client, src_instrument_to_cost, de
         expected_cost = src_part * dest_total_cost
 
         if src_instrument_id not in dest_instrument_to_cost:
-            instruments_for_buy[src_instrument_id] = expected_cost;
+            instruments_for_buy[src_instrument_id] = expected_cost
 
             continue
 
         lot = await _get_instrument_lot(dest_client, src_instrument_id)
 
-        print("-------------")
-        print(src_part)
-        print(expected_cost)
-        print(lot)
+        dest_portfolio_item = dest_instrument_to_cost[src_instrument_id]
+        delta = expected_cost - dest_portfolio_item["cost"]
+        lot_price = dest_portfolio_item["price"] * lot
+
+        if delta < -lot_price:
+            instruments_for_sale[src_instrument_id] = expected_cost
+        elif delta > lot_price:
+            instruments_for_buy[src_instrument_id] = expected_cost
+
+    for dest_instrument_id in dest_instrument_to_cost:
+        if dest_instrument_id not in src_instrument_to_cost:
+            instruments_for_sale[dest_instrument_id] = Decimal(0)  # Need to sell all
 
     return instruments_for_sale, instruments_for_buy
 
@@ -149,11 +168,10 @@ async def _get_instrument_lot(client, instrument_id):
     if instrument_id in _instrument_lot_cache:
         return _instrument_lot_cache[instrument_id]
 
-    res = 1
+    resp = await client.instruments.get_instrument_by(id_type=InstrumentIdType.INSTRUMENT_ID_TYPE_UID, id=instrument_id)
+    _instrument_lot_cache[instrument_id] = resp.instrument.lot
 
-    _instrument_lot_cache[instrument_id] = res
-
-    return res
+    return resp.instrument.lot
 
 
 def main():

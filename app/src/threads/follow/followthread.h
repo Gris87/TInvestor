@@ -36,16 +36,16 @@ private:
         const std::shared_ptr<tinkoff::PortfolioResponse>& portfolio,
         const std::shared_ptr<tinkoff::PortfolioResponse>& anotherPortfolio
     );
-    PortfolioMinItems     buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
-    double                calculateTotalCost(const PortfolioMinItems& instruments);
-    void                  buildInstrumentsForTrading(
-                         const PortfolioMinItems& instruments,
-                         const PortfolioMinItems& anotherInstruments,
-                         double                   totalCost,
-                         double                   anotherTotalCost,
-                         QMap<QString, double>&   instrumentsForSale,
-                         QMap<QString, double>&   instrumentsForBuy
-                     );
+    PortfolioMinItems buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
+    double            calculateTotalCost(const PortfolioMinItems& instruments);
+    void              buildInstrumentsForTrading(
+                     const PortfolioMinItems& instruments,
+                     const PortfolioMinItems& anotherInstruments,
+                     double                   totalCost,
+                     double                   anotherTotalCost,
+                     QMap<QString, double>&   instrumentsForSale,
+                     QMap<QString, double>&   instrumentsForBuy
+                 );
 
     IUserStorage*                    mUserStorage;
     IInstrumentsStorage*             mInstrumentsStorage;

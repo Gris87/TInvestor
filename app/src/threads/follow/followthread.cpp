@@ -218,8 +218,8 @@ void FollowThread::buildInstrumentsForTrading(
         const qint32 lot = instrumentsData.value(instrumentId).lot;
         mInstrumentsStorage->getMutex()->unlock();
 
-        const PortfolioMinItem& item  = instruments[instrumentId];
-        const double            delta = expectedCost - item.cost;
+        const PortfolioMinItem& item     = instruments[instrumentId];
+        const double            delta    = expectedCost - item.cost;
         const double            lotPrice = item.price * lot;
 
         if (delta < -lotPrice)
