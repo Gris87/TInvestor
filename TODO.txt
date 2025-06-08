@@ -1,6 +1,6 @@
-Python script for following
-Follow for the strategy
+Display spread on orderwaves dialog
 PositionsStream for OperationsThread
+Follow for the strategy
 Optimization
 Long startup
 Tray icon popup too long

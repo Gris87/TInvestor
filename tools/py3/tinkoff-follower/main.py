@@ -6,7 +6,7 @@ from aiostream import stream
 from decimal import Decimal
 from loguru import logger
 
-from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest
+from tinkoff.invest import InstrumentIdType, GetMaxLotsRequest, OrderDirection, OrderType, PriceType, TimeInForceType
 from tinkoff.invest.constants import INVEST_GRPC_API, INVEST_GRPC_API_SANDBOX
 from tinkoff.invest.retrying.aio.client import AsyncRetryingClient
 from tinkoff.invest.retrying.settings import RetryClientSettings
@@ -20,8 +20,8 @@ RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c"
 
 
 async def follow(args):
-    if args.real_dest and not args.confirm:
-        answer = input("Are you sure to use real destination account? [Y/n]")
+    if args.official_dest and not args.confirm:
+        answer = input("Are you sure to use official destination account? [Y/n]")
 
         if answer != "" and answer != "Y" and answer != "y":
             return
@@ -30,8 +30,8 @@ async def follow(args):
 
     retry_settings = RetryClientSettings(use_retry=True, max_retry_attempt=10)
 
-    async with AsyncRetryingClient(args.src_token, settings=retry_settings, target=INVEST_GRPC_API if args.real_src else INVEST_GRPC_API_SANDBOX) as src_client:
-        async with AsyncRetryingClient(args.dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.real_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
+    async with AsyncRetryingClient(args.src_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_src else INVEST_GRPC_API_SANDBOX) as src_client:
+        async with AsyncRetryingClient(args.dest_token, settings=retry_settings, target=INVEST_GRPC_API if args.official_dest else INVEST_GRPC_API_SANDBOX) as dest_client:
             logger.info("Verifying accounts")
 
             if not await _validate_account(src_client, args.src_account, "Source"):
@@ -189,29 +189,44 @@ async def _sell_instrument(dest_client, dest_account, instrument_id, delta, sell
     while True:
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
 
-        if order_book.bids:
+        if order_book.bids and order_book.asks:
             bid = order_book.bids[0]
+            ask = order_book.asks[0]
 
-            lot_price = lot * quotation_to_decimal(bid.price)
+            bid_decimal = quotation_to_decimal(bid.price)
+            ask_decimal = quotation_to_decimal(ask.price)
 
-            req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
-            max_lots = await dest_client.orders.get_max_lots(req)
+            spread = (ask_decimal / bid_decimal - 1) * 100
 
-            if sell_all:
-                amount_to_sell = min(bid.quantity, max_lots.sell_limits.sell_max_lots)
-            else:
-                delta_quantity = round(delta / lot_price)
-                amount_to_sell = min(min(delta_quantity, bid.quantity), max_lots.sell_limits.sell_max_lots)
+            if spread < 0.5:
+                lot_price = lot * bid_decimal
 
-            if amount_to_sell > 0:
-                # TODO: Sell here
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=bid.price)
+                max_lots = await dest_client.orders.get_max_lots(req)
 
-                delta -= amount_to_sell * lot_price
+                if sell_all:
+                    amount_to_sell = min(bid.quantity, max_lots.sell_limits.sell_max_lots)
+                else:
+                    delta_quantity = round(delta / lot_price)
+                    amount_to_sell = min(min(delta_quantity, bid.quantity), max_lots.sell_limits.sell_max_lots)
 
-                if delta < lot_price:
+                if amount_to_sell > 0:
+                    resp = await dest_client.orders.post_order(
+                        quantity=amount_to_sell,
+                        direction=OrderDirection.ORDER_DIRECTION_SELL,
+                        account_id=dest_account,
+                        order_type=OrderType.ORDER_TYPE_MARKET,
+                        instrument_id=instrument_id,
+                        time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY
+                    )
+
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+
+                    if delta < lot_price:
+                        break
+                else:
                     break
-            else:
-                break
 
         await asyncio.sleep(30)
 
@@ -222,26 +237,41 @@ async def _buy_instrument(dest_client, dest_account, instrument_id, delta):
     while True:
         order_book = await dest_client.market_data.get_order_book(depth=1, instrument_id=instrument_id)
 
-        if order_book.asks:
+        if order_book.bids and order_book.asks:
+            bid = order_book.bids[0]
             ask = order_book.asks[0]
 
-            lot_price = lot * quotation_to_decimal(ask.price)
+            bid_decimal = quotation_to_decimal(bid.price)
+            ask_decimal = quotation_to_decimal(ask.price)
 
-            req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
-            max_lots = await dest_client.orders.get_max_lots(req)
+            spread = (ask_decimal / bid_decimal - 1) * 100
 
-            delta_quantity = round(delta / lot_price)
-            amount_to_buy = min(min(delta_quantity, ask.quantity), max_lots.buy_limits.buy_max_lots)
+            if spread < 0.5:
+                lot_price = lot * ask_decimal
 
-            if amount_to_buy > 0:
-                # TODO: Buy here
+                req = GetMaxLotsRequest(account_id=dest_account, instrument_id=instrument_id, price=ask.price)
+                max_lots = await dest_client.orders.get_max_lots(req)
 
-                delta -= amount_to_buy * lot_price
+                delta_quantity = round(delta / lot_price)
+                amount_to_buy = min(min(delta_quantity, ask.quantity), max_lots.buy_limits.buy_max_lots)
 
-                if delta < lot_price:
+                if amount_to_buy > 0:
+                    resp = await dest_client.orders.post_order(
+                        quantity=amount_to_buy,
+                        direction=OrderDirection.ORDER_DIRECTION_BUY,
+                        account_id=dest_account,
+                        order_type=OrderType.ORDER_TYPE_MARKET,
+                        instrument_id=instrument_id,
+                        time_in_force=TimeInForceType.TIME_IN_FORCE_DAY,
+                        price_type=PriceType.PRICE_TYPE_CURRENCY
+                    )
+
+                    delta -= resp.lots_executed * lot * quotation_to_decimal(resp.executed_order_price)
+
+                    if delta < lot_price:
+                        break
+                else:
                     break
-            else:
-                break
 
         await asyncio.sleep(30)
 
@@ -262,15 +292,15 @@ async def _get_instrument_lot(client, instrument_id):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--real-src",
-        dest="real_src",
+        "--official-src",
+        dest="official_src",
         default=False,
         action="store_true",
         help="Flag for using official server for source account",
     )
     parser.add_argument(
-        "--real-dest",
-        dest="real_dest",
+        "--official-dest",
+        dest="official_dest",
         default=False,
         action="store_true",
         help="Flag for using official server for destination account",
@@ -280,7 +310,7 @@ def main():
         dest="confirm",
         default=False,
         action="store_true",
-        help="Do not ask about using real destination account",
+        help="Do not ask about using official destination account",
     )
     parser.add_argument(
         "--src-token",

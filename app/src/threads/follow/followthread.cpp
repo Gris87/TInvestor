@@ -29,14 +29,16 @@ FollowThread::~FollowThread()
     qDebug() << "Destroy FollowThread";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void FollowThread::run()
 {
     qDebug() << "Running FollowThread";
 
     if (mAccountId != "" || mAnotherAccountId != "")
     {
-        std::shared_ptr<tinkoff::PortfolioResponse> portfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-        std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
+        const std::shared_ptr<tinkoff::PortfolioResponse> portfolio =
+            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
             mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
 
         if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
@@ -57,8 +59,8 @@ void FollowThread::run()
 
                 if (portfolioStreamResponse->has_portfolio())
                 {
-                    tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
-                    QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
+                    const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
+                    const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
 
                     Q_ASSERT_X(
                         accountId == mAccountId || accountId == mAnotherAccountId, "FollowThread::run()", "Unexpected account ID"
@@ -88,6 +90,7 @@ void FollowThread::run()
 
     qDebug() << "Finish FollowThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void FollowThread::setAccounts(const QString& account, const QString& anotherAccount)
 {
