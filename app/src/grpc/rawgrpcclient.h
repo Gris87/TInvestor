@@ -77,6 +77,12 @@ public:
         const tinkoff::PortfolioRequest&                         req,
         tinkoff::PortfolioResponse*                              resp
     ) override;
+    grpc::Status getPositions(
+        const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+        grpc::ClientContext*                                     context,
+        const tinkoff::PositionsRequest&                         req,
+        tinkoff::PositionsResponse*                              resp
+    ) override;
     grpc::Status getOperations(
         const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
         grpc::ClientContext*                                     context,
@@ -100,6 +106,14 @@ public:
     ) override;
     bool readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream, tinkoff::PortfolioStreamResponse* resp) override;
     grpc::Status finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
+
+    PositionsStream::Stream createPositionsStream(
+        const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+        grpc::ClientContext*                                           context,
+        const tinkoff::PositionsStreamRequest&                         req
+    ) override;
+    bool readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream, tinkoff::PositionsStreamResponse* resp) override;
+    grpc::Status finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) override;
 
 private:
     QMutex* mMutex;

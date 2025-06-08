@@ -112,6 +112,15 @@ public:
     );
     MOCK_METHOD(
         grpc::Status,
+        getPositions,
+        (const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+         grpc::ClientContext*                                     context,
+         const tinkoff::PositionsRequest&                         req,
+         tinkoff::PositionsResponse*                              resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
         getOperations,
         (const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
          grpc::ClientContext*                                     context,
@@ -156,4 +165,20 @@ public:
         (override)
     );
     MOCK_METHOD(grpc::Status, finishPortfolioStream, (std::shared_ptr<PortfolioStream> & portfolioStream), (override));
+
+    MOCK_METHOD(
+        PositionsStream::Stream,
+        createPositionsStream,
+        (const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+         grpc::ClientContext*                                           context,
+         const tinkoff::PositionsStreamRequest&                         req),
+        (override)
+    );
+    MOCK_METHOD(
+        bool,
+        readPositionsStream,
+        (std::shared_ptr<PositionsStream> & positionsStream, tinkoff::PositionsStreamResponse* resp),
+        (override)
+    );
+    MOCK_METHOD(grpc::Status, finishPositionsStream, (std::shared_ptr<PositionsStream> & positionsStream), (override));
 };

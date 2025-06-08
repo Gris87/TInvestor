@@ -82,6 +82,7 @@ public:
     getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to) override;
     std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& instrumentId) override;
     std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId) override;
+    std::shared_ptr<tinkoff::PositionsResponse>    getPositions(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
     getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) override;
 
@@ -102,6 +103,12 @@ public:
          readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
     void cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
     void finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) override;
+
+    std::shared_ptr<PositionsStream>                  createPositionsStream(const QString& accountId) override;
+    std::shared_ptr<tinkoff::PositionsStreamResponse> readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream
+    ) override;
+    void cancelPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) override;
+    void finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) override;
 
     void emitAuthFailed(const grpc::Status& status);
 

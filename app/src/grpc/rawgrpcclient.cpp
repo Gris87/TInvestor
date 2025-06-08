@@ -138,6 +138,18 @@ grpc::Status RawGrpcClient::getPortfolio(
     return service->GetPortfolio(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::getPositions(
+    const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
+    grpc::ClientContext*                                     context,
+    const tinkoff::PositionsRequest&                         req,
+    tinkoff::PositionsResponse*                              resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->GetPositions(context, req, resp);
+}
+
 grpc::Status RawGrpcClient::getOperations(
     const std::unique_ptr<tinkoff::OperationsService::Stub>& service,
     grpc::ClientContext*                                     context,
@@ -207,4 +219,27 @@ grpc::Status RawGrpcClient::finishPortfolioStream(std::shared_ptr<PortfolioStrea
     const QMutexLocker lock(mMutex);
 
     return portfolioStream->stream->Finish();
+}
+
+PositionsStream::Stream RawGrpcClient::createPositionsStream(
+    const std::unique_ptr<tinkoff::OperationsStreamService::Stub>& service,
+    grpc::ClientContext*                                           context,
+    const tinkoff::PositionsStreamRequest&                         req
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->PositionsStream(context, req);
+}
+
+bool RawGrpcClient::readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream, tinkoff::PositionsStreamResponse* resp)
+{
+    return positionsStream->stream->Read(resp);
+}
+
+grpc::Status RawGrpcClient::finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)
+{
+    const QMutexLocker lock(mMutex);
+
+    return positionsStream->stream->Finish();
 }

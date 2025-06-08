@@ -36,6 +36,7 @@ public:
     getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to)                                  = 0;
     virtual std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& instrumentId) = 0;
     virtual std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId)    = 0;
+    virtual std::shared_ptr<tinkoff::PositionsResponse>    getPositions(QThread* parentThread, const QString& accountId)    = 0;
     virtual std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
     getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) = 0;
 
@@ -56,6 +57,12 @@ public:
                  readPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream)   = 0;
     virtual void cancelPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) = 0;
     virtual void finishPortfolioStream(std::shared_ptr<PortfolioStream>& portfolioStream) = 0;
+
+    virtual std::shared_ptr<PositionsStream> createPositionsStream(const QString& accountId) = 0;
+    virtual std::shared_ptr<tinkoff::PositionsStreamResponse>
+                 readPositionsStream(std::shared_ptr<PositionsStream>& positionsStream)   = 0;
+    virtual void cancelPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) = 0;
+    virtual void finishPositionsStream(std::shared_ptr<PositionsStream>& positionsStream) = 0;
 
 signals:
     void authFailed(
