@@ -48,6 +48,7 @@
 #include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
+#include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
 #include "src/utils/filedialog/filedialogfactory.h"
@@ -338,6 +339,7 @@ static int runApplication(QApplication* app)
     FollowThread             followThread(&instrumentsStorage, &grpcClient);
     MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
     OrderBookThread          orderBookThread(&grpcClient);
+    TradingThreadFactory     tradingThreadFactory;
 
     MainWindow mainWindow(
         &config,
@@ -388,6 +390,7 @@ static int runApplication(QApplication* app)
         &followThread,
         &makeDecisionThread,
         &orderBookThread,
+        &tradingThreadFactory,
         &fileDialogFactory,
         &messageBoxUtils,
         &settingsEditor,

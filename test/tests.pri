@@ -72,6 +72,7 @@ SOURCES += \
     src/threads/portfoliolastprice/test_portfoliolastpricethread.cpp \
     src/threads/pricecollect/test_pricecollectthread.cpp \
     src/threads/trading/test_tradingthread.cpp \
+    src/threads/trading/test_tradingthreadfactory.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
     src/utils/filedialog/test_filedialog.cpp \
@@ -190,6 +191,7 @@ HEADERS += \
     src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
     src/threads/trading/itradingthread_mock.h \
+    src/threads/trading/itradingthreadfactory_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \
     src/utils/autorunenabler/iautorunenabler_mock.h \
     src/utils/filedialog/ifiledialog_mock.h \

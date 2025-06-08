@@ -76,6 +76,7 @@ SOURCES += \
     src/threads/portfoliolastprice/portfoliolastpricethread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
     src/threads/trading/tradingthread.cpp \
+    src/threads/trading/tradingthreadfactory.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
     src/utils/filedialog/filedialog.cpp \
@@ -267,7 +268,9 @@ HEADERS += \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
     src/threads/trading/itradingthread.h \
+    src/threads/trading/itradingthreadfactory.h \
     src/threads/trading/tradingthread.h \
+    src/threads/trading/tradingthreadfactory.h \
     src/threads/userupdate/iuserupdatethread.h \
     src/threads/userupdate/userupdatethread.h \
     src/utils/autorunenabler/autorunenabler.h \

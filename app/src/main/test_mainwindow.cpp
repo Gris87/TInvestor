@@ -35,6 +35,7 @@
 #include "src/threads/portfolio/iportfoliothread_mock.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
+#include "src/threads/trading/itradingthreadfactory_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
@@ -138,6 +139,7 @@ protected:
         followThreadMock                     = new StrictMock<FollowThreadMock>();
         makeDecisionThreadMock               = new StrictMock<MakeDecisionThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
+        tradingThreadFactoryMock             = new StrictMock<TradingThreadFactoryMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
@@ -284,6 +286,7 @@ protected:
             followThreadMock,
             makeDecisionThreadMock,
             orderBookThreadMock,
+            tradingThreadFactoryMock,
             fileDialogFactoryMock,
             messageBoxUtilsMock,
             settingsEditorMock,
@@ -368,6 +371,7 @@ protected:
         delete followThreadMock;
         delete makeDecisionThreadMock;
         delete orderBookThreadMock;
+        delete tradingThreadFactoryMock;
         delete fileDialogFactoryMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
@@ -433,6 +437,7 @@ protected:
     StrictMock<FollowThreadMock>*                     followThreadMock;
     StrictMock<MakeDecisionThreadMock>*               makeDecisionThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
+    StrictMock<TradingThreadFactoryMock>*             tradingThreadFactoryMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;

@@ -26,6 +26,7 @@
 #include "src/threads/portfolio/iportfoliothread.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
+#include "src/threads/trading/itradingthreadfactory.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/http/ihttpclient.h"
@@ -101,6 +102,7 @@ public:
         IFollowThread*                     followThread,
         IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
+        ITradingThreadFactory*             tradingThreadFactory,
         IFileDialogFactory*                fileDialogFactory,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
@@ -172,6 +174,7 @@ private:
     IFollowThread*                     mFollowThread;
     IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
+    ITradingThreadFactory*             mTradingThreadFactory;
     IFileDialogFactory*                mFileDialogFactory;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
