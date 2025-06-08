@@ -20,5 +20,10 @@ public:
     TradingThreadFactoryMock(const TradingThreadFactoryMock& another)            = delete;
     TradingThreadFactoryMock& operator=(const TradingThreadFactoryMock& another) = delete;
 
-    MOCK_METHOD(ITradingThread*, newInstance, (IGrpcClient * grpcClient, QObject* parent), (const, override));
+    MOCK_METHOD(
+        ITradingThread*,
+        newInstance,
+        (IGrpcClient * grpcClient, const QString& accountId, const QString& instrumentId, double expectedCost, QObject* parent),
+        (const, override)
+    );
 };

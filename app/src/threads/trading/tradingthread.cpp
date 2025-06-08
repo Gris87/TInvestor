@@ -4,10 +4,15 @@
 
 
 
-TradingThread::TradingThread(IGrpcClient* grpcClient, QObject* parent) :
+TradingThread::TradingThread(
+    IGrpcClient* grpcClient, const QString& accountId, const QString& instrumentId, double expectedCost, QObject* parent
+) :
     ITradingThread(parent),
+    mMutex(new QMutex()),
     mGrpcClient(grpcClient),
-    mAccountId()
+    mAccountId(accountId),
+    mInstrumentId(instrumentId),
+    mExpectedCost(expectedCost)
 {
     qDebug() << "Create TradingThread";
 }
@@ -15,18 +20,34 @@ TradingThread::TradingThread(IGrpcClient* grpcClient, QObject* parent) :
 TradingThread::~TradingThread()
 {
     qDebug() << "Destroy TradingThread";
+
+    delete mMutex;
 }
 
 void TradingThread::run()
 {
     qDebug() << "Running TradingThread";
 
+    // TODO: Implement it
+    qInfo() << mInstrumentId << mExpectedCost;
+
+    emit tradingCompleted(mInstrumentId);
+
     qDebug() << "Finish TradingThread";
 }
 
-void TradingThread::setAccountId(const QString& accountId)
+void TradingThread::setExpectedCost(double expectedCost)
 {
-    mAccountId = accountId;
+    const QMutexLocker lock(mMutex);
+
+    mExpectedCost = expectedCost;
+}
+
+double TradingThread::expectedCost() const
+{
+    const QMutexLocker lock(mMutex);
+
+    return mExpectedCost;
 }
 
 void TradingThread::terminateThread()

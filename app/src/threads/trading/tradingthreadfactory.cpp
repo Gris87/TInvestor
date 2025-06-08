@@ -17,7 +17,9 @@ TradingThreadFactory::~TradingThreadFactory()
     qDebug() << "Destroy TradingThreadFactory";
 }
 
-ITradingThread* TradingThreadFactory::newInstance(IGrpcClient* grpcClient, QObject* parent) const
+ITradingThread* TradingThreadFactory::newInstance(
+    IGrpcClient* grpcClient, const QString& accountId, const QString& instrumentId, double expectedCost, QObject* parent
+) const
 {
-    return new TradingThread(grpcClient, parent);
+    return new TradingThread(grpcClient, accountId, instrumentId, expectedCost, parent);
 }

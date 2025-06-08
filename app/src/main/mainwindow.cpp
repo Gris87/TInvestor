@@ -130,7 +130,8 @@ MainWindow::MainWindow(
     mAutoPilotSettingsEditor(autoPilotSettingsEditor),
     mAutorunEnabler(autorunEnabler),
     mAutoPilotAccountId(),
-    mAutoPilotAnotherAccountId()
+    mAutoPilotAnotherAccountId(),
+    mTradingThreads()
 {
     qDebug() << "Create MainWindow";
 
@@ -236,6 +237,7 @@ MainWindow::MainWindow(
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
+    connect(mFollowThread,                            SIGNAL(tradeInstruments(const QMap<QString, double>&)),                                       this, SLOT(autoPilotTradeInstruments(const QMap<QString, double>&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -264,6 +266,11 @@ MainWindow::~MainWindow()
     mFollowThread->terminateThread();
     mMakeDecisionThread->terminateThread();
 
+    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    {
+        it.value()->terminateThread();
+    }
+
     mCleanupThread->wait();
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
@@ -274,6 +281,11 @@ MainWindow::~MainWindow()
     mPortfolioLastPriceThread->wait();
     mFollowThread->wait();
     mMakeDecisionThread->wait();
+
+    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    {
+        it.value()->wait();
+    }
 
     saveWindowState();
 
@@ -574,6 +586,11 @@ void MainWindow::stopAutoPilot()
     mPortfolioLastPriceThread->terminateThread();
     mFollowThread->terminateThread();
 
+    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    {
+        it.value()->terminateThread();
+    }
+
     autoPilotPortfolioUpdateLastPricesTimer.stop();
 
     mOperationsThread->wait();
@@ -581,6 +598,14 @@ void MainWindow::stopAutoPilot()
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
     mFollowThread->wait();
+
+    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    {
+        it.value()->wait();
+        delete it.value();
+    }
+
+    mTradingThreads.clear();
 }
 
 void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
@@ -612,6 +637,35 @@ void MainWindow::autoPilotLogAdded(const LogEntry& entry)
 void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price)
 {
     mAutoPilotDecisionMakerWidget->lastPriceChanged(instrumentId, price);
+}
+
+void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instruments)
+{
+    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    {
+        ITradingThread* tradingThread = mTradingThreads.value(it.key());
+
+        if (tradingThread == nullptr)
+        {
+            tradingThread = mTradingThreadFactory->newInstance(mGrpcClient, mAutoPilotAccountId, it.key(), it.value(), this);
+
+            connect(
+                tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
+            );
+
+            mTradingThreads[it.key()] = tradingThread;
+            tradingThread->start();
+        }
+        else
+        {
+            tradingThread->setExpectedCost(it.value());
+        }
+    }
+}
+
+void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
+{
+    delete mTradingThreads.take(instrumentId);
 }
 
 void MainWindow::on_actionAuth_triggered()

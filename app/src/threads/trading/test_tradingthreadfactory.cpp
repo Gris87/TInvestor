@@ -21,7 +21,7 @@ TEST(Test_TradingThreadFactory, Test_newInstance)
 
     StrictMock<GrpcClientMock> grpcClientMock;
 
-    const ITradingThread* thread = factory.newInstance(&grpcClientMock, nullptr);
+    const ITradingThread* thread = factory.newInstance(&grpcClientMock, "aaaaa", "bbbbb", 1000.0, nullptr);
     ASSERT_TRUE(thread != nullptr);
 
     delete thread;

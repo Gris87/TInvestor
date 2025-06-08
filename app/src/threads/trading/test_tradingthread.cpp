@@ -17,7 +17,7 @@ protected:
     {
         grpcClientMock = new StrictMock<GrpcClientMock>();
 
-        thread = new TradingThread(grpcClientMock);
+        thread = new TradingThread(grpcClientMock, "aaaaa", "bbbbb", 1000.0);
     }
 
     void TearDown() override

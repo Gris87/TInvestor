@@ -183,6 +183,7 @@ private:
     IAutorunEnabler*                   mAutorunEnabler;
     QString                            mAutoPilotAccountId;
     QString                            mAutoPilotAnotherAccountId;
+    QMap<QString, ITradingThread*>     mTradingThreads; // Instrument UID => ITradingThread
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
@@ -219,6 +220,8 @@ public slots:
     void autoPilotLogAdded(const LogEntry& entry);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
+    void autoPilotTradeInstruments(const QMap<QString, double>& instruments);
+    void autoPilotTradingCompleted(const QString& instrumentId);
 
 private slots:
     void on_actionAuth_triggered();

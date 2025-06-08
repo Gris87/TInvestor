@@ -20,6 +20,9 @@ public:
     ITradingThread(const ITradingThread& another)            = delete;
     ITradingThread& operator=(const ITradingThread& another) = delete;
 
-    virtual void setAccountId(const QString& accountId) = 0;
-    virtual void terminateThread()                      = 0;
+    virtual void setExpectedCost(double expectedCost) = 0;
+    virtual void terminateThread()                    = 0;
+
+signals:
+    void tradingCompleted(const QString& instrumentId);
 };

@@ -15,5 +15,7 @@ public:
     TradingThreadFactory(const TradingThreadFactory& another)            = delete;
     TradingThreadFactory& operator=(const TradingThreadFactory& another) = delete;
 
-    ITradingThread* newInstance(IGrpcClient* grpcClient, QObject* parent) const override;
+    ITradingThread* newInstance(
+        IGrpcClient* grpcClient, const QString& accountId, const QString& instrumentId, double expectedCost, QObject* parent
+    ) const override;
 };

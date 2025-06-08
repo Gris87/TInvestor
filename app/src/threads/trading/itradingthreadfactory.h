@@ -16,5 +16,7 @@ public:
     ITradingThreadFactory(const ITradingThreadFactory& another)            = delete;
     ITradingThreadFactory& operator=(const ITradingThreadFactory& another) = delete;
 
-    virtual ITradingThread* newInstance(IGrpcClient* grpcClient, QObject* parent) const = 0;
+    virtual ITradingThread* newInstance(
+        IGrpcClient* grpcClient, const QString& accountId, const QString& instrumentId, double expectedCost, QObject* parent
+    ) const = 0;
 };

@@ -26,5 +26,5 @@ public:
     virtual void terminateThread()                                                        = 0;
 
 signals:
-    void tradeInstruments(QMap<QString, double> instruments); // Instrument UID => Expected cost
+    void tradeInstruments(const QMap<QString, double>& instruments); // Instrument UID => Expected cost
 };
