@@ -1,4 +1,4 @@
-PositionsStream for OperationsThread
+Remove account search in threads
 Follow for the strategy
 Optimization
 Long startup
