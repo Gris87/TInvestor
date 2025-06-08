@@ -9,6 +9,7 @@
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 constexpr QChar   RUBLE           = QChar(0x20BD);
+constexpr float   HUNDRED_PERCENT = 100.0f;
 
 
 
@@ -59,8 +60,24 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
+    QString price = QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE;
+    QString spread;
+
+    if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())
+    {
+        float spreadPrice   = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
+        float spreadPercent = (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price - 1) * HUNDRED_PERCENT;
+
+        spread =
+            QString("%1 \u20BD (%2%)").arg(QString::number(spreadPrice, 'f', mPrecision), QString::number(spreadPercent, 'f', 3));
+    }
+    else
+    {
+        spread = "-";
+    }
+
     ui->timeLabel->setText(QDateTime::fromMSecsSinceEpoch(orderBook.timestamp).toString(DATETIME_FORMAT));
-    ui->priceLabel->setText(QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE);
+    ui->priceLabel->setText(tr("%1 / Spread: %2").arg(price, spread));
 
     mOrderWavesWidget->orderBookChanged(orderBook);
 

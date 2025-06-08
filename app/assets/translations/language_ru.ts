@@ -591,6 +591,11 @@
         <source>Order waves (book)</source>
         <translation>Биржевые волны (стакан)</translation>
     </message>
+    <message>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="80"/>
+        <source>%1 / Spread: %2</source>
+        <translation>%1 / Спред: %2</translation>
+    </message>
 </context>
 <context>
     <name>PortfolioTreeWidget</name>
@@ -714,14 +719,14 @@
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="399"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="427"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="404"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="432"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="740"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="748"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="745"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="753"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>

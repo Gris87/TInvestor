@@ -1,4 +1,3 @@
-Display spread on orderwaves dialog
 PositionsStream for OperationsThread
 Follow for the strategy
 Optimization
