@@ -23,7 +23,7 @@ OperationsThread::OperationsThread(
     mOperationsDatabase(operationsDatabase),
     mGrpcClient(grpcClient),
     mAccountId(),
-    mPortfolioStream(),
+    mPositionsStream(),
     mLastRequestTimestamp(),
     mLastOperationTimestamp(),
     mAmountOfOperationsWithSameTimestamp(),
@@ -51,29 +51,29 @@ void OperationsThread::run()
     {
         readOperations();
 
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        const std::shared_ptr<tinkoff::PositionsResponse> tinkoffPositions =
+            mGrpcClient->getPositions(QThread::currentThread(), mAccountId);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPositions != nullptr)
         {
-            Quotation money = handlePortfolioResponse(*tinkoffPortfolio);
+            Quotation money = handlePositionsResponse(*tinkoffPositions);
 
-            createPortfolioStream();
+            createPositionsStream();
             requestOperations();
 
             while (true)
             {
-                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                    mGrpcClient->readPortfolioStream(mPortfolioStream);
+                const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
+                    mGrpcClient->readPositionsStream(mPositionsStream);
 
-                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
+                if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
                 {
                     break;
                 }
 
-                if (portfolioStreamResponse->has_portfolio())
+                if (positionsStreamResponse->has_position())
                 {
-                    const Quotation newMoney = handlePortfolioResponse(portfolioStreamResponse->portfolio());
+                    const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
 
                     if (money != newMoney)
                     {
@@ -84,8 +84,8 @@ void OperationsThread::run()
                 }
             }
 
-            mGrpcClient->finishPortfolioStream(mPortfolioStream);
-            mPortfolioStream = nullptr;
+            mGrpcClient->finishPositionsStream(mPositionsStream);
+            mPositionsStream = nullptr;
         }
     }
     else
@@ -108,17 +108,17 @@ void OperationsThread::setAccount(const QString& account)
 
 void OperationsThread::terminateThread()
 {
-    if (mPortfolioStream != nullptr)
+    if (mPositionsStream != nullptr)
     {
-        mGrpcClient->cancelPortfolioStream(mPortfolioStream);
+        mGrpcClient->cancelPositionsStream(mPositionsStream);
     }
 
     requestInterruption();
 }
 
-void OperationsThread::createPortfolioStream()
+void OperationsThread::createPositionsStream()
 {
-    mPortfolioStream = mGrpcClient->createPortfolioStream(mAccountId);
+    mPositionsStream = mGrpcClient->createPositionsStream(mAccountId);
 }
 
 void OperationsThread::readOperations()
@@ -172,17 +172,36 @@ void OperationsThread::readOperations()
     emit operationsRead(operations);
 }
 
-Quotation OperationsThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+Quotation OperationsThread::handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions)
 {
     Quotation res;
 
-    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    for (int i = 0; i < tinkoffPositions.money_size(); ++i)
     {
-        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+        const tinkoff::MoneyValue& money = tinkoffPositions.money(i);
 
-        if (position.instrument_uid() == RUBLE_UID)
+        if (money.currency() == "rub")
         {
-            res = quotationConvert(position.quantity());
+            res = quotationConvert(money);
+
+            break;
+        }
+    }
+
+    return res;
+}
+
+Quotation OperationsThread::handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions)
+{
+    Quotation res;
+
+    for (int i = 0; i < tinkoffPositions.money_size(); ++i)
+    {
+        const tinkoff::MoneyValue& money = tinkoffPositions.money(i).available_value();
+
+        if (money.currency() == "rub")
+        {
+            res = quotationConvert(money);
 
             break;
         }

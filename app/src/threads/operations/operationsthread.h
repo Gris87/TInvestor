@@ -47,11 +47,12 @@ public:
     void setAccount(const QString& account) override;
     void terminateThread() override;
 
-    void createPortfolioStream();
+    void createPositionsStream();
 
 private:
     void      readOperations();
-    Quotation handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
+    Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
     void      requestOperations();
     Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
 
@@ -62,7 +63,7 @@ private:
     IOperationsDatabase*             mOperationsDatabase;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
-    std::shared_ptr<PortfolioStream> mPortfolioStream;
+    std::shared_ptr<PositionsStream> mPositionsStream;
     qint64                           mLastRequestTimestamp;
     qint64                           mLastOperationTimestamp;
     qint8                            mAmountOfOperationsWithSameTimestamp;
