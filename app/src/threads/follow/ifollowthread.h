@@ -22,10 +22,9 @@ public:
     IFollowThread(const IFollowThread& another)            = delete;
     IFollowThread& operator=(const IFollowThread& another) = delete;
 
-    virtual void setAccounts(const QString& account, const QString& anotherAccount) = 0;
-    virtual void terminateThread()                                                  = 0;
+    virtual void setAccountIds(const QString& accountId, const QString& anotherAccountId) = 0;
+    virtual void terminateThread()                                                        = 0;
 
 signals:
-    void accountNotFound();
     void tradeInstruments(QMap<QString, double> instruments); // Instrument UID => Expected cost
 };

@@ -7,7 +7,6 @@
 #include "src/db/operations/ioperationsdatabase.h"
 #include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
-#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -34,9 +33,7 @@ class OperationsThread : public IOperationsThread
     Q_OBJECT
 
 public:
-    explicit OperationsThread(
-        IUserStorage* userStorage, IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent = nullptr
-    );
+    explicit OperationsThread(IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~OperationsThread() override;
 
     OperationsThread(const OperationsThread& another)            = delete;
@@ -44,7 +41,7 @@ public:
 
     void run() override;
 
-    void setAccount(const QString& account) override;
+    void setAccountId(const QString& account, const QString& accountId) override;
     void terminateThread() override;
 
     void createPositionsStream();
@@ -59,7 +56,6 @@ private:
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
-    IUserStorage*                    mUserStorage;
     IOperationsDatabase*             mOperationsDatabase;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;

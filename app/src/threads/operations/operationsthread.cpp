@@ -15,11 +15,8 @@ constexpr qint64  ONE_DAY         = 24LL * ONE_HOUR;
 
 
 
-OperationsThread::OperationsThread(
-    IUserStorage* userStorage, IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent
-) :
+OperationsThread::OperationsThread(IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent) :
     IOperationsThread(parent),
-    mUserStorage(userStorage),
     mOperationsDatabase(operationsDatabase),
     mGrpcClient(grpcClient),
     mAccountId(),
@@ -47,63 +44,53 @@ void OperationsThread::run()
 {
     qDebug() << "Running OperationsThread";
 
-    if (mAccountId != "")
+    readOperations();
+
+    const std::shared_ptr<tinkoff::PositionsResponse> tinkoffPositions =
+        mGrpcClient->getPositions(QThread::currentThread(), mAccountId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPositions != nullptr)
     {
-        readOperations();
+        Quotation money = handlePositionsResponse(*tinkoffPositions);
 
-        const std::shared_ptr<tinkoff::PositionsResponse> tinkoffPositions =
-            mGrpcClient->getPositions(QThread::currentThread(), mAccountId);
+        createPositionsStream();
+        requestOperations();
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPositions != nullptr)
+        while (true)
         {
-            Quotation money = handlePositionsResponse(*tinkoffPositions);
+            const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
+                mGrpcClient->readPositionsStream(mPositionsStream);
 
-            createPositionsStream();
-            requestOperations();
-
-            while (true)
+            if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
             {
-                const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
-                    mGrpcClient->readPositionsStream(mPositionsStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || positionsStreamResponse == nullptr)
-                {
-                    break;
-                }
-
-                if (positionsStreamResponse->has_position())
-                {
-                    const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
-
-                    if (money != newMoney)
-                    {
-                        money = newMoney;
-
-                        requestOperations();
-                    }
-                }
+                break;
             }
 
-            mGrpcClient->finishPositionsStream(mPositionsStream);
-            mPositionsStream = nullptr;
+            if (positionsStreamResponse->has_position())
+            {
+                const Quotation newMoney = handlePositionsResponse(positionsStreamResponse->position());
+
+                if (money != newMoney)
+                {
+                    money = newMoney;
+
+                    requestOperations();
+                }
+            }
         }
-    }
-    else
-    {
-        emit accountNotFound();
+
+        mGrpcClient->finishPositionsStream(mPositionsStream);
+        mPositionsStream = nullptr;
     }
 
     qDebug() << "Finish OperationsThread";
 }
 
-void OperationsThread::setAccount(const QString& account)
+void OperationsThread::setAccountId(const QString& account, const QString& accountId)
 {
     mOperationsDatabase->setAccount(account);
 
-    const QMutexLocker lock(mUserStorage->getMutex());
-    const Accounts     accounts = mUserStorage->getAccounts();
-
-    mAccountId = accounts.value(account).id;
+    mAccountId = accountId;
 }
 
 void OperationsThread::terminateThread()

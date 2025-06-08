@@ -23,7 +23,7 @@ public:
     LogsThreadMock& operator=(const LogsThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
-    MOCK_METHOD(void, setAccount, (const QString& account), (override));
+    MOCK_METHOD(void, setAccountId, (const QString& account, const QString& accountId), (override));
     MOCK_METHOD(void, addLog, (LogLevel level, const QString& message), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

@@ -11,9 +11,8 @@ constexpr float   HUNDRED_PERCENT = 100.0f;
 
 
 
-PortfolioThread::PortfolioThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent) :
+PortfolioThread::PortfolioThread(IGrpcClient* grpcClient, QObject* parent) :
     IPortfolioThread(parent),
-    mUserStorage(userStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
     mPortfolioStream()
@@ -30,51 +29,41 @@ void PortfolioThread::run()
 {
     qDebug() << "Running PortfolioThread";
 
-    if (mAccountId != "")
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+        handlePortfolioResponse(*tinkoffPortfolio);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+        createPortfolioStream();
+
+        while (true)
         {
-            handlePortfolioResponse(*tinkoffPortfolio);
+            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                mGrpcClient->readPortfolioStream(mPortfolioStream);
 
-            createPortfolioStream();
-
-            while (true)
+            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
             {
-                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                    mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
-                {
-                    break;
-                }
-
-                if (portfolioStreamResponse->has_portfolio())
-                {
-                    handlePortfolioResponse(portfolioStreamResponse->portfolio());
-                }
+                break;
             }
 
-            mGrpcClient->finishPortfolioStream(mPortfolioStream);
-            mPortfolioStream = nullptr;
+            if (portfolioStreamResponse->has_portfolio())
+            {
+                handlePortfolioResponse(portfolioStreamResponse->portfolio());
+            }
         }
-    }
-    else
-    {
-        emit accountNotFound();
+
+        mGrpcClient->finishPortfolioStream(mPortfolioStream);
+        mPortfolioStream = nullptr;
     }
 
     qDebug() << "Finish PortfolioThread";
 }
 
-void PortfolioThread::setAccount(const QString& account)
+void PortfolioThread::setAccountId(const QString& accountId)
 {
-    const QMutexLocker lock(mUserStorage->getMutex());
-    const Accounts     accounts = mUserStorage->getAccounts();
-
-    mAccountId = accounts.value(account).id;
+    mAccountId = accountId;
 }
 
 void PortfolioThread::terminateThread()

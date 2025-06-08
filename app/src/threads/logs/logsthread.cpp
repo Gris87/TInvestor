@@ -4,11 +4,10 @@
 
 
 
-LogsThread::LogsThread(IUserStorage* userStorage, ILogsDatabase* logsDatabase, QObject* parent) :
+LogsThread::LogsThread(ILogsDatabase* logsDatabase, QObject* parent) :
     ILogsThread(parent),
     mSemaphore(),
     mMutex(new QMutex()),
-    mUserStorage(userStorage),
     mLogsDatabase(logsDatabase),
     mAccountId(),
     mEntries()
@@ -27,42 +26,32 @@ void LogsThread::run()
 {
     qDebug() << "Running LogsThread";
 
-    if (mAccountId != "")
-    {
-        readLogs();
+    readLogs();
 
-        while (true)
+    while (true)
+    {
+        mSemaphore.acquire();
+
+        const LogEntry entry = takeEntry();
+
+        if (entry.timestamp == 0)
         {
-            mSemaphore.acquire();
-
-            const LogEntry entry = takeEntry();
-
-            if (entry.timestamp == 0)
-            {
-                break;
-            }
-
-            emit logAdded(entry);
-
-            mLogsDatabase->appendLog(entry);
+            break;
         }
-    }
-    else
-    {
-        emit accountNotFound();
+
+        emit logAdded(entry);
+
+        mLogsDatabase->appendLog(entry);
     }
 
     qDebug() << "Finish LogsThread";
 }
 
-void LogsThread::setAccount(const QString& account)
+void LogsThread::setAccountId(const QString& account, const QString& accountId)
 {
     mLogsDatabase->setAccount(account);
 
-    const QMutexLocker lock(mUserStorage->getMutex());
-    const Accounts     accounts = mUserStorage->getAccounts();
-
-    mAccountId = accounts.value(account).id;
+    mAccountId = accountId;
 }
 
 void LogsThread::addLog(LogLevel level, const QString& message)

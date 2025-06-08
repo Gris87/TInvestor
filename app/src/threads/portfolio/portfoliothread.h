@@ -5,7 +5,6 @@
 #include "src/threads/portfolio/iportfoliothread.h"
 
 #include "src/grpc/igrpcclient.h"
-#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -14,7 +13,7 @@ class PortfolioThread : public IPortfolioThread
     Q_OBJECT
 
 public:
-    explicit PortfolioThread(IUserStorage* userStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit PortfolioThread(IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~PortfolioThread() override;
 
     PortfolioThread(const PortfolioThread& another)            = delete;
@@ -22,7 +21,7 @@ public:
 
     void run() override;
 
-    void setAccount(const QString& account) override;
+    void setAccountId(const QString& accountId) override;
     void terminateThread() override;
 
     void createPortfolioStream();
@@ -30,7 +29,6 @@ public:
 private:
     void handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
-    IUserStorage*                    mUserStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;

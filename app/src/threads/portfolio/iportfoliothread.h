@@ -22,10 +22,9 @@ public:
     IPortfolioThread(const IPortfolioThread& another)            = delete;
     IPortfolioThread& operator=(const IPortfolioThread& another) = delete;
 
-    virtual void setAccount(const QString& account) = 0;
-    virtual void terminateThread()                  = 0;
+    virtual void setAccountId(const QString& accountId) = 0;
+    virtual void terminateThread()                      = 0;
 
 signals:
-    void accountNotFound();
     void portfolioChanged(const Portfolio& portfolio);
 };

@@ -23,6 +23,6 @@ public:
     FollowThreadMock& operator=(const FollowThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
-    MOCK_METHOD(void, setAccounts, (const QString& account, const QString& anotherAccount), (override));
+    MOCK_METHOD(void, setAccountIds, (const QString& accountId, const QString& anotherAccountId), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

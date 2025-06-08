@@ -10,11 +10,8 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-FollowThread::FollowThread(
-    IUserStorage* userStorage, IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent
-) :
+FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
     IFollowThread(parent),
-    mUserStorage(userStorage),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
@@ -34,71 +31,60 @@ void FollowThread::run()
 {
     qDebug() << "Running FollowThread";
 
-    if (mAccountId != "" || mAnotherAccountId != "")
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+    const std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
+        mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
     {
-        const std::shared_ptr<tinkoff::PortfolioResponse> portfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
-        const std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
-            mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
+        handlePortfolios(portfolio, anotherPortfolio);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && portfolio != nullptr && anotherPortfolio != nullptr)
+        createPortfolioStream();
+
+        while (true)
         {
-            handlePortfolios(portfolio, anotherPortfolio);
+            const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
+                mGrpcClient->readPortfolioStream(mPortfolioStream);
 
-            createPortfolioStream();
-
-            while (true)
+            if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
             {
-                const std::shared_ptr<tinkoff::PortfolioStreamResponse> portfolioStreamResponse =
-                    mGrpcClient->readPortfolioStream(mPortfolioStream);
-
-                if (QThread::currentThread()->isInterruptionRequested() || portfolioStreamResponse == nullptr)
-                {
-                    break;
-                }
-
-                if (portfolioStreamResponse->has_portfolio())
-                {
-                    const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
-                    const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
-
-                    Q_ASSERT_X(
-                        accountId == mAccountId || accountId == mAnotherAccountId, "FollowThread::run()", "Unexpected account ID"
-                    );
-
-                    if (accountId == mAccountId)
-                    {
-                        *portfolio = tinkoffPortfolio;
-                    }
-                    else
-                    {
-                        *anotherPortfolio = tinkoffPortfolio;
-                    }
-
-                    handlePortfolios(portfolio, anotherPortfolio);
-                }
+                break;
             }
 
-            mGrpcClient->finishPortfolioStream(mPortfolioStream);
-            mPortfolioStream = nullptr;
+            if (portfolioStreamResponse->has_portfolio())
+            {
+                const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
+                const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
+
+                Q_ASSERT_X(
+                    accountId == mAccountId || accountId == mAnotherAccountId, "FollowThread::run()", "Unexpected account ID"
+                );
+
+                if (accountId == mAccountId)
+                {
+                    *portfolio = tinkoffPortfolio;
+                }
+                else
+                {
+                    *anotherPortfolio = tinkoffPortfolio;
+                }
+
+                handlePortfolios(portfolio, anotherPortfolio);
+            }
         }
-    }
-    else
-    {
-        emit accountNotFound();
+
+        mGrpcClient->finishPortfolioStream(mPortfolioStream);
+        mPortfolioStream = nullptr;
     }
 
     qDebug() << "Finish FollowThread";
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-void FollowThread::setAccounts(const QString& account, const QString& anotherAccount)
+void FollowThread::setAccountIds(const QString& accountId, const QString& anotherAccountId)
 {
-    const QMutexLocker lock(mUserStorage->getMutex());
-    const Accounts     accounts = mUserStorage->getAccounts();
-
-    mAccountId        = accounts.value(account).id;
-    mAnotherAccountId = accounts.value(anotherAccount).id;
+    mAccountId        = accountId;
+    mAnotherAccountId = anotherAccountId;
 }
 
 void FollowThread::terminateThread()

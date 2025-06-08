@@ -178,6 +178,8 @@ private:
     ISettingsEditor*                   mSimulatorSettingsEditor;
     ISettingsEditor*                   mAutoPilotSettingsEditor;
     IAutorunEnabler*                   mAutorunEnabler;
+    QString                            mAutoPilotAccountId;
+    QString                            mAutoPilotAnotherAccountId;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

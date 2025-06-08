@@ -7,7 +7,6 @@
 #include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
-#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -16,9 +15,7 @@ class FollowThread : public IFollowThread
     Q_OBJECT
 
 public:
-    explicit FollowThread(
-        IUserStorage* userStorage, IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent = nullptr
-    );
+    explicit FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~FollowThread() override;
 
     FollowThread(const FollowThread& another)            = delete;
@@ -26,7 +23,7 @@ public:
 
     void run() override;
 
-    void setAccounts(const QString& account, const QString& anotherAccount) override;
+    void setAccountIds(const QString& accountId, const QString& anotherAccountId) override;
     void terminateThread() override;
 
     void createPortfolioStream();
@@ -47,7 +44,6 @@ private:
                      QMap<QString, double>&   instrumentsForBuy
                  );
 
-    IUserStorage*                    mUserStorage;
     IInstrumentsStorage*             mInstrumentsStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;

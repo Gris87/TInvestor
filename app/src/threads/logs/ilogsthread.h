@@ -22,12 +22,11 @@ public:
     ILogsThread(const ILogsThread& another)            = delete;
     ILogsThread& operator=(const ILogsThread& another) = delete;
 
-    virtual void setAccount(const QString& account)             = 0;
-    virtual void addLog(LogLevel level, const QString& message) = 0;
-    virtual void terminateThread()                              = 0;
+    virtual void setAccountId(const QString& account, const QString& accountId) = 0;
+    virtual void addLog(LogLevel level, const QString& message)                 = 0;
+    virtual void terminateThread()                                              = 0;
 
 signals:
-    void accountNotFound();
     void logsRead(const QList<LogEntry>& entries);
     void logAdded(const LogEntry& entry);
 };

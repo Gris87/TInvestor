@@ -725,7 +725,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     account.id    = "aaaaaa";
     account.name  = "Sergio";
 
-    accounts["aaaaaa"] = account;
+    accounts["AAAAAA"] = account;
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
@@ -734,14 +734,15 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
         .WillOnce(Return(QVariant("VIEW")));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
-        .WillOnce(Return(QVariant("aaaaaa")));
-
-    EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
-    EXPECT_CALL(*logsThreadMock, setAccount(QString("aaaaaa")));
-    EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
+        .WillOnce(Return(QVariant("AAAAAA")));
 
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+
+    EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
+
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
 
@@ -939,13 +940,19 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     QMutex mutex;
 
     Accounts accounts;
-    Account  account;
+    Account  account1;
+    Account  account2;
 
-    account.index = 0;
-    account.id    = "aaaaaa";
-    account.name  = "Sergio";
+    account1.index = 0;
+    account1.id    = "aaaaaa";
+    account1.name  = "Sergio";
 
-    accounts["aaaaaa"] = account;
+    account2.index = 0;
+    account2.id    = "bbbbbb";
+    account2.name  = "Antonio";
+
+    accounts["AAAAAA"] = account1;
+    accounts["BBBBBB"] = account2;
 
     EXPECT_CALL(
         *startAutoPilotDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, settingsEditorMock, mainWindow)
@@ -953,28 +960,28 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
     EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
-    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("aaaaaa"));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("aaaaaa")));
+    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("AAAAAA")));
     EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return("FOLLOW"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("FOLLOW")));
-    EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("bbbbbb"));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("bbbbbb")));
+    EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("BBBBBB"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("BBBBBB")));
 
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
         .WillOnce(Return(QVariant("FOLLOW")));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
-        .WillOnce(Return(QVariant("aaaaaa")));
-
-    EXPECT_CALL(*operationsThreadMock, setAccount(QString("aaaaaa")));
-    EXPECT_CALL(*logsThreadMock, setAccount(QString("aaaaaa")));
-    EXPECT_CALL(*portfolioThreadMock, setAccount(QString("aaaaaa")));
-
-    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
-        .WillOnce(Return(QVariant("bbbbbb")));
-    EXPECT_CALL(*followThreadMock, setAccounts(QString("aaaaaa"), QString("bbbbbb")));
+        .WillOnce(Return(QVariant("AAAAAA")));
 
     EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
+        .WillOnce(Return(QVariant("BBBBBB")));
+
+    EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
+    EXPECT_CALL(*followThreadMock, setAccountIds(QString("aaaaaa"), QString("bbbbbb")));
+
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
 

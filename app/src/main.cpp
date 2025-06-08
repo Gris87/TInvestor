@@ -331,11 +331,11 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread         operationsThread(&userStorage, &autoPilotOperationsDatabase, &grpcClient);
-    LogsThread               logsThread(&userStorage, &autoPilotLogsDatabase);
-    PortfolioThread          portfolioThread(&userStorage, &grpcClient);
+    OperationsThread         operationsThread(&autoPilotOperationsDatabase, &grpcClient);
+    LogsThread               logsThread(&autoPilotLogsDatabase);
+    PortfolioThread          portfolioThread(&grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
-    FollowThread             followThread(&userStorage, &instrumentsStorage, &grpcClient);
+    FollowThread             followThread(&instrumentsStorage, &grpcClient);
     MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
     OrderBookThread          orderBookThread(&grpcClient);
 

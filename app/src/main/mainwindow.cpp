@@ -126,7 +126,9 @@ MainWindow::MainWindow(
     mSettingsEditor(settingsEditor),
     mSimulatorSettingsEditor(simulatorSettingsEditor),
     mAutoPilotSettingsEditor(autoPilotSettingsEditor),
-    mAutorunEnabler(autorunEnabler)
+    mAutorunEnabler(autorunEnabler),
+    mAutoPilotAccountId(),
+    mAutoPilotAnotherAccountId()
 {
     qDebug() << "Create MainWindow";
 
@@ -226,16 +228,12 @@ MainWindow::MainWindow(
     connect(mPriceCollectThread,                      SIGNAL(pricesChanged()),                                                                      this, SLOT(pricesChanged()));
     connect(mPriceCollectThread,                      SIGNAL(periodicDataChanged()),                                                                this, SLOT(periodicDataChanged()));
     connect(mLastPriceThread,                         SIGNAL(lastPriceChanged(const QString&)),                                                     this, SLOT(lastPriceChanged(const QString&)));
-    connect(mOperationsThread,                        SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mOperationsThread,                        SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(autoPilotOperationsRead(const QList<Operation>&)));
     connect(mOperationsThread,                        SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(autoPilotOperationsAdded(const QList<Operation>&)));
-    connect(mLogsThread,                              SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mLogsThread,                              SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(autoPilotLogsRead(const QList<LogEntry>&)));
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
-    connect(mPortfolioThread,                         SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mFollowThread,                            SIGNAL(accountNotFound()),                                                                    this, SLOT(stopAutoPilot()));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -500,45 +498,62 @@ void MainWindow::stopSimulator() const
 
 void MainWindow::startAutoPilot()
 {
-    ui->autoPilotActiveWidget->show();
-    ui->autoPilotActiveSpinnerWidget->start();
-
-    ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
-    ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
-
     const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
-    mOperationsThread->setAccount(account);
-    mLogsThread->setAccount(account);
-    mPortfolioThread->setAccount(account);
+    QMutex* userStorageMutex = mUserStorage->getMutex();
+    userStorageMutex->lock();
+    const Accounts& accounts    = mUserStorage->getAccounts();
+    const Account   accountInfo = accounts.value(account);
+
+    mAutoPilotAccountId = accountInfo.id;
 
     if (mode == "FOLLOW")
     {
         const QString anotherAccount = mAutoPilotSettingsEditor->value("Options/AnotherAccount", "").toString();
 
-        mFollowThread->setAccounts(account, anotherAccount);
+        mAutoPilotAnotherAccountId = accounts.value(anotherAccount).id;
     }
-
-    const QMutexLocker lock(mUserStorage->getMutex());
-    const Accounts     accounts = mUserStorage->getAccounts();
-
-    mAutoPilotDecisionMakerWidget->setAccountName(accounts.value(account).name);
-    mAutoPilotDecisionMakerWidget->showSpinners();
-
-    mOperationsThread->start();
-    mLogsThread->start();
-    mPortfolioThread->start();
-    mPortfolioLastPriceThread->start();
-
-    if (mode == "FOLLOW")
+    else
     {
-        mFollowThread->start();
+        mAutoPilotAnotherAccountId = "-";
     }
+    userStorageMutex->unlock();
 
-    autoPilotPortfolioUpdateLastPricesTimer.start();
+    if (mAutoPilotAccountId != "" && mAutoPilotAnotherAccountId != "")
+    {
+        ui->autoPilotActiveWidget->show();
+        ui->autoPilotActiveSpinnerWidget->start();
 
-    mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot started"));
+        ui->startAutoPilotButton->setIcon(QIcon(":/assets/images/stop.png"));
+        ui->startAutoPilotButton->setText(tr("Stop auto-pilot"));
+
+        mOperationsThread->setAccountId(account, mAutoPilotAccountId);
+        mLogsThread->setAccountId(account, mAutoPilotAccountId);
+        mPortfolioThread->setAccountId(mAutoPilotAccountId);
+
+        if (mode == "FOLLOW")
+        {
+            mFollowThread->setAccountIds(mAutoPilotAccountId, mAutoPilotAnotherAccountId);
+        }
+
+        mAutoPilotDecisionMakerWidget->setAccountName(accountInfo.name);
+        mAutoPilotDecisionMakerWidget->showSpinners();
+
+        mOperationsThread->start();
+        mLogsThread->start();
+        mPortfolioThread->start();
+        mPortfolioLastPriceThread->start();
+
+        if (mode == "FOLLOW")
+        {
+            mFollowThread->start();
+        }
+
+        autoPilotPortfolioUpdateLastPricesTimer.start();
+
+        mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot started"));
+    }
 }
 
 void MainWindow::stopAutoPilot()
