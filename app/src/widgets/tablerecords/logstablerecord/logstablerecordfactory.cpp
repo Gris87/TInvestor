@@ -18,8 +18,15 @@ LogsTableRecordFactory::~LogsTableRecordFactory()
 }
 
 ILogsTableRecord* LogsTableRecordFactory::newInstance(
-    QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+    QTableWidget*                      tableWidget,
+    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    QObject*                           parent
 ) const
 {
-    return new LogsTableRecord(tableWidget, logLevelTableItemWidgetFactory, parent);
+    return new LogsTableRecord(
+        tableWidget, logLevelTableItemWidgetFactory, instrumentTableItemWidgetFactory, userStorage, instrumentsStorage, parent
+    );
 }

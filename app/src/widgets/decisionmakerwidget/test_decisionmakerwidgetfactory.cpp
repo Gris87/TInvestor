@@ -82,6 +82,9 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         newInstance(
             &logsTableRecordFactoryMock,
             &logLevelTableItemWidgetFactoryMock,
+            &instrumentTableItemWidgetFactoryMock,
+            &userStorageMock,
+            &instrumentsStorageMock,
             &fileDialogFactoryMock,
             &settingsEditorMock,
             NotNull()

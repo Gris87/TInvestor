@@ -24,10 +24,13 @@ public:
         ILogsTableWidget*,
         newInstance,
         (ILogsTableRecordFactory * logsTableRecordFactory,
-         ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
-         IFileDialogFactory*              fileDialogFactory,
-         ISettingsEditor*                 settingsEditor,
-         QWidget*                         parent),
+         ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+         IUserStorage*                      userStorage,
+         IInstrumentsStorage*               instrumentsStorage,
+         IFileDialogFactory*                fileDialogFactory,
+         ISettingsEditor*                   settingsEditor,
+         QWidget*                           parent),
         (const, override)
     );
 };

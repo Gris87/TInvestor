@@ -4,8 +4,10 @@
 
 #include "src/widgets/logstablewidget/ilogstablewidget.h"
 
+#include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h"
 
 
@@ -23,11 +25,14 @@ class LogsTableWidget : public ILogsTableWidget
 
 public:
     explicit LogsTableWidget(
-        ILogsTableRecordFactory*         logsTableRecordFactory,
-        ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
-        IFileDialogFactory*              fileDialogFactory,
-        ISettingsEditor*                 settingsEditor,
-        QWidget*                         parent = nullptr
+        ILogsTableRecordFactory*           logsTableRecordFactory,
+        ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        IFileDialogFactory*                fileDialogFactory,
+        ISettingsEditor*                   settingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~LogsTableWidget() override;
 
@@ -46,12 +51,15 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
-    ILogsTableRecordFactory*         mLogsTableRecordFactory;
-    ILogLevelTableItemWidgetFactory* mLogLevelTableItemWidgetFactory;
-    IFileDialogFactory*              mFileDialogFactory;
-    ISettingsEditor*                 mSettingsEditor;
-    LogLevel                         mFilterLogLevel;
-    QList<ILogsTableRecord*>         mRecords;
+    ILogsTableRecordFactory*           mLogsTableRecordFactory;
+    ILogLevelTableItemWidgetFactory*   mLogLevelTableItemWidgetFactory;
+    IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
+    IUserStorage*                      mUserStorage;
+    IInstrumentsStorage*               mInstrumentsStorage;
+    IFileDialogFactory*                mFileDialogFactory;
+    ISettingsEditor*                   mSettingsEditor;
+    LogLevel                           mFilterLogLevel;
+    QList<ILogsTableRecord*>           mRecords;
 
 public slots:
     void on_tableWidget_customContextMenuRequested(const QPoint& pos);

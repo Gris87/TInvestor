@@ -512,8 +512,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
 
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_ERROR, QString("GRPC error happened with code UNKNOWN")));
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot stopped")));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_ERROR, QString(""), QString("GRPC error happened with code UNKNOWN")));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot stopped")));
 
     EXPECT_CALL(*userUpdateThreadMock, terminateThread());
     EXPECT_CALL(*priceCollectThreadMock, terminateThread());
@@ -760,7 +760,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*portfolioLastPriceThreadMock, run());
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot started")));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));
 
     mainWindow->ui->actionAuth->trigger();
 
@@ -996,7 +996,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*portfolioLastPriceThreadMock, run());
     EXPECT_CALL(*followThreadMock, run());
 
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot started")));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));
 
     mainWindow->ui->startAutoPilotButton->click();
 
@@ -1025,7 +1025,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(QMessageBox::Yes));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
 
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString("Auto-pilot stopped")));
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot stopped")));
 
     EXPECT_CALL(*operationsThreadMock, terminateThread());
     EXPECT_CALL(*logsThreadMock, terminateThread());

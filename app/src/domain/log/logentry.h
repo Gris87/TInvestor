@@ -36,6 +36,7 @@ struct LogEntry
 
     qint64   timestamp;
     LogLevel level;
+    QString  instrumentId;
     QString  message;
 };
 

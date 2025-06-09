@@ -12,25 +12,36 @@ const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=no
 
 
 LogsTableRecord::LogsTableRecord(
-    QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+    QTableWidget*                      tableWidget,
+    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    QObject*                           parent
 ) :
     ILogsTableRecord(parent),
+    mInstrumentsStorage(instrumentsStorage),
     mTimeTableWidgetItem(new TimeTableItem()),
     mLevelTableWidgetItem(),
+    mInstrumentTableItemWidget(),
     mMessageTableWidgetItem(new QTableWidgetItem())
 {
     qDebug() << "Create LogsTableRecord";
 
     mLevelTableWidgetItem = logLevelTableItemWidgetFactory->newInstance(tableWidget); // tableWidget will take ownership
+    mInstrumentTableItemWidget =
+        instrumentTableItemWidgetFactory->newInstance(userStorage, tableWidget); // tableWidget will take ownership
 
     const int rowIndex = tableWidget->rowCount();
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex, LOGS_TIME_COLUMN,        mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, LOGS_LEVEL_COLUMN, mLevelTableWidgetItem);
-    tableWidget->setItem(rowIndex, LOGS_LEVEL_COLUMN,       mLevelTableWidgetItem);
-    tableWidget->setItem(rowIndex, LOGS_MESSAGE_COLUMN,     mMessageTableWidgetItem);
+    tableWidget->setItem(rowIndex,       LOGS_TIME_COLUMN,    mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LOGS_LEVEL_COLUMN,   mLevelTableWidgetItem);
+    tableWidget->setItem(rowIndex,       LOGS_LEVEL_COLUMN,   mLevelTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LOGS_NAME_COLUMN,    mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       LOGS_NAME_COLUMN,    mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       LOGS_MESSAGE_COLUMN, mMessageTableWidgetItem);
     // clang-format on
 }
 
@@ -41,8 +52,25 @@ LogsTableRecord::~LogsTableRecord()
 
 void LogsTableRecord::setLogEntry(const LogEntry& entry)
 {
+    const QMutexLocker lock(mInstrumentsStorage->getMutex());
+
+    const Instruments& instruments = mInstrumentsStorage->getInstruments();
+    Instrument         instrument  = instruments[entry.instrumentId];
+
+    const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), entry.instrumentId));
+
+    if (instrument.ticker == "" || instrument.name == "")
+    {
+        instrument.ticker         = entry.instrumentId;
+        instrument.name           = "?????";
+        instrument.pricePrecision = 2;
+    }
+
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(entry.timestamp));
     mLevelTableWidgetItem->setLogLevel(entry.level);
+    mInstrumentTableItemWidget->setInstrumentLogo(instrumentLogo);
+    mInstrumentTableItemWidget->setTicker(instrument.ticker);
+    mInstrumentTableItemWidget->setFullText(instrument.name);
     mMessageTableWidgetItem->setText(entry.message);
 }
 
@@ -74,6 +102,7 @@ void LogsTableRecord::exportToExcel(QXlsx::Document& doc) const
     // clang-format off
     doc.write(row, LOGS_TIME_COLUMN + 1,    mTimeTableWidgetItem->value(), dateFormat);
     doc.write(row, LOGS_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[mLevelTableWidgetItem->logLevel()], cellStyle);
+    doc.write(row, LOGS_NAME_COLUMN + 1,    mInstrumentTableItemWidget->fullText(), cellStyle);
     doc.write(row, LOGS_MESSAGE_COLUMN + 1, mMessageTableWidgetItem->text(), cellStyle);
     // clang-format on
 }

@@ -6,6 +6,8 @@
 
 #include <QTableWidget>
 
+#include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory.h"
 #include "src/widgets/tableitems/timetableitem.h"
 
@@ -17,7 +19,12 @@ class LogsTableRecord : public ILogsTableRecord
 
 public:
     explicit LogsTableRecord(
-        QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent = nullptr
+        QTableWidget*                      tableWidget,
+        ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        QObject*                           parent = nullptr
     );
     ~LogsTableRecord() override;
 
@@ -29,7 +36,9 @@ public:
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
-    TimeTableItem*            mTimeTableWidgetItem;
-    ILogLevelTableItemWidget* mLevelTableWidgetItem;
-    QTableWidgetItem*         mMessageTableWidgetItem;
+    IInstrumentsStorage*        mInstrumentsStorage;
+    TimeTableItem*              mTimeTableWidgetItem;
+    ILogLevelTableItemWidget*   mLevelTableWidgetItem;
+    IInstrumentTableItemWidget* mInstrumentTableItemWidget;
+    QTableWidgetItem*           mMessageTableWidgetItem;
 };

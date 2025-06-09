@@ -10,9 +10,9 @@
 
 // TODO: Update widths
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 900};
+const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 10, 900};
 #else
-const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 900};
+const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 10, 900};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
@@ -23,16 +23,22 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 LogsTableWidget::LogsTableWidget(
-    ILogsTableRecordFactory*         logsTableRecordFactory,
-    ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
-    IFileDialogFactory*              fileDialogFactory,
-    ISettingsEditor*                 settingsEditor,
-    QWidget*                         parent
+    ILogsTableRecordFactory*           logsTableRecordFactory,
+    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    IFileDialogFactory*                fileDialogFactory,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) :
     ILogsTableWidget(parent),
     ui(new Ui::LogsTableWidget),
     mLogsTableRecordFactory(logsTableRecordFactory),
     mLogLevelTableItemWidgetFactory(logLevelTableItemWidgetFactory),
+    mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
+    mUserStorage(userStorage),
+    mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
     mFilterLogLevel(),
@@ -85,7 +91,14 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
 
     while (mRecords.size() < entries.size())
     {
-        ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, mLogLevelTableItemWidgetFactory, this);
+        ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(
+            ui->tableWidget,
+            mLogLevelTableItemWidgetFactory,
+            mInstrumentTableItemWidgetFactory,
+            mUserStorage,
+            mInstrumentsStorage,
+            this
+        );
         mRecords.append(record);
     }
 
@@ -106,7 +119,14 @@ void LogsTableWidget::logAdded(const LogEntry& entry)
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
-    ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(ui->tableWidget, mLogLevelTableItemWidgetFactory, this);
+    ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(
+        ui->tableWidget,
+        mLogLevelTableItemWidgetFactory,
+        mInstrumentTableItemWidgetFactory,
+        mUserStorage,
+        mInstrumentsStorage,
+        this
+    );
     record->setLogEntry(entry);
     record->filter(ui->tableWidget, mFilterLogLevel);
 
@@ -174,6 +194,7 @@ void LogsTableWidget::exportToExcel(const QString& path) const
     // clang-format off
     doc.setColumnWidth(LOGS_TIME_COLUMN + 1,  17.57 + COLUMN_GAP);
     doc.setColumnWidth(LOGS_LEVEL_COLUMN + 1, 9.29  + COLUMN_GAP);
+    doc.setColumnWidth(LOGS_NAME_COLUMN + 1,  3.29  + COLUMN_GAP);
     doc.autosizeColumnWidth(LOGS_MESSAGE_COLUMN + 1);
     // clang-format on
     // NOLINTEND(readability-magic-numbers)
@@ -186,6 +207,7 @@ void LogsTableWidget::saveWindowState(const QString& type)
     // clang-format off
     mSettingsEditor->setValue(type + "/columnWidth_Time",    ui->tableWidget->columnWidth(LOGS_TIME_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Level",   ui->tableWidget->columnWidth(LOGS_LEVEL_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Name",    ui->tableWidget->columnWidth(LOGS_NAME_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Message", ui->tableWidget->columnWidth(LOGS_MESSAGE_COLUMN));
     // clang-format on
 }
@@ -195,6 +217,7 @@ void LogsTableWidget::loadWindowState(const QString& type)
     // clang-format off
     ui->tableWidget->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    COLUMN_WIDTHS[LOGS_TIME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(LOGS_LEVEL_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Level",   COLUMN_WIDTHS[LOGS_LEVEL_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(LOGS_NAME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Name",    COLUMN_WIDTHS[LOGS_NAME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
     // clang-format on
 }

@@ -15,6 +15,7 @@ enum LogsTableColumns : qint8
 {
     LOGS_TIME_COLUMN,
     LOGS_LEVEL_COLUMN,
+    LOGS_NAME_COLUMN,
     LOGS_MESSAGE_COLUMN,
     LOGS_COLUMN_COUNT,
 };

@@ -16,6 +16,11 @@ public:
     LogsTableRecordFactory& operator=(const LogsTableRecordFactory& another) = delete;
 
     ILogsTableRecord* newInstance(
-        QTableWidget* tableWidget, ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory, QObject* parent
+        QTableWidget*                      tableWidget,
+        ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+        IUserStorage*                      userStorage,
+        IInstrumentsStorage*               instrumentsStorage,
+        QObject*                           parent
     ) const override;
 };

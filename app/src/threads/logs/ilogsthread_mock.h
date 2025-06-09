@@ -24,6 +24,6 @@ public:
 
     MOCK_METHOD(void, run, (), (override));
     MOCK_METHOD(void, setAccountId, (const QString& account, const QString& accountId), (override));
-    MOCK_METHOD(void, addLog, (LogLevel level, const QString& message), (override));
+    MOCK_METHOD(void, addLog, (LogLevel level, const QString& instrumentId, const QString& message), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

@@ -353,7 +353,7 @@ void MainWindow::authFailed(
         return;
     }
 
-    mLogsThread->addLog(LOG_LEVEL_ERROR, tr("GRPC error happened with code %1").arg(errorCodeString));
+    mLogsThread->addLog(LOG_LEVEL_ERROR, "", tr("GRPC error happened with code %1").arg(errorCodeString));
 
     mUserUpdateThread->terminateThread();
     mPriceCollectThread->terminateThread();
@@ -569,13 +569,13 @@ void MainWindow::startAutoPilot()
 
         autoPilotPortfolioUpdateLastPricesTimer.start();
 
-        mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot started"));
+        mLogsThread->addLog(LOG_LEVEL_INFO, "", tr("Auto-pilot started"));
     }
 }
 
 void MainWindow::stopAutoPilot()
 {
-    mLogsThread->addLog(LOG_LEVEL_INFO, tr("Auto-pilot stopped"));
+    mLogsThread->addLog(LOG_LEVEL_INFO, "", tr("Auto-pilot stopped"));
 
     ui->autoPilotActiveWidget->hide();
     ui->autoPilotActiveSpinnerWidget->stop();

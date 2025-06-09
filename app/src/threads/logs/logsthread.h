@@ -25,7 +25,7 @@ public:
     void run() override;
 
     void setAccountId(const QString& account, const QString& accountId) override;
-    void addLog(LogLevel level, const QString& message) override;
+    void addLog(LogLevel level, const QString& instrumentId, const QString& message) override;
     void terminateThread() override;
 
 private:

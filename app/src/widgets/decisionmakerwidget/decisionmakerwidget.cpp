@@ -54,7 +54,14 @@ DecisionMakerWidget::DecisionMakerWidget(
     );
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsTableWidget    = logsTableWidgetFactory->newInstance(
-        logsTableRecordFactory, logLevelTableItemWidgetFactory, fileDialogFactory, mSettingsEditor, this
+        logsTableRecordFactory,
+        logLevelTableItemWidgetFactory,
+        instrumentTableItemWidgetFactory,
+        userStorage,
+        instrumentsStorage,
+        fileDialogFactory,
+        mSettingsEditor,
+        this
     );
     mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
         portfolioTreeRecordFactory,

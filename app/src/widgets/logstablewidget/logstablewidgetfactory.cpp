@@ -18,12 +18,24 @@ LogsTableWidgetFactory::~LogsTableWidgetFactory()
 }
 
 ILogsTableWidget* LogsTableWidgetFactory::newInstance(
-    ILogsTableRecordFactory*         logsTableRecordFactory,
-    ILogLevelTableItemWidgetFactory* logLevelTableItemWidgetFactory,
-    IFileDialogFactory*              fileDialogFactory,
-    ISettingsEditor*                 settingsEditor,
-    QWidget*                         parent
+    ILogsTableRecordFactory*           logsTableRecordFactory,
+    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
+    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
+    IUserStorage*                      userStorage,
+    IInstrumentsStorage*               instrumentsStorage,
+    IFileDialogFactory*                fileDialogFactory,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) const
 {
-    return new LogsTableWidget(logsTableRecordFactory, logLevelTableItemWidgetFactory, fileDialogFactory, settingsEditor, parent);
+    return new LogsTableWidget(
+        logsTableRecordFactory,
+        logLevelTableItemWidgetFactory,
+        instrumentTableItemWidgetFactory,
+        userStorage,
+        instrumentsStorage,
+        fileDialogFactory,
+        settingsEditor,
+        parent
+    );
 }

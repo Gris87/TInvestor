@@ -79,6 +79,9 @@ protected:
             newInstance(
                 logsTableRecordFactoryMock,
                 logLevelTableItemWidgetFactoryMock,
+                instrumentTableItemWidgetFactoryMock,
+                userStorageMock,
+                instrumentsStorageMock,
                 fileDialogFactoryMock,
                 settingsEditorMock,
                 NotNull()
