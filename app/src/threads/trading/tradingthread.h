@@ -8,6 +8,7 @@
 
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/threads/logs/ilogsthread.h"
 
 
 
@@ -19,6 +20,7 @@ public:
     explicit TradingThread(
         IInstrumentsStorage* instrumentsStorage,
         IGrpcClient*         grpcClient,
+        ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,
@@ -47,6 +49,7 @@ private:
     QMutex*              mMutex;
     IInstrumentsStorage* mInstrumentsStorage;
     IGrpcClient*         mGrpcClient;
+    ILogsThread*         mLogsThread;
     QString              mAccountId;
     QString              mInstrumentId;
     double               mExpectedCost;

@@ -10,10 +10,13 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
+FollowThread::FollowThread(
+    IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, ILogsThread* logsThread, QObject* parent
+) :
     IFollowThread(parent),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
+    mLogsThread(logsThread),
     mAccountId(),
     mAnotherAccountId(),
     mPortfolioStream()

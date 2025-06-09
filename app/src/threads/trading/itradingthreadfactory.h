@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/threads/logs/ilogsthread.h"
 #include "src/threads/trading/itradingthread.h"
 
 
@@ -20,6 +21,7 @@ public:
     virtual ITradingThread* newInstance(
         IInstrumentsStorage* instrumentsStorage,
         IGrpcClient*         grpcClient,
+        ILogsThread*         logsThread,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,

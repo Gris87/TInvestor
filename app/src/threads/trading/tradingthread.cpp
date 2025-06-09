@@ -9,6 +9,7 @@
 TradingThread::TradingThread(
     IInstrumentsStorage* instrumentsStorage,
     IGrpcClient*         grpcClient,
+    ILogsThread*         logsThread,
     const QString&       accountId,
     const QString&       instrumentId,
     double               expectedCost,
@@ -18,6 +19,7 @@ TradingThread::TradingThread(
     mMutex(new QMutex()),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
+    mLogsThread(logsThread),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
     mExpectedCost(expectedCost)

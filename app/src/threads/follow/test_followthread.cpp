@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/threads/logs/ilogsthread_mock.h"
 
 
 
@@ -18,8 +19,9 @@ protected:
     {
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
+        logsThreadMock         = new StrictMock<LogsThreadMock>();
 
-        thread = new FollowThread(instrumentsStorageMock, grpcClientMock);
+        thread = new FollowThread(instrumentsStorageMock, grpcClientMock, logsThreadMock);
     }
 
     void TearDown() override
@@ -27,11 +29,13 @@ protected:
         delete thread;
         delete instrumentsStorageMock;
         delete grpcClientMock;
+        delete logsThreadMock;
     }
 
     FollowThread*                       thread;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<GrpcClientMock>*         grpcClientMock;
+    StrictMock<LogsThreadMock>*         logsThreadMock;
 };
 
 

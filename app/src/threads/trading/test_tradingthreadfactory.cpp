@@ -4,6 +4,7 @@
 
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/threads/logs/ilogsthread_mock.h"
 
 
 
@@ -22,9 +23,10 @@ TEST(Test_TradingThreadFactory, Test_newInstance)
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
     StrictMock<GrpcClientMock>         grpcClientMock;
+    StrictMock<LogsThreadMock>         logsThreadMock;
 
     const ITradingThread* thread =
-        factory.newInstance(&instrumentsStorageMock, &grpcClientMock, "aaaaa", "bbbbb", 1000.0, nullptr);
+        factory.newInstance(&instrumentsStorageMock, &grpcClientMock, &logsThreadMock, "aaaaa", "bbbbb", 1000.0, nullptr);
     ASSERT_TRUE(thread != nullptr);
 
     delete thread;

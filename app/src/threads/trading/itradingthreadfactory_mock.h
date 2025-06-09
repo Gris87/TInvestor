@@ -25,6 +25,7 @@ public:
         newInstance,
         (IInstrumentsStorage * instrumentsStorage,
          IGrpcClient*   grpcClient,
+         ILogsThread*   logsThread,
          const QString& accountId,
          const QString& instrumentId,
          double         expectedCost,
