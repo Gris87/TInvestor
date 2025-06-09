@@ -29,6 +29,8 @@ void PortfolioThread::run()
 {
     qDebug() << "Running PortfolioThread";
 
+    blockSignals(false);
+
     const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
         mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
 
@@ -68,6 +70,8 @@ void PortfolioThread::setAccountId(const QString& accountId)
 
 void PortfolioThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mPortfolioStream != nullptr)
     {
         mGrpcClient->cancelPortfolioStream(mPortfolioStream);

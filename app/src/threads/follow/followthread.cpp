@@ -31,6 +31,8 @@ void FollowThread::run()
 {
     qDebug() << "Running FollowThread";
 
+    blockSignals(false);
+
     const std::shared_ptr<tinkoff::PortfolioResponse> portfolio = mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
     const std::shared_ptr<tinkoff::PortfolioResponse> anotherPortfolio =
         mGrpcClient->getPortfolio(QThread::currentThread(), mAnotherAccountId);
@@ -89,6 +91,8 @@ void FollowThread::setAccountIds(const QString& accountId, const QString& anothe
 
 void FollowThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mPortfolioStream != nullptr)
     {
         mGrpcClient->cancelPortfolioStream(mPortfolioStream);

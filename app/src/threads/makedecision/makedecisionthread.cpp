@@ -21,6 +21,8 @@ void MakeDecisionThread::run()
 {
     qDebug() << "Running MakeDecisionThread";
 
+    blockSignals(false);
+
     // TODO: Do we need it?
 
     qDebug() << "Finish MakeDecisionThread";
@@ -28,5 +30,7 @@ void MakeDecisionThread::run()
 
 void MakeDecisionThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 }

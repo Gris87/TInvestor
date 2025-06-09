@@ -24,6 +24,8 @@ void OrderBookThread::run()
 {
     qDebug() << "Running OrderBookThread";
 
+    blockSignals(false);
+
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid);
 
@@ -66,6 +68,8 @@ void OrderBookThread::setStock(Stock* stock)
 
 void OrderBookThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);

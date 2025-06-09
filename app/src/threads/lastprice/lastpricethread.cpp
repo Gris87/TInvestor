@@ -32,6 +32,8 @@ void LastPriceThread::run()
 {
     qDebug() << "Running LastPriceThread";
 
+    blockSignals(false);
+
     QStringList stocks;
 
     while (!QThread::currentThread()->isInterruptionRequested())
@@ -150,6 +152,8 @@ void LastPriceThread::stocksChanged()
 
 void LastPriceThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);

@@ -44,6 +44,7 @@ void OperationsThread::run()
 {
     qDebug() << "Running OperationsThread";
 
+    blockSignals(false);
     readOperations();
 
     const std::shared_ptr<tinkoff::PositionsResponse> tinkoffPositions =
@@ -95,6 +96,8 @@ void OperationsThread::setAccountId(const QString& account, const QString& accou
 
 void OperationsThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mPositionsStream != nullptr)
     {
         mGrpcClient->cancelPositionsStream(mPositionsStream);

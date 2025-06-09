@@ -31,6 +31,8 @@ void CleanupThread::run()
 {
     qDebug() << "Running CleanupThread";
 
+    blockSignals(false);
+
     const qint64 obsoleteTimestamp = QDateTime::currentMSecsSinceEpoch() - (mConfig->getStorageMonthLimit() * ONE_MONTH);
 
     const QMutexLocker lock(mStocksStorage->getMutex());
@@ -41,5 +43,7 @@ void CleanupThread::run()
 
 void CleanupThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 }

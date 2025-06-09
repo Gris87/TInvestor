@@ -31,6 +31,8 @@ void PortfolioLastPriceThread::run()
 {
     qDebug() << "Running PortfolioLastPriceThread";
 
+    blockSignals(false);
+
     while (!QThread::currentThread()->isInterruptionRequested())
     {
         if (!mInstrumentIds.isEmpty())
@@ -114,6 +116,8 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
 
 void PortfolioLastPriceThread::terminateThread()
 {
+    blockSignals(true);
+
     if (mMarketDataStream != nullptr)
     {
         mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);

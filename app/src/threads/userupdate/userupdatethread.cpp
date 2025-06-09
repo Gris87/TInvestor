@@ -22,6 +22,8 @@ void UserUpdateThread::run()
 {
     qDebug() << "Running UserUpdateThread";
 
+    blockSignals(false);
+
     const std::shared_ptr<tinkoff::GetInfoResponse> userInfo = mGrpcClient->getUserInfo(QThread::currentThread());
 
     if (!QThread::currentThread()->isInterruptionRequested() && userInfo != nullptr)
@@ -72,5 +74,7 @@ void UserUpdateThread::run()
 
 void UserUpdateThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 }

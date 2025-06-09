@@ -26,6 +26,7 @@ void LogsThread::run()
 {
     qDebug() << "Running LogsThread";
 
+    blockSignals(false);
     readLogs();
 
     while (true)
@@ -73,6 +74,8 @@ void LogsThread::addLog(LogLevel level, const QString& message)
 
 void LogsThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 
     const QMutexLocker lock(mMutex);

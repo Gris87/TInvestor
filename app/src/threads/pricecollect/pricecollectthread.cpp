@@ -78,6 +78,7 @@ void PriceCollectThread::run()
 {
     qDebug() << "Running PriceCollectThread";
 
+    blockSignals(false);
     emit notifyInstrumentsProgress(tr("Downloading metadata"));
 
     const std::shared_ptr<tinkoff::SharesResponse> tinkoffStocks =
@@ -101,6 +102,8 @@ void PriceCollectThread::run()
 
 void PriceCollectThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 }
 

@@ -28,6 +28,8 @@ void TradingThread::run()
 {
     qDebug() << "Running TradingThread";
 
+    blockSignals(false);
+
     // TODO: Implement it
     qInfo() << mInstrumentId << mExpectedCost;
 
@@ -52,5 +54,7 @@ double TradingThread::expectedCost() const
 
 void TradingThread::terminateThread()
 {
+    blockSignals(true);
+
     requestInterruption();
 }
