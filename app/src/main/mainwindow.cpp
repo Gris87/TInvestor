@@ -559,10 +559,13 @@ void MainWindow::startAutoPilot()
         mPortfolioThread->start();
         mPortfolioLastPriceThread->start();
 
+        // TODO: Remove it when you ready to use real account
+#ifdef USE_SANDBOX
         if (mode == "FOLLOW")
         {
             mFollowThread->start();
         }
+#endif
 
         autoPilotPortfolioUpdateLastPricesTimer.start();
 

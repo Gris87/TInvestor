@@ -61,7 +61,7 @@ OrderWavesDialog::~OrderWavesDialog()
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
     const QString price = QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE;
-    QString spread;
+    QString       spread;
 
     if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())
     {
