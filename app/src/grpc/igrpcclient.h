@@ -33,11 +33,11 @@ public:
     virtual std::shared_ptr<tinkoff::EtfsResponse>       findEtfs(QThread* parentThread)       = 0;
     virtual std::shared_ptr<tinkoff::FuturesResponse>    findFutures(QThread* parentThread)    = 0;
     virtual std::shared_ptr<tinkoff::GetCandlesResponse>
-    getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to)                                  = 0;
+    getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to) = 0;
     virtual std::shared_ptr<tinkoff::GetOrderBookResponse>
-    getOrderBook(QThread* parentThread, const QString& instrumentId, int depth)                                             = 0;
-    virtual std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId)    = 0;
-    virtual std::shared_ptr<tinkoff::PositionsResponse>    getPositions(QThread* parentThread, const QString& accountId)    = 0;
+    getOrderBook(QThread* parentThread, const QString& instrumentId, int depth)                                       = 0;
+    virtual std::shared_ptr<tinkoff::PortfolioResponse> getPortfolio(QThread* parentThread, const QString& accountId) = 0;
+    virtual std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) = 0;
     virtual std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
     getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) = 0;
 
@@ -45,8 +45,8 @@ public:
     virtual bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) = 0;
     virtual bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream)                                 = 0;
     virtual bool
-    subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth)         = 0;
-    virtual bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)                                  = 0;
+    subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth) = 0;
+    virtual bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream)                          = 0;
     virtual std::shared_ptr<tinkoff::MarketDataResponse>
                  readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream)       = 0;
     virtual bool closeWriteMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) = 0;

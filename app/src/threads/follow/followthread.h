@@ -26,7 +26,7 @@ public:
 
     void run() override;
 
-    void setAccountIds(const QString& accountId, const QString& anotherAccountId) override;
+    void setAccounts(const QString& accountId, const QString& anotherAccountId, const QString& anotherAccountName) override;
     void terminateThread() override;
 
     void createPortfolioStream();
@@ -52,5 +52,6 @@ private:
     ILogsThread*                     mLogsThread;
     QString                          mAccountId;
     QString                          mAnotherAccountId;
+    QString                          mAnotherAccountName;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
 };

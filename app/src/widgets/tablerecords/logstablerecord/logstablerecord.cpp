@@ -52,25 +52,30 @@ LogsTableRecord::~LogsTableRecord()
 
 void LogsTableRecord::setLogEntry(const LogEntry& entry)
 {
-    const QMutexLocker lock(mInstrumentsStorage->getMutex());
-
-    const Instruments& instruments = mInstrumentsStorage->getInstruments();
-    Instrument         instrument  = instruments[entry.instrumentId];
-
-    const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), entry.instrumentId));
-
-    if (instrument.ticker == "" || instrument.name == "")
+    if (entry.instrumentId != "")
     {
-        instrument.ticker         = entry.instrumentId;
-        instrument.name           = "?????";
-        instrument.pricePrecision = 2;
+        const QMutexLocker lock(mInstrumentsStorage->getMutex());
+
+        const Instruments& instruments = mInstrumentsStorage->getInstruments();
+        Instrument         instrument  = instruments[entry.instrumentId];
+
+        const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), entry.instrumentId)
+        );
+
+        if (instrument.ticker == "" || instrument.name == "")
+        {
+            instrument.ticker         = entry.instrumentId;
+            instrument.name           = "?????";
+            instrument.pricePrecision = 2;
+        }
+
+        mInstrumentTableItemWidget->setInstrumentLogo(instrumentLogo);
+        mInstrumentTableItemWidget->setTicker(instrument.ticker);
+        mInstrumentTableItemWidget->setFullText(instrument.name);
     }
 
     mTimeTableWidgetItem->setValue(QDateTime::fromMSecsSinceEpoch(entry.timestamp));
     mLevelTableWidgetItem->setLogLevel(entry.level);
-    mInstrumentTableItemWidget->setInstrumentLogo(instrumentLogo);
-    mInstrumentTableItemWidget->setTicker(instrument.ticker);
-    mInstrumentTableItemWidget->setFullText(instrument.name);
     mMessageTableWidgetItem->setText(entry.message);
 }
 

@@ -985,7 +985,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
-    EXPECT_CALL(*followThreadMock, setAccountIds(QString("aaaaaa"), QString("bbbbbb")));
+    EXPECT_CALL(*followThreadMock, setAccounts(QString("aaaaaa"), QString("bbbbbb"), QString("Antonio")));
 
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());

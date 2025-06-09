@@ -86,10 +86,11 @@ void FollowThread::run()
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
-void FollowThread::setAccountIds(const QString& accountId, const QString& anotherAccountId)
+void FollowThread::setAccounts(const QString& accountId, const QString& anotherAccountId, const QString& anotherAccountName)
 {
-    mAccountId        = accountId;
-    mAnotherAccountId = anotherAccountId;
+    mAccountId          = accountId;
+    mAnotherAccountId   = anotherAccountId;
+    mAnotherAccountName = anotherAccountName;
 }
 
 void FollowThread::terminateThread()
@@ -132,6 +133,16 @@ void FollowThread::handlePortfolios(
 
     if (!instrumentsForSale.isEmpty())
     {
+        for (auto it = instrumentsForSale.constBegin(); it != instrumentsForSale.constEnd(); ++it)
+        {
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG,
+                it.key(),
+                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"")
+                    .arg(QString::number(it.value(), 'f', 2), "\u20BD", mAnotherAccountName)
+            );
+        }
+
         emit tradeInstruments(instrumentsForSale);
 
         return;
@@ -139,6 +150,16 @@ void FollowThread::handlePortfolios(
 
     if (!instrumentsForBuy.isEmpty())
     {
+        for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
+        {
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG,
+                it.key(),
+                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
+                    .arg(QString::number(it.value(), 'f', 2), "\u20BD", mAnotherAccountName)
+            );
+        }
+
         emit tradeInstruments(instrumentsForBuy);
     }
 }

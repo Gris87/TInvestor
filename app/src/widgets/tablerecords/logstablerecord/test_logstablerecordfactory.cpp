@@ -28,13 +28,13 @@ TEST(Test_LogsTableRecordFactory, Test_newInstance)
 
     const LogsTableRecordFactory factory;
 
-    StrictMock<LogLevelTableItemWidgetFactoryMock> logLevelTableItemWidgetFactoryMock;
+    StrictMock<LogLevelTableItemWidgetFactoryMock>   logLevelTableItemWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
 
     // tableWidget will take ownership
-    StrictMock<LogLevelTableItemWidgetMock>* logLevelTableItemWidgetMock = new StrictMock<LogLevelTableItemWidgetMock>(nullptr);
+    StrictMock<LogLevelTableItemWidgetMock>*   logLevelTableItemWidgetMock = new StrictMock<LogLevelTableItemWidgetMock>(nullptr);
     StrictMock<InstrumentTableItemWidgetMock>* instrumentTableItemWidgetMock =
         new StrictMock<InstrumentTableItemWidgetMock>(nullptr);
 

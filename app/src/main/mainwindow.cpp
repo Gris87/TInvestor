@@ -519,14 +519,16 @@ void MainWindow::startAutoPilot()
     userStorageMutex->lock();
     const Accounts& accounts    = mUserStorage->getAccounts();
     const Account   accountInfo = accounts.value(account);
+    Account         anotherAccountInfo;
 
     mAutoPilotAccountId = accountInfo.id;
 
     if (mode == "FOLLOW")
     {
         const QString anotherAccount = mAutoPilotSettingsEditor->value("Options/AnotherAccount", "").toString();
+        anotherAccountInfo           = accounts.value(anotherAccount);
 
-        mAutoPilotAnotherAccountId = accounts.value(anotherAccount).id;
+        mAutoPilotAnotherAccountId = anotherAccountInfo.id;
     }
     else
     {
@@ -548,7 +550,7 @@ void MainWindow::startAutoPilot()
 
         if (mode == "FOLLOW")
         {
-            mFollowThread->setAccountIds(mAutoPilotAccountId, mAutoPilotAnotherAccountId);
+            mFollowThread->setAccounts(mAutoPilotAccountId, mAutoPilotAnotherAccountId, anotherAccountInfo.name);
         }
 
         mAutoPilotDecisionMakerWidget->setAccountName(accountInfo.name);
@@ -559,7 +561,7 @@ void MainWindow::startAutoPilot()
         mPortfolioThread->start();
         mPortfolioLastPriceThread->start();
 
-        // TODO: Remove it when you ready to use real account
+// TODO: Remove it when you ready to use real account
 #ifdef USE_SANDBOX
         if (mode == "FOLLOW")
         {

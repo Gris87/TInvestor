@@ -31,25 +31,31 @@ InstrumentWidget::~InstrumentWidget()
 
 void InstrumentWidget::enterEvent(QEnterEvent* event)
 {
-    hoverTextWidget = new QLabel();
-    hoverTextWidget->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
-    hoverTextWidget->setText(mFullText);
+    if (mFullText != "")
+    {
+        hoverTextWidget = new QLabel();
+        hoverTextWidget->setWindowFlags(Qt::Tool | Qt::FramelessWindowHint | Qt::WindowTransparentForInput);
+        hoverTextWidget->setText(mFullText);
 
-    const QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
-    hoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), hoverTextWidget->sizeHint().width(), ui->nameLabel->height());
+        const QPoint globalPos = ui->nameLabel->mapToGlobal(QPoint(0, 0));
+        hoverTextWidget->setGeometry(globalPos.x(), globalPos.y(), hoverTextWidget->sizeHint().width(), ui->nameLabel->height());
 
-    hoverTextWidget->show();
-    ui->nameLabel->hide();
+        hoverTextWidget->show();
+        ui->nameLabel->hide();
+    }
 
     IInstrumentWidget::enterEvent(event);
 }
 
 void InstrumentWidget::leaveEvent(QEvent* event)
 {
-    delete hoverTextWidget;
-    hoverTextWidget = nullptr;
+    if (hoverTextWidget != nullptr)
+    {
+        delete hoverTextWidget;
+        hoverTextWidget = nullptr;
 
-    ui->nameLabel->show();
+        ui->nameLabel->show();
+    }
 
     IInstrumentWidget::leaveEvent(event);
 }

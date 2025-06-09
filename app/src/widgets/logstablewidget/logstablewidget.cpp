@@ -10,7 +10,7 @@
 
 // TODO: Update widths
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 10, 900};
+const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 111, 900};
 #else
 const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 10, 900};
 #endif
@@ -194,7 +194,7 @@ void LogsTableWidget::exportToExcel(const QString& path) const
     // clang-format off
     doc.setColumnWidth(LOGS_TIME_COLUMN + 1,  17.57 + COLUMN_GAP);
     doc.setColumnWidth(LOGS_LEVEL_COLUMN + 1, 9.29  + COLUMN_GAP);
-    doc.setColumnWidth(LOGS_NAME_COLUMN + 1,  3.29  + COLUMN_GAP);
+    doc.autosizeColumnWidth(LOGS_NAME_COLUMN + 1);
     doc.autosizeColumnWidth(LOGS_MESSAGE_COLUMN + 1);
     // clang-format on
     // NOLINTEND(readability-magic-numbers)
