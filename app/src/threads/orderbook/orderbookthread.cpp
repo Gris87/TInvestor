@@ -6,6 +6,10 @@
 
 
 
+constexpr int ORDER_BOOK_DEPTH = 50;
+
+
+
 OrderBookThread::OrderBookThread(IGrpcClient* grpcClient, QObject* parent) :
     IOrderBookThread(parent),
     mGrpcClient(grpcClient),
@@ -27,7 +31,7 @@ void OrderBookThread::run()
     blockSignals(false);
 
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid);
+        mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid, ORDER_BOOK_DEPTH);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
     {
@@ -35,7 +39,7 @@ void OrderBookThread::run()
 
         createMarketDataStream();
 
-        if (mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.uid))
+        if (mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.uid, ORDER_BOOK_DEPTH))
         {
             while (true)
             {

@@ -650,7 +650,9 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instrume
 
         if (tradingThread == nullptr)
         {
-            tradingThread = mTradingThreadFactory->newInstance(mGrpcClient, mAutoPilotAccountId, it.key(), it.value(), this);
+            tradingThread = mTradingThreadFactory->newInstance(
+                mInstrumentsStorage, mGrpcClient, mAutoPilotAccountId, it.key(), it.value(), this
+            );
 
             connect(
                 tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))

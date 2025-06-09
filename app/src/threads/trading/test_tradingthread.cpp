@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 
 
 
@@ -15,19 +16,22 @@ class Test_TradingThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        grpcClientMock = new StrictMock<GrpcClientMock>();
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        grpcClientMock         = new StrictMock<GrpcClientMock>();
 
-        thread = new TradingThread(grpcClientMock, "aaaaa", "bbbbb", 1000.0);
+        thread = new TradingThread(instrumentsStorageMock, grpcClientMock, "aaaaa", "bbbbb", 1000.0);
     }
 
     void TearDown() override
     {
         delete thread;
+        delete instrumentsStorageMock;
         delete grpcClientMock;
     }
 
-    TradingThread*              thread;
-    StrictMock<GrpcClientMock>* grpcClientMock;
+    TradingThread*                      thread;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<GrpcClientMock>*         grpcClientMock;
 };
 
 

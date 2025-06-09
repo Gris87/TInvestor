@@ -80,7 +80,8 @@ public:
     std::shared_ptr<tinkoff::FuturesResponse>    findFutures(QThread* parentThread) override;
     std::shared_ptr<tinkoff::GetCandlesResponse>
     getCandles(QThread* parentThread, const QString& instrumentId, qint64 from, qint64 to) override;
-    std::shared_ptr<tinkoff::GetOrderBookResponse> getOrderBook(QThread* parentThread, const QString& instrumentId) override;
+    std::shared_ptr<tinkoff::GetOrderBookResponse>
+    getOrderBook(QThread* parentThread, const QString& instrumentId, int depth) override;
     std::shared_ptr<tinkoff::PortfolioResponse>    getPortfolio(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::PositionsResponse>    getPositions(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
@@ -89,7 +90,7 @@ public:
     std::shared_ptr<MarketDataStream> createMarketDataStream() override;
     bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) override;
     bool unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream) override;
-    bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId) override;
+    bool subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth) override;
     bool unsubscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream) override;
     std::shared_ptr<tinkoff::MarketDataResponse>
          readMarketDataStream(std::shared_ptr<MarketDataStream>& marketDataStream) override;

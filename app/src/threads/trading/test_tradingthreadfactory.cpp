@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/grpc/igrpcclient_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 
 
 
@@ -19,9 +20,11 @@ TEST(Test_TradingThreadFactory, Test_newInstance)
 {
     const TradingThreadFactory factory;
 
-    StrictMock<GrpcClientMock> grpcClientMock;
+    StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
+    StrictMock<GrpcClientMock>         grpcClientMock;
 
-    const ITradingThread* thread = factory.newInstance(&grpcClientMock, "aaaaa", "bbbbb", 1000.0, nullptr);
+    const ITradingThread* thread =
+        factory.newInstance(&instrumentsStorageMock, &grpcClientMock, "aaaaa", "bbbbb", 1000.0, nullptr);
     ASSERT_TRUE(thread != nullptr);
 
     delete thread;

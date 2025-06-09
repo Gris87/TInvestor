@@ -251,18 +251,18 @@ TEST_F(Test_GrpcClient, Test_getOrderBook)
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
 
-    ASSERT_NE(client->getOrderBook(QThread::currentThread(), "aaaaa"), nullptr);
+    ASSERT_NE(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
 
-    ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa"), nullptr);
+    ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 
     EXPECT_CALL(*rawGrpcClientMock, getOrderBook(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
-    ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa"), nullptr);
+    ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 }
 
 TEST_F(Test_GrpcClient, Test_createMarketDataStream)
@@ -325,11 +325,11 @@ TEST_F(Test_GrpcClient, Test_subscribeOrderBook)
 
     EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(false));
 
-    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa"), false);
+    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa", 50), false);
 
     EXPECT_CALL(*rawGrpcClientMock, writeMarketDataStream(marketDataStream, _)).WillOnce(Return(true));
 
-    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa"), true);
+    ASSERT_EQ(client->subscribeOrderBook(marketDataStream, "aaaaa", 50), true);
 }
 
 TEST_F(Test_GrpcClient, Test_unsubscribeOrderBook)

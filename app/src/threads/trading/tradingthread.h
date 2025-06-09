@@ -7,6 +7,7 @@
 #include <QMutex>
 
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 
 
 
@@ -16,11 +17,12 @@ class TradingThread : public ITradingThread
 
 public:
     explicit TradingThread(
-        IGrpcClient*   grpcClient,
-        const QString& accountId,
-        const QString& instrumentId,
-        double         expectedCost,
-        QObject*       parent = nullptr
+        IInstrumentsStorage* instrumentsStorage,
+        IGrpcClient*         grpcClient,
+        const QString&       accountId,
+        const QString&       instrumentId,
+        double               expectedCost,
+        QObject*             parent = nullptr
     );
     ~TradingThread() override;
 
@@ -37,9 +39,15 @@ public:
     void terminateThread() override;
 
 private:
-    QMutex*      mMutex;
-    IGrpcClient* mGrpcClient;
-    QString      mAccountId;
-    QString      mInstrumentId;
-    double       mExpectedCost;
+    bool   trade();
+    double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool   sell(qint32 lot, double delta, bool sellAll);
+    bool   buy(qint32 lot, double delta);
+
+    QMutex*              mMutex;
+    IInstrumentsStorage* mInstrumentsStorage;
+    IGrpcClient*         mGrpcClient;
+    QString              mAccountId;
+    QString              mInstrumentId;
+    double               mExpectedCost;
 };

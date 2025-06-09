@@ -15,7 +15,6 @@ const char* const GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
 #endif
 
 constexpr int    MAX_LIMIT_FOR_INTERVAL_1_MIN = 2400;
-constexpr int    ORDER_BOOK_DEPTH             = 50;
 constexpr int    OPERATIONS_LIMIT             = 1000;
 constexpr qint64 MS_IN_SECOND                 = 1000LL;
 
@@ -287,7 +286,8 @@ static grpc::Status getOrderBookAction(
     return rawGrpcClient->getOrderBook(service, context, req, resp.get());
 }
 
-std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId)
+std::shared_ptr<tinkoff::GetOrderBookResponse>
+GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId, int depth)
 {
     grpc::ClientContext                                  context;
     tinkoff::GetOrderBookRequest                         req;
@@ -296,7 +296,7 @@ std::shared_ptr<tinkoff::GetOrderBookResponse> GrpcClient::getOrderBook(QThread*
     context.set_credentials(mCreds);
 
     req.set_instrument_id(instrumentId.toStdString());
-    req.set_depth(ORDER_BOOK_DEPTH);
+    req.set_depth(depth);
 
     return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
 }
@@ -444,7 +444,7 @@ bool GrpcClient::unsubscribeLastPrices(std::shared_ptr<MarketDataStream>& market
     return res;
 }
 
-bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId)
+bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDataStream, const QString& instrumentId, int depth)
 {
     tinkoff::MarketDataRequest          req;
     tinkoff::SubscribeOrderBookRequest* subscribeOrderBookRequest =
@@ -454,7 +454,7 @@ bool GrpcClient::subscribeOrderBook(std::shared_ptr<MarketDataStream>& marketDat
     tinkoff::OrderBookInstrument* orderBook = subscribeOrderBookRequest->add_instruments();
 
     orderBook->set_instrument_id(instrumentId.toStdString());
-    orderBook->set_depth(ORDER_BOOK_DEPTH);
+    orderBook->set_depth(depth);
     orderBook->set_order_book_type(tinkoff::ORDERBOOK_TYPE_ALL);
 
     req.set_allocated_subscribe_order_book_request(subscribeOrderBookRequest);
