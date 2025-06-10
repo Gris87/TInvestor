@@ -42,6 +42,7 @@
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/messagebox/imessageboxutils_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/utils/timeutils/itimeutils_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h"
@@ -141,6 +142,7 @@ protected:
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         tradingThreadFactoryMock             = new StrictMock<TradingThreadFactoryMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
+        timeUtilsMock                        = new StrictMock<TimeUtilsMock>();
         messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
         simulatorSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
@@ -288,6 +290,7 @@ protected:
             orderBookThreadMock,
             tradingThreadFactoryMock,
             fileDialogFactoryMock,
+            timeUtilsMock,
             messageBoxUtilsMock,
             settingsEditorMock,
             simulatorSettingsEditorMock,
@@ -373,6 +376,7 @@ protected:
         delete orderBookThreadMock;
         delete tradingThreadFactoryMock;
         delete fileDialogFactoryMock;
+        delete timeUtilsMock;
         delete messageBoxUtilsMock;
         delete settingsEditorMock;
         delete simulatorSettingsEditorMock;
@@ -439,6 +443,7 @@ protected:
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<TradingThreadFactoryMock>*             tradingThreadFactoryMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
+    StrictMock<TimeUtilsMock>*                        timeUtilsMock;
     StrictMock<MessageBoxUtilsMock>*                  messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<SettingsEditorMock>*                   simulatorSettingsEditorMock;

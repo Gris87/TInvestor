@@ -6,6 +6,7 @@
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/threads/logs/ilogsthread.h"
 #include "src/threads/trading/itradingthread.h"
+#include "src/utils/timeutils/itimeutils.h"
 
 
 
@@ -22,6 +23,7 @@ public:
         IInstrumentsStorage* instrumentsStorage,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
+        ITimeUtils*          timeUtils,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,

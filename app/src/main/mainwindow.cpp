@@ -82,6 +82,7 @@ MainWindow::MainWindow(
     IOrderBookThread*                  orderBookThread,
     ITradingThreadFactory*             tradingThreadFactory,
     IFileDialogFactory*                fileDialogFactory,
+    ITimeUtils*                        timeUtils,
     IMessageBoxUtils*                  messageBoxUtils,
     ISettingsEditor*                   settingsEditor,
     ISettingsEditor*                   simulatorSettingsEditor,
@@ -124,6 +125,7 @@ MainWindow::MainWindow(
     mOrderBookThread(orderBookThread),
     mTradingThreadFactory(tradingThreadFactory),
     mFileDialogFactory(fileDialogFactory),
+    mTimeUtils(timeUtils),
     mMessageBoxUtils(messageBoxUtils),
     mSettingsEditor(settingsEditor),
     mSimulatorSettingsEditor(simulatorSettingsEditor),
@@ -653,7 +655,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instrume
         if (tradingThread == nullptr)
         {
             tradingThread = mTradingThreadFactory->newInstance(
-                mInstrumentsStorage, mGrpcClient, mLogsThread, mAutoPilotAccountId, it.key(), it.value(), this
+                mInstrumentsStorage, mGrpcClient, mLogsThread, mTimeUtils, mAutoPilotAccountId, it.key(), it.value(), this
             );
 
             connect(

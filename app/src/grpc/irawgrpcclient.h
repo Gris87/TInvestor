@@ -21,6 +21,7 @@
 #include "messages/generated/instruments.grpc.pb.h"
 #include "messages/generated/marketdata.grpc.pb.h"
 #include "messages/generated/operations.grpc.pb.h"
+#include "messages/generated/orders.grpc.pb.h"
 #include "messages/generated/users.grpc.pb.h"
 
 #if defined(Q_OS_WINDOWS)
@@ -148,6 +149,30 @@ public:
         grpc::ClientContext*                                     context,
         const tinkoff::GetOperationsByCursorRequest&             req,
         tinkoff::GetOperationsByCursorResponse*                  resp
+    ) = 0;
+    virtual grpc::Status getMaxLots(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::GetMaxLotsRequest&                    req,
+        tinkoff::GetMaxLotsResponse*                         resp
+    ) = 0;
+    virtual grpc::Status postOrder(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::PostOrderRequest&                     req,
+        tinkoff::PostOrderResponse*                          resp
+    ) = 0;
+    virtual grpc::Status getOrderState(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::GetOrderStateRequest&                 req,
+        tinkoff::OrderState*                                 resp
+    ) = 0;
+    virtual grpc::Status cancelOrder(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::CancelOrderRequest&                   req,
+        tinkoff::CancelOrderResponse*                        resp
     ) = 0;
 
     virtual MarketDataStream::Stream createMarketDataStream(

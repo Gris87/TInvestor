@@ -6,6 +6,7 @@
 
 #include <QThread>
 
+#include "src/domain/quotation/quotation.h"
 #include "src/grpc/irawgrpcclient.h"
 
 
@@ -40,6 +41,20 @@ public:
     virtual std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) = 0;
     virtual std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
     getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) = 0;
+    virtual std::shared_ptr<tinkoff::GetMaxLotsResponse>
+    getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price) = 0;
+    virtual std::shared_ptr<tinkoff::PostOrderResponse> postOrder(
+        QThread*                parentThread,
+        const QString&          accountId,
+        const QString&          instrumentId,
+        tinkoff::OrderDirection direction,
+        qint64                  quantity,
+        const Quotation&        price
+    ) = 0;
+    virtual std::shared_ptr<tinkoff::OrderState>
+    getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId) = 0;
+    virtual std::shared_ptr<tinkoff::CancelOrderResponse>
+    cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId) = 0;
 
     virtual std::shared_ptr<MarketDataStream> createMarketDataStream()                                                      = 0;
     virtual bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) = 0;

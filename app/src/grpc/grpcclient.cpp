@@ -65,6 +65,7 @@ GrpcClient::GrpcClient(IUserStorage* userStorage, IRawGrpcClient* rawGrpcClient,
     mMarketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
     mOperationsService       = tinkoff::OperationsService::NewStub(channel);
     mOperationsStreamService = tinkoff::OperationsStreamService::NewStub(channel);
+    mOrdersService           = tinkoff::OrdersService::NewStub(channel);
 }
 
 GrpcClient::~GrpcClient()
@@ -387,6 +388,136 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_without_trades(true);
 
     return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);
+}
+
+static grpc::Status getMaxLotsAction(
+    IRawGrpcClient*                                      rawGrpcClient,
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::GetMaxLotsRequest&                    req,
+    const std::shared_ptr<tinkoff::GetMaxLotsResponse>&  resp
+)
+{
+    return rawGrpcClient->getMaxLots(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::GetMaxLotsResponse>
+GrpcClient::getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price)
+{
+    grpc::ClientContext                                context;
+    tinkoff::GetMaxLotsRequest                         req;
+    const std::shared_ptr<tinkoff::GetMaxLotsResponse> resp = std::make_shared<tinkoff::GetMaxLotsResponse>();
+
+    context.set_credentials(mCreds);
+
+    tinkoff::Quotation* tinkoffPrice = new tinkoff::Quotation(); // req will take ownership
+
+    tinkoffPrice->set_units(price.units);
+    tinkoffPrice->set_nano(price.nano);
+
+    req.set_account_id(accountId.toStdString());
+    req.set_instrument_id(instrumentId.toStdString());
+    req.set_allocated_price(tinkoffPrice);
+
+    return repeatRequest(parentThread, getMaxLotsAction, mOrdersService, &context, req, resp);
+}
+
+static grpc::Status postOrderAction(
+    IRawGrpcClient*                                      rawGrpcClient,
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::PostOrderRequest&                     req,
+    const std::shared_ptr<tinkoff::PostOrderResponse>&   resp
+)
+{
+    return rawGrpcClient->postOrder(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
+    QThread*                parentThread,
+    const QString&          accountId,
+    const QString&          instrumentId,
+    tinkoff::OrderDirection direction,
+    qint64                  quantity,
+    const Quotation&        price
+)
+{
+    grpc::ClientContext                               context;
+    tinkoff::PostOrderRequest                         req;
+    const std::shared_ptr<tinkoff::PostOrderResponse> resp = std::make_shared<tinkoff::PostOrderResponse>();
+
+    context.set_credentials(mCreds);
+
+    tinkoff::Quotation* tinkoffPrice = new tinkoff::Quotation(); // req will take ownership
+
+    tinkoffPrice->set_units(price.units);
+    tinkoffPrice->set_nano(price.nano);
+
+    req.set_account_id(accountId.toStdString());
+    req.set_instrument_id(instrumentId.toStdString());
+    req.set_direction(direction);
+    req.set_quantity(quantity);
+    req.set_allocated_price(tinkoffPrice);
+    req.set_order_type(tinkoff::ORDER_TYPE_LIMIT);
+    req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
+    req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
+
+    return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp);
+}
+
+static grpc::Status getOrderStateAction(
+    IRawGrpcClient*                                      rawGrpcClient,
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::GetOrderStateRequest&                 req,
+    const std::shared_ptr<tinkoff::OrderState>&          resp
+)
+{
+    return rawGrpcClient->getOrderState(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::OrderState>
+GrpcClient::getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId)
+{
+    grpc::ClientContext                        context;
+    tinkoff::GetOrderStateRequest              req;
+    const std::shared_ptr<tinkoff::OrderState> resp = std::make_shared<tinkoff::OrderState>();
+
+    context.set_credentials(mCreds);
+
+    req.set_account_id(accountId.toStdString());
+    req.set_order_id(orderId.toStdString());
+    req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
+    req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
+
+    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp);
+}
+
+static grpc::Status cancelOrderAction(
+    IRawGrpcClient*                                      rawGrpcClient,
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::CancelOrderRequest&                   req,
+    const std::shared_ptr<tinkoff::CancelOrderResponse>& resp
+)
+{
+    return rawGrpcClient->cancelOrder(service, context, req, resp.get());
+}
+
+std::shared_ptr<tinkoff::CancelOrderResponse>
+GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId)
+{
+    grpc::ClientContext                                 context;
+    tinkoff::CancelOrderRequest                         req;
+    const std::shared_ptr<tinkoff::CancelOrderResponse> resp = std::make_shared<tinkoff::CancelOrderResponse>();
+
+    context.set_credentials(mCreds);
+
+    req.set_account_id(accountId.toStdString());
+    req.set_order_id(orderId.toStdString());
+    req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
+
+    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()

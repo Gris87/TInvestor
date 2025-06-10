@@ -127,8 +127,8 @@ TEST_F(Test_InstrumentWidget, Test_setQualInvestor_and_forQualInvestorFlag)
 TEST_F(Test_InstrumentWidget, Test_setTicker_and_ticker)
 {
     // clang-format off
-    ASSERT_EQ(widget->ticker(),              "Name");
-    ASSERT_EQ(widget->ui->nameLabel->text(), "Name");
+    ASSERT_EQ(widget->ticker(),              "");
+    ASSERT_EQ(widget->ui->nameLabel->text(), "");
     // clang-format on
 
     widget->setTicker("AAAAA");

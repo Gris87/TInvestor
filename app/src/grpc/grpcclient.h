@@ -56,7 +56,7 @@ public:
                     continue;
                 }
 
-                if (status.error_code() != grpc::StatusCode::CANCELLED)
+                if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND)
                 {
                     emitAuthFailed(status);
                 }
@@ -86,6 +86,20 @@ public:
     std::shared_ptr<tinkoff::PositionsResponse> getPositions(QThread* parentThread, const QString& accountId) override;
     std::shared_ptr<tinkoff::GetOperationsByCursorResponse>
     getOperations(QThread* parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor) override;
+    std::shared_ptr<tinkoff::GetMaxLotsResponse>
+    getMaxLots(QThread* parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price) override;
+    std::shared_ptr<tinkoff::PostOrderResponse> postOrder(
+        QThread*                parentThread,
+        const QString&          accountId,
+        const QString&          instrumentId,
+        tinkoff::OrderDirection direction,
+        qint64                  quantity,
+        const Quotation&        price
+    ) override;
+    std::shared_ptr<tinkoff::OrderState>
+    getOrderState(QThread* parentThread, const QString& accountId, const QString& orderId) override;
+    std::shared_ptr<tinkoff::CancelOrderResponse>
+    cancelOrder(QThread* parentThread, const QString& accountId, const QString& orderId) override;
 
     std::shared_ptr<MarketDataStream> createMarketDataStream() override;
     bool subscribeLastPrices(std::shared_ptr<MarketDataStream>& marketDataStream, const QStringList& instrumentIds) override;
@@ -123,4 +137,5 @@ private:
     std::unique_ptr<tinkoff::MarketDataStreamService::Stub> mMarketDataStreamService;
     std::unique_ptr<tinkoff::OperationsService::Stub>       mOperationsService;
     std::unique_ptr<tinkoff::OperationsStreamService::Stub> mOperationsStreamService;
+    std::unique_ptr<tinkoff::OrdersService::Stub>           mOrdersService;
 };

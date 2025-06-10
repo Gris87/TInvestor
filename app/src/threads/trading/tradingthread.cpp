@@ -6,10 +6,16 @@
 
 
 
+constexpr qint64 MS_IN_SECOND = 1000LL;
+constexpr qint64 SLEEP_DELAY  = 30LL * MS_IN_SECOND; // 30 seconds
+
+
+
 TradingThread::TradingThread(
     IInstrumentsStorage* instrumentsStorage,
     IGrpcClient*         grpcClient,
     ILogsThread*         logsThread,
+    ITimeUtils*          timeUtils,
     const QString&       accountId,
     const QString&       instrumentId,
     double               expectedCost,
@@ -20,6 +26,7 @@ TradingThread::TradingThread(
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mLogsThread(logsThread),
+    mTimeUtils(timeUtils),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
     mExpectedCost(expectedCost)
@@ -71,11 +78,7 @@ void TradingThread::terminateThread()
 
 bool TradingThread::trade()
 {
-    mInstrumentsStorage->getMutex()->lock();
-    const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
-    Q_ASSERT_X(instrumentsData.contains(mInstrumentId), "TradingThread::trade()", "Data about instrument not found");
-    const qint32 lot = instrumentsData.value(mInstrumentId).lot;
-    mInstrumentsStorage->getMutex()->unlock();
+    const qint32 lot = getInstrumentLot();
 
     while (true)
     {
@@ -92,7 +95,7 @@ bool TradingThread::trade()
 
         const double delta = expected - cost;
 
-        bool completed;
+        bool completed = false;
 
         if (delta < 0)
         {
@@ -103,17 +106,30 @@ bool TradingThread::trade()
             completed = buy(lot, delta);
         }
 
-        qInfo() << mInstrumentId << lot << cost << expected << completed;
-
         if (completed)
         {
             break;
+        }
+
+        if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, this))
+        {
+            return false;
         }
 
         break;
     }
 
     return true;
+}
+
+qint32 TradingThread::getInstrumentLot() const
+{
+    const QMutexLocker lock(mInstrumentsStorage->getMutex());
+    const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
+
+    Q_ASSERT_X(instrumentsData.contains(mInstrumentId), "TradingThread::trade()", "Data about instrument not found");
+
+    return instrumentsData.value(mInstrumentId).lot;
 }
 
 double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
@@ -144,10 +160,10 @@ bool TradingThread::sell(qint32 lot, double delta, bool sellAll)
         return false;
     }
 
-    if (tinkoffOrderBook->bids_size() > 0)
+    if (tinkoffOrderBook->asks_size() > 0)
     {
-        Quotation bidPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
-        qInfo() << mInstrumentId << lot << delta << sellAll << bidPrice.units << bidPrice.nano;
+        const Quotation askPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
+        qInfo() << mInstrumentId << lot << delta << sellAll << askPrice.units << askPrice.nano;
     }
 
     return false;
@@ -163,7 +179,11 @@ bool TradingThread::buy(qint32 lot, double delta)
         return false;
     }
 
-    qInfo() << mInstrumentId << lot << delta;
+    if (tinkoffOrderBook->bids_size() > 0)
+    {
+        const Quotation bidPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
+        qInfo() << mInstrumentId << lot << delta << bidPrice.units << bidPrice.nano;
+    }
 
     return false;
 }

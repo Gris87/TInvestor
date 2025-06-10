@@ -89,6 +89,30 @@ public:
         const tinkoff::GetOperationsByCursorRequest&             req,
         tinkoff::GetOperationsByCursorResponse*                  resp
     ) override;
+    grpc::Status getMaxLots(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::GetMaxLotsRequest&                    req,
+        tinkoff::GetMaxLotsResponse*                         resp
+    ) override;
+    grpc::Status postOrder(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::PostOrderRequest&                     req,
+        tinkoff::PostOrderResponse*                          resp
+    ) override;
+    grpc::Status getOrderState(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::GetOrderStateRequest&                 req,
+        tinkoff::OrderState*                                 resp
+    ) override;
+    grpc::Status cancelOrder(
+        const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+        grpc::ClientContext*                                 context,
+        const tinkoff::CancelOrderRequest&                   req,
+        tinkoff::CancelOrderResponse*                        resp
+    ) override;
 
     MarketDataStream::Stream createMarketDataStream(
         const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context

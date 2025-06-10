@@ -392,6 +392,7 @@ static int runApplication(QApplication* app)
         &orderBookThread,
         &tradingThreadFactory,
         &fileDialogFactory,
+        &timeUtils,
         &messageBoxUtils,
         &settingsEditor,
         &simulatorSettingsEditor,

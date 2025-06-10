@@ -58,6 +58,35 @@ public:
         (QThread * parentThread, const QString& accountId, qint64 from, qint64 to, const QString& cursor),
         (override)
     );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::GetMaxLotsResponse>,
+        getMaxLots,
+        (QThread * parentThread, const QString& accountId, const QString& instrumentId, const Quotation& price),
+        (override)
+    );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::PostOrderResponse>,
+        postOrder,
+        (QThread * parentThread,
+         const QString&          accountId,
+         const QString&          instrumentId,
+         tinkoff::OrderDirection direction,
+         qint64                  quantity,
+         const Quotation&        price),
+        (override)
+    );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::OrderState>,
+        getOrderState,
+        (QThread * parentThread, const QString& accountId, const QString& orderId),
+        (override)
+    );
+    MOCK_METHOD(
+        std::shared_ptr<tinkoff::CancelOrderResponse>,
+        cancelOrder,
+        (QThread * parentThread, const QString& accountId, const QString& orderId),
+        (override)
+    );
 
     MOCK_METHOD(std::shared_ptr<MarketDataStream>, createMarketDataStream, (), (override));
     MOCK_METHOD(

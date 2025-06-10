@@ -162,6 +162,54 @@ grpc::Status RawGrpcClient::getOperations(
     return service->GetOperationsByCursor(context, req, resp);
 }
 
+grpc::Status RawGrpcClient::getMaxLots(
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::GetMaxLotsRequest&                    req,
+    tinkoff::GetMaxLotsResponse*                         resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->GetMaxLots(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::postOrder(
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::PostOrderRequest&                     req,
+    tinkoff::PostOrderResponse*                          resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->PostOrder(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::getOrderState(
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::GetOrderStateRequest&                 req,
+    tinkoff::OrderState*                                 resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->GetOrderState(context, req, resp);
+}
+
+grpc::Status RawGrpcClient::cancelOrder(
+    const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+    grpc::ClientContext*                                 context,
+    const tinkoff::CancelOrderRequest&                   req,
+    tinkoff::CancelOrderResponse*                        resp
+)
+{
+    const QMutexLocker lock(mMutex);
+
+    return service->CancelOrder(context, req, resp);
+}
+
 MarketDataStream::Stream RawGrpcClient::createMarketDataStream(
     const std::unique_ptr<tinkoff::MarketDataStreamService::Stub>& service, grpc::ClientContext* context
 )

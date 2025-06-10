@@ -128,6 +128,42 @@ public:
          tinkoff::GetOperationsByCursorResponse*                  resp),
         (override)
     );
+    MOCK_METHOD(
+        grpc::Status,
+        getMaxLots,
+        (const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+         grpc::ClientContext*                                 context,
+         const tinkoff::GetMaxLotsRequest&                    req,
+         tinkoff::GetMaxLotsResponse*                         resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        postOrder,
+        (const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+         grpc::ClientContext*                                 context,
+         const tinkoff::PostOrderRequest&                     req,
+         tinkoff::PostOrderResponse*                          resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        getOrderState,
+        (const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+         grpc::ClientContext*                                 context,
+         const tinkoff::GetOrderStateRequest&                 req,
+         tinkoff::OrderState*                                 resp),
+        (override)
+    );
+    MOCK_METHOD(
+        grpc::Status,
+        cancelOrder,
+        (const std::unique_ptr<tinkoff::OrdersService::Stub>& service,
+         grpc::ClientContext*                                 context,
+         const tinkoff::CancelOrderRequest&                   req,
+         tinkoff::CancelOrderResponse*                        resp),
+        (override)
+    );
 
     MOCK_METHOD(
         MarketDataStream::Stream,

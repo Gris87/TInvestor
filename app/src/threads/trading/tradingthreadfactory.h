@@ -19,6 +19,7 @@ public:
         IInstrumentsStorage* instrumentsStorage,
         IGrpcClient*         grpcClient,
         ILogsThread*         logsThread,
+        ITimeUtils*          timeUtils,
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,

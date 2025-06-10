@@ -30,6 +30,7 @@
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
 #include "src/utils/http/ihttpclient.h"
+#include "src/utils/timeutils/itimeutils.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
@@ -104,6 +105,7 @@ public:
         IOrderBookThread*                  orderBookThread,
         ITradingThreadFactory*             tradingThreadFactory,
         IFileDialogFactory*                fileDialogFactory,
+        ITimeUtils*                        timeUtils,
         IMessageBoxUtils*                  messageBoxUtils,
         ISettingsEditor*                   settingsEditor,
         ISettingsEditor*                   simulatorSettingsEditor,
@@ -176,6 +178,7 @@ private:
     IOrderBookThread*                  mOrderBookThread;
     ITradingThreadFactory*             mTradingThreadFactory;
     IFileDialogFactory*                mFileDialogFactory;
+    ITimeUtils*                        mTimeUtils;
     IMessageBoxUtils*                  mMessageBoxUtils;
     ISettingsEditor*                   mSettingsEditor;
     ISettingsEditor*                   mSimulatorSettingsEditor;
