@@ -27,6 +27,7 @@ public:
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,
+        const QString&       cause,
         QObject*             parent
     ) const = 0;
 };

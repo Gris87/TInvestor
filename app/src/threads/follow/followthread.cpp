@@ -10,13 +10,10 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-FollowThread::FollowThread(
-    IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, ILogsThread* logsThread, QObject* parent
-) :
+FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
     IFollowThread(parent),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
-    mLogsThread(logsThread),
     mAccountId(),
     mAnotherAccountId(),
     mPortfolioStream()
@@ -124,8 +121,8 @@ void FollowThread::handlePortfolios(
     instruments.remove(RUBLE_UID);
     anotherInstruments.remove(RUBLE_UID);
 
-    QMap<QString, double> instrumentsForSale; // Instrument UID => Expected cost
-    QMap<QString, double> instrumentsForBuy;  // Instrument UID => Expected cost
+    QMap<QString, TradingInfo> instrumentsForSale; // Instrument UID => TradingInfo
+    QMap<QString, TradingInfo> instrumentsForBuy;  // Instrument UID => TradingInfo
 
     buildInstrumentsForTrading(
         instruments, anotherInstruments, totalCost, anotherTotalCost, instrumentsForSale, instrumentsForBuy
@@ -133,16 +130,6 @@ void FollowThread::handlePortfolios(
 
     if (!instrumentsForSale.isEmpty())
     {
-        for (auto it = instrumentsForSale.constBegin(); it != instrumentsForSale.constEnd(); ++it)
-        {
-            mLogsThread->addLog(
-                LOG_LEVEL_DEBUG,
-                it.key(),
-                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"")
-                    .arg(QString::number(it.value(), 'f', 2), "\u20BD", mAnotherAccountName)
-            );
-        }
-
         emit tradeInstruments(instrumentsForSale);
 
         return;
@@ -150,16 +137,6 @@ void FollowThread::handlePortfolios(
 
     if (!instrumentsForBuy.isEmpty())
     {
-        for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
-        {
-            mLogsThread->addLog(
-                LOG_LEVEL_DEBUG,
-                it.key(),
-                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
-                    .arg(QString::number(it.value(), 'f', 2), "\u20BD", mAnotherAccountName)
-            );
-        }
-
         emit tradeInstruments(instrumentsForBuy);
     }
 }
@@ -205,12 +182,12 @@ double FollowThread::calculateTotalCost(const PortfolioMinItems& instruments)
 }
 
 void FollowThread::buildInstrumentsForTrading(
-    const PortfolioMinItems& instruments,
-    const PortfolioMinItems& anotherInstruments,
-    double                   totalCost,
-    double                   anotherTotalCost,
-    QMap<QString, double>&   instrumentsForSale,
-    QMap<QString, double>&   instrumentsForBuy
+    const PortfolioMinItems&    instruments,
+    const PortfolioMinItems&    anotherInstruments,
+    double                      totalCost,
+    double                      anotherTotalCost,
+    QMap<QString, TradingInfo>& instrumentsForSale,
+    QMap<QString, TradingInfo>& instrumentsForBuy
 )
 {
     for (auto it = anotherInstruments.constBegin(); it != anotherInstruments.constEnd(); ++it)
@@ -222,7 +199,11 @@ void FollowThread::buildInstrumentsForTrading(
 
         if (!instruments.contains(instrumentId))
         {
-            instrumentsForBuy[instrumentId] = expectedCost;
+            instrumentsForBuy[instrumentId] = TradingInfo(
+                expectedCost,
+                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
+                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+            );
 
             continue;
         }
@@ -241,11 +222,19 @@ void FollowThread::buildInstrumentsForTrading(
 
         if (delta < -lotPrice)
         {
-            instrumentsForSale[instrumentId] = expectedCost;
+            instrumentsForSale[instrumentId] = TradingInfo(
+                expectedCost,
+                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"")
+                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+            );
         }
         else if (delta > lotPrice)
         {
-            instrumentsForBuy[instrumentId] = expectedCost;
+            instrumentsForBuy[instrumentId] = TradingInfo(
+                expectedCost,
+                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
+                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+            );
         }
     }
 
@@ -255,7 +244,10 @@ void FollowThread::buildInstrumentsForTrading(
 
         if (!anotherInstruments.contains(instrumentId))
         {
-            instrumentsForSale[instrumentId] = 0; // Need to sell all
+            instrumentsForSale[instrumentId] = TradingInfo(
+                0, // Need to sell all
+                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"").arg("0.00", "\u20BD", mAnotherAccountName)
+            );
         }
     }
 }

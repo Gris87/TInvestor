@@ -56,6 +56,7 @@ SOURCES += \
     src/domain/stock/stock.cpp \
     src/domain/stock/stockmeta.cpp \
     src/domain/stock/stockoperational.cpp \
+    src/domain/trading/tradinginfo.cpp \
     src/domain/user/account.cpp \
     src/domain/user/user.cpp \
     src/grpc/grpcclient.cpp \
@@ -231,6 +232,7 @@ HEADERS += \
     src/domain/stock/stockdata.h \
     src/domain/stock/stockmeta.h \
     src/domain/stock/stockoperational.h \
+    src/domain/trading/tradinginfo.h \
     src/domain/user/account.h \
     src/domain/user/user.h \
     src/grpc/grpcclient.h \

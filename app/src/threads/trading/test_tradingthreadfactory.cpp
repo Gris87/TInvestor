@@ -9,6 +9,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::StrictMock;
 
 
@@ -20,6 +21,8 @@ TEST(Test_TradingThreadFactory, Test_constructor_and_destructor)
 
 TEST(Test_TradingThreadFactory, Test_newInstance)
 {
+    const InSequence seq;
+
     const TradingThreadFactory factory;
 
     StrictMock<InstrumentsStorageMock> instrumentsStorageMock;
@@ -27,8 +30,10 @@ TEST(Test_TradingThreadFactory, Test_newInstance)
     StrictMock<LogsThreadMock>         logsThreadMock;
     StrictMock<TimeUtilsMock>          timeUtilsMock;
 
+    EXPECT_CALL(logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
+
     const ITradingThread* thread = factory.newInstance(
-        &instrumentsStorageMock, &grpcClientMock, &logsThreadMock, &timeUtilsMock, "aaaaa", "bbbbb", 1000.0, nullptr
+        &instrumentsStorageMock, &grpcClientMock, &logsThreadMock, &timeUtilsMock, "aaaaa", "bbbbb", 1000.0, "But why", nullptr
     );
     ASSERT_TRUE(thread != nullptr);
 

@@ -239,7 +239,7 @@ MainWindow::MainWindow(
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mFollowThread,                            SIGNAL(tradeInstruments(const QMap<QString, double>&)),                                       this, SLOT(autoPilotTradeInstruments(const QMap<QString, double>&)));
+    connect(mFollowThread,                            SIGNAL(tradeInstruments(const QMap<QString, TradingInfo>&)),                                  this, SLOT(autoPilotTradeInstruments(const QMap<QString, TradingInfo>&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
     // clang-format on
@@ -646,7 +646,7 @@ void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId,
     mAutoPilotDecisionMakerWidget->lastPriceChanged(instrumentId, price);
 }
 
-void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instruments)
+void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& instruments)
 {
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
@@ -655,7 +655,15 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instrume
         if (tradingThread == nullptr)
         {
             tradingThread = mTradingThreadFactory->newInstance(
-                mInstrumentsStorage, mGrpcClient, mLogsThread, mTimeUtils, mAutoPilotAccountId, it.key(), it.value(), this
+                mInstrumentsStorage,
+                mGrpcClient,
+                mLogsThread,
+                mTimeUtils,
+                mAutoPilotAccountId,
+                it.key(),
+                it.value().expectedCost,
+                it.value().cause,
+                this
             );
 
             connect(
@@ -667,7 +675,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, double>& instrume
         }
         else
         {
-            tradingThread->setExpectedCost(it.value());
+            tradingThread->setExpectedCost(it.value().expectedCost, it.value().cause);
         }
     }
 }

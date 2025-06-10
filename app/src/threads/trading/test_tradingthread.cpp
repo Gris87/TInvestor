@@ -9,6 +9,7 @@
 
 
 
+using ::testing::InSequence;
 using ::testing::StrictMock;
 
 
@@ -18,13 +19,18 @@ class Test_TradingThread : public ::testing::Test
 protected:
     void SetUp() override
     {
+        const InSequence seq;
+
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         grpcClientMock         = new StrictMock<GrpcClientMock>();
         logsThreadMock         = new StrictMock<LogsThreadMock>();
         timeUtilsMock          = new StrictMock<TimeUtilsMock>();
 
-        thread =
-            new TradingThread(instrumentsStorageMock, grpcClientMock, logsThreadMock, timeUtilsMock, "aaaaa", "bbbbb", 1000.0);
+        EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_DEBUG, QString("bbbbb"), QString("But why")));
+
+        thread = new TradingThread(
+            instrumentsStorageMock, grpcClientMock, logsThreadMock, timeUtilsMock, "aaaaa", "bbbbb", 1000.0, "But why"
+        );
     }
 
     void TearDown() override

@@ -25,10 +25,11 @@ ITradingThread* TradingThreadFactory::newInstance(
     const QString&       accountId,
     const QString&       instrumentId,
     double               expectedCost,
+    const QString&       cause,
     QObject*             parent
 ) const
 {
     return new TradingThread(
-        instrumentsStorage, grpcClient, logsThread, timeUtils, accountId, instrumentId, expectedCost, parent
+        instrumentsStorage, grpcClient, logsThread, timeUtils, accountId, instrumentId, expectedCost, cause, parent
     );
 }

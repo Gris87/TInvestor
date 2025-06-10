@@ -223,7 +223,7 @@ public slots:
     void autoPilotLogAdded(const LogEntry& entry);
     void autoPilotPortfolioChanged(const Portfolio& portfolio);
     void autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price);
-    void autoPilotTradeInstruments(const QMap<QString, double>& instruments);
+    void autoPilotTradeInstruments(const QMap<QString, TradingInfo>& instruments);
     void autoPilotTradingCompleted(const QString& instrumentId);
 
 private slots:

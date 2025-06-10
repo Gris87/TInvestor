@@ -336,7 +336,7 @@ static int runApplication(QApplication* app)
     LogsThread               logsThread(&autoPilotLogsDatabase);
     PortfolioThread          portfolioThread(&grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
-    FollowThread             followThread(&instrumentsStorage, &grpcClient, &logsThread);
+    FollowThread             followThread(&instrumentsStorage, &grpcClient);
     MakeDecisionThread       makeDecisionThread(&config, &stocksStorage);
     OrderBookThread          orderBookThread(&grpcClient);
     TradingThreadFactory     tradingThreadFactory;

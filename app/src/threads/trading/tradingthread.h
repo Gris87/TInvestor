@@ -26,6 +26,7 @@ public:
         const QString&       accountId,
         const QString&       instrumentId,
         double               expectedCost,
+        const QString&       cause,
         QObject*             parent = nullptr
     );
     ~TradingThread() override;
@@ -35,7 +36,7 @@ public:
 
     void run() override;
 
-    void setExpectedCost(double expectedCost) override;
+    void setExpectedCost(double expectedCost, const QString& cause) override;
 
     [[nodiscard]]
     double expectedCost() const;

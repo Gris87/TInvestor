@@ -20,6 +20,7 @@ TradingThread::TradingThread(
     const QString&       accountId,
     const QString&       instrumentId,
     double               expectedCost,
+    const QString&       cause,
     QObject*             parent
 ) :
     ITradingThread(parent),
@@ -38,6 +39,8 @@ TradingThread::TradingThread(
     mLastExpectedCost()
 {
     qDebug() << "Create TradingThread";
+
+    mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
 }
 
 TradingThread::~TradingThread()
@@ -63,11 +66,16 @@ void TradingThread::run()
     qDebug() << "Finish TradingThread";
 }
 
-void TradingThread::setExpectedCost(double expectedCost)
+void TradingThread::setExpectedCost(double expectedCost, const QString& cause)
 {
     const QMutexLocker lock(mMutex);
 
-    mExpectedCost = expectedCost;
+    if (mExpectedCost != expectedCost)
+    {
+        mExpectedCost = expectedCost;
+
+        mLogsThread->addLog(LOG_LEVEL_DEBUG, mInstrumentId, cause);
+    }
 }
 
 double TradingThread::expectedCost() const

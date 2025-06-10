@@ -7,7 +7,6 @@
 #include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
-#include "src/threads/logs/ilogsthread.h"
 
 
 
@@ -16,9 +15,7 @@ class FollowThread : public IFollowThread
     Q_OBJECT
 
 public:
-    explicit FollowThread(
-        IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, ILogsThread* logsThread, QObject* parent = nullptr
-    );
+    explicit FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent = nullptr);
     ~FollowThread() override;
 
     FollowThread(const FollowThread& another)            = delete;
@@ -39,17 +36,16 @@ private:
     PortfolioMinItems buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
     double            calculateTotalCost(const PortfolioMinItems& instruments);
     void              buildInstrumentsForTrading(
-                     const PortfolioMinItems& instruments,
-                     const PortfolioMinItems& anotherInstruments,
-                     double                   totalCost,
-                     double                   anotherTotalCost,
-                     QMap<QString, double>&   instrumentsForSale,
-                     QMap<QString, double>&   instrumentsForBuy
+                     const PortfolioMinItems&    instruments,
+                     const PortfolioMinItems&    anotherInstruments,
+                     double                      totalCost,
+                     double                      anotherTotalCost,
+                     QMap<QString, TradingInfo>& instrumentsForSale,
+                     QMap<QString, TradingInfo>& instrumentsForBuy
                  );
 
     IInstrumentsStorage*             mInstrumentsStorage;
     IGrpcClient*                     mGrpcClient;
-    ILogsThread*                     mLogsThread;
     QString                          mAccountId;
     QString                          mAnotherAccountId;
     QString                          mAnotherAccountName;
