@@ -10,6 +10,8 @@ LogsThread::LogsThread(ILogsDatabase* logsDatabase, QObject* parent) :
     mMutex(new QMutex()),
     mLogsDatabase(logsDatabase),
     mAccountId(),
+    mLastLogTimestamp(),
+    mAmountOfLogsWithSameTimestamp(),
     mEntries()
 {
     qDebug() << "Create LogsThread";
@@ -59,9 +61,21 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
 {
     if (isRunning())
     {
+        qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+
+        if (timestamp == mLastLogTimestamp)
+        {
+            ++mAmountOfLogsWithSameTimestamp;
+        }
+        else
+        {
+            mLastLogTimestamp              = timestamp;
+            mAmountOfLogsWithSameTimestamp = 0;
+        }
+
         LogEntry entry;
 
-        entry.timestamp    = QDateTime::currentMSecsSinceEpoch();
+        entry.timestamp    = timestamp + mAmountOfLogsWithSameTimestamp;
         entry.level        = level;
         entry.instrumentId = instrumentId;
         entry.message      = message;

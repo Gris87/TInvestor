@@ -113,7 +113,7 @@ bool TradingThread::trade()
 
         bool completed = false;
 
-        if (delta < 0)
+        if (delta <= 0)
         {
             completed = sell(expected, -delta);
         }

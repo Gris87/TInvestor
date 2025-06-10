@@ -36,5 +36,7 @@ private:
     QMutex*         mMutex;
     ILogsDatabase*  mLogsDatabase;
     QString         mAccountId;
+    qint64          mLastLogTimestamp;
+    qint8           mAmountOfLogsWithSameTimestamp;
     QList<LogEntry> mEntries;
 };
