@@ -46,17 +46,28 @@ private:
     [[nodiscard]]
     bool trade();
 
-    [[nodiscard]]
-    qint32 getInstrumentLot() const;
+    void getInstrumentData();
 
     [[nodiscard]]
     double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     [[nodiscard]]
-    bool sell(qint32 lot, double delta, bool sellAll);
+    bool sell(double expected, double delta);
 
     [[nodiscard]]
-    bool buy(qint32 lot, double delta);
+    bool sellWithPrice(double expected, double delta, const Quotation& price);
+
+    [[nodiscard]]
+    bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price);
+
+    [[nodiscard]]
+    bool buy(double expected, double delta);
+
+    [[nodiscard]]
+    bool buyWithPrice(double expected, double delta, const Quotation& price);
+
+    void cancelOrder();
+    void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);
 
     QMutex*              mMutex;
     IInstrumentsStorage* mInstrumentsStorage;
@@ -66,4 +77,9 @@ private:
     QString              mAccountId;
     QString              mInstrumentId;
     double               mExpectedCost;
+    qint32               mInstrumentLot;
+    qint8                mPricePrecision;
+    QString              mOrderId;
+    Quotation            mLastOrderPrice;
+    double               mLastExpectedCost;
 };

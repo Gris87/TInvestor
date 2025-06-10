@@ -6,8 +6,9 @@
 
 
 
-constexpr qint64 MS_IN_SECOND = 1000LL;
-constexpr qint64 SLEEP_DELAY  = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 MS_IN_SECOND      = 1000LL;
+constexpr qint64 SLEEP_DELAY       = 30LL * MS_IN_SECOND; // 30 seconds
+constexpr qint64 ORDER_RETRY_DELAY = 1LL * MS_IN_SECOND;  // 1 second
 
 
 
@@ -29,7 +30,12 @@ TradingThread::TradingThread(
     mTimeUtils(timeUtils),
     mAccountId(accountId),
     mInstrumentId(instrumentId),
-    mExpectedCost(expectedCost)
+    mExpectedCost(expectedCost),
+    mInstrumentLot(),
+    mPricePrecision(),
+    mOrderId(),
+    mLastOrderPrice(),
+    mLastExpectedCost()
 {
     qDebug() << "Create TradingThread";
 }
@@ -49,6 +55,8 @@ void TradingThread::run()
 
     if (trade())
     {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Trade completed successfully"));
+
         emit tradingCompleted(mInstrumentId);
     }
 
@@ -78,7 +86,7 @@ void TradingThread::terminateThread()
 
 bool TradingThread::trade()
 {
-    const qint32 lot = getInstrumentLot();
+    getInstrumentData();
 
     while (true)
     {
@@ -99,11 +107,11 @@ bool TradingThread::trade()
 
         if (delta < 0)
         {
-            completed = sell(lot, -delta, expected == 0);
+            completed = sell(expected, -delta);
         }
         else
         {
-            completed = buy(lot, delta);
+            completed = buy(expected, delta);
         }
 
         if (completed)
@@ -115,21 +123,22 @@ bool TradingThread::trade()
         {
             return false;
         }
-
-        break;
     }
 
     return true;
 }
 
-qint32 TradingThread::getInstrumentLot() const
+void TradingThread::getInstrumentData()
 {
     const QMutexLocker lock(mInstrumentsStorage->getMutex());
     const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
 
     Q_ASSERT_X(instrumentsData.contains(mInstrumentId), "TradingThread::trade()", "Data about instrument not found");
 
-    return instrumentsData.value(mInstrumentId).lot;
+    const Instrument& instrument = instrumentsData.value(mInstrumentId);
+
+    mInstrumentLot  = instrument.lot;
+    mPricePrecision = instrument.pricePrecision;
 }
 
 double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
@@ -150,7 +159,7 @@ double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     return 0;
 }
 
-bool TradingThread::sell(qint32 lot, double delta, bool sellAll)
+bool TradingThread::sell(double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
@@ -162,14 +171,118 @@ bool TradingThread::sell(qint32 lot, double delta, bool sellAll)
 
     if (tinkoffOrderBook->asks_size() > 0)
     {
-        const Quotation askPrice = quotationConvert(tinkoffOrderBook->asks(0).price());
-        qInfo() << mInstrumentId << lot << delta << sellAll << askPrice.units << askPrice.nano;
+        return sellWithPrice(expected, delta, quotationConvert(tinkoffOrderBook->asks(0).price()));
     }
 
     return false;
 }
 
-bool TradingThread::buy(qint32 lot, double delta)
+bool TradingThread::sellWithPrice(double expected, double delta, const Quotation& price)
+{
+    if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
+    {
+        cancelOrder();
+
+        return sellWithPriceOptimalAmount(expected, delta, price);
+    }
+    else
+    {
+        const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
+            mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+        {
+            informAboutOrderState(*tinkoffOrder);
+
+            tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
+
+            if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+            {
+                return true;
+            }
+
+            if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
+            {
+                mOrderId = "";
+            }
+        }
+        else
+        {
+            mOrderId = "";
+        }
+    }
+
+    return false;
+}
+
+bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price)
+{
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return false;
+        }
+
+        qint64 amountToSell = tinkoffMaxLots->sell_limits().sell_max_lots();
+
+        if (expected > 0)
+        {
+            const double lotPrice      = mInstrumentLot * quotationToDouble(price);
+            const qint64 deltaQuantity = qRound64(delta / lotPrice);
+
+            amountToSell = qMin(deltaQuantity, amountToSell);
+        }
+
+        if (amountToSell > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_SELL, amountToSell, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                return false;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mLogsThread->addLog(
+                    LOG_LEVEL_VERBOSE,
+                    mInstrumentId,
+                    tr("Order created in order to sell %1 lots with a price %2 %3")
+                        .arg(
+                            QString::number(amountToSell),
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                            "\u20BD"
+                        )
+                );
+
+                mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
+                mLastOrderPrice   = price;
+                mLastExpectedCost = expected;
+
+                break;
+            }
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, this))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool TradingThread::buy(double expected, double delta)
 {
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
         mGrpcClient->getOrderBook(QThread::currentThread(), mInstrumentId, 1);
@@ -181,9 +294,93 @@ bool TradingThread::buy(qint32 lot, double delta)
 
     if (tinkoffOrderBook->bids_size() > 0)
     {
-        const Quotation bidPrice = quotationConvert(tinkoffOrderBook->bids(0).price());
-        qInfo() << mInstrumentId << lot << delta << bidPrice.units << bidPrice.nano;
+        return buyWithPrice(expected, delta, quotationConvert(tinkoffOrderBook->bids(0).price()));
     }
 
     return false;
+}
+
+bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price)
+{
+    qInfo() << mInstrumentId << expected << delta << price.units << price.nano;
+
+    return false;
+}
+
+void TradingThread::cancelOrder()
+{
+    if (mOrderId != "")
+    {
+        const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
+            mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+
+        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+        {
+            informAboutOrderState(*tinkoffOrder);
+
+            if (tinkoffOrder->execution_report_status() == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+            {
+                mOrderId = "";
+            }
+            else
+            {
+                mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order cancelled"));
+
+                const std::shared_ptr<tinkoff::CancelOrderResponse> tinkoffCancel =
+                    mGrpcClient->cancelOrder(QThread::currentThread(), mAccountId, mOrderId);
+
+                if (!QThread::currentThread()->isInterruptionRequested() && tinkoffCancel != nullptr)
+                {
+                    mOrderId = "";
+                }
+            }
+        }
+    }
+}
+
+void TradingThread::informAboutOrderState(const tinkoff::OrderState& tinkoffOrder)
+{
+    QString details;
+
+    if (tinkoffOrder.direction() == tinkoff::ORDER_DIRECTION_BUY)
+    {
+        details = tr("%1 lots bought with a price %2 %3")
+                      .arg(
+                          QString::number(tinkoffOrder.lots_executed()),
+                          QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
+                          "\u20BD"
+                      );
+    }
+    else
+    {
+        details = tr("%1 lots sold with a price %2 %3")
+                      .arg(
+                          QString::number(tinkoffOrder.lots_executed()),
+                          QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
+                          "\u20BD"
+                      );
+    }
+
+    tinkoff::OrderExecutionReportStatus status = tinkoffOrder.execution_report_status();
+
+    if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+    {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order completed") + ". " + details);
+    }
+    else if (status == tinkoff::EXECUTION_REPORT_STATUS_PARTIALLYFILL)
+    {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order partially completed") + ". " + details);
+    }
+    else if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+    {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order rejected") + ". " + details);
+    }
+    else if (status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
+    {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order cancelled") + ". " + details);
+    }
+    else if (status == tinkoff::EXECUTION_REPORT_STATUS_NEW)
+    {
+        mLogsThread->addLog(LOG_LEVEL_VERBOSE, mInstrumentId, tr("Order is still waiting") + ". " + details);
+    }
 }
