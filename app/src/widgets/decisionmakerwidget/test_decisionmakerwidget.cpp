@@ -10,6 +10,8 @@
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidget_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidget_mock.h"
@@ -42,10 +44,12 @@ protected:
 
         operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
         accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableWidgetMock            = new StrictMock<OperationsTableWidgetMock>();
         accountChartWidgetMock               = new StrictMock<AccountChartWidgetMock>();
+        logsFilterWidgetMock                 = new StrictMock<LogsFilterWidgetMock>();
         logsTableWidgetMock                  = new StrictMock<LogsTableWidgetMock>();
         portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
@@ -74,6 +78,7 @@ protected:
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(fileDialogFactoryMock, settingsEditorMock, NotNull()))
             .WillOnce(Return(accountChartWidgetMock));
+        EXPECT_CALL(*logsFilterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(logsFilterWidgetMock));
         EXPECT_CALL(
             *logsTableWidgetFactoryMock,
             newInstance(
@@ -105,6 +110,7 @@ protected:
         decisionMakerWidget = new DecisionMakerWidget(
             operationsTableWidgetFactoryMock,
             accountChartWidgetFactoryMock,
+            logsFilterWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
@@ -125,8 +131,17 @@ protected:
         delete decisionMakerWidget;
         delete operationsTableWidgetFactoryMock;
         delete accountChartWidgetFactoryMock;
+        delete logsFilterWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
+        // It will be deleted by `delete ui;`
+        /*
+        delete operationsTableWidgetMock;
+        delete accountChartWidgetMock;
+        delete logsFilterWidgetMock;
+        delete logsTableWidgetMock;
+        delete portfolioTreeWidgetMock;
+        */
         delete operationsTableRecordFactoryMock;
         delete logsTableRecordFactoryMock;
         delete portfolioTreeRecordFactoryMock;
@@ -142,10 +157,12 @@ protected:
     DecisionMakerWidget*                              decisionMakerWidget;
     StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>*          logsFilterWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableWidgetMock>*            operationsTableWidgetMock;
     StrictMock<AccountChartWidgetMock>*               accountChartWidgetMock;
+    StrictMock<LogsFilterWidgetMock>*                 logsFilterWidgetMock;
     StrictMock<LogsTableWidgetMock>*                  logsTableWidgetMock;
     StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;

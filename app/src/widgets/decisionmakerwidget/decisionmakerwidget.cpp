@@ -12,6 +12,7 @@ const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-sta
 DecisionMakerWidget::DecisionMakerWidget(
     IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
     IAccountChartWidgetFactory*        accountChartWidgetFactory,
+    ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
@@ -53,6 +54,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         this
     );
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
+    mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
     mLogsTableWidget    = logsTableWidgetFactory->newInstance(
         logsTableRecordFactory,
         logLevelTableItemWidgetFactory,
@@ -75,6 +77,7 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->layoutForOperationsTableWidget->addWidget(mOperationsTableWidget);
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);
+    ui->layoutForLogsFilterWidget->addWidget(mLogsFilterWidget);
     ui->layoutForLogsTableWidget->addWidget(mLogsTableWidget);
     ui->layoutForPortfolioTreeWidget->addWidget(mPortfolioTreeWidget);
 
@@ -183,61 +186,6 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->monthlyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
-}
-
-void DecisionMakerWidget::on_verboseButton_clicked()
-{
-    mLogsTableWidget->setFilter(LOG_LEVEL_VERBOSE);
-
-    ui->verboseButton->setChecked(true);
-    ui->debugButton->setChecked(false);
-    ui->infoButton->setChecked(false);
-    ui->warningButton->setChecked(false);
-    ui->errorButton->setChecked(false);
-}
-
-void DecisionMakerWidget::on_debugButton_clicked()
-{
-    mLogsTableWidget->setFilter(LOG_LEVEL_DEBUG);
-
-    ui->verboseButton->setChecked(false);
-    ui->debugButton->setChecked(true);
-    ui->infoButton->setChecked(false);
-    ui->warningButton->setChecked(false);
-    ui->errorButton->setChecked(false);
-}
-
-void DecisionMakerWidget::on_infoButton_clicked()
-{
-    mLogsTableWidget->setFilter(LOG_LEVEL_INFO);
-
-    ui->verboseButton->setChecked(false);
-    ui->debugButton->setChecked(false);
-    ui->infoButton->setChecked(true);
-    ui->warningButton->setChecked(false);
-    ui->errorButton->setChecked(false);
-}
-
-void DecisionMakerWidget::on_warningButton_clicked()
-{
-    mLogsTableWidget->setFilter(LOG_LEVEL_WARNING);
-
-    ui->verboseButton->setChecked(false);
-    ui->debugButton->setChecked(false);
-    ui->infoButton->setChecked(false);
-    ui->warningButton->setChecked(true);
-    ui->errorButton->setChecked(false);
-}
-
-void DecisionMakerWidget::on_errorButton_clicked()
-{
-    mLogsTableWidget->setFilter(LOG_LEVEL_ERROR);
-
-    ui->verboseButton->setChecked(false);
-    ui->debugButton->setChecked(false);
-    ui->infoButton->setChecked(false);
-    ui->warningButton->setChecked(false);
-    ui->errorButton->setChecked(true);
 }
 
 void DecisionMakerWidget::saveWindowState(const QString& type)

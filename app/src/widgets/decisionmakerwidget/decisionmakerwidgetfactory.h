@@ -15,21 +15,6 @@ public:
     DecisionMakerWidgetFactory(const DecisionMakerWidgetFactory& another)            = delete;
     DecisionMakerWidgetFactory& operator=(const DecisionMakerWidgetFactory& another) = delete;
 
-    IDecisionMakerWidget* newInstance(
-        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*        accountChartWidgetFactory,
-        ILogsTableWidgetFactory*           logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-        IOperationsTableRecordFactory*     operationsTableRecordFactory,
-        ILogsTableRecordFactory*           logsTableRecordFactory,
-        IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*          instrumentWidgetFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
-        IUserStorage*                      userStorage,
-        IInstrumentsStorage*               instrumentsStorage,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent
-    ) const override;
+    IDecisionMakerWidget*
+    newInstance(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& args, QWidget* parent) const override;
 };

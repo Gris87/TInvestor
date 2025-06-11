@@ -17,39 +17,25 @@ DecisionMakerWidgetFactory::~DecisionMakerWidgetFactory()
     qDebug() << "Destroy DecisionMakerWidgetFactory";
 }
 
-IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
-    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*        accountChartWidgetFactory,
-    ILogsTableWidgetFactory*           logsTableWidgetFactory,
-    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-    IOperationsTableRecordFactory*     operationsTableRecordFactory,
-    ILogsTableRecordFactory*           logsTableRecordFactory,
-    IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
-    IInstrumentWidgetFactory*          instrumentWidgetFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
-    IUserStorage*                      userStorage,
-    IInstrumentsStorage*               instrumentsStorage,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
-) const
+IDecisionMakerWidget*
+DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& args, QWidget* parent) const
 {
     return new DecisionMakerWidget(
-        operationsTableWidgetFactory,
-        accountChartWidgetFactory,
-        logsTableWidgetFactory,
-        portfolioTreeWidgetFactory,
-        operationsTableRecordFactory,
-        logsTableRecordFactory,
-        portfolioTreeRecordFactory,
-        instrumentWidgetFactory,
-        instrumentTableItemWidgetFactory,
-        logLevelTableItemWidgetFactory,
-        userStorage,
-        instrumentsStorage,
-        fileDialogFactory,
-        settingsEditor,
+        args.operationsTableWidgetFactory,
+        args.accountChartWidgetFactory,
+        args.logsFilterWidgetFactory,
+        args.logsTableWidgetFactory,
+        args.portfolioTreeWidgetFactory,
+        args.operationsTableRecordFactory,
+        args.logsTableRecordFactory,
+        args.portfolioTreeRecordFactory,
+        args.instrumentWidgetFactory,
+        args.instrumentTableItemWidgetFactory,
+        args.logLevelTableItemWidgetFactory,
+        args.userStorage,
+        args.instrumentsStorage,
+        args.fileDialogFactory,
+        args.settingsEditor,
         parent
     );
 }

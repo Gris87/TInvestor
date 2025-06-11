@@ -9,6 +9,8 @@
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
 #include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidget_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidget_mock.h"
@@ -43,6 +45,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 
     StrictMock<OperationsTableWidgetFactoryMock>     operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>        accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>          logsFilterWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
@@ -59,6 +62,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     // It will be deleted by `delete ui;`
     StrictMock<OperationsTableWidgetMock>* operationsTableWidgetMock = new StrictMock<OperationsTableWidgetMock>();
     StrictMock<AccountChartWidgetMock>*    accountChartWidgetMock    = new StrictMock<AccountChartWidgetMock>();
+    StrictMock<LogsFilterWidgetMock>*      logsFilterWidgetMock      = new StrictMock<LogsFilterWidgetMock>();
     StrictMock<LogsTableWidgetMock>*       logsTableWidgetMock       = new StrictMock<LogsTableWidgetMock>();
     StrictMock<PortfolioTreeWidgetMock>*   portfolioTreeWidgetMock   = new StrictMock<PortfolioTreeWidgetMock>();
 
@@ -77,6 +81,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(operationsTableWidgetMock));
     EXPECT_CALL(accountChartWidgetFactoryMock, newInstance(&fileDialogFactoryMock, &settingsEditorMock, NotNull()))
         .WillOnce(Return(accountChartWidgetMock));
+    EXPECT_CALL(logsFilterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(logsFilterWidgetMock));
     EXPECT_CALL(
         logsTableWidgetFactoryMock,
         newInstance(
@@ -106,20 +111,23 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(portfolioTreeWidgetMock));
 
     const IDecisionMakerWidget* widget = factory.newInstance(
-        &operationsTableWidgetFactoryMock,
-        &accountChartWidgetFactoryMock,
-        &logsTableWidgetFactoryMock,
-        &portfolioTreeWidgetFactoryMock,
-        &operationsTableRecordFactoryMock,
-        &logsTableRecordFactoryMock,
-        &portfolioTreeRecordFactoryMock,
-        &instrumentWidgetFactoryMock,
-        &instrumentTableItemWidgetFactoryMock,
-        &logLevelTableItemWidgetFactoryMock,
-        &userStorageMock,
-        &instrumentsStorageMock,
-        &fileDialogFactoryMock,
-        &settingsEditorMock,
+        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+            &operationsTableWidgetFactoryMock,
+            &accountChartWidgetFactoryMock,
+            &logsFilterWidgetFactoryMock,
+            &logsTableWidgetFactoryMock,
+            &portfolioTreeWidgetFactoryMock,
+            &operationsTableRecordFactoryMock,
+            &logsTableRecordFactoryMock,
+            &portfolioTreeRecordFactoryMock,
+            &instrumentWidgetFactoryMock,
+            &instrumentTableItemWidgetFactoryMock,
+            &logLevelTableItemWidgetFactoryMock,
+            &userStorageMock,
+            &instrumentsStorageMock,
+            &fileDialogFactoryMock,
+            &settingsEditorMock
+        ),
         nullptr
     );
     ASSERT_TRUE(widget != nullptr);

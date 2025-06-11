@@ -39,5 +39,10 @@ public slots:
     void filterChangeDelayTimerTicked();
 
 private slots:
+    void on_verboseButton_clicked();
+    void on_debugButton_clicked();
+    void on_infoButton_clicked();
+    void on_warningButton_clicked();
+    void on_errorButton_clicked();
     void on_tickerLineEdit_textChanged(const QString& text);
 };

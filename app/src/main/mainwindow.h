@@ -80,6 +80,7 @@ public:
         IStocksTableWidgetFactory*         stocksTableWidgetFactory,
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
         IAccountChartWidgetFactory*        accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,

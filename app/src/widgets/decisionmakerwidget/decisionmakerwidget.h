@@ -7,6 +7,7 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory.h"
@@ -28,6 +29,7 @@ public:
     explicit DecisionMakerWidget(
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
         IAccountChartWidgetFactory*        accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
@@ -66,6 +68,7 @@ public:
 private:
     IOperationsTableWidget* mOperationsTableWidget;
     IAccountChartWidget*    mAccountChartWidget;
+    ILogsFilterWidget*      mLogsFilterWidget;
     ILogsTableWidget*       mLogsTableWidget;
     IPortfolioTreeWidget*   mPortfolioTreeWidget;
     ISettingsEditor*        mSettingsEditor;
@@ -75,9 +78,4 @@ private slots:
     void on_monthlyYieldButton_clicked();
     void on_remainedMoneyButton_clicked();
     void on_totalMoneyButton_clicked();
-    void on_verboseButton_clicked();
-    void on_debugButton_clicked();
-    void on_infoButton_clicked();
-    void on_warningButton_clicked();
-    void on_errorButton_clicked();
 };

@@ -47,6 +47,7 @@
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h"
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h"
 #include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
+#include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h"
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
@@ -117,6 +118,7 @@ protected:
         stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
         operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
         accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
@@ -176,20 +178,23 @@ protected:
         EXPECT_CALL(
             *decisionMakerWidgetFactoryMock,
             newInstance(
-                operationsTableWidgetFactoryMock,
-                accountChartWidgetFactoryMock,
-                logsTableWidgetFactoryMock,
-                portfolioTreeWidgetFactoryMock,
-                operationsTableRecordFactoryMock,
-                logsTableRecordFactoryMock,
-                portfolioTreeRecordFactoryMock,
-                instrumentWidgetFactoryMock,
-                instrumentTableItemWidgetFactoryMock,
-                logLevelTableItemWidgetFactoryMock,
-                userStorageMock,
-                instrumentsStorageMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
+                DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+                    operationsTableWidgetFactoryMock,
+                    accountChartWidgetFactoryMock,
+                    logsFilterWidgetFactoryMock,
+                    logsTableWidgetFactoryMock,
+                    portfolioTreeWidgetFactoryMock,
+                    operationsTableRecordFactoryMock,
+                    logsTableRecordFactoryMock,
+                    portfolioTreeRecordFactoryMock,
+                    instrumentWidgetFactoryMock,
+                    instrumentTableItemWidgetFactoryMock,
+                    logLevelTableItemWidgetFactoryMock,
+                    userStorageMock,
+                    instrumentsStorageMock,
+                    fileDialogFactoryMock,
+                    settingsEditorMock
+                ),
                 NotNull()
             )
         )
@@ -197,20 +202,23 @@ protected:
         EXPECT_CALL(
             *decisionMakerWidgetFactoryMock,
             newInstance(
-                operationsTableWidgetFactoryMock,
-                accountChartWidgetFactoryMock,
-                logsTableWidgetFactoryMock,
-                portfolioTreeWidgetFactoryMock,
-                operationsTableRecordFactoryMock,
-                logsTableRecordFactoryMock,
-                portfolioTreeRecordFactoryMock,
-                instrumentWidgetFactoryMock,
-                instrumentTableItemWidgetFactoryMock,
-                logLevelTableItemWidgetFactoryMock,
-                userStorageMock,
-                instrumentsStorageMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
+                DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+                    operationsTableWidgetFactoryMock,
+                    accountChartWidgetFactoryMock,
+                    logsFilterWidgetFactoryMock,
+                    logsTableWidgetFactoryMock,
+                    portfolioTreeWidgetFactoryMock,
+                    operationsTableRecordFactoryMock,
+                    logsTableRecordFactoryMock,
+                    portfolioTreeRecordFactoryMock,
+                    instrumentWidgetFactoryMock,
+                    instrumentTableItemWidgetFactoryMock,
+                    logLevelTableItemWidgetFactoryMock,
+                    userStorageMock,
+                    instrumentsStorageMock,
+                    fileDialogFactoryMock,
+                    settingsEditorMock
+                ),
                 NotNull()
             )
         )
@@ -265,6 +273,7 @@ protected:
             stocksTableWidgetFactoryMock,
             operationsTableWidgetFactoryMock,
             accountChartWidgetFactoryMock,
+            logsFilterWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
@@ -351,6 +360,7 @@ protected:
         delete stocksTableWidgetFactoryMock;
         delete operationsTableWidgetFactoryMock;
         delete accountChartWidgetFactoryMock;
+        delete logsFilterWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
         delete operationsTableRecordFactoryMock;
@@ -418,6 +428,7 @@ protected:
     StrictMock<StocksTableWidgetFactoryMock>*         stocksTableWidgetFactoryMock;
     StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
     StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>*          logsFilterWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
