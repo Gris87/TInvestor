@@ -66,7 +66,7 @@ TEST_F(Test_StocksControlsWidget, Test_getDateChangeTime)
 
 TEST_F(Test_StocksControlsWidget, Test_getFilter)
 {
-    const Filter filter = stocksControlsWidget->getFilter();
+    const StockFilter filter = stocksControlsWidget->getFilter();
 
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
@@ -140,7 +140,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_tickerCheckBox_checkStateChanged)
     stocksControlsWidget->ui->tickerCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->tickerCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->tickerLineEdit->isEnabled(), true);
     ASSERT_EQ(filter.useTicker, true);
@@ -163,7 +163,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_tickerLineEdit_textChanged)
     stocksControlsWidget->ui->tickerLineEdit->blockSignals(false);
 
     stocksControlsWidget->ui->tickerLineEdit->setText("SPBE");
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(filter.ticker, "SPBE");
 
@@ -184,7 +184,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_qualInvestorCheckBox_checkStateChanged
     stocksControlsWidget->ui->qualInvestorCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->qualInvestorCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->qualInvestorComboBox->isEnabled(), true);
     ASSERT_EQ(filter.useQualInvestor, true);
@@ -207,7 +207,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_qualInvestorComboBox_currentIndexChang
     stocksControlsWidget->ui->qualInvestorComboBox->blockSignals(false);
 
     stocksControlsWidget->ui->qualInvestorComboBox->setCurrentIndex(1);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(filter.qualInvestor, QUAL_INVESTOR_ONLY_WITH_STATUS);
 
@@ -228,7 +228,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_priceCheckBox_checkStateChanged)
     stocksControlsWidget->ui->priceCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->priceCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->priceFromDoubleSpinBox->isEnabled(), true);
     ASSERT_EQ(stocksControlsWidget->ui->priceToDoubleSpinBox->isEnabled(), true);
@@ -252,7 +252,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_priceFromDoubleSpinBox_valueChanged)
     stocksControlsWidget->ui->priceToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->priceFromDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->priceToDoubleSpinBox->value(), 4.0f, 0.0001f);
     ASSERT_NEAR(filter.priceFrom, 3.0f, 0.0001f);
@@ -276,7 +276,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_priceToDoubleSpinBox_valueChanged)
     stocksControlsWidget->ui->priceToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->priceToDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->priceFromDoubleSpinBox->value(), 2.0f, 0.0001f);
     ASSERT_NEAR(filter.priceFrom, 2.0f, 0.0001f);
@@ -301,7 +301,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dayStartChangeCheckBox_checkStateChang
     stocksControlsWidget->ui->dayStartChangeCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->dayStartChangeCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->dayStartChangeFromDoubleSpinBox->isEnabled(), true);
     ASSERT_EQ(stocksControlsWidget->ui->dayStartChangeToDoubleSpinBox->isEnabled(), true);
@@ -325,7 +325,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dayStartChangeFromDoubleSpinBox_valueC
     stocksControlsWidget->ui->dayStartChangeToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->dayStartChangeFromDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->dayStartChangeToDoubleSpinBox->value(), 4.0f, 0.0001f);
     ASSERT_NEAR(filter.dayStartChangeFrom, 3.0f, 0.0001f);
@@ -349,7 +349,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dayStartChangeToDoubleSpinBox_valueCha
     stocksControlsWidget->ui->dayStartChangeToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->dayStartChangeToDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->dayStartChangeFromDoubleSpinBox->value(), 2.0f, 0.0001f);
     ASSERT_NEAR(filter.dayStartChangeFrom, 2.0f, 0.0001f);
@@ -374,7 +374,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dateChangeCheckBox_checkStateChanged)
     stocksControlsWidget->ui->dateChangeCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->dateChangeCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->dateChangeFromDoubleSpinBox->isEnabled(), true);
     ASSERT_EQ(stocksControlsWidget->ui->dateChangeToDoubleSpinBox->isEnabled(), true);
@@ -398,7 +398,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dateChangeFromDoubleSpinBox_valueChang
     stocksControlsWidget->ui->dateChangeToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->dateChangeFromDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->dateChangeToDoubleSpinBox->value(), 4.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeFrom, 3.0f, 0.0001f);
@@ -422,7 +422,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_dateChangeToDoubleSpinBox_valueChanged
     stocksControlsWidget->ui->dateChangeToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->dateChangeToDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->dateChangeFromDoubleSpinBox->value(), 2.0f, 0.0001f);
     ASSERT_NEAR(filter.dateChangeFrom, 2.0f, 0.0001f);
@@ -447,7 +447,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_turnoverCheckBox_checkStateChanged)
     stocksControlsWidget->ui->turnoverCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->turnoverCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->turnoverFromSpinBox->isEnabled(), true);
     ASSERT_EQ(stocksControlsWidget->ui->turnoverToSpinBox->isEnabled(), true);
@@ -471,7 +471,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_turnoverFromSpinBox_valueChanged)
     stocksControlsWidget->ui->turnoverToSpinBox->setValue(4);
 
     stocksControlsWidget->ui->turnoverFromSpinBox->setValue(3);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->turnoverToSpinBox->value(), 4);
     ASSERT_EQ(filter.turnoverFrom, 3000);
@@ -495,7 +495,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_turnoverToSpinBox_valueChanged)
     stocksControlsWidget->ui->turnoverToSpinBox->setValue(4);
 
     stocksControlsWidget->ui->turnoverToSpinBox->setValue(3);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->turnoverFromSpinBox->value(), 2);
     ASSERT_EQ(filter.turnoverFrom, 2000);
@@ -520,7 +520,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_paybackCheckBox_checkStateChanged)
     stocksControlsWidget->ui->paybackCheckBox->blockSignals(false);
 
     stocksControlsWidget->ui->paybackCheckBox->setChecked(true);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_EQ(stocksControlsWidget->ui->paybackFromDoubleSpinBox->isEnabled(), true);
     ASSERT_EQ(stocksControlsWidget->ui->paybackToDoubleSpinBox->isEnabled(), true);
@@ -544,7 +544,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_paybackFromDoubleSpinBox_valueChanged)
     stocksControlsWidget->ui->paybackToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->paybackFromDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->paybackToDoubleSpinBox->value(), 4.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackFrom, 3.0f, 0.0001f);
@@ -568,7 +568,7 @@ TEST_F(Test_StocksControlsWidget, Test_on_paybackToDoubleSpinBox_valueChanged)
     stocksControlsWidget->ui->paybackToDoubleSpinBox->setValue(4.0);
 
     stocksControlsWidget->ui->paybackToDoubleSpinBox->setValue(3.0);
-    Filter filter = stocksControlsWidget->getFilter();
+    StockFilter filter = stocksControlsWidget->getFilter();
 
     ASSERT_NEAR(stocksControlsWidget->ui->paybackFromDoubleSpinBox->value(), 2.0f, 0.0001f);
     ASSERT_NEAR(filter.paybackFrom, 2.0f, 0.0001f);

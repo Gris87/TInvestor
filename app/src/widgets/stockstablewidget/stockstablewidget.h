@@ -52,17 +52,17 @@ public:
     QMap<QString, IStocksTableRecord*> records;
     QSet<QString>                      lastPricesUpdates;
 
-    void updateTable(const QList<Stock*>& stocks, const Filter& filter) override;
+    void updateTable(const QList<Stock*>& stocks, const StockFilter& filter) override;
 
-    void updateAll(const Filter& filter) override;
-    void updateLastPrices(const Filter& filter) override;
-    void updatePrices(const Filter& filter) override;
-    void updatePeriodicData(const Filter& filter) override;
+    void updateAll(const StockFilter& filter) override;
+    void updateLastPrices(const StockFilter& filter) override;
+    void updatePrices(const StockFilter& filter) override;
+    void updatePeriodicData(const StockFilter& filter) override;
 
     void setDateChangeTooltip(const QString& tooltip) override;
 
     void lastPriceChanged(const QString& instrumentId) override;
-    void filterChanged(const Filter& filter) override;
+    void filterChanged(const StockFilter& filter) override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

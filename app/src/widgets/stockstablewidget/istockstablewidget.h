@@ -4,7 +4,7 @@
 
 #include <QWidget>
 
-#include "src/domain/filter/filter.h"
+#include "src/domain/filter/stockfilter.h"
 #include "src/domain/stock/stock.h"
 
 
@@ -23,17 +23,17 @@ public:
     IStocksTableWidget(const IStocksTableWidget& another)            = delete;
     IStocksTableWidget& operator=(const IStocksTableWidget& another) = delete;
 
-    virtual void updateTable(const QList<Stock*>& stocks, const Filter& filter) = 0;
+    virtual void updateTable(const QList<Stock*>& stocks, const StockFilter& filter) = 0;
 
-    virtual void updateAll(const Filter& filter)          = 0;
-    virtual void updateLastPrices(const Filter& filter)   = 0;
-    virtual void updatePrices(const Filter& filter)       = 0;
-    virtual void updatePeriodicData(const Filter& filter) = 0;
+    virtual void updateAll(const StockFilter& filter)          = 0;
+    virtual void updateLastPrices(const StockFilter& filter)   = 0;
+    virtual void updatePrices(const StockFilter& filter)       = 0;
+    virtual void updatePeriodicData(const StockFilter& filter) = 0;
 
     virtual void setDateChangeTooltip(const QString& tooltip) = 0;
 
     virtual void lastPriceChanged(const QString& instrumentId) = 0;
-    virtual void filterChanged(const Filter& filter)           = 0;
+    virtual void filterChanged(const StockFilter& filter)      = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;

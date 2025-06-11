@@ -34,8 +34,8 @@ public:
     QTimer dateChangeDelayTimer;
     QTimer filterChangeDelayTimer;
 
-    QDateTime     getDateChangeTime() override;
-    const Filter& getFilter() override;
+    QDateTime          getDateChangeTime() override;
+    const StockFilter& getFilter() override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
@@ -43,7 +43,7 @@ public:
 private:
     IStocksStorage*  mStocksStorage;
     ISettingsEditor* mSettingsEditor;
-    Filter           mFilter;
+    StockFilter      mFilter;
 
 public slots:
     void dateChangeDelayTimerTicked();

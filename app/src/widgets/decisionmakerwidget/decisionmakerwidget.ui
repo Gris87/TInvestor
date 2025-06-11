@@ -303,6 +303,16 @@
               </widget>
              </item>
              <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>TIcker:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="tickerLineEdit"/>
+             </item>
+             <item>
               <spacer name="horizontalSpacer_2">
                <property name="orientation">
                 <enum>Qt::Orientation::Horizontal</enum>

@@ -56,7 +56,7 @@ QDateTime StocksControlsWidget::getDateChangeTime()
     return ui->dateChangeTimeEdit->dateTime();
 }
 
-const Filter& StocksControlsWidget::getFilter()
+const StockFilter& StocksControlsWidget::getFilter()
 {
     return mFilter;
 }

@@ -41,7 +41,7 @@ public:
     void updateAll() override;
     void updatePrice() override;
     void updatePeriodicData() override;
-    void filter(QTableWidget* tableWidget, const Filter& filter) override;
+    void filter(QTableWidget* tableWidget, const StockFilter& filter) override;
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:

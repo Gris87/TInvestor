@@ -185,7 +185,7 @@ TEST_F(Test_StocksTableRecord, Test_filter)
 {
     const InSequence seq;
 
-    Filter filter;
+    StockFilter filter;
 
     filter.useTicker          = true;
     filter.ticker             = "WAG";

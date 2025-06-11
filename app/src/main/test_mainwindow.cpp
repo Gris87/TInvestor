@@ -603,7 +603,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
 {
     const InSequence seq;
 
-    Filter filter;
+    StockFilter filter;
 
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updateAll(filter));
@@ -615,7 +615,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
 {
     const InSequence seq;
 
-    Filter filter;
+    StockFilter filter;
 
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updateLastPrices(filter));
@@ -652,7 +652,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
 {
     const InSequence seq;
 
-    Filter filter;
+    StockFilter filter;
 
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
@@ -664,7 +664,7 @@ TEST_F(Test_MainWindow, Test_periodicDataChanged)
 {
     const InSequence seq;
 
-    Filter filter;
+    StockFilter filter;
 
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updatePeriodicData(filter));
@@ -687,7 +687,7 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 
     QMutex          mutex;
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
-    Filter          filter;
+    StockFilter     filter;
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
@@ -698,15 +698,15 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
     mainWindow->dateChangeDateTimeChanged(dateChangeTime);
 }
 
-TEST_F(Test_MainWindow, Test_filterChanged)
+TEST_F(Test_MainWindow, Test_stockFilterChanged)
 {
     const InSequence seq;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(*stocksTableWidgetMock, filterChanged(filter));
 
-    mainWindow->filterChanged(filter);
+    mainWindow->stockFilterChanged(filter);
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
@@ -1128,7 +1128,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     stocks << &stock1 << &stock1 << &stock2;
 
     const QDateTime dateChangeTime(QDate(2023, 12, 30), QTime(23, 59, 45));
-    Filter          filter;
+    StockFilter     filter;
 
     EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));

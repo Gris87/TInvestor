@@ -112,7 +112,7 @@ void StocksTableRecord::updatePeriodicData()
     mPaybackTableWidgetItem->setValue(mStock->operational.payback);
 }
 
-void StocksTableRecord::filter(QTableWidget* tableWidget, const Filter& filter)
+void StocksTableRecord::filter(QTableWidget* tableWidget, const StockFilter& filter)
 {
     const int row = mInstrumentTableItemWidget->row();
 

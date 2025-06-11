@@ -1,13 +1,13 @@
-#include "src/domain/filter/filter.h"
+#include "src/domain/filter/stockfilter.h"
 
 #include <gtest/gtest.h>
 
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
-TEST(Test_Filter, Test_constructor_and_destructor)
+TEST(Test_StockFilter, Test_constructor_and_destructor)
 {
-    const Filter filter;
+    const StockFilter filter;
 
     // clang-format off
     ASSERT_EQ(filter.useTicker,            false);
@@ -32,9 +32,9 @@ TEST(Test_Filter, Test_constructor_and_destructor)
     // clang-format on
 }
 
-TEST(Test_Filter, Test_copy_constructor)
+TEST(Test_StockFilter, Test_copy_constructor)
 {
-    Filter filter;
+    StockFilter filter;
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";
@@ -56,7 +56,7 @@ TEST(Test_Filter, Test_copy_constructor)
     filter.paybackFrom        = 9.0f;
     filter.paybackTo          = 10.0f;
 
-    const Filter filter2(filter);
+    const StockFilter filter2(filter);
 
     // clang-format off
     ASSERT_EQ(filter2.useTicker,            true);
@@ -81,10 +81,10 @@ TEST(Test_Filter, Test_copy_constructor)
     // clang-format on
 }
 
-TEST(Test_Filter, Test_assign)
+TEST(Test_StockFilter, Test_assign)
 {
-    Filter filter;
-    Filter filter2;
+    StockFilter filter;
+    StockFilter filter2;
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";
@@ -131,9 +131,9 @@ TEST(Test_Filter, Test_assign)
     // clang-format on
 }
 
-TEST(Test_Filter, Test_isActive)
+TEST(Test_StockFilter, Test_isActive)
 {
-    Filter filter;
+    StockFilter filter;
 
     ASSERT_EQ(filter.isActive(), false);
 
@@ -181,9 +181,9 @@ TEST(Test_Filter, Test_isActive)
     ASSERT_EQ(filter.isActive(), false);
 }
 
-TEST(Test_Filter, Test_isFiltered)
+TEST(Test_StockFilter, Test_isFiltered)
 {
-    Filter filter;
+    StockFilter filter;
 
     filter.useTicker          = true;
     filter.ticker             = "SPB";
@@ -224,10 +224,10 @@ TEST(Test_Filter, Test_isFiltered)
     // clang-format on
 }
 
-TEST(Test_Filter, Test_equals)
+TEST(Test_StockFilter, Test_equals)
 {
-    Filter filter;
-    Filter filter2;
+    StockFilter filter;
+    StockFilter filter2;
 
     filter.useTicker          = true;
     filter.ticker             = "BLAH";

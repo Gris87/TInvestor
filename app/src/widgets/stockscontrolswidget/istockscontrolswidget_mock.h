@@ -23,7 +23,7 @@ public:
     StocksControlsWidgetMock& operator=(const StocksControlsWidgetMock& another) = delete;
 
     MOCK_METHOD(QDateTime, getDateChangeTime, (), (override));
-    MOCK_METHOD(const Filter&, getFilter, (), (override));
+    MOCK_METHOD(const StockFilter&, getFilter, (), (override));
 
     MOCK_METHOD(void, saveWindowState, (const QString& type), (override));
     MOCK_METHOD(void, loadWindowState, (const QString& type), (override));

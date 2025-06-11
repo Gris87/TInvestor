@@ -43,7 +43,8 @@ SOURCES += \
     src/dialogs/startautopilotdialog/startautopilotdialogfactory.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.cpp \
-    src/domain/filter/filter.cpp \
+    src/domain/filter/logfilter.cpp \
+    src/domain/filter/stockfilter.cpp \
     src/domain/instrument/instrument.cpp \
     src/domain/log/logentry.cpp \
     src/domain/operation/operation.cpp \
@@ -217,7 +218,8 @@ HEADERS += \
     src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h \
     src/dialogs/startsimulationdialog/startsimulationdialog.h \
     src/dialogs/startsimulationdialog/startsimulationdialogfactory.h \
-    src/domain/filter/filter.h \
+    src/domain/filter/logfilter.h \
+    src/domain/filter/stockfilter.h \
     src/domain/instrument/instrument.h \
     src/domain/log/logentry.h \
     src/domain/operation/operation.h \

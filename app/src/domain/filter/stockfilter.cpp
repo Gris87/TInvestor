@@ -1,4 +1,4 @@
-#include "src/domain/filter/filter.h"
+#include "src/domain/filter/stockfilter.h"
 
 
 
@@ -7,7 +7,7 @@ constexpr float  PAYBACK_TO_DEFAULT  = 100;
 
 
 
-Filter::Filter() :
+StockFilter::StockFilter() :
     useTicker(),
     ticker(),
     useQualInvestor(),
@@ -30,13 +30,13 @@ Filter::Filter() :
 {
 }
 
-bool Filter::isActive() const
+bool StockFilter::isActive() const
 {
     return (useTicker && ticker != "") || (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL) || usePrice ||
            useDayStartChange || useDateChange || useTurnover || usePayback;
 }
 
-bool Filter::isFiltered(
+bool StockFilter::isFiltered(
     const QString& t,
     const QString& name,
     bool           forQualInvestorFlag,
@@ -86,7 +86,7 @@ bool Filter::isFiltered(
     return true;
 }
 
-bool operator==(const Filter& lhs, const Filter& rhs)
+bool operator==(const StockFilter& lhs, const StockFilter& rhs)
 {
     return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.useQualInvestor == rhs.useQualInvestor &&
            lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice && lhs.priceFrom == rhs.priceFrom &&

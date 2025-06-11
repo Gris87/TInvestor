@@ -241,7 +241,7 @@ MainWindow::MainWindow(
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const QMap<QString, TradingInfo>&)),                                  this, SLOT(autoPilotTradeInstruments(const QMap<QString, TradingInfo>&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
-    connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const Filter&)),                                                         this, SLOT(filterChanged(const Filter&)));
+    connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                                                    this, SLOT(stockFilterChanged(const StockFilter&)));
     // clang-format on
 
     mTrayIcon->show();
@@ -485,7 +485,7 @@ void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
     mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
 
-void MainWindow::filterChanged(const Filter& filter)
+void MainWindow::stockFilterChanged(const StockFilter& filter)
 {
     mStocksTableWidget->filterChanged(filter);
 }
@@ -682,7 +682,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& ins
 
 void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 {
-    delete mTradingThreads.take(instrumentId);
+    mTradingThreads.take(instrumentId)->deleteLater();
 }
 
 void MainWindow::on_actionAuth_triggered()

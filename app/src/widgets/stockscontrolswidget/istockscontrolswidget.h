@@ -6,7 +6,7 @@
 
 #include <QDateTime>
 
-#include "src/domain/filter/filter.h"
+#include "src/domain/filter/stockfilter.h"
 
 
 
@@ -24,13 +24,13 @@ public:
     IStocksControlsWidget(const IStocksControlsWidget& another)            = delete;
     IStocksControlsWidget& operator=(const IStocksControlsWidget& another) = delete;
 
-    virtual QDateTime     getDateChangeTime() = 0;
-    virtual const Filter& getFilter()         = 0;
+    virtual QDateTime          getDateChangeTime() = 0;
+    virtual const StockFilter& getFilter()         = 0;
 
     virtual void saveWindowState(const QString& type) = 0;
     virtual void loadWindowState(const QString& type) = 0;
 
 signals:
     void dateChangeDateTimeChanged(const QDateTime& dateTime);
-    void filterChanged(const Filter& filter);
+    void filterChanged(const StockFilter& filter);
 };

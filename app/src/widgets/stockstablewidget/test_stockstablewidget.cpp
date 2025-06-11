@@ -106,7 +106,7 @@ TEST_F(Test_StocksTableWidget, Test_updateTable)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -173,7 +173,7 @@ TEST_F(Test_StocksTableWidget, Test_updateAll)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -247,7 +247,7 @@ TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -328,7 +328,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePrices)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -402,7 +402,7 @@ TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,
@@ -487,7 +487,7 @@ TEST_F(Test_StocksTableWidget, Test_filterChanged)
 
     stocks << &stock1 << &stock1 << &stock2;
 
-    const Filter filter;
+    const StockFilter filter;
 
     EXPECT_CALL(
         *stockTableRecordFactoryMock,

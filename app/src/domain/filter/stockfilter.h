@@ -15,13 +15,13 @@ enum QualInvestorFilter : quint8
 
 
 
-struct Filter
+struct StockFilter
 {
-    Filter();
-    Filter(const Filter& another) = default;
-    ~Filter()                     = default;
+    StockFilter();
+    StockFilter(const StockFilter& another) = default;
+    ~StockFilter()                          = default;
 
-    Filter& operator=(const Filter& another) = default;
+    StockFilter& operator=(const StockFilter& another) = default;
 
     [[nodiscard]]
     bool isActive() const;
@@ -61,4 +61,4 @@ struct Filter
 
 
 
-bool operator==(const Filter& lhs, const Filter& rhs);
+bool operator==(const StockFilter& lhs, const StockFilter& rhs);

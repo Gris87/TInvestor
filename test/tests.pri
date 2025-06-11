@@ -38,7 +38,8 @@ SOURCES += \
     src/dialogs/startautopilotdialog/test_startautopilotdialogfactory.cpp \
     src/dialogs/startsimulationdialog/test_startsimulationdialog.cpp \
     src/dialogs/startsimulationdialog/test_startsimulationdialogfactory.cpp \
-    src/domain/filter/test_filter.cpp \
+    src/domain/filter/test_logfilter.cpp \
+    src/domain/filter/test_stockfilter.cpp \
     src/domain/instrument/test_instrument.cpp \
     src/domain/log/test_logentry.cpp \
     src/domain/operation/test_operation.cpp \

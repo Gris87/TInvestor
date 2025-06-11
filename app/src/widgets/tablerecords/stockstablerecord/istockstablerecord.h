@@ -6,7 +6,7 @@
 
 #include <QTableWidget>
 
-#include "src/domain/filter/filter.h"
+#include "src/domain/filter/stockfilter.h"
 #include "src/qxlsx/xlsxdocument.h"
 
 
@@ -39,9 +39,9 @@ public:
     IStocksTableRecord(const IStocksTableRecord& another)            = delete;
     IStocksTableRecord& operator=(const IStocksTableRecord& another) = delete;
 
-    virtual void updateAll()                                             = 0;
-    virtual void updatePrice()                                           = 0;
-    virtual void updatePeriodicData()                                    = 0;
-    virtual void filter(QTableWidget* tableWidget, const Filter& filter) = 0;
-    virtual void exportToExcel(QXlsx::Document& doc) const               = 0;
+    virtual void updateAll()                                                  = 0;
+    virtual void updatePrice()                                                = 0;
+    virtual void updatePeriodicData()                                         = 0;
+    virtual void filter(QTableWidget* tableWidget, const StockFilter& filter) = 0;
+    virtual void exportToExcel(QXlsx::Document& doc) const                    = 0;
 };

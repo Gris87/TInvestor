@@ -65,7 +65,7 @@ StocksTableWidget::~StocksTableWidget()
     delete ui;
 }
 
-void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& filter)
+void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const StockFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -103,7 +103,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const Filter& f
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updateAll(const Filter& filter)
+void StocksTableWidget::updateAll(const StockFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -118,7 +118,7 @@ void StocksTableWidget::updateAll(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updateLastPrices(const Filter& filter)
+void StocksTableWidget::updateLastPrices(const StockFilter& filter)
 {
     if (!lastPricesUpdates.isEmpty())
     {
@@ -143,7 +143,7 @@ void StocksTableWidget::updateLastPrices(const Filter& filter)
     }
 }
 
-void StocksTableWidget::updatePrices(const Filter& filter)
+void StocksTableWidget::updatePrices(const StockFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -158,7 +158,7 @@ void StocksTableWidget::updatePrices(const Filter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updatePeriodicData(const Filter& filter)
+void StocksTableWidget::updatePeriodicData(const StockFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -183,7 +183,7 @@ void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
     lastPricesUpdates.insert(instrumentId);
 }
 
-void StocksTableWidget::filterChanged(const Filter& filter)
+void StocksTableWidget::filterChanged(const StockFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
 
