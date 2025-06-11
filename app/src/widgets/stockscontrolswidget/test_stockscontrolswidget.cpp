@@ -3,7 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -28,21 +27,18 @@ class Test_StocksControlsWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        stocksStorageMock  = new StrictMock<StocksStorageMock>();
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
-        stocksControlsWidget = new StocksControlsWidget(stocksStorageMock, settingsEditorMock);
+        stocksControlsWidget = new StocksControlsWidget(settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete stocksControlsWidget;
-        delete stocksStorageMock;
         delete settingsEditorMock;
     }
 
     StocksControlsWidget*           stocksControlsWidget;
-    StrictMock<StocksStorageMock>*  stocksStorageMock;
     StrictMock<SettingsEditorMock>* settingsEditorMock;
 };
 

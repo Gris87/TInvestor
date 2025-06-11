@@ -154,7 +154,7 @@ protected:
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
-        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(stocksStorageMock, settingsEditorMock, NotNull()))
+        EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
         EXPECT_CALL(
             *stocksTableWidgetFactoryMock,

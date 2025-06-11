@@ -6,7 +6,6 @@
 
 #include <QTimer>
 
-#include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -23,7 +22,7 @@ class StocksControlsWidget : public IStocksControlsWidget
     Q_OBJECT
 
 public:
-    explicit StocksControlsWidget(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
+    explicit StocksControlsWidget(ISettingsEditor* settingsEditor, QWidget* parent = nullptr);
     ~StocksControlsWidget() override;
 
     StocksControlsWidget(const StocksControlsWidget& another)            = delete;
@@ -41,7 +40,6 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    IStocksStorage*  mStocksStorage;
     ISettingsEditor* mSettingsEditor;
     StockFilter      mFilter;
 

@@ -100,6 +100,8 @@ SOURCES += \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
     src/widgets/instrumentwidget/test_instrumentwidget.cpp \
     src/widgets/instrumentwidget/test_instrumentwidgetfactory.cpp \
+    src/widgets/logsfilterwidget/test_logsfilterwidget.cpp \
+    src/widgets/logsfilterwidget/test_logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/test_logstablewidget.cpp \
     src/widgets/logstablewidget/test_logstablewidgetfactory.cpp \
     src/widgets/operationstablewidget/test_operationstablewidget.cpp \
@@ -216,6 +218,8 @@ HEADERS += \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
     src/widgets/instrumentwidget/iinstrumentwidget_mock.h \
     src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h \
+    src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h \
+    src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h \
     src/widgets/logstablewidget/ilogstablewidget_mock.h \
     src/widgets/logstablewidget/ilogstablewidgetfactory_mock.h \
     src/widgets/operationstablewidget/ioperationstablewidget_mock.h \

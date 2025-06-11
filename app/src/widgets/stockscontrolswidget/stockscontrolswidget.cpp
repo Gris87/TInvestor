@@ -23,10 +23,9 @@ constexpr int VISIBLE_WIDTH = 270;
 
 
 
-StocksControlsWidget::StocksControlsWidget(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) :
+StocksControlsWidget::StocksControlsWidget(ISettingsEditor* settingsEditor, QWidget* parent) :
     IStocksControlsWidget(parent),
     ui(new Ui::StocksControlsWidget),
-    mStocksStorage(stocksStorage),
     mSettingsEditor(settingsEditor),
     mFilter()
 {

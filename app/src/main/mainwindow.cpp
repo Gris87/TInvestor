@@ -156,7 +156,7 @@ MainWindow::MainWindow(
     ui->autoPilotActiveSpinnerWidget->setLineLength(SMALL_SPINNER_LINE_LENGTH);
     ui->autoPilotActiveSpinnerWidget->setColor(GREY_COLOR);
 
-    mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mStocksStorage, mSettingsEditor, this);
+    mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mSettingsEditor, this);
     mStocksTableWidget    = stocksTableWidgetFactory->newInstance(
         stockTableRecordFactory,
         instrumentTableItemWidgetFactory,

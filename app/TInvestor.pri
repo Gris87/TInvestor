@@ -104,6 +104,8 @@ SOURCES += \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
     src/widgets/instrumentwidget/instrumentwidget.cpp \
     src/widgets/instrumentwidget/instrumentwidgetfactory.cpp \
+    src/widgets/logsfilterwidget/logsfilterwidget.cpp \
+    src/widgets/logsfilterwidget/logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/logstablewidget.cpp \
     src/widgets/logstablewidget/logstablewidgetfactory.cpp \
     src/widgets/operationstablewidget/operationstablewidget.cpp \
@@ -322,6 +324,10 @@ HEADERS += \
     src/widgets/instrumentwidget/iinstrumentwidgetfactory.h \
     src/widgets/instrumentwidget/instrumentwidget.h \
     src/widgets/instrumentwidget/instrumentwidgetfactory.h \
+    src/widgets/logsfilterwidget/ilogsfilterwidget.h \
+    src/widgets/logsfilterwidget/ilogsfilterwidgetfactory.h \
+    src/widgets/logsfilterwidget/logsfilterwidget.h \
+    src/widgets/logsfilterwidget/logsfilterwidgetfactory.h \
     src/widgets/logstablewidget/ilogstablewidget.h \
     src/widgets/logstablewidget/ilogstablewidgetfactory.h \
     src/widgets/logstablewidget/logstablewidget.h \
@@ -405,6 +411,7 @@ FORMS += \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/instrumentwidget/instrumentwidget.ui \
+    src/widgets/logsfilterwidget/logsfilterwidget.ui \
     src/widgets/logstablewidget/logstablewidget.ui \
     src/widgets/operationstablewidget/operationstablewidget.ui \
     src/widgets/portfoliotreewidget/portfoliotreewidget.ui \

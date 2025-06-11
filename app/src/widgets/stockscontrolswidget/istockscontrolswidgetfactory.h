@@ -4,7 +4,6 @@
 
 #include "src/widgets/stockscontrolswidget/istockscontrolswidget.h"
 
-#include "src/storage/stocks/istocksstorage.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -18,6 +17,5 @@ public:
     IStocksControlsWidgetFactory(const IStocksControlsWidgetFactory& another)            = delete;
     IStocksControlsWidgetFactory& operator=(const IStocksControlsWidgetFactory& another) = delete;
 
-    virtual IStocksControlsWidget*
-    newInstance(IStocksStorage* stocksStorage, ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
+    virtual IStocksControlsWidget* newInstance(ISettingsEditor* settingsEditor, QWidget* parent) const = 0;
 };
