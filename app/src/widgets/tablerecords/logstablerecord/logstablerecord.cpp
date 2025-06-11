@@ -79,10 +79,14 @@ void LogsTableRecord::setLogEntry(const LogEntry& entry)
     mMessageTableWidgetItem->setText(entry.message);
 }
 
-void LogsTableRecord::filter(QTableWidget* tableWidget, LogLevel level)
+void LogsTableRecord::filter(QTableWidget* tableWidget, const LogFilter& filter)
 {
     const int  row    = mTimeTableWidgetItem->row();
-    const bool hidden = mLevelTableWidgetItem->logLevel() < level;
+
+    const QString ticker   = mInstrumentTableItemWidget->ticker();
+    const QString fullText = mInstrumentTableItemWidget->fullText();
+
+    const bool hidden = !filter.isFiltered(mLevelTableWidgetItem->logLevel(), ticker, fullText);
 
     tableWidget->setRowHidden(row, hidden);
 }

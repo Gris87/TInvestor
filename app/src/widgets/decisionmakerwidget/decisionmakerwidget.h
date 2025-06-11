@@ -73,6 +73,9 @@ private:
     IPortfolioTreeWidget*   mPortfolioTreeWidget;
     ISettingsEditor*        mSettingsEditor;
 
+public slots:
+    void logFilterChanged(const LogFilter& filter);
+
 private slots:
     void on_yieldButton_clicked();
     void on_monthlyYieldButton_clicked();

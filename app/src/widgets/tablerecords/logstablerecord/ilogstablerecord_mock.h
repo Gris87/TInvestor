@@ -23,6 +23,6 @@ public:
     LogsTableRecordMock& operator=(const LogsTableRecordMock& another) = delete;
 
     MOCK_METHOD(void, setLogEntry, (const LogEntry& entry), (override));
-    MOCK_METHOD(void, filter, (QTableWidget * tableWidget, LogLevel level), (override));
+    MOCK_METHOD(void, filter, (QTableWidget * tableWidget, const LogFilter& filter), (override));
     MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 };

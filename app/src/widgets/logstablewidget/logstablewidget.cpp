@@ -41,7 +41,6 @@ LogsTableWidget::LogsTableWidget(
     mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
-    mFilterLogLevel(),
     mRecords()
 {
     qDebug() << "Create LogsTableWidget";
@@ -58,23 +57,7 @@ LogsTableWidget::~LogsTableWidget()
     delete ui;
 }
 
-void LogsTableWidget::setFilter(LogLevel level)
-{
-    if (mFilterLogLevel != level)
-    {
-        ui->tableWidget->setUpdatesEnabled(false);
-        mFilterLogLevel = level;
-
-        for (ILogsTableRecord* record : std::as_const(mRecords))
-        {
-            record->filter(ui->tableWidget, mFilterLogLevel);
-        }
-
-        ui->tableWidget->setUpdatesEnabled(true);
-    }
-}
-
-void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
+void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -107,14 +90,14 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
         ILogsTableRecord* record = mRecords.at(i);
 
         record->setLogEntry(entries.at(i));
-        record->filter(ui->tableWidget, mFilterLogLevel);
+        record->filter(ui->tableWidget, filter);
     }
 
     ui->tableWidget->setSortingEnabled(true);
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void LogsTableWidget::logAdded(const LogEntry& entry)
+void LogsTableWidget::logAdded(const LogEntry& entry, const LogFilter& filter)
 {
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
@@ -128,11 +111,23 @@ void LogsTableWidget::logAdded(const LogEntry& entry)
         this
     );
     record->setLogEntry(entry);
-    record->filter(ui->tableWidget, mFilterLogLevel);
+    record->filter(ui->tableWidget, filter);
 
     mRecords.append(record);
 
     ui->tableWidget->setSortingEnabled(true);
+    ui->tableWidget->setUpdatesEnabled(true);
+}
+
+void LogsTableWidget::filterChanged(const LogFilter& filter)
+{
+    ui->tableWidget->setUpdatesEnabled(false);
+
+    for (ILogsTableRecord* record : std::as_const(mRecords))
+    {
+        record->filter(ui->tableWidget, filter);
+    }
+
     ui->tableWidget->setUpdatesEnabled(true);
 }
 

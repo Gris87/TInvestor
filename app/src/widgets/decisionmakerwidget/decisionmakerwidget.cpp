@@ -82,6 +82,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->layoutForPortfolioTreeWidget->addWidget(mPortfolioTreeWidget);
 
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
+
+    connect(mLogsFilterWidget, SIGNAL(filterChanged(const LogFilter&)), this, SLOT(logFilterChanged(const LogFilter&)));
 }
 
 DecisionMakerWidget::~DecisionMakerWidget()
@@ -122,12 +124,12 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
 
 void DecisionMakerWidget::logsRead(const QList<LogEntry>& entries)
 {
-    mLogsTableWidget->logsRead(entries);
+    mLogsTableWidget->logsRead(entries, mLogsFilterWidget->getFilter());
 }
 
 void DecisionMakerWidget::logAdded(const LogEntry& entry)
 {
-    mLogsTableWidget->logAdded(entry);
+    mLogsTableWidget->logAdded(entry, mLogsFilterWidget->getFilter());
 }
 
 void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
@@ -186,6 +188,11 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->monthlyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
+}
+
+void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
+{
+    mLogsTableWidget->filterChanged(filter);
 }
 
 void DecisionMakerWidget::saveWindowState(const QString& type)

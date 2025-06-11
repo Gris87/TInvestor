@@ -6,7 +6,7 @@
 
 #include <QTableWidget>
 
-#include "src/domain/log/logentry.h"
+#include "src/domain/filter/logfilter.h"
 #include "src/qxlsx/xlsxdocument.h"
 
 
@@ -36,7 +36,7 @@ public:
     ILogsTableRecord(const ILogsTableRecord& another)            = delete;
     ILogsTableRecord& operator=(const ILogsTableRecord& another) = delete;
 
-    virtual void setLogEntry(const LogEntry& entry)                = 0;
-    virtual void filter(QTableWidget* tableWidget, LogLevel level) = 0;
-    virtual void exportToExcel(QXlsx::Document& doc) const         = 0;
+    virtual void setLogEntry(const LogEntry& entry)                         = 0;
+    virtual void filter(QTableWidget* tableWidget, const LogFilter& filter) = 0;
+    virtual void exportToExcel(QXlsx::Document& doc) const                  = 0;
 };

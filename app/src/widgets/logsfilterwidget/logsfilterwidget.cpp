@@ -47,8 +47,11 @@ void LogsFilterWidget::filterChangeDelayTimerTicked()
 
 void LogsFilterWidget::on_verboseButton_clicked()
 {
-    mFilter.level = LOG_LEVEL_VERBOSE;
-    emit filterChanged(mFilter);
+    if (mFilter.level != LOG_LEVEL_VERBOSE)
+    {
+        mFilter.level = LOG_LEVEL_VERBOSE;
+        emit filterChanged(mFilter);
+    }
 
     ui->verboseButton->setChecked(true);
     ui->debugButton->setChecked(false);
@@ -59,8 +62,11 @@ void LogsFilterWidget::on_verboseButton_clicked()
 
 void LogsFilterWidget::on_debugButton_clicked()
 {
-    mFilter.level = LOG_LEVEL_DEBUG;
-    emit filterChanged(mFilter);
+    if (mFilter.level != LOG_LEVEL_DEBUG)
+    {
+        mFilter.level = LOG_LEVEL_DEBUG;
+        emit filterChanged(mFilter);
+    }
 
     ui->verboseButton->setChecked(false);
     ui->debugButton->setChecked(true);
@@ -71,8 +77,11 @@ void LogsFilterWidget::on_debugButton_clicked()
 
 void LogsFilterWidget::on_infoButton_clicked()
 {
-    mFilter.level = LOG_LEVEL_INFO;
-    emit filterChanged(mFilter);
+    if (mFilter.level != LOG_LEVEL_INFO)
+    {
+        mFilter.level = LOG_LEVEL_INFO;
+        emit filterChanged(mFilter);
+    }
 
     ui->verboseButton->setChecked(false);
     ui->debugButton->setChecked(false);
@@ -83,8 +92,11 @@ void LogsFilterWidget::on_infoButton_clicked()
 
 void LogsFilterWidget::on_warningButton_clicked()
 {
-    mFilter.level = LOG_LEVEL_WARNING;
-    emit filterChanged(mFilter);
+    if (mFilter.level != LOG_LEVEL_WARNING)
+    {
+        mFilter.level = LOG_LEVEL_WARNING;
+        emit filterChanged(mFilter);
+    }
 
     ui->verboseButton->setChecked(false);
     ui->debugButton->setChecked(false);
@@ -95,8 +107,11 @@ void LogsFilterWidget::on_warningButton_clicked()
 
 void LogsFilterWidget::on_errorButton_clicked()
 {
-    mFilter.level = LOG_LEVEL_ERROR;
-    emit filterChanged(mFilter);
+    if (mFilter.level != LOG_LEVEL_ERROR)
+    {
+        mFilter.level = LOG_LEVEL_ERROR;
+        emit filterChanged(mFilter);
+    }
 
     ui->verboseButton->setChecked(false);
     ui->debugButton->setChecked(false);

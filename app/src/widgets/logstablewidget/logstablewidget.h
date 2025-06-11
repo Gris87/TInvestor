@@ -41,9 +41,9 @@ public:
 
     Ui::LogsTableWidget* ui;
 
-    void setFilter(LogLevel level) override;
-    void logsRead(const QList<LogEntry>& entries) override;
-    void logAdded(const LogEntry& entry) override;
+    void logsRead(const QList<LogEntry>& entries, const LogFilter& filter) override;
+    void logAdded(const LogEntry& entry, const LogFilter& filter) override;
+    void filterChanged(const LogFilter& filter) override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
@@ -58,7 +58,6 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     IFileDialogFactory*                mFileDialogFactory;
     ISettingsEditor*                   mSettingsEditor;
-    LogLevel                           mFilterLogLevel;
     QList<ILogsTableRecord*>           mRecords;
 
 public slots:
