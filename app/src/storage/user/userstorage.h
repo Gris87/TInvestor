@@ -19,6 +19,8 @@ public:
 
     void            readFromDatabase() override;
     QMutex*         getMutex() override;
+    void            lock() override;
+    void            unlock() override;
     void            setToken(const QString& token) override;
     const QString&  getToken() override;
     void            setUserInfo(const User& user) override;

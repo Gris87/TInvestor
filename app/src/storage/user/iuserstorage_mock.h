@@ -22,6 +22,8 @@ public:
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
     MOCK_METHOD(QMutex*, getMutex, (), (override));
+    MOCK_METHOD(void, lock, (), (override));
+    MOCK_METHOD(void, unlock, (), (override));
     MOCK_METHOD(void, setToken, (const QString& token), (override));
     MOCK_METHOD(const QString&, getToken, (), (override));
     MOCK_METHOD(void, setUserInfo, (const User& user), (override));

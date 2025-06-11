@@ -44,6 +44,16 @@ QMutex* StocksStorage::getMutex()
     return mMutex;
 }
 
+void StocksStorage::lock()
+{
+    mMutex->lock();
+}
+
+void StocksStorage::unlock()
+{
+    mMutex->unlock();
+}
+
 const QList<Stock*>& StocksStorage::getStocks()
 {
     return mStocks;
@@ -341,9 +351,9 @@ static void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, 
     IUserStorage*   userStorage    = getPaybackInfo->userStorage;
     const qint64    startTimestamp = getPaybackInfo->startTimestamp;
 
-    userStorage->getMutex()->lock();
+    userStorage->lock();
     const float commission = userStorage->getCommission();
-    userStorage->getMutex()->unlock();
+    userStorage->unlock();
 
     Stock** stockArray = stocks.data();
 

@@ -19,6 +19,8 @@ public:
 
     void               readFromDatabase() override;
     QMutex*            getMutex() override;
+    void               lock() override;
+    void               unlock() override;
     const Instruments& getInstruments() override;
     void               mergeInstruments(const Instruments& instruments) override;
 

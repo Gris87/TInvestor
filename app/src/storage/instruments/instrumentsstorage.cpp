@@ -30,6 +30,16 @@ QMutex* InstrumentsStorage::getMutex()
     return mMutex;
 }
 
+void InstrumentsStorage::lock()
+{
+    mMutex->lock();
+}
+
+void InstrumentsStorage::unlock()
+{
+    mMutex->unlock();
+}
+
 const Instruments& InstrumentsStorage::getInstruments()
 {
     return mInstruments;

@@ -81,7 +81,7 @@ void LogsTableRecord::setLogEntry(const LogEntry& entry)
 
 void LogsTableRecord::filter(QTableWidget* tableWidget, const LogFilter& filter)
 {
-    const int  row    = mTimeTableWidgetItem->row();
+    const int row = mTimeTableWidgetItem->row();
 
     const QString ticker   = mInstrumentTableItemWidget->ticker();
     const QString fullText = mInstrumentTableItemWidget->fullText();

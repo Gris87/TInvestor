@@ -20,6 +20,8 @@ public:
 
     void                 readFromDatabase() override;
     QMutex*              getMutex() override;
+    void                 lock() override;
+    void                 unlock() override;
     const QList<Stock*>& getStocks() override;
     bool                 mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
     void                 appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;

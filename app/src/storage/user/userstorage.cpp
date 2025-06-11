@@ -34,6 +34,16 @@ QMutex* UserStorage::getMutex()
     return mMutex;
 }
 
+void UserStorage::lock()
+{
+    mMutex->lock();
+}
+
+void UserStorage::unlock()
+{
+    mMutex->unlock();
+}
+
 void UserStorage::setToken(const QString& token)
 {
     if (mUser.token != token)

@@ -19,6 +19,8 @@ public:
 
     virtual void               readFromDatabase()                               = 0;
     virtual QMutex*            getMutex()                                       = 0;
+    virtual void               lock()                                           = 0;
+    virtual void               unlock()                                         = 0;
     virtual const Instruments& getInstruments()                                 = 0;
     virtual void               mergeInstruments(const Instruments& instruments) = 0;
 };

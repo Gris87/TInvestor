@@ -2035,11 +2035,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 
-    QMutex mutex;
-
-    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, lock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.3f));
-    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, unlock());
 
     storage->obtainPayback(200);
 
