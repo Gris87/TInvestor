@@ -193,31 +193,29 @@ bool TradingThread::sellWithPrice(double expected, double delta, const Quotation
 
         return sellWithPriceOptimalAmount(expected, delta, price);
     }
-    else
+
+    const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
+        mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
     {
-        const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
-            mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+        informAboutOrderState(*tinkoffOrder);
 
-        if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+        const tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
         {
-            informAboutOrderState(*tinkoffOrder);
-
-            tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
-
-            if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
-            {
-                return true;
-            }
-
-            if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
-            {
-                mOrderId = "";
-            }
+            return true;
         }
-        else
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
         {
             mOrderId = "";
         }
+    }
+    else
+    {
+        mOrderId = "";
     }
 
     return false;
@@ -261,9 +259,9 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                 mLogsThread->addLog(
                     LOG_LEVEL_VERBOSE,
                     mInstrumentId,
-                    tr("Order created in order to sell %1 lots with a price %2 %3")
+                    tr("Order to sell %1 created with a price %2 %3")
                         .arg(
-                            QString::number(amountToSell),
+                            QString::number(amountToSell * mInstrumentLot),
                             QString::number(quotationToFloat(price), 'f', mPricePrecision),
                             "\u20BD"
                         )
@@ -310,7 +308,98 @@ bool TradingThread::buy(double expected, double delta)
 
 bool TradingThread::buyWithPrice(double expected, double delta, const Quotation& price)
 {
-    qInfo() << mInstrumentId << expected << delta << price.units << price.nano;
+    if (mOrderId == "" || mLastOrderPrice != price || mLastExpectedCost != expected)
+    {
+        cancelOrder();
+
+        return buyWithPriceOptimalAmount(expected, delta, price);
+    }
+
+    const std::shared_ptr<tinkoff::OrderState> tinkoffOrder =
+        mGrpcClient->getOrderState(QThread::currentThread(), mAccountId, mOrderId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrder != nullptr)
+    {
+        informAboutOrderState(*tinkoffOrder);
+
+        const tinkoff::OrderExecutionReportStatus status = tinkoffOrder->execution_report_status();
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
+        {
+            return true;
+        }
+
+        if (status == tinkoff::EXECUTION_REPORT_STATUS_REJECTED || status == tinkoff::EXECUTION_REPORT_STATUS_CANCELLED)
+        {
+            mOrderId = "";
+        }
+    }
+    else
+    {
+        mOrderId = "";
+    }
+
+    return false;
+}
+
+bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price)
+{
+    while (true)
+    {
+        const std::shared_ptr<tinkoff::GetMaxLotsResponse> tinkoffMaxLots =
+            mGrpcClient->getMaxLots(QThread::currentThread(), mAccountId, mInstrumentId, price);
+
+        if (QThread::currentThread()->isInterruptionRequested() || tinkoffMaxLots == nullptr)
+        {
+            return false;
+        }
+
+        const double lotPrice      = mInstrumentLot * quotationToDouble(price);
+        const qint64 deltaQuantity = qRound64(delta / lotPrice);
+
+        const qint64 amountToBuy = qMin(deltaQuantity, tinkoffMaxLots->buy_limits().buy_max_lots());
+
+        if (amountToBuy > 0)
+        {
+            const std::shared_ptr<tinkoff::PostOrderResponse> tinkoffOrder = mGrpcClient->postOrder(
+                QThread::currentThread(), mAccountId, mInstrumentId, tinkoff::ORDER_DIRECTION_BUY, amountToBuy, price
+            );
+
+            if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
+            {
+                return false;
+            }
+
+            if (tinkoffOrder->execution_report_status() != tinkoff::EXECUTION_REPORT_STATUS_REJECTED)
+            {
+                mLogsThread->addLog(
+                    LOG_LEVEL_VERBOSE,
+                    mInstrumentId,
+                    tr("Order to buy %1 created with a price %2 %3")
+                        .arg(
+                            QString::number(amountToBuy * mInstrumentLot),
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                            "\u20BD"
+                        )
+                );
+
+                mOrderId          = QString::fromStdString(tinkoffOrder->order_id());
+                mLastOrderPrice   = price;
+                mLastExpectedCost = expected;
+
+                break;
+            }
+
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, this))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
 
     return false;
 }
@@ -352,24 +441,24 @@ void TradingThread::informAboutOrderState(const tinkoff::OrderState& tinkoffOrde
 
     if (tinkoffOrder.direction() == tinkoff::ORDER_DIRECTION_BUY)
     {
-        details = tr("%1 lots bought with a price %2 %3")
+        details = tr("%1 bought with a price %2 %3")
                       .arg(
-                          QString::number(tinkoffOrder.lots_executed()),
+                          QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
                           QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
                           "\u20BD"
                       );
     }
     else
     {
-        details = tr("%1 lots sold with a price %2 %3")
+        details = tr("%1 sold with a price %2 %3")
                       .arg(
-                          QString::number(tinkoffOrder.lots_executed()),
+                          QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
                           QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
                           "\u20BD"
                       );
     }
 
-    tinkoff::OrderExecutionReportStatus status = tinkoffOrder.execution_report_status();
+    const tinkoff::OrderExecutionReportStatus status = tinkoffOrder.execution_report_status();
 
     if (status == tinkoff::EXECUTION_REPORT_STATUS_FILL)
     {

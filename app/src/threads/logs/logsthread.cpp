@@ -61,7 +61,7 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
 {
     if (isRunning())
     {
-        qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
+        const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
 
         if (timestamp == mLastLogTimestamp)
         {

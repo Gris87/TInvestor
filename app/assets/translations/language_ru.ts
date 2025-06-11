@@ -293,12 +293,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="141"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="227"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="249"/>
         <source>Decided to sell up to cost %1 %2 due to following account &quot;%3&quot;</source>
         <translation>Решено продать до стоимости %1 %2 из-за следования за аккаунтом &quot;%3&quot;</translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="158"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="204"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="235"/>
         <source>Decided to buy up to cost %1 %2 due to following account &quot;%3&quot;</source>
         <translation>Решено покупать до стоимости %1 %2 из-за следования за аккаунтом &quot;%3&quot;</translation>
     </message>
@@ -447,13 +449,13 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="484"/>
-        <location filename="../../src/main/mainwindow.cpp" line="866"/>
+        <location filename="../../src/main/mainwindow.cpp" line="874"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="499"/>
-        <location filename="../../src/main/mainwindow.cpp" line="788"/>
+        <location filename="../../src/main/mainwindow.cpp" line="796"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
@@ -468,13 +470,13 @@
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="788"/>
+        <location filename="../../src/main/mainwindow.cpp" line="796"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.cpp" line="547"/>
-        <location filename="../../src/main/mainwindow.cpp" line="819"/>
+        <location filename="../../src/main/mainwindow.cpp" line="827"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
@@ -489,7 +491,7 @@
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="819"/>
+        <location filename="../../src/main/mainwindow.cpp" line="827"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -1183,48 +1185,53 @@
 <context>
     <name>TradingThread</name>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="58"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="61"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="256"/>
-        <source>Order created in order to sell %1 lots with a price %2 %3</source>
-        <translation>Заявка создана на продажу %1 лотов по цене %2 %3</translation>
-    </message>
-    <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="327"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="380"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="428"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="481"/>
         <source>Order cancelled</source>
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="347"/>
-        <source>%1 lots bought with a price %2 %3</source>
-        <translation>%1 лотов куплено по цене %2 %3</translation>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="264"/>
+        <source>Order to sell %1 created with a price %2 %3</source>
+        <translation>Заявка создана на продажу %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="356"/>
-        <source>%1 lots sold with a price %2 %3</source>
-        <translation>%1 лотов продано по цене %2 %3</translation>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="382"/>
+        <source>Order to buy %1 created with a price %2 %3</source>
+        <translation>Заявка создана на покупку %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="368"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="448"/>
+        <source>%1 bought with a price %2 %3</source>
+        <translation>%1 куплено по цене %2 %3</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="457"/>
+        <source>%1 sold with a price %2 %3</source>
+        <translation>%1 продано по цене %2 %3</translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="469"/>
         <source>Order completed</source>
         <translation>Заявка выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="372"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="473"/>
         <source>Order partially completed</source>
         <translation>Заявка частично выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="376"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="477"/>
         <source>Order rejected</source>
         <translation>Заявка отклонена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="384"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="485"/>
         <source>Order is still waiting</source>
         <translation>Заявка ещё ожидает</translation>
     </message>

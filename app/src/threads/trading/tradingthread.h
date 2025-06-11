@@ -67,6 +67,9 @@ private:
     [[nodiscard]]
     bool buyWithPrice(double expected, double delta, const Quotation& price);
 
+    [[nodiscard]]
+    bool buyWithPriceOptimalAmount(double expected, double delta, const Quotation& price);
+
     void cancelOrder();
     void informAboutOrderState(const tinkoff::OrderState& tinkoffOrder);
 
