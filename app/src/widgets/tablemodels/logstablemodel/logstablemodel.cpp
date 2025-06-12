@@ -63,7 +63,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
             break;
             case LOGS_LEVEL_COLUMN:
             {
-                return QString::number(mEntries.at(index.row()).level);
+                return mEntries.at(index.row()).level;
             }
             break;
             case LOGS_NAME_COLUMN:

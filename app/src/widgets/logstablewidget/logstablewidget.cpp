@@ -5,6 +5,7 @@
 #include <QMenu>
 
 #include "src/qxlsx/xlsxdocument.h"
+#include "src/widgets/tabledelegates/loglevelitemdelegate.h"
 
 
 
@@ -53,6 +54,7 @@ LogsTableWidget::LogsTableWidget(
     mLogsTableModel = mLogsTableModelFactory->newInstance(this);
 
     ui->tableView->setModel(mLogsTableModel);
+    ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(this));
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 
     ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);

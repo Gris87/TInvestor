@@ -118,6 +118,7 @@ SOURCES += \
     src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/stockstablewidget.cpp \
     src/widgets/stockstablewidget/stockstablewidgetfactory.cpp \
+    src/widgets/tabledelegates/loglevelitemdelegate.cpp \
     src/widgets/tableitems/actions/actionstableitemwidget.cpp \
     src/widgets/tableitems/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
@@ -354,6 +355,7 @@ HEADERS += \
     src/widgets/stockstablewidget/istockstablewidgetfactory.h \
     src/widgets/stockstablewidget/stockstablewidget.h \
     src/widgets/stockstablewidget/stockstablewidgetfactory.h \
+    src/widgets/tabledelegates/loglevelitemdelegate.h \
     src/widgets/tableitems/actions/actionstableitemwidget.h \
     src/widgets/tableitems/actions/actionstableitemwidgetfactory.h \
     src/widgets/tableitems/actions/iactionstableitemwidget.h \

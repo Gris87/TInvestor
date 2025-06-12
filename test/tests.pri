@@ -114,6 +114,7 @@ SOURCES += \
     src/widgets/stockscontrolswidget/test_stockscontrolswidgetfactory.cpp \
     src/widgets/stockstablewidget/test_stockstablewidget.cpp \
     src/widgets/stockstablewidget/test_stockstablewidgetfactory.cpp \
+    src/widgets/tabledelegates/test_loglevelitemdelegate.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidget.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
