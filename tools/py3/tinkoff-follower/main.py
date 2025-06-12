@@ -331,14 +331,14 @@ def main():
         dest="src_account",
         type=str,
         default="d1843f24-0864-4666-8608-d5d16822fbae",
-        help="Source account id",
+        help="Source account ID",
     )
     parser.add_argument(
         "--dest-account",
         dest="dest_account",
         type=str,
         default="8963c33d-7ee2-4ff2-ac01-8c090ec502f5",
-        help="Destination account id",
+        help="Destination account ID",
     )
     args = parser.parse_args()
 

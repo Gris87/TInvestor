@@ -1,5 +1,6 @@
 Something wrong with the logs
 Limit operations and logs
+Align amount of money in operations from portfolio
 Optimization
 Long startup
 Tray icon popup too long
