@@ -40,7 +40,7 @@ TEST(Test_LogsTableRecordFactory, Test_newInstance)
 
     QTableWidget tableWidget;
 
-    tableWidget.setColumnCount(LOGS_COLUMN_COUNT);
+    tableWidget.setColumnCount(LOGS_OLD_COLUMN_COUNT);
 
     EXPECT_CALL(logLevelTableItemWidgetFactoryMock, newInstance(&tableWidget)).WillOnce(Return(logLevelTableItemWidgetMock));
     EXPECT_CALL(instrumentTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))

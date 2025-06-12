@@ -61,9 +61,10 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     IFileDialogFactory*                mFileDialogFactory;
     ISettingsEditor*                   mSettingsEditor;
+    ILogsTableModel*                   mLogsTableModel;
     QList<ILogsTableRecord*>           mRecords;
 
 public slots:
-    void on_tableWidget_customContextMenuRequested(const QPoint& pos);
+    void on_tableView_customContextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
 };

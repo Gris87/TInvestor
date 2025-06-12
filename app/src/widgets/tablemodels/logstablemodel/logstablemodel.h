@@ -20,5 +20,13 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+
+    void logsRead(const QList<LogEntry>& entries) override;
+    void logAdded(const LogEntry& entry) override;
+
+private:
+    QStringList     mHeader;
+    QList<LogEntry> mEntries;
 };

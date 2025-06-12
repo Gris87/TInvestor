@@ -284,8 +284,8 @@
         <translation>Логи</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="41"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="42"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="43"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="44"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -314,19 +314,45 @@
     </message>
 </context>
 <context>
-    <name>LogsTableWidget</name>
+    <name>LogsFilterWidget</name>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="51"/>
+        <location filename="../../src/widgets/logsfilterwidget/logsfilterwidget.ui" line="135"/>
+        <source>TIcker:</source>
+        <translation>Тикер:</translation>
+    </message>
+</context>
+<context>
+    <name>LogsTableModel</name>
+    <message>
+        <location filename="../../src/widgets/tablemodels/logstablemodel/logstablemodel.cpp" line="13"/>
         <source>Time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="61"/>
+        <location filename="../../src/widgets/tablemodels/logstablemodel/logstablemodel.cpp" line="13"/>
         <source>Name</source>
         <translation>Название</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="66"/>
+        <location filename="../../src/widgets/tablemodels/logstablemodel/logstablemodel.cpp" line="13"/>
+        <source>Message</source>
+        <translation>Сообщение</translation>
+    </message>
+</context>
+<context>
+    <name>LogsTableWidget</name>
+    <message>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="70"/>
+        <source>Time</source>
+        <translation>Время</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="80"/>
+        <source>Name</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.ui" line="85"/>
         <source>Message</source>
         <translation>Сообщение</translation>
     </message>
@@ -355,13 +381,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="309"/>
+        <location filename="../../src/main/mainwindow.cpp" line="319"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="111"/>
-        <location filename="../../src/main/mainwindow.cpp" line="510"/>
+        <location filename="../../src/main/mainwindow.cpp" line="520"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -372,7 +398,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="238"/>
-        <location filename="../../src/main/mainwindow.cpp" line="588"/>
+        <location filename="../../src/main/mainwindow.cpp" line="598"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -433,65 +459,65 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="310"/>
+        <location filename="../../src/main/mainwindow.cpp" line="320"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="358"/>
+        <location filename="../../src/main/mainwindow.cpp" line="368"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="380"/>
+        <location filename="../../src/main/mainwindow.cpp" line="390"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="484"/>
-        <location filename="../../src/main/mainwindow.cpp" line="874"/>
+        <location filename="../../src/main/mainwindow.cpp" line="494"/>
+        <location filename="../../src/main/mainwindow.cpp" line="884"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="499"/>
-        <location filename="../../src/main/mainwindow.cpp" line="796"/>
+        <location filename="../../src/main/mainwindow.cpp" line="509"/>
+        <location filename="../../src/main/mainwindow.cpp" line="806"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="576"/>
+        <location filename="../../src/main/mainwindow.cpp" line="586"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="582"/>
+        <location filename="../../src/main/mainwindow.cpp" line="592"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="796"/>
+        <location filename="../../src/main/mainwindow.cpp" line="806"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="547"/>
-        <location filename="../../src/main/mainwindow.cpp" line="827"/>
+        <location filename="../../src/main/mainwindow.cpp" line="557"/>
+        <location filename="../../src/main/mainwindow.cpp" line="837"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="208"/>
+        <location filename="../../src/main/mainwindow.cpp" line="218"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="209"/>
+        <location filename="../../src/main/mainwindow.cpp" line="219"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="827"/>
+        <location filename="../../src/main/mainwindow.cpp" line="837"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -754,22 +780,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="145"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="145"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="157"/>
+        <location filename="../../src/main.cpp" line="159"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="157"/>
+        <location filename="../../src/main.cpp" line="159"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -1099,12 +1125,12 @@
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="313"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="312"/>
         <source>Filter active</source>
         <translation>Фильтр активен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="317"/>
         <source>Filter inactive</source>
         <translation>Фильтр неактивен</translation>
     </message>
@@ -1190,48 +1216,48 @@
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="428"/>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="481"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="424"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="477"/>
         <source>Order cancelled</source>
         <translation>Заявка отменена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="264"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="262"/>
         <source>Order to sell %1 created with a price %2 %3</source>
         <translation>Заявка создана на продажу %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="382"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="378"/>
         <source>Order to buy %1 created with a price %2 %3</source>
         <translation>Заявка создана на покупку %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="448"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="444"/>
         <source>%1 bought with a price %2 %3</source>
         <translation>%1 куплено по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="457"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="453"/>
         <source>%1 sold with a price %2 %3</source>
         <translation>%1 продано по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="469"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="465"/>
         <source>Order completed</source>
         <translation>Заявка выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="473"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="469"/>
         <source>Order partially completed</source>
         <translation>Заявка частично выполнена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="477"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="473"/>
         <source>Order rejected</source>
         <translation>Заявка отклонена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/trading/tradingthread.cpp" line="485"/>
+        <location filename="../../src/threads/trading/tradingthread.cpp" line="481"/>
         <source>Order is still waiting</source>
         <translation>Заявка ещё ожидает</translation>
     </message>

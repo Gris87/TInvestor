@@ -43,13 +43,16 @@ LogsTableWidget::LogsTableWidget(
     mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
+    mLogsTableModel(),
     mRecords()
 {
     qDebug() << "Create LogsTableWidget";
 
     ui->setupUi(this);
 
-    ui->tableView->setModel(mLogsTableModelFactory->newInstance(this));
+    mLogsTableModel = mLogsTableModelFactory->newInstance(this);
+
+    ui->tableView->setModel(mLogsTableModel);
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 
     ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
@@ -64,6 +67,14 @@ LogsTableWidget::~LogsTableWidget()
 
 void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& filter)
 {
+    ui->tableView->setUpdatesEnabled(false);
+    ui->tableView->setSortingEnabled(false);
+
+    mLogsTableModel->logsRead(entries);
+
+    ui->tableView->setSortingEnabled(true);
+    ui->tableView->setUpdatesEnabled(true);
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -104,6 +115,14 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& 
 
 void LogsTableWidget::logAdded(const LogEntry& entry, const LogFilter& filter)
 {
+    ui->tableView->setUpdatesEnabled(false);
+    ui->tableView->setSortingEnabled(false);
+
+    mLogsTableModel->logAdded(entry);
+
+    ui->tableView->setSortingEnabled(true);
+    ui->tableView->setUpdatesEnabled(true);
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -136,13 +155,13 @@ void LogsTableWidget::filterChanged(const LogFilter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void LogsTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& pos)
+void LogsTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)
 {
     QMenu* contextMenu = new QMenu(this);
 
     contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
 
-    contextMenu->popup(ui->tableWidget->viewport()->mapToGlobal(pos));
+    contextMenu->popup(ui->tableView->viewport()->mapToGlobal(pos));
 }
 
 void LogsTableWidget::actionExportToExcelTriggered()
@@ -180,9 +199,9 @@ void LogsTableWidget::exportToExcel(const QString& path) const
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    for (int i = 0; i < ui->tableWidget->columnCount(); ++i)
+    for (int i = 0; i < mLogsTableModel->columnCount(); ++i)
     {
-        doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+        doc.write(1, i + 1, mLogsTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
 
     for (ILogsTableRecord* record : std::as_const(mRecords))
@@ -205,15 +224,22 @@ void LogsTableWidget::exportToExcel(const QString& path) const
 void LogsTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off
-    mSettingsEditor->setValue(type + "/columnWidth_Time",    ui->tableWidget->columnWidth(LOGS_TIME_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Level",   ui->tableWidget->columnWidth(LOGS_LEVEL_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Name",    ui->tableWidget->columnWidth(LOGS_NAME_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Message", ui->tableWidget->columnWidth(LOGS_MESSAGE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Time",    ui->tableView->columnWidth(LOGS_TIME_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Level",   ui->tableView->columnWidth(LOGS_LEVEL_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Name",    ui->tableView->columnWidth(LOGS_NAME_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Message", ui->tableView->columnWidth(LOGS_MESSAGE_COLUMN));
     // clang-format on
 }
 
 void LogsTableWidget::loadWindowState(const QString& type)
 {
+    // clang-format off
+    ui->tableView->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    COLUMN_WIDTHS[LOGS_TIME_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(LOGS_LEVEL_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Level",   COLUMN_WIDTHS[LOGS_LEVEL_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(LOGS_NAME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Name",    COLUMN_WIDTHS[LOGS_NAME_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
+    // clang-format on
+
     // clang-format off
     ui->tableWidget->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    COLUMN_WIDTHS[LOGS_TIME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(LOGS_LEVEL_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Level",   COLUMN_WIDTHS[LOGS_LEVEL_COLUMN]).toInt());

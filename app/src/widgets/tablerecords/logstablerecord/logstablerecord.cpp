@@ -36,12 +36,12 @@ LogsTableRecord::LogsTableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex,       LOGS_TIME_COLUMN,    mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, LOGS_LEVEL_COLUMN,   mLevelTableWidgetItem);
-    tableWidget->setItem(rowIndex,       LOGS_LEVEL_COLUMN,   mLevelTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, LOGS_NAME_COLUMN,    mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       LOGS_NAME_COLUMN,    mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       LOGS_MESSAGE_COLUMN, mMessageTableWidgetItem);
+    tableWidget->setItem(rowIndex,       LOGS_OLD_TIME_COLUMN,    mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LOGS_OLD_LEVEL_COLUMN,   mLevelTableWidgetItem);
+    tableWidget->setItem(rowIndex,       LOGS_OLD_LEVEL_COLUMN,   mLevelTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, LOGS_OLD_NAME_COLUMN,    mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       LOGS_OLD_NAME_COLUMN,    mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       LOGS_OLD_MESSAGE_COLUMN, mMessageTableWidgetItem);
     // clang-format on
 }
 
@@ -109,9 +109,9 @@ void LogsTableRecord::exportToExcel(QXlsx::Document& doc) const
     dateFormat.setFontColor(CELL_FONT_COLOR);
 
     // clang-format off
-    doc.write(row, LOGS_TIME_COLUMN + 1,    mTimeTableWidgetItem->value(), dateFormat);
-    doc.write(row, LOGS_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[mLevelTableWidgetItem->logLevel()], cellStyle);
-    doc.write(row, LOGS_NAME_COLUMN + 1,    mInstrumentTableItemWidget->fullText(), cellStyle);
-    doc.write(row, LOGS_MESSAGE_COLUMN + 1, mMessageTableWidgetItem->text(), cellStyle);
+    doc.write(row, LOGS_OLD_TIME_COLUMN + 1,    mTimeTableWidgetItem->value(), dateFormat);
+    doc.write(row, LOGS_OLD_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[mLevelTableWidgetItem->logLevel()], cellStyle);
+    doc.write(row, LOGS_OLD_NAME_COLUMN + 1,    mInstrumentTableItemWidget->fullText(), cellStyle);
+    doc.write(row, LOGS_OLD_MESSAGE_COLUMN + 1, mMessageTableWidgetItem->text(), cellStyle);
     // clang-format on
 }

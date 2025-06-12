@@ -190,7 +190,7 @@ def main():
     parser.add_argument(
         "--count",
         dest="count",
-        type=str,
+        type=int,
         default=100000,
         help="Amount of operations",
     )
