@@ -20,6 +20,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
@@ -53,6 +54,7 @@ protected:
         logsTableWidgetMock                  = new StrictMock<LogsTableWidgetMock>();
         portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
+        logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
         logsTableRecordFactoryMock           = new StrictMock<LogsTableRecordFactoryMock>();
         portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
         instrumentWidgetFactoryMock          = new StrictMock<InstrumentWidgetFactoryMock>();
@@ -82,6 +84,7 @@ protected:
         EXPECT_CALL(
             *logsTableWidgetFactoryMock,
             newInstance(
+                logsTableModelFactoryMock,
                 logsTableRecordFactoryMock,
                 logLevelTableItemWidgetFactoryMock,
                 instrumentTableItemWidgetFactoryMock,
@@ -114,6 +117,7 @@ protected:
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
+            logsTableModelFactoryMock,
             logsTableRecordFactoryMock,
             portfolioTreeRecordFactoryMock,
             instrumentWidgetFactoryMock,
@@ -143,6 +147,7 @@ protected:
         delete portfolioTreeWidgetMock;
         */
         delete operationsTableRecordFactoryMock;
+        delete logsTableModelFactoryMock;
         delete logsTableRecordFactoryMock;
         delete portfolioTreeRecordFactoryMock;
         delete instrumentWidgetFactoryMock;
@@ -166,6 +171,7 @@ protected:
     StrictMock<LogsTableWidgetMock>*                  logsTableWidgetMock;
     StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
+    StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
     StrictMock<LogsTableRecordFactoryMock>*           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>*          instrumentWidgetFactoryMock;

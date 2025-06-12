@@ -16,6 +16,7 @@ public:
     LogsTableWidgetFactory& operator=(const LogsTableWidgetFactory& another) = delete;
 
     ILogsTableWidget* newInstance(
+        ILogsTableModelFactory*            logsTableModelFactory,
         ILogsTableRecordFactory*           logsTableRecordFactory,
         ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,

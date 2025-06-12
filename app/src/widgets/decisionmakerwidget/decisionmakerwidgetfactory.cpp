@@ -27,6 +27,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.logsTableWidgetFactory,
         args.portfolioTreeWidgetFactory,
         args.operationsTableRecordFactory,
+        args.logsTableModelFactory,
         args.logsTableRecordFactory,
         args.portfolioTreeRecordFactory,
         args.instrumentWidgetFactory,

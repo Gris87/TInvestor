@@ -23,7 +23,8 @@ public:
     MOCK_METHOD(
         ILogsTableWidget*,
         newInstance,
-        (ILogsTableRecordFactory * logsTableRecordFactory,
+        (ILogsTableModelFactory * logsTableModelFactory,
+         ILogsTableRecordFactory*           logsTableRecordFactory,
          ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
          IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
          IUserStorage*                      userStorage,

@@ -21,4 +21,8 @@ public:
 
     LogsTableModelMock(const LogsTableModelMock& another)            = delete;
     LogsTableModelMock& operator=(const LogsTableModelMock& another) = delete;
+
+    MOCK_METHOD(int, rowCount, (const QModelIndex& parent), (const, override));
+    MOCK_METHOD(int, columnCount, (const QModelIndex& parent), (const, override));
+    MOCK_METHOD(QVariant, data, (const QModelIndex& index, int role), (const, override));
 };

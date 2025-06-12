@@ -23,6 +23,7 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 LogsTableWidget::LogsTableWidget(
+    ILogsTableModelFactory*            logsTableModelFactory,
     ILogsTableRecordFactory*           logsTableRecordFactory,
     ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
@@ -34,6 +35,7 @@ LogsTableWidget::LogsTableWidget(
 ) :
     ILogsTableWidget(parent),
     ui(new Ui::LogsTableWidget),
+    mLogsTableModelFactory(logsTableModelFactory),
     mLogsTableRecordFactory(logsTableRecordFactory),
     mLogLevelTableItemWidgetFactory(logLevelTableItemWidgetFactory),
     mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
@@ -46,6 +48,9 @@ LogsTableWidget::LogsTableWidget(
     qDebug() << "Create LogsTableWidget";
 
     ui->setupUi(this);
+
+    ui->tableView->setModel(mLogsTableModelFactory->newInstance(this));
+    ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 
     ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 }

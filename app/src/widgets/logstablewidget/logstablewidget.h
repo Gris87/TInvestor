@@ -8,6 +8,7 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h"
 
 
@@ -25,6 +26,7 @@ class LogsTableWidget : public ILogsTableWidget
 
 public:
     explicit LogsTableWidget(
+        ILogsTableModelFactory*            logsTableModelFactory,
         ILogsTableRecordFactory*           logsTableRecordFactory,
         ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
@@ -51,6 +53,7 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
+    ILogsTableModelFactory*            mLogsTableModelFactory;
     ILogsTableRecordFactory*           mLogsTableRecordFactory;
     ILogLevelTableItemWidgetFactory*   mLogLevelTableItemWidgetFactory;
     IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;

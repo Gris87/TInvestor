@@ -19,6 +19,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
@@ -49,6 +50,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogsTableWidgetFactoryMock>           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
+    StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
     StrictMock<LogsTableRecordFactoryMock>           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
@@ -85,6 +87,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(
         logsTableWidgetFactoryMock,
         newInstance(
+            &logsTableModelFactoryMock,
             &logsTableRecordFactoryMock,
             &logLevelTableItemWidgetFactoryMock,
             &instrumentTableItemWidgetFactoryMock,
@@ -118,6 +121,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &logsTableWidgetFactoryMock,
             &portfolioTreeWidgetFactoryMock,
             &operationsTableRecordFactoryMock,
+            &logsTableModelFactoryMock,
             &logsTableRecordFactoryMock,
             &portfolioTreeRecordFactoryMock,
             &instrumentWidgetFactoryMock,

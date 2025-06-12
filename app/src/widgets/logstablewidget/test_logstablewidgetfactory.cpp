@@ -8,10 +8,16 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 
 
 
+using ::testing::_;
+using ::testing::InSequence;
+using ::testing::NotNull;
+using ::testing::Return;
 using ::testing::StrictMock;
 
 
@@ -23,8 +29,11 @@ TEST(Test_LogsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_LogsTableWidgetFactory, Test_newInstance)
 {
+    const InSequence seq;
+
     const LogsTableWidgetFactory factory;
 
+    StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
     StrictMock<LogsTableRecordFactoryMock>           logsTableRecordFactoryMock;
     StrictMock<LogLevelTableItemWidgetFactoryMock>   logLevelTableItemWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
@@ -33,7 +42,14 @@ TEST(Test_LogsTableWidgetFactory, Test_newInstance)
     StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
+    StrictMock<LogsTableModelMock> logsTableModelMock;
+
+    EXPECT_CALL(logsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(&logsTableModelMock));
+    EXPECT_CALL(logsTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
+    EXPECT_CALL(logsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
+
     const ILogsTableWidget* widget = factory.newInstance(
+        &logsTableModelFactoryMock,
         &logsTableRecordFactoryMock,
         &logLevelTableItemWidgetFactoryMock,
         &instrumentTableItemWidgetFactoryMock,

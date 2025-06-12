@@ -8,6 +8,7 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h"
 #include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h"
 
 
@@ -22,6 +23,7 @@ public:
     ILogsTableWidgetFactory& operator=(const ILogsTableWidgetFactory& another) = delete;
 
     virtual ILogsTableWidget* newInstance(
+        ILogsTableModelFactory*            logsTableModelFactory,
         ILogsTableRecordFactory*           logsTableRecordFactory,
         ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,

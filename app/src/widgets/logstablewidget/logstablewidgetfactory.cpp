@@ -18,6 +18,7 @@ LogsTableWidgetFactory::~LogsTableWidgetFactory()
 }
 
 ILogsTableWidget* LogsTableWidgetFactory::newInstance(
+    ILogsTableModelFactory*            logsTableModelFactory,
     ILogsTableRecordFactory*           logsTableRecordFactory,
     ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
@@ -29,6 +30,7 @@ ILogsTableWidget* LogsTableWidgetFactory::newInstance(
 ) const
 {
     return new LogsTableWidget(
+        logsTableModelFactory,
         logsTableRecordFactory,
         logLevelTableItemWidgetFactory,
         instrumentTableItemWidgetFactory,

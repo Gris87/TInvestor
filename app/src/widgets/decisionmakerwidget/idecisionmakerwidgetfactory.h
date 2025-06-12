@@ -23,6 +23,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         ILogsTableWidgetFactory*           _logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       _portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     _operationsTableRecordFactory,
+        ILogsTableModelFactory*            _logsTableModelFactory,
         ILogsTableRecordFactory*           _logsTableRecordFactory,
         IPortfolioTreeRecordFactory*       _portfolioTreeRecordFactory,
         IInstrumentWidgetFactory*          _instrumentWidgetFactory,
@@ -39,6 +40,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         logsTableWidgetFactory(_logsTableWidgetFactory),
         portfolioTreeWidgetFactory(_portfolioTreeWidgetFactory),
         operationsTableRecordFactory(_operationsTableRecordFactory),
+        logsTableModelFactory(_logsTableModelFactory),
         logsTableRecordFactory(_logsTableRecordFactory),
         portfolioTreeRecordFactory(_portfolioTreeRecordFactory),
         instrumentWidgetFactory(_instrumentWidgetFactory),
@@ -59,6 +61,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     ILogsTableWidgetFactory*           logsTableWidgetFactory;
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory;
     IOperationsTableRecordFactory*     operationsTableRecordFactory;
+    ILogsTableModelFactory*            logsTableModelFactory;
     ILogsTableRecordFactory*           logsTableRecordFactory;
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory;
     IInstrumentWidgetFactory*          instrumentWidgetFactory;
