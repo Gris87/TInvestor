@@ -7,8 +7,6 @@ from datetime import datetime
 from pathlib import Path
 
 
-last_timestamp = int(datetime.now().timestamp() * 1000)
-
 TIMESTAMP_STEP = 5000
 
 
@@ -21,18 +19,20 @@ def generate_operations(args):
     f = open(output_path, "w")
     f.close()
 
+    last_timestamp = int(datetime.now().timestamp() * 1000 - args.count * TIMESTAMP_STEP)
+
     amount = 0
 
     while amount < args.count:
-        amount += _generate_operations(output_path)
+        block_size, last_timestamp = _generate_operations(last_timestamp, output_path)
+
+        amount += block_size
 
     return True
 
 
-def _generate_operations(output_path):
+def _generate_operations(last_timestamp, output_path):
     block = []
-
-    global last_timestamp
 
     operation = {
         "timestamp": last_timestamp
@@ -41,14 +41,18 @@ def _generate_operations(output_path):
     block.append(operation)
     last_timestamp += TIMESTAMP_STEP
 
+    first_record = output_path.stat().st_size == 0
+
     with open(output_path, "a") as f:
         for operation in block:
-            if output_path.stat().st_size > 0:
+            if not first_record:
                 f.write(",\n")
+            else:
+                first_record = False
 
             f.write(json.dumps(operation))
 
-    return len(block)
+    return len(block), last_timestamp
 
 
 def _calculate_account_hash(account_id):
