@@ -35,9 +35,10 @@ protected:
 
         appDir = qApp->applicationDirPath();
 
+        dirFactoryMock  = new StrictMock<DirFactoryMock>();
+        fileFactoryMock = new StrictMock<FileFactoryMock>();
+
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in StocksDatabase constructor
-        dirFactoryMock               = new StrictMock<DirFactoryMock>();
-        fileFactoryMock              = new StrictMock<FileFactoryMock>();
 
         EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
         EXPECT_CALL(*dirMock, mkpath(appDir + "/data/stocks")).WillOnce(Return(true));

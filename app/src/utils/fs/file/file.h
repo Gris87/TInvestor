@@ -26,6 +26,7 @@ public:
     void       close() override;
     bool       exists() override;
     bool       remove() override;
+    QIODevice* getDevice() override;
 
 private:
     QFile mFile;

@@ -5,6 +5,7 @@ Optimization
 Long startup
 Tray icon popup too long
 Test coverage
+Check style on Q_ASSERT_X
 Create release
 
 Buy if it was sold during 24h and price is less than 1%

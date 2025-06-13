@@ -60,3 +60,8 @@ bool File::remove()
 {
     return mFile.remove();
 }
+
+QIODevice* File::getDevice()
+{
+    return &mFile;
+}

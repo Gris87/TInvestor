@@ -38,6 +38,8 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 0,  # VERBOSE
         "instrumentId": "15dc2120-29d2-48b8-87c0-da1d95255f68",  # SPBE
+        "instrumentTicker": "SPBE",
+        "instrumentName": "SPBEmushka",
         "message": "a" * 100
     }
 
@@ -48,6 +50,8 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 1,  # DEBUG
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
+        "instrumentTicker": "SPBE",
+        "instrumentName": "UGLDushka",
         "message": "b" * 100
     }
 
@@ -58,6 +62,8 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 2,  # INFO
         "instrumentId": "4d813ab1-8bc9-4670-89ea-12bfbab6017d",  # SMLT
+        "instrumentTicker": "SPBE",
+        "instrumentName": "SMLTushka",
         "message": "c" * 100
     }
 
@@ -68,6 +74,8 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 3,  # WARNING
         "instrumentId": "962e2a95-02a9-4171-abd7-aa198dbe643a",  # GAZP
+        "instrumentTicker": "GAZP",
+        "instrumentName": "GAZPromushka",
         "message": "d" * 100
     }
 
@@ -78,6 +86,8 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 4,  # ERROR
         "instrumentId": "e6123145-9665-43e0-8413-cd61b8aa9b13",  # SBER
+        "instrumentTicker": "SBER",
+        "instrumentName": "SBERushka",
         "message": "e" * 100
     }
 
