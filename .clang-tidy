@@ -50,6 +50,7 @@
 # misc-use-anonymous-namespace                              - function 'readStocksDataForParallel' declared 'static', move to anonymous namespace instead
 # modernize-avoid-c-arrays                                  - alias of `cppcoreguidelines-avoid-c-arrays`
 # modernize-pass-by-value                                   - pass by value and use std::move
+# modernize-return-braced-init-list                         - avoid repeating the return type from the declaration; use a braced initializer list instead
 # modernize-type-traits                                     - use c++17 style variable templates
 # modernize-use-auto                                        - use auto when initializing with new to avoid duplicating the type name
 # modernize-use-default-member-init                         - alias of `cppcoreguidelines-use-default-member-init`
@@ -116,6 +117,7 @@ Checks:
         -misc-use-anonymous-namespace,
         -modernize-avoid-c-arrays,
         -modernize-pass-by-value,
+        -modernize-return-braced-init-list,
         -modernize-type-traits,
         -modernize-use-auto,
         -modernize-use-default-member-init,

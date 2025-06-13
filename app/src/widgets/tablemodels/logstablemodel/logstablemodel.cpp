@@ -41,10 +41,8 @@ QVariant LogsTableModel::headerData(int section, Qt::Orientation orientation, in
         {
             return mHeader.at(section);
         }
-        else
-        {
-            return section + 1;
-        }
+
+        return section + 1;
     }
 
     return QVariant();
@@ -54,28 +52,24 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        switch (index.column())
+        int row    = index.row();
+        int column = index.column();
+
+        if (column == LOGS_TIME_COLUMN)
         {
-            case LOGS_TIME_COLUMN:
-            {
-                return QDateTime::fromMSecsSinceEpoch(mEntries.at(index.row()).timestamp).toString(DATETIME_FORMAT);
-            }
-            break;
-            case LOGS_LEVEL_COLUMN:
-            {
-                return mEntries.at(index.row()).level;
-            }
-            break;
-            case LOGS_NAME_COLUMN:
-            {
-                return mEntries.at(index.row()).instrumentId;
-            }
-            break;
-            case LOGS_MESSAGE_COLUMN:
-            {
-                return mEntries.at(index.row()).message;
-            }
-            break;
+            return QDateTime::fromMSecsSinceEpoch(mEntries.at(row).timestamp).toString(DATETIME_FORMAT);
+        }
+        else if (column == LOGS_LEVEL_COLUMN)
+        {
+            return mEntries.at(row).level;
+        }
+        else if (column == LOGS_NAME_COLUMN)
+        {
+            return mEntries.at(row).instrumentId;
+        }
+        else if (column == LOGS_MESSAGE_COLUMN)
+        {
+            return mEntries.at(row).message;
         }
     }
 
