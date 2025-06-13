@@ -4,6 +4,8 @@
 
 #include <QStyledItemDelegate>
 
+#include <QLabel>
+
 #include "src/storage/logos/ilogosstorage.h"
 
 
@@ -21,6 +23,9 @@ public:
 
     void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+
+    static QLabel*     hoverTextWidget;
+    static QModelIndex hoverIndex;
 
 private:
     ILogosStorage* mLogosStorage;

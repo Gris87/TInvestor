@@ -46,6 +46,7 @@ void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)
     else
     {
         logoInStorage = new QPixmap(logo);
+        mLogos[instrumentId] = logoInStorage;
     }
 
     mLogosDatabase->writeLogo(instrumentId, logoInStorage);
@@ -59,6 +60,7 @@ QPixmap* LogosStorage::getLogo(const QString& instrumentId)
     {
         res = new QPixmap();
         mLogosDatabase->readLogo(instrumentId, res);
+        mLogos[instrumentId] = res;
     }
 
     return res;

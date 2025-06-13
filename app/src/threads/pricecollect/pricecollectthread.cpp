@@ -364,7 +364,9 @@ void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& u
         Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
     }
 
+    mLogosStorage->lock();
     mLogosStorage->setLogo(instrumentId, logo);
+    mLogosStorage->unlock();
 }
 
 struct DownloadLogosInfo

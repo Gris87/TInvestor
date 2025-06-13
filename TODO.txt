@@ -10,6 +10,7 @@ Check style on Q_ASSERT_X
 Remove getMutex()
 Read from database in parallel with LogosStorage
 Move LOGS_ROLE_INSTRUMENT_LOGO to shared place
+Put SpinnerWidgets to dedicated page
 Create release
 
 Buy if it was sold during 24h and price is less than 1%

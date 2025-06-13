@@ -56,8 +56,8 @@ LogsTableWidget::LogsTableWidget(
     mLogsTableModel = mLogsTableModelFactory->newInstance(this);
 
     ui->tableView->setModel(mLogsTableModel);
-    ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(this));
-    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, this));
+    ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(ui->tableView));
+    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 
     ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
