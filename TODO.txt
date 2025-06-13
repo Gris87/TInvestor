@@ -5,7 +5,9 @@ Optimization
 Long startup
 Tray icon popup too long
 Test coverage
+Use RWMutex instead of QMutex
 Check style on Q_ASSERT_X
+Remove getMutex()
 Create release
 
 Buy if it was sold during 24h and price is less than 1%
