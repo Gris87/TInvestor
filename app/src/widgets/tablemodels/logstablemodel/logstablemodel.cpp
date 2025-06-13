@@ -78,7 +78,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
 
         Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, "LogsTableModel::data()", "Unexpected behavior");
 
-        return QVariant::fromValue(reinterpret_cast<void*>(mEntries.at(row).instrumentLogo));
+        return reinterpret_cast<qint64>(mEntries.at(row).instrumentLogo);
     }
     else if (role == LOGS_ROLE_INSTRUMENT_NAME)
     {

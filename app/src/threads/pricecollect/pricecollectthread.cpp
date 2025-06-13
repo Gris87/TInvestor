@@ -20,6 +20,7 @@ constexpr qint64  ONE_MONTH                          = 31LL * ONE_DAY;
 constexpr qint64  SLEEP_DELAY                        = 5LL * MS_IN_SECOND; // 5 seconds
 constexpr qint64  MOSCOW_TIME                        = 3 * ONE_HOUR;       // 3 hours
 constexpr qint64  MAX_GRPC_TIME_LIMIT                = ONE_MONTH;          // 1 month
+constexpr int     LOGO_SIZE                          = 24;
 constexpr int     HTTP_STATUS_CODE_OK                = 200;
 constexpr int     HTTP_STATUS_CODE_TOO_MANY_REQUESTS = 429;
 
@@ -43,6 +44,7 @@ PriceCollectThread::PriceCollectThread(
     IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
     IInstrumentsStorage* instrumentsStorage,
+    ILogosStorage*       logosStorage,
     IDirFactory*         dirFactory,
     IFileFactory*        fileFactory,
     IQZipFactory*        qZipFactory,
@@ -57,6 +59,7 @@ PriceCollectThread::PriceCollectThread(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
     mQZipFactory(qZipFactory),
@@ -329,35 +332,39 @@ static void obtainInstrumentsForParallel(
     }
 }
 
-void PriceCollectThread::downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& logoFile)
+void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& url)
 {
     const IHttpClient::Headers headers;
+    const HttpResult           httpResult = mHttpClient->download(url, headers);
 
-    const HttpResult httpResult = mHttpClient->download(url, headers);
+    QPixmap logo;
+    bool    good = false;
 
     if (httpResult.statusCode == HTTP_STATUS_CODE_OK && httpResult.body.size() > 0)
     {
-        const bool ok = logoFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
+        good = logo.loadFromData(httpResult.body, "PNG");
 
-        logoFile->write(httpResult.body);
-        logoFile->close();
+        if (good)
+        {
+            logo = logo.scaled(LOGO_SIZE, LOGO_SIZE, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        }
     }
-    else
+
+    if (!good)
     {
         const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
 
         bool ok = noImageFile->open(QIODevice::ReadOnly);
         Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
 
-        ok = logoFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
-
-        logoFile->write(noImageFile->readAll());
-        logoFile->close();
-
+        QByteArray content = noImageFile->readAll();
         noImageFile->close();
+
+        ok = logo.loadFromData(content, "PNG");
+        Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
     }
+
+    mLogosStorage->setLogo(instrumentId, logo);
 }
 
 struct DownloadLogosInfo
@@ -398,7 +405,7 @@ downloadLogosForParallel(QThread* parentThread, QList<InstrumentIdAndLogo>& logo
             const QString logoName = logosArray[i].logo.replace(".png", "x160.png"); // 160 pixels
             const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
 
-            thread->downloadLogo(url, logoFile);
+            thread->downloadLogo(logosArray[i].instrumentId, url);
         }
 
         downloadLogosInfo->finished++;

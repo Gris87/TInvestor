@@ -1,11 +1,14 @@
 #include "src/threads/pricecollect/pricecollectthread.h"
 
+#include <QBuffer>
 #include <QCoreApplication>
+#include <QPixmap>
 #include <gtest/gtest.h>
 
 #include "src/config/iconfig_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
@@ -21,6 +24,7 @@
 
 
 
+using ::testing::_;
 using ::testing::Gt;
 using ::testing::InSequence;
 using ::testing::Ne;
@@ -47,6 +51,7 @@ protected:
         userStorageMock        = new StrictMock<UserStorageMock>();
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock       = new StrictMock<LogosStorageMock>();
         dirFactoryMock         = new StrictMock<DirFactoryMock>();
         fileFactoryMock        = new StrictMock<FileFactoryMock>();
         qZipFactoryMock        = new StrictMock<QZipFactoryMock>();
@@ -60,6 +65,7 @@ protected:
             userStorageMock,
             stocksStorageMock,
             instrumentsStorageMock,
+            logosStorageMock,
             dirFactoryMock,
             fileFactoryMock,
             qZipFactoryMock,
@@ -77,6 +83,7 @@ protected:
         delete userStorageMock;
         delete stocksStorageMock;
         delete instrumentsStorageMock;
+        delete logosStorageMock;
         delete dirFactoryMock;
         delete fileFactoryMock;
         delete qZipFactoryMock;
@@ -91,6 +98,7 @@ protected:
     StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*       logosStorageMock;
     StrictMock<DirFactoryMock>*         dirFactoryMock;
     StrictMock<FileFactoryMock>*        fileFactoryMock;
     StrictMock<QZipFactoryMock>*        qZipFactoryMock;
@@ -233,9 +241,14 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     stocks << &stock;
 
+    QBuffer logoBuffer;
+
+    QPixmap logoImage(1, 1);
+    logoImage.save(&logoBuffer, "PNG");
+
     HttpResult httpResult;
     httpResult.statusCode = 200;
-    httpResult.body       = QString("What are doing here?").toUtf8();
+    httpResult.body       = logoBuffer.data();
 
     HttpResult tooManyRequestsHttpResult;
     tooManyRequestsHttpResult.statusCode = 429;
@@ -286,9 +299,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/ZARAx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logoFileMock1, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock1, write(httpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock1, close());
+    EXPECT_CALL(*logosStorageMock, setLogo(QString("bbbbb"), _));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ccccc.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock2)));
@@ -296,9 +307,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/LOTOx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logoFileMock2, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock2, write(httpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock2, close());
+    EXPECT_CALL(*logosStorageMock, setLogo(QString("ccccc"), _));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ddddd.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock3)));
@@ -306,9 +315,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/USDx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logoFileMock3, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock3, write(httpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock3, close());
+    EXPECT_CALL(*logosStorageMock, setLogo(QString("ddddd"), _));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/eeeee.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock4)));
@@ -316,9 +323,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logoFileMock4, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock4, write(httpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock4, close());
+    EXPECT_CALL(*logosStorageMock, setLogo(QString("eeeee"), _));
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/fffff.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock5)));
@@ -329,11 +334,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(":/assets/images/no_image.png")))
         .WillOnce(Return(std::shared_ptr<IFile>(noImageFileMock)));
     EXPECT_CALL(*noImageFileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*logoFileMock5, open(QIODevice::OpenMode(QIODevice::WriteOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(internalServerErrorHttpResult.body));
-    EXPECT_CALL(*logoFileMock5, write(internalServerErrorHttpResult.body)).WillOnce(Return(1));
-    EXPECT_CALL(*logoFileMock5, close());
+    EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(logoBuffer.data()));
     EXPECT_CALL(*noImageFileMock, close());
+    EXPECT_CALL(*logosStorageMock, setLogo(QString("fffff"), _));
 
     EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));

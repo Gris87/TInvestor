@@ -30,8 +30,6 @@ Buy if price is less than average for last n days
 Use readonly grpc streams
 Double check mutexes
 Check for maximum memory requirements (With all limits)
-Shared icons
-Resize icons
 Improve all readability-function-cognitive-complexity
 
 

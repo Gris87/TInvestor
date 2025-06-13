@@ -331,6 +331,7 @@ static int runApplication(QApplication* app)
         &userStorage,
         &stocksStorage,
         &instrumentsStorage,
+        &logosStorage,
         &dirFactory,
         &fileFactory,
         &qZipFactory,

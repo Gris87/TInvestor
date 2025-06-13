@@ -7,6 +7,7 @@
 #include "src/config/iconfig.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
@@ -43,6 +44,7 @@ public:
         IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
         IInstrumentsStorage* instrumentsStorage,
+        ILogosStorage*       logosStorage,
         IDirFactory*         dirFactory,
         IFileFactory*        fileFactory,
         IQZipFactory*        qZipFactory,
@@ -63,7 +65,7 @@ public:
 
     bool storeNewStocksInfo(const std::shared_ptr<tinkoff::SharesResponse>& tinkoffStocks);
     void storeNewInstrumentsInfo();
-    void downloadLogo(const QUrl& url, const std::shared_ptr<IFile>& stockLogoFile);
+    void downloadLogo(const QString& instrumentId, const QUrl& url);
     void obtainStocksData();
     void cleanupOperationalData();
     bool obtainStocksDayStartPrice();
@@ -76,6 +78,7 @@ private:
     IUserStorage*        mUserStorage;
     IStocksStorage*      mStocksStorage;
     IInstrumentsStorage* mInstrumentsStorage;
+    ILogosStorage*       mLogosStorage;
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
     IQZipFactory*        mQZipFactory;
