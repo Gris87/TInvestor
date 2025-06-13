@@ -22,7 +22,7 @@ struct User
 
     QString     token;
     bool        qualified;
-    QStringList qualifiedForWorkWith;
+    QStringList qualifiedForWorkWith; // TODO: Do we need it?
     QString     tariff;
     float       commission;
 };

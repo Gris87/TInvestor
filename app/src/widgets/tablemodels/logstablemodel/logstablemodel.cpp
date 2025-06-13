@@ -65,12 +65,28 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
         }
         else if (column == LOGS_NAME_COLUMN)
         {
-            return mEntries.at(row).instrumentId;
+            return mEntries.at(row).instrumentTicker;
         }
         else if (column == LOGS_MESSAGE_COLUMN)
         {
             return mEntries.at(row).message;
         }
+    }
+    else if (role == LOGS_ROLE_INSTRUMENT_LOGO)
+    {
+        int row = index.row();
+
+        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, "LogsTableModel::data()", "Unexpected behavior");
+
+        return QVariant::fromValue(reinterpret_cast<void*>(mEntries.at(row).instrumentLogo));
+    }
+    else if (role == LOGS_ROLE_INSTRUMENT_NAME)
+    {
+        int row = index.row();
+
+        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, "LogsTableModel::data()", "Unexpected behavior");
+
+        return mEntries.at(row).instrumentName;
     }
 
     return QVariant();

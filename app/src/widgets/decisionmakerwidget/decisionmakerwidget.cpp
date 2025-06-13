@@ -24,6 +24,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    ILogosStorage*                     logosStorage,
     IFileDialogFactory*                fileDialogFactory,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -63,6 +64,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
+        logosStorage,
         fileDialogFactory,
         mSettingsEditor,
         this

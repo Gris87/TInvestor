@@ -69,6 +69,7 @@ MainWindow::MainWindow(
     IUserStorage*                      userStorage,
     IStocksStorage*                    stocksStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    ILogosStorage*                     logosStorage,
     IHttpClient*                       httpClient,
     IGrpcClient*                       grpcClient,
     ICleanupThread*                    cleanupThread,
@@ -112,6 +113,7 @@ MainWindow::MainWindow(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mHttpClient(httpClient),
     mGrpcClient(grpcClient),
     mCleanupThread(cleanupThread),
@@ -188,6 +190,7 @@ MainWindow::MainWindow(
             logLevelTableItemWidgetFactory,
             mUserStorage,
             mInstrumentsStorage,
+            mLogosStorage,
             mFileDialogFactory,
             mSettingsEditor
         ),
@@ -209,6 +212,7 @@ MainWindow::MainWindow(
             logLevelTableItemWidgetFactory,
             mUserStorage,
             mInstrumentsStorage,
+            mLogosStorage,
             mFileDialogFactory,
             mSettingsEditor
         ),

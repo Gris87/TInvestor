@@ -4,14 +4,17 @@
 #include <QDebug>
 #include <QPainter>
 
+#include "src/widgets/tablemodels/logstablemodel/ilogstablemodel.h"
+
 
 
 constexpr int ICON_SIZE = 24;
 
 
 
-InstrumentItemDelegate::InstrumentItemDelegate(QWidget* parent) :
-    QStyledItemDelegate(parent)
+InstrumentItemDelegate::InstrumentItemDelegate(ILogosStorage* logosStorage, QWidget* parent) :
+    QStyledItemDelegate(parent),
+    mLogosStorage(logosStorage)
 {
     qDebug() << "Create InstrumentItemDelegate";
 }
@@ -23,16 +26,11 @@ InstrumentItemDelegate::~InstrumentItemDelegate()
 
 void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    const QString instrumentId = index.data().toString();
+    mLogosStorage->lock();
+    QPixmap* logo = reinterpret_cast<QPixmap*>(index.data(LOGS_ROLE_INSTRUMENT_LOGO).data());
 
-    // TODO: Optimize
-    painter->drawPixmap(
-        option.rect.x(),
-        option.rect.y() + (option.rect.height() - ICON_SIZE) / 2,
-        ICON_SIZE,
-        ICON_SIZE,
-        QPixmap(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), instrumentId))
-    );
+    painter->drawPixmap(option.rect.x(), option.rect.y() + (option.rect.height() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE, *logo);
+    mLogosStorage->unlock();
 }
 
 QSize InstrumentItemDelegate::sizeHint(const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/) const

@@ -8,10 +8,18 @@
 
 
 
-LogsDatabase::LogsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, bool autoPilotMode) :
+LogsDatabase::LogsDatabase(
+    IDirFactory*         dirFactory,
+    IFileFactory*        fileFactory,
+    IInstrumentsStorage* instrumentsStorage,
+    ILogosStorage*       logosStorage,
+    bool                 autoPilotMode
+) :
     ILogsDatabase(),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
+    mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mAutoPilotMode(autoPilotMode),
     mAccountHash()
 {
@@ -53,10 +61,25 @@ QList<LogEntry> LogsDatabase::readLogs()
 
             res.resizeForOverwrite(jsonLogs.size());
 
+            mInstrumentsStorage->lock();
+            mLogosStorage->lock();
+
+            const Instruments& instruments = mInstrumentsStorage->getInstruments();
+
             for (int i = 0; i < jsonLogs.size(); ++i)
             {
                 res[i].fromJsonObject(jsonLogs.at(i).toObject());
+
+                const QString     instrumentId = res.at(i).instrumentId;
+                const Instrument& instrument   = instruments.value(instrumentId);
+
+                res[i].instrumentLogo   = mLogosStorage->getLogo(instrumentId);
+                res[i].instrumentTicker = instrument.ticker;
+                res[i].instrumentName   = instrument.name;
             }
+
+            mInstrumentsStorage->unlock();
+            mLogosStorage->unlock();
         }
     }
 

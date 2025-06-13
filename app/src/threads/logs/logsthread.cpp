@@ -4,11 +4,15 @@
 
 
 
-LogsThread::LogsThread(ILogsDatabase* logsDatabase, QObject* parent) :
+LogsThread::LogsThread(
+    ILogsDatabase* logsDatabase, IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, QObject* parent
+) :
     ILogsThread(parent),
     mSemaphore(),
     mMutex(new QMutex()),
     mLogsDatabase(logsDatabase),
+    mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mAccountId(),
     mLastLogTimestamp(),
     mAmountOfLogsWithSameTimestamp(),
@@ -80,8 +84,21 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
         entry.instrumentId = instrumentId;
         entry.message      = message;
 
-        const QMutexLocker lock(mMutex);
+        mInstrumentsStorage->lock();
+        mLogosStorage->lock();
+
+        const Instrument& instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+
+        entry.instrumentLogo   = mLogosStorage->getLogo(instrumentId);
+        entry.instrumentTicker = instrument.ticker;
+        entry.instrumentName   = instrument.name;
+
+        mInstrumentsStorage->unlock();
+        mLogosStorage->unlock();
+
+        mMutex->lock();
         mEntries.append(entry);
+        mMutex->unlock();
 
         mSemaphore.release();
     }
@@ -93,8 +110,9 @@ void LogsThread::terminateThread()
 
     requestInterruption();
 
-    const QMutexLocker lock(mMutex);
+    mMutex->lock();
     mEntries.append(LogEntry());
+    mMutex->unlock();
 
     mSemaphore.release();
 }

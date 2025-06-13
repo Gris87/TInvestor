@@ -5,6 +5,7 @@
 #include "src/widgets/logstablewidget/ilogstablewidget.h"
 
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
@@ -29,6 +30,7 @@ public:
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
         IInstrumentsStorage*               instrumentsStorage,
+        ILogosStorage*                     logosStorage,
         IFileDialogFactory*                fileDialogFactory,
         ISettingsEditor*                   settingsEditor,
         QWidget*                           parent

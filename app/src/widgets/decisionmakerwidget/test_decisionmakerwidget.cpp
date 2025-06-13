@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -62,6 +63,7 @@ protected:
         logLevelTableItemWidgetFactoryMock   = new StrictMock<LogLevelTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock                     = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
@@ -90,6 +92,7 @@ protected:
                 instrumentTableItemWidgetFactoryMock,
                 userStorageMock,
                 instrumentsStorageMock,
+                logosStorageMock,
                 fileDialogFactoryMock,
                 settingsEditorMock,
                 NotNull()
@@ -125,6 +128,7 @@ protected:
             logLevelTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
+            logosStorageMock,
             fileDialogFactoryMock,
             settingsEditorMock
         );
@@ -155,6 +159,7 @@ protected:
         delete logLevelTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
+        delete logosStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
     }
@@ -179,6 +184,7 @@ protected:
     StrictMock<LogLevelTableItemWidgetFactoryMock>*   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*                     logosStorageMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };

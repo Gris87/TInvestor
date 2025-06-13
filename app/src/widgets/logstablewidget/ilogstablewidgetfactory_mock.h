@@ -29,6 +29,7 @@ public:
          IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
          IUserStorage*                      userStorage,
          IInstrumentsStorage*               instrumentsStorage,
+         ILogosStorage*                     logosStorage,
          IFileDialogFactory*                fileDialogFactory,
          ISettingsEditor*                   settingsEditor,
          QWidget*                           parent),

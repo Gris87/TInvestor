@@ -17,6 +17,12 @@ enum LogsTableColumns : qint8
     LOGS_COLUMN_COUNT,
 };
 
+enum LogsTableUserRoles : qint16
+{
+    LOGS_ROLE_INSTRUMENT_LOGO = Qt::UserRole + 1,
+    LOGS_ROLE_INSTRUMENT_NAME = Qt::UserRole + 2
+};
+
 
 
 class ILogsTableModel : public QAbstractTableModel

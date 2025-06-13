@@ -14,6 +14,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/cleanup/icleanupthread.h"
@@ -92,6 +93,7 @@ public:
         IUserStorage*                      userStorage,
         IStocksStorage*                    stocksStorage,
         IInstrumentsStorage*               instrumentsStorage,
+        ILogosStorage*                     logosStorage,
         IHttpClient*                       httpClient,
         IGrpcClient*                       grpcClient,
         ICleanupThread*                    cleanupThread,
@@ -165,6 +167,7 @@ private:
     IUserStorage*                      mUserStorage;
     IStocksStorage*                    mStocksStorage;
     IInstrumentsStorage*               mInstrumentsStorage;
+    ILogosStorage*                     mLogosStorage;
     IHttpClient*                       mHttpClient;
     IGrpcClient*                       mGrpcClient;
     ICleanupThread*                    mCleanupThread;

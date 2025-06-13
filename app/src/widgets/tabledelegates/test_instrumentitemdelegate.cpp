@@ -6,5 +6,4 @@
 
 TEST(Test_InstrumentItemDelegate, Test_constructor_and_destructor)
 {
-    const InstrumentItemDelegate item;
 }

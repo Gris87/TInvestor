@@ -23,6 +23,7 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h"
 #include "src/db/instruments/instrumentsdatabase.h"
+#include "src/db/logos/logosdatabase.h"
 #include "src/db/logs/logsdatabase.h"
 #include "src/db/operations/operationsdatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
@@ -36,6 +37,7 @@
 #include "src/grpc/rawgrpcclient.h"
 #include "src/main/mainwindow.h"
 #include "src/storage/instruments/instrumentsstorage.h"
+#include "src/storage/logos/logosstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
 #include "src/threads/cleanup/cleanupthread.h"
@@ -310,8 +312,10 @@ static int runApplication(QApplication* app)
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
+    LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
+    LogosStorage        logosStorage(&logosDatabase);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
-    LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, true);
+    LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &instrumentsStorage, &logosStorage, true);
 
     TimeUtils         timeUtils;
     FileDialogFactory fileDialogFactory;
@@ -337,7 +341,7 @@ static int runApplication(QApplication* app)
     );
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     OperationsThread         operationsThread(&autoPilotOperationsDatabase, &grpcClient);
-    LogsThread               logsThread(&autoPilotLogsDatabase);
+    LogsThread               logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
     PortfolioThread          portfolioThread(&grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
     FollowThread             followThread(&instrumentsStorage, &grpcClient);
@@ -383,6 +387,7 @@ static int runApplication(QApplication* app)
         &userStorage,
         &stocksStorage,
         &instrumentsStorage,
+        &logosStorage,
         &httpClient,
         &grpcClient,
         &cleanupThread,

@@ -35,6 +35,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.logLevelTableItemWidgetFactory,
         args.userStorage,
         args.instrumentsStorage,
+        args.logosStorage,
         args.fileDialogFactory,
         args.settingsEditor,
         parent

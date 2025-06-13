@@ -15,7 +15,7 @@ TEST(Test_LogEntry, Test_constructor_and_destructor)
     ASSERT_EQ(entry.timestamp,        0);
     ASSERT_EQ(entry.level,            LOG_LEVEL_VERBOSE);
     ASSERT_EQ(entry.instrumentId,     "");
-    ASSERT_EQ(entry.instrumentIcon,   nullptr);
+    ASSERT_EQ(entry.instrumentLogo,   nullptr);
     ASSERT_EQ(entry.instrumentTicker, "");
     ASSERT_EQ(entry.instrumentName,   "");
     ASSERT_EQ(entry.message,          "");
@@ -39,7 +39,7 @@ TEST(Test_LogEntry, Test_copy_constructor)
     ASSERT_EQ(entry2.timestamp,        1);
     ASSERT_EQ(entry2.level,            LOG_LEVEL_INFO);
     ASSERT_EQ(entry2.instrumentId,     "a");
-    ASSERT_EQ(entry2.instrumentIcon,   nullptr);
+    ASSERT_EQ(entry2.instrumentLogo,   nullptr);
     ASSERT_EQ(entry2.instrumentTicker, "b");
     ASSERT_EQ(entry2.instrumentName,   "c");
     ASSERT_EQ(entry2.message,          "d");
@@ -64,7 +64,7 @@ TEST(Test_LogEntry, Test_assign)
     ASSERT_EQ(entry2.timestamp,        1);
     ASSERT_EQ(entry2.level,            LOG_LEVEL_INFO);
     ASSERT_EQ(entry2.instrumentId,     "a");
-    ASSERT_EQ(entry2.instrumentIcon,   nullptr);
+    ASSERT_EQ(entry2.instrumentLogo,   nullptr);
     ASSERT_EQ(entry2.instrumentTicker, "b");
     ASSERT_EQ(entry2.instrumentName,   "c");
     ASSERT_EQ(entry2.message,          "d");
@@ -79,7 +79,7 @@ TEST(Test_LogEntry, Test_fromJsonObject)
     ASSERT_EQ(entry.timestamp,        0);
     ASSERT_EQ(entry.level,            LOG_LEVEL_VERBOSE);
     ASSERT_EQ(entry.instrumentId,     "");
-    ASSERT_EQ(entry.instrumentIcon,   nullptr);
+    ASSERT_EQ(entry.instrumentLogo,   nullptr);
     ASSERT_EQ(entry.instrumentTicker, "");
     ASSERT_EQ(entry.instrumentName,   "");
     ASSERT_EQ(entry.message,          "");
@@ -98,7 +98,7 @@ TEST(Test_LogEntry, Test_fromJsonObject)
     ASSERT_EQ(entry.timestamp,        1);
     ASSERT_EQ(entry.level,            LOG_LEVEL_INFO);
     ASSERT_EQ(entry.instrumentId,     "a");
-    ASSERT_EQ(entry.instrumentIcon,   nullptr);
+    ASSERT_EQ(entry.instrumentLogo,   nullptr);
     ASSERT_EQ(entry.instrumentTicker, "b");
     ASSERT_EQ(entry.instrumentName,   "c");
     ASSERT_EQ(entry.message,          "d");

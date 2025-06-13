@@ -24,7 +24,7 @@ LogEntry::LogEntry() :
     timestamp(),
     level(),
     instrumentId(),
-    instrumentIcon(),
+    instrumentLogo(),
     instrumentTicker(),
     instrumentName(),
     message()

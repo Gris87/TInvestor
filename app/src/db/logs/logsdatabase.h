@@ -4,6 +4,8 @@
 
 #include "src/db/logs/ilogsdatabase.h"
 
+#include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
 
@@ -12,7 +14,13 @@
 class LogsDatabase : public ILogsDatabase
 {
 public:
-    explicit LogsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, bool autoPilotMode);
+    explicit LogsDatabase(
+        IDirFactory*         dirFactory,
+        IFileFactory*        fileFactory,
+        IInstrumentsStorage* instrumentsStorage,
+        ILogosStorage*       logosStorage,
+        bool                 autoPilotMode
+    );
     ~LogsDatabase() override;
 
     LogsDatabase(const LogsDatabase& another)            = delete;
@@ -28,8 +36,10 @@ public:
     QString logsDirPath() const;
 
 private:
-    IDirFactory*  mDirFactory;
-    IFileFactory* mFileFactory;
-    bool          mAutoPilotMode;
-    QString       mAccountHash;
+    IDirFactory*         mDirFactory;
+    IFileFactory*        mFileFactory;
+    IInstrumentsStorage* mInstrumentsStorage;
+    ILogosStorage*       mLogosStorage;
+    bool                 mAutoPilotMode;
+    QString              mAccountHash;
 };

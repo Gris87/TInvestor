@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -37,6 +38,7 @@ protected:
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock                     = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
@@ -53,6 +55,7 @@ protected:
             instrumentTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
+            logosStorageMock,
             fileDialogFactoryMock,
             settingsEditorMock
         );
@@ -67,6 +70,7 @@ protected:
         delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
+        delete logosStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete logsTableModelMock;
@@ -79,6 +83,7 @@ protected:
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*                     logosStorageMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
     StrictMock<LogsTableModelMock>*                   logsTableModelMock;

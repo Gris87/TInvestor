@@ -31,6 +31,7 @@ LogsTableWidget::LogsTableWidget(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    ILogosStorage*                     logosStorage,
     IFileDialogFactory*                fileDialogFactory,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -56,7 +57,7 @@ LogsTableWidget::LogsTableWidget(
 
     ui->tableView->setModel(mLogsTableModel);
     ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(this));
-    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(this));
+    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, this));
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 
     ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);

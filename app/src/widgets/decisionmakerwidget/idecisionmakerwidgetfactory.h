@@ -31,6 +31,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         ILogLevelTableItemWidgetFactory*   _logLevelTableItemWidgetFactory,
         IUserStorage*                      _userStorage,
         IInstrumentsStorage*               _instrumentsStorage,
+        ILogosStorage*                     _logosStorage,
         IFileDialogFactory*                _fileDialogFactory,
         ISettingsEditor*                   _settingsEditor
     ) :
@@ -48,6 +49,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         logLevelTableItemWidgetFactory(_logLevelTableItemWidgetFactory),
         userStorage(_userStorage),
         instrumentsStorage(_instrumentsStorage),
+        logosStorage(_logosStorage),
         fileDialogFactory(_fileDialogFactory),
         settingsEditor(_settingsEditor)
     {
@@ -69,6 +71,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory;
     IUserStorage*                      userStorage;
     IInstrumentsStorage*               instrumentsStorage;
+    ILogosStorage*                     logosStorage;
     IFileDialogFactory*                fileDialogFactory;
     ISettingsEditor*                   settingsEditor;
 };

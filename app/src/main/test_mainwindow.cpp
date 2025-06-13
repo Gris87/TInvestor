@@ -23,6 +23,7 @@
 #include "src/dialogs/startsimulationdialog/istartsimulationdialogfactory_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
@@ -131,6 +132,7 @@ protected:
         userStorageMock                      = new StrictMock<UserStorageMock>();
         stocksStorageMock                    = new StrictMock<StocksStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock                     = new StrictMock<LogosStorageMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         grpcClientMock                       = new StrictMock<GrpcClientMock>();
         cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
@@ -195,6 +197,7 @@ protected:
                     logLevelTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
+                    logosStorageMock,
                     fileDialogFactoryMock,
                     settingsEditorMock
                 ),
@@ -220,6 +223,7 @@ protected:
                     logLevelTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
+                    logosStorageMock,
                     fileDialogFactoryMock,
                     settingsEditorMock
                 ),
@@ -289,6 +293,7 @@ protected:
             userStorageMock,
             stocksStorageMock,
             instrumentsStorageMock,
+            logosStorageMock,
             httpClientMock,
             grpcClientMock,
             cleanupThreadMock,
@@ -377,6 +382,7 @@ protected:
         delete userStorageMock;
         delete stocksStorageMock;
         delete instrumentsStorageMock;
+        delete logosStorageMock;
         delete httpClientMock;
         delete grpcClientMock;
         delete cleanupThreadMock;
@@ -446,6 +452,7 @@ protected:
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<StocksStorageMock>*                    stocksStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*                     logosStorageMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<GrpcClientMock>*                       grpcClientMock;
     StrictMock<CleanupThreadMock>*                    cleanupThreadMock;

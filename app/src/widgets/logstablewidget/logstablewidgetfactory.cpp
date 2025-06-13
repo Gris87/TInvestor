@@ -24,6 +24,7 @@ ILogsTableWidget* LogsTableWidgetFactory::newInstance(
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
+    ILogosStorage*                     logosStorage,
     IFileDialogFactory*                fileDialogFactory,
     ISettingsEditor*                   settingsEditor,
     QWidget*                           parent
@@ -36,6 +37,7 @@ ILogsTableWidget* LogsTableWidgetFactory::newInstance(
         instrumentTableItemWidgetFactory,
         userStorage,
         instrumentsStorage,
+        logosStorage,
         fileDialogFactory,
         settingsEditor,
         parent

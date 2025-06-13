@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -58,6 +59,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogLevelTableItemWidgetFactoryMock>   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
+    StrictMock<LogosStorageMock>                     logosStorageMock;
     StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>                   settingsEditorMock;
 
@@ -93,6 +95,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &instrumentTableItemWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
+            &logosStorageMock,
             &fileDialogFactoryMock,
             &settingsEditorMock,
             NotNull()
@@ -129,6 +132,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &logLevelTableItemWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
+            &logosStorageMock,
             &fileDialogFactoryMock,
             &settingsEditorMock
         ),
