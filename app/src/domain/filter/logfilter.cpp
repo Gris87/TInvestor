@@ -8,14 +8,20 @@ LogFilter::LogFilter() :
 {
 }
 
-bool LogFilter::isFiltered(LogLevel l, const QString& t, const QString& name) const
+bool LogFilter::isActive() const
 {
-    if (l < level)
+    return level != LOG_LEVEL_VERBOSE || ticker != "";
+}
+
+bool LogFilter::isFiltered(const LogEntry& entry) const
+{
+    if (entry.level < level)
     {
         return false;
     }
 
-    if (ticker != "" && !t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
+    if (ticker != "" && !entry.instrumentTicker.contains(ticker, Qt::CaseInsensitive) &&
+        !entry.instrumentName.contains(ticker, Qt::CaseInsensitive))
     {
         return false;
     }

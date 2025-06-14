@@ -30,6 +30,7 @@
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -69,6 +70,8 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<LogsFilterWidgetMock>*      logsFilterWidgetMock      = new StrictMock<LogsFilterWidgetMock>();
     StrictMock<LogsTableWidgetMock>*       logsTableWidgetMock       = new StrictMock<LogsTableWidgetMock>();
     StrictMock<PortfolioTreeWidgetMock>*   portfolioTreeWidgetMock   = new StrictMock<PortfolioTreeWidgetMock>();
+
+    LogFilter filter;
 
     EXPECT_CALL(
         operationsTableWidgetFactoryMock,
@@ -115,6 +118,9 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         )
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
+
+    EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+    EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
 
     const IDecisionMakerWidget* widget = factory.newInstance(
         DecisionMakerWidgetFactoryNewInstanceArgsMore15(

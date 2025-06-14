@@ -29,7 +29,7 @@ void LogosDatabase::readLogo(const QString& instrumentId, QPixmap* logo)
 
     if (logoFile->open(QIODevice::ReadOnly))
     {
-        QByteArray content = logoFile->readAll();
+        const QByteArray content = logoFile->readAll();
         logoFile->close();
 
         if (!logo->loadFromData(content, "PNG"))

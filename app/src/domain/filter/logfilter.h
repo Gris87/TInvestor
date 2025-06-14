@@ -15,7 +15,10 @@ struct LogFilter
     LogFilter& operator=(const LogFilter& another) = default;
 
     [[nodiscard]]
-    bool isFiltered(LogLevel l, const QString& t, const QString& name) const;
+    bool isActive() const;
+
+    [[nodiscard]]
+    bool isFiltered(const LogEntry& entry) const;
 
     LogLevel level;
     QString  ticker;

@@ -32,6 +32,7 @@ using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -66,6 +67,8 @@ protected:
         logosStorageMock                     = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+
+        LogFilter filter;
 
         EXPECT_CALL(
             *operationsTableWidgetFactoryMock,
@@ -112,6 +115,9 @@ protected:
             )
         )
             .WillOnce(Return(portfolioTreeWidgetMock));
+
+        EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+        EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
 
         decisionMakerWidget = new DecisionMakerWidget(
             operationsTableWidgetFactoryMock,

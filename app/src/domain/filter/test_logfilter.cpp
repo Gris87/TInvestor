@@ -46,18 +46,48 @@ TEST(Test_LogFilter, Test_assign)
     // clang-format on
 }
 
+TEST(Test_LogFilter, Test_isActive)
+{
+    LogFilter filter;
+
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.level = LOG_LEVEL_ERROR;
+    ASSERT_EQ(filter.isActive(), true);
+    filter.level = LOG_LEVEL_VERBOSE;
+    ASSERT_EQ(filter.isActive(), false);
+
+    filter.ticker = "aaaaa";
+    ASSERT_EQ(filter.isActive(), true);
+    filter.ticker = "";
+    ASSERT_EQ(filter.isActive(), false);
+}
+
 TEST(Test_LogFilter, Test_isFiltered)
 {
     LogFilter filter;
+    LogEntry  entry;
 
     filter.level  = LOG_LEVEL_DEBUG;
     filter.ticker = "SPB";
 
-    // clang-format off
-    ASSERT_EQ(filter.isFiltered(LOG_LEVEL_VERBOSE, "SPBE", "SPB Market"), false);
-    ASSERT_EQ(filter.isFiltered(LOG_LEVEL_DEBUG,   "SEPB", "SEB Market"), false);
-    ASSERT_EQ(filter.isFiltered(LOG_LEVEL_DEBUG,   "SPBE", "SPB Market"), true);
-    // clang-format on
+    entry.level            = LOG_LEVEL_DEBUG;
+    entry.instrumentTicker = "SPBE";
+    entry.instrumentName   = "SPB Market";
+
+    ASSERT_EQ(filter.isFiltered(entry), true);
+
+    entry.level            = LOG_LEVEL_VERBOSE;
+    entry.instrumentTicker = "SPBE";
+    entry.instrumentName   = "SPB Market";
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.level            = LOG_LEVEL_DEBUG;
+    entry.instrumentTicker = "SEPB";
+    entry.instrumentName   = "SEB Market";
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
 }
 
 TEST(Test_LogFilter, Test_equals)

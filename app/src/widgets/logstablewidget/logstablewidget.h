@@ -45,9 +45,9 @@ public:
 
     Ui::LogsTableWidget* ui;
 
+    void setFilter(const LogFilter& filter) override;
     void logsRead(const QList<LogEntry>& entries, const LogFilter& filter) override;
     void logAdded(const LogEntry& entry, const LogFilter& filter) override;
-    void filterChanged(const LogFilter& filter) override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;

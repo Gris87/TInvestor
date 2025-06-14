@@ -86,7 +86,13 @@ void LogsTableRecord::filter(QTableWidget* tableWidget, const LogFilter& filter)
     const QString ticker   = mInstrumentTableItemWidget->ticker();
     const QString fullText = mInstrumentTableItemWidget->fullText();
 
-    const bool hidden = !filter.isFiltered(mLevelTableWidgetItem->logLevel(), ticker, fullText);
+    LogEntry entry;
+
+    entry.level            = mLevelTableWidgetItem->logLevel();
+    entry.instrumentTicker = ticker;
+    entry.instrumentName   = fullText;
+
+    const bool hidden = !filter.isFiltered(entry);
 
     tableWidget->setRowHidden(row, hidden);
 }

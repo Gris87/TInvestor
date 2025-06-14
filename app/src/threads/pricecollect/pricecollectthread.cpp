@@ -357,7 +357,7 @@ void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& u
         bool ok = noImageFile->open(QIODevice::ReadOnly);
         Q_ASSERT_X(ok, "PriceCollectThread::downloadLogo()", "Failed to open file");
 
-        QByteArray content = noImageFile->readAll();
+        const QByteArray content = noImageFile->readAll();
         noImageFile->close();
 
         ok = logo.loadFromData(content, "PNG");

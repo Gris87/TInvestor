@@ -31,10 +31,15 @@ public:
 
     void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
 
+    void setFilter(const LogFilter& filter) override;
     void logsRead(const QList<LogEntry>& entries) override;
     void logAdded(const LogEntry& entry) override;
 
 private:
-    QStringList     mHeader;
-    QList<LogEntry> mEntries;
+    void filterAll();
+
+    QStringList                      mHeader;
+    LogFilter                        mFilter;
+    std::shared_ptr<QList<LogEntry>> mEntriesUnfiltered;
+    std::shared_ptr<QList<LogEntry>> mEntries;
 };

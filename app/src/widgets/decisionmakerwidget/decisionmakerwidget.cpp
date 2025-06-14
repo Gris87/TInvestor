@@ -79,6 +79,8 @@ DecisionMakerWidget::DecisionMakerWidget(
         this
     );
 
+    mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());
+
     ui->layoutForOperationsTableWidget->addWidget(mOperationsTableWidget);
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);
     ui->layoutForLogsFilterWidget->addWidget(mLogsFilterWidget);
@@ -154,6 +156,11 @@ void DecisionMakerWidget::updateLastPrices()
     mPortfolioTreeWidget->updateLastPrices();
 }
 
+void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
+{
+    mLogsTableWidget->setFilter(filter);
+}
+
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
     mAccountChartWidget->switchChart(CHART_TYPE_YIELD);
@@ -192,11 +199,6 @@ void DecisionMakerWidget::on_totalMoneyButton_clicked()
     ui->monthlyYieldButton->setChecked(false);
     ui->remainedMoneyButton->setChecked(false);
     ui->totalMoneyButton->setChecked(true);
-}
-
-void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
-{
-    mLogsTableWidget->filterChanged(filter);
 }
 
 void DecisionMakerWidget::saveWindowState(const QString& type)

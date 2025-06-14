@@ -70,6 +70,26 @@ LogsTableWidget::~LogsTableWidget()
     delete ui;
 }
 
+void LogsTableWidget::setFilter(const LogFilter& filter)
+{
+    ui->tableView->setUpdatesEnabled(false);
+    ui->tableView->setSortingEnabled(false);
+
+    mLogsTableModel->setFilter(filter);
+
+    ui->tableView->setSortingEnabled(true);
+    ui->tableView->setUpdatesEnabled(true);
+
+    ui->tableWidget->setUpdatesEnabled(false);
+
+    for (ILogsTableRecord* record : std::as_const(mRecords))
+    {
+        record->filter(ui->tableWidget, filter);
+    }
+
+    ui->tableWidget->setUpdatesEnabled(true);
+}
+
 void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& filter)
 {
     ui->tableView->setUpdatesEnabled(false);
@@ -145,18 +165,6 @@ void LogsTableWidget::logAdded(const LogEntry& entry, const LogFilter& filter)
     mRecords.append(record);
 
     ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
-}
-
-void LogsTableWidget::filterChanged(const LogFilter& filter)
-{
-    ui->tableWidget->setUpdatesEnabled(false);
-
-    for (ILogsTableRecord* record : std::as_const(mRecords))
-    {
-        record->filter(ui->tableWidget, filter);
-    }
-
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
