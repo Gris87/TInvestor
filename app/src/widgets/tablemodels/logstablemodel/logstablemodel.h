@@ -29,6 +29,8 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+
     void logsRead(const QList<LogEntry>& entries) override;
     void logAdded(const LogEntry& entry) override;
 

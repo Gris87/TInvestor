@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include "src/widgets/tablemodels/logstablemodel/comparators.h"
+
 
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
@@ -90,6 +92,54 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
     }
 
     return QVariant();
+}
+
+void LogsTableModel::sort(int column, Qt::SortOrder order)
+{
+    QList<QPersistentModelIndex> parents;
+
+    emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
+    if (order == Qt::AscendingOrder)
+    {
+        if (column == LOGS_TIME_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableTimeLessThan());
+        }
+        else if (column == LOGS_LEVEL_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableLevelLessThan());
+        }
+        else if (column == LOGS_NAME_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableNameLessThan());
+        }
+        else if (column == LOGS_MESSAGE_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableMessageLessThan());
+        }
+    }
+    else
+    {
+        if (column == LOGS_TIME_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableTimeGreaterThan());
+        }
+        else if (column == LOGS_LEVEL_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableLevelGreaterThan());
+        }
+        else if (column == LOGS_NAME_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableNameGreaterThan());
+        }
+        else if (column == LOGS_MESSAGE_COLUMN)
+        {
+            std::stable_sort(mEntries.begin(), mEntries.end(), LogsTableMessageGreaterThan());
+        }
+    }
+
+    emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
 }
 
 void LogsTableModel::logsRead(const QList<LogEntry>& entries)

@@ -383,6 +383,7 @@ HEADERS += \
     src/widgets/tableitems/paybacktableitem.h \
     src/widgets/tableitems/timetableitem.h \
     src/widgets/tableitems/turnovertableitem.h \
+    src/widgets/tablemodels/logstablemodel/comparators.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h \
     src/widgets/tablemodels/logstablemodel/logstablemodel.h \
