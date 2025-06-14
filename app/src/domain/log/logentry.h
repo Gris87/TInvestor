@@ -17,7 +17,6 @@ enum LogLevel : quint8
 };
 
 extern const char* const LOG_LEVEL_NAMES[LOG_LEVEL_COUNT];
-extern const char* const LOG_LEVEL_NAMES_LOWERCASE[LOG_LEVEL_COUNT];
 
 
 

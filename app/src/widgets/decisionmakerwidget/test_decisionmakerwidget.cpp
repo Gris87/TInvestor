@@ -20,9 +20,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
@@ -57,11 +55,9 @@ protected:
         portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
         logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
-        logsTableRecordFactoryMock           = new StrictMock<LogsTableRecordFactoryMock>();
         portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
         instrumentWidgetFactoryMock          = new StrictMock<InstrumentWidgetFactoryMock>();
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
-        logLevelTableItemWidgetFactoryMock   = new StrictMock<LogLevelTableItemWidgetFactoryMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock                     = new StrictMock<LogosStorageMock>();
@@ -88,18 +84,7 @@ protected:
         EXPECT_CALL(*logsFilterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(logsFilterWidgetMock));
         EXPECT_CALL(
             *logsTableWidgetFactoryMock,
-            newInstance(
-                logsTableModelFactoryMock,
-                logsTableRecordFactoryMock,
-                logLevelTableItemWidgetFactoryMock,
-                instrumentTableItemWidgetFactoryMock,
-                userStorageMock,
-                instrumentsStorageMock,
-                logosStorageMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
-                NotNull()
-            )
+            newInstance(logsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(logsTableWidgetMock));
         EXPECT_CALL(
@@ -127,11 +112,9 @@ protected:
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
             logsTableModelFactoryMock,
-            logsTableRecordFactoryMock,
             portfolioTreeRecordFactoryMock,
             instrumentWidgetFactoryMock,
             instrumentTableItemWidgetFactoryMock,
-            logLevelTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
@@ -158,11 +141,9 @@ protected:
         */
         delete operationsTableRecordFactoryMock;
         delete logsTableModelFactoryMock;
-        delete logsTableRecordFactoryMock;
         delete portfolioTreeRecordFactoryMock;
         delete instrumentWidgetFactoryMock;
         delete instrumentTableItemWidgetFactoryMock;
-        delete logLevelTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
@@ -183,11 +164,9 @@ protected:
     StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
     StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
-    StrictMock<LogsTableRecordFactoryMock>*           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>*          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
-    StrictMock<LogLevelTableItemWidgetFactoryMock>*   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
     StrictMock<LogosStorageMock>*                     logosStorageMock;

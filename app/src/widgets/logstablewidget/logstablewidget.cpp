@@ -25,42 +25,28 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 LogsTableWidget::LogsTableWidget(
-    ILogsTableModelFactory*            logsTableModelFactory,
-    ILogsTableRecordFactory*           logsTableRecordFactory,
-    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    IUserStorage*                      userStorage,
-    IInstrumentsStorage*               instrumentsStorage,
-    ILogosStorage*                     logosStorage,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
+    ILogsTableModelFactory* logsTableModelFactory,
+    ILogosStorage*          logosStorage,
+    IFileDialogFactory*     fileDialogFactory,
+    ISettingsEditor*        settingsEditor,
+    QWidget*                parent
 ) :
     ILogsTableWidget(parent),
     ui(new Ui::LogsTableWidget),
-    mLogsTableModelFactory(logsTableModelFactory),
-    mLogsTableRecordFactory(logsTableRecordFactory),
-    mLogLevelTableItemWidgetFactory(logLevelTableItemWidgetFactory),
-    mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
-    mUserStorage(userStorage),
-    mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
-    mLogsTableModel(),
-    mRecords()
+    mLogsTableModel()
 {
     qDebug() << "Create LogsTableWidget";
 
     ui->setupUi(this);
 
-    mLogsTableModel = mLogsTableModelFactory->newInstance(this);
+    mLogsTableModel = logsTableModelFactory->newInstance(this);
 
     ui->tableView->setModel(mLogsTableModel);
     ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(ui->tableView));
     ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
-
-    ui->tableWidget->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 }
 
 LogsTableWidget::~LogsTableWidget()
@@ -79,18 +65,9 @@ void LogsTableWidget::setFilter(const LogFilter& filter)
 
     ui->tableView->setSortingEnabled(true);
     ui->tableView->setUpdatesEnabled(true);
-
-    ui->tableWidget->setUpdatesEnabled(false);
-
-    for (ILogsTableRecord* record : std::as_const(mRecords))
-    {
-        record->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& filter)
+void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
 {
     ui->tableView->setUpdatesEnabled(false);
     ui->tableView->setSortingEnabled(false);
@@ -99,46 +76,9 @@ void LogsTableWidget::logsRead(const QList<LogEntry>& entries, const LogFilter& 
 
     ui->tableView->setSortingEnabled(true);
     ui->tableView->setUpdatesEnabled(true);
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    if (mRecords.size() > entries.size())
-    {
-        while (mRecords.size() > entries.size())
-        {
-            delete mRecords.takeLast();
-        }
-
-        ui->tableWidget->setRowCount(entries.size());
-    }
-
-    while (mRecords.size() < entries.size())
-    {
-        ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(
-            ui->tableWidget,
-            mLogLevelTableItemWidgetFactory,
-            mInstrumentTableItemWidgetFactory,
-            mUserStorage,
-            mInstrumentsStorage,
-            this
-        );
-        mRecords.append(record);
-    }
-
-    for (int i = 0; i < entries.size(); ++i)
-    {
-        ILogsTableRecord* record = mRecords.at(i);
-
-        record->setLogEntry(entries.at(i));
-        record->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void LogsTableWidget::logAdded(const LogEntry& entry, const LogFilter& filter)
+void LogsTableWidget::logAdded(const LogEntry& entry)
 {
     ui->tableView->setUpdatesEnabled(false);
     ui->tableView->setSortingEnabled(false);
@@ -147,25 +87,6 @@ void LogsTableWidget::logAdded(const LogEntry& entry, const LogFilter& filter)
 
     ui->tableView->setSortingEnabled(true);
     ui->tableView->setUpdatesEnabled(true);
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    ILogsTableRecord* record = mLogsTableRecordFactory->newInstance(
-        ui->tableWidget,
-        mLogLevelTableItemWidgetFactory,
-        mInstrumentTableItemWidgetFactory,
-        mUserStorage,
-        mInstrumentsStorage,
-        this
-    );
-    record->setLogEntry(entry);
-    record->filter(ui->tableWidget, filter);
-
-    mRecords.append(record);
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void LogsTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)
@@ -217,10 +138,7 @@ void LogsTableWidget::exportToExcel(const QString& path) const
         doc.write(1, i + 1, mLogsTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
 
-    for (ILogsTableRecord* record : std::as_const(mRecords))
-    {
-        record->exportToExcel(doc);
-    }
+    mLogsTableModel->exportToExcel(doc);
 
     // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
@@ -251,12 +169,5 @@ void LogsTableWidget::loadWindowState(const QString& type)
     ui->tableView->setColumnWidth(LOGS_LEVEL_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Level",   COLUMN_WIDTHS[LOGS_LEVEL_COLUMN]).toInt());
     ui->tableView->setColumnWidth(LOGS_NAME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Name",    COLUMN_WIDTHS[LOGS_NAME_COLUMN]).toInt());
     ui->tableView->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
-    // clang-format on
-
-    // clang-format off
-    ui->tableWidget->setColumnWidth(LOGS_TIME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Time",    COLUMN_WIDTHS[LOGS_TIME_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(LOGS_LEVEL_COLUMN,   mSettingsEditor->value(type + "/columnWidth_Level",   COLUMN_WIDTHS[LOGS_LEVEL_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(LOGS_NAME_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Name",    COLUMN_WIDTHS[LOGS_NAME_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(LOGS_MESSAGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_Message", COLUMN_WIDTHS[LOGS_MESSAGE_COLUMN]).toInt());
     // clang-format on
 }

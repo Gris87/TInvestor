@@ -45,7 +45,7 @@ void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)
     }
     else
     {
-        logoInStorage = new QPixmap(logo);
+        logoInStorage        = new QPixmap(logo);
         mLogos[instrumentId] = logoInStorage;
     }
 

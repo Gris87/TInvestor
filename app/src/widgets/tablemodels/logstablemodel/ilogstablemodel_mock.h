@@ -29,4 +29,5 @@ public:
     MOCK_METHOD(void, setFilter, (const LogFilter& filter), (override));
     MOCK_METHOD(void, logsRead, (const QList<LogEntry>& entries), (override));
     MOCK_METHOD(void, logAdded, (const LogEntry& entry), (override));
+    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 };

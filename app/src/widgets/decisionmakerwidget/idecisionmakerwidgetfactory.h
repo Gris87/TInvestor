@@ -24,11 +24,9 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         IPortfolioTreeWidgetFactory*       _portfolioTreeWidgetFactory,
         IOperationsTableRecordFactory*     _operationsTableRecordFactory,
         ILogsTableModelFactory*            _logsTableModelFactory,
-        ILogsTableRecordFactory*           _logsTableRecordFactory,
         IPortfolioTreeRecordFactory*       _portfolioTreeRecordFactory,
         IInstrumentWidgetFactory*          _instrumentWidgetFactory,
         IInstrumentTableItemWidgetFactory* _instrumentTableItemWidgetFactory,
-        ILogLevelTableItemWidgetFactory*   _logLevelTableItemWidgetFactory,
         IUserStorage*                      _userStorage,
         IInstrumentsStorage*               _instrumentsStorage,
         ILogosStorage*                     _logosStorage,
@@ -42,11 +40,9 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         portfolioTreeWidgetFactory(_portfolioTreeWidgetFactory),
         operationsTableRecordFactory(_operationsTableRecordFactory),
         logsTableModelFactory(_logsTableModelFactory),
-        logsTableRecordFactory(_logsTableRecordFactory),
         portfolioTreeRecordFactory(_portfolioTreeRecordFactory),
         instrumentWidgetFactory(_instrumentWidgetFactory),
         instrumentTableItemWidgetFactory(_instrumentTableItemWidgetFactory),
-        logLevelTableItemWidgetFactory(_logLevelTableItemWidgetFactory),
         userStorage(_userStorage),
         instrumentsStorage(_instrumentsStorage),
         logosStorage(_logosStorage),
@@ -64,11 +60,9 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory;
     IOperationsTableRecordFactory*     operationsTableRecordFactory;
     ILogsTableModelFactory*            logsTableModelFactory;
-    ILogsTableRecordFactory*           logsTableRecordFactory;
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory;
     IInstrumentWidgetFactory*          instrumentWidgetFactory;
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory;
-    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory;
     IUserStorage*                      userStorage;
     IInstrumentsStorage*               instrumentsStorage;
     ILogosStorage*                     logosStorage;

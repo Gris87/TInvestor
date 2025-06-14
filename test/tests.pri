@@ -122,8 +122,6 @@ SOURCES += \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
-    src/widgets/tableitems/loglevel/test_logleveltableitemwidget.cpp \
-    src/widgets/tableitems/loglevel/test_logleveltableitemwidgetfactory.cpp \
     src/widgets/tableitems/test_integertableitem.cpp \
     src/widgets/tableitems/test_moneychangepercenttableitem.cpp \
     src/widgets/tableitems/test_moneychangetableitem.cpp \
@@ -133,8 +131,6 @@ SOURCES += \
     src/widgets/tableitems/test_turnovertableitem.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodelfactory.cpp \
-    src/widgets/tablerecords/logstablerecord/test_logstablerecord.cpp \
-    src/widgets/tablerecords/logstablerecord/test_logstablerecordfactory.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/test_operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
@@ -244,12 +240,8 @@ HEADERS += \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h \
     src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h \
-    src/widgets/tableitems/loglevel/ilogleveltableitemwidget_mock.h \
-    src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h \
-    src/widgets/tablerecords/logstablerecord/ilogstablerecord_mock.h \
-    src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord_mock.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \

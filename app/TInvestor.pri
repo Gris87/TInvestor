@@ -127,8 +127,6 @@ SOURCES += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
     src/widgets/tableitems/integertableitem.cpp \
-    src/widgets/tableitems/loglevel/logleveltableitemwidget.cpp \
-    src/widgets/tableitems/loglevel/logleveltableitemwidgetfactory.cpp \
     src/widgets/tableitems/moneychangepercenttableitem.cpp \
     src/widgets/tableitems/moneychangetableitem.cpp \
     src/widgets/tableitems/moneytableitem.cpp \
@@ -137,8 +135,6 @@ SOURCES += \
     src/widgets/tableitems/turnovertableitem.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
-    src/widgets/tablerecords/logstablerecord/logstablerecord.cpp \
-    src/widgets/tablerecords/logstablerecord/logstablerecordfactory.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
@@ -373,10 +369,6 @@ HEADERS += \
     src/widgets/tableitems/instrument/instrumenttableitemwidget.h \
     src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
     src/widgets/tableitems/integertableitem.h \
-    src/widgets/tableitems/loglevel/ilogleveltableitemwidget.h \
-    src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory.h \
-    src/widgets/tableitems/loglevel/logleveltableitemwidget.h \
-    src/widgets/tableitems/loglevel/logleveltableitemwidgetfactory.h \
     src/widgets/tableitems/moneychangepercenttableitem.h \
     src/widgets/tableitems/moneychangetableitem.h \
     src/widgets/tableitems/moneytableitem.h \
@@ -388,10 +380,6 @@ HEADERS += \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h \
     src/widgets/tablemodels/logstablemodel/logstablemodel.h \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.h \
-    src/widgets/tablerecords/logstablerecord/ilogstablerecord.h \
-    src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory.h \
-    src/widgets/tablerecords/logstablerecord/logstablerecord.h \
-    src/widgets/tablerecords/logstablerecord/logstablerecordfactory.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.h \
@@ -435,4 +423,3 @@ FORMS += \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
     src/widgets/tableitems/actions/actionstableitemwidget.ui \
-    src/widgets/tableitems/loglevel/logleveltableitemwidget.ui \

@@ -6,7 +6,9 @@
 
 
 
-const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
+const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
 
 
@@ -191,6 +193,35 @@ void LogsTableModel::logAdded(const LogEntry& entry)
         mEntriesUnfiltered->append(entry);
 
         endInsertRows();
+    }
+}
+
+void LogsTableModel::exportToExcel(QXlsx::Document& doc) const
+{
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
+    QXlsx::Format dateFormat;
+    dateFormat.setNumberFormat(DATETIME_FORMAT);
+    dateFormat.setFillPattern(QXlsx::Format::PatternSolid);
+    dateFormat.setBorderStyle(QXlsx::Format::BorderThin);
+    dateFormat.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    dateFormat.setFontColor(CELL_FONT_COLOR);
+
+    for (int i = 0; i < mEntriesUnfiltered->size(); ++i)
+    {
+        int             row   = i + 2; // Header and start index from 1
+        const LogEntry& entry = mEntriesUnfiltered->at(i);
+
+        // clang-format off
+        doc.write(row, LOGS_TIME_COLUMN + 1,    QDateTime::fromMSecsSinceEpoch(entry.timestamp), dateFormat);
+        doc.write(row, LOGS_LEVEL_COLUMN + 1,   LOG_LEVEL_NAMES[entry.level], cellStyle);
+        doc.write(row, LOGS_NAME_COLUMN + 1,    entry.instrumentName, cellStyle);
+        doc.write(row, LOGS_MESSAGE_COLUMN + 1, entry.message, cellStyle);
+        // clang-format on
     }
 }
 

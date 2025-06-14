@@ -19,9 +19,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
@@ -53,11 +51,9 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
     StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
-    StrictMock<LogsTableRecordFactoryMock>           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
-    StrictMock<LogLevelTableItemWidgetFactoryMock>   logLevelTableItemWidgetFactoryMock;
     StrictMock<UserStorageMock>                      userStorageMock;
     StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
     StrictMock<LogosStorageMock>                     logosStorageMock;
@@ -91,18 +87,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(logsFilterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(logsFilterWidgetMock));
     EXPECT_CALL(
         logsTableWidgetFactoryMock,
-        newInstance(
-            &logsTableModelFactoryMock,
-            &logsTableRecordFactoryMock,
-            &logLevelTableItemWidgetFactoryMock,
-            &instrumentTableItemWidgetFactoryMock,
-            &userStorageMock,
-            &instrumentsStorageMock,
-            &logosStorageMock,
-            &fileDialogFactoryMock,
-            &settingsEditorMock,
-            NotNull()
-        )
+        newInstance(&logsTableModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
     )
         .WillOnce(Return(logsTableWidgetMock));
     EXPECT_CALL(
@@ -131,11 +116,9 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &portfolioTreeWidgetFactoryMock,
             &operationsTableRecordFactoryMock,
             &logsTableModelFactoryMock,
-            &logsTableRecordFactoryMock,
             &portfolioTreeRecordFactoryMock,
             &instrumentWidgetFactoryMock,
             &instrumentTableItemWidgetFactoryMock,
-            &logLevelTableItemWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
             &logosStorageMock,

@@ -76,9 +76,7 @@
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h"
-#include "src/widgets/tableitems/loglevel/logleveltableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/logstablemodel/logstablemodelfactory.h"
-#include "src/widgets/tablerecords/logstablerecord/logstablerecordfactory.h"
 #include "src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -181,7 +179,6 @@ static int runApplication(QApplication* app)
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
     InstrumentWidgetFactory          instrumentWidgetFactory;
     InstrumentTableItemWidgetFactory instrumentTableItemWidgetFactory;
-    LogLevelTableItemWidgetFactory   logLevelTableItemWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     StocksControlsWidgetFactory      stocksControlsWidgetFactory;
@@ -196,7 +193,6 @@ static int runApplication(QApplication* app)
     StocksTableRecordFactory     stocksTableRecordFactory;
     OperationsTableRecordFactory operationsTableRecordFactory;
     LogsTableModelFactory        logsTableModelFactory;
-    LogsTableRecordFactory       logsTableRecordFactory;
     PortfolioTreeRecordFactory   portfolioTreeRecordFactory;
 
     TrayIconFactory trayIconFactory;
@@ -368,7 +364,6 @@ static int runApplication(QApplication* app)
         &sellDecision3ConfigWidgetFactory,
         &instrumentWidgetFactory,
         &instrumentTableItemWidgetFactory,
-        &logLevelTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
         &stocksTableRecordFactory,
@@ -381,7 +376,6 @@ static int runApplication(QApplication* app)
         &portfolioTreeWidgetFactory,
         &operationsTableRecordFactory,
         &logsTableModelFactory,
-        &logsTableRecordFactory,
         &portfolioTreeRecordFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,

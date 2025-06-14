@@ -34,6 +34,7 @@ public:
     void setFilter(const LogFilter& filter) override;
     void logsRead(const QList<LogEntry>& entries) override;
     void logAdded(const LogEntry& entry) override;
+    void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
     void filterAll();

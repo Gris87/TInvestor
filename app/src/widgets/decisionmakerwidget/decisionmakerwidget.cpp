@@ -17,11 +17,9 @@ DecisionMakerWidget::DecisionMakerWidget(
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
-    ILogsTableRecordFactory*           logsTableRecordFactory,
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
     IInstrumentWidgetFactory*          instrumentWidgetFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    ILogLevelTableItemWidgetFactory*   logLevelTableItemWidgetFactory,
     IUserStorage*                      userStorage,
     IInstrumentsStorage*               instrumentsStorage,
     ILogosStorage*                     logosStorage,
@@ -57,18 +55,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     );
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
-    mLogsTableWidget    = logsTableWidgetFactory->newInstance(
-        logsTableModelFactory,
-        logsTableRecordFactory,
-        logLevelTableItemWidgetFactory,
-        instrumentTableItemWidgetFactory,
-        userStorage,
-        instrumentsStorage,
-        logosStorage,
-        fileDialogFactory,
-        mSettingsEditor,
-        this
-    );
+    mLogsTableWidget =
+        logsTableWidgetFactory->newInstance(logsTableModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this);
     mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
         portfolioTreeRecordFactory,
         instrumentWidgetFactory,
@@ -130,12 +118,12 @@ void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
 
 void DecisionMakerWidget::logsRead(const QList<LogEntry>& entries)
 {
-    mLogsTableWidget->logsRead(entries, mLogsFilterWidget->getFilter());
+    mLogsTableWidget->logsRead(entries);
 }
 
 void DecisionMakerWidget::logAdded(const LogEntry& entry)
 {
-    mLogsTableWidget->logAdded(entry, mLogsFilterWidget->getFilter());
+    mLogsTableWidget->logAdded(entry);
 }
 
 void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)

@@ -59,9 +59,7 @@
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/loglevel/ilogleveltableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/logstablerecord/ilogstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
@@ -112,7 +110,6 @@ protected:
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
         instrumentWidgetFactoryMock          = new StrictMock<InstrumentWidgetFactoryMock>();
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
-        logLevelTableItemWidgetFactoryMock   = new StrictMock<LogLevelTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
         stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
@@ -125,7 +122,6 @@ protected:
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
         logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
-        logsTableRecordFactoryMock           = new StrictMock<LogsTableRecordFactoryMock>();
         portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
         decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
         trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
@@ -190,11 +186,9 @@ protected:
                     portfolioTreeWidgetFactoryMock,
                     operationsTableRecordFactoryMock,
                     logsTableModelFactoryMock,
-                    logsTableRecordFactoryMock,
                     portfolioTreeRecordFactoryMock,
                     instrumentWidgetFactoryMock,
                     instrumentTableItemWidgetFactoryMock,
-                    logLevelTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
                     logosStorageMock,
@@ -216,11 +210,9 @@ protected:
                     portfolioTreeWidgetFactoryMock,
                     operationsTableRecordFactoryMock,
                     logsTableModelFactoryMock,
-                    logsTableRecordFactoryMock,
                     portfolioTreeRecordFactoryMock,
                     instrumentWidgetFactoryMock,
                     instrumentTableItemWidgetFactoryMock,
-                    logLevelTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
                     logosStorageMock,
@@ -273,7 +265,6 @@ protected:
             sellDecision3ConfigWidgetFactoryMock,
             instrumentWidgetFactoryMock,
             instrumentTableItemWidgetFactoryMock,
-            logLevelTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesWidgetFactoryMock,
             stockTableRecordFactoryMock,
@@ -286,7 +277,6 @@ protected:
             portfolioTreeWidgetFactoryMock,
             operationsTableRecordFactoryMock,
             logsTableModelFactoryMock,
-            logsTableRecordFactoryMock,
             portfolioTreeRecordFactoryMock,
             decisionMakerWidgetFactoryMock,
             trayIconFactoryMock,
@@ -362,7 +352,6 @@ protected:
         delete sellDecision3ConfigWidgetFactoryMock;
         delete instrumentWidgetFactoryMock;
         delete instrumentTableItemWidgetFactoryMock;
-        delete logLevelTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesWidgetFactoryMock;
         delete stockTableRecordFactoryMock;
@@ -375,7 +364,6 @@ protected:
         delete portfolioTreeWidgetFactoryMock;
         delete operationsTableRecordFactoryMock;
         delete logsTableModelFactoryMock;
-        delete logsTableRecordFactoryMock;
         delete portfolioTreeRecordFactoryMock;
         delete decisionMakerWidgetFactoryMock;
         delete trayIconFactoryMock;
@@ -432,7 +420,6 @@ protected:
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>*          instrumentWidgetFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
-    StrictMock<LogLevelTableItemWidgetFactoryMock>*   logLevelTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
     StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
@@ -445,7 +432,6 @@ protected:
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
     StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
-    StrictMock<LogsTableRecordFactoryMock>*           logsTableRecordFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
     StrictMock<DecisionMakerWidgetFactoryMock>*       decisionMakerWidgetFactoryMock;
     StrictMock<TrayIconFactoryMock>*                  trayIconFactoryMock;

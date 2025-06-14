@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-TIMESTAMP_STEP = 5000
+TIMESTAMP_STEP = 75000
 
 
 def generate_operations(args):
