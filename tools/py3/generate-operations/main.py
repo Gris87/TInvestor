@@ -160,7 +160,7 @@ def _generate_operations(last_timestamp, output_path):
 
     first_record = output_path.stat().st_size == 0
 
-    with open(output_path, "a") as f:
+    with open(output_path, "a", newline="") as f:
         for operation in block:
             if not first_record:
                 f.write(",\n")

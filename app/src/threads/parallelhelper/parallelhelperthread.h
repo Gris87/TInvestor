@@ -10,11 +10,12 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    using ActionType = void (*)(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs);
+    using ActionType = void (*)(QThread* parentThread, int threadId, QList<T>& array, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
         ActionType action,
         QThread*   parentThread,
+        int        threadId,
         QList<T>&  array,
         int        start,
         int        end,
@@ -24,6 +25,7 @@ public:
         QThread(parent),
         mAction(action),
         mParentThread(parentThread),
+        mThreadId(threadId),
         mArray(array),
         mStart(start),
         mEnd(end),
@@ -38,12 +40,13 @@ public:
 
     void run() override
     {
-        mAction(mParentThread, mArray, mStart, mEnd, mAdditionalArgs);
+        mAction(mParentThread, mThreadId, mArray, mStart, mEnd, mAdditionalArgs);
     }
 
 private:
     ActionType mAction;
     QThread*   mParentThread;
+    int        mThreadId;
     QList<T>&  mArray;
     int        mStart;
     int        mEnd;
@@ -55,7 +58,7 @@ private:
 template<typename T>
 void processInParallel(
     QList<T>& array,
-    void      action(QThread* parentThread, QList<T>& array, int start, int end, void* additionalArgs),
+    void      action(QThread* parentThread, int threadId, QList<T>& array, int start, int end, void* additionalArgs),
     void*     additionalArgs = nullptr
 )
 {
@@ -81,7 +84,7 @@ void processInParallel(
             ++end;
         }
 
-        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, parentThread, array, start, end, additionalArgs);
+        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, parentThread, i, array, start, end, additionalArgs);
         thread->start();
 
         threads[i] = thread;
@@ -97,6 +100,6 @@ void processInParallel(
         delete thread;
     }
 #else
-    action(QThread::currentThread(), array, 0, array.size(), additionalArgs);
+    action(QThread::currentThread(), 0, array, 0, array.size(), additionalArgs);
 #endif
 }

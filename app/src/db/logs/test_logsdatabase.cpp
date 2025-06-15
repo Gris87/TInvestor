@@ -3,7 +3,6 @@
 #include <QCoreApplication>
 #include <gtest/gtest.h>
 
-#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
@@ -24,12 +23,11 @@ class Test_LogsDatabase : public ::testing::Test
 protected:
     void SetUp() override
     {
-        dirFactoryMock         = new StrictMock<DirFactoryMock>();
-        fileFactoryMock        = new StrictMock<FileFactoryMock>();
-        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
-        logosStorageMock       = new StrictMock<LogosStorageMock>();
+        dirFactoryMock   = new StrictMock<DirFactoryMock>();
+        fileFactoryMock  = new StrictMock<FileFactoryMock>();
+        logosStorageMock = new StrictMock<LogosStorageMock>();
 
-        database = new LogsDatabase(dirFactoryMock, fileFactoryMock, instrumentsStorageMock, logosStorageMock, true);
+        database = new LogsDatabase(dirFactoryMock, fileFactoryMock, logosStorageMock, true);
     }
 
     void TearDown() override
@@ -37,15 +35,13 @@ protected:
         delete database;
         delete dirFactoryMock;
         delete fileFactoryMock;
-        delete instrumentsStorageMock;
         delete logosStorageMock;
     }
 
-    LogsDatabase*                       database;
-    StrictMock<DirFactoryMock>*         dirFactoryMock;
-    StrictMock<FileFactoryMock>*        fileFactoryMock;
-    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
-    StrictMock<LogosStorageMock>*       logosStorageMock;
+    LogsDatabase*                 database;
+    StrictMock<DirFactoryMock>*   dirFactoryMock;
+    StrictMock<FileFactoryMock>*  fileFactoryMock;
+    StrictMock<LogosStorageMock>* logosStorageMock;
 };
 
 

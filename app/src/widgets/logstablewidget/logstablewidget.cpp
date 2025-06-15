@@ -58,35 +58,18 @@ LogsTableWidget::~LogsTableWidget()
 
 void LogsTableWidget::setFilter(const LogFilter& filter)
 {
-    ui->tableView->setUpdatesEnabled(false);
-    ui->tableView->setSortingEnabled(false);
-
     mLogsTableModel->setFilter(filter);
-
-    ui->tableView->setSortingEnabled(true);
-    ui->tableView->setUpdatesEnabled(true);
 }
 
 void LogsTableWidget::logsRead(const QList<LogEntry>& entries)
 {
-    ui->tableView->setUpdatesEnabled(false);
-    ui->tableView->setSortingEnabled(false);
-
     mLogsTableModel->logsRead(entries);
-
-    ui->tableView->setSortingEnabled(true);
-    ui->tableView->setUpdatesEnabled(true);
+    ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 }
 
 void LogsTableWidget::logAdded(const LogEntry& entry)
 {
-    ui->tableView->setUpdatesEnabled(false);
-    ui->tableView->setSortingEnabled(false);
-
     mLogsTableModel->logAdded(entry);
-
-    ui->tableView->setSortingEnabled(true);
-    ui->tableView->setUpdatesEnabled(true);
 }
 
 void LogsTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)

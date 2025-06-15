@@ -311,7 +311,7 @@ static int runApplication(QApplication* app)
     LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
     LogosStorage        logosStorage(&logosDatabase);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
-    LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &instrumentsStorage, &logosStorage, true);
+    LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
     TimeUtils         timeUtils;
     FileDialogFactory fileDialogFactory;

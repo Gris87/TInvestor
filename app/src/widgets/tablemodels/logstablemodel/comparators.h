@@ -9,159 +9,167 @@
 class LogsTableTimeLessThan
 {
 public:
-    explicit LogsTableTimeLessThan()
+    explicit LogsTableTimeLessThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableTimeLessThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableTimeLessThan(const LogsTableTimeLessThan& another)            = delete;
-    LogsTableTimeLessThan& operator=(const LogsTableTimeLessThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.timestamp < r.timestamp;
+        return entries->at(l).timestamp < entries->at(r).timestamp;
     }
 };
 
 class LogsTableLevelLessThan
 {
 public:
-    explicit LogsTableLevelLessThan()
+    explicit LogsTableLevelLessThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableLevelLessThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableLevelLessThan(const LogsTableLevelLessThan& another)            = delete;
-    LogsTableLevelLessThan& operator=(const LogsTableLevelLessThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.level < r.level;
+        return entries->at(l).level < entries->at(r).level;
     }
 };
 
 class LogsTableNameLessThan
 {
 public:
-    explicit LogsTableNameLessThan()
+    explicit LogsTableNameLessThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableNameLessThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableNameLessThan(const LogsTableNameLessThan& another)            = delete;
-    LogsTableNameLessThan& operator=(const LogsTableNameLessThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.instrumentTicker < r.instrumentTicker;
+        return entries->at(l).instrumentTicker < entries->at(r).instrumentTicker;
     }
 };
 
 class LogsTableMessageLessThan
 {
 public:
-    explicit LogsTableMessageLessThan()
+    explicit LogsTableMessageLessThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableMessageLessThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableMessageLessThan(const LogsTableMessageLessThan& another)            = delete;
-    LogsTableMessageLessThan& operator=(const LogsTableMessageLessThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.message < r.message;
+        return entries->at(l).message < entries->at(r).message;
     }
 };
 
 class LogsTableTimeGreaterThan
 {
 public:
-    explicit LogsTableTimeGreaterThan()
+    explicit LogsTableTimeGreaterThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableTimeGreaterThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableTimeGreaterThan(const LogsTableTimeGreaterThan& another)            = delete;
-    LogsTableTimeGreaterThan& operator=(const LogsTableTimeGreaterThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.timestamp > r.timestamp;
+        return entries->at(l).timestamp > entries->at(r).timestamp;
     }
 };
 
 class LogsTableLevelGreaterThan
 {
 public:
-    explicit LogsTableLevelGreaterThan()
+    explicit LogsTableLevelGreaterThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableLevelGreaterThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableLevelGreaterThan(const LogsTableLevelGreaterThan& another)            = delete;
-    LogsTableLevelGreaterThan& operator=(const LogsTableLevelGreaterThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.level > r.level;
+        return entries->at(l).level > entries->at(r).level;
     }
 };
 
 class LogsTableNameGreaterThan
 {
 public:
-    explicit LogsTableNameGreaterThan()
+    explicit LogsTableNameGreaterThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableNameGreaterThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableNameGreaterThan(const LogsTableNameGreaterThan& another)            = delete;
-    LogsTableNameGreaterThan& operator=(const LogsTableNameGreaterThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.instrumentTicker > r.instrumentTicker;
+        return entries->at(l).instrumentTicker > entries->at(r).instrumentTicker;
     }
 };
 
 class LogsTableMessageGreaterThan
 {
 public:
-    explicit LogsTableMessageGreaterThan()
+    explicit LogsTableMessageGreaterThan(QList<LogEntry>* _entries) :
+        entries(_entries)
     {
     }
 
-    ~LogsTableMessageGreaterThan()
-    {
-    }
+    QList<LogEntry>* entries;
 
-    LogsTableMessageGreaterThan(const LogsTableMessageGreaterThan& another)            = delete;
-    LogsTableMessageGreaterThan& operator=(const LogsTableMessageGreaterThan& another) = delete;
-
-    inline bool operator()(const LogEntry& l, const LogEntry& r) const
+    inline bool operator()(int l, int r) const
     {
-        return l.message > r.message;
+        return entries->at(l).message > entries->at(r).message;
     }
 };
+
+inline bool logsTimeLess(const LogEntry& l, const LogEntry& r)
+{
+    return l.timestamp < r.timestamp;
+}
+
+inline bool logsLevelLess(const LogEntry& l, const LogEntry& r)
+{
+    return l.level < r.level;
+}
+
+inline bool logsNameLess(const LogEntry& l, const LogEntry& r)
+{
+    return l.instrumentTicker < r.instrumentTicker;
+}
+
+inline bool logsMessageLess(const LogEntry& l, const LogEntry& r)
+{
+    return l.message < r.message;
+}
+
+inline bool logsTimeGreater(const LogEntry& l, const LogEntry& r)
+{
+    return l.timestamp > r.timestamp;
+}
+
+inline bool logsLevelGreater(const LogEntry& l, const LogEntry& r)
+{
+    return l.level > r.level;
+}
+
+inline bool logsNameGreater(const LogEntry& l, const LogEntry& r)
+{
+    return l.instrumentTicker > r.instrumentTicker;
+}
+
+inline bool logsMessageGreater(const LogEntry& l, const LogEntry& r)
+{
+    return l.message > r.message;
+}

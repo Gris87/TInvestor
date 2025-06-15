@@ -50,7 +50,7 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 1,  # DEBUG
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
-        "instrumentTicker": "SPBE",
+        "instrumentTicker": "UGLD",
         "instrumentName": "UGLDushka",
         "message": "b" * 100
     }
@@ -62,7 +62,7 @@ def _generate_logs(last_timestamp, output_path):
         "timestamp": last_timestamp,
         "level": 2,  # INFO
         "instrumentId": "4d813ab1-8bc9-4670-89ea-12bfbab6017d",  # SMLT
-        "instrumentTicker": "SPBE",
+        "instrumentTicker": "SMLT",
         "instrumentName": "SMLTushka",
         "message": "c" * 100
     }
@@ -96,7 +96,7 @@ def _generate_logs(last_timestamp, output_path):
 
     first_record = output_path.stat().st_size == 0
 
-    with open(output_path, "a") as f:
+    with open(output_path, "a", newline="") as f:
         for log in block:
             if not first_record:
                 f.write(",\n")

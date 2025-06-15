@@ -37,10 +37,14 @@ public:
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
+    int  indexOfSortedInsert(QList<LogEntry>* entries, const LogEntry& entry);
+    void insertRow(QList<LogEntry>* entries, int row, const LogEntry& entry);
     void filterAll();
 
     QStringList                      mHeader;
     LogFilter                        mFilter;
     std::shared_ptr<QList<LogEntry>> mEntriesUnfiltered;
     std::shared_ptr<QList<LogEntry>> mEntries;
+    int                              mSortColumn;
+    Qt::SortOrder                    mSortOrder;
 };

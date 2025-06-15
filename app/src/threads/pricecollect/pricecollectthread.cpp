@@ -313,7 +313,12 @@ struct ObtainInstrumentsInfo
 };
 
 static void obtainInstrumentsForParallel(
-    QThread* parentThread, QList<tinkoff::InstrumentType>& instrumentTypes, int start, int end, void* additionalArgs
+    QThread* parentThread,
+    int /*threadId*/,
+    QList<tinkoff::InstrumentType>& instrumentTypes,
+    int                             start,
+    int                             end,
+    void*                           additionalArgs
 )
 {
     ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
@@ -385,8 +390,9 @@ struct DownloadLogosInfo
     QAtomicInt          finished;
 };
 
-static void
-downloadLogosForParallel(QThread* parentThread, QList<InstrumentIdAndLogo>& logos, int start, int end, void* additionalArgs)
+static void downloadLogosForParallel(
+    QThread* parentThread, int /*threadId*/, QList<InstrumentIdAndLogo>& logos, int start, int end, void* additionalArgs
+)
 {
     DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
     PriceCollectThread* thread            = downloadLogosInfo->thread;
@@ -438,7 +444,7 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     for (int i = 0; i < instrumentTypes.size(); ++i)
     {
         instruments.insert(obtainInstrumentsInfo.results.at(i));
-        logos.append(obtainInstrumentsInfo.logos.at(i));
+        logos.append(obtainInstrumentsInfo.logos.at(i)); // TODO: Combine in parallel
     }
 
     emit notifyInstrumentsProgress(tr("Downloading logos"));
@@ -703,7 +709,8 @@ struct GetCandlesInfo
     QAtomicInt          finished;
 };
 
-static void getCandlesForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void
+getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     PriceCollectThread* thread           = getCandlesInfo->thread;

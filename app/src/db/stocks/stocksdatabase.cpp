@@ -77,7 +77,9 @@ struct ReadStocksDataInfo
     IFileFactory* fileFactory;
 };
 
-static void readStocksDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void readStocksDataForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+)
 {
     ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
     IFileFactory*       fileFactory        = readStocksDataInfo->fileFactory;

@@ -129,7 +129,9 @@ struct DeleteObsoleteDataInfo
     qint64           obsoleteTimestamp;
 };
 
-static void deleteObsoleteDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void deleteObsoleteDataForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+)
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
     IStocksDatabase*        stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
@@ -176,8 +178,9 @@ struct CleanupOperationalDataInfo
     qint64 obsoleteTimestamp;
 };
 
-static void
-cleanupOperationalDataForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void cleanupOperationalDataForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+)
 {
     CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
     const qint64                obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
@@ -224,7 +227,8 @@ struct GetDatePriceInfo
     bool   isDayStartNeeded;
 };
 
-static void getDatePriceForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void
+getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
     const qint64      startTimestamp   = getDatePriceInfo->startTimestamp;
@@ -286,7 +290,8 @@ struct GetTurnoverInfo
     qint64 startTimestamp;
 };
 
-static void getTurnoverForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void
+getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
     const qint64     startTimestamp  = getTurnoverInfo->startTimestamp;
@@ -345,7 +350,8 @@ struct GetPaybackInfo
     qint64        startTimestamp;
 };
 
-static void getPaybackForParallel(QThread* parentThread, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void
+getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
 {
     GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
     IUserStorage*   userStorage    = getPaybackInfo->userStorage;
