@@ -94,11 +94,11 @@ void DecisionMakerWidget::setAccountName(const QString& name)
 
 void DecisionMakerWidget::showSpinners()
 {
-    ui->tabWidget->hide();
-    mPortfolioTreeWidget->hide();
-
     ui->operationsWaitingSpinnerWidget->start();
     ui->portfolioWaitingSpinnerWidget->start();
+
+    ui->operationsWaitingStackedWidget->setCurrentWidget(ui->operationsWaitingPage);
+    ui->portfolioWaitingStackedWidget->setCurrentWidget(ui->portfolioWaitingPage);
 }
 
 void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
@@ -106,8 +106,8 @@ void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
     mOperationsTableWidget->operationsRead(operations);
     mAccountChartWidget->operationsRead(operations);
 
-    ui->tabWidget->show();
     ui->operationsWaitingSpinnerWidget->stop();
+    ui->operationsWaitingStackedWidget->setCurrentWidget(ui->operationsWorkingPage);
 }
 
 void DecisionMakerWidget::operationsAdded(const QList<Operation>& operations)
@@ -130,8 +130,8 @@ void DecisionMakerWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mPortfolioTreeWidget->portfolioChanged(portfolio);
 
-    mPortfolioTreeWidget->show();
     ui->portfolioWaitingSpinnerWidget->stop();
+    ui->portfolioWaitingStackedWidget->setCurrentWidget(ui->portfolioWorkingPage);
 }
 
 void DecisionMakerWidget::lastPriceChanged(const QString& instrumentId, float price)

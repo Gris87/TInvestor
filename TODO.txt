@@ -8,7 +8,6 @@ Test coverage
 Use RWMutex instead of QMutex
 Check style on Q_ASSERT_X
 Move LOGS_ROLE_INSTRUMENT_LOGO to shared place
-Put SpinnerWidgets to dedicated page
 Create release
 
 Buy if it was sold during 24h and price is less than 1%

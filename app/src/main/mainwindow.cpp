@@ -945,15 +945,15 @@ void MainWindow::updateStocksTableWidget()
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
-        ui->stackedWidget->show();
         ui->waitingSpinnerWidget->stop();
+        ui->waitingStackedWidget->setCurrentWidget(ui->workingPage);
     }
     else
     {
         mStocksStorage->unlock();
 
-        ui->stackedWidget->hide();
         ui->waitingSpinnerWidget->start();
+        ui->waitingStackedWidget->setCurrentWidget(ui->waitingPage);
     }
 }
 

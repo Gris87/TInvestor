@@ -37,17 +37,14 @@
      <number>4</number>
     </property>
     <item>
-     <widget class="WaitingSpinnerWidget" name="waitingSpinnerWidget" native="true"/>
-    </item>
-    <item>
-     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QStackedWidget" name="waitingStackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="stocksPage">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+      <widget class="QWidget" name="waitingPage">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <property name="spacing">
-         <number>4</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
          <number>0</number>
@@ -62,25 +59,14 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QVBoxLayout" name="layoutForStocksControlsWidget">
-          <property name="spacing">
-           <number>4</number>
-          </property>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="layoutForStocksTableWidget">
-          <property name="spacing">
-           <number>4</number>
-          </property>
-         </layout>
+         <widget class="WaitingSpinnerWidget" name="waitingSpinnerWidget" native="true"/>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="simulationPage">
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+      <widget class="QWidget" name="workingPage">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
         <property name="spacing">
-         <number>4</number>
+         <number>0</number>
         </property>
         <property name="leftMargin">
          <number>0</number>
@@ -95,256 +81,315 @@
          <number>0</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="spacing">
-           <number>4</number>
+         <widget class="QStackedWidget" name="stackedWidget">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-          <item>
-           <widget class="QPushButton" name="startSimulationButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>26</height>
-             </size>
+          <widget class="QWidget" name="stocksPage">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>4</number>
             </property>
-            <property name="text">
-             <string>Start simulation</string>
+            <property name="leftMargin">
+             <number>0</number>
             </property>
-            <property name="icon">
-             <iconset resource="../../Resources.qrc">
-              <normaloff>:/assets/images/start.png</normaloff>:/assets/images/start.png</iconset>
+            <property name="topMargin">
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="simulationActiveWidget" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="spacing">
-              <number>4</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QWidget" name="widget" native="true">
-               <property name="minimumSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_3">
-                <property name="spacing">
-                 <number>4</number>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="layoutForStocksControlsWidget">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="layoutForStocksTableWidget">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="simulationPage">
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="spacing">
+             <number>4</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="startSimulationButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="text">
+                 <string>Start simulation</string>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
+                <property name="icon">
+                 <iconset resource="../../Resources.qrc">
+                  <normaloff>:/assets/images/start.png</normaloff>:/assets/images/start.png</iconset>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="simulationActiveWidget" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <property name="spacing">
+                  <number>4</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QWidget" name="widget" native="true">
+                   <property name="minimumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_3">
+                    <property name="spacing">
+                     <number>4</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="WaitingSpinnerWidget" name="simulationActiveSpinnerWidget" native="true"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="text">
+                    <string>Simulator active</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
-                <property name="bottomMargin">
-                 <number>0</number>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <item>
-                 <widget class="WaitingSpinnerWidget" name="simulationActiveSpinnerWidget" native="true"/>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Simulator active</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="layoutForSimulatorDecisionMaker">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="autoPilotPage">
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <property name="spacing">
+             <number>4</number>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
+            <property name="leftMargin">
+             <number>0</number>
             </property>
-           </spacer>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="layoutForSimulatorDecisionMaker">
-          <property name="spacing">
-           <number>4</number>
-          </property>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="autoPilotPage">
-       <layout class="QVBoxLayout" name="verticalLayout_4">
-        <property name="spacing">
-         <number>4</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <property name="spacing">
-           <number>4</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="startAutoPilotButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>26</height>
-             </size>
+            <property name="topMargin">
+             <number>0</number>
             </property>
-            <property name="text">
-             <string>Start auto-pilot</string>
+            <property name="rightMargin">
+             <number>0</number>
             </property>
-            <property name="icon">
-             <iconset resource="../../Resources.qrc">
-              <normaloff>:/assets/images/start.png</normaloff>:/assets/images/start.png</iconset>
+            <property name="bottomMargin">
+             <number>0</number>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="autoPilotActiveWidget" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <property name="spacing">
-              <number>4</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QWidget" name="widget_2" native="true">
-               <property name="minimumSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_5">
-                <property name="spacing">
-                 <number>4</number>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="startAutoPilotButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
                 </property>
-                <property name="leftMargin">
-                 <number>0</number>
+                <property name="text">
+                 <string>Start auto-pilot</string>
                 </property>
-                <property name="topMargin">
-                 <number>0</number>
+                <property name="icon">
+                 <iconset resource="../../Resources.qrc">
+                  <normaloff>:/assets/images/start.png</normaloff>:/assets/images/start.png</iconset>
                 </property>
-                <property name="rightMargin">
-                 <number>0</number>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="autoPilotActiveWidget" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <property name="spacing">
+                  <number>4</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QWidget" name="widget_2" native="true">
+                   <property name="minimumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_5">
+                    <property name="spacing">
+                     <number>4</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="WaitingSpinnerWidget" name="autoPilotActiveSpinnerWidget" native="true"/>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="text">
+                    <string>Auto-pilot active</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
-                <property name="bottomMargin">
-                 <number>0</number>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
                 </property>
-                <item>
-                 <widget class="WaitingSpinnerWidget" name="autoPilotActiveSpinnerWidget" native="true"/>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Auto-pilot active</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Orientation::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Keep money on account:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="keepMoneySpinBox">
-            <property name="suffix">
-             <string notr="true"> p</string>
-            </property>
-            <property name="maximum">
-             <number>1000000000</number>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="layoutForAutoPilotDecisionMaker">
-          <property name="spacing">
-           <number>4</number>
-          </property>
-         </layout>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Keep money on account:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="keepMoneySpinBox">
+                <property name="suffix">
+                 <string notr="true"> p</string>
+                </property>
+                <property name="maximum">
+                 <number>1000000000</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="layoutForAutoPilotDecisionMaker">
+              <property name="spacing">
+               <number>4</number>
+              </property>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
