@@ -39,11 +39,6 @@ void StocksStorage::readFromDatabase()
     mStocksDatabase->readStocksData(mStocks);
 }
 
-QMutex* StocksStorage::getMutex()
-{
-    return mMutex;
-}
-
 void StocksStorage::lock()
 {
     mMutex->lock();

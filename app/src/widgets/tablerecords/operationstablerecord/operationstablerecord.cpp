@@ -79,10 +79,10 @@ OperationsTableRecord::~OperationsTableRecord()
 
 void OperationsTableRecord::setOperation(const Operation& operation)
 {
-    const QMutexLocker lock(mInstrumentsStorage->getMutex());
-
+    mInstrumentsStorage->lock();
     const Instruments& instruments = mInstrumentsStorage->getInstruments();
     Instrument         instrument  = instruments[operation.instrumentId];
+    mInstrumentsStorage->unlock();
 
     const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), operation.instrumentId)
     );

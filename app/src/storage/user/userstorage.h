@@ -18,7 +18,6 @@ public:
     UserStorage& operator=(const UserStorage& another) = delete;
 
     void            readFromDatabase() override;
-    QMutex*         getMutex() override;
     void            lock() override;
     void            unlock() override;
     void            setToken(const QString& token) override;

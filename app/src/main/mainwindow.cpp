@@ -488,9 +488,10 @@ void MainWindow::lastPriceChanged(const QString& instrumentId)
 
 void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 {
-    const QMutexLocker lock(mStocksStorage->getMutex());
-
+    mStocksStorage->lock();
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
+    mStocksStorage->unlock();
+
     mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
     mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
 }
@@ -527,8 +528,7 @@ void MainWindow::startAutoPilot()
     const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
-    QMutex* userStorageMutex = mUserStorage->getMutex();
-    userStorageMutex->lock();
+    mUserStorage->lock();
     const Accounts& accounts    = mUserStorage->getAccounts();
     const Account   accountInfo = accounts.value(account);
     Account         anotherAccountInfo;
@@ -546,7 +546,7 @@ void MainWindow::startAutoPilot()
     {
         mAutoPilotAnotherAccountId = "-";
     }
-    userStorageMutex->unlock();
+    mUserStorage->unlock();
 
     if (mAutoPilotAccountId != "" && mAutoPilotAnotherAccountId != "")
     {
@@ -933,7 +933,7 @@ void MainWindow::init()
 
 void MainWindow::updateStocksTableWidget()
 {
-    const QMutexLocker   lock(mStocksStorage->getMutex());
+    mStocksStorage->lock();
     const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     if (!stocks.isEmpty())
@@ -941,6 +941,7 @@ void MainWindow::updateStocksTableWidget()
         const QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
 
         mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
+        mStocksStorage->unlock();
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
 
@@ -949,6 +950,8 @@ void MainWindow::updateStocksTableWidget()
     }
     else
     {
+        mStocksStorage->unlock();
+
         ui->stackedWidget->hide();
         ui->waitingSpinnerWidget->start();
     }

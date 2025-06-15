@@ -52,7 +52,6 @@ TEST_F(Test_LastPriceThread, Test_run)
 {
     const InSequence seq;
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
@@ -83,12 +82,14 @@ TEST_F(Test_LastPriceThread, Test_run)
 
     ASSERT_EQ(stock.operational.detailedData.size(), 0);
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*grpcClientMock, createMarketDataStream()).WillOnce(Return(marketDataStream));
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "aaaa")).WillOnce(Return(true));
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(marketDataResponse));
     EXPECT_CALL(*grpcClientMock, readMarketDataStream(marketDataStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, finishMarketDataStream(marketDataStream));
@@ -106,14 +107,15 @@ TEST_F(Test_LastPriceThread, Test_run_interrupted_without_stocks)
 {
     const InSequence seq;
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
 
     thread->run();
@@ -123,7 +125,6 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
 {
     const InSequence seq;
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
@@ -138,8 +139,9 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
     thread->createMarketDataStream();
 
     EXPECT_CALL(*grpcClientMock, unsubscribeLastPrices(marketDataStream)).WillOnce(Return(true));
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*grpcClientMock, subscribeLastPrices(marketDataStream, QStringList() << "bbbb")).WillOnce(Return(true));
 
     thread->stocksChanged();

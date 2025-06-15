@@ -135,8 +135,11 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         }
     }
 
-    const QMutexLocker lock(mStocksStorage->getMutex());
-    return mStocksStorage->mergeStocksMeta(stocksMeta);
+    mStocksStorage->lock();
+    const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);
+    mStocksStorage->unlock();
+
+    return res;
 }
 
 static void
@@ -460,8 +463,9 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
     processInParallel(logos, downloadLogosForParallel, &downloadLogosInfo);
 
-    const QMutexLocker lock(mInstrumentsStorage->getMutex());
+    mInstrumentsStorage->lock();
     mInstrumentsStorage->mergeInstruments(instruments);
+    mInstrumentsStorage->unlock();
 }
 
 static void getCandlesWithGrpc(

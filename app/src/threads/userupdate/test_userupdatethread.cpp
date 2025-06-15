@@ -95,9 +95,10 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, getUserInfo(QThread::currentThread())).WillOnce(Return(getInfoResponse));
     EXPECT_CALL(*grpcClientMock, getAccounts(QThread::currentThread())).WillOnce(Return(getAccountsResponse));
-    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, lock());
     EXPECT_CALL(*userStorageMock, setUserInfo(user));
     EXPECT_CALL(*userStorageMock, setAccounts(accounts));
+    EXPECT_CALL(*userStorageMock, unlock());
 
     thread->run();
 }

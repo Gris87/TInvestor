@@ -135,8 +135,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
     StrictMock<QZipMock>*     qZipMock3       = new StrictMock<QZipMock>();     // Will be deleted in getCandlesFromZipFile
     StrictMock<QZipFileMock>* qZipFileMock1   = new StrictMock<QZipFileMock>(); // Will be deleted in getCandlesFromZipFile
 
-    QMutex mutex;
-
     const std::shared_ptr<tinkoff::SharesResponse> stocksResponse(new tinkoff::SharesResponse());
     tinkoff::Share*                                stockShare = stocksResponse->add_instruments();
 
@@ -283,8 +281,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_BASE))
         .WillOnce(Return(stocksResponse));
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, mergeStocksMeta(Ne(QList<StockMeta>()))).WillOnce(Return(true));
+    EXPECT_CALL(*stocksStorageMock, unlock());
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_ALL))
         .WillOnce(Return(sharesResponse));
@@ -348,8 +347,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*logosStorageMock, setLogo(QString("fffff"), _));
     EXPECT_CALL(*logosStorageMock, unlock());
 
-    EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*instrumentsStorageMock, lock());
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
+    EXPECT_CALL(*instrumentsStorageMock, unlock());
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
     EXPECT_CALL(*dirMock1, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));

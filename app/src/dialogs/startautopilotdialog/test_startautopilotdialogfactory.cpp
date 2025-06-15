@@ -48,8 +48,9 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     accounts[account1.hash()] = account1;
     accounts[account2.hash()] = account2;
 
-    EXPECT_CALL(userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(userStorageMock, lock());
     EXPECT_CALL(userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(userStorageMock, unlock());
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));

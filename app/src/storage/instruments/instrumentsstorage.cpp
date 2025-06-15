@@ -25,11 +25,6 @@ void InstrumentsStorage::readFromDatabase()
     mInstruments = mInstrumentsDatabase->readInstruments();
 }
 
-QMutex* InstrumentsStorage::getMutex()
-{
-    return mMutex;
-}
-
 void InstrumentsStorage::lock()
 {
     mMutex->lock();

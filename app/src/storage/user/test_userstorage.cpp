@@ -78,11 +78,6 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_
     // clang-format on
 }
 
-TEST_F(Test_UserStorage, Test_getMutex)
-{
-    ASSERT_NE(storage->getMutex(), nullptr);
-}
-
 TEST_F(Test_UserStorage, Test_setToken)
 {
     const InSequence seq;

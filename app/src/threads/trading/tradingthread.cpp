@@ -138,7 +138,7 @@ bool TradingThread::trade()
 
 void TradingThread::getInstrumentData()
 {
-    const QMutexLocker lock(mInstrumentsStorage->getMutex());
+    mInstrumentsStorage->lock();
     const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
 
     Q_ASSERT_X(instrumentsData.contains(mInstrumentId), "TradingThread::trade()", "Data about instrument not found");
@@ -147,6 +147,7 @@ void TradingThread::getInstrumentData()
 
     mInstrumentLot  = instrument.lot;
     mPricePrecision = instrument.pricePrecision;
+    mInstrumentsStorage->unlock();
 }
 
 double TradingThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)

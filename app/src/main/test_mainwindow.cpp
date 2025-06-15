@@ -649,11 +649,11 @@ TEST_F(Test_MainWindow, Test_stocksChanged)
 {
     const InSequence seq;
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*lastPriceThreadMock, stocksChanged());
 
     mainWindow->stocksChanged();
@@ -700,8 +700,9 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
     StockFilter     filter;
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
@@ -757,8 +758,9 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 
-    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, lock());
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*userStorageMock, unlock());
 
     EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
@@ -993,8 +995,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 
-    EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*userStorageMock, lock());
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*userStorageMock, unlock());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
         .WillOnce(Return(QVariant("BBBBBB")));
 
@@ -1079,8 +1082,10 @@ TEST_F(Test_MainWindow, Test_init)
     EXPECT_CALL(*userStorageMock, readFromDatabase());
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
     EXPECT_CALL(*instrumentsStorageMock, readFromDatabase());
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*logosStorageMock, readFromDatabase());
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(false)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
@@ -1120,8 +1125,9 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     QMutex        mutex;
     QList<Stock*> stocks;
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, unlock());
 
     mainWindow->updateStocksTableWidget();
 
@@ -1141,10 +1147,11 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     const QDateTime dateChangeTime(QDate(2023, 12, 30), QTime(23, 59, 45));
     StockFilter     filter;
 
-    EXPECT_CALL(*stocksStorageMock, getMutex()).WillOnce(Return(&mutex));
+    EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksControlsWidgetMock, getDateChangeTime()).WillOnce(Return(dateChangeTime));
     EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1703969985000));
+    EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2023-12-30 23:59:45")));
     EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*stocksTableWidgetMock, updateTable(stocks, filter));

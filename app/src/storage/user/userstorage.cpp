@@ -29,11 +29,6 @@ void UserStorage::readFromDatabase()
     mAccounts = mUserDatabase->readAccounts();
 }
 
-QMutex* UserStorage::getMutex()
-{
-    return mMutex;
-}
-
 void UserStorage::lock()
 {
     mMutex->lock();

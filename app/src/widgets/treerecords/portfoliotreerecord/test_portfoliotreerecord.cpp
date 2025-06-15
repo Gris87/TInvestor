@@ -49,8 +49,9 @@ protected:
 
         EXPECT_CALL(*instrumentWidgetFactoryMock, newInstance(userStorageMock, treeWidget))
             .WillOnce(Return(instrumentWidgetMock));
-        EXPECT_CALL(*instrumentsStorageMock, getMutex()).WillOnce(Return(&mutex));
+        EXPECT_CALL(*instrumentsStorageMock, lock());
         EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+        EXPECT_CALL(*instrumentsStorageMock, unlock());
         EXPECT_CALL(*instrumentWidgetMock, setInstrumentLogo(_));
         EXPECT_CALL(*instrumentWidgetMock, setTicker(QString("WAGA")));
         EXPECT_CALL(*instrumentWidgetMock, setFullText(QString("Wata Giga")));

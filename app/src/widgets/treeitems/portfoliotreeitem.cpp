@@ -45,10 +45,10 @@ PortfolioTreeItem::PortfolioTreeItem(
     mInstrumentWidget = instrumentWidgetFactory->newInstance(userStorage, treeWidget());
     treeWidget()->setItemWidget(this, PORTFOLIO_NAME_COLUMN, mInstrumentWidget);
 
-    const QMutexLocker lock(instrumentsStorage->getMutex());
-
+    instrumentsStorage->lock();
     const Instruments& instruments = instrumentsStorage->getInstruments();
     Instrument         instrument  = instruments[mInstrumentId];
+    instrumentsStorage->unlock();
 
     const QIcon instrumentLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mInstrumentId));
 

@@ -18,7 +18,6 @@ public:
     InstrumentsStorage& operator=(const InstrumentsStorage& another) = delete;
 
     void               readFromDatabase() override;
-    QMutex*            getMutex() override;
     void               lock() override;
     void               unlock() override;
     const Instruments& getInstruments() override;

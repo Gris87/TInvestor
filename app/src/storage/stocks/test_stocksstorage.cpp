@@ -190,11 +190,6 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     // clang-format on
 }
 
-TEST_F(Test_StocksStorage, Test_getMutex)
-{
-    ASSERT_NE(storage->getMutex(), nullptr);
-}
-
 TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 {
     const InSequence seq;

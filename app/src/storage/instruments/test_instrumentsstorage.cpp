@@ -92,11 +92,6 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     // clang-format on
 }
 
-TEST_F(Test_InstrumentsStorage, Test_getMutex)
-{
-    ASSERT_NE(storage->getMutex(), nullptr);
-}
-
 TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
 {
     const InSequence seq;

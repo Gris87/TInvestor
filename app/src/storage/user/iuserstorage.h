@@ -19,7 +19,6 @@ public:
     IUserStorage& operator=(const IUserStorage& another) = delete;
 
     virtual void            readFromDatabase()                    = 0;
-    virtual QMutex*         getMutex()                            = 0;
     virtual void            lock()                                = 0;
     virtual void            unlock()                              = 0;
     virtual void            setToken(const QString& token)        = 0;

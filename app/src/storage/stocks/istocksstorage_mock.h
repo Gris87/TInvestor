@@ -21,7 +21,6 @@ public:
     StocksStorageMock& operator=(const StocksStorageMock& another) = delete;
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
-    MOCK_METHOD(QMutex*, getMutex, (), (override));
     MOCK_METHOD(void, lock, (), (override));
     MOCK_METHOD(void, unlock, (), (override));
     MOCK_METHOD(const QList<Stock*>&, getStocks, (), (override));

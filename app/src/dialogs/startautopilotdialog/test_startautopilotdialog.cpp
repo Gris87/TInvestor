@@ -52,8 +52,9 @@ protected:
         accounts[account2.hash()] = account2;
         accounts[account3.hash()] = account3;
 
-        EXPECT_CALL(*userStorageMock, getMutex()).WillOnce(Return(&mutex));
+        EXPECT_CALL(*userStorageMock, lock());
         EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+        EXPECT_CALL(*userStorageMock, unlock());
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));
