@@ -1,4 +1,3 @@
-ReadFromDatabase for LogosStorage
 Limit operations and logs
 Align amount of money in operations from portfolio
 Optimization

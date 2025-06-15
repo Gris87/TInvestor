@@ -19,6 +19,9 @@ public:
 
     bool mkpath(const QString& dirPath) override;
     bool removeRecursively() override;
+    QStringList entryList(
+        const QStringList& nameFilters, QDir::Filters filters = QDir::NoFilter, QDir::SortFlags sort = QDir::NoSort
+    ) override;
 
 private:
     QDir mDir;

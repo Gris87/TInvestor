@@ -20,6 +20,6 @@ public:
     LogosDatabaseMock(const LogosDatabaseMock& another)            = delete;
     LogosDatabaseMock& operator=(const LogosDatabaseMock& another) = delete;
 
-    MOCK_METHOD(void, readLogo, (const QString& instrumentId, QPixmap* logo), (override));
+    MOCK_METHOD(Logos, readLogos, (), (override));
     MOCK_METHOD(void, writeLogo, (const QString& instrumentId, QPixmap* logo), (override));
 };

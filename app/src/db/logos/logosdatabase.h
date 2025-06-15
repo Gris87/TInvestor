@@ -18,9 +18,10 @@ public:
     LogosDatabase(const LogosDatabase& another)            = delete;
     LogosDatabase& operator=(const LogosDatabase& another) = delete;
 
-    void readLogo(const QString& instrumentId, QPixmap* logo) override;
+    Logos readLogos() override;
     void writeLogo(const QString& instrumentId, QPixmap* logo) override;
 
 private:
+    IDirFactory*  mDirFactory;
     IFileFactory* mFileFactory;
 };

@@ -25,3 +25,8 @@ bool Dir::removeRecursively()
 {
     return mDir.removeRecursively();
 }
+
+QStringList Dir::entryList(const QStringList& nameFilters, QDir::Filters filters, QDir::SortFlags sort)
+{
+    return mDir.entryList(nameFilters, filters, sort);
+}

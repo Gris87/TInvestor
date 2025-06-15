@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QEvent>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
+
 
 
 const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
@@ -847,13 +849,73 @@ void MainWindow::on_keepMoneySpinBox_valueChanged(int /*value*/)
     keepMoneyChangeDelayTimer.start(KEEP_MONEY_CHANGE_DELAY);
 }
 
+enum DatabaseType : qint8
+{
+    DATABASE_TYPE_USER,
+    DATABASE_TYPE_STOCKS,
+    DATABASE_TYPE_INSTRUMENT,
+    DATABASE_TYPE_LOGOS
+};
+
+struct ReadDatabasesInfo
+{
+    ReadDatabasesInfo(
+        IUserStorage*        _userStorage,
+        IStocksStorage*      _stocksStorage,
+        IInstrumentsStorage* _instrumentsStoragen,
+        ILogosStorage*       _logosStorage
+    ) :
+        userStorage(_userStorage),
+        stocksStorage(_stocksStorage),
+        instrumentsStorage(_instrumentsStoragen),
+        logosStorage(_logosStorage)
+    {
+    }
+
+    IUserStorage*        userStorage;
+    IStocksStorage*      stocksStorage;
+    IInstrumentsStorage* instrumentsStorage;
+    ILogosStorage*       logosStorage;
+};
+
+static void readDatabasesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<DatabaseType>& databases, int start, int end, void* additionalArgs
+)
+{
+    ReadDatabasesInfo* readDatabasesInfo = reinterpret_cast<ReadDatabasesInfo*>(additionalArgs);
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        DatabaseType dbType = databases.at(i);
+
+        if (dbType == DATABASE_TYPE_USER)
+        {
+            readDatabasesInfo->userStorage->readFromDatabase();
+        }
+        else if (dbType == DATABASE_TYPE_STOCKS)
+        {
+            readDatabasesInfo->stocksStorage->readFromDatabase();
+        }
+        else if (dbType == DATABASE_TYPE_INSTRUMENT)
+        {
+            readDatabasesInfo->instrumentsStorage->readFromDatabase();
+        }
+        else if (dbType == DATABASE_TYPE_LOGOS)
+        {
+            readDatabasesInfo->logosStorage->readFromDatabase();
+        }
+    }
+}
+
 void MainWindow::init()
 {
     qInfo() << "Start main initialization";
 
-    mUserStorage->readFromDatabase();
-    mStocksStorage->readFromDatabase();
-    mInstrumentsStorage->readFromDatabase();
+    QList<DatabaseType> databases;
+    databases << DATABASE_TYPE_USER << DATABASE_TYPE_STOCKS << DATABASE_TYPE_INSTRUMENT << DATABASE_TYPE_LOGOS;
+
+    ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage);
+    processInParallel(databases, readDatabasesForParallel, &readDatabasesInfo);
 
     updateStocksTableWidget();
 

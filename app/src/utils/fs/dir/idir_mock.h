@@ -22,4 +22,7 @@ public:
 
     MOCK_METHOD(bool, mkpath, (const QString& dirPath), (override));
     MOCK_METHOD(bool, removeRecursively, (), (override));
+    MOCK_METHOD(
+        QStringList, entryList, (const QStringList& nameFilters, QDir::Filters filters, QDir::SortFlags sort), (override)
+    );
 };

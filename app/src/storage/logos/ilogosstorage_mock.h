@@ -20,6 +20,7 @@ public:
     LogosStorageMock(const LogosStorageMock& another)            = delete;
     LogosStorageMock& operator=(const LogosStorageMock& another) = delete;
 
+    MOCK_METHOD(void, readFromDatabase, (), (override));
     MOCK_METHOD(void, lock, (), (override));
     MOCK_METHOD(void, unlock, (), (override));
     MOCK_METHOD(void, setLogo, (const QString& instrumentId, const QPixmap& logo), (override));

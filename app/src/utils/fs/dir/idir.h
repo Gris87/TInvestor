@@ -2,7 +2,7 @@
 
 
 
-#include <QString>
+#include <QDir>
 
 
 
@@ -17,4 +17,6 @@ public:
 
     virtual bool mkpath(const QString& dirPath) = 0;
     virtual bool removeRecursively()            = 0;
+    virtual QStringList
+    entryList(const QStringList& nameFilters, QDir::Filters filters = QDir::NoFilter, QDir::SortFlags sort = QDir::NoSort) = 0;
 };

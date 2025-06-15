@@ -19,6 +19,7 @@ public:
     LogosStorage(const LogosStorage& another)            = delete;
     LogosStorage& operator=(const LogosStorage& another) = delete;
 
+    void     readFromDatabase() override;
     void     lock() override;
     void     unlock() override;
     void     setLogo(const QString& instrumentId, const QPixmap& logo) override;
@@ -27,5 +28,6 @@ public:
 private:
     ILogosDatabase*         mLogosDatabase;
     QMutex*                 mMutex;
-    QMap<QString, QPixmap*> mLogos; // Instrument UID => Logo
+    Logos                   mLogos;
+    QPixmap                 mNotFoundLogo;
 };

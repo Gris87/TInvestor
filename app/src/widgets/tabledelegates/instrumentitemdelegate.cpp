@@ -39,7 +39,12 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     mLogosStorage->lock();
     QPixmap* logo = reinterpret_cast<QPixmap*>(index.data(LOGS_ROLE_INSTRUMENT_LOGO).toLongLong());
 
-    painter->drawPixmap(option.rect.x(), option.rect.y() + (option.rect.height() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE, *logo);
+    if (logo != nullptr)
+    {
+        painter->drawPixmap(
+            option.rect.x(), option.rect.y() + (option.rect.height() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE, *logo
+        );
+    }
     mLogosStorage->unlock();
 
     QFontMetrics fontMetrics(option.font);
