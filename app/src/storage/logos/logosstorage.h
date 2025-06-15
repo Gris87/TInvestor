@@ -26,8 +26,8 @@ public:
     QPixmap* getLogo(const QString& instrumentId) override;
 
 private:
-    ILogosDatabase*         mLogosDatabase;
-    QMutex*                 mMutex;
-    Logos                   mLogos;
-    QPixmap                 mNotFoundLogo;
+    ILogosDatabase* mLogosDatabase;
+    QMutex*         mMutex;
+    Logos           mLogos;
+    QPixmap         mNotFoundLogo;
 };

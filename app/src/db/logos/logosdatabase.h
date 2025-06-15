@@ -19,7 +19,7 @@ public:
     LogosDatabase& operator=(const LogosDatabase& another) = delete;
 
     Logos readLogos() override;
-    void writeLogo(const QString& instrumentId, QPixmap* logo) override;
+    void  writeLogo(const QString& instrumentId, QPixmap* logo) override;
 
 private:
     IDirFactory*  mDirFactory;

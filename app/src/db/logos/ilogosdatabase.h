@@ -20,5 +20,5 @@ public:
     ILogosDatabase& operator=(const ILogosDatabase& another) = delete;
 
     virtual Logos readLogos()                                           = 0;
-    virtual void writeLogo(const QString& instrumentId, QPixmap* logo) = 0;
+    virtual void  writeLogo(const QString& instrumentId, QPixmap* logo) = 0;
 };

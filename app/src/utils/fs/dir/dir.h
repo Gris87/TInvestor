@@ -17,8 +17,8 @@ public:
     Dir(const Dir& another)            = delete;
     Dir& operator=(const Dir& another) = delete;
 
-    bool mkpath(const QString& dirPath) override;
-    bool removeRecursively() override;
+    bool        mkpath(const QString& dirPath) override;
+    bool        removeRecursively() override;
     QStringList entryList(
         const QStringList& nameFilters, QDir::Filters filters = QDir::NoFilter, QDir::SortFlags sort = QDir::NoSort
     ) override;
