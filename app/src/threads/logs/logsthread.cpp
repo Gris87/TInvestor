@@ -84,23 +84,26 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
         entry.instrumentId = instrumentId;
         entry.message      = message;
 
-        mInstrumentsStorage->lock();
-        Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
-        mInstrumentsStorage->unlock();
-
-        if (instrument.ticker == "" || instrument.name == "")
+        if (instrumentId != "")
         {
-            instrument.ticker         = instrumentId;
-            instrument.name           = "?????";
-            instrument.pricePrecision = 2;
+            mInstrumentsStorage->lock();
+            Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+            mInstrumentsStorage->unlock();
+
+            if (instrument.ticker == "" || instrument.name == "")
+            {
+                instrument.ticker         = instrumentId;
+                instrument.name           = "?????";
+                instrument.pricePrecision = 2;
+            }
+
+            mLogosStorage->lock();
+            entry.instrumentLogo = mLogosStorage->getLogo(instrumentId);
+            mLogosStorage->unlock();
+
+            entry.instrumentTicker = instrument.ticker;
+            entry.instrumentName   = instrument.name;
         }
-
-        mLogosStorage->lock();
-        entry.instrumentLogo = mLogosStorage->getLogo(instrumentId);
-        mLogosStorage->unlock();
-
-        entry.instrumentTicker = instrument.ticker;
-        entry.instrumentName   = instrument.name;
 
         mMutex->lock();
         mEntries.append(entry);

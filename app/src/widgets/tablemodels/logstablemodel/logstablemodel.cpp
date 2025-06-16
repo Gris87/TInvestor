@@ -61,6 +61,32 @@ QVariant LogsTableModel::headerData(int section, Qt::Orientation orientation, in
     return QVariant();
 }
 
+static QVariant logsTimeDisplayRole(const LogEntry& entry)
+{
+    return QDateTime::fromMSecsSinceEpoch(entry.timestamp).toString(DATETIME_FORMAT);
+}
+
+static QVariant logsLevelDisplayRole(const LogEntry& entry)
+{
+    return entry.level;
+}
+
+static QVariant logsNameDisplayRole(const LogEntry& entry)
+{
+    return entry.instrumentTicker;
+}
+
+static QVariant logsMessageDisplayRole(const LogEntry& entry)
+{
+    return entry.message;
+}
+
+using DisplayRoleHandler = QVariant (*)(const LogEntry& entry);
+
+static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[LOGS_COLUMN_COUNT]{
+    logsTimeDisplayRole, logsLevelDisplayRole, logsNameDisplayRole, logsMessageDisplayRole
+};
+
 QVariant LogsTableModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -68,25 +94,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        if (column == LOGS_TIME_COLUMN)
-        {
-            return QDateTime::fromMSecsSinceEpoch(mEntries->at(row).timestamp).toString(DATETIME_FORMAT);
-        }
-
-        if (column == LOGS_LEVEL_COLUMN)
-        {
-            return mEntries->at(row).level;
-        }
-
-        if (column == LOGS_NAME_COLUMN)
-        {
-            return mEntries->at(row).instrumentTicker;
-        }
-
-        if (column == LOGS_MESSAGE_COLUMN)
-        {
-            return mEntries->at(row).message;
-        }
+        return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
     }
     else if (role == ROLE_INSTRUMENT_LOGO)
     {

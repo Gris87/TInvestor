@@ -1,16 +1,24 @@
 #include "src/widgets/tablemodels/operationstablemodel/operationstablemodel.h"
 
+#include <QBrush>
 #include <QDebug>
 #include <algorithm>
 #include <execution>
 
+#include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/widgets/tablemodels/modelroles.h"
 #include "src/widgets/tablemodels/operationstablemodel/comparators.h"
 
 
 
+constexpr QChar RUBLE      = QChar(0x20BD);
+constexpr float ZERO_LIMIT = 0.0001f;
+
 const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
+const QBrush      GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush      RED_COLOR             = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush      NORMAL_COLOR          = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
 const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
@@ -62,6 +70,277 @@ QVariant OperationsTableModel::headerData(int section, Qt::Orientation orientati
     return QVariant();
 }
 
+static QVariant operationsTimeDisplayRole(const Operation& operation)
+{
+    return QDateTime::fromMSecsSinceEpoch(operation.timestamp).toString(DATETIME_FORMAT);
+}
+
+static QVariant operationsNameDisplayRole(const Operation& operation)
+{
+    return operation.instrumentTicker;
+}
+
+static QVariant operationsDescriptionDisplayRole(const Operation& operation)
+{
+    return operation.description;
+}
+
+static QVariant operationsPriceDisplayRole(const Operation& operation)
+{
+    return QString::number(operation.price, 'f', operation.pricePrecision) + " " + RUBLE;
+}
+
+static QVariant operationsAvgPriceFifoDisplayRole(const Operation& operation)
+{
+    return QString::number(operation.avgPriceFifo, 'f', operation.pricePrecision) + " " + RUBLE;
+}
+
+static QVariant operationsAvgPriceWavgDisplayRole(const Operation& operation)
+{
+    return QString::number(operation.avgPriceWavg, 'f', operation.pricePrecision) + " " + RUBLE;
+}
+
+static QVariant operationsQuantityDisplayRole(const Operation& operation)
+{
+    return operation.quantity;
+}
+
+static QVariant operationsRemainedQuantityDisplayRole(const Operation& operation)
+{
+    return operation.remainedQuantity;
+}
+
+static QVariant operationsPaymentDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.payment > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.payment, 'f', operation.paymentPrecision) + " " + RUBLE;
+}
+
+static QVariant operationsCommissionDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.commission > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.commission, 'f', operation.commissionPrecision) + " " + RUBLE;
+}
+
+static QVariant operationsYieldDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.yield > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.yield, 'f', 2) + " " + RUBLE;
+}
+
+static QVariant operationsYieldWithCommissionDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.yieldWithCommission > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.yieldWithCommission, 'f', 2) + " " + RUBLE;
+}
+
+static QVariant operationsYieldWithCommissionPercentDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.yieldWithCommissionPercent > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.yieldWithCommissionPercent, 'f', 2) + "%";
+}
+
+static QVariant operationsTotalYieldWithCommissionDisplayRole(const Operation& operation)
+{
+    const float   value  = quotationToFloat(operation.totalYieldWithCommission);
+    const QString prefix = value > 0 ? "+" : "";
+
+    return prefix + QString::number(value, 'f', 2) + " " + RUBLE;
+}
+
+static QVariant operationsTotalYieldWithCommissionPercentDisplayRole(const Operation& operation)
+{
+    const QString prefix = operation.totalYieldWithCommissionPercent > 0 ? "+" : "";
+
+    return prefix + QString::number(operation.totalYieldWithCommissionPercent, 'f', 2) + "%";
+}
+
+static QVariant operationsRemainedMoneyDisplayRole(const Operation& operation)
+{
+    return QString::number(quotationToFloat(operation.remainedMoney), 'f', 2) + " " + RUBLE;
+}
+
+static QVariant operationsTotalMoneyDisplayRole(const Operation& operation)
+{
+    return QString::number(quotationToFloat(operation.totalMoney), 'f', 2) + " " + RUBLE;
+}
+
+using DisplayRoleHandler = QVariant (*)(const Operation& operation);
+
+static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
+    operationsTimeDisplayRole,
+    operationsNameDisplayRole,
+    operationsDescriptionDisplayRole,
+    operationsPriceDisplayRole,
+    operationsAvgPriceFifoDisplayRole,
+    operationsAvgPriceWavgDisplayRole,
+    operationsQuantityDisplayRole,
+    operationsRemainedQuantityDisplayRole,
+    operationsPaymentDisplayRole,
+    operationsCommissionDisplayRole,
+    operationsYieldDisplayRole,
+    operationsYieldWithCommissionDisplayRole,
+    operationsYieldWithCommissionPercentDisplayRole,
+    operationsTotalYieldWithCommissionDisplayRole,
+    operationsTotalYieldWithCommissionPercentDisplayRole,
+    operationsRemainedMoneyDisplayRole,
+    operationsTotalMoneyDisplayRole
+};
+
+static QVariant operationsTimeForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsNameForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsDescriptionForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsPriceForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsAvgPriceFifoForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsAvgPriceWavgForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsQuantityForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsRemainedQuantityForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsPaymentForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsCommissionForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsYieldForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsYieldWithCommissionForegroundRole(const Operation& operation)
+{
+    if (operation.yieldWithCommission > -ZERO_LIMIT && operation.yieldWithCommission < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (operation.yieldWithCommission > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant operationsYieldWithCommissionPercentForegroundRole(const Operation& operation)
+{
+    if (operation.yieldWithCommissionPercent > -ZERO_LIMIT && operation.yieldWithCommissionPercent < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (operation.yieldWithCommissionPercent > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant operationsTotalYieldWithCommissionForegroundRole(const Operation& operation)
+{
+    float value = quotationToFloat(operation.totalYieldWithCommission);
+
+    if (value > -ZERO_LIMIT && value < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (value > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant operationsTotalYieldWithCommissionPercentForegroundRole(const Operation& operation)
+{
+    if (operation.totalYieldWithCommissionPercent > -ZERO_LIMIT && operation.totalYieldWithCommissionPercent < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (operation.totalYieldWithCommissionPercent > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant operationsRemainedMoneyForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+static QVariant operationsTotalMoneyForegroundRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+using ForegroundRoleHandler = QVariant (*)(const Operation& operation);
+
+static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
+    operationsTimeForegroundRole,
+    operationsNameForegroundRole,
+    operationsDescriptionForegroundRole,
+    operationsPriceForegroundRole,
+    operationsAvgPriceFifoForegroundRole,
+    operationsAvgPriceWavgForegroundRole,
+    operationsQuantityForegroundRole,
+    operationsRemainedQuantityForegroundRole,
+    operationsPaymentForegroundRole,
+    operationsCommissionForegroundRole,
+    operationsYieldForegroundRole,
+    operationsYieldWithCommissionForegroundRole,
+    operationsYieldWithCommissionPercentForegroundRole,
+    operationsTotalYieldWithCommissionForegroundRole,
+    operationsTotalYieldWithCommissionPercentForegroundRole,
+    operationsRemainedMoneyForegroundRole,
+    operationsTotalMoneyForegroundRole
+};
+
 QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -69,14 +348,42 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        if (column == OPERATIONS_TIME_COLUMN)
+        return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
+    }
+    else if (role == Qt::ForegroundRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return FOREGROUND_ROLE_HANDLER[column](mEntries->at(row));
+    }
+    else if (role == Qt::ToolTipRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        if (column == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
         {
-            return QDateTime::fromMSecsSinceEpoch(mEntries->at(row).timestamp).toString(DATETIME_FORMAT);
+            const Operation& operation = mEntries->at(row);
+
+            if (operation.avgCostFifo <= 0)
+            {
+                return QVariant();
+            }
+
+            return tr("From: %1").arg(operation.avgCostFifo, 0, 'f', operation.pricePrecision) + " " + RUBLE;
         }
 
-        if (column == OPERATIONS_NAME_COLUMN)
+        if (column == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
         {
-            return mEntries->at(row).instrumentTicker;
+            float fromPrice = quotationToFloat(mEntries->at(row).maxInputMoney);
+
+            if (fromPrice <= 0)
+            {
+                return QVariant();
+            }
+
+            return tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE;
         }
     }
     else if (role == ROLE_INSTRUMENT_LOGO)
