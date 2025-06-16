@@ -14,6 +14,9 @@ TEST(Test_Operation, Test_constructor_and_destructor)
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         0);
     ASSERT_EQ(operation.instrumentId,                      "");
+    ASSERT_EQ(operation.instrumentLogo,                    nullptr);
+    ASSERT_EQ(operation.instrumentTicker,                  "");
+    ASSERT_EQ(operation.instrumentName,                    "");
     ASSERT_EQ(operation.description,                       "");
     ASSERT_NEAR(operation.price,                           0, 0.0001f);
     ASSERT_EQ(operation.fifoItems.size(),                  0);
@@ -53,7 +56,9 @@ TEST(Test_Operation, Test_copy_constructor)
 
     operation.timestamp                       = 1;
     operation.instrumentId                    = "a";
-    operation.description                     = "b";
+    operation.instrumentTicker                = "b";
+    operation.instrumentName                  = "c";
+    operation.description                     = "d";
     operation.price                           = 2.0f;
     operation.avgPriceFifo                    = 3.0f;
     operation.avgPriceWavg                    = 4.0f;
@@ -96,7 +101,10 @@ TEST(Test_Operation, Test_copy_constructor)
     // clang-format off
     ASSERT_EQ(operation2.timestamp,                         1);
     ASSERT_EQ(operation2.instrumentId,                      "a");
-    ASSERT_EQ(operation2.description,                       "b");
+    ASSERT_EQ(operation2.instrumentLogo,                    nullptr);
+    ASSERT_EQ(operation2.instrumentTicker,                  "b");
+    ASSERT_EQ(operation2.instrumentName,                    "c");
+    ASSERT_EQ(operation2.description,                       "d");
     ASSERT_NEAR(operation2.price,                           2, 0.0001f);
     ASSERT_EQ(operation2.fifoItems.size(),                  1);
     ASSERT_EQ(operation2.fifoItems.at(0).quantity,          30);
@@ -139,7 +147,9 @@ TEST(Test_Operation, Test_assign)
 
     operation.timestamp                       = 1;
     operation.instrumentId                    = "a";
-    operation.description                     = "b";
+    operation.instrumentTicker                = "b";
+    operation.instrumentName                  = "c";
+    operation.description                     = "d";
     operation.price                           = 2.0f;
     operation.avgPriceFifo                    = 3.0f;
     operation.avgPriceWavg                    = 4.0f;
@@ -182,7 +192,10 @@ TEST(Test_Operation, Test_assign)
     // clang-format off
     ASSERT_EQ(operation2.timestamp,                         1);
     ASSERT_EQ(operation2.instrumentId,                      "a");
-    ASSERT_EQ(operation2.description,                       "b");
+    ASSERT_EQ(operation2.instrumentLogo,                    nullptr);
+    ASSERT_EQ(operation2.instrumentTicker,                  "b");
+    ASSERT_EQ(operation2.instrumentName,                    "c");
+    ASSERT_EQ(operation2.description,                       "d");
     ASSERT_NEAR(operation2.price,                           2, 0.0001f);
     ASSERT_EQ(operation2.fifoItems.size(),                  1);
     ASSERT_EQ(operation2.fifoItems.at(0).quantity,          30);
@@ -225,6 +238,9 @@ TEST(Test_Operation, Test_fromJsonObject)
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         0);
     ASSERT_EQ(operation.instrumentId,                      "");
+    ASSERT_EQ(operation.instrumentLogo,                    nullptr);
+    ASSERT_EQ(operation.instrumentTicker,                  "");
+    ASSERT_EQ(operation.instrumentName,                    "");
     ASSERT_EQ(operation.description,                       "");
     ASSERT_NEAR(operation.price,                           0, 0.0001f);
     ASSERT_EQ(operation.fifoItems.size(),                  0);
@@ -258,7 +274,7 @@ TEST(Test_Operation, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
+        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"d","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
     QJsonParseError     parseError;
     const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
@@ -269,7 +285,10 @@ TEST(Test_Operation, Test_fromJsonObject)
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1);
     ASSERT_EQ(operation.instrumentId,                      "a");
-    ASSERT_EQ(operation.description,                       "b");
+    ASSERT_EQ(operation.instrumentLogo,                    nullptr);
+    ASSERT_EQ(operation.instrumentTicker,                  "b");
+    ASSERT_EQ(operation.instrumentName,                    "c");
+    ASSERT_EQ(operation.description,                       "d");
     ASSERT_NEAR(operation.price,                           2, 0.0001f);
     ASSERT_EQ(operation.fifoItems.size(),                  1);
     ASSERT_EQ(operation.fifoItems.at(0).quantity,          30);
@@ -311,7 +330,9 @@ TEST(Test_Operation, Test_toJsonObject)
 
     operation.timestamp                       = 1;
     operation.instrumentId                    = "a";
-    operation.description                     = "b";
+    operation.instrumentTicker                = "b";
+    operation.instrumentName                  = "c";
+    operation.description                     = "d";
     operation.price                           = 2.0f;
     operation.avgPriceFifo                    = 3.0f;
     operation.avgPriceWavg                    = 4.0f;
@@ -354,7 +375,7 @@ TEST(Test_Operation, Test_toJsonObject)
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"b","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
+        R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":29,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"d","fifoItems":[{"cost":{"nano":32,"units":31},"quantity":30}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":28,"price":2,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -366,7 +387,9 @@ TEST(Test_Operation, Test_equals)
 
     operation.timestamp                       = 1;
     operation.instrumentId                    = "a";
-    operation.description                     = "b";
+    operation.instrumentTicker                = "b";
+    operation.instrumentName                  = "c";
+    operation.description                     = "d";
     operation.price                           = 2.0f;
     operation.avgPriceFifo                    = 3.0f;
     operation.avgPriceWavg                    = 4.0f;
@@ -398,7 +421,9 @@ TEST(Test_Operation, Test_equals)
 
     operation2.timestamp                       = 1;
     operation2.instrumentId                    = "a";
-    operation2.description                     = "b";
+    operation2.instrumentTicker                = "b";
+    operation2.instrumentName                  = "c";
+    operation2.description                     = "d";
     operation2.price                           = 2.0f;
     operation2.avgPriceFifo                    = 3.0f;
     operation2.avgPriceWavg                    = 4.0f;
@@ -456,9 +481,19 @@ TEST(Test_Operation, Test_equals)
     operation2.instrumentId = "a";
     ASSERT_EQ(operation, operation2);
 
-    operation2.description = "bbbb";
+    operation2.instrumentTicker = "bbbb";
     ASSERT_NE(operation, operation2);
-    operation2.description = "b";
+    operation2.instrumentTicker = "b";
+    ASSERT_EQ(operation, operation2);
+
+    operation2.instrumentName = "cccc";
+    ASSERT_NE(operation, operation2);
+    operation2.instrumentName = "c";
+    ASSERT_EQ(operation, operation2);
+
+    operation2.description = "dddd";
+    ASSERT_NE(operation, operation2);
+    operation2.description = "d";
     ASSERT_EQ(operation, operation2);
 
     operation2.price = 2222.0f;

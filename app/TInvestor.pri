@@ -135,6 +135,8 @@ SOURCES += \
     src/widgets/tableitems/turnovertableitem.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
+    src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp \
+    src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
     src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
@@ -380,6 +382,12 @@ HEADERS += \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h \
     src/widgets/tablemodels/logstablemodel/logstablemodel.h \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.h \
+    src/widgets/tablemodels/modelroles.h \
+    src/widgets/tablemodels/operationstablemodel/comparators.h \
+    src/widgets/tablemodels/operationstablemodel/ioperationstablemodel.h \
+    src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h \
+    src/widgets/tablemodels/operationstablemodel/operationstablemodel.h \
+    src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
     src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \
     src/widgets/tablerecords/operationstablerecord/operationstablerecord.h \

@@ -4,8 +4,10 @@
 
 #include "src/widgets/operationstablewidget/ioperationstablewidget.h"
 
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h"
 #include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
 
@@ -23,6 +25,8 @@ class OperationsTableWidget : public IOperationsTableWidget
 
 public:
     explicit OperationsTableWidget(
+        IOperationsTableModelFactory*      operationsTableModelFactory,
+        ILogosStorage*                     logosStorage,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,
@@ -53,9 +57,10 @@ private:
     IInstrumentsStorage*               mInstrumentsStorage;
     IFileDialogFactory*                mFileDialogFactory;
     ISettingsEditor*                   mSettingsEditor;
+    IOperationsTableModel*             mOperationsTableModel;
     QList<IOperationsTableRecord*>     mRecords;
 
 public slots:
-    void on_tableWidget_customContextMenuRequested(const QPoint& pos);
+    void on_tableView_customContextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
 };

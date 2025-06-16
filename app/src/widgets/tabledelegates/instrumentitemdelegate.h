@@ -21,8 +21,8 @@ public:
     InstrumentItemDelegate(const InstrumentItemDelegate& another)            = delete;
     InstrumentItemDelegate& operator=(const InstrumentItemDelegate& another) = delete;
 
-    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
     static QLabel*     hoverTextWidget;
     static QModelIndex hoverIndex;

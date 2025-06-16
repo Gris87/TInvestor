@@ -9,6 +9,9 @@
 Operation::Operation() :
     timestamp(),
     instrumentId(),
+    instrumentLogo(),
+    instrumentTicker(),
+    instrumentName(),
     description(),
     price(),
     fifoItems(),
@@ -39,6 +42,8 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
 {
     timestamp                       = jsonObject.value("timestamp").toInteger();
     instrumentId                    = jsonObject.value("instrumentId").toString();
+    instrumentTicker                = jsonObject.value("instrumentTicker").toString();
+    instrumentName                  = jsonObject.value("instrumentName").toString();
     description                     = jsonObject.value("description").toString();
     price                           = jsonObject.value("price").toDouble();
     avgPriceFifo                    = jsonObject.value("avgPriceFifo").toDouble();
@@ -86,6 +91,8 @@ QJsonObject Operation::toJsonObject() const
     // clang-format off
     res.insert("timestamp",                       timestamp);
     res.insert("instrumentId",                    instrumentId);
+    res.insert("instrumentTicker",                instrumentTicker);
+    res.insert("instrumentName",                  instrumentName);
     res.insert("description",                     description);
     res.insert("price",                           price);
     res.insert("fifoItems",                       jsonFifoItems);
@@ -116,12 +123,13 @@ QJsonObject Operation::toJsonObject() const
 
 bool operator==(const Operation& lhs, const Operation& rhs)
 {
-    return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId && lhs.description == rhs.description &&
-           lhs.price == rhs.price && lhs.fifoItems == rhs.fifoItems && lhs.avgPriceFifo == rhs.avgPriceFifo &&
-           lhs.avgPriceWavg == rhs.avgPriceWavg && lhs.quantity == rhs.quantity && lhs.remainedQuantity == rhs.remainedQuantity &&
-           lhs.payment == rhs.payment && lhs.avgCostFifo == rhs.avgCostFifo && lhs.costFifo == rhs.costFifo &&
-           lhs.costWavg == rhs.costWavg && lhs.commission == rhs.commission && lhs.yield == rhs.yield &&
-           lhs.yieldWithCommission == rhs.yieldWithCommission &&
+    return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId &&
+           lhs.instrumentTicker == rhs.instrumentTicker && lhs.instrumentName == rhs.instrumentName &&
+           lhs.description == rhs.description && lhs.price == rhs.price && lhs.fifoItems == rhs.fifoItems &&
+           lhs.avgPriceFifo == rhs.avgPriceFifo && lhs.avgPriceWavg == rhs.avgPriceWavg && lhs.quantity == rhs.quantity &&
+           lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.avgCostFifo == rhs.avgCostFifo &&
+           lhs.costFifo == rhs.costFifo && lhs.costWavg == rhs.costWavg && lhs.commission == rhs.commission &&
+           lhs.yield == rhs.yield && lhs.yieldWithCommission == rhs.yieldWithCommission &&
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&
            lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
            lhs.totalYieldWithCommissionPercent == rhs.totalYieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&

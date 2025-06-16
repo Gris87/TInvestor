@@ -37,7 +37,7 @@ void LogsDatabase::setAccount(const QString& account)
 
 struct FindLogsIndeciesInfo
 {
-    FindLogsIndeciesInfo(QByteArray _content) :
+    explicit FindLogsIndeciesInfo(const QByteArray& _content) :
         content(_content)
     {
         const int cpuCount = QThread::idealThreadCount();
@@ -57,7 +57,7 @@ findLogsIndeciesForParallel(QThread* parentThread, int threadId, QList<int>& /*t
     const char* contentArray = findLogsIndeciesInfo->content.constData();
     QList<int>* resultsArray = findLogsIndeciesInfo->results.data();
 
-    int part = findLogsIndeciesInfo->content.size() / findLogsIndeciesInfo->results.size();
+    const int part = findLogsIndeciesInfo->content.size() / findLogsIndeciesInfo->results.size();
 
     start = part * threadId;
     end   = qMin(part * (threadId + 1), findLogsIndeciesInfo->content.size() - 3);
@@ -76,7 +76,7 @@ findLogsIndeciesForParallel(QThread* parentThread, int threadId, QList<int>& /*t
 
 struct MergeLogsIndeciesInfo
 {
-    MergeLogsIndeciesInfo(QList<QList<int>> _results) :
+    explicit MergeLogsIndeciesInfo(const QList<QList<int>>& _results) :
         results(_results)
     {
         indecies.resizeForOverwrite(results.size() + 1);
@@ -103,7 +103,7 @@ static void mergeLogsIndeciesForParallel(
 {
     MergeLogsIndeciesInfo* mergeLogsIndeciesInfo = reinterpret_cast<MergeLogsIndeciesInfo*>(additionalArgs);
 
-    int               index   = mergeLogsIndeciesInfo->indecies.at(threadId);
+    const int         index   = mergeLogsIndeciesInfo->indecies.at(threadId);
     const QList<int>& results = mergeLogsIndeciesInfo->results.at(threadId);
 
     int* resArray = res.data();
@@ -116,7 +116,7 @@ static void mergeLogsIndeciesForParallel(
 
 struct ReadLogsInfo
 {
-    explicit ReadLogsInfo(ILogosStorage* _logosStorage, QByteArray _content, QList<int>* _indecies) :
+    explicit ReadLogsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, QList<int>* _indecies) :
         logosStorage(_logosStorage),
         content(_content),
         indecies(_indecies)
@@ -134,7 +134,7 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
     ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
 
     ILogosStorage* logosStorage  = readLogsInfo->logosStorage;
-    QByteArray     content       = readLogsInfo->content;
+    const QByteArray content       = readLogsInfo->content;
     int*           indeciesArray = readLogsInfo->indecies->data();
 
     LogEntry* resArray = res.data();
@@ -143,10 +143,10 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
     {
         LogEntry& entry = resArray[res.size() - i - 1];
 
-        int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
-        int endBlock   = indeciesArray[i];
+        const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
+        const int endBlock   = indeciesArray[i];
 
-        QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
+        const QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
 
         QJsonParseError     parseError;
         const QJsonDocument jsonDoc = QJsonDocument::fromJson(entryContent, &parseError);

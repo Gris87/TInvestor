@@ -36,7 +36,7 @@ TEST(Test_OperationsTableRecordFactory, Test_newInstance)
 
     QTableWidget tableWidget;
 
-    tableWidget.setColumnCount(OPERATIONS_COLUMN_COUNT);
+    tableWidget.setColumnCount(OPERATIONS_OLD_COLUMN_COUNT);
 
     EXPECT_CALL(instrumentTableItemWidgetFactoryMock, newInstance(&userStorageMock, &tableWidget))
         .WillOnce(Return(instrumentTableItemWidgetMock));

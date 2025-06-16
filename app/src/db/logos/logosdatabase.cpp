@@ -48,14 +48,14 @@ readLogosForParallel(QThread* parentThread, int /*threadId*/, QList<QString>& fi
     QString*      instrumentsArray = readLogosInfo->instrumentIds.data();
     QPixmap**     logosArray       = readLogosInfo->logos.data();
 
-    QString logosPath = qApp->applicationDirPath() + "/data/instruments/logos/";
+    const QString logosPath = qApp->applicationDirPath() + "/data/instruments/logos/";
 
     QString* filesArray = files.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        QString  instrumentId = filesArray[i].remove(".png");
-        QPixmap* logo         = new QPixmap();
+        const QString instrumentId = filesArray[i].remove(".png");
+        QPixmap*      logo         = new QPixmap();
 
         const std::shared_ptr<IFile> logoFile = fileFactory->newInstance(logosPath + filesArray[i]);
 
@@ -76,7 +76,7 @@ Logos LogosDatabase::readLogos()
 {
     Logos res;
 
-    QString logosPath = qApp->applicationDirPath() + "/data/instruments/logos/";
+    const QString logosPath = qApp->applicationDirPath() + "/data/instruments/logos/";
 
     const std::shared_ptr<IDir> dir   = mDirFactory->newInstance(logosPath);
     QStringList                 files = dir->entryList(QStringList() << "*.png");

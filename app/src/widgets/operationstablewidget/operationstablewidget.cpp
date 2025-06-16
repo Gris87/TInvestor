@@ -5,6 +5,7 @@
 #include <QMenu>
 
 #include "src/qxlsx/xlsxdocument.h"
+#include "src/widgets/tabledelegates/instrumentitemdelegate.h"
 
 
 
@@ -27,6 +28,8 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 OperationsTableWidget::OperationsTableWidget(
+    IOperationsTableModelFactory*      operationsTableModelFactory,
+    ILogosStorage*                     logosStorage,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
@@ -49,6 +52,12 @@ OperationsTableWidget::OperationsTableWidget(
 
     ui->setupUi(this);
 
+    mOperationsTableModel = operationsTableModelFactory->newInstance(this);
+
+    ui->tableView->setModel(mOperationsTableModel);
+    ui->tableView->setItemDelegateForColumn(OPERATIONS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::DescendingOrder);
+
     ui->tableWidget->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::DescendingOrder);
 }
 
@@ -61,6 +70,9 @@ OperationsTableWidget::~OperationsTableWidget()
 
 void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 {
+    mOperationsTableModel->operationsRead(operations);
+    ui->tableView->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::DescendingOrder);
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -93,6 +105,8 @@ void OperationsTableWidget::operationsRead(const QList<Operation>& operations)
 
 void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
 {
+    mOperationsTableModel->operationsAdded(operations);
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -110,13 +124,13 @@ void OperationsTableWidget::operationsAdded(const QList<Operation>& operations)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void OperationsTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& pos)
+void OperationsTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)
 {
     QMenu* contextMenu = new QMenu(this);
 
     contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
 
-    contextMenu->popup(ui->tableWidget->viewport()->mapToGlobal(pos));
+    contextMenu->popup(ui->tableView->viewport()->mapToGlobal(pos));
 }
 
 void OperationsTableWidget::actionExportToExcelTriggered()
@@ -154,15 +168,12 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    for (int i = 0; i < ui->tableWidget->columnCount(); ++i)
+    for (int i = 0; i < mOperationsTableModel->columnCount(); ++i)
     {
-        doc.write(1, i + 1, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+        doc.write(1, i + 1, mOperationsTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
 
-    for (IOperationsTableRecord* record : std::as_const(mRecords))
-    {
-        record->exportToExcel(doc);
-    }
+    mOperationsTableModel->exportToExcel(doc);
 
     // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
@@ -214,6 +225,26 @@ void OperationsTableWidget::saveWindowState(const QString& type)
 
 void OperationsTableWidget::loadWindowState(const QString& type)
 {
+    // clang-format off
+    ui->tableView->setColumnWidth(OPERATIONS_TIME_COLUMN,                                mSettingsEditor->value(type + "/columnWidth_Time",                            COLUMN_WIDTHS[OPERATIONS_TIME_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_NAME_COLUMN,                                mSettingsEditor->value(type + "/columnWidth_Name",                            COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_DESCRIPTION_COLUMN,                         mSettingsEditor->value(type + "/columnWidth_Description",                     COLUMN_WIDTHS[OPERATIONS_DESCRIPTION_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_PRICE_COLUMN,                               mSettingsEditor->value(type + "/columnWidth_Price",                           COLUMN_WIDTHS[OPERATIONS_PRICE_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_AVG_PRICE_FIFO_COLUMN,                      mSettingsEditor->value(type + "/columnWidth_AvgPriceFifo",                    COLUMN_WIDTHS[OPERATIONS_AVG_PRICE_FIFO_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_AVG_PRICE_WAVG_COLUMN,                      mSettingsEditor->value(type + "/columnWidth_AvgPriceWavg",                    COLUMN_WIDTHS[OPERATIONS_AVG_PRICE_WAVG_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_QUANTITY_COLUMN,                            mSettingsEditor->value(type + "/columnWidth_Quantity",                        COLUMN_WIDTHS[OPERATIONS_QUANTITY_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_REMAINED_QUANTITY_COLUMN,                   mSettingsEditor->value(type + "/columnWidth_RemainedQuantity",                COLUMN_WIDTHS[OPERATIONS_REMAINED_QUANTITY_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_PAYMENT_COLUMN,                             mSettingsEditor->value(type + "/columnWidth_Payment",                         COLUMN_WIDTHS[OPERATIONS_PAYMENT_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_COMMISSION_COLUMN,                          mSettingsEditor->value(type + "/columnWidth_Commission",                      COLUMN_WIDTHS[OPERATIONS_COMMISSION_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_YIELD_COLUMN,                               mSettingsEditor->value(type + "/columnWidth_Yield",                           COLUMN_WIDTHS[OPERATIONS_YIELD_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_YIELD_WITH_COMMISSION_COLUMN,               mSettingsEditor->value(type + "/columnWidth_YieldWithCommission",             COLUMN_WIDTHS[OPERATIONS_YIELD_WITH_COMMISSION_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN,       mSettingsEditor->value(type + "/columnWidth_YieldWithCommissionPercent",      COLUMN_WIDTHS[OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN,         mSettingsEditor->value(type + "/columnWidth_TotalYieldWithCommission",        COLUMN_WIDTHS[OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN, mSettingsEditor->value(type + "/columnWidth_TotalYieldWithCommissionPercent", COLUMN_WIDTHS[OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_REMAINED_MONEY_COLUMN,                      mSettingsEditor->value(type + "/columnWidth_RemainedMoney",                   COLUMN_WIDTHS[OPERATIONS_REMAINED_MONEY_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(OPERATIONS_TOTAL_MONEY_COLUMN,                         mSettingsEditor->value(type + "/columnWidth_TotalMoney",                      COLUMN_WIDTHS[OPERATIONS_TOTAL_MONEY_COLUMN]).toInt());
+    // clang-format on
+
     // clang-format off
     ui->tableWidget->setColumnWidth(OPERATIONS_TIME_COLUMN,                                mSettingsEditor->value(type + "/columnWidth_Time",                            COLUMN_WIDTHS[OPERATIONS_TIME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(OPERATIONS_NAME_COLUMN,                                mSettingsEditor->value(type + "/columnWidth_Name",                            COLUMN_WIDTHS[OPERATIONS_NAME_COLUMN]).toInt());

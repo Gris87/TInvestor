@@ -16,6 +16,8 @@ public:
     OperationsTableWidgetFactory& operator=(const OperationsTableWidgetFactory& another) = delete;
 
     IOperationsTableWidget* newInstance(
+        IOperationsTableModelFactory*      operationsTableModelFactory,
+        ILogosStorage*                     logosStorage,
         IOperationsTableRecordFactory*     operationsTableRecordFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IUserStorage*                      userStorage,

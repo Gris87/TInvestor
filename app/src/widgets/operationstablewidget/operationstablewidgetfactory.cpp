@@ -18,6 +18,8 @@ OperationsTableWidgetFactory::~OperationsTableWidgetFactory()
 }
 
 IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
+    IOperationsTableModelFactory*      operationsTableModelFactory,
+    ILogosStorage*                     logosStorage,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IUserStorage*                      userStorage,
@@ -28,6 +30,8 @@ IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
 ) const
 {
     return new OperationsTableWidget(
+        operationsTableModelFactory,
+        logosStorage,
         operationsTableRecordFactory,
         instrumentTableItemWidgetFactory,
         userStorage,

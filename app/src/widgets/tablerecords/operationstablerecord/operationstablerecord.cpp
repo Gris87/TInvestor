@@ -51,24 +51,24 @@ OperationsTableRecord::OperationsTableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setItem(rowIndex,       OPERATIONS_TIME_COLUMN,                                mTimeTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, OPERATIONS_NAME_COLUMN,                                mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_NAME_COLUMN,                                mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       OPERATIONS_DESCRIPTION_COLUMN,                         mDescriptionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PRICE_COLUMN,                               mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_FIFO_COLUMN,                      mAvgPriceFifoTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_AVG_PRICE_WAVG_COLUMN,                      mAvgPriceWavgTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_QUANTITY_COLUMN,                            mQuantityTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_QUANTITY_COLUMN,                   mRemainedQuantityTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_PAYMENT_COLUMN,                             mPaymentTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_COMMISSION_COLUMN,                          mCommissionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_COLUMN,                               mYieldTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_WITH_COMMISSION_COLUMN,               mYieldWithCommissionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN,       mYieldWithCommissionPercentTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN,         mTotalYieldWithCommissionTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN, mTotalYieldWithCommissionPercentTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_REMAINED_MONEY_COLUMN,                      mRemainedMoneyTableWidgetItem);
-    tableWidget->setItem(rowIndex,       OPERATIONS_TOTAL_MONEY_COLUMN,                         mTotalMoneyTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_TIME_COLUMN,                                mTimeTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, OPERATIONS_OLD_NAME_COLUMN,                                mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_NAME_COLUMN,                                mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_DESCRIPTION_COLUMN,                         mDescriptionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_PRICE_COLUMN,                               mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_AVG_PRICE_FIFO_COLUMN,                      mAvgPriceFifoTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_AVG_PRICE_WAVG_COLUMN,                      mAvgPriceWavgTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_QUANTITY_COLUMN,                            mQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_REMAINED_QUANTITY_COLUMN,                   mRemainedQuantityTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_PAYMENT_COLUMN,                             mPaymentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_COMMISSION_COLUMN,                          mCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_YIELD_COLUMN,                               mYieldTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_YIELD_WITH_COMMISSION_COLUMN,               mYieldWithCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_YIELD_WITH_COMMISSION_PERCENT_COLUMN,       mYieldWithCommissionPercentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_TOTAL_YIELD_WITH_COMMISSION_COLUMN,         mTotalYieldWithCommissionTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN, mTotalYieldWithCommissionPercentTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_REMAINED_MONEY_COLUMN,                      mRemainedMoneyTableWidgetItem);
+    tableWidget->setItem(rowIndex,       OPERATIONS_OLD_TOTAL_MONEY_COLUMN,                         mTotalMoneyTableWidgetItem);
     // clang-format on
 }
 
@@ -137,23 +137,23 @@ void OperationsTableRecord::exportToExcel(QXlsx::Document& doc) const
     dateFormat.setFontColor(CELL_FONT_COLOR);
 
     // clang-format off
-    doc.write(row, OPERATIONS_TIME_COLUMN + 1,                                mTimeTableWidgetItem->value(), dateFormat);
-    doc.write(row, OPERATIONS_NAME_COLUMN + 1,                                mInstrumentTableItemWidget->fullText(), cellStyle);
-    doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                         mDescriptionTableWidgetItem->text(), cellStyle);
-    doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                               mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      mAvgPriceFifoTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceFifoTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      mAvgPriceWavgTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceWavgTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                            mQuantityTableWidgetItem->value(), cellStyle);
-    doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   mRemainedQuantityTableWidgetItem->value(), cellStyle);
-    doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                             mPaymentTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                          mCommissionTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                               mYieldTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,               mYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       mYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
-    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         mTotalYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mTotalYieldWithCommissionTableWidgetItem->foreground().color(), true, mTotalYieldWithCommissionTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mTotalYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mTotalYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
-    doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                      mRemainedMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->precision()));
-    doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                         mTotalMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_TIME_COLUMN + 1,                                mTimeTableWidgetItem->value(), dateFormat);
+    doc.write(row, OPERATIONS_OLD_NAME_COLUMN + 1,                                mInstrumentTableItemWidget->fullText(), cellStyle);
+    doc.write(row, OPERATIONS_OLD_DESCRIPTION_COLUMN + 1,                         mDescriptionTableWidgetItem->text(), cellStyle);
+    doc.write(row, OPERATIONS_OLD_PRICE_COLUMN + 1,                               mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mPriceTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_AVG_PRICE_FIFO_COLUMN + 1,                      mAvgPriceFifoTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceFifoTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_AVG_PRICE_WAVG_COLUMN + 1,                      mAvgPriceWavgTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mAvgPriceWavgTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_QUANTITY_COLUMN + 1,                            mQuantityTableWidgetItem->value(), cellStyle);
+    doc.write(row, OPERATIONS_OLD_REMAINED_QUANTITY_COLUMN + 1,                   mRemainedQuantityTableWidgetItem->value(), cellStyle);
+    doc.write(row, OPERATIONS_OLD_PAYMENT_COLUMN + 1,                             mPaymentTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mPaymentTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_COMMISSION_COLUMN + 1,                          mCommissionTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_YIELD_COLUMN + 1,                               mYieldTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, true, mYieldTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_YIELD_WITH_COMMISSION_COLUMN + 1,               mYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mYieldWithCommissionTableWidgetItem->foreground().color(), true, mYieldWithCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       mYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_OLD_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         mTotalYieldWithCommissionTableWidgetItem->value(), createRubleFormat(mTotalYieldWithCommissionTableWidgetItem->foreground().color(), true, mTotalYieldWithCommissionTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, mTotalYieldWithCommissionPercentTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mTotalYieldWithCommissionPercentTableWidgetItem->foreground().color(), true));
+    doc.write(row, OPERATIONS_OLD_REMAINED_MONEY_COLUMN + 1,                      mRemainedMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mRemainedMoneyTableWidgetItem->precision()));
+    doc.write(row, OPERATIONS_OLD_TOTAL_MONEY_COLUMN + 1,                         mTotalMoneyTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, false, mTotalMoneyTableWidgetItem->precision()));
     // clang-format on
 }
 

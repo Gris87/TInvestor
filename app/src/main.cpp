@@ -77,6 +77,7 @@
 #include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/logstablemodel/logstablemodelfactory.h"
+#include "src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.h"
 #include "src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
@@ -192,6 +193,7 @@ static int runApplication(QApplication* app)
 
     StocksTableRecordFactory     stocksTableRecordFactory;
     OperationsTableRecordFactory operationsTableRecordFactory;
+    OperationsTableModelFactory  operationsTableModelFactory;
     LogsTableModelFactory        logsTableModelFactory;
     PortfolioTreeRecordFactory   portfolioTreeRecordFactory;
 
@@ -375,6 +377,7 @@ static int runApplication(QApplication* app)
         &logsTableWidgetFactory,
         &portfolioTreeWidgetFactory,
         &operationsTableRecordFactory,
+        &operationsTableModelFactory,
         &logsTableModelFactory,
         &portfolioTreeRecordFactory,
         &decisionMakerWidgetFactory,

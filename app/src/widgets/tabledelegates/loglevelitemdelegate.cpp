@@ -29,10 +29,10 @@ LogLevelItemDelegate::~LogLevelItemDelegate()
 
 void LogLevelItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QPoint center = option.rect.center();
+    const QPoint center = option.rect.center();
 
     painter->drawPixmap(
-        center.x() - ICON_SIZE / 2, center.y() - ICON_SIZE / 2, ICON_SIZE, ICON_SIZE, mIcons.at(index.data().toInt())
+        center.x() - (ICON_SIZE / 2), center.y() - (ICON_SIZE / 2), ICON_SIZE, ICON_SIZE, mIcons.at(index.data().toInt())
     );
 }
 

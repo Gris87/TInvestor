@@ -6,6 +6,7 @@
 
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/widgets/tablemodels/logstablemodel/comparators.h"
+#include "src/widgets/tablemodels/modelroles.h"
 
 
 
@@ -27,6 +28,7 @@ LogsTableModel::LogsTableModel(QObject* parent) :
     qDebug() << "Create LogsTableModel";
 
     mHeader << tr("Time") << "L" << tr("Name") << tr("Message");
+    Q_ASSERT_X(mHeader.size() == LOGS_COLUMN_COUNT, "LogsTableModel::LogsTableModel()", "Header is incorrect");
 }
 
 LogsTableModel::~LogsTableModel()
@@ -86,7 +88,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
             return mEntries->at(row).message;
         }
     }
-    else if (role == LOGS_ROLE_INSTRUMENT_LOGO)
+    else if (role == ROLE_INSTRUMENT_LOGO)
     {
         const int row = index.row();
 
@@ -94,7 +96,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
 
         return reinterpret_cast<qint64>(mEntries->at(row).instrumentLogo);
     }
-    else if (role == LOGS_ROLE_INSTRUMENT_NAME)
+    else if (role == ROLE_INSTRUMENT_NAME)
     {
         const int row = index.row();
 

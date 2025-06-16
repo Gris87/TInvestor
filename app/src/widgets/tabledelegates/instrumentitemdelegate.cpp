@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QPainter>
 
-#include "src/widgets/tablemodels/logstablemodel/ilogstablemodel.h"
+#include "src/widgets/tablemodels/modelroles.h"
 
 
 
@@ -36,18 +36,19 @@ InstrumentItemDelegate::~InstrumentItemDelegate()
 
 void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    mLogosStorage->lock();
-    QPixmap* logo = reinterpret_cast<QPixmap*>(index.data(LOGS_ROLE_INSTRUMENT_LOGO).toLongLong());
+    QPixmap* logo =
+        reinterpret_cast<QPixmap*>(index.data(ROLE_INSTRUMENT_LOGO).toLongLong()); // NOLINT(performance-no-int-to-ptr)
 
     if (logo != nullptr)
     {
+        mLogosStorage->lock();
         painter->drawPixmap(
-            option.rect.x(), option.rect.y() + (option.rect.height() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE, *logo
+            option.rect.x(), option.rect.y() + ((option.rect.height() - ICON_SIZE) / 2), ICON_SIZE, ICON_SIZE, *logo
         );
+        mLogosStorage->unlock();
     }
-    mLogosStorage->unlock();
 
-    QFontMetrics fontMetrics(option.font);
+    const QFontMetrics fontMetrics(option.font);
 
     QRect textRect = option.rect;
     textRect.setLeft(textRect.x() + ICON_SIZE + SPACING);
@@ -74,7 +75,7 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     {
         hoverIndex = index;
 
-        const QString name = index.data(LOGS_ROLE_INSTRUMENT_NAME).toString();
+        const QString name = index.data(ROLE_INSTRUMENT_NAME).toString();
 
         if (name != "")
         {
@@ -104,10 +105,10 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
 
 QSize InstrumentItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QFontMetrics fontMetrics(option.font);
+    const QFontMetrics fontMetrics(option.font);
 
     const QString ticker   = index.data().toString();
-    QRect         textRect = fontMetrics.boundingRect(ticker);
+    const QRect   textRect = fontMetrics.boundingRect(ticker);
 
     return QSize(ICON_SIZE + SPACING + textRect.width(), ICON_SIZE);
 }

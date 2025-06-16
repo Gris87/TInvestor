@@ -23,7 +23,9 @@ public:
     MOCK_METHOD(
         IOperationsTableWidget*,
         newInstance,
-        (IOperationsTableRecordFactory * operationsTableRecordFactory,
+        (IOperationsTableModelFactory * operationsTableModelFactory,
+         ILogosStorage*                     logosStorage,
+         IOperationsTableRecordFactory*     operationsTableRecordFactory,
          IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
          IUserStorage*                      userStorage,
          IInstrumentsStorage*               instrumentsStorage,

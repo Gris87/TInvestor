@@ -16,6 +16,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    IOperationsTableModelFactory*      operationsTableModelFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
     IInstrumentWidgetFactory*          instrumentWidgetFactory,
@@ -45,6 +46,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
+        operationsTableModelFactory,
+        logosStorage,
         operationsTableRecordFactory,
         instrumentTableItemWidgetFactory,
         userStorage,

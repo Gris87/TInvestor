@@ -62,6 +62,7 @@ MainWindow::MainWindow(
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableRecordFactory*     operationsTableRecordFactory,
+    IOperationsTableModelFactory*      operationsTableModelFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
     IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
     IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
@@ -182,6 +183,7 @@ MainWindow::MainWindow(
             logsTableWidgetFactory,
             portfolioTreeWidgetFactory,
             operationsTableRecordFactory,
+            operationsTableModelFactory,
             logsTableModelFactory,
             portfolioTreeRecordFactory,
             instrumentWidgetFactory,
@@ -202,6 +204,7 @@ MainWindow::MainWindow(
             logsTableWidgetFactory,
             portfolioTreeWidgetFactory,
             operationsTableRecordFactory,
+            operationsTableModelFactory,
             logsTableModelFactory,
             portfolioTreeRecordFactory,
             instrumentWidgetFactory,
@@ -886,7 +889,7 @@ static void readDatabasesForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        DatabaseType dbType = databases.at(i);
+        const DatabaseType dbType = databases.at(i);
 
         if (dbType == DATABASE_TYPE_USER)
         {

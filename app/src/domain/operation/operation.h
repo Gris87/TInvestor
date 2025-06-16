@@ -24,6 +24,9 @@ struct Operation
 
     qint64                   timestamp;
     QString                  instrumentId;
+    QPixmap*                 instrumentLogo;
+    QString                  instrumentTicker;
+    QString                  instrumentName;
     QString                  description;
     float                    price;
     QList<OperationFifoItem> fifoItems;
