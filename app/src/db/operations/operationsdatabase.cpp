@@ -6,12 +6,19 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
-OperationsDatabase::OperationsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, bool autoPilotMode) :
+
+constexpr int MIN_FILE_SIZE_PARALLEL = 5000;
+
+
+
+OperationsDatabase::OperationsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage, bool autoPilotMode) :
     IOperationsDatabase(),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
+    mLogosStorage(logosStorage),
     mAutoPilotMode(autoPilotMode),
     mAccountHash()
 {
@@ -28,6 +35,137 @@ void OperationsDatabase::setAccount(const QString& account)
     mAccountHash = account;
 }
 
+struct FindOperationsIndeciesInfo
+{
+    explicit FindOperationsIndeciesInfo(const QByteArray& _content) :
+        content(_content)
+    {
+        const int cpuCount = QThread::idealThreadCount();
+
+        results.resize(cpuCount);
+    }
+
+    QByteArray        content;
+    QList<QList<int>> results;
+};
+
+static void
+findOperationsIndeciesForParallel(QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs)
+{
+    FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
+
+    const char* contentArray = findOperationsIndeciesInfo->content.constData();
+    QList<int>* resultsArray = findOperationsIndeciesInfo->results.data();
+
+    const int part = findOperationsIndeciesInfo->content.size() / findOperationsIndeciesInfo->results.size();
+
+    start = part * threadId;
+    end   = qMin(part * (threadId + 1), findOperationsIndeciesInfo->content.size() - 3);
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        if (contentArray[i] == '}' && contentArray[i + 1] == ',' &&
+            (contentArray[i + 2] == '\n' || (contentArray[i + 2] == '\r' && contentArray[i + 3] == '\n')))
+        {
+            resultsArray[threadId].append(i);
+
+            i += 3;
+        }
+    }
+}
+
+struct MergeOperationsIndeciesInfo
+{
+    explicit MergeOperationsIndeciesInfo(const QList<QList<int>>& _results) :
+        results(_results)
+    {
+        indecies.resizeForOverwrite(results.size() + 1);
+
+        int index = 0;
+
+        for (int i = 0; i < results.size(); ++i)
+        {
+            indecies[i] = index;
+
+            index += results.at(i).size();
+        }
+
+        indecies[results.size()] = index;
+    }
+
+    QList<int>        indecies;
+    QList<QList<int>> results;
+};
+
+static void mergeOperationsIndeciesForParallel(
+    QThread* parentThread, int threadId, QList<int>& res, int /*start*/, int /*end*/, void* additionalArgs
+)
+{
+    MergeOperationsIndeciesInfo* mergeOperationsIndeciesInfo = reinterpret_cast<MergeOperationsIndeciesInfo*>(additionalArgs);
+
+    const int         index   = mergeOperationsIndeciesInfo->indecies.at(threadId);
+    const QList<int>& results = mergeOperationsIndeciesInfo->results.at(threadId);
+
+    int* resArray = res.data();
+
+    for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[index + i] = results.at(i);
+    }
+}
+
+struct ReadOperationsInfo
+{
+    explicit ReadOperationsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, QList<int>* _indecies) :
+        logosStorage(_logosStorage),
+        content(_content),
+        indecies(_indecies)
+    {
+    }
+
+    ILogosStorage* logosStorage;
+    QByteArray     content;
+    QList<int>*    indecies;
+};
+
+static void
+readOperationsForParallel(QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs)
+{
+    ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
+
+    ILogosStorage* logosStorage  = readOperationsInfo->logosStorage;
+    const QByteArray content       = readOperationsInfo->content;
+    int*           indeciesArray = readOperationsInfo->indecies->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Operation& operation = resArray[res.size() - i - 1];
+
+        const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
+        const int endBlock   = indeciesArray[i];
+
+        const QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
+
+        QJsonParseError     parseError;
+        const QJsonDocument jsonDoc = QJsonDocument::fromJson(entryContent, &parseError);
+
+        if (parseError.error == QJsonParseError::NoError)
+        {
+            operation.fromJsonObject(jsonDoc.object());
+
+            logosStorage->lock(); // TODO: Should do read lock outside
+            operation.instrumentLogo = logosStorage->getLogo(operation.instrumentId);
+            logosStorage->unlock();
+        }
+        else
+        {
+            qWarning() << "Failed to parse operation";
+        }
+    }
+}
+
 QList<Operation> OperationsDatabase::readOperations()
 {
     qDebug() << "Reading operations from database";
@@ -38,24 +176,50 @@ QList<Operation> OperationsDatabase::readOperations()
 
     if (operationsFile->open(QIODevice::ReadOnly))
     {
-        QByteArray content  = "[";
-        content            += operationsFile->readAll();
-        content            += "]";
-
+        QByteArray content = operationsFile->readAll();
         operationsFile->close();
 
-        QJsonParseError     parseError;
-        const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
-
-        if (parseError.error == QJsonParseError::NoError)
+        if (content.size() > MIN_FILE_SIZE_PARALLEL)
         {
-            const QJsonArray jsonOperations = jsonDoc.array();
+            QList<int> indecies;
 
-            res.resizeForOverwrite(jsonOperations.size());
+            FindOperationsIndeciesInfo findOperationsIndeciesInfo(content);
+            processInParallel(indecies, findOperationsIndeciesForParallel, &findOperationsIndeciesInfo);
 
-            for (int i = 0; i < jsonOperations.size(); ++i)
+            MergeOperationsIndeciesInfo mergeOperationsIndeciesInfo(findOperationsIndeciesInfo.results);
+            indecies.resizeForOverwrite(mergeOperationsIndeciesInfo.indecies.constLast() + 1);
+            processInParallel(indecies, mergeOperationsIndeciesForParallel, &mergeOperationsIndeciesInfo);
+
+            indecies[indecies.size() - 1] = content.size() - 1;
+
+            res.resizeForOverwrite(indecies.size());
+
+            ReadOperationsInfo readOperationsInfo(mLogosStorage, content, &indecies);
+            processInParallel(res, readOperationsForParallel, &readOperationsInfo);
+        }
+        else
+        {
+            content = "[" + content + "]";
+
+            QJsonParseError     parseError;
+            const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
+
+            if (parseError.error == QJsonParseError::NoError)
             {
-                res[i].fromJsonObject(jsonOperations.at(i).toObject());
+                const QJsonArray jsonOperations = jsonDoc.array();
+
+                res.resizeForOverwrite(jsonOperations.size());
+
+                mLogosStorage->lock();
+
+                for (int i = 0; i < jsonOperations.size(); ++i)
+                {
+                    res[i].fromJsonObject(jsonOperations.at(jsonOperations.size() - i - 1).toObject());
+
+                    res[i].instrumentLogo = mLogosStorage->getLogo(res.at(i).instrumentId);
+                }
+
+                mLogosStorage->unlock();
             }
         }
     }

@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <gtest/gtest.h>
 
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
@@ -22,10 +23,11 @@ class Test_OperationsDatabase : public ::testing::Test
 protected:
     void SetUp() override
     {
-        dirFactoryMock  = new StrictMock<DirFactoryMock>();
-        fileFactoryMock = new StrictMock<FileFactoryMock>();
+        dirFactoryMock   = new StrictMock<DirFactoryMock>();
+        fileFactoryMock  = new StrictMock<FileFactoryMock>();
+        logosStorageMock = new StrictMock<LogosStorageMock>();
 
-        database = new OperationsDatabase(dirFactoryMock, fileFactoryMock, true);
+        database = new OperationsDatabase(dirFactoryMock, fileFactoryMock, logosStorageMock, true);
     }
 
     void TearDown() override
@@ -33,11 +35,13 @@ protected:
         delete database;
         delete dirFactoryMock;
         delete fileFactoryMock;
+        delete logosStorageMock;
     }
 
-    OperationsDatabase*          database;
-    StrictMock<DirFactoryMock>*  dirFactoryMock;
-    StrictMock<FileFactoryMock>* fileFactoryMock;
+    OperationsDatabase*           database;
+    StrictMock<DirFactoryMock>*   dirFactoryMock;
+    StrictMock<FileFactoryMock>*  fileFactoryMock;
+    StrictMock<LogosStorageMock>* logosStorageMock;
 };
 
 

@@ -15,9 +15,17 @@ constexpr qint64  ONE_DAY         = 24LL * ONE_HOUR;
 
 
 
-OperationsThread::OperationsThread(IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent) :
+OperationsThread::OperationsThread(
+    IOperationsDatabase* operationsDatabase,
+    IInstrumentsStorage* instrumentsStorage,
+    ILogosStorage*       logosStorage,
+    IGrpcClient*         grpcClient,
+    QObject*             parent
+) :
     IOperationsThread(parent),
     mOperationsDatabase(operationsDatabase),
+    mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
     mPositionsStream(),
@@ -439,8 +447,25 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
             quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
     }
 
+    mInstrumentsStorage->lock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+    mInstrumentsStorage->unlock();
+
+    if (instrument.ticker == "" || instrument.name == "")
+    {
+        instrument.ticker         = instrumentId;
+        instrument.name           = "?????";
+        instrument.pricePrecision = 2;
+    }
+
+    mLogosStorage->lock();
+    res.instrumentLogo = mLogosStorage->getLogo(instrumentId);
+    mLogosStorage->unlock();
+
     res.timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
     res.instrumentId                    = instrumentId;
+    res.instrumentTicker                = instrument.ticker;
+    res.instrumentName                  = instrument.name;
     res.description                     = QString::fromStdString(tinkoffOperation.description());
     res.price                           = quotationToFloat(tinkoffOperation.price());
     res.fifoItems                       = quantityAndCost.fifoItems;
@@ -462,6 +487,7 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     res.totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
     res.remainedMoney                   = mRemainedMoney;
     res.totalMoney                      = mTotalMoney;
+    res.pricePrecision                  = instrument.pricePrecision;
     res.paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
     res.commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
 

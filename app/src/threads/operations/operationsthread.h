@@ -7,6 +7,8 @@
 #include "src/db/operations/ioperationsdatabase.h"
 #include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
+#include "src/storage/logos/ilogosstorage.h"
 
 
 
@@ -33,7 +35,13 @@ class OperationsThread : public IOperationsThread
     Q_OBJECT
 
 public:
-    explicit OperationsThread(IOperationsDatabase* operationsDatabase, IGrpcClient* grpcClient, QObject* parent = nullptr);
+    explicit OperationsThread(
+        IOperationsDatabase* operationsDatabase,
+        IInstrumentsStorage* instrumentsStorage,
+        ILogosStorage*       logosStorage,
+        IGrpcClient*         grpcClient,
+        QObject*             parent = nullptr
+    );
     ~OperationsThread() override;
 
     OperationsThread(const OperationsThread& another)            = delete;
@@ -57,6 +65,8 @@ private:
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
 
     IOperationsDatabase*             mOperationsDatabase;
+    IInstrumentsStorage*             mInstrumentsStorage;
+    ILogosStorage*                   mLogosStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     std::shared_ptr<PositionsStream> mPositionsStream;

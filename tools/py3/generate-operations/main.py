@@ -37,6 +37,8 @@ def _generate_operations(last_timestamp, output_path):
     operation = {
         "timestamp": last_timestamp,
         "instrumentId": "15dc2120-29d2-48b8-87c0-da1d95255f68",  # SPBE
+        "instrumentTicker": "SPBE",
+        "instrumentName": "SPBEmushka",
         "description": "a" * 100,
         "price": 100.5,
         "fifoItems": [],
@@ -58,6 +60,7 @@ def _generate_operations(last_timestamp, output_path):
         "totalYieldWithCommissionPercent": -0.03,
         "remainedMoney": {"units": 100, "nano": 0},
         "totalMoney": {"units": 100000, "nano": 0},
+        "pricePrecision": 2,
         "paymentPrecision": 2,
         "commissionPrecision": 2
     }
@@ -68,6 +71,8 @@ def _generate_operations(last_timestamp, output_path):
     operation = {
         "timestamp": last_timestamp,
         "instrumentId": "15dc2120-29d2-48b8-87c0-da1d95255f68",  # SPBE
+        "instrumentTicker": "SPBE",
+        "instrumentName": "SPBEmushka",
         "description": "b" * 100,
         "price": 120.5,
         "fifoItems": [],
@@ -89,6 +94,7 @@ def _generate_operations(last_timestamp, output_path):
         "totalYieldWithCommissionPercent": 5.99,
         "remainedMoney": {"units": 100000, "nano": 0},
         "totalMoney": {"units": 100000, "nano": 0},
+        "pricePrecision": 2,
         "paymentPrecision": 2,
         "commissionPrecision": 2
     }
@@ -99,6 +105,8 @@ def _generate_operations(last_timestamp, output_path):
     operation = {
         "timestamp": last_timestamp,
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
+        "instrumentTicker": "UGLD",
+        "instrumentName": "UGLDushka",
         "description": "c" * 100,
         "price": 100.5,
         "fifoItems": [],
@@ -120,6 +128,7 @@ def _generate_operations(last_timestamp, output_path):
         "totalYieldWithCommissionPercent": -0.03,
         "remainedMoney": {"units": 100, "nano": 0},
         "totalMoney": {"units": 100000, "nano": 0},
+        "pricePrecision": 2,
         "paymentPrecision": 2,
         "commissionPrecision": 2
     }
@@ -130,6 +139,8 @@ def _generate_operations(last_timestamp, output_path):
     operation = {
         "timestamp": last_timestamp,
         "instrumentId": "48bd9002-43be-4528-abf4-dc8135ad4550",  # UGLD
+        "instrumentTicker": "UGLD",
+        "instrumentName": "UGLDushka",
         "description": "d" * 100,
         "price": 120.5,
         "fifoItems": [],
@@ -151,6 +162,7 @@ def _generate_operations(last_timestamp, output_path):
         "totalYieldWithCommissionPercent": -9.12,
         "remainedMoney": {"units": 100000, "nano": 0},
         "totalMoney": {"units": 100000, "nano": 0},
+        "pricePrecision": 2,
         "paymentPrecision": 2,
         "commissionPrecision": 2
     }

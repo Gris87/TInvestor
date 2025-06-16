@@ -33,6 +33,7 @@ Operation::Operation() :
     totalYieldWithCommissionPercent(),
     remainedMoney(),
     totalMoney(),
+    pricePrecision(),
     paymentPrecision(),
     commissionPrecision()
 {
@@ -57,6 +58,7 @@ void Operation::fromJsonObject(const QJsonObject& jsonObject)
     yieldWithCommission             = jsonObject.value("yieldWithCommission").toDouble();
     yieldWithCommissionPercent      = jsonObject.value("yieldWithCommissionPercent").toDouble();
     totalYieldWithCommissionPercent = jsonObject.value("totalYieldWithCommissionPercent").toDouble();
+    pricePrecision                  = jsonObject.value("pricePrecision").toInt();
     paymentPrecision                = jsonObject.value("paymentPrecision").toInt();
     commissionPrecision             = jsonObject.value("commissionPrecision").toInt();
 
@@ -114,6 +116,7 @@ QJsonObject Operation::toJsonObject() const
     res.insert("totalYieldWithCommissionPercent", totalYieldWithCommissionPercent);
     res.insert("remainedMoney",                   remainedMoney.toJsonObject());
     res.insert("totalMoney",                      totalMoney.toJsonObject());
+    res.insert("pricePrecision",                  pricePrecision);
     res.insert("paymentPrecision",                paymentPrecision);
     res.insert("commissionPrecision",             commissionPrecision);
     // clang-format on
@@ -133,6 +136,6 @@ bool operator==(const Operation& lhs, const Operation& rhs)
            lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&
            lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
            lhs.totalYieldWithCommissionPercent == rhs.totalYieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&
-           lhs.totalMoney == rhs.totalMoney && lhs.paymentPrecision == rhs.paymentPrecision &&
-           lhs.commissionPrecision == rhs.commissionPrecision;
+           lhs.totalMoney == rhs.totalMoney && lhs.pricePrecision == rhs.pricePrecision &&
+           lhs.paymentPrecision == rhs.paymentPrecision && lhs.commissionPrecision == rhs.commissionPrecision;
 }

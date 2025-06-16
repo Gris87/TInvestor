@@ -312,7 +312,7 @@ static int runApplication(QApplication* app)
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
     LogosStorage        logosStorage(&logosDatabase);
-    OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, true);
+    OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
     TimeUtils         timeUtils;
@@ -339,7 +339,7 @@ static int runApplication(QApplication* app)
         &grpcClient
     );
     LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread         operationsThread(&autoPilotOperationsDatabase, &grpcClient);
+    OperationsThread         operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
     LogsThread               logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
     PortfolioThread          portfolioThread(&grpcClient);
     PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
