@@ -133,9 +133,9 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
 {
     ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
 
-    ILogosStorage* logosStorage  = readLogsInfo->logosStorage;
+    ILogosStorage*   logosStorage  = readLogsInfo->logosStorage;
     const QByteArray content       = readLogsInfo->content;
-    int*           indeciesArray = readLogsInfo->indecies->data();
+    int*             indeciesArray = readLogsInfo->indecies->data();
 
     LogEntry* resArray = res.data();
 

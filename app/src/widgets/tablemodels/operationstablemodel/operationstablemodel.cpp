@@ -19,8 +19,8 @@ const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
 const QBrush      GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
 const QBrush      RED_COLOR             = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
 const QBrush      NORMAL_COLOR          = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
-const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-const QColor      CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+const QColor      CELL_BACKGROUND_COLOR = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
+const QColor      CELL_FONT_COLOR       = QColor("#97AEC4");         // clazy:exclude=non-pod-global-static
 
 
 

@@ -29,6 +29,8 @@ TEST(Test_OperationsTableWidgetFactory, Test_constructor_and_destructor)
 
 TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
 {
+    const InSequence seq;
+
     const OperationsTableWidgetFactory factory;
 
     StrictMock<OperationsTableModelFactoryMock>      operationsTableModelFactoryMock;

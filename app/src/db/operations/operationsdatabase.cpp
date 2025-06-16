@@ -14,7 +14,9 @@ constexpr int MIN_FILE_SIZE_PARALLEL = 5000;
 
 
 
-OperationsDatabase::OperationsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage, bool autoPilotMode) :
+OperationsDatabase::OperationsDatabase(
+    IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage, bool autoPilotMode
+) :
     IOperationsDatabase(),
     mDirFactory(dirFactory),
     mFileFactory(fileFactory),
@@ -49,8 +51,9 @@ struct FindOperationsIndeciesInfo
     QList<QList<int>> results;
 };
 
-static void
-findOperationsIndeciesForParallel(QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs)
+static void findOperationsIndeciesForParallel(
+    QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs
+)
 {
     FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
 
@@ -128,14 +131,15 @@ struct ReadOperationsInfo
     QList<int>*    indecies;
 };
 
-static void
-readOperationsForParallel(QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs)
+static void readOperationsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
 {
     ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
 
-    ILogosStorage* logosStorage  = readOperationsInfo->logosStorage;
+    ILogosStorage*   logosStorage  = readOperationsInfo->logosStorage;
     const QByteArray content       = readOperationsInfo->content;
-    int*           indeciesArray = readOperationsInfo->indecies->data();
+    int*             indeciesArray = readOperationsInfo->indecies->data();
 
     Operation* resArray = res.data();
 

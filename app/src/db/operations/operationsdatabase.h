@@ -13,7 +13,9 @@
 class OperationsDatabase : public IOperationsDatabase
 {
 public:
-    explicit OperationsDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage, bool autoPilotMode);
+    explicit OperationsDatabase(
+        IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage, bool autoPilotMode
+    );
     ~OperationsDatabase() override;
 
     OperationsDatabase(const OperationsDatabase& another)            = delete;

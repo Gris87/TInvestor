@@ -29,6 +29,8 @@ class Test_OperationsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
+        const InSequence seq;
+
         operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
         logosStorageMock                     = new StrictMock<LogosStorageMock>();
         operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
