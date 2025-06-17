@@ -27,23 +27,21 @@ class DecisionMakerWidget : public IDecisionMakerWidget
 
 public:
     explicit DecisionMakerWidget(
-        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*        accountChartWidgetFactory,
-        ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
-        ILogsTableWidgetFactory*           logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-        IOperationsTableRecordFactory*     operationsTableRecordFactory,
-        IOperationsTableModelFactory*      operationsTableModelFactory,
-        ILogsTableModelFactory*            logsTableModelFactory,
-        IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*          instrumentWidgetFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IUserStorage*                      userStorage,
-        IInstrumentsStorage*               instrumentsStorage,
-        ILogosStorage*                     logosStorage,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent = nullptr
+        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*    accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
+        ILogsTableWidgetFactory*       logsTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
+        IOperationsTableModelFactory*  operationsTableModelFactory,
+        ILogsTableModelFactory*        logsTableModelFactory,
+        IPortfolioTreeRecordFactory*   portfolioTreeRecordFactory,
+        IInstrumentWidgetFactory*      instrumentWidgetFactory,
+        IUserStorage*                  userStorage,
+        IInstrumentsStorage*           instrumentsStorage,
+        ILogosStorage*                 logosStorage,
+        IFileDialogFactory*            fileDialogFactory,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent = nullptr
     );
     ~DecisionMakerWidget() override;
 

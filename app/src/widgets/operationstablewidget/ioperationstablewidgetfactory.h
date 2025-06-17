@@ -8,7 +8,6 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
 
 
@@ -22,14 +21,10 @@ public:
     IOperationsTableWidgetFactory& operator=(const IOperationsTableWidgetFactory& another) = delete;
 
     virtual IOperationsTableWidget* newInstance(
-        IOperationsTableModelFactory*      operationsTableModelFactory,
-        ILogosStorage*                     logosStorage,
-        IOperationsTableRecordFactory*     operationsTableRecordFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IUserStorage*                      userStorage,
-        IInstrumentsStorage*               instrumentsStorage,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent
+        IOperationsTableModelFactory* operationsTableModelFactory,
+        ILogosStorage*                logosStorage,
+        IFileDialogFactory*           fileDialogFactory,
+        ISettingsEditor*              settingsEditor,
+        QWidget*                      parent
     ) const = 0;
 };

@@ -24,14 +24,10 @@ public:
         IOperationsTableWidget*,
         newInstance,
         (IOperationsTableModelFactory * operationsTableModelFactory,
-         ILogosStorage*                     logosStorage,
-         IOperationsTableRecordFactory*     operationsTableRecordFactory,
-         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-         IUserStorage*                      userStorage,
-         IInstrumentsStorage*               instrumentsStorage,
-         IFileDialogFactory*                fileDialogFactory,
-         ISettingsEditor*                   settingsEditor,
-         QWidget*                           parent),
+         ILogosStorage*      logosStorage,
+         IFileDialogFactory* fileDialogFactory,
+         ISettingsEditor*    settingsEditor,
+         QWidget*            parent),
         (const, override)
     );
 };

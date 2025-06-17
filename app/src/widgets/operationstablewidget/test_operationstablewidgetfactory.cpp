@@ -10,7 +10,6 @@
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodel_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -33,14 +32,10 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
 
     const OperationsTableWidgetFactory factory;
 
-    StrictMock<OperationsTableModelFactoryMock>      operationsTableModelFactoryMock;
-    StrictMock<LogosStorageMock>                     logosStorageMock;
-    StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>                      userStorageMock;
-    StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
-    StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>                   settingsEditorMock;
+    StrictMock<OperationsTableModelFactoryMock> operationsTableModelFactoryMock;
+    StrictMock<LogosStorageMock>                logosStorageMock;
+    StrictMock<FileDialogFactoryMock>           fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>              settingsEditorMock;
 
     StrictMock<OperationsTableModelMock> operationsTableModelMock;
 
@@ -49,15 +44,7 @@ TEST(Test_OperationsTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(operationsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
     const IOperationsTableWidget* widget = factory.newInstance(
-        &operationsTableModelFactoryMock,
-        &logosStorageMock,
-        &operationsTableRecordFactoryMock,
-        &instrumentTableItemWidgetFactoryMock,
-        &userStorageMock,
-        &instrumentsStorageMock,
-        &fileDialogFactoryMock,
-        &settingsEditorMock,
-        nullptr
+        &operationsTableModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr
     );
     ASSERT_TRUE(widget != nullptr);
 

@@ -18,10 +18,8 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
-#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
@@ -45,22 +43,20 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 
     const DecisionMakerWidgetFactory factory;
 
-    StrictMock<OperationsTableWidgetFactoryMock>     operationsTableWidgetFactoryMock;
-    StrictMock<AccountChartWidgetFactoryMock>        accountChartWidgetFactoryMock;
-    StrictMock<LogsFilterWidgetFactoryMock>          logsFilterWidgetFactoryMock;
-    StrictMock<LogsTableWidgetFactoryMock>           logsTableWidgetFactoryMock;
-    StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
-    StrictMock<OperationsTableRecordFactoryMock>     operationsTableRecordFactoryMock;
-    StrictMock<OperationsTableModelFactoryMock>      operationsTableModelFactoryMock;
-    StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
-    StrictMock<PortfolioTreeRecordFactoryMock>       portfolioTreeRecordFactoryMock;
-    StrictMock<InstrumentWidgetFactoryMock>          instrumentWidgetFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>                      userStorageMock;
-    StrictMock<InstrumentsStorageMock>               instrumentsStorageMock;
-    StrictMock<LogosStorageMock>                     logosStorageMock;
-    StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>                   settingsEditorMock;
+    StrictMock<OperationsTableWidgetFactoryMock> operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>    accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>      logsFilterWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>       logsTableWidgetFactoryMock;
+    StrictMock<PortfolioTreeWidgetFactoryMock>   portfolioTreeWidgetFactoryMock;
+    StrictMock<OperationsTableModelFactoryMock>  operationsTableModelFactoryMock;
+    StrictMock<LogsTableModelFactoryMock>        logsTableModelFactoryMock;
+    StrictMock<PortfolioTreeRecordFactoryMock>   portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentWidgetFactoryMock>      instrumentWidgetFactoryMock;
+    StrictMock<UserStorageMock>                  userStorageMock;
+    StrictMock<InstrumentsStorageMock>           instrumentsStorageMock;
+    StrictMock<LogosStorageMock>                 logosStorageMock;
+    StrictMock<FileDialogFactoryMock>            fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>               settingsEditorMock;
 
     // It will be deleted by `delete ui;`
     StrictMock<OperationsTableWidgetMock>* operationsTableWidgetMock = new StrictMock<OperationsTableWidgetMock>();
@@ -73,17 +69,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 
     EXPECT_CALL(
         operationsTableWidgetFactoryMock,
-        newInstance(
-            &operationsTableModelFactoryMock,
-            &logosStorageMock,
-            &operationsTableRecordFactoryMock,
-            &instrumentTableItemWidgetFactoryMock,
-            &userStorageMock,
-            &instrumentsStorageMock,
-            &fileDialogFactoryMock,
-            &settingsEditorMock,
-            NotNull()
-        )
+        newInstance(&operationsTableModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
     )
         .WillOnce(Return(operationsTableWidgetMock));
     EXPECT_CALL(accountChartWidgetFactoryMock, newInstance(&fileDialogFactoryMock, &settingsEditorMock, NotNull()))
@@ -118,12 +104,10 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &logsFilterWidgetFactoryMock,
             &logsTableWidgetFactoryMock,
             &portfolioTreeWidgetFactoryMock,
-            &operationsTableRecordFactoryMock,
             &operationsTableModelFactoryMock,
             &logsTableModelFactoryMock,
             &portfolioTreeRecordFactoryMock,
             &instrumentWidgetFactoryMock,
-            &instrumentTableItemWidgetFactoryMock,
             &userStorageMock,
             &instrumentsStorageMock,
             &logosStorageMock,

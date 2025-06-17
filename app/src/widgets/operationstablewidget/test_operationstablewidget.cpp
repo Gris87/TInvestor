@@ -11,7 +11,6 @@
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodel_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 
 
 
@@ -31,14 +30,10 @@ protected:
     {
         const InSequence seq;
 
-        operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
-        logosStorageMock                     = new StrictMock<LogosStorageMock>();
-        operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
-        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
-        userStorageMock                      = new StrictMock<UserStorageMock>();
-        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
-        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+        operationsTableModelFactoryMock = new StrictMock<OperationsTableModelFactoryMock>();
+        logosStorageMock                = new StrictMock<LogosStorageMock>();
+        fileDialogFactoryMock           = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock              = new StrictMock<SettingsEditorMock>();
 
         operationsTableModelMock = new StrictMock<OperationsTableModelMock>();
 
@@ -47,14 +42,7 @@ protected:
         EXPECT_CALL(*operationsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
         operationsTableWidget = new OperationsTableWidget(
-            operationsTableModelFactoryMock,
-            logosStorageMock,
-            operationsTableRecordFactoryMock,
-            instrumentTableItemWidgetFactoryMock,
-            userStorageMock,
-            instrumentsStorageMock,
-            fileDialogFactoryMock,
-            settingsEditorMock
+            operationsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock
         );
     }
 
@@ -63,25 +51,17 @@ protected:
         delete operationsTableWidget;
         delete operationsTableModelFactoryMock;
         delete logosStorageMock;
-        delete operationsTableRecordFactoryMock;
-        delete instrumentTableItemWidgetFactoryMock;
-        delete userStorageMock;
-        delete instrumentsStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete operationsTableModelMock;
     }
 
-    OperationsTableWidget*                            operationsTableWidget;
-    StrictMock<OperationsTableModelFactoryMock>*      operationsTableModelFactoryMock;
-    StrictMock<LogosStorageMock>*                     logosStorageMock;
-    StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                      userStorageMock;
-    StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
-    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
-    StrictMock<OperationsTableModelMock>*             operationsTableModelMock;
+    OperationsTableWidget*                       operationsTableWidget;
+    StrictMock<OperationsTableModelFactoryMock>* operationsTableModelFactoryMock;
+    StrictMock<LogosStorageMock>*                logosStorageMock;
+    StrictMock<FileDialogFactoryMock>*           fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*              settingsEditorMock;
+    StrictMock<OperationsTableModelMock>*        operationsTableModelMock;
 };
 
 
@@ -122,26 +102,6 @@ TEST_F(Test_OperationsTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // TODO: Put some normal values
-    // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),                            _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),                            _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Description"),                     _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),                           _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPriceFifo"),                    _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_AvgPriceWavg"),                    _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Quantity"),                        _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_RemainedQuantity"),                _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payment"),                         _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Commission"),                      _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Yield"),                           _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_YieldWithCommission"),             _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_YieldWithCommissionPercent"),      _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_TotalYieldWithCommission"),        _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_TotalYieldWithCommissionPercent"), _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_RemainedMoney"),                   _)).WillOnce(Return(QVariant(10)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_TotalMoney"),                      _)).WillOnce(Return(QVariant(10)));
-    // clang-format on
-
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Time"),                            _)).WillOnce(Return(QVariant(10)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),                            _)).WillOnce(Return(QVariant(10)));

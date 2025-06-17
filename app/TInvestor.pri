@@ -137,8 +137,6 @@ SOURCES += \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.cpp \
-    src/widgets/tablerecords/operationstablerecord/operationstablerecord.cpp \
-    src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -388,10 +386,6 @@ HEADERS += \
     src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.h \
     src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.h \
-    src/widgets/tablerecords/operationstablerecord/ioperationstablerecord.h \
-    src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h \
-    src/widgets/tablerecords/operationstablerecord/operationstablerecord.h \
-    src/widgets/tablerecords/operationstablerecord/operationstablerecordfactory.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.h \

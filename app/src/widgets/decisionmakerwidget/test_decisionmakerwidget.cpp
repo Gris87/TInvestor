@@ -19,10 +19,8 @@
 #include "src/widgets/operationstablewidget/ioperationstablewidgetfactory_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget_mock.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
-#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
@@ -44,43 +42,31 @@ protected:
     {
         const InSequence seq;
 
-        operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
-        accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
-        logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
-        logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
-        portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
-        operationsTableWidgetMock            = new StrictMock<OperationsTableWidgetMock>();
-        accountChartWidgetMock               = new StrictMock<AccountChartWidgetMock>();
-        logsFilterWidgetMock                 = new StrictMock<LogsFilterWidgetMock>();
-        logsTableWidgetMock                  = new StrictMock<LogsTableWidgetMock>();
-        portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
-        operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
-        operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
-        logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
-        portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
-        instrumentWidgetFactoryMock          = new StrictMock<InstrumentWidgetFactoryMock>();
-        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
-        userStorageMock                      = new StrictMock<UserStorageMock>();
-        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
-        logosStorageMock                     = new StrictMock<LogosStorageMock>();
-        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+        operationsTableWidgetFactoryMock = new StrictMock<OperationsTableWidgetFactoryMock>();
+        accountChartWidgetFactoryMock    = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsFilterWidgetFactoryMock      = new StrictMock<LogsFilterWidgetFactoryMock>();
+        logsTableWidgetFactoryMock       = new StrictMock<LogsTableWidgetFactoryMock>();
+        portfolioTreeWidgetFactoryMock   = new StrictMock<PortfolioTreeWidgetFactoryMock>();
+        operationsTableWidgetMock        = new StrictMock<OperationsTableWidgetMock>();
+        accountChartWidgetMock           = new StrictMock<AccountChartWidgetMock>();
+        logsFilterWidgetMock             = new StrictMock<LogsFilterWidgetMock>();
+        logsTableWidgetMock              = new StrictMock<LogsTableWidgetMock>();
+        portfolioTreeWidgetMock          = new StrictMock<PortfolioTreeWidgetMock>();
+        operationsTableModelFactoryMock  = new StrictMock<OperationsTableModelFactoryMock>();
+        logsTableModelFactoryMock        = new StrictMock<LogsTableModelFactoryMock>();
+        portfolioTreeRecordFactoryMock   = new StrictMock<PortfolioTreeRecordFactoryMock>();
+        instrumentWidgetFactoryMock      = new StrictMock<InstrumentWidgetFactoryMock>();
+        userStorageMock                  = new StrictMock<UserStorageMock>();
+        instrumentsStorageMock           = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock                 = new StrictMock<LogosStorageMock>();
+        fileDialogFactoryMock            = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
         LogFilter filter;
 
         EXPECT_CALL(
             *operationsTableWidgetFactoryMock,
-            newInstance(
-                operationsTableModelFactoryMock,
-                logosStorageMock,
-                operationsTableRecordFactoryMock,
-                instrumentTableItemWidgetFactoryMock,
-                userStorageMock,
-                instrumentsStorageMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
-                NotNull()
-            )
+            newInstance(operationsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(fileDialogFactoryMock, settingsEditorMock, NotNull()))
@@ -114,12 +100,10 @@ protected:
             logsFilterWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
-            operationsTableRecordFactoryMock,
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
             portfolioTreeRecordFactoryMock,
             instrumentWidgetFactoryMock,
-            instrumentTableItemWidgetFactoryMock,
             userStorageMock,
             instrumentsStorageMock,
             logosStorageMock,
@@ -144,12 +128,10 @@ protected:
         delete logsTableWidgetMock;
         delete portfolioTreeWidgetMock;
         */
-        delete operationsTableRecordFactoryMock;
         delete operationsTableModelFactoryMock;
         delete logsTableModelFactoryMock;
         delete portfolioTreeRecordFactoryMock;
         delete instrumentWidgetFactoryMock;
-        delete instrumentTableItemWidgetFactoryMock;
         delete userStorageMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
@@ -157,28 +139,26 @@ protected:
         delete settingsEditorMock;
     }
 
-    DecisionMakerWidget*                              decisionMakerWidget;
-    StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
-    StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
-    StrictMock<LogsFilterWidgetFactoryMock>*          logsFilterWidgetFactoryMock;
-    StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
-    StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
-    StrictMock<OperationsTableWidgetMock>*            operationsTableWidgetMock;
-    StrictMock<AccountChartWidgetMock>*               accountChartWidgetMock;
-    StrictMock<LogsFilterWidgetMock>*                 logsFilterWidgetMock;
-    StrictMock<LogsTableWidgetMock>*                  logsTableWidgetMock;
-    StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
-    StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
-    StrictMock<OperationsTableModelFactoryMock>*      operationsTableModelFactoryMock;
-    StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
-    StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;
-    StrictMock<InstrumentWidgetFactoryMock>*          instrumentWidgetFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
-    StrictMock<UserStorageMock>*                      userStorageMock;
-    StrictMock<InstrumentsStorageMock>*               instrumentsStorageMock;
-    StrictMock<LogosStorageMock>*                     logosStorageMock;
-    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
+    DecisionMakerWidget*                          decisionMakerWidget;
+    StrictMock<OperationsTableWidgetFactoryMock>* operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>*    accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>*      logsFilterWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>*       logsTableWidgetFactoryMock;
+    StrictMock<PortfolioTreeWidgetFactoryMock>*   portfolioTreeWidgetFactoryMock;
+    StrictMock<OperationsTableWidgetMock>*        operationsTableWidgetMock;
+    StrictMock<AccountChartWidgetMock>*           accountChartWidgetMock;
+    StrictMock<LogsFilterWidgetMock>*             logsFilterWidgetMock;
+    StrictMock<LogsTableWidgetMock>*              logsTableWidgetMock;
+    StrictMock<PortfolioTreeWidgetMock>*          portfolioTreeWidgetMock;
+    StrictMock<OperationsTableModelFactoryMock>*  operationsTableModelFactoryMock;
+    StrictMock<LogsTableModelFactoryMock>*        logsTableModelFactoryMock;
+    StrictMock<PortfolioTreeRecordFactoryMock>*   portfolioTreeRecordFactoryMock;
+    StrictMock<InstrumentWidgetFactoryMock>*      instrumentWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                  userStorageMock;
+    StrictMock<InstrumentsStorageMock>*           instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*                 logosStorageMock;
+    StrictMock<FileDialogFactoryMock>*            fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };
 
 

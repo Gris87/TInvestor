@@ -10,23 +10,21 @@ const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-sta
 
 
 DecisionMakerWidget::DecisionMakerWidget(
-    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*        accountChartWidgetFactory,
-    ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
-    ILogsTableWidgetFactory*           logsTableWidgetFactory,
-    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-    IOperationsTableRecordFactory*     operationsTableRecordFactory,
-    IOperationsTableModelFactory*      operationsTableModelFactory,
-    ILogsTableModelFactory*            logsTableModelFactory,
-    IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
-    IInstrumentWidgetFactory*          instrumentWidgetFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    IUserStorage*                      userStorage,
-    IInstrumentsStorage*               instrumentsStorage,
-    ILogosStorage*                     logosStorage,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
+    IOperationsTableWidgetFactory* operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*    accountChartWidgetFactory,
+    ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
+    ILogsTableWidgetFactory*       logsTableWidgetFactory,
+    IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
+    IOperationsTableModelFactory*  operationsTableModelFactory,
+    ILogsTableModelFactory*        logsTableModelFactory,
+    IPortfolioTreeRecordFactory*   portfolioTreeRecordFactory,
+    IInstrumentWidgetFactory*      instrumentWidgetFactory,
+    IUserStorage*                  userStorage,
+    IInstrumentsStorage*           instrumentsStorage,
+    ILogosStorage*                 logosStorage,
+    IFileDialogFactory*            fileDialogFactory,
+    ISettingsEditor*               settingsEditor,
+    QWidget*                       parent
 ) :
     IDecisionMakerWidget(parent),
     ui(new Ui::DecisionMakerWidget),
@@ -46,15 +44,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
     mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
-        operationsTableModelFactory,
-        logosStorage,
-        operationsTableRecordFactory,
-        instrumentTableItemWidgetFactory,
-        userStorage,
-        instrumentsStorage,
-        fileDialogFactory,
-        mSettingsEditor,
-        this
+        operationsTableModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this
     );
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);

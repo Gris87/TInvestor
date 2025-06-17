@@ -61,7 +61,6 @@
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
@@ -121,7 +120,6 @@ protected:
         logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
         logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
         portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
-        operationsTableRecordFactoryMock     = new StrictMock<OperationsTableRecordFactoryMock>();
         operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
         logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
         portfolioTreeRecordFactoryMock       = new StrictMock<PortfolioTreeRecordFactoryMock>();
@@ -186,12 +184,10 @@ protected:
                     logsFilterWidgetFactoryMock,
                     logsTableWidgetFactoryMock,
                     portfolioTreeWidgetFactoryMock,
-                    operationsTableRecordFactoryMock,
                     operationsTableModelFactoryMock,
                     logsTableModelFactoryMock,
                     portfolioTreeRecordFactoryMock,
                     instrumentWidgetFactoryMock,
-                    instrumentTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
                     logosStorageMock,
@@ -211,12 +207,10 @@ protected:
                     logsFilterWidgetFactoryMock,
                     logsTableWidgetFactoryMock,
                     portfolioTreeWidgetFactoryMock,
-                    operationsTableRecordFactoryMock,
                     operationsTableModelFactoryMock,
                     logsTableModelFactoryMock,
                     portfolioTreeRecordFactoryMock,
                     instrumentWidgetFactoryMock,
-                    instrumentTableItemWidgetFactoryMock,
                     userStorageMock,
                     instrumentsStorageMock,
                     logosStorageMock,
@@ -279,7 +273,6 @@ protected:
             logsFilterWidgetFactoryMock,
             logsTableWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
-            operationsTableRecordFactoryMock,
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
             portfolioTreeRecordFactoryMock,
@@ -367,7 +360,6 @@ protected:
         delete logsFilterWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
-        delete operationsTableRecordFactoryMock;
         delete operationsTableModelFactoryMock;
         delete logsTableModelFactoryMock;
         delete portfolioTreeRecordFactoryMock;
@@ -436,7 +428,6 @@ protected:
     StrictMock<LogsFilterWidgetFactoryMock>*          logsFilterWidgetFactoryMock;
     StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
-    StrictMock<OperationsTableRecordFactoryMock>*     operationsTableRecordFactoryMock;
     StrictMock<OperationsTableModelFactoryMock>*      operationsTableModelFactoryMock;
     StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>*       portfolioTreeRecordFactoryMock;

@@ -8,7 +8,6 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h"
-#include "src/widgets/tablerecords/operationstablerecord/ioperationstablerecordfactory.h"
 
 
 
@@ -25,15 +24,11 @@ class OperationsTableWidget : public IOperationsTableWidget
 
 public:
     explicit OperationsTableWidget(
-        IOperationsTableModelFactory*      operationsTableModelFactory,
-        ILogosStorage*                     logosStorage,
-        IOperationsTableRecordFactory*     operationsTableRecordFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IUserStorage*                      userStorage,
-        IInstrumentsStorage*               instrumentsStorage,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent = nullptr
+        IOperationsTableModelFactory* operationsTableModelFactory,
+        ILogosStorage*                logosStorage,
+        IFileDialogFactory*           fileDialogFactory,
+        ISettingsEditor*              settingsEditor,
+        QWidget*                      parent = nullptr
     );
     ~OperationsTableWidget() override;
 
@@ -51,14 +46,9 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
-    IOperationsTableRecordFactory*     mOperationsTableRecordFactory;
-    IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
-    IUserStorage*                      mUserStorage;
-    IInstrumentsStorage*               mInstrumentsStorage;
-    IFileDialogFactory*                mFileDialogFactory;
-    ISettingsEditor*                   mSettingsEditor;
-    IOperationsTableModel*             mOperationsTableModel;
-    QList<IOperationsTableRecord*>     mRecords;
+    IFileDialogFactory*    mFileDialogFactory;
+    ISettingsEditor*       mSettingsEditor;
+    IOperationsTableModel* mOperationsTableModel;
 
 public slots:
     void on_tableView_customContextMenuRequested(const QPoint& pos);

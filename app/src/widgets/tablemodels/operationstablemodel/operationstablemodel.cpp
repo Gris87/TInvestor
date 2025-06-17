@@ -12,8 +12,9 @@
 
 
 
-constexpr QChar RUBLE      = QChar(0x20BD);
-constexpr float ZERO_LIMIT = 0.0001f;
+constexpr QChar RUBLE           = QChar(0x20BD);
+constexpr float ZERO_LIMIT      = 0.0001f;
+constexpr float HUNDRED_PERCENT = 100.0f;
 
 const char* const DATETIME_FORMAT       = "yyyy-MM-dd hh:mm:ss";
 const QBrush      GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
@@ -809,10 +810,67 @@ void OperationsTableModel::exportToExcel(QXlsx::Document& doc) const
         const Operation& entry = mEntries->at(i);
 
         // clang-format off
-        doc.write(row, OPERATIONS_TIME_COLUMN + 1,    QDateTime::fromMSecsSinceEpoch(entry.timestamp), dateFormat);
-        doc.write(row, OPERATIONS_NAME_COLUMN + 1,    entry.instrumentName, cellStyle);
+        doc.write(row, OPERATIONS_TIME_COLUMN + 1,                                QDateTime::fromMSecsSinceEpoch(entry.timestamp), dateFormat);
+        doc.write(row, OPERATIONS_NAME_COLUMN + 1,                                entry.instrumentName, cellStyle);
+        doc.write(row, OPERATIONS_DESCRIPTION_COLUMN + 1,                         entry.description, cellStyle);
+        doc.write(row, OPERATIONS_PRICE_COLUMN + 1,                               entry.price, createRubleFormat(CELL_FONT_COLOR, false, entry.pricePrecision));
+        doc.write(row, OPERATIONS_AVG_PRICE_FIFO_COLUMN + 1,                      entry.avgPriceFifo, createRubleFormat(CELL_FONT_COLOR, false, entry.pricePrecision));
+        doc.write(row, OPERATIONS_AVG_PRICE_WAVG_COLUMN + 1,                      entry.avgPriceWavg, createRubleFormat(CELL_FONT_COLOR, false, entry.pricePrecision));
+        doc.write(row, OPERATIONS_QUANTITY_COLUMN + 1,                            entry.quantity, cellStyle);
+        doc.write(row, OPERATIONS_REMAINED_QUANTITY_COLUMN + 1,                   entry.remainedQuantity, cellStyle);
+        doc.write(row, OPERATIONS_PAYMENT_COLUMN + 1,                             entry.payment, createRubleFormat(CELL_FONT_COLOR, true, entry.paymentPrecision));
+        doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                          entry.commission, createRubleFormat(CELL_FONT_COLOR, true, entry.commissionPrecision));
+        doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                               entry.yield, createRubleFormat(CELL_FONT_COLOR, true, 2));
+        doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,               entry.yieldWithCommission, createRubleFormat(operationsYieldWithCommissionForegroundRole(entry).value<QBrush>().color(), true, 2));
+        doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       entry.yieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         quotationToFloat(entry.totalYieldWithCommission), createRubleFormat(operationsTotalYieldWithCommissionForegroundRole(entry).value<QBrush>().color(), true, 2));
+        doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, entry.totalYieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsTotalYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                      quotationToFloat(entry.remainedMoney), createRubleFormat(CELL_FONT_COLOR, false, 2));
+        doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                         quotationToFloat(entry.totalMoney), createRubleFormat(CELL_FONT_COLOR, false, 2));
         // clang-format on
     }
+}
+
+QXlsx::Format OperationsTableModel::createRubleFormat(const QColor& color, bool withPlus, int precision) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat(QString("+0.%1 \u20BD;-0.%1 \u20BD;0.%1 \u20BD").arg("", precision, '0'));
+    }
+    else
+    {
+        res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
+}
+
+QXlsx::Format OperationsTableModel::createPercentFormat(const QColor& color, bool withPlus) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat("+0.00%;-0.00%;0.00%");
+    }
+    else
+    {
+        res.setNumberFormat("0.00%");
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
 }
 
 using AscSortHandler = bool (*)(const Operation& l, const Operation& r);

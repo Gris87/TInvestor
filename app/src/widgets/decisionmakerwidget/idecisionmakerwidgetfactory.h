@@ -17,34 +17,30 @@
 struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
 {
     explicit DecisionMakerWidgetFactoryNewInstanceArgsMore15(
-        IOperationsTableWidgetFactory*     _operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*        _accountChartWidgetFactory,
-        ILogsFilterWidgetFactory*          _logsFilterWidgetFactory,
-        ILogsTableWidgetFactory*           _logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*       _portfolioTreeWidgetFactory,
-        IOperationsTableRecordFactory*     _operationsTableRecordFactory,
-        IOperationsTableModelFactory*      _operationsTableModelFactory,
-        ILogsTableModelFactory*            _logsTableModelFactory,
-        IPortfolioTreeRecordFactory*       _portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*          _instrumentWidgetFactory,
-        IInstrumentTableItemWidgetFactory* _instrumentTableItemWidgetFactory,
-        IUserStorage*                      _userStorage,
-        IInstrumentsStorage*               _instrumentsStorage,
-        ILogosStorage*                     _logosStorage,
-        IFileDialogFactory*                _fileDialogFactory,
-        ISettingsEditor*                   _settingsEditor
+        IOperationsTableWidgetFactory* _operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*    _accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*      _logsFilterWidgetFactory,
+        ILogsTableWidgetFactory*       _logsTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*   _portfolioTreeWidgetFactory,
+        IOperationsTableModelFactory*  _operationsTableModelFactory,
+        ILogsTableModelFactory*        _logsTableModelFactory,
+        IPortfolioTreeRecordFactory*   _portfolioTreeRecordFactory,
+        IInstrumentWidgetFactory*      _instrumentWidgetFactory,
+        IUserStorage*                  _userStorage,
+        IInstrumentsStorage*           _instrumentsStorage,
+        ILogosStorage*                 _logosStorage,
+        IFileDialogFactory*            _fileDialogFactory,
+        ISettingsEditor*               _settingsEditor
     ) :
         operationsTableWidgetFactory(_operationsTableWidgetFactory),
         accountChartWidgetFactory(_accountChartWidgetFactory),
         logsFilterWidgetFactory(_logsFilterWidgetFactory),
         logsTableWidgetFactory(_logsTableWidgetFactory),
         portfolioTreeWidgetFactory(_portfolioTreeWidgetFactory),
-        operationsTableRecordFactory(_operationsTableRecordFactory),
         operationsTableModelFactory(_operationsTableModelFactory),
         logsTableModelFactory(_logsTableModelFactory),
         portfolioTreeRecordFactory(_portfolioTreeRecordFactory),
         instrumentWidgetFactory(_instrumentWidgetFactory),
-        instrumentTableItemWidgetFactory(_instrumentTableItemWidgetFactory),
         userStorage(_userStorage),
         instrumentsStorage(_instrumentsStorage),
         logosStorage(_logosStorage),
@@ -55,22 +51,20 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
 
     bool operator==(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& another) const = default;
 
-    IOperationsTableWidgetFactory*     operationsTableWidgetFactory;
-    IAccountChartWidgetFactory*        accountChartWidgetFactory;
-    ILogsFilterWidgetFactory*          logsFilterWidgetFactory;
-    ILogsTableWidgetFactory*           logsTableWidgetFactory;
-    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory;
-    IOperationsTableRecordFactory*     operationsTableRecordFactory;
-    IOperationsTableModelFactory*      operationsTableModelFactory;
-    ILogsTableModelFactory*            logsTableModelFactory;
-    IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory;
-    IInstrumentWidgetFactory*          instrumentWidgetFactory;
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory;
-    IUserStorage*                      userStorage;
-    IInstrumentsStorage*               instrumentsStorage;
-    ILogosStorage*                     logosStorage;
-    IFileDialogFactory*                fileDialogFactory;
-    ISettingsEditor*                   settingsEditor;
+    IOperationsTableWidgetFactory* operationsTableWidgetFactory;
+    IAccountChartWidgetFactory*    accountChartWidgetFactory;
+    ILogsFilterWidgetFactory*      logsFilterWidgetFactory;
+    ILogsTableWidgetFactory*       logsTableWidgetFactory;
+    IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory;
+    IOperationsTableModelFactory*  operationsTableModelFactory;
+    ILogsTableModelFactory*        logsTableModelFactory;
+    IPortfolioTreeRecordFactory*   portfolioTreeRecordFactory;
+    IInstrumentWidgetFactory*      instrumentWidgetFactory;
+    IUserStorage*                  userStorage;
+    IInstrumentsStorage*           instrumentsStorage;
+    ILogosStorage*                 logosStorage;
+    IFileDialogFactory*            fileDialogFactory;
+    ISettingsEditor*               settingsEditor;
 };
 
 

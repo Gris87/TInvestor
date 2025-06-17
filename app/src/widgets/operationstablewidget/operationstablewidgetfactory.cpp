@@ -18,26 +18,12 @@ OperationsTableWidgetFactory::~OperationsTableWidgetFactory()
 }
 
 IOperationsTableWidget* OperationsTableWidgetFactory::newInstance(
-    IOperationsTableModelFactory*      operationsTableModelFactory,
-    ILogosStorage*                     logosStorage,
-    IOperationsTableRecordFactory*     operationsTableRecordFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    IUserStorage*                      userStorage,
-    IInstrumentsStorage*               instrumentsStorage,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
+    IOperationsTableModelFactory* operationsTableModelFactory,
+    ILogosStorage*                logosStorage,
+    IFileDialogFactory*           fileDialogFactory,
+    ISettingsEditor*              settingsEditor,
+    QWidget*                      parent
 ) const
 {
-    return new OperationsTableWidget(
-        operationsTableModelFactory,
-        logosStorage,
-        operationsTableRecordFactory,
-        instrumentTableItemWidgetFactory,
-        userStorage,
-        instrumentsStorage,
-        fileDialogFactory,
-        settingsEditor,
-        parent
-    );
+    return new OperationsTableWidget(operationsTableModelFactory, logosStorage, fileDialogFactory, settingsEditor, parent);
 }

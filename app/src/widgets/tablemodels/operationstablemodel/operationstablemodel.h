@@ -36,6 +36,12 @@ public:
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
+    [[nodiscard]]
+    QXlsx::Format createRubleFormat(const QColor& color, bool withPlus, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+
     int  indexOfSortedInsert(QList<Operation>* entries, const Operation& entry);
     void insertRow(QList<Operation>* entries, int row, const Operation& entry);
 
