@@ -86,7 +86,7 @@ Logos LogosDatabase::readLogos()
 
     for (int i = 0; i < files.size(); ++i)
     {
-        res[readLogosInfo.instrumentIds[i]] = readLogosInfo.logos[i];
+        res[readLogosInfo.instrumentIds.at(i)] = readLogosInfo.logos.at(i);
     }
 
     return res;

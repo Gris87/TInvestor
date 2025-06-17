@@ -16,7 +16,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).timestamp < entries->at(r).timestamp;
     }
@@ -32,7 +32,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).level < entries->at(r).level;
     }
@@ -48,7 +48,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).instrumentTicker < entries->at(r).instrumentTicker;
     }
@@ -64,7 +64,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).message < entries->at(r).message;
     }
@@ -80,7 +80,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).timestamp > entries->at(r).timestamp;
     }
@@ -96,7 +96,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).level > entries->at(r).level;
     }
@@ -112,7 +112,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).instrumentTicker > entries->at(r).instrumentTicker;
     }
@@ -128,7 +128,7 @@ public:
 
     QList<LogEntry>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).message > entries->at(r).message;
     }

@@ -251,7 +251,7 @@ void OperationsThread::requestOperations()
         cursor = QString::fromStdString(tinkoffOperations->next_cursor());
     }
 
-    if (!QThread::currentThread()->isInterruptionRequested() && !allTinkoffOperations.isEmpty())
+    if (!QThread::currentThread()->isInterruptionRequested() && totalOperations > 0)
     {
         QList<Operation> operations;
 
@@ -274,21 +274,18 @@ void OperationsThread::requestOperations()
             }
         }
 
-        if (!operations.isEmpty())
+        if (mLastRequestTimestamp == 0)
         {
-            if (mLastRequestTimestamp == 0)
-            {
-                mOperationsDatabase->writeOperations(operations);
-                emit operationsRead(operations);
-            }
-            else
-            {
-                mOperationsDatabase->appendOperations(operations);
-                emit operationsAdded(operations);
-            }
-
-            mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
+            mOperationsDatabase->writeOperations(operations);
+            emit operationsRead(operations);
         }
+        else
+        {
+            mOperationsDatabase->appendOperations(operations);
+            emit operationsAdded(operations);
+        }
+
+        mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
     }
 }
 

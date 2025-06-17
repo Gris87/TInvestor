@@ -16,7 +16,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).timestamp < entries->at(r).timestamp;
     }
@@ -32,7 +32,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).instrumentTicker < entries->at(r).instrumentTicker;
     }
@@ -48,7 +48,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).description < entries->at(r).description;
     }
@@ -64,7 +64,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).price < entries->at(r).price;
     }
@@ -80,7 +80,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).avgPriceFifo < entries->at(r).avgPriceFifo;
     }
@@ -96,7 +96,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).avgPriceWavg < entries->at(r).avgPriceWavg;
     }
@@ -112,7 +112,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).quantity < entries->at(r).quantity;
     }
@@ -128,7 +128,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).remainedQuantity < entries->at(r).remainedQuantity;
     }
@@ -144,7 +144,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).payment < entries->at(r).payment;
     }
@@ -160,7 +160,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).commission < entries->at(r).commission;
     }
@@ -176,7 +176,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yield < entries->at(r).yield;
     }
@@ -192,7 +192,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yieldWithCommission < entries->at(r).yieldWithCommission;
     }
@@ -208,7 +208,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yieldWithCommissionPercent < entries->at(r).yieldWithCommissionPercent;
     }
@@ -224,7 +224,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalYieldWithCommission < entries->at(r).totalYieldWithCommission;
     }
@@ -240,7 +240,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalYieldWithCommissionPercent < entries->at(r).totalYieldWithCommissionPercent;
     }
@@ -256,7 +256,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).remainedMoney < entries->at(r).remainedMoney;
     }
@@ -272,7 +272,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalMoney < entries->at(r).totalMoney;
     }
@@ -288,7 +288,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).timestamp > entries->at(r).timestamp;
     }
@@ -304,7 +304,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).instrumentTicker > entries->at(r).instrumentTicker;
     }
@@ -320,7 +320,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).description > entries->at(r).description;
     }
@@ -336,7 +336,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).price > entries->at(r).price;
     }
@@ -352,7 +352,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).avgPriceFifo > entries->at(r).avgPriceFifo;
     }
@@ -368,7 +368,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).avgPriceWavg > entries->at(r).avgPriceWavg;
     }
@@ -384,7 +384,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).quantity > entries->at(r).quantity;
     }
@@ -400,7 +400,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).remainedQuantity > entries->at(r).remainedQuantity;
     }
@@ -416,7 +416,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).payment > entries->at(r).payment;
     }
@@ -432,7 +432,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).commission > entries->at(r).commission;
     }
@@ -448,7 +448,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yield > entries->at(r).yield;
     }
@@ -464,7 +464,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yieldWithCommission > entries->at(r).yieldWithCommission;
     }
@@ -480,7 +480,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).yieldWithCommissionPercent > entries->at(r).yieldWithCommissionPercent;
     }
@@ -496,7 +496,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalYieldWithCommission > entries->at(r).totalYieldWithCommission;
     }
@@ -512,7 +512,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalYieldWithCommissionPercent > entries->at(r).totalYieldWithCommissionPercent;
     }
@@ -528,7 +528,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).remainedMoney > entries->at(r).remainedMoney;
     }
@@ -544,7 +544,7 @@ public:
 
     QList<Operation>* entries;
 
-    inline bool operator()(int l, int r) const
+    bool operator()(int l, int r) const
     {
         return entries->at(l).totalMoney > entries->at(r).totalMoney;
     }

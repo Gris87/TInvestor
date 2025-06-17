@@ -17,7 +17,9 @@ public:
     LogLevelItemDelegate(const LogLevelItemDelegate& another)            = delete;
     LogLevelItemDelegate& operator=(const LogLevelItemDelegate& another) = delete;
 
-    void  paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+
+    [[nodiscard]]
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
