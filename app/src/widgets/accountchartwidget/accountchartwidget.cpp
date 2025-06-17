@@ -337,9 +337,9 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 
     if (!operations.isEmpty())
     {
-        for (const Operation& operation : operations)
+        for (int i = operations.size() - 1; i >= 0; --i)
         {
-            handleOperation(operation);
+            handleOperation(operations.at(i));
         }
 
         mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
@@ -366,9 +366,9 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 
 void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 {
-    for (const Operation& operation : operations)
+    for (int i = operations.size() - 1; i >= 0; --i)
     {
-        handleOperation(operation);
+        handleOperation(operations.at(i));
     }
 
     mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));

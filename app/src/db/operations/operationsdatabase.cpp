@@ -249,7 +249,7 @@ void OperationsDatabase::writeOperations(const QList<Operation>& operations)
 
     for (int i = 0; i < operations.size(); ++i)
     {
-        const QJsonDocument jsonDoc(operations.at(i).toJsonObject());
+        const QJsonDocument jsonDoc(operations.at(operations.size() - i - 1).toJsonObject());
 
         if (i != 0)
         {
@@ -271,9 +271,9 @@ void OperationsDatabase::appendOperations(const QList<Operation>& operations)
     const bool ok = operationsFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, "OperationsDatabase::appendOperations()", "Failed to open file");
 
-    for (const Operation& operation : operations)
+    for (int i = 0; i < operations.size(); ++i)
     {
-        const QJsonDocument jsonDoc(operation.toJsonObject());
+        const QJsonDocument jsonDoc(operations.at(operations.size() - i - 1).toJsonObject());
 
         operationsFile->write(",\n");
         operationsFile->write(jsonDoc.toJson(QJsonDocument::Compact));

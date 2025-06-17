@@ -746,7 +746,12 @@ void OperationsTableModel::operationsAdded(const QList<Operation>& operations)
         {
             beginInsertRows(QModelIndex(), mEntries->size(), mEntries->size() + operations.size() - 1);
 
-            mEntries->append(operations);
+            for (int i = operations.size() - 1; i >= 0; --i)
+            {
+                const Operation& operation = operations.at(i);
+
+                mEntries->append(operation);
+            }
 
             endInsertRows();
         }
@@ -754,8 +759,10 @@ void OperationsTableModel::operationsAdded(const QList<Operation>& operations)
         {
             beginInsertRows(QModelIndex(), 0, operations.size() - 1);
 
-            for (const Operation& operation : operations)
+            for (int i = operations.size() - 1; i >= 0; --i)
             {
+                const Operation& operation = operations.at(i);
+
                 mEntries->prepend(operation);
             }
 
@@ -764,8 +771,10 @@ void OperationsTableModel::operationsAdded(const QList<Operation>& operations)
     }
     else
     {
-        for (const Operation& operation : operations)
+        for (int i = operations.size() - 1; i >= 0; --i)
         {
+            const Operation& operation = operations.at(i);
+
             insertRow(mEntries.get(), indexOfSortedInsert(mEntries.get(), operation), operation);
         }
     }

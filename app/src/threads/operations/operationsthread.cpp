@@ -125,7 +125,7 @@ void OperationsThread::readOperations()
 
     if (!operations.isEmpty())
     {
-        const Operation& lastOperation = operations.constLast();
+        const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
         mLastRequestTimestamp     = lastOperation.timestamp + MS_IN_SECOND;
         mInputMoney               = lastOperation.inputMoney;
@@ -150,8 +150,10 @@ void OperationsThread::readOperations()
 
     mInstruments.clear();
 
-    for (const Operation& operation : operations)
+    for (int i = operations.size() - 1; i >= 0; --i)
     {
+        const Operation& operation = operations.at(i);
+
         if (operation.remainedQuantity > 0)
         {
             QuantityAndCost& quantityAndCost = mInstruments[operation.instrumentId]; // clazy:exclude=detaching-member
@@ -214,6 +216,7 @@ void OperationsThread::requestOperations()
     QString      cursor;
 
     QList<std::shared_ptr<tinkoff::GetOperationsByCursorResponse>> allTinkoffOperations;
+    int                                                            totalOperations = 0;
 
     while (true)
     {
@@ -228,6 +231,16 @@ void OperationsThread::requestOperations()
         if (tinkoffOperations->items_size() > 0)
         {
             allTinkoffOperations.append(tinkoffOperations);
+
+            for (int i = tinkoffOperations->items_size() - 1; i >= 0; --i)
+            {
+                const tinkoff::OperationItem& tinkoffOperation = tinkoffOperations->items(i);
+
+                if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
+                {
+                    ++totalOperations;
+                }
+            }
         }
 
         if (!tinkoffOperations->has_next())
@@ -242,6 +255,9 @@ void OperationsThread::requestOperations()
     {
         QList<Operation> operations;
 
+        operations.resizeForOverwrite(totalOperations);
+        int curOperation = totalOperations - 1;
+
         for (int i = allTinkoffOperations.size() - 1; i >= 0; --i)
         {
             const std::shared_ptr<tinkoff::GetOperationsByCursorResponse>& tinkoffOperations = allTinkoffOperations.at(i);
@@ -252,7 +268,8 @@ void OperationsThread::requestOperations()
 
                 if (tinkoffOperation.type() != tinkoff::OPERATION_TYPE_BROKER_FEE)
                 {
-                    operations.append(handleOperationItem(tinkoffOperation));
+                    handleOperationItem(tinkoffOperation, &operations[curOperation]);
+                    --curOperation;
                 }
             }
         }
@@ -270,16 +287,14 @@ void OperationsThread::requestOperations()
                 emit operationsAdded(operations);
             }
 
-            mLastRequestTimestamp = operations.constLast().timestamp + MS_IN_SECOND;
+            mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
         }
     }
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation)
+void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res)
 {
-    Operation res;
-
     QString                      instrumentId  = QString::fromStdString(tinkoffOperation.instrument_uid());
     const QString                positionUid   = QString::fromStdString(tinkoffOperation.position_uid());
     const qint64                 timestamp     = timeToTimestamp(tinkoffOperation.date());
@@ -459,44 +474,42 @@ Operation OperationsThread::handleOperationItem(const tinkoff::OperationItem& ti
     }
 
     mLogosStorage->lock();
-    res.instrumentLogo = mLogosStorage->getLogo(instrumentId);
+    res->instrumentLogo = mLogosStorage->getLogo(instrumentId);
     mLogosStorage->unlock();
 
-    res.timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
-    res.instrumentId                    = instrumentId;
-    res.instrumentTicker                = instrument.ticker;
-    res.instrumentName                  = instrument.name;
-    res.description                     = QString::fromStdString(tinkoffOperation.description());
-    res.price                           = quotationToFloat(tinkoffOperation.price());
-    res.fifoItems                       = quantityAndCost.fifoItems;
-    res.avgPriceFifo                    = avgPriceFifo;
-    res.avgPriceWavg                    = avgPriceWavg;
-    res.quantity                        = tinkoffOperation.quantity_done();
-    res.remainedQuantity                = quantityAndCost.quantity;
-    res.payment                         = payment;
-    res.avgCostFifo                     = avgCostFifo;
-    res.costFifo                        = quantityAndCost.costFifo;
-    res.costWavg                        = quantityAndCost.costWavg;
-    res.commission                      = quotationToFloat(tinkoffOperation.commission());
-    res.yield                           = quotationToFloat(yield);
-    res.yieldWithCommission             = quotationToFloat(yieldWithCommission);
-    res.yieldWithCommissionPercent      = yieldWithCommissionPercent;
-    res.inputMoney                      = mInputMoney;
-    res.maxInputMoney                   = mMaxInputMoney;
-    res.totalYieldWithCommission        = mTotalYieldWithCommission;
-    res.totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
-    res.remainedMoney                   = mRemainedMoney;
-    res.totalMoney                      = mTotalMoney;
-    res.pricePrecision                  = instrument.pricePrecision;
-    res.paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
-    res.commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
+    res->timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
+    res->instrumentId                    = instrumentId;
+    res->instrumentTicker                = instrument.ticker;
+    res->instrumentName                  = instrument.name;
+    res->description                     = QString::fromStdString(tinkoffOperation.description());
+    res->price                           = quotationToFloat(tinkoffOperation.price());
+    res->fifoItems                       = quantityAndCost.fifoItems;
+    res->avgPriceFifo                    = avgPriceFifo;
+    res->avgPriceWavg                    = avgPriceWavg;
+    res->quantity                        = tinkoffOperation.quantity_done();
+    res->remainedQuantity                = quantityAndCost.quantity;
+    res->payment                         = payment;
+    res->avgCostFifo                     = avgCostFifo;
+    res->costFifo                        = quantityAndCost.costFifo;
+    res->costWavg                        = quantityAndCost.costWavg;
+    res->commission                      = quotationToFloat(tinkoffOperation.commission());
+    res->yield                           = quotationToFloat(yield);
+    res->yieldWithCommission             = quotationToFloat(yieldWithCommission);
+    res->yieldWithCommissionPercent      = yieldWithCommissionPercent;
+    res->inputMoney                      = mInputMoney;
+    res->maxInputMoney                   = mMaxInputMoney;
+    res->totalYieldWithCommission        = mTotalYieldWithCommission;
+    res->totalYieldWithCommissionPercent = totalYieldWithCommissionPercent;
+    res->remainedMoney                   = mRemainedMoney;
+    res->totalMoney                      = mTotalMoney;
+    res->pricePrecision                  = instrument.pricePrecision;
+    res->paymentPrecision                = quotationPrecision(tinkoffOperation.payment());
+    res->commissionPrecision             = quotationPrecision(tinkoffOperation.commission());
 
     if (quantityAndCost.quantity <= 0)
     {
         mInstruments.remove(instrumentId);
     }
-
-    return res;
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 

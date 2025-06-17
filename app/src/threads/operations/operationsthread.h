@@ -59,7 +59,7 @@ private:
     Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
     Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
     void      requestOperations();
-    Operation handleOperationItem(const tinkoff::OperationItem& tinkoffOperation);
+    void      handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
