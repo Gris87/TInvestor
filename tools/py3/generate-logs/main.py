@@ -127,7 +127,7 @@ def main():
         "--count",
         dest="count",
         type=int,
-        default=100000,
+        default=1000000,
         help="Amount of logs",
     )
     args = parser.parse_args()

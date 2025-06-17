@@ -49,6 +49,8 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mMonthlyYieldSeries(),
     mMonthlyYieldPositiveBarSet("Positive"),
     mMonthlyYieldNegativeBarSet("Negative"),
+    mMonthlyYieldPositivePoints(),
+    mMonthlyYieldNegativePoints(),
     mMonthlyYieldAxisX(),
     mMonthlyYieldAxisY(),
     mRemainedMoneyChart(),
@@ -162,10 +164,6 @@ void AccountChartWidget::initYieldChart()
     mYieldSeries.attachAxis(&mYieldAxisX);
     mYieldSeries.attachAxis(&mYieldAxisY);
 
-    QPen pen(SERIES_COLOR);
-    pen.setWidth(3);
-    mYieldSeries.setPen(pen);
-
     initChartStyle(&mYieldChart, &mYieldAxisX, &mYieldAxisY);
 }
 
@@ -214,10 +212,6 @@ void AccountChartWidget::initRemainedMoneyChart()
     mRemainedMoneySeries.attachAxis(&mRemainedMoneyAxisX);
     mRemainedMoneySeries.attachAxis(&mRemainedMoneyAxisY);
 
-    QPen pen(SERIES_COLOR);
-    pen.setWidth(3);
-    mRemainedMoneySeries.setPen(pen);
-
     initChartStyle(&mRemainedMoneyChart, &mRemainedMoneyAxisX, &mRemainedMoneyAxisY);
 }
 
@@ -236,10 +230,6 @@ void AccountChartWidget::initTotalMoneyChart()
     mTotalMoneySeries.attachAxis(&mTotalMoneyAxisX);
     mTotalMoneySeries.attachAxis(&mTotalMoneyAxisY);
 
-    QPen pen(SERIES_COLOR);
-    pen.setWidth(3);
-    mTotalMoneySeries.setPen(pen);
-
     initChartStyle(&mTotalMoneyChart, &mTotalMoneyAxisX, &mTotalMoneyAxisY);
 }
 
@@ -251,7 +241,6 @@ void AccountChartWidget::initChartStyle(QChart* chart, QAbstractAxis* axisX, QAb
 
     chart->legend()->hide();
     chart->setAcceptHoverEvents(true);
-    chart->setAnimationOptions(QChart::SeriesAnimations);
 
     chart->setBackgroundBrush(QBrush(BACKGROUND_COLOR));
     chart->setPlotAreaBackgroundBrush(QBrush(PLOT_AREA_COLOR));
@@ -316,6 +305,8 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
     mYieldSeries.clear();
     mMonthlyYieldPositiveBarSet.remove(0, mMonthlyYieldPositiveBarSet.count());
     mMonthlyYieldNegativeBarSet.remove(0, mMonthlyYieldNegativeBarSet.count());
+    mMonthlyYieldPositivePoints.clear();
+    mMonthlyYieldNegativePoints.clear();
     mRemainedMoneySeries.clear();
     mTotalMoneySeries.clear();
 
@@ -337,10 +328,24 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 
     if (!operations.isEmpty())
     {
+        QList<QPointF> yieldPoints;
+        QList<QPointF> remainedMoneyPoints;
+        QList<QPointF> totalMoneySeriesPoints;
+
+        yieldPoints.reserve(operations.size());
+        remainedMoneyPoints.reserve(operations.size());
+        totalMoneySeriesPoints.reserve(operations.size());
+
         for (int i = operations.size() - 1; i >= 0; --i)
         {
-            handleOperation(operations.at(i));
+            handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneySeriesPoints);
         }
+
+        mYieldSeries.replace(yieldPoints);
+        syncBarSetFromPoints(&mMonthlyYieldPositiveBarSet, mMonthlyYieldPositivePoints);
+        syncBarSetFromPoints(&mMonthlyYieldNegativeBarSet, mMonthlyYieldNegativePoints);
+        mRemainedMoneySeries.replace(remainedMoneyPoints);
+        mTotalMoneySeries.replace(totalMoneySeriesPoints);
 
         mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
         mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
@@ -349,6 +354,12 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         mRemainedMoneyAxisY.setRange(mRemainedMoneyAxisYMin, mRemainedMoneyAxisYMax);
         mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
         mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
+
+        QPen pen(SERIES_COLOR);
+        pen.setWidthF(qMin(3000 / mYieldSeries.count(), 3));
+        mYieldSeries.setPen(pen);
+        mRemainedMoneySeries.setPen(pen);
+        mTotalMoneySeries.setPen(pen);
     }
     else
     {
@@ -366,10 +377,24 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 
 void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
 {
+    QList<QPointF> yieldPoints;
+    QList<QPointF> remainedMoneyPoints;
+    QList<QPointF> totalMoneySeriesPoints;
+
+    yieldPoints.reserve(operations.size());
+    remainedMoneyPoints.reserve(operations.size());
+    totalMoneySeriesPoints.reserve(operations.size());
+
     for (int i = operations.size() - 1; i >= 0; --i)
     {
-        handleOperation(operations.at(i));
+        handleOperation(operations.at(i), yieldPoints, remainedMoneyPoints, totalMoneySeriesPoints);
     }
+
+    mYieldSeries.append(yieldPoints);
+    syncBarSetFromPoints(&mMonthlyYieldPositiveBarSet, mMonthlyYieldPositivePoints);
+    syncBarSetFromPoints(&mMonthlyYieldNegativeBarSet, mMonthlyYieldNegativePoints);
+    mRemainedMoneySeries.append(remainedMoneyPoints);
+    mTotalMoneySeries.append(totalMoneySeriesPoints);
 
     mYieldAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
     mYieldAxisY.setRange(mYieldAxisYMin, mYieldAxisYMax);
@@ -379,10 +404,21 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     mTotalMoneyAxisX.setRange(QDateTime::fromMSecsSinceEpoch(mAxisXMin), QDateTime::fromMSecsSinceEpoch(mAxisXMax));
     mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
+    QPen pen(SERIES_COLOR);
+    pen.setWidthF(qMin(3000 / mYieldSeries.count(), 3));
+    mYieldSeries.setPen(pen);
+    mRemainedMoneySeries.setPen(pen);
+    mTotalMoneySeries.setPen(pen);
+
     scene()->invalidate();
 }
 
-void AccountChartWidget::handleOperation(const Operation& operation)
+void AccountChartWidget::handleOperation(
+    const Operation& operation,
+    QList<QPointF>&  yieldPoints,
+    QList<QPointF>&  remainedMoneyPoints,
+    QList<QPointF>&  totalMoneySeriesPoints
+)
 {
     const float yield         = operation.totalYieldWithCommissionPercent;
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
@@ -395,16 +431,16 @@ void AccountChartWidget::handleOperation(const Operation& operation)
     {
         mLastMonthlyCategory = monthlyCategory;
 
-        mLastMonthlyYield += mMonthlyYieldPositiveBarSet.count() > 0
-                                 ? mMonthlyYieldPositiveBarSet.at(mMonthlyYieldPositiveBarSet.count() - 1) +
-                                       mMonthlyYieldNegativeBarSet.at(mMonthlyYieldNegativeBarSet.count() - 1)
+        mLastMonthlyYield += mMonthlyYieldPositivePoints.count() > 0
+                                 ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.count() - 1) +
+                                       mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.count() - 1)
                                  : 0.0f;
 
         mMonthlyYieldAxisX.append(
             QString("%1 %2").arg(mMonthNames.at(operationDate.month() - 1), QString::number(operationDate.year()))
         );
-        mMonthlyYieldPositiveBarSet.append(0);
-        mMonthlyYieldNegativeBarSet.append(0);
+        mMonthlyYieldPositivePoints.append(0);
+        mMonthlyYieldNegativePoints.append(0);
     }
 
     const float monthlyYield = yield - mLastMonthlyYield;
@@ -421,11 +457,35 @@ void AccountChartWidget::handleOperation(const Operation& operation)
     mTotalMoneyAxisYMin    = qMin(mTotalMoneyAxisYMin, totalMoney);
     mTotalMoneyAxisYMax    = qMax(mTotalMoneyAxisYMax, totalMoney);
 
-    mYieldSeries.append(operation.timestamp, yield);
-    mMonthlyYieldPositiveBarSet.replace(mMonthlyYieldPositiveBarSet.count() - 1, qMax(monthlyYield, 0.0f));
-    mMonthlyYieldNegativeBarSet.replace(mMonthlyYieldNegativeBarSet.count() - 1, qMin(monthlyYield, 0.0f));
-    mRemainedMoneySeries.append(operation.timestamp, remainedMoney);
-    mTotalMoneySeries.append(operation.timestamp, totalMoney);
+    yieldPoints.append(QPointF(operation.timestamp, yield));
+    mMonthlyYieldPositivePoints.replace(mMonthlyYieldPositivePoints.count() - 1, qMax(monthlyYield, 0.0f));
+    mMonthlyYieldNegativePoints.replace(mMonthlyYieldNegativePoints.count() - 1, qMin(monthlyYield, 0.0f));
+    remainedMoneyPoints.append(QPointF(operation.timestamp, remainedMoney));
+    totalMoneySeriesPoints.append(QPointF(operation.timestamp, totalMoney));
+}
+
+void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points)
+{
+    Q_ASSERT_X(points.count() > 0, "AccountChartWidget::syncBarSetFromPoints()", "points is empty");
+    Q_ASSERT_X(
+        barSet->count() <= points.count(), "AccountChartWidget::syncBarSetFromPoints()", "barSet should be smaller than points"
+    );
+
+    if (barSet->count() > 0)
+    {
+        qreal barSetValue = barSet->at(barSet->count() - 1);
+        qreal pointValue  = points.at(barSet->count() - 1);
+
+        if (barSetValue != pointValue)
+        {
+            barSet->replace(barSet->count() - 1, pointValue);
+        }
+    }
+
+    for (int i = barSet->count(); i < points.count(); ++i)
+    {
+        barSet->append(points.at(i));
+    }
 }
 
 void AccountChartWidget::contextMenuRequested(const QPoint& pos)

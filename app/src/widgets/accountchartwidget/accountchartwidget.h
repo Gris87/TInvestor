@@ -56,7 +56,13 @@ private:
     void    initRemainedMoneyChart();
     void    initTotalMoneyChart();
     void    initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
-    void    handleOperation(const Operation& operation);
+    void    handleOperation(
+           const Operation& operation,
+           QList<QPointF>&  yieldPoints,
+           QList<QPointF>&  remainedMoneyPoints,
+           QList<QPointF>&  totalMoneySeriesPoints
+       );
+    void    syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points);
     void    exportToExcel(const QString& path) const;
     QPointF findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints);
 
@@ -71,6 +77,8 @@ private:
     QStackedBarSeries   mMonthlyYieldSeries;
     QBarSet             mMonthlyYieldPositiveBarSet;
     QBarSet             mMonthlyYieldNegativeBarSet;
+    QList<qreal>        mMonthlyYieldPositivePoints;
+    QList<qreal>        mMonthlyYieldNegativePoints;
     QBarCategoryAxis    mMonthlyYieldAxisX;
     QValueAxis          mMonthlyYieldAxisY;
     QChart              mRemainedMoneyChart;

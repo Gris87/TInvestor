@@ -1,4 +1,5 @@
 Something strange with the logs
+Use library for JSON (simdjson)
 Limit operations and logs
 Align amount of money in operations from portfolio
 Optimization
