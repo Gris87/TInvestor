@@ -393,6 +393,15 @@ void LogsTableModel::exportToExcel(QXlsx::Document& doc) const
         // clang-format on
     }
 }
+using AscSortHandler = bool (*)(const LogEntry& l, const LogEntry& r);
+
+static const AscSortHandler ASC_SORT_HANDLER[LOGS_COLUMN_COUNT]{logsTimeLess, logsLevelLess, logsNameLess, logsMessageLess};
+
+using DescSortHandler = bool (*)(const LogEntry& l, const LogEntry& r);
+
+static const DescSortHandler DESC_SORT_HANDLER[LOGS_COLUMN_COUNT]{
+    logsTimeGreater, logsLevelGreater, logsNameGreater, logsMessageGreater
+};
 
 int LogsTableModel::indexOfSortedInsert(QList<LogEntry>* entries, const LogEntry& entry)
 {
@@ -400,33 +409,15 @@ int LogsTableModel::indexOfSortedInsert(QList<LogEntry>* entries, const LogEntry
 
     if (mSortOrder == Qt::AscendingOrder)
     {
-        if (mSortColumn == LOGS_LEVEL_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsLevelLess));
-        }
-        else if (mSortColumn == LOGS_NAME_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsNameLess));
-        }
-        else if (mSortColumn == LOGS_MESSAGE_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsMessageLess));
-        }
+        res = std::distance(
+            entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, ASC_SORT_HANDLER[mSortColumn])
+        );
     }
     else
     {
-        if (mSortColumn == LOGS_LEVEL_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsLevelGreater));
-        }
-        else if (mSortColumn == LOGS_NAME_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsNameGreater));
-        }
-        else if (mSortColumn == LOGS_MESSAGE_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, logsMessageGreater));
-        }
+        res = std::distance(
+            entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, DESC_SORT_HANDLER[mSortColumn])
+        );
     }
 
     return res;

@@ -815,211 +815,69 @@ void OperationsTableModel::exportToExcel(QXlsx::Document& doc) const
     }
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
+using AscSortHandler = bool (*)(const Operation& l, const Operation& r);
+
+static const AscSortHandler ASC_SORT_HANDLER[OPERATIONS_COLUMN_COUNT]{
+    operationsTimeLess,
+    operationsNameLess,
+    operationsDescriptionLess,
+    operationsPriceLess,
+    operationsAvgPriceFifoLess,
+    operationsAvgPriceWavgLess,
+    operationsQuantityLess,
+    operationsRemainedQuantityLess,
+    operationsPaymentLess,
+    operationsCommissionLess,
+    operationsYieldLess,
+    operationsYieldWithCommissionLess,
+    operationsYieldWithCommissionPercentLess,
+    operationsTotalYieldWithCommissionLess,
+    operationsTotalYieldWithCommissionPercentLess,
+    operationsRemainedMoneyLess,
+    operationsTotalMoneyLess
+};
+
+using DescSortHandler = bool (*)(const Operation& l, const Operation& r);
+
+static const DescSortHandler DESC_SORT_HANDLER[OPERATIONS_COLUMN_COUNT]{
+    operationsTimeGreater,
+    operationsNameGreater,
+    operationsDescriptionGreater,
+    operationsPriceGreater,
+    operationsAvgPriceFifoGreater,
+    operationsAvgPriceWavgGreater,
+    operationsQuantityGreater,
+    operationsRemainedQuantityGreater,
+    operationsPaymentGreater,
+    operationsCommissionGreater,
+    operationsYieldGreater,
+    operationsYieldWithCommissionGreater,
+    operationsYieldWithCommissionPercentGreater,
+    operationsTotalYieldWithCommissionGreater,
+    operationsTotalYieldWithCommissionPercentGreater,
+    operationsRemainedMoneyGreater,
+    operationsTotalMoneyGreater
+};
+
 int OperationsTableModel::indexOfSortedInsert(QList<Operation>* entries, const Operation& entry)
 {
     int res = 0;
 
     if (mSortOrder == Qt::AscendingOrder)
     {
-        if (mSortColumn == OPERATIONS_NAME_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsNameLess));
-        }
-        else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsDescriptionLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsPriceLess));
-        }
-        else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsAvgPriceFifoLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsAvgPriceWavgLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsQuantityLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsRemainedQuantityLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
-        {
-            res =
-                std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsPaymentLess));
-        }
-        else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsCommissionLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
-        {
-            res = std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldLess));
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldWithCommissionLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldWithCommissionPercentLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalYieldWithCommissionLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalYieldWithCommissionPercentLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsRemainedMoneyLess)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalMoneyLess)
-            );
-        }
+        res = std::distance(
+            entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, ASC_SORT_HANDLER[mSortColumn])
+        );
     }
     else
     {
-        if (mSortColumn == OPERATIONS_NAME_COLUMN)
-        {
-            res =
-                std::distance(entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsNameGreater));
-        }
-        else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsDescriptionGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsPriceGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsAvgPriceFifoGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsAvgPriceWavgGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsQuantityGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsRemainedQuantityGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsPaymentGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsCommissionGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldWithCommissionGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsYieldWithCommissionPercentGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalYieldWithCommissionGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(),
-                std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalYieldWithCommissionPercentGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsRemainedMoneyGreater)
-            );
-        }
-        else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
-        {
-            res = std::distance(
-                entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, operationsTotalMoneyGreater)
-            );
-        }
+        res = std::distance(
+            entries->begin(), std::lower_bound(entries->begin(), entries->end(), entry, DESC_SORT_HANDLER[mSortColumn])
+        );
     }
 
     return res;
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 void OperationsTableModel::insertRow(QList<Operation>* entries, int row, const Operation& entry)
 {
