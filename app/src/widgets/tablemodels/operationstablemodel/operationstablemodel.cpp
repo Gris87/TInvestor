@@ -721,7 +721,7 @@ void OperationsTableModel::sort(int column, Qt::SortOrder order)
         {
             mSortOrder = order;
 
-            std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
+            const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
             entries->resizeForOverwrite(mEntries->size());
 
             ReverseEntriesInfo reverseEntriesInfo(mEntries.get());

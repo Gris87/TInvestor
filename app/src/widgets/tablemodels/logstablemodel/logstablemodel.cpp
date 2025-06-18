@@ -256,7 +256,7 @@ void LogsTableModel::sort(int column, Qt::SortOrder order)
                 }
             }
 
-            std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
+            const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
             entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
             MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
@@ -498,7 +498,7 @@ static void mergeFilteredEntriesForParallel(
     MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
 
     QList<LogEntry>*  entriesUnfiltered = mergeFilteredEntriesInfo->entriesUnfiltered;
-    int               index             = mergeFilteredEntriesInfo->indecies.at(threadId);
+    const int         index             = mergeFilteredEntriesInfo->indecies.at(threadId);
     const QList<int>& results           = mergeFilteredEntriesInfo->results.at(threadId);
 
     LogEntry* resArray = res.data();

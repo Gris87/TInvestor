@@ -26,12 +26,13 @@ const QColor      HEADER_FONT_COLOR       = QColor("#699BA2"); // clazy:exclude=
 const QColor      CELL_BACKGROUND_COLOR   = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 const QColor      CELL_FONT_COLOR         = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
-constexpr qint64 MS_IN_SECOND       = 1000LL;
-constexpr qint64 TOOLTIP_HIDE_DELAY = MS_IN_SECOND; // 1 second
-constexpr double ZOOM_FACTOR_BASE   = 1.001;
-constexpr int    TITLE_FONT_SIZE    = 16;
-constexpr qreal  TOOLTIP_Z_VALUE    = 11;
-constexpr double COLUMN_GAP         = 0.71;
+constexpr qint64 MS_IN_SECOND          = 1000LL;
+constexpr qint64 TOOLTIP_HIDE_DELAY    = MS_IN_SECOND; // 1 second
+constexpr double ZOOM_FACTOR_BASE      = 1.001;
+constexpr double CHART_PEN_SIZE_FACTOR = 3000.0;
+constexpr int    TITLE_FONT_SIZE       = 16;
+constexpr qreal  TOOLTIP_Z_VALUE       = 11;
+constexpr double COLUMN_GAP            = 0.71;
 
 
 
@@ -356,7 +357,7 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
         QPen pen(SERIES_COLOR);
-        pen.setWidthF(qMin(3000 / mYieldSeries.count(), 3));
+        pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3));
         mYieldSeries.setPen(pen);
         mRemainedMoneySeries.setPen(pen);
         mTotalMoneySeries.setPen(pen);
@@ -405,7 +406,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
     QPen pen(SERIES_COLOR);
-    pen.setWidthF(qMin(3000 / mYieldSeries.count(), 3));
+    pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3));
     mYieldSeries.setPen(pen);
     mRemainedMoneySeries.setPen(pen);
     mTotalMoneySeries.setPen(pen);
@@ -473,8 +474,8 @@ void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal
 
     if (barSet->count() > 0)
     {
-        qreal barSetValue = barSet->at(barSet->count() - 1);
-        qreal pointValue  = points.at(barSet->count() - 1);
+        const qreal barSetValue = barSet->at(barSet->count() - 1);
+        const qreal pointValue  = points.at(barSet->count() - 1);
 
         if (barSetValue != pointValue)
         {

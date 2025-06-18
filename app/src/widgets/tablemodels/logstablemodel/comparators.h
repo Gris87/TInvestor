@@ -134,42 +134,42 @@ public:
     }
 };
 
-bool logsTimeLess(const LogEntry& l, const LogEntry& r)
+inline bool logsTimeLess(const LogEntry& l, const LogEntry& r)
 {
     return l.timestamp < r.timestamp;
 }
 
-bool logsLevelLess(const LogEntry& l, const LogEntry& r)
+inline bool logsLevelLess(const LogEntry& l, const LogEntry& r)
 {
     return l.level < r.level;
 }
 
-bool logsNameLess(const LogEntry& l, const LogEntry& r)
+inline bool logsNameLess(const LogEntry& l, const LogEntry& r)
 {
     return l.instrumentTicker < r.instrumentTicker;
 }
 
-bool logsMessageLess(const LogEntry& l, const LogEntry& r)
+inline bool logsMessageLess(const LogEntry& l, const LogEntry& r)
 {
     return l.message < r.message;
 }
 
-bool logsTimeGreater(const LogEntry& l, const LogEntry& r)
+inline bool logsTimeGreater(const LogEntry& l, const LogEntry& r)
 {
     return l.timestamp > r.timestamp;
 }
 
-bool logsLevelGreater(const LogEntry& l, const LogEntry& r)
+inline bool logsLevelGreater(const LogEntry& l, const LogEntry& r)
 {
     return l.level > r.level;
 }
 
-bool logsNameGreater(const LogEntry& l, const LogEntry& r)
+inline bool logsNameGreater(const LogEntry& l, const LogEntry& r)
 {
     return l.instrumentTicker > r.instrumentTicker;
 }
 
-bool logsMessageGreater(const LogEntry& l, const LogEntry& r)
+inline bool logsMessageGreater(const LogEntry& l, const LogEntry& r)
 {
     return l.message > r.message;
 }

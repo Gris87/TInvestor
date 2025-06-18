@@ -550,172 +550,172 @@ public:
     }
 };
 
-bool operationsTimeLess(const Operation& l, const Operation& r)
+inline bool operationsTimeLess(const Operation& l, const Operation& r)
 {
     return l.timestamp < r.timestamp;
 }
 
-bool operationsNameLess(const Operation& l, const Operation& r)
+inline bool operationsNameLess(const Operation& l, const Operation& r)
 {
     return l.instrumentTicker < r.instrumentTicker;
 }
 
-bool operationsDescriptionLess(const Operation& l, const Operation& r)
+inline bool operationsDescriptionLess(const Operation& l, const Operation& r)
 {
     return l.description < r.description;
 }
 
-bool operationsPriceLess(const Operation& l, const Operation& r)
+inline bool operationsPriceLess(const Operation& l, const Operation& r)
 {
     return l.price < r.price;
 }
 
-bool operationsAvgPriceFifoLess(const Operation& l, const Operation& r)
+inline bool operationsAvgPriceFifoLess(const Operation& l, const Operation& r)
 {
     return l.avgPriceFifo < r.avgPriceFifo;
 }
 
-bool operationsAvgPriceWavgLess(const Operation& l, const Operation& r)
+inline bool operationsAvgPriceWavgLess(const Operation& l, const Operation& r)
 {
     return l.avgPriceWavg < r.avgPriceWavg;
 }
 
-bool operationsQuantityLess(const Operation& l, const Operation& r)
+inline bool operationsQuantityLess(const Operation& l, const Operation& r)
 {
     return l.quantity < r.quantity;
 }
 
-bool operationsRemainedQuantityLess(const Operation& l, const Operation& r)
+inline bool operationsRemainedQuantityLess(const Operation& l, const Operation& r)
 {
     return l.remainedQuantity < r.remainedQuantity;
 }
 
-bool operationsPaymentLess(const Operation& l, const Operation& r)
+inline bool operationsPaymentLess(const Operation& l, const Operation& r)
 {
     return l.payment < r.payment;
 }
 
-bool operationsCommissionLess(const Operation& l, const Operation& r)
+inline bool operationsCommissionLess(const Operation& l, const Operation& r)
 {
     return l.commission < r.commission;
 }
 
-bool operationsYieldLess(const Operation& l, const Operation& r)
+inline bool operationsYieldLess(const Operation& l, const Operation& r)
 {
     return l.yield < r.yield;
 }
 
-bool operationsYieldWithCommissionLess(const Operation& l, const Operation& r)
+inline bool operationsYieldWithCommissionLess(const Operation& l, const Operation& r)
 {
     return l.yieldWithCommission < r.yieldWithCommission;
 }
 
-bool operationsYieldWithCommissionPercentLess(const Operation& l, const Operation& r)
+inline bool operationsYieldWithCommissionPercentLess(const Operation& l, const Operation& r)
 {
     return l.yieldWithCommissionPercent < r.yieldWithCommissionPercent;
 }
 
-bool operationsTotalYieldWithCommissionLess(const Operation& l, const Operation& r)
+inline bool operationsTotalYieldWithCommissionLess(const Operation& l, const Operation& r)
 {
     return l.totalYieldWithCommission < r.totalYieldWithCommission;
 }
 
-bool operationsTotalYieldWithCommissionPercentLess(const Operation& l, const Operation& r)
+inline bool operationsTotalYieldWithCommissionPercentLess(const Operation& l, const Operation& r)
 {
     return l.totalYieldWithCommissionPercent < r.totalYieldWithCommissionPercent;
 }
 
-bool operationsRemainedMoneyLess(const Operation& l, const Operation& r)
+inline bool operationsRemainedMoneyLess(const Operation& l, const Operation& r)
 {
     return l.remainedMoney < r.remainedMoney;
 }
 
-bool operationsTotalMoneyLess(const Operation& l, const Operation& r)
+inline bool operationsTotalMoneyLess(const Operation& l, const Operation& r)
 {
     return l.totalMoney < r.totalMoney;
 }
 
-bool operationsTimeGreater(const Operation& l, const Operation& r)
+inline bool operationsTimeGreater(const Operation& l, const Operation& r)
 {
     return l.timestamp > r.timestamp;
 }
 
-bool operationsNameGreater(const Operation& l, const Operation& r)
+inline bool operationsNameGreater(const Operation& l, const Operation& r)
 {
     return l.instrumentTicker > r.instrumentTicker;
 }
 
-bool operationsDescriptionGreater(const Operation& l, const Operation& r)
+inline bool operationsDescriptionGreater(const Operation& l, const Operation& r)
 {
     return l.description > r.description;
 }
 
-bool operationsPriceGreater(const Operation& l, const Operation& r)
+inline bool operationsPriceGreater(const Operation& l, const Operation& r)
 {
     return l.price > r.price;
 }
 
-bool operationsAvgPriceFifoGreater(const Operation& l, const Operation& r)
+inline bool operationsAvgPriceFifoGreater(const Operation& l, const Operation& r)
 {
     return l.avgPriceFifo > r.avgPriceFifo;
 }
 
-bool operationsAvgPriceWavgGreater(const Operation& l, const Operation& r)
+inline bool operationsAvgPriceWavgGreater(const Operation& l, const Operation& r)
 {
     return l.avgPriceWavg > r.avgPriceWavg;
 }
 
-bool operationsQuantityGreater(const Operation& l, const Operation& r)
+inline bool operationsQuantityGreater(const Operation& l, const Operation& r)
 {
     return l.quantity > r.quantity;
 }
 
-bool operationsRemainedQuantityGreater(const Operation& l, const Operation& r)
+inline bool operationsRemainedQuantityGreater(const Operation& l, const Operation& r)
 {
     return l.remainedQuantity > r.remainedQuantity;
 }
 
-bool operationsPaymentGreater(const Operation& l, const Operation& r)
+inline bool operationsPaymentGreater(const Operation& l, const Operation& r)
 {
     return l.payment > r.payment;
 }
 
-bool operationsCommissionGreater(const Operation& l, const Operation& r)
+inline bool operationsCommissionGreater(const Operation& l, const Operation& r)
 {
     return l.commission > r.commission;
 }
 
-bool operationsYieldGreater(const Operation& l, const Operation& r)
+inline bool operationsYieldGreater(const Operation& l, const Operation& r)
 {
     return l.yield > r.yield;
 }
 
-bool operationsYieldWithCommissionGreater(const Operation& l, const Operation& r)
+inline bool operationsYieldWithCommissionGreater(const Operation& l, const Operation& r)
 {
     return l.yieldWithCommission > r.yieldWithCommission;
 }
 
-bool operationsYieldWithCommissionPercentGreater(const Operation& l, const Operation& r)
+inline bool operationsYieldWithCommissionPercentGreater(const Operation& l, const Operation& r)
 {
     return l.yieldWithCommissionPercent > r.yieldWithCommissionPercent;
 }
 
-bool operationsTotalYieldWithCommissionGreater(const Operation& l, const Operation& r)
+inline bool operationsTotalYieldWithCommissionGreater(const Operation& l, const Operation& r)
 {
     return l.totalYieldWithCommission > r.totalYieldWithCommission;
 }
 
-bool operationsTotalYieldWithCommissionPercentGreater(const Operation& l, const Operation& r)
+inline bool operationsTotalYieldWithCommissionPercentGreater(const Operation& l, const Operation& r)
 {
     return l.totalYieldWithCommissionPercent > r.totalYieldWithCommissionPercent;
 }
 
-bool operationsRemainedMoneyGreater(const Operation& l, const Operation& r)
+inline bool operationsRemainedMoneyGreater(const Operation& l, const Operation& r)
 {
     return l.remainedMoney > r.remainedMoney;
 }
 
-bool operationsTotalMoneyGreater(const Operation& l, const Operation& r)
+inline bool operationsTotalMoneyGreater(const Operation& l, const Operation& r)
 {
     return l.totalMoney > r.totalMoney;
 }

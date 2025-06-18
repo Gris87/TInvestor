@@ -45,6 +45,7 @@
 # llvmlibc-implementation-in-namespace                      - declaration must be enclosed within the 'LIBC_NAMESPACE_DECL' namespace
 # llvmlibc-inline-function-decl                             - 'QPrivateSignal' must be tagged with the LIBC_INLINE macro; the macro should be placed at the beginning of the declaration
 # llvmlibc-restrict-system-libc-headers                     - system include memory not allowed
+# misc-confusable-identifiers                               - 'l' is confusable with 'I'
 # misc-include-cleaner                                      - no header providing "IBuyDecision1Config" is directly included
 # misc-non-private-member-variables-in-classes              - alias of `cppcoreguidelines-non-private-member-variables-in-classes`
 # misc-use-anonymous-namespace                              - function 'readStocksDataForParallel' declared 'static', move to anonymous namespace instead
@@ -112,6 +113,7 @@ Checks:
         -llvmlibc-implementation-in-namespace,
         -llvmlibc-inline-function-decl,
         -llvmlibc-restrict-system-libc-headers,
+        -misc-confusable-identifiers,
         -misc-include-cleaner,
         -misc-non-private-member-variables-in-classes,
         -misc-use-anonymous-namespace,

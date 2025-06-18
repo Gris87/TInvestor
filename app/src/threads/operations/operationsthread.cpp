@@ -210,6 +210,7 @@ Quotation OperationsThread::handlePositionsResponse(const tinkoff::PositionData&
     return res;
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsThread::requestOperations()
 {
     const qint64 endTimestamp = QDateTime::currentMSecsSinceEpoch() + ONE_DAY;
@@ -288,6 +289,7 @@ void OperationsThread::requestOperations()
         mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res)
