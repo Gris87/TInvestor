@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "src/simdjson/simdjson_wrapped.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
@@ -147,19 +148,21 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
         const int endBlock   = indeciesArray[i];
 
         const QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
+        simdjson::padded_string jsonData(entryContent.toStdString());
 
-        QJsonParseError     parseError;
-        const QJsonDocument jsonDoc = QJsonDocument::fromJson(entryContent, &parseError);
+        simdjson::ondemand::parser parser;
 
-        if (parseError.error == QJsonParseError::NoError)
+        try
         {
-            entry.fromJsonObject(jsonDoc.object());
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+            entry.fromJsonObject(doc.get_object());
 
             logosStorage->lock(); // TODO: Should do read lock outside
             entry.instrumentLogo = logosStorage->getLogo(entry.instrumentId);
             logosStorage->unlock();
         }
-        else
+        catch (...)
         {
             qWarning() << "Failed to parse log entry";
         }
@@ -200,26 +203,36 @@ QList<LogEntry> LogsDatabase::readLogs()
         else
         {
             content = "[" + content + "]";
+            simdjson::padded_string jsonData(content.toStdString());
 
-            QJsonParseError     parseError;
-            const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
+            simdjson::ondemand::parser parser;
 
-            if (parseError.error == QJsonParseError::NoError)
+            try
             {
-                const QJsonArray jsonLogs = jsonDoc.array();
+                simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-                res.resizeForOverwrite(jsonLogs.size());
+                simdjson::ondemand::array jsonLogs = doc.get_array();
+                res.resizeForOverwrite(jsonLogs.count_elements());
+
+                int i = res.size() - 1;
 
                 mLogosStorage->lock();
 
-                for (int i = 0; i < jsonLogs.size(); ++i)
+                for (simdjson::ondemand::object jsonObject : jsonLogs)
                 {
-                    res[i].fromJsonObject(jsonLogs.at(jsonLogs.size() - i - 1).toObject());
+                    LogEntry& entry = res[i];
 
-                    res[i].instrumentLogo = mLogosStorage->getLogo(res.at(i).instrumentId);
+                    entry.fromJsonObject(jsonObject);
+                    entry.instrumentLogo = mLogosStorage->getLogo(entry.instrumentId);
+
+                    --i;
                 }
 
                 mLogosStorage->unlock();
+            }
+            catch (...)
+            {
+                qWarning() << "Failed to parse logs";
             }
         }
     }

@@ -4,6 +4,8 @@
 
 #include <QJsonObject>
 
+#include "src/simdjson/simdjson_wrapped.h"
+
 
 
 enum LogLevel : quint8
@@ -28,7 +30,7 @@ struct LogEntry
 
     LogEntry& operator=(const LogEntry& another) = default;
 
-    void fromJsonObject(const QJsonObject& jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject);
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

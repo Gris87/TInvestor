@@ -1,6 +1,7 @@
 include(../libs/investapi.pri)
 include(../libs/quazip.pri)
 include(../libs/qxlsx.pri)
+include(../libs/simdjson.pri)
 include(../libs/simplecrypt.pri)
 include(../libs/verticallabel.pri)
 include(../libs/waitingspinner.pri)

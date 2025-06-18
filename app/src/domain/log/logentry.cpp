@@ -23,14 +23,41 @@ LogEntry::LogEntry() :
 {
 }
 
-void LogEntry::fromJsonObject(const QJsonObject& jsonObject)
+void LogEntry::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
-    timestamp        = jsonObject.value("timestamp").toInteger();
-    level            = static_cast<LogLevel>(jsonObject.value("level").toInt());
-    instrumentId     = jsonObject.value("instrumentId").toString();
-    instrumentTicker = jsonObject.value("instrumentTicker").toString();
-    instrumentName   = jsonObject.value("instrumentName").toString();
-    message          = jsonObject.value("message").toString();
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key = field.escaped_key();
+
+        if (key == "timestamp")
+        {
+            timestamp = field.value().get_int64();
+        }
+        else if (key == "level")
+        {
+            level = static_cast<LogLevel>(field.value().get_int64().value());
+        }
+        else if (key == "instrumentId")
+        {
+            std::string_view value = field.value().get_string();
+            instrumentId           = QString::fromUtf8(value.data(), value.size());
+        }
+        else if (key == "instrumentTicker")
+        {
+            std::string_view value = field.value().get_string();
+            instrumentTicker       = QString::fromUtf8(value.data(), value.size());
+        }
+        else if (key == "instrumentName")
+        {
+            std::string_view value = field.value().get_string();
+            instrumentName         = QString::fromUtf8(value.data(), value.size());
+        }
+        else if (key == "message")
+        {
+            std::string_view value = field.value().get_string();
+            message                = QString::fromUtf8(value.data(), value.size());
+        }
+    }
 }
 
 QJsonObject LogEntry::toJsonObject() const

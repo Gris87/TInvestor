@@ -88,11 +88,12 @@ TEST(Test_LogEntry, Test_fromJsonObject)
     const QString content =
         R"({"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","level":2,"message":"d","timestamp":1})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    entry.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    entry.fromJsonObject(doc.get_object());
 
     // clang-format off
     ASSERT_EQ(entry.timestamp,        1);
