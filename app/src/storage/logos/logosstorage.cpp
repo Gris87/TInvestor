@@ -30,7 +30,7 @@ LogosStorage::~LogosStorage()
 
 void LogosStorage::readFromDatabase()
 {
-    mLogos = mLogosDatabase->readLogos();
+    mLogos = mLogosDatabase->prepareLogos();
 }
 
 void LogosStorage::lock()
@@ -45,19 +45,21 @@ void LogosStorage::unlock()
 
 void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)
 {
-    QPixmap* logoInStorage = mLogos.value(instrumentId);
+    Logo* logoInStorage = mLogos.value(instrumentId);
 
     if (logoInStorage != nullptr)
     {
-        *logoInStorage = logo;
+        logoInStorage->pixmap = logo;
     }
     else
     {
-        logoInStorage        = new QPixmap(logo);
+        logoInStorage         = new Logo();
+        logoInStorage->pixmap = logo;
+
         mLogos[instrumentId] = logoInStorage;
     }
 
-    mLogosDatabase->writeLogo(instrumentId, logoInStorage);
+    mLogosDatabase->writeLogo(instrumentId, &logoInStorage->pixmap);
 }
 
 QPixmap* LogosStorage::getLogo(const QString& instrumentId)
@@ -67,12 +69,19 @@ QPixmap* LogosStorage::getLogo(const QString& instrumentId)
         return nullptr;
     }
 
-    QPixmap* res = mLogos.value(instrumentId);
+    Logo* res = mLogos.value(instrumentId);
 
     if (res == nullptr)
     {
-        res = &mNotFoundLogo;
+        return &mNotFoundLogo;
     }
 
-    return res;
+    res->mutex.lock();
+    if (res->pixmap.isNull())
+    {
+        mLogosDatabase->readLogo(instrumentId, &res->pixmap);
+    }
+    res->mutex.unlock();
+
+    return &res->pixmap;
 }

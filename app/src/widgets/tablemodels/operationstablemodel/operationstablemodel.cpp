@@ -427,7 +427,7 @@ static void fillEntriesIndeciesForParallel(
 
 struct MergeSortedEntriesInfo
 {
-    MergeSortedEntriesInfo(QList<Operation>* _entries, QList<int>* _sortedIndecies) :
+    explicit MergeSortedEntriesInfo(QList<Operation>* _entries, QList<int>* _sortedIndecies) :
         entries(_entries),
         sortedIndecies(_sortedIndecies)
     {

@@ -51,17 +51,17 @@ public slots:
     void tooltipHideTimerTicked();
 
 private:
-    void    initYieldChart();
-    void    initMonthlyYieldChart();
-    void    initRemainedMoneyChart();
-    void    initTotalMoneyChart();
-    void    initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
-    void    handleOperation(
-           const Operation& operation,
-           QList<QPointF>&  yieldPoints,
-           QList<QPointF>&  remainedMoneyPoints,
-           QList<QPointF>&  totalMoneySeriesPoints
-       );
+    void initYieldChart();
+    void initMonthlyYieldChart();
+    void initRemainedMoneyChart();
+    void initTotalMoneyChart();
+    void initChartStyle(QChart* chart, QAbstractAxis* axisX, QAbstractAxis* axisY);
+    void handleOperation(
+        const Operation& operation,
+        QList<QPointF>&  yieldPoints,
+        QList<QPointF>&  remainedMoneyPoints,
+        QList<QPointF>&  totalMoneySeriesPoints
+    );
     void    syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points);
     void    exportToExcel(const QString& path) const;
     QPointF findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints);
@@ -90,7 +90,8 @@ private:
     QDateTimeAxis       mTotalMoneyAxisX;
     QValueAxis          mTotalMoneyAxisY;
     QStringList         mMonthNames;
-    int                 mLastMonthlyCategory;
+    qint64              mLastMonthLimitsStart;
+    qint64              mLastMonthLimitsEnd;
     float               mLastMonthlyYield;
     qint64              mAxisXMin;
     qint64              mAxisXMax;

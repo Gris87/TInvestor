@@ -63,7 +63,8 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mTotalMoneyAxisX(),
     mTotalMoneyAxisY(),
     mMonthNames(),
-    mLastMonthlyCategory(),
+    mLastMonthLimitsStart(),
+    mLastMonthLimitsEnd(),
     mLastMonthlyYield(),
     mAxisXMin(),
     mAxisXMax(),
@@ -313,8 +314,9 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
 
     mMonthlyYieldAxisX.clear();
 
-    mLastMonthlyCategory = 0;
-    mLastMonthlyYield    = 0.0f;
+    mLastMonthLimitsStart = 0;
+    mLastMonthLimitsEnd   = 0;
+    mLastMonthlyYield     = 0.0f;
 
     mAxisXMin              = std::numeric_limits<qint64>::max();
     mAxisXMax              = std::numeric_limits<qint64>::min();
@@ -357,7 +359,7 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
         QPen pen(SERIES_COLOR);
-        pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3));
+        pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3.0));
         mYieldSeries.setPen(pen);
         mRemainedMoneySeries.setPen(pen);
         mTotalMoneySeries.setPen(pen);
@@ -406,7 +408,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
     QPen pen(SERIES_COLOR);
-    pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3));
+    pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3.0));
     mYieldSeries.setPen(pen);
     mRemainedMoneySeries.setPen(pen);
     mTotalMoneySeries.setPen(pen);
@@ -425,21 +427,23 @@ void AccountChartWidget::handleOperation(
     const float remainedMoney = quotationToFloat(operation.remainedMoney);
     const float totalMoney    = quotationToFloat(operation.totalMoney);
 
-    const QDate operationDate   = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
-    const int   monthlyCategory = (operationDate.year() * 100) + operationDate.month();
-
-    if (mLastMonthlyCategory != monthlyCategory)
+    if (operation.timestamp < mLastMonthLimitsStart || operation.timestamp > mLastMonthLimitsEnd)
     {
-        mLastMonthlyCategory = monthlyCategory;
+        const QDate operationDate = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
+
+        int year  = operationDate.year();
+        int month = operationDate.month();
+
+        mLastMonthLimitsStart = QDateTime(QDate(year, month, 1), QTime(0, 0)).toMSecsSinceEpoch();
+        mLastMonthLimitsEnd =
+            QDateTime(QDate(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1), QTime(0, 0)).toMSecsSinceEpoch();
 
         mLastMonthlyYield += mMonthlyYieldPositivePoints.count() > 0
                                  ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.count() - 1) +
                                        mMonthlyYieldNegativePoints.at(mMonthlyYieldNegativePoints.count() - 1)
                                  : 0.0f;
 
-        mMonthlyYieldAxisX.append(
-            QString("%1 %2").arg(mMonthNames.at(operationDate.month() - 1), QString::number(operationDate.year()))
-        );
+        mMonthlyYieldAxisX.append(QString("%1 %2").arg(mMonthNames.at(month - 1), QString::number(year)));
         mMonthlyYieldPositivePoints.append(0);
         mMonthlyYieldNegativePoints.append(0);
     }

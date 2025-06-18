@@ -5,9 +5,7 @@
 #include <QMap>
 #include <QPixmap>
 
-
-
-using Logos = QMap<QString, QPixmap*>; // Instrument UID => Logo
+#include "src/domain/logo/logo.h"
 
 
 
@@ -20,6 +18,7 @@ public:
     ILogosDatabase(const ILogosDatabase& another)            = delete;
     ILogosDatabase& operator=(const ILogosDatabase& another) = delete;
 
-    virtual Logos readLogos()                                           = 0;
+    virtual Logos prepareLogos()                                        = 0;
+    virtual void  readLogo(const QString& instrumentId, QPixmap* logo)  = 0;
     virtual void  writeLogo(const QString& instrumentId, QPixmap* logo) = 0;
 };

@@ -228,6 +228,7 @@ HEADERS += \
     src/domain/filter/stockfilter.h \
     src/domain/instrument/instrument.h \
     src/domain/log/logentry.h \
+    src/domain/logo/logo.h \
     src/domain/operation/operation.h \
     src/domain/operation/operationfifoitem.h \
     src/domain/orderbook/orderbook.h \

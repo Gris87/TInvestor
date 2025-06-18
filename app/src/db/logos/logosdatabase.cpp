@@ -25,54 +25,36 @@ LogosDatabase::~LogosDatabase()
     qDebug() << "Destroy LogosDatabase";
 }
 
-struct ReadLogosInfo
+struct PrepareLogosInfo
 {
-    ReadLogosInfo(IFileFactory* _fileFactory, const QStringList& files) :
-        fileFactory(_fileFactory)
+    explicit PrepareLogosInfo(const QStringList& files)
     {
         instrumentIds.resizeForOverwrite(files.size());
         logos.resizeForOverwrite(files.size());
     }
 
-    IFileFactory*   fileFactory;
-    QStringList     instrumentIds;
-    QList<QPixmap*> logos;
+    QStringList  instrumentIds;
+    QList<Logo*> logos;
 };
 
 static void
-readLogosForParallel(QThread* parentThread, int /*threadId*/, QList<QString>& files, int start, int end, void* additionalArgs)
+prepareLogosForParallel(QThread* parentThread, int /*threadId*/, QList<QString>& files, int start, int end, void* additionalArgs)
 {
-    ReadLogosInfo* readLogosInfo = reinterpret_cast<ReadLogosInfo*>(additionalArgs);
+    PrepareLogosInfo* prepareLogosInfo = reinterpret_cast<PrepareLogosInfo*>(additionalArgs);
 
-    IFileFactory* fileFactory      = readLogosInfo->fileFactory;
-    QString*      instrumentsArray = readLogosInfo->instrumentIds.data();
-    QPixmap**     logosArray       = readLogosInfo->logos.data();
-
-    const QString logosPath = qApp->applicationDirPath() + "/data/instruments/logos/";
+    QString* instrumentsArray = prepareLogosInfo->instrumentIds.data();
+    Logo**   logosArray       = prepareLogosInfo->logos.data();
 
     QString* filesArray = files.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        const QString instrumentId = filesArray[i].remove(".png");
-        QPixmap*      logo         = new QPixmap();
-
-        const std::shared_ptr<IFile> logoFile = fileFactory->newInstance(logosPath + filesArray[i]);
-
-        if (logoFile->open(QIODevice::ReadOnly))
-        {
-            const QByteArray content = logoFile->readAll();
-            logoFile->close();
-
-            logo->loadFromData(content, "PNG");
-        }
-
-        instrumentsArray[i] = instrumentId;
-        logosArray[i]       = logo;
+        instrumentsArray[i] = filesArray[i].remove(".png");
+        logosArray[i]       = new Logo();
     }
 }
 
-Logos LogosDatabase::readLogos()
+Logos LogosDatabase::prepareLogos()
 {
     Logos res;
 
@@ -81,15 +63,29 @@ Logos LogosDatabase::readLogos()
     const std::shared_ptr<IDir> dir   = mDirFactory->newInstance(logosPath);
     QStringList                 files = dir->entryList(QStringList() << "*.png");
 
-    ReadLogosInfo readLogosInfo(mFileFactory, files);
-    processInParallel(files, readLogosForParallel, &readLogosInfo);
+    PrepareLogosInfo prepareLogosInfo(files);
+    processInParallel(files, prepareLogosForParallel, &prepareLogosInfo);
 
     for (int i = 0; i < files.size(); ++i)
     {
-        res[readLogosInfo.instrumentIds.at(i)] = readLogosInfo.logos.at(i);
+        res[prepareLogosInfo.instrumentIds.at(i)] = prepareLogosInfo.logos.at(i);
     }
 
     return res;
+}
+
+void LogosDatabase::readLogo(const QString& instrumentId, QPixmap* logo)
+{
+    const std::shared_ptr<IFile> logoFile =
+        mFileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), instrumentId));
+
+    if (logoFile->open(QIODevice::ReadOnly))
+    {
+        const QByteArray content = logoFile->readAll();
+        logoFile->close();
+
+        logo->loadFromData(content, "PNG");
+    }
 }
 
 void LogosDatabase::writeLogo(const QString& instrumentId, QPixmap* logo)

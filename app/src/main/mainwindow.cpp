@@ -857,7 +857,7 @@ enum DatabaseType : qint8
 
 struct ReadDatabasesInfo
 {
-    ReadDatabasesInfo(
+    explicit ReadDatabasesInfo(
         IUserStorage*        _userStorage,
         IStocksStorage*      _stocksStorage,
         IInstrumentsStorage* _instrumentsStoragen,

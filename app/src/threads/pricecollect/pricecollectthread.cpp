@@ -303,7 +303,7 @@ static const QMap<tinkoff::InstrumentType, InstrumentHandler> INSTRUMENT_TYPE_TO
 
 struct ObtainInstrumentsInfo
 {
-    ObtainInstrumentsInfo(IGrpcClient* _grpcClient, const QList<tinkoff::InstrumentType>& instrumentTypes) :
+    explicit ObtainInstrumentsInfo(IGrpcClient* _grpcClient, const QList<tinkoff::InstrumentType>& instrumentTypes) :
         grpcClient(_grpcClient)
     {
         results.resize(instrumentTypes.size());
