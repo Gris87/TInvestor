@@ -60,6 +60,7 @@ private:
     Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
     void      requestOperations();
     void      handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
+    void      alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;

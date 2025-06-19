@@ -275,6 +275,8 @@ void OperationsThread::requestOperations()
             }
         }
 
+        alignRemainedAndTotalMoneyFromPortfolio(&operations.first()); // Since it reversed
+
         if (mLastRequestTimestamp == 0)
         {
             mOperationsDatabase->writeOperations(operations);
@@ -511,6 +513,38 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     }
 }
 // NOLINTEND(readability-function-cognitive-complexity)
+
+void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation)
+{
+    const std::shared_ptr<tinkoff::PortfolioResponse> tinkoffPortfolio =
+        mGrpcClient->getPortfolio(QThread::currentThread(), mAccountId);
+
+    if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
+    {
+        mRemainedMoney = Quotation();
+        mTotalMoney    = Quotation();
+
+        for (int i = 0; i < tinkoffPortfolio->positions_size(); ++i)
+        {
+            const tinkoff::PortfolioPosition& position = tinkoffPortfolio->positions(i);
+
+            if (QString::fromStdString(position.instrument_uid()) == RUBLE_UID)
+            {
+                mRemainedMoney = quotationConvert(position.quantity());
+                mTotalMoney    = quotationSum(mTotalMoney, mRemainedMoney);
+            }
+            else
+            {
+                mTotalMoney = quotationSum(
+                    mTotalMoney, quotationMultiply(position.average_position_price_fifo(), position.quantity().units())
+                );
+            }
+        }
+
+        lastOperation->remainedMoney = mRemainedMoney;
+        lastOperation->totalMoney    = mTotalMoney;
+    }
+}
 
 bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const
 {
