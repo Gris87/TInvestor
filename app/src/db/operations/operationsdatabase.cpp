@@ -142,6 +142,8 @@ static void readOperationsForParallel(
     const QByteArray content       = readOperationsInfo->content;
     int*             indeciesArray = readOperationsInfo->indecies->data();
 
+    simdjson::ondemand::parser parser;
+
     Operation* resArray = res.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
@@ -153,8 +155,6 @@ static void readOperationsForParallel(
 
         const QByteArray        operationContent = content.mid(startBlock, endBlock - startBlock + 1);
         simdjson::padded_string jsonData(operationContent.toStdString());
-
-        simdjson::ondemand::parser parser;
 
         try
         {

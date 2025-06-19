@@ -138,6 +138,8 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
     const QByteArray content       = readLogsInfo->content;
     int*             indeciesArray = readLogsInfo->indecies->data();
 
+    simdjson::ondemand::parser parser;
+
     LogEntry* resArray = res.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
@@ -149,8 +151,6 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
 
         const QByteArray        entryContent = content.mid(startBlock, endBlock - startBlock + 1);
         simdjson::padded_string jsonData(entryContent.toStdString());
-
-        simdjson::ondemand::parser parser;
 
         try
         {

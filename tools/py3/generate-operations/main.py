@@ -203,7 +203,7 @@ def main():
         "--count",
         dest="count",
         type=int,
-        default=100000,
+        default=300000,
         help="Amount of operations",
     )
     args = parser.parse_args()

@@ -32,10 +32,7 @@ void Quotation::fromJsonObject(simdjson::ondemand::object jsonObject)
         std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
-        if (parseHandler != nullptr)
-        {
-            parseHandler(this, field.value());
-        }
+        parseHandler(this, field.value());
     }
 }
 
