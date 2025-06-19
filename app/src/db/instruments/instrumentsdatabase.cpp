@@ -38,17 +38,27 @@ Instruments InstrumentsDatabase::readInstruments()
         const QByteArray content = instrumentsFile->readAll();
         instrumentsFile->close();
 
-        QJsonParseError     parseError;
-        const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
+        simdjson::padded_string jsonData(content.toStdString());
 
-        if (parseError.error == QJsonParseError::NoError)
+        simdjson::ondemand::parser parser;
+
+        try
         {
-            const QJsonObject jsonInstruments = jsonDoc.object();
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-            for (auto it = jsonInstruments.constBegin(), end = jsonInstruments.constEnd(); it != end; ++it)
+            simdjson::ondemand::object jsonInstruments = doc.get_object();
+
+            for (simdjson::ondemand::field field : jsonInstruments)
             {
-                res[it.key()].fromJsonObject(it.value().toObject());
+                std::string_view fieldStr     = field.escaped_key();
+                QString          instrumentId = QString::fromUtf8(fieldStr.data(), fieldStr.size());
+
+                res[instrumentId].fromJsonObject(field.value().get_object());
             }
+        }
+        catch (...)
+        {
+            qWarning() << "Failed to parse instruments";
         }
     }
 

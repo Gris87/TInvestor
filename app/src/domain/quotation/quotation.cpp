@@ -8,10 +8,35 @@ Quotation::Quotation() :
 {
 }
 
-void Quotation::fromJsonObject(const QJsonObject& jsonObject)
+static void quotationUnitsParse(Quotation* quotation, simdjson::ondemand::value value)
 {
-    units = jsonObject.value("units").toInteger();
-    nano  = jsonObject.value("nano").toInt();
+    quotation->units = value.get_int64();
+}
+
+static void quotationNanoParse(Quotation* quotation, simdjson::ondemand::value value)
+{
+    quotation->nano = value.get_int64();
+}
+
+using ParseHandler = void (*)(Quotation* quotation, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"units", quotationUnitsParse},
+    {"nano",  quotationNanoParse }
+};
+
+void Quotation::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+
+        if (parseHandler != nullptr)
+        {
+            parseHandler(this, field.value());
+        }
+    }
 }
 
 QJsonObject Quotation::toJsonObject() const

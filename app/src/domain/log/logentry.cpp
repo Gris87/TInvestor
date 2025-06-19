@@ -23,39 +23,61 @@ LogEntry::LogEntry() :
 {
 }
 
+static void logTimestampParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    entry->timestamp = value.get_int64();
+}
+
+static void logLevelParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    entry->level = static_cast<LogLevel>(value.get_int64().value());
+}
+
+static void logInstrumentIdParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    entry->instrumentId       = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void logInstrumentTickerParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    entry->instrumentTicker   = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void logInstrumentNameParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    entry->instrumentName     = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    entry->message            = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"timestamp",        logTimestampParse       },
+    {"level",            logLevelParse           },
+    {"instrumentId",     logInstrumentIdParse    },
+    {"instrumentTicker", logInstrumentTickerParse},
+    {"instrumentName",   logInstrumentNameParse  },
+    {"message",          logMessageParse         }
+};
+
 void LogEntry::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key = field.escaped_key();
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
-        if (key == "timestamp")
+        if (parseHandler != nullptr)
         {
-            timestamp = field.value().get_int64();
-        }
-        else if (key == "level")
-        {
-            level = static_cast<LogLevel>(field.value().get_int64().value());
-        }
-        else if (key == "instrumentId")
-        {
-            std::string_view value = field.value().get_string();
-            instrumentId           = QString::fromUtf8(value.data(), value.size());
-        }
-        else if (key == "instrumentTicker")
-        {
-            std::string_view value = field.value().get_string();
-            instrumentTicker       = QString::fromUtf8(value.data(), value.size());
-        }
-        else if (key == "instrumentName")
-        {
-            std::string_view value = field.value().get_string();
-            instrumentName         = QString::fromUtf8(value.data(), value.size());
-        }
-        else if (key == "message")
-        {
-            std::string_view value = field.value().get_string();
-            message                = QString::fromUtf8(value.data(), value.size());
+            parseHandler(this, field.value());
         }
     }
 }

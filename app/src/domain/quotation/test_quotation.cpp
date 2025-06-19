@@ -51,11 +51,12 @@ TEST(Test_Quotation, Test_fromJsonObject)
 
     const QString content = R"({"nano":2,"units":1})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    quotation.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    quotation.fromJsonObject(doc.get_object());
 
     ASSERT_EQ(quotation.units, 1);
     ASSERT_EQ(quotation.nano, 2);

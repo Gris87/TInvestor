@@ -8,11 +8,35 @@ OperationFifoItem::OperationFifoItem() :
 {
 }
 
-void OperationFifoItem::fromJsonObject(const QJsonObject& jsonObject)
+static void itemQuantityParse(OperationFifoItem* item, simdjson::ondemand::value value)
 {
-    quantity = jsonObject.value("quantity").toInteger();
+    item->quantity = value.get_int64();
+}
 
-    cost.fromJsonObject(jsonObject.value("cost").toObject());
+static void itemCostParse(OperationFifoItem* item, simdjson::ondemand::value value)
+{
+    item->cost.fromJsonObject(value.get_object());
+}
+
+using ParseHandler = void (*)(OperationFifoItem* item, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"quantity", itemQuantityParse},
+    {"cost",     itemCostParse    }
+};
+
+void OperationFifoItem::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+
+        if (parseHandler != nullptr)
+        {
+            parseHandler(this, field.value());
+        }
+    }
 }
 
 QJsonObject OperationFifoItem::toJsonObject() const

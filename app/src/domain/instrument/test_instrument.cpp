@@ -69,11 +69,12 @@ TEST(Test_Instrument, Test_fromJsonObject)
 
     const QString content = R"({"lot":1,"name":"b","pricePrecision":2,"ticker":"a"})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    instrument.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    instrument.fromJsonObject(doc.get_object());
 
     // clang-format off
     ASSERT_EQ(instrument.ticker,         "a");

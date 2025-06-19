@@ -10,12 +10,49 @@ Instrument::Instrument() :
 {
 }
 
-void Instrument::fromJsonObject(const QJsonObject& jsonObject)
+static void instrumentTickerParse(Instrument* instrument, simdjson::ondemand::value value)
 {
-    ticker         = jsonObject.value("ticker").toString();
-    name           = jsonObject.value("name").toString();
-    lot            = jsonObject.value("lot").toInt();
-    pricePrecision = jsonObject.value("pricePrecision").toInt();
+    std::string_view valueStr = value.get_string();
+    instrument->ticker        = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void instrumentNameParse(Instrument* instrument, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    instrument->name          = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void instrumentLotParse(Instrument* instrument, simdjson::ondemand::value value)
+{
+    instrument->lot = value.get_int64();
+}
+
+static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::ondemand::value value)
+{
+    instrument->pricePrecision = value.get_int64();
+}
+
+using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"ticker",         instrumentTickerParse        },
+    {"name",           instrumentNameParse          },
+    {"lot",            instrumentLotParse           },
+    {"pricePrecision", instrumentPricePrecisionParse}
+};
+
+void Instrument::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+
+        if (parseHandler != nullptr)
+        {
+            parseHandler(this, field.value());
+        }
+    }
 }
 
 QJsonObject Instrument::toJsonObject() const

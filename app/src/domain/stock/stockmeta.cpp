@@ -12,14 +12,62 @@ StockMeta::StockMeta() :
 {
 }
 
-void StockMeta::fromJsonObject(const QJsonObject& jsonObject)
+static void metaUidParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    uid                 = jsonObject.value("uid").toString();
-    ticker              = jsonObject.value("ticker").toString();
-    name                = jsonObject.value("name").toString();
-    forQualInvestorFlag = jsonObject.value("forQualInvestorFlag").toBool();
-    lot                 = jsonObject.value("lot").toInt();
-    minPriceIncrement.fromJsonObject(jsonObject.value("minPriceIncrement").toObject());
+    std::string_view valueStr = value.get_string();
+    meta->uid                 = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void metaTickerParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    meta->ticker              = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void metaNameParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    meta->name                = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void metaForQualInvestorFlagParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->forQualInvestorFlag = value.get_bool().value();
+}
+
+static void metaLotParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->lot = value.get_int64();
+}
+
+static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->minPriceIncrement.fromJsonObject(value.get_object());
+}
+
+using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"uid",                 metaUidParse                },
+    {"ticker",              metaTickerParse             },
+    {"name",                metaNameParse               },
+    {"forQualInvestorFlag", metaForQualInvestorFlagParse},
+    {"lot",                 metaLotParse                },
+    {"minPriceIncrement",   metaMinPriceIncrementParse  }
+};
+
+void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+
+        if (parseHandler != nullptr)
+        {
+            parseHandler(this, field.value());
+        }
+    }
 }
 
 QJsonObject StockMeta::toJsonObject() const

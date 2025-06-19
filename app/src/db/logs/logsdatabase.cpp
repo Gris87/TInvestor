@@ -147,7 +147,7 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
         const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
         const int endBlock   = indeciesArray[i];
 
-        const QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
+        const QByteArray        entryContent = content.mid(startBlock, endBlock - startBlock + 1);
         simdjson::padded_string jsonData(entryContent.toStdString());
 
         simdjson::ondemand::parser parser;

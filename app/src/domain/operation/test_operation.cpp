@@ -282,11 +282,12 @@ TEST(Test_Operation, Test_fromJsonObject)
     const QString content =
         R"({"avgCostFifo":8,"avgPriceFifo":3,"avgPriceWavg":4,"commission":13,"commissionPrecision":30,"costFifo":{"nano":10,"units":9},"costWavg":{"nano":12,"units":11},"description":"d","fifoItems":[{"cost":{"nano":33,"units":32},"quantity":31}],"inputMoney":{"nano":18,"units":17},"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","maxInputMoney":{"nano":20,"units":19},"payment":7,"paymentPrecision":29,"price":2,"pricePrecision":28,"quantity":5,"remainedMoney":{"nano":25,"units":24},"remainedQuantity":6,"timestamp":1,"totalMoney":{"nano":27,"units":26},"totalYieldWithCommission":{"nano":22,"units":21},"totalYieldWithCommissionPercent":23,"yield":14,"yieldWithCommission":15,"yieldWithCommissionPercent":16})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    operation.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    operation.fromJsonObject(doc.get_object());
 
     // clang-format off
     ASSERT_EQ(operation.timestamp,                         1);

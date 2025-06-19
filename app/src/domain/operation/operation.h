@@ -17,7 +17,7 @@ struct Operation
 
     Operation& operator=(const Operation& another) = default;
 
-    void fromJsonObject(const QJsonObject& jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject);
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

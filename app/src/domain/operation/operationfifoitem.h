@@ -16,7 +16,7 @@ struct OperationFifoItem
 
     OperationFifoItem& operator=(const OperationFifoItem& another) = default;
 
-    void fromJsonObject(const QJsonObject& jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject);
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

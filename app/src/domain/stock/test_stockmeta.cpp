@@ -90,11 +90,12 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     const QString content =
         R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    stockMeta.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    stockMeta.fromJsonObject(doc.get_object());
 
     // clang-format off
     ASSERT_EQ(stockMeta.uid,                     "a");

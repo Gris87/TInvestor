@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "src/simdjson/simdjson_wrapped.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
@@ -150,20 +151,22 @@ static void readOperationsForParallel(
         const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
         const int endBlock   = indeciesArray[i];
 
-        const QByteArray entryContent = content.mid(startBlock, endBlock - startBlock + 1);
+        const QByteArray        operationContent = content.mid(startBlock, endBlock - startBlock + 1);
+        simdjson::padded_string jsonData(operationContent.toStdString());
 
-        QJsonParseError     parseError;
-        const QJsonDocument jsonDoc = QJsonDocument::fromJson(entryContent, &parseError);
+        simdjson::ondemand::parser parser;
 
-        if (parseError.error == QJsonParseError::NoError)
+        try
         {
-            operation.fromJsonObject(jsonDoc.object());
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+            operation.fromJsonObject(doc.get_object());
 
             logosStorage->lock(); // TODO: Should do read lock outside
             operation.instrumentLogo = logosStorage->getLogo(operation.instrumentId);
             logosStorage->unlock();
         }
-        else
+        catch (...)
         {
             qWarning() << "Failed to parse operation";
         }
@@ -204,26 +207,36 @@ QList<Operation> OperationsDatabase::readOperations()
         else
         {
             content = "[" + content + "]";
+            simdjson::padded_string jsonData(content.toStdString());
 
-            QJsonParseError     parseError;
-            const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
+            simdjson::ondemand::parser parser;
 
-            if (parseError.error == QJsonParseError::NoError)
+            try
             {
-                const QJsonArray jsonOperations = jsonDoc.array();
+                simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-                res.resizeForOverwrite(jsonOperations.size());
+                simdjson::ondemand::array jsonOperations = doc.get_array();
+                res.resizeForOverwrite(jsonOperations.count_elements());
+
+                int i = res.size() - 1;
 
                 mLogosStorage->lock();
 
-                for (int i = 0; i < jsonOperations.size(); ++i)
+                for (simdjson::ondemand::object jsonObject : jsonOperations)
                 {
-                    res[i].fromJsonObject(jsonOperations.at(jsonOperations.size() - i - 1).toObject());
+                    Operation& operation = res[i];
 
-                    res[i].instrumentLogo = mLogosStorage->getLogo(res.at(i).instrumentId);
+                    operation.fromJsonObject(jsonObject);
+                    operation.instrumentLogo = mLogosStorage->getLogo(operation.instrumentId);
+
+                    --i;
                 }
 
                 mLogosStorage->unlock();
+            }
+            catch (...)
+            {
+                qWarning() << "Failed to parse operations";
             }
         }
     }

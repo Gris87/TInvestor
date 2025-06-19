@@ -44,23 +44,33 @@ QList<Stock*> StocksDatabase::readStocksMeta()
         const QByteArray content = stocksFile->readAll();
         stocksFile->close();
 
-        QJsonParseError     parseError;
-        const QJsonDocument jsonDoc = QJsonDocument::fromJson(content, &parseError);
+        simdjson::padded_string jsonData(content.toStdString());
 
-        if (parseError.error == QJsonParseError::NoError)
+        simdjson::ondemand::parser parser;
+
+        try
         {
-            const QJsonArray jsonStocks = jsonDoc.array();
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-            res.resizeForOverwrite(jsonStocks.size());
+            simdjson::ondemand::array jsonStocks = doc.get_array();
+            res.resizeForOverwrite(jsonStocks.count_elements());
 
-            for (int i = 0; i < jsonStocks.size(); ++i)
+            int i = 0;
+
+            for (simdjson::ondemand::object jsonObject : jsonStocks)
             {
                 Stock* stock = new Stock();
-                stock->meta.fromJsonObject(jsonStocks.at(i).toObject());
+                stock->meta.fromJsonObject(jsonObject);
                 res[i] = stock;
 
                 qDebug() << "Read stock" << stock->meta.ticker << ":" << stock->meta.name;
+
+                ++i;
             }
+        }
+        catch (...)
+        {
+            qWarning() << "Failed to parse stocks";
         }
     }
 

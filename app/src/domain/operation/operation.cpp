@@ -39,43 +39,203 @@ Operation::Operation() :
 {
 }
 
-void Operation::fromJsonObject(const QJsonObject& jsonObject)
+static void operationTimestampParse(Operation* operation, simdjson::ondemand::value value)
 {
-    timestamp                       = jsonObject.value("timestamp").toInteger();
-    instrumentId                    = jsonObject.value("instrumentId").toString();
-    instrumentTicker                = jsonObject.value("instrumentTicker").toString();
-    instrumentName                  = jsonObject.value("instrumentName").toString();
-    description                     = jsonObject.value("description").toString();
-    price                           = jsonObject.value("price").toDouble();
-    avgPriceFifo                    = jsonObject.value("avgPriceFifo").toDouble();
-    avgPriceWavg                    = jsonObject.value("avgPriceWavg").toDouble();
-    quantity                        = jsonObject.value("quantity").toInteger();
-    remainedQuantity                = jsonObject.value("remainedQuantity").toInteger();
-    payment                         = jsonObject.value("payment").toDouble();
-    avgCostFifo                     = jsonObject.value("avgCostFifo").toDouble();
-    commission                      = jsonObject.value("commission").toDouble();
-    yield                           = jsonObject.value("yield").toDouble();
-    yieldWithCommission             = jsonObject.value("yieldWithCommission").toDouble();
-    yieldWithCommissionPercent      = jsonObject.value("yieldWithCommissionPercent").toDouble();
-    totalYieldWithCommissionPercent = jsonObject.value("totalYieldWithCommissionPercent").toDouble();
-    pricePrecision                  = jsonObject.value("pricePrecision").toInt();
-    paymentPrecision                = jsonObject.value("paymentPrecision").toInt();
-    commissionPrecision             = jsonObject.value("commissionPrecision").toInt();
+    operation->timestamp = value.get_int64();
+}
 
-    costFifo.fromJsonObject(jsonObject.value("costFifo").toObject());
-    costWavg.fromJsonObject(jsonObject.value("costWavg").toObject());
-    inputMoney.fromJsonObject(jsonObject.value("inputMoney").toObject());
-    maxInputMoney.fromJsonObject(jsonObject.value("maxInputMoney").toObject());
-    totalYieldWithCommission.fromJsonObject(jsonObject.value("totalYieldWithCommission").toObject());
-    remainedMoney.fromJsonObject(jsonObject.value("remainedMoney").toObject());
-    totalMoney.fromJsonObject(jsonObject.value("totalMoney").toObject());
+static void operationInstrumentIdParse(Operation* operation, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    operation->instrumentId   = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
 
-    const QJsonArray jsonFifoItems = jsonObject.value("fifoItems").toArray();
-    fifoItems.resizeForOverwrite(jsonFifoItems.size());
+static void operationInstrumentTickerParse(Operation* operation, simdjson::ondemand::value value)
+{
+    std::string_view valueStr   = value.get_string();
+    operation->instrumentTicker = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
 
-    for (int i = 0; i < jsonFifoItems.size(); ++i)
+static void operationInstrumentNameParse(Operation* operation, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    operation->instrumentName = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void operationDescriptionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    std::string_view valueStr = value.get_string();
+    operation->description    = QString::fromUtf8(valueStr.data(), valueStr.size());
+}
+
+static void operationPriceParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->price = value.get_double();
+}
+
+static void operationFifoItemsParse(Operation* operation, simdjson::ondemand::value value)
+{
+    simdjson::ondemand::array jsonArray = value.get_array();
+
+    operation->fifoItems.resizeForOverwrite(jsonArray.count_elements());
+    int i = 0;
+
+    for (simdjson::ondemand::object jsonObject : jsonArray)
     {
-        fifoItems[i].fromJsonObject(jsonFifoItems.at(i).toObject());
+        operation->fifoItems[i].fromJsonObject(jsonObject);
+        ++i;
+    }
+}
+
+static void operationAvgPriceFifoParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->avgPriceFifo = value.get_double();
+}
+
+static void operationAvgPriceWavgParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->avgPriceWavg = value.get_double();
+}
+
+static void operationQuantityParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->quantity = value.get_int64();
+}
+
+static void operationRemainedQuantityParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->remainedQuantity = value.get_int64();
+}
+
+static void operationPaymentParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->payment = value.get_double();
+}
+
+static void operationAvgCostFifoParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->avgCostFifo = value.get_double();
+}
+
+static void operationCostFifoParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->costFifo.fromJsonObject(value.get_object());
+}
+
+static void operationCostWavgParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->costWavg.fromJsonObject(value.get_object());
+}
+
+static void operationCommissionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->commission = value.get_double();
+}
+
+static void operationYieldParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->yield = value.get_double();
+}
+
+static void operationYieldWithCommissionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->yieldWithCommission = value.get_double();
+}
+
+static void operationYieldWithCommissionPercentParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->yieldWithCommissionPercent = value.get_double();
+}
+
+static void operationInputMoneyParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->inputMoney.fromJsonObject(value.get_object());
+}
+
+static void operationMaxInputMoneyParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->maxInputMoney.fromJsonObject(value.get_object());
+}
+
+static void operationTotalYieldWithCommissionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->totalYieldWithCommission.fromJsonObject(value.get_object());
+}
+
+static void operationTotalYieldWithCommissionPercentParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->totalYieldWithCommissionPercent = value.get_double();
+}
+
+static void operationRemainedMoneyParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->remainedMoney.fromJsonObject(value.get_object());
+}
+
+static void operationTotalMoneyParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->totalMoney.fromJsonObject(value.get_object());
+}
+
+static void operationPricePrecisionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->pricePrecision = value.get_int64();
+}
+
+static void operationPaymentPrecisionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->paymentPrecision = value.get_int64();
+}
+
+static void operationCommissionPrecisionParse(Operation* operation, simdjson::ondemand::value value)
+{
+    operation->commissionPrecision = value.get_int64();
+}
+
+using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value value);
+
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+    {"timestamp",                       operationTimestampParse                      },
+    {"instrumentId",                    operationInstrumentIdParse                   },
+    {"instrumentTicker",                operationInstrumentTickerParse               },
+    {"instrumentName",                  operationInstrumentNameParse                 },
+    {"description",                     operationDescriptionParse                    },
+    {"price",                           operationPriceParse                          },
+    {"fifoItems",                       operationFifoItemsParse                      },
+    {"avgPriceFifo",                    operationAvgPriceFifoParse                   },
+    {"avgPriceWavg",                    operationAvgPriceWavgParse                   },
+    {"quantity",                        operationQuantityParse                       },
+    {"remainedQuantity",                operationRemainedQuantityParse               },
+    {"payment",                         operationPaymentParse                        },
+    {"avgCostFifo",                     operationAvgCostFifoParse                    },
+    {"costFifo",                        operationCostFifoParse                       },
+    {"costWavg",                        operationCostWavgParse                       },
+    {"commission",                      operationCommissionParse                     },
+    {"yield",                           operationYieldParse                          },
+    {"yieldWithCommission",             operationYieldWithCommissionParse            },
+    {"yieldWithCommissionPercent",      operationYieldWithCommissionPercentParse     },
+    {"inputMoney",                      operationInputMoneyParse                     },
+    {"maxInputMoney",                   operationMaxInputMoneyParse                  },
+    {"totalYieldWithCommission",        operationTotalYieldWithCommissionParse       },
+    {"totalYieldWithCommissionPercent", operationTotalYieldWithCommissionPercentParse},
+    {"remainedMoney",                   operationRemainedMoneyParse                  },
+    {"totalMoney",                      operationTotalMoneyParse                     },
+    {"pricePrecision",                  operationPricePrecisionParse                 },
+    {"paymentPrecision",                operationPaymentPrecisionParse               },
+    {"commissionPrecision",             operationCommissionPrecisionParse            }
+};
+
+void Operation::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        std::string_view key          = field.escaped_key();
+        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+
+        if (parseHandler != nullptr)
+        {
+            parseHandler(this, field.value());
+        }
     }
 }
 

@@ -4,6 +4,8 @@
 
 #include <QJsonObject>
 
+#include "src/simdjson/simdjson_wrapped.h"
+
 
 
 struct Instrument
@@ -14,7 +16,7 @@ struct Instrument
 
     Instrument& operator=(const Instrument& another) = default;
 
-    void fromJsonObject(const QJsonObject& jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject);
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

@@ -65,11 +65,12 @@ TEST(Test_OperationFifoItem, Test_fromJsonObject)
 
     const QString content = R"({"cost":{"nano":3,"units":2},"quantity":1})";
 
-    QJsonParseError     parseError;
-    const QJsonDocument jsonDoc = QJsonDocument::fromJson(content.toUtf8(), &parseError);
+    simdjson::padded_string jsonData(content.toStdString());
 
-    ASSERT_EQ(parseError.error, QJsonParseError::NoError);
-    item.fromJsonObject(jsonDoc.object());
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    item.fromJsonObject(doc.get_object());
 
     // clang-format off
     ASSERT_EQ(item.quantity,   1);
