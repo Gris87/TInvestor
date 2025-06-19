@@ -38,7 +38,7 @@ OperationsTableModel::OperationsTableModel(QObject* parent) :
             << tr("Quantity") << tr("Remained quantity") << tr("Payment") << tr("Commission") << tr("Yield")
             << tr("Yield with commission") << tr("Yield with commission (%)") << tr("Total yield") << tr("Total yield (%)")
             << tr("Remained money") << tr("Total money");
-    Q_ASSERT_X(mHeader.size() == OPERATIONS_COLUMN_COUNT, "OperationsTableModel::OperationsTableModel()", "Header is incorrect");
+    Q_ASSERT_X(mHeader.size() == OPERATIONS_COLUMN_COUNT, __FUNCTION__ "()", "Header is incorrect");
 }
 
 OperationsTableModel::~OperationsTableModel()
@@ -396,7 +396,7 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
     {
         const int row = index.row();
 
-        Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, "OperationsTableModel::data()", "Unexpected behavior");
+        Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, __FUNCTION__ "()", "Unexpected behavior");
 
         return reinterpret_cast<qint64>(mEntries->at(row).instrumentLogo);
     }
@@ -405,7 +405,7 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
     {
         const int row = index.row();
 
-        Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, "OperationsTableModel::data()", "Unexpected behavior");
+        Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, __FUNCTION__ "()", "Unexpected behavior");
 
         return mEntries->at(row).instrumentName;
     }

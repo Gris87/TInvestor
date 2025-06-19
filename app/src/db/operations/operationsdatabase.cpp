@@ -253,12 +253,12 @@ void OperationsDatabase::writeOperations(const QList<Operation>& operations)
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
     bool ok = dir->mkpath(dirPath);
-    Q_ASSERT_X(ok, "OperationsDatabase::writeOperations()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
 
     const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(dirPath + "/operations.json");
 
     ok = operationsFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, "OperationsDatabase::writeOperations()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
 
     for (int i = 0; i < operations.size(); ++i)
     {
@@ -282,7 +282,7 @@ void OperationsDatabase::appendOperations(const QList<Operation>& operations)
     const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(operationsDirPath() + "/operations.json");
 
     const bool ok = operationsFile->open(QIODevice::Append);
-    Q_ASSERT_X(ok, "OperationsDatabase::appendOperations()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
 
     for (int i = 0; i < operations.size(); ++i)
     {

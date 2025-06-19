@@ -59,12 +59,12 @@ void AutorunEnabler::enable()
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
     bool ok = dir->mkpath(QDir::homePath() + "/.config/autostart");
-    Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
 
     const std::shared_ptr<IFile> file = mFileFactory->newInstance(QDir::homePath() + "/.config/autostart/TInvestor.desktop");
 
     ok = file->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, "AutorunEnabler::enable()", "Failed to create file");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create file");
 
     QString content = "";
 
@@ -92,7 +92,7 @@ void AutorunEnabler::disable()
     if (file->exists())
     {
         const bool ok = file->remove();
-        Q_ASSERT_X(ok, "AutorunEnabler::disable()", "Failed to delete file");
+        Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to delete file");
     }
 }
 #endif

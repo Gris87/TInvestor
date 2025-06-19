@@ -141,7 +141,7 @@ void TradingThread::getInstrumentData()
     mInstrumentsStorage->lock();
     const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
 
-    Q_ASSERT_X(instrumentsData.contains(mInstrumentId), "TradingThread::trade()", "Data about instrument not found");
+    Q_ASSERT_X(instrumentsData.contains(mInstrumentId), __FUNCTION__ "()", "Data about instrument not found");
 
     const Instrument& instrument = instrumentsData.value(mInstrumentId);
 

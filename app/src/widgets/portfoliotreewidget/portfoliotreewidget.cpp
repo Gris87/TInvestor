@@ -106,7 +106,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
         if (categoryTreeItem == nullptr)
         {
-            Q_ASSERT_X(mCategoryNames.contains(category), "PortfolioTreeWidget::portfolioChanged()", "Missing translation");
+            Q_ASSERT_X(mCategoryNames.contains(category), __FUNCTION__ "()", "Missing translation");
             categoryTreeItem = new CategoryTreeItem(ui->treeWidget, mCategoryNames.value(category, "UNKNOWN"));
 
             mCategories[category] = categoryTreeItem;

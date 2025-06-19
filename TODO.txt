@@ -1,11 +1,10 @@
 Something strange with the logs
-Limit operations and logs
-Optimization
-Long startup
+Portfolio TreeView
+Stocks TableView
 Tray icon popup too long
-Test coverage
 Use RWMutex instead of QMutex
-Check style on Q_ASSERT_X
+Limit operations and logs
+Test coverage
 Create release
 
 Buy if it was sold during 24h and price is less than 1%

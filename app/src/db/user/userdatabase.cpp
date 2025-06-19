@@ -24,13 +24,13 @@ UserDatabase::UserDatabase() :
     const QString appDir = qApp->applicationDirPath();
 
     bool ok = QDir().mkpath(appDir + "/data/user");
-    Q_ASSERT_X(ok, "UserDatabase::UserDatabase()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
 
     const QString dbPath = appDir + "/data/user/user.db";
     db.setDatabaseName(dbPath);
 
     ok = db.open();
-    Q_ASSERT_X(ok, "UserDatabase::UserDatabase()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", db.lastError().text().toLocal8Bit().constData());
 
     qInfo() << "User database" << dbPath << "created";
 
@@ -98,7 +98,7 @@ void UserDatabase::createUserTable() const
     QSqlQuery query(db);
 
     const bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::createUserTable()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 }
 
 void UserDatabase::createAccountsTable() const
@@ -115,7 +115,7 @@ void UserDatabase::createAccountsTable() const
     QSqlQuery query(db);
 
     const bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::createAccountsTable()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 }
 
 User UserDatabase::readUserInfo()
@@ -132,7 +132,7 @@ User UserDatabase::readUserInfo()
     QSqlQuery query(db);
 
     const bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 
     const QSqlRecord rec = query.record();
 
@@ -171,7 +171,7 @@ User UserDatabase::readUserInfo()
         query.bindValue(":tariff", res.tariff);
 
         const bool ok = query.exec();
-        Q_ASSERT_X(ok, "UserDatabase::readUserInfo()", query.lastError().text().toLocal8Bit().constData());
+        Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
     }
 
     return res;
@@ -190,7 +190,7 @@ Accounts UserDatabase::readAccounts()
     QSqlQuery query(db);
 
     const bool ok = query.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::readAccounts()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 
     const QSqlRecord rec = query.record();
 
@@ -223,7 +223,7 @@ void UserDatabase::writeToken(const QString& token)
     query.bindValue(":token", mSimpleCrypt.encryptToString(token));
 
     const bool ok = query.exec();
-    Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 }
 
 void UserDatabase::writeUserInfo(const User& user)
@@ -242,13 +242,13 @@ void UserDatabase::writeUserInfo(const User& user)
     query.bindValue(":tariff", user.tariff);
 
     const bool ok = query.exec();
-    Q_ASSERT_X(ok, "UserDatabase::writeToken()", query.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query.lastError().text().toLocal8Bit().constData());
 }
 
 void UserDatabase::writeAccounts(const Accounts& accounts)
 {
     bool ok = db.transaction();
-    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", db.lastError().text().toLocal8Bit().constData());
 
     const QString str =
         "DELETE "
@@ -257,7 +257,7 @@ void UserDatabase::writeAccounts(const Accounts& accounts)
     QSqlQuery query1(db);
 
     ok = query1.exec(str);
-    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", query1.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query1.lastError().text().toLocal8Bit().constData());
 
     QVariantList ids;
     QVariantList uids;
@@ -291,8 +291,8 @@ void UserDatabase::writeAccounts(const Accounts& accounts)
     query2.bindValue(":name", names);
 
     ok = query2.execBatch();
-    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", query2.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", query2.lastError().text().toLocal8Bit().constData());
 
     ok = db.commit();
-    Q_ASSERT_X(ok, "UserDatabase::writeAccounts()", db.lastError().text().toLocal8Bit().constData());
+    Q_ASSERT_X(ok, __FUNCTION__ "()", db.lastError().text().toLocal8Bit().constData());
 }

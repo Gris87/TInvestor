@@ -247,12 +247,12 @@ void LogsDatabase::appendLog(const LogEntry& entry)
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
     bool ok = dir->mkpath(dirPath);
-    Q_ASSERT_X(ok, "LogsDatabase::appendLog()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
 
     const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(dirPath + "/logs.json");
 
     ok = logsFile->open(QIODevice::WriteOnly | QIODevice::Append);
-    Q_ASSERT_X(ok, "LogsDatabase::appendLog()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
 
     const QJsonDocument jsonDoc(entry.toJsonObject());
 

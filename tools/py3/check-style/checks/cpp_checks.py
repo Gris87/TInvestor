@@ -6,6 +6,7 @@ group_name = "cpp"
 files_pattern = ["*.h", "*.cpp"]
 
 check_modules = [
+    "assert_x",
     "clang_format",
     "clang_format_off_on",
     "include_groups",
