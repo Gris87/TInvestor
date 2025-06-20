@@ -228,6 +228,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.vcpkg_path}\\installed\\x64-windows\\include")
         res.append(f"-I{args.quazip_path}")
         res.append(f"-I{cwd}\\libs\\qxlsx")
+        res.append(f"-I{cwd}\\libs\\simdjson")
         res.append(f"-I{cwd}\\libs\\simplecrypt")
         res.append(f"-I{cwd}\\libs\\verticallabel")
         res.append(f"-I{cwd}\\libs\\waitingspinner")
@@ -283,6 +284,10 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}\\include\\QtCore")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx\\build\\gen\\qxlsx\\moc")
         res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\qxlsx")
+
+    if "/libs/simdjson/" in file_path:
+        res.append(f"-I{cwd}\\libs\\simdjson")
+        res.append(f"-I{cwd}\\build\\Desktop-Debug\\libs\\simdjson")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")
@@ -482,6 +487,7 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.vcpkg_path}/installed/x64-linux/include")
         res.append(f"-I{args.quazip_path}")
         res.append(f"-I{cwd}/libs/qxlsx")
+        res.append(f"-I{cwd}/libs/simdjson")
         res.append(f"-I{cwd}/libs/simplecrypt")
         res.append(f"-I{cwd}/libs/verticallabel")
         res.append(f"-I{cwd}/libs/waitingspinner")
@@ -537,6 +543,10 @@ def _get_arguments_for_file_linux(args, file_path, duplicate_for_tests):
         res.append(f"-I{args.qt_path}/include/QtCore")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx/build/gen/qxlsx/moc")
         res.append(f"-I{cwd}/build/Desktop-Debug/libs/qxlsx")
+
+    if "/libs/simdjson/" in file_path:
+        res.append(f"-I{cwd}/libs/simdjson")
+        res.append(f"-I{cwd}/build/Desktop-Debug/libs/simdjson")
 
     if "/libs/simplecrypt/" in file_path:
         res.append("-DQT_ANNOTATE_FUNCTION(x)=__attribute__((annotate(#x)))")

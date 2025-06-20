@@ -1,5 +1,4 @@
-QT += core
-
+CONFIG -= qt
 CONFIG += c++20
 CONFIG += staticlib
 
