@@ -2,6 +2,8 @@
 
 
 
+#include <QIcon>
+
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel.h"
 
 
@@ -31,4 +33,5 @@ public:
 
 private:
     QStringList mHeader;
+    QIcon       mHelpIcon;
 };

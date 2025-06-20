@@ -6,13 +6,13 @@
 
 PortfolioTreeModel::PortfolioTreeModel(QObject* parent) :
     IPortfolioTreeModel(parent),
-    mHeader()
+    mHeader(),
+    mHelpIcon(":/assets/images/question.png")
 {
     qDebug() << "Create PortfolioTreeModel";
 
     mHeader << tr("Name") << tr("Available") << tr("Price") << tr("Avg price") << tr("Cost") << tr("Part") << tr("Yield")
             << tr("Yield, %") << tr("Daily yield, %");
-
     Q_ASSERT_X(mHeader.size() == PORTFOLIO_COLUMN_COUNT, __FUNCTION__, "Header is incorrect");
 }
 
@@ -41,6 +41,26 @@ QVariant PortfolioTreeModel::headerData(int section, Qt::Orientation orientation
         }
 
         return section + 1;
+    }
+
+    if (role == Qt::ToolTipRole)
+    {
+        if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+        {
+            return tr("Average price by FIFO");
+        }
+
+        return QVariant();
+    }
+
+    if (role == Qt::DecorationRole)
+    {
+        if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+        {
+            return mHelpIcon;
+        }
+
+        return QVariant();
     }
 
     return QVariant();
