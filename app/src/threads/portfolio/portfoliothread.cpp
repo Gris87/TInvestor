@@ -11,8 +11,12 @@ constexpr float   HUNDRED_PERCENT = 100.0f;
 
 
 
-PortfolioThread::PortfolioThread(IGrpcClient* grpcClient, QObject* parent) :
+PortfolioThread::PortfolioThread(
+    IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, IGrpcClient* grpcClient, QObject* parent
+) :
     IPortfolioThread(parent),
+    mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
     mPortfolioStream(),
@@ -155,17 +159,33 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     double                              totalCost = 0.0;
     QMap<QString, QList<PortfolioItem>> categories; // Instrument type => category
 
+
+    mInstrumentsStorage->lock();
+    mLogosStorage->lock();
+
     for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {
         const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
 
+        const QString instrumentId   = QString::fromStdString(position.instrument_uid());
         const QString instrumentType = QString::fromStdString(position.instrument_type());
 
         PortfolioItem item;
 
-        item.instrumentId = QString::fromStdString(position.instrument_uid());
+        Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
 
-        item.showPrices         = item.instrumentId != RUBLE_UID;
+        if (instrument.ticker == "" || instrument.name == "")
+        {
+            instrument.ticker         = instrumentId;
+            instrument.name           = "?????";
+            instrument.pricePrecision = 2;
+        }
+
+        item.instrumentId       = instrumentId;
+        item.instrumentLogo     = mLogosStorage->getLogo(instrumentId);
+        item.instrumentTicker   = instrument.ticker;
+        item.instrumentName     = instrument.name;
+        item.showPrices         = instrumentId != RUBLE_UID;
         item.available          = quotationToDouble(position.quantity());
         item.price              = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
         item.avgPriceFifo       = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
@@ -182,6 +202,9 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         categories[instrumentType].append(item);
     }
+
+    mLogosStorage->unlock();
+    mInstrumentsStorage->unlock();
 
     for (const QString& category : std::as_const(mSortedCategories))
     {
