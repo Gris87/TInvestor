@@ -638,54 +638,87 @@
     </message>
 </context>
 <context>
+    <name>PortfolioThread</name>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="26"/>
+        <source>Currency and metals</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="27"/>
+        <source>Share</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="28"/>
+        <source>ETF</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="29"/>
+        <source>Bond</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="30"/>
+        <source>Futures</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/portfolio/portfoliothread.cpp" line="31"/>
+        <source>Options</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>PortfolioTreeModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Available</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Avg price</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Cost</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Part</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="14"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
         <source>Yield</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="16"/>
         <source>Yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="16"/>
         <source>Daily yield, %</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="50"/>
+        <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="51"/>
         <source>Average price by FIFO</source>
         <translation></translation>
     </message>
@@ -754,52 +787,52 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="69"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="71"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="70"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="72"/>
         <source>Share</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="71"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="73"/>
         <source>ETF</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="72"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="74"/>
         <source>Bond</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="73"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="75"/>
         <source>Futures</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="74"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="76"/>
         <source>Options</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="271"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="278"/>
         <source>Export to Excel</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="281"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="288"/>
         <source>Export</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="281"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="288"/>
         <source>Excel file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="342"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="349"/>
         <source>Portfolio</source>
         <translation></translation>
     </message>

@@ -32,4 +32,6 @@ private:
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
+    QStringList                      mSortedCategories;
+    QMap<QString, QString>           mCategoryNames; // Category => Localized name
 };

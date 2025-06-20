@@ -15,9 +15,20 @@ PortfolioThread::PortfolioThread(IGrpcClient* grpcClient, QObject* parent) :
     IPortfolioThread(parent),
     mGrpcClient(grpcClient),
     mAccountId(),
-    mPortfolioStream()
+    mPortfolioStream(),
+    mSortedCategories(),
+    mCategoryNames()
 {
     qDebug() << "Create PortfolioThread";
+
+    mSortedCategories << "currency" << "share" << "etf" << "bond" << "futures" << "options";
+
+    mCategoryNames["currency"] = tr("Currency and metals");
+    mCategoryNames["share"]    = tr("Share");
+    mCategoryNames["etf"]      = tr("ETF");
+    mCategoryNames["bond"]     = tr("Bond");
+    mCategoryNames["futures"]  = tr("Futures");
+    mCategoryNames["options"]  = tr("Options");
 }
 
 PortfolioThread::~PortfolioThread()
@@ -89,7 +100,8 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 {
     Portfolio portfolio;
 
-    double totalCost = 0.0;
+    // TODO: Delete below
+    double totalCostMap = 0.0;
 
     for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {
@@ -114,7 +126,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         item.costForDailyYield  = item.available * item.priceForDailyYield;
         item.dailyYieldPercent  = ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
 
-        totalCost += item.cost;
+        totalCostMap += item.cost;
 
         portfolio.positionsMap[instrumentType][instrumentId] = item;
     }
@@ -129,14 +141,73 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         for (PortfolioItem& item : items)
         {
+            item.part = (item.cost / totalCostMap) * HUNDRED_PERCENT;
+
+            categoryItem.cost += item.cost;
+        }
+
+        categoryItem.part = (categoryItem.cost / totalCostMap) * HUNDRED_PERCENT;
+
+        items["total"] = categoryItem;
+    }
+    // TODO: Delete above
+
+    double                              totalCost = 0.0;
+    QMap<QString, QList<PortfolioItem>> categories; // Instrument type => category
+
+    for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
+    {
+        const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
+
+        const QString instrumentType = QString::fromStdString(position.instrument_type());
+
+        PortfolioItem item;
+
+        item.instrumentId = QString::fromStdString(position.instrument_uid());
+
+        item.showPrices         = item.instrumentId != RUBLE_UID;
+        item.available          = quotationToDouble(position.quantity());
+        item.price              = item.showPrices ? quotationToFloat(position.current_price()) : 1.0f;
+        item.avgPriceFifo       = item.showPrices ? quotationToFloat(position.average_position_price_fifo()) : 1.0f;
+        item.avgPriceWavg       = item.showPrices ? quotationToFloat(position.average_position_price()) : 1.0f;
+        item.cost               = item.available * item.avgPriceFifo;
+        item.yield              = (item.available * item.price) - item.cost;
+        item.yieldPercent       = (item.yield / item.cost) * HUNDRED_PERCENT;
+        item.dailyYield         = quotationToFloat(position.daily_yield());
+        item.priceForDailyYield = item.price - (item.dailyYield / item.available);
+        item.costForDailyYield  = item.available * item.priceForDailyYield;
+        item.dailyYieldPercent  = ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+
+        totalCost += item.cost;
+
+        categories[instrumentType].append(item);
+    }
+
+    for (const QString& category : std::as_const(mSortedCategories))
+    {
+        if (!categories.contains(category))
+        {
+            continue;
+        }
+
+        QList<PortfolioItem>& items = categories[category];
+
+        PortfolioCategoryItem categoryItem;
+
+        Q_ASSERT_X(mCategoryNames.contains(category), __FUNCTION__, "Missing translation");
+        categoryItem.name = mCategoryNames.value(category, "UNKNOWN");
+
+        for (PortfolioItem& item : items)
+        {
             item.part = (item.cost / totalCost) * HUNDRED_PERCENT;
 
             categoryItem.cost += item.cost;
         }
 
-        categoryItem.part = (categoryItem.cost / totalCost) * HUNDRED_PERCENT;
+        categoryItem.part  = (categoryItem.cost / totalCost) * HUNDRED_PERCENT;
+        categoryItem.items = items;
 
-        items["total"] = categoryItem;
+        portfolio.positionsList.append(categoryItem);
     }
 
     emit portfolioChanged(portfolio);

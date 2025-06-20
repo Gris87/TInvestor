@@ -64,8 +64,10 @@ PortfolioTreeWidget::PortfolioTreeWidget(
 
     ui->setupUi(this);
 
+    // TODO: Delete it
     mSortedCategories << "currency" << "share" << "etf" << "bond" << "futures" << "options";
 
+    // TODO: Delete it
     mCategoryNames["currency"] = tr("Currency and metals");
     mCategoryNames["share"]    = tr("Share");
     mCategoryNames["etf"]      = tr("ETF");

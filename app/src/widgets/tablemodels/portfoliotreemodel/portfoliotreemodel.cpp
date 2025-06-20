@@ -67,11 +67,48 @@ QVariant PortfolioTreeModel::headerData(int section, Qt::Orientation orientation
     return QVariant();
 }
 
-QVariant PortfolioTreeModel::data(const QModelIndex& /*index*/, int role) const
+static QVariant categoryNameDisplayRole(const PortfolioCategoryItem& category)
+{
+    return category.name;
+}
+
+static QVariant categoryCostDisplayRole(const PortfolioCategoryItem& category)
+{
+    return QString::number(category.cost, 'f', 2) + " \u20BD";
+}
+
+static QVariant categoryPartDisplayRole(const PortfolioCategoryItem& category)
+{
+    return QString::number(category.part, 'f', 2) + "%";
+}
+
+static QVariant categoryNothingDisplayRole(const PortfolioCategoryItem& /*category*/)
+{
+    return QVariant();
+}
+
+using CategoryDisplayRoleHandler = QVariant (*)(const PortfolioCategoryItem& category);
+
+static const CategoryDisplayRoleHandler CATEGORY_DISPLAY_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
+    categoryNameDisplayRole,
+    categoryNothingDisplayRole,
+    categoryNothingDisplayRole,
+    categoryNothingDisplayRole,
+    categoryCostDisplayRole,
+    categoryPartDisplayRole,
+    categoryNothingDisplayRole,
+    categoryNothingDisplayRole,
+    categoryNothingDisplayRole
+};
+
+QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
     {
-        return "a";
+        const int row    = index.row();
+        const int column = index.column();
+
+        return CATEGORY_DISPLAY_ROLE_HANDLER[column](mPortfolio.positionsList.at(row));
     }
 
     return QVariant();
