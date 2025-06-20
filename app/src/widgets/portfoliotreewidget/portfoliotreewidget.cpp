@@ -94,6 +94,8 @@ void PortfolioTreeWidget::setAccountName(const QString& name)
 
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
+    mPortfolioTreeModel->portfolioChanged(portfolio);
+
     mTotalCost       = 0.0;
     mTotalYield      = 0.0;
     mTotalDailyCost  = 0.0;
@@ -134,11 +136,14 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
 void PortfolioTreeWidget::lastPriceChanged(const QString& instrumentId, float price)
 {
+    mPortfolioTreeModel->lastPriceChanged(instrumentId, price);
     mLastPricesUpdates[instrumentId] = price;
 }
 
 void PortfolioTreeWidget::updateLastPrices()
 {
+    mPortfolioTreeModel->updateLastPrices();
+
     if (!mLastPricesUpdates.isEmpty())
     {
         ui->treeWidget->setUpdatesEnabled(false);

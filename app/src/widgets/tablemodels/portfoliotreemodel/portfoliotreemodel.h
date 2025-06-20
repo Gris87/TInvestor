@@ -31,7 +31,12 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
+    void portfolioChanged(const Portfolio& portfolio) override;
+    void lastPriceChanged(const QString& instrumentId, float price) override;
+    void updateLastPrices() override;
+
 private:
     QStringList mHeader;
     QIcon       mHelpIcon;
+    Portfolio   mPortfolio;
 };

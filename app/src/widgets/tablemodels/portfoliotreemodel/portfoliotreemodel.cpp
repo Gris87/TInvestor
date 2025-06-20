@@ -7,7 +7,8 @@
 PortfolioTreeModel::PortfolioTreeModel(QObject* parent) :
     IPortfolioTreeModel(parent),
     mHeader(),
-    mHelpIcon(":/assets/images/question.png")
+    mHelpIcon(":/assets/images/question.png"),
+    mPortfolio()
 {
     qDebug() << "Create PortfolioTreeModel";
 
@@ -23,7 +24,7 @@ PortfolioTreeModel::~PortfolioTreeModel()
 
 int PortfolioTreeModel::rowCount(const QModelIndex& /*parent*/) const
 {
-    return 5;
+    return mPortfolio.positions.size();
 }
 
 int PortfolioTreeModel::columnCount(const QModelIndex& /*parent*/) const
@@ -74,4 +75,25 @@ QVariant PortfolioTreeModel::data(const QModelIndex& /*index*/, int role) const
     }
 
     return QVariant();
+}
+
+void PortfolioTreeModel::portfolioChanged(const Portfolio& portfolio)
+{
+    beginResetModel();
+
+    mPortfolio = portfolio;
+
+    // TODO: Sort
+
+    endResetModel();
+}
+
+void PortfolioTreeModel::lastPriceChanged(const QString& /*instrumentId*/, float /*price*/)
+{
+    // TODO: Implement
+}
+
+void PortfolioTreeModel::updateLastPrices()
+{
+    // TODO: Implement
 }

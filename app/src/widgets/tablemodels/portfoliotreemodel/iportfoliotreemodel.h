@@ -4,6 +4,8 @@
 
 #include <QAbstractTableModel>
 
+#include "src/domain/portfolio/portfolio.h"
+
 
 
 enum PortfolioTreeColumns : qint8
@@ -35,4 +37,8 @@ public:
 
     IPortfolioTreeModel(const IPortfolioTreeModel& another)            = delete;
     IPortfolioTreeModel& operator=(const IPortfolioTreeModel& another) = delete;
+
+    virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
+    virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
+    virtual void updateLastPrices()                                         = 0;
 };
