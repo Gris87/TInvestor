@@ -52,6 +52,7 @@ SOURCES += \
     src/domain/operation/operationfifoitem.cpp \
     src/domain/orderbook/orderbook.cpp \
     src/domain/portfolio/portfolio.cpp \
+    src/domain/portfolio/portfoliocategoryitem.cpp \
     src/domain/portfolio/portfolioitem.cpp \
     src/domain/portfolio/portfoliominitem.cpp \
     src/domain/quotation/quotation.cpp \
@@ -236,6 +237,7 @@ HEADERS += \
     src/domain/orderbook/orderbook.h \
     src/domain/orderbook/orderbookdata.h \
     src/domain/portfolio/portfolio.h \
+    src/domain/portfolio/portfoliocategoryitem.h \
     src/domain/portfolio/portfolioitem.h \
     src/domain/portfolio/portfoliominitem.h \
     src/domain/quotation/quotation.h \

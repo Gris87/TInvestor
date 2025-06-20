@@ -82,7 +82,7 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
 {
     QStringList instrumentIds;
 
-    for (auto it = portfolio.positions.constBegin(), end = portfolio.positions.constEnd(); it != end; ++it)
+    for (auto it = portfolio.positionsMap.constBegin(), end = portfolio.positionsMap.constEnd(); it != end; ++it)
     {
         const PortfolioItems& portfolioItems = it.value();
 

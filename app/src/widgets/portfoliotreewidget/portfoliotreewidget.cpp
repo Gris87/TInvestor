@@ -108,7 +108,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 
     for (const QString& category : std::as_const(mSortedCategories))
     {
-        if (!portfolio.positions.contains(category))
+        if (!portfolio.positionsMap.contains(category))
         {
             continue;
         }
@@ -123,7 +123,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
             mCategories[category] = categoryTreeItem;
         }
 
-        updateCategory(categoryTreeItem, portfolio.positions[category]);
+        updateCategory(categoryTreeItem, portfolio.positionsMap[category]);
     }
 
     ui->treeWidget->setSortingEnabled(true);
@@ -186,7 +186,7 @@ void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
 
     for (auto it = mCategories.constBegin(), end = mCategories.constEnd(); it != end; ++it)
     {
-        if (!portfolio.positions.contains(it.key()))
+        if (!portfolio.positionsMap.contains(it.key()))
         {
             categoriesToDelete.append(it.key());
         }

@@ -4,7 +4,7 @@
 
 #include <QMap>
 
-#include "src/domain/portfolio/portfolioitem.h"
+#include "src/domain/portfolio/portfoliocategoryitem.h"
 
 
 
@@ -16,7 +16,8 @@ struct Portfolio
 
     Portfolio& operator=(const Portfolio& another) = default;
 
-    QMap<QString, PortfolioItems> positions; // Instrument type => positions
+    QMap<QString, PortfolioItems> positionsMap; // Instrument type => positions // TODO: Delete it
+    QList<PortfolioCategoryItem>  positionsList;
 };
 
 

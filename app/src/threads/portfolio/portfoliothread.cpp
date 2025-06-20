@@ -116,11 +116,11 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         totalCost += item.cost;
 
-        portfolio.positions[instrumentType][instrumentId] = item;
+        portfolio.positionsMap[instrumentType][instrumentId] = item;
     }
 
-    for (auto it = portfolio.positions.begin(), // clazy:exclude=detaching-member
-         end     = portfolio.positions.end();   // clazy:exclude=detaching-member
+    for (auto it = portfolio.positionsMap.begin(), // clazy:exclude=detaching-member
+         end     = portfolio.positionsMap.end();   // clazy:exclude=detaching-member
          it != end;
          ++it)
     {

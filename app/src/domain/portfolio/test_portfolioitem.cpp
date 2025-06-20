@@ -11,6 +11,10 @@ TEST(Test_PortfolioItem, Test_constructor_and_destructor)
     const PortfolioItem item;
 
     // clang-format off
+    ASSERT_EQ(item.instrumentId,         "");
+    ASSERT_EQ(item.instrumentLogo,       nullptr);
+    ASSERT_EQ(item.instrumentTicker,     "");
+    ASSERT_EQ(item.instrumentName,       "");
     ASSERT_EQ(item.showPrices,           false);
     ASSERT_NEAR(item.available,          0, 0.0001);
     ASSERT_NEAR(item.price,              0, 0.0001f);
@@ -31,6 +35,9 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
 {
     PortfolioItem item;
 
+    item.instrumentId       = "a";
+    item.instrumentTicker   = "b";
+    item.instrumentName     = "c";
     item.showPrices         = true;
     item.available          = 1.0;
     item.price              = 2.0f;
@@ -48,6 +55,10 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
     const PortfolioItem item2(item);
 
     // clang-format off
+    ASSERT_EQ(item2.instrumentId,         "a");
+    ASSERT_EQ(item2.instrumentLogo,       nullptr);
+    ASSERT_EQ(item2.instrumentTicker,     "b");
+    ASSERT_EQ(item2.instrumentName,       "c");
     ASSERT_EQ(item2.showPrices,           true);
     ASSERT_NEAR(item2.available,          1.0,   0.0001);
     ASSERT_NEAR(item2.price,              2.0f,  0.0001f);
@@ -69,6 +80,9 @@ TEST(Test_PortfolioItem, Test_assign)
     PortfolioItem item;
     PortfolioItem item2;
 
+    item.instrumentId       = "a";
+    item.instrumentTicker   = "b";
+    item.instrumentName     = "c";
     item.showPrices         = true;
     item.available          = 1.0;
     item.price              = 2.0f;
@@ -86,6 +100,10 @@ TEST(Test_PortfolioItem, Test_assign)
     item2 = item;
 
     // clang-format off
+    ASSERT_EQ(item2.instrumentId,         "a");
+    ASSERT_EQ(item2.instrumentLogo,       nullptr);
+    ASSERT_EQ(item2.instrumentTicker,     "b");
+    ASSERT_EQ(item2.instrumentName,       "c");
     ASSERT_EQ(item2.showPrices,           true);
     ASSERT_NEAR(item2.available,          1.0,   0.0001);
     ASSERT_NEAR(item2.price,              2.0f,  0.0001f);
@@ -107,6 +125,9 @@ TEST(Test_PortfolioItem, Test_equals)
     PortfolioItem item;
     PortfolioItem item2;
 
+    item.instrumentId       = "a";
+    item.instrumentTicker   = "b";
+    item.instrumentName     = "c";
     item.showPrices         = true;
     item.available          = 1.0;
     item.price              = 2.0f;
@@ -121,6 +142,9 @@ TEST(Test_PortfolioItem, Test_equals)
     item.costForDailyYield  = 11.0;
     item.dailyYieldPercent  = 12.0f;
 
+    item2.instrumentId       = "a";
+    item2.instrumentTicker   = "b";
+    item2.instrumentName     = "c";
     item2.showPrices         = true;
     item2.available          = 1.0;
     item2.price              = 2.0f;
@@ -135,6 +159,21 @@ TEST(Test_PortfolioItem, Test_equals)
     item2.costForDailyYield  = 11.0;
     item2.dailyYieldPercent  = 12.0f;
 
+    ASSERT_EQ(item, item2);
+
+    item2.instrumentId = "aaaa";
+    ASSERT_NE(item, item2);
+    item2.instrumentId = "a";
+    ASSERT_EQ(item, item2);
+
+    item2.instrumentTicker = "bbbb";
+    ASSERT_NE(item, item2);
+    item2.instrumentTicker = "b";
+    ASSERT_EQ(item, item2);
+
+    item2.instrumentName = "cccc";
+    ASSERT_NE(item, item2);
+    item2.instrumentName = "c";
     ASSERT_EQ(item, item2);
 
     item2.showPrices = false;

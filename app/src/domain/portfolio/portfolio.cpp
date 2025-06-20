@@ -3,11 +3,12 @@
 
 
 Portfolio::Portfolio() :
-    positions()
+    positionsMap(),
+    positionsList()
 {
 }
 
 bool operator==(const Portfolio& lhs, const Portfolio& rhs)
 {
-    return lhs.positions == rhs.positions;
+    return lhs.positionsList == rhs.positionsList;
 }

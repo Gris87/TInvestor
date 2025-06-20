@@ -47,6 +47,7 @@ SOURCES += \
     src/domain/operation/test_operationfifoitem.cpp \
     src/domain/orderbook/test_orderbook.cpp \
     src/domain/portfolio/test_portfolio.cpp \
+    src/domain/portfolio/test_portfoliocategoryitem.cpp \
     src/domain/portfolio/test_portfolioitem.cpp \
     src/domain/portfolio/test_portfoliominitem.cpp \
     src/domain/quotation/test_quotation.cpp \

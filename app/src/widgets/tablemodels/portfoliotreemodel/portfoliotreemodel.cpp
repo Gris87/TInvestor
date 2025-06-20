@@ -24,7 +24,7 @@ PortfolioTreeModel::~PortfolioTreeModel()
 
 int PortfolioTreeModel::rowCount(const QModelIndex& /*parent*/) const
 {
-    return mPortfolio.positions.size();
+    return mPortfolio.positionsList.size();
 }
 
 int PortfolioTreeModel::columnCount(const QModelIndex& /*parent*/) const

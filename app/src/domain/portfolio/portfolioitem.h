@@ -2,7 +2,7 @@
 
 
 
-#include <QString>
+#include <QPixmap>
 
 
 
@@ -14,19 +14,23 @@ struct PortfolioItem
 
     PortfolioItem& operator=(const PortfolioItem& another) = default;
 
-    bool   showPrices;
-    double available;
-    float  price;
-    float  avgPriceFifo;
-    float  avgPriceWavg;
-    double cost;
-    float  part;
-    float  yield;
-    float  yieldPercent;
-    float  dailyYield;
-    float  priceForDailyYield;
-    double costForDailyYield;
-    float  dailyYieldPercent;
+    QString  instrumentId;
+    QPixmap* instrumentLogo;
+    QString  instrumentTicker;
+    QString  instrumentName;
+    bool     showPrices;
+    double   available;
+    float    price;
+    float    avgPriceFifo;
+    float    avgPriceWavg;
+    double   cost;
+    float    part;
+    float    yield;
+    float    yieldPercent;
+    float    dailyYield;
+    float    priceForDailyYield;
+    double   costForDailyYield;
+    float    dailyYieldPercent;
 };
 
 using PortfolioItems = QMap<QString, PortfolioItem>; // UID => PortfolioItem
