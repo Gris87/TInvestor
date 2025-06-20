@@ -360,13 +360,13 @@ void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& u
         const std::shared_ptr<IFile> noImageFile = mFileFactory->newInstance(":/assets/images/no_image.png");
 
         bool ok = noImageFile->open(QIODevice::ReadOnly);
-        Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
         const QByteArray content = noImageFile->readAll();
         noImageFile->close();
 
         ok = logo.loadFromData(content, "PNG");
-        Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
     }
 
     mLogosStorage->lock();
@@ -642,7 +642,7 @@ static void getCandlesWithHttp(
                 if (httpResult.statusCode == HTTP_STATUS_CODE_OK)
                 {
                     const bool ok = stockDataFile->open(QIODevice::WriteOnly);
-                    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+                    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
                     stockDataFile->write(httpResult.body);
                     stockDataFile->close();
@@ -775,7 +775,7 @@ void PriceCollectThread::obtainStocksData()
     const std::shared_ptr<IDir> createDir = mDirFactory->newInstance();
 
     bool ok = createDir->mkpath(qApp->applicationDirPath() + "/cache/stocks");
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 
     GetCandlesInfo getCandlesInfo(
         this,
@@ -797,7 +797,7 @@ void PriceCollectThread::obtainStocksData()
     const std::shared_ptr<IDir> deleteDir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
 
     ok = deleteDir->removeRecursively();
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to delete dir");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to delete dir");
 }
 
 void PriceCollectThread::cleanupOperationalData()

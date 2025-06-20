@@ -48,7 +48,7 @@ static bool             isLogToFile;       // NOLINT(cppcoreguidelines-avoid-non
 
 static void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-    Q_ASSERT_X(QtInfoMsg != 1, __FUNCTION__ "()", "It's time to remove hack");
+    Q_ASSERT_X(QtInfoMsg != 1, __FUNCTION__, "It's time to remove hack");
 
     if (LOG_LEVEL_TO_INTEGER[type] < LOG_LEVEL_TO_INTEGER[LOG_LEVEL])
     {
@@ -75,7 +75,7 @@ static void messageHandler(QtMsgType type, const QMessageLogContext& context, co
         QFile logFile(qApp->applicationDirPath() + "/logs.txt");
 
         const bool ok = logFile.open(QIODevice::Append);
-        Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open log file");
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open log file");
         logFile.write(msgText.toUtf8());
         logFile.close();
     }

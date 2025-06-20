@@ -23,7 +23,7 @@ StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactor
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
     const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/stocks");
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 }
 
 StocksDatabase::~StocksDatabase()
@@ -154,7 +154,7 @@ void StocksDatabase::writeStocksMeta(const QList<Stock*>& stocks)
     const std::shared_ptr<IFile> stocksFile = mFileFactory->newInstance(qApp->applicationDirPath() + "/data/stocks/stocks.json");
 
     const bool ok = stocksFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     stocksFile->write(jsonDoc.toJson(QJsonDocument::Compact));
     stocksFile->close();
@@ -166,7 +166,7 @@ void StocksDatabase::appendStockData(Stock* stock, const StockData* dataArray, i
     const std::shared_ptr<IFile> stockDataFile = mFileFactory->newInstance(stockDataFilePath);
 
     const bool ok = stockDataFile->open(QIODevice::Append);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     stockDataFile->write(reinterpret_cast<const char*>(dataArray), dataArraySize * sizeof(StockData));
     stockDataFile->close();
@@ -185,7 +185,7 @@ void StocksDatabase::writeStockData(const Stock& stock)
     const std::shared_ptr<IFile> stockDataFile = mFileFactory->newInstance(stockDataFilePath);
 
     const bool ok = stockDataFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     stockDataFile->write(reinterpret_cast<const char*>(stock.data.constData()), stock.data.size() * sizeof(StockData));
     stockDataFile->close();

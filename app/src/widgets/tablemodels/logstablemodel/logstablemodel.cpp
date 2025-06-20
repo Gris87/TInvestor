@@ -28,7 +28,7 @@ LogsTableModel::LogsTableModel(QObject* parent) :
     qDebug() << "Create LogsTableModel";
 
     mHeader << tr("Time") << "L" << tr("Name") << tr("Message");
-    Q_ASSERT_X(mHeader.size() == LOGS_COLUMN_COUNT, __FUNCTION__ "()", "Header is incorrect");
+    Q_ASSERT_X(mHeader.size() == LOGS_COLUMN_COUNT, __FUNCTION__, "Header is incorrect");
 }
 
 LogsTableModel::~LogsTableModel()
@@ -101,7 +101,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
     {
         const int row = index.row();
 
-        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, __FUNCTION__ "()", "Unexpected behavior");
+        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return reinterpret_cast<qint64>(mEntries->at(row).instrumentLogo);
     }
@@ -110,7 +110,7 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
     {
         const int row = index.row();
 
-        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, __FUNCTION__ "()", "Unexpected behavior");
+        Q_ASSERT_X(index.column() == LOGS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return mEntries->at(row).instrumentName;
     }

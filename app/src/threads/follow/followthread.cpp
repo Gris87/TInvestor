@@ -58,7 +58,7 @@ void FollowThread::run()
                 const tinkoff::PortfolioResponse tinkoffPortfolio = portfolioStreamResponse->portfolio();
                 const QString                    accountId        = QString::fromStdString(tinkoffPortfolio.account_id());
 
-                Q_ASSERT_X(accountId == mAccountId || accountId == mAnotherAccountId, __FUNCTION__ "()", "Unexpected account ID");
+                Q_ASSERT_X(accountId == mAccountId || accountId == mAnotherAccountId, __FUNCTION__, "Unexpected account ID");
 
                 if (accountId == mAccountId)
                 {
@@ -208,7 +208,7 @@ void FollowThread::buildInstrumentsForTrading(
 
         mInstrumentsStorage->lock();
         const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
-        Q_ASSERT_X(instrumentsData.contains(instrumentId), __FUNCTION__ "()", "Data about instrument not found");
+        Q_ASSERT_X(instrumentsData.contains(instrumentId), __FUNCTION__, "Data about instrument not found");
         const qint32 lot = instrumentsData.value(instrumentId).lot;
         mInstrumentsStorage->unlock();
 

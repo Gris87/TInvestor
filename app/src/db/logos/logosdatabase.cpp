@@ -17,7 +17,7 @@ LogosDatabase::LogosDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory)
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
     const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/instruments/logos");
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 }
 
 LogosDatabase::~LogosDatabase()
@@ -94,7 +94,7 @@ void LogosDatabase::writeLogo(const QString& instrumentId, QPixmap* logo)
         mFileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), instrumentId));
 
     const bool ok = logoFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     logo->save(logoFile->getDevice(), "PNG");
     logoFile->close();

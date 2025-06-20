@@ -115,15 +115,18 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
 
 void LogsThread::terminateThread()
 {
-    blockSignals(true);
+    if (isRunning())
+    {
+        blockSignals(true);
 
-    requestInterruption();
+        requestInterruption();
 
-    mMutex->lock();
-    mEntries.append(LogEntry());
-    mMutex->unlock();
+        mMutex->lock();
+        mEntries.append(LogEntry());
+        mMutex->unlock();
 
-    mSemaphore.release();
+        mSemaphore.release();
+    }
 }
 
 void LogsThread::readLogs()

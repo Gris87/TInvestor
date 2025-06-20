@@ -16,7 +16,7 @@ InstrumentsDatabase::InstrumentsDatabase(IDirFactory* dirFactory, IFileFactory* 
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
     const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/instruments/logos");
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to create dir");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 }
 
 InstrumentsDatabase::~InstrumentsDatabase()
@@ -82,7 +82,7 @@ void InstrumentsDatabase::writeInstruments(const Instruments& instruments)
         mFileFactory->newInstance(qApp->applicationDirPath() + "/data/instruments/instruments.json");
 
     const bool ok = instrumentsFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open file");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     instrumentsFile->write(jsonDoc.toJson(QJsonDocument::Compact));
     instrumentsFile->close();

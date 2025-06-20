@@ -471,8 +471,8 @@ void AccountChartWidget::handleOperation(
 
 void AccountChartWidget::syncBarSetFromPoints(QBarSet* barSet, const QList<qreal>& points)
 {
-    Q_ASSERT_X(points.count() > 0, __FUNCTION__ "()", "points is empty");
-    Q_ASSERT_X(barSet->count() <= points.count(), __FUNCTION__ "()", "barSet should be smaller than points");
+    Q_ASSERT_X(points.count() > 0, __FUNCTION__, "points is empty");
+    Q_ASSERT_X(barSet->count() <= points.count(), __FUNCTION__, "barSet should be smaller than points");
 
     if (barSet->count() > 0)
     {

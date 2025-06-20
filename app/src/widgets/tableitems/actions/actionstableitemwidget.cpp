@@ -49,5 +49,5 @@ void ActionsTableItemWidget::on_linkButton_clicked()
     mStock->mutex->unlock();
 
     const bool ok = mHttpClient->openInBrowser(url);
-    Q_ASSERT_X(ok, __FUNCTION__ "()", "Failed to open link");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open link");
 }

@@ -38,8 +38,8 @@ def _validate_file(args, file_path, lines):
                 index = line.find(");")
                 j += 1
 
-            if '__FUNCTION__ "()"' not in line:
-                logger.error(f'{file_path}:{i + 1}: Expecting for use of `__FUNCTION__ "()"` in Q_ASSERT_X()')
+            if '__FUNCTION__' not in line:
+                logger.error(f'{file_path}:{i + 1}: Expecting for use of `__FUNCTION__` in Q_ASSERT_X()')
 
                 res = False
 
