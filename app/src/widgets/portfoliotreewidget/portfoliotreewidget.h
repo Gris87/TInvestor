@@ -6,8 +6,10 @@
 
 #include <QLabel>
 
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h"
 #include "src/widgets/treeitems/categorytreeitem.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h"
 
@@ -26,6 +28,8 @@ class PortfolioTreeWidget : public IPortfolioTreeWidget
 
 public:
     explicit PortfolioTreeWidget(
+        IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
+        ILogosStorage*               logosStorage,
         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
         IInstrumentWidgetFactory*    instrumentWidgetFactory,
         IUserStorage*                userStorage,
@@ -65,6 +69,7 @@ private:
     IInstrumentsStorage*                 mInstrumentsStorage;
     IFileDialogFactory*                  mFileDialogFactory;
     ISettingsEditor*                     mSettingsEditor;
+    IPortfolioTreeModel*                 mPortfolioTreeModel;
     QStringList                          mSortedCategories;
     QMap<QString, QString>               mCategoryNames;     // Category => Localized name
     QMap<QString, CategoryTreeItem*>     mCategories;        // Category => CategoryTreeItem

@@ -28,6 +28,7 @@ DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInsta
         args.portfolioTreeWidgetFactory,
         args.operationsTableModelFactory,
         args.logsTableModelFactory,
+        args.portfolioTreeModelFactory,
         args.portfolioTreeRecordFactory,
         args.instrumentWidgetFactory,
         args.userStorage,

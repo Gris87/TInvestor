@@ -18,6 +18,8 @@ PortfolioTreeWidgetFactory::~PortfolioTreeWidgetFactory()
 }
 
 IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
+    IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
+    ILogosStorage*               logosStorage,
     IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
     IInstrumentWidgetFactory*    instrumentWidgetFactory,
     IUserStorage*                userStorage,
@@ -28,6 +30,8 @@ IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
 ) const
 {
     return new PortfolioTreeWidget(
+        portfolioTreeModelFactory,
+        logosStorage,
         portfolioTreeRecordFactory,
         instrumentWidgetFactory,
         userStorage,

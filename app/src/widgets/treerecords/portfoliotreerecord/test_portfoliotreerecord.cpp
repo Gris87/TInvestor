@@ -43,7 +43,7 @@ protected:
         instruments["aaaaa"] = instrument;
 
         treeWidget = new QTreeWidget();
-        treeWidget->setColumnCount(PORTFOLIO_COLUMN_COUNT);
+        treeWidget->setColumnCount(PORTFOLIO_OLD_COLUMN_COUNT);
 
         categoryTreeItem = new CategoryTreeItem(treeWidget, "Hello");
 

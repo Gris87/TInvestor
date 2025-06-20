@@ -137,6 +137,8 @@ SOURCES += \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.cpp \
+    src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp \
+    src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodelfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
     src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
@@ -387,6 +389,11 @@ HEADERS += \
     src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory.h \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.h \
     src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.h \
+    src/widgets/tablemodels/portfoliotreemodel/comparators.h \
+    src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel.h \
+    src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h \
+    src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.h \
+    src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodelfactory.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h \
     src/widgets/tablerecords/stockstablerecord/stockstablerecord.h \

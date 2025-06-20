@@ -16,6 +16,8 @@ public:
     PortfolioTreeWidgetFactory& operator=(const PortfolioTreeWidgetFactory& another) = delete;
 
     IPortfolioTreeWidget* newInstance(
+        IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
+        ILogosStorage*               logosStorage,
         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
         IInstrumentWidgetFactory*    instrumentWidgetFactory,
         IUserStorage*                userStorage,

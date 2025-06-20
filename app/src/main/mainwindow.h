@@ -85,6 +85,7 @@ public:
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
         IOperationsTableModelFactory*      operationsTableModelFactory,
         ILogsTableModelFactory*            logsTableModelFactory,
+        IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
         IPortfolioTreeRecordFactory*       portfolioTreeRecordFactory,
         IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
         ITrayIconFactory*                  trayIconFactory,

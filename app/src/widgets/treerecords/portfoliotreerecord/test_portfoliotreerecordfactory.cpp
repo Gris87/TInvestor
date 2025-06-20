@@ -47,7 +47,7 @@ TEST(Test_PortfolioTreeRecordFactory, Test_newInstance)
     instruments["aaaaa"] = instrument;
 
     QTreeWidget treeWidget;
-    treeWidget.setColumnCount(PORTFOLIO_COLUMN_COUNT);
+    treeWidget.setColumnCount(PORTFOLIO_OLD_COLUMN_COUNT);
 
     CategoryTreeItem categoryTreeItem(&treeWidget, "Hello");
 

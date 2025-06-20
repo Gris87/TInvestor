@@ -21,6 +21,7 @@
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
+#include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
 #include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
@@ -54,6 +55,7 @@ protected:
         portfolioTreeWidgetMock          = new StrictMock<PortfolioTreeWidgetMock>();
         operationsTableModelFactoryMock  = new StrictMock<OperationsTableModelFactoryMock>();
         logsTableModelFactoryMock        = new StrictMock<LogsTableModelFactoryMock>();
+        portfolioTreeModelFactoryMock    = new StrictMock<PortfolioTreeModelFactoryMock>();
         portfolioTreeRecordFactoryMock   = new StrictMock<PortfolioTreeRecordFactoryMock>();
         instrumentWidgetFactoryMock      = new StrictMock<InstrumentWidgetFactoryMock>();
         userStorageMock                  = new StrictMock<UserStorageMock>();
@@ -80,6 +82,8 @@ protected:
         EXPECT_CALL(
             *portfolioTreeWidgetFactoryMock,
             newInstance(
+                portfolioTreeModelFactoryMock,
+                logosStorageMock,
                 portfolioTreeRecordFactoryMock,
                 instrumentWidgetFactoryMock,
                 userStorageMock,
@@ -102,6 +106,7 @@ protected:
             portfolioTreeWidgetFactoryMock,
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
+            portfolioTreeModelFactoryMock,
             portfolioTreeRecordFactoryMock,
             instrumentWidgetFactoryMock,
             userStorageMock,
@@ -130,6 +135,7 @@ protected:
         */
         delete operationsTableModelFactoryMock;
         delete logsTableModelFactoryMock;
+        delete portfolioTreeModelFactoryMock;
         delete portfolioTreeRecordFactoryMock;
         delete instrumentWidgetFactoryMock;
         delete userStorageMock;
@@ -152,6 +158,7 @@ protected:
     StrictMock<PortfolioTreeWidgetMock>*          portfolioTreeWidgetMock;
     StrictMock<OperationsTableModelFactoryMock>*  operationsTableModelFactoryMock;
     StrictMock<LogsTableModelFactoryMock>*        logsTableModelFactoryMock;
+    StrictMock<PortfolioTreeModelFactoryMock>*    portfolioTreeModelFactoryMock;
     StrictMock<PortfolioTreeRecordFactoryMock>*   portfolioTreeRecordFactoryMock;
     StrictMock<InstrumentWidgetFactoryMock>*      instrumentWidgetFactoryMock;
     StrictMock<UserStorageMock>*                  userStorageMock;

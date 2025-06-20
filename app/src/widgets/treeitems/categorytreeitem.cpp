@@ -18,7 +18,7 @@ CategoryTreeItem::CategoryTreeItem(QTreeWidget* treeWidget, const QString& name,
 {
     qDebug() << "Create CategoryTreeItem";
 
-    setText(PORTFOLIO_NAME_COLUMN, mName);
+    setText(PORTFOLIO_OLD_NAME_COLUMN, mName);
     setExpanded(true);
 }
 
@@ -31,14 +31,14 @@ void CategoryTreeItem::setCost(double value)
 {
     mCost = value;
 
-    setText(PORTFOLIO_COST_COLUMN, QString::number(mCost, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_COST_COLUMN, QString::number(mCost, 'f', 2) + " " + RUBLE);
 }
 
 void CategoryTreeItem::setPart(float value)
 {
     mPart = value;
 
-    setText(PORTFOLIO_PART_COLUMN, QString::number(mPart, 'f', 2) + "%");
+    setText(PORTFOLIO_OLD_PART_COLUMN, QString::number(mPart, 'f', 2) + "%");
 }
 
 QString CategoryTreeItem::name() const

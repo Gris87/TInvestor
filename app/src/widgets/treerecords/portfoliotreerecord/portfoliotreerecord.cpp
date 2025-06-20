@@ -73,32 +73,32 @@ void PortfolioTreeRecord::exportToExcel(QXlsx::Document& doc, int row) const
     cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     cellStyle.setFontColor(CELL_FONT_COLOR);
 
-    if (mPortfolioTreeItem->text(PORTFOLIO_PRICE_COLUMN) != "")
+    if (mPortfolioTreeItem->text(PORTFOLIO_OLD_PRICE_COLUMN) != "")
     {
         // clang-format off
-        doc.write(row, PORTFOLIO_NAME_COLUMN + 1,          mPortfolioTreeItem->name(),                                cellStyle);
-        doc.write(row, PORTFOLIO_AVAILABLE_COLUMN + 1,     mPortfolioTreeItem->available(),                           cellStyle);
-        doc.write(row, PORTFOLIO_PRICE_COLUMN + 1,         mPortfolioTreeItem->price(),                               createRubleFormat(CELL_FONT_COLOR, false, mPortfolioTreeItem->pricePrecision()));
-        doc.write(row, PORTFOLIO_AVG_PRICE_COLUMN + 1,     mPortfolioTreeItem->avgPrice(),                            createRubleFormat(CELL_FONT_COLOR, false, mPortfolioTreeItem->pricePrecision()));
-        doc.write(row, PORTFOLIO_COST_COLUMN + 1,          mPortfolioTreeItem->cost(),                                createRubleFormat(CELL_FONT_COLOR, false, 2));
-        doc.write(row, PORTFOLIO_PART_COLUMN + 1,          mPortfolioTreeItem->part() / HUNDRED_PERCENT,              createPercentFormat(CELL_FONT_COLOR, false));
-        doc.write(row, PORTFOLIO_YIELD_COLUMN + 1,         mPortfolioTreeItem->yield(),                               createRubleFormat(mPortfolioTreeItem->foreground(PORTFOLIO_YIELD_COLUMN).color(), true, 2));
-        doc.write(row, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, mPortfolioTreeItem->yieldPercent() / HUNDRED_PERCENT,      createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_YIELD_PERCENT_COLUMN).color(), true));
-        doc.write(row, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   mPortfolioTreeItem->dailyYieldPercent() / HUNDRED_PERCENT, createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_DAILY_YIELD_COLUMN).color(), true));
+        doc.write(row, PORTFOLIO_OLD_NAME_COLUMN + 1,          mPortfolioTreeItem->name(),                                cellStyle);
+        doc.write(row, PORTFOLIO_OLD_AVAILABLE_COLUMN + 1,     mPortfolioTreeItem->available(),                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_PRICE_COLUMN + 1,         mPortfolioTreeItem->price(),                               createRubleFormat(CELL_FONT_COLOR, false, mPortfolioTreeItem->pricePrecision()));
+        doc.write(row, PORTFOLIO_OLD_AVG_PRICE_COLUMN + 1,     mPortfolioTreeItem->avgPrice(),                            createRubleFormat(CELL_FONT_COLOR, false, mPortfolioTreeItem->pricePrecision()));
+        doc.write(row, PORTFOLIO_OLD_COST_COLUMN + 1,          mPortfolioTreeItem->cost(),                                createRubleFormat(CELL_FONT_COLOR, false, 2));
+        doc.write(row, PORTFOLIO_OLD_PART_COLUMN + 1,          mPortfolioTreeItem->part() / HUNDRED_PERCENT,              createPercentFormat(CELL_FONT_COLOR, false));
+        doc.write(row, PORTFOLIO_OLD_YIELD_COLUMN + 1,         mPortfolioTreeItem->yield(),                               createRubleFormat(mPortfolioTreeItem->foreground(PORTFOLIO_OLD_YIELD_COLUMN).color(), true, 2));
+        doc.write(row, PORTFOLIO_OLD_YIELD_PERCENT_COLUMN + 1, mPortfolioTreeItem->yieldPercent() / HUNDRED_PERCENT,      createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_OLD_YIELD_PERCENT_COLUMN).color(), true));
+        doc.write(row, PORTFOLIO_OLD_DAILY_YIELD_COLUMN + 1,   mPortfolioTreeItem->dailyYieldPercent() / HUNDRED_PERCENT, createPercentFormat(mPortfolioTreeItem->foreground(PORTFOLIO_OLD_DAILY_YIELD_COLUMN).color(), true));
         // clang-format on
     }
     else
     {
         // clang-format off
-        doc.write(row, PORTFOLIO_NAME_COLUMN + 1,          mPortfolioTreeItem->name(),                   cellStyle);
-        doc.write(row, PORTFOLIO_AVAILABLE_COLUMN + 1,     mPortfolioTreeItem->available(),              cellStyle);
-        doc.write(row, PORTFOLIO_PRICE_COLUMN + 1,         "",                                           cellStyle);
-        doc.write(row, PORTFOLIO_AVG_PRICE_COLUMN + 1,     "",                                           cellStyle);
-        doc.write(row, PORTFOLIO_COST_COLUMN + 1,          mPortfolioTreeItem->cost(),                   createRubleFormat(CELL_FONT_COLOR, false, 2));
-        doc.write(row, PORTFOLIO_PART_COLUMN + 1,          mPortfolioTreeItem->part() / HUNDRED_PERCENT, createPercentFormat(CELL_FONT_COLOR, false));
-        doc.write(row, PORTFOLIO_YIELD_COLUMN + 1,         "",                                           cellStyle);
-        doc.write(row, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, "",                                           cellStyle);
-        doc.write(row, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   "",                                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_NAME_COLUMN + 1,          mPortfolioTreeItem->name(),                   cellStyle);
+        doc.write(row, PORTFOLIO_OLD_AVAILABLE_COLUMN + 1,     mPortfolioTreeItem->available(),              cellStyle);
+        doc.write(row, PORTFOLIO_OLD_PRICE_COLUMN + 1,         "",                                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_AVG_PRICE_COLUMN + 1,     "",                                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_COST_COLUMN + 1,          mPortfolioTreeItem->cost(),                   createRubleFormat(CELL_FONT_COLOR, false, 2));
+        doc.write(row, PORTFOLIO_OLD_PART_COLUMN + 1,          mPortfolioTreeItem->part() / HUNDRED_PERCENT, createPercentFormat(CELL_FONT_COLOR, false));
+        doc.write(row, PORTFOLIO_OLD_YIELD_COLUMN + 1,         "",                                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_YIELD_PERCENT_COLUMN + 1, "",                                           cellStyle);
+        doc.write(row, PORTFOLIO_OLD_DAILY_YIELD_COLUMN + 1,   "",                                           cellStyle);
         // clang-format on
     }
 }

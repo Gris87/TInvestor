@@ -17,6 +17,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
     IOperationsTableModelFactory*  operationsTableModelFactory,
     ILogsTableModelFactory*        logsTableModelFactory,
+    IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
     IPortfolioTreeRecordFactory*   portfolioTreeRecordFactory,
     IInstrumentWidgetFactory*      instrumentWidgetFactory,
     IUserStorage*                  userStorage,
@@ -51,6 +52,8 @@ DecisionMakerWidget::DecisionMakerWidget(
     mLogsTableWidget =
         logsTableWidgetFactory->newInstance(logsTableModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this);
     mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
+        portfolioTreeModelFactory,
+        logosStorage,
         portfolioTreeRecordFactory,
         instrumentWidgetFactory,
         userStorage,

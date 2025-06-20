@@ -23,13 +23,15 @@ public:
     MOCK_METHOD(
         IPortfolioTreeWidget*,
         newInstance,
-        (IPortfolioTreeRecordFactory * portfolioTreeRecordFactory,
-         IInstrumentWidgetFactory* instrumentWidgetFactory,
-         IUserStorage*             userStorage,
-         IInstrumentsStorage*      instrumentsStorage,
-         IFileDialogFactory*       fileDialogFactory,
-         ISettingsEditor*          settingsEditor,
-         QWidget*                  parent),
+        (IPortfolioTreeModelFactory * portfolioTreeModelFactory,
+         ILogosStorage*               logosStorage,
+         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
+         IInstrumentWidgetFactory*    instrumentWidgetFactory,
+         IUserStorage*                userStorage,
+         IInstrumentsStorage*         instrumentsStorage,
+         IFileDialogFactory*          fileDialogFactory,
+         ISettingsEditor*             settingsEditor,
+         QWidget*                     parent),
         (const, override)
     );
 };
