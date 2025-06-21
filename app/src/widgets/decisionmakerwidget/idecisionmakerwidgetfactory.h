@@ -14,52 +14,6 @@
 
 
 
-struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
-{
-    explicit DecisionMakerWidgetFactoryNewInstanceArgsMore15(
-        IOperationsTableWidgetFactory* _operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*    _accountChartWidgetFactory,
-        ILogsFilterWidgetFactory*      _logsFilterWidgetFactory,
-        ILogsTableWidgetFactory*       _logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*   _portfolioTreeWidgetFactory,
-        IOperationsTableModelFactory*  _operationsTableModelFactory,
-        ILogsTableModelFactory*        _logsTableModelFactory,
-        IPortfolioTreeModelFactory*    _portfolioTreeModelFactory,
-        ILogosStorage*                 _logosStorage,
-        IFileDialogFactory*            _fileDialogFactory,
-        ISettingsEditor*               _settingsEditor
-    ) :
-        operationsTableWidgetFactory(_operationsTableWidgetFactory),
-        accountChartWidgetFactory(_accountChartWidgetFactory),
-        logsFilterWidgetFactory(_logsFilterWidgetFactory),
-        logsTableWidgetFactory(_logsTableWidgetFactory),
-        portfolioTreeWidgetFactory(_portfolioTreeWidgetFactory),
-        operationsTableModelFactory(_operationsTableModelFactory),
-        logsTableModelFactory(_logsTableModelFactory),
-        portfolioTreeModelFactory(_portfolioTreeModelFactory),
-        logosStorage(_logosStorage),
-        fileDialogFactory(_fileDialogFactory),
-        settingsEditor(_settingsEditor)
-    {
-    }
-
-    bool operator==(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& another) const = default;
-
-    IOperationsTableWidgetFactory* operationsTableWidgetFactory;
-    IAccountChartWidgetFactory*    accountChartWidgetFactory;
-    ILogsFilterWidgetFactory*      logsFilterWidgetFactory;
-    ILogsTableWidgetFactory*       logsTableWidgetFactory;
-    IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory;
-    IOperationsTableModelFactory*  operationsTableModelFactory;
-    ILogsTableModelFactory*        logsTableModelFactory;
-    IPortfolioTreeModelFactory*    portfolioTreeModelFactory;
-    ILogosStorage*                 logosStorage;
-    IFileDialogFactory*            fileDialogFactory;
-    ISettingsEditor*               settingsEditor;
-};
-
-
-
 class IDecisionMakerWidgetFactory
 {
 public:
@@ -69,6 +23,18 @@ public:
     IDecisionMakerWidgetFactory(const IDecisionMakerWidgetFactory& another)            = delete;
     IDecisionMakerWidgetFactory& operator=(const IDecisionMakerWidgetFactory& another) = delete;
 
-    virtual IDecisionMakerWidget*
-    newInstance(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& args, QWidget* parent) const = 0;
+    virtual IDecisionMakerWidget* newInstance(
+        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*    accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
+        ILogsTableWidgetFactory*       logsTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
+        IOperationsTableModelFactory*  operationsTableModelFactory,
+        ILogsTableModelFactory*        logsTableModelFactory,
+        IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
+        ILogosStorage*                 logosStorage,
+        IFileDialogFactory*            fileDialogFactory,
+        ISettingsEditor*               settingsEditor,
+        QWidget*                       parent
+    ) const = 0;
 };

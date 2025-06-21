@@ -174,35 +174,31 @@ MainWindow::MainWindow(
         this
     );
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
-        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
-            operationsTableWidgetFactory,
-            accountChartWidgetFactory,
-            logsFilterWidgetFactory,
-            logsTableWidgetFactory,
-            portfolioTreeWidgetFactory,
-            operationsTableModelFactory,
-            logsTableModelFactory,
-            portfolioTreeModelFactory,
-            mLogosStorage,
-            mFileDialogFactory,
-            mSettingsEditor
-        ),
+        operationsTableWidgetFactory,
+        accountChartWidgetFactory,
+        logsFilterWidgetFactory,
+        logsTableWidgetFactory,
+        portfolioTreeWidgetFactory,
+        operationsTableModelFactory,
+        logsTableModelFactory,
+        portfolioTreeModelFactory,
+        mLogosStorage,
+        mFileDialogFactory,
+        mSettingsEditor,
         this
     );
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
-        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
-            operationsTableWidgetFactory,
-            accountChartWidgetFactory,
-            logsFilterWidgetFactory,
-            logsTableWidgetFactory,
-            portfolioTreeWidgetFactory,
-            operationsTableModelFactory,
-            logsTableModelFactory,
-            portfolioTreeModelFactory,
-            mLogosStorage,
-            mFileDialogFactory,
-            mSettingsEditor
-        ),
+        operationsTableWidgetFactory,
+        accountChartWidgetFactory,
+        logsFilterWidgetFactory,
+        logsTableWidgetFactory,
+        portfolioTreeWidgetFactory,
+        operationsTableModelFactory,
+        logsTableModelFactory,
+        portfolioTreeModelFactory,
+        mLogosStorage,
+        mFileDialogFactory,
+        mSettingsEditor,
         this
     );
 

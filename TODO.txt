@@ -1,4 +1,3 @@
-DecisionMakerWidgetFactoryNewInstanceArgsMore15
 Stocks TableView
 Slow splitter move
 Tray icon popup too long

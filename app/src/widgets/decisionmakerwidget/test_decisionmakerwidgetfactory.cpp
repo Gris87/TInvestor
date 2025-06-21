@@ -84,19 +84,17 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
 
     const IDecisionMakerWidget* widget = factory.newInstance(
-        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
-            &operationsTableWidgetFactoryMock,
-            &accountChartWidgetFactoryMock,
-            &logsFilterWidgetFactoryMock,
-            &logsTableWidgetFactoryMock,
-            &portfolioTreeWidgetFactoryMock,
-            &operationsTableModelFactoryMock,
-            &logsTableModelFactoryMock,
-            &portfolioTreeModelFactoryMock,
-            &logosStorageMock,
-            &fileDialogFactoryMock,
-            &settingsEditorMock
-        ),
+        &operationsTableWidgetFactoryMock,
+        &accountChartWidgetFactoryMock,
+        &logsFilterWidgetFactoryMock,
+        &logsTableWidgetFactoryMock,
+        &portfolioTreeWidgetFactoryMock,
+        &operationsTableModelFactoryMock,
+        &logsTableModelFactoryMock,
+        &portfolioTreeModelFactoryMock,
+        &logosStorageMock,
+        &fileDialogFactoryMock,
+        &settingsEditorMock,
         nullptr
     );
     ASSERT_TRUE(widget != nullptr);
