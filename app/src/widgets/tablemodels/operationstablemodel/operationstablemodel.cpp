@@ -368,74 +368,6 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-static void fillEntriesIndeciesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
-)
-{
-    int* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = i;
-    }
-}
-
-struct MergeSortedEntriesInfo
-{
-    explicit MergeSortedEntriesInfo(QList<Operation>* _entries, QList<int>* _sortedIndecies) :
-        entries(_entries),
-        sortedIndecies(_sortedIndecies)
-    {
-    }
-
-    QList<Operation>* entries;
-    QList<int>*       sortedIndecies;
-};
-
-static void mergeSortedEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
-)
-{
-    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
-
-    Operation* entriesArray  = mergeSortedEntriesInfo->entries->data();
-    int*       indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
-
-    Operation* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = entriesArray[indeciesArray[i]];
-    }
-}
-
-struct ReverseEntriesInfo
-{
-    explicit ReverseEntriesInfo(QList<Operation>* _entries) :
-        entries(_entries)
-    {
-    }
-
-    QList<Operation>* entries;
-};
-
-static void reverseEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
-)
-{
-    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
-
-    Operation* entriesArray = reverseEntriesInfo->entries->data();
-
-    Operation* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = entriesArray[res.size() - i - 1];
-    }
-}
-
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 void OperationsTableModel::sort(int column, Qt::SortOrder order)
 {
     if (mSortColumn != column || mSortOrder != order)
@@ -449,246 +381,18 @@ void OperationsTableModel::sort(int column, Qt::SortOrder order)
             mSortColumn = column;
             mSortOrder  = order;
 
-            QList<int> entriesIndecies;
-            entriesIndecies.resizeForOverwrite(mEntries->size());
-            processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
-
-            if (mSortOrder == Qt::AscendingOrder)
-            {
-                if (mSortColumn == OPERATIONS_TIME_COLUMN)
-                {
-                    const OperationsTableTimeLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_NAME_COLUMN)
-                {
-                    const OperationsTableNameLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
-                {
-                    const OperationsTableDescriptionLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
-                {
-                    const OperationsTablePriceLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
-                {
-                    const OperationsTableAvgPriceFifoLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
-                {
-                    const OperationsTableAvgPriceWavgLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
-                {
-                    const OperationsTableQuantityLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
-                {
-                    const OperationsTableRemainedQuantityLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
-                {
-                    const OperationsTablePaymentLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
-                {
-                    const OperationsTableCommissionLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
-                {
-                    const OperationsTableYieldLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
-                {
-                    const OperationsTableYieldWithCommissionLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-                {
-                    const OperationsTableYieldWithCommissionPercentLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
-                {
-                    const OperationsTableTotalYieldWithCommissionLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-                {
-                    const OperationsTableTotalYieldWithCommissionPercentLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
-                {
-                    const OperationsTableRemainedMoneyLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
-                {
-                    const OperationsTableTotalMoneyLessThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-            }
-            else
-            {
-                if (mSortColumn == OPERATIONS_TIME_COLUMN)
-                {
-                    const OperationsTableTimeGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_NAME_COLUMN)
-                {
-                    const OperationsTableNameGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
-                {
-                    const OperationsTableDescriptionGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
-                {
-                    const OperationsTablePriceGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
-                {
-                    const OperationsTableAvgPriceFifoGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
-                {
-                    const OperationsTableAvgPriceWavgGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
-                {
-                    const OperationsTableQuantityGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
-                {
-                    const OperationsTableRemainedQuantityGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
-                {
-                    const OperationsTablePaymentGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
-                {
-                    const OperationsTableCommissionGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
-                {
-                    const OperationsTableYieldGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
-                {
-                    const OperationsTableYieldWithCommissionGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-                {
-                    const OperationsTableYieldWithCommissionPercentGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
-                {
-                    const OperationsTableTotalYieldWithCommissionGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-                {
-                    const OperationsTableTotalYieldWithCommissionPercentGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
-                {
-                    const OperationsTableRemainedMoneyGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
-                {
-                    const OperationsTableTotalMoneyGreaterThan cmp(mEntries.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-            }
-
-            const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
-            entries->resizeForOverwrite(mEntries->size());
-
-            MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntries.get(), &entriesIndecies);
-            processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
-
-            mEntries = entries;
+            sortEntries();
         }
         else
         {
             mSortOrder = order;
 
-            const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
-            entries->resizeForOverwrite(mEntries->size());
-
-            ReverseEntriesInfo reverseEntriesInfo(mEntries.get());
-            processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
-
-            mEntries = entries;
+            reverseEntries();
         }
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 void OperationsTableModel::operationsRead(const QList<Operation>& operations)
 {
@@ -826,6 +530,312 @@ QXlsx::Format OperationsTableModel::createPercentFormat(const QColor& color, boo
     res.setFontColor(color);
 
     return res;
+}
+
+static void fillEntriesIndeciesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+)
+{
+    int* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = i;
+    }
+}
+
+struct MergeSortedEntriesInfo
+{
+    explicit MergeSortedEntriesInfo(QList<Operation>* _entries, QList<int>* _sortedIndecies) :
+        entries(_entries),
+        sortedIndecies(_sortedIndecies)
+    {
+    }
+
+    QList<Operation>* entries;
+    QList<int>*       sortedIndecies;
+};
+
+static void mergeSortedEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
+{
+    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+
+    Operation* entriesArray  = mergeSortedEntriesInfo->entries->data();
+    int*       indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[indeciesArray[i]];
+    }
+}
+
+// NOLINTBEGIN(readability-function-cognitive-complexity)
+void OperationsTableModel::sortEntries()
+{
+    QList<int> entriesIndecies;
+    entriesIndecies.resizeForOverwrite(mEntries->size());
+    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+
+    if (mSortOrder == Qt::AscendingOrder)
+    {
+        if (mSortColumn == OPERATIONS_TIME_COLUMN)
+        {
+            const OperationsTableTimeLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_NAME_COLUMN)
+        {
+            const OperationsTableNameLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
+        {
+            const OperationsTableDescriptionLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
+        {
+            const OperationsTablePriceLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
+        {
+            const OperationsTableAvgPriceFifoLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
+        {
+            const OperationsTableAvgPriceWavgLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
+        {
+            const OperationsTableQuantityLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
+        {
+            const OperationsTableRemainedQuantityLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
+        {
+            const OperationsTablePaymentLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
+        {
+            const OperationsTableCommissionLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
+        {
+            const OperationsTableYieldLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
+        {
+            const OperationsTableYieldWithCommissionLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
+        {
+            const OperationsTableYieldWithCommissionPercentLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
+        {
+            const OperationsTableTotalYieldWithCommissionLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
+        {
+            const OperationsTableTotalYieldWithCommissionPercentLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
+        {
+            const OperationsTableRemainedMoneyLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
+        {
+            const OperationsTableTotalMoneyLessThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+    else
+    {
+        if (mSortColumn == OPERATIONS_TIME_COLUMN)
+        {
+            const OperationsTableTimeGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_NAME_COLUMN)
+        {
+            const OperationsTableNameGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_DESCRIPTION_COLUMN)
+        {
+            const OperationsTableDescriptionGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_PRICE_COLUMN)
+        {
+            const OperationsTablePriceGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_AVG_PRICE_FIFO_COLUMN)
+        {
+            const OperationsTableAvgPriceFifoGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_AVG_PRICE_WAVG_COLUMN)
+        {
+            const OperationsTableAvgPriceWavgGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_QUANTITY_COLUMN)
+        {
+            const OperationsTableQuantityGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_REMAINED_QUANTITY_COLUMN)
+        {
+            const OperationsTableRemainedQuantityGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_PAYMENT_COLUMN)
+        {
+            const OperationsTablePaymentGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_COMMISSION_COLUMN)
+        {
+            const OperationsTableCommissionGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_COLUMN)
+        {
+            const OperationsTableYieldGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_COLUMN)
+        {
+            const OperationsTableYieldWithCommissionGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
+        {
+            const OperationsTableYieldWithCommissionPercentGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN)
+        {
+            const OperationsTableTotalYieldWithCommissionGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
+        {
+            const OperationsTableTotalYieldWithCommissionPercentGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_REMAINED_MONEY_COLUMN)
+        {
+            const OperationsTableRemainedMoneyGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == OPERATIONS_TOTAL_MONEY_COLUMN)
+        {
+            const OperationsTableTotalMoneyGreaterThan cmp(mEntries.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+
+    const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
+    entries->resizeForOverwrite(mEntries->size());
+
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntries.get(), &entriesIndecies);
+    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+
+    mEntries = entries;
+}
+// NOLINTEND(readability-function-cognitive-complexity)
+
+struct ReverseEntriesInfo
+{
+    explicit ReverseEntriesInfo(QList<Operation>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<Operation>* entries;
+};
+
+static void reverseEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
+{
+    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+
+    Operation* entriesArray = reverseEntriesInfo->entries->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[res.size() - i - 1];
+    }
+}
+
+void OperationsTableModel::reverseEntries()
+{
+    const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
+    entries->resizeForOverwrite(mEntries->size());
+
+    ReverseEntriesInfo reverseEntriesInfo(mEntries.get());
+    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+
+    mEntries = entries;
 }
 
 using AscSortHandler = bool (*)(const Operation& l, const Operation& r);

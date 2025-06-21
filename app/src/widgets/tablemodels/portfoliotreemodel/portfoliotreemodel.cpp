@@ -2,8 +2,12 @@
 
 #include <QBrush>
 #include <QDebug>
+#include <algorithm>
+#include <execution>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/widgets/tablemodels/modelroles.h"
+#include "src/widgets/tablemodels/portfoliotreemodel/comparators.h"
 
 
 
@@ -19,7 +23,9 @@ PortfolioTreeModel::PortfolioTreeModel(QObject* parent) :
     IPortfolioTreeModel(parent),
     mHeader(),
     mHelpIcon(":/assets/images/question.png"),
-    mPortfolio()
+    mPortfolio(),
+    mSortColumn(PORTFOLIO_NAME_COLUMN),
+    mSortOrder(Qt::AscendingOrder)
 {
     qDebug() << "Create PortfolioTreeModel";
 
@@ -423,13 +429,48 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
+void PortfolioTreeModel::sort(int column, Qt::SortOrder order)
+{
+    if (mSortColumn != column || mSortOrder != order)
+    {
+        const QList<QPersistentModelIndex> parents;
+
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
+        if (mSortColumn != column)
+        {
+            mSortColumn = column;
+            mSortOrder  = order;
+
+            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            {
+                sortCategory(&category.items);
+            }
+        }
+        else
+        {
+            mSortOrder = order;
+
+            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            {
+                reverseCategory(&category.items);
+            }
+        }
+
+        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+}
+
 void PortfolioTreeModel::portfolioChanged(const Portfolio& portfolio)
 {
     beginResetModel();
 
     mPortfolio = portfolio;
 
-    // TODO: Sort
+    for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+    {
+        sortCategory(&category.items);
+    }
 
     endResetModel();
 }
@@ -442,4 +483,212 @@ void PortfolioTreeModel::lastPriceChanged(const QString& /*instrumentId*/, float
 void PortfolioTreeModel::updateLastPrices()
 {
     // TODO: Implement
+}
+
+static void fillItemsIndeciesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+)
+{
+    int* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = i;
+    }
+}
+
+struct MergeSortedItemsInfo
+{
+    explicit MergeSortedItemsInfo(QList<PortfolioItem>* _items, QList<int>* _sortedIndecies) :
+        items(_items),
+        sortedIndecies(_sortedIndecies)
+    {
+    }
+
+    QList<PortfolioItem>* items;
+    QList<int>*           sortedIndecies;
+};
+
+static void mergeSortedItemsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<PortfolioItem>& res, int start, int end, void* additionalArgs
+)
+{
+    MergeSortedItemsInfo* mergeSortedItemsInfo = reinterpret_cast<MergeSortedItemsInfo*>(additionalArgs);
+
+    PortfolioItem* itemsArray    = mergeSortedItemsInfo->items->data();
+    int*           indeciesArray = mergeSortedItemsInfo->sortedIndecies->data();
+
+    PortfolioItem* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = itemsArray[indeciesArray[i]];
+    }
+}
+
+void PortfolioTreeModel::sortCategory(QList<PortfolioItem>* items)
+{
+    QList<int> itemsIndecies;
+    itemsIndecies.resizeForOverwrite(items->size());
+    processInParallel(itemsIndecies, fillItemsIndeciesForParallel);
+
+    if (mSortOrder == Qt::AscendingOrder)
+    {
+        if (mSortColumn == PORTFOLIO_NAME_COLUMN)
+        {
+            const PortfolioTreeNameLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_AVAILABLE_COLUMN)
+        {
+            const PortfolioTreeAvailableLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_PRICE_COLUMN)
+        {
+            const PortfolioTreePriceLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_AVG_PRICE_COLUMN)
+        {
+            const PortfolioTreeAvgPriceLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_COST_COLUMN)
+        {
+            const PortfolioTreeCostLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_PART_COLUMN)
+        {
+            const PortfolioTreePartLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_YIELD_COLUMN)
+        {
+            const PortfolioTreeYieldLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_YIELD_PERCENT_COLUMN)
+        {
+            const PortfolioTreeYieldPercentLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_DAILY_YIELD_COLUMN)
+        {
+            const PortfolioTreeDailyYieldLessThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+    }
+    else
+    {
+        if (mSortColumn == PORTFOLIO_NAME_COLUMN)
+        {
+            const PortfolioTreeNameGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_AVAILABLE_COLUMN)
+        {
+            const PortfolioTreeAvailableGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_PRICE_COLUMN)
+        {
+            const PortfolioTreePriceGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_AVG_PRICE_COLUMN)
+        {
+            const PortfolioTreeAvgPriceGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_COST_COLUMN)
+        {
+            const PortfolioTreeCostGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_PART_COLUMN)
+        {
+            const PortfolioTreePartGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_YIELD_COLUMN)
+        {
+            const PortfolioTreeYieldGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_YIELD_PERCENT_COLUMN)
+        {
+            const PortfolioTreeYieldPercentGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+        else if (mSortColumn == PORTFOLIO_DAILY_YIELD_COLUMN)
+        {
+            const PortfolioTreeDailyYieldGreaterThan cmp(items);
+
+            std::stable_sort(std::execution::par, itemsIndecies.begin(), itemsIndecies.end(), cmp);
+        }
+    }
+
+    QList<PortfolioItem> newItems;
+    newItems.resizeForOverwrite(items->size());
+
+    MergeSortedItemsInfo mergeSortedItemsInfo(items, &itemsIndecies);
+    processInParallel(newItems, mergeSortedItemsForParallel, &mergeSortedItemsInfo);
+
+    *items = newItems;
+}
+
+struct ReverseItemsInfo
+{
+    explicit ReverseItemsInfo(QList<PortfolioItem>* _items) :
+        items(_items)
+    {
+    }
+
+    QList<PortfolioItem>* items;
+};
+
+static void reverseItemsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<PortfolioItem>& res, int start, int end, void* additionalArgs
+)
+{
+    ReverseItemsInfo* reverseItemsInfo = reinterpret_cast<ReverseItemsInfo*>(additionalArgs);
+
+    PortfolioItem* itemsArray = reverseItemsInfo->items->data();
+
+    PortfolioItem* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = itemsArray[res.size() - i - 1];
+    }
+}
+
+void PortfolioTreeModel::reverseCategory(QList<PortfolioItem>* items)
+{
+    QList<PortfolioItem> newItems;
+    newItems.resizeForOverwrite(items->size());
+
+    ReverseItemsInfo reverseItemsInfo(items);
+    processInParallel(newItems, reverseItemsForParallel, &reverseItemsInfo);
+
+    *items = newItems;
 }

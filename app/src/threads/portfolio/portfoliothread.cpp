@@ -159,7 +159,6 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     double                              totalCost = 0.0;
     QMap<QString, QList<PortfolioItem>> categories; // Instrument type => category
 
-
     mInstrumentsStorage->lock();
     mLogosStorage->lock();
 

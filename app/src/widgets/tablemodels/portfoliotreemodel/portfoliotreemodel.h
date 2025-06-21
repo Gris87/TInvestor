@@ -34,12 +34,19 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
+    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder) override;
+
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;
 
 private:
-    QStringList mHeader;
-    QIcon       mHelpIcon;
-    Portfolio   mPortfolio;
+    void sortCategory(QList<PortfolioItem>* items);
+    void reverseCategory(QList<PortfolioItem>* items);
+
+    QStringList   mHeader;
+    QIcon         mHelpIcon;
+    Portfolio     mPortfolio;
+    int           mSortColumn;
+    Qt::SortOrder mSortOrder;
 };

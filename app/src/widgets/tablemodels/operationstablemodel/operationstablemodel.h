@@ -42,6 +42,8 @@ private:
     [[nodiscard]]
     QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
 
+    void sortEntries();
+    void reverseEntries();
     int  indexOfSortedInsert(QList<Operation>* entries, const Operation& entry);
     void insertRow(QList<Operation>* entries, int row, const Operation& entry);
 

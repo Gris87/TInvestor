@@ -116,72 +116,6 @@ QVariant LogsTableModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-static void fillEntriesIndeciesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
-)
-{
-    int* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = i;
-    }
-}
-
-struct MergeSortedEntriesInfo
-{
-    explicit MergeSortedEntriesInfo(QList<LogEntry>* _entriesUnfiltered, QList<int>* _sortedIndecies) :
-        entriesUnfiltered(_entriesUnfiltered),
-        sortedIndecies(_sortedIndecies)
-    {
-    }
-
-    QList<LogEntry>* entriesUnfiltered;
-    QList<int>*      sortedIndecies;
-};
-
-static void mergeSortedEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs
-)
-{
-    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
-
-    LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
-    int*      indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
-
-    LogEntry* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = entriesArray[indeciesArray[i]];
-    }
-}
-
-struct ReverseEntriesInfo
-{
-    explicit ReverseEntriesInfo(QList<LogEntry>* _entriesUnfiltered) :
-        entriesUnfiltered(_entriesUnfiltered)
-    {
-    }
-
-    QList<LogEntry>* entriesUnfiltered;
-};
-
-static void
-reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
-{
-    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
-
-    LogEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
-
-    LogEntry* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = entriesArray[res.size() - i - 1];
-    }
-}
-
 void LogsTableModel::sort(int column, Qt::SortOrder order)
 {
     if (mSortColumn != column || mSortOrder != order)
@@ -195,84 +129,13 @@ void LogsTableModel::sort(int column, Qt::SortOrder order)
             mSortColumn = column;
             mSortOrder  = order;
 
-            QList<int> entriesIndecies;
-            entriesIndecies.resizeForOverwrite(mEntriesUnfiltered->size());
-            processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
-
-            if (mSortOrder == Qt::AscendingOrder)
-            {
-                if (mSortColumn == LOGS_TIME_COLUMN)
-                {
-                    const LogsTableTimeLessThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_LEVEL_COLUMN)
-                {
-                    const LogsTableLevelLessThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_NAME_COLUMN)
-                {
-                    const LogsTableNameLessThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_MESSAGE_COLUMN)
-                {
-                    const LogsTableMessageLessThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-            }
-            else
-            {
-                if (mSortColumn == LOGS_TIME_COLUMN)
-                {
-                    const LogsTableTimeGreaterThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_LEVEL_COLUMN)
-                {
-                    const LogsTableLevelGreaterThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_NAME_COLUMN)
-                {
-                    const LogsTableNameGreaterThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-                else if (mSortColumn == LOGS_MESSAGE_COLUMN)
-                {
-                    const LogsTableMessageGreaterThan cmp(mEntriesUnfiltered.get());
-
-                    std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
-                }
-            }
-
-            const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
-            entries->resizeForOverwrite(mEntriesUnfiltered->size());
-
-            MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
-            processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
-
-            mEntriesUnfiltered = entries;
+            sortEntries();
         }
         else
         {
             mSortOrder = order;
 
-            const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
-            entries->resizeForOverwrite(mEntriesUnfiltered->size());
-
-            ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
-            processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
-
-            mEntriesUnfiltered = entries;
+            reverseEntries();
         }
 
         filterAll();
@@ -391,6 +254,154 @@ void LogsTableModel::exportToExcel(QXlsx::Document& doc) const
         // clang-format on
     }
 }
+
+static void fillEntriesIndeciesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+)
+{
+    int* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = i;
+    }
+}
+
+struct MergeSortedEntriesInfo
+{
+    explicit MergeSortedEntriesInfo(QList<LogEntry>* _entriesUnfiltered, QList<int>* _sortedIndecies) :
+        entriesUnfiltered(_entriesUnfiltered),
+        sortedIndecies(_sortedIndecies)
+    {
+    }
+
+    QList<LogEntry>* entriesUnfiltered;
+    QList<int>*      sortedIndecies;
+};
+
+static void mergeSortedEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+
+    LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
+    int*      indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+
+    LogEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[indeciesArray[i]];
+    }
+}
+
+void LogsTableModel::sortEntries()
+{
+    QList<int> entriesIndecies;
+    entriesIndecies.resizeForOverwrite(mEntriesUnfiltered->size());
+    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+
+    if (mSortOrder == Qt::AscendingOrder)
+    {
+        if (mSortColumn == LOGS_TIME_COLUMN)
+        {
+            const LogsTableTimeLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_LEVEL_COLUMN)
+        {
+            const LogsTableLevelLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_NAME_COLUMN)
+        {
+            const LogsTableNameLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_MESSAGE_COLUMN)
+        {
+            const LogsTableMessageLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+    else
+    {
+        if (mSortColumn == LOGS_TIME_COLUMN)
+        {
+            const LogsTableTimeGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_LEVEL_COLUMN)
+        {
+            const LogsTableLevelGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_NAME_COLUMN)
+        {
+            const LogsTableNameGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == LOGS_MESSAGE_COLUMN)
+        {
+            const LogsTableMessageGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+
+    const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
+    entries->resizeForOverwrite(mEntriesUnfiltered->size());
+
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
+    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+
+    mEntriesUnfiltered = entries;
+}
+
+struct ReverseEntriesInfo
+{
+    explicit ReverseEntriesInfo(QList<LogEntry>* _entriesUnfiltered) :
+        entriesUnfiltered(_entriesUnfiltered)
+    {
+    }
+
+    QList<LogEntry>* entriesUnfiltered;
+};
+
+static void
+reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+{
+    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+
+    LogEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
+
+    LogEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[res.size() - i - 1];
+    }
+}
+
+void LogsTableModel::reverseEntries()
+{
+    const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
+    entries->resizeForOverwrite(mEntriesUnfiltered->size());
+
+    ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
+    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+
+    mEntriesUnfiltered = entries;
+}
+
 using AscSortHandler = bool (*)(const LogEntry& l, const LogEntry& r);
 
 static const AscSortHandler ASC_SORT_HANDLER[LOGS_COLUMN_COUNT]{logsTimeLess, logsLevelLess, logsNameLess, logsMessageLess};

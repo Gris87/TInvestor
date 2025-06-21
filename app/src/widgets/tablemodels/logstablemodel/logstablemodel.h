@@ -37,6 +37,8 @@ public:
     void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
+    void sortEntries();
+    void reverseEntries();
     int  indexOfSortedInsert(QList<LogEntry>* entries, const LogEntry& entry);
     void insertRow(QList<LogEntry>* entries, int row, const LogEntry& entry);
     void filterAll();
