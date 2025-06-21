@@ -43,10 +43,12 @@ public:
 private:
     void sortCategory(QList<PortfolioItem>* items);
     void reverseCategory(QList<PortfolioItem>* items);
+    void updatePriceInCategory(PortfolioCategoryItem* category, bool needToSort);
 
-    QStringList   mHeader;
-    QIcon         mHelpIcon;
-    Portfolio     mPortfolio;
-    int           mSortColumn;
-    Qt::SortOrder mSortOrder;
+    QStringList          mHeader;
+    QIcon                mHelpIcon;
+    Portfolio            mPortfolio;
+    int                  mSortColumn;
+    Qt::SortOrder        mSortOrder;
+    QMap<QString, float> mLastPricesUpdates; // Instrument ID => Price
 };

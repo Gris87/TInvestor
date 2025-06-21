@@ -11,7 +11,8 @@
 
 
 
-constexpr float ZERO_LIMIT = 0.0001f;
+constexpr float ZERO_LIMIT      = 0.0001f;
+constexpr float HUNDRED_PERCENT = 100.0f;
 
 const QBrush GREEN_COLOR  = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
 const QBrush RED_COLOR    = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
@@ -25,7 +26,8 @@ PortfolioTreeModel::PortfolioTreeModel(QObject* parent) :
     mHelpIcon(":/assets/images/question.png"),
     mPortfolio(),
     mSortColumn(PORTFOLIO_NAME_COLUMN),
-    mSortOrder(Qt::AscendingOrder)
+    mSortOrder(Qt::AscendingOrder),
+    mLastPricesUpdates()
 {
     qDebug() << "Create PortfolioTreeModel";
 
@@ -475,14 +477,42 @@ void PortfolioTreeModel::portfolioChanged(const Portfolio& portfolio)
     endResetModel();
 }
 
-void PortfolioTreeModel::lastPriceChanged(const QString& /*instrumentId*/, float /*price*/)
+void PortfolioTreeModel::lastPriceChanged(const QString& instrumentId, float price)
 {
-    // TODO: Implement
+    mLastPricesUpdates[instrumentId] = price;
 }
 
 void PortfolioTreeModel::updateLastPrices()
 {
-    // TODO: Implement
+    if (!mLastPricesUpdates.isEmpty())
+    {
+        const QList<QPersistentModelIndex> parents;
+
+        const bool needToSort = mSortColumn == PORTFOLIO_PRICE_COLUMN || mSortColumn == PORTFOLIO_YIELD_COLUMN ||
+                                mSortColumn == PORTFOLIO_YIELD_PERCENT_COLUMN || mSortColumn == PORTFOLIO_DAILY_YIELD_COLUMN;
+
+        if (needToSort)
+        {
+            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+        }
+
+        for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+        {
+            updatePriceInCategory(&category, needToSort);
+        }
+
+        mLastPricesUpdates.clear();
+
+        if (needToSort)
+        {
+            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            {
+                sortCategory(&category.items);
+            }
+
+            emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+        }
+    }
 }
 
 static void fillItemsIndeciesForParallel(
@@ -691,4 +721,34 @@ void PortfolioTreeModel::reverseCategory(QList<PortfolioItem>* items)
     processInParallel(newItems, reverseItemsForParallel, &reverseItemsInfo);
 
     *items = newItems;
+}
+
+void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category, bool needToSort)
+{
+    for (int i = 0; i < category->items.size(); ++i)
+    {
+        PortfolioItem& item = category->items[i];
+
+        if (mLastPricesUpdates.contains(item.instrumentId))
+        {
+            item.price = mLastPricesUpdates.value(item.instrumentId);
+
+            const double currentCost = item.available * item.price;
+
+            item.yield             = currentCost - item.cost;
+            item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+            item.dailyYield        = currentCost - item.costForDailyYield;
+            item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+
+            if (!needToSort)
+            {
+                emit dataChanged(
+                    createIndex(i, PORTFOLIO_PRICE_COLUMN, category), createIndex(i, PORTFOLIO_PRICE_COLUMN, category)
+                );
+                emit dataChanged(
+                    createIndex(i, PORTFOLIO_YIELD_COLUMN, category), createIndex(i, PORTFOLIO_DAILY_YIELD_COLUMN, category)
+                );
+            }
+        }
+    }
 }
