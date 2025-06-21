@@ -66,7 +66,6 @@
 #include "src/utils/timeutils/timeutils.h"
 #include "src/widgets/accountchartwidget/accountchartwidgetfactory.h"
 #include "src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h"
-#include "src/widgets/instrumentwidget/instrumentwidgetfactory.h"
 #include "src/widgets/logsfilterwidget/logsfilterwidgetfactory.h"
 #include "src/widgets/logstablewidget/logstablewidgetfactory.h"
 #include "src/widgets/operationstablewidget/operationstablewidgetfactory.h"
@@ -81,7 +80,6 @@
 #include "src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodelfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
-#include "src/widgets/treerecords/portfoliotreerecord/portfoliotreerecordfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
 #error "QSystemTrayIcon is not supported on this platform"
@@ -178,7 +176,6 @@ static int runApplication(QApplication* app)
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
-    InstrumentWidgetFactory          instrumentWidgetFactory;
     InstrumentTableItemWidgetFactory instrumentTableItemWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
@@ -195,7 +192,6 @@ static int runApplication(QApplication* app)
     OperationsTableModelFactory operationsTableModelFactory;
     LogsTableModelFactory       logsTableModelFactory;
     PortfolioTreeModelFactory   portfolioTreeModelFactory;
-    PortfolioTreeRecordFactory  portfolioTreeRecordFactory;
 
     TrayIconFactory trayIconFactory;
     DirFactory      dirFactory;
@@ -364,7 +360,6 @@ static int runApplication(QApplication* app)
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
-        &instrumentWidgetFactory,
         &instrumentTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
@@ -379,7 +374,6 @@ static int runApplication(QApplication* app)
         &operationsTableModelFactory,
         &logsTableModelFactory,
         &portfolioTreeModelFactory,
-        &portfolioTreeRecordFactory,
         &decisionMakerWidgetFactory,
         &trayIconFactory,
         &userStorage,

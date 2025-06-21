@@ -52,7 +52,7 @@ QModelIndex PortfolioTreeModel::index(int row, int column, const QModelIndex& pa
         return createIndex(row, column);
     }
 
-    return createIndex(row, column, &mPortfolio.positionsList.at(parent.row()));
+    return createIndex(row, column, &mPortfolio.positions.at(parent.row()));
 }
 
 QModelIndex PortfolioTreeModel::parent(const QModelIndex& child) const
@@ -71,14 +71,14 @@ int PortfolioTreeModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid())
     {
-        return mPortfolio.positionsList.size();
+        return mPortfolio.positions.size();
     }
 
     PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(parent.internalPointer());
 
     if (category == nullptr)
     {
-        return mPortfolio.positionsList.at(parent.row()).items.size();
+        return mPortfolio.positions.at(parent.row()).items.size();
     }
 
     return 0;
@@ -366,10 +366,10 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
         if (category == nullptr)
         {
-            return CATEGORY_DISPLAY_ROLE_HANDLER[column](mPortfolio.positionsList.at(row));
+            return CATEGORY_DISPLAY_ROLE_HANDLER[column](mPortfolio.positions.at(row));
         }
 
-        return ITEM_DISPLAY_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
+        return ITEM_DISPLAY_ROLE_HANDLER[column](mPortfolio.positions.at(category->id).items.at(row));
     }
 
     if (role == Qt::ForegroundRole)
@@ -384,7 +384,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        return ITEM_FOREGROUND_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
+        return ITEM_FOREGROUND_ROLE_HANDLER[column](mPortfolio.positions.at(category->id).items.at(row));
     }
 
     if (role == Qt::ToolTipRole)
@@ -399,7 +399,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        return ITEM_TOOLTIP_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
+        return ITEM_TOOLTIP_ROLE_HANDLER[column](mPortfolio.positions.at(category->id).items.at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
@@ -414,7 +414,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row = index.row();
         Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
-        return reinterpret_cast<qint64>(mPortfolio.positionsList.at(category->id).items.at(row).instrumentLogo);
+        return reinterpret_cast<qint64>(mPortfolio.positions.at(category->id).items.at(row).instrumentLogo);
     }
 
     if (role == ROLE_INSTRUMENT_NAME)
@@ -429,7 +429,7 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         const int row = index.row();
         Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
-        return mPortfolio.positionsList.at(category->id).items.at(row).instrumentName;
+        return mPortfolio.positions.at(category->id).items.at(row).instrumentName;
     }
 
     return QVariant();
@@ -448,7 +448,7 @@ void PortfolioTreeModel::sort(int column, Qt::SortOrder order)
             mSortColumn = column;
             mSortOrder  = order;
 
-            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            for (PortfolioCategoryItem& category : mPortfolio.positions)
             {
                 sortCategory(&category.items);
             }
@@ -457,7 +457,7 @@ void PortfolioTreeModel::sort(int column, Qt::SortOrder order)
         {
             mSortOrder = order;
 
-            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            for (PortfolioCategoryItem& category : mPortfolio.positions)
             {
                 reverseCategory(&category.items);
             }
@@ -473,7 +473,7 @@ void PortfolioTreeModel::portfolioChanged(const Portfolio& portfolio)
 
     mPortfolio = portfolio;
 
-    for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+    for (PortfolioCategoryItem& category : mPortfolio.positions)
     {
         sortCategory(&category.items);
     }
@@ -486,9 +486,11 @@ void PortfolioTreeModel::lastPriceChanged(const QString& instrumentId, float pri
     mLastPricesUpdates[instrumentId] = price;
 }
 
-void PortfolioTreeModel::updateLastPrices()
+bool PortfolioTreeModel::updateLastPrices()
 {
-    if (!mLastPricesUpdates.isEmpty())
+    const bool res = !mLastPricesUpdates.isEmpty();
+
+    if (res)
     {
         const QList<QPersistentModelIndex> parents;
 
@@ -500,7 +502,7 @@ void PortfolioTreeModel::updateLastPrices()
             emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
         }
 
-        for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+        for (PortfolioCategoryItem& category : mPortfolio.positions)
         {
             updatePriceInCategory(&category, needToSort);
         }
@@ -509,7 +511,7 @@ void PortfolioTreeModel::updateLastPrices()
 
         if (needToSort)
         {
-            for (PortfolioCategoryItem& category : mPortfolio.positionsList)
+            for (PortfolioCategoryItem& category : mPortfolio.positions)
             {
                 sortCategory(&category.items);
             }
@@ -517,6 +519,8 @@ void PortfolioTreeModel::updateLastPrices()
             emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
         }
     }
+
+    return res;
 }
 
 void PortfolioTreeModel::exportToExcel(QXlsx::Document& doc) const
@@ -555,7 +559,7 @@ void PortfolioTreeModel::exportToExcel(QXlsx::Document& doc) const
 
     int curRow = 2;
 
-    for (const PortfolioCategoryItem& category : mPortfolio.positionsList)
+    for (const PortfolioCategoryItem& category : mPortfolio.positions)
     {
         // clang-format off
         doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          category.name, categoryStyle);
@@ -885,4 +889,61 @@ void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category, 
             }
         }
     }
+}
+
+double PortfolioTreeModel::totalCost() const
+{
+    double res = 0.0;
+
+    for (const PortfolioCategoryItem& category : mPortfolio.positions)
+    {
+        res += category.cost;
+    }
+
+    return res;
+}
+
+double PortfolioTreeModel::totalYield() const
+{
+    double res = 0.0;
+
+    for (const PortfolioCategoryItem& category : mPortfolio.positions)
+    {
+        for (const PortfolioItem& item : category.items)
+        {
+            res += item.yield;
+        }
+    }
+
+    return res;
+}
+
+double PortfolioTreeModel::totalDailyCost() const
+{
+    double res = 0.0;
+
+    for (const PortfolioCategoryItem& category : mPortfolio.positions)
+    {
+        for (const PortfolioItem& item : category.items)
+        {
+            res += item.costForDailyYield;
+        }
+    }
+
+    return res;
+}
+
+double PortfolioTreeModel::totalDailyYield() const
+{
+    double res = 0.0;
+
+    for (const PortfolioCategoryItem& category : mPortfolio.positions)
+    {
+        for (const PortfolioItem& item : category.items)
+        {
+            res += item.dailyYield;
+        }
+    }
+
+    return res;
 }

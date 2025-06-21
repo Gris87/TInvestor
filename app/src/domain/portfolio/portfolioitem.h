@@ -34,8 +34,6 @@ struct PortfolioItem
     qint8    pricePrecision;
 };
 
-using PortfolioItems = QMap<QString, PortfolioItem>; // UID => PortfolioItem
-
 
 
 bool operator==(const PortfolioItem& lhs, const PortfolioItem& rhs);

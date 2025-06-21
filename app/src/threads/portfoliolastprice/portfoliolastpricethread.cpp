@@ -82,15 +82,13 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
 {
     QStringList instrumentIds;
 
-    for (auto it = portfolio.positionsMap.constBegin(), end = portfolio.positionsMap.constEnd(); it != end; ++it)
+    for (const PortfolioCategoryItem& category : portfolio.positions)
     {
-        const PortfolioItems& portfolioItems = it.value();
-
-        for (auto it2 = portfolioItems.constBegin(), end = portfolioItems.constEnd(); it2 != end; ++it2)
+        for (const PortfolioItem& item : category.items)
         {
-            if (it2.value().showPrices)
+            if (item.showPrices)
             {
-                instrumentIds.append(it2.key());
+                instrumentIds.append(item.instrumentId);
             }
         }
     }

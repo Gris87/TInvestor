@@ -2,15 +2,11 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
-#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
-#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
-#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
 
@@ -33,14 +29,10 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
 
     const PortfolioTreeWidgetFactory factory;
 
-    StrictMock<PortfolioTreeModelFactoryMock>  portfolioTreeModelFactoryMock;
-    StrictMock<LogosStorageMock>               logosStorageMock;
-    StrictMock<PortfolioTreeRecordFactoryMock> portfolioTreeRecordFactoryMock;
-    StrictMock<InstrumentWidgetFactoryMock>    instrumentWidgetFactoryMock;
-    StrictMock<UserStorageMock>                userStorageMock;
-    StrictMock<InstrumentsStorageMock>         instrumentsStorageMock;
-    StrictMock<FileDialogFactoryMock>          fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>             settingsEditorMock;
+    StrictMock<PortfolioTreeModelFactoryMock> portfolioTreeModelFactoryMock;
+    StrictMock<LogosStorageMock>              logosStorageMock;
+    StrictMock<FileDialogFactoryMock>         fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>            settingsEditorMock;
 
     StrictMock<PortfolioTreeModelMock> portfolioTreeModelMock;
 
@@ -49,15 +41,7 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTreeModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
     const IPortfolioTreeWidget* widget = factory.newInstance(
-        &portfolioTreeModelFactoryMock,
-        &logosStorageMock,
-        &portfolioTreeRecordFactoryMock,
-        &instrumentWidgetFactoryMock,
-        &userStorageMock,
-        &instrumentsStorageMock,
-        &fileDialogFactoryMock,
-        &settingsEditorMock,
-        nullptr
+        &portfolioTreeModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr
     );
     ASSERT_TRUE(widget != nullptr);
 

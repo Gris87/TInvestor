@@ -41,6 +41,18 @@ public:
 
     virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
     virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
-    virtual void updateLastPrices()                                         = 0;
+    virtual bool updateLastPrices()                                         = 0;
     virtual void exportToExcel(QXlsx::Document& doc) const                  = 0;
+
+    [[nodiscard]]
+    virtual double totalCost() const = 0;
+
+    [[nodiscard]]
+    virtual double totalYield() const = 0;
+
+    [[nodiscard]]
+    virtual double totalDailyCost() const = 0;
+
+    [[nodiscard]]
+    virtual double totalDailyYield() const = 0;
 };

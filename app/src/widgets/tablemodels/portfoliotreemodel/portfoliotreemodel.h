@@ -38,8 +38,20 @@ public:
 
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
-    void updateLastPrices() override;
+    bool updateLastPrices() override;
     void exportToExcel(QXlsx::Document& doc) const override;
+
+    [[nodiscard]]
+    double totalCost() const override;
+
+    [[nodiscard]]
+    double totalYield() const override;
+
+    [[nodiscard]]
+    double totalDailyCost() const override;
+
+    [[nodiscard]]
+    double totalDailyYield() const override;
 
 private:
     [[nodiscard]]

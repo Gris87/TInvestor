@@ -2,14 +2,11 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
-#include "src/storage/user/iuserstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h"
-#include "src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h"
 #include "src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h"
 #include "src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h"
 #include "src/widgets/logstablewidget/ilogstablewidget_mock.h"
@@ -21,7 +18,6 @@
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
-#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory_mock.h"
 
 
 
@@ -52,10 +48,6 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<OperationsTableModelFactoryMock>  operationsTableModelFactoryMock;
     StrictMock<LogsTableModelFactoryMock>        logsTableModelFactoryMock;
     StrictMock<PortfolioTreeModelFactoryMock>    portfolioTreeModelFactoryMock;
-    StrictMock<PortfolioTreeRecordFactoryMock>   portfolioTreeRecordFactoryMock;
-    StrictMock<InstrumentWidgetFactoryMock>      instrumentWidgetFactoryMock;
-    StrictMock<UserStorageMock>                  userStorageMock;
-    StrictMock<InstrumentsStorageMock>           instrumentsStorageMock;
     StrictMock<LogosStorageMock>                 logosStorageMock;
     StrictMock<FileDialogFactoryMock>            fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>               settingsEditorMock;
@@ -84,17 +76,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
         .WillOnce(Return(logsTableWidgetMock));
     EXPECT_CALL(
         portfolioTreeWidgetFactoryMock,
-        newInstance(
-            &portfolioTreeModelFactoryMock,
-            &logosStorageMock,
-            &portfolioTreeRecordFactoryMock,
-            &instrumentWidgetFactoryMock,
-            &userStorageMock,
-            &instrumentsStorageMock,
-            &fileDialogFactoryMock,
-            &settingsEditorMock,
-            NotNull()
-        )
+        newInstance(&portfolioTreeModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, NotNull())
     )
         .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -111,10 +93,6 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &operationsTableModelFactoryMock,
             &logsTableModelFactoryMock,
             &portfolioTreeModelFactoryMock,
-            &portfolioTreeRecordFactoryMock,
-            &instrumentWidgetFactoryMock,
-            &userStorageMock,
-            &instrumentsStorageMock,
             &logosStorageMock,
             &fileDialogFactoryMock,
             &settingsEditorMock

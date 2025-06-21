@@ -16,14 +16,10 @@ public:
     PortfolioTreeWidgetFactory& operator=(const PortfolioTreeWidgetFactory& another) = delete;
 
     IPortfolioTreeWidget* newInstance(
-        IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
-        ILogosStorage*               logosStorage,
-        IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*    instrumentWidgetFactory,
-        IUserStorage*                userStorage,
-        IInstrumentsStorage*         instrumentsStorage,
-        IFileDialogFactory*          fileDialogFactory,
-        ISettingsEditor*             settingsEditor,
-        QWidget*                     parent
+        IPortfolioTreeModelFactory* portfolioTreeModelFactory,
+        ILogosStorage*              logosStorage,
+        IFileDialogFactory*         fileDialogFactory,
+        ISettingsEditor*            settingsEditor,
+        QWidget*                    parent
     ) const override;
 };

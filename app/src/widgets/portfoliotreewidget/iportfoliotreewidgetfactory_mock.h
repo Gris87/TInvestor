@@ -24,14 +24,10 @@ public:
         IPortfolioTreeWidget*,
         newInstance,
         (IPortfolioTreeModelFactory * portfolioTreeModelFactory,
-         ILogosStorage*               logosStorage,
-         IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
-         IInstrumentWidgetFactory*    instrumentWidgetFactory,
-         IUserStorage*                userStorage,
-         IInstrumentsStorage*         instrumentsStorage,
-         IFileDialogFactory*          fileDialogFactory,
-         ISettingsEditor*             settingsEditor,
-         QWidget*                     parent),
+         ILogosStorage*      logosStorage,
+         IFileDialogFactory* fileDialogFactory,
+         ISettingsEditor*    settingsEditor,
+         QWidget*            parent),
         (const, override)
     );
 };

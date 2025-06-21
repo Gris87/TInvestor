@@ -6,7 +6,6 @@
 
 #include "src/qxlsx/xlsxdocument.h"
 #include "src/widgets/tabledelegates/instrumentitemdelegate.h"
-#include "src/widgets/treeitems/portfoliotreeitem.h"
 
 
 
@@ -16,11 +15,11 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {178, 80, 56, 106, 87, 56, 68,
 const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 83, 93};
 #endif
 
-const QColor HEADER_BACKGROUND_COLOR   = QColor("#354450"); // clazy:exclude=non-pod-global-static
-const QColor HEADER_FONT_COLOR         = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
-const QColor GREEN_COLOR               = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
-const QColor RED_COLOR                 = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
-const QColor NORMAL_COLOR              = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
+const QColor HEADER_FONT_COLOR       = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
+const QColor GREEN_COLOR             = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
+const QColor RED_COLOR               = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
+const QColor NORMAL_COLOR            = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
 constexpr float  ZERO_LIMIT      = 0.0001f;
 constexpr float  HUNDRED_PERCENT = 100.0f;
@@ -29,48 +28,22 @@ constexpr double COLUMN_GAP      = 0.71;
 
 
 PortfolioTreeWidget::PortfolioTreeWidget(
-    IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
-    ILogosStorage*               logosStorage,
-    IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
-    IInstrumentWidgetFactory*    instrumentWidgetFactory,
-    IUserStorage*                userStorage,
-    IInstrumentsStorage*         instrumentsStorage,
-    IFileDialogFactory*          fileDialogFactory,
-    ISettingsEditor*             settingsEditor,
-    QWidget*                     parent
+    IPortfolioTreeModelFactory* portfolioTreeModelFactory,
+    ILogosStorage*              logosStorage,
+    IFileDialogFactory*         fileDialogFactory,
+    ISettingsEditor*            settingsEditor,
+    QWidget*                    parent
 ) :
     IPortfolioTreeWidget(parent),
     ui(new Ui::PortfolioTreeWidget),
-    mPortfolioTreeRecordFactory(portfolioTreeRecordFactory),
-    mInstrumentWidgetFactory(instrumentWidgetFactory),
-    mUserStorage(userStorage),
-    mInstrumentsStorage(instrumentsStorage),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
-    mSortedCategories(),
-    mCategoryNames(),
-    mCategories(),
-    mRecords(),
-    mLastPricesUpdates(),
     mTotalCost(),
-    mTotalYield(),
-    mTotalDailyCost(),
-    mTotalDailyYield()
+    mTotalDailyCost()
 {
     qDebug() << "Create PortfolioTreeWidget";
 
     ui->setupUi(this);
-
-    // TODO: Delete it
-    mSortedCategories << "currency" << "share" << "etf" << "bond" << "futures" << "options";
-
-    // TODO: Delete it
-    mCategoryNames["currency"] = tr("Currency and metals");
-    mCategoryNames["share"]    = tr("Share");
-    mCategoryNames["etf"]      = tr("ETF");
-    mCategoryNames["bond"]     = tr("Bond");
-    mCategoryNames["futures"]  = tr("Futures");
-    mCategoryNames["options"]  = tr("Options");
 
     mPortfolioTreeModel = portfolioTreeModelFactory->newInstance(this);
 
@@ -96,38 +69,8 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     mPortfolioTreeModel->portfolioChanged(portfolio);
     ui->treeView->expandAll();
 
-    mTotalCost       = 0.0;
-    mTotalYield      = 0.0;
-    mTotalDailyCost  = 0.0;
-    mTotalDailyYield = 0.0;
-
-    ui->treeWidget->setUpdatesEnabled(false);
-    ui->treeWidget->setSortingEnabled(false);
-
-    deleteObsoleteCategories(portfolio);
-
-    for (const QString& category : std::as_const(mSortedCategories))
-    {
-        if (!portfolio.positionsMap.contains(category))
-        {
-            continue;
-        }
-
-        CategoryTreeItem* categoryTreeItem = mCategories.value(category);
-
-        if (categoryTreeItem == nullptr)
-        {
-            Q_ASSERT_X(mCategoryNames.contains(category), __FUNCTION__, "Missing translation");
-            categoryTreeItem = new CategoryTreeItem(ui->treeWidget, mCategoryNames.value(category, "UNKNOWN"));
-
-            mCategories[category] = categoryTreeItem;
-        }
-
-        updateCategory(categoryTreeItem, portfolio.positionsMap[category]);
-    }
-
-    ui->treeWidget->setSortingEnabled(true);
-    ui->treeWidget->setUpdatesEnabled(true);
+    mTotalCost      = mPortfolioTreeModel->totalCost();
+    mTotalDailyCost = mPortfolioTreeModel->totalDailyCost();
 
     ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " \u20BD");
     updateAllTimeLabel();
@@ -137,146 +80,25 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 void PortfolioTreeWidget::lastPriceChanged(const QString& instrumentId, float price)
 {
     mPortfolioTreeModel->lastPriceChanged(instrumentId, price);
-    mLastPricesUpdates[instrumentId] = price;
 }
 
 void PortfolioTreeWidget::updateLastPrices()
 {
-    mPortfolioTreeModel->updateLastPrices();
-
-    if (!mLastPricesUpdates.isEmpty())
+    if (mPortfolioTreeModel->updateLastPrices())
     {
-        ui->treeWidget->setUpdatesEnabled(false);
-        ui->treeWidget->setSortingEnabled(false);
-
-        for (auto it = mLastPricesUpdates.constBegin(); it != mLastPricesUpdates.constEnd(); ++it)
-        {
-            IPortfolioTreeRecord* record = mRecords.value(it.key());
-
-            if (record != nullptr)
-            {
-                record->updatePrice(it.value());
-            }
-        }
-
-        mLastPricesUpdates.clear();
-
-        ui->treeWidget->setSortingEnabled(true);
-        ui->treeWidget->setUpdatesEnabled(true);
-
-        mTotalYield      = 0.0;
-        mTotalDailyYield = 0.0;
-
-        for (auto it = mRecords.constBegin(); it != mRecords.constEnd(); ++it)
-        {
-            IPortfolioTreeRecord* record = it.value();
-
-            mTotalYield      += record->yield();
-            mTotalDailyYield += record->dailyYield();
-        }
-
         updateAllTimeLabel();
         updateForTodayLabel();
     }
 }
 
-void PortfolioTreeWidget::deleteObsoleteCategories(const Portfolio& portfolio)
-{
-    QStringList categoriesToDelete;
-
-    for (auto it = mCategories.constBegin(), end = mCategories.constEnd(); it != end; ++it)
-    {
-        if (!portfolio.positionsMap.contains(it.key()))
-        {
-            categoriesToDelete.append(it.key());
-        }
-    }
-
-    for (const QString& category : categoriesToDelete)
-    {
-        CategoryTreeItem* categoryTreeItem = mCategories.take(category);
-
-        for (int i = 0; i < categoryTreeItem->childCount(); ++i)
-        {
-            PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
-            delete mRecords.take(portfolioTreeItem->instrumentId());
-        }
-
-        delete categoryTreeItem;
-    }
-}
-
-void PortfolioTreeWidget::updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems)
-{
-    const PortfolioItem& categoryTotal = portfolioItems["total"];
-
-    mTotalCost += categoryTotal.cost;
-
-    categoryTreeItem->setCost(categoryTotal.cost);
-    categoryTreeItem->setPart(categoryTotal.part);
-
-    deleteObsoleteRecords(categoryTreeItem, portfolioItems);
-
-    for (auto it = portfolioItems.constBegin(), end = portfolioItems.constEnd(); it != end; ++it)
-    {
-        const QString& instrumentId = it.key();
-
-        if (instrumentId == "total")
-        {
-            continue;
-        }
-
-        const PortfolioItem& portfolioItem = it.value();
-
-        IPortfolioTreeRecord* record = mRecords.value(instrumentId);
-
-        if (record == nullptr)
-        {
-            record = mPortfolioTreeRecordFactory->newInstance(
-                mInstrumentWidgetFactory, mUserStorage, mInstrumentsStorage, categoryTreeItem, instrumentId, this
-            );
-            mRecords[instrumentId] = record;
-        }
-
-        record->setPortfolioItem(portfolioItem);
-
-        mTotalYield      += portfolioItem.yield;
-        mTotalDailyCost  += portfolioItem.costForDailyYield;
-        mTotalDailyYield += portfolioItem.dailyYield;
-    }
-}
-
-void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems)
-{
-    QList<PortfolioTreeItem*> itemsToDelete;
-
-    itemsToDelete.reserve(categoryTreeItem->childCount());
-
-    for (int i = 0; i < categoryTreeItem->childCount(); ++i)
-    {
-        PortfolioTreeItem* portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(i));
-
-        if (!portfolioItems.contains(portfolioTreeItem->instrumentId()))
-        {
-            itemsToDelete.append(portfolioTreeItem);
-        }
-    }
-
-    for (PortfolioTreeItem* item : itemsToDelete)
-    {
-        delete mRecords.take(item->instrumentId());
-        delete item;
-    }
-}
-
 void PortfolioTreeWidget::updateAllTimeLabel()
 {
-    updateYieldLabel(ui->allTimeLabel, mTotalYield, mTotalCost);
+    updateYieldLabel(ui->allTimeLabel, mPortfolioTreeModel->totalYield(), mTotalCost);
 }
 
 void PortfolioTreeWidget::updateForTodayLabel()
 {
-    updateYieldLabel(ui->forTodayLabel, mTotalDailyYield, mTotalDailyCost);
+    updateYieldLabel(ui->forTodayLabel, mPortfolioTreeModel->totalDailyYield(), mTotalDailyCost);
 }
 
 void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double cost)
@@ -285,6 +107,7 @@ void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double c
     const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
 
     label->setText(prefix + QString::number(yield, 'f', 2) + " \u20BD" + "(" + prefix + QString::number(percent, 'f', 2) + "%)");
+    label->setToolTip(cost > 0 ? tr("From: %1").arg(cost, 0, 'f', 2) + " \u20BD" : "");
 
     QColor color;
 
@@ -404,17 +227,5 @@ void PortfolioTreeWidget::loadWindowState(const QString& type)
     ui->treeView->setColumnWidth(PORTFOLIO_YIELD_COLUMN,         mSettingsEditor->value(type + "/columnWidth_Yield",        COLUMN_WIDTHS[PORTFOLIO_YIELD_COLUMN]).toInt());
     ui->treeView->setColumnWidth(PORTFOLIO_YIELD_PERCENT_COLUMN, mSettingsEditor->value(type + "/columnWidth_YieldPercent", COLUMN_WIDTHS[PORTFOLIO_YIELD_PERCENT_COLUMN]).toInt());
     ui->treeView->setColumnWidth(PORTFOLIO_DAILY_YIELD_COLUMN,   mSettingsEditor->value(type + "/columnWidth_DailyYield",   COLUMN_WIDTHS[PORTFOLIO_DAILY_YIELD_COLUMN]).toInt());
-    // clang-format on
-
-    // clang-format off
-    ui->treeWidget->setColumnWidth(PORTFOLIO_NAME_COLUMN,          mSettingsEditor->value(type + "/columnWidth_Name",         COLUMN_WIDTHS[PORTFOLIO_NAME_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_AVAILABLE_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Available",    COLUMN_WIDTHS[PORTFOLIO_AVAILABLE_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_PRICE_COLUMN,         mSettingsEditor->value(type + "/columnWidth_Price",        COLUMN_WIDTHS[PORTFOLIO_PRICE_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_AVG_PRICE_COLUMN,     mSettingsEditor->value(type + "/columnWidth_AvgPrice",     COLUMN_WIDTHS[PORTFOLIO_AVG_PRICE_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_COST_COLUMN,          mSettingsEditor->value(type + "/columnWidth_Cost",         COLUMN_WIDTHS[PORTFOLIO_COST_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_PART_COLUMN,          mSettingsEditor->value(type + "/columnWidth_Part",         COLUMN_WIDTHS[PORTFOLIO_PART_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_YIELD_COLUMN,         mSettingsEditor->value(type + "/columnWidth_Yield",        COLUMN_WIDTHS[PORTFOLIO_YIELD_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_YIELD_PERCENT_COLUMN, mSettingsEditor->value(type + "/columnWidth_YieldPercent", COLUMN_WIDTHS[PORTFOLIO_YIELD_PERCENT_COLUMN]).toInt());
-    ui->treeWidget->setColumnWidth(PORTFOLIO_DAILY_YIELD_COLUMN,   mSettingsEditor->value(type + "/columnWidth_DailyYield",   COLUMN_WIDTHS[PORTFOLIO_DAILY_YIELD_COLUMN]).toInt());
     // clang-format on
 }

@@ -18,26 +18,12 @@ PortfolioTreeWidgetFactory::~PortfolioTreeWidgetFactory()
 }
 
 IPortfolioTreeWidget* PortfolioTreeWidgetFactory::newInstance(
-    IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
-    ILogosStorage*               logosStorage,
-    IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
-    IInstrumentWidgetFactory*    instrumentWidgetFactory,
-    IUserStorage*                userStorage,
-    IInstrumentsStorage*         instrumentsStorage,
-    IFileDialogFactory*          fileDialogFactory,
-    ISettingsEditor*             settingsEditor,
-    QWidget*                     parent
+    IPortfolioTreeModelFactory* portfolioTreeModelFactory,
+    ILogosStorage*              logosStorage,
+    IFileDialogFactory*         fileDialogFactory,
+    ISettingsEditor*            settingsEditor,
+    QWidget*                    parent
 ) const
 {
-    return new PortfolioTreeWidget(
-        portfolioTreeModelFactory,
-        logosStorage,
-        portfolioTreeRecordFactory,
-        instrumentWidgetFactory,
-        userStorage,
-        instrumentsStorage,
-        fileDialogFactory,
-        settingsEditor,
-        parent
-    );
+    return new PortfolioTreeWidget(portfolioTreeModelFactory, logosStorage, fileDialogFactory, settingsEditor, parent);
 }

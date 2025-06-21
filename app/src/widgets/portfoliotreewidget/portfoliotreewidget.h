@@ -10,8 +10,6 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h"
-#include "src/widgets/treeitems/categorytreeitem.h"
-#include "src/widgets/treerecords/portfoliotreerecord/iportfoliotreerecordfactory.h"
 
 
 
@@ -28,15 +26,11 @@ class PortfolioTreeWidget : public IPortfolioTreeWidget
 
 public:
     explicit PortfolioTreeWidget(
-        IPortfolioTreeModelFactory*  portfolioTreeModelFactory,
-        ILogosStorage*               logosStorage,
-        IPortfolioTreeRecordFactory* portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*    instrumentWidgetFactory,
-        IUserStorage*                userStorage,
-        IInstrumentsStorage*         instrumentsStorage,
-        IFileDialogFactory*          fileDialogFactory,
-        ISettingsEditor*             settingsEditor,
-        QWidget*                     parent = nullptr
+        IPortfolioTreeModelFactory* portfolioTreeModelFactory,
+        ILogosStorage*              logosStorage,
+        IFileDialogFactory*         fileDialogFactory,
+        ISettingsEditor*            settingsEditor,
+        QWidget*                    parent = nullptr
     );
     ~PortfolioTreeWidget() override;
 
@@ -55,30 +49,16 @@ public:
     void loadWindowState(const QString& type) override;
 
 private:
-    void deleteObsoleteCategories(const Portfolio& portfolio);
-    void updateCategory(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
-    void deleteObsoleteRecords(CategoryTreeItem* categoryTreeItem, const PortfolioItems& portfolioItems);
     void updateAllTimeLabel();
     void updateForTodayLabel();
     void updateYieldLabel(QLabel* label, double yield, double cost);
     void exportToExcel(const QString& path) const;
 
-    IPortfolioTreeRecordFactory*         mPortfolioTreeRecordFactory;
-    IInstrumentWidgetFactory*            mInstrumentWidgetFactory;
-    IUserStorage*                        mUserStorage;
-    IInstrumentsStorage*                 mInstrumentsStorage;
-    IFileDialogFactory*                  mFileDialogFactory;
-    ISettingsEditor*                     mSettingsEditor;
-    IPortfolioTreeModel*                 mPortfolioTreeModel;
-    QStringList                          mSortedCategories;
-    QMap<QString, QString>               mCategoryNames;     // Category => Localized name
-    QMap<QString, CategoryTreeItem*>     mCategories;        // Category => CategoryTreeItem
-    QMap<QString, IPortfolioTreeRecord*> mRecords;           // UID => PortfolioTreeRecord
-    QMap<QString, float>                 mLastPricesUpdates; // UID => Price
-    double                               mTotalCost;
-    double                               mTotalYield;
-    double                               mTotalDailyCost;
-    double                               mTotalDailyYield;
+    IFileDialogFactory*  mFileDialogFactory;
+    ISettingsEditor*     mSettingsEditor;
+    IPortfolioTreeModel* mPortfolioTreeModel;
+    double               mTotalCost;
+    double               mTotalDailyCost;
 
 public slots:
     void on_treeView_customContextMenuRequested(const QPoint& pos);

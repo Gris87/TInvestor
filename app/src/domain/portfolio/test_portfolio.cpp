@@ -10,7 +10,7 @@ TEST(Test_Portfolio, Test_constructor_and_destructor)
 {
     const Portfolio portfolio;
 
-    ASSERT_EQ(portfolio.positionsList.size(), 0);
+    ASSERT_EQ(portfolio.positions.size(), 0);
 }
 
 TEST(Test_Portfolio, Test_copy_constructor)
@@ -45,35 +45,35 @@ TEST(Test_Portfolio, Test_copy_constructor)
     item.pricePrecision     = 16;
 
     category.items.append(item);
-    portfolio.positionsList.append(category);
+    portfolio.positions.append(category);
 
     const Portfolio portfolio2(portfolio);
 
     // clang-format off
-    ASSERT_EQ(portfolio2.positionsList.size(),                                 1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).id,                               1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).name,                             "a");
-    ASSERT_NEAR(portfolio2.positionsList.at(0).cost,                           2.0, 0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).part,                           3.0, 0.0001f);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.size(),                     1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentId,         "b");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentLogo,       nullptr);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentTicker,     "c");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentName,       "d");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).showPrices,           true);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).available,          4.0,   0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).price,              5.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).avgPriceFifo,       6.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).avgPriceWavg,       7.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).cost,               8.0,   0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).part,               9.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).yield,              10.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).yieldPercent,       11.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).dailyYield,         12.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).priceForDailyYield, 13.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).costForDailyYield,  14.0,  0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).dailyYieldPercent,  15.0f, 0.0001f);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).pricePrecision,       16);
+    ASSERT_EQ(portfolio2.positions.size(),                                 1);
+    ASSERT_EQ(portfolio2.positions.at(0).id,                               1);
+    ASSERT_EQ(portfolio2.positions.at(0).name,                             "a");
+    ASSERT_NEAR(portfolio2.positions.at(0).cost,                           2.0, 0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).part,                           3.0, 0.0001f);
+    ASSERT_EQ(portfolio2.positions.at(0).items.size(),                     1);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentId,         "b");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentLogo,       nullptr);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentTicker,     "c");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentName,       "d");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).showPrices,           true);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).available,          4.0,   0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).price,              5.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).avgPriceFifo,       6.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).avgPriceWavg,       7.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).cost,               8.0,   0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).part,               9.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).yield,              10.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).yieldPercent,       11.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).dailyYield,         12.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).priceForDailyYield, 13.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).costForDailyYield,  14.0,  0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).dailyYieldPercent,  15.0f, 0.0001f);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).pricePrecision,       16);
     // clang-format on
 }
 
@@ -110,35 +110,35 @@ TEST(Test_Portfolio, Test_assign)
     item.pricePrecision     = 16;
 
     category.items.append(item);
-    portfolio.positionsList.append(category);
+    portfolio.positions.append(category);
 
     portfolio2 = portfolio;
 
     // clang-format off
-    ASSERT_EQ(portfolio2.positionsList.size(),                                 1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).id,                               1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).name,                             "a");
-    ASSERT_NEAR(portfolio2.positionsList.at(0).cost,                           2.0, 0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).part,                           3.0, 0.0001f);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.size(),                     1);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentId,         "b");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentLogo,       nullptr);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentTicker,     "c");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).instrumentName,       "d");
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).showPrices,           true);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).available,          4.0,   0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).price,              5.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).avgPriceFifo,       6.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).avgPriceWavg,       7.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).cost,               8.0,   0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).part,               9.0f,  0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).yield,              10.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).yieldPercent,       11.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).dailyYield,         12.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).priceForDailyYield, 13.0f, 0.0001f);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).costForDailyYield,  14.0,  0.0001);
-    ASSERT_NEAR(portfolio2.positionsList.at(0).items.at(0).dailyYieldPercent,  15.0f, 0.0001f);
-    ASSERT_EQ(portfolio2.positionsList.at(0).items.at(0).pricePrecision,       16);
+    ASSERT_EQ(portfolio2.positions.size(),                                 1);
+    ASSERT_EQ(portfolio2.positions.at(0).id,                               1);
+    ASSERT_EQ(portfolio2.positions.at(0).name,                             "a");
+    ASSERT_NEAR(portfolio2.positions.at(0).cost,                           2.0, 0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).part,                           3.0, 0.0001f);
+    ASSERT_EQ(portfolio2.positions.at(0).items.size(),                     1);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentId,         "b");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentLogo,       nullptr);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentTicker,     "c");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).instrumentName,       "d");
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).showPrices,           true);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).available,          4.0,   0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).price,              5.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).avgPriceFifo,       6.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).avgPriceWavg,       7.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).cost,               8.0,   0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).part,               9.0f,  0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).yield,              10.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).yieldPercent,       11.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).dailyYield,         12.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).priceForDailyYield, 13.0f, 0.0001f);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).costForDailyYield,  14.0,  0.0001);
+    ASSERT_NEAR(portfolio2.positions.at(0).items.at(0).dailyYieldPercent,  15.0f, 0.0001f);
+    ASSERT_EQ(portfolio2.positions.at(0).items.at(0).pricePrecision,       16);
     // clang-format on
 }
 
@@ -175,7 +175,7 @@ TEST(Test_Portfolio, Test_equals)
     item.pricePrecision     = 16;
 
     category.items.append(item);
-    portfolio.positionsList.append(category);
+    portfolio.positions.append(category);
 
     PortfolioCategoryItem category2;
 
@@ -205,13 +205,13 @@ TEST(Test_Portfolio, Test_equals)
     item2.pricePrecision     = 16;
 
     category2.items.append(item2);
-    portfolio2.positionsList.append(category2);
+    portfolio2.positions.append(category2);
 
     ASSERT_EQ(portfolio, portfolio2);
 
-    portfolio2.positionsList[0].id = 1000;
+    portfolio2.positions[0].id = 1000;
     ASSERT_NE(portfolio, portfolio2);
-    portfolio2.positionsList[0].id = 1;
+    portfolio2.positions[0].id = 1;
     ASSERT_EQ(portfolio, portfolio2);
 }
 // NOLINTEND(readability-magic-numbers)

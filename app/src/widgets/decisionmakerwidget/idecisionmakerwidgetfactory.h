@@ -25,10 +25,6 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         IOperationsTableModelFactory*  _operationsTableModelFactory,
         ILogsTableModelFactory*        _logsTableModelFactory,
         IPortfolioTreeModelFactory*    _portfolioTreeModelFactory,
-        IPortfolioTreeRecordFactory*   _portfolioTreeRecordFactory,
-        IInstrumentWidgetFactory*      _instrumentWidgetFactory,
-        IUserStorage*                  _userStorage,
-        IInstrumentsStorage*           _instrumentsStorage,
         ILogosStorage*                 _logosStorage,
         IFileDialogFactory*            _fileDialogFactory,
         ISettingsEditor*               _settingsEditor
@@ -41,10 +37,6 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         operationsTableModelFactory(_operationsTableModelFactory),
         logsTableModelFactory(_logsTableModelFactory),
         portfolioTreeModelFactory(_portfolioTreeModelFactory),
-        portfolioTreeRecordFactory(_portfolioTreeRecordFactory),
-        instrumentWidgetFactory(_instrumentWidgetFactory),
-        userStorage(_userStorage),
-        instrumentsStorage(_instrumentsStorage),
         logosStorage(_logosStorage),
         fileDialogFactory(_fileDialogFactory),
         settingsEditor(_settingsEditor)
@@ -61,10 +53,6 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     IOperationsTableModelFactory*  operationsTableModelFactory;
     ILogsTableModelFactory*        logsTableModelFactory;
     IPortfolioTreeModelFactory*    portfolioTreeModelFactory;
-    IPortfolioTreeRecordFactory*   portfolioTreeRecordFactory;
-    IInstrumentWidgetFactory*      instrumentWidgetFactory;
-    IUserStorage*                  userStorage;
-    IInstrumentsStorage*           instrumentsStorage;
     ILogosStorage*                 logosStorage;
     IFileDialogFactory*            fileDialogFactory;
     ISettingsEditor*               settingsEditor;

@@ -127,81 +127,8 @@
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="contextMenuPolicy">
-      <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
-     </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
-     <property name="animated">
-      <bool>true</bool>
-     </property>
-     <column>
-      <property name="text">
-       <string>Name</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Available</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Price</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Avg price</string>
-      </property>
-      <property name="toolTip">
-       <string>Average price by FIFO</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../../../Resources.qrc">
-        <normaloff>:/assets/images/question.png</normaloff>:/assets/images/question.png</iconset>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Cost</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Part</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Yield</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Yield, %</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Daily yield, %</string>
-      </property>
-     </column>
-    </widget>
-   </item>
   </layout>
  </widget>
- <resources>
-  <include location="../../../Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

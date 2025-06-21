@@ -1,6 +1,6 @@
-Portfolio TreeView
+DecisionMakerWidgetFactoryNewInstanceArgsMore15
 Stocks TableView
-Replace RUBLE
+Slow splitter move
 Tray icon popup too long
 Use RWMutex instead of QMutex
 Limit operations and logs
