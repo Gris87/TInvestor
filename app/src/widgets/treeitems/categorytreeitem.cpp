@@ -6,10 +6,6 @@
 
 
 
-constexpr QChar RUBLE = QChar(0x20BD);
-
-
-
 CategoryTreeItem::CategoryTreeItem(QTreeWidget* treeWidget, const QString& name, int type) :
     QTreeWidgetItem(treeWidget, type),
     mName(name),
@@ -31,7 +27,7 @@ void CategoryTreeItem::setCost(double value)
 {
     mCost = value;
 
-    setText(PORTFOLIO_OLD_COST_COLUMN, QString::number(mCost, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_COST_COLUMN, QString::number(mCost, 'f', 2) + " \u20BD");
 }
 
 void CategoryTreeItem::setPart(float value)

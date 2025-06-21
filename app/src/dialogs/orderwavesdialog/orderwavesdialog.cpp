@@ -8,7 +8,6 @@
 
 
 const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-constexpr QChar   RUBLE           = QChar(0x20BD);
 constexpr float   HUNDRED_PERCENT = 100.0f;
 
 
@@ -60,7 +59,7 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
-    const QString price = QString::number(orderBook.price, 'f', mPrecision) + " " + RUBLE;
+    const QString price = QString::number(orderBook.price, 'f', mPrecision) + " \u20BD";
     QString       spread;
 
     if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())

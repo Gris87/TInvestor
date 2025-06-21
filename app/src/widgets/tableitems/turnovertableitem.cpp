@@ -4,7 +4,6 @@
 
 
 
-constexpr QChar  RUBLE        = QChar(0x20BD);
 constexpr qint64 GREEN_LIMIT  = 1000000000LL;
 constexpr qint64 NORMAL_LIMIT = 1000000LL;
 constexpr double BILLIONS     = 1000000000.0;
@@ -38,17 +37,17 @@ void TurnoverTableItem::setValue(qint64 value)
 
     if (mValue >= GREEN_LIMIT)
     {
-        text  = QString::number(static_cast<double>(mValue) / BILLIONS, 'f', 2) + "B " + RUBLE;
+        text  = QString::number(static_cast<double>(mValue) / BILLIONS, 'f', 2) + "B \u20BD";
         color = GREEN_COLOR;
     }
     else if (mValue >= NORMAL_LIMIT)
     {
-        text  = QString::number(static_cast<double>(mValue) / MILLIONS, 'f', 2) + "M " + RUBLE;
+        text  = QString::number(static_cast<double>(mValue) / MILLIONS, 'f', 2) + "M \u20BD";
         color = NORMAL_COLOR;
     }
     else
     {
-        text  = QString::number(static_cast<double>(mValue) / KILOS, 'f', 2) + "K " + RUBLE;
+        text  = QString::number(static_cast<double>(mValue) / KILOS, 'f', 2) + "K \u20BD";
         color = RED_COLOR;
     }
 

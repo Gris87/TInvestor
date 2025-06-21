@@ -4,7 +4,6 @@
 
 
 
-constexpr QChar RUBLE      = QChar(0x20BD);
 constexpr float ZERO_LIMIT = 0.0001f;
 
 const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
@@ -32,7 +31,7 @@ void MoneyChangePercentTableItem::setValue(float value, float fromPrice, qint8 p
     const QString prefix = mValue > 0 ? "+" : "";
 
     setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', 2) + "%");
-    setToolTip(fromPrice > 0 ? QObject::tr("From: %1").arg(fromPrice, 0, 'f', precision) + " " + RUBLE : "");
+    setToolTip(fromPrice > 0 ? QObject::tr("From: %1").arg(fromPrice, 0, 'f', precision) + " \u20BD" : "");
 
     QColor color;
 

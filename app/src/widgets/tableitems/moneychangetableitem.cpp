@@ -4,7 +4,6 @@
 
 
 
-constexpr QChar RUBLE      = QChar(0x20BD);
 constexpr float ZERO_LIMIT = 0.0001f;
 
 const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
@@ -33,7 +32,7 @@ void MoneyChangeTableItem::setValue(float value, bool withColor, qint8 precision
 
     const QString prefix = mValue > 0 ? "+" : "";
 
-    setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', mPrecision) + " " + RUBLE);
+    setData(Qt::DisplayRole, prefix + QString::number(mValue, 'f', mPrecision) + " \u20BD");
 
     if (withColor)
     {

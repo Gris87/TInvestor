@@ -7,7 +7,6 @@
 
 
 
-constexpr QChar  RUBLE              = QChar(0x20BD);
 constexpr int    LIMIT_BARS         = 200;
 constexpr int    MAX_ORDERS_COUNT   = 50;
 constexpr int    MAX_BAR_HEIGHT     = 600;
@@ -263,14 +262,14 @@ void OrderWavesWidget::orderBookChanged(const OrderBook& orderBook)
 
             // NOLINTNEXTLINE(readability-magic-numbers)
             axisLine->setLine(axisX, -AXIS_LINE_HEIGHT / 2.0f, axisX, AXIS_LINE_HEIGHT / 2.0f);
-            axisMarker->setText(axisMarkerText + " " + RUBLE);
+            axisMarker->setText(axisMarkerText + " \u20BD");
         }
         else
         {
             // NOLINTNEXTLINE(readability-magic-numbers)
             axisLine = mScene.addLine(axisX, -AXIS_LINE_HEIGHT / 2.0f, axisX, AXIS_LINE_HEIGHT / 2.0f, QPen(AXIS_LINE_COLOR));
 
-            axisMarker = mScene.addSimpleText(axisMarkerText + " " + RUBLE);
+            axisMarker = mScene.addSimpleText(axisMarkerText + " \u20BD");
             axisMarker->setBrush(QBrush(AXIS_MARKER_COLOR));
             axisMarker->setRotation(AXIS_MARKER_ANGLE);
 

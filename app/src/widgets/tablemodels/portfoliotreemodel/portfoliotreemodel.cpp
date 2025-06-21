@@ -1,8 +1,17 @@
 #include "src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.h"
 
+#include <QBrush>
 #include <QDebug>
 
 #include "src/widgets/tablemodels/modelroles.h"
+
+
+
+constexpr float ZERO_LIMIT = 0.0001f;
+
+const QBrush GREEN_COLOR  = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush RED_COLOR    = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush NORMAL_COLOR = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
 
 
 
@@ -236,6 +245,104 @@ static const ItemDisplayRoleHandler ITEM_DISPLAY_ROLE_HANDLER[PORTFOLIO_COLUMN_C
     itemDailyYieldDisplayRole
 };
 
+static QVariant itemYieldForegroundRole(const PortfolioItem& item)
+{
+    if (item.yield > -ZERO_LIMIT && item.yield < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (item.yield > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant itemYieldPercentForegroundRole(const PortfolioItem& item)
+{
+    if (item.yieldPercent > -ZERO_LIMIT && item.yieldPercent < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (item.yieldPercent > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant itemDailyYieldForegroundRole(const PortfolioItem& item)
+{
+    if (item.dailyYieldPercent > -ZERO_LIMIT && item.dailyYieldPercent < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (item.dailyYieldPercent > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant itemNothingForegroundRole(const PortfolioItem& /*item*/)
+{
+    return QVariant();
+}
+
+using ItemForegroundRoleHandler = QVariant (*)(const PortfolioItem& item);
+
+static const ItemForegroundRoleHandler ITEM_FOREGROUND_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
+    itemNothingForegroundRole,
+    itemNothingForegroundRole,
+    itemNothingForegroundRole,
+    itemNothingForegroundRole,
+    itemNothingForegroundRole,
+    itemNothingForegroundRole,
+    itemYieldForegroundRole,
+    itemYieldPercentForegroundRole,
+    itemDailyYieldForegroundRole
+};
+
+static QVariant itemAvgPriceTooltipRole(const PortfolioItem& item)
+{
+    return QObject::tr("Average price by WAVG: %1").arg(item.avgPriceWavg, 0, 'f', item.pricePrecision) + " \u20BD";
+}
+
+static QVariant itemYieldPercentTooltipRole(const PortfolioItem& item)
+{
+    return QObject::tr("From: %1").arg(item.avgPriceFifo, 0, 'f', item.pricePrecision) + " \u20BD";
+}
+
+static QVariant itemDailyYieldTooltipRole(const PortfolioItem& item)
+{
+    return QObject::tr("From: %1").arg(item.priceForDailyYield, 0, 'f', item.pricePrecision) + " \u20BD";
+}
+
+static QVariant itemNothingTooltipRole(const PortfolioItem& /*item*/)
+{
+    return QVariant();
+}
+
+using ItemTooltipRoleHandler = QVariant (*)(const PortfolioItem& item);
+
+static const ItemTooltipRoleHandler ITEM_TOOLTIP_ROLE_HANDLER[PORTFOLIO_COLUMN_COUNT]{
+    itemNothingTooltipRole,
+    itemNothingTooltipRole,
+    itemNothingTooltipRole,
+    itemAvgPriceTooltipRole,
+    itemNothingTooltipRole,
+    itemNothingTooltipRole,
+    itemNothingTooltipRole,
+    itemYieldPercentTooltipRole,
+    itemDailyYieldTooltipRole
+};
+
 QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -253,32 +360,62 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
         return ITEM_DISPLAY_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
     }
 
-    if (role == ROLE_INSTRUMENT_LOGO)
+    if (role == Qt::ForegroundRole)
     {
-        const int row = index.row();
-        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
-
         PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
             return QVariant();
         }
+
+        const int row    = index.row();
+        const int column = index.column();
+
+        return ITEM_FOREGROUND_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
+    }
+
+    if (role == Qt::ToolTipRole)
+    {
+        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+
+        if (category == nullptr)
+        {
+            return QVariant();
+        }
+
+        const int row    = index.row();
+        const int column = index.column();
+
+        return ITEM_TOOLTIP_ROLE_HANDLER[column](mPortfolio.positionsList.at(category->id).items.at(row));
+    }
+
+    if (role == ROLE_INSTRUMENT_LOGO)
+    {
+        PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
+
+        if (category == nullptr)
+        {
+            return QVariant();
+        }
+
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return reinterpret_cast<qint64>(mPortfolio.positionsList.at(category->id).items.at(row).instrumentLogo);
     }
 
     if (role == ROLE_INSTRUMENT_NAME)
     {
-        const int row = index.row();
-        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
-
         PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
             return QVariant();
         }
+
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return mPortfolio.positionsList.at(category->id).items.at(row).instrumentName;
     }

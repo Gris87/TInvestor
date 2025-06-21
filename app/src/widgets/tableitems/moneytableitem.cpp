@@ -4,10 +4,6 @@
 
 
 
-constexpr QChar RUBLE = QChar(0x20BD);
-
-
-
 MoneyTableItem::MoneyTableItem(int type) :
     QTableWidgetItem(type),
     mValue(),
@@ -26,7 +22,7 @@ void MoneyTableItem::setValue(float value, qint8 precision)
     mValue     = value;
     mPrecision = precision;
 
-    setData(Qt::DisplayRole, QString::number(mValue, 'f', mPrecision) + " " + RUBLE);
+    setData(Qt::DisplayRole, QString::number(mValue, 'f', mPrecision) + " \u20BD");
 }
 
 float MoneyTableItem::value() const

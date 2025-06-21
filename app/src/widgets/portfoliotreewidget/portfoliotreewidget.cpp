@@ -24,7 +24,6 @@ const QColor GREEN_COLOR               = QColor("#2BD793"); // clazy:exclude=non
 const QColor RED_COLOR                 = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
 const QColor NORMAL_COLOR              = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
-constexpr QChar  RUBLE           = QChar(0x20BD);
 constexpr float  ZERO_LIMIT      = 0.0001f;
 constexpr float  HUNDRED_PERCENT = 100.0f;
 constexpr double COLUMN_GAP      = 0.71;
@@ -132,7 +131,7 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     ui->treeWidget->setSortingEnabled(true);
     ui->treeWidget->setUpdatesEnabled(true);
 
-    ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " " + RUBLE);
+    ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " \u20BD");
     updateAllTimeLabel();
     updateForTodayLabel();
 }
@@ -318,7 +317,7 @@ void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double c
     const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
 
     label->setText(
-        prefix + QString::number(yield, 'f', 2) + " " + RUBLE + "(" + prefix + QString::number(percent, 'f', 2) + "%)"
+        prefix + QString::number(yield, 'f', 2) + " \u20BD" + "(" + prefix + QString::number(percent, 'f', 2) + "%)"
     );
 
     QColor color;

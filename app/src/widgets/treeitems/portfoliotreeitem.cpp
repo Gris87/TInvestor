@@ -7,7 +7,6 @@
 
 
 
-constexpr QChar RUBLE      = QChar(0x20BD);
 constexpr float ZERO_LIMIT = 0.0001f;
 
 const QColor GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
@@ -89,17 +88,17 @@ void PortfolioTreeItem::setPrice(float value)
 {
     mPrice = value;
 
-    setText(PORTFOLIO_OLD_PRICE_COLUMN, QString::number(mPrice, 'f', mPricePrecision) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_PRICE_COLUMN, QString::number(mPrice, 'f', mPricePrecision) + " \u20BD");
 }
 
 void PortfolioTreeItem::setAvgPrice(float valueFifo, float valueWavg)
 {
     mAvgPrice = valueFifo;
 
-    setText(PORTFOLIO_OLD_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_AVG_PRICE_COLUMN, QString::number(mAvgPrice, 'f', mPricePrecision) + " \u20BD");
     setToolTip(
         PORTFOLIO_OLD_AVG_PRICE_COLUMN,
-        QObject::tr("Average price by WAVG: %1").arg(valueWavg, 0, 'f', mPricePrecision) + " " + RUBLE
+        QObject::tr("Average price by WAVG: %1").arg(valueWavg, 0, 'f', mPricePrecision) + " \u20BD"
     );
 }
 
@@ -107,7 +106,7 @@ void PortfolioTreeItem::setCost(double value)
 {
     mCost = value;
 
-    setText(PORTFOLIO_OLD_COST_COLUMN, QString::number(mCost, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_COST_COLUMN, QString::number(mCost, 'f', 2) + " \u20BD");
 }
 
 void PortfolioTreeItem::setPart(float value)
@@ -123,7 +122,7 @@ void PortfolioTreeItem::setYield(float value)
 
     const QString prefix = mYield > 0 ? "+" : "";
 
-    setText(PORTFOLIO_OLD_YIELD_COLUMN, prefix + QString::number(mYield, 'f', 2) + " " + RUBLE);
+    setText(PORTFOLIO_OLD_YIELD_COLUMN, prefix + QString::number(mYield, 'f', 2) + " \u20BD");
 
     QColor color;
 
@@ -153,7 +152,7 @@ void PortfolioTreeItem::setYieldPercent(float value, float fromPrice)
     const QString prefix = mYieldPercent > 0 ? "+" : "";
 
     setText(PORTFOLIO_OLD_YIELD_PERCENT_COLUMN, prefix + QString::number(mYieldPercent, 'f', 2) + "%");
-    setToolTip(PORTFOLIO_OLD_YIELD_PERCENT_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " " + RUBLE);
+    setToolTip(PORTFOLIO_OLD_YIELD_PERCENT_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " \u20BD");
 
     QColor color;
 
@@ -194,7 +193,7 @@ void PortfolioTreeItem::setDailyYieldPercent(float value, float fromPrice)
     const QString prefix = mDailyYieldPercent > 0 ? "+" : "";
 
     setText(PORTFOLIO_OLD_DAILY_YIELD_COLUMN, prefix + QString::number(mDailyYieldPercent, 'f', 2) + "%");
-    setToolTip(PORTFOLIO_OLD_DAILY_YIELD_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " " + RUBLE);
+    setToolTip(PORTFOLIO_OLD_DAILY_YIELD_COLUMN, QObject::tr("From: %1").arg(fromPrice, 0, 'f', mPricePrecision) + " \u20BD");
 
     QColor color;
 

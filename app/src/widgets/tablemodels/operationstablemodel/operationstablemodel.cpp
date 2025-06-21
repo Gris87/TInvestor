@@ -12,7 +12,6 @@
 
 
 
-constexpr QChar RUBLE           = QChar(0x20BD);
 constexpr float ZERO_LIMIT      = 0.0001f;
 constexpr float HUNDRED_PERCENT = 100.0f;
 
@@ -88,17 +87,17 @@ static QVariant operationsDescriptionDisplayRole(const Operation& operation)
 
 static QVariant operationsPriceDisplayRole(const Operation& operation)
 {
-    return QString::number(operation.price, 'f', operation.pricePrecision) + " " + RUBLE;
+    return QString::number(operation.price, 'f', operation.pricePrecision) + " \u20BD";
 }
 
 static QVariant operationsAvgPriceFifoDisplayRole(const Operation& operation)
 {
-    return QString::number(operation.avgPriceFifo, 'f', operation.pricePrecision) + " " + RUBLE;
+    return QString::number(operation.avgPriceFifo, 'f', operation.pricePrecision) + " \u20BD";
 }
 
 static QVariant operationsAvgPriceWavgDisplayRole(const Operation& operation)
 {
-    return QString::number(operation.avgPriceWavg, 'f', operation.pricePrecision) + " " + RUBLE;
+    return QString::number(operation.avgPriceWavg, 'f', operation.pricePrecision) + " \u20BD";
 }
 
 static QVariant operationsQuantityDisplayRole(const Operation& operation)
@@ -115,28 +114,28 @@ static QVariant operationsPaymentDisplayRole(const Operation& operation)
 {
     const QString prefix = operation.payment > 0 ? "+" : "";
 
-    return prefix + QString::number(operation.payment, 'f', operation.paymentPrecision) + " " + RUBLE;
+    return prefix + QString::number(operation.payment, 'f', operation.paymentPrecision) + " \u20BD";
 }
 
 static QVariant operationsCommissionDisplayRole(const Operation& operation)
 {
     const QString prefix = operation.commission > 0 ? "+" : "";
 
-    return prefix + QString::number(operation.commission, 'f', operation.commissionPrecision) + " " + RUBLE;
+    return prefix + QString::number(operation.commission, 'f', operation.commissionPrecision) + " \u20BD";
 }
 
 static QVariant operationsYieldDisplayRole(const Operation& operation)
 {
     const QString prefix = operation.yield > 0 ? "+" : "";
 
-    return prefix + QString::number(operation.yield, 'f', 2) + " " + RUBLE;
+    return prefix + QString::number(operation.yield, 'f', 2) + " \u20BD";
 }
 
 static QVariant operationsYieldWithCommissionDisplayRole(const Operation& operation)
 {
     const QString prefix = operation.yieldWithCommission > 0 ? "+" : "";
 
-    return prefix + QString::number(operation.yieldWithCommission, 'f', 2) + " " + RUBLE;
+    return prefix + QString::number(operation.yieldWithCommission, 'f', 2) + " \u20BD";
 }
 
 static QVariant operationsYieldWithCommissionPercentDisplayRole(const Operation& operation)
@@ -151,7 +150,7 @@ static QVariant operationsTotalYieldWithCommissionDisplayRole(const Operation& o
     const float   value  = quotationToFloat(operation.totalYieldWithCommission);
     const QString prefix = value > 0 ? "+" : "";
 
-    return prefix + QString::number(value, 'f', 2) + " " + RUBLE;
+    return prefix + QString::number(value, 'f', 2) + " \u20BD";
 }
 
 static QVariant operationsTotalYieldWithCommissionPercentDisplayRole(const Operation& operation)
@@ -163,12 +162,12 @@ static QVariant operationsTotalYieldWithCommissionPercentDisplayRole(const Opera
 
 static QVariant operationsRemainedMoneyDisplayRole(const Operation& operation)
 {
-    return QString::number(quotationToFloat(operation.remainedMoney), 'f', 2) + " " + RUBLE;
+    return QString::number(quotationToFloat(operation.remainedMoney), 'f', 2) + " \u20BD";
 }
 
 static QVariant operationsTotalMoneyDisplayRole(const Operation& operation)
 {
-    return QString::number(quotationToFloat(operation.totalMoney), 'f', 2) + " " + RUBLE;
+    return QString::number(quotationToFloat(operation.totalMoney), 'f', 2) + " \u20BD";
 }
 
 using DisplayRoleHandler = QVariant (*)(const Operation& operation);
@@ -192,61 +191,6 @@ static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
     operationsRemainedMoneyDisplayRole,
     operationsTotalMoneyDisplayRole
 };
-
-static QVariant operationsTimeForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsNameForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsDescriptionForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsPriceForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsAvgPriceFifoForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsAvgPriceWavgForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsQuantityForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsRemainedQuantityForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsPaymentForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsCommissionForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsYieldForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
 
 static QVariant operationsYieldWithCommissionForegroundRole(const Operation& operation)
 {
@@ -310,12 +254,7 @@ static QVariant operationsTotalYieldWithCommissionPercentForegroundRole(const Op
     return RED_COLOR;
 }
 
-static QVariant operationsRemainedMoneyForegroundRole(const Operation& /*operation*/)
-{
-    return QVariant();
-}
-
-static QVariant operationsTotalMoneyForegroundRole(const Operation& /*operation*/)
+static QVariant operationsNothingForegroundRole(const Operation& /*operation*/)
 {
     return QVariant();
 }
@@ -323,23 +262,65 @@ static QVariant operationsTotalMoneyForegroundRole(const Operation& /*operation*
 using ForegroundRoleHandler = QVariant (*)(const Operation& operation);
 
 static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
-    operationsTimeForegroundRole,
-    operationsNameForegroundRole,
-    operationsDescriptionForegroundRole,
-    operationsPriceForegroundRole,
-    operationsAvgPriceFifoForegroundRole,
-    operationsAvgPriceWavgForegroundRole,
-    operationsQuantityForegroundRole,
-    operationsRemainedQuantityForegroundRole,
-    operationsPaymentForegroundRole,
-    operationsCommissionForegroundRole,
-    operationsYieldForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole,
     operationsYieldWithCommissionForegroundRole,
     operationsYieldWithCommissionPercentForegroundRole,
     operationsTotalYieldWithCommissionForegroundRole,
     operationsTotalYieldWithCommissionPercentForegroundRole,
-    operationsRemainedMoneyForegroundRole,
-    operationsTotalMoneyForegroundRole
+    operationsNothingForegroundRole,
+    operationsNothingForegroundRole
+};
+
+static QVariant operationsYieldWithCommissionPercentTooltipRole(const Operation& operation)
+{
+    if (operation.avgCostFifo <= 0)
+    {
+        return QVariant();
+    }
+
+    return QObject::tr("From: %1").arg(operation.avgCostFifo, 0, 'f', operation.pricePrecision) + " \u20BD";
+}
+
+static QVariant operationsTotalYieldWithCommissionPercentTooltipRole(const Operation& operation)
+{
+    return QObject::tr("From: %1").arg(quotationToFloat(operation.maxInputMoney), 0, 'f', 2) + " \u20BD";
+}
+
+static QVariant operationsNothingTooltipRole(const Operation& /*operation*/)
+{
+    return QVariant();
+}
+
+using TooltipRoleHandler = QVariant (*)(const Operation& operation);
+
+static const TooltipRoleHandler TOOLTIP_ROLE_HANDLER[OPERATIONS_COLUMN_COUNT]{
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole,
+    operationsYieldWithCommissionPercentTooltipRole,
+    operationsNothingTooltipRole,
+    operationsTotalYieldWithCommissionPercentTooltipRole,
+    operationsNothingTooltipRole,
+    operationsNothingTooltipRole
 };
 
 QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
@@ -365,31 +346,7 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
         const int row    = index.row();
         const int column = index.column();
 
-        if (column == OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            const Operation& operation = mEntries->at(row);
-
-            if (operation.avgCostFifo <= 0)
-            {
-                return QVariant();
-            }
-
-            return tr("From: %1").arg(operation.avgCostFifo, 0, 'f', operation.pricePrecision) + " " + RUBLE;
-        }
-
-        if (column == OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN)
-        {
-            const float fromPrice = quotationToFloat(mEntries->at(row).maxInputMoney);
-
-            if (fromPrice <= 0)
-            {
-                return QVariant();
-            }
-
-            return tr("From: %1").arg(fromPrice, 0, 'f', 2) + " " + RUBLE;
-        }
-
-        return QVariant();
+        return TOOLTIP_ROLE_HANDLER[column](mEntries->at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
