@@ -316,9 +316,7 @@ void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double c
     const QString prefix  = yield > 0 ? "+" : "";
     const float   percent = cost > 0 ? (yield / cost) * HUNDRED_PERCENT : 0.0f;
 
-    label->setText(
-        prefix + QString::number(yield, 'f', 2) + " \u20BD" + "(" + prefix + QString::number(percent, 'f', 2) + "%)"
-    );
+    label->setText(prefix + QString::number(yield, 'f', 2) + " \u20BD" + "(" + prefix + QString::number(percent, 'f', 2) + "%)");
 
     QColor color;
 

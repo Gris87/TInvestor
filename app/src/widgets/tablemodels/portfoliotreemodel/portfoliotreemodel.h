@@ -2,9 +2,9 @@
 
 
 
-#include <QIcon>
-
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel.h"
+
+#include <QIcon>
 
 
 
