@@ -1,5 +1,6 @@
 Portfolio TreeView
 Stocks TableView
+Replace RUBLE
 Tray icon popup too long
 Use RWMutex instead of QMutex
 Limit operations and logs

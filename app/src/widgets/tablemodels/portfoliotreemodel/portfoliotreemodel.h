@@ -19,6 +19,9 @@ public:
     PortfolioTreeModel(const PortfolioTreeModel& another)            = delete;
     PortfolioTreeModel& operator=(const PortfolioTreeModel& another) = delete;
 
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& child) const override;
+
     [[nodiscard]]
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 

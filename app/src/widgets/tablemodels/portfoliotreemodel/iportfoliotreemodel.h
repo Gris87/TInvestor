@@ -2,7 +2,7 @@
 
 
 
-#include <QAbstractTableModel>
+#include <QAbstractItemModel>
 
 #include "src/domain/portfolio/portfolio.h"
 
@@ -24,13 +24,13 @@ enum PortfolioTreeColumns : qint8
 
 
 
-class IPortfolioTreeModel : public QAbstractTableModel
+class IPortfolioTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
     explicit IPortfolioTreeModel(QObject* parent = nullptr) :
-        QAbstractTableModel(parent)
+        QAbstractItemModel(parent)
     {
     }
     ~IPortfolioTreeModel() override = default;

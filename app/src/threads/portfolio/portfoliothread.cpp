@@ -197,6 +197,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         item.priceForDailyYield = item.price - (item.dailyYield / item.available);
         item.costForDailyYield  = item.available * item.priceForDailyYield;
         item.dailyYieldPercent  = ((item.price / item.priceForDailyYield) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        item.pricePrecision     = instrument.pricePrecision;
 
         totalCost += item.cost;
 
@@ -216,6 +217,8 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         QList<PortfolioItem>& items = categories[category];
 
         PortfolioCategoryItem categoryItem;
+
+        categoryItem.id = portfolio.positionsList.size();
 
         Q_ASSERT_X(mCategoryNames.contains(category), __FUNCTION__, "Missing translation");
         categoryItem.name = mCategoryNames.value(category, "UNKNOWN");

@@ -14,6 +14,7 @@ struct PortfolioCategoryItem
 
     PortfolioCategoryItem& operator=(const PortfolioCategoryItem& another) = default;
 
+    int                  id;
     QString              name;
     double               cost;
     float                part;

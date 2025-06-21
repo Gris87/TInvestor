@@ -395,7 +395,6 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
     if (role == ROLE_INSTRUMENT_LOGO)
     {
         const int row = index.row();
-
         Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return reinterpret_cast<qint64>(mEntries->at(row).instrumentLogo);
@@ -404,7 +403,6 @@ QVariant OperationsTableModel::data(const QModelIndex& index, int role) const
     if (role == ROLE_INSTRUMENT_NAME)
     {
         const int row = index.row();
-
         Q_ASSERT_X(index.column() == OPERATIONS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return mEntries->at(row).instrumentName;

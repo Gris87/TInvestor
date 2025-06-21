@@ -19,7 +19,8 @@ PortfolioItem::PortfolioItem() :
     dailyYield(),
     priceForDailyYield(),
     costForDailyYield(),
-    dailyYieldPercent()
+    dailyYieldPercent(),
+    pricePrecision()
 {
 }
 
@@ -30,5 +31,6 @@ bool operator==(const PortfolioItem& lhs, const PortfolioItem& rhs)
            lhs.price == rhs.price && lhs.avgPriceFifo == rhs.avgPriceFifo && lhs.avgPriceWavg == rhs.avgPriceWavg &&
            lhs.cost == rhs.cost && lhs.part == rhs.part && lhs.yield == rhs.yield && lhs.yieldPercent == rhs.yieldPercent &&
            lhs.dailyYield == rhs.dailyYield && lhs.priceForDailyYield == rhs.priceForDailyYield &&
-           lhs.costForDailyYield == rhs.costForDailyYield && lhs.dailyYieldPercent == rhs.dailyYieldPercent;
+           lhs.costForDailyYield == rhs.costForDailyYield && lhs.dailyYieldPercent == rhs.dailyYieldPercent &&
+           lhs.pricePrecision == rhs.pricePrecision;
 }

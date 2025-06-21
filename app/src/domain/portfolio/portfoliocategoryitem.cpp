@@ -3,6 +3,7 @@
 
 
 PortfolioCategoryItem::PortfolioCategoryItem() :
+    id(),
     name(),
     cost(),
     part(),
@@ -12,5 +13,5 @@ PortfolioCategoryItem::PortfolioCategoryItem() :
 
 bool operator==(const PortfolioCategoryItem& lhs, const PortfolioCategoryItem& rhs)
 {
-    return lhs.name == rhs.name && lhs.cost == rhs.cost && lhs.part == rhs.part && lhs.items == rhs.items;
+    return lhs.id == rhs.id && lhs.name == rhs.name && lhs.cost == rhs.cost && lhs.part == rhs.part && lhs.items == rhs.items;
 }

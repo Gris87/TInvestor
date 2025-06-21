@@ -97,6 +97,7 @@ void PortfolioTreeWidget::setAccountName(const QString& name)
 void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
 {
     mPortfolioTreeModel->portfolioChanged(portfolio);
+    ui->treeView->expandAll();
 
     mTotalCost       = 0.0;
     mTotalYield      = 0.0;

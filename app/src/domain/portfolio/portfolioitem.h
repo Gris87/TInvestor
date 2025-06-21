@@ -31,6 +31,7 @@ struct PortfolioItem
     float    priceForDailyYield;
     double   costForDailyYield;
     float    dailyYieldPercent;
+    qint8    pricePrecision;
 };
 
 using PortfolioItems = QMap<QString, PortfolioItem>; // UID => PortfolioItem

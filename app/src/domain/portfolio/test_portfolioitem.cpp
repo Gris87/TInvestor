@@ -28,6 +28,7 @@ TEST(Test_PortfolioItem, Test_constructor_and_destructor)
     ASSERT_NEAR(item.priceForDailyYield, 0, 0.0001f);
     ASSERT_NEAR(item.costForDailyYield,  0, 0.0001);
     ASSERT_NEAR(item.dailyYieldPercent,  0, 0.0001f);
+    ASSERT_EQ(item.pricePrecision,       0);
     // clang-format on
 }
 
@@ -51,6 +52,7 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
     item.priceForDailyYield = 10.0f;
     item.costForDailyYield  = 11.0;
     item.dailyYieldPercent  = 12.0f;
+    item.pricePrecision     = 13;
 
     const PortfolioItem item2(item);
 
@@ -72,6 +74,7 @@ TEST(Test_PortfolioItem, Test_copy_constructor)
     ASSERT_NEAR(item2.priceForDailyYield, 10.0f, 0.0001f);
     ASSERT_NEAR(item2.costForDailyYield,  11.0,  0.0001);
     ASSERT_NEAR(item2.dailyYieldPercent,  12.0f, 0.0001f);
+    ASSERT_EQ(item2.pricePrecision,       13);
     // clang-format on
 }
 
@@ -96,6 +99,7 @@ TEST(Test_PortfolioItem, Test_assign)
     item.priceForDailyYield = 10.0f;
     item.costForDailyYield  = 11.0;
     item.dailyYieldPercent  = 12.0f;
+    item.pricePrecision     = 13;
 
     item2 = item;
 
@@ -117,6 +121,7 @@ TEST(Test_PortfolioItem, Test_assign)
     ASSERT_NEAR(item2.priceForDailyYield, 10.0f, 0.0001f);
     ASSERT_NEAR(item2.costForDailyYield,  11.0,  0.0001);
     ASSERT_NEAR(item2.dailyYieldPercent,  12.0f, 0.0001f);
+    ASSERT_EQ(item2.pricePrecision,       13);
     // clang-format on
 }
 
@@ -141,6 +146,7 @@ TEST(Test_PortfolioItem, Test_equals)
     item.priceForDailyYield = 10.0f;
     item.costForDailyYield  = 11.0;
     item.dailyYieldPercent  = 12.0f;
+    item.pricePrecision     = 13;
 
     item2.instrumentId       = "a";
     item2.instrumentTicker   = "b";
@@ -158,6 +164,7 @@ TEST(Test_PortfolioItem, Test_equals)
     item2.priceForDailyYield = 10.0f;
     item2.costForDailyYield  = 11.0;
     item2.dailyYieldPercent  = 12.0f;
+    item2.pricePrecision     = 13;
 
     ASSERT_EQ(item, item2);
 
@@ -239,6 +246,11 @@ TEST(Test_PortfolioItem, Test_equals)
     item2.dailyYieldPercent = 12000.0f;
     ASSERT_NE(item, item2);
     item2.dailyYieldPercent = 12.0f;
+    ASSERT_EQ(item, item2);
+
+    item2.pricePrecision = -13;
+    ASSERT_NE(item, item2);
+    item2.pricePrecision = 13;
     ASSERT_EQ(item, item2);
 }
 // NOLINTEND(readability-magic-numbers)

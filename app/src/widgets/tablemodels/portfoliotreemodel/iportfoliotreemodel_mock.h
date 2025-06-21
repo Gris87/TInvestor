@@ -22,6 +22,8 @@ public:
     PortfolioTreeModelMock(const PortfolioTreeModelMock& another)            = delete;
     PortfolioTreeModelMock& operator=(const PortfolioTreeModelMock& another) = delete;
 
+    MOCK_METHOD(QModelIndex, index, (int row, int column, const QModelIndex& parent), (const, override));
+    MOCK_METHOD(QModelIndex, parent, (const QModelIndex& child), (const, override));
     MOCK_METHOD(int, rowCount, (const QModelIndex& parent), (const, override));
     MOCK_METHOD(int, columnCount, (const QModelIndex& parent), (const, override));
     MOCK_METHOD(QVariant, data, (const QModelIndex& index, int role), (const, override));
