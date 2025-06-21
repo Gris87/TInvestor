@@ -81,6 +81,6 @@ private:
     double                               mTotalDailyYield;
 
 public slots:
-    void on_treeWidget_customContextMenuRequested(const QPoint& pos);
+    void on_treeView_customContextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
 };

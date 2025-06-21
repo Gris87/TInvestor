@@ -31,4 +31,5 @@ public:
     MOCK_METHOD(void, portfolioChanged, (const Portfolio& portfolio), (override));
     MOCK_METHOD(void, lastPriceChanged, (const QString& instrumentId, float price), (override));
     MOCK_METHOD(void, updateLastPrices, (), (override));
+    MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 };

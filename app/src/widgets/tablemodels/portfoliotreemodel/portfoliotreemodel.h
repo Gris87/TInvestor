@@ -39,8 +39,15 @@ public:
     void portfolioChanged(const Portfolio& portfolio) override;
     void lastPriceChanged(const QString& instrumentId, float price) override;
     void updateLastPrices() override;
+    void exportToExcel(QXlsx::Document& doc) const override;
 
 private:
+    [[nodiscard]]
+    QXlsx::Format createRubleFormat(const QColor& color, bool withPlus, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+
     void sortCategory(QList<PortfolioItem>* items);
     void reverseCategory(QList<PortfolioItem>* items);
     void updatePriceInCategory(PortfolioCategoryItem* category, bool needToSort);

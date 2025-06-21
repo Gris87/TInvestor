@@ -5,6 +5,7 @@
 #include <QAbstractItemModel>
 
 #include "src/domain/portfolio/portfolio.h"
+#include "src/qxlsx/xlsxdocument.h"
 
 
 
@@ -41,4 +42,5 @@ public:
     virtual void portfolioChanged(const Portfolio& portfolio)               = 0;
     virtual void lastPriceChanged(const QString& instrumentId, float price) = 0;
     virtual void updateLastPrices()                                         = 0;
+    virtual void exportToExcel(QXlsx::Document& doc) const                  = 0;
 };

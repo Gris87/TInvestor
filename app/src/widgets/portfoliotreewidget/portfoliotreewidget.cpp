@@ -18,8 +18,6 @@ const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 
 
 const QColor HEADER_BACKGROUND_COLOR   = QColor("#354450"); // clazy:exclude=non-pod-global-static
 const QColor HEADER_FONT_COLOR         = QColor("#699BA2"); // clazy:exclude=non-pod-global-static
-const QColor CATEGORY_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static
-const QColor CATEGORY_FONT_COLOR       = QColor("#BFBFBF"); // clazy:exclude=non-pod-global-static
 const QColor GREEN_COLOR               = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
 const QColor RED_COLOR                 = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
 const QColor NORMAL_COLOR              = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
@@ -271,36 +269,6 @@ void PortfolioTreeWidget::deleteObsoleteRecords(CategoryTreeItem* categoryTreeIt
     }
 }
 
-void PortfolioTreeWidget::on_treeWidget_customContextMenuRequested(const QPoint& pos)
-{
-    QMenu* contextMenu = new QMenu(this);
-
-    contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
-
-    contextMenu->popup(ui->treeWidget->viewport()->mapToGlobal(pos));
-}
-
-void PortfolioTreeWidget::actionExportToExcelTriggered()
-{
-    const QString lastFile = mSettingsEditor->value("MainWindow/PortfolioTreeWidget/exportToExcelFile", "").toString();
-
-    const std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
-        this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
-    );
-    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog->setDefaultSuffix("xlsx");
-
-    fileDialog->selectFile(lastFile);
-
-    if (fileDialog->exec() == QDialog::Accepted)
-    {
-        const QString path = fileDialog->selectedFiles().at(0);
-        mSettingsEditor->setValue("MainWindow/PortfolioTreeWidget/exportToExcelFile", path);
-
-        exportToExcel(path);
-    }
-}
-
 void PortfolioTreeWidget::updateAllTimeLabel()
 {
     updateYieldLabel(ui->allTimeLabel, mTotalYield, mTotalCost);
@@ -341,6 +309,36 @@ void PortfolioTreeWidget::updateYieldLabel(QLabel* label, double yield, double c
     label->setPalette(palette);
 }
 
+void PortfolioTreeWidget::on_treeView_customContextMenuRequested(const QPoint& pos)
+{
+    QMenu* contextMenu = new QMenu(this);
+
+    contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
+
+    contextMenu->popup(ui->treeView->viewport()->mapToGlobal(pos));
+}
+
+void PortfolioTreeWidget::actionExportToExcelTriggered()
+{
+    const QString lastFile = mSettingsEditor->value("MainWindow/PortfolioTreeWidget/exportToExcelFile", "").toString();
+
+    const std::shared_ptr<IFileDialog> fileDialog = mFileDialogFactory->newInstance(
+        this, tr("Export"), lastFile.left(lastFile.lastIndexOf("/")), tr("Excel file") + " (*.xlsx)"
+    );
+    fileDialog->setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog->setDefaultSuffix("xlsx");
+
+    fileDialog->selectFile(lastFile);
+
+    if (fileDialog->exec() == QDialog::Accepted)
+    {
+        const QString path = fileDialog->selectedFiles().at(0);
+        mSettingsEditor->setValue("MainWindow/PortfolioTreeWidget/exportToExcelFile", path);
+
+        exportToExcel(path);
+    }
+}
+
 void PortfolioTreeWidget::exportToExcel(const QString& path) const
 {
     QXlsx::Document doc;
@@ -355,67 +353,12 @@ void PortfolioTreeWidget::exportToExcel(const QString& path) const
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    QXlsx::Format categoryStyle;
-    categoryStyle.setFontBold(true);
-    categoryStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
-    categoryStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
-    categoryStyle.setFillPattern(QXlsx::Format::PatternSolid);
-    categoryStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
-    categoryStyle.setFontColor(CATEGORY_FONT_COLOR);
-
-    QXlsx::Format categoryRubleStyle;
-    categoryRubleStyle.setFontBold(true);
-    categoryRubleStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
-    categoryRubleStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
-    categoryRubleStyle.setNumberFormat("0.00 \u20BD");
-    categoryRubleStyle.setFillPattern(QXlsx::Format::PatternSolid);
-    categoryRubleStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
-    categoryRubleStyle.setFontColor(CATEGORY_FONT_COLOR);
-
-    QXlsx::Format categoryPercentStyle;
-    categoryPercentStyle.setFontBold(true);
-    categoryPercentStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
-    categoryPercentStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
-    categoryPercentStyle.setNumberFormat("0.00%");
-    categoryPercentStyle.setFillPattern(QXlsx::Format::PatternSolid);
-    categoryPercentStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
-    categoryPercentStyle.setFontColor(CATEGORY_FONT_COLOR);
-
-    for (int i = 0; i < ui->treeWidget->columnCount(); ++i)
+    for (int i = 0; i < PORTFOLIO_COLUMN_COUNT; ++i)
     {
-        doc.write(1, i + 1, ui->treeWidget->headerItem()->text(i), headerStyle);
+        doc.write(1, i + 1, mPortfolioTreeModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
 
-    int curRow = 2;
-
-    for (int i = 0; i < ui->treeWidget->topLevelItemCount(); ++i)
-    {
-        CategoryTreeItem* categoryTreeItem = dynamic_cast<CategoryTreeItem*>(ui->treeWidget->topLevelItem(i));
-
-        // clang-format off
-        doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          categoryTreeItem->name(), categoryStyle);
-        doc.write(curRow, PORTFOLIO_AVAILABLE_COLUMN + 1,     "", categoryStyle);
-        doc.write(curRow, PORTFOLIO_PRICE_COLUMN + 1,         "", categoryStyle);
-        doc.write(curRow, PORTFOLIO_AVG_PRICE_COLUMN + 1,     "", categoryStyle);
-        doc.write(curRow, PORTFOLIO_COST_COLUMN + 1,          categoryTreeItem->cost(), categoryRubleStyle);
-        doc.write(curRow, PORTFOLIO_PART_COLUMN + 1,          categoryTreeItem->part() / HUNDRED_PERCENT, categoryPercentStyle);
-        doc.write(curRow, PORTFOLIO_YIELD_COLUMN + 1,         "", categoryStyle);
-        doc.write(curRow, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, "", categoryStyle);
-        doc.write(curRow, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   "", categoryStyle);
-        // clang-format on
-
-        ++curRow;
-
-        for (int j = 0; j < categoryTreeItem->childCount(); ++j)
-        {
-            PortfolioTreeItem*    portfolioTreeItem = dynamic_cast<PortfolioTreeItem*>(categoryTreeItem->child(j));
-            IPortfolioTreeRecord* record            = mRecords.value(portfolioTreeItem->instrumentId());
-
-            record->exportToExcel(doc, curRow);
-
-            ++curRow;
-        }
-    }
+    mPortfolioTreeModel->exportToExcel(doc);
 
     // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off

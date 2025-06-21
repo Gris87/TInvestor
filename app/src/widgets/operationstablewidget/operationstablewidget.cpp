@@ -112,7 +112,7 @@ void OperationsTableWidget::exportToExcel(const QString& path) const
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    for (int i = 0; i < mOperationsTableModel->columnCount(); ++i)
+    for (int i = 0; i < OPERATIONS_COLUMN_COUNT; ++i)
     {
         doc.write(1, i + 1, mOperationsTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }

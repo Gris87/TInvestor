@@ -14,9 +14,13 @@
 constexpr float ZERO_LIMIT      = 0.0001f;
 constexpr float HUNDRED_PERCENT = 100.0f;
 
-const QBrush GREEN_COLOR  = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
-const QBrush RED_COLOR    = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
-const QBrush NORMAL_COLOR = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
+const QBrush GREEN_COLOR               = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush RED_COLOR                 = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush NORMAL_COLOR              = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
+const QColor CATEGORY_BACKGROUND_COLOR = QColor("#354450");         // clazy:exclude=non-pod-global-static
+const QColor CATEGORY_FONT_COLOR       = QColor("#BFBFBF");         // clazy:exclude=non-pod-global-static
+const QColor CELL_BACKGROUND_COLOR     = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
+const QColor CELL_FONT_COLOR           = QColor("#97AEC4");         // clazy:exclude=non-pod-global-static
 
 
 
@@ -513,6 +517,136 @@ void PortfolioTreeModel::updateLastPrices()
             emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
         }
     }
+}
+
+void PortfolioTreeModel::exportToExcel(QXlsx::Document& doc) const
+{
+    QXlsx::Format categoryStyle;
+    categoryStyle.setFontBold(true);
+    categoryStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    QXlsx::Format categoryRubleStyle;
+    categoryRubleStyle.setFontBold(true);
+    categoryRubleStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryRubleStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryRubleStyle.setNumberFormat("0.00 \u20BD");
+    categoryRubleStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryRubleStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryRubleStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    QXlsx::Format categoryPercentStyle;
+    categoryPercentStyle.setFontBold(true);
+    categoryPercentStyle.setHorizontalAlignment(QXlsx::Format::AlignHCenter);
+    categoryPercentStyle.setVerticalAlignment(QXlsx::Format::AlignVCenter);
+    categoryPercentStyle.setNumberFormat("0.00%");
+    categoryPercentStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    categoryPercentStyle.setPatternBackgroundColor(CATEGORY_BACKGROUND_COLOR);
+    categoryPercentStyle.setFontColor(CATEGORY_FONT_COLOR);
+
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
+    int curRow = 2;
+
+    for (const PortfolioCategoryItem& category : mPortfolio.positionsList)
+    {
+        // clang-format off
+        doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          category.name, categoryStyle);
+        doc.write(curRow, PORTFOLIO_AVAILABLE_COLUMN + 1,     "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_PRICE_COLUMN + 1,         "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_AVG_PRICE_COLUMN + 1,     "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_COST_COLUMN + 1,          category.cost, categoryRubleStyle);
+        doc.write(curRow, PORTFOLIO_PART_COLUMN + 1,          category.part / HUNDRED_PERCENT, categoryPercentStyle);
+        doc.write(curRow, PORTFOLIO_YIELD_COLUMN + 1,         "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, "", categoryStyle);
+        doc.write(curRow, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   "", categoryStyle);
+        // clang-format on
+
+        ++curRow;
+
+        for (const PortfolioItem& item : category.items)
+        {
+            if (item.showPrices)
+            {
+                // clang-format off
+                doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          item.instrumentName,                      cellStyle);
+                doc.write(curRow, PORTFOLIO_AVAILABLE_COLUMN + 1,     item.available,                           cellStyle);
+                doc.write(curRow, PORTFOLIO_PRICE_COLUMN + 1,         item.price,                               createRubleFormat(CELL_FONT_COLOR, false, item.pricePrecision));
+                doc.write(curRow, PORTFOLIO_AVG_PRICE_COLUMN + 1,     item.avgPriceFifo,                        createRubleFormat(CELL_FONT_COLOR, false, item.pricePrecision));
+                doc.write(curRow, PORTFOLIO_COST_COLUMN + 1,          item.cost,                                createRubleFormat(CELL_FONT_COLOR, false, 2));
+                doc.write(curRow, PORTFOLIO_PART_COLUMN + 1,          item.part / HUNDRED_PERCENT,              createPercentFormat(CELL_FONT_COLOR, false));
+                doc.write(curRow, PORTFOLIO_YIELD_COLUMN + 1,         item.yield,                               createRubleFormat(itemYieldForegroundRole(item).value<QBrush>().color(), true, 2));
+                doc.write(curRow, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, item.yieldPercent / HUNDRED_PERCENT,      createPercentFormat(itemYieldPercentForegroundRole(item).value<QBrush>().color(), true));
+                doc.write(curRow, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   item.dailyYieldPercent / HUNDRED_PERCENT, createPercentFormat(itemDailyYieldForegroundRole(item).value<QBrush>().color(), true));
+                // clang-format on
+            }
+            else
+            {
+                // clang-format off
+                doc.write(curRow, PORTFOLIO_NAME_COLUMN + 1,          item.instrumentName,         cellStyle);
+                doc.write(curRow, PORTFOLIO_AVAILABLE_COLUMN + 1,     item.available,              cellStyle);
+                doc.write(curRow, PORTFOLIO_PRICE_COLUMN + 1,         "",                          cellStyle);
+                doc.write(curRow, PORTFOLIO_AVG_PRICE_COLUMN + 1,     "",                          cellStyle);
+                doc.write(curRow, PORTFOLIO_COST_COLUMN + 1,          item.cost,                   createRubleFormat(CELL_FONT_COLOR, false, 2));
+                doc.write(curRow, PORTFOLIO_PART_COLUMN + 1,          item.part / HUNDRED_PERCENT, createPercentFormat(CELL_FONT_COLOR, false));
+                doc.write(curRow, PORTFOLIO_YIELD_COLUMN + 1,         "",                          cellStyle);
+                doc.write(curRow, PORTFOLIO_YIELD_PERCENT_COLUMN + 1, "",                          cellStyle);
+                doc.write(curRow, PORTFOLIO_DAILY_YIELD_COLUMN + 1,   "",                          cellStyle);
+                // clang-format on
+            }
+
+            ++curRow;
+        }
+    }
+}
+
+QXlsx::Format PortfolioTreeModel::createRubleFormat(const QColor& color, bool withPlus, int precision) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat(QString("+0.%1 \u20BD;-0.%1 \u20BD;0.%1 \u20BD").arg("", precision, '0'));
+    }
+    else
+    {
+        res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
+}
+
+QXlsx::Format PortfolioTreeModel::createPercentFormat(const QColor& color, bool withPlus) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat("+0.00%;-0.00%;0.00%");
+    }
+    else
+    {
+        res.setNumberFormat("0.00%");
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
 }
 
 static void fillItemsIndeciesForParallel(

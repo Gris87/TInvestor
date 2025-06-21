@@ -116,7 +116,7 @@ void LogsTableWidget::exportToExcel(const QString& path) const
     headerStyle.setPatternBackgroundColor(HEADER_BACKGROUND_COLOR);
     headerStyle.setFontColor(HEADER_FONT_COLOR);
 
-    for (int i = 0; i < mLogsTableModel->columnCount(); ++i)
+    for (int i = 0; i < LOGS_COLUMN_COUNT; ++i)
     {
         doc.write(1, i + 1, mLogsTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
