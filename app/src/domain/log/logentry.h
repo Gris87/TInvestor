@@ -30,7 +30,7 @@ struct LogEntry
 
     LogEntry& operator=(const LogEntry& another) = default;
 
-    void fromJsonObject(simdjson::ondemand::object jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

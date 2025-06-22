@@ -12,13 +12,13 @@ Instrument::Instrument() :
 
 static void instrumentTickerParse(Instrument* instrument, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     instrument->ticker        = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void instrumentNameParse(Instrument* instrument, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     instrument->name          = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
@@ -34,18 +34,20 @@ static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::onde
 
 using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value value);
 
-static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"ticker",         instrumentTickerParse        },
     {"name",           instrumentNameParse          },
     {"lot",            instrumentLotParse           },
     {"pricePrecision", instrumentPricePrecisionParse}
 };
+// clang-format on
 
 void Instrument::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key          = field.escaped_key();
+        const std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());

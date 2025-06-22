@@ -69,7 +69,7 @@ TEST(Test_Instrument, Test_fromJsonObject)
 
     const QString content = R"({"lot":1,"name":"b","pricePrecision":2,"ticker":"a"})";
 
-    simdjson::padded_string jsonData(content.toStdString());
+    const simdjson::padded_string jsonData(content.toStdString());
 
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);

@@ -16,7 +16,7 @@ struct StockMeta
 
     StockMeta& operator=(const StockMeta& another) = default;
 
-    void fromJsonObject(simdjson::ondemand::object jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

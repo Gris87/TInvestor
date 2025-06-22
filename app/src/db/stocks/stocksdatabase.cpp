@@ -44,7 +44,7 @@ QList<Stock*> StocksDatabase::readStocksMeta()
         const QByteArray content = stocksFile->readAll();
         stocksFile->close();
 
-        simdjson::padded_string jsonData(content.toStdString());
+        const simdjson::padded_string jsonData(content.toStdString());
 
         simdjson::ondemand::parser parser;
 
@@ -57,7 +57,7 @@ QList<Stock*> StocksDatabase::readStocksMeta()
 
             int i = 0;
 
-            for (simdjson::ondemand::object jsonObject : jsonStocks)
+            for (const simdjson::ondemand::object jsonObject : jsonStocks)
             {
                 Stock* stock = new Stock();
                 stock->meta.fromJsonObject(jsonObject);

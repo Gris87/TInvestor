@@ -65,7 +65,7 @@ TEST(Test_OperationFifoItem, Test_fromJsonObject)
 
     const QString content = R"({"cost":{"nano":3,"units":2},"quantity":1})";
 
-    simdjson::padded_string jsonData(content.toStdString());
+    const simdjson::padded_string jsonData(content.toStdString());
 
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);

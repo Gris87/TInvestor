@@ -165,16 +165,14 @@ static QVariant itemNameDisplayRole(const PortfolioItem& item)
 
 static QVariant itemAvailableDisplayRole(const PortfolioItem& item)
 {
-    double value = item.available;
+    const double value = item.available;
 
     if (static_cast<qint64>(value) * 1000 == static_cast<qint64>(value * 1000)) // NOLINT(readability-magic-numbers)
     {
         return QString::number(static_cast<qint64>(value));
     }
-    else
-    {
-        return QString::number(value, 'f', 2);
-    }
+
+    return QString::number(value, 'f', 2);
 }
 
 static QVariant itemPriceDisplayRole(const PortfolioItem& item)
@@ -865,7 +863,7 @@ void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category, 
 {
     for (int i = 0; i < category->items.size(); ++i)
     {
-        PortfolioItem& item = category->items[i];
+        PortfolioItem& item = category->items[i]; // clazy:exclude=detaching-member
 
         if (mLastPricesUpdates.contains(item.instrumentId))
         {

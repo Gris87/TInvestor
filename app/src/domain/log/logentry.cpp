@@ -35,31 +35,32 @@ static void logLevelParse(LogEntry* entry, simdjson::ondemand::value value)
 
 static void logInstrumentIdParse(LogEntry* entry, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     entry->instrumentId       = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logInstrumentTickerParse(LogEntry* entry, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     entry->instrumentTicker   = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logInstrumentNameParse(LogEntry* entry, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     entry->instrumentName     = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     entry->message            = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);
 
-static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"timestamp",        logTimestampParse       },
     {"level",            logLevelParse           },
     {"instrumentId",     logInstrumentIdParse    },
@@ -67,12 +68,13 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
     {"instrumentName",   logInstrumentNameParse  },
     {"message",          logMessageParse         }
 };
+// clang-format on
 
 void LogEntry::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key          = field.escaped_key();
+        const std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());

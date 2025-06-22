@@ -90,7 +90,7 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     const QString content =
         R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
 
-    simdjson::padded_string jsonData(content.toStdString());
+    const simdjson::padded_string jsonData(content.toStdString());
 
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);

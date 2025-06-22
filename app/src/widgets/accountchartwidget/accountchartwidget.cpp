@@ -30,6 +30,8 @@ constexpr qint64 MS_IN_SECOND          = 1000LL;
 constexpr qint64 TOOLTIP_HIDE_DELAY    = MS_IN_SECOND; // 1 second
 constexpr double ZOOM_FACTOR_BASE      = 1.001;
 constexpr double CHART_PEN_SIZE_FACTOR = 3000.0;
+constexpr double CHART_PEN_MAX_SIZE    = 3.0;
+constexpr int    MONTH_COUNT           = 12;
 constexpr int    TITLE_FONT_SIZE       = 16;
 constexpr qreal  TOOLTIP_Z_VALUE       = 11;
 constexpr double COLUMN_GAP            = 0.71;
@@ -359,7 +361,7 @@ void AccountChartWidget::operationsRead(const QList<Operation>& operations)
         mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
         QPen pen(SERIES_COLOR);
-        pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3.0));
+        pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), CHART_PEN_MAX_SIZE));
         mYieldSeries.setPen(pen);
         mRemainedMoneySeries.setPen(pen);
         mTotalMoneySeries.setPen(pen);
@@ -408,7 +410,7 @@ void AccountChartWidget::operationsAdded(const QList<Operation>& operations)
     mTotalMoneyAxisY.setRange(mTotalMoneyAxisYMin, mTotalMoneyAxisYMax);
 
     QPen pen(SERIES_COLOR);
-    pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), 3.0));
+    pen.setWidthF(qMin(CHART_PEN_SIZE_FACTOR / mYieldSeries.count(), CHART_PEN_MAX_SIZE));
     mYieldSeries.setPen(pen);
     mRemainedMoneySeries.setPen(pen);
     mTotalMoneySeries.setPen(pen);
@@ -431,12 +433,13 @@ void AccountChartWidget::handleOperation(
     {
         const QDate operationDate = QDateTime::fromMSecsSinceEpoch(operation.timestamp).date();
 
-        int year  = operationDate.year();
-        int month = operationDate.month();
+        const int year  = operationDate.year();
+        const int month = operationDate.month();
 
         mLastMonthLimitsStart = QDateTime(QDate(year, month, 1), QTime(0, 0)).toMSecsSinceEpoch();
         mLastMonthLimitsEnd =
-            QDateTime(QDate(month == 12 ? year + 1 : year, month == 12 ? 1 : month + 1, 1), QTime(0, 0)).toMSecsSinceEpoch();
+            QDateTime(QDate(month == MONTH_COUNT ? year + 1 : year, month == MONTH_COUNT ? 1 : month + 1, 1), QTime(0, 0))
+                .toMSecsSinceEpoch();
 
         mLastMonthlyYield += mMonthlyYieldPositivePoints.count() > 0
                                  ? mMonthlyYieldPositivePoints.at(mMonthlyYieldPositivePoints.count() - 1) +

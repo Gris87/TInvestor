@@ -9,11 +9,8 @@
 
 struct Logo
 {
-    Logo()                    = default;
-    Logo(const Logo& another) = default;
-    ~Logo()                   = default;
-
-    Logo& operator=(const Logo& another) = default;
+    Logo()  = default;
+    ~Logo() = default;
 
     QMutex  mutex;
     QPixmap pixmap;

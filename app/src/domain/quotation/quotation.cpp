@@ -20,16 +20,18 @@ static void quotationNanoParse(Quotation* quotation, simdjson::ondemand::value v
 
 using ParseHandler = void (*)(Quotation* quotation, simdjson::ondemand::value value);
 
-static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"units", quotationUnitsParse},
     {"nano",  quotationNanoParse }
 };
+// clang-format on
 
 void Quotation::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key          = field.escaped_key();
+        const std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());

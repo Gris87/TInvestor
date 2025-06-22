@@ -51,7 +51,7 @@ TEST(Test_Quotation, Test_fromJsonObject)
 
     const QString content = R"({"nano":2,"units":1})";
 
-    simdjson::padded_string jsonData(content.toStdString());
+    const simdjson::padded_string jsonData(content.toStdString());
 
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);

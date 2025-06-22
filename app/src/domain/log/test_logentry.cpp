@@ -88,7 +88,7 @@ TEST(Test_LogEntry, Test_fromJsonObject)
     const QString content =
         R"({"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","level":2,"message":"d","timestamp":1})";
 
-    simdjson::padded_string jsonData(content.toStdString());
+    const simdjson::padded_string jsonData(content.toStdString());
 
     simdjson::ondemand::parser   parser;
     simdjson::ondemand::document doc = parser.iterate(jsonData);

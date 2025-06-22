@@ -17,7 +17,7 @@ struct Operation
 
     Operation& operator=(const Operation& another) = default;
 
-    void fromJsonObject(simdjson::ondemand::object jsonObject);
+    void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]
     QJsonObject toJsonObject() const;

@@ -14,19 +14,19 @@ StockMeta::StockMeta() :
 
 static void metaUidParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     meta->uid                 = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaTickerParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     meta->ticker              = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaNameParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     meta->name                = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
@@ -47,7 +47,8 @@ static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::valu
 
 using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);
 
-static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"uid",                 metaUidParse                },
     {"ticker",              metaTickerParse             },
     {"name",                metaNameParse               },
@@ -55,12 +56,13 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
     {"lot",                 metaLotParse                },
     {"minPriceIncrement",   metaMinPriceIncrementParse  }
 };
+// clang-format on
 
 void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key          = field.escaped_key();
+        const std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());

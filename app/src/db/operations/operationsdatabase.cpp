@@ -154,7 +154,7 @@ static void readOperationsForParallel(
         const int endBlock   = indeciesArray[i];
 
         const QByteArray        operationContent = content.mid(startBlock, endBlock - startBlock + 1);
-        simdjson::padded_string jsonData(operationContent.toStdString());
+        const simdjson::padded_string jsonData(operationContent.toStdString());
 
         try
         {
@@ -207,7 +207,7 @@ QList<Operation> OperationsDatabase::readOperations()
         else
         {
             content = "[" + content + "]";
-            simdjson::padded_string jsonData(content.toStdString());
+            const simdjson::padded_string jsonData(content.toStdString());
 
             simdjson::ondemand::parser parser;
 
@@ -222,7 +222,7 @@ QList<Operation> OperationsDatabase::readOperations()
 
                 mLogosStorage->lock();
 
-                for (simdjson::ondemand::object jsonObject : jsonOperations)
+                for (const simdjson::ondemand::object jsonObject : jsonOperations)
                 {
                     Operation& operation = res[i];
 

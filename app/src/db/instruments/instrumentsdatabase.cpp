@@ -38,7 +38,7 @@ Instruments InstrumentsDatabase::readInstruments()
         const QByteArray content = instrumentsFile->readAll();
         instrumentsFile->close();
 
-        simdjson::padded_string jsonData(content.toStdString());
+        const simdjson::padded_string jsonData(content.toStdString());
 
         simdjson::ondemand::parser parser;
 
@@ -50,8 +50,8 @@ Instruments InstrumentsDatabase::readInstruments()
 
             for (simdjson::ondemand::field field : jsonInstruments)
             {
-                std::string_view fieldStr     = field.escaped_key();
-                QString          instrumentId = QString::fromUtf8(fieldStr.data(), fieldStr.size());
+                const std::string_view fieldStr     = field.escaped_key();
+                const QString          instrumentId = QString::fromUtf8(fieldStr.data(), fieldStr.size());
 
                 res[instrumentId].fromJsonObject(field.value().get_object());
             }

@@ -19,7 +19,10 @@ public:
     PortfolioTreeModel(const PortfolioTreeModel& another)            = delete;
     PortfolioTreeModel& operator=(const PortfolioTreeModel& another) = delete;
 
+    [[nodiscard]]
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+
+    [[nodiscard]]
     QModelIndex parent(const QModelIndex& child) const override;
 
     [[nodiscard]]

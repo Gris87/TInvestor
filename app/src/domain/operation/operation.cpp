@@ -46,25 +46,25 @@ static void operationTimestampParse(Operation* operation, simdjson::ondemand::va
 
 static void operationInstrumentIdParse(Operation* operation, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     operation->instrumentId   = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationInstrumentTickerParse(Operation* operation, simdjson::ondemand::value value)
 {
-    std::string_view valueStr   = value.get_string();
+    const std::string_view valueStr = value.get_string();
     operation->instrumentTicker = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationInstrumentNameParse(Operation* operation, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     operation->instrumentName = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationDescriptionParse(Operation* operation, simdjson::ondemand::value value)
 {
-    std::string_view valueStr = value.get_string();
+    const std::string_view valueStr = value.get_string();
     operation->description    = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
@@ -80,7 +80,7 @@ static void operationFifoItemsParse(Operation* operation, simdjson::ondemand::va
     operation->fifoItems.resizeForOverwrite(jsonArray.count_elements());
     int i = 0;
 
-    for (simdjson::ondemand::object jsonObject : jsonArray)
+    for (const simdjson::ondemand::object jsonObject : jsonArray)
     {
         operation->fifoItems[i].fromJsonObject(jsonObject);
         ++i;
@@ -194,7 +194,8 @@ static void operationCommissionPrecisionParse(Operation* operation, simdjson::on
 
 using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value value);
 
-static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
     {"timestamp",                       operationTimestampParse                      },
     {"instrumentId",                    operationInstrumentIdParse                   },
     {"instrumentTicker",                operationInstrumentTickerParse               },
@@ -224,12 +225,13 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{
     {"paymentPrecision",                operationPaymentPrecisionParse               },
     {"commissionPrecision",             operationCommissionPrecisionParse            }
 };
+// clang-format on
 
 void Operation::fromJsonObject(simdjson::ondemand::object jsonObject)
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
-        std::string_view key          = field.escaped_key();
+        const std::string_view key          = field.escaped_key();
         ParseHandler     parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());
