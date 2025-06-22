@@ -136,6 +136,8 @@ SOURCES += \
     src/widgets/tablemodels/operationstablemodel/test_operationstablemodelfactory.cpp \
     src/widgets/tablemodels/portfoliotreemodel/test_portfoliotreemodel.cpp \
     src/widgets/tablemodels/portfoliotreemodel/test_portfoliotreemodelfactory.cpp \
+    src/widgets/tablemodels/stockstablemodel/test_stockstablemodel.cpp \
+    src/widgets/tablemodels/stockstablemodel/test_stockstablemodelfactory.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
     src/widgets/tablerecords/stockstablerecord/test_stockstablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
@@ -245,6 +247,8 @@ HEADERS += \
     src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h \
     src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h \
     src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h \
+    src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h \
+    src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
     src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
