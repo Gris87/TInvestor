@@ -49,7 +49,7 @@ TEST_F(Test_OrderBookThread, Test_run)
     stockData.price     = 5000.75f;
 
     Stock stock;
-    stock.meta.uid = "aaaaa";
+    stock.meta.instrumentId = "aaaaa";
     stock.operational.detailedData.append(stockData);
 
     thread->setStock(&stock);

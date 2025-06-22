@@ -35,8 +35,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     StrictMock<OrderWavesWidgetMock>* orderWavesWidgetMock =
         new StrictMock<OrderWavesWidgetMock>(); // Will be deleted in OrderWavesDialog constructor
 
-    stock.meta.minPriceIncrement.units = 1;
-    stock.meta.minPriceIncrement.nano  = 500000000;
+    stock.meta.pricePrecision = 1;
 
     EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull())).WillOnce(Return(orderWavesWidgetMock));
     EXPECT_CALL(orderBookThreadMock, setStock(&stock));

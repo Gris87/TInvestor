@@ -1135,8 +1135,8 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     Stock stock1;
     Stock stock2;
 
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
+    stock1.meta.instrumentId = "aaaaa";
+    stock2.meta.instrumentId = "bbbbb";
 
     stocks << &stock1 << &stock1 << &stock2;
 

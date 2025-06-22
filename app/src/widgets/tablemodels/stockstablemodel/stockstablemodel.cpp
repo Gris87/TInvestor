@@ -114,7 +114,7 @@ static QVariant stocksNameDisplayRole(Stock* stock)
 {
     const QMutexLocker lock(stock->mutex);
 
-    return stock->meta.name;
+    return stock->meta.instrumentTicker;
 }
 
 static QVariant stocksPriceDisplayRole(Stock* stock)

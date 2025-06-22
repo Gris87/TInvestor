@@ -39,7 +39,7 @@ StocksTableRecord::StocksTableRecord(
     qDebug() << "Create StocksTableRecord";
 
     mStock->mutex->lock();
-    mPrecision = quotationPrecision(mStock->meta.minPriceIncrement);
+    mPrecision = mStock->meta.pricePrecision;
     mStock->mutex->unlock();
 
     mInstrumentTableItemWidget =
@@ -73,12 +73,12 @@ void StocksTableRecord::updateAll()
 {
     mStock->mutex->lock();
 
-    const QIcon stockLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.uid));
+    const QIcon stockLogo(QString("%1/data/instruments/logos/%2.png").arg(qApp->applicationDirPath(), mStock->meta.instrumentId));
 
     mInstrumentTableItemWidget->setInstrumentLogo(stockLogo);
     mInstrumentTableItemWidget->setQualInvestor(mStock->meta.forQualInvestorFlag);
-    mInstrumentTableItemWidget->setTicker(mStock->meta.ticker);
-    mInstrumentTableItemWidget->setFullText(mStock->meta.name);
+    mInstrumentTableItemWidget->setTicker(mStock->meta.instrumentTicker);
+    mInstrumentTableItemWidget->setFullText(mStock->meta.instrumentName);
 
     mStock->mutex->unlock();
 

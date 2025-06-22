@@ -57,7 +57,7 @@ TEST_F(Test_LastPriceThread, Test_run)
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
     Stock stock;
-    stock.meta.uid = "aaaa";
+    stock.meta.instrumentId = "aaaa";
 
     stocks.append(&stock);
 
@@ -130,7 +130,7 @@ TEST_F(Test_LastPriceThread, Test_stocksChanged)
     std::shared_ptr<MarketDataStream> marketDataStream(new MarketDataStream());
 
     Stock stock;
-    stock.meta.uid = "bbbb";
+    stock.meta.instrumentId = "bbbb";
 
     stocks.append(&stock);
 

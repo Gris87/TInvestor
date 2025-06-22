@@ -31,9 +31,8 @@ protected:
         orderBookThreadMock         = new StrictMock<OrderBookThreadMock>();
         stock                       = new Stock();
 
-        stock->meta.minPriceIncrement.units = 1;
-        stock->meta.minPriceIncrement.nano  = 500000000;
-        stock->meta.name                    = "Serezha stock";
+        stock->meta.instrumentName    = "Serezha stock";
+        stock->meta.minPriceIncrement = 1.5f;
 
         EXPECT_CALL(*orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull()))
             .WillOnce(Return(orderWavesWidgetMock));

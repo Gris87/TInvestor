@@ -35,10 +35,6 @@ using ::testing::StrictMock;
 
 
 
-const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
-
-
-
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
 class Test_PriceCollectThread : public ::testing::Test
 {
@@ -229,13 +225,12 @@ TEST_F(Test_PriceCollectThread, Test_run)
     Stock         stock;
     QList<Stock*> stocks;
 
-    stock.meta.uid                     = "aaaaa";
-    stock.meta.ticker                  = "WAGA";
-    stock.meta.name                    = "Wagadaka too";
-    stock.meta.forQualInvestorFlag     = true;
-    stock.meta.lot                     = 100;
-    stock.meta.minPriceIncrement.units = 1;
-    stock.meta.minPriceIncrement.nano  = 500000000;
+    stock.meta.instrumentId        = "aaaaa";
+    stock.meta.instrumentTicker    = "WAGA";
+    stock.meta.instrumentName      = "Wagadaka too";
+    stock.meta.forQualInvestorFlag = true;
+    stock.meta.minPriceIncrement   = 0.001f;
+    stock.meta.pricePrecision      = 3;
 
     stocks << &stock;
 

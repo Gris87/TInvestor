@@ -124,12 +124,11 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         {
             StockMeta stockMeta;
 
-            stockMeta.uid                 = QString::fromStdString(tinkoffStock.uid());
-            stockMeta.ticker              = QString::fromStdString(tinkoffStock.ticker());
-            stockMeta.name                = QString::fromStdString(tinkoffStock.name());
+            stockMeta.instrumentId        = QString::fromStdString(tinkoffStock.uid());
+            stockMeta.instrumentTicker    = QString::fromStdString(tinkoffStock.ticker());
+            stockMeta.instrumentName      = QString::fromStdString(tinkoffStock.name());
             stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
-            stockMeta.lot                 = tinkoffStock.lot();
-            stockMeta.minPriceIncrement   = quotationConvert(tinkoffStock.min_price_increment());
+            stockMeta.pricePrecision      = quotationPrecision(tinkoffStock.min_price_increment());
 
             stocksMeta.append(stockMeta);
         }
@@ -487,7 +486,7 @@ static void getCandlesWithGrpc(
     while (true)
     {
         const std::shared_ptr<tinkoff::GetCandlesResponse> tinkoffCandles =
-            grpcClient->getCandles(parentThread, stock->meta.uid, startTimestamp, endTimestamp);
+            grpcClient->getCandles(parentThread, stock->meta.instrumentId, startTimestamp, endTimestamp);
 
         if (parentThread->isInterruptionRequested() || tinkoffCandles == nullptr || tinkoffCandles->candles_size() == 0)
         {
@@ -611,7 +610,8 @@ static void getCandlesWithHttp(
 
     for (int year = startYear; year <= endYear && !parentThread->isInterruptionRequested(); ++year)
     {
-        const QString zipFilePath = QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.uid, QString::number(year));
+        const QString zipFilePath =
+            QString("%1/cache/stocks/%2_%3.zip").arg(appDir, stock->meta.instrumentId, QString::number(year));
 
         const std::shared_ptr<IFile> stockDataFile = fileFactory->newInstance(zipFilePath);
 
@@ -621,7 +621,7 @@ static void getCandlesWithHttp(
 
             QUrlQuery query;
 
-            query.addQueryItem("instrumentId", stock->meta.uid);
+            query.addQueryItem("instrumentId", stock->meta.instrumentId);
             query.addQueryItem("year", QString::number(year));
 
             url.setQuery(query.query());

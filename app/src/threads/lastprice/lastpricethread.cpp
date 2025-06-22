@@ -117,7 +117,7 @@ QStringList LastPriceThread::getStockUIDs()
 
     for (int i = 0; i < stocks.size(); ++i)
     {
-        res[i] = stocks.at(i)->meta.uid;
+        res[i] = stocks.at(i)->meta.instrumentId;
     }
     mStocksStorage->unlock();
 
@@ -133,7 +133,7 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 
     for (Stock* stock : stocks)
     {
-        res[stock->meta.uid] = stock;
+        res[stock->meta.instrumentId] = stock;
     }
     mStocksStorage->unlock();
 

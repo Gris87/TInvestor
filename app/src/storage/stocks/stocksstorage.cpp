@@ -65,15 +65,15 @@ bool StocksStorage::mergeStocksMeta(const QList<StockMeta>& stocksMeta)
 
     for (Stock* stock : std::as_const(mStocks))
     {
-        StockMeta* existingMeta          = &stock->meta;
-        existingMetas[existingMeta->uid] = existingMeta;
+        StockMeta* existingMeta                   = &stock->meta;
+        existingMetas[existingMeta->instrumentId] = existingMeta;
     }
 
     for (const StockMeta& newMeta : stocksMeta)
     {
-        if (existingMetas.contains(newMeta.uid))
+        if (existingMetas.contains(newMeta.instrumentId))
         {
-            StockMeta* existingMeta = existingMetas[newMeta.uid];
+            StockMeta* existingMeta = existingMetas[newMeta.instrumentId];
 
             if (*existingMeta != newMeta)
             {

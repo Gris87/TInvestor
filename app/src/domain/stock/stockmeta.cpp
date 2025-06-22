@@ -3,31 +3,32 @@
 
 
 StockMeta::StockMeta() :
-    uid(),
-    ticker(),
-    name(),
+    instrumentId(),
+    instrumentLogo(),
+    instrumentTicker(),
+    instrumentName(),
     forQualInvestorFlag(),
-    lot(),
-    minPriceIncrement()
+    minPriceIncrement(),
+    pricePrecision()
 {
 }
 
-static void metaUidParse(StockMeta* meta, simdjson::ondemand::value value)
+static void metaInstrumentIdParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->uid                       = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->instrumentId              = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
-static void metaTickerParse(StockMeta* meta, simdjson::ondemand::value value)
+static void metaInstrumentTickerParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->ticker                    = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->instrumentTicker          = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
-static void metaNameParse(StockMeta* meta, simdjson::ondemand::value value)
+static void metaInstrumentNameParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->name                      = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->instrumentName            = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaForQualInvestorFlagParse(StockMeta* meta, simdjson::ondemand::value value)
@@ -35,26 +36,26 @@ static void metaForQualInvestorFlagParse(StockMeta* meta, simdjson::ondemand::va
     meta->forQualInvestorFlag = value.get_bool().value();
 }
 
-static void metaLotParse(StockMeta* meta, simdjson::ondemand::value value)
-{
-    meta->lot = value.get_int64();
-}
-
 static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::value value)
 {
-    meta->minPriceIncrement.fromJsonObject(value.get_object());
+    meta->minPriceIncrement = value.get_double_in_string().value();
+}
+
+static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->pricePrecision = value.get_int64();
 }
 
 using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"uid",                 metaUidParse                },
-    {"ticker",              metaTickerParse             },
-    {"name",                metaNameParse               },
+    {"instrumentId",        metaInstrumentIdParse       },
+    {"instrumentTicker",    metaInstrumentTickerParse   },
+    {"instrumentName",      metaInstrumentNameParse     },
     {"forQualInvestorFlag", metaForQualInvestorFlagParse},
-    {"lot",                 metaLotParse                },
-    {"minPriceIncrement",   metaMinPriceIncrementParse  }
+    {"minPriceIncrement",   metaMinPriceIncrementParse  },
+    {"pricePrecision",      metaPricePrecisionParse     }
 };
 // clang-format on
 
@@ -73,19 +74,21 @@ QJsonObject StockMeta::toJsonObject() const
 {
     QJsonObject res;
 
-    res.insert("uid", uid);
-    res.insert("ticker", ticker);
-    res.insert("name", name);
+    // clang-format off
+    res.insert("instrumentId",        instrumentId);
+    res.insert("instrumentTicker",    instrumentTicker);
+    res.insert("instrumentName",      instrumentName);
     res.insert("forQualInvestorFlag", forQualInvestorFlag);
-    res.insert("lot", lot);
-    res.insert("minPriceIncrement", minPriceIncrement.toJsonObject());
+    res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
+    res.insert("pricePrecision",      pricePrecision);
+    // clang-format on
 
     return res;
 }
 
 bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
-    return lhs.uid == rhs.uid && lhs.ticker == rhs.ticker && lhs.name == rhs.name &&
-           lhs.forQualInvestorFlag == rhs.forQualInvestorFlag && lhs.lot == rhs.lot &&
-           lhs.minPriceIncrement == rhs.minPriceIncrement;
+    return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
+           lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
+           lhs.minPriceIncrement == rhs.minPriceIncrement && lhs.pricePrecision == rhs.pricePrecision;
 }

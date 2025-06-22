@@ -31,7 +31,7 @@ void OrderBookThread::run()
     blockSignals(false);
 
     const std::shared_ptr<tinkoff::GetOrderBookResponse> tinkoffOrderBook =
-        mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.uid, ORDER_BOOK_DEPTH);
+        mGrpcClient->getOrderBook(QThread::currentThread(), mStock->meta.instrumentId, ORDER_BOOK_DEPTH);
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffOrderBook != nullptr)
     {
@@ -39,7 +39,7 @@ void OrderBookThread::run()
 
         createMarketDataStream();
 
-        if (mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.uid, ORDER_BOOK_DEPTH))
+        if (mGrpcClient->subscribeOrderBook(mMarketDataStream, mStock->meta.instrumentId, ORDER_BOOK_DEPTH))
         {
             while (true)
             {

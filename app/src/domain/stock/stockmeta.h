@@ -2,9 +2,9 @@
 
 
 
-#include <QString>
+#include <QJsonObject>
 
-#include "src/domain/quotation/quotation.h"
+#include "src/simdjson/simdjson_wrapped.h"
 
 
 
@@ -21,12 +21,13 @@ struct StockMeta
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    QString   uid;
-    QString   ticker;
-    QString   name;
-    bool      forQualInvestorFlag;
-    qint32    lot;               // TODO: Do we need it?
-    Quotation minPriceIncrement; // TODO: Do we need it?
+    QString  instrumentId;
+    QPixmap* instrumentLogo;
+    QString  instrumentTicker;
+    QString  instrumentName;
+    bool     forQualInvestorFlag;
+    float    minPriceIncrement;
+    qint8    pricePrecision;
 };
 
 

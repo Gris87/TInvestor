@@ -12,13 +12,11 @@ TEST(Test_StockMeta, Test_constructor_and_destructor)
     const StockMeta stockMeta;
 
     // clang-format off
-    ASSERT_EQ(stockMeta.uid,                     "");
-    ASSERT_EQ(stockMeta.ticker,                  "");
-    ASSERT_EQ(stockMeta.name,                    "");
-    ASSERT_EQ(stockMeta.forQualInvestorFlag,     false);
-    ASSERT_EQ(stockMeta.lot,                     0);
-    ASSERT_EQ(stockMeta.minPriceIncrement.units, 0);
-    ASSERT_EQ(stockMeta.minPriceIncrement.nano,  0);
+    ASSERT_EQ(stockMeta.instrumentId,        "");
+    ASSERT_EQ(stockMeta.instrumentTicker,    "");
+    ASSERT_EQ(stockMeta.instrumentName,      "");
+    ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
+    ASSERT_EQ(stockMeta.pricePrecision,      0);
     // clang-format on
 }
 
@@ -26,24 +24,20 @@ TEST(Test_StockMeta, Test_copy_constructor)
 {
     StockMeta stockMeta;
 
-    stockMeta.uid                     = "a";
-    stockMeta.ticker                  = "b";
-    stockMeta.name                    = "c";
-    stockMeta.forQualInvestorFlag     = true;
-    stockMeta.lot                     = 1;
-    stockMeta.minPriceIncrement.units = 2;
-    stockMeta.minPriceIncrement.nano  = 3;
+    stockMeta.instrumentId        = "a";
+    stockMeta.instrumentTicker    = "b";
+    stockMeta.instrumentName      = "c";
+    stockMeta.forQualInvestorFlag = true;
+    stockMeta.pricePrecision      = 1;
 
     const StockMeta stockMeta2(stockMeta);
 
     // clang-format off
-    ASSERT_EQ(stockMeta2.uid,                     "a");
-    ASSERT_EQ(stockMeta2.ticker,                  "b");
-    ASSERT_EQ(stockMeta2.name,                    "c");
-    ASSERT_EQ(stockMeta2.forQualInvestorFlag,     true);
-    ASSERT_EQ(stockMeta2.lot,                     1);
-    ASSERT_EQ(stockMeta2.minPriceIncrement.units, 2);
-    ASSERT_EQ(stockMeta2.minPriceIncrement.nano,  3);
+    ASSERT_EQ(stockMeta2.instrumentId,        "a");
+    ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
+    ASSERT_EQ(stockMeta2.instrumentName,      "c");
+    ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
+    ASSERT_EQ(stockMeta2.pricePrecision,      1);
     // clang-format on
 }
 
@@ -52,24 +46,20 @@ TEST(Test_StockMeta, Test_assign)
     StockMeta stockMeta;
     StockMeta stockMeta2;
 
-    stockMeta.uid                     = "a";
-    stockMeta.ticker                  = "b";
-    stockMeta.name                    = "c";
-    stockMeta.forQualInvestorFlag     = true;
-    stockMeta.lot                     = 1;
-    stockMeta.minPriceIncrement.units = 2;
-    stockMeta.minPriceIncrement.nano  = 3;
+    stockMeta.instrumentId        = "a";
+    stockMeta.instrumentTicker    = "b";
+    stockMeta.instrumentName      = "c";
+    stockMeta.forQualInvestorFlag = true;
+    stockMeta.pricePrecision      = 1;
 
     stockMeta2 = stockMeta;
 
     // clang-format off
-    ASSERT_EQ(stockMeta2.uid,                     "a");
-    ASSERT_EQ(stockMeta2.ticker,                  "b");
-    ASSERT_EQ(stockMeta2.name,                    "c");
-    ASSERT_EQ(stockMeta2.forQualInvestorFlag,     true);
-    ASSERT_EQ(stockMeta2.lot,                     1);
-    ASSERT_EQ(stockMeta2.minPriceIncrement.units, 2);
-    ASSERT_EQ(stockMeta2.minPriceIncrement.nano,  3);
+    ASSERT_EQ(stockMeta2.instrumentId,        "a");
+    ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
+    ASSERT_EQ(stockMeta2.instrumentName,      "c");
+    ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
+    ASSERT_EQ(stockMeta2.pricePrecision,      1);
     // clang-format on
 }
 
@@ -78,13 +68,11 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     StockMeta stockMeta;
 
     // clang-format off
-    ASSERT_EQ(stockMeta.uid,                     "");
-    ASSERT_EQ(stockMeta.ticker,                  "");
-    ASSERT_EQ(stockMeta.name,                    "");
-    ASSERT_EQ(stockMeta.forQualInvestorFlag,     false);
-    ASSERT_EQ(stockMeta.lot,                     0);
-    ASSERT_EQ(stockMeta.minPriceIncrement.units, 0);
-    ASSERT_EQ(stockMeta.minPriceIncrement.nano,  0);
+    ASSERT_EQ(stockMeta.instrumentId,        "");
+    ASSERT_EQ(stockMeta.instrumentTicker,    "");
+    ASSERT_EQ(stockMeta.instrumentName,      "");
+    ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
+    ASSERT_EQ(stockMeta.pricePrecision,      0);
     // clang-format on
 
     const QString content =
@@ -98,13 +86,11 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     stockMeta.fromJsonObject(doc.get_object());
 
     // clang-format off
-    ASSERT_EQ(stockMeta.uid,                     "a");
-    ASSERT_EQ(stockMeta.ticker,                  "b");
-    ASSERT_EQ(stockMeta.name,                    "c");
-    ASSERT_EQ(stockMeta.forQualInvestorFlag,     true);
-    ASSERT_EQ(stockMeta.lot,                     1);
-    ASSERT_EQ(stockMeta.minPriceIncrement.units, 2);
-    ASSERT_EQ(stockMeta.minPriceIncrement.nano,  3);
+    ASSERT_EQ(stockMeta.instrumentId,        "a");
+    ASSERT_EQ(stockMeta.instrumentTicker,    "b");
+    ASSERT_EQ(stockMeta.instrumentName,      "c");
+    ASSERT_EQ(stockMeta.forQualInvestorFlag, true);
+    ASSERT_EQ(stockMeta.pricePrecision,      1);
     // clang-format on
 }
 
@@ -112,13 +98,11 @@ TEST(Test_StockMeta, Test_toJsonObject)
 {
     StockMeta stockMeta;
 
-    stockMeta.uid                     = "a";
-    stockMeta.ticker                  = "b";
-    stockMeta.name                    = "c";
-    stockMeta.forQualInvestorFlag     = true;
-    stockMeta.lot                     = 1;
-    stockMeta.minPriceIncrement.units = 2;
-    stockMeta.minPriceIncrement.nano  = 3;
+    stockMeta.instrumentId        = "a";
+    stockMeta.instrumentTicker    = "b";
+    stockMeta.instrumentName      = "c";
+    stockMeta.forQualInvestorFlag = true;
+    stockMeta.pricePrecision      = 1;
 
     const QJsonObject   jsonObject = stockMeta.toJsonObject();
     const QJsonDocument jsonDoc(jsonObject);
@@ -126,6 +110,8 @@ TEST(Test_StockMeta, Test_toJsonObject)
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
         R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
+
+    qInfo() << content;
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -135,37 +121,33 @@ TEST(Test_StockMeta, Test_equals)
     StockMeta stockMeta;
     StockMeta stockMeta2;
 
-    stockMeta.uid                     = "a";
-    stockMeta.ticker                  = "b";
-    stockMeta.name                    = "c";
-    stockMeta.forQualInvestorFlag     = true;
-    stockMeta.lot                     = 1;
-    stockMeta.minPriceIncrement.units = 2;
-    stockMeta.minPriceIncrement.nano  = 3;
+    stockMeta.instrumentId        = "a";
+    stockMeta.instrumentTicker    = "b";
+    stockMeta.instrumentName      = "c";
+    stockMeta.forQualInvestorFlag = true;
+    stockMeta.pricePrecision      = 1;
 
-    stockMeta2.uid                     = "a";
-    stockMeta2.ticker                  = "b";
-    stockMeta2.name                    = "c";
-    stockMeta2.forQualInvestorFlag     = true;
-    stockMeta2.lot                     = 1;
-    stockMeta2.minPriceIncrement.units = 2;
-    stockMeta2.minPriceIncrement.nano  = 3;
+    stockMeta2.instrumentId        = "a";
+    stockMeta2.instrumentTicker    = "b";
+    stockMeta2.instrumentName      = "c";
+    stockMeta2.forQualInvestorFlag = true;
+    stockMeta2.pricePrecision      = 1;
 
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.uid = "aaaa";
+    stockMeta2.instrumentId = "aaaa";
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.uid = "a";
+    stockMeta2.instrumentId = "a";
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.ticker = "bbbb";
+    stockMeta2.instrumentTicker = "bbbb";
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.ticker = "b";
+    stockMeta2.instrumentTicker = "b";
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.name = "cccc";
+    stockMeta2.instrumentName = "cccc";
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.name = "c";
+    stockMeta2.instrumentName = "c";
     ASSERT_EQ(stockMeta, stockMeta2);
 
     stockMeta2.forQualInvestorFlag = false;
@@ -173,19 +155,9 @@ TEST(Test_StockMeta, Test_equals)
     stockMeta2.forQualInvestorFlag = true;
     ASSERT_EQ(stockMeta, stockMeta2);
 
-    stockMeta2.lot = 1000;
+    stockMeta2.pricePrecision = -1;
     ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.lot = 1;
-    ASSERT_EQ(stockMeta, stockMeta2);
-
-    stockMeta2.minPriceIncrement.units = 2000;
-    ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.minPriceIncrement.units = 2;
-    ASSERT_EQ(stockMeta, stockMeta2);
-
-    stockMeta2.minPriceIncrement.nano = 3000;
-    ASSERT_NE(stockMeta, stockMeta2);
-    stockMeta2.minPriceIncrement.nano = 3;
+    stockMeta2.pricePrecision = 1;
     ASSERT_EQ(stockMeta, stockMeta2);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)

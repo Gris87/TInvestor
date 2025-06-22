@@ -11,7 +11,7 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
     Stock*                    stock,
-    qint8                     precision,
+    qint8                     precision, // TODO: Remove?
     QWidget*                  parent
 ) :
     IActionsTableItemWidget(parent),
@@ -21,7 +21,7 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
     mStock(stock),
-    mPrecision(precision)
+    mPrecision(precision) // TODO: Remove?
 {
     qDebug() << "Create ActionsTableItemWidget";
 
@@ -45,7 +45,7 @@ void ActionsTableItemWidget::on_orderWavesButton_clicked()
 void ActionsTableItemWidget::on_linkButton_clicked()
 {
     mStock->mutex->lock();
-    const QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.ticker));
+    const QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.instrumentTicker));
     mStock->mutex->unlock();
 
     const bool ok = mHttpClient->openInBrowser(url);

@@ -16,7 +16,7 @@ OrderWavesDialog::OrderWavesDialog(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     Stock*                    stock,
-    qint8                     precision,
+    qint8                     precision, // TODO: Remove?
     QWidget*                  parent
 ) :
     IOrderWavesDialog(parent),
@@ -35,9 +35,9 @@ OrderWavesDialog::OrderWavesDialog(
     );
     setWindowModality(Qt::ApplicationModal);
 
-    ui->nameLabel->setText(mStock->meta.name);
+    ui->nameLabel->setText(mStock->meta.instrumentName);
 
-    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mPrecision, quotationToFloat(mStock->meta.minPriceIncrement), this);
+    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mPrecision, mStock->meta.minPriceIncrement, this);
     mOrderWavesWidget->hide();
     ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 

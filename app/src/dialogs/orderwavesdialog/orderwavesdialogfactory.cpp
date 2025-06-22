@@ -21,7 +21,7 @@ std::shared_ptr<IOrderWavesDialog> OrderWavesDialogFactory::newInstance(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     Stock*                    stock,
-    qint8                     precision,
+    qint8                     precision, // TODO: Remove?
     QWidget*                  parent
 ) const
 {

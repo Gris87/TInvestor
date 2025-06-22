@@ -29,10 +29,11 @@ protected:
         httpClientMock              = new StrictMock<HttpClientMock>();
         stock                       = new Stock();
 
-        stock->meta.uid                    = "aaa";
-        stock->meta.ticker                 = "WAGA";
-        stock->meta.name                   = "Wata Giga";
-        stock->meta.minPriceIncrement.nano = 10000;
+        stock->meta.instrumentId      = "aaa";
+        stock->meta.instrumentTicker  = "WAGA";
+        stock->meta.instrumentName    = "Wata Giga";
+        stock->meta.minPriceIncrement = 0.00001f;
+        stock->meta.pricePrecision    = 5;
 
         widget = new ActionsTableItemWidget(
             orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock, 2

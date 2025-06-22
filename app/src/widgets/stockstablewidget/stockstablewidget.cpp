@@ -99,7 +99,7 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const StockFilt
     for (Stock* stock : stocks)
     {
         stock->mutex->lock();
-        const QString instrumentId = stock->meta.uid;
+        const QString instrumentId = stock->meta.instrumentId;
         stock->mutex->unlock();
 
         IStocksTableRecord* record = records.value(instrumentId);

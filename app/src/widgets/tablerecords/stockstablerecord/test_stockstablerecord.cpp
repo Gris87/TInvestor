@@ -48,11 +48,12 @@ protected:
         stockData.timestamp = 100;
         stockData.price     = 50;
 
-        stock->meta.uid                    = "aaa";
-        stock->meta.ticker                 = "WAGA";
-        stock->meta.name                   = "Wata Giga";
-        stock->meta.forQualInvestorFlag    = true;
-        stock->meta.minPriceIncrement.nano = 10000;
+        stock->meta.instrumentId        = "aaa";
+        stock->meta.instrumentTicker    = "WAGA";
+        stock->meta.instrumentName      = "Wata Giga";
+        stock->meta.forQualInvestorFlag = true;
+        stock->meta.minPriceIncrement   = 0.00001f;
+        stock->meta.pricePrecision      = 5;
 
         stock->operational.dayStartPrice      = 40;
         stock->operational.specifiedDatePrice = 20;
