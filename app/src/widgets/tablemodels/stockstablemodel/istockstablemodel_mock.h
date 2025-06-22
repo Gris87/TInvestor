@@ -25,4 +25,6 @@ public:
     MOCK_METHOD(int, rowCount, (const QModelIndex& parent), (const, override));
     MOCK_METHOD(int, columnCount, (const QModelIndex& parent), (const, override));
     MOCK_METHOD(QVariant, data, (const QModelIndex& index, int role), (const, override));
+
+    MOCK_METHOD(void, setDateChangeTooltip, (const QString& tooltip), (override));
 };

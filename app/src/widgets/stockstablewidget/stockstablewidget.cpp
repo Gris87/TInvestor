@@ -185,6 +185,7 @@ void StocksTableWidget::updatePeriodicData(const StockFilter& filter)
 
 void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
 {
+    mStocksTableModel->setDateChangeTooltip(tooltip);
     ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->setToolTip(tooltip);
 }
 

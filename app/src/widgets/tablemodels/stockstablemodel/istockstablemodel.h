@@ -33,4 +33,6 @@ public:
 
     IStocksTableModel(const IStocksTableModel& another)            = delete;
     IStocksTableModel& operator=(const IStocksTableModel& another) = delete;
+
+    virtual void setDateChangeTooltip(const QString& tooltip) = 0;
 };

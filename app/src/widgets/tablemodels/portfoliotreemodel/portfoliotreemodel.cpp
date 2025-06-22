@@ -103,9 +103,12 @@ QVariant PortfolioTreeModel::headerData(int section, Qt::Orientation orientation
 
     if (role == Qt::ToolTipRole)
     {
-        if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+        if (orientation == Qt::Horizontal)
         {
-            return tr("Average price by FIFO");
+            if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+            {
+                return tr("Average price by FIFO");
+            }
         }
 
         return QVariant();
@@ -113,9 +116,12 @@ QVariant PortfolioTreeModel::headerData(int section, Qt::Orientation orientation
 
     if (role == Qt::DecorationRole)
     {
-        if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+        if (orientation == Qt::Horizontal)
         {
-            return mHelpIcon;
+            if (section == PORTFOLIO_AVG_PRICE_COLUMN)
+            {
+                return mHelpIcon;
+            }
         }
 
         return QVariant();
@@ -417,15 +423,15 @@ QVariant PortfolioTreeModel::data(const QModelIndex& index, int role) const
 
     if (role == ROLE_INSTRUMENT_NAME)
     {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
+
         PortfolioCategoryItem* category = reinterpret_cast<PortfolioCategoryItem*>(index.internalPointer());
 
         if (category == nullptr)
         {
-            return QVariant();
+            return mPortfolio.positions.at(row).name;
         }
-
-        const int row = index.row();
-        Q_ASSERT_X(index.column() == PORTFOLIO_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
 
         return mPortfolio.positions.at(category->id).items.at(row).instrumentName;
     }

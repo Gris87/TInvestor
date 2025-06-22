@@ -6,7 +6,9 @@
 
 StocksTableModel::StocksTableModel(QObject* parent) :
     IStocksTableModel(parent),
-    mHeader()
+    mHeader(),
+    mHelpIcon(":/assets/images/question.png"),
+    mDateChangeTooltip()
 {
     qDebug() << "Create StocksTableModel";
 
@@ -42,6 +44,42 @@ QVariant StocksTableModel::headerData(int section, Qt::Orientation orientation, 
         return section + 1;
     }
 
+    if (role == Qt::ToolTipRole)
+    {
+        if (orientation == Qt::Horizontal)
+        {
+            if (section == STOCKS_DATE_CHANGE_COLUMN)
+            {
+                return mDateChangeTooltip;
+            }
+
+            if (section == STOCKS_TURNOVER_COLUMN)
+            {
+                return tr("Average daily turnover in the last 31 days");
+            }
+
+            if (section == STOCKS_PAYBACK_COLUMN)
+            {
+                return tr("Opportunity to get money back (with commission) based on the last 24 hours");
+            }
+        }
+
+        return QVariant();
+    }
+
+    if (role == Qt::DecorationRole)
+    {
+        if (orientation == Qt::Horizontal)
+        {
+            if (section == STOCKS_DATE_CHANGE_COLUMN || section == STOCKS_TURNOVER_COLUMN || section == STOCKS_PAYBACK_COLUMN)
+            {
+                return mHelpIcon;
+            }
+        }
+
+        return QVariant();
+    }
+
     return QVariant();
 }
 
@@ -53,4 +91,9 @@ QVariant StocksTableModel::data(const QModelIndex& /*index*/, int role) const
     }
 
     return QVariant();
+}
+
+void StocksTableModel::setDateChangeTooltip(const QString& tooltip)
+{
+    mDateChangeTooltip = tooltip;
 }

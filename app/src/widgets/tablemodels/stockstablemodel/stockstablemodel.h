@@ -4,6 +4,8 @@
 
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel.h"
 
+#include <QIcon>
+
 
 
 class StocksTableModel : public IStocksTableModel
@@ -29,6 +31,10 @@ public:
     [[nodiscard]]
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
+    void setDateChangeTooltip(const QString& tooltip) override;
+
 private:
     QStringList mHeader;
+    QIcon       mHelpIcon;
+    QString     mDateChangeTooltip;
 };
