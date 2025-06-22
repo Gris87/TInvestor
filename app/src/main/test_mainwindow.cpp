@@ -156,6 +156,8 @@ protected:
         autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
         trayIconMock                         = new StrictMock<TrayIconMock>();
 
+        StockFilter filter;
+
         EXPECT_CALL(*stocksControlsWidgetFactoryMock, newInstance(settingsEditorMock, NotNull()))
             .WillOnce(Return(stocksControlsWidgetMock));
         EXPECT_CALL(
@@ -215,6 +217,10 @@ protected:
             .WillOnce(Return(autoPilotDecisionMakerWidgetMock));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, setAccountName(QString("Simulator")));
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Auto-pilot")));
+
+        EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
+        EXPECT_CALL(*stocksTableWidgetMock, setFilter(filter));
+
         EXPECT_CALL(*trayIconFactoryMock, newInstance(NotNull())).WillOnce(Return(trayIconMock));
 
         EXPECT_CALL(*configMock, makeDefault());
@@ -706,7 +712,7 @@ TEST_F(Test_MainWindow, Test_stockFilterChanged)
 
     const StockFilter filter;
 
-    EXPECT_CALL(*stocksTableWidgetMock, filterChanged(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, setFilter(filter));
 
     mainWindow->stockFilterChanged(filter);
 }

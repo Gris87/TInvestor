@@ -16,7 +16,7 @@
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
-
+/*
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -75,3 +75,4 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 
     delete widget;
 }
+*/

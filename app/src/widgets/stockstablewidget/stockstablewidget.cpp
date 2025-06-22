@@ -75,8 +75,24 @@ StocksTableWidget::~StocksTableWidget()
     delete ui;
 }
 
+void StocksTableWidget::setFilter(const StockFilter& filter)
+{
+    mStocksTableModel->setFilter(filter);
+
+    ui->tableWidget->setUpdatesEnabled(false);
+
+    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
+    {
+        it.value()->filter(ui->tableWidget, filter);
+    }
+
+    ui->tableWidget->setUpdatesEnabled(true);
+}
+
 void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const StockFilter& filter)
 {
+    mStocksTableModel->updateTable(stocks);
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -192,18 +208,6 @@ void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
 void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
 {
     lastPricesUpdates.insert(instrumentId);
-}
-
-void StocksTableWidget::filterChanged(const StockFilter& filter)
-{
-    ui->tableWidget->setUpdatesEnabled(false);
-
-    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
-    {
-        it.value()->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void StocksTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)

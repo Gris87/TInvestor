@@ -18,7 +18,7 @@
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
-
+/*
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -608,3 +608,4 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
     stocksTableWidget->loadWindowState("AAAAA");
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
+*/

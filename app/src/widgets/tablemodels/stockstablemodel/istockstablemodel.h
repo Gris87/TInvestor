@@ -4,6 +4,9 @@
 
 #include <QAbstractTableModel>
 
+#include "src/domain/filter/stockfilter.h"
+#include "src/domain/stock/stock.h"
+
 
 
 enum StocksTableColumns : qint8
@@ -33,6 +36,9 @@ public:
 
     IStocksTableModel(const IStocksTableModel& another)            = delete;
     IStocksTableModel& operator=(const IStocksTableModel& another) = delete;
+
+    virtual void setFilter(const StockFilter& filter)     = 0;
+    virtual void updateTable(const QList<Stock*>& stocks) = 0;
 
     virtual void setDateChangeTooltip(const QString& tooltip) = 0;
 };

@@ -208,6 +208,8 @@ MainWindow::MainWindow(
     mSimulatorDecisionMakerWidget->setAccountName(tr("Simulator"));
     mAutoPilotDecisionMakerWidget->setAccountName(tr("Auto-pilot"));
 
+    mStocksTableWidget->setFilter(mStocksControlsWidget->getFilter());
+
     ui->layoutForStocksControlsWidget->addWidget(mStocksControlsWidget);
     ui->layoutForStocksTableWidget->addWidget(mStocksTableWidget);
     ui->layoutForSimulatorDecisionMaker->addWidget(mSimulatorDecisionMakerWidget);
@@ -488,7 +490,7 @@ void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 
 void MainWindow::stockFilterChanged(const StockFilter& filter)
 {
-    mStocksTableWidget->filterChanged(filter);
+    mStocksTableWidget->setFilter(filter);
 }
 
 void MainWindow::startSimulator() const
