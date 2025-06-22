@@ -60,6 +60,7 @@ MainWindow::MainWindow(
     ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
     ILogsTableWidgetFactory*           logsTableWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
+    IStocksTableModelFactory*          stocksTableModelFactory,
     IOperationsTableModelFactory*      operationsTableModelFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
     IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
@@ -161,11 +162,13 @@ MainWindow::MainWindow(
 
     mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mSettingsEditor, this);
     mStocksTableWidget    = stocksTableWidgetFactory->newInstance(
+        stocksTableModelFactory,
         stockTableRecordFactory,
         instrumentTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,
+        mLogosStorage,
         mUserStorage,
         mOrderBookThread,
         mHttpClient,

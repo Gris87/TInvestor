@@ -47,25 +47,25 @@ static void operationTimestampParse(Operation* operation, simdjson::ondemand::va
 static void operationInstrumentIdParse(Operation* operation, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    operation->instrumentId   = QString::fromUtf8(valueStr.data(), valueStr.size());
+    operation->instrumentId         = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationInstrumentTickerParse(Operation* operation, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    operation->instrumentTicker = QString::fromUtf8(valueStr.data(), valueStr.size());
+    operation->instrumentTicker     = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationInstrumentNameParse(Operation* operation, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    operation->instrumentName = QString::fromUtf8(valueStr.data(), valueStr.size());
+    operation->instrumentName       = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationDescriptionParse(Operation* operation, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    operation->description    = QString::fromUtf8(valueStr.data(), valueStr.size());
+    operation->description          = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void operationPriceParse(Operation* operation, simdjson::ondemand::value value)
@@ -232,7 +232,7 @@ void Operation::fromJsonObject(simdjson::ondemand::object jsonObject)
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());
     }

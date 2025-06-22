@@ -53,14 +53,14 @@ StocksTableRecord::StocksTableRecord(
     tableWidget->setRowCount(rowIndex + 1);
 
     // clang-format off
-    tableWidget->setCellWidget(rowIndex, STOCKS_STOCK_COLUMN,       mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       STOCKS_STOCK_COLUMN,       mInstrumentTableItemWidget);
-    tableWidget->setItem(rowIndex,       STOCKS_PRICE_COLUMN,       mPriceTableWidgetItem);
-    tableWidget->setItem(rowIndex,       STOCKS_DAY_CHANGE_COLUMN,  mDayChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex,       STOCKS_DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
-    tableWidget->setItem(rowIndex,       STOCKS_TURNOVER_COLUMN,    mTurnoverTableWidgetItem);
-    tableWidget->setItem(rowIndex,       STOCKS_PAYBACK_COLUMN,     mPaybackTableWidgetItem);
-    tableWidget->setCellWidget(rowIndex, STOCKS_ACTIONS_COLUMN,     actionsTableItemWidget);
+    tableWidget->setCellWidget(rowIndex, STOCKS_OLD_STOCK_COLUMN,       mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_STOCK_COLUMN,       mInstrumentTableItemWidget);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_PRICE_COLUMN,       mPriceTableWidgetItem);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_DAY_CHANGE_COLUMN,  mDayChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_DATE_CHANGE_COLUMN, mDateChangeTableWidgetItem);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_TURNOVER_COLUMN,    mTurnoverTableWidgetItem);
+    tableWidget->setItem(rowIndex,       STOCKS_OLD_PAYBACK_COLUMN,     mPaybackTableWidgetItem);
+    tableWidget->setCellWidget(rowIndex, STOCKS_OLD_ACTIONS_COLUMN,     actionsTableItemWidget);
     // clang-format on
 }
 
@@ -145,13 +145,13 @@ void StocksTableRecord::exportToExcel(QXlsx::Document& doc) const
     cellStyle.setFontColor(CELL_FONT_COLOR);
 
     // clang-format off
-    doc.write(row, STOCKS_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText(), cellStyle);
-    doc.write(row, STOCKS_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag(), cellStyle);
-    doc.write(row, STOCKS_PRICE_COLUMN + 2,       mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, mPriceTableWidgetItem->precision()));
-    doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
-    doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
-    doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->value(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
-    doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
+    doc.write(row, STOCKS_OLD_STOCK_COLUMN + 1,       mInstrumentTableItemWidget->fullText(), cellStyle);
+    doc.write(row, STOCKS_OLD_STOCK_COLUMN + 2,       mInstrumentTableItemWidget->forQualInvestorFlag(), cellStyle);
+    doc.write(row, STOCKS_OLD_PRICE_COLUMN + 2,       mPriceTableWidgetItem->value(), createRubleFormat(CELL_FONT_COLOR, mPriceTableWidgetItem->precision()));
+    doc.write(row, STOCKS_OLD_DAY_CHANGE_COLUMN + 2,  mDayChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDayChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_OLD_DATE_CHANGE_COLUMN + 2, mDateChangeTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mDateChangeTableWidgetItem->foreground().color(), true));
+    doc.write(row, STOCKS_OLD_TURNOVER_COLUMN + 2,    mTurnoverTableWidgetItem->value(), createRubleFormat(mTurnoverTableWidgetItem->foreground().color(), 0));
+    doc.write(row, STOCKS_OLD_PAYBACK_COLUMN + 2,     mPaybackTableWidgetItem->value() / HUNDRED_PERCENT, createPercentFormat(mPaybackTableWidgetItem->foreground().color(), false));
     // clang-format on
 }
 

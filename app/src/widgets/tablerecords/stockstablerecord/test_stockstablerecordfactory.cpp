@@ -48,7 +48,7 @@ TEST(Test_StocksTableRecordFactory, Test_newInstance)
     QTableWidget tableWidget;
     Stock        stock;
 
-    tableWidget.setColumnCount(STOCKS_COLUMN_COUNT);
+    tableWidget.setColumnCount(STOCKS_OLD_COLUMN_COUNT);
 
     StockOperationalData stockData;
     stockData.timestamp = 100;

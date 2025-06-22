@@ -5,6 +5,7 @@
 #include "src/widgets/stockstablewidget/istockstablewidget.h"
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
@@ -13,6 +14,7 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 
@@ -30,11 +32,13 @@ class StocksTableWidget : public IStocksTableWidget
 
 public:
     explicit StocksTableWidget(
+        IStocksTableModelFactory*          stocksTableModelFactory,
         IStocksTableRecordFactory*         stocksTableRecordFactory,
         IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*          orderWavesDialogFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+        ILogosStorage*                     logosStorage,
         IUserStorage*                      userStorage,
         IOrderBookThread*                  orderBookThread,
         IHttpClient*                       httpClient,
@@ -80,8 +84,9 @@ private:
     IHttpClient*                       mHttpClient;
     IFileDialogFactory*                mFileDialogFactory;
     ISettingsEditor*                   mSettingsEditor;
+    IStocksTableModel*                 mStocksTableModel;
 
 public slots:
-    void on_tableWidget_customContextMenuRequested(const QPoint& pos);
+    void on_tableView_customContextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
 };

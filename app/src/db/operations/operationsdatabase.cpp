@@ -153,7 +153,7 @@ static void readOperationsForParallel(
         const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
         const int endBlock   = indeciesArray[i];
 
-        const QByteArray        operationContent = content.mid(startBlock, endBlock - startBlock + 1);
+        const QByteArray              operationContent = content.mid(startBlock, endBlock - startBlock + 1);
         const simdjson::padded_string jsonData(operationContent.toStdString());
 
         try

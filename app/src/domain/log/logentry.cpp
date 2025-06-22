@@ -36,25 +36,25 @@ static void logLevelParse(LogEntry* entry, simdjson::ondemand::value value)
 static void logInstrumentIdParse(LogEntry* entry, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    entry->instrumentId       = QString::fromUtf8(valueStr.data(), valueStr.size());
+    entry->instrumentId             = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logInstrumentTickerParse(LogEntry* entry, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    entry->instrumentTicker   = QString::fromUtf8(valueStr.data(), valueStr.size());
+    entry->instrumentTicker         = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logInstrumentNameParse(LogEntry* entry, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    entry->instrumentName     = QString::fromUtf8(valueStr.data(), valueStr.size());
+    entry->instrumentName           = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    entry->message            = QString::fromUtf8(valueStr.data(), valueStr.size());
+    entry->message                  = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);
@@ -75,7 +75,7 @@ void LogEntry::fromJsonObject(simdjson::ondemand::object jsonObject)
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());
     }

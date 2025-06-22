@@ -13,13 +13,13 @@ Instrument::Instrument() :
 static void instrumentTickerParse(Instrument* instrument, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    instrument->ticker        = QString::fromUtf8(valueStr.data(), valueStr.size());
+    instrument->ticker              = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void instrumentNameParse(Instrument* instrument, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    instrument->name          = QString::fromUtf8(valueStr.data(), valueStr.size());
+    instrument->name                = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void instrumentLotParse(Instrument* instrument, simdjson::ondemand::value value)
@@ -48,7 +48,7 @@ void Instrument::fromJsonObject(simdjson::ondemand::object jsonObject)
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());
     }

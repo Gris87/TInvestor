@@ -18,11 +18,13 @@ StocksTableWidgetFactory::~StocksTableWidgetFactory()
 }
 
 IStocksTableWidget* StocksTableWidgetFactory::newInstance(
+    IStocksTableModelFactory*          stocksTableModelFactory,
     IStocksTableRecordFactory*         stockTableRecordFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*          orderWavesDialogFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    ILogosStorage*                     logosStorage,
     IUserStorage*                      userStorage,
     IOrderBookThread*                  orderBookThread,
     IHttpClient*                       httpClient,
@@ -32,11 +34,13 @@ IStocksTableWidget* StocksTableWidgetFactory::newInstance(
 ) const
 {
     return new StocksTableWidget(
+        stocksTableModelFactory,
         stockTableRecordFactory,
         instrumentTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,
+        logosStorage,
         userStorage,
         orderBookThread,
         httpClient,

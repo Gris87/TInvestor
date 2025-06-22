@@ -15,19 +15,19 @@ StockMeta::StockMeta() :
 static void metaUidParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->uid                 = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->uid                       = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaTickerParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->ticker              = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->ticker                    = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaNameParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();
-    meta->name                = QString::fromUtf8(valueStr.data(), valueStr.size());
+    meta->name                      = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
 static void metaForQualInvestorFlagParse(StockMeta* meta, simdjson::ondemand::value value)
@@ -63,7 +63,7 @@ void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject)
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler     parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
 
         parseHandler(this, field.value());
     }

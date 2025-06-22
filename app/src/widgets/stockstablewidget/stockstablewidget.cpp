@@ -5,6 +5,7 @@
 #include <QMenu>
 
 #include "src/qxlsx/xlsxdocument.h"
+#include "src/widgets/tabledelegates/instrumentitemdelegate.h"
 
 
 
@@ -24,11 +25,13 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 StocksTableWidget::StocksTableWidget(
+    IStocksTableModelFactory*          stocksTableModelFactory,
     IStocksTableRecordFactory*         stocksTableRecordFactory,
     IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*          orderWavesDialogFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
+    ILogosStorage*                     logosStorage,
     IUserStorage*                      userStorage,
     IOrderBookThread*                  orderBookThread,
     IHttpClient*                       httpClient,
@@ -49,13 +52,20 @@ StocksTableWidget::StocksTableWidget(
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
     mFileDialogFactory(fileDialogFactory),
-    mSettingsEditor(settingsEditor)
+    mSettingsEditor(settingsEditor),
+    mStocksTableModel()
 {
     qDebug() << "Create StocksTableWidget";
 
     ui->setupUi(this);
 
     ui->tableWidget->sortByColumn(STOCKS_STOCK_COLUMN, Qt::AscendingOrder);
+
+    mStocksTableModel = stocksTableModelFactory->newInstance(this);
+
+    ui->tableView->setModel(mStocksTableModel);
+    ui->tableView->setItemDelegateForColumn(STOCKS_STOCK_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->sortByColumn(STOCKS_STOCK_COLUMN, Qt::AscendingOrder);
 }
 
 StocksTableWidget::~StocksTableWidget()
@@ -195,13 +205,13 @@ void StocksTableWidget::filterChanged(const StockFilter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::on_tableWidget_customContextMenuRequested(const QPoint& pos)
+void StocksTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)
 {
     QMenu* contextMenu = new QMenu(this);
 
     contextMenu->addAction(tr("Export to Excel"), this, SLOT(actionExportToExcelTriggered()));
 
-    contextMenu->popup(ui->tableWidget->viewport()->mapToGlobal(pos));
+    contextMenu->popup(ui->tableView->viewport()->mapToGlobal(pos));
 }
 
 void StocksTableWidget::actionExportToExcelTriggered()
@@ -284,18 +294,28 @@ void StocksTableWidget::exportToExcel(const QString& path) const
 void StocksTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off
-    mSettingsEditor->setValue(type + "/columnWidth_Stock",      ui->tableWidget->columnWidth(STOCKS_STOCK_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Price",      ui->tableWidget->columnWidth(STOCKS_PRICE_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_DayChange",  ui->tableWidget->columnWidth(STOCKS_DAY_CHANGE_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_DateChange", ui->tableWidget->columnWidth(STOCKS_DATE_CHANGE_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Turnover",   ui->tableWidget->columnWidth(STOCKS_TURNOVER_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Payback",    ui->tableWidget->columnWidth(STOCKS_PAYBACK_COLUMN));
-    mSettingsEditor->setValue(type + "/columnWidth_Actions",    ui->tableWidget->columnWidth(STOCKS_ACTIONS_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Stock",      ui->tableView->columnWidth(STOCKS_STOCK_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Price",      ui->tableView->columnWidth(STOCKS_PRICE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_DayChange",  ui->tableView->columnWidth(STOCKS_DAY_CHANGE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_DateChange", ui->tableView->columnWidth(STOCKS_DATE_CHANGE_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Turnover",   ui->tableView->columnWidth(STOCKS_TURNOVER_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Payback",    ui->tableView->columnWidth(STOCKS_PAYBACK_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Actions",    ui->tableView->columnWidth(STOCKS_ACTIONS_COLUMN));
     // clang-format on
 }
 
 void StocksTableWidget::loadWindowState(const QString& type)
 {
+    // clang-format off
+    ui->tableView->setColumnWidth(STOCKS_STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      COLUMN_WIDTHS[STOCKS_STOCK_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[STOCKS_DAY_CHANGE_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   COLUMN_WIDTHS[STOCKS_TURNOVER_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    COLUMN_WIDTHS[STOCKS_PAYBACK_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[STOCKS_ACTIONS_COLUMN]).toInt());
+    // clang-format on
+
     // clang-format off
     ui->tableWidget->setColumnWidth(STOCKS_STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      COLUMN_WIDTHS[STOCKS_STOCK_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());

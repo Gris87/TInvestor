@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
@@ -12,6 +13,8 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
 #include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
@@ -19,6 +22,7 @@
 
 using ::testing::_;
 using ::testing::InSequence;
+using ::testing::NotNull;
 using ::testing::Return;
 using ::testing::StrictMock;
 
@@ -30,23 +34,35 @@ class Test_StocksTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
+        const InSequence seq;
+
+        stocksTableModelFactoryMock          = new StrictMock<StocksTableModelFactoryMock>();
         stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
         instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
+        logosStorageMock                     = new StrictMock<LogosStorageMock>();
         userStorageMock                      = new StrictMock<UserStorageMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         httpClientMock                       = new StrictMock<HttpClientMock>();
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
+        stocksTableModelMock = new StrictMock<StocksTableModelMock>();
+
+        EXPECT_CALL(*stocksTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(stocksTableModelMock));
+        EXPECT_CALL(*stocksTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
+        EXPECT_CALL(*stocksTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
+
         stocksTableWidget = new StocksTableWidget(
+            stocksTableModelFactoryMock,
             stockTableRecordFactoryMock,
             instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
+            logosStorageMock,
             userStorageMock,
             orderBookThreadMock,
             httpClientMock,
@@ -58,29 +74,35 @@ protected:
     void TearDown() override
     {
         delete stocksTableWidget;
+        delete stocksTableModelFactoryMock;
         delete stockTableRecordFactoryMock;
         delete instrumentTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
+        delete logosStorageMock;
         delete userStorageMock;
         delete orderBookThreadMock;
         delete httpClientMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
+        delete stocksTableModelMock;
     }
 
     StocksTableWidget*                                stocksTableWidget;
+    StrictMock<StocksTableModelFactoryMock>*          stocksTableModelFactoryMock;
     StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
     StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
+    StrictMock<LogosStorageMock>*                     logosStorageMock;
     StrictMock<UserStorageMock>*                      userStorageMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<HttpClientMock>*                       httpClientMock;
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
+    StrictMock<StocksTableModelMock>*                 stocksTableModelMock;
 };
 
 
@@ -562,6 +584,16 @@ TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 TEST_F(Test_StocksTableWidget, Test_loadWindowState)
 {
     const InSequence seq;
+
+    // clang-format off
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(99)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),      _)).WillOnce(Return(QVariant(61)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DayChange"),  _)).WillOnce(Return(QVariant(139)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), _)).WillOnce(Return(QVariant(157)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Turnover"),   _)).WillOnce(Return(QVariant(86)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payback"),    _)).WillOnce(Return(QVariant(120)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Actions"),    _)).WillOnce(Return(QVariant(83)));
+    // clang-format on
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(99)));

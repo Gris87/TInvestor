@@ -82,6 +82,7 @@ public:
         ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
         ILogsTableWidgetFactory*           logsTableWidgetFactory,
         IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
+        IStocksTableModelFactory*          stocksTableModelFactory,
         IOperationsTableModelFactory*      operationsTableModelFactory,
         ILogsTableModelFactory*            logsTableModelFactory,
         IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
