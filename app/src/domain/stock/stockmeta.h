@@ -25,7 +25,7 @@ struct StockMeta
     QString   ticker;
     QString   name;
     bool      forQualInvestorFlag;
-    qint32    lot;
+    qint32    lot;               // TODO: Do we need it?
     Quotation minPriceIncrement; // TODO: Do we need it?
 };
 

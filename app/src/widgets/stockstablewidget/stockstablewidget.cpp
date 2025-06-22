@@ -59,13 +59,13 @@ StocksTableWidget::StocksTableWidget(
 
     ui->setupUi(this);
 
-    ui->tableWidget->sortByColumn(STOCKS_STOCK_COLUMN, Qt::AscendingOrder);
+    ui->tableWidget->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
 
     mStocksTableModel = stocksTableModelFactory->newInstance(this);
 
     ui->tableView->setModel(mStocksTableModel);
-    ui->tableView->setItemDelegateForColumn(STOCKS_STOCK_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
-    ui->tableView->sortByColumn(STOCKS_STOCK_COLUMN, Qt::AscendingOrder);
+    ui->tableView->setItemDelegateForColumn(STOCKS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
 }
 
 StocksTableWidget::~StocksTableWidget()
@@ -260,8 +260,8 @@ void StocksTableWidget::exportToExcel(const QString& path) const
     cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     cellStyle.setFontColor(CELL_FONT_COLOR);
 
-    doc.write(1, STOCKS_STOCK_COLUMN + 1, ui->tableWidget->horizontalHeaderItem(STOCKS_STOCK_COLUMN)->text(), headerStyle);
-    doc.write(1, STOCKS_STOCK_COLUMN + 2, tr("Qual investor"), headerStyle);
+    doc.write(1, STOCKS_NAME_COLUMN + 1, ui->tableWidget->horizontalHeaderItem(STOCKS_NAME_COLUMN)->text(), headerStyle);
+    doc.write(1, STOCKS_NAME_COLUMN + 2, tr("Qual investor"), headerStyle);
 
     for (int i = STOCKS_PRICE_COLUMN; i < STOCKS_ACTIONS_COLUMN; ++i)
     {
@@ -282,8 +282,8 @@ void StocksTableWidget::exportToExcel(const QString& path) const
 
     // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
-    doc.autosizeColumnWidth(STOCKS_STOCK_COLUMN + 1);
-    doc.setColumnWidth(STOCKS_STOCK_COLUMN + 2,       13.57 + COLUMN_GAP);
+    doc.autosizeColumnWidth(STOCKS_NAME_COLUMN + 1);
+    doc.setColumnWidth(STOCKS_NAME_COLUMN + 2,       13.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_PRICE_COLUMN + 2,       9.43  + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DAY_CHANGE_COLUMN + 2,  18.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DATE_CHANGE_COLUMN + 2, 18.86 + COLUMN_GAP);
@@ -299,7 +299,7 @@ void StocksTableWidget::exportToExcel(const QString& path) const
 void StocksTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off
-    mSettingsEditor->setValue(type + "/columnWidth_Stock",      ui->tableView->columnWidth(STOCKS_STOCK_COLUMN));
+    mSettingsEditor->setValue(type + "/columnWidth_Name",       ui->tableView->columnWidth(STOCKS_NAME_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_Price",      ui->tableView->columnWidth(STOCKS_PRICE_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_DayChange",  ui->tableView->columnWidth(STOCKS_DAY_CHANGE_COLUMN));
     mSettingsEditor->setValue(type + "/columnWidth_DateChange", ui->tableView->columnWidth(STOCKS_DATE_CHANGE_COLUMN));
@@ -312,7 +312,7 @@ void StocksTableWidget::saveWindowState(const QString& type)
 void StocksTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableView->setColumnWidth(STOCKS_STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      COLUMN_WIDTHS[STOCKS_STOCK_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[STOCKS_NAME_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[STOCKS_DAY_CHANGE_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());
@@ -322,7 +322,7 @@ void StocksTableWidget::loadWindowState(const QString& type)
     // clang-format on
 
     // clang-format off
-    ui->tableWidget->setColumnWidth(STOCKS_STOCK_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Stock",      COLUMN_WIDTHS[STOCKS_STOCK_COLUMN]).toInt());
+    ui->tableWidget->setColumnWidth(STOCKS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[STOCKS_NAME_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(STOCKS_DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[STOCKS_DAY_CHANGE_COLUMN]).toInt());
     ui->tableWidget->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());
