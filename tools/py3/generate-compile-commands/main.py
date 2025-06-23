@@ -102,7 +102,13 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Wno-unknown-warning-option")
     res.append("-Wno-unknown-pragmas")
     res.append("-nostdinc")
-    res.append("-nostdinc++")
+
+    if not args.ci:
+        res.append("-nostdinc++")  # error: unknown argument ignored in clang-cl: '-nostdinc++' [clang-diagnostic-unknown-argument,-warnings-as-errors]
+    else:
+        res.append("-Xclang")
+        res.append("-stdlib=libc++")
+
     res.append("--driver-mode=cl")
     res.append("-nologo")
     res.append("-Zc:wchar_t")
@@ -110,10 +116,15 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("-Zc:rvalueCast")
     res.append("-Zc:inline")
     res.append("-Zc:strictStrings")
-    res.append("-Zc:throwingNew")
+
+    if not args.ci:
+        res.append("-Zc:throwingNew")  # error: argument unused during compilation: '-Zc:throwingNew' [clang-diagnostic-unused-command-line-argument,-warnings-as-errors]
+
     res.append("-permissive-")
     res.append("-Zc:__cplusplus")
-    res.append("-Zc:externConstexpr")
+
+    if not args.ci:
+        res.append("-Zc:externConstexpr")  # error: argument unused during compilation: '-Zc:externConstexpr' [clang-diagnostic-unused-command-line-argument,-warnings-as-errors]
 
     if app_or_test and "/libs/" not in file_path:
         if args.target == "build":
@@ -142,8 +153,11 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     res.append("/Zs")
     res.append("-m64")
     res.append("--target=x86_64-pc-windows-msvc")
-    res.append("-fcxx-exceptions")
-    res.append("-fexceptions")
+
+    if not args.ci:
+        res.append("-fcxx-exceptions")  # error: unknown argument ignored in clang-cl: '-fcxx-exceptions' [clang-diagnostic-unknown-argument,-warnings-as-errors]
+        res.append("-fexceptions")      # error: unknown argument ignored in clang-cl: '-fexceptions' [clang-diagnostic-unknown-argument,-warnings-as-errors]
+
     res.append("-fms-compatibility-version=19.42")
     res.append("-DUNICODE")
     res.append("-D_UNICODE")

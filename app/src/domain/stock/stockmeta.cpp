@@ -59,7 +59,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
 };
 // clang-format on
 
-void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject)
+void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
