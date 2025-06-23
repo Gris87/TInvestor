@@ -1,4 +1,3 @@
-
 #include "src/storage/stocks/stocksstorage.h"
 
 #include <gtest/gtest.h>

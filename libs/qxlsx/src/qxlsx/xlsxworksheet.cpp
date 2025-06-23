@@ -2618,8 +2618,8 @@ void WorksheetPrivate::loadXmlSheetData(QXmlStreamReader& reader)
     int row_num = 0;
     int col_num = 0;
 
-    while (!reader.atEnd() && !(reader.name() == QLatin1String("sheetData") && reader.tokenType() == QXmlStreamReader::EndElement)
-    )
+    while (!reader.atEnd() &&
+           !(reader.name() == QLatin1String("sheetData") && reader.tokenType() == QXmlStreamReader::EndElement))
     {
         if (reader.readNextStartElement())
         {

@@ -37,7 +37,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
 
     stock.meta.instrumentName    = "Serezha stock";
     stock.meta.minPriceIncrement = 1.5f;
-    stock.meta.pricePrecision = 1;
+    stock.meta.pricePrecision    = 1;
 
     EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull())).WillOnce(Return(orderWavesWidgetMock));
     EXPECT_CALL(orderBookThreadMock, setStock(&stock));
