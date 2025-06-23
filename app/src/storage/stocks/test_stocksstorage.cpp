@@ -1,3 +1,4 @@
+
 #include "src/storage/stocks/stocksstorage.h"
 
 #include <gtest/gtest.h>
@@ -331,7 +332,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     stockMeta1.instrumentTicker    = "BEST";
     stockMeta1.instrumentName      = "cba";
     stockMeta1.forQualInvestorFlag = false;
-    stockMeta1.minPriceIncrement   = 0.1f;
+    stockMeta1.minPriceIncrement   = 0.01f;
     stockMeta1.pricePrecision      = 2;
 
     stockMeta2.instrumentId        = "dddddddd-dddd-dddd-dddd-dddddddddddd";

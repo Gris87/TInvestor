@@ -76,7 +76,7 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     // clang-format on
 
     const QString content =
-        R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","minPriceIncrement":"0.0","pricePrecision":1})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -109,9 +109,7 @@ TEST(Test_StockMeta, Test_toJsonObject)
 
     const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
     const QString expectedContent =
-        R"({"forQualInvestorFlag":true,"lot":1,"minPriceIncrement":{"nano":3,"units":2},"name":"c","ticker":"b","uid":"a"})";
-
-    qInfo() << content;
+        R"({"forQualInvestorFlag":true,"instrumentId":"a","instrumentName":"c","instrumentTicker":"b","minPriceIncrement":"0.0","pricePrecision":1})";
 
     ASSERT_EQ(content, expectedContent);
 }
