@@ -199,4 +199,9 @@ TEST_F(Test_File, Test_remove)
     ASSERT_EQ(file->remove(), true);
     ASSERT_EQ(file->exists(), false);
 }
+
+TEST_F(Test_File, Test_getDevice)
+{
+    ASSERT_NE(file->getDevice(), nullptr);
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity)

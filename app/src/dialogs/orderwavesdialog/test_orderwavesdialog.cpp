@@ -91,6 +91,26 @@ TEST_F(Test_OrderWavesDialog, Test_orderBookChanged)
     ASSERT_EQ(dialog->ui->timeLabel->text(),  "2024-01-01 00:00:00");
     ASSERT_EQ(dialog->ui->priceLabel->text(), QString("1500.75 \u20BD / Spread: -"));
     // clang-format on
+
+    OrderBookData bid;
+    OrderBookData ask;
+
+    bid.price    = 1500.5f;
+    bid.quantity = 1000;
+    ask.price    = 1500.9f;
+    ask.quantity = 100;
+
+    orderBook.bids.append(bid);
+    orderBook.asks.append(ask);
+
+    EXPECT_CALL(*orderWavesWidgetMock, orderBookChanged(Ref(orderBook)));
+
+    dialog->orderBookChanged(orderBook);
+
+    // clang-format off
+    ASSERT_EQ(dialog->ui->timeLabel->text(),  "2024-01-01 00:00:00");
+    ASSERT_EQ(dialog->ui->priceLabel->text(), QString("1500.75 \u20BD / Spread: 0.40 \u20BD (0.027%)"));
+    // clang-format on
 }
 
 TEST_F(Test_OrderWavesDialog, Test_on_resetButton_clicked)

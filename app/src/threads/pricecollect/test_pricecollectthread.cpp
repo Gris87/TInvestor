@@ -427,6 +427,11 @@ TEST_F(Test_PriceCollectThread, Test_run)
     thread->run();
 }
 
+TEST_F(Test_PriceCollectThread, Test_terminateThread)
+{
+    thread->terminateThread();
+}
+
 TEST_F(Test_PriceCollectThread, Test_obtainStocksDayStartPrice)
 {
     const InSequence seq;

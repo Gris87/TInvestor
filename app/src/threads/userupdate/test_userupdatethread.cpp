@@ -102,4 +102,9 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     thread->run();
 }
+
+TEST_F(Test_UserUpdateThread, Test_terminateThread)
+{
+    thread->terminateThread();
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)

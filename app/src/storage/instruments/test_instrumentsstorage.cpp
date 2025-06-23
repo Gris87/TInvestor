@@ -92,6 +92,12 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     // clang-format on
 }
 
+TEST_F(Test_InstrumentsStorage, Test_lock_unlock)
+{
+    storage->lock();
+    storage->unlock();
+}
+
 TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)
 {
     const InSequence seq;

@@ -78,6 +78,27 @@ TEST(Test_Quotation, Test_toJsonObject)
     ASSERT_EQ(content, expectedContent);
 }
 
+TEST(Test_Quotation, Test_less)
+{
+    Quotation quotation;
+    Quotation quotation2;
+
+    quotation.units = 1;
+    quotation.nano  = 2;
+
+    quotation2.units = 3;
+    quotation2.nano  = 4;
+
+    ASSERT_LT(quotation, quotation2);
+
+    quotation2.units = 1;
+    quotation2.nano  = 2;
+    ASSERT_EQ(quotation, quotation2);
+    quotation2.units = 1;
+    quotation2.nano  = 4;
+    ASSERT_LT(quotation, quotation2);
+}
+
 TEST(Test_Quotation, Test_equals)
 {
     Quotation quotation;
@@ -100,5 +121,26 @@ TEST(Test_Quotation, Test_equals)
     ASSERT_NE(quotation, quotation2);
     quotation2.nano = 2;
     ASSERT_EQ(quotation, quotation2);
+}
+
+TEST(Test_Quotation, Test_more)
+{
+    Quotation quotation;
+    Quotation quotation2;
+
+    quotation.units = 3;
+    quotation.nano  = 4;
+
+    quotation2.units = 1;
+    quotation2.nano  = 2;
+
+    ASSERT_GT(quotation, quotation2);
+
+    quotation2.units = 3;
+    quotation2.nano  = 4;
+    ASSERT_EQ(quotation, quotation2);
+    quotation2.units = 3;
+    quotation2.nano  = 2;
+    ASSERT_GT(quotation, quotation2);
 }
 // NOLINTEND(readability-magic-numbers)

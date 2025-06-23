@@ -1,4 +1,5 @@
 Stocks TableView
+Make Quazip to use QIODevice and adapt tests
 Slow splitter move
 Tray icon popup too long
 Use RWMutex instead of QMutex

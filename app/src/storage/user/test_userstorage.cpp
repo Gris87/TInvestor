@@ -78,6 +78,12 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_
     // clang-format on
 }
 
+TEST_F(Test_UserStorage, Test_lock_unlock)
+{
+    storage->lock();
+    storage->unlock();
+}
+
 TEST_F(Test_UserStorage, Test_setToken)
 {
     const InSequence seq;

@@ -57,8 +57,8 @@ protected:
         EXPECT_CALL(*userStorageMock, unlock());
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("74b87337454200d4d33f80c4663dc5e5")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL"))).WillOnce(Return(QVariant("INTERNAL")));
         // clang-format on
 
@@ -90,6 +90,29 @@ TEST_F(Test_StartAutoPilotDialog, Test_constructor_and_destructor)
     ASSERT_EQ(dialog->ui->accountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
     ASSERT_EQ(dialog->ui->accountComboBox->itemData(1), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
     ASSERT_EQ(dialog->ui->accountComboBox->itemData(2), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
+}
+
+TEST_F(Test_StartAutoPilotDialog, Test_account)
+{
+    ASSERT_EQ(dialog->account(), "74b87337454200d4d33f80c4663dc5e5");
+}
+
+TEST_F(Test_StartAutoPilotDialog, Test_mode)
+{
+    ASSERT_EQ(dialog->mode(), "INTERNAL");
+
+    dialog->ui->followRadioButton->setChecked(true);
+
+    ASSERT_EQ(dialog->mode(), "FOLLOW");
+
+    dialog->ui->viewRadioButton->setChecked(true);
+
+    ASSERT_EQ(dialog->mode(), "VIEW");
+}
+
+TEST_F(Test_StartAutoPilotDialog, Test_anotherAccount)
+{
+    ASSERT_EQ(dialog->anotherAccount(), "65ba841e01d6db7733e90a5b7f9e6f80");
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)

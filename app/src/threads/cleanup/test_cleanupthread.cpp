@@ -57,4 +57,9 @@ TEST_F(Test_CleanupThread, Test_run)
 
     thread->run();
 }
+
+TEST_F(Test_CleanupThread, Test_terminateThread)
+{
+    thread->terminateThread();
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)

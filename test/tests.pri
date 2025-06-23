@@ -43,6 +43,7 @@ SOURCES += \
     src/domain/filter/test_stockfilter.cpp \
     src/domain/instrument/test_instrument.cpp \
     src/domain/log/test_logentry.cpp \
+    src/domain/logo/test_logo.cpp \
     src/domain/operation/test_operation.cpp \
     src/domain/operation/test_operationfifoitem.cpp \
     src/domain/orderbook/test_orderbook.cpp \

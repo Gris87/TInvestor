@@ -143,16 +143,29 @@ TEST_F(Test_StocksDatabase, Test_readStocksMeta)
 {
     const InSequence seq;
 
-    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
+    StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/stocks/stocks.json")))
-        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
 
-    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testStocks));
-    EXPECT_CALL(*fileMock, close());
+    EXPECT_CALL(*fileMock1, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock1, readAll()).WillOnce(Return("{Bad content ::::: 555"));
+    EXPECT_CALL(*fileMock1, close());
 
-    const QList<Stock*> stocks = database->readStocksMeta();
+    QList<Stock*> stocks = database->readStocksMeta();
+
+    ASSERT_EQ(stocks.size(), 0);
+
+    StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readStocksMeta
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/stocks/stocks.json")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
+
+    EXPECT_CALL(*fileMock2, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock2, readAll()).WillOnce(Return(testStocks));
+    EXPECT_CALL(*fileMock2, close());
+
+    stocks = database->readStocksMeta();
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);

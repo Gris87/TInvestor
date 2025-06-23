@@ -74,16 +74,29 @@ TEST_F(Test_InstrumentsDatabase, Test_readInstruments)
 {
     const InSequence seq;
 
-    StrictMock<FileMock>* fileMock = new StrictMock<FileMock>(); // Will be deleted in readInstruments
+    StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in readInstruments
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/instruments/instruments.json")))
-        .WillOnce(Return(std::shared_ptr<IFile>(fileMock)));
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
 
-    EXPECT_CALL(*fileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
-    EXPECT_CALL(*fileMock, readAll()).WillOnce(Return(testInstruments));
-    EXPECT_CALL(*fileMock, close());
+    EXPECT_CALL(*fileMock1, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock1, readAll()).WillOnce(Return("{Bad content ::::: 555"));
+    EXPECT_CALL(*fileMock1, close());
 
-    const Instruments instruments = database->readInstruments();
+    Instruments instruments = database->readInstruments();
+
+    ASSERT_EQ(instruments.size(), 0);
+
+    StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in readInstruments
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(QString(appDir + "/data/instruments/instruments.json")))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
+
+    EXPECT_CALL(*fileMock2, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
+    EXPECT_CALL(*fileMock2, readAll()).WillOnce(Return(testInstruments));
+    EXPECT_CALL(*fileMock2, close());
+
+    instruments = database->readInstruments();
 
     // clang-format off
     ASSERT_EQ(instruments.size(),                  3);

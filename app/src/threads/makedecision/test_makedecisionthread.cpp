@@ -45,4 +45,9 @@ TEST_F(Test_MakeDecisionThread, Test_run)
 {
     thread->run();
 }
+
+TEST_F(Test_MakeDecisionThread, Test_terminateThread)
+{
+    thread->terminateThread();
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
