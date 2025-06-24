@@ -55,6 +55,7 @@ SOURCES += \
     src/domain/stock/test_stock.cpp \
     src/domain/stock/test_stockmeta.cpp \
     src/domain/stock/test_stockoperational.cpp \
+    src/domain/stock/test_stocktableentry.cpp \
     src/domain/trading/test_tradinginfo.cpp \
     src/domain/user/test_account.cpp \
     src/domain/user/test_user.cpp \

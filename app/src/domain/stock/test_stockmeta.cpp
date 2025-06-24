@@ -13,6 +13,7 @@ TEST(Test_StockMeta, Test_constructor_and_destructor)
 
     // clang-format off
     ASSERT_EQ(stockMeta.instrumentId,        "");
+    ASSERT_EQ(stockMeta.instrumentLogo,      nullptr);
     ASSERT_EQ(stockMeta.instrumentTicker,    "");
     ASSERT_EQ(stockMeta.instrumentName,      "");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
@@ -36,6 +37,7 @@ TEST(Test_StockMeta, Test_copy_constructor)
 
     // clang-format off
     ASSERT_EQ(stockMeta2.instrumentId,        "a");
+    ASSERT_EQ(stockMeta2.instrumentLogo,      nullptr);
     ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta2.instrumentName,      "c");
     ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
@@ -60,6 +62,7 @@ TEST(Test_StockMeta, Test_assign)
 
     // clang-format off
     ASSERT_EQ(stockMeta2.instrumentId,        "a");
+    ASSERT_EQ(stockMeta2.instrumentLogo,      nullptr);
     ASSERT_EQ(stockMeta2.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta2.instrumentName,      "c");
     ASSERT_EQ(stockMeta2.forQualInvestorFlag, true);
@@ -74,6 +77,7 @@ TEST(Test_StockMeta, Test_fromJsonObject)
 
     // clang-format off
     ASSERT_EQ(stockMeta.instrumentId,        "");
+    ASSERT_EQ(stockMeta.instrumentLogo,      nullptr);
     ASSERT_EQ(stockMeta.instrumentTicker,    "");
     ASSERT_EQ(stockMeta.instrumentName,      "");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, false);
@@ -93,6 +97,7 @@ TEST(Test_StockMeta, Test_fromJsonObject)
 
     // clang-format off
     ASSERT_EQ(stockMeta.instrumentId,        "a");
+    ASSERT_EQ(stockMeta.instrumentLogo,      nullptr);
     ASSERT_EQ(stockMeta.instrumentTicker,    "b");
     ASSERT_EQ(stockMeta.instrumentName,      "c");
     ASSERT_EQ(stockMeta.forQualInvestorFlag, true);

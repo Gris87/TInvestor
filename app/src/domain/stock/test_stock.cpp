@@ -12,6 +12,7 @@ TEST(Test_Stock, Test_constructor_and_destructor)
     // clang-format off
     ASSERT_NE(stock.mutex,                            nullptr);
     ASSERT_EQ(stock.meta.instrumentId,                "");
+    ASSERT_EQ(stock.meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stock.meta.instrumentTicker,            "");
     ASSERT_EQ(stock.meta.instrumentName,              "");
     ASSERT_EQ(stock.meta.forQualInvestorFlag,         false);
@@ -60,6 +61,7 @@ TEST(Test_Stock, Test_copy_constructor)
     ASSERT_NE(stock2.mutex,                                    stock.mutex);
     ASSERT_NE(stock2.mutex,                                    nullptr);
     ASSERT_EQ(stock2.meta.instrumentId,                        "a");
+    ASSERT_EQ(stock2.meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stock2.meta.instrumentTicker,                    "b");
     ASSERT_EQ(stock2.meta.instrumentName,                      "c");
     ASSERT_EQ(stock2.meta.forQualInvestorFlag,                 true);
@@ -114,6 +116,7 @@ TEST(Test_Stock, Test_assign)
     ASSERT_NE(stock2.mutex,                                    stock.mutex);
     ASSERT_NE(stock2.mutex,                                    nullptr);
     ASSERT_EQ(stock2.meta.instrumentId,                        "a");
+    ASSERT_EQ(stock2.meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stock2.meta.instrumentTicker,                    "b");
     ASSERT_EQ(stock2.meta.instrumentName,                      "c");
     ASSERT_EQ(stock2.meta.forQualInvestorFlag,                 true);
