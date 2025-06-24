@@ -126,7 +126,7 @@ QStringList LastPriceThread::getStockUIDs()
 
 QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 {
-    QMap<QString, Stock*> res; // UID => Stock
+    QMap<QString, Stock*> res; // Instrument ID => Stock
 
     mStocksStorage->lock();
     const QList<Stock*>& stocks = mStocksStorage->getStocks();

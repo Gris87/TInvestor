@@ -402,6 +402,8 @@ static void fillEntriesForParallel(
     {
         Stock* stock = stocksArray[i];
 
+        stock->mutex->lock();
+
         resArray[i].instrumentId        = stock->meta.instrumentId;
         resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
         resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
@@ -420,6 +422,8 @@ static void fillEntriesForParallel(
         resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
         resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
         resArray[i].pricePrecision     = stock->meta.pricePrecision;
+
+        stock->mutex->unlock();
     }
 }
 
@@ -433,10 +437,42 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     FillEntriesInfo fillEntriesInfo(&stocks);
     processInParallel(*mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
 
+    mStocks.clear();
+
+    for (Stock* stock : stocks)
+    {
+        mStocks[stock->meta.instrumentId] = stock;
+    }
+
     sortEntries();
     filterAll();
 
     endResetModel();
+}
+
+void StocksTableModel::updateAll()
+{
+    // TODO: Implement
+}
+
+void StocksTableModel::lastPriceChanged(const QString& /*instrumentId*/)
+{
+    // TODO: Implement
+}
+
+void StocksTableModel::updateLastPrices()
+{
+    // TODO: Implement
+}
+
+void StocksTableModel::updatePrices()
+{
+    // TODO: Implement
+}
+
+void StocksTableModel::updatePeriodicData()
+{
+    // TODO: Implement
 }
 
 void StocksTableModel::exportToExcel(QXlsx::Document& doc) const

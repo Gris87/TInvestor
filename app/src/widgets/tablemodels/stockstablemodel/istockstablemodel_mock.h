@@ -28,6 +28,11 @@ public:
 
     MOCK_METHOD(void, setFilter, (const StockFilter& filter), (override));
     MOCK_METHOD(void, updateTable, (const QList<Stock*>& stocks), (override));
+    MOCK_METHOD(void, updateAll, (), (override));
+    MOCK_METHOD(void, lastPriceChanged, (const QString& instrumentId), (override));
+    MOCK_METHOD(void, updateLastPrices, (), (override));
+    MOCK_METHOD(void, updatePrices, (), (override));
+    MOCK_METHOD(void, updatePeriodicData, (), (override));
     MOCK_METHOD(void, exportToExcel, (QXlsx::Document & doc), (const, override));
 
     MOCK_METHOD(void, setDateChangeTooltip, (const QString& tooltip), (override));

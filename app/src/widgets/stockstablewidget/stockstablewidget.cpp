@@ -131,6 +131,8 @@ void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const StockFilt
 
 void StocksTableWidget::updateAll(const StockFilter& filter)
 {
+    mStocksTableModel->updateAll();
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -144,8 +146,16 @@ void StocksTableWidget::updateAll(const StockFilter& filter)
     ui->tableWidget->setUpdatesEnabled(true);
 }
 
+void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
+{
+    mStocksTableModel->lastPriceChanged(instrumentId);
+    lastPricesUpdates.insert(instrumentId);
+}
+
 void StocksTableWidget::updateLastPrices(const StockFilter& filter)
 {
+    mStocksTableModel->updateLastPrices();
+
     if (!lastPricesUpdates.isEmpty())
     {
         ui->tableWidget->setUpdatesEnabled(false);
@@ -171,6 +181,8 @@ void StocksTableWidget::updateLastPrices(const StockFilter& filter)
 
 void StocksTableWidget::updatePrices(const StockFilter& filter)
 {
+    mStocksTableModel->updatePrices();
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -186,6 +198,8 @@ void StocksTableWidget::updatePrices(const StockFilter& filter)
 
 void StocksTableWidget::updatePeriodicData(const StockFilter& filter)
 {
+    mStocksTableModel->updatePeriodicData();
+
     ui->tableWidget->setUpdatesEnabled(false);
     ui->tableWidget->setSortingEnabled(false);
 
@@ -203,11 +217,6 @@ void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
 {
     mStocksTableModel->setDateChangeTooltip(tooltip);
     ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->setToolTip(tooltip);
-}
-
-void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
-{
-    lastPricesUpdates.insert(instrumentId);
 }
 
 void StocksTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)

@@ -37,6 +37,11 @@ public:
 
     void setFilter(const StockFilter& filter) override;
     void updateTable(const QList<Stock*>& stocks) override;
+    void updateAll() override;
+    void lastPriceChanged(const QString& instrumentId) override;
+    void updateLastPrices() override;
+    void updatePrices() override;
+    void updatePeriodicData() override;
     void exportToExcel(QXlsx::Document& doc) const override;
 
     void setDateChangeTooltip(const QString& tooltip) override;
@@ -56,6 +61,7 @@ private:
     QIcon                                   mHelpIcon;
     QString                                 mDateChangeTooltip;
     StockFilter                             mFilter;
+    QMap<QString, Stock*>                   mStocks; // Instrument ID => Stock
     std::shared_ptr<QList<StockTableEntry>> mEntriesUnfiltered;
     std::shared_ptr<QList<StockTableEntry>> mEntries;
     int                                     mSortColumn;

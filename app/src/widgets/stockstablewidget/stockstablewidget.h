@@ -58,15 +58,13 @@ public:
 
     void setFilter(const StockFilter& filter) override;
     void updateTable(const QList<Stock*>& stocks, const StockFilter& filter) override;
-
     void updateAll(const StockFilter& filter) override;
+    void lastPriceChanged(const QString& instrumentId) override;
     void updateLastPrices(const StockFilter& filter) override;
     void updatePrices(const StockFilter& filter) override;
     void updatePeriodicData(const StockFilter& filter) override;
 
     void setDateChangeTooltip(const QString& tooltip) override;
-
-    void lastPriceChanged(const QString& instrumentId) override;
 
     void saveWindowState(const QString& type) override;
     void loadWindowState(const QString& type) override;
