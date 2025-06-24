@@ -309,14 +309,176 @@ void StocksTableModel::setDateChangeTooltip(const QString& tooltip)
     mDateChangeTooltip = tooltip;
 }
 
+static void fillEntriesIndeciesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+)
+{
+    int* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = i;
+    }
+}
+
+struct MergeSortedEntriesInfo
+{
+    explicit MergeSortedEntriesInfo(QList<StockTableEntry>* _entriesUnfiltered, QList<int>* _sortedIndecies) :
+        entriesUnfiltered(_entriesUnfiltered),
+        sortedIndecies(_sortedIndecies)
+    {
+    }
+
+    QList<StockTableEntry>* entriesUnfiltered;
+    QList<int>*             sortedIndecies;
+};
+
+static void mergeSortedEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
+
+    StockTableEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
+    int*             indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[indeciesArray[i]];
+    }
+}
+
 void StocksTableModel::sortEntries()
 {
-    // TODO: Implement
+    QList<int> entriesIndecies;
+    entriesIndecies.resizeForOverwrite(mEntriesUnfiltered->size());
+    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+
+    if (mSortOrder == Qt::AscendingOrder)
+    {
+        if (mSortColumn == STOCKS_NAME_COLUMN)
+        {
+            const StocksTableNameLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_PRICE_COLUMN)
+        {
+            const StocksTablePriceLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_DAY_CHANGE_COLUMN)
+        {
+            const StocksTableDayChangeLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_DATE_CHANGE_COLUMN)
+        {
+            const StocksTableDateChangeLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_TURNOVER_COLUMN)
+        {
+            const StocksTableTurnoverLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_PAYBACK_COLUMN)
+        {
+            const StocksTablePaybackLessThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+    else
+    {
+        if (mSortColumn == STOCKS_NAME_COLUMN)
+        {
+            const StocksTableNameGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_PRICE_COLUMN)
+        {
+            const StocksTablePriceGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_DAY_CHANGE_COLUMN)
+        {
+            const StocksTableDayChangeGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_DATE_CHANGE_COLUMN)
+        {
+            const StocksTableDateChangeGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_TURNOVER_COLUMN)
+        {
+            const StocksTableTurnoverGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+        else if (mSortColumn == STOCKS_PAYBACK_COLUMN)
+        {
+            const StocksTablePaybackGreaterThan cmp(mEntriesUnfiltered.get());
+
+            std::stable_sort(std::execution::par, entriesIndecies.begin(), entriesIndecies.end(), cmp);
+        }
+    }
+
+    const std::shared_ptr<QList<StockTableEntry>> entries = std::make_shared<QList<StockTableEntry>>();
+    entries->resizeForOverwrite(mEntriesUnfiltered->size());
+
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
+    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+
+    mEntriesUnfiltered = entries;
+}
+
+struct ReverseEntriesInfo
+{
+    explicit ReverseEntriesInfo(QList<StockTableEntry>* _entriesUnfiltered) :
+        entriesUnfiltered(_entriesUnfiltered)
+    {
+    }
+
+    QList<StockTableEntry>* entriesUnfiltered;
+};
+
+static void reverseEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+
+    StockTableEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[res.size() - i - 1];
+    }
 }
 
 void StocksTableModel::reverseEntries()
 {
-    // TODO: Implement
+    const std::shared_ptr<QList<StockTableEntry>> entries = std::make_shared<QList<StockTableEntry>>();
+    entries->resizeForOverwrite(mEntriesUnfiltered->size());
+
+    ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
+    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+
+    mEntriesUnfiltered = entries;
 }
 
 void StocksTableModel::filterAll()
