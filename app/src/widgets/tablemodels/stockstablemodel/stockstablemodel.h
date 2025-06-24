@@ -6,6 +6,8 @@
 
 #include <QIcon>
 
+#include "src/domain/stock/stocktableentry.h"
+
 
 
 class StocksTableModel : public IStocksTableModel
@@ -43,12 +45,12 @@ private:
     void reverseEntries();
     void filterAll();
 
-    QStringList                    mHeader;
-    QIcon                          mHelpIcon;
-    QString                        mDateChangeTooltip;
-    StockFilter                    mFilter;
-    std::shared_ptr<QList<Stock*>> mEntriesUnfiltered;
-    std::shared_ptr<QList<Stock*>> mEntries;
-    int                            mSortColumn;
-    Qt::SortOrder                  mSortOrder;
+    QStringList                             mHeader;
+    QIcon                                   mHelpIcon;
+    QString                                 mDateChangeTooltip;
+    StockFilter                             mFilter;
+    std::shared_ptr<QList<StockTableEntry>> mEntriesUnfiltered;
+    std::shared_ptr<QList<StockTableEntry>> mEntries;
+    int                                     mSortColumn;
+    Qt::SortOrder                           mSortOrder;
 };

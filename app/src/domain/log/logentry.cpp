@@ -57,6 +57,11 @@ static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
     entry->message                  = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
+static void logThrowParseException(LogEntry* /*entry*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);
 
 // clang-format off
@@ -75,7 +80,7 @@ void LogEntry::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:ex
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, logThrowParseException);
 
         parseHandler(this, field.value());
     }

@@ -46,6 +46,11 @@ static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value v
     meta->pricePrecision = value.get_int64();
 }
 
+static void metaThrowParseException(StockMeta* /*meta*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);
 
 // clang-format off
@@ -64,7 +69,7 @@ void StockMeta::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:e
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, metaThrowParseException);
 
         parseHandler(this, field.value());
     }

@@ -18,6 +18,11 @@ static void quotationNanoParse(Quotation* quotation, simdjson::ondemand::value v
     quotation->nano = value.get_int64();
 }
 
+static void quotationThrowParseException(Quotation* /*quotation*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(Quotation* quotation, simdjson::ondemand::value value);
 
 // clang-format off
@@ -32,7 +37,7 @@ void Quotation::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:e
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, quotationThrowParseException);
 
         parseHandler(this, field.value());
     }

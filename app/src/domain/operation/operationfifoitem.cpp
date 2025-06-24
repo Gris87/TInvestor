@@ -18,6 +18,11 @@ static void itemCostParse(OperationFifoItem* item, simdjson::ondemand::value val
     item->cost.fromJsonObject(value.get_object());
 }
 
+static void itemThrowParseException(OperationFifoItem* /*item*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(OperationFifoItem* item, simdjson::ondemand::value value);
 
 // clang-format off
@@ -32,7 +37,7 @@ void OperationFifoItem::fromJsonObject(simdjson::ondemand::object jsonObject) //
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, itemThrowParseException);
 
         parseHandler(this, field.value());
     }

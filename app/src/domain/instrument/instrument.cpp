@@ -32,6 +32,11 @@ static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::onde
     instrument->pricePrecision = value.get_int64();
 }
 
+static void instrumentThrowParseException(Instrument* /*instrument*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value value);
 
 // clang-format off
@@ -48,7 +53,7 @@ void Instrument::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, instrumentThrowParseException);
 
         parseHandler(this, field.value());
     }

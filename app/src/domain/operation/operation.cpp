@@ -192,6 +192,11 @@ static void operationCommissionPrecisionParse(Operation* operation, simdjson::on
     operation->commissionPrecision = value.get_int64();
 }
 
+static void operationThrowParseException(Operation* /*operation*/, simdjson::ondemand::value /*value*/)
+{
+    throw std::exception("Unknown parameter");
+}
+
 using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value value);
 
 // clang-format off
@@ -232,7 +237,7 @@ void Operation::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:e
     for (simdjson::ondemand::field field : jsonObject)
     {
         const std::string_view key          = field.escaped_key();
-        ParseHandler           parseHandler = PARSE_HANDLER.value(key);
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, operationThrowParseException);
 
         parseHandler(this, field.value());
     }

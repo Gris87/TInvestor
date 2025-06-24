@@ -32,8 +32,8 @@ StocksTableModel::StocksTableModel(QObject* parent) :
     mHelpIcon(":/assets/images/question.png"),
     mDateChangeTooltip(),
     mFilter(),
-    mEntriesUnfiltered(std::make_shared<QList<Stock*>>()),
-    mEntries(std::make_shared<QList<Stock*>>()),
+    mEntriesUnfiltered(std::make_shared<QList<StockTableEntry>>()),
+    mEntries(std::make_shared<QList<StockTableEntry>>()),
     mSortColumn(STOCKS_NAME_COLUMN),
     mSortOrder(Qt::AscendingOrder)
 {
@@ -110,82 +110,61 @@ QVariant StocksTableModel::headerData(int section, Qt::Orientation orientation, 
     return QVariant();
 }
 
-static QVariant stocksNameDisplayRole(Stock* stock)
+static QVariant stocksNameDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
-
-    return stock->meta.instrumentTicker;
+    return entry.instrumentTicker;
 }
 
-static QVariant stocksPriceDisplayRole(Stock* stock)
+static QVariant stocksPriceDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
-
-    return QString::number(stock->lastPrice(), 'f', 2) + " \u20BD"; // TODO: Use stock pricePrecision
+    return QString::number(entry.price, 'f', 2) + " \u20BD"; // TODO: Use stock pricePrecision
 }
 
-static QVariant stocksDayChangeDisplayRole(Stock* stock)
+static QVariant stocksDayChangeDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
+    const QString prefix = entry.dayChange > 0 ? "+" : "";
 
-    const float dayChange = stock->operational.dayStartPrice > 0
-                                ? ((stock->lastPrice() / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                : 0;
-
-    const QString prefix = dayChange > 0 ? "+" : "";
-
-    return prefix + QString::number(dayChange, 'f', 2) + "%";
+    return prefix + QString::number(entry.dayChange, 'f', 2) + "%";
 }
 
-static QVariant stocksDateChangeDisplayRole(Stock* stock)
+static QVariant stocksDateChangeDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
+    const QString prefix = entry.dateChange > 0 ? "+" : "";
 
-    const float dateChange =
-        stock->operational.specifiedDatePrice > 0
-            ? ((stock->lastPrice() / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-            : 0;
-
-    const QString prefix = dateChange > 0 ? "+" : "";
-
-    return prefix + QString::number(dateChange, 'f', 2) + "%";
+    return prefix + QString::number(entry.dateChange, 'f', 2) + "%";
 }
 
-static QVariant stocksTurnoverDisplayRole(Stock* stock)
+static QVariant stocksTurnoverDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
-
     QString text;
 
-    if (stock->operational.turnover >= TURNOVER_GREEN_LIMIT)
+    if (entry.turnover >= TURNOVER_GREEN_LIMIT)
     {
-        text = QString::number(static_cast<double>(stock->operational.turnover) / BILLIONS, 'f', 2) + "B \u20BD";
+        text = QString::number(static_cast<double>(entry.turnover) / BILLIONS, 'f', 2) + "B \u20BD";
     }
-    else if (stock->operational.turnover >= TURNOVER_NORMAL_LIMIT)
+    else if (entry.turnover >= TURNOVER_NORMAL_LIMIT)
     {
-        text = QString::number(static_cast<double>(stock->operational.turnover) / MILLIONS, 'f', 2) + "M \u20BD";
+        text = QString::number(static_cast<double>(entry.turnover) / MILLIONS, 'f', 2) + "M \u20BD";
     }
     else
     {
-        text = QString::number(static_cast<double>(stock->operational.turnover) / KILOS, 'f', 2) + "K \u20BD";
+        text = QString::number(static_cast<double>(entry.turnover) / KILOS, 'f', 2) + "K \u20BD";
     }
 
     return text;
 }
 
-static QVariant stocksPaybackDisplayRole(Stock* stock)
+static QVariant stocksPaybackDisplayRole(const StockTableEntry& entry)
 {
-    const QMutexLocker lock(stock->mutex);
-
-    return QString::number(stock->operational.payback, 'f', 2) + "%";
+    return QString::number(entry.payback, 'f', 2) + "%";
 }
 
-static QVariant stocksActionsDisplayRole(Stock* /*stock*/)
+static QVariant stocksActionsDisplayRole(const StockTableEntry& /*entry*/)
 {
     return QVariant();
 }
 
-using DisplayRoleHandler = QVariant (*)(Stock* stock);
+using DisplayRoleHandler = QVariant (*)(const StockTableEntry& entry);
 
 static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
     stocksNameDisplayRole,
@@ -205,6 +184,22 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         const int column = index.column();
 
         return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == ROLE_INSTRUMENT_LOGO)
+    {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == STOCKS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
+
+        return reinterpret_cast<qint64>(mEntries->at(row).instrumentLogo);
+    }
+
+    if (role == ROLE_INSTRUMENT_NAME)
+    {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == STOCKS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
+
+        return mEntries->at(row).instrumentName;
     }
 
     return QVariant();
@@ -250,11 +245,59 @@ void StocksTableModel::setFilter(const StockFilter& filter)
     }
 }
 
+struct FillEntriesInfo
+{
+    explicit FillEntriesInfo(const QList<Stock*>* _stocks) :
+        stocks(_stocks)
+    {
+    }
+
+    const QList<Stock*>* stocks;
+};
+
+static void fillEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
+
+    Stock* const* stocksArray = fillEntriesInfo->stocks->data();
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocksArray[i];
+
+        resArray[i].instrumentId        = stock->meta.instrumentId;
+        resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
+        resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
+        resArray[i].instrumentName      = stock->meta.instrumentName;
+        resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        resArray[i].price               = stock->lastPrice();
+        resArray[i].dayChange           = stock->operational.dayStartPrice > 0
+                                              ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                              : 0;
+        resArray[i].dateChange =
+            stock->operational.specifiedDatePrice > 0
+                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                : 0;
+        resArray[i].turnover       = stock->operational.turnover;
+        resArray[i].payback        = stock->operational.payback;
+        resArray[i].pricePrecision = stock->meta.pricePrecision;
+    }
+}
+
 void StocksTableModel::updateTable(const QList<Stock*>& stocks)
 {
     beginResetModel();
 
-    mEntriesUnfiltered = std::make_shared<QList<Stock*>>(stocks);
+    mEntriesUnfiltered = std::make_shared<QList<StockTableEntry>>();
+    mEntriesUnfiltered->resizeForOverwrite(stocks.size());
+
+    FillEntriesInfo fillEntriesInfo(&stocks);
+    processInParallel(*mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
+
     sortEntries();
     filterAll();
 
