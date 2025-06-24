@@ -24,6 +24,8 @@ struct StockTableEntry
     float    dateChange;
     qint64   turnover;
     float    payback;
+    float    dayStartPrice;
+    float    specifiedDatePrice;
     qint8    pricePrecision;
 };
 

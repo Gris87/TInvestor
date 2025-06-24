@@ -1,5 +1,6 @@
 #include "src/widgets/tablemodels/stockstablemodel/stockstablemodel.h"
 
+#include <QBrush>
 #include <QDebug>
 #include <algorithm>
 #include <execution>
@@ -10,17 +11,19 @@
 
 
 
-// constexpr float ZERO_LIMIT      = 0.0001f;
+constexpr float  ZERO_LIMIT            = 0.0001f;
 constexpr qint64 TURNOVER_GREEN_LIMIT  = 1000000000LL;
 constexpr qint64 TURNOVER_NORMAL_LIMIT = 1000000LL;
+constexpr float  PAYBACK_GREEN_LIMIT   = 60.0f;
+constexpr float  PAYBACK_NORMAL_LIMIT  = 30.0f;
 constexpr double BILLIONS              = 1000000000.0;
 constexpr double MILLIONS              = 1000000.0;
 constexpr double KILOS                 = 1000.0;
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 
-// const QBrush      GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
-// const QBrush      RED_COLOR             = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
-// const QBrush      NORMAL_COLOR          = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
+const QBrush GREEN_COLOR  = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush RED_COLOR    = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush NORMAL_COLOR = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
 // const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
 // const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
@@ -176,6 +179,120 @@ static const DisplayRoleHandler DISPLAY_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
     stocksActionsDisplayRole,
 };
 
+static QVariant stocksDayChangeForegroundRole(const StockTableEntry& entry)
+{
+    if (entry.dayChange > -ZERO_LIMIT && entry.dayChange < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (entry.dayChange > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant stocksDateChangeForegroundRole(const StockTableEntry& entry)
+{
+    if (entry.dateChange > -ZERO_LIMIT && entry.dateChange < ZERO_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    if (entry.dateChange > 0)
+    {
+        return GREEN_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant stocksTurnoverForegroundRole(const StockTableEntry& entry)
+{
+    if (entry.turnover > TURNOVER_GREEN_LIMIT)
+    {
+        return GREEN_COLOR;
+    }
+
+    if (entry.turnover > TURNOVER_NORMAL_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant stocksPaybackForegroundRole(const StockTableEntry& entry)
+{
+    if (entry.payback > PAYBACK_GREEN_LIMIT)
+    {
+        return GREEN_COLOR;
+    }
+
+    if (entry.payback > PAYBACK_NORMAL_LIMIT)
+    {
+        return NORMAL_COLOR;
+    }
+
+    return RED_COLOR;
+}
+
+static QVariant stocksNothingForegroundRole(const StockTableEntry& /*entry*/)
+{
+    return QVariant();
+}
+
+using ForegroundRoleHandler = QVariant (*)(const StockTableEntry& entry);
+
+static const ForegroundRoleHandler FOREGROUND_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
+    stocksNothingForegroundRole,
+    stocksNothingForegroundRole,
+    stocksDayChangeForegroundRole,
+    stocksDateChangeForegroundRole,
+    stocksTurnoverForegroundRole,
+    stocksPaybackForegroundRole,
+    stocksNothingForegroundRole,
+};
+
+static QVariant stocksDayChangeTooltipRole(const StockTableEntry& entry)
+{
+    if (entry.dayStartPrice <= 0)
+    {
+        return QVariant();
+    }
+
+    return QObject::tr("From: %1").arg(entry.dayStartPrice, 0, 'f', entry.pricePrecision) + " \u20BD";
+}
+
+static QVariant stocksDateChangeTooltipRole(const StockTableEntry& entry)
+{
+    if (entry.specifiedDatePrice <= 0)
+    {
+        return QVariant();
+    }
+
+    return QObject::tr("From: %1").arg(entry.specifiedDatePrice, 0, 'f', entry.pricePrecision) + " \u20BD";
+}
+
+static QVariant stocksNothingTooltipRole(const StockTableEntry& /*entry*/)
+{
+    return QVariant();
+}
+
+using TooltipRoleHandler = QVariant (*)(const StockTableEntry& entry);
+
+static const TooltipRoleHandler TOOLTIP_ROLE_HANDLER[STOCKS_COLUMN_COUNT]{
+    stocksNothingTooltipRole,
+    stocksNothingTooltipRole,
+    stocksDayChangeTooltipRole,
+    stocksDateChangeTooltipRole,
+    stocksNothingTooltipRole,
+    stocksNothingTooltipRole,
+    stocksNothingTooltipRole,
+};
+
 QVariant StocksTableModel::data(const QModelIndex& index, int role) const
 {
     if (role == Qt::DisplayRole)
@@ -184,6 +301,22 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         const int column = index.column();
 
         return DISPLAY_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == Qt::ForegroundRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return FOREGROUND_ROLE_HANDLER[column](mEntries->at(row));
+    }
+
+    if (role == Qt::ToolTipRole)
+    {
+        const int row    = index.row();
+        const int column = index.column();
+
+        return TOOLTIP_ROLE_HANDLER[column](mEntries->at(row));
     }
 
     if (role == ROLE_INSTRUMENT_LOGO)
@@ -282,9 +415,11 @@ static void fillEntriesForParallel(
             stock->operational.specifiedDatePrice > 0
                 ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                 : 0;
-        resArray[i].turnover       = stock->operational.turnover;
-        resArray[i].payback        = stock->operational.payback;
-        resArray[i].pricePrecision = stock->meta.pricePrecision;
+        resArray[i].turnover           = stock->operational.turnover;
+        resArray[i].payback            = stock->operational.payback;
+        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
+        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
+        resArray[i].pricePrecision     = stock->meta.pricePrecision;
     }
 }
 
