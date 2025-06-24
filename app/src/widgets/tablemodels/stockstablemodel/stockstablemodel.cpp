@@ -31,6 +31,7 @@ const QColor CELL_FONT_COLOR       = QColor("#97AEC4");         // clazy:exclude
 
 StocksTableModel::StocksTableModel(QObject* parent) :
     IStocksTableModel(parent),
+    lastPricesUpdates(),
     mHeader(),
     mHelpIcon(":/assets/images/question.png"),
     mDateChangeTooltip(),
@@ -120,7 +121,7 @@ static QVariant stocksNameDisplayRole(const StockTableEntry& entry)
 
 static QVariant stocksPriceDisplayRole(const StockTableEntry& entry)
 {
-    return QString::number(entry.price, 'f', 2) + " \u20BD"; // TODO: Use stock pricePrecision
+    return QString::number(entry.price, 'f', entry.pricePrecision) + " \u20BD";
 }
 
 static QVariant stocksDayChangeDisplayRole(const StockTableEntry& entry)
@@ -450,29 +451,367 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     endResetModel();
 }
 
-void StocksTableModel::updateAll()
+struct UpdateAllInfo
 {
-    // TODO: Implement
+    explicit UpdateAllInfo(StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed) :
+        model(_model),
+        stocks(_stocks),
+        updateAllowed(_updateAllowed)
+    {
+    }
+
+    StocksTableModel*            model;
+    const QMap<QString, Stock*>* stocks;
+    bool                         updateAllowed;
+};
+
+static void updateAllForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    UpdateAllInfo* updateAllInfo = reinterpret_cast<UpdateAllInfo*>(additionalArgs);
+
+    StocksTableModel*            model         = updateAllInfo->model;
+    const QMap<QString, Stock*>* stocks        = updateAllInfo->stocks;
+    const bool                   updateAllowed = updateAllInfo->updateAllowed;
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks->value(resArray[i].instrumentId);
+        Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        stock->mutex->lock();
+
+        resArray[i].instrumentId        = stock->meta.instrumentId;
+        resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
+        resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
+        resArray[i].instrumentName      = stock->meta.instrumentName;
+        resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        resArray[i].price               = stock->lastPrice();
+        resArray[i].dayChange           = stock->operational.dayStartPrice > 0
+                                              ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                              : 0;
+        resArray[i].dateChange =
+            stock->operational.specifiedDatePrice > 0
+                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                : 0;
+        resArray[i].turnover           = stock->operational.turnover;
+        resArray[i].payback            = stock->operational.payback;
+        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
+        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
+        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+
+        stock->mutex->unlock();
+
+        if (updateAllowed)
+        {
+            emit model->dataChanged(model->index(i, STOCKS_NAME_COLUMN), model->index(i, STOCKS_PAYBACK_COLUMN));
+        }
+    }
 }
 
-void StocksTableModel::lastPriceChanged(const QString& /*instrumentId*/)
+void StocksTableModel::updateAll()
 {
-    // TODO: Implement
+    const QList<QPersistentModelIndex> parents;
+
+    const bool needToSort = mSortColumn != STOCKS_ACTIONS_COLUMN;
+
+    if (mFilter.isActive())
+    {
+        beginResetModel();
+    }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+
+    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
+
+    if (mFilter.isActive())
+    {
+        sortEntries();
+        filterAll();
+
+        endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+}
+
+void StocksTableModel::lastPriceChanged(const QString& instrumentId)
+{
+    lastPricesUpdates.insert(instrumentId);
+}
+
+struct UpdateLastPricesInfo
+{
+    explicit UpdateLastPricesInfo(StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed) :
+        model(_model),
+        stocks(_stocks),
+        updateAllowed(_updateAllowed)
+    {
+    }
+
+    StocksTableModel*            model;
+    const QMap<QString, Stock*>* stocks;
+    bool                         updateAllowed;
+};
+
+static void updateLastPricesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    UpdateLastPricesInfo* updateLastPricesInfo = reinterpret_cast<UpdateLastPricesInfo*>(additionalArgs);
+
+    StocksTableModel*            model         = updateLastPricesInfo->model;
+    const QMap<QString, Stock*>* stocks        = updateLastPricesInfo->stocks;
+    const bool                   updateAllowed = updateLastPricesInfo->updateAllowed;
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        if (!model->lastPricesUpdates.contains(resArray[i].instrumentId))
+        {
+            continue;
+        }
+
+        Stock* stock = stocks->value(resArray[i].instrumentId);
+        Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        stock->mutex->lock();
+
+        resArray[i].price     = stock->lastPrice();
+        resArray[i].dayChange = stock->operational.dayStartPrice > 0
+                                    ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                    : 0;
+        resArray[i].dateChange =
+            stock->operational.specifiedDatePrice > 0
+                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                : 0;
+        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
+        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
+        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+
+        stock->mutex->unlock();
+
+        if (updateAllowed)
+        {
+            emit model->dataChanged(model->index(i, STOCKS_PRICE_COLUMN), model->index(i, STOCKS_DATE_CHANGE_COLUMN));
+        }
+    }
 }
 
 void StocksTableModel::updateLastPrices()
 {
-    // TODO: Implement
+    if (!lastPricesUpdates.isEmpty())
+    {
+        const QList<QPersistentModelIndex> parents;
+
+        const bool needToSort = mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN ||
+                                mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
+
+        if (mFilter.isActive())
+        {
+            beginResetModel();
+        }
+        else if (needToSort)
+        {
+            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+        }
+
+        UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+        processInParallel(*mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
+
+        lastPricesUpdates.clear();
+
+        if (mFilter.isActive())
+        {
+            sortEntries();
+            filterAll();
+
+            endResetModel();
+        }
+        else if (needToSort)
+        {
+            sortEntries();
+
+            emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+        }
+    }
+}
+
+struct UpdatePricesInfo
+{
+    explicit UpdatePricesInfo(StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed) :
+        model(_model),
+        stocks(_stocks),
+        updateAllowed(_updateAllowed)
+    {
+    }
+
+    StocksTableModel*            model;
+    const QMap<QString, Stock*>* stocks;
+    bool                         updateAllowed;
+};
+
+static void updatePricesForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    UpdatePricesInfo* updatePricesInfo = reinterpret_cast<UpdatePricesInfo*>(additionalArgs);
+
+    StocksTableModel*            model         = updatePricesInfo->model;
+    const QMap<QString, Stock*>* stocks        = updatePricesInfo->stocks;
+    const bool                   updateAllowed = updatePricesInfo->updateAllowed;
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks->value(resArray[i].instrumentId);
+        Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        stock->mutex->lock();
+
+        resArray[i].price     = stock->lastPrice();
+        resArray[i].dayChange = stock->operational.dayStartPrice > 0
+                                    ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                    : 0;
+        resArray[i].dateChange =
+            stock->operational.specifiedDatePrice > 0
+                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                : 0;
+        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
+        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
+        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+
+        stock->mutex->unlock();
+
+        if (updateAllowed)
+        {
+            emit model->dataChanged(model->index(i, STOCKS_PRICE_COLUMN), model->index(i, STOCKS_DATE_CHANGE_COLUMN));
+        }
+    }
 }
 
 void StocksTableModel::updatePrices()
 {
-    // TODO: Implement
+    const QList<QPersistentModelIndex> parents;
+
+    const bool needToSort =
+        mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN || mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
+
+    if (mFilter.isActive())
+    {
+        beginResetModel();
+    }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+
+    UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
+
+    if (mFilter.isActive())
+    {
+        sortEntries();
+        filterAll();
+
+        endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+}
+
+struct UpdatePeriodicDataInfo
+{
+    explicit UpdatePeriodicDataInfo(StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed) :
+        model(_model),
+        stocks(_stocks),
+        updateAllowed(_updateAllowed)
+    {
+    }
+
+    StocksTableModel*            model;
+    const QMap<QString, Stock*>* stocks;
+    bool                         updateAllowed;
+};
+
+static void updatePeriodicDataForParallel(
+    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+)
+{
+    UpdatePeriodicDataInfo* updatePeriodicDataInfo = reinterpret_cast<UpdatePeriodicDataInfo*>(additionalArgs);
+
+    StocksTableModel*            model         = updatePeriodicDataInfo->model;
+    const QMap<QString, Stock*>* stocks        = updatePeriodicDataInfo->stocks;
+    const bool                   updateAllowed = updatePeriodicDataInfo->updateAllowed;
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stocks->value(resArray[i].instrumentId);
+        Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        stock->mutex->lock();
+
+        resArray[i].turnover = stock->operational.turnover;
+        resArray[i].payback  = stock->operational.payback;
+
+        stock->mutex->unlock();
+
+        if (updateAllowed)
+        {
+            emit model->dataChanged(model->index(i, STOCKS_TURNOVER_COLUMN), model->index(i, STOCKS_PAYBACK_COLUMN));
+        }
+    }
 }
 
 void StocksTableModel::updatePeriodicData()
 {
-    // TODO: Implement
+    const QList<QPersistentModelIndex> parents;
+
+    const bool needToSort = mSortColumn == STOCKS_TURNOVER_COLUMN || mSortColumn == STOCKS_PAYBACK_COLUMN;
+
+    if (mFilter.isActive())
+    {
+        beginResetModel();
+    }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
+
+    UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
+
+    if (mFilter.isActive())
+    {
+        sortEntries();
+        filterAll();
+
+        endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+    }
 }
 
 void StocksTableModel::exportToExcel(QXlsx::Document& doc) const

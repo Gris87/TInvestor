@@ -21,6 +21,8 @@ public:
     StocksTableModel(const StocksTableModel& another)            = delete;
     StocksTableModel& operator=(const StocksTableModel& another) = delete;
 
+    QSet<QString> lastPricesUpdates; // Instrument Id
+
     [[nodiscard]]
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
