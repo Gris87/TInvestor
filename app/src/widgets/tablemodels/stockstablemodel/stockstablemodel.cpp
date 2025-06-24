@@ -21,11 +21,11 @@ constexpr double MILLIONS              = 1000000.0;
 constexpr double KILOS                 = 1000.0;
 constexpr float  HUNDRED_PERCENT       = 100.0f;
 
-const QBrush GREEN_COLOR  = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
-const QBrush RED_COLOR    = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
-const QBrush NORMAL_COLOR = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
-// const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B"); // clazy:exclude=non-pod-global-static
-// const QColor CELL_FONT_COLOR       = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
+const QBrush GREEN_COLOR           = QBrush(QColor("#2BD793")); // clazy:exclude=non-pod-global-static
+const QBrush RED_COLOR             = QBrush(QColor("#ED6F7E")); // clazy:exclude=non-pod-global-static
+const QBrush NORMAL_COLOR          = QBrush(QColor("#97AEC4")); // clazy:exclude=non-pod-global-static
+const QColor CELL_BACKGROUND_COLOR = QColor("#2C3C4B");         // clazy:exclude=non-pod-global-static
+const QColor CELL_FONT_COLOR       = QColor("#97AEC4");         // clazy:exclude=non-pod-global-static
 
 
 
@@ -437,6 +437,73 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     filterAll();
 
     endResetModel();
+}
+
+void StocksTableModel::exportToExcel(QXlsx::Document& doc) const
+{
+    QXlsx::Format cellStyle;
+    cellStyle.setFillPattern(QXlsx::Format::PatternSolid);
+    cellStyle.setBorderStyle(QXlsx::Format::BorderThin);
+    cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    cellStyle.setFontColor(CELL_FONT_COLOR);
+
+    for (int i = 0; i < mEntries->size(); ++i)
+    {
+        const int              row   = i + 2; // Header and start index from 1
+        const StockTableEntry& entry = mEntries->at(i);
+
+        // clang-format off
+        doc.write(row, STOCKS_NAME_COLUMN + 1,        entry.instrumentName, cellStyle);
+        doc.write(row, STOCKS_NAME_COLUMN + 2,        entry.forQualInvestorFlag, cellStyle);
+        doc.write(row, STOCKS_PRICE_COLUMN + 2,       entry.price, createRubleFormat(CELL_FONT_COLOR, entry.pricePrecision));
+        doc.write(row, STOCKS_DAY_CHANGE_COLUMN + 2,  entry.dayChange / HUNDRED_PERCENT, createPercentFormat(stocksDayChangeForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, STOCKS_DATE_CHANGE_COLUMN + 2, entry.dateChange / HUNDRED_PERCENT, createPercentFormat(stocksDateChangeForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, STOCKS_TURNOVER_COLUMN + 2,    entry.turnover, createRubleFormat(stocksTurnoverForegroundRole(entry).value<QBrush>().color(), 0));
+        doc.write(row, STOCKS_PAYBACK_COLUMN + 2,     entry.payback / HUNDRED_PERCENT, createPercentFormat(stocksPaybackForegroundRole(entry).value<QBrush>().color(), false));
+        // clang-format on
+    }
+}
+
+QXlsx::Format StocksTableModel::createRubleFormat(const QColor& color, int precision) const
+{
+    QXlsx::Format res;
+
+    if (precision > 0)
+    {
+        res.setNumberFormat(QString("0.%1 \u20BD").arg("", precision, '0'));
+    }
+    else
+    {
+        res.setNumberFormat("0 \u20BD");
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
+}
+
+QXlsx::Format StocksTableModel::createPercentFormat(const QColor& color, bool withPlus) const
+{
+    QXlsx::Format res;
+
+    if (withPlus)
+    {
+        res.setNumberFormat("+0.00%;-0.00%;0.00%");
+    }
+    else
+    {
+        res.setNumberFormat("0.00%");
+    }
+
+    res.setFillPattern(QXlsx::Format::PatternSolid);
+    res.setBorderStyle(QXlsx::Format::BorderThin);
+    res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
+    res.setFontColor(color);
+
+    return res;
 }
 
 void StocksTableModel::setDateChangeTooltip(const QString& tooltip)

@@ -37,10 +37,17 @@ public:
 
     void setFilter(const StockFilter& filter) override;
     void updateTable(const QList<Stock*>& stocks) override;
+    void exportToExcel(QXlsx::Document& doc) const override;
 
     void setDateChangeTooltip(const QString& tooltip) override;
 
 private:
+    [[nodiscard]]
+    QXlsx::Format createRubleFormat(const QColor& color, int precision) const;
+
+    [[nodiscard]]
+    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+
     void sortEntries();
     void reverseEntries();
     void filterAll();

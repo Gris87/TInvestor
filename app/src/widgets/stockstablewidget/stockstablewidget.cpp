@@ -260,30 +260,35 @@ void StocksTableWidget::exportToExcel(const QString& path) const
     cellStyle.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
     cellStyle.setFontColor(CELL_FONT_COLOR);
 
-    doc.write(1, STOCKS_NAME_COLUMN + 1, ui->tableWidget->horizontalHeaderItem(STOCKS_NAME_COLUMN)->text(), headerStyle);
+    doc.write(
+        1, STOCKS_NAME_COLUMN + 1, mStocksTableModel->headerData(STOCKS_NAME_COLUMN, Qt::Horizontal).toString(), headerStyle
+    );
     doc.write(1, STOCKS_NAME_COLUMN + 2, tr("Qual investor"), headerStyle);
 
     for (int i = STOCKS_PRICE_COLUMN; i < STOCKS_ACTIONS_COLUMN; ++i)
     {
-        doc.write(1, i + 2, ui->tableWidget->horizontalHeaderItem(i)->text(), headerStyle);
+        doc.write(1, i + 2, mStocksTableModel->headerData(i, Qt::Horizontal).toString(), headerStyle);
     }
 
     doc.write(
-        1, STOCKS_PAYBACK_COLUMN + 4, ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->text(), headerStyle
+        1,
+        STOCKS_PAYBACK_COLUMN + 4,
+        mStocksTableModel->headerData(STOCKS_DATE_CHANGE_COLUMN, Qt::Horizontal).toString(),
+        headerStyle
     );
     doc.write(
-        2, STOCKS_PAYBACK_COLUMN + 4, ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), cellStyle
+        2,
+        STOCKS_PAYBACK_COLUMN + 4,
+        mStocksTableModel->headerData(STOCKS_DATE_CHANGE_COLUMN, Qt::Horizontal, Qt::ToolTipRole).toString(),
+        cellStyle
     );
 
-    for (auto it = records.constBegin(), end = records.constEnd(); it != end; ++it)
-    {
-        it.value()->exportToExcel(doc);
-    }
+    mStocksTableModel->exportToExcel(doc);
 
     // NOLINTBEGIN(readability-magic-numbers)
     // clang-format off
     doc.autosizeColumnWidth(STOCKS_NAME_COLUMN + 1);
-    doc.setColumnWidth(STOCKS_NAME_COLUMN + 2,       13.57 + COLUMN_GAP);
+    doc.setColumnWidth(STOCKS_NAME_COLUMN + 2,        13.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_PRICE_COLUMN + 2,       9.43  + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DAY_CHANGE_COLUMN + 2,  18.57 + COLUMN_GAP);
     doc.setColumnWidth(STOCKS_DATE_CHANGE_COLUMN + 2, 18.86 + COLUMN_GAP);
