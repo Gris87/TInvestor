@@ -304,12 +304,12 @@ static int runApplication(QApplication* app)
 
     UserDatabase        userDatabase;
     UserStorage         userStorage(&userDatabase);
-    StocksDatabase      stocksDatabase(&dirFactory, &fileFactory);
-    StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     InstrumentsDatabase instrumentsDatabase(&dirFactory, &fileFactory);
     InstrumentsStorage  instrumentsStorage(&instrumentsDatabase);
     LogosDatabase       logosDatabase(&dirFactory, &fileFactory);
     LogosStorage        logosStorage(&logosDatabase);
+    StocksDatabase      stocksDatabase(&dirFactory, &fileFactory, &logosStorage);
+    StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 

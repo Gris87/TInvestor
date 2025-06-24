@@ -19,6 +19,7 @@ public:
     StocksStorage& operator=(const StocksStorage& another) = delete;
 
     void                 readFromDatabase() override;
+    void                 assignLogos() override;
     void                 lock() override;
     void                 unlock() override;
     const QList<Stock*>& getStocks() override;

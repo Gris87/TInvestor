@@ -14,9 +14,10 @@ constexpr qsizetype AMOUNT_OF_DATA_PER_DAY = 24LL * 60LL; // Amount of minutes i
 
 
 
-StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory) :
+StocksDatabase::StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage) :
     IStocksDatabase(),
-    mFileFactory(fileFactory)
+    mFileFactory(fileFactory),
+    mLogosStorage(logosStorage)
 {
     qDebug() << "Create StocksDatabase";
 
@@ -134,8 +135,43 @@ void StocksDatabase::readStocksData(QList<Stock*>& stocks)
     qDebug() << "Reading stocks data from database";
 
     ReadStocksDataInfo readStocksDataInfo(mFileFactory);
-
     processInParallel(stocks, readStocksDataForParallel, &readStocksDataInfo);
+}
+
+struct AssignLogosInfo
+{
+    explicit AssignLogosInfo(ILogosStorage* _logosStorage) :
+        logosStorage(_logosStorage)
+    {
+    }
+
+    ILogosStorage* logosStorage;
+};
+
+static void
+assignLogosForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+{
+    AssignLogosInfo* assignLogosInfo = reinterpret_cast<AssignLogosInfo*>(additionalArgs);
+    ILogosStorage*   logosStorage    = assignLogosInfo->logosStorage;
+
+    Stock** stockArray = stocks.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        Stock* stock = stockArray[i];
+
+        stock->meta.instrumentLogo = logosStorage->getLogo(stock->meta.instrumentId);
+    }
+}
+
+void StocksDatabase::assignLogos(QList<Stock*>& stocks)
+{
+    mLogosStorage->lock();
+
+    AssignLogosInfo assignLogosInfo(mLogosStorage);
+    processInParallel(stocks, assignLogosForParallel, &assignLogosInfo);
+
+    mLogosStorage->unlock();
 }
 
 void StocksDatabase::writeStocksMeta(const QList<Stock*>& stocks)

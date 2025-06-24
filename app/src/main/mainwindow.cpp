@@ -909,6 +909,7 @@ void MainWindow::init()
     ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage);
     processInParallel(databases, readDatabasesForParallel, &readDatabasesInfo);
 
+    mStocksStorage->assignLogos();
     updateStocksTableWidget();
 
     cleanupTimer.start(CLEANUP_INTERVAL);

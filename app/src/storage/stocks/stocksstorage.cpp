@@ -39,6 +39,11 @@ void StocksStorage::readFromDatabase()
     mStocksDatabase->readStocksData(mStocks);
 }
 
+void StocksStorage::assignLogos()
+{
+    mStocksDatabase->assignLogos(mStocks);
+}
+
 void StocksStorage::lock()
 {
     mMutex->lock();

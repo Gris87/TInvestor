@@ -116,6 +116,8 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
 
     stocksMeta.reserve(tinkoffStocks->instruments_size());
 
+    mLogosStorage->lock();
+
     for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {
         const tinkoff::Share& tinkoffStock = tinkoffStocks->instruments(i);
@@ -125,6 +127,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             StockMeta stockMeta;
 
             stockMeta.instrumentId        = QString::fromStdString(tinkoffStock.uid());
+            stockMeta.instrumentLogo      = mLogosStorage->getLogo(stockMeta.instrumentId);
             stockMeta.instrumentTicker    = QString::fromStdString(tinkoffStock.ticker());
             stockMeta.instrumentName      = QString::fromStdString(tinkoffStock.name());
             stockMeta.forQualInvestorFlag = tinkoffStock.for_qual_investor_flag();
@@ -134,6 +137,8 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
             stocksMeta.append(stockMeta);
         }
     }
+
+    mLogosStorage->unlock();
 
     mStocksStorage->lock();
     const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);

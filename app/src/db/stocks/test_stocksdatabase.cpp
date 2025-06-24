@@ -4,6 +4,7 @@
 #include <QVariantList>
 #include <gtest/gtest.h>
 
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
@@ -35,15 +36,16 @@ protected:
 
         appDir = qApp->applicationDirPath();
 
-        dirFactoryMock  = new StrictMock<DirFactoryMock>();
-        fileFactoryMock = new StrictMock<FileFactoryMock>();
+        dirFactoryMock   = new StrictMock<DirFactoryMock>();
+        fileFactoryMock  = new StrictMock<FileFactoryMock>();
+        logosStorageMock = new StrictMock<LogosStorageMock>();
 
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in StocksDatabase constructor
 
         EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
         EXPECT_CALL(*dirMock, mkpath(appDir + "/data/stocks")).WillOnce(Return(true));
 
-        database = new StocksDatabase(dirFactoryMock, fileFactoryMock);
+        database = new StocksDatabase(dirFactoryMock, fileFactoryMock, logosStorageMock);
 
         fillWithData();
     }
@@ -53,6 +55,7 @@ protected:
         delete database;
         delete dirFactoryMock;
         delete fileFactoryMock;
+        delete logosStorageMock;
     }
 
     void fillWithData()
@@ -125,12 +128,13 @@ protected:
         }
     }
 
-    StocksDatabase*              database;
-    StrictMock<DirFactoryMock>*  dirFactoryMock;
-    StrictMock<FileFactoryMock>* fileFactoryMock;
-    QString                      appDir;
-    QByteArray                   testStocks;
-    QByteArray                   testStockData[3];
+    StocksDatabase*               database;
+    StrictMock<DirFactoryMock>*   dirFactoryMock;
+    StrictMock<FileFactoryMock>*  fileFactoryMock;
+    StrictMock<LogosStorageMock>* logosStorageMock;
+    QString                       appDir;
+    QByteArray                    testStocks;
+    QByteArray                    testStockData[3];
 };
 
 

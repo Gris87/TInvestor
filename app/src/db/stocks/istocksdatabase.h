@@ -19,6 +19,7 @@ public:
 
     virtual QList<Stock*> readStocksMeta()                                                             = 0;
     virtual void          readStocksData(QList<Stock*>& stocks)                                        = 0;
+    virtual void          assignLogos(QList<Stock*>& stocks)                                           = 0;
     virtual void          writeStocksMeta(const QList<Stock*>& stocks)                                 = 0;
     virtual void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;
     virtual void          writeStockData(const Stock& stock)                                           = 0;

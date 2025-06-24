@@ -4,6 +4,7 @@
 
 #include "src/db/stocks/istocksdatabase.h"
 
+#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
 
@@ -12,7 +13,7 @@
 class StocksDatabase : public IStocksDatabase
 {
 public:
-    explicit StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory);
+    explicit StocksDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage);
     ~StocksDatabase() override;
 
     StocksDatabase(const StocksDatabase& another)            = delete;
@@ -20,10 +21,12 @@ public:
 
     QList<Stock*> readStocksMeta() override;
     void          readStocksData(QList<Stock*>& stocks) override;
+    void          assignLogos(QList<Stock*>& stocks) override;
     void          writeStocksMeta(const QList<Stock*>& stocks) override;
     void          appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
     void          writeStockData(const Stock& stock) override;
 
 private:
     IFileFactory* mFileFactory;
+    ILogosStorage* mLogosStorage;
 };

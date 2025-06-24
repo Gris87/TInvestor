@@ -22,6 +22,7 @@ public:
 
     MOCK_METHOD(QList<Stock*>, readStocksMeta, (), (override));
     MOCK_METHOD(void, readStocksData, (QList<Stock*> & stocks), (override));
+    MOCK_METHOD(void, assignLogos, (QList<Stock*> & stocks), (override));
     MOCK_METHOD(void, writeStocksMeta, (const QList<Stock*>& stocks), (override));
     MOCK_METHOD(void, appendStockData, (Stock * stock, const StockData* dataArray, int dataArraySize), (override));
     MOCK_METHOD(void, writeStockData, (const Stock& stock), (override));
