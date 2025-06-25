@@ -6,6 +6,7 @@
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 
 
 
@@ -26,10 +27,16 @@ TEST(Test_ActionsTableItemWidgetFactory, Test_newInstance)
     StrictMock<OrderWavesWidgetFactoryMock> orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>         orderBookThreadMock;
     StrictMock<HttpClientMock>              httpClientMock;
-    Stock                                   stock;
+    StrictMock<StocksTableModelMock>        stocksTableModelMock;
 
     const IActionsTableItemWidget* widget = factory.newInstance(
-        &orderWavesDialogFactoryMock, &orderWavesWidgetFactoryMock, &orderBookThreadMock, &httpClientMock, &stock, 2, nullptr
+        &orderWavesDialogFactoryMock,
+        &orderWavesWidgetFactoryMock,
+        &orderBookThreadMock,
+        &httpClientMock,
+        &stocksTableModelMock,
+        0,
+        nullptr
     );
     ASSERT_TRUE(widget != nullptr);
 

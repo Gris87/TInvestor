@@ -20,8 +20,8 @@ public:
         IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
-        Stock*                    stock,
-        qint8                     precision,
+        IStocksTableModel*        stocksTableModel,
+        int                       tableRow,
         QWidget*                  parent
     ) const override;
 };

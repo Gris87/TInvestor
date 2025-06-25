@@ -5,10 +5,10 @@
 #include "src/widgets/actionstableitemwidget/iactionstableitemwidget.h"
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
-#include "src/domain/stock/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodel.h"
 
 
 
@@ -26,8 +26,8 @@ public:
         IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
-        Stock*                    stock,
-        qint8                     precision,
+        IStocksTableModel*        stocksTableModel,
+        int                       tableRow,
         QWidget*                  parent
     ) const = 0;
 };

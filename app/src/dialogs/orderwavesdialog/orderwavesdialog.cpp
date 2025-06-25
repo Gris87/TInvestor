@@ -13,17 +13,12 @@ constexpr float   HUNDRED_PERCENT = 100.0f;
 
 
 OrderWavesDialog::OrderWavesDialog(
-    IOrderWavesWidgetFactory* orderWavesWidgetFactory,
-    IOrderBookThread*         orderBookThread,
-    Stock*                    stock,
-    qint8                     precision, // TODO: Remove?
-    QWidget*                  parent
+    IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
 ) :
     IOrderWavesDialog(parent),
     ui(new Ui::OrderWavesDialog),
     mOrderBookThread(orderBookThread),
-    mStock(stock),
-    mPrecision(precision)
+    mStock(stock)
 {
     qDebug() << "Create OrderWavesDialog";
 
@@ -37,7 +32,7 @@ OrderWavesDialog::OrderWavesDialog(
 
     ui->nameLabel->setText(mStock->meta.instrumentName);
 
-    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mPrecision, mStock->meta.minPriceIncrement, this);
+    mOrderWavesWidget = orderWavesWidgetFactory->newInstance(mStock->meta.pricePrecision, mStock->meta.minPriceIncrement, this);
     mOrderWavesWidget->hide();
     ui->layoutForOrderWaves->addWidget(mOrderWavesWidget);
 
@@ -59,7 +54,7 @@ OrderWavesDialog::~OrderWavesDialog()
 
 void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
 {
-    const QString price = QString::number(orderBook.price, 'f', mPrecision) + " \u20BD";
+    const QString price = QString::number(orderBook.price, 'f', mStock->meta.pricePrecision) + " \u20BD";
     QString       spread;
 
     if (!orderBook.bids.isEmpty() && !orderBook.asks.isEmpty())
@@ -67,8 +62,8 @@ void OrderWavesDialog::orderBookChanged(const OrderBook& orderBook)
         const float spreadPrice   = orderBook.asks.constFirst().price - orderBook.bids.constFirst().price;
         const float spreadPercent = (orderBook.asks.constFirst().price / orderBook.bids.constFirst().price - 1) * HUNDRED_PERCENT;
 
-        spread =
-            QString("%1 \u20BD (%2%)").arg(QString::number(spreadPrice, 'f', mPrecision), QString::number(spreadPercent, 'f', 3));
+        spread = QString("%1 \u20BD (%2%)")
+                     .arg(QString::number(spreadPrice, 'f', mStock->meta.pricePrecision), QString::number(spreadPercent, 'f', 3));
     }
     else
     {

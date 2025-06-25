@@ -16,10 +16,6 @@ public:
     OrderWavesDialogFactory& operator=(const OrderWavesDialogFactory& another) = delete;
 
     std::shared_ptr<IOrderWavesDialog> newInstance(
-        IOrderWavesWidgetFactory* orderWavesWidgetFactory,
-        IOrderBookThread*         orderBookThread,
-        Stock*                    stock,
-        qint8                     precision, // TODO: Remove?
-        QWidget*                  parent
+        IOrderWavesWidgetFactory* orderWavesWidgetFactory, IOrderBookThread* orderBookThread, Stock* stock, QWidget* parent
     ) const override;
 };

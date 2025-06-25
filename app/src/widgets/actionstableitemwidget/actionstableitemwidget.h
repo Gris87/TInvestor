@@ -5,10 +5,10 @@
 #include "src/widgets/actionstableitemwidget/iactionstableitemwidget.h"
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
-#include "src/domain/stock/stock.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodel.h"
 
 
 
@@ -29,8 +29,8 @@ public:
         IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         IHttpClient*              httpClient,
-        Stock*                    stock,
-        qint8                     precision, // TODO: Remove?
+        IStocksTableModel*        stocksTableModel,
+        int                       tableRow,
         QWidget*                  parent = nullptr
     );
     ~ActionsTableItemWidget() override;
@@ -45,8 +45,8 @@ private:
     IOrderWavesWidgetFactory* mOrderWavesWidgetFactory;
     IOrderBookThread*         mOrderBookThread;
     IHttpClient*              mHttpClient;
-    Stock*                    mStock;
-    qint8                     mPrecision; // TODO: Remove?
+    IStocksTableModel*        mStocksTableModel;
+    int                       mTableRow;
 
 private slots:
     void on_orderWavesButton_clicked();

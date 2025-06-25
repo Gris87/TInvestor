@@ -37,7 +37,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
 
     stock.meta.instrumentName    = "Serezha stock";
     stock.meta.minPriceIncrement = 1.5f;
-    stock.meta.pricePrecision    = 1;
+    stock.meta.pricePrecision    = 2;
 
     EXPECT_CALL(orderWavesWidgetFactoryMock, newInstance(2, FloatEq(1.5f), NotNull())).WillOnce(Return(orderWavesWidgetMock));
     EXPECT_CALL(orderBookThreadMock, setStock(&stock));
@@ -45,7 +45,7 @@ TEST(Test_OrderWavesDialogFactory, Test_newInstance)
     EXPECT_CALL(orderBookThreadMock, terminateThread());
 
     const std::shared_ptr<IOrderWavesDialog> dialog =
-        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, 2, nullptr);
+        factory.newInstance(&orderWavesWidgetFactoryMock, &orderBookThreadMock, &stock, nullptr);
     ASSERT_TRUE(dialog != nullptr);
 
     orderBookThreadMock.wait();

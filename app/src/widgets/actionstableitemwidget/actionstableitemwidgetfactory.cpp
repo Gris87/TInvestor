@@ -22,12 +22,12 @@ IActionsTableItemWidget* ActionsTableItemWidgetFactory::newInstance(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
-    Stock*                    stock,
-    qint8                     precision,
+    IStocksTableModel*        stocksTableModel,
+    int                       tableRow,
     QWidget*                  parent
 ) const
 {
     return new ActionsTableItemWidget(
-        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, stock, precision, parent
+        orderWavesDialogFactory, orderWavesWidgetFactory, orderBookThread, httpClient, stocksTableModel, tableRow, parent
     );
 }

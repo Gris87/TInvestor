@@ -207,7 +207,7 @@ void StocksTableWidget::modelReset()
     for (int i = 0; i < mStocksTableModel->rowCount(); ++i)
     {
         IActionsTableItemWidget* actionsWidget = mActionsTableItemWidgetFactory->newInstance(
-            mOrderWavesDialogFactory, mOrderWavesWidgetFactory, mOrderBookThread, mHttpClient, nullptr, 2, this
+            mOrderWavesDialogFactory, mOrderWavesWidgetFactory, mOrderBookThread, mHttpClient, mStocksTableModel, i, this
         );
 
         ui->tableView->setIndexWidget(mStocksTableModel->index(i, STOCKS_ACTIONS_COLUMN), actionsWidget);

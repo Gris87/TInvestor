@@ -8,9 +8,12 @@
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
+#include "src/widgets/tablemodels/modelroles.h"
+#include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 
 
 
+using ::testing::_;
 using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::StrictMock;
@@ -27,16 +30,10 @@ protected:
         orderWavesWidgetFactoryMock = new StrictMock<OrderWavesWidgetFactoryMock>();
         orderBookThreadMock         = new StrictMock<OrderBookThreadMock>();
         httpClientMock              = new StrictMock<HttpClientMock>();
-        stock                       = new Stock();
-
-        stock->meta.instrumentId      = "aaa";
-        stock->meta.instrumentTicker  = "WAGA";
-        stock->meta.instrumentName    = "Wata Giga";
-        stock->meta.minPriceIncrement = 0.00001f;
-        stock->meta.pricePrecision    = 5;
+        stocksTableModelMock        = new StrictMock<StocksTableModelMock>();
 
         widget = new ActionsTableItemWidget(
-            orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stock, 2
+            orderWavesDialogFactoryMock, orderWavesWidgetFactoryMock, orderBookThreadMock, httpClientMock, stocksTableModelMock, 0
         );
     }
 
@@ -47,7 +44,7 @@ protected:
         delete orderWavesWidgetFactoryMock;
         delete orderBookThreadMock;
         delete httpClientMock;
-        delete stock;
+        delete stocksTableModelMock;
     }
 
     ActionsTableItemWidget*                  widget;
@@ -55,7 +52,7 @@ protected:
     StrictMock<OrderWavesWidgetFactoryMock>* orderWavesWidgetFactoryMock;
     StrictMock<OrderBookThreadMock>*         orderBookThreadMock;
     StrictMock<HttpClientMock>*              httpClientMock;
-    Stock*                                   stock;
+    StrictMock<StocksTableModelMock>*        stocksTableModelMock;
 };
 
 
@@ -71,7 +68,12 @@ TEST_F(Test_ActionsTableItemWidget, Test_on_orderWavesButton_clicked)
     StrictMock<OrderWavesDialogMock>* orderWavesDialogMock =
         new StrictMock<OrderWavesDialogMock>(); // Will be deleted in authFailed
 
-    EXPECT_CALL(*orderWavesDialogFactoryMock, newInstance(orderWavesWidgetFactoryMock, orderBookThreadMock, stock, 2, widget))
+    Stock stock;
+
+    EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillOnce(Return(1));
+    EXPECT_CALL(*stocksTableModelMock, columnCount(QModelIndex())).WillOnce(Return(STOCKS_COLUMN_COUNT));
+    EXPECT_CALL(*stocksTableModelMock, data(_, ROLE_STOCK)).WillOnce(Return(QVariant(reinterpret_cast<qint64>(&stock))));
+    EXPECT_CALL(*orderWavesDialogFactoryMock, newInstance(orderWavesWidgetFactoryMock, orderBookThreadMock, &stock, widget))
         .WillOnce(Return(std::shared_ptr<IOrderWavesDialog>(orderWavesDialogMock)));
     EXPECT_CALL(*orderWavesDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
 
@@ -82,6 +84,9 @@ TEST_F(Test_ActionsTableItemWidget, Test_on_linkButton_clicked)
 {
     const InSequence seq;
 
+    EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillOnce(Return(1));
+    EXPECT_CALL(*stocksTableModelMock, columnCount(QModelIndex())).WillOnce(Return(STOCKS_COLUMN_COUNT));
+    EXPECT_CALL(*stocksTableModelMock, data(_, Qt::DisplayRole)).WillOnce(Return(QVariant("WAGA")));
     EXPECT_CALL(*httpClientMock, openInBrowser(QUrl("https://www.tbank.ru/invest/stocks/WAGA/"))).WillOnce(Return(true));
 
     widget->ui->linkButton->click();

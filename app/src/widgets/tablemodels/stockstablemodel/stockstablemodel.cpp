@@ -345,6 +345,17 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         return mEntries->at(row).locked;
     }
 
+    if (role == ROLE_STOCK)
+    {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == STOCKS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
+
+        Stock* stock = mStocks.value(mEntries->at(row).instrumentId);
+        Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
+
+        return reinterpret_cast<qint64>(stock);
+    }
+
     return QVariant();
 }
 
@@ -539,6 +550,10 @@ void StocksTableModel::updateAll()
     {
         beginResetModel();
     }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged();
+    }
 
     UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, mUserStorage->isQualified());
     processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
@@ -553,8 +568,9 @@ void StocksTableModel::updateAll()
     else if (needToSort)
     {
         sortEntries();
+        filterAll();
 
-        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
+        emit layoutChanged();
     }
 }
 
@@ -633,6 +649,10 @@ void StocksTableModel::updateLastPrices()
         {
             beginResetModel();
         }
+        else if (needToSort)
+        {
+            emit layoutAboutToBeChanged();
+        }
 
         UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
         processInParallel(*mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
@@ -649,8 +669,9 @@ void StocksTableModel::updateLastPrices()
         else if (needToSort)
         {
             sortEntries();
+            filterAll();
 
-            emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
+            emit layoutChanged();
         }
     }
 }
@@ -718,6 +739,10 @@ void StocksTableModel::updatePrices()
     {
         beginResetModel();
     }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged();
+    }
 
     UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
@@ -732,8 +757,9 @@ void StocksTableModel::updatePrices()
     else if (needToSort)
     {
         sortEntries();
+        filterAll();
 
-        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
+        emit layoutChanged();
     }
 }
 
@@ -790,6 +816,10 @@ void StocksTableModel::updatePeriodicData()
     {
         beginResetModel();
     }
+    else if (needToSort)
+    {
+        emit layoutAboutToBeChanged();
+    }
 
     UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
@@ -804,8 +834,9 @@ void StocksTableModel::updatePeriodicData()
     else if (needToSort)
     {
         sortEntries();
+        filterAll();
 
-        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
+        emit layoutChanged();
     }
 }
 

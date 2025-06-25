@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+#include "src/widgets/tablemodels/modelroles.h"
+
 
 
 ActionsTableItemWidget::ActionsTableItemWidget(
@@ -10,8 +12,8 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     IOrderWavesWidgetFactory* orderWavesWidgetFactory,
     IOrderBookThread*         orderBookThread,
     IHttpClient*              httpClient,
-    Stock*                    stock,
-    qint8                     precision, // TODO: Remove?
+    IStocksTableModel*        stocksTableModel,
+    int                       tableRow,
     QWidget*                  parent
 ) :
     IActionsTableItemWidget(parent),
@@ -20,8 +22,8 @@ ActionsTableItemWidget::ActionsTableItemWidget(
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
     mOrderBookThread(orderBookThread),
     mHttpClient(httpClient),
-    mStock(stock),
-    mPrecision(precision) // TODO: Remove?
+    mStocksTableModel(stocksTableModel),
+    mTableRow(tableRow)
 {
     qDebug() << "Create ActionsTableItemWidget";
 
@@ -37,16 +39,18 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 
 void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
+    qint64 stockAddress = mStocksTableModel->index(mTableRow, STOCKS_NAME_COLUMN).data(ROLE_STOCK).toLongLong();
+    Stock* stock        = reinterpret_cast<Stock*>(stockAddress); // NOLINT(performance-no-int-to-ptr)
+
     const std::shared_ptr<IOrderWavesDialog> dialog =
-        mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, mStock, mPrecision, this);
+        mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, stock, this);
     dialog->exec();
 }
 
 void ActionsTableItemWidget::on_linkButton_clicked()
 {
-    mStock->mutex->lock();
-    const QUrl url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(mStock->meta.instrumentTicker));
-    mStock->mutex->unlock();
+    const QString ticker = mStocksTableModel->index(mTableRow, STOCKS_NAME_COLUMN).data().toString();
+    const QUrl    url(QString("https://www.tbank.ru/invest/stocks/%1/").arg(ticker));
 
     const bool ok = mHttpClient->openInBrowser(url);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open link");

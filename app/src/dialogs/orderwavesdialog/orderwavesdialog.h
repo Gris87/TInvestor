@@ -26,7 +26,6 @@ public:
         IOrderWavesWidgetFactory* orderWavesWidgetFactory,
         IOrderBookThread*         orderBookThread,
         Stock*                    stock,
-        qint8                     precision, // TODO: Remove?
         QWidget*                  parent = nullptr
     );
     ~OrderWavesDialog() override;
@@ -40,7 +39,6 @@ private:
     IOrderWavesWidget* mOrderWavesWidget;
     IOrderBookThread*  mOrderBookThread;
     Stock*             mStock;
-    qint8              mPrecision;
 
 public slots:
     void orderBookChanged(const OrderBook& orderBook);
