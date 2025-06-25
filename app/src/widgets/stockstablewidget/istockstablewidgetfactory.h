@@ -12,8 +12,8 @@
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
+#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 
 
@@ -27,18 +27,16 @@ public:
     IStocksTableWidgetFactory& operator=(const IStocksTableWidgetFactory& another) = delete;
 
     virtual IStocksTableWidget* newInstance(
-        IStocksTableModelFactory*          stocksTableModelFactory,
-        IStocksTableRecordFactory*         stockTableRecordFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*          orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        ILogosStorage*                     logosStorage,
-        IUserStorage*                      userStorage,
-        IOrderBookThread*                  orderBookThread,
-        IHttpClient*                       httpClient,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent
+        IStocksTableModelFactory*       stocksTableModelFactory,
+        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*       orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+        ILogosStorage*                  logosStorage,
+        IUserStorage*                   userStorage,
+        IOrderBookThread*               orderBookThread,
+        IHttpClient*                    httpClient,
+        IFileDialogFactory*             fileDialogFactory,
+        ISettingsEditor*                settingsEditor,
+        QWidget*                        parent
     ) const = 0;
 };

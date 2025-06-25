@@ -25,26 +25,21 @@ constexpr double COLUMN_GAP = 0.71;
 
 
 StocksTableWidget::StocksTableWidget(
-    IStocksTableModelFactory*          stocksTableModelFactory,
-    IStocksTableRecordFactory*         stocksTableRecordFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*          orderWavesDialogFactory,
-    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-    ILogosStorage*                     logosStorage,
-    IUserStorage*                      userStorage,
-    IOrderBookThread*                  orderBookThread,
-    IHttpClient*                       httpClient,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
+    IStocksTableModelFactory*       stocksTableModelFactory,
+    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+    IOrderWavesDialogFactory*       orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+    ILogosStorage*                  logosStorage,
+    IUserStorage*                   userStorage,
+    IOrderBookThread*               orderBookThread,
+    IHttpClient*                    httpClient,
+    IFileDialogFactory*             fileDialogFactory,
+    ISettingsEditor*                settingsEditor,
+    QWidget*                        parent
 ) :
     IStocksTableWidget(parent),
     ui(new Ui::StocksTableWidget),
-    records(),
     lastPricesUpdates(),
-    mStocksTableRecordFactory(stocksTableRecordFactory),
-    mInstrumentTableItemWidgetFactory(instrumentTableItemWidgetFactory),
     mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
@@ -58,8 +53,6 @@ StocksTableWidget::StocksTableWidget(
     qDebug() << "Create StocksTableWidget";
 
     ui->setupUi(this);
-
-    ui->tableWidget->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
 
     mStocksTableModel = stocksTableModelFactory->newInstance(userStorage, this);
 
@@ -78,72 +71,16 @@ StocksTableWidget::~StocksTableWidget()
 void StocksTableWidget::setFilter(const StockFilter& filter)
 {
     mStocksTableModel->setFilter(filter);
-
-    ui->tableWidget->setUpdatesEnabled(false);
-
-    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
-    {
-        it.value()->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updateTable(const QList<Stock*>& stocks, const StockFilter& filter)
+void StocksTableWidget::updateTable(const QList<Stock*>& stocks)
 {
     mStocksTableModel->updateTable(stocks);
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    for (Stock* stock : stocks)
-    {
-        stock->mutex->lock();
-        const QString instrumentId = stock->meta.instrumentId;
-        stock->mutex->unlock();
-
-        IStocksTableRecord* record = records.value(instrumentId);
-
-        if (record == nullptr)
-        {
-            record = mStocksTableRecordFactory->newInstance(
-                ui->tableWidget,
-                mInstrumentTableItemWidgetFactory,
-                mActionsTableItemWidgetFactory,
-                mOrderWavesDialogFactory,
-                mOrderWavesWidgetFactory,
-                mUserStorage,
-                mOrderBookThread,
-                mHttpClient,
-                stock,
-                this
-            );
-            records[instrumentId] = record;
-        }
-
-        record->updateAll();
-        record->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updateAll(const StockFilter& filter)
+void StocksTableWidget::updateAll()
 {
     mStocksTableModel->updateAll();
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
-    {
-        it.value()->updateAll();
-        it.value()->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
@@ -152,71 +89,24 @@ void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
     lastPricesUpdates.insert(instrumentId);
 }
 
-void StocksTableWidget::updateLastPrices(const StockFilter& filter)
+void StocksTableWidget::updateLastPrices()
 {
     mStocksTableModel->updateLastPrices();
-
-    if (!lastPricesUpdates.isEmpty())
-    {
-        ui->tableWidget->setUpdatesEnabled(false);
-        ui->tableWidget->setSortingEnabled(false);
-
-        for (const QString& lastPricesUpdate : std::as_const(lastPricesUpdates))
-        {
-            IStocksTableRecord* record = records.value(lastPricesUpdate);
-
-            if (record != nullptr)
-            {
-                record->updatePrice();
-                record->filter(ui->tableWidget, filter);
-            }
-        }
-
-        lastPricesUpdates.clear();
-
-        ui->tableWidget->setSortingEnabled(true);
-        ui->tableWidget->setUpdatesEnabled(true);
-    }
 }
 
-void StocksTableWidget::updatePrices(const StockFilter& filter)
+void StocksTableWidget::updatePrices()
 {
     mStocksTableModel->updatePrices();
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
-    {
-        it.value()->updatePrice();
-        it.value()->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
-void StocksTableWidget::updatePeriodicData(const StockFilter& filter)
+void StocksTableWidget::updatePeriodicData()
 {
     mStocksTableModel->updatePeriodicData();
-
-    ui->tableWidget->setUpdatesEnabled(false);
-    ui->tableWidget->setSortingEnabled(false);
-
-    for (auto it = records.constBegin(); it != records.constEnd(); ++it)
-    {
-        it.value()->updatePeriodicData();
-        it.value()->filter(ui->tableWidget, filter);
-    }
-
-    ui->tableWidget->setSortingEnabled(true);
-    ui->tableWidget->setUpdatesEnabled(true);
 }
 
 void StocksTableWidget::setDateChangeTooltip(const QString& tooltip)
 {
     mStocksTableModel->setDateChangeTooltip(tooltip);
-    ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->setToolTip(tooltip);
 }
 
 void StocksTableWidget::on_tableView_customContextMenuRequested(const QPoint& pos)
@@ -333,15 +223,5 @@ void StocksTableWidget::loadWindowState(const QString& type)
     ui->tableView->setColumnWidth(STOCKS_TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   COLUMN_WIDTHS[STOCKS_TURNOVER_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    COLUMN_WIDTHS[STOCKS_PAYBACK_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[STOCKS_ACTIONS_COLUMN]).toInt());
-    // clang-format on
-
-    // clang-format off
-    ui->tableWidget->setColumnWidth(STOCKS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[STOCKS_NAME_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[STOCKS_DAY_CHANGE_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_TURNOVER_COLUMN,    mSettingsEditor->value(type + "/columnWidth_Turnover",   COLUMN_WIDTHS[STOCKS_TURNOVER_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_PAYBACK_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Payback",    COLUMN_WIDTHS[STOCKS_PAYBACK_COLUMN]).toInt());
-    ui->tableWidget->setColumnWidth(STOCKS_ACTIONS_COLUMN,     mSettingsEditor->value(type + "/columnWidth_Actions",    COLUMN_WIDTHS[STOCKS_ACTIONS_COLUMN]).toInt());
     // clang-format on
 }

@@ -276,6 +276,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_BASE))
         .WillOnce(Return(stocksResponse));
+    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));
+    EXPECT_CALL(*logosStorageMock, unlock());
     EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, mergeStocksMeta(Ne(QList<StockMeta>()))).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, unlock());

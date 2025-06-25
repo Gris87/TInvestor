@@ -106,8 +106,6 @@ SOURCES += \
     src/widgets/accountchartwidget/charttooltip.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
-    src/widgets/instrumentwidget/instrumentwidget.cpp \
-    src/widgets/instrumentwidget/instrumentwidgetfactory.cpp \
     src/widgets/logsfilterwidget/logsfilterwidget.cpp \
     src/widgets/logsfilterwidget/logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/logstablewidget.cpp \
@@ -126,15 +124,6 @@ SOURCES += \
     src/widgets/tabledelegates/loglevelitemdelegate.cpp \
     src/widgets/tableitems/actions/actionstableitemwidget.cpp \
     src/widgets/tableitems/actions/actionstableitemwidgetfactory.cpp \
-    src/widgets/tableitems/instrument/instrumenttableitemwidget.cpp \
-    src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.cpp \
-    src/widgets/tableitems/integertableitem.cpp \
-    src/widgets/tableitems/moneychangepercenttableitem.cpp \
-    src/widgets/tableitems/moneychangetableitem.cpp \
-    src/widgets/tableitems/moneytableitem.cpp \
-    src/widgets/tableitems/paybacktableitem.cpp \
-    src/widgets/tableitems/timetableitem.cpp \
-    src/widgets/tableitems/turnovertableitem.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp \
@@ -143,8 +132,6 @@ SOURCES += \
     src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodelfactory.cpp \
     src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp \
     src/widgets/tablemodels/stockstablemodel/stockstablemodelfactory.cpp \
-    src/widgets/tablerecords/stockstablerecord/stockstablerecord.cpp \
-    src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.cpp \
     src/widgets/trayicon/trayicon.cpp \
     src/widgets/trayicon/trayiconfactory.cpp \
 
@@ -331,10 +318,6 @@ HEADERS += \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory.h \
-    src/widgets/instrumentwidget/iinstrumentwidget.h \
-    src/widgets/instrumentwidget/iinstrumentwidgetfactory.h \
-    src/widgets/instrumentwidget/instrumentwidget.h \
-    src/widgets/instrumentwidget/instrumentwidgetfactory.h \
     src/widgets/logsfilterwidget/ilogsfilterwidget.h \
     src/widgets/logsfilterwidget/ilogsfilterwidgetfactory.h \
     src/widgets/logsfilterwidget/logsfilterwidget.h \
@@ -369,17 +352,6 @@ HEADERS += \
     src/widgets/tableitems/actions/actionstableitemwidgetfactory.h \
     src/widgets/tableitems/actions/iactionstableitemwidget.h \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h \
-    src/widgets/tableitems/instrument/iinstrumenttableitemwidget.h \
-    src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h \
-    src/widgets/tableitems/instrument/instrumenttableitemwidget.h \
-    src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h \
-    src/widgets/tableitems/integertableitem.h \
-    src/widgets/tableitems/moneychangepercenttableitem.h \
-    src/widgets/tableitems/moneychangetableitem.h \
-    src/widgets/tableitems/moneytableitem.h \
-    src/widgets/tableitems/paybacktableitem.h \
-    src/widgets/tableitems/timetableitem.h \
-    src/widgets/tableitems/turnovertableitem.h \
     src/widgets/tablemodels/logstablemodel/comparators.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h \
@@ -401,10 +373,6 @@ HEADERS += \
     src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory.h \
     src/widgets/tablemodels/stockstablemodel/stockstablemodel.h \
     src/widgets/tablemodels/stockstablemodel/stockstablemodelfactory.h \
-    src/widgets/tablerecords/stockstablerecord/istockstablerecord.h \
-    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h \
-    src/widgets/tablerecords/stockstablerecord/stockstablerecord.h \
-    src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h \
     src/widgets/trayicon/itrayicon.h \
     src/widgets/trayicon/itrayiconfactory.h \
     src/widgets/trayicon/trayicon.h \
@@ -426,7 +394,6 @@ FORMS += \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
-    src/widgets/instrumentwidget/instrumentwidget.ui \
     src/widgets/logsfilterwidget/logsfilterwidget.ui \
     src/widgets/logstablewidget/logstablewidget.ui \
     src/widgets/operationstablewidget/operationstablewidget.ui \

@@ -24,12 +24,12 @@ public:
     IStocksTableWidget& operator=(const IStocksTableWidget& another) = delete;
 
     virtual void setFilter(const StockFilter& filter)                                = 0;
-    virtual void updateTable(const QList<Stock*>& stocks, const StockFilter& filter) = 0;
+    virtual void updateTable(const QList<Stock*>& stocks)                            = 0;
     virtual void lastPriceChanged(const QString& instrumentId) = 0;
-    virtual void updateAll(const StockFilter& filter)          = 0;
-    virtual void updateLastPrices(const StockFilter& filter)   = 0;
-    virtual void updatePrices(const StockFilter& filter)       = 0;
-    virtual void updatePeriodicData(const StockFilter& filter) = 0;
+    virtual void updateAll()                                                         = 0;
+    virtual void updateLastPrices()                                                  = 0;
+    virtual void updatePrices()                                                      = 0;
+    virtual void updatePeriodicData()                                                = 0;
 
     virtual void setDateChangeTooltip(const QString& tooltip) = 0;
 

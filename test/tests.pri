@@ -103,8 +103,6 @@ SOURCES += \
     src/widgets/accountchartwidget/test_charttooltip.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
-    src/widgets/instrumentwidget/test_instrumentwidget.cpp \
-    src/widgets/instrumentwidget/test_instrumentwidgetfactory.cpp \
     src/widgets/logsfilterwidget/test_logsfilterwidget.cpp \
     src/widgets/logsfilterwidget/test_logsfilterwidgetfactory.cpp \
     src/widgets/logstablewidget/test_logstablewidget.cpp \
@@ -123,15 +121,6 @@ SOURCES += \
     src/widgets/tabledelegates/test_loglevelitemdelegate.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidget.cpp \
     src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
-    src/widgets/tableitems/instrument/test_instrumenttableitemwidget.cpp \
-    src/widgets/tableitems/instrument/test_instrumenttableitemwidgetfactory.cpp \
-    src/widgets/tableitems/test_integertableitem.cpp \
-    src/widgets/tableitems/test_moneychangepercenttableitem.cpp \
-    src/widgets/tableitems/test_moneychangetableitem.cpp \
-    src/widgets/tableitems/test_moneytableitem.cpp \
-    src/widgets/tableitems/test_paybacktableitem.cpp \
-    src/widgets/tableitems/test_timetableitem.cpp \
-    src/widgets/tableitems/test_turnovertableitem.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/test_operationstablemodel.cpp \
@@ -140,8 +129,6 @@ SOURCES += \
     src/widgets/tablemodels/portfoliotreemodel/test_portfoliotreemodelfactory.cpp \
     src/widgets/tablemodels/stockstablemodel/test_stockstablemodel.cpp \
     src/widgets/tablemodels/stockstablemodel/test_stockstablemodelfactory.cpp \
-    src/widgets/tablerecords/stockstablerecord/test_stockstablerecord.cpp \
-    src/widgets/tablerecords/stockstablerecord/test_stockstablerecordfactory.cpp \
     src/widgets/trayicon/test_trayicon.cpp \
     src/widgets/trayicon/test_trayiconfactory.cpp \
 
@@ -223,8 +210,6 @@ HEADERS += \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
-    src/widgets/instrumentwidget/iinstrumentwidget_mock.h \
-    src/widgets/instrumentwidget/iinstrumentwidgetfactory_mock.h \
     src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h \
     src/widgets/logsfilterwidget/ilogsfilterwidgetfactory_mock.h \
     src/widgets/logstablewidget/ilogstablewidget_mock.h \
@@ -241,8 +226,6 @@ HEADERS += \
     src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
     src/widgets/tableitems/actions/iactionstableitemwidget_mock.h \
     src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
-    src/widgets/tableitems/instrument/iinstrumenttableitemwidget_mock.h \
-    src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h \
     src/widgets/tablemodels/operationstablemodel/ioperationstablemodel_mock.h \
@@ -251,7 +234,5 @@ HEADERS += \
     src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h \
     src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h \
     src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h \
-    src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h \
-    src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h \
     src/widgets/trayicon/itrayicon_mock.h \
     src/widgets/trayicon/itrayiconfactory_mock.h \

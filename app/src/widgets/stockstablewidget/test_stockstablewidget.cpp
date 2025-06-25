@@ -12,11 +12,8 @@
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecord_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 
 /*
 
@@ -584,16 +581,6 @@ TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 TEST_F(Test_StocksTableWidget, Test_loadWindowState)
 {
     const InSequence seq;
-
-    // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(99)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),      _)).WillOnce(Return(QVariant(61)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DayChange"),  _)).WillOnce(Return(QVariant(139)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), _)).WillOnce(Return(QVariant(157)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Turnover"),   _)).WillOnce(Return(QVariant(86)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Payback"),    _)).WillOnce(Return(QVariant(120)));
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Actions"),    _)).WillOnce(Return(QVariant(83)));
-    // clang-format on
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(99)));

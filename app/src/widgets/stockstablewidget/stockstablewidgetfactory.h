@@ -16,18 +16,16 @@ public:
     StocksTableWidgetFactory& operator=(const StocksTableWidgetFactory& another) = delete;
 
     IStocksTableWidget* newInstance(
-        IStocksTableModelFactory*          stocksTableModelFactory,
-        IStocksTableRecordFactory*         stockTableRecordFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*          orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        ILogosStorage*                     logosStorage,
-        IUserStorage*                      userStorage,
-        IOrderBookThread*                  orderBookThread,
-        IHttpClient*                       httpClient,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent
+        IStocksTableModelFactory*       stocksTableModelFactory,
+        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*       orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+        ILogosStorage*                  logosStorage,
+        IUserStorage*                   userStorage,
+        IOrderBookThread*               orderBookThread,
+        IHttpClient*                    httpClient,
+        IFileDialogFactory*             fileDialogFactory,
+        ISettingsEditor*                settingsEditor,
+        QWidget*                        parent
     ) const override;
 };

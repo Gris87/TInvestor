@@ -57,12 +57,10 @@
 #include "src/widgets/stockstablewidget/istockstablewidget_mock.h"
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
-#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodelfactory_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory_mock.h"
 #include "src/widgets/trayicon/itrayicon_mock.h"
 #include "src/widgets/trayicon/itrayiconfactory_mock.h"
 
@@ -108,10 +106,8 @@ protected:
         sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
-        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
-        stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
         stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
         stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
         operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
@@ -164,8 +160,6 @@ protected:
             *stocksTableWidgetFactoryMock,
             newInstance(
                 stocksTableModelFactoryMock,
-                stockTableRecordFactoryMock,
-                instrumentTableItemWidgetFactoryMock,
                 actionsTableItemWidgetFactoryMock,
                 orderWavesDialogFactoryMock,
                 orderWavesWidgetFactoryMock,
@@ -259,10 +253,8 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
-            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesWidgetFactoryMock,
-            stockTableRecordFactoryMock,
             stocksControlsWidgetFactoryMock,
             stocksTableWidgetFactoryMock,
             operationsTableWidgetFactoryMock,
@@ -346,10 +338,8 @@ protected:
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
-        delete instrumentTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesWidgetFactoryMock;
-        delete stockTableRecordFactoryMock;
         delete stocksControlsWidgetFactoryMock;
         delete stocksTableWidgetFactoryMock;
         delete operationsTableWidgetFactoryMock;
@@ -414,10 +404,8 @@ protected:
     StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
-    StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
     StrictMock<StocksControlsWidgetFactoryMock>*      stocksControlsWidgetFactoryMock;
     StrictMock<StocksTableWidgetFactoryMock>*         stocksTableWidgetFactoryMock;
     StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
@@ -610,10 +598,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
 {
     const InSequence seq;
 
-    StockFilter filter;
-
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updateAll(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateAll());
 
     mainWindow->stocksTableUpdateAllTimerTicked();
 }
@@ -622,10 +607,7 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
 {
     const InSequence seq;
 
-    StockFilter filter;
-
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updateLastPrices(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateLastPrices());
 
     mainWindow->stocksTableUpdateLastPricesTimerTicked();
 }
@@ -659,10 +641,7 @@ TEST_F(Test_MainWindow, Test_pricesChanged)
 {
     const InSequence seq;
 
-    StockFilter filter;
-
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePrices());
 
     mainWindow->pricesChanged();
 }
@@ -671,10 +650,7 @@ TEST_F(Test_MainWindow, Test_periodicDataChanged)
 {
     const InSequence seq;
 
-    StockFilter filter;
-
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updatePeriodicData(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePeriodicData());
 
     mainWindow->periodicDataChanged();
 }
@@ -694,14 +670,12 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 
     QMutex          mutex;
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
-    StockFilter     filter;
 
     EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1767128385000));
     EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2025-12-30 23:59:45")));
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updatePrices(filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updatePrices());
 
     mainWindow->dateChangeDateTimeChanged(dateChangeTime);
 }
@@ -1079,6 +1053,7 @@ TEST_F(Test_MainWindow, Test_init)
     EXPECT_CALL(*stocksStorageMock, readFromDatabase());
     EXPECT_CALL(*instrumentsStorageMock, readFromDatabase());
     EXPECT_CALL(*logosStorageMock, readFromDatabase());
+    EXPECT_CALL(*stocksStorageMock, assignLogos());
     EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, unlock());
@@ -1141,7 +1116,6 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     stocks << &stock1 << &stock1 << &stock2;
 
     const QDateTime dateChangeTime(QDate(2023, 12, 30), QTime(23, 59, 45));
-    StockFilter     filter;
 
     EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
@@ -1149,8 +1123,7 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
     EXPECT_CALL(*stocksStorageMock, obtainStocksDatePrice(1703969985000));
     EXPECT_CALL(*stocksStorageMock, unlock());
     EXPECT_CALL(*stocksTableWidgetMock, setDateChangeTooltip(QString("From: 2023-12-30 23:59:45")));
-    EXPECT_CALL(*stocksControlsWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
-    EXPECT_CALL(*stocksTableWidgetMock, updateTable(stocks, filter));
+    EXPECT_CALL(*stocksTableWidgetMock, updateTable(stocks));
 
     mainWindow->updateStocksTableWidget();
 

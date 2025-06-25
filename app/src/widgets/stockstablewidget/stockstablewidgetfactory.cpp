@@ -18,25 +18,21 @@ StocksTableWidgetFactory::~StocksTableWidgetFactory()
 }
 
 IStocksTableWidget* StocksTableWidgetFactory::newInstance(
-    IStocksTableModelFactory*          stocksTableModelFactory,
-    IStocksTableRecordFactory*         stockTableRecordFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-    IOrderWavesDialogFactory*          orderWavesDialogFactory,
-    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-    ILogosStorage*                     logosStorage,
-    IUserStorage*                      userStorage,
-    IOrderBookThread*                  orderBookThread,
-    IHttpClient*                       httpClient,
-    IFileDialogFactory*                fileDialogFactory,
-    ISettingsEditor*                   settingsEditor,
-    QWidget*                           parent
+    IStocksTableModelFactory*       stocksTableModelFactory,
+    IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+    IOrderWavesDialogFactory*       orderWavesDialogFactory,
+    IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+    ILogosStorage*                  logosStorage,
+    IUserStorage*                   userStorage,
+    IOrderBookThread*               orderBookThread,
+    IHttpClient*                    httpClient,
+    IFileDialogFactory*             fileDialogFactory,
+    ISettingsEditor*                settingsEditor,
+    QWidget*                        parent
 ) const
 {
     return new StocksTableWidget(
         stocksTableModelFactory,
-        stockTableRecordFactory,
-        instrumentTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,

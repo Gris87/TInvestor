@@ -36,7 +36,6 @@
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/stockscontrolswidget/istockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/istockstablewidgetfactory.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 #include "src/widgets/trayicon/itrayiconfactory.h"
 
 
@@ -71,10 +70,8 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
         IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
         IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        IStocksTableRecordFactory*         stockTableRecordFactory,
         IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
         IStocksTableWidgetFactory*         stocksTableWidgetFactory,
         IOperationsTableWidgetFactory*     operationsTableWidgetFactory,

@@ -49,10 +49,8 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-    IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
     IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-    IStocksTableRecordFactory*         stockTableRecordFactory,
     IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
     IStocksTableWidgetFactory*         stocksTableWidgetFactory,
     IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
@@ -163,8 +161,6 @@ MainWindow::MainWindow(
     mStocksControlsWidget = stocksControlsWidgetFactory->newInstance(mSettingsEditor, this);
     mStocksTableWidget    = stocksTableWidgetFactory->newInstance(
         stocksTableModelFactory,
-        stockTableRecordFactory,
-        instrumentTableItemWidgetFactory,
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,
@@ -428,14 +424,14 @@ void MainWindow::stocksTableUpdateAllTimerTicked()
 {
     qDebug() << "Stocks table update all timer ticked";
 
-    mStocksTableWidget->updateAll(mStocksControlsWidget->getFilter());
+    mStocksTableWidget->updateAll();
 }
 
 void MainWindow::stocksTableUpdateLastPricesTimerTicked()
 {
     qDebug() << "Stocks table update timer ticked";
 
-    mStocksTableWidget->updateLastPrices(mStocksControlsWidget->getFilter());
+    mStocksTableWidget->updateLastPrices();
 }
 
 void MainWindow::keepMoneyChangeDelayTimerTicked()
@@ -465,12 +461,12 @@ void MainWindow::stocksChanged()
 
 void MainWindow::pricesChanged()
 {
-    mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
+    mStocksTableWidget->updatePrices();
 }
 
 void MainWindow::periodicDataChanged()
 {
-    mStocksTableWidget->updatePeriodicData(mStocksControlsWidget->getFilter());
+    mStocksTableWidget->updatePeriodicData();
 }
 
 void MainWindow::lastPriceChanged(const QString& instrumentId)
@@ -485,7 +481,7 @@ void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
     mStocksStorage->unlock();
 
     mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
-    mStocksTableWidget->updatePrices(mStocksControlsWidget->getFilter());
+    mStocksTableWidget->updatePrices();
 }
 
 void MainWindow::stockFilterChanged(const StockFilter& filter)
@@ -936,7 +932,7 @@ void MainWindow::updateStocksTableWidget()
         mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
         mStocksStorage->unlock();
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
-        mStocksTableWidget->updateTable(stocks, mStocksControlsWidget->getFilter());
+        mStocksTableWidget->updateTable(stocks);
 
         ui->waitingSpinnerWidget->stop();
         ui->waitingStackedWidget->setCurrentWidget(ui->workingPage);

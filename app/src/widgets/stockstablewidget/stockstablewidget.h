@@ -13,9 +13,7 @@
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
 #include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
-#include "src/widgets/tableitems/instrument/iinstrumenttableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory.h"
-#include "src/widgets/tablerecords/stockstablerecord/istockstablerecordfactory.h"
 
 
 
@@ -32,19 +30,17 @@ class StocksTableWidget : public IStocksTableWidget
 
 public:
     explicit StocksTableWidget(
-        IStocksTableModelFactory*          stocksTableModelFactory,
-        IStocksTableRecordFactory*         stocksTableRecordFactory,
-        IInstrumentTableItemWidgetFactory* instrumentTableItemWidgetFactory,
-        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-        IOrderWavesDialogFactory*          orderWavesDialogFactory,
-        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        ILogosStorage*                     logosStorage,
-        IUserStorage*                      userStorage,
-        IOrderBookThread*                  orderBookThread,
-        IHttpClient*                       httpClient,
-        IFileDialogFactory*                fileDialogFactory,
-        ISettingsEditor*                   settingsEditor,
-        QWidget*                           parent = nullptr
+        IStocksTableModelFactory*       stocksTableModelFactory,
+        IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
+        IOrderWavesDialogFactory*       orderWavesDialogFactory,
+        IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
+        ILogosStorage*                  logosStorage,
+        IUserStorage*                   userStorage,
+        IOrderBookThread*               orderBookThread,
+        IHttpClient*                    httpClient,
+        IFileDialogFactory*             fileDialogFactory,
+        ISettingsEditor*                settingsEditor,
+        QWidget*                        parent = nullptr
     );
     ~StocksTableWidget() override;
 
@@ -53,16 +49,15 @@ public:
 
     Ui::StocksTableWidget* ui;
 
-    QMap<QString, IStocksTableRecord*> records;
     QSet<QString>                      lastPricesUpdates;
 
     void setFilter(const StockFilter& filter) override;
-    void updateTable(const QList<Stock*>& stocks, const StockFilter& filter) override;
-    void updateAll(const StockFilter& filter) override;
+    void updateTable(const QList<Stock*>& stocks) override;
+    void updateAll() override;
     void lastPriceChanged(const QString& instrumentId) override;
-    void updateLastPrices(const StockFilter& filter) override;
-    void updatePrices(const StockFilter& filter) override;
-    void updatePeriodicData(const StockFilter& filter) override;
+    void updateLastPrices() override;
+    void updatePrices() override;
+    void updatePeriodicData() override;
 
     void setDateChangeTooltip(const QString& tooltip) override;
 
@@ -72,8 +67,6 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
-    IStocksTableRecordFactory*         mStocksTableRecordFactory;
-    IInstrumentTableItemWidgetFactory* mInstrumentTableItemWidgetFactory;
     IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
     IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
     IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;

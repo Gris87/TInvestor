@@ -74,12 +74,10 @@
 #include "src/widgets/stockscontrolswidget/stockscontrolswidgetfactory.h"
 #include "src/widgets/stockstablewidget/stockstablewidgetfactory.h"
 #include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
-#include "src/widgets/tableitems/instrument/instrumenttableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/logstablemodel/logstablemodelfactory.h"
 #include "src/widgets/tablemodels/operationstablemodel/operationstablemodelfactory.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodelfactory.h"
 #include "src/widgets/tablemodels/stockstablemodel/stockstablemodelfactory.h"
-#include "src/widgets/tablerecords/stockstablerecord/stockstablerecordfactory.h"
 #include "src/widgets/trayicon/trayiconfactory.h"
 
 #ifdef QT_NO_SYSTEMTRAYICON
@@ -177,7 +175,6 @@ static int runApplication(QApplication* app)
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
-    InstrumentTableItemWidgetFactory instrumentTableItemWidgetFactory;
     ActionsTableItemWidgetFactory    actionsTableItemWidgetFactory;
     OrderWavesWidgetFactory          orderWavesWidgetFactory;
     StocksControlsWidgetFactory      stocksControlsWidgetFactory;
@@ -189,7 +186,6 @@ static int runApplication(QApplication* app)
     PortfolioTreeWidgetFactory       portfolioTreeWidgetFactory;
     DecisionMakerWidgetFactory       decisionMakerWidgetFactory;
 
-    StocksTableRecordFactory    stocksTableRecordFactory;
     StocksTableModelFactory     stocksTableModelFactory;
     OperationsTableModelFactory operationsTableModelFactory;
     LogsTableModelFactory       logsTableModelFactory;
@@ -362,10 +358,8 @@ static int runApplication(QApplication* app)
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,
-        &instrumentTableItemWidgetFactory,
         &actionsTableItemWidgetFactory,
         &orderWavesWidgetFactory,
-        &stocksTableRecordFactory,
         &stocksControlsWidgetFactory,
         &stocksTableWidgetFactory,
         &operationsTableWidgetFactory,
