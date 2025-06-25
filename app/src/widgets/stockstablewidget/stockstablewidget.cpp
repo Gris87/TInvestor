@@ -59,6 +59,8 @@ StocksTableWidget::StocksTableWidget(
     ui->tableView->setModel(mStocksTableModel);
     ui->tableView->setItemDelegateForColumn(STOCKS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
     ui->tableView->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
+
+    connect(mStocksTableModel, SIGNAL(modelReset()), this, SLOT(modelReset()));
 }
 
 StocksTableWidget::~StocksTableWidget()
@@ -200,6 +202,18 @@ void StocksTableWidget::exportToExcel(const QString& path) const
     doc.saveAs(path);
 }
 
+void StocksTableWidget::modelReset()
+{
+    for (int i = 0; i < mStocksTableModel->rowCount(); ++i)
+    {
+        IActionsTableItemWidget* actionsWidget = mActionsTableItemWidgetFactory->newInstance(
+            mOrderWavesDialogFactory, mOrderWavesWidgetFactory, mOrderBookThread, mHttpClient, nullptr, 2, this
+        );
+
+        ui->tableView->setIndexWidget(mStocksTableModel->index(i, STOCKS_ACTIONS_COLUMN), actionsWidget);
+    }
+}
+
 void StocksTableWidget::saveWindowState(const QString& type)
 {
     // clang-format off
@@ -216,7 +230,7 @@ void StocksTableWidget::saveWindowState(const QString& type)
 void StocksTableWidget::loadWindowState(const QString& type)
 {
     // clang-format off
-    ui->tableView->setColumnWidth(STOCKS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",      COLUMN_WIDTHS[STOCKS_NAME_COLUMN]).toInt());
+    ui->tableView->setColumnWidth(STOCKS_NAME_COLUMN,        mSettingsEditor->value(type + "/columnWidth_Name",       COLUMN_WIDTHS[STOCKS_NAME_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_PRICE_COLUMN,       mSettingsEditor->value(type + "/columnWidth_Price",      COLUMN_WIDTHS[STOCKS_PRICE_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_DAY_CHANGE_COLUMN,  mSettingsEditor->value(type + "/columnWidth_DayChange",  COLUMN_WIDTHS[STOCKS_DAY_CHANGE_COLUMN]).toInt());
     ui->tableView->setColumnWidth(STOCKS_DATE_CHANGE_COLUMN, mSettingsEditor->value(type + "/columnWidth_DateChange", COLUMN_WIDTHS[STOCKS_DATE_CHANGE_COLUMN]).toInt());

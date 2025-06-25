@@ -496,28 +496,26 @@ bool PortfolioTreeModel::updateLastPrices()
 
     if (res)
     {
-        const QList<QPersistentModelIndex> parents;
-
         const bool needToSort = mSortColumn == PORTFOLIO_PRICE_COLUMN || mSortColumn == PORTFOLIO_YIELD_COLUMN ||
                                 mSortColumn == PORTFOLIO_YIELD_PERCENT_COLUMN || mSortColumn == PORTFOLIO_DAILY_YIELD_COLUMN;
 
         for (PortfolioCategoryItem& category : mPortfolio.positions)
         {
-            updatePriceInCategory(&category);
+            updatePriceInCategory(&category, !needToSort);
         }
 
         mLastPricesUpdates.clear();
 
         if (needToSort)
         {
-            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+            emit layoutAboutToBeChanged();
 
             for (PortfolioCategoryItem& category : mPortfolio.positions)
             {
                 sortCategory(&category.items);
             }
 
-            emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
+            emit layoutChanged();
         }
     }
 
@@ -862,7 +860,7 @@ void PortfolioTreeModel::reverseCategory(QList<PortfolioItem>* items)
     *items = newItems;
 }
 
-void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category)
+void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category, bool updateAllowed)
 {
     for (int i = 0; i < category->items.size(); ++i)
     {
@@ -879,10 +877,15 @@ void PortfolioTreeModel::updatePriceInCategory(PortfolioCategoryItem* category)
             item.dailyYield        = currentCost - item.costForDailyYield;
             item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
 
-            emit dataChanged(createIndex(i, PORTFOLIO_PRICE_COLUMN, category), createIndex(i, PORTFOLIO_PRICE_COLUMN, category));
-            emit dataChanged(
-                createIndex(i, PORTFOLIO_YIELD_COLUMN, category), createIndex(i, PORTFOLIO_DAILY_YIELD_COLUMN, category)
-            );
+            if (updateAllowed)
+            {
+                emit dataChanged(
+                    createIndex(i, PORTFOLIO_PRICE_COLUMN, category), createIndex(i, PORTFOLIO_PRICE_COLUMN, category)
+                );
+                emit dataChanged(
+                    createIndex(i, PORTFOLIO_YIELD_COLUMN, category), createIndex(i, PORTFOLIO_DAILY_YIELD_COLUMN, category)
+                );
+            }
         }
     }
 }

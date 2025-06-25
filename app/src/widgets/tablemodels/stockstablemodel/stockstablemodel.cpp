@@ -535,7 +535,7 @@ void StocksTableModel::updateAll()
 {
     const bool needToSort = mSortColumn != STOCKS_ACTIONS_COLUMN;
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         beginResetModel();
     }
@@ -543,12 +543,18 @@ void StocksTableModel::updateAll()
     UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, mUserStorage->isQualified());
     processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         sortEntries();
         filterAll();
 
         endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
     }
 }
 
@@ -623,7 +629,7 @@ void StocksTableModel::updateLastPrices()
         const bool needToSort = mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN ||
                                 mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
 
-        if (mFilter.isActive() || needToSort)
+        if (mFilter.isActive())
         {
             beginResetModel();
         }
@@ -633,12 +639,18 @@ void StocksTableModel::updateLastPrices()
 
         lastPricesUpdates.clear();
 
-        if (mFilter.isActive() || needToSort)
+        if (mFilter.isActive())
         {
             sortEntries();
             filterAll();
 
             endResetModel();
+        }
+        else if (needToSort)
+        {
+            sortEntries();
+
+            emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
         }
     }
 }
@@ -702,7 +714,7 @@ void StocksTableModel::updatePrices()
     const bool needToSort =
         mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN || mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         beginResetModel();
     }
@@ -710,12 +722,18 @@ void StocksTableModel::updatePrices()
     UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         sortEntries();
         filterAll();
 
         endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
     }
 }
 
@@ -768,7 +786,7 @@ void StocksTableModel::updatePeriodicData()
 {
     const bool needToSort = mSortColumn == STOCKS_TURNOVER_COLUMN || mSortColumn == STOCKS_PAYBACK_COLUMN;
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         beginResetModel();
     }
@@ -776,12 +794,18 @@ void StocksTableModel::updatePeriodicData()
     UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
 
-    if (mFilter.isActive() || needToSort)
+    if (mFilter.isActive())
     {
         sortEntries();
         filterAll();
 
         endResetModel();
+    }
+    else if (needToSort)
+    {
+        sortEntries();
+
+        emit dataChanged(index(0, STOCKS_NAME_COLUMN), index(mEntries->size() - 1, STOCKS_PAYBACK_COLUMN));
     }
 }
 

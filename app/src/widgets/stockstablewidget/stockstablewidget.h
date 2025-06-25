@@ -80,4 +80,5 @@ private:
 public slots:
     void on_tableView_customContextMenuRequested(const QPoint& pos);
     void actionExportToExcelTriggered();
+    void modelReset();
 };
