@@ -26,7 +26,7 @@ protected:
         delete userStorageMock;
     }
 
-    StocksTableModel* model;
+    StocksTableModel*            model;
     StrictMock<UserStorageMock>* userStorageMock;
 };
 

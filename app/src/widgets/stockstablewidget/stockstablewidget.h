@@ -49,7 +49,7 @@ public:
 
     Ui::StocksTableWidget* ui;
 
-    QSet<QString>                      lastPricesUpdates;
+    QSet<QString> lastPricesUpdates;
 
     void setFilter(const StockFilter& filter) override;
     void updateTable(const QList<Stock*>& stocks) override;
@@ -67,15 +67,15 @@ public:
 private:
     void exportToExcel(const QString& path) const;
 
-    IActionsTableItemWidgetFactory*    mActionsTableItemWidgetFactory;
-    IOrderWavesDialogFactory*          mOrderWavesDialogFactory;
-    IOrderWavesWidgetFactory*          mOrderWavesWidgetFactory;
-    IUserStorage*                      mUserStorage;
-    IOrderBookThread*                  mOrderBookThread;
-    IHttpClient*                       mHttpClient;
-    IFileDialogFactory*                mFileDialogFactory;
-    ISettingsEditor*                   mSettingsEditor;
-    IStocksTableModel*                 mStocksTableModel;
+    IActionsTableItemWidgetFactory* mActionsTableItemWidgetFactory;
+    IOrderWavesDialogFactory*       mOrderWavesDialogFactory;
+    IOrderWavesWidgetFactory*       mOrderWavesWidgetFactory;
+    IUserStorage*                   mUserStorage;
+    IOrderBookThread*               mOrderBookThread;
+    IHttpClient*                    mHttpClient;
+    IFileDialogFactory*             mFileDialogFactory;
+    ISettingsEditor*                mSettingsEditor;
+    IStocksTableModel*              mStocksTableModel;
 
 public slots:
     void on_tableView_customContextMenuRequested(const QPoint& pos);

@@ -27,6 +27,6 @@ public:
     void          writeStockData(const Stock& stock) override;
 
 private:
-    IFileFactory* mFileFactory;
+    IFileFactory*  mFileFactory;
     ILogosStorage* mLogosStorage;
 };
