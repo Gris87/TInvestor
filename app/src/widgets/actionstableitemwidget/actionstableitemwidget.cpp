@@ -1,4 +1,4 @@
-#include "src/widgets/tableitems/actions/actionstableitemwidget.h"
+#include "src/widgets/actionstableitemwidget/actionstableitemwidget.h"
 #include "ui_actionstableitemwidget.h"
 
 #include <QDebug>

@@ -2,7 +2,7 @@
 
 
 
-#include "src/widgets/tableitems/actions/iactionstableitemwidget.h"
+#include "src/widgets/actionstableitemwidget/iactionstableitemwidget.h"
 
 #include <gmock/gmock.h>
 

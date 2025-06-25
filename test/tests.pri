@@ -101,6 +101,8 @@ SOURCES += \
     src/widgets/accountchartwidget/test_accountchartwidget.cpp \
     src/widgets/accountchartwidget/test_accountchartwidgetfactory.cpp \
     src/widgets/accountchartwidget/test_charttooltip.cpp \
+    src/widgets/actionstableitemwidget/test_actionstableitemwidget.cpp \
+    src/widgets/actionstableitemwidget/test_actionstableitemwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/test_decisionmakerwidgetfactory.cpp \
     src/widgets/logsfilterwidget/test_logsfilterwidget.cpp \
@@ -119,8 +121,6 @@ SOURCES += \
     src/widgets/stockstablewidget/test_stockstablewidgetfactory.cpp \
     src/widgets/tabledelegates/test_instrumentitemdelegate.cpp \
     src/widgets/tabledelegates/test_loglevelitemdelegate.cpp \
-    src/widgets/tableitems/actions/test_actionstableitemwidget.cpp \
-    src/widgets/tableitems/actions/test_actionstableitemwidgetfactory.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/test_logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/test_operationstablemodel.cpp \
@@ -208,6 +208,8 @@ HEADERS += \
     src/utils/timeutils/itimeutils_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidget_mock.h \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory_mock.h \
+    src/widgets/actionstableitemwidget/iactionstableitemwidget_mock.h \
+    src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget_mock.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidgetfactory_mock.h \
     src/widgets/logsfilterwidget/ilogsfilterwidget_mock.h \
@@ -224,8 +226,6 @@ HEADERS += \
     src/widgets/stockscontrolswidget/istockscontrolswidgetfactory_mock.h \
     src/widgets/stockstablewidget/istockstablewidget_mock.h \
     src/widgets/stockstablewidget/istockstablewidgetfactory_mock.h \
-    src/widgets/tableitems/actions/iactionstableitemwidget_mock.h \
-    src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory_mock.h \
     src/widgets/tablemodels/operationstablemodel/ioperationstablemodel_mock.h \

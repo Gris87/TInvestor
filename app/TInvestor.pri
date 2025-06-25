@@ -104,6 +104,8 @@ SOURCES += \
     src/widgets/accountchartwidget/accountchartwidget.cpp \
     src/widgets/accountchartwidget/accountchartwidgetfactory.cpp \
     src/widgets/accountchartwidget/charttooltip.cpp \
+    src/widgets/actionstableitemwidget/actionstableitemwidget.cpp \
+    src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidget.cpp \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.cpp \
     src/widgets/logsfilterwidget/logsfilterwidget.cpp \
@@ -122,8 +124,6 @@ SOURCES += \
     src/widgets/stockstablewidget/stockstablewidgetfactory.cpp \
     src/widgets/tabledelegates/instrumentitemdelegate.cpp \
     src/widgets/tabledelegates/loglevelitemdelegate.cpp \
-    src/widgets/tableitems/actions/actionstableitemwidget.cpp \
-    src/widgets/tableitems/actions/actionstableitemwidgetfactory.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodel.cpp \
     src/widgets/tablemodels/logstablemodel/logstablemodelfactory.cpp \
     src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp \
@@ -314,6 +314,10 @@ HEADERS += \
     src/widgets/accountchartwidget/charttooltip.h \
     src/widgets/accountchartwidget/iaccountchartwidget.h \
     src/widgets/accountchartwidget/iaccountchartwidgetfactory.h \
+    src/widgets/actionstableitemwidget/actionstableitemwidget.h \
+    src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.h \
+    src/widgets/actionstableitemwidget/iactionstableitemwidget.h \
+    src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory.h \
     src/widgets/decisionmakerwidget/decisionmakerwidget.h \
     src/widgets/decisionmakerwidget/decisionmakerwidgetfactory.h \
     src/widgets/decisionmakerwidget/idecisionmakerwidget.h \
@@ -348,10 +352,6 @@ HEADERS += \
     src/widgets/stockstablewidget/stockstablewidgetfactory.h \
     src/widgets/tabledelegates/instrumentitemdelegate.h \
     src/widgets/tabledelegates/loglevelitemdelegate.h \
-    src/widgets/tableitems/actions/actionstableitemwidget.h \
-    src/widgets/tableitems/actions/actionstableitemwidgetfactory.h \
-    src/widgets/tableitems/actions/iactionstableitemwidget.h \
-    src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h \
     src/widgets/tablemodels/logstablemodel/comparators.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodel.h \
     src/widgets/tablemodels/logstablemodel/ilogstablemodelfactory.h \
@@ -393,6 +393,7 @@ FORMS += \
     src/dialogs/startautopilotdialog/startautopilotdialog.ui \
     src/dialogs/startsimulationdialog/startsimulationdialog.ui \
     src/main/mainwindow.ui \
+    src/widgets/actionstableitemwidget/actionstableitemwidget.ui \
     src/widgets/decisionmakerwidget/decisionmakerwidget.ui \
     src/widgets/logsfilterwidget/logsfilterwidget.ui \
     src/widgets/logstablewidget/logstablewidget.ui \
@@ -400,4 +401,3 @@ FORMS += \
     src/widgets/portfoliotreewidget/portfoliotreewidget.ui \
     src/widgets/stockscontrolswidget/stockscontrolswidget.ui \
     src/widgets/stockstablewidget/stockstablewidget.ui \
-    src/widgets/tableitems/actions/actionstableitemwidget.ui \

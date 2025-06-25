@@ -2,7 +2,7 @@
 
 
 
-#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
+#include "src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory.h"
 
 
 

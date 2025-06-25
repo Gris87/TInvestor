@@ -106,8 +106,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
     if not args.ci:
         res.append("-nostdinc++")  # error: unknown argument ignored in clang-cl: '-nostdinc++' [clang-diagnostic-unknown-argument,-warnings-as-errors]
     else:
-        res.append("-Xclang")
-        res.append("-stdlib=libc++")
+        res.append("/clang:-stdlib=libc++")
 
     res.append("--driver-mode=cl")
     res.append("-nologo")

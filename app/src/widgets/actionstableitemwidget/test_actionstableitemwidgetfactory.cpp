@@ -1,4 +1,4 @@
-#include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
+#include "src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.h"
 
 #include <gtest/gtest.h>
 

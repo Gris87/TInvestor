@@ -10,8 +10,8 @@
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
-#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
 

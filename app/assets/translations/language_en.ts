@@ -116,12 +116,12 @@
 <context>
     <name>ActionsTableItemWidget</name>
     <message>
-        <location filename="../../src/widgets/tableitems/actions/actionstableitemwidget.ui" line="51"/>
+        <location filename="../../src/widgets/actionstableitemwidget/actionstableitemwidget.ui" line="51"/>
         <source>Order waves (book)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/actions/actionstableitemwidget.ui" line="79"/>
+        <location filename="../../src/widgets/actionstableitemwidget/actionstableitemwidget.ui" line="79"/>
         <source>Open in browser</source>
         <translation></translation>
     </message>

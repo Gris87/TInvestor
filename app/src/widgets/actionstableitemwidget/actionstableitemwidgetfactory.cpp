@@ -1,8 +1,8 @@
-#include "src/widgets/tableitems/actions/actionstableitemwidgetfactory.h"
+#include "src/widgets/actionstableitemwidget/actionstableitemwidgetfactory.h"
 
 #include <QDebug>
 
-#include "src/widgets/tableitems/actions/actionstableitemwidget.h"
+#include "src/widgets/actionstableitemwidget/actionstableitemwidget.h"
 
 
 

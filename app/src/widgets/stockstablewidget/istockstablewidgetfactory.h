@@ -11,8 +11,8 @@
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/http/ihttpclient.h"
 #include "src/utils/settingseditor/isettingseditor.h"
+#include "src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory.h"
-#include "src/widgets/tableitems/actions/iactionstableitemwidgetfactory.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory.h"
 
 
