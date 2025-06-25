@@ -533,32 +533,22 @@ static void updateAllForParallel(
 
 void StocksTableModel::updateAll()
 {
-    const QList<QPersistentModelIndex> parents;
-
     const bool needToSort = mSortColumn != STOCKS_ACTIONS_COLUMN;
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         beginResetModel();
     }
 
-    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive(), mUserStorage->isQualified());
+    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, mUserStorage->isQualified());
     processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         sortEntries();
         filterAll();
 
         endResetModel();
-    }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-
-        sortEntries();
-
-        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
 }
 
@@ -630,35 +620,25 @@ void StocksTableModel::updateLastPrices()
 {
     if (!lastPricesUpdates.isEmpty())
     {
-        const QList<QPersistentModelIndex> parents;
-
         const bool needToSort = mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN ||
                                 mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
 
-        if (mFilter.isActive())
+        if (mFilter.isActive() || needToSort)
         {
             beginResetModel();
         }
 
-        UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive());
+        UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
         processInParallel(*mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
 
         lastPricesUpdates.clear();
 
-        if (mFilter.isActive())
+        if (mFilter.isActive() || needToSort)
         {
             sortEntries();
             filterAll();
 
             endResetModel();
-        }
-        else if (needToSort)
-        {
-            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-
-            sortEntries();
-
-            emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
         }
     }
 }
@@ -719,33 +699,23 @@ static void updatePricesForParallel(
 
 void StocksTableModel::updatePrices()
 {
-    const QList<QPersistentModelIndex> parents;
-
     const bool needToSort =
         mSortColumn == STOCKS_PRICE_COLUMN || mSortColumn == STOCKS_DAY_CHANGE_COLUMN || mSortColumn == STOCKS_DATE_CHANGE_COLUMN;
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         beginResetModel();
     }
 
-    UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive());
+    UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         sortEntries();
         filterAll();
 
         endResetModel();
-    }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-
-        sortEntries();
-
-        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
 }
 
@@ -796,32 +766,22 @@ static void updatePeriodicDataForParallel(
 
 void StocksTableModel::updatePeriodicData()
 {
-    const QList<QPersistentModelIndex> parents;
-
     const bool needToSort = mSortColumn == STOCKS_TURNOVER_COLUMN || mSortColumn == STOCKS_PAYBACK_COLUMN;
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         beginResetModel();
     }
 
-    UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive());
+    UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
     processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
 
-    if (mFilter.isActive())
+    if (mFilter.isActive() || needToSort)
     {
         sortEntries();
         filterAll();
 
         endResetModel();
-    }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-
-        sortEntries();
-
-        emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
     }
 }
 
