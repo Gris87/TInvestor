@@ -7,6 +7,7 @@
 #include <QIcon>
 
 #include "src/domain/stock/stocktableentry.h"
+#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -15,7 +16,7 @@ class StocksTableModel : public IStocksTableModel
     Q_OBJECT
 
 public:
-    explicit StocksTableModel(QObject* parent = nullptr);
+    explicit StocksTableModel(IUserStorage* userStorage, QObject* parent = nullptr);
     ~StocksTableModel() override;
 
     StocksTableModel(const StocksTableModel& another)            = delete;
@@ -59,6 +60,7 @@ private:
     void reverseEntries();
     void filterAll();
 
+    IUserStorage*                           mUserStorage;
     QStringList                             mHeader;
     QIcon                                   mHelpIcon;
     QString                                 mDateChangeTooltip;

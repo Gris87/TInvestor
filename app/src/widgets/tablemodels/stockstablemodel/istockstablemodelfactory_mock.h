@@ -20,5 +20,5 @@ public:
     StocksTableModelFactoryMock(const StocksTableModelFactoryMock& another)            = delete;
     StocksTableModelFactoryMock& operator=(const StocksTableModelFactoryMock& another) = delete;
 
-    MOCK_METHOD(IStocksTableModel*, newInstance, (QObject * parent), (const, override));
+    MOCK_METHOD(IStocksTableModel*, newInstance, (IUserStorage * userStorage, QObject* parent), (const, override));
 };

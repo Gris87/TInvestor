@@ -15,6 +15,7 @@ TEST(Test_StockTableEntry, Test_constructor_and_destructor)
     ASSERT_EQ(entry.instrumentTicker,     "");
     ASSERT_EQ(entry.instrumentName,       "");
     ASSERT_EQ(entry.forQualInvestorFlag,  false);
+    ASSERT_EQ(entry.locked,               false);
     ASSERT_NEAR(entry.price,              0.0f, 0.0001f);
     ASSERT_NEAR(entry.dayChange,          0.0f, 0.0001f);
     ASSERT_NEAR(entry.dateChange,         0.0f, 0.0001f);
@@ -34,6 +35,7 @@ TEST(Test_StockTableEntry, Test_copy_constructor)
     entry.instrumentTicker    = "b";
     entry.instrumentName      = "c";
     entry.forQualInvestorFlag = true;
+    entry.locked              = true;
     entry.price               = 1.0f;
     entry.dayChange           = 2.0f;
     entry.dateChange          = 3.0f;
@@ -51,6 +53,7 @@ TEST(Test_StockTableEntry, Test_copy_constructor)
     ASSERT_EQ(entry2.instrumentTicker,     "b");
     ASSERT_EQ(entry2.instrumentName,       "c");
     ASSERT_EQ(entry2.forQualInvestorFlag,  true);
+    ASSERT_EQ(entry2.locked,               true);
     ASSERT_NEAR(entry2.price,              1.0f, 0.0001f);
     ASSERT_NEAR(entry2.dayChange,          2.0f, 0.0001f);
     ASSERT_NEAR(entry2.dateChange,         3.0f, 0.0001f);
@@ -71,6 +74,7 @@ TEST(Test_StockTableEntry, Test_assign)
     entry.instrumentTicker    = "b";
     entry.instrumentName      = "c";
     entry.forQualInvestorFlag = true;
+    entry.locked              = true;
     entry.price               = 1.0f;
     entry.dayChange           = 2.0f;
     entry.dateChange          = 3.0f;
@@ -88,6 +92,7 @@ TEST(Test_StockTableEntry, Test_assign)
     ASSERT_EQ(entry2.instrumentTicker,     "b");
     ASSERT_EQ(entry2.instrumentName,       "c");
     ASSERT_EQ(entry2.forQualInvestorFlag,  true);
+    ASSERT_EQ(entry2.locked,               true);
     ASSERT_NEAR(entry2.price,              1.0f, 0.0001f);
     ASSERT_NEAR(entry2.dayChange,          2.0f, 0.0001f);
     ASSERT_NEAR(entry2.dateChange,         3.0f, 0.0001f);
@@ -108,6 +113,7 @@ TEST(Test_StockTableEntry, Test_equals)
     entry.instrumentTicker    = "b";
     entry.instrumentName      = "c";
     entry.forQualInvestorFlag = true;
+    entry.locked              = true;
     entry.price               = 1.0f;
     entry.dayChange           = 2.0f;
     entry.dateChange          = 3.0f;
@@ -121,6 +127,7 @@ TEST(Test_StockTableEntry, Test_equals)
     entry2.instrumentTicker    = "b";
     entry2.instrumentName      = "c";
     entry2.forQualInvestorFlag = true;
+    entry2.locked              = true;
     entry2.price               = 1.0f;
     entry2.dayChange           = 2.0f;
     entry2.dateChange          = 3.0f;
@@ -150,6 +157,11 @@ TEST(Test_StockTableEntry, Test_equals)
     entry2.forQualInvestorFlag = false;
     ASSERT_NE(entry, entry2);
     entry2.forQualInvestorFlag = true;
+    ASSERT_EQ(entry, entry2);
+
+    entry2.locked = false;
+    ASSERT_NE(entry, entry2);
+    entry2.locked = true;
     ASSERT_EQ(entry, entry2);
 
     entry2.price = 1000.0f;

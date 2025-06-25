@@ -65,7 +65,7 @@ private:
 
     void sortCategory(QList<PortfolioItem>* items);
     void reverseCategory(QList<PortfolioItem>* items);
-    void updatePriceInCategory(PortfolioCategoryItem* category, bool needToSort);
+    void updatePriceInCategory(PortfolioCategoryItem* category);
 
     QStringList          mHeader;
     QIcon                mHelpIcon;

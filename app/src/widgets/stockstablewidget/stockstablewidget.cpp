@@ -61,7 +61,7 @@ StocksTableWidget::StocksTableWidget(
 
     ui->tableWidget->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
 
-    mStocksTableModel = stocksTableModelFactory->newInstance(this);
+    mStocksTableModel = stocksTableModelFactory->newInstance(userStorage, this);
 
     ui->tableView->setModel(mStocksTableModel);
     ui->tableView->setItemDelegateForColumn(STOCKS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));

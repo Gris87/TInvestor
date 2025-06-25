@@ -17,7 +17,7 @@ StocksTableModelFactory::~StocksTableModelFactory()
     qDebug() << "Destroy StocksTableModelFactory";
 }
 
-IStocksTableModel* StocksTableModelFactory::newInstance(QObject* parent) const
+IStocksTableModel* StocksTableModelFactory::newInstance(IUserStorage* userStorage, QObject* parent) const
 {
-    return new StocksTableModel(parent);
+    return new StocksTableModel(userStorage, parent);
 }

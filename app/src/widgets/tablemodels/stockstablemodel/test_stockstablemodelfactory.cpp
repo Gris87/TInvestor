@@ -2,6 +2,12 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::StrictMock;
+
 
 
 TEST(Test_StocksTableModelFactory, Test_constructor_and_destructor)
@@ -13,7 +19,9 @@ TEST(Test_StocksTableModelFactory, Test_newInstance)
 {
     const StocksTableModelFactory factory;
 
-    const IStocksTableModel* model = factory.newInstance(nullptr);
+    StrictMock<UserStorageMock> userStorageMock;
+
+    const IStocksTableModel* model = factory.newInstance(&userStorageMock, nullptr);
     ASSERT_TRUE(model != nullptr);
 
     delete model;

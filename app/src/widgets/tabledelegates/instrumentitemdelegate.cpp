@@ -9,8 +9,9 @@
 
 
 
-constexpr int ICON_SIZE = 24;
-constexpr int SPACING   = 4;
+constexpr int LOGO_ICON_SIZE = 24;
+constexpr int LOCK_ICON_SIZE = 16;
+constexpr int SPACING        = 4;
 
 
 
@@ -21,7 +22,8 @@ QModelIndex InstrumentItemDelegate::hoverIndex      = QModelIndex();
 
 InstrumentItemDelegate::InstrumentItemDelegate(ILogosStorage* logosStorage, QWidget* parent) :
     QStyledItemDelegate(parent),
-    mLogosStorage(logosStorage)
+    mLogosStorage(logosStorage),
+    mLockedPixmap(":/assets/images/lock.png")
 {
     qDebug() << "Create InstrumentItemDelegate";
 }
@@ -43,15 +45,36 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
     {
         mLogosStorage->lock();
         painter->drawPixmap(
-            option.rect.x(), option.rect.y() + ((option.rect.height() - ICON_SIZE) / 2), ICON_SIZE, ICON_SIZE, *logo
+            option.rect.x(),
+            option.rect.y() + ((option.rect.height() - LOGO_ICON_SIZE) / 2),
+            LOGO_ICON_SIZE,
+            LOGO_ICON_SIZE,
+            *logo
         );
         mLogosStorage->unlock();
+    }
+
+    qint8 offset = LOGO_ICON_SIZE + SPACING;
+
+    const bool locked = index.data(ROLE_INSTRUMENT_LOCKED).toBool();
+
+    if (locked)
+    {
+        painter->drawPixmap(
+            option.rect.x() + offset,
+            option.rect.y() + ((option.rect.height() - LOCK_ICON_SIZE) / 2),
+            LOCK_ICON_SIZE,
+            LOCK_ICON_SIZE,
+            mLockedPixmap
+        );
+
+        offset += LOCK_ICON_SIZE + SPACING;
     }
 
     const QFontMetrics fontMetrics(option.font);
 
     QRect textRect = option.rect;
-    textRect.setLeft(textRect.x() + ICON_SIZE + SPACING);
+    textRect.setLeft(textRect.x() + offset);
 
     if ((option.state & QStyle::State_MouseOver) == 0)
     {
@@ -105,10 +128,19 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
 
 QSize InstrumentItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+    qint8 offset = LOGO_ICON_SIZE + SPACING;
+
+    const bool locked = index.data(ROLE_INSTRUMENT_LOCKED).toBool();
+
+    if (locked)
+    {
+        offset += LOCK_ICON_SIZE + SPACING;
+    }
+
     const QFontMetrics fontMetrics(option.font);
 
     const QString ticker   = index.data().toString();
     const QRect   textRect = fontMetrics.boundingRect(ticker);
 
-    return QSize(ICON_SIZE + SPACING + textRect.width(), ICON_SIZE);
+    return QSize(offset + textRect.width(), LOGO_ICON_SIZE);
 }

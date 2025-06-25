@@ -31,4 +31,5 @@ public:
 
 private:
     ILogosStorage* mLogosStorage;
+    QPixmap        mLockedPixmap;
 };

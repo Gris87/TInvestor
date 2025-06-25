@@ -15,5 +15,5 @@ public:
     StocksTableModelFactory(const StocksTableModelFactory& another)            = delete;
     StocksTableModelFactory& operator=(const StocksTableModelFactory& another) = delete;
 
-    IStocksTableModel* newInstance(QObject* parent) const override;
+    IStocksTableModel* newInstance(IUserStorage* userStorage, QObject* parent) const override;
 };

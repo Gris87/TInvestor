@@ -19,6 +19,7 @@ struct StockTableEntry
     QString  instrumentTicker;
     QString  instrumentName;
     bool     forQualInvestorFlag;
+    bool     locked;
     float    price;
     float    dayChange;
     float    dateChange;

@@ -29,9 +29,10 @@ const QColor CELL_FONT_COLOR       = QColor("#97AEC4");         // clazy:exclude
 
 
 
-StocksTableModel::StocksTableModel(QObject* parent) :
+StocksTableModel::StocksTableModel(IUserStorage* userStorage, QObject* parent) :
     IStocksTableModel(parent),
     lastPricesUpdates(),
+    mUserStorage(userStorage),
     mHeader(),
     mHelpIcon(":/assets/images/question.png"),
     mDateChangeTooltip(),
@@ -336,6 +337,14 @@ QVariant StocksTableModel::data(const QModelIndex& index, int role) const
         return mEntries->at(row).instrumentName;
     }
 
+    if (role == ROLE_INSTRUMENT_LOCKED)
+    {
+        const int row = index.row();
+        Q_ASSERT_X(index.column() == STOCKS_NAME_COLUMN, __FUNCTION__, "Unexpected behavior");
+
+        return mEntries->at(row).locked;
+    }
+
     return QVariant();
 }
 
@@ -381,12 +390,14 @@ void StocksTableModel::setFilter(const StockFilter& filter)
 
 struct FillEntriesInfo
 {
-    explicit FillEntriesInfo(const QList<Stock*>* _stocks) :
-        stocks(_stocks)
+    explicit FillEntriesInfo(const QList<Stock*>* _stocks, bool _isQualified) :
+        stocks(_stocks),
+        isQualified(_isQualified)
     {
     }
 
     const QList<Stock*>* stocks;
+    bool                 isQualified;
 };
 
 static void fillEntriesForParallel(
@@ -396,6 +407,7 @@ static void fillEntriesForParallel(
     FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
 
     Stock* const* stocksArray = fillEntriesInfo->stocks->data();
+    const bool    isQualified = fillEntriesInfo->isQualified;
 
     StockTableEntry* resArray = res.data();
 
@@ -410,6 +422,7 @@ static void fillEntriesForParallel(
         resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
         resArray[i].instrumentName      = stock->meta.instrumentName;
         resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        resArray[i].locked              = stock->meta.forQualInvestorFlag && !isQualified;
         resArray[i].price               = stock->lastPrice();
         resArray[i].dayChange           = stock->operational.dayStartPrice > 0
                                               ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
@@ -435,7 +448,7 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     mEntriesUnfiltered = std::make_shared<QList<StockTableEntry>>();
     mEntriesUnfiltered->resizeForOverwrite(stocks.size());
 
-    FillEntriesInfo fillEntriesInfo(&stocks);
+    FillEntriesInfo fillEntriesInfo(&stocks, mUserStorage->isQualified());
     processInParallel(*mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
 
     mStocks.clear();
@@ -453,16 +466,20 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
 
 struct UpdateAllInfo
 {
-    explicit UpdateAllInfo(StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed) :
+    explicit UpdateAllInfo(
+        StocksTableModel* _model, const QMap<QString, Stock*>* _stocks, bool _updateAllowed, bool _isQualified
+    ) :
         model(_model),
         stocks(_stocks),
-        updateAllowed(_updateAllowed)
+        updateAllowed(_updateAllowed),
+        isQualified(_isQualified)
     {
     }
 
     StocksTableModel*            model;
     const QMap<QString, Stock*>* stocks;
     bool                         updateAllowed;
+    bool                         isQualified;
 };
 
 static void updateAllForParallel(
@@ -474,6 +491,7 @@ static void updateAllForParallel(
     StocksTableModel*            model         = updateAllInfo->model;
     const QMap<QString, Stock*>* stocks        = updateAllInfo->stocks;
     const bool                   updateAllowed = updateAllInfo->updateAllowed;
+    const bool                   isQualified   = updateAllInfo->isQualified;
 
     StockTableEntry* resArray = res.data();
 
@@ -489,6 +507,7 @@ static void updateAllForParallel(
         resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
         resArray[i].instrumentName      = stock->meta.instrumentName;
         resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        resArray[i].locked              = stock->meta.forQualInvestorFlag && !isQualified;
         resArray[i].price               = stock->lastPrice();
         resArray[i].dayChange           = stock->operational.dayStartPrice > 0
                                               ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
@@ -522,12 +541,8 @@ void StocksTableModel::updateAll()
     {
         beginResetModel();
     }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-    }
 
-    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive(), mUserStorage->isQualified());
     processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
 
     if (mFilter.isActive())
@@ -539,6 +554,8 @@ void StocksTableModel::updateAll()
     }
     else if (needToSort)
     {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
         sortEntries();
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
@@ -622,12 +639,8 @@ void StocksTableModel::updateLastPrices()
         {
             beginResetModel();
         }
-        else if (needToSort)
-        {
-            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-        }
 
-        UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+        UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive());
         processInParallel(*mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
 
         lastPricesUpdates.clear();
@@ -641,6 +654,8 @@ void StocksTableModel::updateLastPrices()
         }
         else if (needToSort)
         {
+            emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
             sortEntries();
 
             emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
@@ -713,12 +728,8 @@ void StocksTableModel::updatePrices()
     {
         beginResetModel();
     }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-    }
 
-    UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive());
     processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
 
     if (mFilter.isActive())
@@ -730,6 +741,8 @@ void StocksTableModel::updatePrices()
     }
     else if (needToSort)
     {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
         sortEntries();
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);
@@ -791,12 +804,8 @@ void StocksTableModel::updatePeriodicData()
     {
         beginResetModel();
     }
-    else if (needToSort)
-    {
-        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
-    }
 
-    UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
+    UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive());
     processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
 
     if (mFilter.isActive())
@@ -808,6 +817,8 @@ void StocksTableModel::updatePeriodicData()
     }
     else if (needToSort)
     {
+        emit layoutAboutToBeChanged(parents, QAbstractItemModel::VerticalSortHint);
+
         sortEntries();
 
         emit layoutChanged(parents, QAbstractItemModel::VerticalSortHint);

@@ -2,6 +2,12 @@
 
 #include <gtest/gtest.h>
 
+#include "src/storage/user/iuserstorage_mock.h"
+
+
+
+using ::testing::StrictMock;
+
 
 
 class Test_StocksTableModel : public ::testing::Test
@@ -9,15 +15,19 @@ class Test_StocksTableModel : public ::testing::Test
 protected:
     void SetUp() override
     {
-        model = new StocksTableModel();
+        userStorageMock = new StrictMock<UserStorageMock>();
+
+        model = new StocksTableModel(userStorageMock);
     }
 
     void TearDown() override
     {
         delete model;
+        delete userStorageMock;
     }
 
     StocksTableModel* model;
+    StrictMock<UserStorageMock>* userStorageMock;
 };
 
 
