@@ -36,49 +36,41 @@ bool StockFilter::isActive() const
            useDayStartChange || useDateChange || useTurnover || usePayback;
 }
 
-bool StockFilter::isFiltered(
-    const QString& t,
-    const QString& name,
-    bool           forQualInvestorFlag,
-    float          price,
-    float          dayStartChange,
-    float          dateChange,
-    qint64         turnover,
-    float          payback
-) const
+bool StockFilter::isFiltered(const StockTableEntry& entry) const
 {
-    if (useTicker && ticker != "" && !t.contains(ticker, Qt::CaseInsensitive) && !name.contains(ticker, Qt::CaseInsensitive))
+    if (useTicker && ticker != "" && !entry.instrumentTicker.contains(ticker, Qt::CaseInsensitive) &&
+        !entry.instrumentName.contains(ticker, Qt::CaseInsensitive))
     {
         return false;
     }
 
     if (useQualInvestor && qualInvestor != QUAL_INVESTOR_SHOW_ALL &&
-        forQualInvestorFlag != (qualInvestor == QUAL_INVESTOR_ONLY_WITH_STATUS))
+        entry.forQualInvestorFlag != (qualInvestor == QUAL_INVESTOR_ONLY_WITH_STATUS))
     {
         return false;
     }
 
-    if (usePrice && (price < priceFrom || price > priceTo))
+    if (usePrice && (entry.price < priceFrom || entry.price > priceTo))
     {
         return false;
     }
 
-    if (useDayStartChange && (dayStartChange < dayStartChangeFrom || dayStartChange > dayStartChangeTo))
+    if (useDayStartChange && (entry.dayChange < dayStartChangeFrom || entry.dayChange > dayStartChangeTo))
     {
         return false;
     }
 
-    if (useDateChange && (dateChange < dateChangeFrom || dateChange > dateChangeTo))
+    if (useDateChange && (entry.dateChange < dateChangeFrom || entry.dateChange > dateChangeTo))
     {
         return false;
     }
 
-    if (useTurnover && (turnover < turnoverFrom || turnover > turnoverTo))
+    if (useTurnover && (entry.turnover < turnoverFrom || entry.turnover > turnoverTo))
     {
         return false;
     }
 
-    if (usePayback && (payback < paybackFrom || payback > paybackTo))
+    if (usePayback && (entry.payback < paybackFrom || entry.payback > paybackTo))
     {
         return false;
     }

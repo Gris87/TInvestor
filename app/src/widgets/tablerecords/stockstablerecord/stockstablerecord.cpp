@@ -120,16 +120,18 @@ void StocksTableRecord::filter(QTableWidget* tableWidget, const StockFilter& fil
     const QString fullText            = mInstrumentTableItemWidget->fullText();
     const bool    forQualInvestorFlag = mInstrumentTableItemWidget->forQualInvestorFlag();
 
-    const bool hidden = !filter.isFiltered(
-        ticker,
-        fullText,
-        forQualInvestorFlag,
-        mPriceTableWidgetItem->value(),
-        mDayChangeTableWidgetItem->value(),
-        mDateChangeTableWidgetItem->value(),
-        mTurnoverTableWidgetItem->value(),
-        mPaybackTableWidgetItem->value()
-    );
+    StockTableEntry entry;
+
+    entry.instrumentTicker    = ticker;
+    entry.instrumentName      = fullText;
+    entry.forQualInvestorFlag = forQualInvestorFlag;
+    entry.price               = mPriceTableWidgetItem->value();
+    entry.dayChange           = mDayChangeTableWidgetItem->value();
+    entry.dateChange          = mDateChangeTableWidgetItem->value();
+    entry.turnover            = mTurnoverTableWidgetItem->value();
+    entry.payback             = mPaybackTableWidgetItem->value();
+
+    const bool hidden = !filter.isFiltered(entry);
 
     tableWidget->setRowHidden(row, hidden);
 }

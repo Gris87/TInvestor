@@ -1069,11 +1069,95 @@ void StocksTableModel::reverseEntries()
     mEntriesUnfiltered = entries;
 }
 
+struct FilterEntriesInfo
+{
+    explicit FilterEntriesInfo(StockFilter* _filter) :
+        filter(_filter)
+    {
+        const int cpuCount = QThread::idealThreadCount();
+
+        results.resize(cpuCount);
+    }
+
+    StockFilter*      filter;
+    QList<QList<int>> results;
+};
+
+static void filterEntriesForParallel(
+    QThread* parentThread, int threadId, QList<StockTableEntry>& entriesUnfiltered, int start, int end, void* additionalArgs
+)
+{
+    FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
+
+    StockFilter* filter       = filterEntriesInfo->filter;
+    QList<int>*  resultsArray = filterEntriesInfo->results.data();
+
+    StockTableEntry* entriesArray = entriesUnfiltered.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        if (filter->isFiltered(entriesArray[i]))
+        {
+            resultsArray[threadId].append(i);
+        }
+    }
+}
+
+struct MergeFilteredEntriesInfo
+{
+    explicit MergeFilteredEntriesInfo(QList<StockTableEntry>* _entriesUnfiltered, const QList<QList<int>>& _results) :
+        entriesUnfiltered(_entriesUnfiltered),
+        results(_results)
+    {
+        indecies.resizeForOverwrite(results.size() + 1);
+
+        int index = 0;
+
+        for (int i = 0; i < results.size(); ++i)
+        {
+            indecies[i] = index;
+
+            index += results.at(i).size();
+        }
+
+        indecies[results.size()] = index;
+    }
+
+    QList<StockTableEntry>* entriesUnfiltered;
+    QList<int>              indecies;
+    QList<QList<int>>       results;
+};
+
+static void mergeFilteredEntriesForParallel(
+    QThread* parentThread, int threadId, QList<StockTableEntry>& res, int /*start*/, int /*end*/, void* additionalArgs
+)
+{
+    MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
+
+    QList<StockTableEntry>* entriesUnfiltered = mergeFilteredEntriesInfo->entriesUnfiltered;
+    const int               index             = mergeFilteredEntriesInfo->indecies.at(threadId);
+    const QList<int>&       results           = mergeFilteredEntriesInfo->results.at(threadId);
+
+    StockTableEntry* resArray = res.data();
+
+    for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[index + i] = entriesUnfiltered->at(results.at(i));
+    }
+}
+
 void StocksTableModel::filterAll()
 {
     if (mFilter.isActive())
     {
-        // TODO: Implement
+        mEntries = std::make_shared<QList<StockTableEntry>>();
+
+        FilterEntriesInfo filterEntriesInfo(&mFilter);
+        processInParallel(*mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
+
+        MergeFilteredEntriesInfo mergeFilteredEntriesInfo(mEntriesUnfiltered.get(), filterEntriesInfo.results);
+        mEntries->resizeForOverwrite(mergeFilteredEntriesInfo.indecies.constLast());
+        processInParallel(*mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
     }
     else
     {

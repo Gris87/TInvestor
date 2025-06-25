@@ -183,7 +183,8 @@ TEST(Test_StockFilter, Test_isActive)
 
 TEST(Test_StockFilter, Test_isFiltered)
 {
-    StockFilter filter;
+    StockFilter     filter;
+    StockTableEntry entry;
 
     filter.useTicker          = true;
     filter.ticker             = "SPB";
@@ -205,23 +206,170 @@ TEST(Test_StockFilter, Test_isFiltered)
     filter.paybackFrom        = 70.0f;
     filter.paybackTo          = 95.0f;
 
-    // clang-format off
-    ASSERT_EQ(filter.isFiltered("SEPB", "SEB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", true, 300.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 200.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 400.0f, 3.5f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 1.0f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 8.0f, 75.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 40.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 90.0f, 170, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 100, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 250, 90.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 60.0f), false);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 99.0f), false);
-    ASSERT_EQ(filter.isFiltered("SEPB", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SEB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
-    ASSERT_EQ(filter.isFiltered("SPBE", "SPB Market", false, 300.0f, 3.5f, 75.0f, 170, 90.0f), true);
-    // clang-format on
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), true);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SEB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), true);
+
+    entry.instrumentTicker    = "SEPB";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), true);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 99.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 60.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 250;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 100;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 90.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 40.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 8.0f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 1.0f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 400.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 200.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SPBE";
+    entry.instrumentName      = "SPB Market";
+    entry.forQualInvestorFlag = true;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
+
+    entry.instrumentTicker    = "SEPB";
+    entry.instrumentName      = "SEB Market";
+    entry.forQualInvestorFlag = false;
+    entry.price               = 300.0f;
+    entry.dayChange           = 3.5f;
+    entry.dateChange          = 75.0f;
+    entry.turnover            = 170;
+    entry.payback             = 90.0f;
+
+    ASSERT_EQ(filter.isFiltered(entry), false);
 }
 
 TEST(Test_StockFilter, Test_equals)

@@ -2,7 +2,7 @@
 
 
 
-#include <QString>
+#include "src/domain/stock/stocktableentry.h"
 
 
 
@@ -27,16 +27,7 @@ struct StockFilter
     bool isActive() const;
 
     [[nodiscard]]
-    bool isFiltered(
-        const QString& t,
-        const QString& name,
-        bool           forQualInvestorFlag,
-        float          price,
-        float          dayStartChange,
-        float          dateChange,
-        qint64         turnover,
-        float          payback
-    ) const;
+    bool isFiltered(const StockTableEntry& entry) const;
 
     bool               useTicker;
     QString            ticker;
