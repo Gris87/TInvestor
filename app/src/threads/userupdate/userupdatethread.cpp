@@ -1,7 +1,6 @@
 #include "src/threads/userupdate/userupdatethread.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 
 

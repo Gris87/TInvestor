@@ -141,8 +141,9 @@ static void deleteObsoleteDataForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
 
@@ -157,6 +158,8 @@ static void deleteObsoleteDataForParallel(
 
             stocksDatabase->writeStockData(*stock);
         }
+
+        stock->writeUnlock();
     }
 }
 
@@ -189,8 +192,9 @@ static void cleanupOperationalDataForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
 
@@ -204,6 +208,8 @@ static void cleanupOperationalDataForParallel(
         {
             stock->operational.detailedData.remove(0, index);
         }
+
+        stock->writeUnlock();
     }
 }
 
@@ -238,8 +244,9 @@ getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& 
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;
@@ -265,6 +272,8 @@ getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& 
                 stock->operational.specifiedDatePrice = stock->data.at(index).price;
             }
         }
+
+        stock->writeUnlock();
     }
 }
 
@@ -300,8 +309,9 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;
@@ -329,6 +339,8 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 
             stock->operational.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
         }
+
+        stock->writeUnlock();
     }
 }
 
@@ -365,8 +377,9 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
         int index = 0;
@@ -403,6 +416,8 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
             stock->operational.payback = (goodDeals * 100.0f) / totalDeals;
         }
+
+        stock->writeUnlock();
     }
 }
 

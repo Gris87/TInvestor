@@ -3,26 +3,34 @@
 
 
 #include <QList>
-#include <QMutex>
+#include <QReadWriteLock>
 
 #include "src/domain/stock/stockmeta.h"
 #include "src/domain/stock/stockoperational.h"
 
 
 
-struct Stock
+class Stock
 {
+public:
     Stock();
     Stock(const Stock& another);
     ~Stock();
 
     Stock& operator=(const Stock& another);
 
+    void readLock();
+    void readUnlock();
+    void writeLock();
+    void writeUnlock();
+
     [[nodiscard]]
     float lastPrice() const;
 
-    QMutex*          mutex;
     StockMeta        meta;
     StockOperational operational;
     QList<StockData> data;
+
+private:
+    QReadWriteLock* mRwMutex;
 };

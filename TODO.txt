@@ -1,5 +1,3 @@
-Slow splitter move
-Tray icon popup too long
 Use RWMutex instead of QMutex
 Limit operations and logs
 Test coverage

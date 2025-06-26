@@ -10,7 +10,6 @@ TEST(Test_Stock, Test_constructor_and_destructor)
     const Stock stock;
 
     // clang-format off
-    ASSERT_NE(stock.mutex,                            nullptr);
     ASSERT_EQ(stock.meta.instrumentId,                "");
     ASSERT_EQ(stock.meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stock.meta.instrumentTicker,            "");
@@ -58,8 +57,6 @@ TEST(Test_Stock, Test_copy_constructor)
     const Stock stock2(stock);
 
     // clang-format off
-    ASSERT_NE(stock2.mutex,                                    stock.mutex);
-    ASSERT_NE(stock2.mutex,                                    nullptr);
     ASSERT_EQ(stock2.meta.instrumentId,                        "a");
     ASSERT_EQ(stock2.meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stock2.meta.instrumentTicker,                    "b");
@@ -113,8 +110,6 @@ TEST(Test_Stock, Test_assign)
     stock2 = stock;
 
     // clang-format off
-    ASSERT_NE(stock2.mutex,                                    stock.mutex);
-    ASSERT_NE(stock2.mutex,                                    nullptr);
     ASSERT_EQ(stock2.meta.instrumentId,                        "a");
     ASSERT_EQ(stock2.meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stock2.meta.instrumentTicker,                    "b");

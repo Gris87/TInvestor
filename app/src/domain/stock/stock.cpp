@@ -3,24 +3,24 @@
 
 
 Stock::Stock() :
-    mutex(new QMutex()),
     meta(),
     operational(),
-    data()
+    data(),
+    mRwMutex(new QReadWriteLock())
 {
 }
 
 Stock::Stock(const Stock& another) :
-    mutex(new QMutex()),
     meta(another.meta),
     operational(another.operational),
-    data(another.data)
+    data(another.data),
+    mRwMutex(new QReadWriteLock())
 {
 }
 
 Stock::~Stock()
 {
-    delete mutex;
+    delete mRwMutex;
 }
 
 Stock& Stock::operator=(const Stock& another)
@@ -33,6 +33,26 @@ Stock& Stock::operator=(const Stock& another)
     }
 
     return *this;
+}
+
+void Stock::readLock()
+{
+    mRwMutex->lockForRead();
+}
+
+void Stock::readUnlock()
+{
+    mRwMutex->unlock();
+}
+
+void Stock::writeLock()
+{
+    mRwMutex->lockForWrite();
+}
+
+void Stock::writeUnlock()
+{
+    mRwMutex->unlock();
 }
 
 float Stock::lastPrice() const

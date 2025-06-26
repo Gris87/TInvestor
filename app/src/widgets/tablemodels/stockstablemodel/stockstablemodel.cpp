@@ -426,7 +426,7 @@ static void fillEntriesForParallel(
     {
         Stock* stock = stocksArray[i];
 
-        stock->mutex->lock();
+        stock->readLock();
 
         resArray[i].instrumentId        = stock->meta.instrumentId;
         resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
@@ -448,7 +448,7 @@ static void fillEntriesForParallel(
         resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
         resArray[i].pricePrecision     = stock->meta.pricePrecision;
 
-        stock->mutex->unlock();
+        stock->readUnlock();
     }
 }
 
@@ -511,7 +511,7 @@ static void updateAllForParallel(
         Stock* stock = stocks->value(resArray[i].instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
-        stock->mutex->lock();
+        stock->readLock();
 
         resArray[i].instrumentId        = stock->meta.instrumentId;
         resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
@@ -533,7 +533,7 @@ static void updateAllForParallel(
         resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
         resArray[i].pricePrecision     = stock->meta.pricePrecision;
 
-        stock->mutex->unlock();
+        stock->readUnlock();
 
         if (updateAllowed)
         {
@@ -615,7 +615,7 @@ static void updateLastPricesForParallel(
         Stock* stock = stocks->value(resArray[i].instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
-        stock->mutex->lock();
+        stock->readLock();
 
         resArray[i].price     = stock->lastPrice();
         resArray[i].dayChange = stock->operational.dayStartPrice > 0
@@ -629,7 +629,7 @@ static void updateLastPricesForParallel(
         resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
         resArray[i].pricePrecision     = stock->meta.pricePrecision;
 
-        stock->mutex->unlock();
+        stock->readUnlock();
 
         if (updateAllowed)
         {
@@ -707,7 +707,7 @@ static void updatePricesForParallel(
         Stock* stock = stocks->value(resArray[i].instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
-        stock->mutex->lock();
+        stock->readLock();
 
         resArray[i].price     = stock->lastPrice();
         resArray[i].dayChange = stock->operational.dayStartPrice > 0
@@ -721,7 +721,7 @@ static void updatePricesForParallel(
         resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
         resArray[i].pricePrecision     = stock->meta.pricePrecision;
 
-        stock->mutex->unlock();
+        stock->readUnlock();
 
         if (updateAllowed)
         {
@@ -794,12 +794,12 @@ static void updatePeriodicDataForParallel(
         Stock* stock = stocks->value(resArray[i].instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
-        stock->mutex->lock();
+        stock->readLock();
 
         resArray[i].turnover = stock->operational.turnover;
         resArray[i].payback  = stock->operational.payback;
 
-        stock->mutex->unlock();
+        stock->readUnlock();
 
         if (updateAllowed)
         {

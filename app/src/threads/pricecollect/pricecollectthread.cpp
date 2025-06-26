@@ -738,8 +738,9 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*             stock = stockArray[i];
-        const QMutexLocker lock(stock->mutex);
+        Stock* stock = stockArray[i];
+
+        stock->writeLock();
 
         qint64 startTimestamp =
             qBound(currentTimestamp - storageMonthLimit, stock->operational.lastStoredTimestamp + ONE_MINUTE, currentTimestamp);
@@ -764,6 +765,8 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
         }
 
         getCandlesWithGrpc(parentThread, stocksStorage, grpcClient, stock, startTimestamp, currentTimestamp);
+
+        stock->writeUnlock();
 
         getCandlesInfo->finished++;
 

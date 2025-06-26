@@ -47,8 +47,6 @@ TEST_F(Test_UserUpdateThread, Test_run)
 {
     const InSequence seq;
 
-    QMutex mutex;
-
     User     user;
     Accounts accounts;
     Account  account1;
