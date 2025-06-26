@@ -7,7 +7,7 @@
 UserStorage::UserStorage(IUserDatabase* userDatabase) :
     IUserStorage(),
     mUserDatabase(userDatabase),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mUser(),
     mAccounts()
 {
@@ -18,7 +18,7 @@ UserStorage::~UserStorage()
 {
     qDebug() << "Destroy UserStorage";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 void UserStorage::readFromDatabase()
@@ -29,14 +29,24 @@ void UserStorage::readFromDatabase()
     mAccounts = mUserDatabase->readAccounts();
 }
 
-void UserStorage::lock()
+void UserStorage::readLock()
 {
-    mMutex->lock();
+    mRwMutex->lockForRead();
 }
 
-void UserStorage::unlock()
+void UserStorage::readUnlock()
 {
-    mMutex->unlock();
+    mRwMutex->unlock();
+}
+
+void UserStorage::writeLock()
+{
+    mRwMutex->lockForWrite();
+}
+
+void UserStorage::writeUnlock()
+{
+    mRwMutex->unlock();
 }
 
 void UserStorage::setToken(const QString& token)

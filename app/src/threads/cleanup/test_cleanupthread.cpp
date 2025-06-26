@@ -48,8 +48,6 @@ TEST_F(Test_CleanupThread, Test_run)
 {
     const InSequence seq;
 
-    QMutex mutex;
-
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
     EXPECT_CALL(*stocksStorageMock, lock());
     EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(1704056400000)));

@@ -61,10 +61,10 @@ void UserUpdateThread::run()
                 }
             }
 
-            mUserStorage->lock();
+            mUserStorage->writeLock();
             mUserStorage->setUserInfo(user);
             mUserStorage->setAccounts(accounts);
-            mUserStorage->unlock();
+            mUserStorage->writeUnlock();
         }
     }
 

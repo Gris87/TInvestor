@@ -1,7 +1,6 @@
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 #include "src/grpc/utils.h"
 

@@ -369,9 +369,9 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
     IUserStorage*   userStorage    = getPaybackInfo->userStorage;
     const qint64    startTimestamp = getPaybackInfo->startTimestamp;
 
-    userStorage->lock();
+    userStorage->readLock();
     const float commission = userStorage->getCommission();
-    userStorage->unlock();
+    userStorage->readUnlock();
 
     Stock** stockArray = stocks.data();
 

@@ -80,8 +80,10 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_
 
 TEST_F(Test_UserStorage, Test_lock_unlock)
 {
-    storage->lock();
-    storage->unlock();
+    storage->writeLock();
+    storage->writeUnlock();
+    storage->readLock();
+    storage->readUnlock();
 }
 
 TEST_F(Test_UserStorage, Test_setToken)

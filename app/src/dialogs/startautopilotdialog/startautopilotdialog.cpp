@@ -95,9 +95,9 @@ void StartAutoPilotDialog::fillAccounts()
 {
     ui->accountComboBox->blockSignals(true);
 
-    mUserStorage->lock();
+    mUserStorage->readLock();
     QList<Account> accounts = mUserStorage->getAccounts().values();
-    mUserStorage->unlock();
+    mUserStorage->readUnlock();
 
     std::sort(accounts.begin(), accounts.end());
 

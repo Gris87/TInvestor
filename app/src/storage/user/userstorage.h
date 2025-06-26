@@ -4,6 +4,8 @@
 
 #include "src/storage/user/iuserstorage.h"
 
+#include <QReadWriteLock>
+
 #include "src/db/user/iuserdatabase.h"
 
 
@@ -18,8 +20,10 @@ public:
     UserStorage& operator=(const UserStorage& another) = delete;
 
     void            readFromDatabase() override;
-    void            lock() override;
-    void            unlock() override;
+    void            readLock() override;
+    void            readUnlock() override;
+    void            writeLock() override;
+    void            writeUnlock() override;
     void            setToken(const QString& token) override;
     const QString&  getToken() override;
     void            setUserInfo(const User& user) override;
@@ -29,8 +33,8 @@ public:
     const Accounts& getAccounts() override;
 
 private:
-    IUserDatabase* mUserDatabase;
-    QMutex*        mMutex;
-    User           mUser;
-    Accounts       mAccounts;
+    IUserDatabase*  mUserDatabase;
+    QReadWriteLock* mRwMutex;
+    User            mUser;
+    Accounts        mAccounts;
 };

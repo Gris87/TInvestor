@@ -728,9 +728,9 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 
-    EXPECT_CALL(*userStorageMock, lock());
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
-    EXPECT_CALL(*userStorageMock, unlock());
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
@@ -965,9 +965,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 
-    EXPECT_CALL(*userStorageMock, lock());
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
-    EXPECT_CALL(*userStorageMock, unlock());
+    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
         .WillOnce(Return(QVariant("BBBBBB")));
 

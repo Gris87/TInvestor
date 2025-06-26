@@ -516,7 +516,7 @@ void MainWindow::startAutoPilot()
     const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
-    mUserStorage->lock();
+    mUserStorage->readLock();
     const Accounts& accounts    = mUserStorage->getAccounts();
     const Account   accountInfo = accounts.value(account);
     Account         anotherAccountInfo;
@@ -534,7 +534,7 @@ void MainWindow::startAutoPilot()
     {
         mAutoPilotAnotherAccountId = "-";
     }
-    mUserStorage->unlock();
+    mUserStorage->readUnlock();
 
     if (mAutoPilotAccountId != "" && mAutoPilotAnotherAccountId != "")
     {

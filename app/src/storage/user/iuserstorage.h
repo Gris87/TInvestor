@@ -2,8 +2,6 @@
 
 
 
-#include <QMutex>
-
 #include "src/domain/user/account.h"
 #include "src/domain/user/user.h"
 
@@ -19,8 +17,10 @@ public:
     IUserStorage& operator=(const IUserStorage& another) = delete;
 
     virtual void            readFromDatabase()                    = 0;
-    virtual void            lock()                                = 0;
-    virtual void            unlock()                              = 0;
+    virtual void            readLock()                            = 0;
+    virtual void            readUnlock()                          = 0;
+    virtual void            writeLock()                           = 0;
+    virtual void            writeUnlock()                         = 0;
     virtual void            setToken(const QString& token)        = 0;
     virtual const QString&  getToken()                            = 0;
     virtual void            setUserInfo(const User& user)         = 0;

@@ -30,8 +30,6 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     StrictMock<MessageBoxUtilsMock> messageBoxUtilsMock;
     StrictMock<SettingsEditorMock>  settingsEditorMock;
 
-    QMutex mutex;
-
     Accounts accounts;
 
     Account account1;
@@ -48,9 +46,9 @@ TEST(Test_StartAutoPilotDialogFactory, Test_newInstance)
     accounts[account1.hash()] = account1;
     accounts[account2.hash()] = account2;
 
-    EXPECT_CALL(userStorageMock, lock());
+    EXPECT_CALL(userStorageMock, readLock());
     EXPECT_CALL(userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
-    EXPECT_CALL(userStorageMock, unlock());
+    EXPECT_CALL(userStorageMock, readUnlock());
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("")));

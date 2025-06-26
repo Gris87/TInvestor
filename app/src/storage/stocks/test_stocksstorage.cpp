@@ -1961,9 +1961,9 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 
-    EXPECT_CALL(*userStorageMock, lock());
+    EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.3f));
-    EXPECT_CALL(*userStorageMock, unlock());
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     storage->obtainPayback(200);
 

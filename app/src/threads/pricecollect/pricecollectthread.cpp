@@ -3,7 +3,6 @@
 #include <QAtomicInt>
 #include <QCoreApplication>
 #include <QDebug>
-#include <QMutexLocker>
 #include <QUrlQuery>
 
 #include "src/grpc/utils.h"
