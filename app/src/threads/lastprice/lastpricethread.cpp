@@ -110,7 +110,7 @@ QStringList LastPriceThread::getStockUIDs()
 {
     QStringList res;
 
-    mStocksStorage->lock();
+    mStocksStorage->readLock();
     const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     res.resizeForOverwrite(stocks.size());
@@ -119,7 +119,7 @@ QStringList LastPriceThread::getStockUIDs()
     {
         res[i] = stocks.at(i)->meta.instrumentId;
     }
-    mStocksStorage->unlock();
+    mStocksStorage->readUnlock();
 
     return res;
 }
@@ -128,14 +128,14 @@ QMap<QString, Stock*> LastPriceThread::buildStocksMap()
 {
     QMap<QString, Stock*> res; // Instrument ID => Stock
 
-    mStocksStorage->lock();
+    mStocksStorage->readLock();
     const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     for (Stock* stock : stocks)
     {
         res[stock->meta.instrumentId] = stock;
     }
-    mStocksStorage->unlock();
+    mStocksStorage->readUnlock();
 
     return res;
 }

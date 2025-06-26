@@ -15,7 +15,7 @@ StocksStorage::StocksStorage(IStocksDatabase* stocksDatabase, IUserStorage* user
     IStocksStorage(),
     mStocksDatabase(stocksDatabase),
     mUserStorage(userStorage),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mStocks()
 {
     qDebug() << "Create StocksStorage";
@@ -25,7 +25,7 @@ StocksStorage::~StocksStorage()
 {
     qDebug() << "Destroy StocksStorage";
 
-    delete mMutex;
+    delete mRwMutex;
 
     for (Stock* stock : std::as_const(mStocks))
     {
@@ -44,14 +44,24 @@ void StocksStorage::assignLogos()
     mStocksDatabase->assignLogos(mStocks);
 }
 
-void StocksStorage::lock()
+void StocksStorage::readLock()
 {
-    mMutex->lock();
+    mRwMutex->lockForRead();
 }
 
-void StocksStorage::unlock()
+void StocksStorage::readUnlock()
 {
-    mMutex->unlock();
+    mRwMutex->unlock();
+}
+
+void StocksStorage::writeLock()
+{
+    mRwMutex->lockForWrite();
+}
+
+void StocksStorage::writeUnlock()
+{
+    mRwMutex->unlock();
 }
 
 const QList<Stock*>& StocksStorage::getStocks()

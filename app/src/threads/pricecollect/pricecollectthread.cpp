@@ -139,9 +139,9 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
 
     mLogosStorage->unlock();
 
-    mStocksStorage->lock();
+    mStocksStorage->writeLock();
     const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);
-    mStocksStorage->unlock();
+    mStocksStorage->writeUnlock();
 
     return res;
 }

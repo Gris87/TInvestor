@@ -19,8 +19,10 @@ public:
 
     virtual void                 readFromDatabase()                                                           = 0;
     virtual void                 assignLogos()                                                                = 0;
-    virtual void                 lock()                                                                       = 0;
-    virtual void                 unlock()                                                                     = 0;
+    virtual void                 readLock()                                                                   = 0;
+    virtual void                 readUnlock()                                                                 = 0;
+    virtual void                 writeLock()                                                                  = 0;
+    virtual void                 writeUnlock()                                                                = 0;
     virtual const QList<Stock*>& getStocks()                                                                  = 0;
     virtual bool                 mergeStocksMeta(const QList<StockMeta>& stocksMeta)                          = 0;
     virtual void                 appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) = 0;

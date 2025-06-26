@@ -22,8 +22,10 @@ public:
 
     MOCK_METHOD(void, readFromDatabase, (), (override));
     MOCK_METHOD(void, assignLogos, (), (override));
-    MOCK_METHOD(void, lock, (), (override));
-    MOCK_METHOD(void, unlock, (), (override));
+    MOCK_METHOD(void, readLock, (), (override));
+    MOCK_METHOD(void, readUnlock, (), (override));
+    MOCK_METHOD(void, writeLock, (), (override));
+    MOCK_METHOD(void, writeUnlock, (), (override));
     MOCK_METHOD(const QList<Stock*>&, getStocks, (), (override));
     MOCK_METHOD(bool, mergeStocksMeta, (const QList<StockMeta>& stocksMeta), (override));
     MOCK_METHOD(void, appendStockData, (Stock * stock, const StockData* dataArray, int dataArraySize), (override));

@@ -476,9 +476,9 @@ void MainWindow::lastPriceChanged(const QString& instrumentId)
 
 void MainWindow::dateChangeDateTimeChanged(const QDateTime& dateTime)
 {
-    mStocksStorage->lock();
+    mStocksStorage->readLock();
     mStocksStorage->obtainStocksDatePrice(dateTime.toMSecsSinceEpoch());
-    mStocksStorage->unlock();
+    mStocksStorage->readUnlock();
 
     mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateTime.toString(DATETIME_FORMAT)));
     mStocksTableWidget->updatePrices();
@@ -922,7 +922,7 @@ void MainWindow::init()
 
 void MainWindow::updateStocksTableWidget()
 {
-    mStocksStorage->lock();
+    mStocksStorage->readLock();
     const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
     if (!stocks.isEmpty())
@@ -930,16 +930,16 @@ void MainWindow::updateStocksTableWidget()
         const QDateTime dateChangeTime = mStocksControlsWidget->getDateChangeTime();
 
         mStocksStorage->obtainStocksDatePrice(dateChangeTime.toMSecsSinceEpoch());
-        mStocksStorage->unlock();
         mStocksTableWidget->setDateChangeTooltip(tr("From: %1").arg(dateChangeTime.toString(DATETIME_FORMAT)));
         mStocksTableWidget->updateTable(stocks);
+        mStocksStorage->readUnlock();
 
         ui->waitingSpinnerWidget->stop();
         ui->waitingStackedWidget->setCurrentWidget(ui->workingPage);
     }
     else
     {
-        mStocksStorage->unlock();
+        mStocksStorage->readUnlock();
 
         ui->waitingSpinnerWidget->start();
         ui->waitingStackedWidget->setCurrentWidget(ui->waitingPage);

@@ -4,6 +4,8 @@
 
 #include "src/storage/stocks/istocksstorage.h"
 
+#include <QReadWriteLock>
+
 #include "src/db/stocks/istocksdatabase.h"
 #include "src/storage/user/iuserstorage.h"
 
@@ -20,8 +22,10 @@ public:
 
     void                 readFromDatabase() override;
     void                 assignLogos() override;
-    void                 lock() override;
-    void                 unlock() override;
+    void                 readLock() override;
+    void                 readUnlock() override;
+    void                 writeLock() override;
+    void                 writeUnlock() override;
     const QList<Stock*>& getStocks() override;
     bool                 mergeStocksMeta(const QList<StockMeta>& stocksMeta) override;
     void                 appendStockData(Stock* stock, const StockData* dataArray, int dataArraySize) override;
@@ -35,6 +39,6 @@ public:
 private:
     IStocksDatabase* mStocksDatabase;
     IUserStorage*    mUserStorage;
-    QMutex*          mMutex;
+    QReadWriteLock*  mRwMutex;
     QList<Stock*>    mStocks;
 };

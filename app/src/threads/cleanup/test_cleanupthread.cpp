@@ -49,9 +49,9 @@ TEST_F(Test_CleanupThread, Test_run)
     const InSequence seq;
 
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
-    EXPECT_CALL(*stocksStorageMock, lock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, deleteObsoleteData(Gt(1704056400000)));
-    EXPECT_CALL(*stocksStorageMock, unlock());
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
 
     thread->run();
 }
