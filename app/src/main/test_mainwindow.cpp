@@ -665,7 +665,6 @@ TEST_F(Test_MainWindow, Test_dateChangeDateTimeChanged)
 {
     const InSequence seq;
 
-    QMutex          mutex;
     const QDateTime dateChangeTime(QDate(2025, 12, 30), QTime(23, 59, 45));
 
     EXPECT_CALL(*stocksStorageMock, readLock());
@@ -704,8 +703,6 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     ASSERT_EQ(mainWindow->makeDecisionTimer.interval(), 60000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), false);
     // clang-format on
-
-    QMutex mutex;
 
     Accounts accounts;
     Account  account;
@@ -927,8 +924,6 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
     // clang-format on
 
-    QMutex mutex;
-
     Accounts accounts;
     Account  account1;
     Account  account2;
@@ -1032,7 +1027,6 @@ TEST_F(Test_MainWindow, Test_init)
 {
     // const InSequence seq;
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
     // clang-format off
@@ -1090,7 +1084,6 @@ TEST_F(Test_MainWindow, Test_updateStocksTableWidget)
 
     mainWindow->show();
 
-    QMutex        mutex;
     QList<Stock*> stocks;
 
     EXPECT_CALL(*stocksStorageMock, readLock());

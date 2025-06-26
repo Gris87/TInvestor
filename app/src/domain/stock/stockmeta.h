@@ -22,13 +22,13 @@ struct StockMeta
     [[nodiscard]]
     QJsonObject toJsonObject() const;
 
-    QString  instrumentId;
-    Logo*    instrumentLogo;
-    QString  instrumentTicker;
-    QString  instrumentName;
-    bool     forQualInvestorFlag;
-    float    minPriceIncrement;
-    qint8    pricePrecision;
+    QString instrumentId;
+    Logo*   instrumentLogo;
+    QString instrumentTicker;
+    QString instrumentName;
+    bool    forQualInvestorFlag;
+    float   minPriceIncrement;
+    qint8   pricePrecision;
 };
 
 

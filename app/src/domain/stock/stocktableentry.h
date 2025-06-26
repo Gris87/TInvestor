@@ -14,20 +14,20 @@ struct StockTableEntry
 
     StockTableEntry& operator=(const StockTableEntry& another) = default;
 
-    QString  instrumentId;
-    Logo*    instrumentLogo;
-    QString  instrumentTicker;
-    QString  instrumentName;
-    bool     forQualInvestorFlag;
-    bool     locked;
-    float    price;
-    float    dayChange;
-    float    dateChange;
-    qint64   turnover;
-    float    payback;
-    float    dayStartPrice;
-    float    specifiedDatePrice;
-    qint8    pricePrecision;
+    QString instrumentId;
+    Logo*   instrumentLogo;
+    QString instrumentTicker;
+    QString instrumentName;
+    bool    forQualInvestorFlag;
+    bool    locked;
+    float   price;
+    float   dayChange;
+    float   dateChange;
+    qint64  turnover;
+    float   payback;
+    float   dayStartPrice;
+    float   specifiedDatePrice;
+    qint8   pricePrecision;
 };
 
 

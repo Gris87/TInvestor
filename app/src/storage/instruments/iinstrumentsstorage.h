@@ -2,8 +2,6 @@
 
 
 
-#include <QMutex>
-
 #include "src/domain/instrument/instrument.h"
 
 

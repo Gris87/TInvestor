@@ -1,4 +1,3 @@
-Use RWMutex instead of QMutex
 Limit operations and logs
 Test coverage
 Create release
