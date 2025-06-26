@@ -20,7 +20,7 @@ static void quotationNanoParse(Quotation* quotation, simdjson::ondemand::value v
 
 static void quotationThrowParseException(Quotation* /*quotation*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Quotation* quotation, simdjson::ondemand::value value);

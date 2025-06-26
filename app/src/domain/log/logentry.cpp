@@ -59,7 +59,7 @@ static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
 
 static void logThrowParseException(LogEntry* /*entry*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);

@@ -48,7 +48,7 @@ static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value v
 
 static void metaThrowParseException(StockMeta* /*meta*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);

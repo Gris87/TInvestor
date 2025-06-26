@@ -20,7 +20,7 @@ static void itemCostParse(OperationFifoItem* item, simdjson::ondemand::value val
 
 static void itemThrowParseException(OperationFifoItem* /*item*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(OperationFifoItem* item, simdjson::ondemand::value value);

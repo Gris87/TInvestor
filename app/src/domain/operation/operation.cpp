@@ -1,7 +1,5 @@
 #include "src/domain/operation/operation.h"
 
-
-
 #include <QJsonArray>
 
 
@@ -194,7 +192,7 @@ static void operationCommissionPrecisionParse(Operation* operation, simdjson::on
 
 static void operationThrowParseException(Operation* /*operation*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value value);

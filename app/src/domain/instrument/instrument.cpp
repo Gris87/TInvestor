@@ -34,7 +34,7 @@ static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::onde
 
 static void instrumentThrowParseException(Instrument* /*instrument*/, simdjson::ondemand::value /*value*/)
 {
-    throw std::exception("Unknown parameter");
+    throw std::runtime_error("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value value);
