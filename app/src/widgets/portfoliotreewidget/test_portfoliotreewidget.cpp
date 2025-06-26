@@ -3,7 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
@@ -28,7 +27,6 @@ protected:
         const InSequence seq;
 
         portfolioTreeModelFactoryMock = new StrictMock<PortfolioTreeModelFactoryMock>();
-        logosStorageMock              = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock         = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock            = new StrictMock<SettingsEditorMock>();
 
@@ -38,15 +36,13 @@ protected:
         EXPECT_CALL(*portfolioTreeModelMock, rowCount(_)).WillRepeatedly(Return(0));
         EXPECT_CALL(*portfolioTreeModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
-        portfolioTreeWidget =
-            new PortfolioTreeWidget(portfolioTreeModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock);
+        portfolioTreeWidget = new PortfolioTreeWidget(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete portfolioTreeWidget;
         delete portfolioTreeModelFactoryMock;
-        delete logosStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete portfolioTreeModelMock;
@@ -54,7 +50,6 @@ protected:
 
     PortfolioTreeWidget*                       portfolioTreeWidget;
     StrictMock<PortfolioTreeModelFactoryMock>* portfolioTreeModelFactoryMock;
-    StrictMock<LogosStorageMock>*              logosStorageMock;
     StrictMock<FileDialogFactoryMock>*         fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*            settingsEditorMock;
     StrictMock<PortfolioTreeModelMock>*        portfolioTreeModelMock;

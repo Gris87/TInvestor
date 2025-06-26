@@ -163,7 +163,6 @@ protected:
                 actionsTableItemWidgetFactoryMock,
                 orderWavesDialogFactoryMock,
                 orderWavesWidgetFactoryMock,
-                logosStorageMock,
                 userStorageMock,
                 orderBookThreadMock,
                 httpClientMock,
@@ -184,7 +183,6 @@ protected:
                 operationsTableModelFactoryMock,
                 logsTableModelFactoryMock,
                 portfolioTreeModelFactoryMock,
-                logosStorageMock,
                 fileDialogFactoryMock,
                 settingsEditorMock,
                 NotNull()
@@ -202,7 +200,6 @@ protected:
                 operationsTableModelFactoryMock,
                 logsTableModelFactoryMock,
                 portfolioTreeModelFactoryMock,
-                logosStorageMock,
                 fileDialogFactoryMock,
                 settingsEditorMock,
                 NotNull()

@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h"
@@ -30,7 +29,6 @@ TEST(Test_LogsTableWidgetFactory, Test_newInstance)
     const LogsTableWidgetFactory factory;
 
     StrictMock<LogsTableModelFactoryMock> logsTableModelFactoryMock;
-    StrictMock<LogosStorageMock>          logosStorageMock;
     StrictMock<FileDialogFactoryMock>     fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>        settingsEditorMock;
 
@@ -41,7 +39,7 @@ TEST(Test_LogsTableWidgetFactory, Test_newInstance)
     EXPECT_CALL(logsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
     const ILogsTableWidget* widget =
-        factory.newInstance(&logsTableModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
+        factory.newInstance(&logsTableModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

@@ -25,7 +25,6 @@ class LogsTableWidget : public ILogsTableWidget
 public:
     explicit LogsTableWidget(
         ILogsTableModelFactory* logsTableModelFactory,
-        ILogosStorage*          logosStorage,
         IFileDialogFactory*     fileDialogFactory,
         ISettingsEditor*        settingsEditor,
         QWidget*                parent = nullptr

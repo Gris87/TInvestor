@@ -4,6 +4,7 @@
 
 #include <QJsonObject>
 
+#include "src/domain/logo/logo.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -38,7 +39,7 @@ struct LogEntry
     qint64   timestamp;
     LogLevel level;
     QString  instrumentId;
-    QPixmap* instrumentLogo;
+    Logo*    instrumentLogo;
     QString  instrumentTicker;
     QString  instrumentName;
     QString  message;

@@ -237,8 +237,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     QBuffer logoBuffer;
     QBuffer zipBuffer;
 
-    QPixmap logoImage(1, 1);
-    logoImage.save(&logoBuffer, "PNG");
+    Logo logoImage;
+    logoImage.pixmap = QPixmap(1, 1);
+    logoImage.pixmap.save(&logoBuffer, "PNG");
 
     HttpResult httpResult;
     httpResult.statusCode = 200;

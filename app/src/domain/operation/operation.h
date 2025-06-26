@@ -4,6 +4,7 @@
 
 #include <QJsonObject>
 
+#include "src/domain/logo/logo.h"
 #include "src/domain/operation/operationfifoitem.h"
 #include "src/domain/quotation/quotation.h"
 
@@ -24,7 +25,7 @@ struct Operation
 
     qint64                   timestamp;
     QString                  instrumentId;
-    QPixmap*                 instrumentLogo;
+    Logo*                    instrumentLogo;
     QString                  instrumentTicker;
     QString                  instrumentName;
     QString                  description;

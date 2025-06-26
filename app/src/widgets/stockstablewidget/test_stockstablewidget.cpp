@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"

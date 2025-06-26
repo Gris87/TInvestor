@@ -4,6 +4,7 @@
 
 #include <QJsonObject>
 
+#include "src/domain/logo/logo.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -22,7 +23,7 @@ struct StockMeta
     QJsonObject toJsonObject() const;
 
     QString  instrumentId;
-    QPixmap* instrumentLogo;
+    Logo*    instrumentLogo;
     QString  instrumentTicker;
     QString  instrumentName;
     bool     forQualInvestorFlag;

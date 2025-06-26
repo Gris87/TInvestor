@@ -29,7 +29,6 @@ constexpr double COLUMN_GAP = 0.71;
 
 OperationsTableWidget::OperationsTableWidget(
     IOperationsTableModelFactory* operationsTableModelFactory,
-    ILogosStorage*                logosStorage,
     IFileDialogFactory*           fileDialogFactory,
     ISettingsEditor*              settingsEditor,
     QWidget*                      parent
@@ -46,7 +45,7 @@ OperationsTableWidget::OperationsTableWidget(
     mOperationsTableModel = operationsTableModelFactory->newInstance(this);
 
     ui->tableView->setModel(mOperationsTableModel);
-    ui->tableView->setItemDelegateForColumn(OPERATIONS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->setItemDelegateForColumn(OPERATIONS_NAME_COLUMN, new InstrumentItemDelegate(ui->tableView));
     ui->tableView->sortByColumn(OPERATIONS_TIME_COLUMN, Qt::DescendingOrder);
 }
 

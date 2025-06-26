@@ -17,7 +17,6 @@ public:
 
     IOperationsTableWidget* newInstance(
         IOperationsTableModelFactory* operationsTableModelFactory,
-        ILogosStorage*                logosStorage,
         IFileDialogFactory*           fileDialogFactory,
         ISettingsEditor*              settingsEditor,
         QWidget*                      parent

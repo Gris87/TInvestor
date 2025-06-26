@@ -18,7 +18,6 @@ DecisionMakerWidget::DecisionMakerWidget(
     IOperationsTableModelFactory*  operationsTableModelFactory,
     ILogsTableModelFactory*        logsTableModelFactory,
     IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-    ILogosStorage*                 logosStorage,
     IFileDialogFactory*            fileDialogFactory,
     ISettingsEditor*               settingsEditor,
     QWidget*                       parent
@@ -40,16 +39,13 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
-    mOperationsTableWidget = operationsTableWidgetFactory->newInstance(
-        operationsTableModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this
-    );
+    mOperationsTableWidget =
+        operationsTableWidgetFactory->newInstance(operationsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
-    mLogsTableWidget =
-        logsTableWidgetFactory->newInstance(logsTableModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this);
-    mPortfolioTreeWidget = portfolioTreeWidgetFactory->newInstance(
-        portfolioTreeModelFactory, logosStorage, fileDialogFactory, mSettingsEditor, this
-    );
+    mLogsTableWidget    = logsTableWidgetFactory->newInstance(logsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
+    mPortfolioTreeWidget =
+        portfolioTreeWidgetFactory->newInstance(portfolioTreeModelFactory, fileDialogFactory, mSettingsEditor, this);
 
     mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());
 

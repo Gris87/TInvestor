@@ -17,7 +17,6 @@ public:
 
     IPortfolioTreeWidget* newInstance(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
-        ILogosStorage*              logosStorage,
         IFileDialogFactory*         fileDialogFactory,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent

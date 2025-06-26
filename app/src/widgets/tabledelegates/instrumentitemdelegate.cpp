@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QPainter>
 
+#include "src/domain/logo/logo.h"
 #include "src/widgets/tablemodels/modelroles.h"
 
 
@@ -20,9 +21,8 @@ QModelIndex InstrumentItemDelegate::hoverIndex      = QModelIndex();
 
 
 
-InstrumentItemDelegate::InstrumentItemDelegate(ILogosStorage* logosStorage, QWidget* parent) :
+InstrumentItemDelegate::InstrumentItemDelegate(QWidget* parent) :
     QStyledItemDelegate(parent),
-    mLogosStorage(logosStorage),
     mLockedPixmap(":/assets/images/lock.png")
 {
     qDebug() << "Create InstrumentItemDelegate";
@@ -38,20 +38,19 @@ InstrumentItemDelegate::~InstrumentItemDelegate()
 
 void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    QPixmap* logo =
-        reinterpret_cast<QPixmap*>(index.data(ROLE_INSTRUMENT_LOGO).toLongLong()); // NOLINT(performance-no-int-to-ptr)
+    Logo* logo = reinterpret_cast<Logo*>(index.data(ROLE_INSTRUMENT_LOGO).toLongLong()); // NOLINT(performance-no-int-to-ptr)
 
     if (logo != nullptr)
     {
-        mLogosStorage->readLock();
+        logo->readLock();
         painter->drawPixmap(
             option.rect.x(),
             option.rect.y() + ((option.rect.height() - LOGO_ICON_SIZE) / 2),
             LOGO_ICON_SIZE,
             LOGO_ICON_SIZE,
-            *logo
+            logo->pixmap
         );
-        mLogosStorage->readUnlock();
+        logo->readUnlock();
     }
 
     qint8 offset = LOGO_ICON_SIZE + SPACING;

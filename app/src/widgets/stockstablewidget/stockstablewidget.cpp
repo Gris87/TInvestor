@@ -29,7 +29,6 @@ StocksTableWidget::StocksTableWidget(
     IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
     IOrderWavesDialogFactory*       orderWavesDialogFactory,
     IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-    ILogosStorage*                  logosStorage,
     IUserStorage*                   userStorage,
     IOrderBookThread*               orderBookThread,
     IHttpClient*                    httpClient,
@@ -57,7 +56,7 @@ StocksTableWidget::StocksTableWidget(
     mStocksTableModel = stocksTableModelFactory->newInstance(userStorage, this);
 
     ui->tableView->setModel(mStocksTableModel);
-    ui->tableView->setItemDelegateForColumn(STOCKS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->setItemDelegateForColumn(STOCKS_NAME_COLUMN, new InstrumentItemDelegate(ui->tableView));
     ui->tableView->sortByColumn(STOCKS_NAME_COLUMN, Qt::AscendingOrder);
 
     connect(mStocksTableModel, SIGNAL(modelReset()), this, SLOT(modelReset()));

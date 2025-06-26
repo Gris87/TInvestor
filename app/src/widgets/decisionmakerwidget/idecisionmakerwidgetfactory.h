@@ -32,7 +32,6 @@ public:
         IOperationsTableModelFactory*  operationsTableModelFactory,
         ILogsTableModelFactory*        logsTableModelFactory,
         IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-        ILogosStorage*                 logosStorage,
         IFileDialogFactory*            fileDialogFactory,
         ISettingsEditor*               settingsEditor,
         QWidget*                       parent

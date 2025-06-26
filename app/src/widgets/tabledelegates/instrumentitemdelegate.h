@@ -6,8 +6,6 @@
 
 #include <QLabel>
 
-#include "src/storage/logos/ilogosstorage.h"
-
 
 
 class InstrumentItemDelegate : public QStyledItemDelegate
@@ -15,7 +13,7 @@ class InstrumentItemDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    explicit InstrumentItemDelegate(ILogosStorage* logosStorage, QWidget* parent = nullptr);
+    explicit InstrumentItemDelegate(QWidget* parent = nullptr);
     ~InstrumentItemDelegate() override;
 
     InstrumentItemDelegate(const InstrumentItemDelegate& another)            = delete;
@@ -30,6 +28,5 @@ public:
     static QModelIndex hoverIndex;
 
 private:
-    ILogosStorage* mLogosStorage;
-    QPixmap        mLockedPixmap;
+    QPixmap mLockedPixmap;
 };

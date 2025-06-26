@@ -3,7 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/logstablemodel/ilogstablemodel_mock.h"
@@ -28,7 +27,6 @@ protected:
         const InSequence seq;
 
         logsTableModelFactoryMock = new StrictMock<LogsTableModelFactoryMock>();
-        logosStorageMock          = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock     = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock        = new StrictMock<SettingsEditorMock>();
 
@@ -38,15 +36,13 @@ protected:
         EXPECT_CALL(*logsTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
         EXPECT_CALL(*logsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
-        logsTableWidget =
-            new LogsTableWidget(logsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock);
+        logsTableWidget = new LogsTableWidget(logsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
     }
 
     void TearDown() override
     {
         delete logsTableWidget;
         delete logsTableModelFactoryMock;
-        delete logosStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete logsTableModelMock;
@@ -54,7 +50,6 @@ protected:
 
     LogsTableWidget*                       logsTableWidget;
     StrictMock<LogsTableModelFactoryMock>* logsTableModelFactoryMock;
-    StrictMock<LogosStorageMock>*          logosStorageMock;
     StrictMock<FileDialogFactoryMock>*     fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*        settingsEditorMock;
     StrictMock<LogsTableModelMock>*        logsTableModelMock;

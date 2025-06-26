@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodel_mock.h"
@@ -30,7 +29,6 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     const PortfolioTreeWidgetFactory factory;
 
     StrictMock<PortfolioTreeModelFactoryMock> portfolioTreeModelFactoryMock;
-    StrictMock<LogosStorageMock>              logosStorageMock;
     StrictMock<FileDialogFactoryMock>         fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>            settingsEditorMock;
 
@@ -40,9 +38,8 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     EXPECT_CALL(portfolioTreeModelMock, rowCount(_)).WillRepeatedly(Return(0));
     EXPECT_CALL(portfolioTreeModelMock, columnCount(_)).WillRepeatedly(Return(0));
 
-    const IPortfolioTreeWidget* widget = factory.newInstance(
-        &portfolioTreeModelFactoryMock, &logosStorageMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr
-    );
+    const IPortfolioTreeWidget* widget =
+        factory.newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);
     ASSERT_TRUE(widget != nullptr);
 
     delete widget;

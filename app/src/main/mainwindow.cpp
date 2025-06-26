@@ -164,7 +164,6 @@ MainWindow::MainWindow(
         actionsTableItemWidgetFactory,
         orderWavesDialogFactory,
         orderWavesWidgetFactory,
-        mLogosStorage,
         mUserStorage,
         mOrderBookThread,
         mHttpClient,
@@ -181,7 +180,6 @@ MainWindow::MainWindow(
         operationsTableModelFactory,
         logsTableModelFactory,
         portfolioTreeModelFactory,
-        mLogosStorage,
         mFileDialogFactory,
         mSettingsEditor,
         this
@@ -195,7 +193,6 @@ MainWindow::MainWindow(
         operationsTableModelFactory,
         logsTableModelFactory,
         portfolioTreeModelFactory,
-        mLogosStorage,
         mFileDialogFactory,
         mSettingsEditor,
         this

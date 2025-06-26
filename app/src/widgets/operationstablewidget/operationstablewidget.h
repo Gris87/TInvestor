@@ -25,7 +25,6 @@ class OperationsTableWidget : public IOperationsTableWidget
 public:
     explicit OperationsTableWidget(
         IOperationsTableModelFactory* operationsTableModelFactory,
-        ILogosStorage*                logosStorage,
         IFileDialogFactory*           fileDialogFactory,
         ISettingsEditor*              settingsEditor,
         QWidget*                      parent = nullptr

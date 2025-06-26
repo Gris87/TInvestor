@@ -6,7 +6,6 @@
 
 #include <QLabel>
 
-#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/tablemodels/portfoliotreemodel/iportfoliotreemodelfactory.h"
@@ -27,7 +26,6 @@ class PortfolioTreeWidget : public IPortfolioTreeWidget
 public:
     explicit PortfolioTreeWidget(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
-        ILogosStorage*              logosStorage,
         IFileDialogFactory*         fileDialogFactory,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent = nullptr

@@ -5,7 +5,6 @@
 #include "src/widgets/stockstablewidget/istockstablewidget.h"
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory.h"
-#include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/user/iuserstorage.h"
 #include "src/threads/orderbook/iorderbookthread.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
@@ -34,7 +33,6 @@ public:
         IActionsTableItemWidgetFactory* actionsTableItemWidgetFactory,
         IOrderWavesDialogFactory*       orderWavesDialogFactory,
         IOrderWavesWidgetFactory*       orderWavesWidgetFactory,
-        ILogosStorage*                  logosStorage,
         IUserStorage*                   userStorage,
         IOrderBookThread*               orderBookThread,
         IHttpClient*                    httpClient,

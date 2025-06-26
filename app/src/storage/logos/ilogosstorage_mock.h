@@ -26,5 +26,5 @@ public:
     MOCK_METHOD(void, writeLock, (), (override));
     MOCK_METHOD(void, writeUnlock, (), (override));
     MOCK_METHOD(void, setLogo, (const QString& instrumentId, const QPixmap& logo), (override));
-    MOCK_METHOD(QPixmap*, getLogo, (const QString& instrumentId), (override));
+    MOCK_METHOD(Logo*, getLogo, (const QString& instrumentId), (override));
 };

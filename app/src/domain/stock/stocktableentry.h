@@ -2,7 +2,7 @@
 
 
 
-#include <QPixmap>
+#include "src/domain/logo/logo.h"
 
 
 
@@ -15,7 +15,7 @@ struct StockTableEntry
     StockTableEntry& operator=(const StockTableEntry& another) = default;
 
     QString  instrumentId;
-    QPixmap* instrumentLogo;
+    Logo*    instrumentLogo;
     QString  instrumentTicker;
     QString  instrumentName;
     bool     forQualInvestorFlag;

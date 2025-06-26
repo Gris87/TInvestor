@@ -13,7 +13,7 @@ LogosStorage::LogosStorage(ILogosDatabase* logosDatabase) :
 {
     qDebug() << "Create LogosStorage";
 
-    mNotFoundLogo.load(":/assets/images/no_image.png", "PNG");
+    mNotFoundLogo.pixmap.load(":/assets/images/no_image.png", "PNG");
 }
 
 LogosStorage::~LogosStorage()
@@ -59,7 +59,9 @@ void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)
 
     if (logoInStorage != nullptr)
     {
+        logoInStorage->writeLock();
         logoInStorage->pixmap = logo;
+        logoInStorage->writeUnlock();
     }
     else
     {
@@ -72,7 +74,7 @@ void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)
     mLogosDatabase->writeLogo(instrumentId, &logoInStorage->pixmap);
 }
 
-QPixmap* LogosStorage::getLogo(const QString& instrumentId)
+Logo* LogosStorage::getLogo(const QString& instrumentId)
 {
     if (instrumentId == "")
     {
@@ -86,12 +88,12 @@ QPixmap* LogosStorage::getLogo(const QString& instrumentId)
         return &mNotFoundLogo;
     }
 
-    res->mutex.lock();
+    res->writeLock();
     if (res->pixmap.isNull())
     {
         mLogosDatabase->readLogo(instrumentId, &res->pixmap);
     }
-    res->mutex.unlock();
+    res->writeUnlock();
 
-    return &res->pixmap;
+    return res;
 }

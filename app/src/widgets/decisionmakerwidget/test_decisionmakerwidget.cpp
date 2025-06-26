@@ -3,7 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
@@ -52,7 +51,6 @@ protected:
         operationsTableModelFactoryMock  = new StrictMock<OperationsTableModelFactoryMock>();
         logsTableModelFactoryMock        = new StrictMock<LogsTableModelFactoryMock>();
         portfolioTreeModelFactoryMock    = new StrictMock<PortfolioTreeModelFactoryMock>();
-        logosStorageMock                 = new StrictMock<LogosStorageMock>();
         fileDialogFactoryMock            = new StrictMock<FileDialogFactoryMock>();
         settingsEditorMock               = new StrictMock<SettingsEditorMock>();
 
@@ -60,7 +58,7 @@ protected:
 
         EXPECT_CALL(
             *operationsTableWidgetFactoryMock,
-            newInstance(operationsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(operationsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(operationsTableWidgetMock));
         EXPECT_CALL(*accountChartWidgetFactoryMock, newInstance(fileDialogFactoryMock, settingsEditorMock, NotNull()))
@@ -68,12 +66,12 @@ protected:
         EXPECT_CALL(*logsFilterWidgetFactoryMock, newInstance(NotNull())).WillOnce(Return(logsFilterWidgetMock));
         EXPECT_CALL(
             *logsTableWidgetFactoryMock,
-            newInstance(logsTableModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(logsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(logsTableWidgetMock));
         EXPECT_CALL(
             *portfolioTreeWidgetFactoryMock,
-            newInstance(portfolioTreeModelFactoryMock, logosStorageMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
+            newInstance(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(portfolioTreeWidgetMock));
 
@@ -89,7 +87,6 @@ protected:
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
             portfolioTreeModelFactoryMock,
-            logosStorageMock,
             fileDialogFactoryMock,
             settingsEditorMock
         );
@@ -114,7 +111,6 @@ protected:
         delete operationsTableModelFactoryMock;
         delete logsTableModelFactoryMock;
         delete portfolioTreeModelFactoryMock;
-        delete logosStorageMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
     }
@@ -133,7 +129,6 @@ protected:
     StrictMock<OperationsTableModelFactoryMock>*  operationsTableModelFactoryMock;
     StrictMock<LogsTableModelFactoryMock>*        logsTableModelFactoryMock;
     StrictMock<PortfolioTreeModelFactoryMock>*    portfolioTreeModelFactoryMock;
-    StrictMock<LogosStorageMock>*                 logosStorageMock;
     StrictMock<FileDialogFactoryMock>*            fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*               settingsEditorMock;
 };

@@ -2,7 +2,6 @@
 
 
 
-#include "src/storage/logos/ilogosstorage.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/portfoliotreewidget/iportfoliotreewidget.h"
@@ -21,7 +20,6 @@ public:
 
     virtual IPortfolioTreeWidget* newInstance(
         IPortfolioTreeModelFactory* portfolioTreeModelFactory,
-        ILogosStorage*              logosStorage,
         IFileDialogFactory*         fileDialogFactory,
         ISettingsEditor*            settingsEditor,
         QWidget*                    parent

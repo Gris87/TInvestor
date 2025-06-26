@@ -26,7 +26,6 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
     IOperationsTableModelFactory*  operationsTableModelFactory,
     ILogsTableModelFactory*        logsTableModelFactory,
     IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-    ILogosStorage*                 logosStorage,
     IFileDialogFactory*            fileDialogFactory,
     ISettingsEditor*               settingsEditor,
     QWidget*                       parent
@@ -41,7 +40,6 @@ IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
         operationsTableModelFactory,
         logsTableModelFactory,
         portfolioTreeModelFactory,
-        logosStorage,
         fileDialogFactory,
         settingsEditor,
         parent

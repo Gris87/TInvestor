@@ -29,7 +29,6 @@ constexpr double COLUMN_GAP      = 0.71;
 
 PortfolioTreeWidget::PortfolioTreeWidget(
     IPortfolioTreeModelFactory* portfolioTreeModelFactory,
-    ILogosStorage*              logosStorage,
     IFileDialogFactory*         fileDialogFactory,
     ISettingsEditor*            settingsEditor,
     QWidget*                    parent
@@ -48,7 +47,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     mPortfolioTreeModel = portfolioTreeModelFactory->newInstance(this);
 
     ui->treeView->setModel(mPortfolioTreeModel);
-    ui->treeView->setItemDelegateForColumn(PORTFOLIO_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->treeView));
+    ui->treeView->setItemDelegateForColumn(PORTFOLIO_NAME_COLUMN, new InstrumentItemDelegate(ui->treeView));
     ui->treeView->sortByColumn(PORTFOLIO_NAME_COLUMN, Qt::AscendingOrder);
 }
 

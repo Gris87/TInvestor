@@ -26,7 +26,6 @@ constexpr double COLUMN_GAP = 0.71;
 
 LogsTableWidget::LogsTableWidget(
     ILogsTableModelFactory* logsTableModelFactory,
-    ILogosStorage*          logosStorage,
     IFileDialogFactory*     fileDialogFactory,
     ISettingsEditor*        settingsEditor,
     QWidget*                parent
@@ -45,7 +44,7 @@ LogsTableWidget::LogsTableWidget(
 
     ui->tableView->setModel(mLogsTableModel);
     ui->tableView->setItemDelegateForColumn(LOGS_LEVEL_COLUMN, new LogLevelItemDelegate(ui->tableView));
-    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(logosStorage, ui->tableView));
+    ui->tableView->setItemDelegateForColumn(LOGS_NAME_COLUMN, new InstrumentItemDelegate(ui->tableView));
     ui->tableView->sortByColumn(LOGS_TIME_COLUMN, Qt::DescendingOrder);
 }
 

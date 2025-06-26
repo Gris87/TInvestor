@@ -22,7 +22,6 @@ public:
 
     virtual ILogsTableWidget* newInstance(
         ILogsTableModelFactory* logsTableModelFactory,
-        ILogosStorage*          logosStorage,
         IFileDialogFactory*     fileDialogFactory,
         ISettingsEditor*        settingsEditor,
         QWidget*                parent

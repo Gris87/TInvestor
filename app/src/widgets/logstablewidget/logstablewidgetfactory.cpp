@@ -19,11 +19,10 @@ LogsTableWidgetFactory::~LogsTableWidgetFactory()
 
 ILogsTableWidget* LogsTableWidgetFactory::newInstance(
     ILogsTableModelFactory* logsTableModelFactory,
-    ILogosStorage*          logosStorage,
     IFileDialogFactory*     fileDialogFactory,
     ISettingsEditor*        settingsEditor,
     QWidget*                parent
 ) const
 {
-    return new LogsTableWidget(logsTableModelFactory, logosStorage, fileDialogFactory, settingsEditor, parent);
+    return new LogsTableWidget(logsTableModelFactory, fileDialogFactory, settingsEditor, parent);
 }
