@@ -4,7 +4,7 @@
 
 #include "src/storage/logos/ilogosstorage.h"
 
-#include <QMap>
+#include <QReadWriteLock>
 
 #include "src/db/logos/ilogosdatabase.h"
 
@@ -20,14 +20,16 @@ public:
     LogosStorage& operator=(const LogosStorage& another) = delete;
 
     void     readFromDatabase() override;
-    void     lock() override;
-    void     unlock() override;
+    void     readLock() override;
+    void     readUnlock() override;
+    void     writeLock() override;
+    void     writeUnlock() override;
     void     setLogo(const QString& instrumentId, const QPixmap& logo) override;
     QPixmap* getLogo(const QString& instrumentId) override;
 
 private:
     ILogosDatabase* mLogosDatabase;
-    QMutex*         mMutex;
+    QReadWriteLock* mRwMutex;
     Logos           mLogos;
     QPixmap         mNotFoundLogo;
 };

@@ -161,10 +161,7 @@ static void readOperationsForParallel(
             simdjson::ondemand::document doc = parser.iterate(jsonData);
 
             operation.fromJsonObject(doc.get_object());
-
-            logosStorage->lock(); // TODO: Should do read lock outside
             operation.instrumentLogo = logosStorage->getLogo(operation.instrumentId);
-            logosStorage->unlock();
         }
         catch (...)
         {
@@ -201,8 +198,12 @@ QList<Operation> OperationsDatabase::readOperations()
 
             res.resizeForOverwrite(indecies.size());
 
+            mLogosStorage->readLock();
+
             ReadOperationsInfo readOperationsInfo(mLogosStorage, content, &indecies);
             processInParallel(res, readOperationsForParallel, &readOperationsInfo);
+
+            mLogosStorage->readUnlock();
         }
         else
         {
@@ -220,7 +221,7 @@ QList<Operation> OperationsDatabase::readOperations()
 
                 int i = res.size() - 1;
 
-                mLogosStorage->lock();
+                mLogosStorage->readLock();
 
                 for (const simdjson::ondemand::object jsonObject : jsonOperations)
                 {
@@ -232,7 +233,7 @@ QList<Operation> OperationsDatabase::readOperations()
                     --i;
                 }
 
-                mLogosStorage->unlock();
+                mLogosStorage->readUnlock();
             }
             catch (...)
             {

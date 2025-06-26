@@ -108,7 +108,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     QMap<QString, QList<PortfolioItem>> categories; // Instrument type => category
 
     mInstrumentsStorage->lock();
-    mLogosStorage->lock();
+    mLogosStorage->readLock();
 
     for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {
@@ -151,7 +151,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         categories[instrumentType].append(item);
     }
 
-    mLogosStorage->unlock();
+    mLogosStorage->readUnlock();
     mInstrumentsStorage->unlock();
 
     for (const QString& category : std::as_const(mSortedCategories))

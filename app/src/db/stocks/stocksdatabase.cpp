@@ -166,12 +166,12 @@ assignLogosForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 
 void StocksDatabase::assignLogos(QList<Stock*>& stocks)
 {
-    mLogosStorage->lock();
+    mLogosStorage->readLock();
 
     AssignLogosInfo assignLogosInfo(mLogosStorage);
     processInParallel(stocks, assignLogosForParallel, &assignLogosInfo);
 
-    mLogosStorage->unlock();
+    mLogosStorage->readUnlock();
 }
 
 void StocksDatabase::writeStocksMeta(const QList<Stock*>& stocks)

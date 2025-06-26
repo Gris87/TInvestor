@@ -474,9 +474,9 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
         instrument.pricePrecision = 2;
     }
 
-    mLogosStorage->lock();
+    mLogosStorage->readLock();
     res->instrumentLogo = mLogosStorage->getLogo(instrumentId);
-    mLogosStorage->unlock();
+    mLogosStorage->readUnlock();
 
     res->timestamp                       = timestamp + mAmountOfOperationsWithSameTimestamp;
     res->instrumentId                    = instrumentId;

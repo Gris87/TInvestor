@@ -43,7 +43,7 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
 
     if (logo != nullptr)
     {
-        mLogosStorage->lock();
+        mLogosStorage->readLock();
         painter->drawPixmap(
             option.rect.x(),
             option.rect.y() + ((option.rect.height() - LOGO_ICON_SIZE) / 2),
@@ -51,7 +51,7 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
             LOGO_ICON_SIZE,
             *logo
         );
-        mLogosStorage->unlock();
+        mLogosStorage->readUnlock();
     }
 
     qint8 offset = LOGO_ICON_SIZE + SPACING;

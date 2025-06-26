@@ -7,7 +7,7 @@
 LogosStorage::LogosStorage(ILogosDatabase* logosDatabase) :
     ILogosStorage(),
     mLogosDatabase(logosDatabase),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mLogos(),
     mNotFoundLogo()
 {
@@ -20,7 +20,7 @@ LogosStorage::~LogosStorage()
 {
     qDebug() << "Destroy LogosStorage";
 
-    delete mMutex;
+    delete mRwMutex;
 
     for (auto it = mLogos.constBegin(); it != mLogos.constEnd(); ++it)
     {
@@ -33,14 +33,24 @@ void LogosStorage::readFromDatabase()
     mLogos = mLogosDatabase->prepareLogos();
 }
 
-void LogosStorage::lock()
+void LogosStorage::readLock()
 {
-    mMutex->lock();
+    mRwMutex->lockForRead();
 }
 
-void LogosStorage::unlock()
+void LogosStorage::readUnlock()
 {
-    mMutex->unlock();
+    mRwMutex->unlock();
+}
+
+void LogosStorage::writeLock()
+{
+    mRwMutex->lockForWrite();
+}
+
+void LogosStorage::writeUnlock()
+{
+    mRwMutex->unlock();
 }
 
 void LogosStorage::setLogo(const QString& instrumentId, const QPixmap& logo)

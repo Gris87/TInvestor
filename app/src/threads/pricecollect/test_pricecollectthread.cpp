@@ -277,9 +277,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_BASE))
         .WillOnce(Return(stocksResponse));
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, readUnlock());
     EXPECT_CALL(*stocksStorageMock, writeLock());
     EXPECT_CALL(*stocksStorageMock, mergeStocksMeta(Ne(QList<StockMeta>()))).WillOnce(Return(true));
     EXPECT_CALL(*stocksStorageMock, writeUnlock());
@@ -297,9 +297,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/ZARAx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("bbbbb"), _));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ccccc.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock2)));
@@ -307,9 +307,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/LOTOx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("ccccc"), _));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/ddddd.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock3)));
@@ -317,9 +317,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/USDx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("ddddd"), _));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/eeeee.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock4)));
@@ -327,9 +327,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
         *httpClientMock, download(QUrl(QString("https://invest-brands.cdn-tinkoff.ru/DOGSx160.png")), IHttpClient::Headers())
     )
         .WillOnce(Return(httpResult));
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("eeeee"), _));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
 
     EXPECT_CALL(*fileFactoryMock, newInstance(QString("%1/data/instruments/logos/fffff.png").arg(appDir)))
         .WillOnce(Return(std::shared_ptr<IFile>(logoFileMock5)));
@@ -342,9 +342,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*noImageFileMock, open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
     EXPECT_CALL(*noImageFileMock, readAll()).WillOnce(Return(logoBuffer.data()));
     EXPECT_CALL(*noImageFileMock, close());
-    EXPECT_CALL(*logosStorageMock, lock());
+    EXPECT_CALL(*logosStorageMock, writeLock());
     EXPECT_CALL(*logosStorageMock, setLogo(QString("fffff"), _));
-    EXPECT_CALL(*logosStorageMock, unlock());
+    EXPECT_CALL(*logosStorageMock, writeUnlock());
 
     EXPECT_CALL(*instrumentsStorageMock, lock());
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));

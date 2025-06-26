@@ -157,10 +157,7 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
             simdjson::ondemand::document doc = parser.iterate(jsonData);
 
             entry.fromJsonObject(doc.get_object());
-
-            logosStorage->lock(); // TODO: Should do read lock outside
             entry.instrumentLogo = logosStorage->getLogo(entry.instrumentId);
-            logosStorage->unlock();
         }
         catch (...)
         {
@@ -197,8 +194,12 @@ QList<LogEntry> LogsDatabase::readLogs()
 
             res.resizeForOverwrite(indecies.size());
 
+            mLogosStorage->readLock();
+
             ReadLogsInfo readLogsInfo(mLogosStorage, content, &indecies);
             processInParallel(res, readLogsForParallel, &readLogsInfo);
+
+            mLogosStorage->readUnlock();
         }
         else
         {
@@ -216,7 +217,7 @@ QList<LogEntry> LogsDatabase::readLogs()
 
                 int i = res.size() - 1;
 
-                mLogosStorage->lock();
+                mLogosStorage->readLock();
 
                 for (const simdjson::ondemand::object jsonObject : jsonLogs)
                 {
@@ -228,7 +229,7 @@ QList<LogEntry> LogsDatabase::readLogs()
                     --i;
                 }
 
-                mLogosStorage->unlock();
+                mLogosStorage->readUnlock();
             }
             catch (...)
             {

@@ -115,7 +115,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
 
     stocksMeta.reserve(tinkoffStocks->instruments_size());
 
-    mLogosStorage->lock();
+    mLogosStorage->readLock();
 
     for (int i = 0; i < tinkoffStocks->instruments_size(); ++i)
     {
@@ -137,7 +137,7 @@ bool PriceCollectThread::storeNewStocksInfo(const std::shared_ptr<tinkoff::Share
         }
     }
 
-    mLogosStorage->unlock();
+    mLogosStorage->readUnlock();
 
     mStocksStorage->writeLock();
     const bool res = mStocksStorage->mergeStocksMeta(stocksMeta);
@@ -373,9 +373,9 @@ void PriceCollectThread::downloadLogo(const QString& instrumentId, const QUrl& u
         Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
     }
 
-    mLogosStorage->lock();
+    mLogosStorage->writeLock();
     mLogosStorage->setLogo(instrumentId, logo);
-    mLogosStorage->unlock();
+    mLogosStorage->writeUnlock();
 }
 
 struct DownloadLogosInfo

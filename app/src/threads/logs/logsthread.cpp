@@ -97,9 +97,9 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
                 instrument.pricePrecision = 2;
             }
 
-            mLogosStorage->lock();
+            mLogosStorage->readLock();
             entry.instrumentLogo = mLogosStorage->getLogo(instrumentId);
-            mLogosStorage->unlock();
+            mLogosStorage->readUnlock();
 
             entry.instrumentTicker = instrument.ticker;
             entry.instrumentName   = instrument.name;
