@@ -16,5 +16,5 @@ public:
     QZipFactory& operator=(const QZipFactory& another) = delete;
 
     [[nodiscard]]
-    std::shared_ptr<IQZip> newInstance(const QString& name) const override;
+    std::shared_ptr<IQZip> newInstance(QIODevice* device) const override;
 };

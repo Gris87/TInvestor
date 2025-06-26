@@ -9,7 +9,7 @@
 class QZip : public IQZip
 {
 public:
-    explicit QZip(const QString& name);
+    explicit QZip(QIODevice* device);
     ~QZip() override;
 
     QZip(const QZip& another)            = delete;

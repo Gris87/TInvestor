@@ -525,29 +525,29 @@ static void getCandlesWithGrpc(
 }
 
 static int getCandlesFromZipFile(
-    QThread*          parentThread,
-    IQZipFactory*     qZipFactory,
-    IQZipFileFactory* qZipFileFactory,
-    qint64            startTimestamp,
-    qint64            endTimestamp,
-    const QString&    zipFilePath,
-    StockData*        dataArray
+    QThread*               parentThread,
+    IQZipFactory*          qZipFactory,
+    IQZipFileFactory*      qZipFileFactory,
+    qint64                 startTimestamp,
+    qint64                 endTimestamp,
+    std::shared_ptr<IFile> stockDataFile,
+    StockData*             dataArray
 )
 {
     int indexOffset = 0;
 
-    const std::shared_ptr<IQZip> stockDataFile = qZipFactory->newInstance(zipFilePath);
+    const std::shared_ptr<IQZip> stockDataZipFile = qZipFactory->newInstance(stockDataFile->getDevice());
 
-    if (stockDataFile->open(QuaZip::mdUnzip))
+    if (stockDataZipFile->open(QuaZip::mdUnzip))
     {
-        const std::shared_ptr<IQZipFile> stockZippedFile = qZipFileFactory->newInstance(stockDataFile->getZip());
+        const std::shared_ptr<IQZipFile> stockZippedFile = qZipFileFactory->newInstance(stockDataZipFile->getZip());
 
-        QStringList zippedFiles = stockDataFile->getFileNameList();
+        QStringList zippedFiles = stockDataZipFile->getFileNameList();
         zippedFiles.sort();
 
         for (int i = 0; i < zippedFiles.size() && !parentThread->isInterruptionRequested(); ++i)
         {
-            stockDataFile->setCurrentFile(zippedFiles.at(i));
+            stockDataZipFile->setCurrentFile(zippedFiles.at(i));
 
             stockZippedFile->open(QIODevice::ReadOnly);
             const QString content = QString::fromUtf8(stockZippedFile->readAll());
@@ -578,7 +578,7 @@ static int getCandlesFromZipFile(
             }
         }
 
-        stockDataFile->close();
+        stockDataZipFile->close();
     }
 
     return indexOffset;
@@ -664,7 +664,7 @@ static void getCandlesWithHttp(
         }
 
         indexOffset += getCandlesFromZipFile(
-            parentThread, qZipFactory, qZipFileFactory, startTimestamp, endTimestamp, zipFilePath, &dataArray[indexOffset]
+            parentThread, qZipFactory, qZipFileFactory, startTimestamp, endTimestamp, stockDataFile, &dataArray[indexOffset]
         );
     }
 

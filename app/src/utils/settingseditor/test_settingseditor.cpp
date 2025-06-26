@@ -38,11 +38,8 @@ TEST(Test_SettingsEditor, Test_ini_format)
 {
     const QString appDir = qApp->applicationDirPath();
 
-    QDir qDir(appDir + "/test/dir_for_settings");
-    ASSERT_TRUE(!qDir.exists());
-
-    ASSERT_TRUE(qDir.mkpath(appDir + "/test/dir_for_settings"));
-    ASSERT_TRUE(qDir.exists());
+    ASSERT_TRUE(QDir(appDir + "/test/dir_for_settings").removeRecursively());
+    ASSERT_TRUE(QDir().mkpath(appDir + "/test/dir_for_settings"));
 
     SettingsEditor* editor = new SettingsEditor(appDir + "/test/dir_for_settings/settings.ini", QSettings::IniFormat);
     editor->setValue("TestKey", 123);
@@ -69,7 +66,6 @@ TEST(Test_SettingsEditor, Test_ini_format)
 
     ASSERT_EQ(content, "");
 
-    ASSERT_TRUE(qDir.removeRecursively());
-    ASSERT_TRUE(!qDir.exists());
+    ASSERT_TRUE(QDir(appDir + "/test/dir_for_settings").removeRecursively());
 }
 // NOLINTEND(readability-magic-numbers)

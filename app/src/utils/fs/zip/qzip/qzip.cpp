@@ -4,9 +4,9 @@
 
 
 
-QZip::QZip(const QString& name) :
+QZip::QZip(QIODevice* device) :
     IQZip(),
-    mQuaZip(QuaZip(name))
+    mQuaZip(device)
 {
     qDebug() << "Create QZip";
 }

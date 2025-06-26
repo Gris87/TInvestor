@@ -17,7 +17,7 @@ QZipFactory::~QZipFactory()
     qDebug() << "Destroy QZipFactory";
 }
 
-std::shared_ptr<IQZip> QZipFactory::newInstance(const QString& name) const
+std::shared_ptr<IQZip> QZipFactory::newInstance(QIODevice* device) const
 {
-    return std::shared_ptr<IQZip>(new QZip(name));
+    return std::shared_ptr<IQZip>(new QZip(device));
 }

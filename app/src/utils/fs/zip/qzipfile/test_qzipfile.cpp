@@ -1,6 +1,6 @@
 #include "src/utils/fs/zip/qzipfile/qzipfile.h"
 
-#include <QCoreApplication>
+#include <QBuffer>
 #include <QDir>
 #include <gtest/gtest.h>
 
@@ -12,11 +12,7 @@ class Test_QZipFile : public ::testing::Test
 protected:
     void SetUp() override
     {
-        appDir = qApp->applicationDirPath();
-        QDir(appDir + "/test/dir_for_qzipfile").removeRecursively();
-        QDir().mkpath(appDir + "/test/dir_for_qzipfile");
-
-        zip = new QuaZip(appDir + "/test/dir_for_qzipfile/test.zip");
+        zip = new QuaZip(&zipBuffer);
         zip->open(QuaZip::mdCreate);
 
         QuaZipFile zipFile(zip);
@@ -43,13 +39,11 @@ protected:
 
         delete qZipFile;
         delete zip;
-
-        QDir(appDir + "/test/dir_for_qzipfile").removeRecursively();
     }
 
-    QString   appDir;
-    QuaZip*   zip;
     QZipFile* qZipFile;
+    QuaZip*   zip;
+    QBuffer   zipBuffer;
 };
 
 

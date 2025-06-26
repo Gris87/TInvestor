@@ -18,5 +18,5 @@ public:
     IQZipFactory& operator=(const IQZipFactory& another) = delete;
 
     [[nodiscard]]
-    virtual std::shared_ptr<IQZip> newInstance(const QString& name) const = 0;
+    virtual std::shared_ptr<IQZip> newInstance(QIODevice* device) const = 0;
 };
