@@ -18,8 +18,10 @@ public:
     IInstrumentsStorage& operator=(const IInstrumentsStorage& another) = delete;
 
     virtual void               readFromDatabase()                               = 0;
-    virtual void               lock()                                           = 0;
-    virtual void               unlock()                                         = 0;
+    virtual void               readLock()                                       = 0;
+    virtual void               readUnlock()                                     = 0;
+    virtual void               writeLock()                                      = 0;
+    virtual void               writeUnlock()                                    = 0;
     virtual const Instruments& getInstruments()                                 = 0;
     virtual void               mergeInstruments(const Instruments& instruments) = 0;
 };

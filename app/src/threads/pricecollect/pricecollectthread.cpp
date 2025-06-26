@@ -464,9 +464,9 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
     processInParallel(logos, downloadLogosForParallel, &downloadLogosInfo);
 
-    mInstrumentsStorage->lock();
+    mInstrumentsStorage->writeLock();
     mInstrumentsStorage->mergeInstruments(instruments);
-    mInstrumentsStorage->unlock();
+    mInstrumentsStorage->writeUnlock();
 }
 
 static void getCandlesWithGrpc(

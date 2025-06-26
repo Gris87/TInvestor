@@ -94,8 +94,10 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
 
 TEST_F(Test_InstrumentsStorage, Test_lock_unlock)
 {
-    storage->lock();
-    storage->unlock();
+    storage->writeLock();
+    storage->writeUnlock();
+    storage->readLock();
+    storage->readUnlock();
 }
 
 TEST_F(Test_InstrumentsStorage, Test_mergeInstruments)

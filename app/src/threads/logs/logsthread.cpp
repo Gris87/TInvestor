@@ -86,9 +86,9 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
 
         if (instrumentId != "")
         {
-            mInstrumentsStorage->lock();
+            mInstrumentsStorage->readLock();
             Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
-            mInstrumentsStorage->unlock();
+            mInstrumentsStorage->readUnlock();
 
             if (instrument.ticker == "" || instrument.name == "")
             {

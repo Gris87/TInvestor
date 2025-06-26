@@ -463,9 +463,9 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
             quotationToDouble(mTotalYieldWithCommission) / quotationToDouble(mMaxInputMoney) * HUNDRED_PERCENT;
     }
 
-    mInstrumentsStorage->lock();
+    mInstrumentsStorage->readLock();
     Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
-    mInstrumentsStorage->unlock();
+    mInstrumentsStorage->readUnlock();
 
     if (instrument.ticker == "" || instrument.name == "")
     {

@@ -7,7 +7,7 @@
 InstrumentsStorage::InstrumentsStorage(IInstrumentsDatabase* instrumentsDatabase) :
     IInstrumentsStorage(),
     mInstrumentsDatabase(instrumentsDatabase),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mInstruments()
 {
     qDebug() << "Create InstrumentsStorage";
@@ -17,7 +17,7 @@ InstrumentsStorage::~InstrumentsStorage()
 {
     qDebug() << "Destroy InstrumentsStorage";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 void InstrumentsStorage::readFromDatabase()
@@ -25,14 +25,24 @@ void InstrumentsStorage::readFromDatabase()
     mInstruments = mInstrumentsDatabase->readInstruments();
 }
 
-void InstrumentsStorage::lock()
+void InstrumentsStorage::readLock()
 {
-    mMutex->lock();
+    mRwMutex->lockForRead();
 }
 
-void InstrumentsStorage::unlock()
+void InstrumentsStorage::readUnlock()
 {
-    mMutex->unlock();
+    mRwMutex->unlock();
+}
+
+void InstrumentsStorage::writeLock()
+{
+    mRwMutex->lockForWrite();
+}
+
+void InstrumentsStorage::writeUnlock()
+{
+    mRwMutex->unlock();
 }
 
 const Instruments& InstrumentsStorage::getInstruments()

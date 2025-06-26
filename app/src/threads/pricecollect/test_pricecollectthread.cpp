@@ -346,9 +346,9 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*logosStorageMock, setLogo(QString("fffff"), _));
     EXPECT_CALL(*logosStorageMock, writeUnlock());
 
-    EXPECT_CALL(*instrumentsStorageMock, lock());
+    EXPECT_CALL(*instrumentsStorageMock, writeLock());
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
-    EXPECT_CALL(*instrumentsStorageMock, unlock());
+    EXPECT_CALL(*instrumentsStorageMock, writeUnlock());
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
     EXPECT_CALL(*dirMock1, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));

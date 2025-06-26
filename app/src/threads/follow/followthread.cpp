@@ -206,11 +206,11 @@ void FollowThread::buildInstrumentsForTrading(
             continue;
         }
 
-        mInstrumentsStorage->lock();
+        mInstrumentsStorage->readLock();
         const Instruments& instrumentsData = mInstrumentsStorage->getInstruments();
         Q_ASSERT_X(instrumentsData.contains(instrumentId), __FUNCTION__, "Data about instrument not found");
         const qint32 lot = instrumentsData.value(instrumentId).lot;
-        mInstrumentsStorage->unlock();
+        mInstrumentsStorage->readUnlock();
 
         const PortfolioMinItem& item     = instruments[instrumentId];
         const double            delta    = expectedCost - item.cost;

@@ -4,6 +4,8 @@
 
 #include "src/storage/instruments/iinstrumentsstorage.h"
 
+#include <QReadWriteLock>
+
 #include "src/db/instruments/iinstrumentsdatabase.h"
 
 
@@ -18,13 +20,15 @@ public:
     InstrumentsStorage& operator=(const InstrumentsStorage& another) = delete;
 
     void               readFromDatabase() override;
-    void               lock() override;
-    void               unlock() override;
+    void               readLock() override;
+    void               readUnlock() override;
+    void               writeLock() override;
+    void               writeUnlock() override;
     const Instruments& getInstruments() override;
     void               mergeInstruments(const Instruments& instruments) override;
 
 private:
     IInstrumentsDatabase* mInstrumentsDatabase;
-    QMutex*               mMutex;
+    QReadWriteLock*       mRwMutex;
     Instruments           mInstruments;
 };
