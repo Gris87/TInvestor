@@ -32,7 +32,9 @@ static void instrumentPricePrecisionParse(Instrument* instrument, simdjson::onde
     instrument->pricePrecision = value.get_int64();
 }
 
-static void instrumentThrowParseException(Instrument* /*instrument*/, simdjson::ondemand::value /*value*/)
+static void instrumentThrowParseException(
+    Instrument* /*instrument*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
 {
     throw std::runtime_error("Unknown parameter");
 }

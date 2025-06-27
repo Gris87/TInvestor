@@ -18,7 +18,9 @@ static void quotationNanoParse(Quotation* quotation, simdjson::ondemand::value v
     quotation->nano = value.get_int64();
 }
 
-static void quotationThrowParseException(Quotation* /*quotation*/, simdjson::ondemand::value /*value*/)
+static void quotationThrowParseException(
+    Quotation* /*quotation*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
 {
     throw std::runtime_error("Unknown parameter");
 }

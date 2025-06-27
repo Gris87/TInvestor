@@ -57,7 +57,9 @@ static void logMessageParse(LogEntry* entry, simdjson::ondemand::value value)
     entry->message                  = QString::fromUtf8(valueStr.data(), valueStr.size());
 }
 
-static void logThrowParseException(LogEntry* /*entry*/, simdjson::ondemand::value /*value*/)
+static void logThrowParseException(
+    LogEntry* /*entry*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
 {
     throw std::runtime_error("Unknown parameter");
 }

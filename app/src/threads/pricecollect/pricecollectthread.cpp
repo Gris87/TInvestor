@@ -524,13 +524,13 @@ static void getCandlesWithGrpc(
 }
 
 static int getCandlesFromZipFile(
-    QThread*               parentThread,
-    IQZipFactory*          qZipFactory,
-    IQZipFileFactory*      qZipFileFactory,
-    qint64                 startTimestamp,
-    qint64                 endTimestamp,
-    std::shared_ptr<IFile> stockDataFile,
-    StockData*             dataArray
+    QThread*                      parentThread,
+    IQZipFactory*                 qZipFactory,
+    IQZipFileFactory*             qZipFileFactory,
+    qint64                        startTimestamp,
+    qint64                        endTimestamp,
+    const std::shared_ptr<IFile>& stockDataFile,
+    StockData*                    dataArray
 )
 {
     int indexOffset = 0;

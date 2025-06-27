@@ -18,7 +18,9 @@ static void itemCostParse(OperationFifoItem* item, simdjson::ondemand::value val
     item->cost.fromJsonObject(value.get_object());
 }
 
-static void itemThrowParseException(OperationFifoItem* /*item*/, simdjson::ondemand::value /*value*/)
+static void itemThrowParseException(
+    OperationFifoItem* /*item*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
 {
     throw std::runtime_error("Unknown parameter");
 }

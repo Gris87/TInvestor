@@ -46,7 +46,9 @@ static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value v
     meta->pricePrecision = value.get_int64();
 }
 
-static void metaThrowParseException(StockMeta* /*meta*/, simdjson::ondemand::value /*value*/)
+static void metaThrowParseException(
+    StockMeta* /*meta*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
 {
     throw std::runtime_error("Unknown parameter");
 }

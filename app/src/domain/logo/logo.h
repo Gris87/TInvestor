@@ -16,22 +16,22 @@ public:
     Logo(const Logo& another)            = delete;
     Logo& operator=(const Logo& another) = delete;
 
-    inline void readLock()
+    void readLock()
     {
         mRwMutex.lockForRead();
     }
 
-    inline void readUnlock()
+    void readUnlock()
     {
         mRwMutex.unlock();
     }
 
-    inline void writeLock()
+    void writeLock()
     {
         mRwMutex.lockForWrite();
     }
 
-    inline void writeUnlock()
+    void writeUnlock()
     {
         mRwMutex.unlock();
     }

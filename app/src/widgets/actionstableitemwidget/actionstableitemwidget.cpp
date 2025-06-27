@@ -39,8 +39,8 @@ ActionsTableItemWidget::~ActionsTableItemWidget()
 
 void ActionsTableItemWidget::on_orderWavesButton_clicked()
 {
-    qint64 stockAddress = mStocksTableModel->index(mTableRow, STOCKS_NAME_COLUMN).data(ROLE_STOCK).toLongLong();
-    Stock* stock        = reinterpret_cast<Stock*>(stockAddress); // NOLINT(performance-no-int-to-ptr)
+    const qint64 stockAddress = mStocksTableModel->index(mTableRow, STOCKS_NAME_COLUMN).data(ROLE_STOCK).toLongLong();
+    Stock*       stock        = reinterpret_cast<Stock*>(stockAddress); // NOLINT(performance-no-int-to-ptr)
 
     const std::shared_ptr<IOrderWavesDialog> dialog =
         mOrderWavesDialogFactory->newInstance(mOrderWavesWidgetFactory, mOrderBookThread, stock, this);
