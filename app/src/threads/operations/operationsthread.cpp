@@ -3,15 +3,18 @@
 #include <QDebug>
 
 #include "src/grpc/utils.h"
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
 
-const char* const RUBLE_UID       = "a92e2e25-a698-45cc-a781-167cf465257c";
-constexpr float   HUNDRED_PERCENT = 100.0f;
-constexpr qint64  MS_IN_SECOND    = 1000LL;
-constexpr qint64  ONE_MINUTE      = 60LL * MS_IN_SECOND;
-constexpr qint64  ONE_HOUR        = 60LL * ONE_MINUTE;
-constexpr qint64  ONE_DAY         = 24LL * ONE_HOUR;
+const char* const RUBLE_UID        = "a92e2e25-a698-45cc-a781-167cf465257c";
+constexpr int     LIMIT_OPERATIONS = 100000;
+constexpr int     OPTIMIZE_SIZE    = 10000;
+constexpr float   HUNDRED_PERCENT  = 100.0f;
+constexpr qint64  MS_IN_SECOND     = 1000LL;
+constexpr qint64  ONE_MINUTE       = 60LL * MS_IN_SECOND;
+constexpr qint64  ONE_HOUR         = 60LL * ONE_MINUTE;
+constexpr qint64  ONE_DAY          = 24LL * ONE_HOUR;
 
 
 
@@ -32,6 +35,7 @@ OperationsThread::OperationsThread(
     mLastRequestTimestamp(),
     mLastOperationTimestamp(),
     mAmountOfOperationsWithSameTimestamp(),
+    mAmountOfEntries(),
     mLastPositionUidForExtAccount(),
     mInstruments(),
     mInputMoney(),
@@ -67,6 +71,11 @@ void OperationsThread::run()
 
         while (true)
         {
+            if (mAmountOfEntries > LIMIT_OPERATIONS)
+            {
+                optimize();
+            }
+
             const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
                 mGrpcClient->readPositionsStream(mPositionsStream);
 
@@ -122,8 +131,9 @@ void OperationsThread::createPositionsStream()
 void OperationsThread::readOperations()
 {
     const QList<Operation> operations = mOperationsDatabase->readOperations();
+    mAmountOfEntries                  = operations.size();
 
-    if (!operations.isEmpty())
+    if (mAmountOfEntries > 0)
     {
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
@@ -289,6 +299,8 @@ void OperationsThread::requestOperations()
         }
 
         mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
+
+        mAmountOfEntries += totalOperations;
     }
 }
 // NOLINTEND(readability-function-cognitive-complexity)
@@ -544,6 +556,50 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
         lastOperation->remainedMoney = mRemainedMoney;
         lastOperation->totalMoney    = mTotalMoney;
     }
+}
+
+struct OptimizeOperationsInfo
+{
+    explicit OptimizeOperationsInfo(const QList<Operation>* _operations) :
+        operations(_operations)
+    {
+    }
+
+    const QList<Operation>* operations;
+};
+
+static void optimizeOperationsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
+{
+    OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
+
+    const Operation* operationsArray = optimizeOperationsInfo->operations->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = operationsArray[i];
+    }
+}
+
+void OperationsThread::optimize()
+{
+    const QList<Operation> operations = mOperationsDatabase->readOperations();
+
+    QList<Operation> newOperations;
+    newOperations.resizeForOverwrite(OPTIMIZE_SIZE);
+
+    OptimizeOperationsInfo optimizeOperationsInfo(&operations);
+    processInParallel(newOperations, optimizeOperationsForParallel, &optimizeOperationsInfo);
+
+    mAmountOfEntries = OPTIMIZE_SIZE;
+
+    // TODO: Also add some instruments out of limits
+
+    mOperationsDatabase->writeOperations(newOperations);
+    emit operationsRead(newOperations);
 }
 
 bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const

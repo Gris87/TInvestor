@@ -277,6 +277,8 @@ writeLogsForParallel(QThread* parentThread, int threadId, QList<LogEntry>& entri
 
 void LogsDatabase::writeLogs(QList<LogEntry>& entries)
 {
+    qDebug() << "Writing logs to database";
+
     const QString dirPath = logsDirPath();
 
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();

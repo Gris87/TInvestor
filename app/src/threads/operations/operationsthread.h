@@ -61,6 +61,7 @@ private:
     void      requestOperations();
     void      handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
     void      alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
+    void      optimize();
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
@@ -74,6 +75,7 @@ private:
     qint64                           mLastRequestTimestamp;
     qint64                           mLastOperationTimestamp;
     qint8                            mAmountOfOperationsWithSameTimestamp;
+    int                              mAmountOfEntries;
     QString                          mLastPositionUidForExtAccount;
     QMap<QString, QuantityAndCost>   mInstruments; // Instrument Id => QuantityAndCost
     Quotation                        mInputMoney;

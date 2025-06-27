@@ -23,7 +23,7 @@ public:
 
     void             setAccount(const QString& account) override;
     QList<Operation> readOperations() override;
-    void             writeOperations(const QList<Operation>& operations) override;
+    void             writeOperations(QList<Operation>& operations) override;
     void             appendOperations(const QList<Operation>& operations) override;
 
     void setAutoPilotMode(bool autoPilotMode);

@@ -245,7 +245,42 @@ QList<Operation> OperationsDatabase::readOperations()
     return res;
 }
 
-void OperationsDatabase::writeOperations(const QList<Operation>& operations)
+struct WriteOperationsInfo
+{
+    explicit WriteOperationsInfo()
+    {
+        const int cpuCount = QThread::idealThreadCount();
+
+        results.resize(cpuCount);
+    }
+
+    QList<QByteArray> results;
+};
+
+static void writeOperationsForParallel(
+    QThread* parentThread, int threadId, QList<Operation>& operations, int start, int end, void* additionalArgs
+)
+{
+    WriteOperationsInfo* writeOperationsInfo = reinterpret_cast<WriteOperationsInfo*>(additionalArgs);
+
+    QByteArray* resultsArray = writeOperationsInfo->results.data();
+
+    Operation* operationsArray = operations.data();
+
+    for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
+    {
+        const QJsonDocument jsonDoc(operationsArray[i].toJsonObject());
+
+        resultsArray[threadId].append(jsonDoc.toJson(QJsonDocument::Compact));
+
+        if (i > 0)
+        {
+            resultsArray[threadId].append(",\n");
+        }
+    }
+}
+
+void OperationsDatabase::writeOperations(QList<Operation>& operations)
 {
     qDebug() << "Writing operations to database";
 
@@ -261,16 +296,12 @@ void OperationsDatabase::writeOperations(const QList<Operation>& operations)
     ok = operationsFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
-    for (int i = 0; i < operations.size(); ++i)
+    WriteOperationsInfo writeOperationsInfo;
+    processInParallel(operations, writeOperationsForParallel, &writeOperationsInfo);
+
+    for (int i = writeOperationsInfo.results.size() - 1; i >= 0; --i)
     {
-        const QJsonDocument jsonDoc(operations.at(operations.size() - i - 1).toJsonObject());
-
-        if (i != 0)
-        {
-            operationsFile->write(",\n");
-        }
-
-        operationsFile->write(jsonDoc.toJson(QJsonDocument::Compact));
+        operationsFile->write(writeOperationsInfo.results.at(i));
     }
 
     operationsFile->close();

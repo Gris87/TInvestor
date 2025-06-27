@@ -17,6 +17,6 @@ public:
 
     virtual void             setAccount(const QString& account)                   = 0;
     virtual QList<Operation> readOperations()                                     = 0;
-    virtual void             writeOperations(const QList<Operation>& operations)  = 0;
+    virtual void             writeOperations(QList<Operation>& operations)        = 0;
     virtual void             appendOperations(const QList<Operation>& operations) = 0;
 };
