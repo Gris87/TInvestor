@@ -241,6 +241,65 @@ QList<LogEntry> LogsDatabase::readLogs()
     return res;
 }
 
+struct WriteLogsInfo
+{
+    explicit WriteLogsInfo()
+    {
+        const int cpuCount = QThread::idealThreadCount();
+
+        results.resize(cpuCount);
+    }
+
+    QList<QByteArray> results;
+};
+
+static void
+writeLogsForParallel(QThread* parentThread, int threadId, QList<LogEntry>& entries, int start, int end, void* additionalArgs)
+{
+    WriteLogsInfo* writeLogsInfo = reinterpret_cast<WriteLogsInfo*>(additionalArgs);
+
+    QByteArray* resultsArray = writeLogsInfo->results.data();
+
+    LogEntry* entriesArray = entries.data();
+
+    for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
+    {
+        const QJsonDocument jsonDoc(entriesArray[i].toJsonObject());
+
+        resultsArray[threadId].append(jsonDoc.toJson(QJsonDocument::Compact));
+
+        if (i > 0)
+        {
+            resultsArray[threadId].append(",\n");
+        }
+    }
+}
+
+void LogsDatabase::writeLogs(QList<LogEntry>& entries)
+{
+    const QString dirPath = logsDirPath();
+
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
+
+    bool ok = dir->mkpath(dirPath);
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
+
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(dirPath + "/logs.json");
+
+    ok = logsFile->open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+    WriteLogsInfo writeLogsInfo;
+    processInParallel(entries, writeLogsForParallel, &writeLogsInfo);
+
+    for (int i = writeLogsInfo.results.size() - 1; i >= 0; --i)
+    {
+        logsFile->write(writeLogsInfo.results.at(i));
+    }
+
+    logsFile->close();
+}
+
 void LogsDatabase::appendLog(const LogEntry& entry)
 {
     const QString dirPath = logsDirPath();

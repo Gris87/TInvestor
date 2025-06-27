@@ -21,6 +21,7 @@ public:
 
     void            setAccount(const QString& account) override;
     QList<LogEntry> readLogs() override;
+    void            writeLogs(QList<LogEntry>& entries) override;
     void            appendLog(const LogEntry& entry) override;
 
     void setAutoPilotMode(bool autoPilotMode);

@@ -22,5 +22,6 @@ public:
 
     MOCK_METHOD(void, setAccount, (const QString& account), (override));
     MOCK_METHOD(QList<LogEntry>, readLogs, (), (override));
+    MOCK_METHOD(void, writeLogs, (QList<LogEntry> & entries), (override));
     MOCK_METHOD(void, appendLog, (const LogEntry& entry), (override));
 };

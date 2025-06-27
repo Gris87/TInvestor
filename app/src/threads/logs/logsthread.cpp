@@ -2,6 +2,13 @@
 
 #include <QDebug>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
+
+
+
+constexpr int LIMIT_LOGS    = 1000000;
+constexpr int OPTIMIZE_SIZE = 100000;
+
 
 
 LogsThread::LogsThread(
@@ -16,7 +23,8 @@ LogsThread::LogsThread(
     mAccountId(),
     mLastLogTimestamp(),
     mAmountOfLogsWithSameTimestamp(),
-    mEntries()
+    mIncomingEntries(),
+    mAmountOfEntries()
 {
     qDebug() << "Create LogsThread";
 }
@@ -37,9 +45,14 @@ void LogsThread::run()
 
     while (true)
     {
+        if (mAmountOfEntries > LIMIT_LOGS)
+        {
+            optimize();
+        }
+
         mSemaphore.acquire();
 
-        const LogEntry entry = takeEntry();
+        const LogEntry entry = takeIncomingEntry();
 
         if (entry.timestamp == 0)
         {
@@ -49,6 +62,8 @@ void LogsThread::run()
         emit logAdded(entry);
 
         mLogsDatabase->appendLog(entry);
+
+        ++mAmountOfEntries;
     }
 
     qDebug() << "Finish LogsThread";
@@ -106,7 +121,7 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
         }
 
         mMutex->lock();
-        mEntries.append(entry);
+        mIncomingEntries.append(entry);
         mMutex->unlock();
 
         mSemaphore.release();
@@ -122,7 +137,7 @@ void LogsThread::terminateThread()
         requestInterruption();
 
         mMutex->lock();
-        mEntries.append(LogEntry());
+        mIncomingEntries.append(LogEntry());
         mMutex->unlock();
 
         mSemaphore.release();
@@ -132,13 +147,55 @@ void LogsThread::terminateThread()
 void LogsThread::readLogs()
 {
     const QList<LogEntry> entries = mLogsDatabase->readLogs();
+    mAmountOfEntries              = entries.size();
 
     emit logsRead(entries);
 }
 
-LogEntry LogsThread::takeEntry()
+LogEntry LogsThread::takeIncomingEntry()
 {
     const QMutexLocker lock(mMutex);
 
-    return mEntries.takeFirst();
+    return mIncomingEntries.takeFirst();
+}
+
+struct OptimizeLogsInfo
+{
+    explicit OptimizeLogsInfo(const QList<LogEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    const QList<LogEntry>* entries;
+};
+
+static void
+optimizeLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+{
+    OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
+
+    const LogEntry* entriesArray = optimizeLogsInfo->entries->data();
+
+    LogEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[i];
+    }
+}
+
+void LogsThread::optimize()
+{
+    const QList<LogEntry> entries = mLogsDatabase->readLogs();
+
+    QList<LogEntry> newEntries;
+    newEntries.resizeForOverwrite(OPTIMIZE_SIZE);
+
+    OptimizeLogsInfo optimizeLogsInfo(&entries);
+    processInParallel(newEntries, optimizeLogsForParallel, &optimizeLogsInfo);
+
+    mAmountOfEntries = OPTIMIZE_SIZE;
+
+    mLogsDatabase->writeLogs(newEntries);
+    emit logsRead(newEntries);
 }

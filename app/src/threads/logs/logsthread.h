@@ -37,7 +37,8 @@ public:
 
 private:
     void     readLogs();
-    LogEntry takeEntry();
+    LogEntry takeIncomingEntry();
+    void     optimize();
 
     QSemaphore           mSemaphore;
     QMutex*              mMutex;
@@ -47,5 +48,6 @@ private:
     QString              mAccountId;
     qint64               mLastLogTimestamp;
     qint8                mAmountOfLogsWithSameTimestamp;
-    QList<LogEntry>      mEntries;
+    QList<LogEntry>      mIncomingEntries;
+    int                  mAmountOfEntries;
 };
