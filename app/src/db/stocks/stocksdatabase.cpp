@@ -117,6 +117,16 @@ static void readStocksDataForParallel(
             stockDataFile->read(reinterpret_cast<char*>(stock->data.data()), fileSize);
             stockDataFile->close();
 
+            Q_ASSERT_X(
+                std::is_sorted(
+                    stock->data.constBegin(),
+                    stock->data.constEnd(),
+                    [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+                ),
+                __FUNCTION__,
+                "Stock data is unsorted"
+            );
+
             qDebug() << "Read stock data" << stock->meta.instrumentTicker;
         }
         else
@@ -212,11 +222,31 @@ void StocksDatabase::appendStockData(Stock* stock, const StockData* dataArray, i
         stock->data.append(dataArray[i]);
     }
 
+    Q_ASSERT_X(
+        std::is_sorted(
+            stock->data.constBegin(),
+            stock->data.constEnd(),
+            [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+        ),
+        __FUNCTION__,
+        "Stock data is unsorted"
+    );
+
     stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.constLast().timestamp : 0;
 }
 
 void StocksDatabase::writeStockData(const Stock& stock)
 {
+    Q_ASSERT_X(
+        std::is_sorted(
+            stock.data.constBegin(),
+            stock.data.constEnd(),
+            [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+        ),
+        __FUNCTION__,
+        "Stock data is unsorted"
+    );
+
     const QString stockDataFilePath = QString("%1/data/stocks/%2.dat").arg(qApp->applicationDirPath(), stock.meta.instrumentId);
     const std::shared_ptr<IFile> stockDataFile = mFileFactory->newInstance(stockDataFilePath);
 

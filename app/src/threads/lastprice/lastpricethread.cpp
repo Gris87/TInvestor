@@ -95,6 +95,16 @@ void LastPriceThread::run()
                 stock->operational.detailedData.append(stockData);
                 stock->writeUnlock();
 
+                Q_ASSERT_X(
+                    std::is_sorted(
+                        stock->operational.detailedData.constBegin(),
+                        stock->operational.detailedData.constEnd(),
+                        [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
+                    ),
+                    __FUNCTION__,
+                    "Stock data is unsorted"
+                );
+
                 emit lastPriceChanged(instrumentId);
             }
         }

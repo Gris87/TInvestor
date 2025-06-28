@@ -155,12 +155,25 @@ static void deleteObsoleteDataForParallel(
 
         stock->writeLock();
 
-        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+            ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+        );
 
-        while (index < stock->data.size() && stock->data.at(index).timestamp < obsoleteTimestamp)
-        {
-            ++index;
-        }
+        int index = std::distance(
+            stock->data.constBegin(),
+            std::lower_bound(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                obsoleteTimestamp,
+                [](const StockData& stockData, qint64 value) { return stockData.timestamp < value; }
+            )
+        );
 
         if (index > 0)
         {
@@ -206,13 +219,25 @@ static void cleanupOperationalDataForParallel(
 
         stock->writeLock();
 
-        qint64 index = 0; // TODO: Use binary search (from start to end with binary steps (1 2 4 8)
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->operational.detailedData.constBegin(),
+                stock->operational.detailedData.constEnd(),
+                [](const StockOperationalData& l, const StockOperationalData& r) { return l.timestamp < r.timestamp; }
+            ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+        );
 
-        while (index < stock->operational.detailedData.size() &&
-               stock->operational.detailedData.at(index).timestamp < obsoleteTimestamp)
-        {
-            ++index;
-        }
+        int index = std::distance(
+            stock->operational.detailedData.constBegin(),
+            std::lower_bound(
+                stock->operational.detailedData.constBegin(),
+                stock->operational.detailedData.constEnd(),
+                obsoleteTimestamp,
+                [](const StockOperationalData& stockData, qint64 value) { return stockData.timestamp < value; }
+            )
+        );
 
         if (index > 0)
         {
@@ -258,17 +283,29 @@ getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& 
 
         stock->writeLock();
 
-        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
-        int index = 0;
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+            ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+        );
 
-        for (int i = stock->data.size() - 1; i >= 0; --i)
+        int index = std::distance(
+            stock->data.constBegin(),
+            std::lower_bound(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                startTimestamp,
+                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+            )
+        );
+
+        if (index > 0)
         {
-            if (stock->data.at(i).timestamp <= startTimestamp)
-            {
-                index = i;
-
-                break;
-            }
+            --index;
         }
 
         if (index < stock->data.size())
@@ -323,17 +360,29 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 
         stock->writeLock();
 
-        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
-        int index = 0;
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+            ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+        );
 
-        for (int i = stock->data.size() - 1; i >= 0; --i)
+        int index = std::distance(
+            stock->data.constBegin(),
+            std::lower_bound(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                startTimestamp,
+                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+            )
+        );
+
+        if (index > 0)
         {
-            if (stock->data.at(i).timestamp <= startTimestamp)
-            {
-                index = i;
-
-                break;
-            }
+            --index;
         }
 
         if (index < stock->data.size())
@@ -391,17 +440,29 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
         stock->writeLock();
 
-        // TODO: Use binary search (from end to start with binary steps (1 2 4 8)
-        int index = 0;
+        Q_ASSERT_X(
+            std::is_sorted(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                [](const StockData& l, const StockData& r) { return l.timestamp < r.timestamp; }
+            ),
+            __FUNCTION__,
+            "Stock data is unsorted"
+        );
 
-        for (int i = stock->data.size() - 1; i >= 0; --i)
+        int index = std::distance(
+            stock->data.constBegin(),
+            std::lower_bound(
+                stock->data.constBegin(),
+                stock->data.constEnd(),
+                startTimestamp,
+                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+            )
+        );
+
+        if (index > 0)
         {
-            if (stock->data.at(i).timestamp <= startTimestamp)
-            {
-                index = i;
-
-                break;
-            }
+            --index;
         }
 
         if (index < stock->data.size() - 1)
