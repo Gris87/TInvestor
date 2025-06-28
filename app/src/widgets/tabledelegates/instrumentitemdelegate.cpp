@@ -91,7 +91,7 @@ void InstrumentItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem
             textRect.setRight(option.rect.right());
         }
 
-        painter->drawText(textRect, ticker);
+        painter->drawText(textRect, 0, ticker);
     }
     else
     {
@@ -141,5 +141,5 @@ QSize InstrumentItemDelegate::sizeHint(const QStyleOptionViewItem& option, const
     const QString ticker   = index.data().toString();
     const QRect   textRect = fontMetrics.boundingRect(ticker);
 
-    return QSize(offset + textRect.width(), LOGO_ICON_SIZE);
+    return QSize(offset + textRect.width() + SPACING, LOGO_ICON_SIZE);
 }

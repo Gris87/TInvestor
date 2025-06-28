@@ -284,8 +284,8 @@
         <translation>Логи</translation>
     </message>
     <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="37"/>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="38"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="39"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -303,14 +303,6 @@
         <location filename="../../src/threads/follow/followthread.cpp" line="231"/>
         <source>Decided to buy up to cost %1 %2 due to following account &quot;%3&quot;</source>
         <translation>Решено покупать до стоимости %1 %2 из-за следования за аккаунтом &quot;%3&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>InstrumentWidget</name>
-    <message>
-        <location filename="../../src/widgets/instrumentwidget/instrumentwidget.ui" line="66"/>
-        <source>For qual investor only</source>
-        <translation>Только для квал инвесторов</translation>
     </message>
 </context>
 <context>
@@ -342,22 +334,22 @@
 <context>
     <name>LogsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="79"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="78"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="89"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="88"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="89"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="88"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="108"/>
+        <location filename="../../src/widgets/logstablewidget/logstablewidget.cpp" line="107"/>
         <source>Logs</source>
         <translation>Логи</translation>
     </message>
@@ -366,13 +358,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="309"/>
+        <location filename="../../src/main/mainwindow.cpp" line="304"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="511"/>
+        <location filename="../../src/main/mainwindow.cpp" line="506"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -383,7 +375,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="279"/>
-        <location filename="../../src/main/mainwindow.cpp" line="588"/>
+        <location filename="../../src/main/mainwindow.cpp" line="583"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -444,65 +436,65 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="310"/>
+        <location filename="../../src/main/mainwindow.cpp" line="305"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="358"/>
+        <location filename="../../src/main/mainwindow.cpp" line="353"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="380"/>
+        <location filename="../../src/main/mainwindow.cpp" line="375"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="485"/>
-        <location filename="../../src/main/mainwindow.cpp" line="935"/>
+        <location filename="../../src/main/mainwindow.cpp" line="480"/>
+        <location filename="../../src/main/mainwindow.cpp" line="930"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="500"/>
-        <location filename="../../src/main/mainwindow.cpp" line="796"/>
+        <location filename="../../src/main/mainwindow.cpp" line="495"/>
+        <location filename="../../src/main/mainwindow.cpp" line="791"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="576"/>
+        <location filename="../../src/main/mainwindow.cpp" line="571"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="582"/>
+        <location filename="../../src/main/mainwindow.cpp" line="577"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="796"/>
+        <location filename="../../src/main/mainwindow.cpp" line="791"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="547"/>
-        <location filename="../../src/main/mainwindow.cpp" line="827"/>
+        <location filename="../../src/main/mainwindow.cpp" line="542"/>
+        <location filename="../../src/main/mainwindow.cpp" line="822"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="208"/>
+        <location filename="../../src/main/mainwindow.cpp" line="201"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="209"/>
+        <location filename="../../src/main/mainwindow.cpp" line="202"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="827"/>
+        <location filename="../../src/main/mainwindow.cpp" line="822"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -598,22 +590,22 @@
 <context>
     <name>OperationsTableWidget</name>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="75"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="74"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="85"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="84"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="85"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="84"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="104"/>
+        <location filename="../../src/widgets/operationstablewidget/operationstablewidget.cpp" line="103"/>
         <source>Operations</source>
         <translation>Операции</translation>
     </message>
@@ -626,7 +618,7 @@
         <translation>Биржевые волны (стакан)</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="79"/>
+        <location filename="../../src/dialogs/orderwavesdialog/orderwavesdialog.cpp" line="74"/>
         <source>%1 / Spread: %2</source>
         <translation>%1 / Спред: %2</translation>
     </message>
@@ -735,27 +727,27 @@
         <translation>За сегодня</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="110"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="109"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="139"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="138"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="149"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="149"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="148"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="168"/>
+        <location filename="../../src/widgets/portfoliotreewidget/portfoliotreewidget.cpp" line="167"/>
         <source>Portfolio</source>
         <translation>Портфолио</translation>
     </message>
@@ -763,19 +755,19 @@
 <context>
     <name>PriceCollectThread</name>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="85"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="84"/>
         <source>Downloading metadata</source>
         <translation>Скачивание метаданных</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="422"/>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="450"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="426"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="454"/>
         <source>Downloading logos</source>
         <translation>Скачивание логотипов</translation>
     </message>
     <message>
-        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="765"/>
         <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="773"/>
+        <location filename="../../src/threads/pricecollect/pricecollectthread.cpp" line="781"/>
         <source>Obtain stocks data</source>
         <translation>Получение данных по акциям</translation>
     </message>
@@ -783,31 +775,32 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="145"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="145"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="159"/>
+        <location filename="../../src/main.cpp" line="157"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="159"/>
+        <location filename="../../src/main.cpp" line="157"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tableitems/moneychangepercenttableitem.cpp" line="34"/>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="291"/>
         <location filename="../../src/widgets/tablemodels/operationstablemodel/operationstablemodel.cpp" line="296"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="335"/>
         <location filename="../../src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.cpp" line="340"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="268"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="278"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
@@ -1143,47 +1136,47 @@
 <context>
     <name>StocksTableModel</name>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="15"/>
-        <source>Stock</source>
-        <translation>Акция</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
         <source>Price</source>
         <translation>Цена</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
         <source>Change from day start</source>
         <translation>Изменение за день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
         <source>Change from some date</source>
         <translation>Изменение от даты</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="15"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
         <source>Turnover</source>
         <translation>Оборот</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="16"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="47"/>
+        <source>Name</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="48"/>
         <source>Payback</source>
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="16"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="48"/>
         <source>Actions</source>
         <translation>Действия</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="58"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="90"/>
         <source>Average daily turnover in the last 31 days</source>
         <translation>Средний ежедневный оборот за последний 31 день</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="63"/>
+        <location filename="../../src/widgets/tablemodels/stockstablemodel/stockstablemodel.cpp" line="95"/>
         <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
         <translation>Возможность вернуть потраченную стоимость (с учётом комиссии) на основании последних 24 часов</translation>
     </message>
@@ -1191,72 +1184,27 @@
 <context>
     <name>StocksTableWidget</name>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="79"/>
-        <source>Stock</source>
-        <translation>Акция</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="84"/>
-        <source>Price</source>
-        <translation>Цена</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="89"/>
-        <source>Change from day start</source>
-        <translation>Изменение за день</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="94"/>
-        <source>Change from some date</source>
-        <translation>Изменение от даты</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="103"/>
-        <source>Turnover</source>
-        <translation>Оборот</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="106"/>
-        <source>Average daily turnover in the last 31 days</source>
-        <translation>Средний ежедневный оборот за последний 31 день</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="115"/>
-        <source>Payback</source>
-        <translation>Окупаемость</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="118"/>
-        <source>Opportunity to get money back (with commission) based on the last 24 hours</source>
-        <translation>Возможность вернуть потраченную стоимость (с учётом комиссии) на основании последних 24 часов</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.ui" line="127"/>
-        <source>Actions</source>
-        <translation>Действия</translation>
-    </message>
-    <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="213"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="117"/>
         <source>Export to Excel</source>
         <translation>Экспортировать в Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="223"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="127"/>
         <source>Export</source>
         <translation>Экспорт</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="223"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="127"/>
         <source>Excel file</source>
         <translation>Файл Excel</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="242"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="146"/>
         <source>Stocks</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="260"/>
+        <location filename="../../src/widgets/stockstablewidget/stockstablewidget.cpp" line="166"/>
         <source>Qual investor</source>
         <translation>Квал инвестор</translation>
     </message>
