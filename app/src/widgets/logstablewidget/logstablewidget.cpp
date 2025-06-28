@@ -10,11 +10,10 @@
 
 
 
-// TODO: Update widths
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 111, 900};
+const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 103, 900};
 #else
-const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {110, 32, 10, 900};
+const int COLUMN_WIDTHS[LOGS_COLUMN_COUNT] = {121, 38, 104, 900};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static

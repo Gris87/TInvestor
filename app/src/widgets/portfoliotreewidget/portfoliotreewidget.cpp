@@ -10,9 +10,9 @@
 
 
 #ifdef Q_OS_WINDOWS
-const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {178, 80, 56, 106, 87, 56, 68, 79, 1100};
+const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {172, 80, 56, 124, 87, 56, 68, 79, 1100};
 #else
-const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {89, 87, 59, 114, 95, 59, 66, 83, 93};
+const int COLUMN_WIDTHS[PORTFOLIO_COLUMN_COUNT] = {178, 87, 61, 132, 95, 59, 68, 83, 1100};
 #endif
 
 const QColor HEADER_BACKGROUND_COLOR = QColor("#354450"); // clazy:exclude=non-pod-global-static

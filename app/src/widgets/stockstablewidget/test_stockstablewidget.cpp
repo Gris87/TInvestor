@@ -582,7 +582,7 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(99)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(103)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),      _)).WillOnce(Return(QVariant(61)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DayChange"),  _)).WillOnce(Return(QVariant(139)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), _)).WillOnce(Return(QVariant(157)));
