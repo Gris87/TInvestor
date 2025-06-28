@@ -62,6 +62,7 @@ private:
     void      handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
     void      alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
     void      optimize();
+    void      addInstrumentsAfterOptimization(QList<Operation>& newOperations, const QList<Operation>& oldOperations);
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;

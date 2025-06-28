@@ -1,4 +1,3 @@
-Limit operations and logs
 Test coverage
 Create release
 

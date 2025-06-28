@@ -97,11 +97,7 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     app_or_test = "/app/src/" in file_path or "/test/main.cpp" in file_path or "/app/build/gen/" in file_path or "/test/build/gen/" in file_path or "/googletest/src/" in file_path or "/googlemock/src/" in file_path
 
-    if not args.ci:
-        res.append("clang")
-    else:
-        res.append("clang++")
-
+    res.append("clang")
     res.append("-Wno-documentation-unknown-command")
     res.append("-Wno-unknown-warning-option")
     res.append("-Wno-unknown-pragmas")
@@ -109,8 +105,10 @@ def _get_arguments_for_file_windows(args, file_path, duplicate_for_tests):
 
     if not args.ci:
         res.append("-nostdinc++")  # error: unknown argument ignored in clang-cl: '-nostdinc++' [clang-diagnostic-unknown-argument,-warnings-as-errors]
+        res.append("--driver-mode=cl")
+    else:
+        res.append("--driver-mode=g++")
 
-    res.append("--driver-mode=cl")
     res.append("-nologo")
     res.append("-Zc:wchar_t")
     res.append("-FS")
