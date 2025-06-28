@@ -296,10 +296,9 @@ getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& 
         int index = std::distance(
             stock->data.constBegin(),
             std::lower_bound(
-                stock->data.constBegin(),
-                stock->data.constEnd(),
-                startTimestamp,
-                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+                stock->data.constBegin(), stock->data.constEnd(), startTimestamp, [](const StockData& stockData, qint64 value) {
+                    return stockData.timestamp <= value;
+                }
             )
         );
 
@@ -373,10 +372,9 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
         int index = std::distance(
             stock->data.constBegin(),
             std::lower_bound(
-                stock->data.constBegin(),
-                stock->data.constEnd(),
-                startTimestamp,
-                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+                stock->data.constBegin(), stock->data.constEnd(), startTimestamp, [](const StockData& stockData, qint64 value) {
+                    return stockData.timestamp <= value;
+                }
             )
         );
 
@@ -453,10 +451,9 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
         int index = std::distance(
             stock->data.constBegin(),
             std::lower_bound(
-                stock->data.constBegin(),
-                stock->data.constEnd(),
-                startTimestamp,
-                [](const StockData& stockData, qint64 value) { return stockData.timestamp <= value; }
+                stock->data.constBegin(), stock->data.constEnd(), startTimestamp, [](const StockData& stockData, qint64 value) {
+                    return stockData.timestamp <= value;
+                }
             )
         );
 
