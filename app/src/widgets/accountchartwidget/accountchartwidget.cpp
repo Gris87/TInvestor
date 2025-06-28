@@ -747,37 +747,40 @@ void AccountChartWidget::tooltipHideTimerTicked()
 
 QPointF AccountChartWidget::findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints)
 {
-    QPointF res = seriesPoints.constLast();
+    Q_ASSERT_X(
+        std::is_sorted(
+            seriesPoints.constBegin(), seriesPoints.constEnd(), [](const QPointF& l, const QPointF& r) { return l.x() < r.x(); }
+        ),
+        __FUNCTION__,
+        "Series points is unsorted"
+    );
 
-    // TODO: Use binary search and try to store last found point
-    for (int i = 0; i < seriesPoints.size(); ++i)
+    int index = std::distance(
+        seriesPoints.constBegin(),
+        std::lower_bound(
+            seriesPoints.constBegin(), seriesPoints.constEnd(), point.x(), [](const QPointF& seriesPoint, qreal value) {
+                return seriesPoint.x() < value;
+            }
+        )
+    );
+
+    if (index <= 0)
     {
-        const QPointF& seriesPoint = seriesPoints.at(i);
-        const qreal    distance    = seriesPoint.x() - point.x();
-
-        if (distance > 0)
-        {
-            if (i <= 0)
-            {
-                res = seriesPoint;
-
-                break;
-            }
-
-            const qreal prevDistance = point.x() - seriesPoints.at(i - 1).x();
-
-            if (prevDistance < distance)
-            {
-                res = seriesPoints.at(i - 1);
-            }
-            else
-            {
-                res = seriesPoint;
-            }
-
-            break;
-        }
+        return seriesPoints.constFirst();
     }
 
-    return res;
+    if (index >= seriesPoints.size())
+    {
+        return seriesPoints.constLast();
+    }
+
+    const qreal distance     = seriesPoints.at(index).x() - point.x();
+    const qreal prevDistance = point.x() - seriesPoints.at(index - 1).x();
+
+    if (distance < prevDistance)
+    {
+        return seriesPoints.at(index);
+    }
+
+    return seriesPoints.at(index - 1);
 }

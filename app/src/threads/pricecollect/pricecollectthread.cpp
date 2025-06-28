@@ -448,7 +448,7 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     for (int i = 0; i < instrumentTypes.size(); ++i)
     {
         instruments.insert(obtainInstrumentsInfo.results.at(i));
-        logos.append(obtainInstrumentsInfo.logos.at(i)); // TODO: Combine in parallel
+        logos.append(obtainInstrumentsInfo.logos.at(i));
     }
 
     emit notifyInstrumentsProgress(tr("Downloading logos"));

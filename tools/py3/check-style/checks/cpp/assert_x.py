@@ -30,12 +30,12 @@ def _validate_file(args, file_path, lines):
         line = line.strip()
 
         if line.startswith("Q_ASSERT_X("):
-            index = line.find(");")
+            index = line.find('");')
             j = i + 1
 
             while index < 0 and j < len(lines):
                 line += lines[j].strip()
-                index = line.find(");")
+                index = line.find('");')
                 j += 1
 
             if '__FUNCTION__' not in line:
