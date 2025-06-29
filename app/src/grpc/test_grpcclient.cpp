@@ -265,6 +265,182 @@ TEST_F(Test_GrpcClient, Test_getOrderBook)
     ASSERT_EQ(client->getOrderBook(QThread::currentThread(), "aaaaa", 50), nullptr);
 }
 
+TEST_F(Test_GrpcClient, Test_getPortfolio)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getPortfolio(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->getPortfolio(QThread::currentThread(), "aaaaa"), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_getPositions)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getPositions(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->getPositions(QThread::currentThread(), "aaaaa"), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_getOperations)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getOperations(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->getOperations(QThread::currentThread(), "aaaaa", 1704056400000, 1735678800000, ""), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_getMaxLots)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    Quotation price;
+    price.units = 500;
+    price.nano  = 0;
+
+    EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getMaxLots(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->getMaxLots(QThread::currentThread(), "aaaaa", "aaa-aaa", price), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_postOrder)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    Quotation price;
+    price.units = 500;
+    price.nano  = 0;
+
+    EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, postOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->postOrder(QThread::currentThread(), "aaaaa", "aaa-aaa", tinkoff::ORDER_DIRECTION_BUY, 1, price), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_getOrderState)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, getOrderState(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->getOrderState(QThread::currentThread(), "aaaaa", "007"), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_cancelOrder)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status resourceExhaustedStatus(grpc::StatusCode::RESOURCE_EXHAUSTED, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(goodStatus));
+
+    ASSERT_NE(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(false));
+    EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(badStatus));
+
+    ASSERT_EQ(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, cancelOrder(NotNull(), NotNull(), _, NotNull())).WillOnce(Return(resourceExhaustedStatus));
+    EXPECT_CALL(*timeUtilsMock, interruptibleSleep(5000, QThread::currentThread())).WillOnce(Return(true));
+
+    ASSERT_EQ(client->cancelOrder(QThread::currentThread(), "aaaaa", "007"), nullptr);
+}
+
 TEST_F(Test_GrpcClient, Test_createMarketDataStream)
 {
     const InSequence seq;
@@ -386,6 +562,18 @@ TEST_F(Test_GrpcClient, Test_closeWriteMarketDataStream)
     ASSERT_EQ(client->closeWriteMarketDataStream(marketDataStream), true);
 }
 
+TEST_F(Test_GrpcClient, Test_cancelMarketDataStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createMarketDataStream(NotNull(), NotNull())).WillOnce(Return(nullptr));
+
+    std::shared_ptr<MarketDataStream> marketDataStream = client->createMarketDataStream();
+    ASSERT_NE(marketDataStream, nullptr);
+
+    client->cancelMarketDataStream(marketDataStream);
+}
+
 TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
 {
     const InSequence seq;
@@ -405,5 +593,132 @@ TEST_F(Test_GrpcClient, Test_finishMarketDataStream)
     EXPECT_CALL(*rawGrpcClientMock, finishMarketDataStream(marketDataStream)).WillOnce(Return(goodStatus));
 
     client->finishMarketDataStream(marketDataStream);
+}
+
+TEST_F(Test_GrpcClient, Test_createPortfolioStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPortfolioStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    const std::shared_ptr<PortfolioStream> portfolioStream1 = client->createPortfolioStream("aaaaa");
+    ASSERT_NE(portfolioStream1, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, createPortfolioStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    const std::shared_ptr<PortfolioStream> portfolioStream2 = client->createPortfolioStream("aaaaa", "bbbbb");
+    ASSERT_NE(portfolioStream2, nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_readPortfolioStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPortfolioStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PortfolioStream> portfolioStream = client->createPortfolioStream("aaaaa");
+    ASSERT_NE(portfolioStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readPortfolioStream(portfolioStream, NotNull())).WillOnce(Return(false));
+
+    ASSERT_EQ(client->readPortfolioStream(portfolioStream), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readPortfolioStream(portfolioStream, NotNull())).WillOnce(Return(true));
+
+    ASSERT_NE(client->readPortfolioStream(portfolioStream), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_cancelPortfolioStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPortfolioStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PortfolioStream> portfolioStream = client->createPortfolioStream("aaaaa");
+    ASSERT_NE(portfolioStream, nullptr);
+
+    client->cancelPortfolioStream(portfolioStream);
+}
+
+TEST_F(Test_GrpcClient, Test_finishPortfolioStream)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, createPortfolioStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PortfolioStream> portfolioStream = client->createPortfolioStream("aaaaa");
+    ASSERT_NE(portfolioStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishPortfolioStream(portfolioStream)).WillOnce(Return(badStatus));
+
+    client->finishPortfolioStream(portfolioStream);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishPortfolioStream(portfolioStream)).WillOnce(Return(goodStatus));
+
+    client->finishPortfolioStream(portfolioStream);
+}
+
+TEST_F(Test_GrpcClient, Test_createPositionsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPositionsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    const std::shared_ptr<PositionsStream> positionsStream = client->createPositionsStream("aaaaa");
+    ASSERT_NE(positionsStream, nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_readPositionsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPositionsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PositionsStream> positionsStream = client->createPositionsStream("aaaaa");
+    ASSERT_NE(positionsStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readPositionsStream(positionsStream, NotNull())).WillOnce(Return(false));
+
+    ASSERT_EQ(client->readPositionsStream(positionsStream), nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, readPositionsStream(positionsStream, NotNull())).WillOnce(Return(true));
+
+    ASSERT_NE(client->readPositionsStream(positionsStream), nullptr);
+}
+
+TEST_F(Test_GrpcClient, Test_cancelPositionsStream)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*rawGrpcClientMock, createPositionsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PositionsStream> positionsStream = client->createPositionsStream("aaaaa");
+    ASSERT_NE(positionsStream, nullptr);
+
+    client->cancelPositionsStream(positionsStream);
+}
+
+TEST_F(Test_GrpcClient, Test_finishPositionsStream)
+{
+    const InSequence seq;
+
+    const grpc::Status goodStatus(grpc::StatusCode::OK, "");
+    const grpc::Status badStatus(grpc::StatusCode::INVALID_ARGUMENT, "");
+
+    EXPECT_CALL(*rawGrpcClientMock, createPositionsStream(NotNull(), NotNull(), _)).WillOnce(Return(nullptr));
+
+    std::shared_ptr<PositionsStream> positionsStream = client->createPositionsStream("aaaaa");
+    ASSERT_NE(positionsStream, nullptr);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishPositionsStream(positionsStream)).WillOnce(Return(badStatus));
+
+    client->finishPositionsStream(positionsStream);
+
+    EXPECT_CALL(*rawGrpcClientMock, finishPositionsStream(positionsStream)).WillOnce(Return(goodStatus));
+
+    client->finishPositionsStream(positionsStream);
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
