@@ -4,6 +4,8 @@
 #include <QJsonDocument>
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
+
 
 
 // NOLINTBEGIN(readability-function-cognitive-complexity, readability-magic-numbers)
@@ -108,19 +110,9 @@ TEST(Test_StockMeta, Test_fromJsonObject)
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
     doc                                     = parser.iterate(jsonData2);
 
-    try
-    {
-        stockMeta.fromJsonObject(doc.get_object());
-        FAIL() << "Expected std::runtime_error";
-    }
-    catch (std::runtime_error const& err)
-    {
-        EXPECT_EQ(err.what(), QString("Unknown parameter"));
-    }
-    catch (...)
-    {
-        FAIL() << "Expected std::runtime_error";
-    }
+    lastThrownException = "";
+    stockMeta.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
 TEST(Test_StockMeta, Test_toJsonObject)

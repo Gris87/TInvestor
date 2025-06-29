@@ -82,6 +82,7 @@ SOURCES += \
     src/threads/trading/test_tradingthreadfactory.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
     src/utils/autorunenabler/test_autorunenabler.cpp \
+    src/utils/exception/test_exception.cpp \
     src/utils/filedialog/test_filedialog.cpp \
     src/utils/filedialog/test_filedialogfactory.cpp \
     src/utils/fs/dir/test_dir.cpp \

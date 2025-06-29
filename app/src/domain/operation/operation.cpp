@@ -2,6 +2,8 @@
 
 #include <QJsonArray>
 
+#include "src/utils/exception/exception.h"
+
 
 
 Operation::Operation() :
@@ -194,7 +196,7 @@ static void operationThrowParseException(
     Operation* /*operation*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
-    throw std::runtime_error("Unknown parameter");
+    throwException("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Operation* operation, simdjson::ondemand::value value);

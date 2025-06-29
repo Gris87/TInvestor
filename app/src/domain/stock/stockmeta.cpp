@@ -1,5 +1,7 @@
 #include "src/domain/stock/stockmeta.h"
 
+#include "src/utils/exception/exception.h"
+
 
 
 StockMeta::StockMeta() :
@@ -50,7 +52,7 @@ static void metaThrowParseException(
     StockMeta* /*meta*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
-    throw std::runtime_error("Unknown parameter");
+    throwException("Unknown parameter");
 }
 
 using ParseHandler = void (*)(StockMeta* meta, simdjson::ondemand::value value);

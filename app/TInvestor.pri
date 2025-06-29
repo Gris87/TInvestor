@@ -85,6 +85,7 @@ SOURCES += \
     src/threads/trading/tradingthreadfactory.cpp \
     src/threads/userupdate/userupdatethread.cpp \
     src/utils/autorunenabler/autorunenabler.cpp \
+    src/utils/exception/exception.cpp \
     src/utils/filedialog/filedialog.cpp \
     src/utils/filedialog/filedialogfactory.cpp \
     src/utils/fs/dir/dir.cpp \
@@ -279,6 +280,7 @@ HEADERS += \
     src/threads/userupdate/userupdatethread.h \
     src/utils/autorunenabler/autorunenabler.h \
     src/utils/autorunenabler/iautorunenabler.h \
+    src/utils/exception/exception.h \
     src/utils/filedialog/filedialog.h \
     src/utils/filedialog/filedialogfactory.h \
     src/utils/filedialog/ifiledialog.h \

@@ -1,5 +1,7 @@
 #include "src/domain/log/logentry.h"
 
+#include "src/utils/exception/exception.h"
+
 
 
 const char* const LOG_LEVEL_NAMES[LOG_LEVEL_COUNT] = {
@@ -61,7 +63,7 @@ static void logThrowParseException(
     LogEntry* /*entry*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
-    throw std::runtime_error("Unknown parameter");
+    throwException("Unknown parameter");
 }
 
 using ParseHandler = void (*)(LogEntry* entry, simdjson::ondemand::value value);

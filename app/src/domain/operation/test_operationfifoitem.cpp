@@ -4,6 +4,8 @@
 #include <QJsonDocument>
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
+
 
 
 // NOLINTBEGIN(readability-magic-numbers)
@@ -81,19 +83,9 @@ TEST(Test_OperationFifoItem, Test_fromJsonObject)
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
     doc                                     = parser.iterate(jsonData2);
 
-    try
-    {
-        item.fromJsonObject(doc.get_object());
-        FAIL() << "Expected std::runtime_error";
-    }
-    catch (std::runtime_error const& err)
-    {
-        EXPECT_EQ(err.what(), QString("Unknown parameter"));
-    }
-    catch (...)
-    {
-        FAIL() << "Expected std::runtime_error";
-    }
+    lastThrownException = "";
+    item.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
 }
 
 TEST(Test_OperationFifoItem, Test_toJsonObject)

@@ -1,5 +1,7 @@
 #include "src/domain/instrument/instrument.h"
 
+#include "src/utils/exception/exception.h"
+
 
 
 Instrument::Instrument() :
@@ -36,7 +38,7 @@ static void instrumentThrowParseException(
     Instrument* /*instrument*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
-    throw std::runtime_error("Unknown parameter");
+    throwException("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Instrument* instrument, simdjson::ondemand::value value);

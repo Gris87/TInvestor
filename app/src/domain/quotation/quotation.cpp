@@ -1,5 +1,7 @@
 #include "src/domain/quotation/quotation.h"
 
+#include "src/utils/exception/exception.h"
+
 
 
 Quotation::Quotation() :
@@ -22,7 +24,7 @@ static void quotationThrowParseException(
     Quotation* /*quotation*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
 )
 {
-    throw std::runtime_error("Unknown parameter");
+    throwException("Unknown parameter");
 }
 
 using ParseHandler = void (*)(Quotation* quotation, simdjson::ondemand::value value);
