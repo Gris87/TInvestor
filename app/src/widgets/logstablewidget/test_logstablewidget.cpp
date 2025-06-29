@@ -33,8 +33,8 @@ protected:
         logsTableModelMock = new StrictMock<LogsTableModelMock>();
 
         EXPECT_CALL(*logsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(logsTableModelMock));
-        EXPECT_CALL(*logsTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
-        EXPECT_CALL(*logsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
+        EXPECT_CALL(*logsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+        EXPECT_CALL(*logsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
         logsTableWidget = new LogsTableWidget(logsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
     }

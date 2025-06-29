@@ -50,8 +50,8 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
     StrictMock<StocksTableModelMock> stocksTableModelMock;
 
     EXPECT_CALL(stocksTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(&stocksTableModelMock));
-    EXPECT_CALL(stocksTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
-    EXPECT_CALL(stocksTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
+    EXPECT_CALL(stocksTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+    EXPECT_CALL(stocksTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IStocksTableWidget* widget = factory.newInstance(
         &stocksTableModelFactoryMock,

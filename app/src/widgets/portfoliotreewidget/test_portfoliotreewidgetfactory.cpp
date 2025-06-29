@@ -35,8 +35,8 @@ TEST(Test_PortfolioTreeWidgetFactory, Test_newInstance)
     StrictMock<PortfolioTreeModelMock> portfolioTreeModelMock;
 
     EXPECT_CALL(portfolioTreeModelFactoryMock, newInstance(NotNull())).WillOnce(Return(&portfolioTreeModelMock));
-    EXPECT_CALL(portfolioTreeModelMock, rowCount(_)).WillRepeatedly(Return(0));
-    EXPECT_CALL(portfolioTreeModelMock, columnCount(_)).WillRepeatedly(Return(0));
+    EXPECT_CALL(portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+    EXPECT_CALL(portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IPortfolioTreeWidget* widget =
         factory.newInstance(&portfolioTreeModelFactoryMock, &fileDialogFactoryMock, &settingsEditorMock, nullptr);

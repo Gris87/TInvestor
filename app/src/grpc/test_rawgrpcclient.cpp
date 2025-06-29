@@ -48,6 +48,9 @@ protected:
         instrumentsService      = tinkoff::InstrumentsService::NewStub(channel);
         marketDataService       = tinkoff::MarketDataService::NewStub(channel);
         marketDataStreamService = tinkoff::MarketDataStreamService::NewStub(channel);
+        operationsService       = tinkoff::OperationsService::NewStub(channel);
+        operationsStreamService = tinkoff::OperationsStreamService::NewStub(channel);
+        ordersService           = tinkoff::OrdersService::NewStub(channel);
 
         client = new RawGrpcClient();
     }
@@ -65,6 +68,9 @@ protected:
     std::unique_ptr<tinkoff::InstrumentsService::Stub>      instrumentsService;
     std::unique_ptr<tinkoff::MarketDataService::Stub>       marketDataService;
     std::unique_ptr<tinkoff::MarketDataStreamService::Stub> marketDataStreamService;
+    std::unique_ptr<tinkoff::OperationsService::Stub>       operationsService;
+    std::unique_ptr<tinkoff::OperationsStreamService::Stub> operationsStreamService;
+    std::unique_ptr<tinkoff::OrdersService::Stub>           ordersService;
 };
 
 
@@ -671,6 +677,117 @@ TEST_F(Test_RawGrpcClient, Test_getOrderBook)
     ASSERT_EQ(status.ok(),            true);
     ASSERT_EQ(resp->depth(),          50);
     ASSERT_EQ(resp->instrument_uid(), SPBE_UID);
+    // clang-format on
+}
+
+TEST_F(Test_RawGrpcClient, Test_getPortfolio)
+{
+    const InSequence seq;
+
+    grpc::ClientContext                               context;
+    tinkoff::PortfolioRequest                         req;
+    const std::shared_ptr<tinkoff::PortfolioResponse> resp = std::make_shared<tinkoff::PortfolioResponse>();
+
+    context.set_credentials(creds);
+
+    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status = client->getPortfolio(operationsService, &context, req, resp.get());
+
+    // clang-format off
+    ASSERT_EQ(status.ok(),                             true);
+    ASSERT_EQ(resp->account_id(),                      "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_NE(resp->total_amount_currencies().units(), 0);
+    ASSERT_NE(resp->total_amount_portfolio().units(),  0);
+    ASSERT_GT(resp->positions_size(),                  0);
+    ASSERT_EQ(resp->positions(0).figi(),               "RUB000UTSTOM");
+    ASSERT_EQ(resp->positions(0).instrument_type(),    "currency");
+    ASSERT_NE(resp->positions(0).quantity().units(),   0);
+    ASSERT_EQ(resp->positions(0).instrument_uid(),     "a92e2e25-a698-45cc-a781-167cf465257c");
+    // clang-format on
+}
+
+TEST_F(Test_RawGrpcClient, Test_getPositions)
+{
+    const InSequence seq;
+
+    grpc::ClientContext                               context;
+    tinkoff::PositionsRequest                         req;
+    const std::shared_ptr<tinkoff::PositionsResponse> resp = std::make_shared<tinkoff::PositionsResponse>();
+
+    context.set_credentials(creds);
+
+    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status = client->getPositions(operationsService, &context, req, resp.get());
+
+    // clang-format off
+    ASSERT_EQ(status.ok(),            true);
+    ASSERT_GT(resp->money_size(),     0);
+    ASSERT_NE(resp->money(0).units(), 0);
+    // clang-format on
+}
+
+TEST_F(Test_RawGrpcClient, Test_getOperations)
+{
+    const InSequence seq;
+
+    grpc::ClientContext                                           context;
+    tinkoff::GetOperationsByCursorRequest                         req;
+    const std::shared_ptr<tinkoff::GetOperationsByCursorResponse> resp =
+        std::make_shared<tinkoff::GetOperationsByCursorResponse>();
+
+    context.set_credentials(creds);
+
+    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_limit(2);
+    req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
+    req.set_without_trades(true);
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status = client->getOperations(operationsService, &context, req, resp.get());
+
+    // clang-format off
+    ASSERT_EQ(status.ok(),                        true);
+    ASSERT_GT(resp->items_size(),                 0);
+    ASSERT_EQ(resp->items(0).broker_account_id(), "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_GT(resp->items(0).date().seconds(),    1704056400);
+    ASSERT_EQ(resp->items(0).state(),             tinkoff::OPERATION_STATE_EXECUTED);
+    ASSERT_NE(resp->items(0).payment().units(),   0);
+    // clang-format on
+}
+
+TEST_F(Test_RawGrpcClient, Test_getMaxLots)
+{
+    const InSequence seq;
+
+    grpc::ClientContext                                context;
+    tinkoff::GetMaxLotsRequest                         req;
+    const std::shared_ptr<tinkoff::GetMaxLotsResponse> resp = std::make_shared<tinkoff::GetMaxLotsResponse>();
+
+    context.set_credentials(creds);
+
+    req.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req.set_instrument_id(SPBE_UID);
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status = client->getMaxLots(ordersService, &context, req, resp.get());
+
+    // clang-format off
+    ASSERT_EQ(status.ok(),                                   true);
+    ASSERT_EQ(resp->currency(),                              "rub");
+    ASSERT_GT(resp->buy_limits().buy_money_amount().units(), 0);
+    ASSERT_GT(resp->buy_limits().buy_max_lots(),             0);
     // clang-format on
 }
 

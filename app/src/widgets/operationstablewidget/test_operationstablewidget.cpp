@@ -33,8 +33,8 @@ protected:
         operationsTableModelMock = new StrictMock<OperationsTableModelMock>();
 
         EXPECT_CALL(*operationsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(operationsTableModelMock));
-        EXPECT_CALL(*operationsTableModelMock, rowCount(_)).WillRepeatedly(Return(0));
-        EXPECT_CALL(*operationsTableModelMock, columnCount(_)).WillRepeatedly(Return(0));
+        EXPECT_CALL(*operationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+        EXPECT_CALL(*operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
         operationsTableWidget =
             new OperationsTableWidget(operationsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);

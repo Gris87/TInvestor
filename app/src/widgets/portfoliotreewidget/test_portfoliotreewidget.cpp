@@ -33,8 +33,8 @@ protected:
         portfolioTreeModelMock = new StrictMock<PortfolioTreeModelMock>();
 
         EXPECT_CALL(*portfolioTreeModelFactoryMock, newInstance(NotNull())).WillOnce(Return(portfolioTreeModelMock));
-        EXPECT_CALL(*portfolioTreeModelMock, rowCount(_)).WillRepeatedly(Return(0));
-        EXPECT_CALL(*portfolioTreeModelMock, columnCount(_)).WillRepeatedly(Return(0));
+        EXPECT_CALL(*portfolioTreeModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
+        EXPECT_CALL(*portfolioTreeModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
         portfolioTreeWidget = new PortfolioTreeWidget(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
     }
