@@ -706,6 +706,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
     ASSERT_EQ(resp->positions(0).figi(),               "RUB000UTSTOM");
     ASSERT_EQ(resp->positions(0).instrument_type(),    "currency");
     ASSERT_NE(resp->positions(0).quantity().units(),   0);
+    ASSERT_NE(resp->positions(0).position_uid(),       "");
     ASSERT_EQ(resp->positions(0).instrument_uid(),     "a92e2e25-a698-45cc-a781-167cf465257c");
     // clang-format on
 }
@@ -758,9 +759,16 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
     // clang-format off
     ASSERT_EQ(status.ok(),                        true);
     ASSERT_GT(resp->items_size(),                 0);
+    ASSERT_NE(resp->items(0).cursor(),            "");
     ASSERT_EQ(resp->items(0).broker_account_id(), "d1843f24-0864-4666-8608-d5d16822fbae");
+    ASSERT_NE(resp->items(0).id(),                "");
     ASSERT_GT(resp->items(0).date().seconds(),    1704056400);
+    ASSERT_NE(resp->items(0).description(),       "");
     ASSERT_EQ(resp->items(0).state(),             tinkoff::OPERATION_STATE_EXECUTED);
+    ASSERT_NE(resp->items(0).instrument_uid(),    "");
+    ASSERT_NE(resp->items(0).figi(),              "");
+    ASSERT_NE(resp->items(0).instrument_type(),   "");
+    ASSERT_NE(resp->items(0).position_uid(),      "");
     ASSERT_NE(resp->items(0).payment().units(),   0);
     // clang-format on
 }
@@ -788,6 +796,149 @@ TEST_F(Test_RawGrpcClient, Test_getMaxLots)
     ASSERT_EQ(resp->currency(),                              "rub");
     ASSERT_GT(resp->buy_limits().buy_money_amount().units(), 0);
     ASSERT_GT(resp->buy_limits().buy_max_lots(),             0);
+    ASSERT_GE(resp->sell_limits().sell_max_lots(),           0);
+    // clang-format on
+}
+
+TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
+{
+    const InSequence seq;
+
+    grpc::ClientContext                               context1;
+    tinkoff::PostOrderRequest                         req1;
+    const std::shared_ptr<tinkoff::PostOrderResponse> resp1 = std::make_shared<tinkoff::PostOrderResponse>();
+
+    context1.set_credentials(creds);
+
+    tinkoff::Quotation* tinkoffPrice = new tinkoff::Quotation(); // req1 will take ownership
+
+    tinkoffPrice->set_units(1);
+    tinkoffPrice->set_nano(0);
+
+    req1.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req1.set_instrument_id(SPBE_UID);
+    req1.set_direction(tinkoff::ORDER_DIRECTION_BUY);
+    req1.set_quantity(1);
+    req1.set_allocated_price(tinkoffPrice);
+    req1.set_order_type(tinkoff::ORDER_TYPE_LIMIT);
+    req1.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
+    req1.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status1 = client->postOrder(ordersService, &context1, req1, resp1.get());
+
+    // clang-format off
+    ASSERT_EQ(status1.ok(),                                       true);
+    ASSERT_NE(resp1->order_id(),                                  "");
+    ASSERT_EQ(resp1->execution_report_status(),                   tinkoff::EXECUTION_REPORT_STATUS_NEW);
+    ASSERT_EQ(resp1->lots_requested(),                            1);
+    ASSERT_EQ(resp1->lots_executed(),                             0);
+    ASSERT_EQ(resp1->initial_order_price().currency(),            "rub");
+    ASSERT_EQ(resp1->initial_order_price().units(),               1);
+    ASSERT_EQ(resp1->initial_order_price().nano(),                0);
+    ASSERT_EQ(resp1->executed_order_price().currency(),           "rub");
+    ASSERT_EQ(resp1->executed_order_price().units(),              0);
+    ASSERT_EQ(resp1->executed_order_price().nano(),               0);
+    ASSERT_EQ(resp1->total_order_amount().currency(),             "rub");
+    ASSERT_EQ(resp1->total_order_amount().units(),                1);
+    ASSERT_EQ(resp1->total_order_amount().nano(),                 0);
+    ASSERT_EQ(resp1->initial_commission().currency(),             "rub");
+    ASSERT_EQ(resp1->initial_commission().units(),                0);
+    ASSERT_EQ(resp1->initial_commission().nano(),                 500000);
+    ASSERT_EQ(resp1->executed_commission().currency(),            "rub");
+    ASSERT_EQ(resp1->executed_commission().units(),               0);
+    ASSERT_EQ(resp1->executed_commission().nano(),                0);
+    ASSERT_EQ(resp1->figi(),                                      "TCS60A0JQ9P9");
+    ASSERT_EQ(resp1->direction(),                                 tinkoff::ORDER_DIRECTION_BUY);
+    ASSERT_EQ(resp1->initial_security_price().currency(),         "rub");
+    ASSERT_EQ(resp1->initial_security_price().units(),            1);
+    ASSERT_EQ(resp1->initial_security_price().nano(),             0);
+    ASSERT_EQ(resp1->order_type(),                                tinkoff::ORDER_TYPE_LIMIT);
+    ASSERT_EQ(resp1->message(),                                   "");
+    ASSERT_EQ(resp1->initial_order_price_pt().units(),            0);
+    ASSERT_EQ(resp1->initial_order_price_pt().nano(),             0);
+    ASSERT_EQ(resp1->instrument_uid(),                            SPBE_UID);
+    ASSERT_EQ(resp1->order_request_id(),                          "");
+    ASSERT_NE(resp1->response_metadata().tracking_id(),           "");
+    ASSERT_GT(resp1->response_metadata().server_time().seconds(), 1704056400);
+    // clang-format on
+
+    grpc::ClientContext                        context2;
+    tinkoff::GetOrderStateRequest              req2;
+    const std::shared_ptr<tinkoff::OrderState> resp2 = std::make_shared<tinkoff::OrderState>();
+
+    context2.set_credentials(creds);
+
+    req2.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req2.set_order_id(resp1->order_id());
+    req2.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
+    req2.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
+
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status2 = client->getOrderState(ordersService, &context2, req2, resp2.get());
+
+    // clang-format off
+    ASSERT_EQ(status2.ok(),                                       true);
+    ASSERT_NE(resp2->order_id(),                                  "");
+    ASSERT_EQ(resp2->execution_report_status(),                   tinkoff::EXECUTION_REPORT_STATUS_NEW);
+    ASSERT_EQ(resp2->lots_requested(),                            1);
+    ASSERT_EQ(resp2->lots_executed(),                             0);
+    ASSERT_EQ(resp2->initial_order_price().currency(),            "rub");
+    ASSERT_EQ(resp2->initial_order_price().units(),               1);
+    ASSERT_EQ(resp2->initial_order_price().nano(),                0);
+    ASSERT_EQ(resp2->executed_order_price().currency(),           "rub");
+    ASSERT_EQ(resp2->executed_order_price().units(),              0);
+    ASSERT_EQ(resp2->executed_order_price().nano(),               0);
+    ASSERT_EQ(resp2->total_order_amount().currency(),             "rub");
+    ASSERT_EQ(resp2->total_order_amount().units(),                1);
+    ASSERT_EQ(resp2->total_order_amount().nano(),                 0);
+    ASSERT_EQ(resp2->average_position_price().currency(),         "rub");
+    ASSERT_EQ(resp2->average_position_price().units(),            1);
+    ASSERT_EQ(resp2->average_position_price().nano(),             0);
+    ASSERT_EQ(resp2->initial_commission().currency(),             "rub");
+    ASSERT_EQ(resp2->initial_commission().units(),                0);
+    ASSERT_EQ(resp2->initial_commission().nano(),                 500000);
+    ASSERT_EQ(resp2->executed_commission().currency(),            "rub");
+    ASSERT_EQ(resp2->executed_commission().units(),               0);
+    ASSERT_EQ(resp2->executed_commission().nano(),                0);
+    ASSERT_EQ(resp2->figi(),                                      "TCS60A0JQ9P9");
+    ASSERT_EQ(resp2->direction(),                                 tinkoff::ORDER_DIRECTION_BUY);
+    ASSERT_EQ(resp2->initial_security_price().currency(),         "rub");
+    ASSERT_EQ(resp2->initial_security_price().units(),            1);
+    ASSERT_EQ(resp2->initial_security_price().nano(),             0);
+    ASSERT_EQ(resp2->stages_size(),                               0);
+    ASSERT_EQ(resp2->service_commission().currency(),             "rub");
+    ASSERT_EQ(resp2->service_commission().units(),                0);
+    ASSERT_EQ(resp2->service_commission().nano(),                 0);
+    ASSERT_EQ(resp2->currency(),                                  "rub");
+    ASSERT_EQ(resp2->order_type(),                                tinkoff::ORDER_TYPE_LIMIT);
+    ASSERT_GT(resp2->order_date().seconds(),                      1704056400);
+    ASSERT_EQ(resp2->instrument_uid(),                            SPBE_UID);
+    ASSERT_EQ(resp2->order_request_id(),                          "");
+    // clang-format on
+
+    grpc::ClientContext                                 context3;
+    tinkoff::CancelOrderRequest                         req3;
+    const std::shared_ptr<tinkoff::CancelOrderResponse> resp3 = std::make_shared<tinkoff::CancelOrderResponse>();
+
+    context3.set_credentials(creds);
+
+    req3.set_account_id("d1843f24-0864-4666-8608-d5d16822fbae");
+    req3.set_order_id(resp1->order_id());
+    req3.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
+
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    const grpc::Status status3 = client->cancelOrder(ordersService, &context3, req3, resp3.get());
+
+    // clang-format off
+    ASSERT_EQ(status3.ok(),                                       true);
+    ASSERT_GT(resp3->time().seconds(),                            1704056400);
+    ASSERT_NE(resp3->response_metadata().tracking_id(),           "");
+    ASSERT_GT(resp3->response_metadata().server_time().seconds(), 1704056400);
     // clang-format on
 }
 
