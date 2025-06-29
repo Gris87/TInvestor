@@ -124,15 +124,16 @@ public:
 
     Ui::MainWindow* ui;
 
-    bool   authFailedDialogShown;
-    QTimer cleanupTimer;
-    QTimer userUpdateTimer;
-    QTimer priceCollectTimer;
-    QTimer makeDecisionTimer;
-    QTimer stocksTableUpdateAllTimer;
-    QTimer stocksTableUpdateLastPricesTimer;
-    QTimer keepMoneyChangeDelayTimer;
-    QTimer autoPilotPortfolioUpdateLastPricesTimer;
+    QTimer                         cleanupTimer;
+    QTimer                         userUpdateTimer;
+    QTimer                         priceCollectTimer;
+    QTimer                         makeDecisionTimer;
+    QTimer                         stocksTableUpdateAllTimer;
+    QTimer                         stocksTableUpdateLastPricesTimer;
+    QTimer                         keepMoneyChangeDelayTimer;
+    QTimer                         autoPilotPortfolioUpdateLastPricesTimer;
+    bool                           authFailedDialogShown;
+    QMap<QString, ITradingThread*> tradingThreads; // Instrument UID => ITradingThread
 
 private:
     void updateStackWidgetToolbar() const;
@@ -186,7 +187,6 @@ private:
     IAutorunEnabler*                   mAutorunEnabler;
     QString                            mAutoPilotAccountId;
     QString                            mAutoPilotAnotherAccountId;
-    QMap<QString, ITradingThread*>     mTradingThreads; // Instrument UID => ITradingThread
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);

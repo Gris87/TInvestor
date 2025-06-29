@@ -36,6 +36,7 @@
 #include "src/threads/portfolio/iportfoliothread_mock.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
+#include "src/threads/trading/itradingthread_mock.h"
 #include "src/threads/trading/itradingthreadfactory_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
 #include "src/utils/autorunenabler/iautorunenabler_mock.h"
@@ -67,6 +68,8 @@
 
 
 using ::testing::_;
+using ::testing::DoubleEq;
+using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -609,6 +612,24 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
     mainWindow->stocksTableUpdateLastPricesTimerTicked();
 }
 
+TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
+
+    mainWindow->keepMoneyChangeDelayTimerTicked();
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotPortfolioUpdateLastPricesTimerTicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, updateLastPrices());
+
+    mainWindow->autoPilotPortfolioUpdateLastPricesTimerTicked();
+}
+
 TEST_F(Test_MainWindow, Test_notifyInstrumentsProgress)
 {
     ASSERT_EQ(mainWindow->ui->waitingSpinnerWidget->text(), "");
@@ -685,6 +706,169 @@ TEST_F(Test_MainWindow, Test_stockFilterChanged)
     EXPECT_CALL(*stocksTableWidgetMock, setFilter(filter));
 
     mainWindow->stockFilterChanged(filter);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotOperationsRead)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, operationsRead(operations));
+
+    mainWindow->autoPilotOperationsRead(operations);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotOperationsAdded)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, operationsAdded(operations));
+
+    mainWindow->autoPilotOperationsAdded(operations);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotPortfolioChanged)
+{
+    const InSequence seq;
+
+    const Portfolio portfolio;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, portfolioChanged(portfolio));
+    EXPECT_CALL(*portfolioLastPriceThreadMock, portfolioChanged(portfolio));
+
+    mainWindow->autoPilotPortfolioChanged(portfolio);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotLogsRead)
+{
+    const InSequence seq;
+
+    const QList<LogEntry> entries;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, logsRead(entries));
+
+    mainWindow->autoPilotLogsRead(entries);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotLogAdded)
+{
+    const InSequence seq;
+
+    const LogEntry entry;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, logAdded(entry));
+
+    mainWindow->autoPilotLogAdded(entry);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotPortfolioLastPriceChanged)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, lastPriceChanged(QString("aaaaa"), FloatEq(1.5f)));
+
+    mainWindow->autoPilotPortfolioLastPriceChanged("aaaaa", 1.5f);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompleted)
+{
+    // const InSequence seq;
+
+    // Will be deleted in MainWindow destructor
+    StrictMock<TradingThreadMock>* tradingThreadMock1 = new StrictMock<TradingThreadMock>();
+    StrictMock<TradingThreadMock>* tradingThreadMock2 = new StrictMock<TradingThreadMock>();
+
+    ASSERT_EQ(mainWindow->tradingThreads.size(), 0);
+
+    TradingInfo tradingInfo1;
+    TradingInfo tradingInfo2;
+    TradingInfo tradingInfo3;
+
+    tradingInfo1.expectedCost = 10000.0;
+    tradingInfo1.cause        = "Need to buy";
+
+    tradingInfo2.expectedCost = 15000.0;
+    tradingInfo2.cause        = "Need to buy more";
+
+    tradingInfo3.expectedCost = 0.0;
+    tradingInfo3.cause        = "Sell ASAP";
+
+    QMap<QString, TradingInfo> instruments;
+    QMap<QString, TradingInfo> instruments2;
+
+    instruments["aaaaa"] = tradingInfo1;
+    instruments["bbbbb"] = tradingInfo2;
+
+    instruments2["aaaaa"] = tradingInfo3;
+
+    EXPECT_CALL(
+        *tradingThreadFactoryMock,
+        newInstance(
+            instrumentsStorageMock,
+            grpcClientMock,
+            logsThreadMock,
+            timeUtilsMock,
+            QString(""),
+            QString("aaaaa"),
+            DoubleEq(10000.0),
+            QString("Need to buy"),
+            mainWindow
+        )
+    )
+        .WillOnce(Return(tradingThreadMock1));
+    EXPECT_CALL(*tradingThreadMock1, run());
+    EXPECT_CALL(
+        *tradingThreadFactoryMock,
+        newInstance(
+            instrumentsStorageMock,
+            grpcClientMock,
+            logsThreadMock,
+            timeUtilsMock,
+            QString(""),
+            QString("bbbbb"),
+            DoubleEq(15000.0),
+            QString("Need to buy more"),
+            mainWindow
+        )
+    )
+        .WillOnce(Return(tradingThreadMock2));
+    EXPECT_CALL(*tradingThreadMock2, run());
+
+    mainWindow->autoPilotTradeInstruments(instruments);
+
+    tradingThreadMock1->wait();
+    tradingThreadMock2->wait();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),   2);
+    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"], tradingThreadMock1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    // clang-format on
+
+    EXPECT_CALL(*tradingThreadMock1, setExpectedCost(DoubleEq(0.0), QString("Sell ASAP")));
+
+    mainWindow->autoPilotTradeInstruments(instruments2);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),   2);
+    ASSERT_EQ(mainWindow->tradingThreads["aaaaa"], tradingThreadMock1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    // clang-format on
+
+    mainWindow->autoPilotTradingCompleted("aaaaa");
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),   1);
+    ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
+    // clang-format on
+
+    // Need to do manually. tradingThreadMock2 will be deleted in MainWindow destructor
+    delete tradingThreadMock1;
+
+    EXPECT_CALL(*tradingThreadMock2, terminateThread());
 }
 
 TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
@@ -915,10 +1099,14 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     StrictMock<StartAutoPilotDialogMock>* startAutoPilotDialogMock =
         new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
 
+    // Will be deleted in stopAutoPilot function
+    StrictMock<TradingThreadMock>* tradingThreadMock = new StrictMock<TradingThreadMock>();
+
     mainWindow->show();
     mainWindow->ui->stackedWidget->setCurrentWidget(mainWindow->ui->autoPilotPage);
 
     // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),                          0);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
@@ -982,6 +1170,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     mainWindow->ui->startAutoPilotButton->click();
 
     // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),                          0);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         true);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), true);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Stop auto-pilot");
@@ -992,6 +1181,40 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
     followThreadMock->wait();
+
+    QMap<QString, TradingInfo> instruments;
+    TradingInfo                tradingInfo;
+
+    tradingInfo.expectedCost = 10000.0;
+    tradingInfo.cause        = "Need to buy";
+
+    instruments["aaa-aaa"] = tradingInfo;
+
+    EXPECT_CALL(
+        *tradingThreadFactoryMock,
+        newInstance(
+            instrumentsStorageMock,
+            grpcClientMock,
+            logsThreadMock,
+            timeUtilsMock,
+            QString("aaaaaa"),
+            QString("aaa-aaa"),
+            DoubleEq(10000.0),
+            QString("Need to buy"),
+            mainWindow
+        )
+    )
+        .WillOnce(Return(tradingThreadMock));
+    EXPECT_CALL(*tradingThreadMock, run());
+
+    mainWindow->autoPilotTradeInstruments(instruments);
+
+    tradingThreadMock->wait();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),     1);
+    ASSERT_EQ(mainWindow->tradingThreads["aaa-aaa"], tradingThreadMock);
+    // clang-format on
 
     EXPECT_CALL(
         *messageBoxUtilsMock,
@@ -1013,13 +1236,30 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
+    EXPECT_CALL(*tradingThreadMock, terminateThread());
 
     mainWindow->ui->startAutoPilotButton->click();
 
     // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),                          0);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
     ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
     ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
+    // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_on_keepMoneySpinBox_valueChanged)
+{
+    // clang-format off
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.interval(), 0);
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), false);
+    // clang-format on
+
+    mainWindow->ui->keepMoneySpinBox->setValue(5000);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.interval(), 1000);
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), true);
     // clang-format on
 }
 

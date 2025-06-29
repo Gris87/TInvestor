@@ -1,3 +1,4 @@
+Keep money on follow thread
 Test coverage
 Create release
 

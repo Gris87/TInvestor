@@ -94,6 +94,7 @@ MainWindow::MainWindow(
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     authFailedDialogShown(false),
+    tradingThreads(),
     mConfig(config),
     mConfigForSettingsDialog(configForSettingsDialog),
     mConfigForSimulation(configForSimulation),
@@ -134,8 +135,7 @@ MainWindow::MainWindow(
     mAutoPilotSettingsEditor(autoPilotSettingsEditor),
     mAutorunEnabler(autorunEnabler),
     mAutoPilotAccountId(),
-    mAutoPilotAnotherAccountId(),
-    mTradingThreads()
+    mAutoPilotAnotherAccountId()
 {
     qDebug() << "Create MainWindow";
 
@@ -263,7 +263,7 @@ MainWindow::~MainWindow()
     mFollowThread->terminateThread();
     mMakeDecisionThread->terminateThread();
 
-    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
         it.value()->terminateThread();
     }
@@ -279,9 +279,10 @@ MainWindow::~MainWindow()
     mFollowThread->wait();
     mMakeDecisionThread->wait();
 
-    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
         it.value()->wait();
+        delete it.value();
     }
 
     saveWindowState();
@@ -434,6 +435,8 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
 void MainWindow::keepMoneyChangeDelayTimerTicked()
 {
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", ui->keepMoneySpinBox->value());
+
+    // TODO: Apply keep money
 }
 
 void MainWindow::autoPilotPortfolioUpdateLastPricesTimerTicked()
@@ -588,7 +591,7 @@ void MainWindow::stopAutoPilot()
     mPortfolioLastPriceThread->terminateThread();
     mFollowThread->terminateThread();
 
-    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
         it.value()->terminateThread();
     }
@@ -601,13 +604,13 @@ void MainWindow::stopAutoPilot()
     mPortfolioLastPriceThread->wait();
     mFollowThread->wait();
 
-    for (auto it = mTradingThreads.constBegin(); it != mTradingThreads.constEnd(); ++it)
+    for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
         it.value()->wait();
         delete it.value();
     }
 
-    mTradingThreads.clear();
+    tradingThreads.clear();
 }
 
 void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
@@ -645,7 +648,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& ins
 {
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {
-        ITradingThread* tradingThread = mTradingThreads.value(it.key());
+        ITradingThread* tradingThread = tradingThreads.value(it.key());
 
         if (tradingThread == nullptr)
         {
@@ -665,7 +668,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& ins
                 tradingThread, SIGNAL(tradingCompleted(const QString&)), this, SLOT(autoPilotTradingCompleted(const QString&))
             );
 
-            mTradingThreads[it.key()] = tradingThread;
+            tradingThreads[it.key()] = tradingThread;
             tradingThread->start();
         }
         else
@@ -677,7 +680,7 @@ void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& ins
 
 void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 {
-    mTradingThreads.take(instrumentId)->deleteLater();
+    tradingThreads.take(instrumentId)->deleteLater();
 }
 
 void MainWindow::on_actionAuth_triggered()
