@@ -34,6 +34,7 @@ protected:
 };
 
 
+
 TEST_F(Test_LogLevelItemDelegate, Test_constructor_and_destructor)
 {
 }

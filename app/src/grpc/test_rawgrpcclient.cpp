@@ -986,4 +986,54 @@ TEST_F(Test_RawGrpcClient, Test_MarketDataStream)
     marketDataStream->context.TryCancel();
     ASSERT_EQ(client->finishMarketDataStream(marketDataStream).error_code(), grpc::StatusCode::CANCELLED);
 }
+
+TEST_F(Test_RawGrpcClient, Test_PortfolioStream)
+{
+    const InSequence seq;
+
+    tinkoff::PortfolioStreamRequest req;
+    req.add_accounts("d1843f24-0864-4666-8608-d5d16822fbae");
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    std::shared_ptr<PortfolioStream> portfolioStream(new PortfolioStream());
+
+    portfolioStream->context.set_credentials(creds);
+    portfolioStream->stream = client->createPortfolioStream(operationsStreamService, &portfolioStream->context, req);
+
+    ASSERT_NE(portfolioStream->stream, nullptr);
+
+    portfolioStream->context.TryCancel();
+
+    tinkoff::PortfolioStreamResponse resp;
+    ASSERT_EQ(client->readPortfolioStream(portfolioStream, &resp), false);
+
+    ASSERT_EQ(client->finishPortfolioStream(portfolioStream).error_code(), grpc::StatusCode::CANCELLED);
+}
+
+TEST_F(Test_RawGrpcClient, Test_PositionsStream)
+{
+    const InSequence seq;
+
+    tinkoff::PositionsStreamRequest req;
+    req.add_accounts("d1843f24-0864-4666-8608-d5d16822fbae");
+
+    QString token = SANDBOX_TOKEN;
+    EXPECT_CALL(*userStorageMock, getToken()).WillOnce(ReturnRef(token));
+
+    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
+
+    positionsStream->context.set_credentials(creds);
+    positionsStream->stream = client->createPositionsStream(operationsStreamService, &positionsStream->context, req);
+
+    ASSERT_NE(positionsStream->stream, nullptr);
+
+    positionsStream->context.TryCancel();
+
+    tinkoff::PositionsStreamResponse resp;
+    ASSERT_EQ(client->readPositionsStream(positionsStream, &resp), false);
+
+    ASSERT_EQ(client->finishPositionsStream(positionsStream).error_code(), grpc::StatusCode::CANCELLED);
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-function-cognitive-complexity, readability-magic-numbers)
