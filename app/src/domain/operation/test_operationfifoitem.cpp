@@ -77,6 +77,23 @@ TEST(Test_OperationFifoItem, Test_fromJsonObject)
     ASSERT_EQ(item.cost.units, 2);
     ASSERT_EQ(item.cost.nano,  3);
     // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    try
+    {
+        item.fromJsonObject(doc.get_object());
+        FAIL() << "Expected std::runtime_error";
+    }
+    catch (std::runtime_error const& err)
+    {
+        EXPECT_EQ(err.what(), QString("Unknown parameter"));
+    }
+    catch (...)
+    {
+        FAIL() << "Expected std::runtime_error";
+    }
 }
 
 TEST(Test_OperationFifoItem, Test_toJsonObject)

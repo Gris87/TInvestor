@@ -88,8 +88,8 @@ void PriceCollectThread::run()
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffStocks != nullptr)
     {
-        const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         storeNewInstrumentsInfo();
+        const bool needStocksUpdate = storeNewStocksInfo(tinkoffStocks);
         obtainStocksData();
         cleanupOperationalData();
         const bool needPricesUpdate = obtainStocksDayStartPrice();

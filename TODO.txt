@@ -1,4 +1,3 @@
-Prepare logos on price collect thread
 Test coverage
 Create release
 

@@ -132,6 +132,16 @@ TEST(Test_Stock, Test_assign)
     // clang-format on
 }
 
+TEST(Test_Stock, Test_lock_and_unlock)
+{
+    Stock stock;
+
+    stock.writeLock();
+    stock.writeUnlock();
+    stock.readLock();
+    stock.readUnlock();
+}
+
 TEST(Test_Stock, Test_lastPrice)
 {
     Stock stock;

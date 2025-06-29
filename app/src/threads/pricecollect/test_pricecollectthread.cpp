@@ -278,12 +278,6 @@ TEST_F(Test_PriceCollectThread, Test_run)
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_BASE))
         .WillOnce(Return(stocksResponse));
-    EXPECT_CALL(*logosStorageMock, readLock());
-    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));
-    EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*stocksStorageMock, writeLock());
-    EXPECT_CALL(*stocksStorageMock, mergeStocksMeta(Ne(QList<StockMeta>()))).WillOnce(Return(true));
-    EXPECT_CALL(*stocksStorageMock, writeUnlock());
 
     EXPECT_CALL(*grpcClientMock, findStocks(QThread::currentThread(), tinkoff::INSTRUMENT_STATUS_ALL))
         .WillOnce(Return(sharesResponse));
@@ -350,6 +344,13 @@ TEST_F(Test_PriceCollectThread, Test_run)
     EXPECT_CALL(*instrumentsStorageMock, writeLock());
     EXPECT_CALL(*instrumentsStorageMock, mergeInstruments(Ne(Instruments())));
     EXPECT_CALL(*instrumentsStorageMock, writeUnlock());
+
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logoImage));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, writeLock());
+    EXPECT_CALL(*stocksStorageMock, mergeStocksMeta(Ne(QList<StockMeta>()))).WillOnce(Return(true));
+    EXPECT_CALL(*stocksStorageMock, writeUnlock());
 
     EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock1)));
     EXPECT_CALL(*dirMock1, mkpath(appDir + "/cache/stocks")).WillOnce(Return(true));

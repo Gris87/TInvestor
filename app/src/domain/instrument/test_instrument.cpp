@@ -82,6 +82,23 @@ TEST(Test_Instrument, Test_fromJsonObject)
     ASSERT_EQ(instrument.lot,            1);
     ASSERT_EQ(instrument.pricePrecision, 2);
     // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    try
+    {
+        instrument.fromJsonObject(doc.get_object());
+        FAIL() << "Expected std::runtime_error";
+    }
+    catch (std::runtime_error const& err)
+    {
+        EXPECT_EQ(err.what(), QString("Unknown parameter"));
+    }
+    catch (...)
+    {
+        FAIL() << "Expected std::runtime_error";
+    }
 }
 
 TEST(Test_Instrument, Test_toJsonObject)

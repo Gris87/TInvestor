@@ -45,7 +45,7 @@ TEST_F(Test_StocksStorage, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
+TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
 {
     const InSequence seq;
 
@@ -116,6 +116,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -138,6 +139,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -160,6 +162,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -182,6 +185,10 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks)
     ASSERT_EQ(stocks.at(2)->data.at(2).quantity,              4);
     ASSERT_NEAR(stocks.at(2)->data.at(2).price,               0.4f, 0.0001f);
     // clang-format on
+
+    EXPECT_CALL(*stocksDatabaseMock, assignLogos(Ne(QList<Stock*>())));
+
+    storage->assignLogos();
 }
 
 TEST_F(Test_StocksStorage, Test_lock_unlock)
@@ -263,6 +270,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -285,6 +293,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -307,6 +316,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -361,6 +371,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  4);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "BEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "cba");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         false);
@@ -383,6 +394,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -405,6 +417,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -430,6 +443,7 @@ TEST_F(Test_StocksStorage, Test_mergeStocksMeta)
 
     // clang-format off
     ASSERT_EQ(stocks.at(3)->meta.instrumentId,                "dddddddd-dddd-dddd-dddd-dddddddddddd");
+    ASSERT_EQ(stocks.at(3)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(3)->meta.instrumentTicker,            "ZARA");
     ASSERT_EQ(stocks.at(3)->meta.instrumentName,              "Zaradunger");
     ASSERT_EQ(stocks.at(3)->meta.forQualInvestorFlag,         true);
@@ -537,6 +551,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -562,6 +577,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -596,6 +612,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -632,6 +649,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -654,6 +672,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -685,6 +704,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -718,6 +738,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -734,6 +755,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -759,6 +781,7 @@ TEST_F(Test_StocksStorage, Test_deleteObsoleteData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -851,6 +874,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                          3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                        "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,                    "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,                      "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,                 true);
@@ -873,6 +897,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
@@ -901,6 +926,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                        "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
@@ -930,6 +956,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                          3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                        "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,                    "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,                      "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,                 true);
@@ -950,6 +977,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
@@ -976,6 +1004,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                        "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
@@ -1003,6 +1032,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1019,6 +1049,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,                    "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,                      "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,                 false);
@@ -1041,6 +1072,7 @@ TEST_F(Test_StocksStorage, Test_cleanupOperationalData)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                        "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,                      nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,                    "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,                      "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,                 true);
@@ -1143,6 +1175,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1168,6 +1201,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1196,6 +1230,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1227,6 +1262,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1252,6 +1288,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1280,6 +1317,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDayStartPrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1390,6 +1428,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1415,6 +1454,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1443,6 +1483,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1474,6 +1515,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1499,6 +1541,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1527,6 +1570,7 @@ TEST_F(Test_StocksStorage, Test_obtainStocksDatePrice)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1637,6 +1681,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1662,6 +1707,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1690,6 +1736,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1721,6 +1768,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1746,6 +1794,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1774,6 +1823,7 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1884,6 +1934,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1909,6 +1960,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -1937,6 +1989,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);
@@ -1972,6 +2025,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
     ASSERT_EQ(stocks.at(0)->meta.instrumentId,                "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+    ASSERT_EQ(stocks.at(0)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(0)->meta.instrumentTicker,            "TEST");
     ASSERT_EQ(stocks.at(0)->meta.instrumentName,              "abc");
     ASSERT_EQ(stocks.at(0)->meta.forQualInvestorFlag,         true);
@@ -1997,6 +2051,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 
     // clang-format off
     ASSERT_EQ(stocks.at(1)->meta.instrumentId,                "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb");
+    ASSERT_EQ(stocks.at(1)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(1)->meta.instrumentTicker,            "MAGA");
     ASSERT_EQ(stocks.at(1)->meta.instrumentName,              "def");
     ASSERT_EQ(stocks.at(1)->meta.forQualInvestorFlag,         false);
@@ -2025,6 +2080,7 @@ TEST_F(Test_StocksStorage, Test_obtainPayback)
 
     // clang-format off
     ASSERT_EQ(stocks.at(2)->meta.instrumentId,                "cccccccc-cccc-cccc-cccc-cccccccccccc");
+    ASSERT_EQ(stocks.at(2)->meta.instrumentLogo,              nullptr);
     ASSERT_EQ(stocks.at(2)->meta.instrumentTicker,            "HNYA");
     ASSERT_EQ(stocks.at(2)->meta.instrumentName,              "aaaa");
     ASSERT_EQ(stocks.at(2)->meta.forQualInvestorFlag,         true);

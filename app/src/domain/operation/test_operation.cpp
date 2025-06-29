@@ -330,6 +330,23 @@ TEST(Test_Operation, Test_fromJsonObject)
     ASSERT_EQ(operation.paymentPrecision,                  29);
     ASSERT_EQ(operation.commissionPrecision,               30);
     // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    try
+    {
+        operation.fromJsonObject(doc.get_object());
+        FAIL() << "Expected std::runtime_error";
+    }
+    catch (std::runtime_error const& err)
+    {
+        EXPECT_EQ(err.what(), QString("Unknown parameter"));
+    }
+    catch (...)
+    {
+        FAIL() << "Expected std::runtime_error";
+    }
 }
 
 TEST(Test_Operation, Test_toJsonObject)
