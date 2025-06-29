@@ -676,7 +676,7 @@ void OperationsThread::addInstrumentsAfterOptimization(QList<Operation>& newOper
 
     QList<Operation> operationsWithInstruments;
 
-    for (const QList<Operation>& operations : addInstrumentsInfo.results)
+    for (const QList<Operation>& operations : std::as_const(addInstrumentsInfo.results))
     {
         operationsWithInstruments.append(operations);
     }

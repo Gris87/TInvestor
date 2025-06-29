@@ -165,7 +165,7 @@ static void deleteObsoleteDataForParallel(
             "Stock data is unsorted"
         );
 
-        int index = std::distance(
+        const int index = std::distance(
             stock->data.constBegin(),
             std::lower_bound(
                 stock->data.constBegin(),
@@ -229,7 +229,7 @@ static void cleanupOperationalDataForParallel(
             "Stock data is unsorted"
         );
 
-        int index = std::distance(
+        const int index = std::distance(
             stock->operational.detailedData.constBegin(),
             std::lower_bound(
                 stock->operational.detailedData.constBegin(),

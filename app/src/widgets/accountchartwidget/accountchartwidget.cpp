@@ -755,7 +755,7 @@ QPointF AccountChartWidget::findNearestPoint(const QPointF& point, const QList<Q
         "Series points is unsorted"
     );
 
-    int index = std::distance(
+    const int index = std::distance(
         seriesPoints.constBegin(),
         std::lower_bound(
             seriesPoints.constBegin(), seriesPoints.constEnd(), point.x(), [](const QPointF& seriesPoint, qreal value) {
