@@ -22,6 +22,7 @@
 
 
 using ::testing::_;
+using ::testing::FloatEq;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::Return;
@@ -137,6 +138,222 @@ protected:
 
 TEST_F(Test_DecisionMakerWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_setAccountName)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*portfolioTreeWidgetMock, setAccountName(QString("Hello, friend")));
+
+    decisionMakerWidget->setAccountName("Hello, friend");
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_showSpinners)
+{
+    ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->portfolioWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->operationsWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->operationsWorkingPage
+    );
+    ASSERT_EQ(
+        decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWorkingPage
+    );
+
+    decisionMakerWidget->showSpinners();
+
+    ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(decisionMakerWidget->ui->portfolioWaitingSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->operationsWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->operationsWaitingPage
+    );
+    ASSERT_EQ(
+        decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWaitingPage
+    );
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_operationsRead)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->operationsWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->operationsWorkingPage
+    );
+
+    decisionMakerWidget->showSpinners();
+
+    ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->operationsWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->operationsWaitingPage
+    );
+
+    EXPECT_CALL(*operationsTableWidgetMock, operationsRead(operations));
+    EXPECT_CALL(*accountChartWidgetMock, operationsRead(operations));
+
+    decisionMakerWidget->operationsRead(operations);
+
+    ASSERT_EQ(decisionMakerWidget->ui->operationsWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->operationsWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->operationsWorkingPage
+    );
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_operationsAdded)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*operationsTableWidgetMock, operationsAdded(operations));
+    EXPECT_CALL(*accountChartWidgetMock, operationsAdded(operations));
+
+    decisionMakerWidget->operationsAdded(operations);
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_logsRead)
+{
+    const InSequence seq;
+
+    const QList<LogEntry> entries;
+
+    EXPECT_CALL(*logsTableWidgetMock, logsRead(entries));
+
+    decisionMakerWidget->logsRead(entries);
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_logAdded)
+{
+    const InSequence seq;
+
+    const LogEntry entry;
+
+    EXPECT_CALL(*logsTableWidgetMock, logAdded(entry));
+
+    decisionMakerWidget->logAdded(entry);
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_portfolioChanged)
+{
+    const InSequence seq;
+
+    const Portfolio portfolio;
+
+    ASSERT_EQ(decisionMakerWidget->ui->portfolioWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWorkingPage
+    );
+
+    decisionMakerWidget->showSpinners();
+
+    ASSERT_EQ(decisionMakerWidget->ui->portfolioWaitingSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWaitingPage
+    );
+
+    EXPECT_CALL(*portfolioTreeWidgetMock, portfolioChanged(portfolio));
+
+    decisionMakerWidget->portfolioChanged(portfolio);
+
+    ASSERT_EQ(decisionMakerWidget->ui->portfolioWaitingSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(
+        decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWorkingPage
+    );
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_lastPriceChanged)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*portfolioTreeWidgetMock, lastPriceChanged(QString("aaaaa"), FloatEq(1.5f)));
+
+    decisionMakerWidget->lastPriceChanged("aaaaa", 1.5f);
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_updateLastPrices)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*portfolioTreeWidgetMock, updateLastPrices());
+
+    decisionMakerWidget->updateLastPrices();
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_YIELD));
+
+    decisionMakerWidget->ui->yieldButton->click();
+
+    // clang-format off
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         true);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
+    // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_monthlyYieldButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_MONTHLY_YIELD));
+
+    decisionMakerWidget->ui->monthlyYieldButton->click();
+
+    // clang-format off
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  true);
+    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
+    // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_remainedMoneyButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_REMAINED_MONEY));
+
+    decisionMakerWidget->ui->remainedMoneyButton->click();
+
+    // clang-format off
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), true);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    false);
+    // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*accountChartWidgetMock, switchChart(CHART_TYPE_TOTAL_MONEY));
+
+    decisionMakerWidget->ui->totalMoneyButton->click();
+
+    // clang-format off
+    ASSERT_EQ(decisionMakerWidget->ui->yieldButton->isChecked(),         false);
+    ASSERT_EQ(decisionMakerWidget->ui->monthlyYieldButton->isChecked(),  false);
+    ASSERT_EQ(decisionMakerWidget->ui->remainedMoneyButton->isChecked(), false);
+    ASSERT_EQ(decisionMakerWidget->ui->totalMoneyButton->isChecked(),    true);
+    // clang-format on
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_logFilterChanged)
+{
+    const InSequence seq;
+
+    const LogFilter filter;
+
+    EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
+
+    decisionMakerWidget->logFilterChanged(filter);
 }
 
 TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)
