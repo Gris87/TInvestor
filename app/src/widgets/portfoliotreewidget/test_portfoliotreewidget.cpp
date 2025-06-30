@@ -137,14 +137,14 @@ TEST_F(Test_PortfolioTreeWidget, Test_updateLastPrices)
     ASSERT_EQ(portfolioTreeWidget->ui->forTodayLabel->text(),    "+5000.00 \u20BD(+4.76%)");
     ASSERT_EQ(portfolioTreeWidget->ui->allTimeLabel->toolTip(),  "From: 100000.00 \u20BD");
     ASSERT_EQ(portfolioTreeWidget->ui->forTodayLabel->toolTip(), "From: 105000.00 \u20BD");
-    // clang-format
+    // clang-format on
 
     EXPECT_CALL(*portfolioTreeModelMock, updateLastPrices()).WillOnce(Return(true));
     EXPECT_CALL(*portfolioTreeModelMock, totalYield()).WillOnce(Return(0.0));
     EXPECT_CALL(*portfolioTreeModelMock, totalDailyYield()).WillOnce(Return(-5000.0));
-    
+
     portfolioTreeWidget->updateLastPrices();
-    
+
     qInfo() << portfolioTreeWidget->ui->forTodayLabel->text();
 
     // clang-format off
@@ -153,7 +153,7 @@ TEST_F(Test_PortfolioTreeWidget, Test_updateLastPrices)
     ASSERT_EQ(portfolioTreeWidget->ui->forTodayLabel->text(),    "-5000.00 \u20BD(-4.76%)");
     ASSERT_EQ(portfolioTreeWidget->ui->allTimeLabel->toolTip(),  "From: 100000.00 \u20BD");
     ASSERT_EQ(portfolioTreeWidget->ui->forTodayLabel->toolTip(), "From: 105000.00 \u20BD");
-    // clang-format
+    // clang-format on
 }
 
 TEST_F(Test_PortfolioTreeWidget, Test_on_treeView_customContextMenuRequested)
