@@ -41,6 +41,7 @@ constexpr double COLUMN_GAP            = 0.71;
 AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, ISettingsEditor* settingsEditor, QWidget* parent) :
     IAccountChartWidget(parent),
     tooltipHideTimer(),
+    tooltip(),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
     mChartType(),
@@ -79,8 +80,7 @@ AccountChartWidget::AccountChartWidget(IFileDialogFactory* fileDialogFactory, IS
     mTotalMoneyAxisYMin(),
     mTotalMoneyAxisYMax(),
     mTargetScenePos(),
-    mTargetViewportPos(),
-    mTooltip()
+    mTargetViewportPos()
 {
     qDebug() << "Create AccountChartWidget";
 
@@ -295,12 +295,12 @@ void AccountChartWidget::switchChart(ChartType chartType)
         }
     }
 
-    if (mTooltip != nullptr)
+    if (tooltip != nullptr)
     {
         tooltipHideTimer.stop();
 
-        delete mTooltip;
-        mTooltip = nullptr;
+        delete tooltip;
+        tooltip = nullptr;
     }
 }
 
@@ -681,17 +681,21 @@ void AccountChartWidget::exportToExcel(const QString& path) const
 
 void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
 {
-    if (mTooltip == nullptr)
+    if (tooltip == nullptr)
     {
-        mTooltip = new ChartTooltip(chart());
-        mTooltip->setZValue(TOOLTIP_Z_VALUE);
+        tooltip = new ChartTooltip(chart());
+        tooltip->setZValue(TOOLTIP_Z_VALUE);
     }
 
     if (state)
     {
         tooltipHideTimer.stop();
 
-        const QPointF nearestPoint = findNearestPoint(point, qobject_cast<QLineSeries*>(sender())->points());
+        QLineSeries* series = mChartType == CHART_TYPE_YIELD            ? &mYieldSeries
+                              : mChartType == CHART_TYPE_REMAINED_MONEY ? &mRemainedMoneySeries
+                                                                        : &mTotalMoneySeries;
+
+        const QPointF nearestPoint = findNearestPoint(point, series->points());
 
         const QString prefix =
             (mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD) && nearestPoint.y() > 0 ? "+" : "";
@@ -699,10 +703,10 @@ void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
         const QString xDescription =
             QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(nearestPoint.x())).toString(DATETIME_FORMAT);
 
-        mTooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
-        mTooltip->setAnchor(nearestPoint);
-        mTooltip->updateGeometry();
-        mTooltip->show();
+        tooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
+        tooltip->setAnchor(nearestPoint);
+        tooltip->updateGeometry();
+        tooltip->show();
     }
     else
     {
@@ -712,10 +716,10 @@ void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
 
 void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSet)
 {
-    if (mTooltip == nullptr)
+    if (tooltip == nullptr)
     {
-        mTooltip = new ChartTooltip(chart());
-        mTooltip->setZValue(TOOLTIP_Z_VALUE);
+        tooltip = new ChartTooltip(chart());
+        tooltip->setZValue(TOOLTIP_Z_VALUE);
     }
 
     if (status)
@@ -729,10 +733,10 @@ void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSe
         const QString suffix       = "%";
         const QString xDescription = mMonthlyYieldAxisX.at(index);
 
-        mTooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(value, 'f', 2), suffix));
-        mTooltip->setAnchor(nearestPoint);
-        mTooltip->updateGeometry();
-        mTooltip->show();
+        tooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(value, 'f', 2), suffix));
+        tooltip->setAnchor(nearestPoint);
+        tooltip->updateGeometry();
+        tooltip->show();
     }
     else
     {
@@ -742,7 +746,8 @@ void AccountChartWidget::barSeriesHovered(bool status, int index, QBarSet* barSe
 
 void AccountChartWidget::tooltipHideTimerTicked()
 {
-    mTooltip->hide();
+    tooltipHideTimer.stop();
+    tooltip->hide();
 }
 
 QPointF AccountChartWidget::findNearestPoint(const QPointF& point, const QList<QPointF>& seriesPoints)

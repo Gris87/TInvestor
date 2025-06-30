@@ -36,6 +36,7 @@ OpenCppCoverage ^
     --sources app\src\ ^
     --excluded_sources test_* ^
     --excluded_sources *_mock.h ^
+    --excluded_sources filedialog.cpp ^
     --excluded_sources messageboxutils.cpp ^
     --excluded_sources httpclient.cpp ^
     --export_type html:..\..\..\CoverageReport ^

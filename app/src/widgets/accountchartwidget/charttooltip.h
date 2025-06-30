@@ -18,6 +18,10 @@ public:
     ChartTooltip& operator=(const ChartTooltip& another) = delete;
 
     void setText(const QString& text);
+
+    [[nodiscard]]
+    QString text() const;
+
     void setAnchor(QPointF point);
     void updateGeometry();
 

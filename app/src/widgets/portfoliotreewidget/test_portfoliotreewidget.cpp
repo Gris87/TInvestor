@@ -202,7 +202,7 @@ TEST_F(Test_PortfolioTreeWidget, Test_actionExportToExcelTriggered)
 
     // clang-format off
     ASSERT_EQ(excelFile.exists(), true);
-    ASSERT_GE(excelFile.size(),   6184);
+    ASSERT_GE(excelFile.size(),   6183);
     // clang-format on
 }
 

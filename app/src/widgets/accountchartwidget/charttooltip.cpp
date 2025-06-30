@@ -20,7 +20,12 @@ const QColor  TEXT_COLOR             = QColor("#000000"); // clazy:exclude=non-p
 
 ChartTooltip::ChartTooltip(QChart* parent) :
     QGraphicsItem(parent),
-    mChart(parent)
+    mChart(parent),
+    mAnchor(),
+    mRect(),
+    mTextRect(),
+    mText(),
+    mFont()
 {
     qDebug() << "Create ChartTooltip";
 }
@@ -115,6 +120,11 @@ void ChartTooltip::setText(const QString& text)
     mRect = mTextRect.adjusted(-MARGIN, -MARGIN, MARGIN, MARGIN);
 
     prepareGeometryChange();
+}
+
+QString ChartTooltip::text() const
+{
+    return mText;
 }
 
 void ChartTooltip::setAnchor(QPointF point)

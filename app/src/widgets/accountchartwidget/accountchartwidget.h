@@ -32,7 +32,8 @@ public:
     AccountChartWidget(const AccountChartWidget& another)            = delete;
     AccountChartWidget& operator=(const AccountChartWidget& another) = delete;
 
-    QTimer tooltipHideTimer;
+    QTimer        tooltipHideTimer;
+    ChartTooltip* tooltip;
 
     void zoom(double factor);
 
@@ -105,5 +106,4 @@ private:
     float               mTotalMoneyAxisYMax;
     QPointF             mTargetScenePos;
     QPointF             mTargetViewportPos;
-    ChartTooltip*       mTooltip;
 };
