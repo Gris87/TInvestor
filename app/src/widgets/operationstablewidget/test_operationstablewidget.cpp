@@ -1,8 +1,11 @@
 #include "src/widgets/operationstablewidget/operationstablewidget.h"
 #include "ui_operationstablewidget.h"
 
+#include <QCoreApplication>
+#include <QDir>
 #include <gtest/gtest.h>
 
+#include "src/utils/filedialog/ifiledialog_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/tablemodels/operationstablemodel/ioperationstablemodel_mock.h"
@@ -24,7 +27,7 @@ class Test_OperationsTableWidget : public ::testing::Test
 protected:
     void SetUp() override
     {
-        const InSequence seq;
+        // const InSequence seq;
 
         operationsTableModelFactoryMock = new StrictMock<OperationsTableModelFactoryMock>();
         fileDialogFactoryMock           = new StrictMock<FileDialogFactoryMock>();
@@ -32,9 +35,13 @@ protected:
 
         operationsTableModelMock = new StrictMock<OperationsTableModelMock>();
 
+        appDir = qApp->applicationDirPath();
+        QDir(appDir + "/test/dir_for_operations_table").removeRecursively();
+        QDir().mkpath(appDir + "/test/dir_for_operations_table");
+
         EXPECT_CALL(*operationsTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(operationsTableModelMock));
         EXPECT_CALL(*operationsTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
-        EXPECT_CALL(*operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
+        EXPECT_CALL(*operationsTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(OPERATIONS_COLUMN_COUNT));
 
         operationsTableWidget =
             new OperationsTableWidget(operationsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock);
@@ -47,6 +54,8 @@ protected:
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete operationsTableModelMock;
+
+        QDir(appDir + "/test/dir_for_operations_table").removeRecursively();
     }
 
     OperationsTableWidget*                       operationsTableWidget;
@@ -54,12 +63,90 @@ protected:
     StrictMock<FileDialogFactoryMock>*           fileDialogFactoryMock;
     StrictMock<SettingsEditorMock>*              settingsEditorMock;
     StrictMock<OperationsTableModelMock>*        operationsTableModelMock;
+    QString                                      appDir;
 };
 
 
 
 TEST_F(Test_OperationsTableWidget, Test_constructor_and_destructor)
 {
+}
+
+TEST_F(Test_OperationsTableWidget, Test_operationsRead)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*operationsTableModelMock, operationsRead(operations));
+
+    operationsTableWidget->operationsRead(operations);
+
+    // clang-format off
+    ASSERT_EQ(operationsTableWidget->ui->tableView->horizontalHeader()->sortIndicatorSection(), OPERATIONS_TIME_COLUMN);
+    ASSERT_EQ(operationsTableWidget->ui->tableView->horizontalHeader()->sortIndicatorOrder(),   Qt::DescendingOrder);
+    // clang-format on
+}
+
+TEST_F(Test_OperationsTableWidget, Test_operationsAdded)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*operationsTableModelMock, operationsAdded(operations));
+
+    operationsTableWidget->operationsAdded(operations);
+}
+
+TEST_F(Test_OperationsTableWidget, Test_on_tableView_customContextMenuRequested)
+{
+    const QPoint pos;
+
+    operationsTableWidget->on_tableView_customContextMenuRequested(pos);
+}
+
+TEST_F(Test_OperationsTableWidget, Test_actionExportToExcelTriggered)
+{
+    const InSequence seq;
+
+    StrictMock<FileDialogMock>* fileDialogMock =
+        new StrictMock<FileDialogMock>(); // Will be deleted in actionExportToExcelTriggered
+
+    QFile excelFile(appDir + "/test/dir_for_operations_table/excel.xlsx");
+
+    ASSERT_EQ(excelFile.exists(), false);
+
+    EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/OperationsTableWidget/exportToExcelFile"), _))
+        .WillOnce(Return(QVariant(appDir + "/test/dir_for_operations_table/excel.xlsx")));
+    EXPECT_CALL(
+        *fileDialogFactoryMock,
+        newInstance(
+            operationsTableWidget, QString("Export"), appDir + "/test/dir_for_operations_table", QString("Excel file (*.xlsx)")
+        )
+    )
+        .WillOnce(Return(std::shared_ptr<IFileDialog>(fileDialogMock)));
+    EXPECT_CALL(*fileDialogMock, setAcceptMode(QFileDialog::AcceptSave));
+    EXPECT_CALL(*fileDialogMock, setDefaultSuffix(QString("xlsx")));
+    EXPECT_CALL(*fileDialogMock, selectFile(appDir + "/test/dir_for_operations_table/excel.xlsx"));
+    EXPECT_CALL(*fileDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*fileDialogMock, selectedFiles())
+        .WillOnce(Return(QStringList() << appDir + "/test/dir_for_operations_table/excel.xlsx"));
+    EXPECT_CALL(
+        *settingsEditorMock,
+        setValue(
+            QString("MainWindow/OperationsTableWidget/exportToExcelFile"),
+            QVariant(appDir + "/test/dir_for_operations_table/excel.xlsx")
+        )
+    );
+    EXPECT_CALL(*operationsTableModelMock, exportToExcel(_));
+
+    operationsTableWidget->actionExportToExcelTriggered();
+
+    // clang-format off
+    ASSERT_EQ(excelFile.exists(), true);
+    ASSERT_GE(excelFile.size(),   6318);
+    // clang-format on
 }
 
 TEST_F(Test_OperationsTableWidget, Test_saveWindowState)

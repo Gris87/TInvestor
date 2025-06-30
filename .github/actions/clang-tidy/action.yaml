@@ -153,12 +153,12 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/bin/clang/bin;${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-${Env:CLANG_VERSION}-x86_64-pc-windows-msvc/bin;${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/bin/clang/bin;${Env:PATH}"
             }
             "Linux" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/libexec/qtcreator/clang/bin:${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
+                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/libexec/qtcreator/clang/bin:${Env:PATH}"
             }
         }
 

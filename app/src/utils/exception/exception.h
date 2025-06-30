@@ -7,7 +7,7 @@
 
 
 #ifdef TESTING_MODE
-extern QString lastThrownException;
+extern QString lastThrownException; // NOLINT(cppcoreguidelines-avoid-non-const-global-variables)
 #endif
 
 
