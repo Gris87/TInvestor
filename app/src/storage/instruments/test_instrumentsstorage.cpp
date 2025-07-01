@@ -92,7 +92,7 @@ TEST_F(Test_InstrumentsStorage, Test_readFromDatabase_and_getInstruments)
     // clang-format on
 }
 
-TEST_F(Test_InstrumentsStorage, Test_lock_unlock)
+TEST_F(Test_InstrumentsStorage, Test_lock_and_unlock)
 {
     storage->writeLock();
     storage->writeUnlock();

@@ -78,7 +78,7 @@ TEST_F(Test_UserStorage, Test_readFromDatabase_and_getToken_and_isQualified_and_
     // clang-format on
 }
 
-TEST_F(Test_UserStorage, Test_lock_unlock)
+TEST_F(Test_UserStorage, Test_lock_and_unlock)
 {
     storage->writeLock();
     storage->writeUnlock();

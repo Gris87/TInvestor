@@ -49,5 +49,9 @@ TEST_F(Test_FileDialog, Test_exec)
 
 TEST_F(Test_FileDialog, Test_selectedFiles)
 {
-    ASSERT_EQ(dialog->selectedFiles(), QStringList());
+    QStringList files = dialog->selectedFiles();
+
+    qInfo() << files; // TODO: Remove
+
+    ASSERT_EQ(files, QStringList());
 }

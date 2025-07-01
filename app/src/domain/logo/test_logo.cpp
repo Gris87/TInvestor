@@ -4,9 +4,31 @@
 
 
 
-TEST(Test_Logo, Test_constructor_and_destructor)
+class Test_Logo : public ::testing::Test
 {
-    const Logo logo;
+protected:
+    void SetUp() override
+    {
+        logo = new Logo();
+    }
 
-    ASSERT_TRUE(logo.pixmap.isNull());
+    void TearDown() override
+    {
+        delete logo;
+    }
+
+    Logo* logo;
+};
+
+TEST_F(Test_Logo, Test_constructor_and_destructor)
+{
+    ASSERT_TRUE(logo->pixmap.isNull());
+}
+
+TEST_F(Test_Logo, Test_lock_and_unlock)
+{
+    logo->writeLock();
+    logo->writeUnlock();
+    logo->readLock();
+    logo->readUnlock();
 }

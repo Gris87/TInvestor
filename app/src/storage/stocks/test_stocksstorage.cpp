@@ -191,7 +191,7 @@ TEST_F(Test_StocksStorage, Test_readFromDatabase_and_getStocks_and_assignLogos)
     storage->assignLogos();
 }
 
-TEST_F(Test_StocksStorage, Test_lock_unlock)
+TEST_F(Test_StocksStorage, Test_lock_and_unlock)
 {
     storage->writeLock();
     storage->writeUnlock();
