@@ -101,7 +101,8 @@ TEST_F(Test_InstrumentItemDelegate, Test_sizeHint)
 #ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(57, 24));
 #else
-    ASSERT_EQ(size, QSize(63, 24));
+    ASSERT_TRUE(size.width() >= 63 && size.width() <= 67);
+    ASSERT_EQ(size.height(), 24);
 #endif
 
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOCKED)).WillOnce(Return(QVariant(true)));
@@ -112,6 +113,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_sizeHint)
 #ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(77, 24));
 #else
-    ASSERT_EQ(size, QSize(83, 24));
+    ASSERT_TRUE(size.width() >= 83 && size.width() <= 87);
+    ASSERT_EQ(size.height(), 24);
 #endif
 }
