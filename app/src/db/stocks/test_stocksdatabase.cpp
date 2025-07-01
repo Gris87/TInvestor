@@ -310,22 +310,14 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
 
         EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
         EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
-        EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce(Return(testStockData[i].size()));
+        EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce([this, i](char* data, qint64 maxlen) {
+            memcpy(data, testStockData[i].constData(), maxlen);
+            return maxlen;
+        });
         EXPECT_CALL(*fileMocks[i], close());
     }
 
     database->readStocksData(stocks);
-
-    for (int i = 0; i < 3; ++i)
-    {
-        Stock* stock = stocks[i];
-
-        if (!stock->data.isEmpty())
-        {
-            memcpy(stock->data.data(), testStockData[i].constData(), testStockData[i].size());
-            stock->operational.lastStoredTimestamp = stock->data.constLast().timestamp;
-        }
-    }
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);
@@ -439,7 +431,10 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
         {
             EXPECT_CALL(*fileMocks[i], open(QIODevice::OpenMode(QIODevice::ReadOnly))).WillOnce(Return(true));
             EXPECT_CALL(*fileMocks[i], size()).WillOnce(Return(testStockData[i].size()));
-            EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce(Return(testStockData[i].size()));
+            EXPECT_CALL(*fileMocks[i], read(NotNull(), testStockData[i].size())).WillOnce([this, i](char* data, qint64 maxlen) {
+                memcpy(data, testStockData[i].constData(), maxlen);
+                return maxlen;
+            });
             EXPECT_CALL(*fileMocks[i], close());
         }
         else
@@ -449,17 +444,6 @@ TEST_F(Test_StocksDatabase, Test_readStocksData)
     }
 
     database->readStocksData(stocks);
-
-    for (int i = 0; i < 3; ++i)
-    {
-        Stock* stock = stocks[i];
-
-        if (!stock->data.isEmpty())
-        {
-            memcpy(stock->data.data(), testStockData[i].constData(), testStockData[i].size());
-            stock->operational.lastStoredTimestamp = stock->data.constLast().timestamp;
-        }
-    }
 
     // clang-format off
     ASSERT_EQ(stocks.size(),                                  3);

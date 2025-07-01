@@ -53,7 +53,11 @@ TEST_F(Test_ChartTooltip, Test_boundingRect)
 {
     tooltip->setText("Hello");
 
+#ifdef Q_OS_WINDOWS
     ASSERT_EQ(tooltip->boundingRect(), QRectF(0, 0, 38, 26));
+#else
+    ASSERT_EQ(tooltip->boundingRect(), QRectF(0, 0, 46, 28));
+#endif
 }
 
 TEST_F(Test_ChartTooltip, Test_paint)
