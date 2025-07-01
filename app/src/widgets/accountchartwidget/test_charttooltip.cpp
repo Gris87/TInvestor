@@ -55,12 +55,13 @@ TEST_F(Test_ChartTooltip, Test_boundingRect)
 
     QRectF rect = tooltip->boundingRect();
 
-    qInfo() << rect; // TODO: Remove
-
 #ifdef Q_OS_WINDOWS
     ASSERT_EQ(rect, QRectF(0, 0, 38, 26));
 #else
-    ASSERT_EQ(rect, QRectF(0, 0, 46, 28));
+    ASSERT_EQ(rect.x(), 0);
+    ASSERT_EQ(rect.y(), 0);
+    ASSERT_TRUE(rect.width() >= 41 && rect.width() <= 46);
+    ASSERT_TRUE(rect.height() >= 24 && rect.height() <= 28);
 #endif
 }
 

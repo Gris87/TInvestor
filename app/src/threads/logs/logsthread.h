@@ -35,6 +35,22 @@ public:
     void addLog(LogLevel level, const QString& instrumentId, const QString& message) override;
     void terminateThread() override;
 
+#ifdef TESTING_MODE
+    void testTerminateWithoutTerminate();
+
+    void testSetLimitLogs(int limitLogs)
+    {
+        mLimitLogs = limitLogs;
+    }
+
+    void testSetOptimizeSize(int optimizeSize)
+    {
+        mOptimizeSize = optimizeSize;
+    }
+#endif
+
+    qint64 getTimestamp(qint64 timestamp);
+
 private:
     void     readLogs();
     LogEntry takeIncomingEntry();
@@ -50,4 +66,6 @@ private:
     qint8                mAmountOfLogsWithSameTimestamp;
     QList<LogEntry>      mIncomingEntries;
     int                  mAmountOfEntries;
+    int                  mLimitLogs;
+    int                  mOptimizeSize;
 };

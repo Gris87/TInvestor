@@ -24,7 +24,9 @@ LogsThread::LogsThread(
     mLastLogTimestamp(),
     mAmountOfLogsWithSameTimestamp(),
     mIncomingEntries(),
-    mAmountOfEntries()
+    mAmountOfEntries(),
+    mLimitLogs(LIMIT_LOGS),
+    mOptimizeSize(OPTIMIZE_SIZE)
 {
     qDebug() << "Create LogsThread";
 }
@@ -45,7 +47,7 @@ void LogsThread::run()
 
     while (true)
     {
-        if (mAmountOfEntries > LIMIT_LOGS)
+        if (mAmountOfEntries > mLimitLogs)
         {
             optimize();
         }
@@ -80,21 +82,9 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
 {
     if (isRunning())
     {
-        const qint64 timestamp = QDateTime::currentMSecsSinceEpoch();
-
-        if (timestamp == mLastLogTimestamp)
-        {
-            ++mAmountOfLogsWithSameTimestamp;
-        }
-        else
-        {
-            mLastLogTimestamp              = timestamp;
-            mAmountOfLogsWithSameTimestamp = 0;
-        }
-
         LogEntry entry;
 
-        entry.timestamp    = timestamp + mAmountOfLogsWithSameTimestamp;
+        entry.timestamp    = getTimestamp(QDateTime::currentMSecsSinceEpoch());
         entry.level        = level;
         entry.instrumentId = instrumentId;
         entry.message      = message;
@@ -144,6 +134,32 @@ void LogsThread::terminateThread()
     }
 }
 
+#ifdef TESTING_MODE
+void LogsThread::testTerminateWithoutTerminate()
+{
+    mMutex->lock();
+    mIncomingEntries.append(LogEntry());
+    mMutex->unlock();
+
+    mSemaphore.release();
+}
+#endif
+
+qint64 LogsThread::getTimestamp(qint64 timestamp)
+{
+    if (timestamp == mLastLogTimestamp)
+    {
+        ++mAmountOfLogsWithSameTimestamp;
+    }
+    else
+    {
+        mLastLogTimestamp              = timestamp;
+        mAmountOfLogsWithSameTimestamp = 0;
+    }
+
+    return timestamp + mAmountOfLogsWithSameTimestamp;
+}
+
 void LogsThread::readLogs()
 {
     const QList<LogEntry> entries = mLogsDatabase->readLogs();
@@ -189,12 +205,12 @@ void LogsThread::optimize()
     const QList<LogEntry> entries = mLogsDatabase->readLogs();
 
     QList<LogEntry> newEntries;
-    newEntries.resizeForOverwrite(OPTIMIZE_SIZE);
+    newEntries.resizeForOverwrite(mOptimizeSize);
 
     OptimizeLogsInfo optimizeLogsInfo(&entries);
     processInParallel(newEntries, optimizeLogsForParallel, &optimizeLogsInfo);
 
-    mAmountOfEntries = OPTIMIZE_SIZE;
+    mAmountOfEntries = newEntries.size();
 
     mLogsDatabase->writeLogs(newEntries);
     emit logsRead(newEntries);

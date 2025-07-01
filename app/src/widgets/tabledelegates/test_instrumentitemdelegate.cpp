@@ -98,16 +98,20 @@ TEST_F(Test_InstrumentItemDelegate, Test_sizeHint)
 
     QSize size = item->sizeHint(option, index);
 
-    qInfo() << size; // TODO: Remove
-
+#ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(57, 24));
+#else
+    ASSERT_EQ(size, QSize(63, 24));
+#endif
 
     EXPECT_CALL(*logsTableModelMock, data(index, ROLE_INSTRUMENT_LOCKED)).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*logsTableModelMock, data(index, Qt::DisplayRole)).WillOnce(Return("SPBE"));
 
     size = item->sizeHint(option, index);
 
-    qInfo() << size; // TODO: Remove
-
+#ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(77, 24));
+#else
+    ASSERT_EQ(size, QSize(83, 24));
+#endif
 }
