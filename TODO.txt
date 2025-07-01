@@ -19,6 +19,7 @@ Buy if price is less than average for last n days
 
 Use readonly grpc streams
 Double check mutexes
+Python script for module test coverage check
 Use TEST_F tests everywhere
 Check for maximum memory requirements (With all limits)
 Improve all readability-function-cognitive-complexity
