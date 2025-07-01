@@ -110,6 +110,8 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
     mInstrumentsStorage->readLock();
     mLogosStorage->readLock();
 
+    const Instruments& instruments = mInstrumentsStorage->getInstruments();
+
     for (int i = 0; i < tinkoffPortfolio.positions_size(); ++i)
     {
         const tinkoff::PortfolioPosition& position = tinkoffPortfolio.positions(i);
@@ -119,7 +121,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
 
         PortfolioItem item;
 
-        Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+        Instrument instrument = instruments.value(instrumentId);
 
         if (instrument.ticker == "" || instrument.name == "")
         {
