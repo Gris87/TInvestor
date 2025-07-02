@@ -43,26 +43,26 @@ public:
 
     void terminateThread() override;
 
-private:
     [[nodiscard]]
     bool trade();
 
     void getInstrumentData();
 
     [[nodiscard]]
-    double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+    bool sell(double expected, double delta);
 
     [[nodiscard]]
-    bool sell(double expected, double delta);
+    bool buy(double expected, double delta);
+
+private:
+    [[nodiscard]]
+    double handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
 
     [[nodiscard]]
     bool sellWithPrice(double expected, double delta, const Quotation& price);
 
     [[nodiscard]]
     bool sellWithPriceOptimalAmount(double expected, double delta, const Quotation& price);
-
-    [[nodiscard]]
-    bool buy(double expected, double delta);
 
     [[nodiscard]]
     bool buyWithPrice(double expected, double delta, const Quotation& price);

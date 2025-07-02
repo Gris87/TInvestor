@@ -135,8 +135,6 @@ TEST_F(Test_LogsThread, Test_optimize)
     EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
     EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
 
-    thread->start();
-
     thread->testTerminateWithoutTerminate();
-    thread->wait();
+    thread->run();
 }

@@ -127,7 +127,7 @@ bool TradingThread::trade()
             break;
         }
 
-        if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, this))
+        if (mTimeUtils->interruptibleSleep(SLEEP_DELAY, QThread::currentThread()))
         {
             return false;
         }
@@ -275,7 +275,7 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                 break;
             }
 
-            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, this))
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
             {
                 return false;
             }
@@ -391,7 +391,7 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
                 break;
             }
 
-            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, this))
+            if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
             {
                 return false;
             }

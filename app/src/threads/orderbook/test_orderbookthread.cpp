@@ -59,8 +59,8 @@ TEST_F(Test_OrderBookThread, Test_run)
     tinkoff::Order* ask = getOrderBookResponse->add_asks(); // getOrderBookResponse will take ownership
     tinkoff::Order* bid = getOrderBookResponse->add_bids(); // getOrderBookResponse will take ownership
 
-    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
-    tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // getOrderBookResponse will take ownership
+    tinkoff::Quotation* askPrice = new tinkoff::Quotation(); // ask will take ownership
+    tinkoff::Quotation* bidPrice = new tinkoff::Quotation(); // bid will take ownership
 
     askPrice->set_units(100);
     askPrice->set_nano(500000000);
@@ -89,8 +89,8 @@ TEST_F(Test_OrderBookThread, Test_run)
     tinkoff::Order* lastAsk = orderBook->add_asks(); // orderBook will take ownership
     tinkoff::Order* lastBid = orderBook->add_bids(); // orderBook will take ownership
 
-    tinkoff::Quotation* lastAskPrice = new tinkoff::Quotation(); // orderBook will take ownership
-    tinkoff::Quotation* lastBidPrice = new tinkoff::Quotation(); // orderBook will take ownership
+    tinkoff::Quotation* lastAskPrice = new tinkoff::Quotation(); // lastAsk will take ownership
+    tinkoff::Quotation* lastBidPrice = new tinkoff::Quotation(); // lastBid will take ownership
 
     lastAskPrice->set_units(100);
     lastAskPrice->set_nano(500000000);
