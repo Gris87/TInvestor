@@ -38,7 +38,9 @@ void PortfolioLastPriceThread::run()
         {
             createMarketDataStream();
 
-            if (mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds))
+            bool needToTerminate = !mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+
+            if (!needToTerminate)
             {
                 while (true)
                 {
@@ -64,6 +66,11 @@ void PortfolioLastPriceThread::run()
 
             mGrpcClient->finishMarketDataStream(mMarketDataStream);
             mMarketDataStream = nullptr;
+
+            if (needToTerminate)
+            {
+                break;
+            }
         }
         else
         {
@@ -92,21 +99,24 @@ void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
         }
     }
 
-    mInstrumentIds = instrumentIds;
-
-    if (mMarketDataStream != nullptr)
+    if (mInstrumentIds != instrumentIds)
     {
-        if (!mInstrumentIds.isEmpty())
+        mInstrumentIds = instrumentIds;
+
+        if (mMarketDataStream != nullptr)
         {
-            if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
+            if (!mInstrumentIds.isEmpty())
             {
-                mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+                if (mGrpcClient->unsubscribeLastPrices(mMarketDataStream))
+                {
+                    mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+                }
             }
-        }
-        else
-        {
-            mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
-            mGrpcClient->cancelMarketDataStream(mMarketDataStream);
+            else
+            {
+                mGrpcClient->closeWriteMarketDataStream(mMarketDataStream);
+                mGrpcClient->cancelMarketDataStream(mMarketDataStream);
+            }
         }
     }
 }
