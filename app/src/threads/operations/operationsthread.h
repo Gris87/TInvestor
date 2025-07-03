@@ -54,13 +54,14 @@ public:
 
     void createPositionsStream();
 
+    void requestOperations();
+    void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
+    void alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
+
 private:
     void      readOperations();
     Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
     Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
-    void      requestOperations();
-    void      handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
-    void      alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
     void      optimize();
     void      addInstrumentsAfterOptimization(QList<Operation>& newOperations, const QList<Operation>& oldOperations);
 

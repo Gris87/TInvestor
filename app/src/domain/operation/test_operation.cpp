@@ -83,7 +83,7 @@ TEST(Test_Operation, Test_copy_constructor)
     operation.maxInputMoney.nano              = 20;
     operation.totalYieldWithCommission.units  = 21;
     operation.totalYieldWithCommission.nano   = 22;
-    operation.totalYieldWithCommissionPercent = 23;
+    operation.totalYieldWithCommissionPercent = 23.0f;
     operation.remainedMoney.units             = 24;
     operation.remainedMoney.nano              = 25;
     operation.totalMoney.units                = 26;
@@ -176,7 +176,7 @@ TEST(Test_Operation, Test_assign)
     operation.maxInputMoney.nano              = 20;
     operation.totalYieldWithCommission.units  = 21;
     operation.totalYieldWithCommission.nano   = 22;
-    operation.totalYieldWithCommissionPercent = 23;
+    operation.totalYieldWithCommissionPercent = 23.0f;
     operation.remainedMoney.units             = 24;
     operation.remainedMoney.nano              = 25;
     operation.totalMoney.units                = 26;
@@ -371,7 +371,7 @@ TEST(Test_Operation, Test_toJsonObject)
     operation.maxInputMoney.nano              = 20;
     operation.totalYieldWithCommission.units  = 21;
     operation.totalYieldWithCommission.nano   = 22;
-    operation.totalYieldWithCommissionPercent = 23;
+    operation.totalYieldWithCommissionPercent = 23.0f;
     operation.remainedMoney.units             = 24;
     operation.remainedMoney.nano              = 25;
     operation.totalMoney.units                = 26;
@@ -429,7 +429,7 @@ TEST(Test_Operation, Test_equals)
     operation.maxInputMoney.nano              = 20;
     operation.totalYieldWithCommission.units  = 21;
     operation.totalYieldWithCommission.nano   = 22;
-    operation.totalYieldWithCommissionPercent = 23;
+    operation.totalYieldWithCommissionPercent = 23.0f;
     operation.remainedMoney.units             = 24;
     operation.remainedMoney.nano              = 25;
     operation.totalMoney.units                = 26;
@@ -464,7 +464,7 @@ TEST(Test_Operation, Test_equals)
     operation2.maxInputMoney.nano              = 20;
     operation2.totalYieldWithCommission.units  = 21;
     operation2.totalYieldWithCommission.nano   = 22;
-    operation2.totalYieldWithCommissionPercent = 23;
+    operation2.totalYieldWithCommissionPercent = 23.0f;
     operation2.remainedMoney.units             = 24;
     operation2.remainedMoney.nano              = 25;
     operation2.totalMoney.units                = 26;
