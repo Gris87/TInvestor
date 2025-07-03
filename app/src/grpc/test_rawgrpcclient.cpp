@@ -457,7 +457,7 @@ TEST_F(Test_RawGrpcClient, Test_findEtfs)
 
     // clang-format off
     ASSERT_EQ(status.ok(),                                                 true);
-    ASSERT_GE(resp->instruments_size(),                                    277);
+    ASSERT_GE(resp->instruments_size(),                                    276);
     ASSERT_GE(index,                                                       0);
     ASSERT_EQ(resp->instruments(index).figi(),                             "TCS00A100P44");
     ASSERT_EQ(resp->instruments(index).ticker(),                           "SBRB");

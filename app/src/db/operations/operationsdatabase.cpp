@@ -43,7 +43,11 @@ struct FindOperationsIndeciesInfo
     explicit FindOperationsIndeciesInfo(const QByteArray& _content) :
         content(_content)
     {
+#ifndef TESTING_MODE
         const int cpuCount = QThread::idealThreadCount();
+#else
+        const int cpuCount = 1;
+#endif
 
         results.resize(cpuCount);
     }
@@ -249,7 +253,11 @@ struct WriteOperationsInfo
 {
     explicit WriteOperationsInfo()
     {
+#ifndef TESTING_MODE
         const int cpuCount = QThread::idealThreadCount();
+#else
+        const int cpuCount = 1;
+#endif
 
         results.resize(cpuCount);
     }

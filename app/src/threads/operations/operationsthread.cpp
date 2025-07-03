@@ -606,7 +606,11 @@ struct AddInstrumentsInfo
     explicit AddInstrumentsInfo(const QList<Operation>* _oldOperations) :
         oldOperations(_oldOperations)
     {
+#ifndef TESTING_MODE
         const int cpuCount = QThread::idealThreadCount();
+#else
+        const int cpuCount = 1;
+#endif
 
         results.resize(cpuCount);
     }
