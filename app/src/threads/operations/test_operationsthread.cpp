@@ -267,8 +267,8 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     OperationFifoItem item;
 
     item.quantity   = 10;
-    item.cost.units = 253;
-    item.cost.nano  = 300000000;
+    item.cost.units = 2533;
+    item.cost.nano  = 0;
 
     operation1.fifoItems.append(item);
 
