@@ -69,13 +69,13 @@ TEST_F(Test_FollowThread, Test_run)
     tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position2 will take ownership
     tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
 
-    tinkoff::Quotation*  tinkoffQuantity3     = new tinkoff::Quotation();  // position1 will take ownership
-    tinkoff::MoneyValue* tinkoffCurrentPrice3 = new tinkoff::MoneyValue(); // position1 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo3 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::Quotation*  tinkoffQuantity3     = new tinkoff::Quotation();  // position3 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice3 = new tinkoff::MoneyValue(); // position3 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo3 = new tinkoff::MoneyValue(); // position3 will take ownership
 
-    tinkoff::Quotation*  tinkoffQuantity4     = new tinkoff::Quotation();  // position2 will take ownership
-    tinkoff::MoneyValue* tinkoffCurrentPrice4 = new tinkoff::MoneyValue(); // position2 will take ownership
-    tinkoff::MoneyValue* tinkoffAvgPriceFifo4 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::Quotation*  tinkoffQuantity4     = new tinkoff::Quotation();  // position4 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice4 = new tinkoff::MoneyValue(); // position4 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo4 = new tinkoff::MoneyValue(); // position4 will take ownership
 
     tinkoffQuantity1->set_units(10000);
     tinkoffQuantity1->set_nano(0);

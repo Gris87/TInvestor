@@ -26,6 +26,7 @@ PortfolioLastPriceThread::~PortfolioLastPriceThread()
     qDebug() << "Destroy PortfolioLastPriceThread";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void PortfolioLastPriceThread::run()
 {
     qDebug() << "Running PortfolioLastPriceThread";
@@ -83,6 +84,7 @@ void PortfolioLastPriceThread::run()
 
     qDebug() << "Finish PortfolioLastPriceThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void PortfolioLastPriceThread::portfolioChanged(const Portfolio& portfolio)
 {
