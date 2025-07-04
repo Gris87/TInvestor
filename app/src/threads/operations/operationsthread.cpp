@@ -421,6 +421,34 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
 
         mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
     }
+    else if (operationType != tinkoff::OPERATION_TYPE_INPUT && operationType != tinkoff::OPERATION_TYPE_OUTPUT)
+    {
+        avgCostFifo = quotationToDouble(quantityAndCost.costFifo);
+
+        if (quantityAndCost.quantity > 0)
+        {
+            avgPriceFifo = avgCostFifo / quantityAndCost.quantity;
+            avgPriceWavg = quotationToDouble(quantityAndCost.costWavg) / quantityAndCost.quantity;
+        }
+
+        if (operationType == tinkoff::OPERATION_TYPE_BOND_REPAYMENT_FULL)
+        {
+            yield = quotationDiff(tinkoffOperation.payment(), quantityAndCost.costFifo);
+        }
+        else
+        {
+            yield = quotationConvert(tinkoffOperation.payment());
+        }
+
+        yieldWithCommission = quotationSum(yield, tinkoffOperation.commission());
+
+        if (avgCostFifo > 0)
+        {
+            yieldWithCommissionPercent = quotationToDouble(yieldWithCommission) / avgCostFifo * HUNDRED_PERCENT;
+        }
+
+        mTotalYieldWithCommission = quotationSum(mTotalYieldWithCommission, yieldWithCommission);
+    }
 
     if (!isOperationTypeWithExtAccount(operationType, positionUid))
     {
@@ -432,7 +460,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
         }
         else if (operationType == tinkoff::OPERATION_TYPE_BOND_REPAYMENT_FULL)
         {
-            mTotalMoney = quotationDiff(quotationSum(mTotalMoney, tinkoffOperation.payment()), quantityAndCost.costFifo);
+            mTotalMoney = quotationSum(mTotalMoney, yieldWithCommission);
 
             quantityAndCost.quantity = 0;
             quantityAndCost.fifoItems.clear();
