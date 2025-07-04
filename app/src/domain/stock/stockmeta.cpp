@@ -99,5 +99,5 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
-           lhs.minPriceIncrement == rhs.minPriceIncrement && lhs.pricePrecision == rhs.pricePrecision;
+           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < 0.0001f && lhs.pricePrecision == rhs.pricePrecision;
 }

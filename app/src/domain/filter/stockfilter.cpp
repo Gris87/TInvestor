@@ -81,11 +81,12 @@ bool StockFilter::isFiltered(const StockTableEntry& entry) const
 bool operator==(const StockFilter& lhs, const StockFilter& rhs)
 {
     return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.useQualInvestor == rhs.useQualInvestor &&
-           lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice && lhs.priceFrom == rhs.priceFrom &&
-           lhs.priceTo == rhs.priceTo && lhs.useDayStartChange == rhs.useDayStartChange &&
-           lhs.dayStartChangeFrom == rhs.dayStartChangeFrom && lhs.dayStartChangeTo == rhs.dayStartChangeTo &&
-           lhs.useDateChange == rhs.useDateChange && lhs.dateChangeFrom == rhs.dateChangeFrom &&
-           lhs.dateChangeTo == rhs.dateChangeTo && lhs.useTurnover == rhs.useTurnover && lhs.turnoverFrom == rhs.turnoverFrom &&
-           lhs.turnoverTo == rhs.turnoverTo && lhs.usePayback == rhs.usePayback && lhs.paybackFrom == rhs.paybackFrom &&
-           lhs.paybackTo == rhs.paybackTo;
+           lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice &&
+           qAbs(lhs.priceFrom - rhs.priceFrom) < 0.0001f && qAbs(lhs.priceTo - rhs.priceTo) < 0.0001f &&
+           lhs.useDayStartChange == rhs.useDayStartChange && qAbs(lhs.dayStartChangeFrom - rhs.dayStartChangeFrom) < 0.0001f &&
+           qAbs(lhs.dayStartChangeTo - rhs.dayStartChangeTo) < 0.0001f && lhs.useDateChange == rhs.useDateChange &&
+           qAbs(lhs.dateChangeFrom - rhs.dateChangeFrom) < 0.0001f && qAbs(lhs.dateChangeTo - rhs.dateChangeTo) < 0.0001f &&
+           lhs.useTurnover == rhs.useTurnover && lhs.turnoverFrom == rhs.turnoverFrom && lhs.turnoverTo == rhs.turnoverTo &&
+           lhs.usePayback == rhs.usePayback && qAbs(lhs.paybackFrom - rhs.paybackFrom) < 0.0001f &&
+           qAbs(lhs.paybackTo - rhs.paybackTo) < 0.0001f;
 }

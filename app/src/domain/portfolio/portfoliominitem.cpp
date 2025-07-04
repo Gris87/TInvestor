@@ -10,5 +10,5 @@ PortfolioMinItem::PortfolioMinItem() :
 
 bool operator==(const PortfolioMinItem& lhs, const PortfolioMinItem& rhs)
 {
-    return lhs.price == rhs.price && lhs.cost == rhs.cost;
+    return qAbs(lhs.price - rhs.price) < 0.0001f && qAbs(lhs.cost - rhs.cost) < 0.0001;
 }

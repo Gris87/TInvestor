@@ -35,5 +35,5 @@ void User::setTariff(const QString& value)
 bool operator==(const User& lhs, const User& rhs)
 {
     return lhs.token == rhs.token && lhs.qualified == rhs.qualified && lhs.qualifiedForWorkWith == rhs.qualifiedForWorkWith &&
-           lhs.tariff == rhs.tariff && lhs.commission == rhs.commission;
+           lhs.tariff == rhs.tariff && qAbs(lhs.commission - rhs.commission) < 0.0001f;
 }

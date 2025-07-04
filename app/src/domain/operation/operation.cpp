@@ -294,14 +294,16 @@ bool operator==(const Operation& lhs, const Operation& rhs)
 {
     return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId &&
            lhs.instrumentTicker == rhs.instrumentTicker && lhs.instrumentName == rhs.instrumentName &&
-           lhs.description == rhs.description && lhs.price == rhs.price && lhs.fifoItems == rhs.fifoItems &&
-           lhs.avgPriceFifo == rhs.avgPriceFifo && lhs.avgPriceWavg == rhs.avgPriceWavg && lhs.quantity == rhs.quantity &&
-           lhs.remainedQuantity == rhs.remainedQuantity && lhs.payment == rhs.payment && lhs.avgCostFifo == rhs.avgCostFifo &&
-           lhs.costFifo == rhs.costFifo && lhs.costWavg == rhs.costWavg && lhs.commission == rhs.commission &&
-           lhs.yield == rhs.yield && lhs.yieldWithCommission == rhs.yieldWithCommission &&
-           lhs.yieldWithCommissionPercent == rhs.yieldWithCommissionPercent && lhs.inputMoney == rhs.inputMoney &&
+           lhs.description == rhs.description && qAbs(lhs.price - rhs.price) < 0.0001f && lhs.fifoItems == rhs.fifoItems &&
+           qAbs(lhs.avgPriceFifo - rhs.avgPriceFifo) < 0.0001f && qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < 0.0001f &&
+           lhs.quantity == rhs.quantity && lhs.remainedQuantity == rhs.remainedQuantity &&
+           qAbs(lhs.payment - rhs.payment) < 0.0001f && qAbs(lhs.avgCostFifo - rhs.avgCostFifo) < 0.0001f &&
+           lhs.costFifo == rhs.costFifo && lhs.costWavg == rhs.costWavg && qAbs(lhs.commission - rhs.commission) < 0.0001f &&
+           qAbs(lhs.yield - rhs.yield) < 0.0001f && qAbs(lhs.yieldWithCommission - rhs.yieldWithCommission) < 0.0001f &&
+           qAbs(lhs.yieldWithCommissionPercent - rhs.yieldWithCommissionPercent) < 0.0001f && lhs.inputMoney == rhs.inputMoney &&
            lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
-           lhs.totalYieldWithCommissionPercent == rhs.totalYieldWithCommissionPercent && lhs.remainedMoney == rhs.remainedMoney &&
-           lhs.totalMoney == rhs.totalMoney && lhs.pricePrecision == rhs.pricePrecision &&
-           lhs.paymentPrecision == rhs.paymentPrecision && lhs.commissionPrecision == rhs.commissionPrecision;
+           qAbs(lhs.totalYieldWithCommissionPercent - rhs.totalYieldWithCommissionPercent) < 0.0001f &&
+           lhs.remainedMoney == rhs.remainedMoney && lhs.totalMoney == rhs.totalMoney &&
+           lhs.pricePrecision == rhs.pricePrecision && lhs.paymentPrecision == rhs.paymentPrecision &&
+           lhs.commissionPrecision == rhs.commissionPrecision;
 }
