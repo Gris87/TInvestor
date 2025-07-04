@@ -480,7 +480,7 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
 
     operationItem.set_allocated_date(dateTimestamp);
     operationItem.set_type(tinkoff::OPERATION_TYPE_INPUT);
-    operationItem.set_instrument_uid(RUBLE_UID);
+    operationItem.set_instrument_uid("");
     operationItem.set_position_uid("");
     operationItem.set_description("Give more money");
     operationItem.set_allocated_price(price);
@@ -489,7 +489,16 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     operationItem.set_allocated_commission(commission);
 
     Instruments instruments;
-    Logo        logo;
+    Instrument  instrument;
+
+    instrument.ticker         = "LETO";
+    instrument.name           = "Leto & arbalety";
+    instrument.lot            = 1000;
+    instrument.pricePrecision = 4;
+
+    instruments["aaaaa"] = instrument;
+
+    Logo logo;
 
     Operation operation;
 
@@ -537,6 +546,345 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_EQ(operation.totalMoney.units,                  200000);
     ASSERT_EQ(operation.totalMoney.nano,                   0);
     ASSERT_EQ(operation.pricePrecision,                    2);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               2);
+    // clang-format on
+
+    price->set_units(253);
+    price->set_nano(300000000);
+
+    payment->set_units(-2533);
+    payment->set_nano(0);
+
+    commission->set_units(-1);
+    commission->set_nano(-266500000);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_BUY);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Buy 10 mega bonds");
+    operationItem.set_quantity_done(10);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400001);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Buy 10 mega bonds");
+    ASSERT_NEAR(operation.price,                           253.3f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  1);
+    ASSERT_EQ(operation.fifoItems.at(0).quantity,          10);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.units,        2533);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.nano,         0);
+    ASSERT_NEAR(operation.avgPriceFifo,                    253.3f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    253.3f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          10);
+    ASSERT_EQ(operation.remainedQuantity,                  10);
+    ASSERT_NEAR(operation.payment,                         -2533.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     2533.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo.units,                    2533);
+    ASSERT_EQ(operation.costFifo.nano,                     0);
+    ASSERT_EQ(operation.costWavg.units,                    2533);
+    ASSERT_EQ(operation.costWavg.nano,                     0);
+    ASSERT_NEAR(operation.commission,                      -1.2665f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           0.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             -1.2665f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney.units,                  200000);
+    ASSERT_EQ(operation.inputMoney.nano,                   0);
+    ASSERT_EQ(operation.maxInputMoney.units,               200000);
+    ASSERT_EQ(operation.maxInputMoney.nano,                0);
+    ASSERT_EQ(operation.totalYieldWithCommission.units,    -1);
+    ASSERT_EQ(operation.totalYieldWithCommission.nano,     -266500000);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.0006332f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney.units,               197466);
+    ASSERT_EQ(operation.remainedMoney.nano,                -266500000);
+    ASSERT_EQ(operation.totalMoney.units,                  199999);
+    ASSERT_EQ(operation.totalMoney.nano,                   -266500000);
+    ASSERT_EQ(operation.pricePrecision,                    4);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               4);
+    // clang-format on
+
+    price->set_units(200);
+    price->set_nano(0);
+
+    payment->set_units(-20000);
+    payment->set_nano(0);
+
+    commission->set_units(-10);
+    commission->set_nano(0);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_BUY);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Buy 100 mega bonds");
+    operationItem.set_quantity_done(100);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400002);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Buy 100 mega bonds");
+    ASSERT_NEAR(operation.price,                           200.0f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  2);
+    ASSERT_EQ(operation.fifoItems.at(0).quantity,          10);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.units,        2533);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.nano,         0);
+    ASSERT_EQ(operation.fifoItems.at(1).quantity,          100);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.units,        20000);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.nano,         0);
+    ASSERT_NEAR(operation.avgPriceFifo,                    204.8454f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    204.8454f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          100);
+    ASSERT_EQ(operation.remainedQuantity,                  110);
+    ASSERT_NEAR(operation.payment,                         -20000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     20000.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo.units,                    22533);
+    ASSERT_EQ(operation.costFifo.nano,                     0);
+    ASSERT_EQ(operation.costWavg.units,                    22533);
+    ASSERT_EQ(operation.costWavg.nano,                     0);
+    ASSERT_NEAR(operation.commission,                      -10.0f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           0.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             -10.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney.units,                  200000);
+    ASSERT_EQ(operation.inputMoney.nano,                   0);
+    ASSERT_EQ(operation.maxInputMoney.units,               200000);
+    ASSERT_EQ(operation.maxInputMoney.nano,                0);
+    ASSERT_EQ(operation.totalYieldWithCommission.units,    -11);
+    ASSERT_EQ(operation.totalYieldWithCommission.nano,     -266500000);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.00563325f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney.units,               177456);
+    ASSERT_EQ(operation.remainedMoney.nano,                -266500000);
+    ASSERT_EQ(operation.totalMoney.units,                  199989);
+    ASSERT_EQ(operation.totalMoney.nano,                   -266500000);
+    ASSERT_EQ(operation.pricePrecision,                    4);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               2);
+    // clang-format on
+
+    price->set_units(150);
+    price->set_nano(0);
+
+    payment->set_units(-30000);
+    payment->set_nano(0);
+
+    commission->set_units(-15);
+    commission->set_nano(0);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_BUY);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Buy 200 mega bonds");
+    operationItem.set_quantity_done(200);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400003);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Buy 200 mega bonds");
+    ASSERT_NEAR(operation.price,                           150.0f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  3);
+    ASSERT_EQ(operation.fifoItems.at(0).quantity,          10);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.units,        2533);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.nano,         0);
+    ASSERT_EQ(operation.fifoItems.at(1).quantity,          100);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.units,        20000);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.nano,         0);
+    ASSERT_EQ(operation.fifoItems.at(2).quantity,          200);
+    ASSERT_EQ(operation.fifoItems.at(2).cost.units,        30000);
+    ASSERT_EQ(operation.fifoItems.at(2).cost.nano,         0);
+    ASSERT_NEAR(operation.avgPriceFifo,                    169.4612f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    169.4612f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          200);
+    ASSERT_EQ(operation.remainedQuantity,                  310);
+    ASSERT_NEAR(operation.payment,                         -30000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     30000.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo.units,                    52533);
+    ASSERT_EQ(operation.costFifo.nano,                     0);
+    ASSERT_EQ(operation.costWavg.units,                    52533);
+    ASSERT_EQ(operation.costWavg.nano,                     0);
+    ASSERT_NEAR(operation.commission,                      -15.0f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           0.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             -15.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      -0.05f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney.units,                  200000);
+    ASSERT_EQ(operation.inputMoney.nano,                   0);
+    ASSERT_EQ(operation.maxInputMoney.units,               200000);
+    ASSERT_EQ(operation.maxInputMoney.nano,                0);
+    ASSERT_EQ(operation.totalYieldWithCommission.units,    -26);
+    ASSERT_EQ(operation.totalYieldWithCommission.nano,     -266500000);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, -0.01313325f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney.units,               147441);
+    ASSERT_EQ(operation.remainedMoney.nano,                -266500000);
+    ASSERT_EQ(operation.totalMoney.units,                  199974);
+    ASSERT_EQ(operation.totalMoney.nano,                   -266500000);
+    ASSERT_EQ(operation.pricePrecision,                    4);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               2);
+    // clang-format on
+
+    price->set_units(1000);
+    price->set_nano(0);
+
+    payment->set_units(60000);
+    payment->set_nano(0);
+
+    commission->set_units(-30);
+    commission->set_nano(0);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_SELL);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Sell 60 mega bonds");
+    operationItem.set_quantity_done(60);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400004);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Sell 60 mega bonds");
+    ASSERT_NEAR(operation.price,                           1000.0f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  2);
+    ASSERT_EQ(operation.fifoItems.at(0).quantity,          50);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.units,        10000);
+    ASSERT_EQ(operation.fifoItems.at(0).cost.nano,         0);
+    ASSERT_EQ(operation.fifoItems.at(1).quantity,          200);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.units,        30000);
+    ASSERT_EQ(operation.fifoItems.at(1).cost.nano,         0);
+    ASSERT_NEAR(operation.avgPriceFifo,                    160.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    169.4612f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          60);
+    ASSERT_EQ(operation.remainedQuantity,                  250);
+    ASSERT_NEAR(operation.payment,                         60000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     12533.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo.units,                    40000);
+    ASSERT_EQ(operation.costFifo.nano,                     0);
+    ASSERT_EQ(operation.costWavg.units,                    42366);
+    ASSERT_EQ(operation.costWavg.nano,                     -677419354);
+    ASSERT_NEAR(operation.commission,                      -30.0f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           47467.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             47437.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      378.4967f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney.units,                  200000);
+    ASSERT_EQ(operation.inputMoney.nano,                   0);
+    ASSERT_EQ(operation.maxInputMoney.units,               200000);
+    ASSERT_EQ(operation.maxInputMoney.nano,                0);
+    ASSERT_EQ(operation.totalYieldWithCommission.units,    47411);
+    ASSERT_EQ(operation.totalYieldWithCommission.nano,     -266500000);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 23.705366f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney.units,               207411);
+    ASSERT_EQ(operation.remainedMoney.nano,                -266500000);
+    ASSERT_EQ(operation.totalMoney.units,                  247411);
+    ASSERT_EQ(operation.totalMoney.nano,                   -266500000);
+    ASSERT_EQ(operation.pricePrecision,                    4);
+    ASSERT_EQ(operation.paymentPrecision,                  2);
+    ASSERT_EQ(operation.commissionPrecision,               2);
+    // clang-format on
+
+    price->set_units(300);
+    price->set_nano(0);
+
+    payment->set_units(75000);
+    payment->set_nano(0);
+
+    commission->set_units(-37);
+    commission->set_nano(-500000000);
+
+    operationItem.set_type(tinkoff::OPERATION_TYPE_SELL);
+    operationItem.set_instrument_uid("aaaaa");
+    operationItem.set_position_uid("position-id");
+    operationItem.set_description("Sell 250 mega bonds");
+    operationItem.set_quantity_done(250);
+
+    EXPECT_CALL(*instrumentsStorageMock, readLock());
+    EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
+    EXPECT_CALL(*instrumentsStorageMock, readUnlock());
+    EXPECT_CALL(*logosStorageMock, readLock());
+    EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
+    EXPECT_CALL(*logosStorageMock, readUnlock());
+
+    thread->handleOperationItem(operationItem, &operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.timestamp,                         1704056400005);
+    ASSERT_EQ(operation.instrumentId,                      "aaaaa");
+    ASSERT_EQ(operation.instrumentLogo,                    &logo);
+    ASSERT_EQ(operation.instrumentTicker,                  "LETO");
+    ASSERT_EQ(operation.instrumentName,                    "Leto & arbalety");
+    ASSERT_EQ(operation.description,                       "Sell 250 mega bonds");
+    ASSERT_NEAR(operation.price,                           300.0f, 0.0001f);
+    ASSERT_EQ(operation.fifoItems.size(),                  0);
+    ASSERT_NEAR(operation.avgPriceFifo,                    160.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgPriceWavg,                    169.4612f, 0.0001f);
+    ASSERT_EQ(operation.quantity,                          250);
+    ASSERT_EQ(operation.remainedQuantity,                  0);
+    ASSERT_NEAR(operation.payment,                         75000.0f, 0.0001f);
+    ASSERT_NEAR(operation.avgCostFifo,                     40000.0f, 0.0001f);
+    ASSERT_EQ(operation.costFifo.units,                    0);
+    ASSERT_EQ(operation.costFifo.nano,                     0);
+    ASSERT_EQ(operation.costWavg.units,                    0);
+    ASSERT_EQ(operation.costWavg.nano,                     0);
+    ASSERT_NEAR(operation.commission,                      -37.5f, 0.0001f);
+    ASSERT_NEAR(operation.yield,                           35000.0f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommission,             34962.5f, 0.0001f);
+    ASSERT_NEAR(operation.yieldWithCommissionPercent,      87.40625f, 0.0001f);
+    ASSERT_EQ(operation.inputMoney.units,                  200000);
+    ASSERT_EQ(operation.inputMoney.nano,                   0);
+    ASSERT_EQ(operation.maxInputMoney.units,               200000);
+    ASSERT_EQ(operation.maxInputMoney.nano,                0);
+    ASSERT_EQ(operation.totalYieldWithCommission.units,    82374);
+    ASSERT_EQ(operation.totalYieldWithCommission.nano,     -766500000);
+    ASSERT_NEAR(operation.totalYieldWithCommissionPercent, 41.186616f, 0.0001f);
+    ASSERT_EQ(operation.remainedMoney.units,               282374);
+    ASSERT_EQ(operation.remainedMoney.nano,                -766500000);
+    ASSERT_EQ(operation.totalMoney.units,                  282374);
+    ASSERT_EQ(operation.totalMoney.nano,                   -766500000);
+    ASSERT_EQ(operation.pricePrecision,                    4);
     ASSERT_EQ(operation.paymentPrecision,                  2);
     ASSERT_EQ(operation.commissionPrecision,               2);
     // clang-format on
