@@ -36,6 +36,8 @@ OperationsThread::OperationsThread(
     mLastOperationTimestamp(),
     mAmountOfOperationsWithSameTimestamp(),
     mAmountOfEntries(),
+    mLimitOperations(LIMIT_OPERATIONS),
+    mOptimizeSize(OPTIMIZE_SIZE),
     mLastPositionUidForExtAccount(),
     mInstruments(),
     mInputMoney(),
@@ -71,7 +73,7 @@ void OperationsThread::run()
 
         while (true)
         {
-            if (mAmountOfEntries > LIMIT_OPERATIONS)
+            if (mAmountOfEntries > mLimitOperations)
             {
                 optimize();
             }
@@ -617,13 +619,13 @@ void OperationsThread::optimize()
     const QList<Operation> operations = mOperationsDatabase->readOperations();
 
     QList<Operation> newOperations;
-    newOperations.resizeForOverwrite(OPTIMIZE_SIZE);
+    newOperations.resizeForOverwrite(mOptimizeSize);
 
     OptimizeOperationsInfo optimizeOperationsInfo(&operations);
     processInParallel(newOperations, optimizeOperationsForParallel, &optimizeOperationsInfo);
 
-    mAmountOfEntries = OPTIMIZE_SIZE;
     addInstrumentsAfterOptimization(newOperations, operations);
+    mAmountOfEntries = newOperations.size();
 
     mOperationsDatabase->writeOperations(newOperations);
     emit operationsRead(newOperations);

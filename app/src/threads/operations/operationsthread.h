@@ -58,6 +58,18 @@ public:
     void handleOperationItem(const tinkoff::OperationItem& tinkoffOperation, Operation* res);
     void alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOperation);
 
+#ifdef TESTING_MODE
+    void testSetLimitOperations(int limitOperations)
+    {
+        mLimitOperations = limitOperations;
+    }
+
+    void testSetOptimizeSize(int optimizeSize)
+    {
+        mOptimizeSize = optimizeSize;
+    }
+#endif
+
 private:
     void      readOperations();
     Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
@@ -78,6 +90,8 @@ private:
     qint64                           mLastOperationTimestamp;
     qint8                            mAmountOfOperationsWithSameTimestamp;
     int                              mAmountOfEntries;
+    int                              mLimitOperations;
+    int                              mOptimizeSize;
     QString                          mLastPositionUidForExtAccount;
     QMap<QString, QuantityAndCost>   mInstruments; // Instrument Id => QuantityAndCost
     Quotation                        mInputMoney;
