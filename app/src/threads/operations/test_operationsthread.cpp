@@ -1213,4 +1213,105 @@ TEST_F(Test_OperationsThread, Test_handleOperationItem)
     ASSERT_EQ(operation.commissionPrecision,               2);
     // clang-format on
 }
+
+TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
+
+    thread->setAccountId("account-hash", "account-id");
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position1 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity1->set_units(100000);
+    tinkoffQuantity1->set_nano(0);
+
+    tinkoffAvgPriceFifo1->set_currency("rub");
+    tinkoffAvgPriceFifo1->set_units(1);
+    tinkoffAvgPriceFifo1->set_nano(0);
+
+    position1->set_instrument_uid(RUBLE_UID);
+    position1->set_allocated_quantity(tinkoffQuantity1);
+    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
+
+    Operation operation;
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.remainedMoney.units, 100000);
+    ASSERT_EQ(operation.remainedMoney.nano,  0);
+    ASSERT_EQ(operation.totalMoney.units,    100000);
+    ASSERT_EQ(operation.totalMoney.nano,     0);
+    // clang-format on
+
+    tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity2->set_units(100);
+    tinkoffQuantity2->set_nano(0);
+
+    tinkoffAvgPriceFifo2->set_currency("rub");
+    tinkoffAvgPriceFifo2->set_units(50);
+    tinkoffAvgPriceFifo2->set_nano(0);
+
+    position2->set_instrument_uid("aaaaa");
+    position2->set_allocated_quantity(tinkoffQuantity2);
+    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.remainedMoney.units, 100000);
+    ASSERT_EQ(operation.remainedMoney.nano,  0);
+    ASSERT_EQ(operation.totalMoney.units,    105000);
+    ASSERT_EQ(operation.totalMoney.nano,     0);
+    // clang-format on
+
+    tinkoff::PortfolioPosition* position3 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity3     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo3 = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity3->set_units(200);
+    tinkoffQuantity3->set_nano(0);
+
+    tinkoffAvgPriceFifo3->set_currency("rub");
+    tinkoffAvgPriceFifo3->set_units(130);
+    tinkoffAvgPriceFifo3->set_nano(0);
+
+    position3->set_instrument_uid("bbbbb");
+    position3->set_allocated_quantity(tinkoffQuantity3);
+    position3->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo3);
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
+        .WillOnce(Return(portfolioResponse));
+
+    thread->alignRemainedAndTotalMoneyFromPortfolio(&operation);
+
+    // clang-format off
+    ASSERT_EQ(operation.remainedMoney.units, 100000);
+    ASSERT_EQ(operation.remainedMoney.nano,  0);
+    ASSERT_EQ(operation.totalMoney.units,    131000);
+    ASSERT_EQ(operation.totalMoney.nano,     0);
+    // clang-format on
+}
+
+TEST_F(Test_OperationsThread, Test_optimize)
+{
+}
 // NOLINTEND(readability-magic-numbers)
