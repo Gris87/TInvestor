@@ -12,6 +12,7 @@
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
+#include "src/widgets/actionstableitemwidget/iactionstableitemwidget_mock.h"
 #include "src/widgets/actionstableitemwidget/iactionstableitemwidgetfactory_mock.h"
 #include "src/widgets/orderwaveswidget/iorderwaveswidgetfactory_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
@@ -230,6 +231,32 @@ TEST_F(Test_StocksTableWidget, Test_actionExportToExcelTriggered)
     // clang-format on
 }
 
+TEST_F(Test_StocksTableWidget, Test_modelReset)
+{
+    const InSequence seq;
+
+    // Will be deleted in StocksTableWidget destructor
+    StrictMock<ActionsTableItemWidgetMock>* actionsTableItemWidgetMock = new StrictMock<ActionsTableItemWidgetMock>();
+
+    EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillOnce(Return(1));
+    EXPECT_CALL(
+        *actionsTableItemWidgetFactoryMock,
+        newInstance(
+            orderWavesDialogFactoryMock,
+            orderWavesWidgetFactoryMock,
+            orderBookThreadMock,
+            httpClientMock,
+            stocksTableModelMock,
+            0,
+            stocksTableWidget
+        )
+    )
+        .WillOnce(Return(actionsTableItemWidgetMock));
+    EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillOnce(Return(1));
+    EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillOnce(Return(1));
+
+    stocksTableWidget->modelReset();
+}
 
 TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 {
