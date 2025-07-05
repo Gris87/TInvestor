@@ -39,7 +39,7 @@ void PortfolioLastPriceThread::run()
         {
             createMarketDataStream();
 
-            bool needToTerminate = !mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
+            const bool needToTerminate = !mGrpcClient->subscribeLastPrices(mMarketDataStream, mInstrumentIds);
 
             if (!needToTerminate)
             {

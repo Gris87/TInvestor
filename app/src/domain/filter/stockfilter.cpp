@@ -4,6 +4,7 @@
 
 constexpr qint64 TURNOVER_TO_DEFAULT = 1000000000000;
 constexpr float  PAYBACK_TO_DEFAULT  = 100;
+constexpr float  FLOAT_EPSILON       = 0.0001f;
 
 
 
@@ -82,11 +83,11 @@ bool operator==(const StockFilter& lhs, const StockFilter& rhs)
 {
     return lhs.useTicker == rhs.useTicker && lhs.ticker == rhs.ticker && lhs.useQualInvestor == rhs.useQualInvestor &&
            lhs.qualInvestor == rhs.qualInvestor && lhs.usePrice == rhs.usePrice &&
-           qAbs(lhs.priceFrom - rhs.priceFrom) < 0.0001f && qAbs(lhs.priceTo - rhs.priceTo) < 0.0001f &&
-           lhs.useDayStartChange == rhs.useDayStartChange && qAbs(lhs.dayStartChangeFrom - rhs.dayStartChangeFrom) < 0.0001f &&
-           qAbs(lhs.dayStartChangeTo - rhs.dayStartChangeTo) < 0.0001f && lhs.useDateChange == rhs.useDateChange &&
-           qAbs(lhs.dateChangeFrom - rhs.dateChangeFrom) < 0.0001f && qAbs(lhs.dateChangeTo - rhs.dateChangeTo) < 0.0001f &&
+           qAbs(lhs.priceFrom - rhs.priceFrom) < FLOAT_EPSILON && qAbs(lhs.priceTo - rhs.priceTo) < FLOAT_EPSILON &&
+           lhs.useDayStartChange == rhs.useDayStartChange && qAbs(lhs.dayStartChangeFrom - rhs.dayStartChangeFrom) < FLOAT_EPSILON &&
+           qAbs(lhs.dayStartChangeTo - rhs.dayStartChangeTo) < FLOAT_EPSILON && lhs.useDateChange == rhs.useDateChange &&
+           qAbs(lhs.dateChangeFrom - rhs.dateChangeFrom) < FLOAT_EPSILON && qAbs(lhs.dateChangeTo - rhs.dateChangeTo) < FLOAT_EPSILON &&
            lhs.useTurnover == rhs.useTurnover && lhs.turnoverFrom == rhs.turnoverFrom && lhs.turnoverTo == rhs.turnoverTo &&
-           lhs.usePayback == rhs.usePayback && qAbs(lhs.paybackFrom - rhs.paybackFrom) < 0.0001f &&
-           qAbs(lhs.paybackTo - rhs.paybackTo) < 0.0001f;
+           lhs.usePayback == rhs.usePayback && qAbs(lhs.paybackFrom - rhs.paybackFrom) < FLOAT_EPSILON &&
+           qAbs(lhs.paybackTo - rhs.paybackTo) < FLOAT_EPSILON;
 }

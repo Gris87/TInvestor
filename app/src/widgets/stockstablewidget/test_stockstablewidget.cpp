@@ -1,11 +1,14 @@
 #include "src/widgets/stockstablewidget/stockstablewidget.h"
 #include "ui_stockstablewidget.h"
 
+#include <QCoreApplication>
+#include <QDir>
 #include <gtest/gtest.h>
 
 #include "src/dialogs/orderwavesdialog/iorderwavesdialogfactory_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
+#include "src/utils/filedialog/ifiledialog_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/http/ihttpclient_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -14,7 +17,7 @@
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
 
-/*
+
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -32,33 +35,31 @@ protected:
     {
         const InSequence seq;
 
-        stocksTableModelFactoryMock          = new StrictMock<StocksTableModelFactoryMock>();
-        stockTableRecordFactoryMock          = new StrictMock<StocksTableRecordFactoryMock>();
-        instrumentTableItemWidgetFactoryMock = new StrictMock<InstrumentTableItemWidgetFactoryMock>();
-        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
-        orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
-        logosStorageMock                     = new StrictMock<LogosStorageMock>();
-        userStorageMock                      = new StrictMock<UserStorageMock>();
-        orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
-        httpClientMock                       = new StrictMock<HttpClientMock>();
-        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
+        stocksTableModelFactoryMock       = new StrictMock<StocksTableModelFactoryMock>();
+        actionsTableItemWidgetFactoryMock = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        orderWavesDialogFactoryMock       = new StrictMock<OrderWavesDialogFactoryMock>();
+        orderWavesWidgetFactoryMock       = new StrictMock<OrderWavesWidgetFactoryMock>();
+        userStorageMock                   = new StrictMock<UserStorageMock>();
+        orderBookThreadMock               = new StrictMock<OrderBookThreadMock>();
+        httpClientMock                    = new StrictMock<HttpClientMock>();
+        fileDialogFactoryMock             = new StrictMock<FileDialogFactoryMock>();
+        settingsEditorMock                = new StrictMock<SettingsEditorMock>();
 
         stocksTableModelMock = new StrictMock<StocksTableModelMock>();
 
-        EXPECT_CALL(*stocksTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(stocksTableModelMock));
+        appDir = qApp->applicationDirPath();
+        QDir(appDir + "/test/dir_for_stocks_table").removeRecursively();
+        QDir().mkpath(appDir + "/test/dir_for_stocks_table");
+
+        EXPECT_CALL(*stocksTableModelFactoryMock, newInstance(userStorageMock, NotNull())).WillOnce(Return(stocksTableModelMock));
         EXPECT_CALL(*stocksTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
         EXPECT_CALL(*stocksTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
         stocksTableWidget = new StocksTableWidget(
             stocksTableModelFactoryMock,
-            stockTableRecordFactoryMock,
-            instrumentTableItemWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesDialogFactoryMock,
             orderWavesWidgetFactoryMock,
-            logosStorageMock,
             userStorageMock,
             orderBookThreadMock,
             httpClientMock,
@@ -71,34 +72,31 @@ protected:
     {
         delete stocksTableWidget;
         delete stocksTableModelFactoryMock;
-        delete stockTableRecordFactoryMock;
-        delete instrumentTableItemWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesDialogFactoryMock;
         delete orderWavesWidgetFactoryMock;
-        delete logosStorageMock;
         delete userStorageMock;
         delete orderBookThreadMock;
         delete httpClientMock;
         delete fileDialogFactoryMock;
         delete settingsEditorMock;
         delete stocksTableModelMock;
+
+        QDir(appDir + "/test/dir_for_stocks_table").removeRecursively();
     }
 
-    StocksTableWidget*                                stocksTableWidget;
-    StrictMock<StocksTableModelFactoryMock>*          stocksTableModelFactoryMock;
-    StrictMock<StocksTableRecordFactoryMock>*         stockTableRecordFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock>* instrumentTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock>*    actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>*          orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>*          orderWavesWidgetFactoryMock;
-    StrictMock<LogosStorageMock>*                     logosStorageMock;
-    StrictMock<UserStorageMock>*                      userStorageMock;
-    StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
-    StrictMock<HttpClientMock>*                       httpClientMock;
-    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
-    StrictMock<StocksTableModelMock>*                 stocksTableModelMock;
+    StocksTableWidget*                             stocksTableWidget;
+    StrictMock<StocksTableModelFactoryMock>*       stocksTableModelFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock>* actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>*       orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>*       orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>*                   userStorageMock;
+    StrictMock<OrderBookThreadMock>*               orderBookThreadMock;
+    StrictMock<HttpClientMock>*                    httpClientMock;
+    StrictMock<FileDialogFactoryMock>*             fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>*                settingsEditorMock;
+    StrictMock<StocksTableModelMock>*              stocksTableModelMock;
+    QString                                        appDir;
 };
 
 
@@ -107,465 +105,138 @@ TEST_F(Test_StocksTableWidget, Test_constructor_and_destructor)
 {
 }
 
+TEST_F(Test_StocksTableWidget, Test_setFilter)
+{
+    const InSequence seq;
+
+    const StockFilter filter;
+
+    EXPECT_CALL(*stocksTableModelMock, setFilter(filter));
+
+    stocksTableWidget->setFilter(filter);
+}
+
 TEST_F(Test_StocksTableWidget, Test_updateTable)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    const QList<Stock*> stocks;
 
-    QList<Stock*> stocks;
+    EXPECT_CALL(*stocksTableModelMock, updateTable(stocks));
 
-    Stock stock1;
-    Stock stock2;
-
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
-
-    stocks << &stock1 << &stock1 << &stock2;
-
-    const StockFilter filter;
-
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateTable(stocks, filter);
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
-    // clang-format on
+    stocksTableWidget->updateTable(stocks);
 }
 
 TEST_F(Test_StocksTableWidget, Test_updateAll)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    const QList<Stock*> stocks;
 
-    QList<Stock*> stocks;
+    EXPECT_CALL(*stocksTableModelMock, updateAll());
 
-    Stock stock1;
-    Stock stock2;
+    stocksTableWidget->updateAll();
+}
 
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
+TEST_F(Test_StocksTableWidget, Test_lastPriceChanged)
+{
+    const InSequence seq;
 
-    stocks << &stock1 << &stock1 << &stock2;
+    EXPECT_CALL(*stocksTableModelMock, lastPriceChanged(QString("aaaaa")));
 
-    const StockFilter filter;
-
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateTable(stocks, filter);
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
-    // clang-format on
-
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateAll(filter);
+    stocksTableWidget->lastPriceChanged("aaaaa");
 }
 
 TEST_F(Test_StocksTableWidget, Test_updateLastPrices)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    EXPECT_CALL(*stocksTableModelMock, updateLastPrices());
 
-    QList<Stock*> stocks;
-
-    Stock stock1;
-    Stock stock2;
-
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
-
-    stocks << &stock1 << &stock1 << &stock2;
-
-    const StockFilter filter;
-
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateTable(stocks, filter);
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
-    // clang-format on
-
-    stocksTableWidget->lastPriceChanged("aaaaa");
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.size(),            1);
-    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.contains("aaaaa"), true);
-    // clang-format on
-
-    EXPECT_CALL(stocksTableRecordMock1, updatePrice());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateLastPrices(filter);
-
-    ASSERT_EQ(stocksTableWidget->lastPricesUpdates.isEmpty(), true);
+    stocksTableWidget->updateLastPrices();
 }
 
 TEST_F(Test_StocksTableWidget, Test_updatePrices)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    EXPECT_CALL(*stocksTableModelMock, updatePrices());
 
-    QList<Stock*> stocks;
+    stocksTableWidget->updatePrices();
+}
 
-    Stock stock1;
-    Stock stock2;
+TEST_F(Test_StocksTableWidget, Test_setDateChangeTooltip)
+{
+    const InSequence seq;
 
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
+    EXPECT_CALL(*stocksTableModelMock, setDateChangeTooltip(QString("Blah Blah")));
 
-    stocks << &stock1 << &stock1 << &stock2;
-
-    const StockFilter filter;
-
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateTable(stocks, filter);
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
-    // clang-format on
-
-    EXPECT_CALL(stocksTableRecordMock1, updatePrice());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock2, updatePrice());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updatePrices(filter);
+    stocksTableWidget->setDateChangeTooltip("Blah Blah");
 }
 
 TEST_F(Test_StocksTableWidget, Test_updatePeriodicData)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    EXPECT_CALL(*stocksTableModelMock, updatePeriodicData());
 
-    QList<Stock*> stocks;
-
-    Stock stock1;
-    Stock stock2;
-
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
-
-    stocks << &stock1 << &stock1 << &stock2;
-
-    const StockFilter filter;
-
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
-        )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updateTable(stocks, filter);
-
-    // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
-    // clang-format on
-
-    EXPECT_CALL(stocksTableRecordMock1, updatePeriodicData());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock2, updatePeriodicData());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->updatePeriodicData(filter);
+    stocksTableWidget->updatePeriodicData();
 }
 
-TEST_F(Test_StocksTableWidget, Test_setDateChangeTooltip)
+TEST_F(Test_StocksTableWidget, Test_on_tableView_customContextMenuRequested)
 {
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "");
+    const QPoint pos;
 
-    stocksTableWidget->setDateChangeTooltip("AAAAA");
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "AAAAA");
-
-    stocksTableWidget->setDateChangeTooltip("BBBBB");
-    ASSERT_EQ(stocksTableWidget->ui->tableWidget->horizontalHeaderItem(STOCKS_DATE_CHANGE_COLUMN)->toolTip(), "BBBBB");
+    stocksTableWidget->on_tableView_customContextMenuRequested(pos);
 }
 
-TEST_F(Test_StocksTableWidget, Test_filterChanged)
+TEST_F(Test_StocksTableWidget, Test_actionExportToExcelTriggered)
 {
     const InSequence seq;
 
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock1;
-    StrictMock<StocksTableRecordMock> stocksTableRecordMock2;
+    StrictMock<FileDialogMock>* fileDialogMock =
+        new StrictMock<FileDialogMock>(); // Will be deleted in actionExportToExcelTriggered
 
-    QList<Stock*> stocks;
+    QFile excelFile(appDir + "/test/dir_for_stocks_table/excel.xlsx");
 
-    Stock stock1;
-    Stock stock2;
+    ASSERT_EQ(excelFile.exists(), false);
 
-    stock1.meta.uid = "aaaaa";
-    stock2.meta.uid = "bbbbb";
-
-    stocks << &stock1 << &stock1 << &stock2;
-
-    const StockFilter filter;
-
+    EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/StocksTableWidget/exportToExcelFile"), _))
+        .WillOnce(Return(QVariant(appDir + "/test/dir_for_stocks_table/excel.xlsx")));
     EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock1,
-            stocksTableWidget
-        )
+        *fileDialogFactoryMock,
+        newInstance(stocksTableWidget, QString("Export"), appDir + "/test/dir_for_stocks_table", QString("Excel file (*.xlsx)"))
     )
-        .WillOnce(Return(&stocksTableRecordMock1));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock1, updateAll());
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
+        .WillOnce(Return(std::shared_ptr<IFileDialog>(fileDialogMock)));
+    EXPECT_CALL(*fileDialogMock, setAcceptMode(QFileDialog::AcceptSave));
+    EXPECT_CALL(*fileDialogMock, setDefaultSuffix(QString("xlsx")));
+    EXPECT_CALL(*fileDialogMock, selectFile(appDir + "/test/dir_for_stocks_table/excel.xlsx"));
+    EXPECT_CALL(*fileDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*fileDialogMock, selectedFiles())
+        .WillOnce(Return(QStringList() << appDir + "/test/dir_for_stocks_table/excel.xlsx"));
     EXPECT_CALL(
-        *stockTableRecordFactoryMock,
-        newInstance(
-            stocksTableWidget->ui->tableWidget,
-            instrumentTableItemWidgetFactoryMock,
-            actionsTableItemWidgetFactoryMock,
-            orderWavesDialogFactoryMock,
-            orderWavesWidgetFactoryMock,
-            userStorageMock,
-            orderBookThreadMock,
-            httpClientMock,
-            &stock2,
-            stocksTableWidget
+        *settingsEditorMock,
+        setValue(
+            QString("MainWindow/StocksTableWidget/exportToExcelFile"), QVariant(appDir + "/test/dir_for_stocks_table/excel.xlsx")
         )
-    )
-        .WillOnce(Return(&stocksTableRecordMock2));
-    EXPECT_CALL(stocksTableRecordMock2, updateAll());
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
+    );
+    EXPECT_CALL(*stocksTableModelMock, exportToExcel(_));
 
-    stocksTableWidget->updateTable(stocks, filter);
+    stocksTableWidget->actionExportToExcelTriggered();
 
     // clang-format off
-    ASSERT_EQ(stocksTableWidget->records.size(),   2);
-    ASSERT_EQ(stocksTableWidget->records["aaaaa"], &stocksTableRecordMock1);
-    ASSERT_EQ(stocksTableWidget->records["bbbbb"], &stocksTableRecordMock2);
+    ASSERT_EQ(excelFile.exists(), true);
+    ASSERT_GE(excelFile.size(),   6251);
     // clang-format on
-
-    EXPECT_CALL(stocksTableRecordMock1, filter(stocksTableWidget->ui->tableWidget, filter));
-    EXPECT_CALL(stocksTableRecordMock2, filter(stocksTableWidget->ui->tableWidget, filter));
-
-    stocksTableWidget->filterChanged(filter);
 }
+
 
 TEST_F(Test_StocksTableWidget, Test_saveWindowState)
 {
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Stock"),      _));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Name"),       _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_Price"),      _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_DayChange"),  _));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("AAAAA/columnWidth_DateChange"), _));
@@ -582,7 +253,7 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Stock"),      _)).WillOnce(Return(QVariant(103)));
+    EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Name"),       _)).WillOnce(Return(QVariant(103)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_Price"),      _)).WillOnce(Return(QVariant(61)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DayChange"),  _)).WillOnce(Return(QVariant(139)));
     EXPECT_CALL(*settingsEditorMock, value(QString("AAAAA/columnWidth_DateChange"), _)).WillOnce(Return(QVariant(157)));
@@ -594,4 +265,3 @@ TEST_F(Test_StocksTableWidget, Test_loadWindowState)
     stocksTableWidget->loadWindowState("AAAAA");
 }
 // NOLINTEND(cppcoreguidelines-pro-type-member-init, readability-magic-numbers)
-*/

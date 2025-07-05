@@ -38,7 +38,6 @@ StocksTableWidget::StocksTableWidget(
 ) :
     IStocksTableWidget(parent),
     ui(new Ui::StocksTableWidget),
-    lastPricesUpdates(),
     mActionsTableItemWidgetFactory(actionsTableItemWidgetFactory),
     mOrderWavesDialogFactory(orderWavesDialogFactory),
     mOrderWavesWidgetFactory(orderWavesWidgetFactory),
@@ -87,7 +86,6 @@ void StocksTableWidget::updateAll()
 void StocksTableWidget::lastPriceChanged(const QString& instrumentId)
 {
     mStocksTableModel->lastPriceChanged(instrumentId);
-    lastPricesUpdates.insert(instrumentId);
 }
 
 void StocksTableWidget::updateLastPrices()

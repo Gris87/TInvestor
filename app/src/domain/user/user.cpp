@@ -4,6 +4,10 @@
 
 
 
+constexpr float FLOAT_EPSILON = 0.0001f;
+
+
+
 const char* const SANDBOX_TOKEN = "t.dFIbMnfNHi4EGR17LdlVerWmcQ53eNFvSYJqJKKXyfOfvLNLizHULt_fUPItm2Y9-jeuWs01KzlPk8dXoGonAQ";
 
 // clang-format off
@@ -35,5 +39,5 @@ void User::setTariff(const QString& value)
 bool operator==(const User& lhs, const User& rhs)
 {
     return lhs.token == rhs.token && lhs.qualified == rhs.qualified && lhs.qualifiedForWorkWith == rhs.qualifiedForWorkWith &&
-           lhs.tariff == rhs.tariff && qAbs(lhs.commission - rhs.commission) < 0.0001f;
+           lhs.tariff == rhs.tariff && qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON;
 }

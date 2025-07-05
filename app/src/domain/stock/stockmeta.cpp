@@ -4,6 +4,10 @@
 
 
 
+constexpr float FLOAT_EPSILON = 0.0001f;
+
+
+
 StockMeta::StockMeta() :
     instrumentId(),
     instrumentLogo(),
@@ -99,5 +103,5 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
-           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < 0.0001f && lhs.pricePrecision == rhs.pricePrecision;
+           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON && lhs.pricePrecision == rhs.pricePrecision;
 }

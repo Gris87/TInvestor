@@ -6,6 +6,10 @@
 
 
 
+constexpr float FLOAT_EPSILON = 0.0001f;
+
+
+
 Operation::Operation() :
     timestamp(),
     instrumentId(),
@@ -294,15 +298,15 @@ bool operator==(const Operation& lhs, const Operation& rhs)
 {
     return lhs.timestamp == rhs.timestamp && lhs.instrumentId == rhs.instrumentId &&
            lhs.instrumentTicker == rhs.instrumentTicker && lhs.instrumentName == rhs.instrumentName &&
-           lhs.description == rhs.description && qAbs(lhs.price - rhs.price) < 0.0001f && lhs.fifoItems == rhs.fifoItems &&
-           qAbs(lhs.avgPriceFifo - rhs.avgPriceFifo) < 0.0001f && qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < 0.0001f &&
+           lhs.description == rhs.description && qAbs(lhs.price - rhs.price) < FLOAT_EPSILON && lhs.fifoItems == rhs.fifoItems &&
+           qAbs(lhs.avgPriceFifo - rhs.avgPriceFifo) < FLOAT_EPSILON && qAbs(lhs.avgPriceWavg - rhs.avgPriceWavg) < FLOAT_EPSILON &&
            lhs.quantity == rhs.quantity && lhs.remainedQuantity == rhs.remainedQuantity &&
-           qAbs(lhs.payment - rhs.payment) < 0.0001f && qAbs(lhs.avgCostFifo - rhs.avgCostFifo) < 0.0001f &&
-           lhs.costFifo == rhs.costFifo && lhs.costWavg == rhs.costWavg && qAbs(lhs.commission - rhs.commission) < 0.0001f &&
-           qAbs(lhs.yield - rhs.yield) < 0.0001f && qAbs(lhs.yieldWithCommission - rhs.yieldWithCommission) < 0.0001f &&
-           qAbs(lhs.yieldWithCommissionPercent - rhs.yieldWithCommissionPercent) < 0.0001f && lhs.inputMoney == rhs.inputMoney &&
+           qAbs(lhs.payment - rhs.payment) < FLOAT_EPSILON && qAbs(lhs.avgCostFifo - rhs.avgCostFifo) < FLOAT_EPSILON &&
+           lhs.costFifo == rhs.costFifo && lhs.costWavg == rhs.costWavg && qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON &&
+           qAbs(lhs.yield - rhs.yield) < FLOAT_EPSILON && qAbs(lhs.yieldWithCommission - rhs.yieldWithCommission) < FLOAT_EPSILON &&
+           qAbs(lhs.yieldWithCommissionPercent - rhs.yieldWithCommissionPercent) < FLOAT_EPSILON && lhs.inputMoney == rhs.inputMoney &&
            lhs.maxInputMoney == rhs.maxInputMoney && lhs.totalYieldWithCommission == rhs.totalYieldWithCommission &&
-           qAbs(lhs.totalYieldWithCommissionPercent - rhs.totalYieldWithCommissionPercent) < 0.0001f &&
+           qAbs(lhs.totalYieldWithCommissionPercent - rhs.totalYieldWithCommissionPercent) < FLOAT_EPSILON &&
            lhs.remainedMoney == rhs.remainedMoney && lhs.totalMoney == rhs.totalMoney &&
            lhs.pricePrecision == rhs.pricePrecision && lhs.paymentPrecision == rhs.paymentPrecision &&
            lhs.commissionPrecision == rhs.commissionPrecision;

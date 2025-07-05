@@ -47,8 +47,6 @@ public:
 
     Ui::StocksTableWidget* ui;
 
-    QSet<QString> lastPricesUpdates;
-
     void setFilter(const StockFilter& filter) override;
     void updateTable(const QList<Stock*>& stocks) override;
     void updateAll() override;

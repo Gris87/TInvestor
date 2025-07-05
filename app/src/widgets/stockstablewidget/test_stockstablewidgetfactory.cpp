@@ -13,7 +13,7 @@
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodel_mock.h"
 #include "src/widgets/tablemodels/stockstablemodel/istockstablemodelfactory_mock.h"
 
-/*
+
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -34,33 +34,27 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 
     const StocksTableWidgetFactory factory;
 
-    StrictMock<StocksTableModelFactoryMock>          stocksTableModelFactoryMock;
-    StrictMock<StocksTableRecordFactoryMock>         stockTableRecordFactoryMock;
-    StrictMock<InstrumentTableItemWidgetFactoryMock> instrumentTableItemWidgetFactoryMock;
-    StrictMock<ActionsTableItemWidgetFactoryMock>    actionsTableItemWidgetFactoryMock;
-    StrictMock<OrderWavesDialogFactoryMock>          orderWavesDialogFactoryMock;
-    StrictMock<OrderWavesWidgetFactoryMock>          orderWavesWidgetFactoryMock;
-    StrictMock<LogosStorageMock>                     logosStorageMock;
-    StrictMock<UserStorageMock>                      userStorageMock;
-    StrictMock<OrderBookThreadMock>                  orderBookThreadMock;
-    StrictMock<HttpClientMock>                       httpClientMock;
-    StrictMock<FileDialogFactoryMock>                fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>                   settingsEditorMock;
+    StrictMock<StocksTableModelFactoryMock>       stocksTableModelFactoryMock;
+    StrictMock<ActionsTableItemWidgetFactoryMock> actionsTableItemWidgetFactoryMock;
+    StrictMock<OrderWavesDialogFactoryMock>       orderWavesDialogFactoryMock;
+    StrictMock<OrderWavesWidgetFactoryMock>       orderWavesWidgetFactoryMock;
+    StrictMock<UserStorageMock>                   userStorageMock;
+    StrictMock<OrderBookThreadMock>               orderBookThreadMock;
+    StrictMock<HttpClientMock>                    httpClientMock;
+    StrictMock<FileDialogFactoryMock>             fileDialogFactoryMock;
+    StrictMock<SettingsEditorMock>                settingsEditorMock;
 
     StrictMock<StocksTableModelMock> stocksTableModelMock;
 
-    EXPECT_CALL(stocksTableModelFactoryMock, newInstance(NotNull())).WillOnce(Return(&stocksTableModelMock));
+    EXPECT_CALL(stocksTableModelFactoryMock, newInstance(&userStorageMock, NotNull())).WillOnce(Return(&stocksTableModelMock));
     EXPECT_CALL(stocksTableModelMock, rowCount(QModelIndex())).WillRepeatedly(Return(0));
     EXPECT_CALL(stocksTableModelMock, columnCount(QModelIndex())).WillRepeatedly(Return(0));
 
     const IStocksTableWidget* widget = factory.newInstance(
         &stocksTableModelFactoryMock,
-        &stockTableRecordFactoryMock,
-        &instrumentTableItemWidgetFactoryMock,
         &actionsTableItemWidgetFactoryMock,
         &orderWavesDialogFactoryMock,
         &orderWavesWidgetFactoryMock,
-        &logosStorageMock,
         &userStorageMock,
         &orderBookThreadMock,
         &httpClientMock,
@@ -72,4 +66,3 @@ TEST(Test_StocksTableWidgetFactory, Test_newInstance)
 
     delete widget;
 }
-*/
