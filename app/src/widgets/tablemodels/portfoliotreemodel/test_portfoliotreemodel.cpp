@@ -1,5 +1,6 @@
 #include "src/widgets/tablemodels/portfoliotreemodel/portfoliotreemodel.h"
 
+#include <QBrush>
 #include <gtest/gtest.h>
 
 #include "src/widgets/tablemodels/modelroles.h"
@@ -171,12 +172,12 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     item2.avgPriceWavg       = 103.0f;
     item2.cost               = 400000.0;
     item2.part               = 40.0;
-    item2.yield              = 105.0f;
-    item2.yieldPercent       = 106.0f;
+    item2.yield              = -105.0f;
+    item2.yieldPercent       = -106.0f;
     item2.dailyYield         = 107.0f;
     item2.priceForDailyYield = 108.0f;
     item2.costForDailyYield  = 109.0;
-    item2.dailyYieldPercent  = 110.0f;
+    item2.dailyYieldPercent  = -110.0f;
     item2.pricePrecision     = 3;
 
     item3.instrumentId       = "bbbbb";
@@ -252,9 +253,9 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::DisplayRole),           QVariant("102.000 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::DisplayRole),           QVariant("400000.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::DisplayRole),           QVariant("40.00%"));
-    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole),           QVariant("+105.00 \u20BD"));
-    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole),           QVariant("+106.00%"));
-    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole),           QVariant("+110.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole),           QVariant("-105.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole),           QVariant("-106.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole),           QVariant("-110.00%"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::DisplayRole),           QVariant("BASE"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::DisplayRole),           QVariant("200"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::DisplayRole),           QVariant("201.0000 \u20BD"));
@@ -264,6 +265,96 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole),           QVariant("+205.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole),           QVariant("+206.00%"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole),           QVariant("+210.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN),                             Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN),                             Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN),                             Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN),                              Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN),                             Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(0, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(0, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#97AEC4"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#97AEC4"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(0, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#97AEC4"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#ED6F7E"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#ED6F7E"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#ED6F7E"))));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ForegroundRole),        QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#2BD793"))));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#2BD793"))));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::ForegroundRole),        QVariant(QBrush(QColor("#2BD793"))));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN),                             Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN),                             Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN),                             Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN),                              Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN),                             Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(0, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: 103.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 102.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 108.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::ToolTipRole),           QVariant("Average price by WAVG: 203.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::ToolTipRole),           QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 202.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::ToolTipRole),           QVariant("From: 208.0000 \u20BD"));
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              ROLE_INSTRUMENT_LOGO),      QVariant());
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              ROLE_INSTRUMENT_LOGO),      QVariant());
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), ROLE_INSTRUMENT_LOGO),      QVariant(0));
@@ -275,5 +366,279 @@ TEST_F(Test_PortfolioTreeModel, Test_data)
     ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_INSTRUMENT_NAME),      QVariant("Abstract Basics"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), ROLE_INSTRUMENT_NAME),      QVariant("Basketball enhancement"));
     ASSERT_EQ(model->data(model->index(0, 0),                                                  Qt::WhatsThisPropertyRole), QVariant());
+    // clang-format on
+}
+
+TEST_F(Test_PortfolioTreeModel, Test_sort)
+{
+    Logo logo;
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item1;
+    PortfolioItem         item2;
+    PortfolioItem         item3;
+
+    item1.instrumentId       = RUBLE_UID;
+    item1.instrumentLogo     = nullptr;
+    item1.instrumentTicker   = "RUBLE";
+    item1.instrumentName     = "Ruble";
+    item1.showPrices         = false;
+    item1.available          = 100000.12;
+    item1.price              = 1.0f;
+    item1.avgPriceFifo       = 1.0f;
+    item1.avgPriceWavg       = 1.0f;
+    item1.cost               = 100000.0;
+    item1.part               = 10.0;
+    item1.yield              = 0.0f;
+    item1.yieldPercent       = 0.0f;
+    item1.dailyYield         = 0.0f;
+    item1.priceForDailyYield = 0.0f;
+    item1.costForDailyYield  = 0.0;
+    item1.dailyYieldPercent  = 0.0f;
+    item1.pricePrecision     = 2;
+
+    item2.instrumentId       = "aaaaa";
+    item2.instrumentLogo     = nullptr;
+    item2.instrumentTicker   = "ABBA";
+    item2.instrumentName     = "Abstract Basics";
+    item2.showPrices         = true;
+    item2.available          = 100.0;
+    item2.price              = 101.0f;
+    item2.avgPriceFifo       = 102.0f;
+    item2.avgPriceWavg       = 103.0f;
+    item2.cost               = 400000.0;
+    item2.part               = 40.0;
+    item2.yield              = -105.0f;
+    item2.yieldPercent       = -106.0f;
+    item2.dailyYield         = 107.0f;
+    item2.priceForDailyYield = 108.0f;
+    item2.costForDailyYield  = 109.0;
+    item2.dailyYieldPercent  = -110.0f;
+    item2.pricePrecision     = 3;
+
+    item3.instrumentId       = "bbbbb";
+    item3.instrumentLogo     = &logo;
+    item3.instrumentTicker   = "BASE";
+    item3.instrumentName     = "Basketball enhancement";
+    item3.showPrices         = true;
+    item3.available          = 200.0;
+    item3.price              = 201.0f;
+    item3.avgPriceFifo       = 202.0f;
+    item3.avgPriceWavg       = 203.0f;
+    item3.cost               = 500000.0;
+    item3.part               = 50.0;
+    item3.yield              = 205.0f;
+    item3.yieldPercent       = 206.0f;
+    item3.dailyYield         = 207.0f;
+    item3.priceForDailyYield = 208.0f;
+    item3.costForDailyYield  = 209.0;
+    item3.dailyYieldPercent  = 210.0f;
+    item3.pricePrecision     = 4;
+
+    category1.id   = 0;
+    category1.name = "Currency and metals";
+    category1.cost = 100000.0;
+    category1.part = 10.0;
+    category1.items.append(item1);
+
+    category2.id   = 1;
+    category2.name = "Share";
+    category2.cost = 900000.0;
+    category2.part = 90.0;
+    category2.items.append(item2);
+    category2.items.append(item3);
+
+    portfolio.positions << category1 << category2;
+
+    model->portfolioChanged(portfolio);
+    ASSERT_EQ(model->rowCount(), 2);
+    ASSERT_EQ(model->rowCount(model->index(0, 0)), 1);
+    ASSERT_EQ(model->rowCount(model->index(1, 0)), 2);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              Qt::DisplayRole), QVariant("Currency and metals"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN),                              Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN),                              Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              Qt::DisplayRole), QVariant("Share"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN),                              Qt::DisplayRole), QVariant("900000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN),                              Qt::DisplayRole), QVariant("90.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("RUBLE"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(0, 0)), Qt::DisplayRole), QVariant("100000.12"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("100"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("101.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("102.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("400000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("40.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("-105.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-106.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("-110.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("200"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("201.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("202.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("500000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("50.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%"));
+    // clang-format on
+}
+
+TEST_F(Test_PortfolioTreeModel, Test_exportToExcel)
+{
+    Logo logo;
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item1;
+    PortfolioItem         item2;
+    PortfolioItem         item3;
+
+    item1.instrumentId       = RUBLE_UID;
+    item1.instrumentLogo     = nullptr;
+    item1.instrumentTicker   = "RUBLE";
+    item1.instrumentName     = "Ruble";
+    item1.showPrices         = false;
+    item1.available          = 100000.12;
+    item1.price              = 1.0f;
+    item1.avgPriceFifo       = 1.0f;
+    item1.avgPriceWavg       = 1.0f;
+    item1.cost               = 100000.0;
+    item1.part               = 10.0;
+    item1.yield              = 0.0f;
+    item1.yieldPercent       = 0.0f;
+    item1.dailyYield         = 0.0f;
+    item1.priceForDailyYield = 0.0f;
+    item1.costForDailyYield  = 0.0;
+    item1.dailyYieldPercent  = 0.0f;
+    item1.pricePrecision     = 2;
+
+    item2.instrumentId       = "aaaaa";
+    item2.instrumentLogo     = nullptr;
+    item2.instrumentTicker   = "ABBA";
+    item2.instrumentName     = "Abstract Basics";
+    item2.showPrices         = true;
+    item2.available          = 100.0;
+    item2.price              = 101.0f;
+    item2.avgPriceFifo       = 102.0f;
+    item2.avgPriceWavg       = 103.0f;
+    item2.cost               = 400000.0;
+    item2.part               = 40.0;
+    item2.yield              = -105.0f;
+    item2.yieldPercent       = -106.0f;
+    item2.dailyYield         = 107.0f;
+    item2.priceForDailyYield = 108.0f;
+    item2.costForDailyYield  = 109.0;
+    item2.dailyYieldPercent  = -110.0f;
+    item2.pricePrecision     = 3;
+
+    item3.instrumentId       = "bbbbb";
+    item3.instrumentLogo     = &logo;
+    item3.instrumentTicker   = "BASE";
+    item3.instrumentName     = "Basketball enhancement";
+    item3.showPrices         = true;
+    item3.available          = 200.0;
+    item3.price              = 201.0f;
+    item3.avgPriceFifo       = 202.0f;
+    item3.avgPriceWavg       = 203.0f;
+    item3.cost               = 500000.0;
+    item3.part               = 50.0;
+    item3.yield              = 205.0f;
+    item3.yieldPercent       = 206.0f;
+    item3.dailyYield         = 207.0f;
+    item3.priceForDailyYield = 208.0f;
+    item3.costForDailyYield  = 209.0;
+    item3.dailyYieldPercent  = 210.0f;
+    item3.pricePrecision     = 4;
+
+    category1.id   = 0;
+    category1.name = "Currency and metals";
+    category1.cost = 100000.0;
+    category1.part = 10.0;
+    category1.items.append(item1);
+
+    category2.id   = 1;
+    category2.name = "Share";
+    category2.cost = 900000.0;
+    category2.part = 90.0;
+    category2.items.append(item2);
+    category2.items.append(item3);
+
+    portfolio.positions << category1 << category2;
+
+    model->portfolioChanged(portfolio);
+    ASSERT_EQ(model->rowCount(), 2);
+    ASSERT_EQ(model->rowCount(model->index(0, 0)), 1);
+    ASSERT_EQ(model->rowCount(model->index(1, 0)), 2);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN),                              Qt::DisplayRole), QVariant("Currency and metals"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN),                              Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN),                              Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN),                              Qt::DisplayRole), QVariant("Share"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN),                         Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN),                              Qt::DisplayRole), QVariant("900000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN),                              Qt::DisplayRole), QVariant("90.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN),                             Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN),                     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN),                       Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("RUBLE"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(0, 0)), Qt::DisplayRole), QVariant("100000.12"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(0, 0)), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("100"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("101.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("102.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("400000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("40.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("-105.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-106.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("-110.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("200"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("201.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN,     model->index(1, 0)), Qt::DisplayRole), QVariant("202.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("500000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN,          model->index(1, 0)), Qt::DisplayRole), QVariant("50.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%"));
     // clang-format on
 }

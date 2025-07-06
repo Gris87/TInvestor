@@ -327,16 +327,31 @@ static const ItemForegroundRoleHandler ITEM_FOREGROUND_ROLE_HANDLER[PORTFOLIO_CO
 
 static QVariant itemAvgPriceTooltipRole(const PortfolioItem& item)
 {
+    if (!item.showPrices)
+    {
+        return QVariant();
+    }
+
     return QObject::tr("Average price by WAVG: %1").arg(item.avgPriceWavg, 0, 'f', item.pricePrecision) + " \u20BD";
 }
 
 static QVariant itemYieldPercentTooltipRole(const PortfolioItem& item)
 {
+    if (!item.showPrices)
+    {
+        return QVariant();
+    }
+
     return QObject::tr("From: %1").arg(item.avgPriceFifo, 0, 'f', item.pricePrecision) + " \u20BD";
 }
 
 static QVariant itemDailyYieldTooltipRole(const PortfolioItem& item)
 {
+    if (!item.showPrices)
+    {
+        return QVariant();
+    }
+
     return QObject::tr("From: %1").arg(item.priceForDailyYield, 0, 'f', item.pricePrecision) + " \u20BD";
 }
 
