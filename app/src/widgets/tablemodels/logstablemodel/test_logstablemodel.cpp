@@ -171,24 +171,18 @@ TEST_F(Test_LogsTableModel, Test_sort)
     ASSERT_EQ(model->rowCount(), 3);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:02:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_VERBOSE));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("ABBA"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("A basket full"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Abstract Basics"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:02:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_VERBOSE));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("A basket full"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 
     model->sort(LOGS_TIME_COLUMN, Qt::AscendingOrder);
@@ -310,24 +304,18 @@ TEST_F(Test_LogsTableModel, Test_setFilter)
     ASSERT_EQ(model->rowCount(), 3);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:02:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_VERBOSE));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("ABBA"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("A basket full"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Abstract Basics"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:02:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_VERBOSE));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("A basket full"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 
     LogFilter filter;
@@ -337,18 +325,14 @@ TEST_F(Test_LogsTableModel, Test_setFilter)
     ASSERT_EQ(model->rowCount(), 2);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 }
 
@@ -392,24 +376,18 @@ TEST_F(Test_LogsTableModel, Test_logAdded)
     ASSERT_EQ(model->rowCount(), 3);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:02:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_VERBOSE));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("ABBA"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("A basket full"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Abstract Basics"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:02:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_VERBOSE));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("A basket full"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 
     LogEntry newEntry;
@@ -531,18 +509,14 @@ TEST_F(Test_LogsTableModel, Test_logAdded)
     ASSERT_EQ(model->rowCount(), 2);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 
     model->logAdded(newEntry);
@@ -677,24 +651,18 @@ TEST_F(Test_LogsTableModel, Test_exportToExcel)
     ASSERT_EQ(model->rowCount(), 3);
 
     // clang-format off
-    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:02:00"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_VERBOSE));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("ABBA"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("A basket full"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:01:00"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_DEBUG));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("BASE"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Ball shall levitate"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole),      QVariant("2024-01-01 00:00:00"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole),      QVariant(LOG_LEVEL_INFO));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole),      QVariant("CODE"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole),      QVariant("Can you eat fish?"));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(0));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_LOGO), QVariant(reinterpret_cast<qint64>(&logo)));
-    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Abstract Basics"));
-    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Basketball enhancement"));
-    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    ROLE_INSTRUMENT_NAME), QVariant("Code base"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:02:00"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_VERBOSE));
+    ASSERT_EQ(model->data(model->index(0, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("A basket full"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:01:00"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_DEBUG));
+    ASSERT_EQ(model->data(model->index(1, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Ball shall levitate"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_TIME_COLUMN),    Qt::DisplayRole), QVariant("2024-01-01 00:00:00"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_LEVEL_COLUMN),   Qt::DisplayRole), QVariant(LOG_LEVEL_INFO));
+    ASSERT_EQ(model->data(model->index(2, LOGS_NAME_COLUMN),    Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(2, LOGS_MESSAGE_COLUMN), Qt::DisplayRole), QVariant("Can you eat fish?"));
     // clang-format on
 
     QXlsx::Document doc;
