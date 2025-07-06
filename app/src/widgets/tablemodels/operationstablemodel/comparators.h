@@ -550,11 +550,6 @@ public:
     }
 };
 
-inline bool operationsTimeLess(const Operation& l, const Operation& r)
-{
-    return l.timestamp < r.timestamp;
-}
-
 inline bool operationsNameLess(const Operation& l, const Operation& r)
 {
     return l.instrumentTicker < r.instrumentTicker;
@@ -633,11 +628,6 @@ inline bool operationsRemainedMoneyLess(const Operation& l, const Operation& r)
 inline bool operationsTotalMoneyLess(const Operation& l, const Operation& r)
 {
     return l.totalMoney < r.totalMoney;
-}
-
-inline bool operationsTimeGreater(const Operation& l, const Operation& r)
-{
-    return l.timestamp > r.timestamp;
 }
 
 inline bool operationsNameGreater(const Operation& l, const Operation& r)

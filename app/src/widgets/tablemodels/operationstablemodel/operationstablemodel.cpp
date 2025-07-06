@@ -481,9 +481,9 @@ void OperationsTableModel::exportToExcel(QXlsx::Document& doc) const
         doc.write(row, OPERATIONS_COMMISSION_COLUMN + 1,                          entry.commission, createRubleFormat(CELL_FONT_COLOR, true, entry.commissionPrecision));
         doc.write(row, OPERATIONS_YIELD_COLUMN + 1,                               entry.yield, createRubleFormat(CELL_FONT_COLOR, true, 2));
         doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_COLUMN + 1,               entry.yieldWithCommission, createRubleFormat(operationsYieldWithCommissionForegroundRole(entry).value<QBrush>().color(), true, 2));
-        doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       entry.yieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, OPERATIONS_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1,       entry.yieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color()));
         doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_COLUMN + 1,         quotationToFloat(entry.totalYieldWithCommission), createRubleFormat(operationsTotalYieldWithCommissionForegroundRole(entry).value<QBrush>().color(), true, 2));
-        doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, entry.totalYieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsTotalYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color(), true));
+        doc.write(row, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1, entry.totalYieldWithCommissionPercent / HUNDRED_PERCENT, createPercentFormat(operationsTotalYieldWithCommissionPercentForegroundRole(entry).value<QBrush>().color()));
         doc.write(row, OPERATIONS_REMAINED_MONEY_COLUMN + 1,                      quotationToFloat(entry.remainedMoney), createRubleFormat(CELL_FONT_COLOR, false, 2));
         doc.write(row, OPERATIONS_TOTAL_MONEY_COLUMN + 1,                         quotationToFloat(entry.totalMoney), createRubleFormat(CELL_FONT_COLOR, false, 2));
         // clang-format on
@@ -511,19 +511,11 @@ QXlsx::Format OperationsTableModel::createRubleFormat(const QColor& color, bool 
     return res;
 }
 
-QXlsx::Format OperationsTableModel::createPercentFormat(const QColor& color, bool withPlus) const
+QXlsx::Format OperationsTableModel::createPercentFormat(const QColor& color) const
 {
     QXlsx::Format res;
 
-    if (withPlus)
-    {
-        res.setNumberFormat("+0.00%;-0.00%;0.00%");
-    }
-    else
-    {
-        res.setNumberFormat("0.00%");
-    }
-
+    res.setNumberFormat("+0.00%;-0.00%;0.00%");
     res.setFillPattern(QXlsx::Format::PatternSolid);
     res.setBorderStyle(QXlsx::Format::BorderThin);
     res.setPatternBackgroundColor(CELL_BACKGROUND_COLOR);
@@ -841,7 +833,7 @@ void OperationsTableModel::reverseEntries()
 using AscSortHandler = bool (*)(const Operation& l, const Operation& r);
 
 static const AscSortHandler ASC_SORT_HANDLER[OPERATIONS_COLUMN_COUNT]{
-    operationsTimeLess,
+    nullptr, // Never used
     operationsNameLess,
     operationsDescriptionLess,
     operationsPriceLess,
@@ -863,7 +855,7 @@ static const AscSortHandler ASC_SORT_HANDLER[OPERATIONS_COLUMN_COUNT]{
 using DescSortHandler = bool (*)(const Operation& l, const Operation& r);
 
 static const DescSortHandler DESC_SORT_HANDLER[OPERATIONS_COLUMN_COUNT]{
-    operationsTimeGreater,
+    nullptr, // Never used
     operationsNameGreater,
     operationsDescriptionGreater,
     operationsPriceGreater,

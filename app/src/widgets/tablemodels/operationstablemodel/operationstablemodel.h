@@ -40,7 +40,7 @@ private:
     QXlsx::Format createRubleFormat(const QColor& color, bool withPlus, int precision) const;
 
     [[nodiscard]]
-    QXlsx::Format createPercentFormat(const QColor& color, bool withPlus) const;
+    QXlsx::Format createPercentFormat(const QColor& color) const;
 
     void sortEntries();
     void reverseEntries();
