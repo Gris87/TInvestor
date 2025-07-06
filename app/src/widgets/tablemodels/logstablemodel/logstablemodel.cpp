@@ -404,12 +404,20 @@ void LogsTableModel::reverseEntries()
 
 using AscSortHandler = bool (*)(const LogEntry& l, const LogEntry& r);
 
-static const AscSortHandler ASC_SORT_HANDLER[LOGS_COLUMN_COUNT]{logsTimeLess, logsLevelLess, logsNameLess, logsMessageLess};
+static const AscSortHandler ASC_SORT_HANDLER[LOGS_COLUMN_COUNT]{
+    nullptr, // Never used
+    logsLevelLess,
+    logsNameLess,
+    logsMessageLess
+};
 
 using DescSortHandler = bool (*)(const LogEntry& l, const LogEntry& r);
 
 static const DescSortHandler DESC_SORT_HANDLER[LOGS_COLUMN_COUNT]{
-    logsTimeGreater, logsLevelGreater, logsNameGreater, logsMessageGreater
+    nullptr, // Never used
+    logsLevelGreater,
+    logsNameGreater,
+    logsMessageGreater
 };
 
 int LogsTableModel::indexOfSortedInsert(QList<LogEntry>* entries, const LogEntry& entry)

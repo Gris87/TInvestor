@@ -134,11 +134,6 @@ public:
     }
 };
 
-inline bool logsTimeLess(const LogEntry& l, const LogEntry& r)
-{
-    return l.timestamp < r.timestamp;
-}
-
 inline bool logsLevelLess(const LogEntry& l, const LogEntry& r)
 {
     return l.level < r.level;
@@ -152,11 +147,6 @@ inline bool logsNameLess(const LogEntry& l, const LogEntry& r)
 inline bool logsMessageLess(const LogEntry& l, const LogEntry& r)
 {
     return l.message < r.message;
-}
-
-inline bool logsTimeGreater(const LogEntry& l, const LogEntry& r)
-{
-    return l.timestamp > r.timestamp;
 }
 
 inline bool logsLevelGreater(const LogEntry& l, const LogEntry& r)
