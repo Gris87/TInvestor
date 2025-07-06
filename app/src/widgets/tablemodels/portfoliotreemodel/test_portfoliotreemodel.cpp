@@ -504,6 +504,306 @@ TEST_F(Test_PortfolioTreeModel, Test_sort)
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%"));
     // clang-format on
+
+    model->sort(PORTFOLIO_NAME_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Currency and metals"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Share"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("RUBLE"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("BASE"));
+
+    model->sort(PORTFOLIO_NAME_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Currency and metals"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Share"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("RUBLE"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("ABBA"));
+
+    model->sort(PORTFOLIO_AVAILABLE_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.12")
+    );
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("100"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("200"));
+
+    model->sort(PORTFOLIO_AVAILABLE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.12")
+    );
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("200"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("100"));
+
+    model->sort(PORTFOLIO_PRICE_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("101.000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("201.0000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_PRICE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("201.0000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("101.000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_AVG_PRICE_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("102.000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("202.0000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_AVG_PRICE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("202.0000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("102.000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_COST_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("900000.00 \u20BD"));
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("400000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("500000.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_COST_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("900000.00 \u20BD"));
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("500000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("400000.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_PART_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("90.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("40.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("50.00%"));
+
+    model->sort(PORTFOLIO_PART_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("90.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("50.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("40.00%"));
+
+    model->sort(PORTFOLIO_YIELD_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-105.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_YIELD_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-105.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_YIELD_PERCENT_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-106.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%")
+    );
+
+    model->sort(PORTFOLIO_YIELD_PERCENT_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-106.00%")
+    );
+
+    model->sort(PORTFOLIO_DAILY_YIELD_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-110.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%")
+    );
+
+    model->sort(PORTFOLIO_DAILY_YIELD_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-110.00%")
+    );
+
+    model->sort(PORTFOLIO_NAME_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Currency and metals"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN), Qt::DisplayRole), QVariant("Share"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("RUBLE"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_NAME_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("ABBA"));
+
+    model->sort(PORTFOLIO_AVAILABLE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.12")
+    );
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("200"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVAILABLE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("100"));
+
+    model->sort(PORTFOLIO_PRICE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("201.0000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("101.000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_AVG_PRICE_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("202.0000 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_AVG_PRICE_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("102.000 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_COST_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("100000.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_COST_COLUMN), Qt::DisplayRole), QVariant("900000.00 \u20BD"));
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("100000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("500000.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_COST_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("400000.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_PART_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN), Qt::DisplayRole), QVariant("90.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant("10.00%"));
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("50.00%"));
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_PART_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("40.00%"));
+
+    model->sort(PORTFOLIO_YIELD_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-105.00 \u20BD")
+    );
+
+    model->sort(PORTFOLIO_YIELD_PERCENT_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-106.00%")
+    );
+
+    model->sort(PORTFOLIO_DAILY_YIELD_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(0, 0)), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(
+        model->data(model->index(0, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%")
+    );
+    ASSERT_EQ(
+        model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("-110.00%")
+    );
 }
 
 TEST_F(Test_PortfolioTreeModel, Test_exportToExcel)
@@ -640,5 +940,57 @@ TEST_F(Test_PortfolioTreeModel, Test_exportToExcel)
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_COLUMN,         model->index(1, 0)), Qt::DisplayRole), QVariant("+205.00 \u20BD"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_YIELD_PERCENT_COLUMN, model->index(1, 0)), Qt::DisplayRole), QVariant("+206.00%"));
     ASSERT_EQ(model->data(model->index(1, PORTFOLIO_DAILY_YIELD_COLUMN,   model->index(1, 0)), Qt::DisplayRole), QVariant("+210.00%"));
+    // clang-format on
+
+    QXlsx::Document doc;
+
+    model->exportToExcel(doc);
+
+    // clang-format off
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_NAME_COLUMN + 1)->value(),                       QVariant("Currency and metals"));
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_AVAILABLE_COLUMN + 1)->value(),                  QVariant(""));
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_PRICE_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_AVG_PRICE_COLUMN + 1)->value(),                  QVariant(""));
+    ASSERT_NEAR(doc.cellAt(2, PORTFOLIO_COST_COLUMN + 1)->value().toDouble(),          100000.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(2, PORTFOLIO_PART_COLUMN + 1)->value().toDouble(),          0.1, 0.0001);
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_YIELD_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_YIELD_PERCENT_COLUMN + 1)->value(),              QVariant(""));
+    ASSERT_EQ(doc.cellAt(2, PORTFOLIO_DAILY_YIELD_COLUMN + 1)->value(),                QVariant(""));
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_NAME_COLUMN + 1)->value(),                       QVariant("Ruble"));
+    ASSERT_NEAR(doc.cellAt(3, PORTFOLIO_AVAILABLE_COLUMN + 1)->value().toDouble(),     100000.12, 0.0001);
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_PRICE_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_AVG_PRICE_COLUMN + 1)->value(),                  QVariant(""));
+    ASSERT_NEAR(doc.cellAt(3, PORTFOLIO_COST_COLUMN + 1)->value().toDouble(),          100000.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(3, PORTFOLIO_PART_COLUMN + 1)->value().toDouble(),          0.1, 0.0001);
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_YIELD_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_YIELD_PERCENT_COLUMN + 1)->value(),              QVariant(""));
+    ASSERT_EQ(doc.cellAt(3, PORTFOLIO_DAILY_YIELD_COLUMN + 1)->value(),                QVariant(""));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_NAME_COLUMN + 1)->value(),                       QVariant("Share"));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_AVAILABLE_COLUMN + 1)->value(),                  QVariant(""));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_PRICE_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_AVG_PRICE_COLUMN + 1)->value(),                  QVariant(""));
+    ASSERT_NEAR(doc.cellAt(4, PORTFOLIO_COST_COLUMN + 1)->value().toDouble(),          900000.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(4, PORTFOLIO_PART_COLUMN + 1)->value().toDouble(),          0.9, 0.0001);
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_YIELD_COLUMN + 1)->value(),                      QVariant(""));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_YIELD_PERCENT_COLUMN + 1)->value(),              QVariant(""));
+    ASSERT_EQ(doc.cellAt(4, PORTFOLIO_DAILY_YIELD_COLUMN + 1)->value(),                QVariant(""));
+    ASSERT_EQ(doc.cellAt(5, PORTFOLIO_NAME_COLUMN + 1)->value(),                       QVariant("Abstract Basics"));
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_AVAILABLE_COLUMN + 1)->value().toDouble(),     100.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_PRICE_COLUMN + 1)->value().toDouble(),         101.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_AVG_PRICE_COLUMN + 1)->value().toDouble(),     102.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_COST_COLUMN + 1)->value().toDouble(),          400000.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_PART_COLUMN + 1)->value().toDouble(),          0.4, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_YIELD_COLUMN + 1)->value().toDouble(),         -105.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_YIELD_PERCENT_COLUMN + 1)->value().toDouble(), -1.06, 0.0001);
+    ASSERT_NEAR(doc.cellAt(5, PORTFOLIO_DAILY_YIELD_COLUMN + 1)->value().toDouble(),   -1.1, 0.0001);
+    ASSERT_EQ(doc.cellAt(6, PORTFOLIO_NAME_COLUMN + 1)->value(),                       QVariant("Basketball enhancement"));
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_AVAILABLE_COLUMN + 1)->value().toDouble(),     200.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_PRICE_COLUMN + 1)->value().toDouble(),         201.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_AVG_PRICE_COLUMN + 1)->value().toDouble(),     202.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_COST_COLUMN + 1)->value().toDouble(),          500000.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_PART_COLUMN + 1)->value().toDouble(),          0.5, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_YIELD_COLUMN + 1)->value().toDouble(),         205.0, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_YIELD_PERCENT_COLUMN + 1)->value().toDouble(), 2.06, 0.0001);
+    ASSERT_NEAR(doc.cellAt(6, PORTFOLIO_DAILY_YIELD_COLUMN + 1)->value().toDouble(),   2.1, 0.0001);
     // clang-format on
 }
