@@ -416,6 +416,18 @@ TEST_F(Test_StocksTableModel, Test_sort)
     ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN), Qt::DisplayRole), QVariant("33.00%"));
     ASSERT_EQ(model->data(model->index(2, STOCKS_PAYBACK_COLUMN), Qt::DisplayRole), QVariant("13.00%"));
 
+    model->sort(STOCKS_ACTIONS_COLUMN, Qt::AscendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+
+    model->sort(STOCKS_ACTIONS_COLUMN, Qt::DescendingOrder);
+
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN), Qt::DisplayRole), QVariant());
+
     model->sort(STOCKS_NAME_COLUMN, Qt::DescendingOrder);
 
     ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN), Qt::DisplayRole), QVariant("CODE"));
@@ -647,7 +659,244 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
     // clang-format on
 
-    // TODO: Finish
+    model->sort(STOCKS_ACTIONS_COLUMN, Qt::AscendingOrder);
+    ASSERT_EQ(model->rowCount(), 3);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("ABBA"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("100.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("0.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("0.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("1.12K \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("13.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("BASE"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("250.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+24.38%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+23.76%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("2.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("33.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("CODE"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("500.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("-0.20%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("-0.40%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("5.56B \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("83.00%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
+
+    stock1->meta.instrumentTicker             = "DISY";
+    stock1->meta.instrumentName               = "Disintegration yoyo";
+    stock1->operational.detailedData[0].price = 300.0f;
+    stock1->operational.dayStartPrice         = 150.0f;
+    stock1->operational.specifiedDatePrice    = 170.0f;
+    stock1->operational.turnover              = 2120;
+    stock1->operational.payback               = 17.0f;
+    stock1->meta.pricePrecision               = 4;
+
+    stock2->meta.instrumentTicker             = "EASY";
+    stock2->meta.instrumentName               = "Easy peasy";
+    stock2->operational.detailedData[0].price = 800.0f;
+    stock2->operational.dayStartPrice         = 51.0f;
+    stock2->operational.specifiedDatePrice    = 22.0f;
+    stock2->operational.turnover              = 4340000;
+    stock2->operational.payback               = 37.0f;
+    stock2->meta.pricePrecision               = 2;
+
+    stock3->meta.instrumentTicker             = "FUCK";
+    stock3->meta.instrumentName               = "Funtional clock";
+    stock3->operational.detailedData[0].price = 700.0f;
+    stock3->operational.dayStartPrice         = 231.0f;
+    stock3->operational.specifiedDatePrice    = 192.0f;
+    stock3->operational.turnover              = 6560000000;
+    stock3->operational.payback               = 87.0f;
+    stock3->meta.pricePrecision               = 3;
+
+    EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+
+    model->updateAll();
+    ASSERT_EQ(model->rowCount(), 3);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("DISY"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("300.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+100.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+76.47%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("2.12K \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("17.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("EASY"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("800.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+1468.63%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+3536.36%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("4.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("37.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("FUCK"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("700.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+203.03%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+264.58%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("6.56B \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("87.00%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
+
+    model->sort(STOCKS_NAME_COLUMN, Qt::DescendingOrder);
+    ASSERT_EQ(model->rowCount(), 3);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("FUCK"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("700.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+203.03%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+264.58%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("6.56B \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("87.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("EASY"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("800.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+1468.63%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+3536.36%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("4.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("37.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("DISY"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("300.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+100.00%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+76.47%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("2.12K \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("17.00%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
+
+    stock1->meta.instrumentTicker             = "GORA";
+    stock1->meta.instrumentName               = "Go Randy";
+    stock1->operational.detailedData[0].price = 290.0f;
+    stock1->operational.dayStartPrice         = 640.0f;
+    stock1->operational.specifiedDatePrice    = 170.0f;
+    stock1->operational.turnover              = 3120;
+    stock1->operational.payback               = 27.0f;
+    stock1->meta.pricePrecision               = 3;
+
+    stock2->meta.instrumentTicker             = "HIVE";
+    stock2->meta.instrumentName               = "Bzzzzz hive";
+    stock2->operational.detailedData[0].price = 100.0f;
+    stock2->operational.dayStartPrice         = 131.0f;
+    stock2->operational.specifiedDatePrice    = 922.0f;
+    stock2->operational.turnover              = 5340000;
+    stock2->operational.payback               = 47.0f;
+    stock2->meta.pricePrecision               = 4;
+
+    stock3->meta.instrumentTicker             = "IGOR";
+    stock3->meta.instrumentName               = "I go ready";
+    stock3->operational.detailedData[0].price = 537.0f;
+    stock3->operational.dayStartPrice         = 197.0f;
+    stock3->operational.specifiedDatePrice    = 325.0f;
+    stock3->operational.turnover              = 7560000000;
+    stock3->operational.payback               = 97.0f;
+    stock3->meta.pricePrecision               = 2;
+
+    EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+
+    model->updateAll();
+    ASSERT_EQ(model->rowCount(), 3);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("IGOR"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("537.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+172.59%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+65.23%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("7.56B \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("97.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("HIVE"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("100.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("-23.66%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("-89.15%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("5.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("47.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(2, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("GORA"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("290.000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("-54.69%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+70.59%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("3.12K \u20BD"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("27.00%"));
+    ASSERT_EQ(model->data(model->index(2, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
+
+    StockFilter filter;
+    filter.useTurnover  = true;
+    filter.turnoverFrom = 1000000;
+
+    model->setFilter(filter);
+    ASSERT_EQ(model->rowCount(), 2);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("IGOR"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("537.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+172.59%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+65.23%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("7.56B \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("97.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("HIVE"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("100.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("-23.66%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("-89.15%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("5.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("47.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
+
+    stock1->meta.instrumentTicker             = "JOJO";
+    stock1->meta.instrumentName               = "John Johnson";
+    stock1->operational.detailedData[0].price = 1111.0f;
+    stock1->operational.dayStartPrice         = 888.0f;
+    stock1->operational.specifiedDatePrice    = 999.0f;
+    stock1->operational.turnover              = 9310000;
+    stock1->operational.payback               = 87.0f;
+    stock1->meta.pricePrecision               = 2;
+
+    stock2->meta.instrumentTicker             = "KOND";
+    stock2->meta.instrumentName               = "King of the Northern Dome";
+    stock2->operational.detailedData[0].price = 2222.0f;
+    stock2->operational.dayStartPrice         = 444.0f;
+    stock2->operational.specifiedDatePrice    = 555.0f;
+    stock2->operational.turnover              = 7340000;
+    stock2->operational.payback               = 57.0f;
+    stock2->meta.pricePrecision               = 4;
+
+    stock3->meta.instrumentTicker             = "LEMO";
+    stock3->meta.instrumentName               = "Lemonade";
+    stock3->operational.detailedData[0].price = 3333.0f;
+    stock3->operational.dayStartPrice         = 666.0f;
+    stock3->operational.specifiedDatePrice    = 777.0f;
+    stock3->operational.turnover              = 9560;
+    stock3->operational.payback               = 37.0f;
+    stock3->meta.pricePrecision               = 3;
+
+    EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
+
+    model->updateAll();
+    ASSERT_EQ(model->rowCount(), 2);
+
+    // clang-format off
+    ASSERT_EQ(model->data(model->index(0, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("KOND"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("2222.0000 \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+400.45%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+300.36%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("7.34M \u20BD"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("57.00%"));
+    ASSERT_EQ(model->data(model->index(0, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    ASSERT_EQ(model->data(model->index(1, STOCKS_NAME_COLUMN),        Qt::DisplayRole), QVariant("JOJO"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PRICE_COLUMN),       Qt::DisplayRole), QVariant("1111.00 \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DAY_CHANGE_COLUMN),  Qt::DisplayRole), QVariant("+25.11%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_DATE_CHANGE_COLUMN), Qt::DisplayRole), QVariant("+11.21%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_TURNOVER_COLUMN),    Qt::DisplayRole), QVariant("9.31M \u20BD"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_PAYBACK_COLUMN),     Qt::DisplayRole), QVariant("87.00%"));
+    ASSERT_EQ(model->data(model->index(1, STOCKS_ACTIONS_COLUMN),     Qt::DisplayRole), QVariant());
+    // clang-format on
 }
 
 TEST_F(Test_StocksTableModel, Test_exportToExcel)

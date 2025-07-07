@@ -515,7 +515,6 @@ static void updateAllForParallel(
 
         stock->readLock();
 
-        entry.instrumentId        = stock->meta.instrumentId;
         entry.instrumentLogo      = stock->meta.instrumentLogo;
         entry.instrumentTicker    = stock->meta.instrumentTicker;
         entry.instrumentName      = stock->meta.instrumentName;
