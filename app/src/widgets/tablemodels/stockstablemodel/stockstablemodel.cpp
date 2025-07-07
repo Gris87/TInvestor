@@ -425,28 +425,28 @@ static void fillEntriesForParallel(
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock* stock = stocksArray[i];
+        StockTableEntry& entry = resArray[i];
 
         stock->readLock();
 
-        resArray[i].instrumentId        = stock->meta.instrumentId;
-        resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
-        resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
-        resArray[i].instrumentName      = stock->meta.instrumentName;
-        resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
-        resArray[i].locked              = stock->meta.forQualInvestorFlag && !isQualified;
-        resArray[i].price               = stock->lastPrice();
-        resArray[i].dayChange           = stock->operational.dayStartPrice > 0
-                                              ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                              : 0;
-        resArray[i].dateChange =
-            stock->operational.specifiedDatePrice > 0
-                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                : 0;
-        resArray[i].turnover           = stock->operational.turnover;
-        resArray[i].payback            = stock->operational.payback;
-        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
-        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
-        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+        entry.instrumentId        = stock->meta.instrumentId;
+        entry.instrumentLogo      = stock->meta.instrumentLogo;
+        entry.instrumentTicker    = stock->meta.instrumentTicker;
+        entry.instrumentName      = stock->meta.instrumentName;
+        entry.forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        entry.locked              = stock->meta.forQualInvestorFlag && !isQualified;
+        entry.price               = stock->lastPrice();
+        entry.dayChange           = stock->operational.dayStartPrice > 0
+                                        ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                        : 0;
+        entry.dateChange          = stock->operational.specifiedDatePrice > 0
+                                        ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                        : 0;
+        entry.turnover            = stock->operational.turnover;
+        entry.payback             = stock->operational.payback;
+        entry.dayStartPrice       = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
+        entry.pricePrecision      = stock->meta.pricePrecision;
 
         stock->readUnlock();
     }
@@ -508,30 +508,31 @@ static void updateAllForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocks->value(resArray[i].instrumentId);
+        StockTableEntry& entry = resArray[i];
+
+        Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
         stock->readLock();
 
-        resArray[i].instrumentId        = stock->meta.instrumentId;
-        resArray[i].instrumentLogo      = stock->meta.instrumentLogo;
-        resArray[i].instrumentTicker    = stock->meta.instrumentTicker;
-        resArray[i].instrumentName      = stock->meta.instrumentName;
-        resArray[i].forQualInvestorFlag = stock->meta.forQualInvestorFlag;
-        resArray[i].locked              = stock->meta.forQualInvestorFlag && !isQualified;
-        resArray[i].price               = stock->lastPrice();
-        resArray[i].dayChange           = stock->operational.dayStartPrice > 0
-                                              ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                              : 0;
-        resArray[i].dateChange =
-            stock->operational.specifiedDatePrice > 0
-                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                : 0;
-        resArray[i].turnover           = stock->operational.turnover;
-        resArray[i].payback            = stock->operational.payback;
-        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
-        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
-        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+        entry.instrumentId        = stock->meta.instrumentId;
+        entry.instrumentLogo      = stock->meta.instrumentLogo;
+        entry.instrumentTicker    = stock->meta.instrumentTicker;
+        entry.instrumentName      = stock->meta.instrumentName;
+        entry.forQualInvestorFlag = stock->meta.forQualInvestorFlag;
+        entry.locked              = stock->meta.forQualInvestorFlag && !isQualified;
+        entry.price               = stock->lastPrice();
+        entry.dayChange           = stock->operational.dayStartPrice > 0
+                                        ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                        : 0;
+        entry.dateChange          = stock->operational.specifiedDatePrice > 0
+                                        ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                        : 0;
+        entry.turnover            = stock->operational.turnover;
+        entry.payback             = stock->operational.payback;
+        entry.dayStartPrice       = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
+        entry.pricePrecision      = stock->meta.pricePrecision;
 
         stock->readUnlock();
 
@@ -607,27 +608,28 @@ static void updateLastPricesForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        if (!model->lastPricesUpdates.contains(resArray[i].instrumentId))
+        StockTableEntry& entry = resArray[i];
+
+        if (!model->lastPricesUpdates.contains(entry.instrumentId))
         {
             continue;
         }
 
-        Stock* stock = stocks->value(resArray[i].instrumentId);
+        Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
         stock->readLock();
 
-        resArray[i].price     = stock->lastPrice();
-        resArray[i].dayChange = stock->operational.dayStartPrice > 0
-                                    ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                    : 0;
-        resArray[i].dateChange =
-            stock->operational.specifiedDatePrice > 0
-                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                : 0;
-        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
-        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
-        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+        entry.price              = stock->lastPrice();
+        entry.dayChange          = stock->operational.dayStartPrice > 0
+                                       ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                       : 0;
+        entry.dateChange         = stock->operational.specifiedDatePrice > 0
+                                       ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                       : 0;
+        entry.dayStartPrice      = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
+        entry.pricePrecision     = stock->meta.pricePrecision;
 
         stock->readUnlock();
 
@@ -704,22 +706,23 @@ static void updatePricesForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocks->value(resArray[i].instrumentId);
+        StockTableEntry& entry = resArray[i];
+
+        Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
         stock->readLock();
 
-        resArray[i].price     = stock->lastPrice();
-        resArray[i].dayChange = stock->operational.dayStartPrice > 0
-                                    ? ((resArray[i].price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                                    : 0;
-        resArray[i].dateChange =
-            stock->operational.specifiedDatePrice > 0
-                ? ((resArray[i].price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
-                : 0;
-        resArray[i].dayStartPrice      = stock->operational.dayStartPrice;
-        resArray[i].specifiedDatePrice = stock->operational.specifiedDatePrice;
-        resArray[i].pricePrecision     = stock->meta.pricePrecision;
+        entry.price              = stock->lastPrice();
+        entry.dayChange          = stock->operational.dayStartPrice > 0
+                                       ? ((entry.price / stock->operational.dayStartPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                       : 0;
+        entry.dateChange         = stock->operational.specifiedDatePrice > 0
+                                       ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
+                                       : 0;
+        entry.dayStartPrice      = stock->operational.dayStartPrice;
+        entry.specifiedDatePrice = stock->operational.specifiedDatePrice;
+        entry.pricePrecision     = stock->meta.pricePrecision;
 
         stock->readUnlock();
 
@@ -791,13 +794,15 @@ static void updatePeriodicDataForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocks->value(resArray[i].instrumentId);
+        StockTableEntry& entry = resArray[i];
+
+        Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
 
         stock->readLock();
 
-        resArray[i].turnover = stock->operational.turnover;
-        resArray[i].payback  = stock->operational.payback;
+        entry.turnover = stock->operational.turnover;
+        entry.payback  = stock->operational.payback;
 
         stock->readUnlock();
 
