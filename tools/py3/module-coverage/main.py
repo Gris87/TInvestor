@@ -3,6 +3,7 @@ import re
 import shutil
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
 from pathlib import Path
@@ -14,13 +15,11 @@ test_regexp = re.compile(r'TEST(?:_F)?\((\w+), *\w+\)')
 def module_coverage():
     shutil.rmtree("build/ModuleCoverage", ignore_errors=True)
 
-    output_path = Path(f"build/ModuleCoverage")
+    output_path = Path(f"build/ModuleCoverage/results")
     output_path.mkdir(parents=True, exist_ok=True)
 
     files = _get_files()
     commands = _get_commands(files)
-
-    commands = commands[:4] # TODO: Remove
 
     return _execute_commands(commands)
 
@@ -73,6 +72,8 @@ def _get_commands(files):
             module_path,
             "--export_type",
             f"html:..\\..\\..\\ModuleCoverage\\{module_path_simplified}",
+            "--export_type",
+            f"cobertura:..\\..\\..\\ModuleCoverage\\{module_path_simplified}\\cobertura.xml",
             "--",
             "tests.exe",
             f"--gtest_filter={test_group}.*"
@@ -80,6 +81,7 @@ def _get_commands(files):
 
         res.append({
             "cmd": cmd,
+            "module_path": module_path,
             "module_path_simplified": module_path_simplified,
         })
 
@@ -89,37 +91,69 @@ def _get_commands(files):
 def _execute_commands(commands):
     res = True
 
+    non_full_modules = []
+
     with ThreadPoolExecutor(os.cpu_count()) as executor:
-        for result, lines in executor.map(_execute_command, commands):
+        for result, module_path, coverage in executor.map(_execute_command, commands):
             res &= result
 
-            if not result:
-                for line in lines:
-                    print(line)
+            if coverage == 100:
+                print(f"{module_path:120}: {coverage:5.2f}%")
+            else:
+                non_full_modules.append({
+                    "module_path": module_path,
+                    "coverage": coverage,
+                })
+
+    if non_full_modules:
+        non_full_modules.sort(key=lambda x: x["coverage"], reverse=True)
+
+        for module in non_full_modules:
+            module_path = module["module_path"]
+            coverage = module["coverage"]
+
+            print(f"{module_path:120}: {coverage:5.2f}%")
+
+        logger.error(f'Some modules not fully covered')
 
     return res
 
 
 def _execute_command(command):
-    process = subprocess.Popen(
-        command["cmd"],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        cwd="build/Desktop-Debug/test/build"
-    )
+    cmd = command["cmd"]
+    module_path = command["module_path"]
+    module_path_simplified = command["module_path_simplified"]
 
-    lines = []
+    for i in range(5):
+        shutil.rmtree(f"build/ModuleCoverage/{module_path_simplified}", ignore_errors=True)
 
-    encoding = os.device_encoding(1)
-    if encoding is None:
-        encoding = "utf-8"
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            cwd="build/Desktop-Debug/test/build"
+        )
 
-    for line in iter(process.stdout.readline, b''):
-        lines.append(line.rstrip().decode(encoding))
+        lines = []
 
-    process.wait()
+        encoding = os.device_encoding(1)
+        if encoding is None:
+            encoding = "utf-8"
 
-    return process.returncode == 0, lines
+        for line in iter(process.stdout.readline, b''):
+            lines.append(line.rstrip().decode(encoding))
+
+        process.wait()
+
+        if process.returncode != 0:
+            continue
+
+        tree = ET.parse(f"build/ModuleCoverage/{module_path_simplified}/cobertura.xml")
+        root = tree.getroot()
+
+        return True, module_path, float(root.get("line-rate", "0")) * 100
+
+    return False, module_path, 0
 
 
 def main():
