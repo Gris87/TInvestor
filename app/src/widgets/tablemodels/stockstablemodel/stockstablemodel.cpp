@@ -424,7 +424,7 @@ static void fillEntriesForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocksArray[i];
+        Stock*           stock = stocksArray[i];
         StockTableEntry& entry = resArray[i];
 
         stock->readLock();

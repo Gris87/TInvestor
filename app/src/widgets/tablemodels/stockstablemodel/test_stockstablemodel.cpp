@@ -1999,7 +1999,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     ASSERT_NEAR(doc.cellAt(4, STOCKS_PRICE_COLUMN + 2)->value().toDouble(),       500.0, 0.0001);
     ASSERT_NEAR(doc.cellAt(4, STOCKS_DAY_CHANGE_COLUMN + 2)->value().toDouble(),  -0.0019, 0.0001);
     ASSERT_NEAR(doc.cellAt(4, STOCKS_DATE_CHANGE_COLUMN + 2)->value().toDouble(), -0.00398, 0.0001);
-    ASSERT_EQ(doc.cellAt(4, STOCKS_TURNOVER_COLUMN + 2)->value(),                 QVariant(5560000000));
+    ASSERT_EQ(doc.cellAt(4, STOCKS_TURNOVER_COLUMN + 2)->value(),                 QVariant(5560000000LL));
     ASSERT_NEAR(doc.cellAt(4, STOCKS_PAYBACK_COLUMN + 2)->value().toDouble(),     0.83, 0.0001);
     // clang-format on
 }
