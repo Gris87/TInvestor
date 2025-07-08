@@ -1,4 +1,3 @@
-Python script for module test coverage check
 Test coverage
 Fix nightly
 Create release

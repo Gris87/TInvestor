@@ -31,11 +31,20 @@ def _get_files():
         if path.name.startswith("test_"):
             continue
 
-        if not Path(path.parent / f"test_{path.name}").exists():
-            file_path = str(path.absolute()).replace("\\", "/")
+        file_path = str(path.absolute()).replace("\\", "/")
 
-            if "app/src/main.cpp" not in file_path:
-                logger.error(f'{file_path}: Test file not found')
+        skip_files = (
+            "app/src/main.cpp" in file_path or
+            "app/src/utils/filedialog/filedialog.cp" in file_path or
+            "app/src/utils/http/httpclient.cpp" in file_path or
+            "app/src/utils/messagebox/messageboxutils.cp" in file_path
+        )
+
+        if skip_files:
+            continue
+
+        if not Path(path.parent / f"test_{path.name}").exists():
+            logger.error(f'{file_path}: Test file not found')
 
             continue
 

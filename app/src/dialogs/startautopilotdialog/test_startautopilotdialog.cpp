@@ -55,8 +55,8 @@ protected:
         EXPECT_CALL(*userStorageMock, readUnlock());
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("74b87337454200d4d33f80c4663dc5e5")));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("41fcba09f2bdcdf315ba4119dc7978dd")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL"))).WillOnce(Return(QVariant("INTERNAL")));
         // clang-format on
 
@@ -92,7 +92,7 @@ TEST_F(Test_StartAutoPilotDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_StartAutoPilotDialog, Test_account)
 {
-    ASSERT_EQ(dialog->account(), "74b87337454200d4d33f80c4663dc5e5");
+    ASSERT_EQ(dialog->account(), "65ba841e01d6db7733e90a5b7f9e6f80");
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_mode)
@@ -110,27 +110,27 @@ TEST_F(Test_StartAutoPilotDialog, Test_mode)
 
 TEST_F(Test_StartAutoPilotDialog, Test_anotherAccount)
 {
-    ASSERT_EQ(dialog->anotherAccount(), "65ba841e01d6db7733e90a5b7f9e6f80");
+    ASSERT_EQ(dialog->anotherAccount(), "41fcba09f2bdcdf315ba4119dc7978dd");
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_on_accountComboBox_currentIndexChanged)
 {
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 2);
-    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Matreshka");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Babushka");
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(1), "Balalayka");
-    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(1), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
-    ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 1);
 
     dialog->ui->anotherAccountComboBox->setCurrentIndex(1);
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 1);
 
-    dialog->ui->accountComboBox->setCurrentIndex(1);
+    dialog->ui->accountComboBox->setCurrentIndex(0);
 
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->count(), 2);
-    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Babushka");
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(0), "Matreshka");
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemText(1), "Balalayka");
-    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("74b87337454200d4d33f80c4663dc5e5"));
+    ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(0), QVariant("65ba841e01d6db7733e90a5b7f9e6f80"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->itemData(1), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
     ASSERT_EQ(dialog->ui->anotherAccountComboBox->currentIndex(), 0);
 
@@ -167,8 +167,8 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("74b87337454200d4d33f80c4663dc5e5")));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("41fcba09f2bdcdf315ba4119dc7978dd")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL")));
     // clang-format on
 

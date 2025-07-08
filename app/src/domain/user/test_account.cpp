@@ -94,4 +94,25 @@ TEST(Test_Account, Test_equals)
     account2.name = "b";
     ASSERT_EQ(account, account2);
 }
+
+TEST(Test_Account, Test_less)
+{
+    Account account;
+    Account account2;
+
+    account.index = 1;
+    account.id    = "a";
+    account.name  = "b";
+
+    account2.index = 1;
+    account2.id    = "a";
+    account2.name  = "b";
+
+    ASSERT_EQ(account, account2);
+
+    account2.index = 1111;
+    ASSERT_LT(account, account2);
+    account2.index = 1;
+    ASSERT_EQ(account, account2);
+}
 // NOLINTEND(readability-function-cognitive-complexity)

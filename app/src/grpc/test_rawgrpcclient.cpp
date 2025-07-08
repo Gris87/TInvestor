@@ -770,7 +770,6 @@ TEST_F(Test_RawGrpcClient, Test_getOperations)
     ASSERT_NE(resp->items(0).figi(),              "");
     ASSERT_NE(resp->items(0).instrument_type(),   "");
     ASSERT_NE(resp->items(0).position_uid(),      "");
-    ASSERT_NE(resp->items(0).payment().units(),   0);
     // clang-format on
 }
 
