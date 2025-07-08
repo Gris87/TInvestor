@@ -151,7 +151,14 @@ def _execute_command(command):
         tree = ET.parse(f"build/ModuleCoverage/{module_path_simplified}/cobertura.xml")
         root = tree.getroot()
 
-        return True, module_path, float(root.get("line-rate", "0")) * 100
+        coverage = float(root.get("line-rate", "0")) * 100
+
+        output_path = Path(f"build/ModuleCoverage/results/{int(coverage)}")
+        output_path.mkdir(parents=True, exist_ok=True)
+
+        shutil.move(f"build/ModuleCoverage/{module_path_simplified}", f"build/ModuleCoverage/results/{int(coverage)}/{module_path_simplified}")
+
+        return True, module_path, coverage
 
     return False, module_path, 0
 
