@@ -12,6 +12,7 @@
 
 
 const char* const GRPC_ADDRESS = "sandbox-invest-public-api.tinkoff.ru:443";
+const char* const RUBLE_UID    = "a92e2e25-a698-45cc-a781-167cf465257c";
 const char* const STOCK_UID    = "cf9ed7ef-784d-4c2c-aabe-362891fcd80c";
 const char* const BOND_UID     = "2c7c296c-1f26-429f-ad8b-03fa1b6ba7fa";
 const char* const CURRENCY_UID = "a22a1263-8e1b-4546-a1aa-416463f104d3";
@@ -707,7 +708,7 @@ TEST_F(Test_RawGrpcClient, Test_getPortfolio)
     ASSERT_EQ(resp->positions(0).instrument_type(),    "currency");
     ASSERT_NE(resp->positions(0).quantity().units(),   0);
     ASSERT_NE(resp->positions(0).position_uid(),       "");
-    ASSERT_EQ(resp->positions(0).instrument_uid(),     "a92e2e25-a698-45cc-a781-167cf465257c");
+    ASSERT_EQ(resp->positions(0).instrument_uid(),     RUBLE_UID);
     // clang-format on
 }
 
