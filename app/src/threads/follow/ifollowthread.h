@@ -25,6 +25,7 @@ public:
     IFollowThread& operator=(const IFollowThread& another) = delete;
 
     virtual void setAccounts(const QString& accountId, const QString& anotherAccountId, const QString& anotherAccountName) = 0;
+    virtual void setKeepMoney(int value)                                                                                   = 0;
     virtual void terminateThread()                                                                                         = 0;
 
 signals:

@@ -434,8 +434,13 @@ void MainWindow::stocksTableUpdateLastPricesTimerTicked()
 
 void MainWindow::keepMoneyChangeDelayTimerTicked()
 {
-    mAutoPilotSettingsEditor->setValue("Options/KeepMoney", ui->keepMoneySpinBox->value());
+    keepMoneyChangeDelayTimer.stop();
 
+    int keepMoney = ui->keepMoneySpinBox->value();
+
+    mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
+
+    mFollowThread->setKeepMoney(keepMoney);
     // TODO: Apply keep money
 }
 
@@ -997,12 +1002,13 @@ void MainWindow::loadWindowState()
     restoreState(mSettingsEditor->value("MainWindow/windowState", QByteArray()).toByteArray());
     ui->stackedWidget->setCurrentIndex(mSettingsEditor->value("MainWindow/pageIndex", 0).toInt());
 
-    ui->keepMoneySpinBox->setValue(mAutoPilotSettingsEditor->value("Options/KeepMoney", 0).toInt());
-
     mStocksControlsWidget->loadWindowState("MainWindow/StocksControlsWidget");
     mStocksTableWidget->loadWindowState("MainWindow/StocksTableWidget");
     mSimulatorDecisionMakerWidget->loadWindowState("MainWindow/Simulator");
     mAutoPilotDecisionMakerWidget->loadWindowState("MainWindow/AutoPilot");
+
+    ui->keepMoneySpinBox->setValue(mAutoPilotSettingsEditor->value("Options/KeepMoney", 0).toInt());
+    keepMoneyChangeDelayTimerTicked();
 
     updateStackWidgetToolbar();
 }

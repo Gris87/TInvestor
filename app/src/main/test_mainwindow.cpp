@@ -230,12 +230,14 @@ protected:
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/pageIndex"),   QVariant(0))).WillOnce(Return(QVariant(0)));
         // clang-format on
 
-        EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
-
         EXPECT_CALL(*stocksControlsWidgetMock, loadWindowState(QString("MainWindow/StocksControlsWidget")));
         EXPECT_CALL(*stocksTableWidgetMock, loadWindowState(QString("MainWindow/StocksTableWidget")));
         EXPECT_CALL(*simulatorDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/Simulator")));
         EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, loadWindowState(QString("MainWindow/AutoPilot")));
+
+        EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
+        EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
+        EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
         mainWindow = new MainWindow(
             configMock,
@@ -554,9 +556,14 @@ TEST_F(Test_MainWindow, Test_cleanupTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->cleanupTimer.start(100000);
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(), true);
+
     EXPECT_CALL(*cleanupThreadMock, run());
 
     mainWindow->cleanupTimerTicked();
+
+    ASSERT_EQ(mainWindow->cleanupTimer.isActive(), true);
 
     cleanupThreadMock->wait();
 }
@@ -565,9 +572,14 @@ TEST_F(Test_MainWindow, Test_userUpdateTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->userUpdateTimer.start(100000);
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(), true);
+
     EXPECT_CALL(*userUpdateThreadMock, run());
 
     mainWindow->userUpdateTimerTicked();
+
+    ASSERT_EQ(mainWindow->userUpdateTimer.isActive(), true);
 
     userUpdateThreadMock->wait();
 }
@@ -576,9 +588,14 @@ TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->priceCollectTimer.start(100000);
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
+
     EXPECT_CALL(*priceCollectThreadMock, run());
 
     mainWindow->priceCollectTimerTicked();
+
+    ASSERT_EQ(mainWindow->priceCollectTimer.isActive(), true);
 
     priceCollectThreadMock->wait();
 }
@@ -587,9 +604,14 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->makeDecisionTimer.start(100000);
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
+
     EXPECT_CALL(*makeDecisionThreadMock, run());
 
     mainWindow->makeDecisionTimerTicked();
+
+    ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
 
     makeDecisionThreadMock->wait();
 }
@@ -598,36 +620,57 @@ TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->stocksTableUpdateAllTimer.start(100000);
+    ASSERT_EQ(mainWindow->stocksTableUpdateAllTimer.isActive(), true);
+
     EXPECT_CALL(*stocksTableWidgetMock, updateAll());
 
     mainWindow->stocksTableUpdateAllTimerTicked();
+
+    ASSERT_EQ(mainWindow->stocksTableUpdateAllTimer.isActive(), true);
 }
 
 TEST_F(Test_MainWindow, Test_stocksTableUpdateLastPricesTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->stocksTableUpdateLastPricesTimer.start(100000);
+    ASSERT_EQ(mainWindow->stocksTableUpdateLastPricesTimer.isActive(), true);
+
     EXPECT_CALL(*stocksTableWidgetMock, updateLastPrices());
 
     mainWindow->stocksTableUpdateLastPricesTimerTicked();
+
+    ASSERT_EQ(mainWindow->stocksTableUpdateLastPricesTimer.isActive(), true);
 }
 
 TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->keepMoneyChangeDelayTimer.start(100000);
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), true);
+
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
+    EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
     mainWindow->keepMoneyChangeDelayTimerTicked();
+
+    ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), false);
 }
 
 TEST_F(Test_MainWindow, Test_autoPilotPortfolioUpdateLastPricesTimerTicked)
 {
     const InSequence seq;
 
+    mainWindow->autoPilotPortfolioUpdateLastPricesTimer.start(100000);
+    ASSERT_EQ(mainWindow->autoPilotPortfolioUpdateLastPricesTimer.isActive(), true);
+
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, updateLastPrices());
 
     mainWindow->autoPilotPortfolioUpdateLastPricesTimerTicked();
+
+    ASSERT_EQ(mainWindow->autoPilotPortfolioUpdateLastPricesTimer.isActive(), true);
 }
 
 TEST_F(Test_MainWindow, Test_notifyInstrumentsProgress)

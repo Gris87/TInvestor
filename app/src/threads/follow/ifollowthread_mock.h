@@ -29,5 +29,6 @@ public:
         (const QString& accountId, const QString& anotherAccountId, const QString& anotherAccountName),
         (override)
     );
+    MOCK_METHOD(void, setKeepMoney, (int value), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

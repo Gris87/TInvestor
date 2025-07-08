@@ -12,10 +12,12 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient* grpcClient, QObject* parent) :
     IFollowThread(parent),
+    mMutex(new QMutex()),
     mInstrumentsStorage(instrumentsStorage),
     mGrpcClient(grpcClient),
     mAccountId(),
     mAnotherAccountId(),
+    mKeepMoney(),
     mPortfolioStream()
 {
     qDebug() << "Create FollowThread";
@@ -24,6 +26,8 @@ FollowThread::FollowThread(IInstrumentsStorage* instrumentsStorage, IGrpcClient*
 FollowThread::~FollowThread()
 {
     qDebug() << "Destroy FollowThread";
+
+    delete mMutex;
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
@@ -88,6 +92,20 @@ void FollowThread::setAccounts(const QString& accountId, const QString& anotherA
     mAnotherAccountName = anotherAccountName;
 }
 
+void FollowThread::setKeepMoney(int value)
+{
+    const QMutexLocker lock(mMutex);
+
+    mKeepMoney = value;
+}
+
+int FollowThread::keepMoney() const
+{
+    const QMutexLocker lock(mMutex);
+
+    return mKeepMoney;
+}
+
 void FollowThread::terminateThread()
 {
     blockSignals(true);
@@ -113,7 +131,7 @@ void FollowThread::handlePortfolios(
     PortfolioMinItems instruments        = buildInstrumentToCostMap(portfolio);
     PortfolioMinItems anotherInstruments = buildInstrumentToCostMap(anotherPortfolio);
 
-    const double totalCost        = calculateTotalCost(instruments);
+    const double totalCost        = qMax(calculateTotalCost(instruments) - keepMoney(), 0.0);
     const double anotherTotalCost = calculateTotalCost(anotherInstruments);
 
     instruments.remove(RUBLE_UID);

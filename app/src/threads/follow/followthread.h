@@ -4,6 +4,8 @@
 
 #include "src/threads/follow/ifollowthread.h"
 
+#include <QMutex>
+
 #include "src/domain/portfolio/portfoliominitem.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
@@ -24,6 +26,11 @@ public:
     void run() override;
 
     void setAccounts(const QString& accountId, const QString& anotherAccountId, const QString& anotherAccountName) override;
+    void setKeepMoney(int value) override;
+
+    [[nodiscard]]
+    int keepMoney() const;
+
     void terminateThread() override;
 
     void createPortfolioStream();
@@ -44,10 +51,12 @@ private:
                      QMap<QString, TradingInfo>& instrumentsForBuy
                  );
 
+    QMutex*                          mMutex;
     IInstrumentsStorage*             mInstrumentsStorage;
     IGrpcClient*                     mGrpcClient;
     QString                          mAccountId;
     QString                          mAnotherAccountId;
     QString                          mAnotherAccountName;
+    int                              mKeepMoney;
     std::shared_ptr<PortfolioStream> mPortfolioStream;
 };

@@ -1,7 +1,7 @@
-Keep money on follow thread
 Double check RUBLE_UID usage
 Python script for module test coverage check
 Test coverage
+Fix nightly
 Create release
 
 Limit buy with percent of total money instead of ruble
