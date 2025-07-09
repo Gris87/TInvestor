@@ -699,11 +699,11 @@ void AccountChartWidget::lineSeriesHovered(QPointF point, bool state)
 
         const QString prefix =
             (mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD) && nearestPoint.y() > 0 ? "+" : "";
-        const QString suffix = mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : "\u20BD";
+        const QString suffix = mChartType == CHART_TYPE_YIELD || mChartType == CHART_TYPE_MONTHLY_YIELD ? "%" : " \u20BD";
         const QString xDescription =
             QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(nearestPoint.x())).toString(DATETIME_FORMAT);
 
-        tooltip->setText(QString("%1\n%2%3 %4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
+        tooltip->setText(QString("%1\n%2%3%4").arg(xDescription, prefix, QString::number(nearestPoint.y(), 'f', 2), suffix));
         tooltip->setAnchor(nearestPoint);
         tooltip->updateGeometry();
         tooltip->show();

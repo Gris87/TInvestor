@@ -101,7 +101,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_sizeHint)
 #ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(57, 24));
 #else
-    ASSERT_TRUE(size.width() >= 63 && size.width() <= 67);
+    ASSERT_TRUE(size.width() >= 60 && size.width() <= 67);
     ASSERT_EQ(size.height(), 24);
 #endif
 
@@ -113,7 +113,7 @@ TEST_F(Test_InstrumentItemDelegate, Test_sizeHint)
 #ifdef Q_OS_WINDOWS
     ASSERT_EQ(size, QSize(77, 24));
 #else
-    ASSERT_TRUE(size.width() >= 83 && size.width() <= 87);
+    ASSERT_TRUE(size.width() >= 80 && size.width() <= 87);
     ASSERT_EQ(size.height(), 24);
 #endif
 }

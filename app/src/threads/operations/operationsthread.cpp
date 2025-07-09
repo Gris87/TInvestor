@@ -577,9 +577,10 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
             }
             else
             {
-                mTotalMoney = quotationSum(
-                    mTotalMoney, quotationMultiply(position.average_position_price_fifo(), position.quantity().units())
-                );
+                const Quotation avgCostFifo =
+                    quotationMultiply(position.average_position_price_fifo(), position.quantity().units());
+
+                mTotalMoney = quotationSum(mTotalMoney, avgCostFifo);
             }
         }
 

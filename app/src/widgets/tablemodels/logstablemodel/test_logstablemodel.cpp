@@ -670,17 +670,17 @@ TEST_F(Test_LogsTableModel, Test_exportToExcel)
     model->exportToExcel(doc);
 
     // clang-format off
-    ASSERT_EQ(doc.cellAt(2, LOGS_TIME_COLUMN + 1)->dateTime(), QVariant(QDateTime(QDate(2024, 1, 1), QTime(0, 2, 0))));
-    ASSERT_EQ(doc.cellAt(2, LOGS_LEVEL_COLUMN + 1)->value(),   QVariant("VERBOSE"));
-    ASSERT_EQ(doc.cellAt(2, LOGS_NAME_COLUMN + 1)->value(),    QVariant("Abstract Basics"));
-    ASSERT_EQ(doc.cellAt(2, LOGS_MESSAGE_COLUMN + 1)->value(), QVariant("A basket full"));
-    ASSERT_EQ(doc.cellAt(3, LOGS_TIME_COLUMN + 1)->dateTime(), QVariant(QDateTime(QDate(2024, 1, 1), QTime(0, 1, 0))));
-    ASSERT_EQ(doc.cellAt(3, LOGS_LEVEL_COLUMN + 1)->value(),   QVariant("DEBUG"));
-    ASSERT_EQ(doc.cellAt(3, LOGS_NAME_COLUMN + 1)->value(),    QVariant("Basketball enhancement"));
-    ASSERT_EQ(doc.cellAt(3, LOGS_MESSAGE_COLUMN + 1)->value(), QVariant("Ball shall levitate"));
-    ASSERT_EQ(doc.cellAt(4, LOGS_TIME_COLUMN + 1)->dateTime(), QVariant(QDate(2024, 1, 1)));
-    ASSERT_EQ(doc.cellAt(4, LOGS_LEVEL_COLUMN + 1)->value(),   QVariant("INFO"));
-    ASSERT_EQ(doc.cellAt(4, LOGS_NAME_COLUMN + 1)->value(),    QVariant("Code base"));
-    ASSERT_EQ(doc.cellAt(4, LOGS_MESSAGE_COLUMN + 1)->value(), QVariant("Can you eat fish?"));
+    ASSERT_EQ(doc.cellAt(2, LOGS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(), 1704056520000);
+    ASSERT_EQ(doc.cellAt(2, LOGS_LEVEL_COLUMN + 1)->value(),                                    QVariant("VERBOSE"));
+    ASSERT_EQ(doc.cellAt(2, LOGS_NAME_COLUMN + 1)->value(),                                     QVariant("Abstract Basics"));
+    ASSERT_EQ(doc.cellAt(2, LOGS_MESSAGE_COLUMN + 1)->value(),                                  QVariant("A basket full"));
+    ASSERT_EQ(doc.cellAt(3, LOGS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(), 1704056460000);
+    ASSERT_EQ(doc.cellAt(3, LOGS_LEVEL_COLUMN + 1)->value(),                                    QVariant("DEBUG"));
+    ASSERT_EQ(doc.cellAt(3, LOGS_NAME_COLUMN + 1)->value(),                                     QVariant("Basketball enhancement"));
+    ASSERT_EQ(doc.cellAt(3, LOGS_MESSAGE_COLUMN + 1)->value(),                                  QVariant("Ball shall levitate"));
+    ASSERT_EQ(doc.cellAt(4, LOGS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(), 1704056400000);
+    ASSERT_EQ(doc.cellAt(4, LOGS_LEVEL_COLUMN + 1)->value(),                                    QVariant("INFO"));
+    ASSERT_EQ(doc.cellAt(4, LOGS_NAME_COLUMN + 1)->value(),                                     QVariant("Code base"));
+    ASSERT_EQ(doc.cellAt(4, LOGS_MESSAGE_COLUMN + 1)->value(),                                  QVariant("Can you eat fish?"));
     // clang-format on
 }

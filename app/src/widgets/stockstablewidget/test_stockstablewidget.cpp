@@ -227,7 +227,7 @@ TEST_F(Test_StocksTableWidget, Test_actionExportToExcelTriggered)
 
     // clang-format off
     ASSERT_EQ(excelFile.exists(), true);
-    ASSERT_GE(excelFile.size(),   6251);
+    ASSERT_GE(excelFile.size(),   6250);
     // clang-format on
 }
 

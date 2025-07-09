@@ -1790,7 +1790,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     model->exportToExcel(doc);
 
     // clang-format off
-    ASSERT_EQ(doc.cellAt(2, OPERATIONS_TIME_COLUMN + 1)->dateTime(),                                          QVariant(QDateTime(QDate(2024, 1, 1), QTime(0, 2, 0))));
+    ASSERT_EQ(doc.cellAt(2, OPERATIONS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(),         1704056520000);
     ASSERT_EQ(doc.cellAt(2, OPERATIONS_NAME_COLUMN + 1)->value(),                                             QVariant("Abstract Basics"));
     ASSERT_EQ(doc.cellAt(2, OPERATIONS_DESCRIPTION_COLUMN + 1)->value(),                                      QVariant("A basket full"));
     ASSERT_NEAR(doc.cellAt(2, OPERATIONS_PRICE_COLUMN + 1)->value().toDouble(),                               100.0, 0.0001);
@@ -1807,7 +1807,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     ASSERT_NEAR(doc.cellAt(2, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1)->value().toDouble(), -1.21, 0.0001);
     ASSERT_NEAR(doc.cellAt(2, OPERATIONS_REMAINED_MONEY_COLUMN + 1)->value().toDouble(),                      122.0, 0.0001);
     ASSERT_NEAR(doc.cellAt(2, OPERATIONS_TOTAL_MONEY_COLUMN + 1)->value().toDouble(),                         124.0, 0.0001);
-    ASSERT_EQ(doc.cellAt(3, OPERATIONS_TIME_COLUMN + 1)->dateTime(),                                          QVariant(QDateTime(QDate(2024, 1, 1), QTime(0, 1, 0))));
+    ASSERT_EQ(doc.cellAt(3, OPERATIONS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(),         1704056460000);
     ASSERT_EQ(doc.cellAt(3, OPERATIONS_NAME_COLUMN + 1)->value(),                                             QVariant("Basketball enhancement"));
     ASSERT_EQ(doc.cellAt(3, OPERATIONS_DESCRIPTION_COLUMN + 1)->value(),                                      QVariant("Ball shall levitate"));
     ASSERT_NEAR(doc.cellAt(3, OPERATIONS_PRICE_COLUMN + 1)->value().toDouble(),                               200.0, 0.0001);
@@ -1824,7 +1824,7 @@ TEST_F(Test_OperationsTableModel, Test_exportToExcel)
     ASSERT_NEAR(doc.cellAt(3, OPERATIONS_TOTAL_YIELD_WITH_COMMISSION_PERCENT_COLUMN + 1)->value().toDouble(), 0.0, 0.0001);
     ASSERT_NEAR(doc.cellAt(3, OPERATIONS_REMAINED_MONEY_COLUMN + 1)->value().toDouble(),                      222.0, 0.0001);
     ASSERT_NEAR(doc.cellAt(3, OPERATIONS_TOTAL_MONEY_COLUMN + 1)->value().toDouble(),                         224.0, 0.0001);
-    ASSERT_EQ(doc.cellAt(4, OPERATIONS_TIME_COLUMN + 1)->dateTime(),                                          QVariant(QDate(2024, 1, 1)));
+    ASSERT_EQ(doc.cellAt(4, OPERATIONS_TIME_COLUMN + 1)->dateTime().toDateTime().toMSecsSinceEpoch(),         1704056400000);
     ASSERT_EQ(doc.cellAt(4, OPERATIONS_NAME_COLUMN + 1)->value(),                                             QVariant("Code base"));
     ASSERT_EQ(doc.cellAt(4, OPERATIONS_DESCRIPTION_COLUMN + 1)->value(),                                      QVariant("Can you eat fish?"));
     ASSERT_NEAR(doc.cellAt(4, OPERATIONS_PRICE_COLUMN + 1)->value().toDouble(),                               500.0, 0.0001);

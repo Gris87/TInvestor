@@ -224,56 +224,72 @@ TEST_F(Test_AccountChartWidget, Test_lineSeriesHovered)
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056400000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056410000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n+1.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056420000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:30\n+2.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:30\n+2.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056440000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:30\n+2.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:30\n+2.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056450000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056460000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00%");
     // clang-format on
 
     accountChartWidget->lineSeriesHovered(QPointF(1704056500000, 0), true);
 
     // clang-format off
     ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
-    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00 %");
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:01:00\n-3.00%");
+    // clang-format on
+
+    accountChartWidget->switchChart(CHART_TYPE_REMAINED_MONEY);
+    accountChartWidget->lineSeriesHovered(QPointF(1704056400000, 0), true);
+
+    // clang-format off
+    ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n5000.00 \u20BD");
+    // clang-format on
+
+    accountChartWidget->switchChart(CHART_TYPE_TOTAL_MONEY);
+    accountChartWidget->lineSeriesHovered(QPointF(1704056400000, 0), true);
+
+    // clang-format off
+    ASSERT_EQ(accountChartWidget->tooltipHideTimer.isActive(), false);
+    ASSERT_EQ(accountChartWidget->tooltip->text(),             "2024-01-01 00:00:00\n50000.00 \u20BD");
     // clang-format on
 }
 

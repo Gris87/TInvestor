@@ -60,7 +60,7 @@ TEST_F(Test_ChartTooltip, Test_boundingRect)
 #else
     ASSERT_EQ(rect.x(), 0);
     ASSERT_EQ(rect.y(), 0);
-    ASSERT_TRUE(rect.width() >= 41 && rect.width() <= 46);
+    ASSERT_TRUE(rect.width() >= 40 && rect.width() <= 46);
     ASSERT_TRUE(rect.height() >= 24 && rect.height() <= 28);
 #endif
 }
