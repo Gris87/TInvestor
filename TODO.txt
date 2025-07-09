@@ -1,5 +1,4 @@
 Handle invalid argument for order post
-Test coverage
 Fix nightly
 Create release
 

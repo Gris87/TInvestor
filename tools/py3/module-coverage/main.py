@@ -138,6 +138,8 @@ def _execute_commands(commands):
     else:
         number_of_workers = 1
 
+    cur = 0
+
     non_full_modules = []
 
     with ThreadPoolExecutor(number_of_workers) as executor:
@@ -145,7 +147,9 @@ def _execute_commands(commands):
             res &= result
 
             if coverage == 100:
-                print(f"{module_path:120}: {coverage:5.2f}%")
+                cur += 1
+
+                print(f"{cur:4} {module_path:120}: {coverage:5.2f}%")
             else:
                 non_full_modules.append({
                     "module_path": module_path,
@@ -156,10 +160,12 @@ def _execute_commands(commands):
         non_full_modules.sort(key=lambda x: x["coverage"], reverse=True)
 
         for module in non_full_modules:
+            cur += 1
+
             module_path = module["module_path"]
             coverage = module["coverage"]
 
-            print(f"{module_path:120}: {coverage:5.2f}%")
+            print(f"{cur:4} {module_path:120}: {coverage:5.2f}%")
 
         logger.error(f'Some modules not fully covered')
 

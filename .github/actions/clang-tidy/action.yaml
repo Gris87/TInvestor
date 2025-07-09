@@ -119,32 +119,6 @@ runs:
             }
         }
 
-    # Download clang
-    - name: Download clang
-      if: steps.cache-style.outputs.cache-hit != 'true'
-      shell: cmake -P {0}
-      run: |
-        # Setup several platform-dependent variables
-        if ("${{ runner.os }}" STREQUAL "Windows")
-          set(os_tar_url "clang+llvm-${{ env.CLANG_VERSION }}-x86_64-pc-windows-msvc.tar.xz")
-        elseif ("${{ runner.os }}" STREQUAL "Linux")
-          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-Linux-X64.tar.xz")
-        elseif ("${{ runner.os }}" STREQUAL "macOS")
-          set(os_tar_url "LLVM-${{ env.CLANG_VERSION }}-macOS-X64.tar.xz")
-        endif()
-
-        # Set clang_release_url
-        set(clang_release_url "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ env.CLANG_VERSION }}/${os_tar_url}")
-
-        # Download clang_release_url
-        cmake_language(EVAL CODE "
-          message(\"Downloading: ${clang_release_url}\")
-          file(DOWNLOAD \"${clang_release_url}\" ./clang.tar.xz)
-        ")
-
-        file(MAKE_DIRECTORY Qt/clang)
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ${CMAKE_CURRENT_SOURCE_DIR}/clang.tar.xz WORKING_DIRECTORY Qt/clang)
-
     # Test TInvestor
     - name: Test TInvestor
       if: steps.cache-clang-tidy.outputs.cache-hit != 'true'
@@ -153,11 +127,9 @@ runs:
         switch ("${{ runner.os }}")
         {
             "Windows" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/clang+llvm-${Env:CLANG_VERSION}-x86_64-pc-windows-msvc/bin;${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/bin/clang/bin;${Env:PATH}"
             }
             "Linux" {
-                ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/clang/LLVM-${Env:CLANG_VERSION}-Linux-X64/bin:${Env:PATH}"
                 ${Env:PATH} = "${Env:GITHUB_WORKSPACE}/Qt/qtcreator/libexec/qtcreator/clang/bin:${Env:PATH}"
             }
         }
