@@ -394,7 +394,7 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 
             const qint64 deltaTimestamp = stock->data.constLast().timestamp - stock->data.at(index).timestamp;
 
-            stock->operational.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
+            stock->meta.turnover = deltaTimestamp > 0 ? qRound64(totalTurnover * (ONE_DAY_DOUBLE / deltaTimestamp)) : 0;
         }
 
         stock->writeUnlock();

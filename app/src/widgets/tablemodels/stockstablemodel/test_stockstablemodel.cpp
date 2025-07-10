@@ -131,7 +131,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -146,7 +146,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -161,7 +161,7 @@ TEST_F(Test_StocksTableModel, Test_data)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -275,7 +275,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -290,7 +290,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -305,7 +305,7 @@ TEST_F(Test_StocksTableModel, Test_sort)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -484,7 +484,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -499,7 +499,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -514,7 +514,7 @@ TEST_F(Test_StocksTableModel, Test_setFilter)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -590,7 +590,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -605,7 +605,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -620,7 +620,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -691,7 +691,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 2120;
+    stock1->meta.turnover                     = 2120;
     stock1->operational.payback               = 17.0f;
     stock1->meta.pricePrecision               = 4;
 
@@ -700,7 +700,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
-    stock2->operational.turnover              = 4340000;
+    stock2->meta.turnover                     = 4340000;
     stock2->operational.payback               = 37.0f;
     stock2->meta.pricePrecision               = 2;
 
@@ -709,7 +709,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
-    stock3->operational.turnover              = 6560000000;
+    stock3->meta.turnover                     = 6560000000;
     stock3->operational.payback               = 87.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -774,7 +774,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 3120;
+    stock1->meta.turnover                     = 3120;
     stock1->operational.payback               = 27.0f;
     stock1->meta.pricePrecision               = 3;
 
@@ -783,7 +783,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
-    stock2->operational.turnover              = 5340000;
+    stock2->meta.turnover                     = 5340000;
     stock2->operational.payback               = 47.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -792,7 +792,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
-    stock3->operational.turnover              = 7560000000;
+    stock3->meta.turnover                     = 7560000000;
     stock3->operational.payback               = 97.0f;
     stock3->meta.pricePrecision               = 2;
 
@@ -854,7 +854,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
-    stock1->operational.turnover              = 9310000;
+    stock1->meta.turnover                     = 9310000;
     stock1->operational.payback               = 87.0f;
     stock1->meta.pricePrecision               = 2;
 
@@ -863,7 +863,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
-    stock2->operational.turnover              = 7340000;
+    stock2->meta.turnover                     = 7340000;
     stock2->operational.payback               = 57.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -872,7 +872,7 @@ TEST_F(Test_StocksTableModel, Test_updateAll)
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
-    stock3->operational.turnover              = 9560;
+    stock3->meta.turnover                     = 9560;
     stock3->operational.payback               = 37.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -918,7 +918,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -933,7 +933,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -948,7 +948,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -1019,7 +1019,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 2120;
+    stock1->meta.turnover                     = 2120;
     stock1->operational.payback               = 17.0f;
     stock1->meta.pricePrecision               = 4;
 
@@ -1028,7 +1028,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
-    stock2->operational.turnover              = 4340000;
+    stock2->meta.turnover                     = 4340000;
     stock2->operational.payback               = 37.0f;
     stock2->meta.pricePrecision               = 2;
 
@@ -1037,7 +1037,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
-    stock3->operational.turnover              = 6560000000;
+    stock3->meta.turnover                     = 6560000000;
     stock3->operational.payback               = 87.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1108,7 +1108,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 3120;
+    stock1->meta.turnover                     = 3120;
     stock1->operational.payback               = 27.0f;
     stock1->meta.pricePrecision               = 3;
 
@@ -1117,7 +1117,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
-    stock2->operational.turnover              = 5340000;
+    stock2->meta.turnover                     = 5340000;
     stock2->operational.payback               = 47.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1126,7 +1126,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
-    stock3->operational.turnover              = 7560000000;
+    stock3->meta.turnover                     = 7560000000;
     stock3->operational.payback               = 97.0f;
     stock3->meta.pricePrecision               = 2;
 
@@ -1192,7 +1192,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
-    stock1->operational.turnover              = 9310000;
+    stock1->meta.turnover                     = 9310000;
     stock1->operational.payback               = 87.0f;
     stock1->meta.pricePrecision               = 2;
 
@@ -1201,7 +1201,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
-    stock2->operational.turnover              = 7340000;
+    stock2->meta.turnover                     = 7340000;
     stock2->operational.payback               = 57.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1210,7 +1210,7 @@ TEST_F(Test_StocksTableModel, Test_updateLastPrices)
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
-    stock3->operational.turnover              = 9560;
+    stock3->meta.turnover                     = 9560;
     stock3->operational.payback               = 37.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1262,7 +1262,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -1277,7 +1277,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -1292,7 +1292,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -1363,7 +1363,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 2120;
+    stock1->meta.turnover                     = 2120;
     stock1->operational.payback               = 17.0f;
     stock1->meta.pricePrecision               = 4;
 
@@ -1372,7 +1372,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
-    stock2->operational.turnover              = 4340000;
+    stock2->meta.turnover                     = 4340000;
     stock2->operational.payback               = 37.0f;
     stock2->meta.pricePrecision               = 2;
 
@@ -1381,7 +1381,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
-    stock3->operational.turnover              = 6560000000;
+    stock3->meta.turnover                     = 6560000000;
     stock3->operational.payback               = 87.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1444,7 +1444,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 3120;
+    stock1->meta.turnover                     = 3120;
     stock1->operational.payback               = 27.0f;
     stock1->meta.pricePrecision               = 3;
 
@@ -1453,7 +1453,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
-    stock2->operational.turnover              = 5340000;
+    stock2->meta.turnover                     = 5340000;
     stock2->operational.payback               = 47.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1462,7 +1462,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
-    stock3->operational.turnover              = 7560000000;
+    stock3->meta.turnover                     = 7560000000;
     stock3->operational.payback               = 97.0f;
     stock3->meta.pricePrecision               = 2;
 
@@ -1522,7 +1522,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
-    stock1->operational.turnover              = 9310000;
+    stock1->meta.turnover                     = 9310000;
     stock1->operational.payback               = 87.0f;
     stock1->meta.pricePrecision               = 2;
 
@@ -1531,7 +1531,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
-    stock2->operational.turnover              = 7340000;
+    stock2->meta.turnover                     = 7340000;
     stock2->operational.payback               = 57.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1540,7 +1540,7 @@ TEST_F(Test_StocksTableModel, Test_updatePrices)
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
-    stock3->operational.turnover              = 9560;
+    stock3->meta.turnover                     = 9560;
     stock3->operational.payback               = 37.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1584,7 +1584,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -1599,7 +1599,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -1614,7 +1614,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 
@@ -1685,7 +1685,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->operational.detailedData[0].price = 300.0f;
     stock1->operational.dayStartPrice         = 150.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 2120;
+    stock1->meta.turnover                     = 2120;
     stock1->operational.payback               = 17.0f;
     stock1->meta.pricePrecision               = 4;
 
@@ -1694,7 +1694,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->operational.detailedData[0].price = 800.0f;
     stock2->operational.dayStartPrice         = 51.0f;
     stock2->operational.specifiedDatePrice    = 22.0f;
-    stock2->operational.turnover              = 4340000;
+    stock2->meta.turnover                     = 4340000;
     stock2->operational.payback               = 37.0f;
     stock2->meta.pricePrecision               = 2;
 
@@ -1703,7 +1703,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->operational.detailedData[0].price = 700.0f;
     stock3->operational.dayStartPrice         = 231.0f;
     stock3->operational.specifiedDatePrice    = 192.0f;
-    stock3->operational.turnover              = 6560000000;
+    stock3->meta.turnover                     = 6560000000;
     stock3->operational.payback               = 87.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1766,7 +1766,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->operational.detailedData[0].price = 290.0f;
     stock1->operational.dayStartPrice         = 640.0f;
     stock1->operational.specifiedDatePrice    = 170.0f;
-    stock1->operational.turnover              = 3120;
+    stock1->meta.turnover                     = 3120;
     stock1->operational.payback               = 27.0f;
     stock1->meta.pricePrecision               = 3;
 
@@ -1775,7 +1775,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->operational.detailedData[0].price = 100.0f;
     stock2->operational.dayStartPrice         = 131.0f;
     stock2->operational.specifiedDatePrice    = 922.0f;
-    stock2->operational.turnover              = 5340000;
+    stock2->meta.turnover                     = 5340000;
     stock2->operational.payback               = 47.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1784,7 +1784,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->operational.detailedData[0].price = 537.0f;
     stock3->operational.dayStartPrice         = 197.0f;
     stock3->operational.specifiedDatePrice    = 325.0f;
-    stock3->operational.turnover              = 7560000000;
+    stock3->meta.turnover                     = 7560000000;
     stock3->operational.payback               = 97.0f;
     stock3->meta.pricePrecision               = 2;
 
@@ -1844,7 +1844,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock1->operational.detailedData[0].price = 1111.0f;
     stock1->operational.dayStartPrice         = 888.0f;
     stock1->operational.specifiedDatePrice    = 999.0f;
-    stock1->operational.turnover              = 9310000;
+    stock1->meta.turnover                     = 9310000;
     stock1->operational.payback               = 87.0f;
     stock1->meta.pricePrecision               = 2;
 
@@ -1853,7 +1853,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock2->operational.detailedData[0].price = 2222.0f;
     stock2->operational.dayStartPrice         = 444.0f;
     stock2->operational.specifiedDatePrice    = 555.0f;
-    stock2->operational.turnover              = 7340000;
+    stock2->meta.turnover                     = 7340000;
     stock2->operational.payback               = 57.0f;
     stock2->meta.pricePrecision               = 4;
 
@@ -1862,7 +1862,7 @@ TEST_F(Test_StocksTableModel, Test_updatePeriodicData)
     stock3->operational.detailedData[0].price = 3333.0f;
     stock3->operational.dayStartPrice         = 666.0f;
     stock3->operational.specifiedDatePrice    = 777.0f;
-    stock3->operational.turnover              = 9560;
+    stock3->meta.turnover                     = 9560;
     stock3->operational.payback               = 37.0f;
     stock3->meta.pricePrecision               = 3;
 
@@ -1906,7 +1906,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock1->meta.forQualInvestorFlag       = false;
     stock1->operational.dayStartPrice      = 0.0f;
     stock1->operational.specifiedDatePrice = 0.0f;
-    stock1->operational.turnover           = 1120;
+    stock1->meta.turnover                  = 1120;
     stock1->operational.payback            = 13.0f;
     stock1->meta.pricePrecision            = 2;
 
@@ -1921,7 +1921,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock2->meta.forQualInvestorFlag       = true;
     stock2->operational.dayStartPrice      = 201.0f;
     stock2->operational.specifiedDatePrice = 202.0f;
-    stock2->operational.turnover           = 2340000;
+    stock2->meta.turnover                  = 2340000;
     stock2->operational.payback            = 33.0f;
     stock2->meta.pricePrecision            = 3;
 
@@ -1936,7 +1936,7 @@ TEST_F(Test_StocksTableModel, Test_exportToExcel)
     stock3->meta.forQualInvestorFlag       = false;
     stock3->operational.dayStartPrice      = 501.0f;
     stock3->operational.specifiedDatePrice = 502.0f;
-    stock3->operational.turnover           = 5560000000;
+    stock3->meta.turnover                  = 5560000000;
     stock3->operational.payback            = 83.0f;
     stock3->meta.pricePrecision            = 4;
 

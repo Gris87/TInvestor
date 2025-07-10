@@ -442,7 +442,7 @@ static void fillEntriesForParallel(
         entry.dateChange          = stock->operational.specifiedDatePrice > 0
                                         ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                         : 0;
-        entry.turnover            = stock->operational.turnover;
+        entry.turnover            = stock->meta.turnover;
         entry.payback             = stock->operational.payback;
         entry.dayStartPrice       = stock->operational.dayStartPrice;
         entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
@@ -527,7 +527,7 @@ static void updateAllForParallel(
         entry.dateChange          = stock->operational.specifiedDatePrice > 0
                                         ? ((entry.price / stock->operational.specifiedDatePrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT
                                         : 0;
-        entry.turnover            = stock->operational.turnover;
+        entry.turnover            = stock->meta.turnover;
         entry.payback             = stock->operational.payback;
         entry.dayStartPrice       = stock->operational.dayStartPrice;
         entry.specifiedDatePrice  = stock->operational.specifiedDatePrice;
@@ -800,7 +800,7 @@ static void updatePeriodicDataForParallel(
 
         stock->readLock();
 
-        entry.turnover = stock->operational.turnover;
+        entry.turnover = stock->meta.turnover;
         entry.payback  = stock->operational.payback;
 
         stock->readUnlock();

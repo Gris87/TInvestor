@@ -15,6 +15,7 @@ StockMeta::StockMeta() :
     instrumentName(),
     forQualInvestorFlag(),
     minPriceIncrement(),
+    turnover(),
     pricePrecision()
 {
 }
@@ -47,6 +48,11 @@ static void metaMinPriceIncrementParse(StockMeta* meta, simdjson::ondemand::valu
     meta->minPriceIncrement = value.get_double_in_string().value();
 }
 
+static void metaTurnoverParse(StockMeta* meta, simdjson::ondemand::value value)
+{
+    meta->turnover = value.get_int64();
+}
+
 static void metaPricePrecisionParse(StockMeta* meta, simdjson::ondemand::value value)
 {
     meta->pricePrecision = value.get_int64();
@@ -68,6 +74,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"instrumentName",      metaInstrumentNameParse     },
     {"forQualInvestorFlag", metaForQualInvestorFlagParse},
     {"minPriceIncrement",   metaMinPriceIncrementParse  },
+    {"turnover",            metaTurnoverParse           },
     {"pricePrecision",      metaPricePrecisionParse     }
 };
 // clang-format on
@@ -93,6 +100,7 @@ QJsonObject StockMeta::toJsonObject() const
     res.insert("instrumentName",      instrumentName);
     res.insert("forQualInvestorFlag", forQualInvestorFlag);
     res.insert("minPriceIncrement",   QString::number(minPriceIncrement, 'f', pricePrecision));
+    res.insert("turnover",            turnover);
     res.insert("pricePrecision",      pricePrecision);
     // clang-format on
 
@@ -103,5 +111,6 @@ bool operator==(const StockMeta& lhs, const StockMeta& rhs)
 {
     return lhs.instrumentId == rhs.instrumentId && lhs.instrumentTicker == rhs.instrumentTicker &&
            lhs.instrumentName == rhs.instrumentName && lhs.forQualInvestorFlag == rhs.forQualInvestorFlag &&
-           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON && lhs.pricePrecision == rhs.pricePrecision;
+           qAbs(lhs.minPriceIncrement - rhs.minPriceIncrement) < FLOAT_EPSILON && lhs.turnover == rhs.turnover &&
+           lhs.pricePrecision == rhs.pricePrecision;
 }

@@ -230,6 +230,7 @@ TEST_F(Test_PriceCollectThread, Test_run)
     stock.meta.instrumentName      = "Wagadaka too";
     stock.meta.forQualInvestorFlag = true;
     stock.meta.minPriceIncrement   = 0.001f;
+    stock.meta.turnover            = 5000;
     stock.meta.pricePrecision      = 3;
 
     stocks << &stock;
