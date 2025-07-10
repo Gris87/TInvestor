@@ -892,21 +892,6 @@
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
-        <source>Limit stock purchase</source>
-        <translation>Не покупать акции на сумму больше, чем</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="202"/>
-        <source> rubles</source>
-        <translation> рублей</translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="218"/>
-        <source>and more than</source>
-        <translation>и больше, чем</translation>
-    </message>
-    <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
@@ -948,6 +933,16 @@
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="82"/>
         <source> minutes</source>
         <translation> минут</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
+        <source>Limit stock purchase part less than</source>
+        <translation>Не покупать акции с долей больше, чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="218"/>
+        <source>and less than</source>
+        <translation>и больше, чем</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="323"/>

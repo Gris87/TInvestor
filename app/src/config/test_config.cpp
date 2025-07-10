@@ -42,7 +42,7 @@ TEST(Test_Config, Test_assign)
     config.setScheduleEndHour(20);
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
-    config.setAmountOfStockPurchase(50000);
+    config.setLimitStockPurchasePart(25.0f);
     config.setLimitByTurnover(false);
     config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
@@ -58,7 +58,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.getScheduleEndHour(),          20);
     ASSERT_EQ(config.getScheduleEndMinute(),        50);
     ASSERT_EQ(config.isLimitStockPurchase(),        false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 25.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           false);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        36);
@@ -74,7 +74,7 @@ TEST(Test_Config, Test_assign)
     config2.setScheduleEndHour(21);
     config2.setScheduleEndMinute(37);
     config2.setLimitStockPurchase(true);
-    config2.setAmountOfStockPurchase(75000);
+    config2.setLimitStockPurchasePart(5.0f);
     config2.setLimitByTurnover(true);
     config2.setLimitByTurnoverPercent(7.5f);
     config2.setStorageMonthLimit(12);
@@ -90,7 +90,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config2.getScheduleEndHour(),          21);
     ASSERT_EQ(config2.getScheduleEndMinute(),        37);
     ASSERT_EQ(config2.isLimitStockPurchase(),        true);
-    ASSERT_EQ(config2.getAmountOfStockPurchase(),    75000);
+    ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),        12);
@@ -112,7 +112,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config.getScheduleEndHour(),          21);
     ASSERT_EQ(config.getScheduleEndMinute(),        37);
     ASSERT_EQ(config.isLimitStockPurchase(),        true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    75000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           true);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        12);
@@ -129,7 +129,7 @@ TEST(Test_Config, Test_assign)
     ASSERT_EQ(config2.getScheduleEndHour(),          21);
     ASSERT_EQ(config2.getScheduleEndMinute(),        37);
     ASSERT_EQ(config2.isLimitStockPurchase(),        true);
-    ASSERT_EQ(config2.getAmountOfStockPurchase(),    75000);
+    ASSERT_NEAR(config2.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config2.isLimitByTurnover(),           true);
     ASSERT_NEAR(config2.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
     ASSERT_EQ(config2.getStorageMonthLimit(),        12);
@@ -155,7 +155,7 @@ TEST(Test_Config, Test_makeDefault)
     config.setScheduleEndHour(20);
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
-    config.setAmountOfStockPurchase(50000);
+    config.setLimitStockPurchasePart(50.0f);
     config.setLimitByTurnover(false);
     config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
@@ -171,7 +171,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.getScheduleEndHour(),          20);
     ASSERT_EQ(config.getScheduleEndMinute(),        50);
     ASSERT_EQ(config.isLimitStockPurchase(),        false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           false);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        36);
@@ -193,7 +193,7 @@ TEST(Test_Config, Test_makeDefault)
     ASSERT_EQ(config.getScheduleEndHour(),          18);
     ASSERT_EQ(config.getScheduleEndMinute(),        40);
     ASSERT_EQ(config.isLimitStockPurchase(),        true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    10000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 10.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           true);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 1.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        12);
@@ -219,7 +219,7 @@ TEST(Test_Config, Test_save)
     config.setScheduleEndHour(20);
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
-    config.setAmountOfStockPurchase(50000);
+    config.setLimitStockPurchasePart(50.0f);
     config.setLimitByTurnover(false);
     config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
@@ -235,7 +235,7 @@ TEST(Test_Config, Test_save)
     ASSERT_EQ(config.getScheduleEndHour(),          20);
     ASSERT_EQ(config.getScheduleEndMinute(),        50);
     ASSERT_EQ(config.isLimitStockPurchase(),        false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           false);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        36);
@@ -257,7 +257,7 @@ TEST(Test_Config, Test_save)
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndHour"),        QVariant(20)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleEndMinute"),      QVariant(50)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchase"),     QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/AmountOfStockPurchase"),  QVariant(50000)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitStockPurchasePart"), QVariant(50.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnover"),        QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/StorageMonthLimit"),      QVariant(36)));
@@ -285,7 +285,7 @@ TEST(Test_Config, Test_load)
     config.setScheduleEndHour(20);
     config.setScheduleEndMinute(50);
     config.setLimitStockPurchase(false);
-    config.setAmountOfStockPurchase(50000);
+    config.setLimitStockPurchasePart(50.0f);
     config.setLimitByTurnover(false);
     config.setLimitByTurnoverPercent(5.0f);
     config.setStorageMonthLimit(36);
@@ -301,7 +301,7 @@ TEST(Test_Config, Test_load)
     ASSERT_EQ(config.getScheduleEndHour(),          20);
     ASSERT_EQ(config.getScheduleEndMinute(),        50);
     ASSERT_EQ(config.isLimitStockPurchase(),        false);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    50000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 50.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           false);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        36);
@@ -323,7 +323,7 @@ TEST(Test_Config, Test_load)
     EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndHour"),        QVariant(20))).WillOnce(Return(QVariant(21)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleEndMinute"),      QVariant(50))).WillOnce(Return(QVariant(37)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchase"),     QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("Config/AmountOfStockPurchase"),  QVariant(50000))).WillOnce(Return(QVariant(75000)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitStockPurchasePart"), QVariant(50.0f))).WillOnce(Return(QVariant(5.0f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnover"),        QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/LimitByTurnoverPercent"), QVariant(5.0f))).WillOnce(Return(QVariant(7.5f)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/StorageMonthLimit"),      QVariant(36))).WillOnce(Return(QVariant(12)));
@@ -342,7 +342,7 @@ TEST(Test_Config, Test_load)
     ASSERT_EQ(config.getScheduleEndHour(),          21);
     ASSERT_EQ(config.getScheduleEndMinute(),        37);
     ASSERT_EQ(config.isLimitStockPurchase(),        true);
-    ASSERT_EQ(config.getAmountOfStockPurchase(),    75000);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 5.0f, 0.0001f);
     ASSERT_EQ(config.isLimitByTurnover(),           true);
     ASSERT_NEAR(config.getLimitByTurnoverPercent(), 7.5f, 0.0001f);
     ASSERT_EQ(config.getStorageMonthLimit(),        12);
@@ -483,18 +483,18 @@ TEST(Test_Config, Test_setLimitStockPurchase_and_isLimitStockPurchase)
     ASSERT_EQ(config.isLimitStockPurchase(), true);
 }
 
-TEST(Test_Config, Test_setAmountOfStockPurchase_and_getAmountOfStockPurchase)
+TEST(Test_Config, Test_setLimitStockPurchasePart_and_getLimitStockPurchasePart)
 {
     StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
     StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
 
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
-    config.setAmountOfStockPurchase(1000);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 1000);
+    config.setLimitStockPurchasePart(1.0f);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 1.0f, 0.0001f);
 
-    config.setAmountOfStockPurchase(5000);
-    ASSERT_EQ(config.getAmountOfStockPurchase(), 5000);
+    config.setLimitStockPurchasePart(5.0f);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 5.0f, 0.0001f);
 }
 
 TEST(Test_Config, Test_setLimitByTurnover_and_isLimitByTurnover)

@@ -57,7 +57,7 @@ private slots:
     void on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_limitStockPurchaseCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_amountOfStockPurchaseSpinBox_valueChanged(int value);
+    void on_limitStockPurchasePartDoubleSpinBox_valueChanged(double value);
     void on_limitByTurnoverCheckBox_checkStateChanged(const Qt::CheckState& value);
     void on_limitByTurnoverPercentDoubleSpinBox_valueChanged(double value);
     void on_storageMonthLimitSpinBox_valueChanged(int value);

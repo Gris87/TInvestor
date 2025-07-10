@@ -139,7 +139,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
-    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(true);
     dialog->ui->limitByTurnoverCheckBox->blockSignals(true);
     dialog->ui->limitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
@@ -158,7 +158,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
+    EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(20.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
@@ -174,7 +174,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(19, 15));
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        true);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),          20000);
+    ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 20.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentDoubleSpinBox->value(), 1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),              36);
@@ -194,7 +194,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
-    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(50000));
+    EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(50.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(5.0f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(12));
@@ -210,7 +210,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(11, 15));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(20, 40));
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        false);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),          50000);
+    ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 50.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           false);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentDoubleSpinBox->value(), 5.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),              12);
@@ -347,19 +347,19 @@ TEST_F(Test_SettingsDialog, Test_on_limitStockPurchaseCheckBox_checkStateChanged
     ASSERT_EQ(dialog->ui->limitStockPurchaseWidget->isEnabled(), false);
 }
 
-TEST_F(Test_SettingsDialog, Test_on_amountOfStockPurchaseSpinBox_valueChanged)
+TEST_F(Test_SettingsDialog, Test_on_limitStockPurchasePartDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
-    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
-    dialog->ui->amountOfStockPurchaseSpinBox->setValue(1);
-    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(false);
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(true);
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->setValue(1.0f);
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(*configMock, setAmountOfStockPurchase(2));
-    dialog->ui->amountOfStockPurchaseSpinBox->setValue(2);
+    EXPECT_CALL(*configMock, setLimitStockPurchasePart(2.0f));
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->setValue(2.0f);
 
-    EXPECT_CALL(*configMock, setAmountOfStockPurchase(3));
-    dialog->ui->amountOfStockPurchaseSpinBox->setValue(3);
+    EXPECT_CALL(*configMock, setLimitStockPurchasePart(3.0f));
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->setValue(3.0f);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_limitByTurnoverCheckBox_checkStateChanged)
@@ -547,7 +547,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
     dialog->ui->scheduleEndTimeEdit->blockSignals(true);
     dialog->ui->limitStockPurchaseCheckBox->blockSignals(true);
-    dialog->ui->amountOfStockPurchaseSpinBox->blockSignals(true);
+    dialog->ui->limitStockPurchasePartDoubleSpinBox->blockSignals(true);
     dialog->ui->limitByTurnoverCheckBox->blockSignals(true);
     dialog->ui->limitByTurnoverPercentDoubleSpinBox->blockSignals(true);
     dialog->ui->storageMonthLimitSpinBox->blockSignals(true);
@@ -568,7 +568,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
-    EXPECT_CALL(*configMock, getAmountOfStockPurchase()).WillOnce(Return(20000));
+    EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(20.0f));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(1.0f));
     EXPECT_CALL(*configMock, getStorageMonthLimit()).WillOnce(Return(36));
@@ -584,7 +584,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
     ASSERT_EQ(dialog->ui->scheduleEndTimeEdit->time(),                    QTime(19, 15));
     ASSERT_EQ(dialog->ui->limitStockPurchaseCheckBox->isChecked(),        true);
-    ASSERT_EQ(dialog->ui->amountOfStockPurchaseSpinBox->value(),          20000);
+    ASSERT_NEAR(dialog->ui->limitStockPurchasePartDoubleSpinBox->value(), 20.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->limitByTurnoverCheckBox->isChecked(),           true);
     ASSERT_NEAR(dialog->ui->limitByTurnoverPercentDoubleSpinBox->value(), 1.0f, 0.0001f);
     ASSERT_EQ(dialog->ui->storageMonthLimitSpinBox->value(),              36);

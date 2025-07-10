@@ -49,8 +49,8 @@ public:
     virtual void setLimitStockPurchase(bool value) = 0;
     virtual bool isLimitStockPurchase()            = 0;
 
-    virtual void setAmountOfStockPurchase(int value) = 0;
-    virtual int  getAmountOfStockPurchase()          = 0;
+    virtual void  setLimitStockPurchasePart(float value) = 0;
+    virtual float getLimitStockPurchasePart()            = 0;
 
     virtual void setLimitByTurnover(bool value) = 0;
     virtual bool isLimitByTurnover()            = 0;

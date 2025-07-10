@@ -903,17 +903,12 @@
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
-        <source>Limit stock purchase</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="202"/>
-        <source> rubles</source>
+        <source>Limit stock purchase part less than</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="218"/>
-        <source>and more than</source>
+        <source>and less than</source>
         <translation></translation>
     </message>
     <message>

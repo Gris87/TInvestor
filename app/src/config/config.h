@@ -50,8 +50,8 @@ public:
     void setLimitStockPurchase(bool value) override;
     bool isLimitStockPurchase() override;
 
-    void setAmountOfStockPurchase(int value) override;
-    int  getAmountOfStockPurchase() override;
+    void  setLimitStockPurchasePart(float value) override;
+    float getLimitStockPurchasePart() override;
 
     void setLimitByTurnover(bool value) override;
     bool isLimitByTurnover() override;
@@ -82,7 +82,7 @@ private:
     int   mScheduleEndHour;
     int   mScheduleEndMinute;
     bool  mLimitStockPurchase;
-    int   mAmountOfStockPurchase;
+    float mLimitStockPurchasePart;
     bool  mLimitByTurnover;
     float mLimitByTurnoverPercent;
     int   mStorageMonthLimit;

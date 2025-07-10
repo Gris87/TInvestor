@@ -53,8 +53,8 @@ public:
     MOCK_METHOD(void, setLimitStockPurchase, (bool value), (override));
     MOCK_METHOD(bool, isLimitStockPurchase, (), (override));
 
-    MOCK_METHOD(void, setAmountOfStockPurchase, (int value), (override));
-    MOCK_METHOD(int, getAmountOfStockPurchase, (), (override));
+    MOCK_METHOD(void, setLimitStockPurchasePart, (float value), (override));
+    MOCK_METHOD(float, getLimitStockPurchasePart, (), (override));
 
     MOCK_METHOD(void, setLimitByTurnover, (bool value), (override));
     MOCK_METHOD(bool, isLimitByTurnover, (), (override));

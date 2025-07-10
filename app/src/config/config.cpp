@@ -13,7 +13,7 @@ constexpr int   SCHEDULE_START_MINUTE_DEFAULT     = 0;
 constexpr int   SCHEDULE_END_HOUR_DEFAULT         = 18;
 constexpr int   SCHEDULE_END_MINUTE_DEFAULT       = 40;
 constexpr bool  LIMIT_STOCK_PURCHASE_DEFAULT      = true;
-constexpr int   AMOUNT_OF_STOCK_PURCHASE_DEFAULT  = 10000;
+constexpr float LIMIT_STOCK_PURCHASE_PART_DEFAULT = 10.0f;
 constexpr bool  LIMIT_BY_TURNOVER_DEFAULT         = true;
 constexpr float LIMIT_BY_TURNOVER_PERCENT_DEFAULT = 1.0f;
 constexpr int   STORAGE_MONTH_LIMIT_DEFAULT       = 12;
@@ -35,7 +35,7 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mScheduleEndHour(),
     mScheduleEndMinute(),
     mLimitStockPurchase(),
-    mAmountOfStockPurchase(),
+    mLimitStockPurchasePart(),
     mLimitByTurnover(),
     mLimitByTurnoverPercent(),
     mStorageMonthLimit(),
@@ -71,7 +71,7 @@ void Config::assign(IConfig* another)
     mScheduleEndHour        = config.mScheduleEndHour;
     mScheduleEndMinute      = config.mScheduleEndMinute;
     mLimitStockPurchase     = config.mLimitStockPurchase;
-    mAmountOfStockPurchase  = config.mAmountOfStockPurchase;
+    mLimitStockPurchasePart = config.mLimitStockPurchasePart;
     mLimitByTurnover        = config.mLimitByTurnover;
     mLimitByTurnoverPercent = config.mLimitByTurnoverPercent;
     mStorageMonthLimit      = config.mStorageMonthLimit;
@@ -96,7 +96,7 @@ void Config::makeDefault()
     mScheduleEndHour        = SCHEDULE_END_HOUR_DEFAULT;
     mScheduleEndMinute      = SCHEDULE_END_MINUTE_DEFAULT;
     mLimitStockPurchase     = LIMIT_STOCK_PURCHASE_DEFAULT;
-    mAmountOfStockPurchase  = AMOUNT_OF_STOCK_PURCHASE_DEFAULT;
+    mLimitStockPurchasePart = LIMIT_STOCK_PURCHASE_PART_DEFAULT;
     mLimitByTurnover        = LIMIT_BY_TURNOVER_DEFAULT;
     mLimitByTurnoverPercent = LIMIT_BY_TURNOVER_PERCENT_DEFAULT;
     mStorageMonthLimit      = STORAGE_MONTH_LIMIT_DEFAULT;
@@ -122,7 +122,7 @@ void Config::save(ISettingsEditor* settingsEditor)
     settingsEditor->setValue("Config/ScheduleEndHour",        mScheduleEndHour);
     settingsEditor->setValue("Config/ScheduleEndMinute",      mScheduleEndMinute);
     settingsEditor->setValue("Config/LimitStockPurchase",     mLimitStockPurchase);
-    settingsEditor->setValue("Config/AmountOfStockPurchase",  mAmountOfStockPurchase);
+    settingsEditor->setValue("Config/LimitStockPurchasePart", mLimitStockPurchasePart);
     settingsEditor->setValue("Config/LimitByTurnover",        mLimitByTurnover);
     settingsEditor->setValue("Config/LimitByTurnoverPercent", mLimitByTurnoverPercent);
     settingsEditor->setValue("Config/StorageMonthLimit",      mStorageMonthLimit);
@@ -149,7 +149,7 @@ void Config::load(ISettingsEditor* settingsEditor)
     mScheduleEndHour           = settingsEditor->value("Config/ScheduleEndHour",        mScheduleEndHour).toInt();
     mScheduleEndMinute         = settingsEditor->value("Config/ScheduleEndMinute",      mScheduleEndMinute).toInt();
     mLimitStockPurchase        = settingsEditor->value("Config/LimitStockPurchase",     mLimitStockPurchase).toBool();
-    mAmountOfStockPurchase     = settingsEditor->value("Config/AmountOfStockPurchase",  mAmountOfStockPurchase).toInt();
+    mLimitStockPurchasePart    = settingsEditor->value("Config/LimitStockPurchasePart", mLimitStockPurchasePart).toFloat();
     mLimitByTurnover           = settingsEditor->value("Config/LimitByTurnover",        mLimitByTurnover).toBool();
     mLimitByTurnoverPercent    = settingsEditor->value("Config/LimitByTurnoverPercent", mLimitByTurnoverPercent).toFloat();
     mStorageMonthLimit         = settingsEditor->value("Config/StorageMonthLimit",      mStorageMonthLimit).toInt();
@@ -280,18 +280,18 @@ bool Config::isLimitStockPurchase()
     return mLimitStockPurchase;
 }
 
-void Config::setAmountOfStockPurchase(int value)
+void Config::setLimitStockPurchasePart(float value)
 {
     const QMutexLocker lock(mMutex);
 
-    mAmountOfStockPurchase = value;
+    mLimitStockPurchasePart = value;
 }
 
-int Config::getAmountOfStockPurchase()
+float Config::getLimitStockPurchasePart()
 {
     const QMutexLocker lock(mMutex);
 
-    return mAmountOfStockPurchase;
+    return mLimitStockPurchasePart;
 }
 
 void Config::setLimitByTurnover(bool value)

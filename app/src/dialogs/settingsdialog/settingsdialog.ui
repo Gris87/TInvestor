@@ -171,7 +171,7 @@
          <item>
           <widget class="QCheckBox" name="limitStockPurchaseCheckBox">
            <property name="text">
-            <string>Limit stock purchase</string>
+            <string>Limit stock purchase part less than</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -197,25 +197,25 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QSpinBox" name="amountOfStockPurchaseSpinBox">
+             <widget class="QDoubleSpinBox" name="limitStockPurchasePartDoubleSpinBox">
               <property name="suffix">
-               <string> rubles</string>
-              </property>
-              <property name="minimum">
-               <number>1</number>
+               <string notr="true">%</string>
               </property>
               <property name="maximum">
-               <number>100000000</number>
+               <double>100.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>0.100000000000000</double>
               </property>
               <property name="value">
-               <number>10000</number>
+               <double>10.000000000000000</double>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="limitByTurnoverCheckBox">
               <property name="text">
-               <string>and more than</string>
+               <string>and less than</string>
               </property>
              </widget>
             </item>

@@ -1,6 +1,3 @@
-Create release
-
-Limit buy with percent of total money instead of ruble
 Store turnover in meta
 Load turnover
 Update turnover
