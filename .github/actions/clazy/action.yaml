@@ -99,7 +99,7 @@ runs:
                     --quazip-path "${Env:GITHUB_WORKSPACE}\Qt\quazip\install\include\QuaZip-Qt6-1.5" `
                     --vcpkg-path "${Env:GITHUB_WORKSPACE}\Qt\vcpkg" `
                     --google-test-path "${Env:GITHUB_WORKSPACE}\Qt\googletest-source" `
-                    --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.43.34808" `
+                    --msvc-tools-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.44.35207" `
                     --msvc-auxiliary-path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary" `
                     --windows-kits-path "C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0" `
                     --output build\Desktop-Debug\.qtc_clangd\compile_commands.json
