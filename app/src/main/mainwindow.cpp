@@ -436,7 +436,7 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
 {
     keepMoneyChangeDelayTimer.stop();
 
-    int keepMoney = ui->keepMoneySpinBox->value();
+    const int keepMoney = ui->keepMoneySpinBox->value();
 
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
 

@@ -87,8 +87,6 @@ runs:
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
 
-        Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\"
-
         switch ("${{ runner.os }}")
         {
           "Windows" {
