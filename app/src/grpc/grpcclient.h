@@ -35,7 +35,8 @@ public:
         const SERVICE_T&     service,
         grpc::ClientContext* context,
         const REQ_T&         req,
-        const RESP_T&        resp
+        const RESP_T&        resp,
+        bool                 ignoreInvalidArg
     )
     {
         bool running = true;
@@ -56,7 +57,8 @@ public:
                     continue;
                 }
 
-                if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND)
+                if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND &&
+                    (ignoreInvalidArg && status.error_code() != grpc::StatusCode::INVALID_ARGUMENT))
                 {
                     emitAuthFailed(status);
                 }

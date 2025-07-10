@@ -245,6 +245,10 @@ TEST_F(Test_TradingThread, Test_sell)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price)
     )
         .WillOnce(Return(nullptr));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to sell 50 with a price 10.500 \u20BD"))
+    );
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
 
@@ -262,6 +266,12 @@ TEST_F(Test_TradingThread, Test_sell)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price)
     )
         .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(
+            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.500 \u20BD. Let's try again")
+        )
+    );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(thread->sell(10000, 40000), false);
@@ -280,6 +290,12 @@ TEST_F(Test_TradingThread, Test_sell)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_SELL, 5, price)
     )
         .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(
+            LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to sell 50 rejected with a price 10.500 \u20BD. Let's try again")
+        )
+    );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));
@@ -487,6 +503,10 @@ TEST_F(Test_TradingThread, Test_buy)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price)
     )
         .WillOnce(Return(nullptr));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(LOG_LEVEL_WARNING, QString("aaaaa"), QString("Failed to create order to buy 50 with a price 10.500 \u20BD"))
+    );
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
 
@@ -504,6 +524,10 @@ TEST_F(Test_TradingThread, Test_buy)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price)
     )
         .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to buy 50 rejected with a price 10.500 \u20BD. Let's try again"))
+    );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(true));
 
     ASSERT_EQ(thread->buy(10000, 40000), false);
@@ -522,6 +546,10 @@ TEST_F(Test_TradingThread, Test_buy)
         postOrder(QThread::currentThread(), QString("account-id"), QString("aaaaa"), tinkoff::ORDER_DIRECTION_BUY, 5, price)
     )
         .WillOnce(Return(postOrderResponse));
+    EXPECT_CALL(
+        *logsThreadMock,
+        addLog(LOG_LEVEL_DEBUG, QString("aaaaa"), QString("Order to buy 50 rejected with a price 10.500 \u20BD. Let's try again"))
+    );
     EXPECT_CALL(*timeUtilsMock, interruptibleSleep(1000, QThread::currentThread())).WillOnce(Return(false));
     EXPECT_CALL(*grpcClientMock, getMaxLots(QThread::currentThread(), QString("account-id"), QString("aaaaa"), price))
         .WillOnce(Return(getMaxLotsResponse));

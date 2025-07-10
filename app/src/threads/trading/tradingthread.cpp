@@ -252,6 +252,17 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
             {
+                mLogsThread->addLog(
+                    LOG_LEVEL_WARNING,
+                    mInstrumentId,
+                    tr("Failed to create order to sell %1 with a price %2 %3")
+                        .arg(
+                            QString::number(amountToSell * mInstrumentLot),
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                            "\u20BD"
+                        )
+                );
+
                 return false;
             }
 
@@ -274,6 +285,17 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
 
                 break;
             }
+
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG,
+                mInstrumentId,
+                tr("Order to sell %1 rejected with a price %2 %3. Let's try again")
+                    .arg(
+                        QString::number(amountToSell * mInstrumentLot),
+                        QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                        "\u20BD"
+                    )
+            );
 
             if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
             {
@@ -368,6 +390,17 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
 
             if (QThread::currentThread()->isInterruptionRequested() || tinkoffOrder == nullptr)
             {
+                mLogsThread->addLog(
+                    LOG_LEVEL_WARNING,
+                    mInstrumentId,
+                    tr("Failed to create order to buy %1 with a price %2 %3")
+                        .arg(
+                            QString::number(amountToBuy * mInstrumentLot),
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                            "\u20BD"
+                        )
+                );
+
                 return false;
             }
 
@@ -390,6 +423,17 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
 
                 break;
             }
+
+            mLogsThread->addLog(
+                LOG_LEVEL_DEBUG,
+                mInstrumentId,
+                tr("Order to buy %1 rejected with a price %2 %3. Let's try again")
+                    .arg(
+                        QString::number(amountToBuy * mInstrumentLot),
+                        QString::number(quotationToFloat(price), 'f', mPricePrecision),
+                        "\u20BD"
+                    )
+            );
 
             if (mTimeUtils->interruptibleSleep(ORDER_RETRY_DELAY, QThread::currentThread()))
             {

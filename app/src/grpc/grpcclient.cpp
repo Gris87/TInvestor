@@ -92,7 +92,7 @@ std::shared_ptr<tinkoff::GetInfoResponse> GrpcClient::getUserInfo(QThread* paren
 
     context.set_credentials(mCreds);
 
-    return repeatRequest(parentThread, getUserInfoAction, mUsersService, &context, req, resp);
+    return repeatRequest(parentThread, getUserInfoAction, mUsersService, &context, req, resp, false);
 }
 
 static grpc::Status getAccountsAction(
@@ -116,7 +116,7 @@ std::shared_ptr<tinkoff::GetAccountsResponse> GrpcClient::getAccounts(QThread* p
 
     req.set_status(tinkoff::ACCOUNT_STATUS_OPEN);
 
-    return repeatRequest(parentThread, getAccountsAction, mUsersService, &context, req, resp);
+    return repeatRequest(parentThread, getAccountsAction, mUsersService, &context, req, resp, false);
 }
 
 static grpc::Status findStocksAction(
@@ -140,7 +140,7 @@ std::shared_ptr<tinkoff::SharesResponse> GrpcClient::findStocks(QThread* parentT
 
     req.set_instrument_status(instrumentStatus);
 
-    return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp);
+    return repeatRequest(parentThread, findStocksAction, mInstrumentsService, &context, req, resp, false);
 }
 
 static grpc::Status findBondsAction(
@@ -164,7 +164,7 @@ std::shared_ptr<tinkoff::BondsResponse> GrpcClient::findBonds(QThread* parentThr
 
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findBondsAction, mInstrumentsService, &context, req, resp);
+    return repeatRequest(parentThread, findBondsAction, mInstrumentsService, &context, req, resp, false);
 }
 
 static grpc::Status findCurrenciesAction(
@@ -188,7 +188,7 @@ std::shared_ptr<tinkoff::CurrenciesResponse> GrpcClient::findCurrencies(QThread*
 
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp);
+    return repeatRequest(parentThread, findCurrenciesAction, mInstrumentsService, &context, req, resp, false);
 }
 
 static grpc::Status findEtfsAction(
@@ -212,7 +212,7 @@ std::shared_ptr<tinkoff::EtfsResponse> GrpcClient::findEtfs(QThread* parentThrea
 
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, &context, req, resp);
+    return repeatRequest(parentThread, findEtfsAction, mInstrumentsService, &context, req, resp, false);
 }
 
 static grpc::Status findFuturesAction(
@@ -236,7 +236,7 @@ std::shared_ptr<tinkoff::FuturesResponse> GrpcClient::findFutures(QThread* paren
 
     req.set_instrument_status(tinkoff::INSTRUMENT_STATUS_ALL);
 
-    return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp);
+    return repeatRequest(parentThread, findFuturesAction, mInstrumentsService, &context, req, resp, false);
 }
 
 static grpc::Status getCandlesAction(
@@ -273,7 +273,7 @@ GrpcClient::getCandles(QThread* parentThread, const QString& instrumentId, qint6
     req.set_interval(tinkoff::CANDLE_INTERVAL_1_MIN);
     req.set_limit(MAX_LIMIT_FOR_INTERVAL_1_MIN);
 
-    return repeatRequest(parentThread, getCandlesAction, mMarketDataService, &context, req, resp);
+    return repeatRequest(parentThread, getCandlesAction, mMarketDataService, &context, req, resp, false);
 }
 
 static grpc::Status getOrderBookAction(
@@ -299,7 +299,7 @@ GrpcClient::getOrderBook(QThread* parentThread, const QString& instrumentId, int
     req.set_instrument_id(instrumentId.toStdString());
     req.set_depth(depth);
 
-    return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp);
+    return repeatRequest(parentThread, getOrderBookAction, mMarketDataService, &context, req, resp, false);
 }
 
 static grpc::Status getPortfolioAction(
@@ -323,7 +323,7 @@ std::shared_ptr<tinkoff::PortfolioResponse> GrpcClient::getPortfolio(QThread* pa
 
     req.set_account_id(accountId.toStdString());
 
-    return repeatRequest(parentThread, getPortfolioAction, mOperationsService, &context, req, resp);
+    return repeatRequest(parentThread, getPortfolioAction, mOperationsService, &context, req, resp, false);
 }
 
 static grpc::Status getPositionsAction(
@@ -347,7 +347,7 @@ std::shared_ptr<tinkoff::PositionsResponse> GrpcClient::getPositions(QThread* pa
 
     req.set_account_id(accountId.toStdString());
 
-    return repeatRequest(parentThread, getPositionsAction, mOperationsService, &context, req, resp);
+    return repeatRequest(parentThread, getPositionsAction, mOperationsService, &context, req, resp, false);
 }
 
 static grpc::Status getOperationsAction(
@@ -387,7 +387,7 @@ GrpcClient::getOperations(QThread* parentThread, const QString& accountId, qint6
     req.set_state(tinkoff::OPERATION_STATE_EXECUTED);
     req.set_without_trades(true);
 
-    return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp);
+    return repeatRequest(parentThread, getOperationsAction, mOperationsService, &context, req, resp, false);
 }
 
 static grpc::Status getMaxLotsAction(
@@ -419,7 +419,7 @@ GrpcClient::getMaxLots(QThread* parentThread, const QString& accountId, const QS
     req.set_instrument_id(instrumentId.toStdString());
     req.set_allocated_price(tinkoffPrice);
 
-    return repeatRequest(parentThread, getMaxLotsAction, mOrdersService, &context, req, resp);
+    return repeatRequest(parentThread, getMaxLotsAction, mOrdersService, &context, req, resp, false);
 }
 
 static grpc::Status postOrderAction(
@@ -462,7 +462,7 @@ std::shared_ptr<tinkoff::PostOrderResponse> GrpcClient::postOrder(
     req.set_time_in_force(tinkoff::TIME_IN_FORCE_DAY);
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
 
-    return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp);
+    return repeatRequest(parentThread, postOrderAction, mOrdersService, &context, req, resp, true);
 }
 
 static grpc::Status getOrderStateAction(
@@ -490,7 +490,7 @@ GrpcClient::getOrderState(QThread* parentThread, const QString& accountId, const
     req.set_price_type(tinkoff::PRICE_TYPE_CURRENCY);
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp);
+    return repeatRequest(parentThread, getOrderStateAction, mOrdersService, &context, req, resp, false);
 }
 
 static grpc::Status cancelOrderAction(
@@ -517,7 +517,7 @@ GrpcClient::cancelOrder(QThread* parentThread, const QString& accountId, const Q
     req.set_order_id(orderId.toStdString());
     req.set_order_id_type(tinkoff::ORDER_ID_TYPE_EXCHANGE);
 
-    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp);
+    return repeatRequest(parentThread, cancelOrderAction, mOrdersService, &context, req, resp, false);
 }
 
 std::shared_ptr<MarketDataStream> GrpcClient::createMarketDataStream()
