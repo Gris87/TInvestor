@@ -6,6 +6,11 @@ Limit buy with percent of total money instead of ruble
 Store turnover in meta
 Load turnover
 Update turnover
+Decision maker thread
+Make some decision
+Simulator realtime mode
+Simulator date range mode
+Simulator parameters check
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

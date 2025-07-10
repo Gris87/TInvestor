@@ -87,6 +87,9 @@ runs:
         # Enter to TInvestor-source folder
         Set-Location -Path "TInvestor-source"
 
+        Get-ChildItem -Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC" -Recurse -Filter "type_traits"
+        Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\Include" -Recurse -Filter "type_traits"
+
         switch ("${{ runner.os }}")
         {
           "Windows" {
