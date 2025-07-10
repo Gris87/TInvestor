@@ -405,6 +405,8 @@ void StocksStorage::obtainTurnover(qint64 timestamp)
 {
     GetTurnoverInfo getTurnoverInfo(timestamp);
     processInParallel(mStocks, getTurnoverForParallel, &getTurnoverInfo);
+
+    mStocksDatabase->writeStocksMeta(mStocks);
 }
 
 struct GetPaybackInfo

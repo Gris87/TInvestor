@@ -1,6 +1,3 @@
-Store turnover in meta
-Load turnover
-Update turnover
 Decision maker thread
 Make some decision
 Simulator realtime mode
