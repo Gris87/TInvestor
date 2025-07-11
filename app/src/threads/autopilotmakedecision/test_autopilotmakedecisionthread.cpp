@@ -1,4 +1,4 @@
-#include "src/threads/makedecision/makedecisionthread.h"
+#include "src/threads/autopilotmakedecision/autopilotmakedecisionthread.h"
 
 #include <gtest/gtest.h>
 
@@ -12,7 +12,7 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
-class Test_MakeDecisionThread : public ::testing::Test
+class Test_AutoPilotMakeDecisionThread : public ::testing::Test
 {
 protected:
     void SetUp() override
@@ -20,7 +20,7 @@ protected:
         configMock        = new StrictMock<ConfigMock>();
         stocksStorageMock = new StrictMock<StocksStorageMock>();
 
-        thread = new MakeDecisionThread(configMock, stocksStorageMock);
+        thread = new AutoPilotMakeDecisionThread(configMock, stocksStorageMock);
     }
 
     void TearDown() override
@@ -30,23 +30,23 @@ protected:
         delete stocksStorageMock;
     }
 
-    MakeDecisionThread*            thread;
+    AutoPilotMakeDecisionThread*   thread;
     StrictMock<ConfigMock>*        configMock;
     StrictMock<StocksStorageMock>* stocksStorageMock;
 };
 
 
 
-TEST_F(Test_MakeDecisionThread, Test_constructor_and_destructor)
+TEST_F(Test_AutoPilotMakeDecisionThread, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_MakeDecisionThread, Test_run)
+TEST_F(Test_AutoPilotMakeDecisionThread, Test_run)
 {
     thread->run();
 }
 
-TEST_F(Test_MakeDecisionThread, Test_terminateThread)
+TEST_F(Test_AutoPilotMakeDecisionThread, Test_terminateThread)
 {
     thread->terminateThread();
 }

@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/makedecision/imakedecisionthread.h"
+#include "src/threads/autopilotmakedecision/iautopilotmakedecisionthread.h"
 
 #include <QMutex>
 
@@ -11,16 +11,16 @@
 
 
 
-class MakeDecisionThread : public IMakeDecisionThread
+class AutoPilotMakeDecisionThread : public IAutoPilotMakeDecisionThread
 {
     Q_OBJECT
 
 public:
-    explicit MakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
-    ~MakeDecisionThread() override;
+    explicit AutoPilotMakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
+    ~AutoPilotMakeDecisionThread() override;
 
-    MakeDecisionThread(const MakeDecisionThread& another)            = delete;
-    MakeDecisionThread& operator=(const MakeDecisionThread& another) = delete;
+    AutoPilotMakeDecisionThread(const AutoPilotMakeDecisionThread& another)            = delete;
+    AutoPilotMakeDecisionThread& operator=(const AutoPilotMakeDecisionThread& another) = delete;
 
     void run() override;
 

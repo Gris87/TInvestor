@@ -26,16 +26,17 @@
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/threads/autopilotmakedecision/iautopilotmakedecisionthread_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/follow/ifollowthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
 #include "src/threads/logs/ilogsthread_mock.h"
-#include "src/threads/makedecision/imakedecisionthread_mock.h"
 #include "src/threads/operations/ioperationsthread_mock.h"
 #include "src/threads/orderbook/iorderbookthread_mock.h"
 #include "src/threads/portfolio/iportfoliothread_mock.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
+#include "src/threads/simulatormakedecision/isimulatormakedecisionthread_mock.h"
 #include "src/threads/trading/itradingthread_mock.h"
 #include "src/threads/trading/itradingthreadfactory_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
@@ -138,8 +139,8 @@ protected:
         logsThreadMock                       = new StrictMock<LogsThreadMock>();
         portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         portfolioLastPriceThreadMock         = new StrictMock<PortfolioLastPriceThreadMock>();
-        simulatorMakeDecisionThreadMock      = new StrictMock<MakeDecisionThreadMock>();
-        autoPilotMakeDecisionThreadMock      = new StrictMock<MakeDecisionThreadMock>();
+        simulatorMakeDecisionThreadMock      = new StrictMock<SimulatorMakeDecisionThreadMock>();
+        autoPilotMakeDecisionThreadMock      = new StrictMock<AutoPilotMakeDecisionThreadMock>();
         followThreadMock                     = new StrictMock<FollowThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         tradingThreadFactoryMock             = new StrictMock<TradingThreadFactoryMock>();
@@ -440,8 +441,8 @@ protected:
     StrictMock<LogsThreadMock>*                       logsThreadMock;
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<PortfolioLastPriceThreadMock>*         portfolioLastPriceThreadMock;
-    StrictMock<MakeDecisionThreadMock>*               simulatorMakeDecisionThreadMock;
-    StrictMock<MakeDecisionThreadMock>*               autoPilotMakeDecisionThreadMock;
+    StrictMock<SimulatorMakeDecisionThreadMock>*      simulatorMakeDecisionThreadMock;
+    StrictMock<AutoPilotMakeDecisionThreadMock>*      autoPilotMakeDecisionThreadMock;
     StrictMock<FollowThreadMock>*                     followThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<TradingThreadFactoryMock>*             tradingThreadFactoryMock;

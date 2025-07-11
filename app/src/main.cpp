@@ -40,16 +40,17 @@
 #include "src/storage/logos/logosstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
+#include "src/threads/autopilotmakedecision/autopilotmakedecisionthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/follow/followthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
 #include "src/threads/logs/logsthread.h"
-#include "src/threads/makedecision/makedecisionthread.h"
 #include "src/threads/operations/operationsthread.h"
 #include "src/threads/orderbook/orderbookthread.h"
 #include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
+#include "src/threads/simulatormakedecision/simulatormakedecisionthread.h"
 #include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
@@ -296,7 +297,9 @@ static int runApplication(QApplication* app)
 
     Config config(&simulatorConfig, &autoPilotConfig);
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
-    Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
+    Config configForSimulation(
+        &simulatorConfigForSimulation, &autoPilotConfigForSimulation
+    ); // TODO: Use in simulator thread not in MainWindow
 
     UserDatabase        userDatabase;
     UserStorage         userStorage(&userDatabase);
@@ -332,16 +335,16 @@ static int runApplication(QApplication* app)
         &httpClient,
         &grpcClient
     );
-    LastPriceThread          lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread         operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
-    LogsThread               logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
-    PortfolioThread          portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
-    PortfolioLastPriceThread portfolioLastPriceThread(&timeUtils, &grpcClient);
-    MakeDecisionThread       simulatorMakeDecisionThread(&config, &stocksStorage);
-    MakeDecisionThread       autoPilotMakeDecisionThread(&config, &stocksStorage);
-    FollowThread             followThread(&instrumentsStorage, &grpcClient);
-    OrderBookThread          orderBookThread(&grpcClient);
-    TradingThreadFactory     tradingThreadFactory;
+    LastPriceThread             lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
+    OperationsThread            operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
+    LogsThread                  logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
+    PortfolioThread             portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
+    PortfolioLastPriceThread    portfolioLastPriceThread(&timeUtils, &grpcClient);
+    SimulatorMakeDecisionThread simulatorMakeDecisionThread(&config, &stocksStorage);
+    AutoPilotMakeDecisionThread autoPilotMakeDecisionThread(&config, &stocksStorage);
+    FollowThread                followThread(&instrumentsStorage, &grpcClient);
+    OrderBookThread             orderBookThread(&grpcClient);
+    TradingThreadFactory        tradingThreadFactory;
 
     MainWindow mainWindow(
         &config,

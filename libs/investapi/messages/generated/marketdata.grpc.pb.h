@@ -106,6 +106,14 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>> PrepareAsyncGetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>>(PrepareAsyncGetTechAnalysisRaw(context, request, cq));
     }
+    // GetMarketValues — рыночные данные по инструментам
+    virtual ::grpc::Status GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>> AsyncGetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>>(AsyncGetMarketValuesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>> PrepareAsyncGetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>>(PrepareAsyncGetMarketValuesRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -134,6 +142,9 @@ class MarketDataService final {
       // GetTechAnalysis — технические индикаторы по инструменту
       virtual void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // GetMarketValues — рыночные данные по инструментам
+      virtual void GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -155,6 +166,8 @@ class MarketDataService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>* PrepareAsyncGetClosePricesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>* AsyncGetTechAnalysisRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>* PrepareAsyncGetTechAnalysisRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* AsyncGetMarketValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* PrepareAsyncGetMarketValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -215,6 +228,13 @@ class MarketDataService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>> PrepareAsyncGetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>>(PrepareAsyncGetTechAnalysisRaw(context, request, cq));
     }
+    ::grpc::Status GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>> AsyncGetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>>(AsyncGetMarketValuesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>> PrepareAsyncGetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>>(PrepareAsyncGetMarketValuesRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -234,6 +254,8 @@ class MarketDataService final {
       void GetClosePrices(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, std::function<void(::grpc::Status)>) override;
       void GetTechAnalysis(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetMarketValues(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -261,6 +283,8 @@ class MarketDataService final {
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse>* PrepareAsyncGetClosePricesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>* AsyncGetTechAnalysisRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>* PrepareAsyncGetTechAnalysisRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* AsyncGetMarketValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* PrepareAsyncGetMarketValuesRaw(::grpc::ClientContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetCandles_;
     const ::grpc::internal::RpcMethod rpcmethod_GetLastPrices_;
     const ::grpc::internal::RpcMethod rpcmethod_GetOrderBook_;
@@ -269,6 +293,7 @@ class MarketDataService final {
     const ::grpc::internal::RpcMethod rpcmethod_GetLastTrades_;
     const ::grpc::internal::RpcMethod rpcmethod_GetClosePrices_;
     const ::grpc::internal::RpcMethod rpcmethod_GetTechAnalysis_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetMarketValues_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -293,6 +318,8 @@ class MarketDataService final {
     virtual ::grpc::Status GetClosePrices(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetClosePricesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetClosePricesResponse* response);
     // GetTechAnalysis — технические индикаторы по инструменту
     virtual ::grpc::Status GetTechAnalysis(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* response);
+    // GetMarketValues — рыночные данные по инструментам
+    virtual ::grpc::Status GetMarketValues(::grpc::ServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetCandles : public BaseClass {
@@ -454,7 +481,27 @@ class MarketDataService final {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_GetCandles<WithAsyncMethod_GetLastPrices<WithAsyncMethod_GetOrderBook<WithAsyncMethod_GetTradingStatus<WithAsyncMethod_GetTradingStatuses<WithAsyncMethod_GetLastTrades<WithAsyncMethod_GetClosePrices<WithAsyncMethod_GetTechAnalysis<Service > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodAsync(8);
+    }
+    ~WithAsyncMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetMarketValues(::grpc::ServerContext* context, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::grpc::ServerAsyncResponseWriter< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetCandles<WithAsyncMethod_GetLastPrices<WithAsyncMethod_GetOrderBook<WithAsyncMethod_GetTradingStatus<WithAsyncMethod_GetTradingStatuses<WithAsyncMethod_GetLastTrades<WithAsyncMethod_GetClosePrices<WithAsyncMethod_GetTechAnalysis<WithAsyncMethod_GetMarketValues<Service > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_GetCandles : public BaseClass {
    private:
@@ -671,7 +718,34 @@ class MarketDataService final {
     virtual ::grpc::ServerUnaryReactor* GetTechAnalysis(
       ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_GetCandles<WithCallbackMethod_GetLastPrices<WithCallbackMethod_GetOrderBook<WithCallbackMethod_GetTradingStatus<WithCallbackMethod_GetTradingStatuses<WithCallbackMethod_GetLastTrades<WithCallbackMethod_GetClosePrices<WithCallbackMethod_GetTechAnalysis<Service > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* request, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* response) { return this->GetMarketValues(context, request, response); }));}
+    void SetMessageAllocatorFor_GetMarketValues(
+        ::grpc::MessageAllocator< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetMarketValues(
+      ::grpc::CallbackServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_GetCandles<WithCallbackMethod_GetLastPrices<WithCallbackMethod_GetOrderBook<WithCallbackMethod_GetTradingStatus<WithCallbackMethod_GetTradingStatuses<WithCallbackMethod_GetLastTrades<WithCallbackMethod_GetClosePrices<WithCallbackMethod_GetTechAnalysis<WithCallbackMethod_GetMarketValues<Service > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_GetCandles : public BaseClass {
@@ -805,6 +879,23 @@ class MarketDataService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetTechAnalysis(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodGeneric(8);
+    }
+    ~WithGenericMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -967,6 +1058,26 @@ class MarketDataService final {
     }
     void RequestGetTechAnalysis(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodRaw(8);
+    }
+    ~WithRawMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetMarketValues(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1143,6 +1254,28 @@ class MarketDataService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetTechAnalysis(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodRawCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetMarketValues(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetMarketValues(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1361,9 +1494,36 @@ class MarketDataService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetTechAnalysis(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisRequest,::tinkoff::public_::invest::api::contract::v1::GetTechAnalysisResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_GetCandles<WithStreamedUnaryMethod_GetLastPrices<WithStreamedUnaryMethod_GetOrderBook<WithStreamedUnaryMethod_GetTradingStatus<WithStreamedUnaryMethod_GetTradingStatuses<WithStreamedUnaryMethod_GetLastTrades<WithStreamedUnaryMethod_GetClosePrices<WithStreamedUnaryMethod_GetTechAnalysis<Service > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetMarketValues : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetMarketValues() {
+      ::grpc::Service::MarkMethodStreamed(8,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* streamer) {
+                       return this->StreamedGetMarketValues(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetMarketValues() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetMarketValues(::grpc::ServerContext* /*context*/, const ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest* /*request*/, ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetMarketValues(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::tinkoff::public_::invest::api::contract::v1::GetMarketValuesRequest,::tinkoff::public_::invest::api::contract::v1::GetMarketValuesResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_GetCandles<WithStreamedUnaryMethod_GetLastPrices<WithStreamedUnaryMethod_GetOrderBook<WithStreamedUnaryMethod_GetTradingStatus<WithStreamedUnaryMethod_GetTradingStatuses<WithStreamedUnaryMethod_GetLastTrades<WithStreamedUnaryMethod_GetClosePrices<WithStreamedUnaryMethod_GetTechAnalysis<WithStreamedUnaryMethod_GetMarketValues<Service > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_GetCandles<WithStreamedUnaryMethod_GetLastPrices<WithStreamedUnaryMethod_GetOrderBook<WithStreamedUnaryMethod_GetTradingStatus<WithStreamedUnaryMethod_GetTradingStatuses<WithStreamedUnaryMethod_GetLastTrades<WithStreamedUnaryMethod_GetClosePrices<WithStreamedUnaryMethod_GetTechAnalysis<Service > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_GetCandles<WithStreamedUnaryMethod_GetLastPrices<WithStreamedUnaryMethod_GetOrderBook<WithStreamedUnaryMethod_GetTradingStatus<WithStreamedUnaryMethod_GetTradingStatuses<WithStreamedUnaryMethod_GetLastTrades<WithStreamedUnaryMethod_GetClosePrices<WithStreamedUnaryMethod_GetTechAnalysis<WithStreamedUnaryMethod_GetMarketValues<Service > > > > > > > > > StreamedService;
 };
 // Сервис для получения биржевой информации:<br/> 1. Свечи.<br/> 2. Стаканы.<br/> 3. Торговые статусы.<br/> 4. Лента сделок.
 

@@ -95,6 +95,12 @@ extern GetLastTradesRequestDefaultTypeInternal _GetLastTradesRequest_default_ins
 class GetLastTradesResponse;
 struct GetLastTradesResponseDefaultTypeInternal;
 extern GetLastTradesResponseDefaultTypeInternal _GetLastTradesResponse_default_instance_;
+class GetMarketValuesRequest;
+struct GetMarketValuesRequestDefaultTypeInternal;
+extern GetMarketValuesRequestDefaultTypeInternal _GetMarketValuesRequest_default_instance_;
+class GetMarketValuesResponse;
+struct GetMarketValuesResponseDefaultTypeInternal;
+extern GetMarketValuesResponseDefaultTypeInternal _GetMarketValuesResponse_default_instance_;
 class GetMySubscriptions;
 struct GetMySubscriptionsDefaultTypeInternal;
 extern GetMySubscriptionsDefaultTypeInternal _GetMySubscriptions_default_instance_;
@@ -164,6 +170,12 @@ extern MarketDataResponseDefaultTypeInternal _MarketDataResponse_default_instanc
 class MarketDataServerSideStreamRequest;
 struct MarketDataServerSideStreamRequestDefaultTypeInternal;
 extern MarketDataServerSideStreamRequestDefaultTypeInternal _MarketDataServerSideStreamRequest_default_instance_;
+class MarketValue;
+struct MarketValueDefaultTypeInternal;
+extern MarketValueDefaultTypeInternal _MarketValue_default_instance_;
+class MarketValueInstrument;
+struct MarketValueInstrumentDefaultTypeInternal;
+extern MarketValueInstrumentDefaultTypeInternal _MarketValueInstrument_default_instance_;
 class OpenInterest;
 struct OpenInterestDefaultTypeInternal;
 extern OpenInterestDefaultTypeInternal _OpenInterest_default_instance_;
@@ -662,6 +674,43 @@ inline const std::string& CandleSource_Name(CandleSource value) {
 inline bool CandleSource_Parse(absl::string_view name, CandleSource* value) {
   return ::google::protobuf::internal::ParseNamedEnum<CandleSource>(
       CandleSource_descriptor(), name, value);
+}
+enum MarketValueType : int {
+  INSTRUMENT_VALUE_UNSPECIFIED = 0,
+  INSTRUMENT_VALUE_LAST_PRICE = 1,
+  INSTRUMENT_VALUE_LAST_PRICE_DEALER = 2,
+  INSTRUMENT_VALUE_CLOSE_PRICE = 3,
+  INSTRUMENT_VALUE_EVENING_SESSION_PRICE = 4,
+  INSTRUMENT_VALUE_OPEN_INTEREST = 5,
+  MarketValueType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::min(),
+  MarketValueType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      std::numeric_limits<::int32_t>::max(),
+};
+
+bool MarketValueType_IsValid(int value);
+extern const uint32_t MarketValueType_internal_data_[];
+constexpr MarketValueType MarketValueType_MIN = static_cast<MarketValueType>(0);
+constexpr MarketValueType MarketValueType_MAX = static_cast<MarketValueType>(5);
+constexpr int MarketValueType_ARRAYSIZE = 5 + 1;
+const ::google::protobuf::EnumDescriptor*
+MarketValueType_descriptor();
+template <typename T>
+const std::string& MarketValueType_Name(T value) {
+  static_assert(std::is_same<T, MarketValueType>::value ||
+                    std::is_integral<T>::value,
+                "Incorrect type passed to MarketValueType_Name().");
+  return MarketValueType_Name(static_cast<MarketValueType>(value));
+}
+template <>
+inline const std::string& MarketValueType_Name(MarketValueType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<MarketValueType_descriptor,
+                                                 0, 5>(
+      static_cast<int>(value));
+}
+inline bool MarketValueType_Parse(absl::string_view name, MarketValueType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MarketValueType>(
+      MarketValueType_descriptor(), name, value);
 }
 enum OrderBookType : int {
   ORDERBOOK_TYPE_UNSPECIFIED = 0,
@@ -4235,6 +4284,230 @@ class GetMySubscriptions final : public ::google::protobuf::internal::ZeroFields
                           const GetMySubscriptions& from_msg);
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
+  friend struct ::TableStruct_marketdata_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetMarketValuesRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest) */ {
+ public:
+  inline GetMarketValuesRequest() : GetMarketValuesRequest(nullptr) {}
+  ~GetMarketValuesRequest() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(GetMarketValuesRequest* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(GetMarketValuesRequest));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR GetMarketValuesRequest(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline GetMarketValuesRequest(const GetMarketValuesRequest& from) : GetMarketValuesRequest(nullptr, from) {}
+  inline GetMarketValuesRequest(GetMarketValuesRequest&& from) noexcept
+      : GetMarketValuesRequest(nullptr, std::move(from)) {}
+  inline GetMarketValuesRequest& operator=(const GetMarketValuesRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMarketValuesRequest& operator=(GetMarketValuesRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetMarketValuesRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetMarketValuesRequest* internal_default_instance() {
+    return reinterpret_cast<const GetMarketValuesRequest*>(
+        &_GetMarketValuesRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 53;
+  friend void swap(GetMarketValuesRequest& a, GetMarketValuesRequest& b) { a.Swap(&b); }
+  inline void Swap(GetMarketValuesRequest* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMarketValuesRequest* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetMarketValuesRequest* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<GetMarketValuesRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetMarketValuesRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const GetMarketValuesRequest& from) { GetMarketValuesRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(GetMarketValuesRequest* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest"; }
+
+ protected:
+  explicit GetMarketValuesRequest(::google::protobuf::Arena* arena);
+  GetMarketValuesRequest(::google::protobuf::Arena* arena, const GetMarketValuesRequest& from);
+  GetMarketValuesRequest(::google::protobuf::Arena* arena, GetMarketValuesRequest&& from) noexcept
+      : GetMarketValuesRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kInstrumentIdFieldNumber = 1,
+    kValuesFieldNumber = 2,
+  };
+  // repeated string instrument_id = 1;
+  int instrument_id_size() const;
+  private:
+  int _internal_instrument_id_size() const;
+
+  public:
+  void clear_instrument_id() ;
+  const std::string& instrument_id(int index) const;
+  std::string* mutable_instrument_id(int index);
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_instrument_id(int index, Arg_&& value, Args_... args);
+  std::string* add_instrument_id();
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void add_instrument_id(Arg_&& value, Args_... args);
+  const ::google::protobuf::RepeatedPtrField<std::string>& instrument_id() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_instrument_id();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_instrument_id() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_instrument_id();
+
+  public:
+  // repeated .tinkoff.public.invest.api.contract.v1.MarketValueType values = 2;
+  int values_size() const;
+  private:
+  int _internal_values_size() const;
+
+  public:
+  void clear_values() ;
+  public:
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueType values(int index) const;
+  void set_values(int index, ::tinkoff::public_::invest::api::contract::v1::MarketValueType value);
+  void add_values(::tinkoff::public_::invest::api::contract::v1::MarketValueType value);
+  const ::google::protobuf::RepeatedField<int>& values() const;
+  ::google::protobuf::RepeatedField<int>* mutable_values();
+
+  private:
+  const ::google::protobuf::RepeatedField<int>& _internal_values() const;
+  ::google::protobuf::RepeatedField<int>* _internal_mutable_values();
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      1, 2, 0,
+      82, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const GetMarketValuesRequest& from_msg);
+    ::google::protobuf::RepeatedPtrField<std::string> instrument_id_;
+    ::google::protobuf::RepeatedField<int> values_;
+    ::google::protobuf::internal::CachedSize _values_cached_byte_size_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
   friend struct ::TableStruct_marketdata_2eproto;
 };
 // -------------------------------------------------------------------
@@ -8198,6 +8471,232 @@ class OpenInterest final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
+class MarketValue final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.MarketValue) */ {
+ public:
+  inline MarketValue() : MarketValue(nullptr) {}
+  ~MarketValue() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(MarketValue* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(MarketValue));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR MarketValue(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline MarketValue(const MarketValue& from) : MarketValue(nullptr, from) {}
+  inline MarketValue(MarketValue&& from) noexcept
+      : MarketValue(nullptr, std::move(from)) {}
+  inline MarketValue& operator=(const MarketValue& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MarketValue& operator=(MarketValue&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MarketValue& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MarketValue* internal_default_instance() {
+    return reinterpret_cast<const MarketValue*>(
+        &_MarketValue_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 56;
+  friend void swap(MarketValue& a, MarketValue& b) { a.Swap(&b); }
+  inline void Swap(MarketValue* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MarketValue* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MarketValue* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<MarketValue>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MarketValue& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const MarketValue& from) { MarketValue::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(MarketValue* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.MarketValue"; }
+
+ protected:
+  explicit MarketValue(::google::protobuf::Arena* arena);
+  MarketValue(::google::protobuf::Arena* arena, const MarketValue& from);
+  MarketValue(::google::protobuf::Arena* arena, MarketValue&& from) noexcept
+      : MarketValue(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kValueFieldNumber = 2,
+    kTimeFieldNumber = 3,
+    kTypeFieldNumber = 1,
+  };
+  // optional .tinkoff.public.invest.api.contract.v1.Quotation value = 2;
+  bool has_value() const;
+  void clear_value() ;
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& value() const;
+  PROTOBUF_NODISCARD ::tinkoff::public_::invest::api::contract::v1::Quotation* release_value();
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* mutable_value();
+  void set_allocated_value(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  void unsafe_arena_set_allocated_value(::tinkoff::public_::invest::api::contract::v1::Quotation* value);
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* unsafe_arena_release_value();
+
+  private:
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation& _internal_value() const;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _internal_mutable_value();
+
+  public:
+  // optional .google.protobuf.Timestamp time = 3;
+  bool has_time() const;
+  void clear_time() ;
+  const ::google::protobuf::Timestamp& time() const;
+  PROTOBUF_NODISCARD ::google::protobuf::Timestamp* release_time();
+  ::google::protobuf::Timestamp* mutable_time();
+  void set_allocated_time(::google::protobuf::Timestamp* value);
+  void unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value);
+  ::google::protobuf::Timestamp* unsafe_arena_release_time();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_time() const;
+  ::google::protobuf::Timestamp* _internal_mutable_time();
+
+  public:
+  // optional .tinkoff.public.invest.api.contract.v1.MarketValueType type = 1;
+  bool has_type() const;
+  void clear_type() ;
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueType type() const;
+  void set_type(::tinkoff::public_::invest::api::contract::v1::MarketValueType value);
+
+  private:
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueType _internal_type() const;
+  void _internal_set_type(::tinkoff::public_::invest::api::contract::v1::MarketValueType value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.MarketValue)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      2, 3, 2,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const MarketValue& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::tinkoff::public_::invest::api::contract::v1::Quotation* value_;
+    ::google::protobuf::Timestamp* time_;
+    int type_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_marketdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class LastPrice final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.LastPrice) */ {
  public:
@@ -11192,6 +11691,221 @@ class OrderBook final : public ::google::protobuf::Message
 };
 // -------------------------------------------------------------------
 
+class MarketValueInstrument final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.MarketValueInstrument) */ {
+ public:
+  inline MarketValueInstrument() : MarketValueInstrument(nullptr) {}
+  ~MarketValueInstrument() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(MarketValueInstrument* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(MarketValueInstrument));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR MarketValueInstrument(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline MarketValueInstrument(const MarketValueInstrument& from) : MarketValueInstrument(nullptr, from) {}
+  inline MarketValueInstrument(MarketValueInstrument&& from) noexcept
+      : MarketValueInstrument(nullptr, std::move(from)) {}
+  inline MarketValueInstrument& operator=(const MarketValueInstrument& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MarketValueInstrument& operator=(MarketValueInstrument&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MarketValueInstrument& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MarketValueInstrument* internal_default_instance() {
+    return reinterpret_cast<const MarketValueInstrument*>(
+        &_MarketValueInstrument_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 55;
+  friend void swap(MarketValueInstrument& a, MarketValueInstrument& b) { a.Swap(&b); }
+  inline void Swap(MarketValueInstrument* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MarketValueInstrument* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MarketValueInstrument* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<MarketValueInstrument>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const MarketValueInstrument& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const MarketValueInstrument& from) { MarketValueInstrument::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(MarketValueInstrument* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.MarketValueInstrument"; }
+
+ protected:
+  explicit MarketValueInstrument(::google::protobuf::Arena* arena);
+  MarketValueInstrument(::google::protobuf::Arena* arena, const MarketValueInstrument& from);
+  MarketValueInstrument(::google::protobuf::Arena* arena, MarketValueInstrument&& from) noexcept
+      : MarketValueInstrument(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kValuesFieldNumber = 2,
+    kInstrumentUidFieldNumber = 1,
+  };
+  // repeated .tinkoff.public.invest.api.contract.v1.MarketValue values = 2;
+  int values_size() const;
+  private:
+  int _internal_values_size() const;
+
+  public:
+  void clear_values() ;
+  ::tinkoff::public_::invest::api::contract::v1::MarketValue* mutable_values(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>* mutable_values();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>& _internal_values() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>* _internal_mutable_values();
+  public:
+  const ::tinkoff::public_::invest::api::contract::v1::MarketValue& values(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::MarketValue* add_values();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>& values() const;
+  // string instrument_uid = 1;
+  void clear_instrument_uid() ;
+  const std::string& instrument_uid() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_instrument_uid(Arg_&& arg, Args_... args);
+  std::string* mutable_instrument_uid();
+  PROTOBUF_NODISCARD std::string* release_instrument_uid();
+  void set_allocated_instrument_uid(std::string* value);
+
+  private:
+  const std::string& _internal_instrument_uid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_instrument_uid(
+      const std::string& value);
+  std::string* _internal_mutable_instrument_uid();
+
+  public:
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.MarketValueInstrument)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      1, 2, 1,
+      82, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const MarketValueInstrument& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::MarketValue > values_;
+    ::google::protobuf::internal::ArenaStringPtr instrument_uid_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_marketdata_2eproto;
+};
+// -------------------------------------------------------------------
+
 class MarketDataServerSideStreamRequest final : public ::google::protobuf::Message
 /* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.MarketDataServerSideStreamRequest) */ {
  public:
@@ -14068,6 +14782,203 @@ class MarketDataResponse final : public ::google::protobuf::Message
     } payload_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::uint32_t _oneof_case_[1];
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_marketdata_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetMarketValuesResponse final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse) */ {
+ public:
+  inline GetMarketValuesResponse() : GetMarketValuesResponse(nullptr) {}
+  ~GetMarketValuesResponse() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(GetMarketValuesResponse* msg, std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(GetMarketValuesResponse));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR GetMarketValuesResponse(
+      ::google::protobuf::internal::ConstantInitialized);
+
+  inline GetMarketValuesResponse(const GetMarketValuesResponse& from) : GetMarketValuesResponse(nullptr, from) {}
+  inline GetMarketValuesResponse(GetMarketValuesResponse&& from) noexcept
+      : GetMarketValuesResponse(nullptr, std::move(from)) {}
+  inline GetMarketValuesResponse& operator=(const GetMarketValuesResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMarketValuesResponse& operator=(GetMarketValuesResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetMarketValuesResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetMarketValuesResponse* internal_default_instance() {
+    return reinterpret_cast<const GetMarketValuesResponse*>(
+        &_GetMarketValuesResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 54;
+  friend void swap(GetMarketValuesResponse& a, GetMarketValuesResponse& b) { a.Swap(&b); }
+  inline void Swap(GetMarketValuesResponse* other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMarketValuesResponse* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetMarketValuesResponse* New(::google::protobuf::Arena* arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<GetMarketValuesResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const GetMarketValuesResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const GetMarketValuesResponse& from) { GetMarketValuesResponse::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(
+      ::google::protobuf::MessageLite& to_msg,
+      const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* _InternalSerialize(
+      const MessageLite& msg, ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target,
+      ::google::protobuf::io::EpsCopyOutputStream* stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(GetMarketValuesResponse* other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(
+      ::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse"; }
+
+ protected:
+  explicit GetMarketValuesResponse(::google::protobuf::Arena* arena);
+  GetMarketValuesResponse(::google::protobuf::Arena* arena, const GetMarketValuesResponse& from);
+  GetMarketValuesResponse(::google::protobuf::Arena* arena, GetMarketValuesResponse&& from) noexcept
+      : GetMarketValuesResponse(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* GetClassData() const PROTOBUF_FINAL;
+  static void* PlacementNew_(const void*, void* mem,
+                             ::google::protobuf::Arena* arena);
+  static constexpr auto InternalNewImpl_();
+  static const ::google::protobuf::internal::ClassDataFull _class_data_;
+
+ public:
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kInstrumentsFieldNumber = 1,
+  };
+  // repeated .tinkoff.public.invest.api.contract.v1.MarketValueInstrument instruments = 1;
+  int instruments_size() const;
+  private:
+  int _internal_instruments_size() const;
+
+  public:
+  void clear_instruments() ;
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument* mutable_instruments(int index);
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>* mutable_instruments();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>& _internal_instruments() const;
+  ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>* _internal_mutable_instruments();
+  public:
+  const ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument& instruments(int index) const;
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument* add_instruments();
+  const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>& instruments() const;
+  // @@protoc_insertion_point(class_scope:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<
+      0, 1, 1,
+      0, 2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(
+        ::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena);
+    inline explicit Impl_(::google::protobuf::internal::InternalVisibility visibility,
+                          ::google::protobuf::Arena* arena, const Impl_& from,
+                          const GetMarketValuesResponse& from_msg);
+    ::google::protobuf::RepeatedPtrField< ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument > instruments_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -26640,6 +27551,487 @@ GetTechAnalysisResponse::_internal_mutable_technical_indicators() {
   return &_impl_.technical_indicators_;
 }
 
+// -------------------------------------------------------------------
+
+// GetMarketValuesRequest
+
+// repeated string instrument_id = 1;
+inline int GetMarketValuesRequest::_internal_instrument_id_size() const {
+  return _internal_instrument_id().size();
+}
+inline int GetMarketValuesRequest::instrument_id_size() const {
+  return _internal_instrument_id_size();
+}
+inline void GetMarketValuesRequest::clear_instrument_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_id_.Clear();
+}
+inline std::string* GetMarketValuesRequest::add_instrument_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  std::string* _s = _internal_mutable_instrument_id()->Add();
+  // @@protoc_insertion_point(field_add_mutable:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+  return _s;
+}
+inline const std::string& GetMarketValuesRequest::instrument_id(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+  return _internal_instrument_id().Get(index);
+}
+inline std::string* GetMarketValuesRequest::mutable_instrument_id(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+  return _internal_mutable_instrument_id()->Mutable(index);
+}
+template <typename Arg_, typename... Args_>
+inline void GetMarketValuesRequest::set_instrument_id(int index, Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::AssignToString(
+      *_internal_mutable_instrument_id()->Mutable(index),
+      std::forward<Arg_>(value), args... );
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+}
+template <typename Arg_, typename... Args_>
+inline void GetMarketValuesRequest::add_instrument_id(Arg_&& value, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::google::protobuf::internal::AddToRepeatedPtrField(*_internal_mutable_instrument_id(),
+                               std::forward<Arg_>(value),
+                               args... );
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+GetMarketValuesRequest::instrument_id() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+  return _internal_instrument_id();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+GetMarketValuesRequest::mutable_instrument_id() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.instrument_id)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_instrument_id();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+GetMarketValuesRequest::_internal_instrument_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instrument_id_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+GetMarketValuesRequest::_internal_mutable_instrument_id() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.instrument_id_;
+}
+
+// repeated .tinkoff.public.invest.api.contract.v1.MarketValueType values = 2;
+inline int GetMarketValuesRequest::_internal_values_size() const {
+  return _internal_values().size();
+}
+inline int GetMarketValuesRequest::values_size() const {
+  return _internal_values_size();
+}
+inline void GetMarketValuesRequest::clear_values() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.values_.Clear();
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValueType GetMarketValuesRequest::values(int index) const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.values)
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::MarketValueType>(_internal_values().Get(index));
+}
+inline void GetMarketValuesRequest::set_values(int index, ::tinkoff::public_::invest::api::contract::v1::MarketValueType value) {
+  _internal_mutable_values()->Set(index, value);
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.values)
+}
+inline void GetMarketValuesRequest::add_values(::tinkoff::public_::invest::api::contract::v1::MarketValueType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _internal_mutable_values()->Add(value);
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.values)
+}
+inline const ::google::protobuf::RepeatedField<int>& GetMarketValuesRequest::values() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.values)
+  return _internal_values();
+}
+inline ::google::protobuf::RepeatedField<int>* GetMarketValuesRequest::mutable_values()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesRequest.values)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_values();
+}
+inline const ::google::protobuf::RepeatedField<int>& GetMarketValuesRequest::_internal_values()
+    const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.values_;
+}
+inline ::google::protobuf::RepeatedField<int>* GetMarketValuesRequest::_internal_mutable_values() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.values_;
+}
+
+// -------------------------------------------------------------------
+
+// GetMarketValuesResponse
+
+// repeated .tinkoff.public.invest.api.contract.v1.MarketValueInstrument instruments = 1;
+inline int GetMarketValuesResponse::_internal_instruments_size() const {
+  return _internal_instruments().size();
+}
+inline int GetMarketValuesResponse::instruments_size() const {
+  return _internal_instruments_size();
+}
+inline void GetMarketValuesResponse::clear_instruments() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instruments_.Clear();
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument* GetMarketValuesResponse::mutable_instruments(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse.instruments)
+  return _internal_mutable_instruments()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>* GetMarketValuesResponse::mutable_instruments()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse.instruments)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_instruments();
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument& GetMarketValuesResponse::instruments(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse.instruments)
+  return _internal_instruments().Get(index);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument* GetMarketValuesResponse::add_instruments() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument* _add = _internal_mutable_instruments()->Add();
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse.instruments)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>& GetMarketValuesResponse::instruments() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.GetMarketValuesResponse.instruments)
+  return _internal_instruments();
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>&
+GetMarketValuesResponse::_internal_instruments() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instruments_;
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValueInstrument>*
+GetMarketValuesResponse::_internal_mutable_instruments() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.instruments_;
+}
+
+// -------------------------------------------------------------------
+
+// MarketValueInstrument
+
+// string instrument_uid = 1;
+inline void MarketValueInstrument::clear_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.ClearToEmpty();
+}
+inline const std::string& MarketValueInstrument::instrument_uid() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.instrument_uid)
+  return _internal_instrument_uid();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void MarketValueInstrument::set_instrument_uid(Arg_&& arg,
+                                                     Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.instrument_uid)
+}
+inline std::string* MarketValueInstrument::mutable_instrument_uid() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  std::string* _s = _internal_mutable_instrument_uid();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.instrument_uid)
+  return _s;
+}
+inline const std::string& MarketValueInstrument::_internal_instrument_uid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.instrument_uid_.Get();
+}
+inline void MarketValueInstrument::_internal_set_instrument_uid(const std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.Set(value, GetArena());
+}
+inline std::string* MarketValueInstrument::_internal_mutable_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.instrument_uid_.Mutable( GetArena());
+}
+inline std::string* MarketValueInstrument::release_instrument_uid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.instrument_uid)
+  return _impl_.instrument_uid_.Release();
+}
+inline void MarketValueInstrument::set_allocated_instrument_uid(std::string* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.instrument_uid_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.instrument_uid_.IsDefault()) {
+    _impl_.instrument_uid_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.instrument_uid)
+}
+
+// repeated .tinkoff.public.invest.api.contract.v1.MarketValue values = 2;
+inline int MarketValueInstrument::_internal_values_size() const {
+  return _internal_values().size();
+}
+inline int MarketValueInstrument::values_size() const {
+  return _internal_values_size();
+}
+inline void MarketValueInstrument::clear_values() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.values_.Clear();
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValue* MarketValueInstrument::mutable_values(int index)
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.values)
+  return _internal_mutable_values()->Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>* MarketValueInstrument::mutable_values()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_mutable_list:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.values)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _internal_mutable_values();
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::MarketValue& MarketValueInstrument::values(int index) const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.values)
+  return _internal_values().Get(index);
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValue* MarketValueInstrument::add_values() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::tinkoff::public_::invest::api::contract::v1::MarketValue* _add = _internal_mutable_values()->Add();
+  // @@protoc_insertion_point(field_add:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.values)
+  return _add;
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>& MarketValueInstrument::values() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_list:tinkoff.public.invest.api.contract.v1.MarketValueInstrument.values)
+  return _internal_values();
+}
+inline const ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>&
+MarketValueInstrument::_internal_values() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.values_;
+}
+inline ::google::protobuf::RepeatedPtrField<::tinkoff::public_::invest::api::contract::v1::MarketValue>*
+MarketValueInstrument::_internal_mutable_values() {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return &_impl_.values_;
+}
+
+// -------------------------------------------------------------------
+
+// MarketValue
+
+// optional .tinkoff.public.invest.api.contract.v1.MarketValueType type = 1;
+inline bool MarketValue::has_type() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline void MarketValue::clear_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000004u;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValueType MarketValue::type() const {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketValue.type)
+  return _internal_type();
+}
+inline void MarketValue::set_type(::tinkoff::public_::invest::api::contract::v1::MarketValueType value) {
+  _internal_set_type(value);
+  _impl_._has_bits_[0] |= 0x00000004u;
+  // @@protoc_insertion_point(field_set:tinkoff.public.invest.api.contract.v1.MarketValue.type)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::MarketValueType MarketValue::_internal_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::tinkoff::public_::invest::api::contract::v1::MarketValueType>(_impl_.type_);
+}
+inline void MarketValue::_internal_set_type(::tinkoff::public_::invest::api::contract::v1::MarketValueType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.type_ = value;
+}
+
+// optional .tinkoff.public.invest.api.contract.v1.Quotation value = 2;
+inline bool MarketValue::has_value() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.value_ != nullptr);
+  return value;
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& MarketValue::_internal_value() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::tinkoff::public_::invest::api::contract::v1::Quotation* p = _impl_.value_;
+  return p != nullptr ? *p : reinterpret_cast<const ::tinkoff::public_::invest::api::contract::v1::Quotation&>(::tinkoff::public_::invest::api::contract::v1::_Quotation_default_instance_);
+}
+inline const ::tinkoff::public_::invest::api::contract::v1::Quotation& MarketValue::value() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketValue.value)
+  return _internal_value();
+}
+inline void MarketValue::unsafe_arena_set_allocated_value(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.value_);
+  }
+  _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.MarketValue.value)
+}
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* MarketValue::release_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* released = _impl_.value_;
+  _impl_.value_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* MarketValue::unsafe_arena_release_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.MarketValue.value)
+
+  _impl_._has_bits_[0] &= ~0x00000001u;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* temp = _impl_.value_;
+  _impl_.value_ = nullptr;
+  return temp;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* MarketValue::_internal_mutable_value() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.value_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::tinkoff::public_::invest::api::contract::v1::Quotation>(GetArena());
+    _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(p);
+  }
+  return _impl_.value_;
+}
+inline ::tinkoff::public_::invest::api::contract::v1::Quotation* MarketValue::mutable_value() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  ::tinkoff::public_::invest::api::contract::v1::Quotation* _msg = _internal_mutable_value();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.MarketValue.value)
+  return _msg;
+}
+inline void MarketValue::set_allocated_value(::tinkoff::public_::invest::api::contract::v1::Quotation* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.value_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000001u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000001u;
+  }
+
+  _impl_.value_ = reinterpret_cast<::tinkoff::public_::invest::api::contract::v1::Quotation*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.MarketValue.value)
+}
+
+// optional .google.protobuf.Timestamp time = 3;
+inline bool MarketValue::has_time() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || _impl_.time_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& MarketValue::_internal_time() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.time_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& MarketValue::time() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:tinkoff.public.invest.api.contract.v1.MarketValue.time)
+  return _internal_time();
+}
+inline void MarketValue::unsafe_arena_set_allocated_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+  }
+  _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  if (value != nullptr) {
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:tinkoff.public.invest.api.contract.v1.MarketValue.time)
+}
+inline ::google::protobuf::Timestamp* MarketValue::release_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::google::protobuf::Timestamp* released = _impl_.time_;
+  _impl_.time_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
+  }
+  return released;
+}
+inline ::google::protobuf::Timestamp* MarketValue::unsafe_arena_release_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:tinkoff.public.invest.api.contract.v1.MarketValue.time)
+
+  _impl_._has_bits_[0] &= ~0x00000002u;
+  ::google::protobuf::Timestamp* temp = _impl_.time_;
+  _impl_.time_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* MarketValue::_internal_mutable_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.time_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.time_;
+}
+inline ::google::protobuf::Timestamp* MarketValue::mutable_time() ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  _impl_._has_bits_[0] |= 0x00000002u;
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_time();
+  // @@protoc_insertion_point(field_mutable:tinkoff.public.invest.api.contract.v1.MarketValue.time)
+  return _msg;
+}
+inline void MarketValue::set_allocated_time(::google::protobuf::Timestamp* value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.time_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::MessageLite*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    _impl_._has_bits_[0] |= 0x00000002u;
+  } else {
+    _impl_._has_bits_[0] &= ~0x00000002u;
+  }
+
+  _impl_.time_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  // @@protoc_insertion_point(field_set_allocated:tinkoff.public.invest.api.contract.v1.MarketValue.time)
+}
+
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -26721,6 +28113,12 @@ struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::CandleSource
 template <>
 inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::CandleSource>() {
   return ::tinkoff::public_::invest::api::contract::v1::CandleSource_descriptor();
+}
+template <>
+struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::MarketValueType> : std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor<::tinkoff::public_::invest::api::contract::v1::MarketValueType>() {
+  return ::tinkoff::public_::invest::api::contract::v1::MarketValueType_descriptor();
 }
 template <>
 struct is_proto_enum<::tinkoff::public_::invest::api::contract::v1::OrderBookType> : std::true_type {};

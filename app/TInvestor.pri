@@ -71,16 +71,17 @@ SOURCES += \
     src/storage/logos/logosstorage.cpp \
     src/storage/stocks/stocksstorage.cpp \
     src/storage/user/userstorage.cpp \
+    src/threads/autopilotmakedecision/autopilotmakedecisionthread.cpp \
     src/threads/cleanup/cleanupthread.cpp \
     src/threads/follow/followthread.cpp \
     src/threads/lastprice/lastpricethread.cpp \
     src/threads/logs/logsthread.cpp \
-    src/threads/makedecision/makedecisionthread.cpp \
     src/threads/operations/operationsthread.cpp \
     src/threads/orderbook/orderbookthread.cpp \
     src/threads/portfolio/portfoliothread.cpp \
     src/threads/portfoliolastprice/portfoliolastpricethread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
+    src/threads/simulatormakedecision/simulatormakedecisionthread.cpp \
     src/threads/trading/tradingthread.cpp \
     src/threads/trading/tradingthreadfactory.cpp \
     src/threads/userupdate/userupdatethread.cpp \
@@ -251,6 +252,8 @@ HEADERS += \
     src/storage/stocks/stocksstorage.h \
     src/storage/user/iuserstorage.h \
     src/storage/user/userstorage.h \
+    src/threads/autopilotmakedecision/autopilotmakedecisionthread.h \
+    src/threads/autopilotmakedecision/iautopilotmakedecisionthread.h \
     src/threads/cleanup/cleanupthread.h \
     src/threads/cleanup/icleanupthread.h \
     src/threads/follow/followthread.h \
@@ -259,8 +262,6 @@ HEADERS += \
     src/threads/lastprice/lastpricethread.h \
     src/threads/logs/ilogsthread.h \
     src/threads/logs/logsthread.h \
-    src/threads/makedecision/imakedecisionthread.h \
-    src/threads/makedecision/makedecisionthread.h \
     src/threads/operations/ioperationsthread.h \
     src/threads/operations/operationsthread.h \
     src/threads/orderbook/iorderbookthread.h \
@@ -272,6 +273,8 @@ HEADERS += \
     src/threads/portfoliolastprice/portfoliolastpricethread.h \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
+    src/threads/simulatormakedecision/isimulatormakedecisionthread.h \
+    src/threads/simulatormakedecision/simulatormakedecisionthread.h \
     src/threads/trading/itradingthread.h \
     src/threads/trading/itradingthreadfactory.h \
     src/threads/trading/tradingthread.h \
