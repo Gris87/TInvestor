@@ -21,10 +21,10 @@ public:
     IStartAutoPilotDialog& operator=(const IStartAutoPilotDialog& another) = delete;
 
     [[nodiscard]]
-    virtual QString account() const = 0;
+    virtual QString mode() const = 0;
 
     [[nodiscard]]
-    virtual QString mode() const = 0;
+    virtual QString account() const = 0;
 
     [[nodiscard]]
     virtual QString anotherAccount() const = 0;

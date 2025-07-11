@@ -20,5 +20,7 @@ public:
     IMakeDecisionThread(const IMakeDecisionThread& another)            = delete;
     IMakeDecisionThread& operator=(const IMakeDecisionThread& another) = delete;
 
-    virtual void terminateThread() = 0;
+    virtual void setAccount(const QString& accountId) = 0;
+    virtual void setKeepMoney(int value)              = 0;
+    virtual void terminateThread()                    = 0;
 };

@@ -99,8 +99,9 @@ public:
         ILogsThread*                       logsThread,
         IPortfolioThread*                  portfolioThread,
         IPortfolioLastPriceThread*         portfolioLastPriceThread,
+        IMakeDecisionThread*               simulatorMakeDecisionThread,
+        IMakeDecisionThread*               autoPilotMakeDecisionThread,
         IFollowThread*                     followThread,
-        IMakeDecisionThread*               makeDecisionThread,
         IOrderBookThread*                  orderBookThread,
         ITradingThreadFactory*             tradingThreadFactory,
         IFileDialogFactory*                fileDialogFactory,
@@ -174,8 +175,9 @@ private:
     ILogsThread*                       mLogsThread;
     IPortfolioThread*                  mPortfolioThread;
     IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
+    IMakeDecisionThread*               mSimulatorMakeDecisionThread;
+    IMakeDecisionThread*               mAutoPilotMakeDecisionThread;
     IFollowThread*                     mFollowThread;
-    IMakeDecisionThread*               mMakeDecisionThread;
     IOrderBookThread*                  mOrderBookThread;
     ITradingThreadFactory*             mTradingThreadFactory;
     IFileDialogFactory*                mFileDialogFactory;

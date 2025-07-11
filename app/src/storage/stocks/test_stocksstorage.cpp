@@ -1786,6 +1786,8 @@ TEST_F(Test_StocksStorage, Test_obtainTurnover)
     ASSERT_NEAR(stocks.at(2)->data.at(3).price,               0.2f, 0.0001f);
     // clang-format on
 
+    EXPECT_CALL(*stocksDatabaseMock, writeStocksMeta(Ne(QList<Stock*>())));
+
     storage->obtainTurnover(200);
 
     // clang-format off

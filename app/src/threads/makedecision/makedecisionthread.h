@@ -4,6 +4,8 @@
 
 #include "src/threads/makedecision/imakedecisionthread.h"
 
+#include <QMutex>
+
 #include "src/config/iconfig.h"
 #include "src/storage/stocks/istocksstorage.h"
 
@@ -22,9 +24,21 @@ public:
 
     void run() override;
 
+    void setAccount(const QString& accountId) override;
+    void setKeepMoney(int value) override;
+
+    [[nodiscard]]
+    QString accountId() const;
+
+    [[nodiscard]]
+    int keepMoney() const;
+
     void terminateThread() override;
 
 private:
+    QMutex*         mMutex;
     IConfig*        mConfig;
     IStocksStorage* mStocksStorage;
+    QString         mAccountId;
+    int             mKeepMoney;
 };

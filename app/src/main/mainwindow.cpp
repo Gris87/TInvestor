@@ -78,8 +78,9 @@ MainWindow::MainWindow(
     ILogsThread*                       logsThread,
     IPortfolioThread*                  portfolioThread,
     IPortfolioLastPriceThread*         portfolioLastPriceThread,
+    IMakeDecisionThread*               simulatorMakeDecisionThread,
+    IMakeDecisionThread*               autoPilotMakeDecisionThread,
     IFollowThread*                     followThread,
-    IMakeDecisionThread*               makeDecisionThread,
     IOrderBookThread*                  orderBookThread,
     ITradingThreadFactory*             tradingThreadFactory,
     IFileDialogFactory*                fileDialogFactory,
@@ -123,8 +124,9 @@ MainWindow::MainWindow(
     mLogsThread(logsThread),
     mPortfolioThread(portfolioThread),
     mPortfolioLastPriceThread(portfolioLastPriceThread),
+    mSimulatorMakeDecisionThread(simulatorMakeDecisionThread),
+    mAutoPilotMakeDecisionThread(autoPilotMakeDecisionThread),
     mFollowThread(followThread),
-    mMakeDecisionThread(makeDecisionThread),
     mOrderBookThread(orderBookThread),
     mTradingThreadFactory(tradingThreadFactory),
     mFileDialogFactory(fileDialogFactory),
@@ -260,8 +262,9 @@ MainWindow::~MainWindow()
     mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
+    mSimulatorMakeDecisionThread->terminateThread();
+    mAutoPilotMakeDecisionThread->terminateThread();
     mFollowThread->terminateThread();
-    mMakeDecisionThread->terminateThread();
 
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
@@ -276,8 +279,9 @@ MainWindow::~MainWindow()
     mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
+    mSimulatorMakeDecisionThread->wait();
+    mAutoPilotMakeDecisionThread->wait();
     mFollowThread->wait();
-    mMakeDecisionThread->wait();
 
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
     {
@@ -356,7 +360,8 @@ void MainWindow::authFailed(
     mUserUpdateThread->terminateThread();
     mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
-    mMakeDecisionThread->terminateThread();
+    mSimulatorMakeDecisionThread->terminateThread();
+    mAutoPilotMakeDecisionThread->terminateThread();
 
     userUpdateTimer.stop();
     priceCollectTimer.stop();
@@ -370,7 +375,8 @@ void MainWindow::authFailed(
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
     mLastPriceThread->wait();
-    mMakeDecisionThread->wait();
+    mSimulatorMakeDecisionThread->wait();
+    mAutoPilotMakeDecisionThread->wait();
 
     ui->actionAuth->setEnabled(true);
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
@@ -415,7 +421,25 @@ void MainWindow::makeDecisionTimerTicked()
 {
     qDebug() << "Make decision timer ticked";
 
-    mMakeDecisionThread->start();
+    if (ui->simulationActiveSpinnerWidget->isSpinning())
+    {
+        const QString mode = mSimulatorSettingsEditor->value("Options/Mode", "REALTIME").toString();
+
+        if (mode == "REALTIME")
+        {
+            mSimulatorMakeDecisionThread->start();
+        }
+    }
+
+    if (ui->autoPilotActiveSpinnerWidget->isSpinning())
+    {
+        const QString mode = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
+
+        if (mode == "INTERNAL")
+        {
+            mAutoPilotMakeDecisionThread->start();
+        }
+    }
 }
 
 void MainWindow::stocksTableUpdateAllTimerTicked()
@@ -440,8 +464,8 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
 
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
 
+    mAutoPilotMakeDecisionThread->setKeepMoney(keepMoney);
     mFollowThread->setKeepMoney(keepMoney);
-    // TODO: Apply keep money
 }
 
 void MainWindow::autoPilotPortfolioUpdateLastPricesTimerTicked()
@@ -553,7 +577,11 @@ void MainWindow::startAutoPilot()
         mLogsThread->setAccountId(account, mAutoPilotAccountId);
         mPortfolioThread->setAccountId(mAutoPilotAccountId);
 
-        if (mode == "FOLLOW")
+        if (mode == "INTERNAL")
+        {
+            mAutoPilotMakeDecisionThread->setAccount(mAutoPilotAccountId);
+        }
+        else if (mode == "FOLLOW")
         {
             mFollowThread->setAccounts(mAutoPilotAccountId, mAutoPilotAnotherAccountId, anotherAccountInfo.name);
         }
@@ -817,8 +845,8 @@ void MainWindow::on_startAutoPilotButton_clicked()
         {
             // clang-format off
             mAutoPilotSettingsEditor->setValue("General/Enabled",        true);
-            mAutoPilotSettingsEditor->setValue("Options/Account",        dialog->account());
             mAutoPilotSettingsEditor->setValue("Options/Mode",           dialog->mode());
+            mAutoPilotSettingsEditor->setValue("Options/Account",        dialog->account());
             mAutoPilotSettingsEditor->setValue("Options/AnotherAccount", dialog->anotherAccount());
             // clang-format on
 

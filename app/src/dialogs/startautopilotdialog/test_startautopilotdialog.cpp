@@ -90,11 +90,6 @@ TEST_F(Test_StartAutoPilotDialog, Test_constructor_and_destructor)
     ASSERT_EQ(dialog->ui->accountComboBox->itemData(2), QVariant("41fcba09f2bdcdf315ba4119dc7978dd"));
 }
 
-TEST_F(Test_StartAutoPilotDialog, Test_account)
-{
-    ASSERT_EQ(dialog->account(), "65ba841e01d6db7733e90a5b7f9e6f80");
-}
-
 TEST_F(Test_StartAutoPilotDialog, Test_mode)
 {
     ASSERT_EQ(dialog->mode(), "INTERNAL");
@@ -106,6 +101,11 @@ TEST_F(Test_StartAutoPilotDialog, Test_mode)
     dialog->ui->viewRadioButton->setChecked(true);
 
     ASSERT_EQ(dialog->mode(), "VIEW");
+}
+
+TEST_F(Test_StartAutoPilotDialog, Test_account)
+{
+    ASSERT_EQ(dialog->account(), "65ba841e01d6db7733e90a5b7f9e6f80");
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_anotherAccount)

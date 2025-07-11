@@ -31,10 +31,10 @@ public:
     StartAutoPilotDialog& operator=(const StartAutoPilotDialog& another) = delete;
 
     [[nodiscard]]
-    QString account() const override;
+    QString mode() const override;
 
     [[nodiscard]]
-    QString mode() const override;
+    QString account() const override;
 
     [[nodiscard]]
     QString anotherAccount() const override;

@@ -29,11 +29,6 @@ StartAutoPilotDialog::~StartAutoPilotDialog()
     delete ui;
 }
 
-QString StartAutoPilotDialog::account() const
-{
-    return ui->accountComboBox->currentData().toString();
-}
-
 QString StartAutoPilotDialog::mode() const
 {
     if (ui->internalRadioButton->isChecked())
@@ -47,6 +42,11 @@ QString StartAutoPilotDialog::mode() const
     }
 
     return "VIEW";
+}
+
+QString StartAutoPilotDialog::account() const
+{
+    return ui->accountComboBox->currentData().toString();
 }
 
 QString StartAutoPilotDialog::anotherAccount() const
