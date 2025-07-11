@@ -29,6 +29,7 @@ SOURCES += \
     src/db/operations/test_operationsdatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
+    src/decisions/test_decisionmaker.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
     src/dialogs/orderwavesdialog/test_orderwavesdialog.cpp \
@@ -164,6 +165,7 @@ HEADERS += \
     src/db/operations/ioperationsdatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
+    src/decisions/idecisionmaker_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \
     src/dialogs/authdialog/iauthdialogfactory_mock.h \
     src/dialogs/orderwavesdialog/iorderwavesdialog_mock.h \
