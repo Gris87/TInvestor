@@ -57,7 +57,7 @@ protected:
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/account"),        QVariant(""))).WillOnce(Return(QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/anotherAccount"), QVariant(""))).WillOnce(Return(QVariant("41fcba09f2bdcdf315ba4119dc7978dd")));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL"))).WillOnce(Return(QVariant("INTERNAL")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartAutoPilotDialog/mode"),           QVariant(AUTO_PILOT_MODE_INTERNAL))).WillOnce(Return(QVariant(AUTO_PILOT_MODE_INTERNAL)));
         // clang-format on
 
         dialog = new StartAutoPilotDialog(userStorageMock, messageBoxUtilsMock, settingsEditorMock);
@@ -92,15 +92,15 @@ TEST_F(Test_StartAutoPilotDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_StartAutoPilotDialog, Test_mode)
 {
-    ASSERT_EQ(dialog->mode(), "INTERNAL");
+    ASSERT_EQ(dialog->mode(), AUTO_PILOT_MODE_INTERNAL);
 
     dialog->ui->followRadioButton->setChecked(true);
 
-    ASSERT_EQ(dialog->mode(), "FOLLOW");
+    ASSERT_EQ(dialog->mode(), AUTO_PILOT_MODE_FOLLOW);
 
     dialog->ui->viewRadioButton->setChecked(true);
 
-    ASSERT_EQ(dialog->mode(), "VIEW");
+    ASSERT_EQ(dialog->mode(), AUTO_PILOT_MODE_VIEW);
 }
 
 TEST_F(Test_StartAutoPilotDialog, Test_account)
@@ -169,7 +169,7 @@ TEST_F(Test_StartAutoPilotDialog, Test_on_startButton_clicked)
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/account"),        QVariant("65ba841e01d6db7733e90a5b7f9e6f80")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/anotherAccount"), QVariant("41fcba09f2bdcdf315ba4119dc7978dd")));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/mode"),           QVariant("INTERNAL")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartAutoPilotDialog/mode"),           QVariant(AUTO_PILOT_MODE_INTERNAL)));
     // clang-format on
 
     dialog->ui->startButton->click();

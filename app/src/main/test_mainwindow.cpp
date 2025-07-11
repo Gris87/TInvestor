@@ -612,10 +612,10 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
     mainWindow->makeDecisionTimer.start(100000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
 
-    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant("REALTIME")))
-        .WillOnce(Return(QVariant("REALTIME")));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
-        .WillOnce(Return(QVariant("INTERNAL")));
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
+        .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
+        .WillOnce(Return(QVariant(AUTO_PILOT_MODE_INTERNAL)));
     EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
     EXPECT_CALL(*autoPilotMakeDecisionThreadMock, run());
 
@@ -958,8 +958,8 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
-        .WillOnce(Return(QVariant("VIEW")));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
+        .WillOnce(Return(QVariant(AUTO_PILOT_MODE_VIEW)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 
@@ -1108,8 +1108,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
-    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return("DATERANGE"));
-    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("DATERANGE")));
+    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_DATERANGE));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_DATERANGE)));
     EXPECT_CALL(*startSimulationDialogMock, fromDate()).WillOnce(Return(QDate(2024, 1, 1)));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/FromDate"), QVariant("2024-01-01")));
     EXPECT_CALL(*startSimulationDialogMock, toDate()).WillOnce(Return(QDate(2025, 1, 1)));
@@ -1190,13 +1190,13 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("AAAAAA")));
-    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return("FOLLOW"));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant("FOLLOW")));
+    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return(AUTO_PILOT_MODE_FOLLOW));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_FOLLOW)));
     EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("BBBBBB"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("BBBBBB")));
 
-    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant("VIEW")))
-        .WillOnce(Return(QVariant("FOLLOW")));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
+        .WillOnce(Return(QVariant(AUTO_PILOT_MODE_FOLLOW)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
         .WillOnce(Return(QVariant("AAAAAA")));
 

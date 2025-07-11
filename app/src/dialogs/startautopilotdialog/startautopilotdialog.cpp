@@ -5,6 +5,12 @@
 
 
 
+const char* const AUTO_PILOT_MODE_INTERNAL = "INTERNAL";
+const char* const AUTO_PILOT_MODE_FOLLOW   = "FOLLOW";
+const char* const AUTO_PILOT_MODE_VIEW     = "VIEW";
+
+
+
 StartAutoPilotDialog::StartAutoPilotDialog(
     IUserStorage* userStorage, IMessageBoxUtils* messageBoxUtils, ISettingsEditor* settingsEditor, QWidget* parent
 ) :
@@ -33,15 +39,15 @@ QString StartAutoPilotDialog::mode() const
 {
     if (ui->internalRadioButton->isChecked())
     {
-        return "INTERNAL";
+        return AUTO_PILOT_MODE_INTERNAL;
     }
 
     if (ui->followRadioButton->isChecked())
     {
-        return "FOLLOW";
+        return AUTO_PILOT_MODE_FOLLOW;
     }
 
-    return "VIEW";
+    return AUTO_PILOT_MODE_VIEW;
 }
 
 QString StartAutoPilotDialog::account() const
@@ -129,12 +135,12 @@ void StartAutoPilotDialog::loadWindowState()
     // clang-format off
     const QString account        = mSettingsEditor->value("StartAutoPilotDialog/account",        "").toString();
     const QString anotherAccount = mSettingsEditor->value("StartAutoPilotDialog/anotherAccount", "").toString();
-    const QString mode           = mSettingsEditor->value("StartAutoPilotDialog/mode",           "INTERNAL").toString();
+    const QString mode           = mSettingsEditor->value("StartAutoPilotDialog/mode",           AUTO_PILOT_MODE_INTERNAL).toString();
     // clang-format on
 
-    ui->internalRadioButton->setChecked(mode == "INTERNAL");
-    ui->followRadioButton->setChecked(mode == "FOLLOW");
-    ui->viewRadioButton->setChecked(mode == "VIEW");
+    ui->internalRadioButton->setChecked(mode == AUTO_PILOT_MODE_INTERNAL);
+    ui->followRadioButton->setChecked(mode == AUTO_PILOT_MODE_FOLLOW);
+    ui->viewRadioButton->setChecked(mode == AUTO_PILOT_MODE_VIEW);
 
     for (int i = 0; i < ui->accountComboBox->count(); ++i)
     {

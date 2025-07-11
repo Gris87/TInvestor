@@ -8,6 +8,11 @@
 
 
 
+extern const char* const SIMULATOR_MODE_REALTIME;
+extern const char* const SIMULATOR_MODE_DATERANGE;
+
+
+
 class IStartSimulationDialog : public QDialog
 {
     Q_OBJECT

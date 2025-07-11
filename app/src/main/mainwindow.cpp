@@ -423,9 +423,9 @@ void MainWindow::makeDecisionTimerTicked()
 
     if (ui->simulationActiveSpinnerWidget->isSpinning())
     {
-        const QString mode = mSimulatorSettingsEditor->value("Options/Mode", "REALTIME").toString();
+        const QString mode = mSimulatorSettingsEditor->value("Options/Mode", SIMULATOR_MODE_REALTIME).toString();
 
-        if (mode == "REALTIME")
+        if (mode == SIMULATOR_MODE_REALTIME)
         {
             mSimulatorMakeDecisionThread->start();
         }
@@ -433,9 +433,9 @@ void MainWindow::makeDecisionTimerTicked()
 
     if (ui->autoPilotActiveSpinnerWidget->isSpinning())
     {
-        const QString mode = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
+        const QString mode = mAutoPilotSettingsEditor->value("Options/Mode", AUTO_PILOT_MODE_VIEW).toString();
 
-        if (mode == "INTERNAL")
+        if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
             mAutoPilotMakeDecisionThread->start();
         }
@@ -542,7 +542,7 @@ void MainWindow::stopSimulator() const
 
 void MainWindow::startAutoPilot()
 {
-    const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", "VIEW").toString();
+    const QString mode    = mAutoPilotSettingsEditor->value("Options/Mode", AUTO_PILOT_MODE_VIEW).toString();
     const QString account = mAutoPilotSettingsEditor->value("Options/Account", "").toString();
 
     mUserStorage->readLock();
@@ -552,7 +552,7 @@ void MainWindow::startAutoPilot()
 
     mAutoPilotAccountId = accountInfo.id;
 
-    if (mode == "FOLLOW")
+    if (mode == AUTO_PILOT_MODE_FOLLOW)
     {
         const QString anotherAccount = mAutoPilotSettingsEditor->value("Options/AnotherAccount", "").toString();
         anotherAccountInfo           = accounts.value(anotherAccount);
@@ -577,11 +577,11 @@ void MainWindow::startAutoPilot()
         mLogsThread->setAccountId(account, mAutoPilotAccountId);
         mPortfolioThread->setAccountId(mAutoPilotAccountId);
 
-        if (mode == "INTERNAL")
+        if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
             mAutoPilotMakeDecisionThread->setAccount(mAutoPilotAccountId);
         }
-        else if (mode == "FOLLOW")
+        else if (mode == AUTO_PILOT_MODE_FOLLOW)
         {
             mFollowThread->setAccounts(mAutoPilotAccountId, mAutoPilotAnotherAccountId, anotherAccountInfo.name);
         }
@@ -596,7 +596,7 @@ void MainWindow::startAutoPilot()
 
 // TODO: Remove it when you ready to use real account
 #ifdef USE_SANDBOX
-        if (mode == "FOLLOW")
+        if (mode == AUTO_PILOT_MODE_FOLLOW)
         {
             mFollowThread->start();
         }

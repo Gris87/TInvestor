@@ -6,6 +6,12 @@
 
 
 
+extern const char* const AUTO_PILOT_MODE_INTERNAL;
+extern const char* const AUTO_PILOT_MODE_FOLLOW;
+extern const char* const AUTO_PILOT_MODE_VIEW;
+
+
+
 class IStartAutoPilotDialog : public QDialog
 {
     Q_OBJECT

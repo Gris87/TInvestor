@@ -24,7 +24,7 @@ protected:
         settingsEditorMock = new StrictMock<SettingsEditorMock>();
 
         // clang-format off
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/mode"),       QVariant("REALTIME"))).WillOnce(Return(QVariant("REALTIME")));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME))).WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/startMoney"), QVariant(100000))).WillOnce(Return(QVariant(100000)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01"))).WillOnce(Return(QVariant("2024-01-01")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01"))).WillOnce(Return(QVariant("2025-01-01")));
@@ -61,11 +61,11 @@ TEST_F(Test_StartSimulationDialog, Test_startMoney)
 
 TEST_F(Test_StartSimulationDialog, Test_mode)
 {
-    ASSERT_EQ(dialog->mode(), "REALTIME");
+    ASSERT_EQ(dialog->mode(), SIMULATOR_MODE_REALTIME);
 
     dialog->ui->dateRangeRadioButton->setChecked(true);
 
-    ASSERT_EQ(dialog->mode(), "DATERANGE");
+    ASSERT_EQ(dialog->mode(), SIMULATOR_MODE_DATERANGE);
 }
 
 TEST_F(Test_StartSimulationDialog, Test_bestConfig)
@@ -138,7 +138,7 @@ TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
 
     // clang-format off
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(100000)));
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/mode"),       QVariant("REALTIME")));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/bestConfig"), QVariant(false)));

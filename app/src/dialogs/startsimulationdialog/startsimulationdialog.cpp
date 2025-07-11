@@ -8,6 +8,9 @@
 const char* const DATE_FORMAT = "yyyy-MM-dd";
 constexpr int     START_MONEY = 100000;
 
+const char* const SIMULATOR_MODE_REALTIME  = "REALTIME";
+const char* const SIMULATOR_MODE_DATERANGE = "DATERANGE";
+
 
 
 StartSimulationDialog::StartSimulationDialog(ISettingsEditor* settingsEditor, QWidget* parent) :
@@ -36,7 +39,7 @@ int StartSimulationDialog::startMoney() const
 
 QString StartSimulationDialog::mode() const
 {
-    return ui->dateRangeRadioButton->isChecked() ? "DATERANGE" : "REALTIME";
+    return ui->dateRangeRadioButton->isChecked() ? SIMULATOR_MODE_DATERANGE : SIMULATOR_MODE_REALTIME;
 }
 
 QDate StartSimulationDialog::fromDate() const
@@ -104,7 +107,7 @@ void StartSimulationDialog::loadWindowState()
     const QString defaultFromDate = QString("%1-01-01").arg(currentYear - 1);
     const QString defaultToDate   = QString("%1-01-01").arg(currentYear);
 
-    const QString mode = mSettingsEditor->value("StartSimulationDialog/mode", "REALTIME").toString();
+    const QString mode = mSettingsEditor->value("StartSimulationDialog/mode", SIMULATOR_MODE_REALTIME).toString();
 
     // clang-format off
     ui->startMoneySpinBox->setValue(mSettingsEditor->value("StartSimulationDialog/startMoney",           START_MONEY).toInt());
@@ -113,6 +116,6 @@ void StartSimulationDialog::loadWindowState()
     ui->bestConfigCheckBox->setChecked(mSettingsEditor->value("StartSimulationDialog/bestConfig",        false).toBool());
     // clang-format on
 
-    ui->realTimeRadioButton->setChecked(mode == "REALTIME");
-    ui->dateRangeRadioButton->setChecked(mode == "DATERANGE");
+    ui->realTimeRadioButton->setChecked(mode == SIMULATOR_MODE_REALTIME);
+    ui->dateRangeRadioButton->setChecked(mode == SIMULATOR_MODE_DATERANGE);
 }
