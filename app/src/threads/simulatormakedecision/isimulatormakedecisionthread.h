@@ -4,6 +4,10 @@
 
 #include <QThread>
 
+#include "src/domain/log/logentry.h"
+#include "src/domain/operation/operation.h"
+#include "src/domain/portfolio/portfolio.h"
+
 
 
 class ISimulatorMakeDecisionThread : public QThread
@@ -23,4 +27,11 @@ public:
     virtual void reset()                  = 0;
     virtual void setStartMoney(int value) = 0;
     virtual void terminateThread()        = 0;
+
+signals:
+    void operationsRead(const QList<Operation>& operations);
+    void operationsAdded(const QList<Operation>& operations);
+    void logsRead(const QList<LogEntry>& entries);
+    void logAdded(const LogEntry& entry);
+    void portfolioChanged(const Portfolio& portfolio);
 };

@@ -236,6 +236,11 @@ MainWindow::MainWindow(
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
+    connect(mSimulatorMakeDecisionThread,             SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
+    connect(mSimulatorMakeDecisionThread,             SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(simulatorOperationsAdded(const QList<Operation>&)));
+    connect(mSimulatorMakeDecisionThread,             SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
+    connect(mSimulatorMakeDecisionThread,             SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
+    connect(mSimulatorMakeDecisionThread,             SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
     connect(mAutoPilotMakeDecisionThread,             SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
@@ -647,6 +652,34 @@ void MainWindow::stopAutoPilot()
     tradingThreads.clear();
 }
 
+void MainWindow::simulatorOperationsRead(const QList<Operation>& operations)
+{
+    mSimulatorDecisionMakerWidget->operationsRead(operations);
+}
+
+void MainWindow::simulatorOperationsAdded(const QList<Operation>& operations)
+{
+    mSimulatorDecisionMakerWidget->operationsAdded(operations);
+}
+
+void MainWindow::simulatorLogsRead(const QList<LogEntry>& entries)
+{
+    mSimulatorDecisionMakerWidget->logsRead(entries);
+}
+
+void MainWindow::simulatorLogAdded(const LogEntry& entry)
+{
+    mSimulatorDecisionMakerWidget->logAdded(entry);
+}
+
+void MainWindow::simulatorPortfolioChanged(const Portfolio& portfolio)
+{
+    mSimulatorDecisionMakerWidget->portfolioChanged(portfolio);
+
+    // TODO: Adapt for Simulator
+    //mPortfolioLastPriceThread->portfolioChanged(portfolio);
+}
+
 void MainWindow::autoPilotOperationsRead(const QList<Operation>& operations)
 {
     mAutoPilotDecisionMakerWidget->operationsRead(operations);
@@ -657,12 +690,6 @@ void MainWindow::autoPilotOperationsAdded(const QList<Operation>& operations)
     mAutoPilotDecisionMakerWidget->operationsAdded(operations);
 }
 
-void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
-{
-    mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
-    mPortfolioLastPriceThread->portfolioChanged(portfolio);
-}
-
 void MainWindow::autoPilotLogsRead(const QList<LogEntry>& entries)
 {
     mAutoPilotDecisionMakerWidget->logsRead(entries);
@@ -671,6 +698,12 @@ void MainWindow::autoPilotLogsRead(const QList<LogEntry>& entries)
 void MainWindow::autoPilotLogAdded(const LogEntry& entry)
 {
     mAutoPilotDecisionMakerWidget->logAdded(entry);
+}
+
+void MainWindow::autoPilotPortfolioChanged(const Portfolio& portfolio)
+{
+    mAutoPilotDecisionMakerWidget->portfolioChanged(portfolio);
+    mPortfolioLastPriceThread->portfolioChanged(portfolio);
 }
 
 void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId, float price)

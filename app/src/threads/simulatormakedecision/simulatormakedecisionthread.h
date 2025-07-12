@@ -28,7 +28,13 @@ public:
 
 private:
     void init();
+    void initOperations();
+    void initLogs();
+    void initPortfolio();
     void load();
+    void loadOperations();
+    void loadLogs();
+    void loadPortfolio();
     void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
 
     IStocksStorage* mStocksStorage;

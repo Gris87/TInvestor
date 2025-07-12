@@ -220,6 +220,11 @@ public slots:
     void stopSimulator() const;
     void startAutoPilot();
     void stopAutoPilot();
+    void simulatorOperationsRead(const QList<Operation>& operations);
+    void simulatorOperationsAdded(const QList<Operation>& operations);
+    void simulatorLogsRead(const QList<LogEntry>& entries);
+    void simulatorLogAdded(const LogEntry& entry);
+    void simulatorPortfolioChanged(const Portfolio& portfolio);
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
     void autoPilotLogsRead(const QList<LogEntry>& entries);
