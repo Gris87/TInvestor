@@ -854,8 +854,8 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     tradingInfo3.expectedCost = 0.0;
     tradingInfo3.cause        = "Sell ASAP";
 
-    QMap<QString, TradingInfo> instruments;
-    QMap<QString, TradingInfo> instruments2;
+    InstrumentsForTrading instruments;
+    InstrumentsForTrading instruments2;
 
     instruments["aaaaa"] = tradingInfo1;
     instruments["bbbbb"] = tradingInfo2;
@@ -1238,8 +1238,8 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     portfolioLastPriceThreadMock->wait();
     followThreadMock->wait();
 
-    QMap<QString, TradingInfo> instruments;
-    TradingInfo                tradingInfo;
+    InstrumentsForTrading instruments;
+    TradingInfo           tradingInfo;
 
     tradingInfo.expectedCost = 10000.0;
     tradingInfo.cause        = "Need to buy";

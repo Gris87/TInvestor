@@ -17,7 +17,11 @@ DecisionMaker::~DecisionMaker()
     qDebug() << "Destroy DecisionMaker";
 }
 
-void DecisionMaker::makeDecision(const Portfolio& /*portfolio*/, const QList<Stock*>& /*stocks*/)
+InstrumentsForTrading DecisionMaker::makeDecision(const Portfolio& /*portfolio*/, const QList<Stock*>& /*stocks*/)
 {
+    InstrumentsForTrading res;
+
     // TODO: Implement
+
+    return res;
 }

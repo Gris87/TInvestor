@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "src/decisions/idecisionmaker_mock.h"
+#include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 
 
@@ -19,8 +20,9 @@ protected:
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
         decisionMakerMock = new StrictMock<DecisionMakerMock>();
+        grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new AutoPilotMakeDecisionThread(stocksStorageMock, decisionMakerMock);
+        thread = new AutoPilotMakeDecisionThread(stocksStorageMock, decisionMakerMock, grpcClientMock);
     }
 
     void TearDown() override
@@ -28,11 +30,13 @@ protected:
         delete thread;
         delete stocksStorageMock;
         delete decisionMakerMock;
+        delete grpcClientMock;
     }
 
     AutoPilotMakeDecisionThread*   thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
     StrictMock<DecisionMakerMock>* decisionMakerMock;
+    StrictMock<GrpcClientMock>*    grpcClientMock;
 };
 
 

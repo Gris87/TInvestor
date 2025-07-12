@@ -344,7 +344,7 @@ static int runApplication(QApplication* app)
     PortfolioThread             portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread    portfolioLastPriceThread(&timeUtils, &grpcClient);
     SimulatorMakeDecisionThread simulatorMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker);
-    AutoPilotMakeDecisionThread autoPilotMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker);
+    AutoPilotMakeDecisionThread autoPilotMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
     FollowThread                followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread             orderBookThread(&grpcClient);
     TradingThreadFactory        tradingThreadFactory;

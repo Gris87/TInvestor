@@ -18,3 +18,5 @@ struct TradingInfo
     double  expectedCost;
     QString cause;
 };
+
+using InstrumentsForTrading = QMap<QString, TradingInfo>; // Instrument UID => TradingInfo

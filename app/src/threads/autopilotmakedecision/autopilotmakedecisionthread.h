@@ -7,6 +7,7 @@
 #include <QMutex>
 
 #include "src/decisions/idecisionmaker.h"
+#include "src/grpc/igrpcclient.h"
 #include "src/storage/stocks/istocksstorage.h"
 
 
@@ -16,7 +17,9 @@ class AutoPilotMakeDecisionThread : public IAutoPilotMakeDecisionThread
     Q_OBJECT
 
 public:
-    explicit AutoPilotMakeDecisionThread(IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent = nullptr);
+    explicit AutoPilotMakeDecisionThread(
+        IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent = nullptr
+    );
     ~AutoPilotMakeDecisionThread() override;
 
     AutoPilotMakeDecisionThread(const AutoPilotMakeDecisionThread& another)            = delete;
@@ -36,9 +39,12 @@ public:
     void terminateThread() override;
 
 private:
+    Portfolio handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio);
+
     QMutex*         mMutex;
     IStocksStorage* mStocksStorage;
     IDecisionMaker* mDecisionMaker;
+    IGrpcClient*    mGrpcClient;
     QString         mAccountId;
     int             mKeepMoney;
 };

@@ -4,6 +4,7 @@
 
 #include "src/domain/portfolio/portfolio.h"
 #include "src/domain/stock/stock.h"
+#include "src/domain/trading/tradinginfo.h"
 
 
 
@@ -16,5 +17,5 @@ public:
     IDecisionMaker(const IDecisionMaker& another)            = delete;
     IDecisionMaker& operator=(const IDecisionMaker& another) = delete;
 
-    virtual void makeDecision(const Portfolio& portfolio, const QList<Stock*>& stocks) = 0;
+    virtual InstrumentsForTrading makeDecision(const Portfolio& portfolio, const QList<Stock*>& stocks) = 0;
 };

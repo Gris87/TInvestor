@@ -236,7 +236,8 @@ MainWindow::MainWindow(
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mFollowThread,                            SIGNAL(tradeInstruments(const QMap<QString, TradingInfo>&)),                                  this, SLOT(autoPilotTradeInstruments(const QMap<QString, TradingInfo>&)));
+    connect(mAutoPilotMakeDecisionThread,             SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
+    connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                                                    this, SLOT(stockFilterChanged(const StockFilter&)));
     // clang-format on
@@ -677,7 +678,7 @@ void MainWindow::autoPilotPortfolioLastPriceChanged(const QString& instrumentId,
     mAutoPilotDecisionMakerWidget->lastPriceChanged(instrumentId, price);
 }
 
-void MainWindow::autoPilotTradeInstruments(const QMap<QString, TradingInfo>& instruments)
+void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instruments)
 {
     for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
     {

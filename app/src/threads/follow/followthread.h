@@ -47,8 +47,8 @@ private:
                      const PortfolioMinItems&    anotherInstruments,
                      double                      totalCost,
                      double                      anotherTotalCost,
-                     QMap<QString, TradingInfo>& instrumentsForSale,
-                     QMap<QString, TradingInfo>& instrumentsForBuy
+                     InstrumentsForTrading& instrumentsForSale,
+                     InstrumentsForTrading& instrumentsForBuy
                  );
 
     QMutex*                          mMutex;

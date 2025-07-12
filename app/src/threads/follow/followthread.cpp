@@ -137,8 +137,8 @@ void FollowThread::handlePortfolios(
     instruments.remove(RUBLE_UID);
     anotherInstruments.remove(RUBLE_UID);
 
-    QMap<QString, TradingInfo> instrumentsForSale; // Instrument UID => TradingInfo
-    QMap<QString, TradingInfo> instrumentsForBuy;  // Instrument UID => TradingInfo
+    InstrumentsForTrading instrumentsForSale; // Instrument UID => TradingInfo
+    InstrumentsForTrading instrumentsForBuy;  // Instrument UID => TradingInfo
 
     buildInstrumentsForTrading(
         instruments, anotherInstruments, totalCost, anotherTotalCost, instrumentsForSale, instrumentsForBuy
@@ -202,8 +202,8 @@ void FollowThread::buildInstrumentsForTrading(
     const PortfolioMinItems&    anotherInstruments,
     double                      totalCost,
     double                      anotherTotalCost,
-    QMap<QString, TradingInfo>& instrumentsForSale,
-    QMap<QString, TradingInfo>& instrumentsForBuy
+    InstrumentsForTrading& instrumentsForSale,
+    InstrumentsForTrading& instrumentsForBuy
 )
 {
     for (auto it = anotherInstruments.constBegin(); it != anotherInstruments.constEnd(); ++it)
