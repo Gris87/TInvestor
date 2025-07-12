@@ -4,8 +4,10 @@
 
 
 
-DecisionMaker::DecisionMaker() :
-    IDecisionMaker()
+DecisionMaker::DecisionMaker(IConfig* config, IUserStorage* userStorage) :
+    IDecisionMaker(),
+    mConfig(config),
+    mUserStorage(userStorage)
 {
     qDebug() << "Create DecisionMaker";
 }
@@ -13,4 +15,9 @@ DecisionMaker::DecisionMaker() :
 DecisionMaker::~DecisionMaker()
 {
     qDebug() << "Destroy DecisionMaker";
+}
+
+void DecisionMaker::makeDecision(const Portfolio& /*portfolio*/, const QList<Stock*>& /*stocks*/)
+{
+    // TODO: Implement
 }

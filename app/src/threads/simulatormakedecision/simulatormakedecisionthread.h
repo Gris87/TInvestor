@@ -4,9 +4,7 @@
 
 #include "src/threads/simulatormakedecision/isimulatormakedecisionthread.h"
 
-#include <QMutex>
-
-#include "src/config/iconfig.h"
+#include "src/decisions/idecisionmaker.h"
 #include "src/storage/stocks/istocksstorage.h"
 
 
@@ -16,7 +14,7 @@ class SimulatorMakeDecisionThread : public ISimulatorMakeDecisionThread
     Q_OBJECT
 
 public:
-    explicit SimulatorMakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
+    explicit SimulatorMakeDecisionThread(IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent = nullptr);
     ~SimulatorMakeDecisionThread() override;
 
     SimulatorMakeDecisionThread(const SimulatorMakeDecisionThread& another)            = delete;
@@ -27,9 +25,6 @@ public:
     void terminateThread() override;
 
 private:
-    QMutex*         mMutex;
-    IConfig*        mConfig;
     IStocksStorage* mStocksStorage;
-    QString         mAccountId;
-    int             mKeepMoney;
+    IDecisionMaker* mDecisionMaker;
 };

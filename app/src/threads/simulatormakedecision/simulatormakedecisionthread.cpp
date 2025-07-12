@@ -4,13 +4,12 @@
 
 
 
-SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent) :
+SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
+    IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent
+) :
     ISimulatorMakeDecisionThread(parent),
-    mMutex(new QMutex()),
-    mConfig(config),
     mStocksStorage(stocksStorage),
-    mAccountId(),
-    mKeepMoney()
+    mDecisionMaker(decisionMaker)
 {
     qDebug() << "Create SimulatorMakeDecisionThread";
 }
@@ -18,8 +17,6 @@ SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(IConfig* config, IStock
 SimulatorMakeDecisionThread::~SimulatorMakeDecisionThread()
 {
     qDebug() << "Destroy SimulatorMakeDecisionThread";
-
-    delete mMutex;
 }
 
 void SimulatorMakeDecisionThread::run()

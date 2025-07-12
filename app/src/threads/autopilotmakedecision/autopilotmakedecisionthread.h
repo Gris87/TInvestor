@@ -6,7 +6,7 @@
 
 #include <QMutex>
 
-#include "src/config/iconfig.h"
+#include "src/decisions/idecisionmaker.h"
 #include "src/storage/stocks/istocksstorage.h"
 
 
@@ -16,7 +16,7 @@ class AutoPilotMakeDecisionThread : public IAutoPilotMakeDecisionThread
     Q_OBJECT
 
 public:
-    explicit AutoPilotMakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent = nullptr);
+    explicit AutoPilotMakeDecisionThread(IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent = nullptr);
     ~AutoPilotMakeDecisionThread() override;
 
     AutoPilotMakeDecisionThread(const AutoPilotMakeDecisionThread& another)            = delete;
@@ -37,8 +37,8 @@ public:
 
 private:
     QMutex*         mMutex;
-    IConfig*        mConfig;
     IStocksStorage* mStocksStorage;
+    IDecisionMaker* mDecisionMaker;
     QString         mAccountId;
     int             mKeepMoney;
 };

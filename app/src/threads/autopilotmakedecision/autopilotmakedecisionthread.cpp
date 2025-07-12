@@ -4,11 +4,13 @@
 
 
 
-AutoPilotMakeDecisionThread::AutoPilotMakeDecisionThread(IConfig* config, IStocksStorage* stocksStorage, QObject* parent) :
+AutoPilotMakeDecisionThread::AutoPilotMakeDecisionThread(
+    IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent
+) :
     IAutoPilotMakeDecisionThread(parent),
     mMutex(new QMutex()),
-    mConfig(config),
     mStocksStorage(stocksStorage),
+    mDecisionMaker(decisionMaker),
     mAccountId(),
     mKeepMoney()
 {

@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "src/config/iconfig_mock.h"
+#include "src/decisions/idecisionmaker_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 
 
@@ -17,22 +17,22 @@ class Test_SimulatorMakeDecisionThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        configMock        = new StrictMock<ConfigMock>();
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        decisionMakerMock = new StrictMock<DecisionMakerMock>();
 
-        thread = new SimulatorMakeDecisionThread(configMock, stocksStorageMock);
+        thread = new SimulatorMakeDecisionThread(stocksStorageMock, decisionMakerMock);
     }
 
     void TearDown() override
     {
         delete thread;
-        delete configMock;
         delete stocksStorageMock;
+        delete decisionMakerMock;
     }
 
     SimulatorMakeDecisionThread*   thread;
-    StrictMock<ConfigMock>*        configMock;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<DecisionMakerMock>* decisionMakerMock;
 };
 
 
