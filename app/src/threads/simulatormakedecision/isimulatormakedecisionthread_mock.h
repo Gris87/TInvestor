@@ -23,5 +23,7 @@ public:
     SimulatorMakeDecisionThreadMock& operator=(const SimulatorMakeDecisionThreadMock& another) = delete;
 
     MOCK_METHOD(void, run, (), (override));
+    MOCK_METHOD(void, reset, (), (override));
+    MOCK_METHOD(void, setStartMoney, (int value), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

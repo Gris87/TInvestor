@@ -811,14 +811,19 @@ void MainWindow::on_startSimulationButton_clicked()
 
         if (dialog->exec() == QDialog::Accepted)
         {
+            int startMoney = dialog->startMoney();
+
             // clang-format off
             mSimulatorSettingsEditor->setValue("General/Enabled",    true);
-            mSimulatorSettingsEditor->setValue("Options/StartMoney", dialog->startMoney());
+            mSimulatorSettingsEditor->setValue("Options/StartMoney", startMoney);
             mSimulatorSettingsEditor->setValue("Options/Mode",       dialog->mode());
             mSimulatorSettingsEditor->setValue("Options/FromDate",   dialog->fromDate().toString(DATE_FORMAT));
             mSimulatorSettingsEditor->setValue("Options/ToDate",     dialog->toDate().toString(DATE_FORMAT));
             mSimulatorSettingsEditor->setValue("Options/BestConfig", dialog->bestConfig());
             // clang-format on
+
+            mSimulatorMakeDecisionThread->reset();
+            mSimulatorMakeDecisionThread->setStartMoney(startMoney);
 
             startSimulator();
         }

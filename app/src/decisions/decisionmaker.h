@@ -18,7 +18,7 @@ public:
     DecisionMaker(const DecisionMaker& another)            = delete;
     DecisionMaker& operator=(const DecisionMaker& another) = delete;
 
-    InstrumentsForTrading makeDecision(const Portfolio& portfolio, const QList<Stock*>& stocks) override;
+    InstrumentsForTrading makeDecision(const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney) override;
 
 private:
     IConfig*      mConfig;

@@ -20,5 +20,7 @@ public:
     DecisionMakerMock(const DecisionMakerMock& another)            = delete;
     DecisionMakerMock& operator=(const DecisionMakerMock& another) = delete;
 
-    MOCK_METHOD(InstrumentsForTrading, makeDecision, (const Portfolio& portfolio, const QList<Stock*>& stocks), (override));
+    MOCK_METHOD(
+        InstrumentsForTrading, makeDecision, (const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney), (override)
+    );
 };

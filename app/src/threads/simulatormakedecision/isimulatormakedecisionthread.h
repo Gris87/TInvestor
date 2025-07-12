@@ -20,5 +20,7 @@ public:
     ISimulatorMakeDecisionThread(const ISimulatorMakeDecisionThread& another)            = delete;
     ISimulatorMakeDecisionThread& operator=(const ISimulatorMakeDecisionThread& another) = delete;
 
-    virtual void terminateThread() = 0;
+    virtual void reset()                  = 0;
+    virtual void setStartMoney(int value) = 0;
+    virtual void terminateThread()        = 0;
 };

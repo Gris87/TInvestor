@@ -198,12 +198,12 @@ double FollowThread::calculateTotalCost(const PortfolioMinItems& instruments)
 }
 
 void FollowThread::buildInstrumentsForTrading(
-    const PortfolioMinItems&    instruments,
-    const PortfolioMinItems&    anotherInstruments,
-    double                      totalCost,
-    double                      anotherTotalCost,
-    InstrumentsForTrading& instrumentsForSale,
-    InstrumentsForTrading& instrumentsForBuy
+    const PortfolioMinItems& instruments,
+    const PortfolioMinItems& anotherInstruments,
+    double                   totalCost,
+    double                   anotherTotalCost,
+    InstrumentsForTrading&   instrumentsForSale,
+    InstrumentsForTrading&   instrumentsForBuy
 )
 {
     for (auto it = anotherInstruments.constBegin(); it != anotherInstruments.constEnd(); ++it)

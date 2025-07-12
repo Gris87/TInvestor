@@ -22,9 +22,19 @@ public:
 
     void run() override;
 
+    void reset() override;
+    void setStartMoney(int value) override;
     void terminateThread() override;
 
 private:
+    void init();
+    void load();
+    void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
+
     IStocksStorage* mStocksStorage;
     IDecisionMaker* mDecisionMaker;
+    Portfolio       mPortfolio;
+    bool            mResetted;
+    bool            mLoaded;
+    int             mStartMoney;
 };

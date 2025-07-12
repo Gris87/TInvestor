@@ -9,7 +9,11 @@ SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
 ) :
     ISimulatorMakeDecisionThread(parent),
     mStocksStorage(stocksStorage),
-    mDecisionMaker(decisionMaker)
+    mDecisionMaker(decisionMaker),
+    mPortfolio(),
+    mResetted(),
+    mLoaded(),
+    mStartMoney()
 {
     qDebug() << "Create SimulatorMakeDecisionThread";
 }
@@ -25,9 +29,38 @@ void SimulatorMakeDecisionThread::run()
 
     blockSignals(false);
 
-    // TODO: Do we need it?
+    if (mResetted)
+    {
+        init();
+        mResetted = false;
+        mLoaded   = true;
+    }
+    else if (!mLoaded)
+    {
+        load();
+        mLoaded = true;
+    }
+
+    mStocksStorage->readLock();
+    const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(mPortfolio, mStocksStorage->getStocks(), 0);
+    mStocksStorage->readUnlock();
+
+    if (!instrumentsForTrading.isEmpty())
+    {
+        simulateTrading(instrumentsForTrading);
+    }
 
     qDebug() << "Finish SimulatorMakeDecisionThread";
+}
+
+void SimulatorMakeDecisionThread::reset()
+{
+    mResetted = true;
+}
+
+void SimulatorMakeDecisionThread::setStartMoney(int value)
+{
+    mStartMoney = value;
 }
 
 void SimulatorMakeDecisionThread::terminateThread()
@@ -35,4 +68,16 @@ void SimulatorMakeDecisionThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
+}
+
+void SimulatorMakeDecisionThread::init()
+{
+}
+
+void SimulatorMakeDecisionThread::load()
+{
+}
+
+void SimulatorMakeDecisionThread::simulateTrading(const InstrumentsForTrading& /*instrumentsForTrading*/)
+{
 }

@@ -46,7 +46,7 @@ void AutoPilotMakeDecisionThread::run()
 
         mStocksStorage->readLock();
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(portfolio, mStocksStorage->getStocks());
+            mDecisionMaker->makeDecision(portfolio, mStocksStorage->getStocks(), keepMoney());
         mStocksStorage->readUnlock();
 
         if (!instrumentsForTrading.isEmpty())

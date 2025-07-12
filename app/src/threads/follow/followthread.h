@@ -43,12 +43,12 @@ private:
     PortfolioMinItems buildInstrumentToCostMap(const std::shared_ptr<tinkoff::PortfolioResponse>& tinkoffPortfolio);
     double            calculateTotalCost(const PortfolioMinItems& instruments);
     void              buildInstrumentsForTrading(
-                     const PortfolioMinItems&    instruments,
-                     const PortfolioMinItems&    anotherInstruments,
-                     double                      totalCost,
-                     double                      anotherTotalCost,
-                     InstrumentsForTrading& instrumentsForSale,
-                     InstrumentsForTrading& instrumentsForBuy
+                     const PortfolioMinItems& instruments,
+                     const PortfolioMinItems& anotherInstruments,
+                     double                   totalCost,
+                     double                   anotherTotalCost,
+                     InstrumentsForTrading&   instrumentsForSale,
+                     InstrumentsForTrading&   instrumentsForBuy
                  );
 
     QMutex*                          mMutex;
