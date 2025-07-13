@@ -526,6 +526,8 @@ void MainWindow::stockFilterChanged(const StockFilter& filter)
 
 void MainWindow::startSimulator() const
 {
+    const QString mode = mSimulatorSettingsEditor->value("Options/Mode", SIMULATOR_MODE_REALTIME).toString();
+
     ui->simulationActiveWidget->show();
     ui->simulationActiveSpinnerWidget->start();
 
@@ -533,6 +535,11 @@ void MainWindow::startSimulator() const
     ui->startSimulationButton->setText(tr("Stop simulation"));
 
     // TODO: Start simulation
+
+    if (mode == SIMULATOR_MODE_REALTIME)
+    {
+        mSimulatorMakeDecisionThread->start();
+    }
 }
 
 void MainWindow::stopSimulator() const
@@ -586,6 +593,7 @@ void MainWindow::startAutoPilot()
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
             mAutoPilotMakeDecisionThread->setAccount(mAutoPilotAccountId);
+            mAutoPilotMakeDecisionThread->start();
         }
         else if (mode == AUTO_PILOT_MODE_FOLLOW)
         {
@@ -756,7 +764,6 @@ void MainWindow::on_actionAuth_triggered()
 
     userUpdateTimerTicked();
     priceCollectTimerTicked();
-    makeDecisionTimerTicked();
 
     mLastPriceThread->start();
 

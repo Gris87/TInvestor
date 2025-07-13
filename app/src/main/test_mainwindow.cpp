@@ -608,7 +608,7 @@ TEST_F(Test_MainWindow, Test_priceCollectTimerTicked)
 
 TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 {
-    const InSequence seq;
+    // const InSequence seq;
 
     mainWindow->makeDecisionTimer.start(100000);
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
@@ -957,6 +957,9 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
+        .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
+    EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
@@ -1007,6 +1010,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     logsThreadMock->wait();
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
+    simulatorMakeDecisionThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -1106,8 +1110,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*startSimulationDialogFactoryMock, newInstance(settingsEditorMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IStartSimulationDialog>(startSimulationDialogMock)));
     EXPECT_CALL(*startSimulationDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
-    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
     EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_DATERANGE));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_DATERANGE)));
@@ -1117,8 +1121,16 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/ToDate"), QVariant("2025-01-01")));
     EXPECT_CALL(*startSimulationDialogMock, bestConfig()).WillOnce(Return(true));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/BestConfig"), QVariant(true)));
+    EXPECT_CALL(*simulatorMakeDecisionThreadMock, reset());
+    EXPECT_CALL(*simulatorMakeDecisionThreadMock, setStartMoney(1000000));
+
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
+        .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
+    EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
 
     mainWindow->ui->startSimulationButton->click();
+
+    simulatorMakeDecisionThreadMock->wait();
 
     // clang-format off
     ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         true);

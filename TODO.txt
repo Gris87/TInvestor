@@ -1,5 +1,7 @@
 MakeDecision => DecisionMaker
-Decision maker thread
+Simplest simulator
+Create release
+
 Make some decision
 Simulator realtime mode
 Simulator date range mode

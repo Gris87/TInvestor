@@ -58,7 +58,7 @@ public:
                 }
 
                 if (status.error_code() != grpc::StatusCode::CANCELLED && status.error_code() != grpc::StatusCode::NOT_FOUND &&
-                    (ignoreInvalidArg && status.error_code() != grpc::StatusCode::INVALID_ARGUMENT))
+                    (!ignoreInvalidArg || status.error_code() != grpc::StatusCode::INVALID_ARGUMENT))
                 {
                     emitAuthFailed(status);
                 }

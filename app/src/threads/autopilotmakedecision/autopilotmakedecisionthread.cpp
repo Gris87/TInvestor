@@ -42,7 +42,7 @@ void AutoPilotMakeDecisionThread::run()
 
     if (!QThread::currentThread()->isInterruptionRequested() && tinkoffPortfolio != nullptr)
     {
-        Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
+        const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
 
         mStocksStorage->readLock();
         const InstrumentsForTrading& instrumentsForTrading =
