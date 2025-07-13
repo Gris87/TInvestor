@@ -2,7 +2,11 @@
 
 #include <gtest/gtest.h>
 
+#include "src/db/logs/ilogsdatabase_mock.h"
+#include "src/db/operations/ioperationsdatabase_mock.h"
 #include "src/decisions/idecisionmaker_mock.h"
+#include "src/storage/instruments/iinstrumentsstorage_mock.h"
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 
 
@@ -17,22 +21,41 @@ class Test_SimulatorMakeDecisionThread : public ::testing::Test
 protected:
     void SetUp() override
     {
-        stocksStorageMock = new StrictMock<StocksStorageMock>();
-        decisionMakerMock = new StrictMock<DecisionMakerMock>();
+        operationsDatabaseMock = new StrictMock<OperationsDatabaseMock>();
+        logsDatabaseMock       = new StrictMock<LogsDatabaseMock>();
+        instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock       = new StrictMock<LogosStorageMock>();
+        stocksStorageMock      = new StrictMock<StocksStorageMock>();
+        decisionMakerMock      = new StrictMock<DecisionMakerMock>();
 
-        thread = new SimulatorMakeDecisionThread(stocksStorageMock, decisionMakerMock);
+        thread = new SimulatorMakeDecisionThread(
+            operationsDatabaseMock,
+            logsDatabaseMock,
+            instrumentsStorageMock,
+            logosStorageMock,
+            stocksStorageMock,
+            decisionMakerMock
+        );
     }
 
     void TearDown() override
     {
         delete thread;
+        delete operationsDatabaseMock;
+        delete logsDatabaseMock;
+        delete instrumentsStorageMock;
+        delete logosStorageMock;
         delete stocksStorageMock;
         delete decisionMakerMock;
     }
 
-    SimulatorMakeDecisionThread*   thread;
-    StrictMock<StocksStorageMock>* stocksStorageMock;
-    StrictMock<DecisionMakerMock>* decisionMakerMock;
+    SimulatorMakeDecisionThread*        thread;
+    StrictMock<OperationsDatabaseMock>* operationsDatabaseMock;
+    StrictMock<LogsDatabaseMock>*       logsDatabaseMock;
+    StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
+    StrictMock<LogosStorageMock>*       logosStorageMock;
+    StrictMock<StocksStorageMock>*      stocksStorageMock;
+    StrictMock<DecisionMakerMock>*      decisionMakerMock;
 };
 
 

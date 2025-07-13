@@ -358,13 +358,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="305"/>
+        <location filename="../../src/main/mainwindow.cpp" line="315"/>
         <source>TInvestor</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="514"/>
+        <location filename="../../src/main/mainwindow.cpp" line="551"/>
         <source>Start simulation</source>
         <translation></translation>
     </message>
@@ -375,7 +375,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="279"/>
-        <location filename="../../src/main/mainwindow.cpp" line="591"/>
+        <location filename="../../src/main/mainwindow.cpp" line="633"/>
         <source>Start auto-pilot</source>
         <translation></translation>
     </message>
@@ -436,65 +436,65 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="306"/>
+        <location filename="../../src/main/mainwindow.cpp" line="316"/>
         <source>TInvestor is working in background</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="354"/>
+        <location filename="../../src/main/mainwindow.cpp" line="364"/>
         <source>GRPC error happened with code %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="376"/>
+        <location filename="../../src/main/mainwindow.cpp" line="388"/>
         <source>Waiting for authorization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="488"/>
-        <location filename="../../src/main/mainwindow.cpp" line="938"/>
+        <location filename="../../src/main/mainwindow.cpp" line="518"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1012"/>
         <source>From: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="503"/>
-        <location filename="../../src/main/mainwindow.cpp" line="799"/>
+        <location filename="../../src/main/mainwindow.cpp" line="535"/>
+        <location filename="../../src/main/mainwindow.cpp" line="873"/>
         <source>Stop simulation</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="579"/>
+        <location filename="../../src/main/mainwindow.cpp" line="621"/>
         <source>Auto-pilot started</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="585"/>
+        <location filename="../../src/main/mainwindow.cpp" line="627"/>
         <source>Auto-pilot stopped</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="799"/>
+        <location filename="../../src/main/mainwindow.cpp" line="873"/>
         <source>Do you really want to stop simulation?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="550"/>
-        <location filename="../../src/main/mainwindow.cpp" line="830"/>
+        <location filename="../../src/main/mainwindow.cpp" line="587"/>
+        <location filename="../../src/main/mainwindow.cpp" line="904"/>
         <source>Stop auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="201"/>
+        <location filename="../../src/main/mainwindow.cpp" line="203"/>
         <source>Simulator</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="202"/>
+        <location filename="../../src/main/mainwindow.cpp" line="204"/>
         <source>Auto-pilot</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="830"/>
+        <location filename="../../src/main/mainwindow.cpp" line="904"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation></translation>
     </message>
@@ -775,22 +775,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="145"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="145"/>
+        <location filename="../../src/main.cpp" line="147"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="157"/>
+        <location filename="../../src/main.cpp" line="159"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="157"/>
+        <location filename="../../src/main.cpp" line="159"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -969,6 +969,24 @@
     </message>
 </context>
 <context>
+    <name>SimulatorMakeDecisionThread</name>
+    <message>
+        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="120"/>
+        <source>Input money</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="207"/>
+        <source>Currency and metals</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="213"/>
+        <source>Share</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>StartAutoPilotDialog</name>
     <message>
         <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.ui" line="26"/>
@@ -1006,13 +1024,13 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="71"/>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="84"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="77"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="90"/>
         <source>No another account</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="84"/>
+        <location filename="../../src/dialogs/startautopilotdialog/startautopilotdialog.cpp" line="90"/>
         <source>There is no any account to follow</source>
         <translation></translation>
     </message>

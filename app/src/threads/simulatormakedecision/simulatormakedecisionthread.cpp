@@ -9,9 +9,19 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
-    IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, QObject* parent
+    IOperationsDatabase* operationsDatabase,
+    ILogsDatabase*       logsDatabase,
+    IInstrumentsStorage* instrumentsStorage,
+    ILogosStorage*       logosStorage,
+    IStocksStorage*      stocksStorage,
+    IDecisionMaker*      decisionMaker,
+    QObject*             parent
 ) :
     ISimulatorMakeDecisionThread(parent),
+    mOperationsDatabase(operationsDatabase),
+    mLogsDatabase(logsDatabase),
+    mInstrumentsStorage(instrumentsStorage),
+    mLogosStorage(logosStorage),
     mStocksStorage(stocksStorage),
     mDecisionMaker(decisionMaker),
     mPortfolio(),
@@ -87,11 +97,27 @@ void SimulatorMakeDecisionThread::initOperations()
 
     Operation operation;
 
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
+    mInstrumentsStorage->readUnlock();
+
+    if (instrument.ticker == "" || instrument.name == "")
+    {
+        instrument.ticker         = RUBLE_UID;
+        instrument.name           = "?????";
+        instrument.pricePrecision = 2;
+    }
+
+    mLogosStorage->readLock();
+    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
+    mLogosStorage->readUnlock();
+
     operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
     operation.instrumentId                    = RUBLE_UID;
-    operation.instrumentTicker                = RUBLE_UID;         // TODO: Take from storage
-    operation.instrumentName                  = "?????";           // TODO: Take from storage
-    operation.description                     = "Give more money"; // TODO: Use translation
+    operation.instrumentLogo                  = logo;
+    operation.instrumentTicker                = instrument.ticker;
+    operation.instrumentName                  = instrument.name;
+    operation.description                     = tr("Input money");
     operation.price                           = 0.0f;
     operation.avgPriceFifo                    = 0.0f;
     operation.avgPriceWavg                    = 0.0f;
@@ -118,28 +144,80 @@ void SimulatorMakeDecisionThread::initOperations()
     operation.remainedMoney.nano              = 0;
     operation.totalMoney.units                = mStartMoney;
     operation.totalMoney.nano                 = 0;
-    operation.pricePrecision                  = 2; // TODO: Take from storage
-    operation.paymentPrecision                = 2; // TODO: Take from storage
-    operation.commissionPrecision             = 2; // TODO: Take from storage
+    operation.pricePrecision                  = instrument.pricePrecision;
+    operation.paymentPrecision                = instrument.pricePrecision;
+    operation.commissionPrecision             = instrument.pricePrecision;
 
     operations.append(operation);
 
     emit operationsRead(operations);
-
-    // TODO: Store operations
+    mOperationsDatabase->writeOperations(operations);
 }
 
 void SimulatorMakeDecisionThread::initLogs()
 {
-    const QList<LogEntry> entries;
+    QList<LogEntry> entries;
 
     emit logsRead(entries);
-
-    // TODO: Store logs
+    mLogsDatabase->writeLogs(entries);
 }
 
 void SimulatorMakeDecisionThread::initPortfolio()
 {
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item;
+
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
+    mInstrumentsStorage->readUnlock();
+
+    if (instrument.ticker == "" || instrument.name == "")
+    {
+        instrument.ticker         = RUBLE_UID;
+        instrument.name           = "?????";
+        instrument.pricePrecision = 2;
+    }
+
+    mLogosStorage->readLock();
+    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
+    mLogosStorage->readUnlock();
+
+    item.instrumentId       = RUBLE_UID;
+    item.instrumentLogo     = logo;
+    item.instrumentTicker   = instrument.ticker;
+    item.instrumentName     = instrument.name;
+    item.showPrices         = false;
+    item.available          = mStartMoney;
+    item.price              = 1.0f;
+    item.avgPriceFifo       = 1.0f;
+    item.avgPriceWavg       = 1.0f;
+    item.cost               = mStartMoney;
+    item.part               = 100.0;
+    item.yield              = 0.0f;
+    item.yieldPercent       = 0.0f;
+    item.dailyYield         = 0.0f;
+    item.priceForDailyYield = 0.0f;
+    item.costForDailyYield  = 0.0;
+    item.dailyYieldPercent  = 0.0f;
+    item.pricePrecision     = instrument.pricePrecision;
+
+    category1.id   = 0;
+    category1.name = tr("Currency and metals");
+    category1.cost = mStartMoney;
+    category1.part = 100.0;
+    category1.items.append(item);
+
+    category2.id   = 1;
+    category2.name = tr("Share");
+    category2.cost = 0.0;
+    category2.part = 0.0;
+
+    portfolio.positions << category1 << category2;
+
+    emit portfolioChanged(portfolio);
+
     // TODO: Store portfolio
 }
 
@@ -152,10 +230,14 @@ void SimulatorMakeDecisionThread::load()
 
 void SimulatorMakeDecisionThread::loadOperations()
 {
+    const QList<Operation> operations = mOperationsDatabase->readOperations();
+    emit operationsRead(operations);
 }
 
 void SimulatorMakeDecisionThread::loadLogs()
 {
+    const QList<LogEntry> entries = mLogsDatabase->readLogs();
+    emit logsRead(entries);
 }
 
 void SimulatorMakeDecisionThread::loadPortfolio()

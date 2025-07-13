@@ -310,6 +310,8 @@ static int runApplication(QApplication* app)
     LogosStorage        logosStorage(&logosDatabase);
     StocksDatabase      stocksDatabase(&dirFactory, &fileFactory, &logosStorage);
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
+    OperationsDatabase  simulatorOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
+    LogsDatabase        simulatorLogsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
@@ -343,7 +345,14 @@ static int runApplication(QApplication* app)
     LogsThread                  logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
     PortfolioThread             portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread    portfolioLastPriceThread(&timeUtils, &grpcClient);
-    SimulatorMakeDecisionThread simulatorMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker);
+    SimulatorMakeDecisionThread simulatorMakeDecisionThread(
+        &simulatorOperationsDatabase,
+        &simulatorLogsDatabase,
+        &instrumentsStorage,
+        &logosStorage,
+        &stocksStorage,
+        &realtimeDecisionMaker
+    );
     AutoPilotMakeDecisionThread autoPilotMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
     FollowThread                followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread             orderBookThread(&grpcClient);
