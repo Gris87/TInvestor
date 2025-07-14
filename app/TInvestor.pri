@@ -32,6 +32,7 @@ SOURCES += \
     src/db/logos/logosdatabase.cpp \
     src/db/logs/logsdatabase.cpp \
     src/db/operations/operationsdatabase.cpp \
+    src/db/portfolio/portfoliodatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/db/user/userdatabase.cpp \
     src/decisions/decisionmaker.cpp \
@@ -192,6 +193,8 @@ HEADERS += \
     src/db/logs/logsdatabase.h \
     src/db/operations/ioperationsdatabase.h \
     src/db/operations/operationsdatabase.h \
+    src/db/portfolio/iportfoliodatabase.h \
+    src/db/portfolio/portfoliodatabase.h \
     src/db/stocks/istocksdatabase.h \
     src/db/stocks/stocksdatabase.h \
     src/db/user/iuserdatabase.h \

@@ -27,6 +27,7 @@ SOURCES += \
     src/db/logos/test_logosdatabase.cpp \
     src/db/logs/test_logsdatabase.cpp \
     src/db/operations/test_operationsdatabase.cpp \
+    src/db/portfolio/test_portfoliodatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
     src/decisions/test_decisionmaker.cpp \
@@ -163,6 +164,7 @@ HEADERS += \
     src/db/logos/ilogosdatabase_mock.h \
     src/db/logs/ilogsdatabase_mock.h \
     src/db/operations/ioperationsdatabase_mock.h \
+    src/db/portfolio/iportfoliodatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
     src/decisions/idecisionmaker_mock.h \

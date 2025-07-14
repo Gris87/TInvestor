@@ -15,7 +15,7 @@ InstrumentsDatabase::InstrumentsDatabase(IDirFactory* dirFactory, IFileFactory* 
 
     const std::shared_ptr<IDir> dir = dirFactory->newInstance();
 
-    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/instruments/logos");
+    const bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/instruments");
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 }
 
