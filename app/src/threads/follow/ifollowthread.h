@@ -4,8 +4,6 @@
 
 #include <QThread>
 
-#include <QMap>
-
 #include "src/domain/trading/tradinginfo.h"
 
 
