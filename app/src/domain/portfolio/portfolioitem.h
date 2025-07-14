@@ -2,7 +2,10 @@
 
 
 
+#include <QJsonObject>
+
 #include "src/domain/logo/logo.h"
+#include "src/simdjson/simdjson_wrapped.h"
 
 
 
@@ -13,6 +16,11 @@ struct PortfolioItem
     ~PortfolioItem()                            = default;
 
     PortfolioItem& operator=(const PortfolioItem& another) = default;
+
+    void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    QJsonObject toJsonObject() const;
 
     QString instrumentId;
     Logo*   instrumentLogo;

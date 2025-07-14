@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
+
 
 
 // NOLINTBEGIN(readability-magic-numbers)
@@ -123,6 +125,102 @@ TEST(Test_PortfolioItem, Test_assign)
     ASSERT_NEAR(item2.dailyYieldPercent,  12.0f, 0.0001f);
     ASSERT_EQ(item2.pricePrecision,       13);
     // clang-format on
+}
+
+TEST(Test_PortfolioItem, Test_fromJsonObject)
+{
+    PortfolioItem item;
+
+    // clang-format off
+    ASSERT_EQ(item.instrumentId,         "");
+    ASSERT_EQ(item.instrumentLogo,       nullptr);
+    ASSERT_EQ(item.instrumentTicker,     "");
+    ASSERT_EQ(item.instrumentName,       "");
+    ASSERT_EQ(item.showPrices,           false);
+    ASSERT_NEAR(item.available,          0, 0.0001);
+    ASSERT_NEAR(item.price,              0, 0.0001f);
+    ASSERT_NEAR(item.avgPriceFifo,       0, 0.0001f);
+    ASSERT_NEAR(item.avgPriceWavg,       0, 0.0001f);
+    ASSERT_NEAR(item.cost,               0, 0.0001);
+    ASSERT_NEAR(item.part,               0, 0.0001f);
+    ASSERT_NEAR(item.yield,              0, 0.0001f);
+    ASSERT_NEAR(item.yieldPercent,       0, 0.0001f);
+    ASSERT_NEAR(item.dailyYield,         0, 0.0001f);
+    ASSERT_NEAR(item.priceForDailyYield, 0, 0.0001f);
+    ASSERT_NEAR(item.costForDailyYield,  0, 0.0001);
+    ASSERT_NEAR(item.dailyYieldPercent,  0, 0.0001f);
+    ASSERT_EQ(item.pricePrecision,       0);
+    // clang-format on
+
+    const QString content =
+        R"({"available":"1.00","avgPriceFifo":"3.0000000000000","avgPriceWavg":"4.0000000000000","cost":"5.00","costForDailyYield":"11.00","dailyYield":"9.00","dailyYieldPercent":"12.00","instrumentId":"a","instrumentName":"c","instrumentTicker":"b","part":"6.00","price":"2.0000000000000","priceForDailyYield":"10.00","pricePrecision":13,"showPrices":true,"yield":"7.00","yieldPercent":"8.00"})";
+
+    const simdjson::padded_string jsonData(content.toStdString());
+
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    item.fromJsonObject(doc.get_object());
+
+    // clang-format off
+    ASSERT_EQ(item.instrumentId,         "a");
+    ASSERT_EQ(item.instrumentLogo,       nullptr);
+    ASSERT_EQ(item.instrumentTicker,     "b");
+    ASSERT_EQ(item.instrumentName,       "c");
+    ASSERT_EQ(item.showPrices,           true);
+    ASSERT_NEAR(item.available,          1.0,   0.0001);
+    ASSERT_NEAR(item.price,              2.0f,  0.0001f);
+    ASSERT_NEAR(item.avgPriceFifo,       3.0f,  0.0001f);
+    ASSERT_NEAR(item.avgPriceWavg,       4.0f,  0.0001f);
+    ASSERT_NEAR(item.cost,               5.0,   0.0001);
+    ASSERT_NEAR(item.part,               6.0f,  0.0001f);
+    ASSERT_NEAR(item.yield,              7.0f,  0.0001f);
+    ASSERT_NEAR(item.yieldPercent,       8.0f,  0.0001f);
+    ASSERT_NEAR(item.dailyYield,         9.0f,  0.0001f);
+    ASSERT_NEAR(item.priceForDailyYield, 10.0f, 0.0001f);
+    ASSERT_NEAR(item.costForDailyYield,  11.0,  0.0001);
+    ASSERT_NEAR(item.dailyYieldPercent,  12.0f, 0.0001f);
+    ASSERT_EQ(item.pricePrecision,       13);
+    // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    lastThrownException = "";
+    item.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
+}
+
+TEST(Test_PortfolioItem, Test_toJsonObject)
+{
+    PortfolioItem item;
+
+    item.instrumentId       = "a";
+    item.instrumentTicker   = "b";
+    item.instrumentName     = "c";
+    item.showPrices         = true;
+    item.available          = 1.0;
+    item.price              = 2.0f;
+    item.avgPriceFifo       = 3.0f;
+    item.avgPriceWavg       = 4.0f;
+    item.cost               = 5.0;
+    item.part               = 6.0f;
+    item.yield              = 7.0f;
+    item.yieldPercent       = 8.0f;
+    item.dailyYield         = 9.0f;
+    item.priceForDailyYield = 10.0f;
+    item.costForDailyYield  = 11.0;
+    item.dailyYieldPercent  = 12.0f;
+    item.pricePrecision     = 13;
+
+    const QJsonObject   jsonObject = item.toJsonObject();
+    const QJsonDocument jsonDoc(jsonObject);
+
+    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString expectedContent =
+        R"({"available":"1.00","avgPriceFifo":"3.0000000000000","avgPriceWavg":"4.0000000000000","cost":"5.00","costForDailyYield":"11.00","dailyYield":"9.00","dailyYieldPercent":"12.00","instrumentId":"a","instrumentName":"c","instrumentTicker":"b","part":"6.00","price":"2.0000000000000","priceForDailyYield":"10.00","pricePrecision":13,"showPrices":true,"yield":"7.00","yieldPercent":"8.00"})";
+
+    ASSERT_EQ(content, expectedContent);
 }
 
 TEST(Test_PortfolioItem, Test_equals)

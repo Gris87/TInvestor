@@ -142,6 +142,94 @@ TEST(Test_Portfolio, Test_assign)
     // clang-format on
 }
 
+TEST(Test_Portfolio, Test_fromJsonArray)
+{
+    Portfolio portfolio;
+
+    ASSERT_EQ(portfolio.positions.size(), 0);
+
+    const QString content =
+        R"([{"cost":"2.00","id":1,"items":[{"available":"4.00","avgPriceFifo":"6.0000000000000000","avgPriceWavg":"7.0000000000000000","cost":"8.00","costForDailyYield":"14.00","dailyYield":"12.00","dailyYieldPercent":"15.00","instrumentId":"b","instrumentName":"d","instrumentTicker":"c","part":"9.00","price":"5.0000000000000000","priceForDailyYield":"13.00","pricePrecision":16,"showPrices":true,"yield":"10.00","yieldPercent":"11.00"}],"name":"a","part":"3.00"}])";
+
+    const simdjson::padded_string jsonData(content.toStdString());
+
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    portfolio.fromJsonArray(doc.get_array());
+
+    // clang-format off
+    ASSERT_EQ(portfolio.positions.size(),                                 1);
+    ASSERT_EQ(portfolio.positions.at(0).id,                               1);
+    ASSERT_EQ(portfolio.positions.at(0).name,                             "a");
+    ASSERT_NEAR(portfolio.positions.at(0).cost,                           2.0, 0.0001);
+    ASSERT_NEAR(portfolio.positions.at(0).part,                           3.0, 0.0001f);
+    ASSERT_EQ(portfolio.positions.at(0).items.size(),                     1);
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).instrumentId,         "b");
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).instrumentLogo,       nullptr);
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).instrumentTicker,     "c");
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).instrumentName,       "d");
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).showPrices,           true);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).available,          4.0,   0.0001);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).price,              5.0f,  0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).avgPriceFifo,       6.0f,  0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).avgPriceWavg,       7.0f,  0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).cost,               8.0,   0.0001);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).part,               9.0f,  0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).yield,              10.0f, 0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).yieldPercent,       11.0f, 0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).dailyYield,         12.0f, 0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).priceForDailyYield, 13.0f, 0.0001f);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).costForDailyYield,  14.0,  0.0001);
+    ASSERT_NEAR(portfolio.positions.at(0).items.at(0).dailyYieldPercent,  15.0f, 0.0001f);
+    ASSERT_EQ(portfolio.positions.at(0).items.at(0).pricePrecision,       16);
+    // clang-format on
+}
+
+TEST(Test_Portfolio, Test_toJsonArray)
+{
+    Portfolio portfolio;
+
+    PortfolioCategoryItem category;
+
+    category.id   = 1;
+    category.name = "a";
+    category.cost = 2.0;
+    category.part = 3.0f;
+
+    PortfolioItem item;
+
+    item.instrumentId       = "b";
+    item.instrumentTicker   = "c";
+    item.instrumentName     = "d";
+    item.showPrices         = true;
+    item.available          = 4.0;
+    item.price              = 5.0f;
+    item.avgPriceFifo       = 6.0f;
+    item.avgPriceWavg       = 7.0f;
+    item.cost               = 8.0;
+    item.part               = 9.0f;
+    item.yield              = 10.0f;
+    item.yieldPercent       = 11.0f;
+    item.dailyYield         = 12.0f;
+    item.priceForDailyYield = 13.0f;
+    item.costForDailyYield  = 14.0;
+    item.dailyYieldPercent  = 15.0f;
+    item.pricePrecision     = 16;
+
+    category.items.append(item);
+    portfolio.positions.append(category);
+
+    const QJsonArray    jsonArray = portfolio.toJsonArray();
+    const QJsonDocument jsonDoc(jsonArray);
+
+    const QString content = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+    const QString expectedContent =
+        R"([{"cost":"2.00","id":1,"items":[{"available":"4.00","avgPriceFifo":"6.0000000000000000","avgPriceWavg":"7.0000000000000000","cost":"8.00","costForDailyYield":"14.00","dailyYield":"12.00","dailyYieldPercent":"15.00","instrumentId":"b","instrumentName":"d","instrumentTicker":"c","part":"9.00","price":"5.0000000000000000","priceForDailyYield":"13.00","pricePrecision":16,"showPrices":true,"yield":"10.00","yieldPercent":"11.00"}],"name":"a","part":"3.00"}])";
+
+    ASSERT_EQ(content, expectedContent);
+}
+
 TEST(Test_Portfolio, Test_equals)
 {
     Portfolio portfolio;
