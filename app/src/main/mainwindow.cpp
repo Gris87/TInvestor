@@ -851,7 +851,7 @@ void MainWindow::on_startSimulationButton_clicked()
 
         if (dialog->exec() == QDialog::Accepted)
         {
-            int startMoney = dialog->startMoney();
+            const int startMoney = dialog->startMoney();
 
             // clang-format off
             mSimulatorSettingsEditor->setValue("General/Enabled",    true);
