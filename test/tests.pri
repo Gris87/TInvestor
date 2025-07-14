@@ -68,7 +68,7 @@ SOURCES += \
     src/storage/logos/test_logosstorage.cpp \
     src/storage/stocks/test_stocksstorage.cpp \
     src/storage/user/test_userstorage.cpp \
-    src/threads/autopilotmakedecision/test_autopilotmakedecisionthread.cpp \
+    src/threads/autopilotdecisionmaker/test_autopilotdecisionmakerthread.cpp \
     src/threads/cleanup/test_cleanupthread.cpp \
     src/threads/follow/test_followthread.cpp \
     src/threads/lastprice/test_lastpricethread.cpp \
@@ -79,7 +79,7 @@ SOURCES += \
     src/threads/portfolio/test_portfoliothread.cpp \
     src/threads/portfoliolastprice/test_portfoliolastpricethread.cpp \
     src/threads/pricecollect/test_pricecollectthread.cpp \
-    src/threads/simulatormakedecision/test_simulatormakedecisionthread.cpp \
+    src/threads/simulatordecisionmaker/test_simulatordecisionmakerthread.cpp \
     src/threads/trading/test_tradingthread.cpp \
     src/threads/trading/test_tradingthreadfactory.cpp \
     src/threads/userupdate/test_userupdatethread.cpp \
@@ -182,7 +182,7 @@ HEADERS += \
     src/storage/logos/ilogosstorage_mock.h \
     src/storage/stocks/istocksstorage_mock.h \
     src/storage/user/iuserstorage_mock.h \
-    src/threads/autopilotmakedecision/iautopilotmakedecisionthread_mock.h \
+    src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread_mock.h \
     src/threads/cleanup/icleanupthread_mock.h \
     src/threads/follow/ifollowthread_mock.h \
     src/threads/lastprice/ilastpricethread_mock.h \
@@ -192,7 +192,7 @@ HEADERS += \
     src/threads/portfolio/iportfoliothread_mock.h \
     src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
-    src/threads/simulatormakedecision/isimulatormakedecisionthread_mock.h \
+    src/threads/simulatordecisionmaker/isimulatordecisionmakerthread_mock.h \
     src/threads/trading/itradingthread_mock.h \
     src/threads/trading/itradingthreadfactory_mock.h \
     src/threads/userupdate/iuserupdatethread_mock.h \

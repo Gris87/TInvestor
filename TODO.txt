@@ -1,4 +1,3 @@
-MakeDecision => DecisionMaker
 Simplest simulator
 Create release
 

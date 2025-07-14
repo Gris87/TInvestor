@@ -78,8 +78,8 @@ MainWindow::MainWindow(
     ILogsThread*                       logsThread,
     IPortfolioThread*                  portfolioThread,
     IPortfolioLastPriceThread*         portfolioLastPriceThread,
-    ISimulatorMakeDecisionThread*      simulatorMakeDecisionThread,
-    IAutoPilotMakeDecisionThread*      autoPilotMakeDecisionThread,
+    ISimulatorDecisionMakerThread*     simulatorDecisionMakerThread,
+    IAutoPilotDecisionMakerThread*     autoPilotDecisionMakerThread,
     IFollowThread*                     followThread,
     IOrderBookThread*                  orderBookThread,
     ITradingThreadFactory*             tradingThreadFactory,
@@ -124,8 +124,8 @@ MainWindow::MainWindow(
     mLogsThread(logsThread),
     mPortfolioThread(portfolioThread),
     mPortfolioLastPriceThread(portfolioLastPriceThread),
-    mSimulatorMakeDecisionThread(simulatorMakeDecisionThread),
-    mAutoPilotMakeDecisionThread(autoPilotMakeDecisionThread),
+    mSimulatorDecisionMakerThread(simulatorDecisionMakerThread),
+    mAutoPilotDecisionMakerThread(autoPilotDecisionMakerThread),
     mFollowThread(followThread),
     mOrderBookThread(orderBookThread),
     mTradingThreadFactory(tradingThreadFactory),
@@ -236,12 +236,12 @@ MainWindow::MainWindow(
     connect(mLogsThread,                              SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(autoPilotLogAdded(const LogEntry&)));
     connect(mPortfolioThread,                         SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(autoPilotPortfolioChanged(const Portfolio&)));
     connect(mPortfolioLastPriceThread,                SIGNAL(lastPriceChanged(const QString&, float)),                                              this, SLOT(autoPilotPortfolioLastPriceChanged(const QString&, float)));
-    connect(mSimulatorMakeDecisionThread,             SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
-    connect(mSimulatorMakeDecisionThread,             SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(simulatorOperationsAdded(const QList<Operation>&)));
-    connect(mSimulatorMakeDecisionThread,             SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
-    connect(mSimulatorMakeDecisionThread,             SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
-    connect(mSimulatorMakeDecisionThread,             SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
-    connect(mAutoPilotMakeDecisionThread,             SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(operationsAdded(const QList<Operation>&)),                                             this, SLOT(simulatorOperationsAdded(const QList<Operation>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
+    connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
     connect(mStocksControlsWidget,                    SIGNAL(filterChanged(const StockFilter&)),                                                    this, SLOT(stockFilterChanged(const StockFilter&)));
@@ -268,8 +268,8 @@ MainWindow::~MainWindow()
     mLogsThread->terminateThread();
     mPortfolioThread->terminateThread();
     mPortfolioLastPriceThread->terminateThread();
-    mSimulatorMakeDecisionThread->terminateThread();
-    mAutoPilotMakeDecisionThread->terminateThread();
+    mSimulatorDecisionMakerThread->terminateThread();
+    mAutoPilotDecisionMakerThread->terminateThread();
     mFollowThread->terminateThread();
 
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
@@ -285,8 +285,8 @@ MainWindow::~MainWindow()
     mLogsThread->wait();
     mPortfolioThread->wait();
     mPortfolioLastPriceThread->wait();
-    mSimulatorMakeDecisionThread->wait();
-    mAutoPilotMakeDecisionThread->wait();
+    mSimulatorDecisionMakerThread->wait();
+    mAutoPilotDecisionMakerThread->wait();
     mFollowThread->wait();
 
     for (auto it = tradingThreads.constBegin(); it != tradingThreads.constEnd(); ++it)
@@ -366,8 +366,8 @@ void MainWindow::authFailed(
     mUserUpdateThread->terminateThread();
     mPriceCollectThread->terminateThread();
     mLastPriceThread->terminateThread();
-    mSimulatorMakeDecisionThread->terminateThread();
-    mAutoPilotMakeDecisionThread->terminateThread();
+    mSimulatorDecisionMakerThread->terminateThread();
+    mAutoPilotDecisionMakerThread->terminateThread();
 
     userUpdateTimer.stop();
     priceCollectTimer.stop();
@@ -381,8 +381,8 @@ void MainWindow::authFailed(
     mUserUpdateThread->wait();
     mPriceCollectThread->wait();
     mLastPriceThread->wait();
-    mSimulatorMakeDecisionThread->wait();
-    mAutoPilotMakeDecisionThread->wait();
+    mSimulatorDecisionMakerThread->wait();
+    mAutoPilotDecisionMakerThread->wait();
 
     ui->actionAuth->setEnabled(true);
     ui->waitingSpinnerWidget->setText(tr("Waiting for authorization"));
@@ -433,7 +433,7 @@ void MainWindow::makeDecisionTimerTicked()
 
         if (mode == SIMULATOR_MODE_REALTIME)
         {
-            mSimulatorMakeDecisionThread->start();
+            mSimulatorDecisionMakerThread->start();
         }
     }
 
@@ -443,7 +443,7 @@ void MainWindow::makeDecisionTimerTicked()
 
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
-            mAutoPilotMakeDecisionThread->start();
+            mAutoPilotDecisionMakerThread->start();
         }
     }
 }
@@ -470,7 +470,7 @@ void MainWindow::keepMoneyChangeDelayTimerTicked()
 
     mAutoPilotSettingsEditor->setValue("Options/KeepMoney", keepMoney);
 
-    mAutoPilotMakeDecisionThread->setKeepMoney(keepMoney);
+    mAutoPilotDecisionMakerThread->setKeepMoney(keepMoney);
     mFollowThread->setKeepMoney(keepMoney);
 }
 
@@ -538,7 +538,7 @@ void MainWindow::startSimulator() const
 
     if (mode == SIMULATOR_MODE_REALTIME)
     {
-        mSimulatorMakeDecisionThread->start();
+        mSimulatorDecisionMakerThread->start();
     }
 }
 
@@ -592,8 +592,8 @@ void MainWindow::startAutoPilot()
 
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
-            mAutoPilotMakeDecisionThread->setAccount(mAutoPilotAccountId);
-            mAutoPilotMakeDecisionThread->start();
+            mAutoPilotDecisionMakerThread->setAccount(mAutoPilotAccountId);
+            mAutoPilotDecisionMakerThread->start();
         }
         else if (mode == AUTO_PILOT_MODE_FOLLOW)
         {
@@ -862,8 +862,8 @@ void MainWindow::on_startSimulationButton_clicked()
             mSimulatorSettingsEditor->setValue("Options/BestConfig", dialog->bestConfig());
             // clang-format on
 
-            mSimulatorMakeDecisionThread->reset();
-            mSimulatorMakeDecisionThread->setStartMoney(startMoney);
+            mSimulatorDecisionMakerThread->reset();
+            mSimulatorDecisionMakerThread->setStartMoney(startMoney);
 
             startSimulator();
         }

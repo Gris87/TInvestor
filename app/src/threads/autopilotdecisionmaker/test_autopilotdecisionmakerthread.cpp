@@ -1,4 +1,4 @@
-#include "src/threads/autopilotmakedecision/autopilotmakedecisionthread.h"
+#include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
 
 #include <gtest/gtest.h>
 
@@ -13,7 +13,7 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
-class Test_AutoPilotMakeDecisionThread : public ::testing::Test
+class Test_AutoPilotDecisionMakerThread : public ::testing::Test
 {
 protected:
     void SetUp() override
@@ -22,7 +22,7 @@ protected:
         decisionMakerMock = new StrictMock<DecisionMakerMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new AutoPilotMakeDecisionThread(stocksStorageMock, decisionMakerMock, grpcClientMock);
+        thread = new AutoPilotDecisionMakerThread(stocksStorageMock, decisionMakerMock, grpcClientMock);
     }
 
     void TearDown() override
@@ -33,7 +33,7 @@ protected:
         delete grpcClientMock;
     }
 
-    AutoPilotMakeDecisionThread*   thread;
+    AutoPilotDecisionMakerThread*  thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
     StrictMock<DecisionMakerMock>* decisionMakerMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;
@@ -41,15 +41,15 @@ protected:
 
 
 
-TEST_F(Test_AutoPilotMakeDecisionThread, Test_constructor_and_destructor)
+TEST_F(Test_AutoPilotDecisionMakerThread, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_AutoPilotMakeDecisionThread, Test_run)
+TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 {
 }
 
-TEST_F(Test_AutoPilotMakeDecisionThread, Test_terminateThread)
+TEST_F(Test_AutoPilotDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
 }

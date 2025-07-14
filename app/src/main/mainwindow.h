@@ -17,7 +17,7 @@
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
-#include "src/threads/autopilotmakedecision/iautopilotmakedecisionthread.h"
+#include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread.h"
 #include "src/threads/cleanup/icleanupthread.h"
 #include "src/threads/follow/ifollowthread.h"
 #include "src/threads/lastprice/ilastpricethread.h"
@@ -27,7 +27,7 @@
 #include "src/threads/portfolio/iportfoliothread.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
-#include "src/threads/simulatormakedecision/isimulatormakedecisionthread.h"
+#include "src/threads/simulatordecisionmaker/isimulatordecisionmakerthread.h"
 #include "src/threads/trading/itradingthreadfactory.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
 #include "src/utils/autorunenabler/iautorunenabler.h"
@@ -100,8 +100,8 @@ public:
         ILogsThread*                       logsThread,
         IPortfolioThread*                  portfolioThread,
         IPortfolioLastPriceThread*         portfolioLastPriceThread,
-        ISimulatorMakeDecisionThread*      simulatorMakeDecisionThread,
-        IAutoPilotMakeDecisionThread*      autoPilotMakeDecisionThread,
+        ISimulatorDecisionMakerThread*     simulatorDecisionMakerThread,
+        IAutoPilotDecisionMakerThread*     autoPilotDecisionMakerThread,
         IFollowThread*                     followThread,
         IOrderBookThread*                  orderBookThread,
         ITradingThreadFactory*             tradingThreadFactory,
@@ -176,8 +176,8 @@ private:
     ILogsThread*                       mLogsThread;
     IPortfolioThread*                  mPortfolioThread;
     IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
-    ISimulatorMakeDecisionThread*      mSimulatorMakeDecisionThread;
-    IAutoPilotMakeDecisionThread*      mAutoPilotMakeDecisionThread;
+    ISimulatorDecisionMakerThread*     mSimulatorDecisionMakerThread;
+    IAutoPilotDecisionMakerThread*     mAutoPilotDecisionMakerThread;
     IFollowThread*                     mFollowThread;
     IOrderBookThread*                  mOrderBookThread;
     ITradingThreadFactory*             mTradingThreadFactory;

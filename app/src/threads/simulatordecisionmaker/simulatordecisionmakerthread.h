@@ -2,7 +2,7 @@
 
 
 
-#include "src/threads/simulatormakedecision/isimulatormakedecisionthread.h"
+#include "src/threads/simulatordecisionmaker/isimulatordecisionmakerthread.h"
 
 #include "src/db/logs/ilogsdatabase.h"
 #include "src/db/operations/ioperationsdatabase.h"
@@ -13,12 +13,12 @@
 
 
 
-class SimulatorMakeDecisionThread : public ISimulatorMakeDecisionThread
+class SimulatorDecisionMakerThread : public ISimulatorDecisionMakerThread
 {
     Q_OBJECT
 
 public:
-    explicit SimulatorMakeDecisionThread(
+    explicit SimulatorDecisionMakerThread(
         IOperationsDatabase* operationsDatabase,
         ILogsDatabase*       logsDatabase,
         IInstrumentsStorage* instrumentsStorage,
@@ -27,10 +27,10 @@ public:
         IDecisionMaker*      decisionMaker,
         QObject*             parent = nullptr
     );
-    ~SimulatorMakeDecisionThread() override;
+    ~SimulatorDecisionMakerThread() override;
 
-    SimulatorMakeDecisionThread(const SimulatorMakeDecisionThread& another)            = delete;
-    SimulatorMakeDecisionThread& operator=(const SimulatorMakeDecisionThread& another) = delete;
+    SimulatorDecisionMakerThread(const SimulatorDecisionMakerThread& another)            = delete;
+    SimulatorDecisionMakerThread& operator=(const SimulatorDecisionMakerThread& another) = delete;
 
     void run() override;
 

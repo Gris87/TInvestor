@@ -41,7 +41,7 @@
 #include "src/storage/logos/logosstorage.h"
 #include "src/storage/stocks/stocksstorage.h"
 #include "src/storage/user/userstorage.h"
-#include "src/threads/autopilotmakedecision/autopilotmakedecisionthread.h"
+#include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
 #include "src/threads/cleanup/cleanupthread.h"
 #include "src/threads/follow/followthread.h"
 #include "src/threads/lastprice//lastpricethread.h"
@@ -51,7 +51,7 @@
 #include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
-#include "src/threads/simulatormakedecision/simulatormakedecisionthread.h"
+#include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
 #include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
 #include "src/utils/autorunenabler/autorunenabler.h"
@@ -340,12 +340,12 @@ static int runApplication(QApplication* app)
         &httpClient,
         &grpcClient
     );
-    LastPriceThread             lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
-    OperationsThread            operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
-    LogsThread                  logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
-    PortfolioThread             portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
-    PortfolioLastPriceThread    portfolioLastPriceThread(&timeUtils, &grpcClient);
-    SimulatorMakeDecisionThread simulatorMakeDecisionThread(
+    LastPriceThread              lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
+    OperationsThread             operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
+    LogsThread                   logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
+    PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
+    PortfolioLastPriceThread     portfolioLastPriceThread(&timeUtils, &grpcClient);
+    SimulatorDecisionMakerThread simulatorDecisionMakerThread(
         &simulatorOperationsDatabase,
         &simulatorLogsDatabase,
         &instrumentsStorage,
@@ -353,10 +353,10 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &realtimeDecisionMaker
     );
-    AutoPilotMakeDecisionThread autoPilotMakeDecisionThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
-    FollowThread                followThread(&instrumentsStorage, &grpcClient);
-    OrderBookThread             orderBookThread(&grpcClient);
-    TradingThreadFactory        tradingThreadFactory;
+    AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
+    FollowThread                 followThread(&instrumentsStorage, &grpcClient);
+    OrderBookThread              orderBookThread(&grpcClient);
+    TradingThreadFactory         tradingThreadFactory;
 
     MainWindow mainWindow(
         &config,
@@ -403,8 +403,8 @@ static int runApplication(QApplication* app)
         &logsThread,
         &portfolioThread,
         &portfolioLastPriceThread,
-        &simulatorMakeDecisionThread,
-        &autoPilotMakeDecisionThread,
+        &simulatorDecisionMakerThread,
+        &autoPilotDecisionMakerThread,
         &followThread,
         &orderBookThread,
         &tradingThreadFactory,

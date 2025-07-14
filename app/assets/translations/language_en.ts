@@ -969,19 +969,19 @@
     </message>
 </context>
 <context>
-    <name>SimulatorMakeDecisionThread</name>
+    <name>SimulatorDecisionMakerThread</name>
     <message>
-        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="120"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="120"/>
         <source>Input money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="207"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="207"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatormakedecision/simulatormakedecisionthread.cpp" line="213"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="213"/>
         <source>Share</source>
         <translation></translation>
     </message>

@@ -1,4 +1,4 @@
-#include "src/threads/simulatormakedecision/simulatormakedecisionthread.h"
+#include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
 
 #include <QDebug>
 
@@ -8,7 +8,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
+SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     IOperationsDatabase* operationsDatabase,
     ILogsDatabase*       logsDatabase,
     IInstrumentsStorage* instrumentsStorage,
@@ -17,7 +17,7 @@ SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
     IDecisionMaker*      decisionMaker,
     QObject*             parent
 ) :
-    ISimulatorMakeDecisionThread(parent),
+    ISimulatorDecisionMakerThread(parent),
     mOperationsDatabase(operationsDatabase),
     mLogsDatabase(logsDatabase),
     mInstrumentsStorage(instrumentsStorage),
@@ -29,17 +29,17 @@ SimulatorMakeDecisionThread::SimulatorMakeDecisionThread(
     mLoaded(),
     mStartMoney()
 {
-    qDebug() << "Create SimulatorMakeDecisionThread";
+    qDebug() << "Create SimulatorDecisionMakerThread";
 }
 
-SimulatorMakeDecisionThread::~SimulatorMakeDecisionThread()
+SimulatorDecisionMakerThread::~SimulatorDecisionMakerThread()
 {
-    qDebug() << "Destroy SimulatorMakeDecisionThread";
+    qDebug() << "Destroy SimulatorDecisionMakerThread";
 }
 
-void SimulatorMakeDecisionThread::run()
+void SimulatorDecisionMakerThread::run()
 {
-    qDebug() << "Running SimulatorMakeDecisionThread";
+    qDebug() << "Running SimulatorDecisionMakerThread";
 
     blockSignals(false);
 
@@ -64,34 +64,34 @@ void SimulatorMakeDecisionThread::run()
         simulateTrading(instrumentsForTrading);
     }
 
-    qDebug() << "Finish SimulatorMakeDecisionThread";
+    qDebug() << "Finish SimulatorDecisionMakerThread";
 }
 
-void SimulatorMakeDecisionThread::reset()
+void SimulatorDecisionMakerThread::reset()
 {
     mResetted = true;
 }
 
-void SimulatorMakeDecisionThread::setStartMoney(int value)
+void SimulatorDecisionMakerThread::setStartMoney(int value)
 {
     mStartMoney = value;
 }
 
-void SimulatorMakeDecisionThread::terminateThread()
+void SimulatorDecisionMakerThread::terminateThread()
 {
     blockSignals(true);
 
     requestInterruption();
 }
 
-void SimulatorMakeDecisionThread::init()
+void SimulatorDecisionMakerThread::init()
 {
     initOperations();
     initLogs();
     initPortfolio();
 }
 
-void SimulatorMakeDecisionThread::initOperations()
+void SimulatorDecisionMakerThread::initOperations()
 {
     QList<Operation> operations;
 
@@ -154,7 +154,7 @@ void SimulatorMakeDecisionThread::initOperations()
     mOperationsDatabase->writeOperations(operations);
 }
 
-void SimulatorMakeDecisionThread::initLogs()
+void SimulatorDecisionMakerThread::initLogs()
 {
     QList<LogEntry> entries;
 
@@ -162,7 +162,7 @@ void SimulatorMakeDecisionThread::initLogs()
     mLogsDatabase->writeLogs(entries);
 }
 
-void SimulatorMakeDecisionThread::initPortfolio()
+void SimulatorDecisionMakerThread::initPortfolio()
 {
     Portfolio             portfolio;
     PortfolioCategoryItem category1;
@@ -221,29 +221,29 @@ void SimulatorMakeDecisionThread::initPortfolio()
     // TODO: Store portfolio
 }
 
-void SimulatorMakeDecisionThread::load()
+void SimulatorDecisionMakerThread::load()
 {
     loadOperations();
     loadLogs();
     loadPortfolio();
 }
 
-void SimulatorMakeDecisionThread::loadOperations()
+void SimulatorDecisionMakerThread::loadOperations()
 {
     const QList<Operation> operations = mOperationsDatabase->readOperations();
     emit operationsRead(operations);
 }
 
-void SimulatorMakeDecisionThread::loadLogs()
+void SimulatorDecisionMakerThread::loadLogs()
 {
     const QList<LogEntry> entries = mLogsDatabase->readLogs();
     emit logsRead(entries);
 }
 
-void SimulatorMakeDecisionThread::loadPortfolio()
+void SimulatorDecisionMakerThread::loadPortfolio()
 {
 }
 
-void SimulatorMakeDecisionThread::simulateTrading(const InstrumentsForTrading& /*instrumentsForTrading*/)
+void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& /*instrumentsForTrading*/)
 {
 }

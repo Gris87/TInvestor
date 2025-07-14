@@ -10,19 +10,19 @@
 
 
 
-class ISimulatorMakeDecisionThread : public QThread
+class ISimulatorDecisionMakerThread : public QThread
 {
     Q_OBJECT
 
 public:
-    explicit ISimulatorMakeDecisionThread(QObject* parent = nullptr) :
+    explicit ISimulatorDecisionMakerThread(QObject* parent = nullptr) :
         QThread(parent)
     {
     }
-    ~ISimulatorMakeDecisionThread() override = default;
+    ~ISimulatorDecisionMakerThread() override = default;
 
-    ISimulatorMakeDecisionThread(const ISimulatorMakeDecisionThread& another)            = delete;
-    ISimulatorMakeDecisionThread& operator=(const ISimulatorMakeDecisionThread& another) = delete;
+    ISimulatorDecisionMakerThread(const ISimulatorDecisionMakerThread& another)            = delete;
+    ISimulatorDecisionMakerThread& operator=(const ISimulatorDecisionMakerThread& another) = delete;
 
     virtual void reset()                  = 0;
     virtual void setStartMoney(int value) = 0;

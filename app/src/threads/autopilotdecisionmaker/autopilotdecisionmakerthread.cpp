@@ -1,4 +1,4 @@
-#include "src/threads/autopilotmakedecision/autopilotmakedecisionthread.h"
+#include "src/threads/autopilotdecisionmaker/autopilotdecisionmakerthread.h"
 
 #include <QDebug>
 
@@ -10,10 +10,10 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 
-AutoPilotMakeDecisionThread::AutoPilotMakeDecisionThread(
+AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
     IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent
 ) :
-    IAutoPilotMakeDecisionThread(parent),
+    IAutoPilotDecisionMakerThread(parent),
     mMutex(new QMutex()),
     mStocksStorage(stocksStorage),
     mDecisionMaker(decisionMaker),
@@ -21,19 +21,19 @@ AutoPilotMakeDecisionThread::AutoPilotMakeDecisionThread(
     mAccountId(),
     mKeepMoney()
 {
-    qDebug() << "Create AutoPilotMakeDecisionThread";
+    qDebug() << "Create AutoPilotDecisionMakerThread";
 }
 
-AutoPilotMakeDecisionThread::~AutoPilotMakeDecisionThread()
+AutoPilotDecisionMakerThread::~AutoPilotDecisionMakerThread()
 {
-    qDebug() << "Destroy AutoPilotMakeDecisionThread";
+    qDebug() << "Destroy AutoPilotDecisionMakerThread";
 
     delete mMutex;
 }
 
-void AutoPilotMakeDecisionThread::run()
+void AutoPilotDecisionMakerThread::run()
 {
-    qDebug() << "Running AutoPilotMakeDecisionThread";
+    qDebug() << "Running AutoPilotDecisionMakerThread";
 
     blockSignals(false);
 
@@ -55,45 +55,45 @@ void AutoPilotMakeDecisionThread::run()
         }
     }
 
-    qDebug() << "Finish AutoPilotMakeDecisionThread";
+    qDebug() << "Finish AutoPilotDecisionMakerThread";
 }
 
-void AutoPilotMakeDecisionThread::setAccount(const QString& accountId)
+void AutoPilotDecisionMakerThread::setAccount(const QString& accountId)
 {
     const QMutexLocker lock(mMutex);
 
     mAccountId = accountId;
 }
 
-void AutoPilotMakeDecisionThread::setKeepMoney(int value)
+void AutoPilotDecisionMakerThread::setKeepMoney(int value)
 {
     const QMutexLocker lock(mMutex);
 
     mKeepMoney = value;
 }
 
-QString AutoPilotMakeDecisionThread::accountId() const
+QString AutoPilotDecisionMakerThread::accountId() const
 {
     const QMutexLocker lock(mMutex);
 
     return mAccountId;
 }
 
-int AutoPilotMakeDecisionThread::keepMoney() const
+int AutoPilotDecisionMakerThread::keepMoney() const
 {
     const QMutexLocker lock(mMutex);
 
     return mKeepMoney;
 }
 
-void AutoPilotMakeDecisionThread::terminateThread()
+void AutoPilotDecisionMakerThread::terminateThread()
 {
     blockSignals(true);
 
     requestInterruption();
 }
 
-Portfolio AutoPilotMakeDecisionThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
+Portfolio AutoPilotDecisionMakerThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& tinkoffPortfolio)
 {
     Portfolio portfolio;
 

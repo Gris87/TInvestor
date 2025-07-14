@@ -26,7 +26,7 @@
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
-#include "src/threads/autopilotmakedecision/iautopilotmakedecisionthread_mock.h"
+#include "src/threads/autopilotdecisionmaker/iautopilotdecisionmakerthread_mock.h"
 #include "src/threads/cleanup/icleanupthread_mock.h"
 #include "src/threads/follow/ifollowthread_mock.h"
 #include "src/threads/lastprice/ilastpricethread_mock.h"
@@ -36,7 +36,7 @@
 #include "src/threads/portfolio/iportfoliothread_mock.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h"
 #include "src/threads/pricecollect/ipricecollectthread_mock.h"
-#include "src/threads/simulatormakedecision/isimulatormakedecisionthread_mock.h"
+#include "src/threads/simulatordecisionmaker/isimulatordecisionmakerthread_mock.h"
 #include "src/threads/trading/itradingthread_mock.h"
 #include "src/threads/trading/itradingthreadfactory_mock.h"
 #include "src/threads/userupdate/iuserupdatethread_mock.h"
@@ -139,8 +139,8 @@ protected:
         logsThreadMock                       = new StrictMock<LogsThreadMock>();
         portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
         portfolioLastPriceThreadMock         = new StrictMock<PortfolioLastPriceThreadMock>();
-        simulatorMakeDecisionThreadMock      = new StrictMock<SimulatorMakeDecisionThreadMock>();
-        autoPilotMakeDecisionThreadMock      = new StrictMock<AutoPilotMakeDecisionThreadMock>();
+        simulatorDecisionMakerThreadMock     = new StrictMock<SimulatorDecisionMakerThreadMock>();
+        autoPilotDecisionMakerThreadMock     = new StrictMock<AutoPilotDecisionMakerThreadMock>();
         followThreadMock                     = new StrictMock<FollowThreadMock>();
         orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
         tradingThreadFactoryMock             = new StrictMock<TradingThreadFactoryMock>();
@@ -239,7 +239,7 @@ protected:
 
         EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/KeepMoney"), QVariant(0))).WillOnce(Return(QVariant(0)));
         EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
-        EXPECT_CALL(*autoPilotMakeDecisionThreadMock, setKeepMoney(0));
+        EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
         EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
         mainWindow = new MainWindow(
@@ -287,8 +287,8 @@ protected:
             logsThreadMock,
             portfolioThreadMock,
             portfolioLastPriceThreadMock,
-            simulatorMakeDecisionThreadMock,
-            autoPilotMakeDecisionThreadMock,
+            simulatorDecisionMakerThreadMock,
+            autoPilotDecisionMakerThreadMock,
             followThreadMock,
             orderBookThreadMock,
             tradingThreadFactoryMock,
@@ -314,8 +314,8 @@ protected:
         EXPECT_CALL(*logsThreadMock, terminateThread());
         EXPECT_CALL(*portfolioThreadMock, terminateThread());
         EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
-        EXPECT_CALL(*simulatorMakeDecisionThreadMock, terminateThread());
-        EXPECT_CALL(*autoPilotMakeDecisionThreadMock, terminateThread());
+        EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
+        EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
         EXPECT_CALL(*followThreadMock, terminateThread());
 
         // clang-format off
@@ -374,8 +374,8 @@ protected:
         delete logsThreadMock;
         delete portfolioThreadMock;
         delete portfolioLastPriceThreadMock;
-        delete simulatorMakeDecisionThreadMock;
-        delete autoPilotMakeDecisionThreadMock;
+        delete simulatorDecisionMakerThreadMock;
+        delete autoPilotDecisionMakerThreadMock;
         delete followThreadMock;
         delete orderBookThreadMock;
         delete tradingThreadFactoryMock;
@@ -441,8 +441,8 @@ protected:
     StrictMock<LogsThreadMock>*                       logsThreadMock;
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
     StrictMock<PortfolioLastPriceThreadMock>*         portfolioLastPriceThreadMock;
-    StrictMock<SimulatorMakeDecisionThreadMock>*      simulatorMakeDecisionThreadMock;
-    StrictMock<AutoPilotMakeDecisionThreadMock>*      autoPilotMakeDecisionThreadMock;
+    StrictMock<SimulatorDecisionMakerThreadMock>*     simulatorDecisionMakerThreadMock;
+    StrictMock<AutoPilotDecisionMakerThreadMock>*     autoPilotDecisionMakerThreadMock;
     StrictMock<FollowThreadMock>*                     followThreadMock;
     StrictMock<OrderBookThreadMock>*                  orderBookThreadMock;
     StrictMock<TradingThreadFactoryMock>*             tradingThreadFactoryMock;
@@ -532,8 +532,8 @@ TEST_F(Test_MainWindow, Test_authFailed)
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
     EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, terminateThread());
-    EXPECT_CALL(*autoPilotMakeDecisionThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
@@ -617,8 +617,8 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
         .WillOnce(Return(QVariant(AUTO_PILOT_MODE_INTERNAL)));
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
-    EXPECT_CALL(*autoPilotMakeDecisionThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
 
     mainWindow->ui->simulationActiveSpinnerWidget->start();
     mainWindow->ui->autoPilotActiveSpinnerWidget->start();
@@ -626,8 +626,8 @@ TEST_F(Test_MainWindow, Test_makeDecisionTimerTicked)
 
     ASSERT_EQ(mainWindow->makeDecisionTimer.isActive(), true);
 
-    simulatorMakeDecisionThreadMock->wait();
-    autoPilotMakeDecisionThreadMock->wait();
+    simulatorDecisionMakerThreadMock->wait();
+    autoPilotDecisionMakerThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_stocksTableUpdateAllTimerTicked)
@@ -666,7 +666,7 @@ TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
     ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), true);
 
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/KeepMoney"), QVariant(0)));
-    EXPECT_CALL(*autoPilotMakeDecisionThreadMock, setKeepMoney(0));
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setKeepMoney(0));
     EXPECT_CALL(*followThreadMock, setKeepMoney(0));
 
     mainWindow->keepMoneyChangeDelayTimerTicked();
@@ -959,7 +959,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
@@ -1010,7 +1010,7 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     logsThreadMock->wait();
     portfolioThreadMock->wait();
     portfolioLastPriceThreadMock->wait();
-    simulatorMakeDecisionThreadMock->wait();
+    simulatorDecisionMakerThreadMock->wait();
 }
 
 TEST_F(Test_MainWindow, Test_on_actionStocksPage_toggled)
@@ -1121,16 +1121,16 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/ToDate"), QVariant("2025-01-01")));
     EXPECT_CALL(*startSimulationDialogMock, bestConfig()).WillOnce(Return(true));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/BestConfig"), QVariant(true)));
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, reset());
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, setStartMoney(1000000));
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, reset());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, setStartMoney(1000000));
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
-    EXPECT_CALL(*simulatorMakeDecisionThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
 
     mainWindow->ui->startSimulationButton->click();
 
-    simulatorMakeDecisionThreadMock->wait();
+    simulatorDecisionMakerThreadMock->wait();
 
     // clang-format off
     ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         true);

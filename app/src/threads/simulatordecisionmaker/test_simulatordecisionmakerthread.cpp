@@ -1,4 +1,4 @@
-#include "src/threads/simulatormakedecision/simulatormakedecisionthread.h"
+#include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
 
 #include <gtest/gtest.h>
 
@@ -16,7 +16,7 @@ using ::testing::StrictMock;
 
 
 // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init)
-class Test_SimulatorMakeDecisionThread : public ::testing::Test
+class Test_SimulatorDecisionMakerThread : public ::testing::Test
 {
 protected:
     void SetUp() override
@@ -28,7 +28,7 @@ protected:
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         decisionMakerMock      = new StrictMock<DecisionMakerMock>();
 
-        thread = new SimulatorMakeDecisionThread(
+        thread = new SimulatorDecisionMakerThread(
             operationsDatabaseMock,
             logsDatabaseMock,
             instrumentsStorageMock,
@@ -49,7 +49,7 @@ protected:
         delete decisionMakerMock;
     }
 
-    SimulatorMakeDecisionThread*        thread;
+    SimulatorDecisionMakerThread*       thread;
     StrictMock<OperationsDatabaseMock>* operationsDatabaseMock;
     StrictMock<LogsDatabaseMock>*       logsDatabaseMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
@@ -60,15 +60,15 @@ protected:
 
 
 
-TEST_F(Test_SimulatorMakeDecisionThread, Test_constructor_and_destructor)
+TEST_F(Test_SimulatorDecisionMakerThread, Test_constructor_and_destructor)
 {
 }
 
-TEST_F(Test_SimulatorMakeDecisionThread, Test_run)
+TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 {
 }
 
-TEST_F(Test_SimulatorMakeDecisionThread, Test_terminateThread)
+TEST_F(Test_SimulatorDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
 }
