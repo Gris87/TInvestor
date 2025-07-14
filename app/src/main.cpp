@@ -89,7 +89,7 @@
 
 
 
-const char* const VERSION = "v0.3.0";
+const char* const VERSION = "v0.3.1";
 
 
 
