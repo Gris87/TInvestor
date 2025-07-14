@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <gtest/gtest.h>
 
+#include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/utils/fs/dir/idir_mock.h"
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
@@ -29,11 +30,12 @@ protected:
         StrictMock<DirMock>* dirMock = new StrictMock<DirMock>(); // Will be deleted in PortfolioDatabase constructor
         dirFactoryMock               = new StrictMock<DirFactoryMock>();
         fileFactoryMock              = new StrictMock<FileFactoryMock>();
+        logosStorageMock             = new StrictMock<LogosStorageMock>();
 
         EXPECT_CALL(*dirFactoryMock, newInstance(QString())).WillOnce(Return(std::shared_ptr<IDir>(dirMock)));
         EXPECT_CALL(*dirMock, mkpath(appDir + "/data/simulator")).WillOnce(Return(true));
 
-        database = new PortfolioDatabase(dirFactoryMock, fileFactoryMock);
+        database = new PortfolioDatabase(dirFactoryMock, fileFactoryMock, logosStorageMock);
     }
 
     void TearDown() override
@@ -41,12 +43,14 @@ protected:
         delete database;
         delete dirFactoryMock;
         delete fileFactoryMock;
+        delete logosStorageMock;
     }
 
-    PortfolioDatabase*           database;
-    StrictMock<DirFactoryMock>*  dirFactoryMock;
-    StrictMock<FileFactoryMock>* fileFactoryMock;
-    QString                      appDir;
+    PortfolioDatabase*            database;
+    StrictMock<DirFactoryMock>*   dirFactoryMock;
+    StrictMock<FileFactoryMock>*  fileFactoryMock;
+    StrictMock<LogosStorageMock>* logosStorageMock;
+    QString                       appDir;
 };
 
 

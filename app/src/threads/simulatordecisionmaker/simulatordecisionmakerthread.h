@@ -6,6 +6,7 @@
 
 #include "src/db/logs/ilogsdatabase.h"
 #include "src/db/operations/ioperationsdatabase.h"
+#include "src/db/portfolio/iportfoliodatabase.h"
 #include "src/decisions/idecisionmaker.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
@@ -21,6 +22,7 @@ public:
     explicit SimulatorDecisionMakerThread(
         IOperationsDatabase* operationsDatabase,
         ILogsDatabase*       logsDatabase,
+        IPortfolioDatabase*  portfolioDatabase,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
         IStocksStorage*      stocksStorage,
@@ -51,6 +53,7 @@ private:
 
     IOperationsDatabase* mOperationsDatabase;
     ILogsDatabase*       mLogsDatabase;
+    IPortfolioDatabase*  mPortfolioDatabase;
     IInstrumentsStorage* mInstrumentsStorage;
     ILogosStorage*       mLogosStorage;
     IStocksStorage*      mStocksStorage;

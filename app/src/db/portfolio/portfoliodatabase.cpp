@@ -7,9 +7,10 @@
 
 
 
-PortfolioDatabase::PortfolioDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory) :
+PortfolioDatabase::PortfolioDatabase(IDirFactory* dirFactory, IFileFactory* fileFactory, ILogosStorage* logosStorage) :
     IPortfolioDatabase(),
-    mFileFactory(fileFactory)
+    mFileFactory(fileFactory),
+    mLogosStorage(logosStorage)
 {
     qDebug() << "Create PortfolioDatabase";
 
@@ -51,6 +52,22 @@ Portfolio PortfolioDatabase::readPortfolio()
         {
             qWarning() << "Failed to parse portfolio";
         }
+
+        mLogosStorage->readLock();
+
+        for (int i = 0; i < res.positions.size(); ++i)
+        {
+            PortfolioCategoryItem& category = res.positions[i];
+
+            for (int j = 0; j < category.items.size(); ++j)
+            {
+                PortfolioItem& item = category.items[j];
+
+                item.instrumentLogo = mLogosStorage->getLogo(item.instrumentId);
+            }
+        }
+
+        mLogosStorage->readUnlock();
     }
 
     return res;

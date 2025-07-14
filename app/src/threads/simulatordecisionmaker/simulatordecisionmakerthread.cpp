@@ -11,6 +11,7 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     IOperationsDatabase* operationsDatabase,
     ILogsDatabase*       logsDatabase,
+    IPortfolioDatabase*  portfolioDatabase,
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
     IStocksStorage*      stocksStorage,
@@ -20,6 +21,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     ISimulatorDecisionMakerThread(parent),
     mOperationsDatabase(operationsDatabase),
     mLogsDatabase(logsDatabase),
+    mPortfolioDatabase(portfolioDatabase),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
     mStocksStorage(stocksStorage),
@@ -217,8 +219,7 @@ void SimulatorDecisionMakerThread::initPortfolio()
     portfolio.positions << category1 << category2;
 
     emit portfolioChanged(portfolio);
-
-    // TODO: Store portfolio
+    mPortfolioDatabase->writePortfolio(portfolio);
 }
 
 void SimulatorDecisionMakerThread::load()
@@ -242,6 +243,8 @@ void SimulatorDecisionMakerThread::loadLogs()
 
 void SimulatorDecisionMakerThread::loadPortfolio()
 {
+    const Portfolio portfolio = mPortfolioDatabase->readPortfolio();
+    emit portfolioChanged(portfolio);
 }
 
 void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& /*instrumentsForTrading*/)

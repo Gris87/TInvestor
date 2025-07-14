@@ -26,6 +26,7 @@
 #include "src/db/logos/logosdatabase.h"
 #include "src/db/logs/logsdatabase.h"
 #include "src/db/operations/operationsdatabase.h"
+#include "src/db/portfolio/portfoliodatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/decisions/decisionmaker.h"
@@ -312,6 +313,7 @@ static int runApplication(QApplication* app)
     StocksStorage       stocksStorage(&stocksDatabase, &userStorage);
     OperationsDatabase  simulatorOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
     LogsDatabase        simulatorLogsDatabase(&dirFactory, &fileFactory, &logosStorage, false);
+    PortfolioDatabase   simulatorPortfolioDatabase(&dirFactory, &fileFactory, &logosStorage);
     OperationsDatabase  autoPilotOperationsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
     LogsDatabase        autoPilotLogsDatabase(&dirFactory, &fileFactory, &logosStorage, true);
 
@@ -348,6 +350,7 @@ static int runApplication(QApplication* app)
     SimulatorDecisionMakerThread simulatorDecisionMakerThread(
         &simulatorOperationsDatabase,
         &simulatorLogsDatabase,
+        &simulatorPortfolioDatabase,
         &instrumentsStorage,
         &logosStorage,
         &stocksStorage,
