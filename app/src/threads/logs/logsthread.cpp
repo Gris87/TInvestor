@@ -95,13 +95,7 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
             Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
             mInstrumentsStorage->readUnlock();
 
-            if (instrument.ticker == "" || instrument.name == "")
-            {
-                instrument.ticker         = instrumentId;
-                instrument.name           = "?????";
-                instrument.lot            = 1;
-                instrument.pricePrecision = 2;
-            }
+            instrument.resetIfNotFound(instrumentId);
 
             mLogosStorage->readLock();
             entry.instrumentLogo = mLogosStorage->getLogo(instrumentId);

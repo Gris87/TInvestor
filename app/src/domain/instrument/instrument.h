@@ -16,6 +16,8 @@ struct Instrument
 
     Instrument& operator=(const Instrument& another) = default;
 
+    void resetIfNotFound(const QString& instrumentId);
+
     void fromJsonObject(simdjson::ondemand::object jsonObject); // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]

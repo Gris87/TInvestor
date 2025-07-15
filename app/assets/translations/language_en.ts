@@ -293,14 +293,14 @@
 <context>
     <name>FollowThread</name>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="241"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="263"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="243"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="267"/>
         <source>Decided to sell up to cost %1 %2 due to following account &quot;%3&quot;</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/follow/followthread.cpp" line="220"/>
-        <location filename="../../src/threads/follow/followthread.cpp" line="249"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="221"/>
+        <location filename="../../src/threads/follow/followthread.cpp" line="252"/>
         <source>Decided to buy up to cost %1 %2 due to following account &quot;%3&quot;</source>
         <translation></translation>
     </message>
@@ -775,22 +775,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="147"/>
+        <location filename="../../src/main.cpp" line="148"/>
         <source>Failed to apply localization</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="159"/>
+        <location filename="../../src/main.cpp" line="160"/>
         <source>Systray</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="159"/>
+        <location filename="../../src/main.cpp" line="160"/>
         <source>Failed to detect any system tray on this system</source>
         <translation></translation>
     </message>
@@ -971,18 +971,33 @@
 <context>
     <name>SimulatorDecisionMakerThread</name>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="120"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="124"/>
         <source>Input money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="207"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="205"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="213"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="211"/>
         <source>Share</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="390"/>
+        <source>Order to buy %1 created with a price %2 %3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="400"/>
+        <source>Order completed. %1 bought with a price %2 %3</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="409"/>
+        <source>Trade completed successfully</source>
         <translation></translation>
     </message>
 </context>

@@ -12,6 +12,17 @@ Instrument::Instrument() :
 {
 }
 
+void Instrument::resetIfNotFound(const QString& instrumentId)
+{
+    if (ticker == "" || name == "")
+    {
+        ticker         = instrumentId;
+        name           = "?????";
+        lot            = 1;
+        pricePrecision = 2;
+    }
+}
+
 static void instrumentTickerParse(Instrument* instrument, simdjson::ondemand::value value)
 {
     const std::string_view valueStr = value.get_string();

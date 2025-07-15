@@ -509,13 +509,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
     mInstrumentsStorage->readUnlock();
 
-    if (instrument.ticker == "" || instrument.name == "")
-    {
-        instrument.ticker         = instrumentId;
-        instrument.name           = "?????";
-        instrument.lot            = 1;
-        instrument.pricePrecision = 2;
-    }
+    instrument.resetIfNotFound(instrumentId);
 
     mLogosStorage->readLock();
     res->instrumentLogo = mLogosStorage->getLogo(instrumentId);

@@ -58,6 +58,27 @@ TEST(Test_Instrument, Test_assign)
     // clang-format on
 }
 
+TEST(Test_Instrument, Test_resetIfNotFound)
+{
+    Instrument instrument;
+
+    // clang-format off
+    ASSERT_EQ(instrument.ticker,         "");
+    ASSERT_EQ(instrument.name,           "");
+    ASSERT_EQ(instrument.lot,            0);
+    ASSERT_EQ(instrument.pricePrecision, 0);
+    // clang-format on
+
+    instrument.resetIfNotFound("aaaaa");
+
+    // clang-format off
+    ASSERT_EQ(instrument.ticker,         "aaaaa");
+    ASSERT_EQ(instrument.name,           "?????");
+    ASSERT_EQ(instrument.lot,            1);
+    ASSERT_EQ(instrument.pricePrecision, 2);
+    // clang-format on
+}
+
 TEST(Test_Instrument, Test_fromJsonObject)
 {
     Instrument instrument;

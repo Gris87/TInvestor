@@ -53,8 +53,30 @@ private:
     void loadLogs();
     void loadPortfolio();
     void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
-    void simulateSell(const QString& instrumentId);
-    void simulateBuy(const QString& instrumentId, const TradingInfo& tradingInfo);
+    void simulateSell(const QString& instrumentId, QList<Operation>& operations, QList<LogEntry>& entries);
+    void simulateBuy(
+        const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
+    );
+    void simulateBuyForOperations();
+    void simulateBuyForLogs(
+        QList<LogEntry>&  entries,
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        const QString&    cause,
+        qint64            amountOfLots,
+        float             price
+    );
+    void simulateBuyForPortfolio(
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        qint64            amountOfLots,
+        float             price,
+        double            cost,
+        double            totalCommission
+    );
+    void simulateBuyForInstruments(const QString& instrumentId, qint64 amountOfLots, double cost);
     void updateCostAndPart();
 
     IOperationsDatabase*                 mOperationsDatabase;

@@ -122,14 +122,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         PortfolioItem item;
 
         Instrument instrument = instruments.value(instrumentId);
-
-        if (instrument.ticker == "" || instrument.name == "")
-        {
-            instrument.ticker         = instrumentId;
-            instrument.name           = "?????";
-            instrument.lot            = 1;
-            instrument.pricePrecision = 2;
-        }
+        instrument.resetIfNotFound(instrumentId);
 
         item.instrumentId       = instrumentId;
         item.instrumentLogo     = mLogosStorage->getLogo(instrumentId);
