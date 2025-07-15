@@ -57,26 +57,35 @@ private:
     void simulateBuy(
         const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
     );
-    void simulateBuyForOperations();
+    void simulateBuyForOperations(
+        QList<Operation>& operations,
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        qint64            quantity,
+        float             price,
+        double            cost,
+        double            totalCommission
+    );
     void simulateBuyForLogs(
         QList<LogEntry>&  entries,
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
         const QString&    cause,
-        qint64            amountOfLots,
+        qint64            quantity,
         float             price
     );
     void simulateBuyForPortfolio(
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
-        qint64            amountOfLots,
+        qint64            quantity,
         float             price,
         double            cost,
         double            totalCommission
     );
-    void simulateBuyForInstruments(const QString& instrumentId, qint64 amountOfLots, double cost);
+    void simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
     void updateCostAndPart();
 
     IOperationsDatabase*                 mOperationsDatabase;
@@ -92,4 +101,6 @@ private:
     bool                                 mResetted;
     bool                                 mLoaded;
     int                                  mStartMoney;
+    double                               mTotalYieldWithCommission;
+    double                               mTotalMoney;
 };

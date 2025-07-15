@@ -971,32 +971,37 @@
 <context>
     <name>SimulatorDecisionMakerThread</name>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="124"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="126"/>
         <source>Input money</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="205"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="207"/>
         <source>Currency and metals</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="211"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="213"/>
         <source>Share</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="390"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="383"/>
+        <source>Purchase of shares</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="439"/>
         <source>Order to buy %1 created with a price %2 %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="400"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="446"/>
         <source>Order completed. %1 bought with a price %2 %3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="409"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="453"/>
         <source>Trade completed successfully</source>
         <translation></translation>
     </message>

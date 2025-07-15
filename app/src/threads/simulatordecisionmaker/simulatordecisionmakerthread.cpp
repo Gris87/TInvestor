@@ -2,9 +2,11 @@
 
 #include <QDebug>
 
+#include "src/grpc/utils.h"
 
 
-const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+const char* const RUBLE_UID       = "a92e2e25-a698-45cc-a781-167cf465257c";
 constexpr float   HUNDRED_PERCENT = 100.0f;
 
 constexpr int CURRENCY_ID = 0;
@@ -36,7 +38,9 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mInstruments(),
     mResetted(),
     mLoaded(),
-    mStartMoney()
+    mStartMoney(),
+    mTotalYieldWithCommission(),
+    mTotalMoney()
 {
     qDebug() << "Create SimulatorDecisionMakerThread";
 }
@@ -156,6 +160,9 @@ void SimulatorDecisionMakerThread::initOperations()
 
     emit operationsRead(operations);
     mOperationsDatabase->writeOperations(operations);
+
+    mTotalYieldWithCommission = 0.0;
+    mTotalMoney               = mStartMoney;
 }
 
 void SimulatorDecisionMakerThread::initLogs()
@@ -232,6 +239,19 @@ void SimulatorDecisionMakerThread::loadOperations()
 {
     const QList<Operation> operations = mOperationsDatabase->readOperations();
     emit operationsRead(operations);
+
+    if (!operations.isEmpty())
+    {
+        const Operation& lastOperation = operations.constFirst(); // Since it reversed
+
+        mTotalYieldWithCommission = quotationToDouble(lastOperation.totalYieldWithCommission);
+        mTotalMoney               = quotationToDouble(lastOperation.totalMoney);
+    }
+    else
+    {
+        mTotalYieldWithCommission = 0.0;
+        mTotalMoney               = mStartMoney;
+    }
 }
 
 void SimulatorDecisionMakerThread::loadLogs()
@@ -319,7 +339,7 @@ void SimulatorDecisionMakerThread::
 }
 
 void SimulatorDecisionMakerThread::simulateBuy(
-    const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& /*operations*/, QList<LogEntry>& entries
+    const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
 )
 {
     if (mInstruments.contains(instrumentId))
@@ -333,10 +353,10 @@ void SimulatorDecisionMakerThread::simulateBuy(
 
     instrument.resetIfNotFound(instrumentId);
 
-    const float commission = mUserStorage->getCommission();
+    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
 
     const double lotPrice               = instrument.lot * tradingInfo.price;
-    const double lotPriceWithCommission = lotPrice * (1 + commission / 100);
+    const double lotPriceWithCommission = lotPrice * (1 + commission);
 
     const qint64 amountOfLots = qMin(
         qRound64(tradingInfo.expectedCost / lotPrice),
@@ -345,22 +365,69 @@ void SimulatorDecisionMakerThread::simulateBuy(
 
     if (amountOfLots > 0)
     {
-        const double cost            = amountOfLots * lotPrice;
+        const qint64 quantity        = amountOfLots * instrument.lot;
+        const double cost            = quantity * tradingInfo.price;
         const double totalCommission = cost * commission;
 
         mLogosStorage->readLock();
         Logo* logo = mLogosStorage->getLogo(instrumentId);
         mLogosStorage->readUnlock();
 
-        simulateBuyForOperations();
-        simulateBuyForLogs(entries, instrumentId, logo, instrument, tradingInfo.cause, amountOfLots, tradingInfo.price);
-        simulateBuyForPortfolio(instrumentId, logo, instrument, amountOfLots, tradingInfo.price, cost, totalCommission);
-        simulateBuyForInstruments(instrumentId, amountOfLots, cost);
+        simulateBuyForOperations(operations, instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
+        simulateBuyForLogs(entries, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price);
+        simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
+        simulateBuyForInstruments(instrumentId, quantity, cost);
     }
 }
 
-void SimulatorDecisionMakerThread::simulateBuyForOperations()
+void SimulatorDecisionMakerThread::simulateBuyForOperations(
+    QList<Operation>& operations,
+    const QString&    instrumentId,
+    Logo*             logo,
+    const Instrument& instrument,
+    qint64            quantity,
+    float             price,
+    double            cost,
+    double            totalCommission
+)
 {
+    mTotalYieldWithCommission -= totalCommission;
+    mTotalMoney               -= totalCommission;
+
+    Operation operation;
+
+    operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.instrumentId                    = instrumentId;
+    operation.instrumentLogo                  = logo;
+    operation.instrumentTicker                = instrument.ticker;
+    operation.instrumentName                  = instrument.name;
+    operation.description                     = tr("Purchase of shares");
+    operation.price                           = price;
+    operation.avgPriceFifo                    = price;
+    operation.avgPriceWavg                    = price;
+    operation.quantity                        = quantity;
+    operation.remainedQuantity                = quantity;
+    operation.payment                         = -cost;
+    operation.avgCostFifo                     = cost;
+    operation.costFifo                        = quotationFromDouble(cost);
+    operation.costWavg                        = quotationFromDouble(cost);
+    operation.commission                      = -totalCommission;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = -totalCommission;
+    operation.yieldWithCommissionPercent      = -(totalCommission / cost) * HUNDRED_PERCENT;
+    operation.inputMoney.units                = mStartMoney;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = mStartMoney;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission        = quotationFromDouble(mTotalYieldWithCommission);
+    operation.totalYieldWithCommissionPercent = (mTotalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
+    operation.totalMoney     = quotationFromDouble(mTotalMoney);
+    operation.pricePrecision = instrument.pricePrecision;
+    operation.paymentPrecision    = instrument.pricePrecision;
+    operation.commissionPrecision = instrument.pricePrecision;
+
+    operations.append(operation);
 }
 
 void SimulatorDecisionMakerThread::simulateBuyForLogs(
@@ -369,7 +436,7 @@ void SimulatorDecisionMakerThread::simulateBuyForLogs(
     Logo*             logo,
     const Instrument& instrument,
     const QString&    cause,
-    qint64            amountOfLots,
+    qint64            quantity,
     float             price
 )
 {
@@ -386,22 +453,16 @@ void SimulatorDecisionMakerThread::simulateBuyForLogs(
     entries.append(entry);
 
     ++entry.timestamp;
-    entry.level = LOG_LEVEL_VERBOSE;
-    entry.message =
-        tr("Order to buy %1 created with a price %2 %3")
-            .arg(
-                QString::number(amountOfLots * instrument.lot), QString::number(price, 'f', instrument.pricePrecision), "\u20BD"
-            );
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order to buy %1 created with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
 
     ++entry.timestamp;
-    entry.level = LOG_LEVEL_VERBOSE;
-    entry.message =
-        tr("Order completed. %1 bought with a price %2 %3")
-            .arg(
-                QString::number(amountOfLots * instrument.lot), QString::number(price, 'f', instrument.pricePrecision), "\u20BD"
-            );
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order completed. %1 bought with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
 
@@ -416,7 +477,7 @@ void SimulatorDecisionMakerThread::simulateBuyForPortfolio(
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
-    qint64            amountOfLots,
+    qint64            quantity,
     float             price,
     double            cost,
     double            totalCommission
@@ -429,7 +490,7 @@ void SimulatorDecisionMakerThread::simulateBuyForPortfolio(
     item.instrumentTicker   = instrument.ticker;
     item.instrumentName     = instrument.name;
     item.showPrices         = true;
-    item.available          = amountOfLots * instrument.lot;
+    item.available          = quantity;
     item.price              = price;
     item.avgPriceFifo       = price;
     item.avgPriceWavg       = price;
@@ -443,15 +504,18 @@ void SimulatorDecisionMakerThread::simulateBuyForPortfolio(
     item.dailyYieldPercent  = 0.0f;
     item.pricePrecision     = instrument.pricePrecision;
 
-    mPortfolio.positions[CURRENCY_ID].items.first().cost -= cost + totalCommission;
+    const double costWithCommission = cost + totalCommission;
+
+    mPortfolio.positions[CURRENCY_ID].items.first().available -= costWithCommission;
+    mPortfolio.positions[CURRENCY_ID].items.first().cost      -= costWithCommission;
     mPortfolio.positions[SHARE_ID].items.append(item);
 }
 
-void SimulatorDecisionMakerThread::simulateBuyForInstruments(const QString& instrumentId, qint64 amountOfLots, double cost)
+void SimulatorDecisionMakerThread::simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost)
 {
     QuantityAndCostDouble quantityAndCost;
 
-    quantityAndCost.quantity = amountOfLots;
+    quantityAndCost.quantity = quantity;
     quantityAndCost.cost     = cost;
 
     mInstruments[instrumentId] = quantityAndCost;
@@ -459,27 +523,17 @@ void SimulatorDecisionMakerThread::simulateBuyForInstruments(const QString& inst
 
 void SimulatorDecisionMakerThread::updateCostAndPart()
 {
-    double totalCost = 0.0;
-
-    for (const PortfolioCategoryItem& category : mPortfolio.positions)
-    {
-        for (const PortfolioItem& item : category.items)
-        {
-            totalCost += item.cost;
-        }
-    }
-
     for (PortfolioCategoryItem& category : mPortfolio.positions)
     {
         category.cost = 0;
 
         for (PortfolioItem& item : category.items)
         {
-            item.part = (item.cost / totalCost) * HUNDRED_PERCENT;
+            item.part = (item.cost / mTotalMoney) * HUNDRED_PERCENT;
 
             category.cost += item.cost;
         }
 
-        category.part = (category.cost / totalCost) * HUNDRED_PERCENT;
+        category.part = (category.cost / mTotalMoney) * HUNDRED_PERCENT;
     }
 }
