@@ -5,28 +5,11 @@
 #include "src/threads/operations/ioperationsthread.h"
 
 #include "src/db/operations/ioperationsdatabase.h"
+#include "src/domain/quantityandcost/quantityandcost.h"
 #include "src/domain/quotation/quotation.h"
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
-
-
-
-struct QuantityAndCost
-{
-    explicit QuantityAndCost() :
-        quantity(),
-        fifoItems(),
-        costFifo(),
-        costWavg()
-    {
-    }
-
-    qint64                   quantity;
-    QList<OperationFifoItem> fifoItems;
-    Quotation                costFifo;
-    Quotation                costWavg;
-};
 
 
 

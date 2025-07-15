@@ -57,6 +57,7 @@ SOURCES += \
     src/domain/portfolio/portfoliocategoryitem.cpp \
     src/domain/portfolio/portfolioitem.cpp \
     src/domain/portfolio/portfoliominitem.cpp \
+    src/domain/quantityandcost/quantityandcost.cpp \
     src/domain/quotation/quotation.cpp \
     src/domain/stock/stock.cpp \
     src/domain/stock/stockmeta.cpp \
@@ -234,6 +235,7 @@ HEADERS += \
     src/domain/portfolio/portfoliocategoryitem.h \
     src/domain/portfolio/portfolioitem.h \
     src/domain/portfolio/portfoliominitem.h \
+    src/domain/quantityandcost/quantityandcost.h \
     src/domain/quotation/quotation.h \
     src/domain/stock/stock.h \
     src/domain/stock/stockdata.h \

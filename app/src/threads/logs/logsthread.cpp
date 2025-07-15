@@ -99,6 +99,7 @@ void LogsThread::addLog(LogLevel level, const QString& instrumentId, const QStri
             {
                 instrument.ticker         = instrumentId;
                 instrument.name           = "?????";
+                instrument.lot            = 1;
                 instrument.pricePrecision = 2;
             }
 

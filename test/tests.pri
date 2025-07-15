@@ -53,6 +53,7 @@ SOURCES += \
     src/domain/portfolio/test_portfoliocategoryitem.cpp \
     src/domain/portfolio/test_portfolioitem.cpp \
     src/domain/portfolio/test_portfoliominitem.cpp \
+    src/domain/quantityandcost/test_quantityandcost.cpp \
     src/domain/quotation/test_quotation.cpp \
     src/domain/stock/test_stock.cpp \
     src/domain/stock/test_stockmeta.cpp \

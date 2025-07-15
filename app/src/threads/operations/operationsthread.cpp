@@ -513,6 +513,7 @@ void OperationsThread::handleOperationItem(const tinkoff::OperationItem& tinkoff
     {
         instrument.ticker         = instrumentId;
         instrument.name           = "?????";
+        instrument.lot            = 1;
         instrument.pricePrecision = 2;
     }
 

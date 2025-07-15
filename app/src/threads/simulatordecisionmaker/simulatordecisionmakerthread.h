@@ -8,9 +8,11 @@
 #include "src/db/operations/ioperationsdatabase.h"
 #include "src/db/portfolio/iportfoliodatabase.h"
 #include "src/decisions/idecisionmaker.h"
+#include "src/domain/quantityandcost/quantityandcost.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
+#include "src/storage/user/iuserstorage.h"
 
 
 
@@ -25,6 +27,7 @@ public:
         IPortfolioDatabase*  portfolioDatabase,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
+        IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
         IDecisionMaker*      decisionMaker,
         QObject*             parent = nullptr
@@ -50,16 +53,21 @@ private:
     void loadLogs();
     void loadPortfolio();
     void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
+    void simulateSell(const QString& instrumentId);
+    void simulateBuy(const QString& instrumentId, const TradingInfo& tradingInfo);
+    void updateCostAndPart();
 
-    IOperationsDatabase* mOperationsDatabase;
-    ILogsDatabase*       mLogsDatabase;
-    IPortfolioDatabase*  mPortfolioDatabase;
-    IInstrumentsStorage* mInstrumentsStorage;
-    ILogosStorage*       mLogosStorage;
-    IStocksStorage*      mStocksStorage;
-    IDecisionMaker*      mDecisionMaker;
-    Portfolio            mPortfolio;
-    bool                 mResetted;
-    bool                 mLoaded;
-    int                  mStartMoney;
+    IOperationsDatabase*                 mOperationsDatabase;
+    ILogsDatabase*                       mLogsDatabase;
+    IPortfolioDatabase*                  mPortfolioDatabase;
+    IInstrumentsStorage*                 mInstrumentsStorage;
+    ILogosStorage*                       mLogosStorage;
+    IUserStorage*                        mUserStorage;
+    IStocksStorage*                      mStocksStorage;
+    IDecisionMaker*                      mDecisionMaker;
+    Portfolio                            mPortfolio;
+    QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
+    bool                                 mResetted;
+    bool                                 mLoaded;
+    int                                  mStartMoney;
 };

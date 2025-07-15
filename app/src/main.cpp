@@ -353,6 +353,7 @@ static int runApplication(QApplication* app)
         &simulatorPortfolioDatabase,
         &instrumentsStorage,
         &logosStorage,
+        &userStorage,
         &stocksStorage,
         &realtimeDecisionMaker
     );

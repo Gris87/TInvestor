@@ -127,6 +127,7 @@ void PortfolioThread::handlePortfolioResponse(const tinkoff::PortfolioResponse& 
         {
             instrument.ticker         = instrumentId;
             instrument.name           = "?????";
+            instrument.lot            = 1;
             instrument.pricePrecision = 2;
         }
 

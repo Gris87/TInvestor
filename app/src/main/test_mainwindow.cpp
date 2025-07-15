@@ -845,12 +845,15 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     TradingInfo tradingInfo2;
     TradingInfo tradingInfo3;
 
+    tradingInfo1.price        = 10.0f;
     tradingInfo1.expectedCost = 10000.0;
     tradingInfo1.cause        = "Need to buy";
 
+    tradingInfo2.price        = 100.0f;
     tradingInfo2.expectedCost = 15000.0;
     tradingInfo2.cause        = "Need to buy more";
 
+    tradingInfo3.price        = 1000.0f;
     tradingInfo3.expectedCost = 0.0;
     tradingInfo3.cause        = "Sell ASAP";
 
@@ -1253,6 +1256,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     InstrumentsForTrading instruments;
     TradingInfo           tradingInfo;
 
+    tradingInfo.price        = 100.0f;
     tradingInfo.expectedCost = 10000.0;
     tradingInfo.cause        = "Need to buy";
 

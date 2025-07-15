@@ -216,6 +216,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (!instruments.contains(instrumentId))
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
+                it.value().price,
                 expectedCost,
                 tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
                     .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
@@ -237,6 +238,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (delta < -lotPrice)
         {
             instrumentsForSale[instrumentId] = TradingInfo(
+                item.price,
                 expectedCost,
                 tr("Decided to sell up to cost %1 %2 due to following account \"%3\"")
                     .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
@@ -245,6 +247,7 @@ void FollowThread::buildInstrumentsForTrading(
         else if (delta > lotPrice)
         {
             instrumentsForBuy[instrumentId] = TradingInfo(
+                item.price,
                 expectedCost,
                 tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
                     .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
@@ -259,6 +262,7 @@ void FollowThread::buildInstrumentsForTrading(
         if (!anotherInstruments.contains(instrumentId))
         {
             instrumentsForSale[instrumentId] = TradingInfo(
+                it.value().price,
                 0, // Need to sell all
                 tr("Decided to sell up to cost %1 %2 due to following account \"%3\"").arg("0.00", "\u20BD", mAnotherAccountName)
             );

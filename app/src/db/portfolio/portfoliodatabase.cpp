@@ -55,14 +55,10 @@ Portfolio PortfolioDatabase::readPortfolio()
 
         mLogosStorage->readLock();
 
-        for (int i = 0; i < res.positions.size(); ++i)
+        for (PortfolioCategoryItem& category : res.positions)
         {
-            PortfolioCategoryItem& category = res.positions[i];
-
-            for (int j = 0; j < category.items.size(); ++j)
+            for (PortfolioItem& item : category.items)
             {
-                PortfolioItem& item = category.items[j];
-
                 item.instrumentLogo = mLogosStorage->getLogo(item.instrumentId);
             }
         }

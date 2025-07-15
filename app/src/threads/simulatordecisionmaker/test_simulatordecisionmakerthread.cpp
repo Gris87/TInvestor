@@ -9,6 +9,7 @@
 #include "src/storage/instruments/iinstrumentsstorage_mock.h"
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
+#include "src/storage/user/iuserstorage_mock.h"
 
 
 
@@ -27,6 +28,7 @@ protected:
         portfolioDatabaseMock  = new StrictMock<PortfolioDatabaseMock>();
         instrumentsStorageMock = new StrictMock<InstrumentsStorageMock>();
         logosStorageMock       = new StrictMock<LogosStorageMock>();
+        userStorageMock        = new StrictMock<UserStorageMock>();
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         decisionMakerMock      = new StrictMock<DecisionMakerMock>();
 
@@ -36,6 +38,7 @@ protected:
             portfolioDatabaseMock,
             instrumentsStorageMock,
             logosStorageMock,
+            userStorageMock,
             stocksStorageMock,
             decisionMakerMock
         );
@@ -49,6 +52,7 @@ protected:
         delete portfolioDatabaseMock;
         delete instrumentsStorageMock;
         delete logosStorageMock;
+        delete userStorageMock;
         delete stocksStorageMock;
         delete decisionMakerMock;
     }
@@ -59,6 +63,7 @@ protected:
     StrictMock<PortfolioDatabaseMock>*  portfolioDatabaseMock;
     StrictMock<InstrumentsStorageMock>* instrumentsStorageMock;
     StrictMock<LogosStorageMock>*       logosStorageMock;
+    StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<DecisionMakerMock>*      decisionMakerMock;
 };

@@ -3,12 +3,14 @@
 
 
 TradingInfo::TradingInfo() :
+    price(),
     expectedCost(),
     cause()
 {
 }
 
-TradingInfo::TradingInfo(double _expectedCost, const QString& _cause) :
+TradingInfo::TradingInfo(float _price, double _expectedCost, const QString& _cause) :
+    price(_price),
     expectedCost(_expectedCost),
     cause(_cause)
 {
