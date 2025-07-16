@@ -96,10 +96,11 @@ public:
         IUserUpdateThread*                 userUpdateThread,
         IPriceCollectThread*               priceCollectThread,
         ILastPriceThread*                  lastPriceThread,
+        IPortfolioLastPriceThread*         simulatorPortfolioLastPriceThread,
         IOperationsThread*                 operationsThread,
         ILogsThread*                       logsThread,
         IPortfolioThread*                  portfolioThread,
-        IPortfolioLastPriceThread*         portfolioLastPriceThread,
+        IPortfolioLastPriceThread*         autoPilotPortfolioLastPriceThread,
         ISimulatorDecisionMakerThread*     simulatorDecisionMakerThread,
         IAutoPilotDecisionMakerThread*     autoPilotDecisionMakerThread,
         IFollowThread*                     followThread,
@@ -133,6 +134,7 @@ public:
     QTimer                         stocksTableUpdateAllTimer;
     QTimer                         stocksTableUpdateLastPricesTimer;
     QTimer                         keepMoneyChangeDelayTimer;
+    QTimer                         simulatorPortfolioUpdateLastPricesTimer;
     QTimer                         autoPilotPortfolioUpdateLastPricesTimer;
     bool                           authFailedDialogShown;
     QMap<QString, ITradingThread*> tradingThreads; // Instrument UID => ITradingThread
@@ -172,10 +174,11 @@ private:
     IUserUpdateThread*                 mUserUpdateThread;
     IPriceCollectThread*               mPriceCollectThread;
     ILastPriceThread*                  mLastPriceThread;
+    IPortfolioLastPriceThread*         mSimulatorPortfolioLastPriceThread;
     IOperationsThread*                 mOperationsThread;
     ILogsThread*                       mLogsThread;
     IPortfolioThread*                  mPortfolioThread;
-    IPortfolioLastPriceThread*         mPortfolioLastPriceThread;
+    IPortfolioLastPriceThread*         mAutoPilotPortfolioLastPriceThread;
     ISimulatorDecisionMakerThread*     mSimulatorDecisionMakerThread;
     IAutoPilotDecisionMakerThread*     mAutoPilotDecisionMakerThread;
     IFollowThread*                     mFollowThread;
@@ -208,6 +211,7 @@ public slots:
     void stocksTableUpdateAllTimerTicked();
     void stocksTableUpdateLastPricesTimerTicked();
     void keepMoneyChangeDelayTimerTicked();
+    void simulatorPortfolioUpdateLastPricesTimerTicked();
     void autoPilotPortfolioUpdateLastPricesTimerTicked();
     void notifyInstrumentsProgress(const QString& message) const;
     void stocksChanged();
@@ -216,8 +220,8 @@ public slots:
     void lastPriceChanged(const QString& instrumentId);
     void dateChangeDateTimeChanged(const QDateTime& dateTime);
     void stockFilterChanged(const StockFilter& filter);
-    void startSimulator() const;
-    void stopSimulator() const;
+    void startSimulator();
+    void stopSimulator();
     void startAutoPilot();
     void stopAutoPilot();
     void simulatorOperationsRead(const QList<Operation>& operations);
@@ -225,6 +229,7 @@ public slots:
     void simulatorLogsRead(const QList<LogEntry>& entries);
     void simulatorLogAdded(const LogEntry& entry);
     void simulatorPortfolioChanged(const Portfolio& portfolio);
+    void simulatorPortfolioLastPriceChanged(const QString& instrumentId, float price);
     void autoPilotOperationsRead(const QList<Operation>& operations);
     void autoPilotOperationsAdded(const QList<Operation>& operations);
     void autoPilotLogsRead(const QList<LogEntry>& entries);

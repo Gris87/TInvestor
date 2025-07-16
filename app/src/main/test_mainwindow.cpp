@@ -95,67 +95,68 @@ protected:
     {
         const InSequence seq;
 
-        configMock                           = new StrictMock<ConfigMock>();
-        configForSettingsDialogMock          = new StrictMock<ConfigMock>();
-        configForSimulationMock              = new StrictMock<ConfigMock>();
-        authDialogFactoryMock                = new StrictMock<AuthDialogFactoryMock>();
-        settingsDialogFactoryMock            = new StrictMock<SettingsDialogFactoryMock>();
-        orderWavesDialogFactoryMock          = new StrictMock<OrderWavesDialogFactoryMock>();
-        startSimulationDialogFactoryMock     = new StrictMock<StartSimulationDialogFactoryMock>();
-        startAutoPilotDialogFactoryMock      = new StrictMock<StartAutoPilotDialogFactoryMock>();
-        decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
-        buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
-        buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
-        buyDecision3ConfigWidgetFactoryMock  = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
-        sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
-        sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
-        sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
-        actionsTableItemWidgetFactoryMock    = new StrictMock<ActionsTableItemWidgetFactoryMock>();
-        orderWavesWidgetFactoryMock          = new StrictMock<OrderWavesWidgetFactoryMock>();
-        stocksControlsWidgetFactoryMock      = new StrictMock<StocksControlsWidgetFactoryMock>();
-        stocksTableWidgetFactoryMock         = new StrictMock<StocksTableWidgetFactoryMock>();
-        operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
-        accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
-        logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
-        logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
-        portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
-        stocksTableModelFactoryMock          = new StrictMock<StocksTableModelFactoryMock>();
-        operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
-        logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
-        portfolioTreeModelFactoryMock        = new StrictMock<PortfolioTreeModelFactoryMock>();
-        decisionMakerWidgetFactoryMock       = new StrictMock<DecisionMakerWidgetFactoryMock>();
-        trayIconFactoryMock                  = new StrictMock<TrayIconFactoryMock>();
-        userStorageMock                      = new StrictMock<UserStorageMock>();
-        stocksStorageMock                    = new StrictMock<StocksStorageMock>();
-        instrumentsStorageMock               = new StrictMock<InstrumentsStorageMock>();
-        logosStorageMock                     = new StrictMock<LogosStorageMock>();
-        httpClientMock                       = new StrictMock<HttpClientMock>();
-        grpcClientMock                       = new StrictMock<GrpcClientMock>();
-        cleanupThreadMock                    = new StrictMock<CleanupThreadMock>();
-        userUpdateThreadMock                 = new StrictMock<UserUpdateThreadMock>();
-        priceCollectThreadMock               = new StrictMock<PriceCollectThreadMock>();
-        lastPriceThreadMock                  = new StrictMock<LastPriceThreadMock>();
-        operationsThreadMock                 = new StrictMock<OperationsThreadMock>();
-        logsThreadMock                       = new StrictMock<LogsThreadMock>();
-        portfolioThreadMock                  = new StrictMock<PortfolioThreadMock>();
-        portfolioLastPriceThreadMock         = new StrictMock<PortfolioLastPriceThreadMock>();
-        simulatorDecisionMakerThreadMock     = new StrictMock<SimulatorDecisionMakerThreadMock>();
-        autoPilotDecisionMakerThreadMock     = new StrictMock<AutoPilotDecisionMakerThreadMock>();
-        followThreadMock                     = new StrictMock<FollowThreadMock>();
-        orderBookThreadMock                  = new StrictMock<OrderBookThreadMock>();
-        tradingThreadFactoryMock             = new StrictMock<TradingThreadFactoryMock>();
-        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
-        timeUtilsMock                        = new StrictMock<TimeUtilsMock>();
-        messageBoxUtilsMock                  = new StrictMock<MessageBoxUtilsMock>();
-        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
-        simulatorSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
-        autoPilotSettingsEditorMock          = new StrictMock<SettingsEditorMock>();
-        autorunEnablerMock                   = new StrictMock<AutorunEnablerMock>();
-        stocksControlsWidgetMock             = new StrictMock<StocksControlsWidgetMock>();
-        stocksTableWidgetMock                = new StrictMock<StocksTableWidgetMock>();
-        simulatorDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
-        autoPilotDecisionMakerWidgetMock     = new StrictMock<DecisionMakerWidgetMock>();
-        trayIconMock                         = new StrictMock<TrayIconMock>();
+        configMock                            = new StrictMock<ConfigMock>();
+        configForSettingsDialogMock           = new StrictMock<ConfigMock>();
+        configForSimulationMock               = new StrictMock<ConfigMock>();
+        authDialogFactoryMock                 = new StrictMock<AuthDialogFactoryMock>();
+        settingsDialogFactoryMock             = new StrictMock<SettingsDialogFactoryMock>();
+        orderWavesDialogFactoryMock           = new StrictMock<OrderWavesDialogFactoryMock>();
+        startSimulationDialogFactoryMock      = new StrictMock<StartSimulationDialogFactoryMock>();
+        startAutoPilotDialogFactoryMock       = new StrictMock<StartAutoPilotDialogFactoryMock>();
+        decisionMakerConfigWidgetFactoryMock  = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
+        buyDecision1ConfigWidgetFactoryMock   = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
+        buyDecision2ConfigWidgetFactoryMock   = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
+        buyDecision3ConfigWidgetFactoryMock   = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
+        sellDecision1ConfigWidgetFactoryMock  = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
+        sellDecision2ConfigWidgetFactoryMock  = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
+        sellDecision3ConfigWidgetFactoryMock  = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        actionsTableItemWidgetFactoryMock     = new StrictMock<ActionsTableItemWidgetFactoryMock>();
+        orderWavesWidgetFactoryMock           = new StrictMock<OrderWavesWidgetFactoryMock>();
+        stocksControlsWidgetFactoryMock       = new StrictMock<StocksControlsWidgetFactoryMock>();
+        stocksTableWidgetFactoryMock          = new StrictMock<StocksTableWidgetFactoryMock>();
+        operationsTableWidgetFactoryMock      = new StrictMock<OperationsTableWidgetFactoryMock>();
+        accountChartWidgetFactoryMock         = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsFilterWidgetFactoryMock           = new StrictMock<LogsFilterWidgetFactoryMock>();
+        logsTableWidgetFactoryMock            = new StrictMock<LogsTableWidgetFactoryMock>();
+        portfolioTreeWidgetFactoryMock        = new StrictMock<PortfolioTreeWidgetFactoryMock>();
+        stocksTableModelFactoryMock           = new StrictMock<StocksTableModelFactoryMock>();
+        operationsTableModelFactoryMock       = new StrictMock<OperationsTableModelFactoryMock>();
+        logsTableModelFactoryMock             = new StrictMock<LogsTableModelFactoryMock>();
+        portfolioTreeModelFactoryMock         = new StrictMock<PortfolioTreeModelFactoryMock>();
+        decisionMakerWidgetFactoryMock        = new StrictMock<DecisionMakerWidgetFactoryMock>();
+        trayIconFactoryMock                   = new StrictMock<TrayIconFactoryMock>();
+        userStorageMock                       = new StrictMock<UserStorageMock>();
+        stocksStorageMock                     = new StrictMock<StocksStorageMock>();
+        instrumentsStorageMock                = new StrictMock<InstrumentsStorageMock>();
+        logosStorageMock                      = new StrictMock<LogosStorageMock>();
+        httpClientMock                        = new StrictMock<HttpClientMock>();
+        grpcClientMock                        = new StrictMock<GrpcClientMock>();
+        cleanupThreadMock                     = new StrictMock<CleanupThreadMock>();
+        userUpdateThreadMock                  = new StrictMock<UserUpdateThreadMock>();
+        priceCollectThreadMock                = new StrictMock<PriceCollectThreadMock>();
+        lastPriceThreadMock                   = new StrictMock<LastPriceThreadMock>();
+        simulatorPortfolioLastPriceThreadMock = new StrictMock<PortfolioLastPriceThreadMock>();
+        operationsThreadMock                  = new StrictMock<OperationsThreadMock>();
+        logsThreadMock                        = new StrictMock<LogsThreadMock>();
+        portfolioThreadMock                   = new StrictMock<PortfolioThreadMock>();
+        autoPilotPortfolioLastPriceThreadMock = new StrictMock<PortfolioLastPriceThreadMock>();
+        simulatorDecisionMakerThreadMock      = new StrictMock<SimulatorDecisionMakerThreadMock>();
+        autoPilotDecisionMakerThreadMock      = new StrictMock<AutoPilotDecisionMakerThreadMock>();
+        followThreadMock                      = new StrictMock<FollowThreadMock>();
+        orderBookThreadMock                   = new StrictMock<OrderBookThreadMock>();
+        tradingThreadFactoryMock              = new StrictMock<TradingThreadFactoryMock>();
+        fileDialogFactoryMock                 = new StrictMock<FileDialogFactoryMock>();
+        timeUtilsMock                         = new StrictMock<TimeUtilsMock>();
+        messageBoxUtilsMock                   = new StrictMock<MessageBoxUtilsMock>();
+        settingsEditorMock                    = new StrictMock<SettingsEditorMock>();
+        simulatorSettingsEditorMock           = new StrictMock<SettingsEditorMock>();
+        autoPilotSettingsEditorMock           = new StrictMock<SettingsEditorMock>();
+        autorunEnablerMock                    = new StrictMock<AutorunEnablerMock>();
+        stocksControlsWidgetMock              = new StrictMock<StocksControlsWidgetMock>();
+        stocksTableWidgetMock                 = new StrictMock<StocksTableWidgetMock>();
+        simulatorDecisionMakerWidgetMock      = new StrictMock<DecisionMakerWidgetMock>();
+        autoPilotDecisionMakerWidgetMock      = new StrictMock<DecisionMakerWidgetMock>();
+        trayIconMock                          = new StrictMock<TrayIconMock>();
 
         StockFilter filter;
 
@@ -283,10 +284,11 @@ protected:
             userUpdateThreadMock,
             priceCollectThreadMock,
             lastPriceThreadMock,
+            simulatorPortfolioLastPriceThreadMock,
             operationsThreadMock,
             logsThreadMock,
             portfolioThreadMock,
-            portfolioLastPriceThreadMock,
+            autoPilotPortfolioLastPriceThreadMock,
             simulatorDecisionMakerThreadMock,
             autoPilotDecisionMakerThreadMock,
             followThreadMock,
@@ -310,10 +312,11 @@ protected:
         EXPECT_CALL(*userUpdateThreadMock, terminateThread());
         EXPECT_CALL(*priceCollectThreadMock, terminateThread());
         EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+        EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, terminateThread());
         EXPECT_CALL(*operationsThreadMock, terminateThread());
         EXPECT_CALL(*logsThreadMock, terminateThread());
         EXPECT_CALL(*portfolioThreadMock, terminateThread());
-        EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
+        EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
         EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
         EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
         EXPECT_CALL(*followThreadMock, terminateThread());
@@ -370,10 +373,11 @@ protected:
         delete userUpdateThreadMock;
         delete priceCollectThreadMock;
         delete lastPriceThreadMock;
+        delete simulatorPortfolioLastPriceThreadMock;
         delete operationsThreadMock;
         delete logsThreadMock;
         delete portfolioThreadMock;
-        delete portfolioLastPriceThreadMock;
+        delete autoPilotPortfolioLastPriceThreadMock;
         delete simulatorDecisionMakerThreadMock;
         delete autoPilotDecisionMakerThreadMock;
         delete followThreadMock;
@@ -437,10 +441,11 @@ protected:
     StrictMock<UserUpdateThreadMock>*                 userUpdateThreadMock;
     StrictMock<PriceCollectThreadMock>*               priceCollectThreadMock;
     StrictMock<LastPriceThreadMock>*                  lastPriceThreadMock;
+    StrictMock<PortfolioLastPriceThreadMock>*         simulatorPortfolioLastPriceThreadMock;
     StrictMock<OperationsThreadMock>*                 operationsThreadMock;
     StrictMock<LogsThreadMock>*                       logsThreadMock;
     StrictMock<PortfolioThreadMock>*                  portfolioThreadMock;
-    StrictMock<PortfolioLastPriceThreadMock>*         portfolioLastPriceThreadMock;
+    StrictMock<PortfolioLastPriceThreadMock>*         autoPilotPortfolioLastPriceThreadMock;
     StrictMock<SimulatorDecisionMakerThreadMock>*     simulatorDecisionMakerThreadMock;
     StrictMock<AutoPilotDecisionMakerThreadMock>*     autoPilotDecisionMakerThreadMock;
     StrictMock<FollowThreadMock>*                     followThreadMock;
@@ -522,18 +527,18 @@ TEST_F(Test_MainWindow, Test_authFailed)
     StrictMock<AuthDialogMock>* authDialogMock = new StrictMock<AuthDialogMock>(); // Will be deleted in authFailed
 
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_ERROR, QString(""), QString("GRPC error happened with code UNKNOWN")));
-    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot stopped")));
-
     EXPECT_CALL(*userUpdateThreadMock, terminateThread());
     EXPECT_CALL(*priceCollectThreadMock, terminateThread());
     EXPECT_CALL(*lastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot stopped")));
     EXPECT_CALL(*operationsThreadMock, terminateThread());
     EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
-    EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
-    EXPECT_CALL(*followThreadMock, terminateThread());
-    EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
     EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*authDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IAuthDialog>(authDialogMock)));
     EXPECT_CALL(*authDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
@@ -674,6 +679,20 @@ TEST_F(Test_MainWindow, Test_keepMoneyChangeDelayTimerTicked)
     ASSERT_EQ(mainWindow->keepMoneyChangeDelayTimer.isActive(), false);
 }
 
+TEST_F(Test_MainWindow, Test_simulatorPortfolioUpdateLastPricesTimerTicked)
+{
+    const InSequence seq;
+
+    mainWindow->simulatorPortfolioUpdateLastPricesTimer.start(100000);
+    ASSERT_EQ(mainWindow->simulatorPortfolioUpdateLastPricesTimer.isActive(), true);
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, updateLastPrices());
+
+    mainWindow->simulatorPortfolioUpdateLastPricesTimerTicked();
+
+    ASSERT_EQ(mainWindow->simulatorPortfolioUpdateLastPricesTimer.isActive(), true);
+}
+
 TEST_F(Test_MainWindow, Test_autoPilotPortfolioUpdateLastPricesTimerTicked)
 {
     const InSequence seq;
@@ -795,7 +814,7 @@ TEST_F(Test_MainWindow, Test_autoPilotPortfolioChanged)
     const Portfolio portfolio;
 
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, portfolioChanged(portfolio));
-    EXPECT_CALL(*portfolioLastPriceThreadMock, portfolioChanged(portfolio));
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, portfolioChanged(portfolio));
 
     mainWindow->autoPilotPortfolioChanged(portfolio);
 }
@@ -958,10 +977,16 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
 
     accounts["AAAAAA"] = account;
 
+    EXPECT_CALL(*userUpdateThreadMock, run());
+    EXPECT_CALL(*priceCollectThreadMock, run());
+    EXPECT_CALL(*lastPriceThreadMock, run());
+
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
@@ -981,13 +1006,10 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
 
-    EXPECT_CALL(*userUpdateThreadMock, run());
-    EXPECT_CALL(*priceCollectThreadMock, run());
-    EXPECT_CALL(*lastPriceThreadMock, run());
     EXPECT_CALL(*operationsThreadMock, run());
     EXPECT_CALL(*logsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());
-    EXPECT_CALL(*portfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, run());
 
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));
 
@@ -1009,10 +1031,11 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
     userUpdateThreadMock->wait();
     priceCollectThreadMock->wait();
     lastPriceThreadMock->wait();
+    simulatorPortfolioLastPriceThreadMock->wait();
     operationsThreadMock->wait();
     logsThreadMock->wait();
     portfolioThreadMock->wait();
-    portfolioLastPriceThreadMock->wait();
+    autoPilotPortfolioLastPriceThreadMock->wait();
     simulatorDecisionMakerThreadMock->wait();
 }
 
@@ -1096,7 +1119,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
 
 TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 {
-    const InSequence seq;
+    // const InSequence seq;
 
     StrictMock<StartSimulationDialogMock>* startSimulationDialogMock =
         new StrictMock<StartSimulationDialogMock>(); // Will be deleted in on_startSimulationButton_clicked
@@ -1116,8 +1139,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
-    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_DATERANGE));
-    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_DATERANGE)));
+    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_REALTIME));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*startSimulationDialogMock, fromDate()).WillOnce(Return(QDate(2024, 1, 1)));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/FromDate"), QVariant("2024-01-01")));
     EXPECT_CALL(*startSimulationDialogMock, toDate()).WillOnce(Return(QDate(2025, 1, 1)));
@@ -1129,10 +1152,13 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
 
     mainWindow->ui->startSimulationButton->click();
 
+    simulatorPortfolioLastPriceThreadMock->wait();
     simulatorDecisionMakerThreadMock->wait();
 
     // clang-format off
@@ -1153,6 +1179,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     )
         .WillOnce(Return(QMessageBox::Yes));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
 
     mainWindow->ui->startSimulationButton->click();
 
@@ -1204,10 +1232,10 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
     EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
-    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
-    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("AAAAAA")));
     EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return(AUTO_PILOT_MODE_FOLLOW));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_FOLLOW)));
+    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("AAAAAA")));
     EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("BBBBBB"));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("BBBBBB")));
 
@@ -1218,9 +1246,9 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
 
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
-    EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/AnotherAccount"), QVariant("")))
         .WillOnce(Return(QVariant("BBBBBB")));
+    EXPECT_CALL(*userStorageMock, readUnlock());
 
     EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
     EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
@@ -1233,7 +1261,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*operationsThreadMock, run());
     EXPECT_CALL(*logsThreadMock, run());
     EXPECT_CALL(*portfolioThreadMock, run());
-    EXPECT_CALL(*portfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, run());
     EXPECT_CALL(*followThreadMock, run());
 
     EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));
@@ -1250,7 +1278,7 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     operationsThreadMock->wait();
     logsThreadMock->wait();
     portfolioThreadMock->wait();
-    portfolioLastPriceThreadMock->wait();
+    autoPilotPortfolioLastPriceThreadMock->wait();
     followThreadMock->wait();
 
     InstrumentsForTrading instruments;
@@ -1306,7 +1334,8 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     EXPECT_CALL(*operationsThreadMock, terminateThread());
     EXPECT_CALL(*logsThreadMock, terminateThread());
     EXPECT_CALL(*portfolioThreadMock, terminateThread());
-    EXPECT_CALL(*portfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
     EXPECT_CALL(*followThreadMock, terminateThread());
     EXPECT_CALL(*tradingThreadMock, terminateThread());
 
