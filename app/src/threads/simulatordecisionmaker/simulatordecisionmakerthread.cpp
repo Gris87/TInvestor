@@ -35,6 +35,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mStocksStorage(stocksStorage),
     mDecisionMaker(decisionMaker),
     mPortfolio(),
+    mStocksMap(),
     mInstruments(),
     mResetted(),
     mLoaded(),
@@ -259,6 +260,8 @@ void SimulatorDecisionMakerThread::loadLogs()
 void SimulatorDecisionMakerThread::loadPortfolio()
 {
     mPortfolio = mPortfolioDatabase->readPortfolio();
+    updatePrice();
+
     emit portfolioChanged(mPortfolio);
 
     mInstruments.clear();
@@ -320,6 +323,7 @@ void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& 
     }
 
     updateCostAndPart();
+    updatePrice();
 
     emit portfolioChanged(mPortfolio);
     mPortfolioDatabase->writePortfolio(mPortfolio);
@@ -688,5 +692,42 @@ void SimulatorDecisionMakerThread::updateCostAndPart()
         }
 
         category.part = (category.cost / mTotalMoney) * HUNDRED_PERCENT;
+    }
+}
+
+void SimulatorDecisionMakerThread::updatePrice()
+{
+    PortfolioCategoryItem& category = mPortfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
+
+    for (PortfolioItem& item : category.items)
+    {
+        Stock* stock = mStocksMap.value(item.instrumentId);
+
+        if (stock == nullptr)
+        {
+            mStocksStorage->readLock();
+            QList<Stock*> stocks = mStocksStorage->getStocks();
+
+            for (Stock* s : stocks)
+            {
+                if (s->meta.instrumentId == item.instrumentId)
+                {
+                    stock                         = s;
+                    mStocksMap[item.instrumentId] = stock;
+
+                    break;
+                }
+            }
+            mStocksStorage->readUnlock();
+        }
+
+        item.price = stock->lastPrice();
+
+        const double currentCost = item.available * item.price;
+
+        item.yield             = currentCost - item.cost;
+        item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+        item.dailyYield        = currentCost - item.costForDailyYield;
+        item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
     }
 }

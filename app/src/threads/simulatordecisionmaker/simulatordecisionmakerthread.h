@@ -111,6 +111,7 @@ private:
     );
     void simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
     void updateCostAndPart();
+    void updatePrice();
 
     IOperationsDatabase*                 mOperationsDatabase;
     ILogsDatabase*                       mLogsDatabase;
@@ -121,6 +122,7 @@ private:
     IStocksStorage*                      mStocksStorage;
     IDecisionMaker*                      mDecisionMaker;
     Portfolio                            mPortfolio;
+    QMap<QString, Stock*>                mStocksMap;   // Instrument Id => Stock
     QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
     bool                                 mResetted;
     bool                                 mLoaded;

@@ -24,11 +24,14 @@ InstrumentsForTrading DecisionMaker::makeDecision(const Portfolio& /*portfolio*/
     // TODO: Implement
 
     // TODO: Remove it [BEGIN]
+    const bool    needToBuy = QTime::currentTime().minute() % 4 < 2;
+    const QString instrumentId =
+        QTime::currentTime().minute() % 2 == 0 ? "48bd9002-43be-4528-abf4-dc8135ad4550" : "15dc2120-29d2-48b8-87c0-da1d95255f68";
+
     for (Stock* stock : stocks)
     {
-        if (stock->meta.instrumentId == "48bd9002-43be-4528-abf4-dc8135ad4550")
+        if (stock->meta.instrumentId == instrumentId)
         {
-            const bool  needToBuy = QTime::currentTime().minute() % 2 == 0;
             TradingInfo tradingInfo;
 
             if (needToBuy)
