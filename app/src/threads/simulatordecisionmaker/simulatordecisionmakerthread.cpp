@@ -245,12 +245,8 @@ void SimulatorDecisionMakerThread::loadOperations()
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
         mTotalYieldWithCommission = quotationToDouble(lastOperation.totalYieldWithCommission);
+        mStartMoney               = quotationToDouble(lastOperation.inputMoney);
         mTotalMoney               = quotationToDouble(lastOperation.totalMoney);
-    }
-    else
-    {
-        mTotalYieldWithCommission = 0.0;
-        mTotalMoney               = mStartMoney;
     }
 }
 
@@ -267,9 +263,9 @@ void SimulatorDecisionMakerThread::loadPortfolio()
 
     mInstruments.clear();
 
-    for (const PortfolioCategoryItem& category : mPortfolio.positions)
+    for (const PortfolioCategoryItem& category : std::as_const(mPortfolio.positions))
     {
-        for (const PortfolioItem& item : category.items)
+        for (const PortfolioItem& item : std::as_const(category.items))
         {
             QuantityAndCostDouble quantityAndCost;
 
@@ -317,7 +313,7 @@ void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& 
         mOperationsDatabase->appendOperations(operations);
     }
 
-    for (const LogEntry& entry : entries)
+    for (const LogEntry& entry : std::as_const(entries))
     {
         emit logAdded(entry);
         mLogsDatabase->appendLog(entry);
@@ -344,7 +340,7 @@ void SimulatorDecisionMakerThread::simulateSell(
 
     instrument.resetIfNotFound(instrumentId);
 
-    QuantityAndCostDouble quantityAndCost = mInstruments.value(instrumentId);
+    const QuantityAndCostDouble quantityAndCost = mInstruments.value(instrumentId);
 
     const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
 
@@ -473,7 +469,7 @@ void SimulatorDecisionMakerThread::simulateSellForLogs(
 
 void SimulatorDecisionMakerThread::simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission)
 {
-    PortfolioCategoryItem& category = mPortfolio.positions[SHARE_ID];
+    PortfolioCategoryItem& category = mPortfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
 
     for (int i = 0; i < category.items.size(); ++i)
     {
@@ -483,7 +479,7 @@ void SimulatorDecisionMakerThread::simulateSellForPortfolio(const QString& instr
 
             mPortfolio.positions[CURRENCY_ID].items.first().available += costWithCommission;
             mPortfolio.positions[CURRENCY_ID].items.first().cost      += costWithCommission;
-            mPortfolio.positions[SHARE_ID].items.removeAt(i);
+            category.items.removeAt(i);
 
             break;
         }

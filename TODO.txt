@@ -1,5 +1,3 @@
-Make some decision
-Simulator realtime mode
 Simulator date range mode
 Simulator parameters check
 
