@@ -945,9 +945,6 @@ TEST_F(Test_MainWindow, Test_autoPilotTradeInstruments_and_autoPilotTradingCompl
     ASSERT_EQ(mainWindow->tradingThreads["bbbbb"], tradingThreadMock2);
     // clang-format on
 
-    // Need to do manually. tradingThreadMock2 will be deleted in MainWindow destructor
-    delete tradingThreadMock1;
-
     EXPECT_CALL(*tradingThreadMock2, terminateThread());
 }
 

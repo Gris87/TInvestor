@@ -84,6 +84,7 @@ SOURCES += \
     src/threads/portfolio/portfoliothread.cpp \
     src/threads/portfoliolastprice/portfoliolastpricethread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \
+    src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp \
     src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp \
     src/threads/trading/tradingthread.cpp \
     src/threads/trading/tradingthreadfactory.cpp \
@@ -281,6 +282,8 @@ HEADERS += \
     src/threads/portfoliolastprice/portfoliolastpricethread.h \
     src/threads/pricecollect/ipricecollectthread.h \
     src/threads/pricecollect/pricecollectthread.h \
+    src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread.h \
+    src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.h \
     src/threads/simulatordecisionmaker/isimulatordecisionmakerthread.h \
     src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h \
     src/threads/trading/itradingthread.h \

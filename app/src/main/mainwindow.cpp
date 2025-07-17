@@ -782,7 +782,11 @@ void MainWindow::autoPilotTradeInstruments(const InstrumentsForTrading& instrume
 
 void MainWindow::autoPilotTradingCompleted(const QString& instrumentId)
 {
-    tradingThreads.take(instrumentId)->deleteLater();
+    ITradingThread* tradingThread = tradingThreads.take(instrumentId);
+    Q_ASSERT_X(tradingThread != nullptr, __FUNCTION__, "Unexpected behavior");
+
+    tradingThread->wait();
+    delete tradingThread;
 }
 
 void MainWindow::on_actionAuth_triggered()

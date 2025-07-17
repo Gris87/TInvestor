@@ -706,7 +706,7 @@ void SimulatorDecisionMakerThread::updatePrice()
         if (stock == nullptr)
         {
             mStocksStorage->readLock();
-            QList<Stock*> stocks = mStocksStorage->getStocks();
+            const QList<Stock*> stocks = mStocksStorage->getStocks();
 
             for (Stock* s : stocks)
             {
@@ -721,13 +721,16 @@ void SimulatorDecisionMakerThread::updatePrice()
             mStocksStorage->readUnlock();
         }
 
-        item.price = stock->lastPrice();
+        if (stock != nullptr)
+        {
+            item.price = stock->lastPrice();
 
-        const double currentCost = item.available * item.price;
+            const double currentCost = item.available * item.price;
 
-        item.yield             = currentCost - item.cost;
-        item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
-        item.dailyYield        = currentCost - item.costForDailyYield;
-        item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+            item.yield             = currentCost - item.cost;
+            item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+            item.dailyYield        = currentCost - item.costForDailyYield;
+            item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+        }
     }
 }

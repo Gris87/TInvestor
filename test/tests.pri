@@ -81,6 +81,7 @@ SOURCES += \
     src/threads/portfolio/test_portfoliothread.cpp \
     src/threads/portfoliolastprice/test_portfoliolastpricethread.cpp \
     src/threads/pricecollect/test_pricecollectthread.cpp \
+    src/threads/simulatordaterangedecisionmaker/test_simulatordaterangedecisionmakerthread.cpp \
     src/threads/simulatordecisionmaker/test_simulatordecisionmakerthread.cpp \
     src/threads/trading/test_tradingthread.cpp \
     src/threads/trading/test_tradingthreadfactory.cpp \
@@ -195,6 +196,7 @@ HEADERS += \
     src/threads/portfolio/iportfoliothread_mock.h \
     src/threads/portfoliolastprice/iportfoliolastpricethread_mock.h \
     src/threads/pricecollect/ipricecollectthread_mock.h \
+    src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread_mock.h \
     src/threads/simulatordecisionmaker/isimulatordecisionmakerthread_mock.h \
     src/threads/trading/itradingthread_mock.h \
     src/threads/trading/itradingthreadfactory_mock.h \
