@@ -52,6 +52,7 @@
 #include "src/threads/portfolio/portfoliothread.h"
 #include "src/threads/portfoliolastprice/portfoliolastpricethread.h"
 #include "src/threads/pricecollect/pricecollectthread.h"
+#include "src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.h"
 #include "src/threads/simulatordecisionmaker/simulatordecisionmakerthread.h"
 #include "src/threads/trading/tradingthreadfactory.h"
 #include "src/threads/userupdate/userupdatethread.h"
@@ -358,6 +359,16 @@ static int runApplication(QApplication* app)
         &stocksStorage,
         &realtimeDecisionMaker
     );
+    SimulatorDateRangeDecisionMakerThread simulatorDateRangeDecisionMakerThread(
+        &simulatorOperationsDatabase,
+        &simulatorLogsDatabase,
+        &simulatorPortfolioDatabase,
+        &instrumentsStorage,
+        &logosStorage,
+        &userStorage,
+        &stocksStorage,
+        &realtimeDecisionMaker
+    );
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
     FollowThread                 followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread              orderBookThread(&grpcClient);
@@ -410,6 +421,7 @@ static int runApplication(QApplication* app)
         &portfolioThread,
         &autoPilotPortfolioLastPriceThread,
         &simulatorDecisionMakerThread,
+        &simulatorDateRangeDecisionMakerThread,
         &autoPilotDecisionMakerThread,
         &followThread,
         &orderBookThread,

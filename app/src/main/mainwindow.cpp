@@ -34,64 +34,65 @@ constexpr QSystemTrayIcon::ActivationReason DOUBLE_CLICK_REASON = QSystemTrayIco
 
 
 MainWindow::MainWindow(
-    IConfig*                           config,
-    IConfig*                           configForSettingsDialog,
-    IConfig*                           configForSimulation,
-    IAuthDialogFactory*                authDialogFactory,
-    ISettingsDialogFactory*            settingsDialogFactory,
-    IOrderWavesDialogFactory*          orderWavesDialogFactory,
-    IStartSimulationDialogFactory*     startSimulationDialogFactory,
-    IStartAutoPilotDialogFactory*      startAutoPilotDialogFactory,
-    IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
-    IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
-    IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
-    IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
-    ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
-    ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
-    ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-    IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-    IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-    IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
-    IStocksTableWidgetFactory*         stocksTableWidgetFactory,
-    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*        accountChartWidgetFactory,
-    ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
-    ILogsTableWidgetFactory*           logsTableWidgetFactory,
-    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-    IStocksTableModelFactory*          stocksTableModelFactory,
-    IOperationsTableModelFactory*      operationsTableModelFactory,
-    ILogsTableModelFactory*            logsTableModelFactory,
-    IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
-    IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
-    ITrayIconFactory*                  trayIconFactory,
-    IUserStorage*                      userStorage,
-    IStocksStorage*                    stocksStorage,
-    IInstrumentsStorage*               instrumentsStorage,
-    ILogosStorage*                     logosStorage,
-    IHttpClient*                       httpClient,
-    IGrpcClient*                       grpcClient,
-    ICleanupThread*                    cleanupThread,
-    IUserUpdateThread*                 userUpdateThread,
-    IPriceCollectThread*               priceCollectThread,
-    ILastPriceThread*                  lastPriceThread,
-    IPortfolioLastPriceThread*         simulatorPortfolioLastPriceThread,
-    IOperationsThread*                 operationsThread,
-    ILogsThread*                       logsThread,
-    IPortfolioThread*                  portfolioThread,
-    IPortfolioLastPriceThread*         autoPilotPortfolioLastPriceThread,
-    ISimulatorDecisionMakerThread*     simulatorDecisionMakerThread,
-    IAutoPilotDecisionMakerThread*     autoPilotDecisionMakerThread,
-    IFollowThread*                     followThread,
-    IOrderBookThread*                  orderBookThread,
-    ITradingThreadFactory*             tradingThreadFactory,
-    IFileDialogFactory*                fileDialogFactory,
-    ITimeUtils*                        timeUtils,
-    IMessageBoxUtils*                  messageBoxUtils,
-    ISettingsEditor*                   settingsEditor,
-    ISettingsEditor*                   simulatorSettingsEditor,
-    ISettingsEditor*                   autoPilotSettingsEditor,
-    IAutorunEnabler*                   autorunEnabler,
-    QWidget*                           parent
+    IConfig*                                config,
+    IConfig*                                configForSettingsDialog,
+    IConfig*                                configForSimulation,
+    IAuthDialogFactory*                     authDialogFactory,
+    ISettingsDialogFactory*                 settingsDialogFactory,
+    IOrderWavesDialogFactory*               orderWavesDialogFactory,
+    IStartSimulationDialogFactory*          startSimulationDialogFactory,
+    IStartAutoPilotDialogFactory*           startAutoPilotDialogFactory,
+    IDecisionMakerConfigWidgetFactory*      decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory*       buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory*       buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory*       buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory*      sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory*      sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory*      sellDecision3ConfigWidgetFactory,
+    IActionsTableItemWidgetFactory*         actionsTableItemWidgetFactory,
+    IOrderWavesWidgetFactory*               orderWavesWidgetFactory,
+    IStocksControlsWidgetFactory*           stocksControlsWidgetFactory,
+    IStocksTableWidgetFactory*              stocksTableWidgetFactory,
+    IOperationsTableWidgetFactory*          operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*             accountChartWidgetFactory,
+    ILogsFilterWidgetFactory*               logsFilterWidgetFactory,
+    ILogsTableWidgetFactory*                logsTableWidgetFactory,
+    IPortfolioTreeWidgetFactory*            portfolioTreeWidgetFactory,
+    IStocksTableModelFactory*               stocksTableModelFactory,
+    IOperationsTableModelFactory*           operationsTableModelFactory,
+    ILogsTableModelFactory*                 logsTableModelFactory,
+    IPortfolioTreeModelFactory*             portfolioTreeModelFactory,
+    IDecisionMakerWidgetFactory*            decisionMakerWidgetFactory,
+    ITrayIconFactory*                       trayIconFactory,
+    IUserStorage*                           userStorage,
+    IStocksStorage*                         stocksStorage,
+    IInstrumentsStorage*                    instrumentsStorage,
+    ILogosStorage*                          logosStorage,
+    IHttpClient*                            httpClient,
+    IGrpcClient*                            grpcClient,
+    ICleanupThread*                         cleanupThread,
+    IUserUpdateThread*                      userUpdateThread,
+    IPriceCollectThread*                    priceCollectThread,
+    ILastPriceThread*                       lastPriceThread,
+    IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
+    IOperationsThread*                      operationsThread,
+    ILogsThread*                            logsThread,
+    IPortfolioThread*                       portfolioThread,
+    IPortfolioLastPriceThread*              autoPilotPortfolioLastPriceThread,
+    ISimulatorDecisionMakerThread*          simulatorDecisionMakerThread,
+    ISimulatorDateRangeDecisionMakerThread* simulatorDateRangeDecisionMakerThread,
+    IAutoPilotDecisionMakerThread*          autoPilotDecisionMakerThread,
+    IFollowThread*                          followThread,
+    IOrderBookThread*                       orderBookThread,
+    ITradingThreadFactory*                  tradingThreadFactory,
+    IFileDialogFactory*                     fileDialogFactory,
+    ITimeUtils*                             timeUtils,
+    IMessageBoxUtils*                       messageBoxUtils,
+    ISettingsEditor*                        settingsEditor,
+    ISettingsEditor*                        simulatorSettingsEditor,
+    ISettingsEditor*                        autoPilotSettingsEditor,
+    IAutorunEnabler*                        autorunEnabler,
+    QWidget*                                parent
 ) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -127,6 +128,7 @@ MainWindow::MainWindow(
     mPortfolioThread(portfolioThread),
     mAutoPilotPortfolioLastPriceThread(autoPilotPortfolioLastPriceThread),
     mSimulatorDecisionMakerThread(simulatorDecisionMakerThread),
+    mSimulatorDateRangeDecisionMakerThread(simulatorDateRangeDecisionMakerThread),
     mAutoPilotDecisionMakerThread(autoPilotDecisionMakerThread),
     mFollowThread(followThread),
     mOrderBookThread(orderBookThread),
@@ -245,6 +247,9 @@ MainWindow::MainWindow(
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
     connect(mAutoPilotDecisionMakerThread,            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mFollowThread,                            SIGNAL(tradeInstruments(const InstrumentsForTrading&)),                                       this, SLOT(autoPilotTradeInstruments(const InstrumentsForTrading&)));
     connect(mStocksControlsWidget,                    SIGNAL(dateChangeDateTimeChanged(const QDateTime&)),                                          this, SLOT(dateChangeDateTimeChanged(const QDateTime&)));
@@ -274,6 +279,7 @@ MainWindow::~MainWindow()
     mPortfolioThread->terminateThread();
     mAutoPilotPortfolioLastPriceThread->terminateThread();
     mSimulatorDecisionMakerThread->terminateThread();
+    mSimulatorDateRangeDecisionMakerThread->terminateThread();
     mAutoPilotDecisionMakerThread->terminateThread();
     mFollowThread->terminateThread();
 
@@ -292,6 +298,7 @@ MainWindow::~MainWindow()
     mPortfolioThread->wait();
     mAutoPilotPortfolioLastPriceThread->wait();
     mSimulatorDecisionMakerThread->wait();
+    mSimulatorDateRangeDecisionMakerThread->wait();
     mAutoPilotDecisionMakerThread->wait();
     mFollowThread->wait();
 
@@ -551,6 +558,10 @@ void MainWindow::startSimulator()
     {
         mSimulatorDecisionMakerThread->start();
     }
+    else if (mode == SIMULATOR_MODE_DATERANGE)
+    {
+        mSimulatorDateRangeDecisionMakerThread->start();
+    }
 
     simulatorPortfolioUpdateLastPricesTimer.start();
 }
@@ -565,11 +576,13 @@ void MainWindow::stopSimulator()
 
     mSimulatorPortfolioLastPriceThread->terminateThread();
     mSimulatorDecisionMakerThread->terminateThread();
+    mSimulatorDateRangeDecisionMakerThread->terminateThread();
 
     simulatorPortfolioUpdateLastPricesTimer.stop();
 
     mSimulatorPortfolioLastPriceThread->wait();
     mSimulatorDecisionMakerThread->wait();
+    mSimulatorDateRangeDecisionMakerThread->wait();
 }
 
 void MainWindow::startAutoPilot()
@@ -894,7 +907,9 @@ void MainWindow::on_startSimulationButton_clicked()
             // clang-format on
 
             mSimulatorDecisionMakerThread->reset();
+            mSimulatorDateRangeDecisionMakerThread->reset();
             mSimulatorDecisionMakerThread->setStartMoney(startMoney);
+            mSimulatorDateRangeDecisionMakerThread->setStartMoney(startMoney);
 
             startSimulator();
         }

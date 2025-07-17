@@ -27,6 +27,7 @@
 #include "src/threads/portfolio/iportfoliothread.h"
 #include "src/threads/portfoliolastprice/iportfoliolastpricethread.h"
 #include "src/threads/pricecollect/ipricecollectthread.h"
+#include "src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread.h"
 #include "src/threads/simulatordecisionmaker/isimulatordecisionmakerthread.h"
 #include "src/threads/trading/itradingthreadfactory.h"
 #include "src/threads/userupdate/iuserupdatethread.h"
@@ -56,64 +57,65 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(
-        IConfig*                           config,
-        IConfig*                           configForSettingsDialog,
-        IConfig*                           configForSimulation,
-        IAuthDialogFactory*                authDialogFactory,
-        ISettingsDialogFactory*            settingsDialogFactory,
-        IOrderWavesDialogFactory*          orderWavesDialogFactory,
-        IStartSimulationDialogFactory*     startSimulationDialogFactory,
-        IStartAutoPilotDialogFactory*      startAutoPilotDialogFactory,
-        IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
-        IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
-        IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
-        IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
-        ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
-        ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
-        ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
-        IActionsTableItemWidgetFactory*    actionsTableItemWidgetFactory,
-        IOrderWavesWidgetFactory*          orderWavesWidgetFactory,
-        IStocksControlsWidgetFactory*      stocksControlsWidgetFactory,
-        IStocksTableWidgetFactory*         stocksTableWidgetFactory,
-        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*        accountChartWidgetFactory,
-        ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
-        ILogsTableWidgetFactory*           logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
-        IStocksTableModelFactory*          stocksTableModelFactory,
-        IOperationsTableModelFactory*      operationsTableModelFactory,
-        ILogsTableModelFactory*            logsTableModelFactory,
-        IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
-        IDecisionMakerWidgetFactory*       decisionMakerWidgetFactory,
-        ITrayIconFactory*                  trayIconFactory,
-        IUserStorage*                      userStorage,
-        IStocksStorage*                    stocksStorage,
-        IInstrumentsStorage*               instrumentsStorage,
-        ILogosStorage*                     logosStorage,
-        IHttpClient*                       httpClient,
-        IGrpcClient*                       grpcClient,
-        ICleanupThread*                    cleanupThread,
-        IUserUpdateThread*                 userUpdateThread,
-        IPriceCollectThread*               priceCollectThread,
-        ILastPriceThread*                  lastPriceThread,
-        IPortfolioLastPriceThread*         simulatorPortfolioLastPriceThread,
-        IOperationsThread*                 operationsThread,
-        ILogsThread*                       logsThread,
-        IPortfolioThread*                  portfolioThread,
-        IPortfolioLastPriceThread*         autoPilotPortfolioLastPriceThread,
-        ISimulatorDecisionMakerThread*     simulatorDecisionMakerThread,
-        IAutoPilotDecisionMakerThread*     autoPilotDecisionMakerThread,
-        IFollowThread*                     followThread,
-        IOrderBookThread*                  orderBookThread,
-        ITradingThreadFactory*             tradingThreadFactory,
-        IFileDialogFactory*                fileDialogFactory,
-        ITimeUtils*                        timeUtils,
-        IMessageBoxUtils*                  messageBoxUtils,
-        ISettingsEditor*                   settingsEditor,
-        ISettingsEditor*                   simulatorSettingsEditor,
-        ISettingsEditor*                   autoPilotSettingsEditor,
-        IAutorunEnabler*                   autorunEnabler,
-        QWidget*                           parent = nullptr
+        IConfig*                                config,
+        IConfig*                                configForSettingsDialog,
+        IConfig*                                configForSimulation,
+        IAuthDialogFactory*                     authDialogFactory,
+        ISettingsDialogFactory*                 settingsDialogFactory,
+        IOrderWavesDialogFactory*               orderWavesDialogFactory,
+        IStartSimulationDialogFactory*          startSimulationDialogFactory,
+        IStartAutoPilotDialogFactory*           startAutoPilotDialogFactory,
+        IDecisionMakerConfigWidgetFactory*      decisionMakerConfigWidgetFactory,
+        IBuyDecision1ConfigWidgetFactory*       buyDecision1ConfigWidgetFactory,
+        IBuyDecision2ConfigWidgetFactory*       buyDecision2ConfigWidgetFactory,
+        IBuyDecision3ConfigWidgetFactory*       buyDecision3ConfigWidgetFactory,
+        ISellDecision1ConfigWidgetFactory*      sellDecision1ConfigWidgetFactory,
+        ISellDecision2ConfigWidgetFactory*      sellDecision2ConfigWidgetFactory,
+        ISellDecision3ConfigWidgetFactory*      sellDecision3ConfigWidgetFactory,
+        IActionsTableItemWidgetFactory*         actionsTableItemWidgetFactory,
+        IOrderWavesWidgetFactory*               orderWavesWidgetFactory,
+        IStocksControlsWidgetFactory*           stocksControlsWidgetFactory,
+        IStocksTableWidgetFactory*              stocksTableWidgetFactory,
+        IOperationsTableWidgetFactory*          operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*             accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*               logsFilterWidgetFactory,
+        ILogsTableWidgetFactory*                logsTableWidgetFactory,
+        IPortfolioTreeWidgetFactory*            portfolioTreeWidgetFactory,
+        IStocksTableModelFactory*               stocksTableModelFactory,
+        IOperationsTableModelFactory*           operationsTableModelFactory,
+        ILogsTableModelFactory*                 logsTableModelFactory,
+        IPortfolioTreeModelFactory*             portfolioTreeModelFactory,
+        IDecisionMakerWidgetFactory*            decisionMakerWidgetFactory,
+        ITrayIconFactory*                       trayIconFactory,
+        IUserStorage*                           userStorage,
+        IStocksStorage*                         stocksStorage,
+        IInstrumentsStorage*                    instrumentsStorage,
+        ILogosStorage*                          logosStorage,
+        IHttpClient*                            httpClient,
+        IGrpcClient*                            grpcClient,
+        ICleanupThread*                         cleanupThread,
+        IUserUpdateThread*                      userUpdateThread,
+        IPriceCollectThread*                    priceCollectThread,
+        ILastPriceThread*                       lastPriceThread,
+        IPortfolioLastPriceThread*              simulatorPortfolioLastPriceThread,
+        IOperationsThread*                      operationsThread,
+        ILogsThread*                            logsThread,
+        IPortfolioThread*                       portfolioThread,
+        IPortfolioLastPriceThread*              autoPilotPortfolioLastPriceThread,
+        ISimulatorDecisionMakerThread*          simulatorDecisionMakerThread,
+        ISimulatorDateRangeDecisionMakerThread* simulatorDateRangeDecisionMakerThread,
+        IAutoPilotDecisionMakerThread*          autoPilotDecisionMakerThread,
+        IFollowThread*                          followThread,
+        IOrderBookThread*                       orderBookThread,
+        ITradingThreadFactory*                  tradingThreadFactory,
+        IFileDialogFactory*                     fileDialogFactory,
+        ITimeUtils*                             timeUtils,
+        IMessageBoxUtils*                       messageBoxUtils,
+        ISettingsEditor*                        settingsEditor,
+        ISettingsEditor*                        simulatorSettingsEditor,
+        ISettingsEditor*                        autoPilotSettingsEditor,
+        IAutorunEnabler*                        autorunEnabler,
+        QWidget*                                parent = nullptr
     );
     ~MainWindow() override;
 
@@ -145,54 +147,55 @@ private:
     void saveWindowState();
     void loadWindowState();
 
-    IConfig*                           mConfig;
-    IConfig*                           mConfigForSettingsDialog;
-    IConfig*                           mConfigForSimulation;
-    IAuthDialogFactory*                mAuthDialogFactory;
-    ISettingsDialogFactory*            mSettingsDialogFactory;
-    IStartSimulationDialogFactory*     mStartSimulationDialogFactory;
-    IStartAutoPilotDialogFactory*      mStartAutoPilotDialogFactory;
-    IDecisionMakerConfigWidgetFactory* mDecisionMakerConfigWidgetFactory;
-    IBuyDecision1ConfigWidgetFactory*  mBuyDecision1ConfigWidgetFactory;
-    IBuyDecision2ConfigWidgetFactory*  mBuyDecision2ConfigWidgetFactory;
-    IBuyDecision3ConfigWidgetFactory*  mBuyDecision3ConfigWidgetFactory;
-    ISellDecision1ConfigWidgetFactory* mSellDecision1ConfigWidgetFactory;
-    ISellDecision2ConfigWidgetFactory* mSellDecision2ConfigWidgetFactory;
-    ISellDecision3ConfigWidgetFactory* mSellDecision3ConfigWidgetFactory;
-    IStocksControlsWidget*             mStocksControlsWidget;
-    IStocksTableWidget*                mStocksTableWidget;
-    IDecisionMakerWidget*              mSimulatorDecisionMakerWidget;
-    IDecisionMakerWidget*              mAutoPilotDecisionMakerWidget;
-    ITrayIcon*                         mTrayIcon;
-    IUserStorage*                      mUserStorage;
-    IStocksStorage*                    mStocksStorage;
-    IInstrumentsStorage*               mInstrumentsStorage;
-    ILogosStorage*                     mLogosStorage;
-    IHttpClient*                       mHttpClient;
-    IGrpcClient*                       mGrpcClient;
-    ICleanupThread*                    mCleanupThread;
-    IUserUpdateThread*                 mUserUpdateThread;
-    IPriceCollectThread*               mPriceCollectThread;
-    ILastPriceThread*                  mLastPriceThread;
-    IPortfolioLastPriceThread*         mSimulatorPortfolioLastPriceThread;
-    IOperationsThread*                 mOperationsThread;
-    ILogsThread*                       mLogsThread;
-    IPortfolioThread*                  mPortfolioThread;
-    IPortfolioLastPriceThread*         mAutoPilotPortfolioLastPriceThread;
-    ISimulatorDecisionMakerThread*     mSimulatorDecisionMakerThread;
-    IAutoPilotDecisionMakerThread*     mAutoPilotDecisionMakerThread;
-    IFollowThread*                     mFollowThread;
-    IOrderBookThread*                  mOrderBookThread;
-    ITradingThreadFactory*             mTradingThreadFactory;
-    IFileDialogFactory*                mFileDialogFactory;
-    ITimeUtils*                        mTimeUtils;
-    IMessageBoxUtils*                  mMessageBoxUtils;
-    ISettingsEditor*                   mSettingsEditor;
-    ISettingsEditor*                   mSimulatorSettingsEditor;
-    ISettingsEditor*                   mAutoPilotSettingsEditor;
-    IAutorunEnabler*                   mAutorunEnabler;
-    QString                            mAutoPilotAccountId;
-    QString                            mAutoPilotAnotherAccountId;
+    IConfig*                                mConfig;
+    IConfig*                                mConfigForSettingsDialog;
+    IConfig*                                mConfigForSimulation;
+    IAuthDialogFactory*                     mAuthDialogFactory;
+    ISettingsDialogFactory*                 mSettingsDialogFactory;
+    IStartSimulationDialogFactory*          mStartSimulationDialogFactory;
+    IStartAutoPilotDialogFactory*           mStartAutoPilotDialogFactory;
+    IDecisionMakerConfigWidgetFactory*      mDecisionMakerConfigWidgetFactory;
+    IBuyDecision1ConfigWidgetFactory*       mBuyDecision1ConfigWidgetFactory;
+    IBuyDecision2ConfigWidgetFactory*       mBuyDecision2ConfigWidgetFactory;
+    IBuyDecision3ConfigWidgetFactory*       mBuyDecision3ConfigWidgetFactory;
+    ISellDecision1ConfigWidgetFactory*      mSellDecision1ConfigWidgetFactory;
+    ISellDecision2ConfigWidgetFactory*      mSellDecision2ConfigWidgetFactory;
+    ISellDecision3ConfigWidgetFactory*      mSellDecision3ConfigWidgetFactory;
+    IStocksControlsWidget*                  mStocksControlsWidget;
+    IStocksTableWidget*                     mStocksTableWidget;
+    IDecisionMakerWidget*                   mSimulatorDecisionMakerWidget;
+    IDecisionMakerWidget*                   mAutoPilotDecisionMakerWidget;
+    ITrayIcon*                              mTrayIcon;
+    IUserStorage*                           mUserStorage;
+    IStocksStorage*                         mStocksStorage;
+    IInstrumentsStorage*                    mInstrumentsStorage;
+    ILogosStorage*                          mLogosStorage;
+    IHttpClient*                            mHttpClient;
+    IGrpcClient*                            mGrpcClient;
+    ICleanupThread*                         mCleanupThread;
+    IUserUpdateThread*                      mUserUpdateThread;
+    IPriceCollectThread*                    mPriceCollectThread;
+    ILastPriceThread*                       mLastPriceThread;
+    IPortfolioLastPriceThread*              mSimulatorPortfolioLastPriceThread;
+    IOperationsThread*                      mOperationsThread;
+    ILogsThread*                            mLogsThread;
+    IPortfolioThread*                       mPortfolioThread;
+    IPortfolioLastPriceThread*              mAutoPilotPortfolioLastPriceThread;
+    ISimulatorDecisionMakerThread*          mSimulatorDecisionMakerThread;
+    ISimulatorDateRangeDecisionMakerThread* mSimulatorDateRangeDecisionMakerThread;
+    IAutoPilotDecisionMakerThread*          mAutoPilotDecisionMakerThread;
+    IFollowThread*                          mFollowThread;
+    IOrderBookThread*                       mOrderBookThread;
+    ITradingThreadFactory*                  mTradingThreadFactory;
+    IFileDialogFactory*                     mFileDialogFactory;
+    ITimeUtils*                             mTimeUtils;
+    IMessageBoxUtils*                       mMessageBoxUtils;
+    ISettingsEditor*                        mSettingsEditor;
+    ISettingsEditor*                        mSimulatorSettingsEditor;
+    ISettingsEditor*                        mAutoPilotSettingsEditor;
+    IAutorunEnabler*                        mAutorunEnabler;
+    QString                                 mAutoPilotAccountId;
+    QString                                 mAutoPilotAnotherAccountId;
 
 public slots:
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
