@@ -13,6 +13,7 @@
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/settingseditor/isettingseditor.h"
 
 
 
@@ -22,6 +23,7 @@ class SimulatorDecisionMakerThread : public ISimulatorDecisionMakerThread
 
 public:
     explicit SimulatorDecisionMakerThread(
+        ISettingsEditor*     settingsEditor,
         IOperationsDatabase* operationsDatabase,
         ILogsDatabase*       logsDatabase,
         IPortfolioDatabase*  portfolioDatabase,
@@ -40,11 +42,11 @@ public:
     void run() override;
 
     void reset() override;
-    void setStartMoney(int value) override;
     void terminateThread() override;
 
 private:
     void init();
+    void readSimulationConfig();
     void initOperations();
     void initLogs();
     void initPortfolio();
@@ -113,6 +115,7 @@ private:
     void updateCostAndPart();
     void updatePrice();
 
+    ISettingsEditor*                     mSettingsEditor;
     IOperationsDatabase*                 mOperationsDatabase;
     ILogsDatabase*                       mLogsDatabase;
     IPortfolioDatabase*                  mPortfolioDatabase;

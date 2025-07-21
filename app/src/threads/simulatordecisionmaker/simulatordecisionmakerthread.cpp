@@ -15,6 +15,7 @@ constexpr int SHARE_ID    = 1;
 
 
 SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
+    ISettingsEditor*     settingsEditor,
     IOperationsDatabase* operationsDatabase,
     ILogsDatabase*       logsDatabase,
     IPortfolioDatabase*  portfolioDatabase,
@@ -26,6 +27,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     QObject*             parent
 ) :
     ISimulatorDecisionMakerThread(parent),
+    mSettingsEditor(settingsEditor),
     mOperationsDatabase(operationsDatabase),
     mLogsDatabase(logsDatabase),
     mPortfolioDatabase(portfolioDatabase),
@@ -86,11 +88,6 @@ void SimulatorDecisionMakerThread::reset()
     mResetted = true;
 }
 
-void SimulatorDecisionMakerThread::setStartMoney(int value)
-{
-    mStartMoney = value;
-}
-
 void SimulatorDecisionMakerThread::terminateThread()
 {
     blockSignals(true);
@@ -100,9 +97,15 @@ void SimulatorDecisionMakerThread::terminateThread()
 
 void SimulatorDecisionMakerThread::init()
 {
+    readSimulationConfig();
     initOperations();
     initLogs();
     initPortfolio();
+}
+
+void SimulatorDecisionMakerThread::readSimulationConfig()
+{
+    mStartMoney = mSettingsEditor->value("Options/StartMoney", 0).toInt();
 }
 
 void SimulatorDecisionMakerThread::initOperations()
@@ -231,6 +234,7 @@ void SimulatorDecisionMakerThread::initPortfolio()
 
 void SimulatorDecisionMakerThread::load()
 {
+    readSimulationConfig();
     loadOperations();
     loadLogs();
     loadPortfolio();
@@ -246,7 +250,6 @@ void SimulatorDecisionMakerThread::loadOperations()
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
         mTotalYieldWithCommission = quotationToDouble(lastOperation.totalYieldWithCommission);
-        mStartMoney               = quotationToDouble(lastOperation.inputMoney);
         mTotalMoney               = quotationToDouble(lastOperation.totalMoney);
     }
 }

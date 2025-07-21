@@ -300,9 +300,7 @@ static int runApplication(QApplication* app)
 
     Config config(&simulatorConfig, &autoPilotConfig);
     Config configForSettingsDialog(&simulatorConfigForSettingsDialog, &autoPilotConfigForSettingsDialog);
-    Config configForSimulation(
-        &simulatorConfigForSimulation, &autoPilotConfigForSimulation
-    ); // TODO: Use in simulator thread not in MainWindow
+    Config configForSimulation(&simulatorConfigForSimulation, &autoPilotConfigForSimulation);
 
     UserDatabase        userDatabase;
     UserStorage         userStorage(&userDatabase);
@@ -326,6 +324,7 @@ static int runApplication(QApplication* app)
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
 
     DecisionMaker realtimeDecisionMaker(&config, &userStorage);
+    DecisionMaker dateRangeDecisionMaker(&configForSimulation, &userStorage);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
@@ -350,6 +349,7 @@ static int runApplication(QApplication* app)
     PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread     autoPilotPortfolioLastPriceThread(&timeUtils, &grpcClient);
     SimulatorDecisionMakerThread simulatorDecisionMakerThread(
+        &simulatorSettingsEditor,
         &simulatorOperationsDatabase,
         &simulatorLogsDatabase,
         &simulatorPortfolioDatabase,
@@ -360,6 +360,7 @@ static int runApplication(QApplication* app)
         &realtimeDecisionMaker
     );
     SimulatorDateRangeDecisionMakerThread simulatorDateRangeDecisionMakerThread(
+        &simulatorSettingsEditor,
         &simulatorOperationsDatabase,
         &simulatorLogsDatabase,
         &simulatorPortfolioDatabase,
@@ -367,7 +368,8 @@ static int runApplication(QApplication* app)
         &logosStorage,
         &userStorage,
         &stocksStorage,
-        &realtimeDecisionMaker
+        &configForSimulation,
+        &dateRangeDecisionMaker
     );
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
     FollowThread                 followThread(&instrumentsStorage, &grpcClient);

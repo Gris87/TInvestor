@@ -10,6 +10,7 @@
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
 
@@ -23,6 +24,7 @@ class Test_SimulatorDecisionMakerThread : public ::testing::Test
 protected:
     void SetUp() override
     {
+        settingsEditorMock     = new StrictMock<SettingsEditorMock>();
         operationsDatabaseMock = new StrictMock<OperationsDatabaseMock>();
         logsDatabaseMock       = new StrictMock<LogsDatabaseMock>();
         portfolioDatabaseMock  = new StrictMock<PortfolioDatabaseMock>();
@@ -33,6 +35,7 @@ protected:
         decisionMakerMock      = new StrictMock<DecisionMakerMock>();
 
         thread = new SimulatorDecisionMakerThread(
+            settingsEditorMock,
             operationsDatabaseMock,
             logsDatabaseMock,
             portfolioDatabaseMock,
@@ -47,6 +50,7 @@ protected:
     void TearDown() override
     {
         delete thread;
+        delete settingsEditorMock;
         delete operationsDatabaseMock;
         delete logsDatabaseMock;
         delete portfolioDatabaseMock;
@@ -58,6 +62,7 @@ protected:
     }
 
     SimulatorDecisionMakerThread*       thread;
+    StrictMock<SettingsEditorMock>*     settingsEditorMock;
     StrictMock<OperationsDatabaseMock>* operationsDatabaseMock;
     StrictMock<LogsDatabaseMock>*       logsDatabaseMock;
     StrictMock<PortfolioDatabaseMock>*  portfolioDatabaseMock;

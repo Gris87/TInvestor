@@ -24,6 +24,5 @@ public:
 
     MOCK_METHOD(void, run, (), (override));
     MOCK_METHOD(void, reset, (), (override));
-    MOCK_METHOD(void, setStartMoney, (int value), (override));
     MOCK_METHOD(void, terminateThread, (), (override));
 };

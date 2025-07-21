@@ -1153,8 +1153,6 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/BestConfig"), QVariant(true)));
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, reset());
     EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, reset());
-    EXPECT_CALL(*simulatorDecisionMakerThreadMock, setStartMoney(1000000));
-    EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, setStartMoney(1000000));
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));

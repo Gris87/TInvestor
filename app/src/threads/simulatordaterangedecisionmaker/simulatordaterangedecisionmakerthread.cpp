@@ -7,6 +7,7 @@
 
 
 SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
+    ISettingsEditor*     settingsEditor,
     IOperationsDatabase* operationsDatabase,
     ILogsDatabase*       logsDatabase,
     IPortfolioDatabase*  portfolioDatabase,
@@ -14,10 +15,12 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     ILogosStorage*       logosStorage,
     IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
+    IConfig*             config,
     IDecisionMaker*      decisionMaker,
     QObject*             parent
 ) :
     ISimulatorDateRangeDecisionMakerThread(parent),
+    mSettingsEditor(settingsEditor),
     mOperationsDatabase(operationsDatabase),
     mLogsDatabase(logsDatabase),
     mPortfolioDatabase(portfolioDatabase),
@@ -25,6 +28,7 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mLogosStorage(logosStorage),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
+    mConfig(config),
     mDecisionMaker(decisionMaker),
     mPortfolio(),
     mInstruments(),
@@ -54,11 +58,6 @@ void SimulatorDateRangeDecisionMakerThread::run()
 void SimulatorDateRangeDecisionMakerThread::reset()
 {
     mResetted = true;
-}
-
-void SimulatorDateRangeDecisionMakerThread::setStartMoney(int value)
-{
-    mStartMoney = value;
 }
 
 void SimulatorDateRangeDecisionMakerThread::terminateThread()

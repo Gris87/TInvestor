@@ -560,6 +560,7 @@ void MainWindow::startSimulator()
     }
     else if (mode == SIMULATOR_MODE_DATERANGE)
     {
+        mConfigForSimulation->assign(mConfig);
         mSimulatorDateRangeDecisionMakerThread->start();
     }
 
@@ -895,11 +896,9 @@ void MainWindow::on_startSimulationButton_clicked()
 
         if (dialog->exec() == QDialog::Accepted)
         {
-            const int startMoney = dialog->startMoney();
-
             // clang-format off
             mSimulatorSettingsEditor->setValue("General/Enabled",    true);
-            mSimulatorSettingsEditor->setValue("Options/StartMoney", startMoney);
+            mSimulatorSettingsEditor->setValue("Options/StartMoney", dialog->startMoney());
             mSimulatorSettingsEditor->setValue("Options/Mode",       dialog->mode());
             mSimulatorSettingsEditor->setValue("Options/FromDate",   dialog->fromDate().toString(DATE_FORMAT));
             mSimulatorSettingsEditor->setValue("Options/ToDate",     dialog->toDate().toString(DATE_FORMAT));
@@ -908,8 +907,6 @@ void MainWindow::on_startSimulationButton_clicked()
 
             mSimulatorDecisionMakerThread->reset();
             mSimulatorDateRangeDecisionMakerThread->reset();
-            mSimulatorDecisionMakerThread->setStartMoney(startMoney);
-            mSimulatorDateRangeDecisionMakerThread->setStartMoney(startMoney);
 
             startSimulator();
         }
