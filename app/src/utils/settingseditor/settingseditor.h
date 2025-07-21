@@ -4,6 +4,7 @@
 
 #include "src/utils/settingseditor/isettingseditor.h"
 
+#include <QReadWriteLock>
 #include <QSettings>
 
 
@@ -23,5 +24,6 @@ public:
     void     remove(const QString& key) override;
 
 private:
-    QSettings mSettings;
+    QReadWriteLock mRwMutex;
+    QSettings      mSettings;
 };

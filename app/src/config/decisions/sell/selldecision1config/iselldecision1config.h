@@ -27,10 +27,10 @@ public:
     virtual void fromJsonObject(simdjson::ondemand::object jsonObject) = 0; // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]
-    virtual QString toJsonString() const;
+    virtual QString toJsonString() const = 0;
 
     [[nodiscard]]
-    virtual QStringList variantsAsJson() const;
+    virtual QStringList variantsAsJson() const = 0;
 
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;

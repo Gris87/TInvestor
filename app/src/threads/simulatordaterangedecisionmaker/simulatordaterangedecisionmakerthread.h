@@ -14,6 +14,8 @@
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/fs/dir/idirfactory.h"
+#include "src/utils/fs/file/ifilefactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -24,6 +26,8 @@ class SimulatorDateRangeDecisionMakerThread : public ISimulatorDateRangeDecision
 
 public:
     explicit SimulatorDateRangeDecisionMakerThread(
+        IDirFactory*         dirFactory,
+        IFileFactory*        fileFactory,
         ISettingsEditor*     settingsEditor,
         IOperationsDatabase* operationsDatabase,
         ILogsDatabase*       logsDatabase,
@@ -53,6 +57,8 @@ private:
     void load();
     void loadConfigs();
 
+    IDirFactory*                         mDirFactory;
+    IFileFactory*                        mFileFactory;
     ISettingsEditor*                     mSettingsEditor;
     IOperationsDatabase*                 mOperationsDatabase;
     ILogsDatabase*                       mLogsDatabase;
@@ -70,6 +76,7 @@ private:
     qint64                               mStartTimestamp;
     qint64                               mEndTimestamp;
     bool                                 mBestConfig;
+    QString                              mConfigVariants;
     double                               mTotalYieldWithCommission;
     double                               mTotalMoney;
 };

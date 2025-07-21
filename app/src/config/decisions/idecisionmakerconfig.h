@@ -32,10 +32,10 @@ public:
     virtual void fromJsonObject(simdjson::ondemand::object jsonObject) = 0; // clazy:exclude=function-args-by-ref
 
     [[nodiscard]]
-    virtual QString toJsonString() const;
+    virtual QString toJsonString() const = 0;
 
     [[nodiscard]]
-    virtual QString variantsToJsonString() const;
+    virtual QString variantsToJsonString() const = 0;
 
     virtual IBuyDecision1Config* getBuyDecision1Config() = 0;
     virtual IBuyDecision2Config* getBuyDecision2Config() = 0;

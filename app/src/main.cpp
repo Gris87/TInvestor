@@ -360,6 +360,8 @@ static int runApplication(QApplication* app)
         &realtimeDecisionMaker
     );
     SimulatorDateRangeDecisionMakerThread simulatorDateRangeDecisionMakerThread(
+        &dirFactory,
+        &fileFactory,
         &simulatorSettingsEditor,
         &simulatorOperationsDatabase,
         &simulatorLogsDatabase,

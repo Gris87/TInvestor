@@ -1,5 +1,6 @@
 #include "src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.h"
 
+#include <QCoreApplication>
 #include <QDebug>
 
 #include "src/grpc/utils.h"
@@ -11,6 +12,8 @@ const char* const DATE_FORMAT = "yyyy-MM-dd";
 
 
 SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
+    IDirFactory*         dirFactory,
+    IFileFactory*        fileFactory,
     ISettingsEditor*     settingsEditor,
     IOperationsDatabase* operationsDatabase,
     ILogsDatabase*       logsDatabase,
@@ -24,6 +27,8 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     QObject*             parent
 ) :
     ISimulatorDateRangeDecisionMakerThread(parent),
+    mDirFactory(dirFactory),
+    mFileFactory(fileFactory),
     mSettingsEditor(settingsEditor),
     mOperationsDatabase(operationsDatabase),
     mLogsDatabase(logsDatabase),
@@ -41,6 +46,7 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mStartTimestamp(),
     mEndTimestamp(),
     mBestConfig(),
+    mConfigVariants(),
     mTotalYieldWithCommission(),
     mTotalMoney()
 {
@@ -66,6 +72,40 @@ void SimulatorDateRangeDecisionMakerThread::run()
     else
     {
         load();
+    }
+
+    const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+
+    const simdjson::padded_string jsonData(mConfigVariants.toStdString());
+
+    simdjson::ondemand::parser parser;
+
+    try
+    {
+        simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+        simdjson::ondemand::array jsonConfigs = doc.get_array();
+
+        int i = 0;
+
+        for (const simdjson::ondemand::object jsonObject : jsonConfigs)
+        {
+            if (i < configId)
+            {
+                ++i;
+
+                continue;
+            }
+
+            mSettingsEditor->setValue("Options/LastConfigId", i);
+            mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
+
+            ++i;
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "Failed to parse configs";
     }
 
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
@@ -111,10 +151,28 @@ void SimulatorDateRangeDecisionMakerThread::initConfigs()
 {
     if (mBestConfig)
     {
+        mConfigVariants = mConfig->getSimulatorConfig()->variantsToJsonString();
     }
     else
     {
+        mConfigVariants = "[" + mConfig->getSimulatorConfig()->toJsonString() + "]";
     }
+
+    const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
+
+    bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/simulator");
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
+
+    const std::shared_ptr<IFile> configsFile =
+        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/configs.json");
+
+    ok = configsFile->open(QIODevice::WriteOnly);
+    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+    configsFile->write(mConfigVariants.toUtf8());
+    configsFile->close();
+
+    mSettingsEditor->setValue("Options/LastConfigId", 0);
 }
 
 void SimulatorDateRangeDecisionMakerThread::load()
@@ -125,4 +183,12 @@ void SimulatorDateRangeDecisionMakerThread::load()
 
 void SimulatorDateRangeDecisionMakerThread::loadConfigs()
 {
+    const std::shared_ptr<IFile> configsFile =
+        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/configs.json");
+
+    if (configsFile->open(QIODevice::ReadOnly))
+    {
+        mConfigVariants = QString::fromUtf8(configsFile->readAll());
+        configsFile->close();
+    }
 }
