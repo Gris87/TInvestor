@@ -90,7 +90,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
         for (const simdjson::ondemand::object jsonObject : jsonConfigs)
         {
-            if (i < configId)
+            if (i < configId || QThread::currentThread()->isInterruptionRequested())
             {
                 ++i;
 

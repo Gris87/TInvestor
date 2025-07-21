@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QMutexLocker>
 
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/utils/exception/exception.h"
 
 
@@ -155,9 +156,116 @@ QString DecisionMakerConfig::toJsonString() const
         );
 }
 
+struct CombineVariantsInfo
+{
+    explicit CombineVariantsInfo(const QList<QStringList> _variants) :
+        variants(_variants)
+    {
+#ifndef TESTING_MODE
+        const int cpuCount = QThread::idealThreadCount();
+#else
+        const int cpuCount = 1;
+#endif
+
+        results.resize(cpuCount);
+    }
+
+    QList<QStringList> variants;
+    QList<QStringList> results;
+};
+
+static void
+combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs)
+{
+    CombineVariantsInfo* combineVariantsInfo = reinterpret_cast<CombineVariantsInfo*>(additionalArgs);
+
+    QStringList* variantsArray = combineVariantsInfo->variants.data();
+    const int    variantsSize  = combineVariantsInfo->variants.size();
+    QStringList* resultsArray  = combineVariantsInfo->results.data();
+
+    Q_ASSERT_X(variantsSize == 6, __FUNCTION__, "Unexpected behavior");
+
+    int total = 1;
+
+    for (int i = 0; i < variantsSize; ++i)
+    {
+        total *= variantsArray[i].size();
+    }
+
+    const int part = total / combineVariantsInfo->results.size();
+
+    start = part * threadId;
+    end   = qMin(part * (threadId + 1), total);
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        int cur = i;
+
+        const int b1Index  = cur % variantsArray[0].size();
+        cur               /= variantsArray[0].size();
+        const int b2Index  = cur % variantsArray[1].size();
+        cur               /= variantsArray[1].size();
+        const int b3Index  = cur % variantsArray[2].size();
+        cur               /= variantsArray[2].size();
+        const int s1Index  = cur % variantsArray[3].size();
+        cur               /= variantsArray[3].size();
+        const int s2Index  = cur % variantsArray[4].size();
+        cur               /= variantsArray[4].size();
+        const int s3Index  = cur % variantsArray[5].size();
+
+        if ((b1Index != 0 || b2Index != 0 || b3Index != 0) && ((s1Index != 0 && s2Index == 0) || (s1Index == 0 && s2Index != 0)))
+        {
+            resultsArray[threadId].append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6})")
+                                              .arg(
+                                                  variantsArray[0][b1Index],
+                                                  variantsArray[1][b2Index],
+                                                  variantsArray[2][b3Index],
+                                                  variantsArray[3][s1Index],
+                                                  variantsArray[4][s2Index],
+                                                  variantsArray[5][s3Index]
+                                              ));
+        }
+    }
+}
+
 QString DecisionMakerConfig::variantsToJsonString() const
 {
-    const QString res = "[]";
+    QString res;
+
+    QList<QStringList> variants;
+    QList<int>         temp;
+
+    variants.append(mBuyDecision1Config->variantsAsJson());
+    variants.append(mBuyDecision2Config->variantsAsJson());
+    variants.append(mBuyDecision3Config->variantsAsJson());
+    variants.append(mSellDecision1Config->variantsAsJson());
+    variants.append(mSellDecision2Config->variantsAsJson());
+    variants.append(mSellDecision3Config->variantsAsJson());
+
+    CombineVariantsInfo combineVariantsInfo(variants);
+    processInParallel(temp, combineVariantsForParallel, &combineVariantsInfo);
+
+    res        = "[\n";
+    bool first = true;
+
+    for (const QStringList& results : combineVariantsInfo.results)
+    {
+        if (!results.isEmpty())
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                res += ",\n";
+            }
+
+            res += results.join(",\n");
+        }
+    }
+
+    res += "\n]";
 
     return res;
 }
