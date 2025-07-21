@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QMutexLocker>
 
+#include "src/utils/exception/exception.h"
+
 
 
 DecisionMakerConfig::DecisionMakerConfig(
@@ -77,6 +79,87 @@ void DecisionMakerConfig::load(ISettingsEditor* settingsEditor, const QString& t
     mSellDecision1Config->load(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->load(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->load(settingsEditor, type + "/SellDecision3Config");
+}
+
+static void configBuy1Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision1Config()->fromJsonObject(value.get_object());
+}
+
+static void configBuy2Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision2Config()->fromJsonObject(value.get_object());
+}
+
+static void configBuy3Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision3Config()->fromJsonObject(value.get_object());
+}
+
+static void configSell1Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getSellDecision1Config()->fromJsonObject(value.get_object());
+}
+
+static void configSell2Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getSellDecision2Config()->fromJsonObject(value.get_object());
+}
+
+static void configSell3Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getSellDecision3Config()->fromJsonObject(value.get_object());
+}
+
+static void configThrowParseException(
+    DecisionMakerConfig* /*config*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
+{
+    throwException("Unknown parameter");
+}
+
+using ParseHandler = void (*)(DecisionMakerConfig* config, simdjson::ondemand::value value);
+
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
+    {"b1", configBuy1Parse },
+    {"b2", configBuy2Parse },
+    {"b3", configBuy3Parse },
+    {"s1", configSell1Parse},
+    {"s2", configSell2Parse},
+    {"s3", configSell3Parse}
+};
+// clang-format on
+
+void DecisionMakerConfig::fromJsonObject(simdjson::ondemand::object jsonObject)
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        const std::string_view key          = field.escaped_key();
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, configThrowParseException);
+
+        parseHandler(this, field.value());
+    }
+}
+
+QString DecisionMakerConfig::toJsonString() const
+{
+    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6})")
+        .arg(
+            mBuyDecision1Config->toJsonString(),
+            mBuyDecision2Config->toJsonString(),
+            mBuyDecision3Config->toJsonString(),
+            mSellDecision1Config->toJsonString(),
+            mSellDecision2Config->toJsonString(),
+            mSellDecision3Config->toJsonString()
+        );
+}
+
+QString DecisionMakerConfig::variantsToJsonString() const
+{
+    const QString res = "[]";
+
+    return res;
 }
 
 IBuyDecision1Config* DecisionMakerConfig::getBuyDecision1Config()

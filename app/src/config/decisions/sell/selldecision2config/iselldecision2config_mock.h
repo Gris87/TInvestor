@@ -26,6 +26,10 @@ public:
     MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor, const QString& type), (override));
     MOCK_METHOD(void, load, (ISettingsEditor * settingsEditor, const QString& type), (override));
 
+    MOCK_METHOD(void, fromJsonObject, (simdjson::ondemand::object jsonObject), (override));
+    MOCK_METHOD(QString, toJsonString, (), (const, override));
+    MOCK_METHOD(QStringList, variantsAsJson, (), (const, override));
+
     MOCK_METHOD(void, setEnabled, (bool value), (override));
     MOCK_METHOD(bool, isEnabled, (), (override));
 

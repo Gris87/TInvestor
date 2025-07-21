@@ -2,6 +2,9 @@
 
 
 
+#include <Qt>
+
+#include "src/simdjson/simdjson_wrapped.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -20,6 +23,14 @@ public:
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;
+
+    virtual void fromJsonObject(simdjson::ondemand::object jsonObject) = 0; // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    virtual QString toJsonString() const;
+
+    [[nodiscard]]
+    virtual QStringList variantsAsJson() const;
 
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;

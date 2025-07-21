@@ -47,6 +47,12 @@ public:
     void terminateThread() override;
 
 private:
+    void init();
+    void readSimulationConfig();
+    void initConfigs();
+    void load();
+    void loadConfigs();
+
     ISettingsEditor*                     mSettingsEditor;
     IOperationsDatabase*                 mOperationsDatabase;
     ILogsDatabase*                       mLogsDatabase;
@@ -60,8 +66,10 @@ private:
     Portfolio                            mPortfolio;
     QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
     bool                                 mResetted;
-    bool                                 mLoaded;
     int                                  mStartMoney;
+    qint64                               mStartTimestamp;
+    qint64                               mEndTimestamp;
+    bool                                 mBestConfig;
     double                               mTotalYieldWithCommission;
     double                               mTotalMoney;
 };

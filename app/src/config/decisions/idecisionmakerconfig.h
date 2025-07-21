@@ -2,12 +2,15 @@
 
 
 
+#include <Qt>
+
 #include "src/config/decisions/buy/buydecision1config/ibuydecision1config.h"
 #include "src/config/decisions/buy/buydecision2config/ibuydecision2config.h"
 #include "src/config/decisions/buy/buydecision3config/ibuydecision3config.h"
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config.h"
 #include "src/config/decisions/sell/selldecision2config/iselldecision2config.h"
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
+#include "src/simdjson/simdjson_wrapped.h"
 
 
 
@@ -25,6 +28,14 @@ public:
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;
+
+    virtual void fromJsonObject(simdjson::ondemand::object jsonObject) = 0; // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    virtual QString toJsonString() const;
+
+    [[nodiscard]]
+    virtual QString variantsToJsonString() const;
 
     virtual IBuyDecision1Config* getBuyDecision1Config() = 0;
     virtual IBuyDecision2Config* getBuyDecision2Config() = 0;

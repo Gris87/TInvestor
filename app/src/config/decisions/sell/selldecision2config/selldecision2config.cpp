@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QMutexLocker>
 
+#include "src/utils/exception/exception.h"
+
 
 
 constexpr bool  ENABLED_DEFAULT      = true;
@@ -76,6 +78,75 @@ void SellDecision2Config::load(ISettingsEditor* settingsEditor, const QString& t
     mIncomeAbove = settingsEditor->value(type + "/IncomeAbove", mIncomeAbove).toFloat();
     mLoseIncome  = settingsEditor->value(type + "/LoseIncome",  mLoseIncome).toFloat();
     // clang-format on
+}
+
+static void configEnabledParse(SellDecision2Config* config, simdjson::ondemand::value value)
+{
+    config->setEnabled(value.get_bool());
+}
+
+static void configIncomeAboveParse(SellDecision2Config* config, simdjson::ondemand::value value)
+{
+    config->setIncomeAbove(value.get_double_in_string());
+}
+
+static void configLoseIncomeParse(SellDecision2Config* config, simdjson::ondemand::value value)
+{
+    config->setLoseIncome(value.get_double_in_string());
+}
+
+static void configThrowParseException(
+    SellDecision2Config* /*config*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
+{
+    throwException("Unknown parameter");
+}
+
+using ParseHandler = void (*)(SellDecision2Config* config, simdjson::ondemand::value value);
+
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
+    {"enabled",     configEnabledParse    },
+    {"incomeAbove", configIncomeAboveParse},
+    {"loseIncome",  configLoseIncomeParse }
+};
+// clang-format on
+
+void SellDecision2Config::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        const std::string_view key          = field.escaped_key();
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, configThrowParseException);
+
+        parseHandler(this, field.value());
+    }
+}
+
+QString SellDecision2Config::toJsonString() const
+{
+    return QString(R"({"enabled":%1,"incomeAbove":"%2","loseIncome":"%3"})")
+        .arg(mEnabled ? "true" : "false", QString::number(mIncomeAbove, 'f', 2), QString::number(mLoseIncome, 'f', 2));
+}
+
+QStringList SellDecision2Config::variantsAsJson() const
+{
+    QStringList res;
+
+    res.append(R"({"enabled":false})");
+
+    const QStringList incomeAboveVariants = {"3.00", "4.00", "5.00"};
+    const QStringList loseIncomeVariants  = {"0.1", "0.3", "0.7"};
+
+    for (const QString& incomeAbove : incomeAboveVariants)
+    {
+        for (const QString& loseIncome : loseIncomeVariants)
+        {
+            res.append(QString(R"({"enabled":true,"incomeAbove":"%1","loseIncome":"%2"})").arg(incomeAbove, loseIncome));
+        }
+    }
+
+    return res;
 }
 
 void SellDecision2Config::setEnabled(bool value)

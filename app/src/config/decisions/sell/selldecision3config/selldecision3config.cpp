@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QMutexLocker>
 
+#include "src/utils/exception/exception.h"
+
 
 
 constexpr bool  ENABLED_DEFAULT     = true;
@@ -76,6 +78,75 @@ void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& t
     mLoseIncome = settingsEditor->value(type + "/LoseIncome", mLoseIncome).toFloat();
     mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
     // clang-format on
+}
+
+static void configEnabledParse(SellDecision3Config* config, simdjson::ondemand::value value)
+{
+    config->setEnabled(value.get_bool());
+}
+
+static void configLoseIncomeParse(SellDecision3Config* config, simdjson::ondemand::value value)
+{
+    config->setLoseIncome(value.get_double_in_string());
+}
+
+static void configDurationParse(SellDecision3Config* config, simdjson::ondemand::value value)
+{
+    config->setDuration(value.get_int64());
+}
+
+static void configThrowParseException(
+    SellDecision3Config* /*config*/, simdjson::ondemand::value /*value*/ // clazy:exclude=function-args-by-ref
+)
+{
+    throwException("Unknown parameter");
+}
+
+using ParseHandler = void (*)(SellDecision3Config* config, simdjson::ondemand::value value);
+
+// clang-format off
+static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
+    {"enabled",    configEnabledParse   },
+    {"loseIncome", configLoseIncomeParse},
+    {"duration",   configDurationParse  }
+};
+// clang-format on
+
+void SellDecision3Config::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
+{
+    for (simdjson::ondemand::field field : jsonObject)
+    {
+        const std::string_view key          = field.escaped_key();
+        ParseHandler           parseHandler = PARSE_HANDLER.value(key, configThrowParseException);
+
+        parseHandler(this, field.value());
+    }
+}
+
+QString SellDecision3Config::toJsonString() const
+{
+    return QString(R"({"enabled":%1,"loseIncome":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mLoseIncome, 'f', 2), QString::number(mDuration));
+}
+
+QStringList SellDecision3Config::variantsAsJson() const
+{
+    QStringList res;
+
+    res.append(R"({"enabled":false})");
+
+    const QStringList loseIncomeVariants = {"3.00", "4.00", "5.00"};
+    const QStringList durationVariants   = {"5", "15", "30"};
+
+    for (const QString& loseIncome : loseIncomeVariants)
+    {
+        for (const QString& duration : durationVariants)
+        {
+            res.append(QString(R"({"enabled":true,"loseIncome":"%1","duration":%2})").arg(loseIncome, duration));
+        }
+    }
+
+    return res;
 }
 
 void SellDecision3Config::setEnabled(bool value)

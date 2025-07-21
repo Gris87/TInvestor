@@ -23,6 +23,14 @@ public:
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;
 
+    void fromJsonObject(simdjson::ondemand::object jsonObject) override; // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    QString toJsonString() const override;
+
+    [[nodiscard]]
+    QStringList variantsAsJson() const override;
+
     void setEnabled(bool value) override;
     bool isEnabled() override;
 

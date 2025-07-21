@@ -6,6 +6,10 @@
 
 
 
+const char* const DATE_FORMAT = "yyyy-MM-dd";
+
+
+
 SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     ISettingsEditor*     settingsEditor,
     IOperationsDatabase* operationsDatabase,
@@ -33,8 +37,10 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mPortfolio(),
     mInstruments(),
     mResetted(),
-    mLoaded(),
     mStartMoney(),
+    mStartTimestamp(),
+    mEndTimestamp(),
+    mBestConfig(),
     mTotalYieldWithCommission(),
     mTotalMoney()
 {
@@ -52,6 +58,16 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
     blockSignals(false);
 
+    if (mResetted)
+    {
+        init();
+        mResetted = false;
+    }
+    else
+    {
+        load();
+    }
+
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
 }
 
@@ -65,4 +81,48 @@ void SimulatorDateRangeDecisionMakerThread::terminateThread()
     blockSignals(true);
 
     requestInterruption();
+}
+
+void SimulatorDateRangeDecisionMakerThread::init()
+{
+    readSimulationConfig();
+    initConfigs();
+}
+
+void SimulatorDateRangeDecisionMakerThread::readSimulationConfig()
+{
+    mStartMoney = mSettingsEditor->value("Options/StartMoney", 0).toInt();
+    mStartTimestamp =
+        QDateTime(QDate::fromString(mSettingsEditor->value("Options/FromDate", "").toString(), DATE_FORMAT), QTime(0, 0))
+            .toMSecsSinceEpoch();
+    mEndTimestamp =
+        QDateTime(QDate::fromString(mSettingsEditor->value("Options/ToDate", "").toString(), DATE_FORMAT), QTime(0, 0))
+            .toMSecsSinceEpoch();
+    mBestConfig = mSettingsEditor->value("Options/BestConfig", false).toBool();
+
+    if (mBestConfig)
+    {
+        mConfig->setSimulatorConfigCommon(true);
+        mConfig->setAutoPilotConfigCommon(false);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::initConfigs()
+{
+    if (mBestConfig)
+    {
+    }
+    else
+    {
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::load()
+{
+    readSimulationConfig();
+    loadConfigs();
+}
+
+void SimulatorDateRangeDecisionMakerThread::loadConfigs()
+{
 }

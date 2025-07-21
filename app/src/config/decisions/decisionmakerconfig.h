@@ -30,6 +30,14 @@ public:
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;
 
+    void fromJsonObject(simdjson::ondemand::object jsonObject) override; // clazy:exclude=function-args-by-ref
+
+    [[nodiscard]]
+    QString toJsonString() const override;
+
+    [[nodiscard]]
+    QString variantsToJsonString() const override;
+
     IBuyDecision1Config*  getBuyDecision1Config() override;
     IBuyDecision2Config*  getBuyDecision2Config() override;
     IBuyDecision3Config*  getBuyDecision3Config() override;
