@@ -132,7 +132,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
 };
 // clang-format on
 
-void DecisionMakerConfig::fromJsonObject(simdjson::ondemand::object jsonObject)
+void DecisionMakerConfig::fromJsonObject(simdjson::ondemand::object jsonObject) // clazy:exclude=function-args-by-ref
 {
     for (simdjson::ondemand::field field : jsonObject)
     {
@@ -158,7 +158,7 @@ QString DecisionMakerConfig::toJsonString() const
 
 struct CombineVariantsInfo
 {
-    explicit CombineVariantsInfo(const QList<QStringList> _variants) :
+    explicit CombineVariantsInfo(const QList<QStringList>& _variants) :
         variants(_variants)
     {
 #ifndef TESTING_MODE
@@ -174,6 +174,7 @@ struct CombineVariantsInfo
     QList<QStringList> results;
 };
 
+// NOLINTBEGIN(readability-magic-numbers)
 static void
 combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs)
 {
@@ -227,6 +228,7 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
         }
     }
 }
+// NOLINTEND(readability-magic-numbers)
 
 QString DecisionMakerConfig::variantsToJsonString() const
 {
@@ -248,7 +250,7 @@ QString DecisionMakerConfig::variantsToJsonString() const
     res        = "[\n";
     bool first = true;
 
-    for (const QStringList& results : combineVariantsInfo.results)
+    for (const QStringList& results : std::as_const(combineVariantsInfo.results))
     {
         if (!results.isEmpty())
         {
