@@ -9,6 +9,13 @@
 
 const char* const DATE_FORMAT = "yyyy-MM-dd";
 
+constexpr qint64 MS_IN_SECOND         = 1000LL;
+constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
+constexpr qint64 NOTIFY_PROGRESS_STEP = 24LL * ONE_HOUR;
+const int        SECONDS_IN_MINUTE    = 60;
+const int        MINUTES_IN_HOUR      = 60;
+
 
 
 SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
@@ -74,7 +81,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
         load();
     }
 
-    const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+    const int    configId     = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+    const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
 
     const simdjson::padded_string jsonData(mConfigVariants.toStdString());
 
@@ -84,15 +92,17 @@ void SimulatorDateRangeDecisionMakerThread::run()
     {
         simdjson::ondemand::document doc = parser.iterate(jsonData);
 
-        simdjson::ondemand::array jsonConfigs = doc.get_array();
+        simdjson::ondemand::array jsonConfigs     = doc.get_array();
         const int                 amountOfConfigs = static_cast<int>(jsonConfigs.count_elements());
 
-        int i = 0;
+        qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+        int    i         = 0;
 
         for (const simdjson::ondemand::object jsonObject : jsonConfigs)
         {
             if (i < configId || QThread::currentThread()->isInterruptionRequested())
             {
+                startTime = QDateTime::currentMSecsSinceEpoch();
                 ++i;
 
                 continue;
@@ -102,6 +112,45 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
             mSettingsEditor->setValue("Options/LastConfigId", i);
             mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
+
+            qint64 timestamp = mStartTimestamp;
+
+            while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
+            {
+                if (timestamp % NOTIFY_PROGRESS_STEP == 0)
+                {
+                    const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
+
+                    if (i != configId || currentMinute > 0)
+                    {
+                        const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+
+                        const double processedMinutes = ((i - configId) * totalMinutes) + currentMinute;
+                        const double remainingMinutes = ((amountOfConfigs - i) * totalMinutes) - currentMinute;
+
+                        qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
+                        remainingMilliseconds        /= MS_IN_SECOND;
+                        const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
+                        remainingMilliseconds        /= SECONDS_IN_MINUTE;
+                        const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
+                        remainingMilliseconds        /= MINUTES_IN_HOUR;
+                        const int hours               = remainingMilliseconds;
+
+                        emit progressChanged(
+                            currentMinute,
+                            totalMinutes,
+                            QString("%1:%2:%3")
+                                .arg(
+                                    QString::number(hours).rightJustified(2, '0'),
+                                    QString::number(minutes).rightJustified(2, '0'),
+                                    QString::number(seconds).rightJustified(2, '0')
+                                )
+                        );
+                    }
+                }
+
+                timestamp += ONE_MINUTE;
+            }
 
             ++i;
         }
