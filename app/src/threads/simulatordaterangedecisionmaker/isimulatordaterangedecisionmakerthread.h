@@ -28,6 +28,9 @@ public:
     virtual void terminateThread() = 0;
 
 signals:
+    void totalProgressChanged(int current, int maximum);
+    void progressChanged(int current, int maximum, const QString& remainingTime);
+    void bestResultChanged(const QString& bestResult);
     void operationsRead(const QList<Operation>& operations);
     void logsRead(const QList<LogEntry>& entries);
     void portfolioChanged(const Portfolio& portfolio);

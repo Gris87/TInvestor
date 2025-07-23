@@ -85,6 +85,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
         simdjson::ondemand::document doc = parser.iterate(jsonData);
 
         simdjson::ondemand::array jsonConfigs = doc.get_array();
+        const int                 amountOfConfigs = static_cast<int>(jsonConfigs.count_elements());
 
         int i = 0;
 
@@ -96,6 +97,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
                 continue;
             }
+
+            emit totalProgressChanged(i, amountOfConfigs);
 
             mSettingsEditor->setValue("Options/LastConfigId", i);
             mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);

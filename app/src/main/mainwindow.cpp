@@ -247,6 +247,9 @@ MainWindow::MainWindow(
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&)),                                                    this, SLOT(simulatorBestResultChanged(const QString&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
@@ -550,16 +553,23 @@ void MainWindow::startSimulator()
     ui->startSimulationButton->setIcon(QIcon(":/assets/images/stop.png"));
     ui->startSimulationButton->setText(tr("Stop simulation"));
 
-    mSimulatorDecisionMakerWidget->showSpinners();
-
     mSimulatorPortfolioLastPriceThread->start();
 
     if (mode == SIMULATOR_MODE_REALTIME)
     {
+        ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWorkingPage);
+
+        mSimulatorDecisionMakerWidget->showSpinners();
         mSimulatorDecisionMakerThread->start();
     }
     else if (mode == SIMULATOR_MODE_DATERANGE)
     {
+        ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWaitingPage);
+        ui->simulatorRemainingTimeLabel->setText("00:00:00");
+        ui->simulatorTotalProgressBar->setValue(0);
+        ui->simulatorProgressBar->setValue(0);
+        ui->simulatorBestResultLabel->setText("0.00%");
+
         mConfigForSimulation->assign(mConfig);
         mSimulatorDateRangeDecisionMakerThread->start();
     }
@@ -698,6 +708,24 @@ void MainWindow::stopAutoPilot()
     tradingThreads.clear();
 }
 
+void MainWindow::simulatorTotalProgressChanged(int current, int maximum)
+{
+    ui->simulatorTotalProgressBar->setMaximum(maximum);
+    ui->simulatorTotalProgressBar->setValue(current);
+}
+
+void MainWindow::simulatorProgressChanged(int current, int maximum, const QString& remainingTime)
+{
+    ui->simulatorRemainingTimeLabel->setText(remainingTime);
+    ui->simulatorProgressBar->setMaximum(maximum);
+    ui->simulatorProgressBar->setValue(current);
+}
+
+void MainWindow::simulatorBestResultChanged(const QString& bestResult)
+{
+    ui->simulatorBestResultLabel->setText(bestResult);
+}
+
 void MainWindow::simulatorOperationsRead(const QList<Operation>& operations)
 {
     mSimulatorDecisionMakerWidget->operationsRead(operations);
@@ -720,6 +748,8 @@ void MainWindow::simulatorLogAdded(const LogEntry& entry)
 
 void MainWindow::simulatorPortfolioChanged(const Portfolio& portfolio)
 {
+    ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWorkingPage);
+
     mSimulatorDecisionMakerWidget->portfolioChanged(portfolio);
     mSimulatorPortfolioLastPriceThread->portfolioChanged(portfolio);
 }

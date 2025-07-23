@@ -989,8 +989,8 @@ TEST_F(Test_MainWindow, Test_on_actionAuth_triggered)
         .WillOnce(Return(QVariant(true)));
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
-    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
     EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("General/Enabled"), QVariant(false)))
         .WillOnce(Return(QVariant(true)));
@@ -1156,8 +1156,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 
     EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
         .WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
-    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, showSpinners());
     EXPECT_CALL(*simulatorDecisionMakerThreadMock, run());
 
     mainWindow->ui->startSimulationButton->click();
