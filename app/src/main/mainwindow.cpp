@@ -9,6 +9,7 @@
 
 
 const QColor      GREY_COLOR                               = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
+const QColor      NORMAL_COLOR                             = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 const char* const DATE_FORMAT                              = "yyyy-MM-dd";
 const char* const DATETIME_FORMAT                          = "yyyy-MM-dd hh:mm:ss";
 constexpr int     SMALL_SPINNER_INNER_RADIUS               = 6;
@@ -249,7 +250,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&)),                                                    this, SLOT(simulatorBestResultChanged(const QString&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
@@ -568,7 +569,7 @@ void MainWindow::startSimulator()
         ui->simulatorRemainingTimeLabel->setText("00:00:00");
         ui->simulatorTotalProgressBar->setValue(0);
         ui->simulatorProgressBar->setValue(0);
-        ui->simulatorBestResultLabel->setText("0.00%");
+        simulatorBestResultChanged("0.00%", NORMAL_COLOR);
 
         mConfigForSimulation->assign(mConfig);
         mSimulatorDateRangeDecisionMakerThread->start();
@@ -721,9 +722,13 @@ void MainWindow::simulatorProgressChanged(int current, int maximum, const QStrin
     ui->simulatorProgressBar->setValue(current);
 }
 
-void MainWindow::simulatorBestResultChanged(const QString& bestResult)
+void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QColor& color)
 {
     ui->simulatorBestResultLabel->setText(bestResult);
+
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    ui->simulatorBestResultLabel->setPalette(palette);
 }
 
 void MainWindow::simulatorOperationsRead(const QList<Operation>& operations)

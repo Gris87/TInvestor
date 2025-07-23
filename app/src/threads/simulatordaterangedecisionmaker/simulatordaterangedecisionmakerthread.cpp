@@ -9,7 +9,11 @@
 
 const char* const DATE_FORMAT = "yyyy-MM-dd";
 const char* const RUBLE_UID   = "a92e2e25-a698-45cc-a781-167cf465257c";
+const QColor      GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
+const QColor      RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
+const QColor      NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
+constexpr float  ZERO_LIMIT           = 0.0001f;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
@@ -182,6 +186,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
                     mOperationsDatabase->writeOperations(mBestOperations);
                     mLogsDatabase->writeLogs(mBestEntries);
                     mPortfolioDatabase->writePortfolio(mBestPortfolio);
+
+                    notifyBestResult();
                 }
 
                 ++i;
@@ -405,6 +411,7 @@ void SimulatorDateRangeDecisionMakerThread::loadBestOperations()
         const Operation& lastOperation = mBestOperations.constFirst(); // Since it reversed
 
         mBestTotalMoney = quotationToDouble(lastOperation.totalMoney);
+        notifyBestResult();
     }
 }
 
@@ -428,4 +435,32 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
         mConfigVariants = QString::fromUtf8(configsFile->readAll());
         configsFile->close();
     }
+}
+
+void SimulatorDateRangeDecisionMakerThread::notifyBestResult()
+{
+    const double totalYieldWithCommissionPercent = mBestOperations.constFirst().totalYieldWithCommissionPercent;
+
+    const QString prefix     = totalYieldWithCommissionPercent > 0 ? "+" : "";
+    const QString bestResult = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
+
+    QColor color;
+
+    if (totalYieldWithCommissionPercent > -ZERO_LIMIT && totalYieldWithCommissionPercent < ZERO_LIMIT)
+    {
+        color = NORMAL_COLOR;
+    }
+    else
+    {
+        if (totalYieldWithCommissionPercent > 0)
+        {
+            color = GREEN_COLOR;
+        }
+        else
+        {
+            color = RED_COLOR;
+        }
+    }
+
+    emit bestResultChanged(bestResult, color);
 }

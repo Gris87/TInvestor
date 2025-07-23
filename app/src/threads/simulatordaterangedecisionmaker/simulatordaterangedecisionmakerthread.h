@@ -62,6 +62,7 @@ private:
     void loadBestLogs();
     void loadBestPortfolio();
     void loadConfigs();
+    void notifyBestResult();
 
     IDirFactory*                         mDirFactory;
     IFileFactory*                        mFileFactory;
