@@ -346,7 +346,9 @@ void SimulatorDecisionMakerThread::simulateSell(
 
     const QuantityAndCostDouble quantityAndCost = mInstruments.value(instrumentId);
 
+    mUserStorage->readLock();
     const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
+    mUserStorage->readUnlock();
 
     const double cost            = quantityAndCost.quantity * tradingInfo.price;
     const double totalCommission = cost * commission;
@@ -510,7 +512,9 @@ void SimulatorDecisionMakerThread::simulateBuy(
 
     instrument.resetIfNotFound(instrumentId);
 
+    mUserStorage->readLock();
     const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
+    mUserStorage->readUnlock();
 
     const double lotPrice               = instrument.lot * tradingInfo.price;
     const double lotPriceWithCommission = lotPrice * (1 + commission);
@@ -706,7 +710,7 @@ void SimulatorDecisionMakerThread::updatePrice()
         if (stock == nullptr)
         {
             mStocksStorage->readLock();
-            const QList<Stock*> stocks = mStocksStorage->getStocks();
+            const QList<Stock*>& stocks = mStocksStorage->getStocks();
 
             for (Stock* s : stocks)
             {
@@ -723,7 +727,9 @@ void SimulatorDecisionMakerThread::updatePrice()
 
         if (stock != nullptr)
         {
+            stock->readLock();
             item.price = stock->lastPrice();
+            stock->readUnlock();
 
             const double currentCost = item.available * item.price;
 

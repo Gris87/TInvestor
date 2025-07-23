@@ -62,6 +62,46 @@ private:
     void loadBestLogs();
     void loadBestPortfolio();
     void loadConfigs();
+    void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
+    void simulateSell(const QString& instrumentId, const TradingInfo& tradingInfo);
+    void simulateSellForOperations(
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        qint64            quantity,
+        double            costFifo,
+        float             price,
+        double            cost,
+        double            totalCommission
+    );
+    void simulateSellForLogs(
+        const QString& instrumentId, Logo* logo, const Instrument& instrument, const QString& cause, qint64 quantity, float price
+    );
+    void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission);
+    void simulateSellForInstruments(const QString& instrumentId);
+    void simulateBuy(const QString& instrumentId, const TradingInfo& tradingInfo);
+    void simulateBuyForOperations(
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        qint64            quantity,
+        float             price,
+        double            cost,
+        double            totalCommission
+    );
+    void simulateBuyForLogs(
+        const QString& instrumentId, Logo* logo, const Instrument& instrument, const QString& cause, qint64 quantity, float price
+    );
+    void simulateBuyForPortfolio(
+        const QString&    instrumentId,
+        Logo*             logo,
+        const Instrument& instrument,
+        qint64            quantity,
+        float             price,
+        double            cost,
+        double            totalCommission
+    );
+    void simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
     void notifyBestResult();
 
     IDirFactory*                         mDirFactory;

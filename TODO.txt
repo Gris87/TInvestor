@@ -1,4 +1,8 @@
+Use timestamp instead of QDateTime::currentMSecsSinceEpoch()
 Same timestamp for simulator operations and logs
+Reverse operations and logs
+void updateCostAndPart();
+void updatePrice();
 Simulator date range mode
 Simulator parameters check
 Optimizations for simulator

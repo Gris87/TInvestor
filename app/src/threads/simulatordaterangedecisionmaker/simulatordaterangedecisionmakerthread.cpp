@@ -14,12 +14,16 @@ const QColor      RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-glo
 const QColor      NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
 constexpr float  ZERO_LIMIT           = 0.0001f;
+constexpr float  HUNDRED_PERCENT      = 100.0f;
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
 constexpr qint64 NOTIFY_PROGRESS_STEP = 1LL * ONE_HOUR;
 const int        SECONDS_IN_MINUTE    = 60;
 const int        MINUTES_IN_HOUR      = 60;
+
+constexpr int CURRENCY_ID = 0;
+constexpr int SHARE_ID    = 1;
 
 
 
@@ -97,6 +101,10 @@ void SimulatorDateRangeDecisionMakerThread::run()
     const int    configId     = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
     const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
 
+    mStocksStorage->readLock();
+    QList<Stock*> stocks = mStocksStorage->getStocks();
+    mStocksStorage->readUnlock();
+
     const simdjson::padded_string jsonData(mConfigVariants.toStdString());
 
     simdjson::ondemand::parser parser;
@@ -168,6 +176,13 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
                     // TODO: Remove it
                     msleep(10);
+                }
+
+                const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(mPortfolio, stocks, 0);
+
+                if (!instrumentsForTrading.isEmpty())
+                {
+                    simulateTrading(instrumentsForTrading);
                 }
 
                 timestamp += ONE_MINUTE;
@@ -435,6 +450,362 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
         mConfigVariants = QString::fromUtf8(configsFile->readAll());
         configsFile->close();
     }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateTrading(const InstrumentsForTrading& instrumentsForTrading)
+{
+    InstrumentsForTrading instrumentsForSell;
+    InstrumentsForTrading instrumentsForBuy;
+
+    for (auto it = instrumentsForTrading.constBegin(); it != instrumentsForTrading.constEnd(); ++it)
+    {
+        if (it.value().expectedCost > 0)
+        {
+            instrumentsForBuy[it.key()] = it.value();
+        }
+        else
+        {
+            instrumentsForSell[it.key()] = it.value();
+        }
+    }
+
+    for (auto it = instrumentsForSell.constBegin(); it != instrumentsForSell.constEnd(); ++it)
+    {
+        simulateSell(it.key(), it.value());
+    }
+
+    for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
+    {
+        simulateBuy(it.key(), it.value());
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateSell(const QString& instrumentId, const TradingInfo& tradingInfo)
+{
+    if (!mInstruments.contains(instrumentId))
+    {
+        return;
+    }
+
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+    mInstrumentsStorage->readUnlock();
+
+    instrument.resetIfNotFound(instrumentId);
+
+    const QuantityAndCostDouble quantityAndCost = mInstruments.value(instrumentId);
+
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
+    mUserStorage->readUnlock();
+
+    const double cost            = quantityAndCost.quantity * tradingInfo.price;
+    const double totalCommission = cost * commission;
+
+    mLogosStorage->readLock();
+    Logo* logo = mLogosStorage->getLogo(instrumentId);
+    mLogosStorage->readUnlock();
+
+    simulateSellForOperations(
+        instrumentId, logo, instrument, quantityAndCost.quantity, quantityAndCost.cost, tradingInfo.price, cost, totalCommission
+    );
+    simulateSellForLogs(instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price);
+    simulateSellForPortfolio(instrumentId, cost, totalCommission);
+    simulateSellForInstruments(instrumentId);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
+    const QString&    instrumentId,
+    Logo*             logo,
+    const Instrument& instrument,
+    qint64            quantity,
+    double            costFifo,
+    float             price,
+    double            cost,
+    double            totalCommission
+)
+{
+    const double avgPrice            = costFifo / quantity;
+    const double yield               = cost - costFifo;
+    const double yieldWithCommission = yield - totalCommission;
+
+    mTotalMoney                           += yieldWithCommission;
+    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
+
+    Operation operation;
+
+    operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.instrumentId                    = instrumentId;
+    operation.instrumentLogo                  = logo;
+    operation.instrumentTicker                = instrument.ticker;
+    operation.instrumentName                  = instrument.name;
+    operation.description                     = tr("Sale of shares");
+    operation.price                           = price;
+    operation.avgPriceFifo                    = avgPrice;
+    operation.avgPriceWavg                    = avgPrice;
+    operation.quantity                        = quantity;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = cost;
+    operation.avgCostFifo                     = costFifo;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = -totalCommission;
+    operation.yield                           = yield;
+    operation.yieldWithCommission             = yieldWithCommission;
+    operation.yieldWithCommissionPercent      = (yieldWithCommission / costFifo) * HUNDRED_PERCENT;
+    operation.inputMoney.units                = mStartMoney;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = mStartMoney;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
+    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
+    operation.totalMoney     = quotationFromDouble(mTotalMoney);
+    operation.pricePrecision = instrument.pricePrecision;
+    operation.paymentPrecision    = instrument.pricePrecision;
+    operation.commissionPrecision = instrument.pricePrecision;
+
+    mOperations.append(operation);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
+    const QString& instrumentId, Logo* logo, const Instrument& instrument, const QString& cause, qint64 quantity, float price
+)
+{
+    LogEntry entry;
+
+    entry.timestamp        = QDateTime::currentMSecsSinceEpoch();
+    entry.level            = LOG_LEVEL_DEBUG;
+    entry.instrumentId     = instrumentId;
+    entry.instrumentLogo   = logo;
+    entry.instrumentTicker = instrument.ticker;
+    entry.instrumentName   = instrument.name;
+    entry.message          = cause;
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order to sell %1 created with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order completed. %1 sold with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Trade completed successfully");
+
+    mEntries.append(entry);
+}
+
+void
+SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission)
+{
+    PortfolioCategoryItem& category = mPortfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
+
+    for (int i = 0; i < category.items.size(); ++i)
+    {
+        if (category.items.at(i).instrumentId == instrumentId)
+        {
+            const double costWithCommission = cost - totalCommission;
+
+            mPortfolio.positions[CURRENCY_ID].items.first().available += costWithCommission;
+            mPortfolio.positions[CURRENCY_ID].items.first().cost      += costWithCommission;
+            category.items.removeAt(i);
+
+            break;
+        }
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateSellForInstruments(const QString& instrumentId)
+{
+    mInstruments.remove(instrumentId);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateBuy(const QString& instrumentId, const TradingInfo& tradingInfo)
+{
+    if (mInstruments.contains(instrumentId))
+    {
+        return;
+    }
+
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+    mInstrumentsStorage->readUnlock();
+
+    instrument.resetIfNotFound(instrumentId);
+
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
+    mUserStorage->readUnlock();
+
+    const double lotPrice               = instrument.lot * tradingInfo.price;
+    const double lotPriceWithCommission = lotPrice * (1 + commission);
+
+    const qint64 amountOfLots = qMin(
+        qRound64(tradingInfo.expectedCost / lotPrice),
+        static_cast<qint64>(mPortfolio.positions.at(CURRENCY_ID).items.constFirst().cost / lotPriceWithCommission)
+    );
+
+    if (amountOfLots > 0)
+    {
+        const qint64 quantity        = amountOfLots * instrument.lot;
+        const double cost            = quantity * tradingInfo.price;
+        const double totalCommission = cost * commission;
+
+        mLogosStorage->readLock();
+        Logo* logo = mLogosStorage->getLogo(instrumentId);
+        mLogosStorage->readUnlock();
+
+        simulateBuyForOperations(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
+        simulateBuyForLogs(instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price);
+        simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
+        simulateBuyForInstruments(instrumentId, quantity, cost);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateBuyForOperations(
+    const QString&    instrumentId,
+    Logo*             logo,
+    const Instrument& instrument,
+    qint64            quantity,
+    float             price,
+    double            cost,
+    double            totalCommission
+)
+{
+    mTotalMoney                           -= totalCommission;
+    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
+
+    Operation operation;
+
+    operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.instrumentId                    = instrumentId;
+    operation.instrumentLogo                  = logo;
+    operation.instrumentTicker                = instrument.ticker;
+    operation.instrumentName                  = instrument.name;
+    operation.description                     = tr("Purchase of shares");
+    operation.price                           = price;
+    operation.avgPriceFifo                    = price;
+    operation.avgPriceWavg                    = price;
+    operation.quantity                        = quantity;
+    operation.remainedQuantity                = quantity;
+    operation.payment                         = -cost;
+    operation.avgCostFifo                     = cost;
+    operation.costFifo                        = quotationFromDouble(cost);
+    operation.costWavg                        = quotationFromDouble(cost);
+    operation.commission                      = -totalCommission;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = -totalCommission;
+    operation.yieldWithCommissionPercent      = -(totalCommission / cost) * HUNDRED_PERCENT;
+    operation.inputMoney.units                = mStartMoney;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = mStartMoney;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
+    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
+    operation.totalMoney     = quotationFromDouble(mTotalMoney);
+    operation.pricePrecision = instrument.pricePrecision;
+    operation.paymentPrecision    = instrument.pricePrecision;
+    operation.commissionPrecision = instrument.pricePrecision;
+
+    mOperations.append(operation);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
+    const QString& instrumentId, Logo* logo, const Instrument& instrument, const QString& cause, qint64 quantity, float price
+)
+{
+    LogEntry entry;
+
+    entry.timestamp        = QDateTime::currentMSecsSinceEpoch();
+    entry.level            = LOG_LEVEL_DEBUG;
+    entry.instrumentId     = instrumentId;
+    entry.instrumentLogo   = logo;
+    entry.instrumentTicker = instrument.ticker;
+    entry.instrumentName   = instrument.name;
+    entry.message          = cause;
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order to buy %1 created with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Order completed. %1 bought with a price %2 %3")
+                        .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
+
+    mEntries.append(entry);
+
+    ++entry.timestamp;
+    entry.level   = LOG_LEVEL_VERBOSE;
+    entry.message = tr("Trade completed successfully");
+
+    mEntries.append(entry);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
+    const QString&    instrumentId,
+    Logo*             logo,
+    const Instrument& instrument,
+    qint64            quantity,
+    float             price,
+    double            cost,
+    double            totalCommission
+)
+{
+    PortfolioItem item;
+
+    item.instrumentId       = instrumentId;
+    item.instrumentLogo     = logo;
+    item.instrumentTicker   = instrument.ticker;
+    item.instrumentName     = instrument.name;
+    item.showPrices         = true;
+    item.available          = quantity;
+    item.price              = price;
+    item.avgPriceFifo       = price;
+    item.avgPriceWavg       = price;
+    item.cost               = cost;
+    item.part               = 0.0;
+    item.yield              = 0.0f;
+    item.yieldPercent       = 0.0f;
+    item.dailyYield         = 0.0f;
+    item.priceForDailyYield = price;
+    item.costForDailyYield  = cost;
+    item.dailyYieldPercent  = 0.0f;
+    item.pricePrecision     = instrument.pricePrecision;
+
+    const double costWithCommission = cost + totalCommission;
+
+    mPortfolio.positions[CURRENCY_ID].items.first().available -= costWithCommission;
+    mPortfolio.positions[CURRENCY_ID].items.first().cost      -= costWithCommission;
+    mPortfolio.positions[SHARE_ID].items.append(item);
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost)
+{
+    QuantityAndCostDouble quantityAndCost;
+
+    quantityAndCost.quantity = quantity;
+    quantityAndCost.cost     = cost;
+
+    mInstruments[instrumentId] = quantityAndCost;
 }
 
 void SimulatorDateRangeDecisionMakerThread::notifyBestResult()
