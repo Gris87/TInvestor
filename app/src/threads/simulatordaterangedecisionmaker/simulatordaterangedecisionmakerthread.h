@@ -101,8 +101,10 @@ private:
         double            cost,
         double            totalCommission
     );
-    void simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
-    void notifyBestResult();
+    void             simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
+    QList<Operation> reverseOperations();
+    QList<LogEntry>  reverseEntries();
+    void             notifyBestResult();
 
     IDirFactory*                         mDirFactory;
     IFileFactory*                        mFileFactory;

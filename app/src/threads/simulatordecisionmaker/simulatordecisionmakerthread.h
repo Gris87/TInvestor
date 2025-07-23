@@ -111,9 +111,10 @@ private:
         double            cost,
         double            totalCommission
     );
-    void simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
-    void updateCostAndPart();
-    void updatePrice();
+    void             simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
+    QList<Operation> reverseOperations(QList<Operation>& operations);
+    void             updateCostAndPart();
+    void             updatePrice();
 
     ISettingsEditor*                     mSettingsEditor;
     IOperationsDatabase*                 mOperationsDatabase;

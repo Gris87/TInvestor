@@ -62,7 +62,6 @@ void LogsThread::run()
         }
 
         emit logAdded(entry);
-
         mLogsDatabase->appendLog(entry);
 
         ++mAmountOfEntries;
@@ -207,6 +206,6 @@ void LogsThread::optimize()
 
     mAmountOfEntries = newEntries.size();
 
-    mLogsDatabase->writeLogs(newEntries);
     emit logsRead(newEntries);
+    mLogsDatabase->writeLogs(newEntries);
 }

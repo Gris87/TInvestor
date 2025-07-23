@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include "src/grpc/utils.h"
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
 
@@ -312,6 +313,8 @@ void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& 
 
     if (!operations.isEmpty())
     {
+        operations = reverseOperations(operations);
+
         emit operationsAdded(operations);
         mOperationsDatabase->appendOperations(operations);
     }
@@ -680,6 +683,43 @@ void SimulatorDecisionMakerThread::simulateBuyForInstruments(const QString& inst
     quantityAndCost.cost     = cost;
 
     mInstruments[instrumentId] = quantityAndCost;
+}
+
+struct ReverseOperationsInfo
+{
+    explicit ReverseOperationsInfo(QList<Operation>* _operations) :
+        operations(_operations)
+    {
+    }
+
+    QList<Operation>* operations;
+};
+
+static void reverseOperationsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
+{
+    ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
+
+    Operation* operationsArray = reverseOperationsInfo->operations->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = operationsArray[res.size() - i - 1];
+    }
+}
+
+QList<Operation> SimulatorDecisionMakerThread::reverseOperations(QList<Operation>& operations)
+{
+    QList<Operation> res;
+    res.resizeForOverwrite(operations.size());
+
+    ReverseOperationsInfo reverseOperationsInfo(&operations);
+    processInParallel(res, reverseOperationsForParallel, &reverseOperationsInfo);
+
+    return res;
 }
 
 void SimulatorDecisionMakerThread::updateCostAndPart()

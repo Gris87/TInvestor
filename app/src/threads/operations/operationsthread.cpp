@@ -291,13 +291,13 @@ void OperationsThread::requestOperations()
 
         if (mLastRequestTimestamp == 0)
         {
-            mOperationsDatabase->writeOperations(operations);
             emit operationsRead(operations);
+            mOperationsDatabase->writeOperations(operations);
         }
         else
         {
-            mOperationsDatabase->appendOperations(operations);
             emit operationsAdded(operations);
+            mOperationsDatabase->appendOperations(operations);
         }
 
         mLastRequestTimestamp = operations.constFirst().timestamp + MS_IN_SECOND; // Since it reversed
@@ -623,8 +623,8 @@ void OperationsThread::optimize()
     addInstrumentsAfterOptimization(newOperations, operations);
     mAmountOfEntries = newOperations.size();
 
-    mOperationsDatabase->writeOperations(newOperations);
     emit operationsRead(newOperations);
+    mOperationsDatabase->writeOperations(newOperations);
 }
 
 struct AddInstrumentsInfo

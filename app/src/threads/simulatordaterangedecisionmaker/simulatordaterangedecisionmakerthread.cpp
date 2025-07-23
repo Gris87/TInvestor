@@ -4,11 +4,12 @@
 #include <QDebug>
 
 #include "src/grpc/utils.h"
+#include "src/threads/parallelhelper/parallelhelperthread.h"
 
 
 
-const char* const DATE_FORMAT = "yyyy-MM-dd";
-const char* const RUBLE_UID   = "a92e2e25-a698-45cc-a781-167cf465257c";
+const char* const DATE_FORMAT  = "yyyy-MM-dd";
+const char* const RUBLE_UID    = "a92e2e25-a698-45cc-a781-167cf465257c";
 const QColor      GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
 const QColor      RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
 const QColor      NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
@@ -194,8 +195,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
                 {
                     mBestTotalMoney = mTotalMoney;
 
-                    mBestOperations = mOperations;
-                    mBestEntries    = mEntries;
+                    mBestOperations = reverseOperations();
+                    mBestEntries    = reverseEntries();
                     mBestPortfolio  = mPortfolio;
 
                     mOperationsDatabase->writeOperations(mBestOperations);
@@ -806,6 +807,79 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(const QStr
     quantityAndCost.cost     = cost;
 
     mInstruments[instrumentId] = quantityAndCost;
+}
+
+struct ReverseOperationsInfo
+{
+    explicit ReverseOperationsInfo(QList<Operation>* _operations) :
+        operations(_operations)
+    {
+    }
+
+    QList<Operation>* operations;
+};
+
+static void reverseOperationsForParallel(
+    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+)
+{
+    ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
+
+    Operation* operationsArray = reverseOperationsInfo->operations->data();
+
+    Operation* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = operationsArray[res.size() - i - 1];
+    }
+}
+
+QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations()
+{
+    QList<Operation> res;
+    res.resizeForOverwrite(mOperations.size());
+
+    ReverseOperationsInfo reverseOperationsInfo(&mOperations);
+    processInParallel(res, reverseOperationsForParallel, &reverseOperationsInfo);
+
+    return res;
+}
+
+struct ReverseEntriesInfo
+{
+    explicit ReverseEntriesInfo(QList<LogEntry>* _entries) :
+        entries(_entries)
+    {
+    }
+
+    QList<LogEntry>* entries;
+};
+
+static void
+reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+{
+    ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
+
+    LogEntry* entriesArray = reverseEntriesInfo->entries->data();
+
+    LogEntry* resArray = res.data();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        resArray[i] = entriesArray[res.size() - i - 1];
+    }
+}
+
+QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries()
+{
+    QList<LogEntry> res;
+    res.resizeForOverwrite(mEntries.size());
+
+    ReverseEntriesInfo reverseEntriesInfo(&mEntries);
+    processInParallel(res, reverseEntriesForParallel, &reverseEntriesInfo);
+
+    return res;
 }
 
 void SimulatorDateRangeDecisionMakerThread::notifyBestResult()
