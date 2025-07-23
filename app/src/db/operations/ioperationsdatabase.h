@@ -19,4 +19,5 @@ public:
     virtual QList<Operation> readOperations()                                     = 0;
     virtual void             writeOperations(QList<Operation>& operations)        = 0;
     virtual void             appendOperations(const QList<Operation>& operations) = 0;
+    virtual void             deleteOperations()                                   = 0;
 };

@@ -19,4 +19,5 @@ public:
     virtual QList<LogEntry> readLogs()                          = 0;
     virtual void            writeLogs(QList<LogEntry>& entries) = 0;
     virtual void            appendLog(const LogEntry& entry)    = 0;
+    virtual void            deleteLogs()                        = 0;
 };

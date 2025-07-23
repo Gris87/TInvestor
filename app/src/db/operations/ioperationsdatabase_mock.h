@@ -24,4 +24,5 @@ public:
     MOCK_METHOD(QList<Operation>, readOperations, (), (override));
     MOCK_METHOD(void, writeOperations, (QList<Operation> & operations), (override));
     MOCK_METHOD(void, appendOperations, (const QList<Operation>& operations), (override));
+    MOCK_METHOD(void, deleteOperations, (), (override));
 };

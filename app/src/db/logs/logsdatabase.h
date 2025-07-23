@@ -23,6 +23,7 @@ public:
     QList<LogEntry> readLogs() override;
     void            writeLogs(QList<LogEntry>& entries) override;
     void            appendLog(const LogEntry& entry) override;
+    void            deleteLogs() override;
 
     void setAutoPilotMode(bool autoPilotMode);
 

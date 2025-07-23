@@ -22,4 +22,5 @@ public:
 
     MOCK_METHOD(Portfolio, readPortfolio, (), (override));
     MOCK_METHOD(void, writePortfolio, (const Portfolio& portfolio), (override));
+    MOCK_METHOD(void, deletePortfolio, (), (override));
 };

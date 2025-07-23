@@ -53,8 +53,14 @@ public:
 private:
     void init();
     void readSimulationConfig();
+    void initOperations();
+    void initLogs();
+    void initPortfolio();
     void initConfigs();
     void load();
+    void loadBestOperations();
+    void loadBestLogs();
+    void loadBestPortfolio();
     void loadConfigs();
 
     IDirFactory*                         mDirFactory;
@@ -69,7 +75,15 @@ private:
     IStocksStorage*                      mStocksStorage;
     IConfig*                             mConfig;
     IDecisionMaker*                      mDecisionMaker;
+    QList<Operation>                     mInitOperations;
+    QList<LogEntry>                      mInitEntries;
+    Portfolio                            mInitPortfolio;
+    QList<Operation>                     mOperations;
+    QList<LogEntry>                      mEntries;
     Portfolio                            mPortfolio;
+    QList<Operation>                     mBestOperations;
+    QList<LogEntry>                      mBestEntries;
+    Portfolio                            mBestPortfolio;
     QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
     bool                                 mResetted;
     int                                  mStartMoney;
@@ -77,6 +91,6 @@ private:
     qint64                               mEndTimestamp;
     bool                                 mBestConfig;
     QString                              mConfigVariants;
-    double                               mTotalYieldWithCommission;
     double                               mTotalMoney;
+    double                               mBestTotalMoney;
 };

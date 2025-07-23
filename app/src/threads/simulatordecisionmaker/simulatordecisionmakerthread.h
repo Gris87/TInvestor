@@ -130,6 +130,5 @@ private:
     bool                                 mResetted;
     bool                                 mLoaded;
     int                                  mStartMoney;
-    double                               mTotalYieldWithCommission;
     double                               mTotalMoney;
 };

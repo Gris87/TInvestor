@@ -42,7 +42,6 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mResetted(),
     mLoaded(),
     mStartMoney(),
-    mTotalYieldWithCommission(),
     mTotalMoney()
 {
     qDebug() << "Create SimulatorDecisionMakerThread";
@@ -165,8 +164,7 @@ void SimulatorDecisionMakerThread::initOperations()
     emit operationsRead(operations);
     mOperationsDatabase->writeOperations(operations);
 
-    mTotalYieldWithCommission = 0.0;
-    mTotalMoney               = mStartMoney;
+    mTotalMoney = mStartMoney;
 }
 
 void SimulatorDecisionMakerThread::initLogs()
@@ -249,8 +247,7 @@ void SimulatorDecisionMakerThread::loadOperations()
     {
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
-        mTotalYieldWithCommission = quotationToDouble(lastOperation.totalYieldWithCommission);
-        mTotalMoney               = quotationToDouble(lastOperation.totalMoney);
+        mTotalMoney = quotationToDouble(lastOperation.totalMoney);
     }
 }
 
@@ -390,8 +387,8 @@ void SimulatorDecisionMakerThread::simulateSellForOperations(
     const double yield               = cost - costFifo;
     const double yieldWithCommission = yield - totalCommission;
 
-    mTotalYieldWithCommission += yieldWithCommission;
-    mTotalMoney               += yieldWithCommission;
+    mTotalMoney                           += yieldWithCommission;
+    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
 
     Operation operation;
 
@@ -420,8 +417,8 @@ void SimulatorDecisionMakerThread::simulateSellForOperations(
     operation.inputMoney.nano                 = 0;
     operation.maxInputMoney.units             = mStartMoney;
     operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission        = quotationFromDouble(mTotalYieldWithCommission);
-    operation.totalYieldWithCommissionPercent = (mTotalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
+    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
     operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
     operation.totalMoney     = quotationFromDouble(mTotalMoney);
     operation.pricePrecision = instrument.pricePrecision;
@@ -551,8 +548,8 @@ void SimulatorDecisionMakerThread::simulateBuyForOperations(
     double            totalCommission
 )
 {
-    mTotalYieldWithCommission -= totalCommission;
-    mTotalMoney               -= totalCommission;
+    mTotalMoney                           -= totalCommission;
+    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
 
     Operation operation;
 
@@ -579,8 +576,8 @@ void SimulatorDecisionMakerThread::simulateBuyForOperations(
     operation.inputMoney.nano                 = 0;
     operation.maxInputMoney.units             = mStartMoney;
     operation.maxInputMoney.nano              = 0;
-    operation.totalYieldWithCommission        = quotationFromDouble(mTotalYieldWithCommission);
-    operation.totalYieldWithCommissionPercent = (mTotalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+    operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
+    operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
     operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
     operation.totalMoney     = quotationFromDouble(mTotalMoney);
     operation.pricePrecision = instrument.pricePrecision;

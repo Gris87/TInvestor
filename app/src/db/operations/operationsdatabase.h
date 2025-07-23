@@ -25,6 +25,7 @@ public:
     QList<Operation> readOperations() override;
     void             writeOperations(QList<Operation>& operations) override;
     void             appendOperations(const QList<Operation>& operations) override;
+    void             deleteOperations() override;
 
     void setAutoPilotMode(bool autoPilotMode);
 

@@ -84,3 +84,13 @@ void PortfolioDatabase::writePortfolio(const Portfolio& portfolio)
     portfolioFile->write(jsonDoc.toJson(QJsonDocument::Compact));
     portfolioFile->close();
 }
+
+void PortfolioDatabase::deletePortfolio()
+{
+    qDebug() << "Deleting portfolio";
+
+    const std::shared_ptr<IFile> portfolioFile =
+        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/portfolio.json");
+
+    portfolioFile->remove();
+}

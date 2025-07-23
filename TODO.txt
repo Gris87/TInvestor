@@ -1,5 +1,7 @@
+Same timestamp for simulator operations and logs
 Simulator date range mode
 Simulator parameters check
+Optimizations for simulator
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

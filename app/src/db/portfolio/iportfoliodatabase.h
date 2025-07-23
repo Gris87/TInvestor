@@ -17,4 +17,5 @@ public:
 
     virtual Portfolio readPortfolio()                            = 0;
     virtual void      writePortfolio(const Portfolio& portfolio) = 0;
+    virtual void      deletePortfolio()                          = 0;
 };

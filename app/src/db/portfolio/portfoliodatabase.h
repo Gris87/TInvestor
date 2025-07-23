@@ -21,6 +21,7 @@ public:
 
     Portfolio readPortfolio() override;
     void      writePortfolio(const Portfolio& portfolio) override;
+    void      deletePortfolio() override;
 
 private:
     IFileFactory*  mFileFactory;

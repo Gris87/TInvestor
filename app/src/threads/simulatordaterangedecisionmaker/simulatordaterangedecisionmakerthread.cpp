@@ -8,11 +8,12 @@
 
 
 const char* const DATE_FORMAT = "yyyy-MM-dd";
+const char* const RUBLE_UID   = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 constexpr qint64 MS_IN_SECOND         = 1000LL;
 constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
 constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
-constexpr qint64 NOTIFY_PROGRESS_STEP = 24LL * ONE_HOUR;
+constexpr qint64 NOTIFY_PROGRESS_STEP = 1LL * ONE_HOUR;
 const int        SECONDS_IN_MINUTE    = 60;
 const int        MINUTES_IN_HOUR      = 60;
 
@@ -46,7 +47,15 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mStocksStorage(stocksStorage),
     mConfig(config),
     mDecisionMaker(decisionMaker),
+    mInitOperations(),
+    mInitEntries(),
+    mInitPortfolio(),
+    mOperations(),
+    mEntries(),
     mPortfolio(),
+    mBestOperations(),
+    mBestEntries(),
+    mBestPortfolio(),
     mInstruments(),
     mResetted(),
     mStartMoney(),
@@ -54,8 +63,8 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mEndTimestamp(),
     mBestConfig(),
     mConfigVariants(),
-    mTotalYieldWithCommission(),
-    mTotalMoney()
+    mTotalMoney(),
+    mBestTotalMoney()
 {
     qDebug() << "Create SimulatorDateRangeDecisionMakerThread";
 }
@@ -110,8 +119,13 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
             emit totalProgressChanged(i, amountOfConfigs);
 
-            mSettingsEditor->setValue("Options/LastConfigId", i);
             mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
+
+            mTotalMoney = mStartMoney;
+            mOperations = mInitOperations;
+            mEntries    = mInitEntries;
+            mPortfolio  = mInitPortfolio;
+            mInstruments.clear();
 
             qint64 timestamp = mStartTimestamp;
 
@@ -147,18 +161,42 @@ void SimulatorDateRangeDecisionMakerThread::run()
                                 )
                         );
                     }
+
+                    // TODO: Remove it
+                    msleep(10);
                 }
 
                 timestamp += ONE_MINUTE;
             }
 
-            ++i;
+            if (!QThread::currentThread()->isInterruptionRequested())
+            {
+                if (mTotalMoney > mBestTotalMoney)
+                {
+                    mBestTotalMoney = mTotalMoney;
+
+                    mBestOperations = mOperations;
+                    mBestEntries    = mEntries;
+                    mBestPortfolio  = mPortfolio;
+
+                    mOperationsDatabase->writeOperations(mBestOperations);
+                    mLogsDatabase->writeLogs(mBestEntries);
+                    mPortfolioDatabase->writePortfolio(mBestPortfolio);
+                }
+
+                ++i;
+                mSettingsEditor->setValue("Options/LastConfigId", i);
+            }
         }
     }
     catch (...)
     {
         qWarning() << "Failed to parse configs";
     }
+
+    emit operationsRead(mBestOperations);
+    emit logsRead(mBestEntries);
+    emit portfolioChanged(mBestPortfolio);
 
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
 }
@@ -178,7 +216,14 @@ void SimulatorDateRangeDecisionMakerThread::terminateThread()
 void SimulatorDateRangeDecisionMakerThread::init()
 {
     readSimulationConfig();
+    initOperations();
+    initLogs();
+    initPortfolio();
     initConfigs();
+
+    mOperationsDatabase->deleteOperations();
+    mLogsDatabase->deleteLogs();
+    mPortfolioDatabase->deletePortfolio();
 }
 
 void SimulatorDateRangeDecisionMakerThread::readSimulationConfig()
@@ -197,6 +242,118 @@ void SimulatorDateRangeDecisionMakerThread::readSimulationConfig()
         mConfig->setSimulatorConfigCommon(true);
         mConfig->setAutoPilotConfigCommon(false);
     }
+}
+
+void SimulatorDateRangeDecisionMakerThread::initOperations()
+{
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
+    mInstrumentsStorage->readUnlock();
+
+    instrument.resetIfNotFound(RUBLE_UID);
+
+    mLogosStorage->readLock();
+    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
+    mLogosStorage->readUnlock();
+
+    mInitOperations.clear();
+
+    Operation operation;
+
+    operation.timestamp                       = mStartTimestamp;
+    operation.instrumentId                    = RUBLE_UID;
+    operation.instrumentLogo                  = logo;
+    operation.instrumentTicker                = instrument.ticker;
+    operation.instrumentName                  = instrument.name;
+    operation.description                     = tr("Input money");
+    operation.price                           = 0.0f;
+    operation.avgPriceFifo                    = 0.0f;
+    operation.avgPriceWavg                    = 0.0f;
+    operation.quantity                        = 0;
+    operation.remainedQuantity                = 0;
+    operation.payment                         = mStartMoney;
+    operation.avgCostFifo                     = 0.0f;
+    operation.costFifo.units                  = 0;
+    operation.costFifo.nano                   = 0;
+    operation.costWavg.units                  = 0;
+    operation.costWavg.nano                   = 0;
+    operation.commission                      = 0.0f;
+    operation.yield                           = 0.0f;
+    operation.yieldWithCommission             = 0.0f;
+    operation.yieldWithCommissionPercent      = 0.0f;
+    operation.inputMoney.units                = mStartMoney;
+    operation.inputMoney.nano                 = 0;
+    operation.maxInputMoney.units             = mStartMoney;
+    operation.maxInputMoney.nano              = 0;
+    operation.totalYieldWithCommission.units  = 0;
+    operation.totalYieldWithCommission.nano   = 0;
+    operation.totalYieldWithCommissionPercent = 0.0f;
+    operation.remainedMoney.units             = mStartMoney;
+    operation.remainedMoney.nano              = 0;
+    operation.totalMoney.units                = mStartMoney;
+    operation.totalMoney.nano                 = 0;
+    operation.pricePrecision                  = instrument.pricePrecision;
+    operation.paymentPrecision                = instrument.pricePrecision;
+    operation.commissionPrecision             = instrument.pricePrecision;
+
+    mInitOperations.append(operation);
+
+    mBestTotalMoney = 0;
+}
+
+void SimulatorDateRangeDecisionMakerThread::initLogs()
+{
+    mInitEntries.clear();
+}
+
+void SimulatorDateRangeDecisionMakerThread::initPortfolio()
+{
+    mInstrumentsStorage->readLock();
+    Instrument instrument = mInstrumentsStorage->getInstruments().value(RUBLE_UID);
+    mInstrumentsStorage->readUnlock();
+
+    instrument.resetIfNotFound(RUBLE_UID);
+
+    mLogosStorage->readLock();
+    Logo* logo = mLogosStorage->getLogo(RUBLE_UID);
+    mLogosStorage->readUnlock();
+
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item;
+
+    item.instrumentId       = RUBLE_UID;
+    item.instrumentLogo     = logo;
+    item.instrumentTicker   = instrument.ticker;
+    item.instrumentName     = instrument.name;
+    item.showPrices         = false;
+    item.available          = mStartMoney;
+    item.price              = 1.0f;
+    item.avgPriceFifo       = 1.0f;
+    item.avgPriceWavg       = 1.0f;
+    item.cost               = mStartMoney;
+    item.part               = 100.0;
+    item.yield              = 0.0f;
+    item.yieldPercent       = 0.0f;
+    item.dailyYield         = 0.0f;
+    item.priceForDailyYield = 0.0f;
+    item.costForDailyYield  = 0.0;
+    item.dailyYieldPercent  = 0.0f;
+    item.pricePrecision     = instrument.pricePrecision;
+
+    category1.id   = 0;
+    category1.name = tr("Currency and metals");
+    category1.cost = mStartMoney;
+    category1.part = 100.0;
+    category1.items.append(item);
+
+    category2.id   = 1;
+    category2.name = tr("Share");
+    category2.cost = 0.0;
+    category2.part = 0.0;
+
+    mInitPortfolio.positions.clear();
+    mInitPortfolio.positions << category1 << category2;
 }
 
 void SimulatorDateRangeDecisionMakerThread::initConfigs()
@@ -230,7 +387,35 @@ void SimulatorDateRangeDecisionMakerThread::initConfigs()
 void SimulatorDateRangeDecisionMakerThread::load()
 {
     readSimulationConfig();
+    initOperations();
+    initLogs();
+    initPortfolio();
+    loadBestOperations();
+    loadBestLogs();
+    loadBestPortfolio();
     loadConfigs();
+}
+
+void SimulatorDateRangeDecisionMakerThread::loadBestOperations()
+{
+    mBestOperations = mOperationsDatabase->readOperations();
+
+    if (!mBestOperations.isEmpty())
+    {
+        const Operation& lastOperation = mBestOperations.constFirst(); // Since it reversed
+
+        mBestTotalMoney = quotationToDouble(lastOperation.totalMoney);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::loadBestLogs()
+{
+    mBestEntries = mLogsDatabase->readLogs();
+}
+
+void SimulatorDateRangeDecisionMakerThread::loadBestPortfolio()
+{
+    mBestPortfolio = mPortfolioDatabase->readPortfolio();
 }
 
 void SimulatorDateRangeDecisionMakerThread::loadConfigs()

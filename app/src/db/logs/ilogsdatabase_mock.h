@@ -24,4 +24,5 @@ public:
     MOCK_METHOD(QList<LogEntry>, readLogs, (), (override));
     MOCK_METHOD(void, writeLogs, (QList<LogEntry> & entries), (override));
     MOCK_METHOD(void, appendLog, (const LogEntry& entry), (override));
+    MOCK_METHOD(void, deleteLogs, (), (override));
 };

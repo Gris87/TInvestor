@@ -335,6 +335,15 @@ void LogsDatabase::appendLog(const LogEntry& entry)
     logsFile->close();
 }
 
+void LogsDatabase::deleteLogs()
+{
+    qDebug() << "Deleting logs";
+
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(logsDirPath() + "/logs.json");
+
+    logsFile->remove();
+}
+
 void LogsDatabase::setAutoPilotMode(bool autoPilotMode)
 {
     mAutoPilotMode = autoPilotMode;

@@ -335,6 +335,15 @@ void OperationsDatabase::appendOperations(const QList<Operation>& operations)
     operationsFile->close();
 }
 
+void OperationsDatabase::deleteOperations()
+{
+    qDebug() << "Deleting operations";
+
+    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(operationsDirPath() + "/operations.json");
+
+    operationsFile->remove();
+}
+
 void OperationsDatabase::setAutoPilotMode(bool autoPilotMode)
 {
     mAutoPilotMode = autoPilotMode;
