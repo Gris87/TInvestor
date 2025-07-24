@@ -4,7 +4,13 @@ void updateCostAndPart();
 void updatePrice();
 Simulator date range mode
 Simulator parameters check
+Decision maker with timestamp
+Display best config
+Read only for best config
+Apply best config
 Optimizations for simulator
+Improve coverage
+Create release
 
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes

@@ -709,20 +709,20 @@ void MainWindow::stopAutoPilot()
     tradingThreads.clear();
 }
 
-void MainWindow::simulatorTotalProgressChanged(int current, int maximum)
+void MainWindow::simulatorTotalProgressChanged(int current, int maximum) const
 {
     ui->simulatorTotalProgressBar->setMaximum(maximum);
     ui->simulatorTotalProgressBar->setValue(current);
 }
 
-void MainWindow::simulatorProgressChanged(int current, int maximum, const QString& remainingTime)
+void MainWindow::simulatorProgressChanged(int current, int maximum, const QString& remainingTime) const
 {
     ui->simulatorRemainingTimeLabel->setText(remainingTime);
     ui->simulatorProgressBar->setMaximum(maximum);
     ui->simulatorProgressBar->setValue(current);
 }
 
-void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QColor& color)
+void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QColor& color) const
 {
     ui->simulatorBestResultLabel->setText(bestResult);
 

@@ -83,6 +83,7 @@ SimulatorDateRangeDecisionMakerThread::~SimulatorDateRangeDecisionMakerThread()
     qDebug() << "Destroy SimulatorDateRangeDecisionMakerThread";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void SimulatorDateRangeDecisionMakerThread::run()
 {
     qDebug() << "Running SimulatorDateRangeDecisionMakerThread";
@@ -103,7 +104,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
     const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
 
     mStocksStorage->readLock();
-    QList<Stock*> stocks = mStocksStorage->getStocks();
+    const QList<Stock*> stocks = mStocksStorage->getStocks();
     mStocksStorage->readUnlock();
 
     const simdjson::padded_string jsonData(mConfigVariants.toStdString());
@@ -176,7 +177,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
                     }
 
                     // TODO: Remove it
-                    msleep(10);
+                    msleep(10); // NOLINT(readability-magic-numbers)
                 }
 
                 const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(mPortfolio, stocks, 0);
@@ -222,6 +223,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void SimulatorDateRangeDecisionMakerThread::reset()
 {
