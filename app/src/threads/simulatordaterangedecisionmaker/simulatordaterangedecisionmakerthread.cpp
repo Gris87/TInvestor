@@ -222,6 +222,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
             const int bestConfigId = mSettingsEditor->value("Options/BestConfigId", 0).toInt();
             i                      = 0;
 
+            jsonConfigs.reset();
+
             for (const simdjson::ondemand::object jsonObject : jsonConfigs)
             {
                 if (!QThread::currentThread()->isInterruptionRequested())
