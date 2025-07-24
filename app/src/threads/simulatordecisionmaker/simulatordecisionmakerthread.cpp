@@ -77,7 +77,7 @@ void SimulatorDecisionMakerThread::run()
 
     if (!instrumentsForTrading.isEmpty())
     {
-        simulateTrading(instrumentsForTrading);
+        simulateTrading(QDateTime::currentMSecsSinceEpoch(), instrumentsForTrading);
     }
 
     qDebug() << "Finish SimulatorDecisionMakerThread";
@@ -281,7 +281,7 @@ void SimulatorDecisionMakerThread::loadPortfolio()
     }
 }
 
-void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& instrumentsForTrading)
+void SimulatorDecisionMakerThread::simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading)
 {
     InstrumentsForTrading instrumentsForSell;
     InstrumentsForTrading instrumentsForBuy;
@@ -303,12 +303,12 @@ void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& 
 
     for (auto it = instrumentsForSell.constBegin(); it != instrumentsForSell.constEnd(); ++it)
     {
-        simulateSell(it.key(), it.value(), operations, entries);
+        simulateSell(timestamp, it.key(), it.value(), operations, entries);
     }
 
     for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
     {
-        simulateBuy(it.key(), it.value(), operations, entries);
+        simulateBuy(timestamp, it.key(), it.value(), operations, entries);
     }
 
     if (!operations.isEmpty())
@@ -333,7 +333,11 @@ void SimulatorDecisionMakerThread::simulateTrading(const InstrumentsForTrading& 
 }
 
 void SimulatorDecisionMakerThread::simulateSell(
-    const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
+    qint64&            timestamp,
+    const QString&     instrumentId,
+    const TradingInfo& tradingInfo,
+    QList<Operation>&  operations,
+    QList<LogEntry>&   entries
 )
 {
     if (!mInstruments.contains(instrumentId))
@@ -362,6 +366,7 @@ void SimulatorDecisionMakerThread::simulateSell(
 
     simulateSellForOperations(
         operations,
+        timestamp,
         instrumentId,
         logo,
         instrument,
@@ -371,13 +376,16 @@ void SimulatorDecisionMakerThread::simulateSell(
         cost,
         totalCommission
     );
-    simulateSellForLogs(entries, instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price);
+    simulateSellForLogs(
+        entries, timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price
+    );
     simulateSellForPortfolio(instrumentId, cost, totalCommission);
     simulateSellForInstruments(instrumentId);
 }
 
 void SimulatorDecisionMakerThread::simulateSellForOperations(
     QList<Operation>& operations,
+    qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
@@ -397,7 +405,7 @@ void SimulatorDecisionMakerThread::simulateSellForOperations(
 
     Operation operation;
 
-    operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.timestamp                       = timestamp;
     operation.instrumentId                    = instrumentId;
     operation.instrumentLogo                  = logo;
     operation.instrumentTicker                = instrument.ticker;
@@ -431,10 +439,12 @@ void SimulatorDecisionMakerThread::simulateSellForOperations(
     operation.commissionPrecision = instrument.pricePrecision;
 
     operations.append(operation);
+    ++timestamp;
 }
 
 void SimulatorDecisionMakerThread::simulateSellForLogs(
     QList<LogEntry>&  entries,
+    qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
@@ -445,7 +455,7 @@ void SimulatorDecisionMakerThread::simulateSellForLogs(
 {
     LogEntry entry;
 
-    entry.timestamp        = QDateTime::currentMSecsSinceEpoch();
+    entry.timestamp        = timestamp;
     entry.level            = LOG_LEVEL_DEBUG;
     entry.instrumentId     = instrumentId;
     entry.instrumentLogo   = logo;
@@ -454,26 +464,30 @@ void SimulatorDecisionMakerThread::simulateSellForLogs(
     entry.message          = cause;
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Order to sell %1 created with a price %2 %3")
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Order to sell %1 created with a price %2 %3")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Order completed. %1 sold with a price %2 %3")
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Order completed. %1 sold with a price %2 %3")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Trade completed successfully");
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Trade completed successfully");
 
     entries.append(entry);
+    ++timestamp;
 }
 
 void SimulatorDecisionMakerThread::simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission)
@@ -501,7 +515,11 @@ void SimulatorDecisionMakerThread::simulateSellForInstruments(const QString& ins
 }
 
 void SimulatorDecisionMakerThread::simulateBuy(
-    const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
+    qint64&            timestamp,
+    const QString&     instrumentId,
+    const TradingInfo& tradingInfo,
+    QList<Operation>&  operations,
+    QList<LogEntry>&   entries
 )
 {
     if (mInstruments.contains(instrumentId))
@@ -537,8 +555,10 @@ void SimulatorDecisionMakerThread::simulateBuy(
         Logo* logo = mLogosStorage->getLogo(instrumentId);
         mLogosStorage->readUnlock();
 
-        simulateBuyForOperations(operations, instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
-        simulateBuyForLogs(entries, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price);
+        simulateBuyForOperations(
+            operations, timestamp, instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission
+        );
+        simulateBuyForLogs(entries, timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price);
         simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
         simulateBuyForInstruments(instrumentId, quantity, cost);
     }
@@ -546,6 +566,7 @@ void SimulatorDecisionMakerThread::simulateBuy(
 
 void SimulatorDecisionMakerThread::simulateBuyForOperations(
     QList<Operation>& operations,
+    qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
@@ -560,7 +581,7 @@ void SimulatorDecisionMakerThread::simulateBuyForOperations(
 
     Operation operation;
 
-    operation.timestamp                       = QDateTime::currentMSecsSinceEpoch();
+    operation.timestamp                       = timestamp;
     operation.instrumentId                    = instrumentId;
     operation.instrumentLogo                  = logo;
     operation.instrumentTicker                = instrument.ticker;
@@ -592,10 +613,12 @@ void SimulatorDecisionMakerThread::simulateBuyForOperations(
     operation.commissionPrecision = instrument.pricePrecision;
 
     operations.append(operation);
+    ++timestamp;
 }
 
 void SimulatorDecisionMakerThread::simulateBuyForLogs(
     QList<LogEntry>&  entries,
+    qint64&           timestamp,
     const QString&    instrumentId,
     Logo*             logo,
     const Instrument& instrument,
@@ -606,7 +629,7 @@ void SimulatorDecisionMakerThread::simulateBuyForLogs(
 {
     LogEntry entry;
 
-    entry.timestamp        = QDateTime::currentMSecsSinceEpoch();
+    entry.timestamp        = timestamp;
     entry.level            = LOG_LEVEL_DEBUG;
     entry.instrumentId     = instrumentId;
     entry.instrumentLogo   = logo;
@@ -615,26 +638,30 @@ void SimulatorDecisionMakerThread::simulateBuyForLogs(
     entry.message          = cause;
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Order to buy %1 created with a price %2 %3")
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Order to buy %1 created with a price %2 %3")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Order completed. %1 bought with a price %2 %3")
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Order completed. %1 bought with a price %2 %3")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision), "\u20BD");
 
     entries.append(entry);
+    ++timestamp;
 
-    ++entry.timestamp;
-    entry.level   = LOG_LEVEL_VERBOSE;
-    entry.message = tr("Trade completed successfully");
+    entry.timestamp = timestamp;
+    entry.level     = LOG_LEVEL_VERBOSE;
+    entry.message   = tr("Trade completed successfully");
 
     entries.append(entry);
+    ++timestamp;
 }
 
 void SimulatorDecisionMakerThread::simulateBuyForPortfolio(

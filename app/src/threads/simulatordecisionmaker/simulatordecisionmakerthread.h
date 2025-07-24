@@ -54,12 +54,17 @@ private:
     void loadOperations();
     void loadLogs();
     void loadPortfolio();
-    void simulateTrading(const InstrumentsForTrading& instrumentsForTrading);
+    void simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading);
     void simulateSell(
-        const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
+        qint64&            timestamp,
+        const QString&     instrumentId,
+        const TradingInfo& tradingInfo,
+        QList<Operation>&  operations,
+        QList<LogEntry>&   entries
     );
     void simulateSellForOperations(
         QList<Operation>& operations,
+        qint64&           timestamp,
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
@@ -71,6 +76,7 @@ private:
     );
     void simulateSellForLogs(
         QList<LogEntry>&  entries,
+        qint64&           timestamp,
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
@@ -81,10 +87,15 @@ private:
     void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission);
     void simulateSellForInstruments(const QString& instrumentId);
     void simulateBuy(
-        const QString& instrumentId, const TradingInfo& tradingInfo, QList<Operation>& operations, QList<LogEntry>& entries
+        qint64&            timestamp,
+        const QString&     instrumentId,
+        const TradingInfo& tradingInfo,
+        QList<Operation>&  operations,
+        QList<LogEntry>&   entries
     );
     void simulateBuyForOperations(
         QList<Operation>& operations,
+        qint64&           timestamp,
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
@@ -95,6 +106,7 @@ private:
     );
     void simulateBuyForLogs(
         QList<LogEntry>&  entries,
+        qint64&           timestamp,
         const QString&    instrumentId,
         Logo*             logo,
         const Instrument& instrument,
