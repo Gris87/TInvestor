@@ -179,29 +179,51 @@ MainWindow::MainWindow(
         this
     );
     mSimulatorDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
-        operationsTableWidgetFactory,
-        accountChartWidgetFactory,
-        logsFilterWidgetFactory,
-        logsTableWidgetFactory,
-        portfolioTreeWidgetFactory,
-        operationsTableModelFactory,
-        logsTableModelFactory,
-        portfolioTreeModelFactory,
-        mFileDialogFactory,
-        mSettingsEditor,
+        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+            operationsTableWidgetFactory,
+            accountChartWidgetFactory,
+            logsFilterWidgetFactory,
+            logsTableWidgetFactory,
+            decisionMakerConfigWidgetFactory,
+            buyDecision1ConfigWidgetFactory,
+            buyDecision2ConfigWidgetFactory,
+            buyDecision3ConfigWidgetFactory,
+            sellDecision1ConfigWidgetFactory,
+            sellDecision2ConfigWidgetFactory,
+            sellDecision3ConfigWidgetFactory,
+            portfolioTreeWidgetFactory,
+            operationsTableModelFactory,
+            logsTableModelFactory,
+            portfolioTreeModelFactory,
+            mFileDialogFactory,
+            config,
+            configForSimulation,
+            mSettingsEditor
+        ),
         this
     );
     mAutoPilotDecisionMakerWidget = decisionMakerWidgetFactory->newInstance(
-        operationsTableWidgetFactory,
-        accountChartWidgetFactory,
-        logsFilterWidgetFactory,
-        logsTableWidgetFactory,
-        portfolioTreeWidgetFactory,
-        operationsTableModelFactory,
-        logsTableModelFactory,
-        portfolioTreeModelFactory,
-        mFileDialogFactory,
-        mSettingsEditor,
+        DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+            operationsTableWidgetFactory,
+            accountChartWidgetFactory,
+            logsFilterWidgetFactory,
+            logsTableWidgetFactory,
+            decisionMakerConfigWidgetFactory,
+            buyDecision1ConfigWidgetFactory,
+            buyDecision2ConfigWidgetFactory,
+            buyDecision3ConfigWidgetFactory,
+            sellDecision1ConfigWidgetFactory,
+            sellDecision2ConfigWidgetFactory,
+            sellDecision3ConfigWidgetFactory,
+            portfolioTreeWidgetFactory,
+            operationsTableModelFactory,
+            logsTableModelFactory,
+            portfolioTreeModelFactory,
+            mFileDialogFactory,
+            config,
+            configForSimulation,
+            mSettingsEditor
+        ),
         this
     );
 
@@ -251,7 +273,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
-    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound(IConfig*)),                                                            this, SLOT(simulatorBestConfigFound(IConfig*)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound()),                                                                    this, SLOT(simulatorBestConfigFound()));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
@@ -732,9 +754,9 @@ void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QCo
     ui->simulatorBestResultLabel->setPalette(palette);
 }
 
-void MainWindow::simulatorBestConfigFound(IConfig* config)
+void MainWindow::simulatorBestConfigFound()
 {
-    mSimulatorDecisionMakerWidget->bestConfigFound(config);
+    mSimulatorDecisionMakerWidget->bestConfigFound();
 }
 
 void MainWindow::simulatorOperationsRead(const QList<Operation>& operations)

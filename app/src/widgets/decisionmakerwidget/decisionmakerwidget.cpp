@@ -7,23 +7,36 @@
 
 const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
 
+constexpr int BEST_CONFIG_TAB_ID = 3;
+
 
 
 DecisionMakerWidget::DecisionMakerWidget(
-    IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*    accountChartWidgetFactory,
-    ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
-    ILogsTableWidgetFactory*       logsTableWidgetFactory,
-    IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
-    IOperationsTableModelFactory*  operationsTableModelFactory,
-    ILogsTableModelFactory*        logsTableModelFactory,
-    IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-    IFileDialogFactory*            fileDialogFactory,
-    ISettingsEditor*               settingsEditor,
-    QWidget*                       parent
+    IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+    IAccountChartWidgetFactory*        accountChartWidgetFactory,
+    ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
+    ILogsTableWidgetFactory*           logsTableWidgetFactory,
+    IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
+    IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
+    IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
+    IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
+    ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
+    ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
+    ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
+    IOperationsTableModelFactory*      operationsTableModelFactory,
+    ILogsTableModelFactory*            logsTableModelFactory,
+    IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
+    IFileDialogFactory*                fileDialogFactory,
+    IConfig*                           config,
+    IConfig*                           configForSimulation,
+    ISettingsEditor*                   settingsEditor,
+    QWidget*                           parent
 ) :
     IDecisionMakerWidget(parent),
     ui(new Ui::DecisionMakerWidget),
+    mConfig(config),
+    mConfigForSimulation(configForSimulation),
     mSettingsEditor(settingsEditor)
 {
     qDebug() << "Create DecisionMakerWidget";
@@ -44,6 +57,16 @@ DecisionMakerWidget::DecisionMakerWidget(
     mAccountChartWidget = accountChartWidgetFactory->newInstance(fileDialogFactory, mSettingsEditor, this);
     mLogsFilterWidget   = logsFilterWidgetFactory->newInstance(this);
     mLogsTableWidget    = logsTableWidgetFactory->newInstance(logsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
+    mBestConfigWidget   = decisionMakerConfigWidgetFactory->newInstance(
+        mConfigForSimulation->getSimulatorConfig(),
+        buyDecision1ConfigWidgetFactory,
+        buyDecision2ConfigWidgetFactory,
+        buyDecision3ConfigWidgetFactory,
+        sellDecision1ConfigWidgetFactory,
+        sellDecision2ConfigWidgetFactory,
+        sellDecision3ConfigWidgetFactory,
+        ui->bestConfigTab
+    );
     mPortfolioTreeWidget =
         portfolioTreeWidgetFactory->newInstance(portfolioTreeModelFactory, fileDialogFactory, mSettingsEditor, this);
 
@@ -53,8 +76,10 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);
     ui->layoutForLogsFilterWidget->addWidget(mLogsFilterWidget);
     ui->layoutForLogsTableWidget->addWidget(mLogsTableWidget);
+    ui->layoutForBestConfigWidget->addWidget(mBestConfigWidget);
     ui->layoutForPortfolioTreeWidget->addWidget(mPortfolioTreeWidget);
 
+    ui->tabWidget->removeTab(BEST_CONFIG_TAB_ID);
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
 
     connect(mLogsFilterWidget, SIGNAL(filterChanged(const LogFilter&)), this, SLOT(logFilterChanged(const LogFilter&)));
@@ -79,12 +104,21 @@ void DecisionMakerWidget::showSpinners()
 
     ui->operationsWaitingStackedWidget->setCurrentWidget(ui->operationsWaitingPage);
     ui->portfolioWaitingStackedWidget->setCurrentWidget(ui->portfolioWaitingPage);
+
+    if (ui->tabWidget->count() > BEST_CONFIG_TAB_ID)
+    {
+        ui->tabWidget->removeTab(BEST_CONFIG_TAB_ID);
+    }
 }
 
-void DecisionMakerWidget::bestConfigFound(IConfig* config)
+void DecisionMakerWidget::bestConfigFound()
 {
-    // TODO: Implement
-    qInfo() << config;
+    if (ui->tabWidget->count() <= BEST_CONFIG_TAB_ID)
+    {
+        ui->tabWidget->insertTab(BEST_CONFIG_TAB_ID, ui->bestConfigTab, tr("Best config"));
+    }
+
+    mBestConfigWidget->updateUiFromConfig();
 }
 
 void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)

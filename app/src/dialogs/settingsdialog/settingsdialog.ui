@@ -30,7 +30,7 @@
     <number>4</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="mainTabWidget">
+    <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>

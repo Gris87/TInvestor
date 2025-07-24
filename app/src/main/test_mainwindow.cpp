@@ -183,16 +183,27 @@ protected:
         EXPECT_CALL(
             *decisionMakerWidgetFactoryMock,
             newInstance(
-                operationsTableWidgetFactoryMock,
-                accountChartWidgetFactoryMock,
-                logsFilterWidgetFactoryMock,
-                logsTableWidgetFactoryMock,
-                portfolioTreeWidgetFactoryMock,
-                operationsTableModelFactoryMock,
-                logsTableModelFactoryMock,
-                portfolioTreeModelFactoryMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
+                DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+                    operationsTableWidgetFactoryMock,
+                    accountChartWidgetFactoryMock,
+                    logsFilterWidgetFactoryMock,
+                    logsTableWidgetFactoryMock,
+                    decisionMakerConfigWidgetFactoryMock,
+                    buyDecision1ConfigWidgetFactoryMock,
+                    buyDecision2ConfigWidgetFactoryMock,
+                    buyDecision3ConfigWidgetFactoryMock,
+                    sellDecision1ConfigWidgetFactoryMock,
+                    sellDecision2ConfigWidgetFactoryMock,
+                    sellDecision3ConfigWidgetFactoryMock,
+                    portfolioTreeWidgetFactoryMock,
+                    operationsTableModelFactoryMock,
+                    logsTableModelFactoryMock,
+                    portfolioTreeModelFactoryMock,
+                    fileDialogFactoryMock,
+                    configMock,
+                    configForSimulationMock,
+                    settingsEditorMock
+                ),
                 NotNull()
             )
         )
@@ -200,16 +211,27 @@ protected:
         EXPECT_CALL(
             *decisionMakerWidgetFactoryMock,
             newInstance(
-                operationsTableWidgetFactoryMock,
-                accountChartWidgetFactoryMock,
-                logsFilterWidgetFactoryMock,
-                logsTableWidgetFactoryMock,
-                portfolioTreeWidgetFactoryMock,
-                operationsTableModelFactoryMock,
-                logsTableModelFactoryMock,
-                portfolioTreeModelFactoryMock,
-                fileDialogFactoryMock,
-                settingsEditorMock,
+                DecisionMakerWidgetFactoryNewInstanceArgsMore15(
+                    operationsTableWidgetFactoryMock,
+                    accountChartWidgetFactoryMock,
+                    logsFilterWidgetFactoryMock,
+                    logsTableWidgetFactoryMock,
+                    decisionMakerConfigWidgetFactoryMock,
+                    buyDecision1ConfigWidgetFactoryMock,
+                    buyDecision2ConfigWidgetFactoryMock,
+                    buyDecision3ConfigWidgetFactoryMock,
+                    sellDecision1ConfigWidgetFactoryMock,
+                    sellDecision2ConfigWidgetFactoryMock,
+                    sellDecision3ConfigWidgetFactoryMock,
+                    portfolioTreeWidgetFactoryMock,
+                    operationsTableModelFactoryMock,
+                    logsTableModelFactoryMock,
+                    portfolioTreeModelFactoryMock,
+                    fileDialogFactoryMock,
+                    configMock,
+                    configForSimulationMock,
+                    settingsEditorMock
+                ),
                 NotNull()
             )
         )

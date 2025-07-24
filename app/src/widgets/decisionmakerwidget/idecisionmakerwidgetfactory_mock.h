@@ -23,17 +23,7 @@ public:
     MOCK_METHOD(
         IDecisionMakerWidget*,
         newInstance,
-        (IOperationsTableWidgetFactory * operationsTableWidgetFactory,
-         IAccountChartWidgetFactory*   accountChartWidgetFactory,
-         ILogsFilterWidgetFactory*     logsFilterWidgetFactory,
-         ILogsTableWidgetFactory*      logsTableWidgetFactory,
-         IPortfolioTreeWidgetFactory*  portfolioTreeWidgetFactory,
-         IOperationsTableModelFactory* operationsTableModelFactory,
-         ILogsTableModelFactory*       logsTableModelFactory,
-         IPortfolioTreeModelFactory*   portfolioTreeModelFactory,
-         IFileDialogFactory*           fileDialogFactory,
-         ISettingsEditor*              settingsEditor,
-         QWidget*                      parent),
+        (const DecisionMakerWidgetFactoryNewInstanceArgsMore15& args, QWidget* parent),
         (const, override)
     );
 };

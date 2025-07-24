@@ -230,7 +230,7 @@ public slots:
     void simulatorTotalProgressChanged(int current, int maximum) const;
     void simulatorProgressChanged(int current, int maximum, const QString& remainingTime) const;
     void simulatorBestResultChanged(const QString& bestResult, const QColor& color) const;
-    void simulatorBestConfigFound(IConfig* config);
+    void simulatorBestConfigFound();
     void simulatorOperationsRead(const QList<Operation>& operations);
     void simulatorOperationsAdded(const QList<Operation>& operations);
     void simulatorLogsRead(const QList<LogEntry>& entries);

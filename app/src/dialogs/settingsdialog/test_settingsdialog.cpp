@@ -405,25 +405,25 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(false));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
@@ -437,18 +437,18 @@ TEST_F(Test_SettingsDialog, Test_on_simulatorConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged)
@@ -462,25 +462,25 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(true));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
 
     EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChanged_unexpected_behaviour)
@@ -494,18 +494,18 @@ TEST_F(Test_SettingsDialog, Test_on_autoPilotConfigCommonCheckBox_checkStateChan
     dialog->ui->simulatorConfigCommonCheckBox->blockSignals(false);
     dialog->ui->autoPilotConfigCommonCheckBox->blockSignals(false);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 3);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Simulation");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(2), "Auto-pilot");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 3);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Simulation");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(2), "Auto-pilot");
 
     EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
     dialog->ui->simulatorConfigCommonCheckBox->setChecked(true);
     dialog->ui->autoPilotConfigCommonCheckBox->setChecked(true);
 
-    ASSERT_EQ(dialog->ui->mainTabWidget->count(), 2);
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(0), "General");
-    ASSERT_EQ(dialog->ui->mainTabWidget->tabText(1), "Decision maker");
+    ASSERT_EQ(dialog->ui->tabWidget->count(), 2);
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(0), "General");
+    ASSERT_EQ(dialog->ui->tabWidget->tabText(1), "Decision maker");
 }
 
 TEST_F(Test_SettingsDialog, Test_on_storageMonthLimitSpinBox_valueChanged)

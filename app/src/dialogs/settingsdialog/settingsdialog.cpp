@@ -5,8 +5,8 @@
 
 
 
-const int SIMULATION_TAB_INDEX = 1;
-const int AUTO_PILOT_TAB_INDEX = 2;
+constexpr int SIMULATION_TAB_ID = 1;
+constexpr int AUTO_PILOT_TAB_ID = 2;
 
 
 
@@ -170,13 +170,13 @@ void SettingsDialog::on_simulatorConfigCommonCheckBox_checkStateChanged(const Qt
 
     if (checked)
     {
-        ui->mainTabWidget->setTabText(SIMULATION_TAB_INDEX, tr("Decision maker"));
-        ui->mainTabWidget->removeTab(AUTO_PILOT_TAB_INDEX);
+        ui->tabWidget->setTabText(SIMULATION_TAB_ID, tr("Decision maker"));
+        ui->tabWidget->removeTab(AUTO_PILOT_TAB_ID);
     }
     else
     {
-        ui->mainTabWidget->insertTab(AUTO_PILOT_TAB_INDEX, ui->autoPilotTab, tr("Auto-pilot"));
-        ui->mainTabWidget->setTabText(SIMULATION_TAB_INDEX, tr("Simulation"));
+        ui->tabWidget->insertTab(AUTO_PILOT_TAB_ID, ui->autoPilotTab, tr("Auto-pilot"));
+        ui->tabWidget->setTabText(SIMULATION_TAB_ID, tr("Simulation"));
     }
 }
 
@@ -193,13 +193,13 @@ void SettingsDialog::on_autoPilotConfigCommonCheckBox_checkStateChanged(const Qt
 
     if (checked)
     {
-        ui->mainTabWidget->setTabText(AUTO_PILOT_TAB_INDEX, tr("Decision maker"));
-        ui->mainTabWidget->removeTab(SIMULATION_TAB_INDEX);
+        ui->tabWidget->setTabText(AUTO_PILOT_TAB_ID, tr("Decision maker"));
+        ui->tabWidget->removeTab(SIMULATION_TAB_ID);
     }
     else
     {
-        ui->mainTabWidget->insertTab(SIMULATION_TAB_INDEX, ui->simulationTab, tr("Simulation"));
-        ui->mainTabWidget->setTabText(AUTO_PILOT_TAB_INDEX, tr("Auto-pilot"));
+        ui->tabWidget->insertTab(SIMULATION_TAB_ID, ui->simulationTab, tr("Simulation"));
+        ui->tabWidget->setTabText(AUTO_PILOT_TAB_ID, tr("Auto-pilot"));
     }
 }
 

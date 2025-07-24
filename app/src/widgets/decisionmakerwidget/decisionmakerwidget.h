@@ -4,6 +4,7 @@
 
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidgetfactory.h"
@@ -27,17 +28,26 @@ class DecisionMakerWidget : public IDecisionMakerWidget
 
 public:
     explicit DecisionMakerWidget(
-        IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-        IAccountChartWidgetFactory*    accountChartWidgetFactory,
-        ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
-        ILogsTableWidgetFactory*       logsTableWidgetFactory,
-        IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
-        IOperationsTableModelFactory*  operationsTableModelFactory,
-        ILogsTableModelFactory*        logsTableModelFactory,
-        IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-        IFileDialogFactory*            fileDialogFactory,
-        ISettingsEditor*               settingsEditor,
-        QWidget*                       parent = nullptr
+        IOperationsTableWidgetFactory*     operationsTableWidgetFactory,
+        IAccountChartWidgetFactory*        accountChartWidgetFactory,
+        ILogsFilterWidgetFactory*          logsFilterWidgetFactory,
+        ILogsTableWidgetFactory*           logsTableWidgetFactory,
+        IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
+        IBuyDecision1ConfigWidgetFactory*  buyDecision1ConfigWidgetFactory,
+        IBuyDecision2ConfigWidgetFactory*  buyDecision2ConfigWidgetFactory,
+        IBuyDecision3ConfigWidgetFactory*  buyDecision3ConfigWidgetFactory,
+        ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
+        ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
+        ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
+        IOperationsTableModelFactory*      operationsTableModelFactory,
+        ILogsTableModelFactory*            logsTableModelFactory,
+        IPortfolioTreeModelFactory*        portfolioTreeModelFactory,
+        IFileDialogFactory*                fileDialogFactory,
+        IConfig*                           config,
+        IConfig*                           configForSimulation,
+        ISettingsEditor*                   settingsEditor,
+        QWidget*                           parent = nullptr
     );
     ~DecisionMakerWidget() override;
 
@@ -47,7 +57,7 @@ public:
     void setAccountName(const QString& name) override;
 
     void showSpinners() override;
-    void bestConfigFound(IConfig* config) override;
+    void bestConfigFound() override;
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
     void logsRead(const QList<LogEntry>& entries) override;
@@ -62,12 +72,15 @@ public:
     Ui::DecisionMakerWidget* ui;
 
 private:
-    IOperationsTableWidget* mOperationsTableWidget;
-    IAccountChartWidget*    mAccountChartWidget;
-    ILogsFilterWidget*      mLogsFilterWidget;
-    ILogsTableWidget*       mLogsTableWidget;
-    IPortfolioTreeWidget*   mPortfolioTreeWidget;
-    ISettingsEditor*        mSettingsEditor;
+    IOperationsTableWidget*     mOperationsTableWidget;
+    IAccountChartWidget*        mAccountChartWidget;
+    ILogsFilterWidget*          mLogsFilterWidget;
+    ILogsTableWidget*           mLogsTableWidget;
+    IDecisionMakerConfigWidget* mBestConfigWidget;
+    IPortfolioTreeWidget*       mPortfolioTreeWidget;
+    IConfig*                    mConfig;
+    IConfig*                    mConfigForSimulation;
+    ISettingsEditor*            mSettingsEditor;
 
 public slots:
     void logFilterChanged(const LogFilter& filter);

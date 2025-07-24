@@ -17,31 +17,29 @@ DecisionMakerWidgetFactory::~DecisionMakerWidgetFactory()
     qDebug() << "Destroy DecisionMakerWidgetFactory";
 }
 
-IDecisionMakerWidget* DecisionMakerWidgetFactory::newInstance(
-    IOperationsTableWidgetFactory* operationsTableWidgetFactory,
-    IAccountChartWidgetFactory*    accountChartWidgetFactory,
-    ILogsFilterWidgetFactory*      logsFilterWidgetFactory,
-    ILogsTableWidgetFactory*       logsTableWidgetFactory,
-    IPortfolioTreeWidgetFactory*   portfolioTreeWidgetFactory,
-    IOperationsTableModelFactory*  operationsTableModelFactory,
-    ILogsTableModelFactory*        logsTableModelFactory,
-    IPortfolioTreeModelFactory*    portfolioTreeModelFactory,
-    IFileDialogFactory*            fileDialogFactory,
-    ISettingsEditor*               settingsEditor,
-    QWidget*                       parent
-) const
+IDecisionMakerWidget*
+DecisionMakerWidgetFactory::newInstance(const DecisionMakerWidgetFactoryNewInstanceArgsMore15& args, QWidget* parent) const
 {
     return new DecisionMakerWidget(
-        operationsTableWidgetFactory,
-        accountChartWidgetFactory,
-        logsFilterWidgetFactory,
-        logsTableWidgetFactory,
-        portfolioTreeWidgetFactory,
-        operationsTableModelFactory,
-        logsTableModelFactory,
-        portfolioTreeModelFactory,
-        fileDialogFactory,
-        settingsEditor,
+        args.operationsTableWidgetFactory,
+        args.accountChartWidgetFactory,
+        args.logsFilterWidgetFactory,
+        args.logsTableWidgetFactory,
+        args.decisionMakerConfigWidgetFactory,
+        args.buyDecision1ConfigWidgetFactory,
+        args.buyDecision2ConfigWidgetFactory,
+        args.buyDecision3ConfigWidgetFactory,
+        args.sellDecision1ConfigWidgetFactory,
+        args.sellDecision2ConfigWidgetFactory,
+        args.sellDecision3ConfigWidgetFactory,
+        args.portfolioTreeWidgetFactory,
+        args.operationsTableModelFactory,
+        args.logsTableModelFactory,
+        args.portfolioTreeModelFactory,
+        args.fileDialogFactory,
+        args.config,
+        args.configForSimulation,
+        args.settingsEditor,
         parent
     );
 }

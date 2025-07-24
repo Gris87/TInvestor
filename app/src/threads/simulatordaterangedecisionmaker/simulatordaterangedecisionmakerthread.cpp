@@ -248,7 +248,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
     if (mBestConfig)
     {
-        emit bestConfigFound(mConfig);
+        emit bestConfigFound();
     }
 
     emit operationsRead(mBestOperations);

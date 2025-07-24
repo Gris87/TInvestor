@@ -3,6 +3,16 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/decisions/buy/buydecision1config/buydecision1configwidget/ibuydecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/ibuydecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h"
+#include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h"
+#include "src/config/decisions/idecisionmakerconfig_mock.h"
+#include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 #include "src/widgets/accountchartwidget/iaccountchartwidget_mock.h"
@@ -39,21 +49,32 @@ protected:
     {
         const InSequence seq;
 
-        operationsTableWidgetFactoryMock = new StrictMock<OperationsTableWidgetFactoryMock>();
-        accountChartWidgetFactoryMock    = new StrictMock<AccountChartWidgetFactoryMock>();
-        logsFilterWidgetFactoryMock      = new StrictMock<LogsFilterWidgetFactoryMock>();
-        logsTableWidgetFactoryMock       = new StrictMock<LogsTableWidgetFactoryMock>();
-        portfolioTreeWidgetFactoryMock   = new StrictMock<PortfolioTreeWidgetFactoryMock>();
-        operationsTableWidgetMock        = new StrictMock<OperationsTableWidgetMock>();
-        accountChartWidgetMock           = new StrictMock<AccountChartWidgetMock>();
-        logsFilterWidgetMock             = new StrictMock<LogsFilterWidgetMock>();
-        logsTableWidgetMock              = new StrictMock<LogsTableWidgetMock>();
-        portfolioTreeWidgetMock          = new StrictMock<PortfolioTreeWidgetMock>();
-        operationsTableModelFactoryMock  = new StrictMock<OperationsTableModelFactoryMock>();
-        logsTableModelFactoryMock        = new StrictMock<LogsTableModelFactoryMock>();
-        portfolioTreeModelFactoryMock    = new StrictMock<PortfolioTreeModelFactoryMock>();
-        fileDialogFactoryMock            = new StrictMock<FileDialogFactoryMock>();
-        settingsEditorMock               = new StrictMock<SettingsEditorMock>();
+        operationsTableWidgetFactoryMock     = new StrictMock<OperationsTableWidgetFactoryMock>();
+        accountChartWidgetFactoryMock        = new StrictMock<AccountChartWidgetFactoryMock>();
+        logsFilterWidgetFactoryMock          = new StrictMock<LogsFilterWidgetFactoryMock>();
+        logsTableWidgetFactoryMock           = new StrictMock<LogsTableWidgetFactoryMock>();
+        decisionMakerConfigWidgetFactoryMock = new StrictMock<DecisionMakerConfigWidgetFactoryMock>();
+        buyDecision1ConfigWidgetFactoryMock  = new StrictMock<BuyDecision1ConfigWidgetFactoryMock>();
+        buyDecision2ConfigWidgetFactoryMock  = new StrictMock<BuyDecision2ConfigWidgetFactoryMock>();
+        buyDecision3ConfigWidgetFactoryMock  = new StrictMock<BuyDecision3ConfigWidgetFactoryMock>();
+        sellDecision1ConfigWidgetFactoryMock = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
+        sellDecision2ConfigWidgetFactoryMock = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
+        sellDecision3ConfigWidgetFactoryMock = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        portfolioTreeWidgetFactoryMock       = new StrictMock<PortfolioTreeWidgetFactoryMock>();
+        operationsTableWidgetMock            = new StrictMock<OperationsTableWidgetMock>();
+        accountChartWidgetMock               = new StrictMock<AccountChartWidgetMock>();
+        logsFilterWidgetMock                 = new StrictMock<LogsFilterWidgetMock>();
+        logsTableWidgetMock                  = new StrictMock<LogsTableWidgetMock>();
+        bestConfigWidgetMock                 = new StrictMock<DecisionMakerConfigWidgetMock>();
+        portfolioTreeWidgetMock              = new StrictMock<PortfolioTreeWidgetMock>();
+        operationsTableModelFactoryMock      = new StrictMock<OperationsTableModelFactoryMock>();
+        logsTableModelFactoryMock            = new StrictMock<LogsTableModelFactoryMock>();
+        portfolioTreeModelFactoryMock        = new StrictMock<PortfolioTreeModelFactoryMock>();
+        fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
+        configMock                           = new StrictMock<ConfigMock>();
+        configForSimulationMock              = new StrictMock<ConfigMock>();
+        simulatorConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
+        settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         LogFilter filter;
 
@@ -70,6 +91,21 @@ protected:
             newInstance(logsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(logsTableWidgetMock));
+        EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+        EXPECT_CALL(
+            *decisionMakerConfigWidgetFactoryMock,
+            newInstance(
+                simulatorConfigMock,
+                buyDecision1ConfigWidgetFactoryMock,
+                buyDecision2ConfigWidgetFactoryMock,
+                buyDecision3ConfigWidgetFactoryMock,
+                sellDecision1ConfigWidgetFactoryMock,
+                sellDecision2ConfigWidgetFactoryMock,
+                sellDecision3ConfigWidgetFactoryMock,
+                NotNull()
+            )
+        )
+            .WillOnce(Return(bestConfigWidgetMock));
         EXPECT_CALL(
             *portfolioTreeWidgetFactoryMock,
             newInstance(portfolioTreeModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
@@ -84,11 +120,20 @@ protected:
             accountChartWidgetFactoryMock,
             logsFilterWidgetFactoryMock,
             logsTableWidgetFactoryMock,
+            decisionMakerConfigWidgetFactoryMock,
+            buyDecision1ConfigWidgetFactoryMock,
+            buyDecision2ConfigWidgetFactoryMock,
+            buyDecision3ConfigWidgetFactoryMock,
+            sellDecision1ConfigWidgetFactoryMock,
+            sellDecision2ConfigWidgetFactoryMock,
+            sellDecision3ConfigWidgetFactoryMock,
             portfolioTreeWidgetFactoryMock,
             operationsTableModelFactoryMock,
             logsTableModelFactoryMock,
             portfolioTreeModelFactoryMock,
             fileDialogFactoryMock,
+            configMock,
+            configForSimulationMock,
             settingsEditorMock
         );
     }
@@ -100,6 +145,13 @@ protected:
         delete accountChartWidgetFactoryMock;
         delete logsFilterWidgetFactoryMock;
         delete logsTableWidgetFactoryMock;
+        delete decisionMakerConfigWidgetFactoryMock;
+        delete buyDecision1ConfigWidgetFactoryMock;
+        delete buyDecision2ConfigWidgetFactoryMock;
+        delete buyDecision3ConfigWidgetFactoryMock;
+        delete sellDecision1ConfigWidgetFactoryMock;
+        delete sellDecision2ConfigWidgetFactoryMock;
+        delete sellDecision3ConfigWidgetFactoryMock;
         delete portfolioTreeWidgetFactoryMock;
         // It will be deleted by `delete ui;`
         /*
@@ -107,31 +159,46 @@ protected:
         delete accountChartWidgetMock;
         delete logsFilterWidgetMock;
         delete logsTableWidgetMock;
+        delete bestConfigWidgetMock;
         delete portfolioTreeWidgetMock;
         */
         delete operationsTableModelFactoryMock;
         delete logsTableModelFactoryMock;
         delete portfolioTreeModelFactoryMock;
         delete fileDialogFactoryMock;
+        delete configMock;
+        delete configForSimulationMock;
+        delete simulatorConfigMock;
         delete settingsEditorMock;
     }
 
-    DecisionMakerWidget*                          decisionMakerWidget;
-    StrictMock<OperationsTableWidgetFactoryMock>* operationsTableWidgetFactoryMock;
-    StrictMock<AccountChartWidgetFactoryMock>*    accountChartWidgetFactoryMock;
-    StrictMock<LogsFilterWidgetFactoryMock>*      logsFilterWidgetFactoryMock;
-    StrictMock<LogsTableWidgetFactoryMock>*       logsTableWidgetFactoryMock;
-    StrictMock<PortfolioTreeWidgetFactoryMock>*   portfolioTreeWidgetFactoryMock;
-    StrictMock<OperationsTableWidgetMock>*        operationsTableWidgetMock;
-    StrictMock<AccountChartWidgetMock>*           accountChartWidgetMock;
-    StrictMock<LogsFilterWidgetMock>*             logsFilterWidgetMock;
-    StrictMock<LogsTableWidgetMock>*              logsTableWidgetMock;
-    StrictMock<PortfolioTreeWidgetMock>*          portfolioTreeWidgetMock;
-    StrictMock<OperationsTableModelFactoryMock>*  operationsTableModelFactoryMock;
-    StrictMock<LogsTableModelFactoryMock>*        logsTableModelFactoryMock;
-    StrictMock<PortfolioTreeModelFactoryMock>*    portfolioTreeModelFactoryMock;
-    StrictMock<FileDialogFactoryMock>*            fileDialogFactoryMock;
-    StrictMock<SettingsEditorMock>*               settingsEditorMock;
+    DecisionMakerWidget*                              decisionMakerWidget;
+    StrictMock<OperationsTableWidgetFactoryMock>*     operationsTableWidgetFactoryMock;
+    StrictMock<AccountChartWidgetFactoryMock>*        accountChartWidgetFactoryMock;
+    StrictMock<LogsFilterWidgetFactoryMock>*          logsFilterWidgetFactoryMock;
+    StrictMock<LogsTableWidgetFactoryMock>*           logsTableWidgetFactoryMock;
+    StrictMock<DecisionMakerConfigWidgetFactoryMock>* decisionMakerConfigWidgetFactoryMock;
+    StrictMock<BuyDecision1ConfigWidgetFactoryMock>*  buyDecision1ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision2ConfigWidgetFactoryMock>*  buyDecision2ConfigWidgetFactoryMock;
+    StrictMock<BuyDecision3ConfigWidgetFactoryMock>*  buyDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision1ConfigWidgetFactoryMock>* sellDecision1ConfigWidgetFactoryMock;
+    StrictMock<SellDecision2ConfigWidgetFactoryMock>* sellDecision2ConfigWidgetFactoryMock;
+    StrictMock<SellDecision3ConfigWidgetFactoryMock>* sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<PortfolioTreeWidgetFactoryMock>*       portfolioTreeWidgetFactoryMock;
+    StrictMock<OperationsTableWidgetMock>*            operationsTableWidgetMock;
+    StrictMock<AccountChartWidgetMock>*               accountChartWidgetMock;
+    StrictMock<LogsFilterWidgetMock>*                 logsFilterWidgetMock;
+    StrictMock<LogsTableWidgetMock>*                  logsTableWidgetMock;
+    StrictMock<DecisionMakerConfigWidgetMock>*        bestConfigWidgetMock;
+    StrictMock<PortfolioTreeWidgetMock>*              portfolioTreeWidgetMock;
+    StrictMock<OperationsTableModelFactoryMock>*      operationsTableModelFactoryMock;
+    StrictMock<LogsTableModelFactoryMock>*            logsTableModelFactoryMock;
+    StrictMock<PortfolioTreeModelFactoryMock>*        portfolioTreeModelFactoryMock;
+    StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
+    StrictMock<ConfigMock>*                           configMock;
+    StrictMock<ConfigMock>*                           configForSimulationMock;
+    StrictMock<DecisionMakerConfigMock>*              simulatorConfigMock;
+    StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 
 

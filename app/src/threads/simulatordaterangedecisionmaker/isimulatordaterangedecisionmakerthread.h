@@ -32,7 +32,7 @@ signals:
     void totalProgressChanged(int current, int maximum);
     void progressChanged(int current, int maximum, const QString& remainingTime);
     void bestResultChanged(const QString& bestResult, const QColor& color);
-    void bestConfigFound(IConfig* config);
+    void bestConfigFound();
     void operationsRead(const QList<Operation>& operations);
     void logsRead(const QList<LogEntry>& entries);
     void portfolioChanged(const Portfolio& portfolio);
