@@ -251,6 +251,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestConfigFound(IConfig*)),                                                            this, SLOT(simulatorBestConfigFound(IConfig*)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(operationsRead(const QList<Operation>&)),                                              this, SLOT(simulatorOperationsRead(const QList<Operation>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
@@ -729,6 +730,11 @@ void MainWindow::simulatorBestResultChanged(const QString& bestResult, const QCo
     QPalette palette;
     palette.setColor(QPalette::WindowText, color);
     ui->simulatorBestResultLabel->setPalette(palette);
+}
+
+void MainWindow::simulatorBestConfigFound(IConfig* config)
+{
+    mSimulatorDecisionMakerWidget->bestConfigFound(config);
 }
 
 void MainWindow::simulatorOperationsRead(const QList<Operation>& operations)

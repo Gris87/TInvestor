@@ -4,6 +4,7 @@
 
 #include <QWidget>
 
+#include "src/config/iconfig.h"
 #include "src/domain/log/logentry.h"
 #include "src/domain/operation/operation.h"
 #include "src/domain/portfolio/portfolio.h"
@@ -27,6 +28,7 @@ public:
     virtual void setAccountName(const QString& name) = 0;
 
     virtual void showSpinners()                                             = 0;
+    virtual void bestConfigFound(IConfig* config)                           = 0;
     virtual void operationsRead(const QList<Operation>& operations)         = 0;
     virtual void operationsAdded(const QList<Operation>& operations)        = 0;
     virtual void logsRead(const QList<LogEntry>& entries)                   = 0;

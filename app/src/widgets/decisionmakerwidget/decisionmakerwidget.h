@@ -47,6 +47,7 @@ public:
     void setAccountName(const QString& name) override;
 
     void showSpinners() override;
+    void bestConfigFound(IConfig* config) override;
     void operationsRead(const QList<Operation>& operations) override;
     void operationsAdded(const QList<Operation>& operations) override;
     void logsRead(const QList<LogEntry>& entries) override;

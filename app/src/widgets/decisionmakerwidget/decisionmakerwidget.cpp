@@ -81,6 +81,12 @@ void DecisionMakerWidget::showSpinners()
     ui->portfolioWaitingStackedWidget->setCurrentWidget(ui->portfolioWaitingPage);
 }
 
+void DecisionMakerWidget::bestConfigFound(IConfig* config)
+{
+    // TODO: Implement
+    qInfo() << config;
+}
+
 void DecisionMakerWidget::operationsRead(const QList<Operation>& operations)
 {
     mOperationsTableWidget->operationsRead(operations);
