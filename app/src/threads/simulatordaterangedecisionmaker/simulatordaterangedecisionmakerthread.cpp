@@ -217,6 +217,9 @@ void SimulatorDateRangeDecisionMakerThread::run()
         qWarning() << "Failed to parse configs";
     }
 
+    updateCostAndPart();
+    updatePrice();
+
     emit operationsRead(mBestOperations);
     emit logsRead(mBestEntries);
     emit portfolioChanged(mBestPortfolio);
@@ -919,6 +922,61 @@ QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries()
     processInParallel(res, reverseEntriesForParallel, &reverseEntriesInfo);
 
     return res;
+}
+
+void SimulatorDateRangeDecisionMakerThread::updateCostAndPart()
+{
+    for (PortfolioCategoryItem& category : mBestPortfolio.positions)
+    {
+        category.cost = 0;
+
+        for (PortfolioItem& item : category.items)
+        {
+            item.part = (item.cost / mBestTotalMoney) * HUNDRED_PERCENT;
+
+            category.cost += item.cost;
+        }
+
+        category.part = (category.cost / mBestTotalMoney) * HUNDRED_PERCENT;
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::updatePrice()
+{
+    PortfolioCategoryItem& category = mBestPortfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
+
+    mStocksStorage->readLock();
+    const QList<Stock*> stocks = mStocksStorage->getStocks();
+    mStocksStorage->readUnlock();
+
+    for (PortfolioItem& item : category.items)
+    {
+        Stock* stock;
+
+        for (Stock* s : stocks)
+        {
+            if (s->meta.instrumentId == item.instrumentId)
+            {
+                stock = s;
+
+                break;
+            }
+        }
+
+        if (stock != nullptr)
+        {
+            stock->readLock();
+            item.price = stock->lastPrice();
+            stock->readUnlock();
+
+            const double currentCost = item.available * item.price;
+
+            item.yield             = currentCost - item.cost;
+            item.yieldPercent      = (item.yield / item.cost) * HUNDRED_PERCENT;
+            item.dailyYield        = currentCost - item.costForDailyYield;
+            item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
+        }
+    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::notifyBestResult()

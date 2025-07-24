@@ -1,5 +1,3 @@
-void updateCostAndPart();
-void updatePrice();
 Simulator date range mode
 Simulator parameters check
 Decision maker with timestamp

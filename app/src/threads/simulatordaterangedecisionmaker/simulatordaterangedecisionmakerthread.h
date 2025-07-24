@@ -118,6 +118,8 @@ private:
     void             simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
     QList<Operation> reverseOperations();
     QList<LogEntry>  reverseEntries();
+    void             updateCostAndPart();
+    void             updatePrice();
     void             notifyBestResult();
 
     IDirFactory*                         mDirFactory;
