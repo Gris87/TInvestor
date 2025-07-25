@@ -17,5 +17,6 @@ public:
     IDecisionMaker(const IDecisionMaker& another)            = delete;
     IDecisionMaker& operator=(const IDecisionMaker& another) = delete;
 
-    virtual InstrumentsForTrading makeDecision(const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney) = 0;
+    virtual InstrumentsForTrading
+    makeDecision(qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney, bool dateRange) = 0;
 };

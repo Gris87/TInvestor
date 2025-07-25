@@ -15,6 +15,7 @@ BuyDecision1::~BuyDecision1()
     qDebug() << "Destroy BuyDecision1";
 }
 
-void BuyDecision1::makeDecision()
+QString BuyDecision1::makeDecision(Stock* /*stock*/, bool /*dateRange*/, int /*dataIndex*/, float /*price*/)
 {
+    return "";
 }

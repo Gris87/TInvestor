@@ -45,8 +45,9 @@ void AutoPilotDecisionMakerThread::run()
         const Portfolio portfolio = handlePortfolioResponse(*tinkoffPortfolio);
 
         mStocksStorage->readLock();
-        const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(portfolio, mStocksStorage->getStocks(), keepMoney());
+        const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+            QDateTime::currentMSecsSinceEpoch(), portfolio, mStocksStorage->getStocks(), keepMoney(), false
+        );
         mStocksStorage->readUnlock();
 
         if (!instrumentsForTrading.isEmpty())

@@ -21,6 +21,9 @@ public:
     DecisionMakerMock& operator=(const DecisionMakerMock& another) = delete;
 
     MOCK_METHOD(
-        InstrumentsForTrading, makeDecision, (const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney), (override)
+        InstrumentsForTrading,
+        makeDecision,
+        (qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney, bool dateRange),
+        (override)
     );
 };

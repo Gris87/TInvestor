@@ -2,6 +2,10 @@
 
 
 
+#include "src/domain/stock/stock.h"
+
+
+
 class IActionDecision
 {
 public:
@@ -11,5 +15,5 @@ public:
     IActionDecision(const IActionDecision& another)            = delete;
     IActionDecision& operator=(const IActionDecision& another) = delete;
 
-    virtual void makeDecision() = 0;
+    virtual QString makeDecision(Stock* stock, bool dateRange, int dataIndex, float price) = 0;
 };

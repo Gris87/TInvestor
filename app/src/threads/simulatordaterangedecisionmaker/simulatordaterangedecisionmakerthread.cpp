@@ -182,7 +182,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
                         msleep(10); // NOLINT(readability-magic-numbers)
                     }
 
-                    const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(mPortfolio, stocks, 0);
+                    const InstrumentsForTrading& instrumentsForTrading =
+                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, 0, true);
 
                     if (!instrumentsForTrading.isEmpty())
                     {

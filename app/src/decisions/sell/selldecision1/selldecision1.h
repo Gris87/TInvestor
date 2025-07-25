@@ -15,5 +15,5 @@ public:
     SellDecision1(const SellDecision1& another)            = delete;
     SellDecision1& operator=(const SellDecision1& another) = delete;
 
-    void makeDecision() override;
+    QString makeDecision(Stock* stock, bool dateRange, int dataIndex, float price) override;
 };

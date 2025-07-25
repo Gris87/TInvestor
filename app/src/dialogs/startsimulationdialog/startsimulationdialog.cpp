@@ -6,7 +6,7 @@
 
 
 const char* const DATE_FORMAT = "yyyy-MM-dd";
-constexpr int     START_MONEY = 100000;
+constexpr int     START_MONEY = 1000000;
 
 const char* const SIMULATOR_MODE_REALTIME  = "REALTIME";
 const char* const SIMULATOR_MODE_DATERANGE = "DATERANGE";

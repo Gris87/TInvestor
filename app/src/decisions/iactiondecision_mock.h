@@ -20,5 +20,5 @@ public:
     ActionDecisionMock(const ActionDecisionMock& another)            = delete;
     ActionDecisionMock& operator=(const ActionDecisionMock& another) = delete;
 
-    MOCK_METHOD(void, makeDecision, (), (override));
+    MOCK_METHOD(QString, makeDecision, (Stock * stock, bool dateRange, int dataIndex, float price), (override));
 };

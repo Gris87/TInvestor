@@ -29,7 +29,9 @@
 #include "src/db/portfolio/portfoliodatabase.h"
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
+#include "src/decisions/buy/buydecision1/buydecision1.h"
 #include "src/decisions/decisionmaker.h"
+#include "src/decisions/sell/selldecision1/selldecision1.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
 #include "src/dialogs/orderwavesdialog/orderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
@@ -323,8 +325,15 @@ static int runApplication(QApplication* app)
     RawGrpcClient     rawGrpcClient;
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
 
-    DecisionMaker realtimeDecisionMaker(&config, &userStorage);
-    DecisionMaker dateRangeDecisionMaker(&configForSimulation, &userStorage);
+    BuyDecision1  buyDecision1;
+    SellDecision1 sellDecision1;
+
+    const QList<IActionDecision*> buyDecisions  = {&buyDecision1};
+    const QList<IActionDecision*> sellDecisions = {&sellDecision1};
+
+    DecisionMaker simulatorRealtimeDecisionMaker(&config, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorDateRangeDecisionMaker(&configForSimulation, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker autoPilotRealtimeDecisionMaker(&config, &userStorage, buyDecisions, sellDecisions);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
@@ -357,7 +366,7 @@ static int runApplication(QApplication* app)
         &logosStorage,
         &userStorage,
         &stocksStorage,
-        &realtimeDecisionMaker
+        &simulatorRealtimeDecisionMaker
     );
     SimulatorDateRangeDecisionMakerThread simulatorDateRangeDecisionMakerThread(
         &dirFactory,
@@ -371,9 +380,9 @@ static int runApplication(QApplication* app)
         &userStorage,
         &stocksStorage,
         &configForSimulation,
-        &dateRangeDecisionMaker
+        &simulatorDateRangeDecisionMaker
     );
-    AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &realtimeDecisionMaker, &grpcClient);
+    AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &autoPilotRealtimeDecisionMaker, &grpcClient);
     FollowThread                 followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread              orderBookThread(&grpcClient);
     TradingThreadFactory         tradingThreadFactory;
