@@ -940,7 +940,7 @@
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
         <source> months</source>
-        <translation> месяца</translation>
+        <translation> месяцев</translation>
     </message>
     <message>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="359"/>
