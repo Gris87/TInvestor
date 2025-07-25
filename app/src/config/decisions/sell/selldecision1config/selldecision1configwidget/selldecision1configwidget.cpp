@@ -28,6 +28,13 @@ void SellDecision1ConfigWidget::updateUiFromConfig() const
     ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
 }
 
+void SellDecision1ConfigWidget::makeReadOnly() const
+{
+    ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
+    ui->incomeAboveDoubleSpinBox->setReadOnly(true);
+}
+
 void SellDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;

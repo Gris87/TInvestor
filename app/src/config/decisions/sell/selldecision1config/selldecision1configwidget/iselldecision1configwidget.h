@@ -23,4 +23,5 @@ public:
     ISellDecision1ConfigWidget& operator=(const ISellDecision1ConfigWidget& another) = delete;
 
     virtual void updateUiFromConfig() const = 0;
+    virtual void makeReadOnly() const       = 0;
 };

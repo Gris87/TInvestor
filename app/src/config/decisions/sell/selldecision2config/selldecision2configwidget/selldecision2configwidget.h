@@ -25,6 +25,7 @@ public:
     SellDecision2ConfigWidget& operator=(const SellDecision2ConfigWidget& another) = delete;
 
     void updateUiFromConfig() const override;
+    void makeReadOnly() const override;
 
     Ui::SellDecision2ConfigWidget* ui;
 

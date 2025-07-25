@@ -82,6 +82,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         portfolioTreeWidgetFactory->newInstance(portfolioTreeModelFactory, fileDialogFactory, mSettingsEditor, this);
 
     mLogsTableWidget->setFilter(mLogsFilterWidget->getFilter());
+    mBestConfigWidget->makeReadOnly();
 
     ui->layoutForOperationsTableWidget->addWidget(mOperationsTableWidget);
     ui->layoutForAccountChartWidget->addWidget(mAccountChartWidget);

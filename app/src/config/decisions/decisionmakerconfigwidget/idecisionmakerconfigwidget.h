@@ -20,5 +20,6 @@ public:
     IDecisionMakerConfigWidget(const IDecisionMakerConfigWidget& another)            = delete;
     IDecisionMakerConfigWidget& operator=(const IDecisionMakerConfigWidget& another) = delete;
 
-    virtual void updateUiFromConfig() = 0;
+    virtual void updateUiFromConfig() const = 0;
+    virtual void makeReadOnly() const       = 0;
 };

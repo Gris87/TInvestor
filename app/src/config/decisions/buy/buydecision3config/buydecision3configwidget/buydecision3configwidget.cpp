@@ -29,6 +29,14 @@ void BuyDecision3ConfigWidget::updateUiFromConfig() const
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
+void BuyDecision3ConfigWidget::makeReadOnly() const
+{
+    ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
+    ui->priceRiseDoubleSpinBox->setReadOnly(true);
+    ui->durationSpinBox->setReadOnly(true);
+}
+
 void BuyDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;

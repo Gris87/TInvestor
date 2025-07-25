@@ -1,8 +1,4 @@
-Simulator date range mode
-Simulator parameters check
 Decision maker with timestamp
-Read only for best config
-Apply best config
 Optimizations for simulator
 Improve coverage
 Create release
@@ -27,6 +23,7 @@ Double check mutexes
 Use TEST_F tests everywhere
 Check for maximum memory requirements (With all limits)
 Improve all readability-function-cognitive-complexity
+System requirements
 
 
 

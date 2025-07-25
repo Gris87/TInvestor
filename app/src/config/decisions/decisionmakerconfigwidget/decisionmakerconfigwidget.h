@@ -41,7 +41,8 @@ public:
     DecisionMakerConfigWidget(const DecisionMakerConfigWidget& another)            = delete;
     DecisionMakerConfigWidget& operator=(const DecisionMakerConfigWidget& another) = delete;
 
-    void updateUiFromConfig() override;
+    void updateUiFromConfig() const override;
+    void makeReadOnly() const override;
 
     Ui::DecisionMakerConfigWidget* ui;
 

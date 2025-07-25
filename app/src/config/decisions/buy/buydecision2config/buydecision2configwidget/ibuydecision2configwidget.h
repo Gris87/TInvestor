@@ -23,4 +23,5 @@ public:
     IBuyDecision2ConfigWidget& operator=(const IBuyDecision2ConfigWidget& another) = delete;
 
     virtual void updateUiFromConfig() const = 0;
+    virtual void makeReadOnly() const       = 0;
 };

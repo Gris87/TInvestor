@@ -46,7 +46,7 @@ DecisionMakerConfigWidget::~DecisionMakerConfigWidget()
     delete ui;
 }
 
-void DecisionMakerConfigWidget::updateUiFromConfig()
+void DecisionMakerConfigWidget::updateUiFromConfig() const
 {
     mBuyDecision1ConfigWidget->updateUiFromConfig();
     mBuyDecision2ConfigWidget->updateUiFromConfig();
@@ -54,4 +54,14 @@ void DecisionMakerConfigWidget::updateUiFromConfig()
     mSellDecision1ConfigWidget->updateUiFromConfig();
     mSellDecision2ConfigWidget->updateUiFromConfig();
     mSellDecision3ConfigWidget->updateUiFromConfig();
+}
+
+void DecisionMakerConfigWidget::makeReadOnly() const
+{
+    mBuyDecision1ConfigWidget->makeReadOnly();
+    mBuyDecision2ConfigWidget->makeReadOnly();
+    mBuyDecision3ConfigWidget->makeReadOnly();
+    mSellDecision1ConfigWidget->makeReadOnly();
+    mSellDecision2ConfigWidget->makeReadOnly();
+    mSellDecision3ConfigWidget->makeReadOnly();
 }
