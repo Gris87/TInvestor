@@ -157,10 +157,9 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
             dataIndex = std::distance(
                 stock->data.constBegin(),
                 std::lower_bound(
-                    stock->data.constBegin(),
-                    stock->data.constEnd(),
-                    timestamp,
-                    [](const StockData& stockData, qint64 value) { return stockData.timestamp < value; }
+                    stock->data.constBegin(), stock->data.constEnd(), timestamp, [](const StockData& stockData, qint64 value) {
+                        return stockData.timestamp < value;
+                    }
                 )
             );
 
@@ -269,10 +268,9 @@ makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>&
             dataIndex = std::distance(
                 stock->data.constBegin(),
                 std::lower_bound(
-                    stock->data.constBegin(),
-                    stock->data.constEnd(),
-                    timestamp,
-                    [](const StockData& stockData, qint64 value) { return stockData.timestamp < value; }
+                    stock->data.constBegin(), stock->data.constEnd(), timestamp, [](const StockData& stockData, qint64 value) {
+                        return stockData.timestamp < value;
+                    }
                 )
             );
 

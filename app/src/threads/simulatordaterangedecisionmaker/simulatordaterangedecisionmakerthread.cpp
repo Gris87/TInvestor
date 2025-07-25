@@ -243,17 +243,20 @@ void SimulatorDateRangeDecisionMakerThread::run()
         qWarning() << "Failed to parse configs";
     }
 
-    updateCostAndPart();
-    updatePrice();
-
-    if (mBestConfig)
+    if (!mBestPortfolio.positions.isEmpty())
     {
-        emit bestConfigFound();
-    }
+        updateCostAndPart();
+        updatePrice();
 
-    emit operationsRead(mBestOperations);
-    emit logsRead(mBestEntries);
-    emit portfolioChanged(mBestPortfolio);
+        if (mBestConfig)
+        {
+            emit bestConfigFound();
+        }
+
+        emit operationsRead(mBestOperations);
+        emit logsRead(mBestEntries);
+        emit portfolioChanged(mBestPortfolio);
+    }
 
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
 }
