@@ -8,7 +8,7 @@
 const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
 
 constexpr qint64 MS_IN_SECOND      = 1000LL;
-constexpr qint64 HIDE_COPIED_DELAY = MS_IN_SECOND; // 1 second
+constexpr qint64 HIDE_COPIED_DELAY = 2 * MS_IN_SECOND; // 2 secondы
 
 constexpr int BEST_CONFIG_TAB_ID = 3;
 
@@ -55,8 +55,13 @@ DecisionMakerWidget::DecisionMakerWidget(
 
     ui->splitter->setSizes(QList<int>() << 600 << 400); // NOLINT(readability-magic-numbers)
 
-    ui->copiedLabel->hide();
-    hideCopiedTimer.setInterval(HIDE_COPIED_DELAY);
+    mCopiedOpacityEffect.setOpacity(0.0f);
+    mCopiedOpacityAnimation.setTargetObject(&mCopiedOpacityEffect);
+    mCopiedOpacityAnimation.setPropertyName("opacity");
+    mCopiedOpacityAnimation.setDuration(HIDE_COPIED_DELAY);
+    mCopiedOpacityAnimation.setStartValue(1.0f);
+    mCopiedOpacityAnimation.setEndValue(0.0f);
+    ui->copiedLabel->setGraphicsEffect(&mCopiedOpacityEffect);
 
     mOperationsTableWidget =
         operationsTableWidgetFactory->newInstance(operationsTableModelFactory, fileDialogFactory, mSettingsEditor, this);
@@ -88,10 +93,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ui->tabWidget->removeTab(BEST_CONFIG_TAB_ID);
     ui->tabWidget->setCurrentWidget(ui->operationsTab);
 
-    // clang-format off
     connect(mLogsFilterWidget, SIGNAL(filterChanged(const LogFilter&)), this, SLOT(logFilterChanged(const LogFilter&)));
-    connect(&hideCopiedTimer,  SIGNAL(timeout()),                       this, SLOT(hideCopiedTimerTicked()));
-    // clang-format on
 }
 
 DecisionMakerWidget::~DecisionMakerWidget()
@@ -178,13 +180,6 @@ void DecisionMakerWidget::logFilterChanged(const LogFilter& filter)
     mLogsTableWidget->setFilter(filter);
 }
 
-void DecisionMakerWidget::hideCopiedTimerTicked()
-{
-    hideCopiedTimer.stop();
-
-    ui->copiedLabel->hide();
-}
-
 void DecisionMakerWidget::on_yieldButton_clicked()
 {
     mAccountChartWidget->switchChart(CHART_TYPE_YIELD);
@@ -233,8 +228,8 @@ void DecisionMakerWidget::on_copyToSimulatorConfigButton_clicked()
     mConfig->getSimulatorConfig()->assign(mConfigForSimulation->getSimulatorConfig());
     mConfig->save(mSettingsEditor);
 
-    ui->copiedLabel->show();
-    hideCopiedTimer.start();
+    mCopiedOpacityAnimation.stop();
+    mCopiedOpacityAnimation.start();
 }
 
 void DecisionMakerWidget::on_copyToAutoPilotConfigButton_clicked()
@@ -245,8 +240,8 @@ void DecisionMakerWidget::on_copyToAutoPilotConfigButton_clicked()
     mConfig->getAutoPilotConfig()->assign(mConfigForSimulation->getSimulatorConfig());
     mConfig->save(mSettingsEditor);
 
-    ui->copiedLabel->show();
-    hideCopiedTimer.start();
+    mCopiedOpacityAnimation.stop();
+    mCopiedOpacityAnimation.start();
 }
 
 void DecisionMakerWidget::on_copyToBothConfigsButton_clicked()
@@ -258,8 +253,8 @@ void DecisionMakerWidget::on_copyToBothConfigsButton_clicked()
     mConfig->getAutoPilotConfig()->assign(mConfigForSimulation->getSimulatorConfig());
     mConfig->save(mSettingsEditor);
 
-    ui->copiedLabel->show();
-    hideCopiedTimer.start();
+    mCopiedOpacityAnimation.stop();
+    mCopiedOpacityAnimation.start();
 }
 
 void DecisionMakerWidget::saveWindowState(const QString& type)

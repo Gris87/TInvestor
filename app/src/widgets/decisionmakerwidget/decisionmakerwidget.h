@@ -4,7 +4,8 @@
 
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
-#include <QTimer>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
 
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
@@ -73,8 +74,6 @@ public:
 
     Ui::DecisionMakerWidget* ui;
 
-    QTimer hideCopiedTimer;
-
 private:
     IOperationsTableWidget*     mOperationsTableWidget;
     IAccountChartWidget*        mAccountChartWidget;
@@ -85,10 +84,11 @@ private:
     IConfig*                    mConfig;
     IConfig*                    mConfigForSimulation;
     ISettingsEditor*            mSettingsEditor;
+    QGraphicsOpacityEffect      mCopiedOpacityEffect;
+    QPropertyAnimation          mCopiedOpacityAnimation;
 
 public slots:
     void logFilterChanged(const LogFilter& filter);
-    void hideCopiedTimerTicked();
 
 private slots:
     void on_yieldButton_clicked();
