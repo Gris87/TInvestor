@@ -18,8 +18,8 @@ BuyDecision1::~BuyDecision1()
 QString BuyDecision1::makeDecision(Stock* stock, bool dateRange, int dataIndex, float /*price*/)
 {
     // TODO: Remove it [BEGIN]
-    int minute = dateRange ? QDateTime::fromMSecsSinceEpoch(stock->data.at(dataIndex).timestamp).time().minute()
-                           : QTime::currentTime().minute();
+    const int minute = dateRange ? QDateTime::fromMSecsSinceEpoch(stock->data.at(dataIndex).timestamp).time().minute()
+                                 : QTime::currentTime().minute();
 
     const bool    needToBuy = minute % 4 < 2;
     const QString instrumentId =

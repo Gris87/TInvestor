@@ -33,7 +33,17 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 {
     InstrumentsForTrading res;
 
-    // TODO: Check schedule
+    if (mConfig->isUseSchedule())
+    {
+        QTime time      = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
+        QTime startTime = QTime(mConfig->getScheduleStartHour(), mConfig->getScheduleStartMinute());
+        QTime endTime   = QTime(mConfig->getScheduleEndHour(), mConfig->getScheduleEndMinute());
+
+        if (time < startTime || time > endTime)
+        {
+            return res;
+        }
+    }
 
     QList<Stock*> stocksForBuy;
     QList<Stock*> stocksForSell;

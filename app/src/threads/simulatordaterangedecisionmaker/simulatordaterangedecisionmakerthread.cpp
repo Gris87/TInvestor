@@ -177,9 +177,6 @@ void SimulatorDateRangeDecisionMakerThread::run()
                                     )
                             );
                         }
-
-                        // TODO: Remove it
-                        msleep(10); // NOLINT(readability-magic-numbers)
                     }
 
                     const InstrumentsForTrading& instrumentsForTrading =

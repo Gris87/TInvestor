@@ -23,6 +23,7 @@ Double check mutexes
 Use TEST_F tests everywhere
 Check for maximum memory requirements (With all limits)
 Improve all readability-function-cognitive-complexity
+Make experiments with non Moscow timezone
 System requirements
 
 
