@@ -116,6 +116,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
 
     EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
     EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
+    EXPECT_CALL(*bestConfigWidgetMock, makeReadOnly());
 
     const IDecisionMakerWidget* widget = factory.newInstance(
         DecisionMakerWidgetFactoryNewInstanceArgsMore15(

@@ -114,6 +114,7 @@ protected:
 
         EXPECT_CALL(*logsFilterWidgetMock, getFilter()).WillOnce(ReturnRef(filter));
         EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
+        EXPECT_CALL(*bestConfigWidgetMock, makeReadOnly());
 
         decisionMakerWidget = new DecisionMakerWidget(
             operationsTableWidgetFactoryMock,

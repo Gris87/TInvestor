@@ -9,12 +9,12 @@ const char* const DATETIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
 const QColor      GREY_COLOR      = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
 const QColor      GREEN_COLOR     = QColor("#2BD793"); // clazy:exclude=non-pod-global-static
 
-constexpr qint64  MS_IN_SECOND        = 1000LL;
-constexpr qint64  DATE_CHANGE_DELAY   = MS_IN_SECOND; // 1 second
-constexpr qint64  FILTER_CHANGE_DELAY = MS_IN_SECOND; // 1 second
-constexpr qint64  TURNOVER_KILOS      = 1000;         // 1K rubles
-constexpr int     HIDDEN_WIDTH        = 24;
-constexpr int     MAXIMUM_HEIGHT      = 16777215;
+constexpr qint64 MS_IN_SECOND        = 1000LL;
+constexpr qint64 DATE_CHANGE_DELAY   = MS_IN_SECOND; // 1 second
+constexpr qint64 FILTER_CHANGE_DELAY = MS_IN_SECOND; // 1 second
+constexpr qint64 TURNOVER_KILOS      = 1000;         // 1K rubles
+constexpr int    HIDDEN_WIDTH        = 24;
+constexpr int    MAXIMUM_HEIGHT      = 16777215;
 
 #ifdef Q_OS_WINDOWS
 constexpr int VISIBLE_WIDTH = 250;
