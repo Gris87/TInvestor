@@ -8,7 +8,7 @@
 const QColor GREY_COLOR = QColor("#AFC2D7"); // clazy:exclude=non-pod-global-static
 
 constexpr qint64 MS_IN_SECOND      = 1000LL;
-constexpr qint64 HIDE_COPIED_DELAY = 2 * MS_IN_SECOND; // 2 secondы
+constexpr qint64 HIDE_COPIED_DELAY = 2 * MS_IN_SECOND; // 2 seconds
 
 constexpr int BEST_CONFIG_TAB_ID = 3;
 
