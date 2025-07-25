@@ -30,6 +30,8 @@ SOURCES += \
     src/db/portfolio/test_portfoliodatabase.cpp \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
+    src/decisions/buy/buydecision1/test_buydecision1.cpp \
+    src/decisions/sell/selldecision1/test_selldecision1.cpp \
     src/decisions/test_decisionmaker.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
@@ -169,6 +171,7 @@ HEADERS += \
     src/db/portfolio/iportfoliodatabase_mock.h \
     src/db/stocks/istocksdatabase_mock.h \
     src/db/user/iuserdatabase_mock.h \
+    src/decisions/iactiondecision_mock.h \
     src/decisions/idecisionmaker_mock.h \
     src/dialogs/authdialog/iauthdialog_mock.h \
     src/dialogs/authdialog/iauthdialogfactory_mock.h \

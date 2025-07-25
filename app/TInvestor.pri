@@ -35,7 +35,9 @@ SOURCES += \
     src/db/portfolio/portfoliodatabase.cpp \
     src/db/stocks/stocksdatabase.cpp \
     src/db/user/userdatabase.cpp \
+    src/decisions/buy/buydecision1/buydecision1.cpp \
     src/decisions/decisionmaker.cpp \
+    src/decisions/sell/selldecision1/selldecision1.cpp \
     src/dialogs/authdialog/authdialog.cpp \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/orderwavesdialog/orderwavesdialog.cpp \
@@ -201,8 +203,11 @@ HEADERS += \
     src/db/stocks/stocksdatabase.h \
     src/db/user/iuserdatabase.h \
     src/db/user/userdatabase.h \
+    src/decisions/buy/buydecision1/buydecision1.h \
     src/decisions/decisionmaker.h \
+    src/decisions/iactiondecision.h \
     src/decisions/idecisionmaker.h \
+    src/decisions/sell/selldecision1/selldecision1.h \
     src/dialogs/authdialog/authdialog.h \
     src/dialogs/authdialog/authdialogfactory.h \
     src/dialogs/authdialog/iauthdialog.h \
