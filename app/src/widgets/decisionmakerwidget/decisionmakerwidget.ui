@@ -272,6 +272,51 @@
               </property>
              </layout>
             </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QPushButton" name="copyToSimulatorConfigButton">
+                <property name="text">
+                 <string>Copy to simulator config</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="copyToAutoPilotConfigButton">
+                <property name="text">
+                 <string>Copy to auto-pilot config</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="copyToBothConfigsButton">
+                <property name="text">
+                 <string>Copy to both configs</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="copiedLabel">
+                <property name="text">
+                 <string>Copied</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
            </layout>
           </widget>
          </widget>

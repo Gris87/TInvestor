@@ -285,12 +285,33 @@
     </message>
     <message>
         <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="250"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="127"/>
         <source>Best config</source>
         <translation>Лучшая конфигурация</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="37"/>
-        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="38"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="280"/>
+        <source>Copy to simulator config</source>
+        <translation>Копировать в конфиг симулятора</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="287"/>
+        <source>Copy to auto-pilot config</source>
+        <translation>Копировать в конфиг авто-пилота</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="294"/>
+        <source>Copy to both configs</source>
+        <translation>Копировать в оба конфига</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.ui" line="301"/>
+        <source>Copied</source>
+        <translation>Скопировано</translation>
+    </message>
+    <message>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="53"/>
+        <location filename="../../src/widgets/decisionmakerwidget/decisionmakerwidget.cpp" line="54"/>
         <source>Loading</source>
         <translation>Загрузка</translation>
     </message>
@@ -363,13 +384,13 @@
     <name>MainWindow</name>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="20"/>
-        <location filename="../../src/main/mainwindow.cpp" line="333"/>
+        <location filename="../../src/main/mainwindow.cpp" line="355"/>
         <source>TInvestor</source>
         <translation>Ты ж инвестор</translation>
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="152"/>
-        <location filename="../../src/main/mainwindow.cpp" line="588"/>
+        <location filename="../../src/main/mainwindow.cpp" line="610"/>
         <source>Start simulation</source>
         <translation>Запустить симуляцию</translation>
     </message>
@@ -390,7 +411,7 @@
     </message>
     <message>
         <location filename="../../src/main/mainwindow.ui" line="465"/>
-        <location filename="../../src/main/mainwindow.cpp" line="681"/>
+        <location filename="../../src/main/mainwindow.cpp" line="703"/>
         <source>Start auto-pilot</source>
         <translation>Запустить авто-пилот</translation>
     </message>
@@ -451,65 +472,65 @@
         <translation>Настройки (F6)</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="334"/>
+        <location filename="../../src/main/mainwindow.cpp" line="356"/>
         <source>TInvestor is working in background</source>
         <translation>Ты ж инвестор работает в фоновом режиме</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="382"/>
+        <location filename="../../src/main/mainwindow.cpp" line="404"/>
         <source>GRPC error happened with code %1</source>
         <translation>Возникла ошибка GRPC с кодом %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="402"/>
+        <location filename="../../src/main/mainwindow.cpp" line="424"/>
         <source>Waiting for authorization</source>
         <translation>Ожидание авторизации</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="539"/>
-        <location filename="../../src/main/mainwindow.cpp" line="1097"/>
+        <location filename="../../src/main/mainwindow.cpp" line="561"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1119"/>
         <source>From: %1</source>
         <translation>От: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="556"/>
-        <location filename="../../src/main/mainwindow.cpp" line="957"/>
+        <location filename="../../src/main/mainwindow.cpp" line="578"/>
+        <location filename="../../src/main/mainwindow.cpp" line="979"/>
         <source>Stop simulation</source>
         <translation>Остановить симуляцию</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="669"/>
+        <location filename="../../src/main/mainwindow.cpp" line="691"/>
         <source>Auto-pilot started</source>
         <translation>Авто-пилот запущен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="675"/>
+        <location filename="../../src/main/mainwindow.cpp" line="697"/>
         <source>Auto-pilot stopped</source>
         <translation>Авто-пилот остановлен</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="957"/>
+        <location filename="../../src/main/mainwindow.cpp" line="979"/>
         <source>Do you really want to stop simulation?</source>
         <translation>Вы действительно хотите остановить симуляцию?</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="632"/>
-        <location filename="../../src/main/mainwindow.cpp" line="988"/>
+        <location filename="../../src/main/mainwindow.cpp" line="654"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1010"/>
         <source>Stop auto-pilot</source>
         <translation>Остановить авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="208"/>
+        <location filename="../../src/main/mainwindow.cpp" line="230"/>
         <source>Simulator</source>
         <translation>Симулятор</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="209"/>
+        <location filename="../../src/main/mainwindow.cpp" line="231"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/main/mainwindow.cpp" line="988"/>
+        <location filename="../../src/main/mainwindow.cpp" line="1010"/>
         <source>Do you really want to stop auto-pilot?</source>
         <translation>Вы действительно хотите остановить авто-пилот?</translation>
     </message>
@@ -986,53 +1007,53 @@
 <context>
     <name>SimulatorDateRangeDecisionMakerThread</name>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="326"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="328"/>
         <source>Input money</source>
         <translation>Завод денежных средств</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="403"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="405"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="409"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="411"/>
         <source>Share</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="592"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="594"/>
         <source>Sale of shares</source>
         <translation>Продажа ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="649"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="651"/>
         <source>Order to sell %1 created with a price %2 %3</source>
         <translation>Заявка создана на продажу %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="657"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="659"/>
         <source>Order completed. %1 sold with a price %2 %3</source>
         <translation>Заявка выполнена. %1 продано по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="665"/>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="831"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="667"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="833"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="760"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="762"/>
         <source>Purchase of shares</source>
         <translation>Покупка ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="815"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="817"/>
         <source>Order to buy %1 created with a price %2 %3</source>
         <translation>Заявка создана на покупку %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="823"/>
+        <location filename="../../src/threads/simulatordaterangedecisionmaker/simulatordaterangedecisionmakerthread.cpp" line="825"/>
         <source>Order completed. %1 bought with a price %2 %3</source>
         <translation>Заявка выполнена. %1 куплено по цене %2 %3</translation>
     </message>
@@ -1241,12 +1262,12 @@
         <translation>Окупаемость</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="312"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="313"/>
         <source>Filter active</source>
         <translation>Фильтр активен</translation>
     </message>
     <message>
-        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="317"/>
+        <location filename="../../src/widgets/stockscontrolswidget/stockscontrolswidget.cpp" line="318"/>
         <source>Filter inactive</source>
         <translation>Фильтр неактивен</translation>
     </message>

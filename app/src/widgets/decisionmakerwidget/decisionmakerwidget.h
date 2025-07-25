@@ -4,6 +4,8 @@
 
 #include "src/widgets/decisionmakerwidget/idecisionmakerwidget.h"
 
+#include <QTimer>
+
 #include "src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory.h"
 #include "src/utils/filedialog/ifiledialogfactory.h"
 #include "src/utils/settingseditor/isettingseditor.h"
@@ -71,6 +73,8 @@ public:
 
     Ui::DecisionMakerWidget* ui;
 
+    QTimer hideCopiedTimer;
+
 private:
     IOperationsTableWidget*     mOperationsTableWidget;
     IAccountChartWidget*        mAccountChartWidget;
@@ -84,10 +88,14 @@ private:
 
 public slots:
     void logFilterChanged(const LogFilter& filter);
+    void hideCopiedTimerTicked();
 
 private slots:
     void on_yieldButton_clicked();
     void on_monthlyYieldButton_clicked();
     void on_remainedMoneyButton_clicked();
     void on_totalMoneyButton_clicked();
+    void on_copyToSimulatorConfigButton_clicked();
+    void on_copyToAutoPilotConfigButton_clicked();
+    void on_copyToBothConfigsButton_clicked();
 };
