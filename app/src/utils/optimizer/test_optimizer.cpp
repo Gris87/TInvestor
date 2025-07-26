@@ -289,20 +289,20 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
 TEST_F(Test_Optimizer, Test_optimizeLogs)
 {
     const InSequence seq;
-    
+
     QList<LogEntry> entries;
     QList<LogEntry> optimizedEntries;
-    
+
     entries.resizeForOverwrite(11);
     optimizedEntries.resizeForOverwrite(5);
-    
+
     thread->testSetLimitLogs(entries.size() - 1);
     thread->testSetOptimizeSize(optimizedEntries.size());
-    
+
     for (int i = 0; i < entries.size(); ++i)
     {
         LogEntry& entry = entries[i];
-        
+
         entry.timestamp        = entries.size() - i;
         entry.level            = LOG_LEVEL_DEBUG;
         entry.instrumentId     = "aaaaa";
@@ -311,11 +311,11 @@ TEST_F(Test_Optimizer, Test_optimizeLogs)
         entry.instrumentName   = "Mathafaka";
         entry.message          = "Buy without reason";
     }
-    
+
     for (int i = 0; i < optimizedEntries.size(); ++i)
     {
         LogEntry& entry = optimizedEntries[i];
-        
+
         entry.timestamp        = entries.size() - i;
         entry.level            = LOG_LEVEL_DEBUG;
         entry.instrumentId     = "aaaaa";
@@ -324,11 +324,11 @@ TEST_F(Test_Optimizer, Test_optimizeLogs)
         entry.instrumentName   = "Mathafaka";
         entry.message          = "Buy without reason";
     }
-    
+
     EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
     EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
     EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
-    
+
     thread->testTerminateWithoutTerminate();
     thread->run();
 }

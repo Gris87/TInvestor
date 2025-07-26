@@ -177,7 +177,7 @@ LogEntry LogsThread::takeIncomingEntry()
 void LogsThread::optimize()
 {
     QList<LogEntry> newEntries = mOptimizer->optimizeLogs(mLogsDatabase->readLogs(), mOptimizeSize);
-    mAmountOfEntries = newEntries.size();
+    mAmountOfEntries           = newEntries.size();
 
     emit logsRead(newEntries);
     mLogsDatabase->writeLogs(newEntries);
