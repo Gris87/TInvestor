@@ -20,11 +20,10 @@ struct User
 
     void setTariff(const QString& value);
 
-    QString     token;
-    bool        qualified;
-    QStringList qualifiedForWorkWith; // TODO: Do we need it?
-    QString     tariff;
-    float       commission;
+    QString token;
+    bool    qualified;
+    QString tariff;
+    float   commission;
 };
 
 

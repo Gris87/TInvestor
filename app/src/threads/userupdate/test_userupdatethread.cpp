@@ -54,7 +54,6 @@ TEST_F(Test_UserUpdateThread, Test_run)
 
     user.qualified = true;
     user.tariff    = "premium";
-    user.qualifiedForWorkWith << "blah" << "disintegration gun";
 
     account1.index = 0;
     account1.id    = "aaaaa";
@@ -70,8 +69,6 @@ TEST_F(Test_UserUpdateThread, Test_run)
     const std::shared_ptr<tinkoff::GetInfoResponse> getInfoResponse(new tinkoff::GetInfoResponse());
 
     getInfoResponse->set_qual_status(true);
-    getInfoResponse->add_qualified_for_work_with("blah");
-    getInfoResponse->add_qualified_for_work_with("disintegration gun");
     getInfoResponse->set_tariff("premium");
 
     const std::shared_ptr<tinkoff::GetAccountsResponse> getAccountsResponse(new tinkoff::GetAccountsResponse());

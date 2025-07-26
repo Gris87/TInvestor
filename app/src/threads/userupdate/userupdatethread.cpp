@@ -32,11 +32,6 @@ void UserUpdateThread::run()
         user.qualified = userInfo->qual_status();
         user.tariff    = QString::fromStdString(userInfo->tariff());
 
-        for (int i = 0; i < userInfo->qualified_for_work_with_size(); ++i)
-        {
-            user.qualifiedForWorkWith.append(QString::fromStdString(userInfo->qualified_for_work_with(i)));
-        }
-
         const std::shared_ptr<tinkoff::GetAccountsResponse> tinkoffAccounts = mGrpcClient->getAccounts(QThread::currentThread());
 
         if (!QThread::currentThread()->isInterruptionRequested() && tinkoffAccounts != nullptr)

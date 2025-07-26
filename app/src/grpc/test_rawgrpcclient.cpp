@@ -800,7 +800,6 @@ TEST_F(Test_RawGrpcClient, Test_getMaxLots)
     // clang-format on
 }
 
-// TODO: Unpend this test
 TEST_F(Test_RawGrpcClient, Test_postOrder_and_getOrderState_and_cancelOrder)
 {
     const InSequence seq;

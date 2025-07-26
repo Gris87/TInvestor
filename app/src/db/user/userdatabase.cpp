@@ -88,11 +88,10 @@ void UserDatabase::createUserTable() const
 
     const QString str =
         "CREATE TABLE IF NOT EXISTS user ("
-        "    id                      INTEGER NOT NULL PRIMARY KEY, "
-        "    token                   TEXT NOT NULL, "
-        "    qualified               BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
-        "    qualified_for_work_with TEXT NOT NULL, "
-        "    tariff                  TEXT NOT NULL"
+        "    id        INTEGER NOT NULL PRIMARY KEY, "
+        "    token     TEXT NOT NULL, "
+        "    qualified BOOLEAN NOT NULL CHECK (qualified IN (0, 1)), "
+        "    tariff    TEXT NOT NULL"
         ");";
 
     QSqlQuery query(db);
@@ -125,7 +124,7 @@ User UserDatabase::readUserInfo()
     User res;
 
     const QString str =
-        "SELECT token, qualified, qualified_for_work_with, tariff "
+        "SELECT token, qualified, tariff "
         "FROM user "
         "WHERE id = 1;";
 
@@ -136,38 +135,32 @@ User UserDatabase::readUserInfo()
 
     const QSqlRecord rec = query.record();
 
-    const int tokenIndex                = rec.indexOf("token");
-    const int qualifiedIndex            = rec.indexOf("qualified");
-    const int qualifiedForWorkWithIndex = rec.indexOf("qualified_for_work_with");
-    const int tariffIndex               = rec.indexOf("tariff");
+    const int tokenIndex     = rec.indexOf("token");
+    const int qualifiedIndex = rec.indexOf("qualified");
+    const int tariffIndex    = rec.indexOf("tariff");
 
     if (query.first())
     {
-        res.token                = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
-        res.qualified            = query.value(qualifiedIndex).toLongLong() != 0;
-        res.qualifiedForWorkWith = query.value(qualifiedForWorkWithIndex).toString().split(',');
+        res.token     = mSimpleCrypt.decryptToString(query.value(tokenIndex).toString());
+        res.qualified = query.value(qualifiedIndex).toLongLong() != 0;
         res.setTariff(query.value(tariffIndex).toString());
-
-        res.qualifiedForWorkWith.removeAll("");
     }
     else
     {
-        res.token                = "";
-        res.qualified            = false;
-        res.qualifiedForWorkWith = QStringList();
+        res.token     = "";
+        res.qualified = false;
         res.setTariff("fees");
 
         QSqlQuery query(db);
         query.prepare(
             "INSERT INTO user "
-            "(id, token, qualified, qualified_for_work_with, tariff) "
+            "(id, token, qualified, tariff) "
             "VALUES "
-            "(:id, :token, :qualified, :qualified_for_work_with, :tariff);"
+            "(:id, :token, :qualified, :tariff);"
         );
         query.bindValue(":id", 1);
         query.bindValue(":token", mSimpleCrypt.encryptToString(res.token));
         query.bindValue(":qualified", res.qualified ? 1 : 0);
-        query.bindValue(":qualified_for_work_with", res.qualifiedForWorkWith.isEmpty() ? "" : res.qualifiedForWorkWith.join(','));
         query.bindValue(":tariff", res.tariff);
 
         const bool ok = query.exec();
@@ -233,12 +226,10 @@ void UserDatabase::writeUserInfo(const User& user)
         "UPDATE user "
         "SET "
         "qualified = :qualified, "
-        "qualified_for_work_with = :qualified_for_work_with, "
         "tariff = :tariff "
         "WHERE id = 1;"
     );
     query.bindValue(":qualified", user.qualified ? 1 : 0);
-    query.bindValue(":qualified_for_work_with", user.qualifiedForWorkWith.isEmpty() ? "" : user.qualifiedForWorkWith.join(','));
     query.bindValue(":tariff", user.tariff);
 
     const bool ok = query.exec();

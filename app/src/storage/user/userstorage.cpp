@@ -66,11 +66,9 @@ const QString& UserStorage::getToken()
 
 void UserStorage::setUserInfo(const User& user)
 {
-    if (mUser.qualified != user.qualified || mUser.qualifiedForWorkWith != user.qualifiedForWorkWith ||
-        mUser.tariff != user.tariff)
+    if (mUser.qualified != user.qualified || mUser.tariff != user.tariff)
     {
-        mUser.qualified            = user.qualified;
-        mUser.qualifiedForWorkWith = user.qualifiedForWorkWith;
+        mUser.qualified = user.qualified;
         mUser.setTariff(user.tariff);
 
         mUserDatabase->writeUserInfo(mUser);

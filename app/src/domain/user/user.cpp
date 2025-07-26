@@ -24,7 +24,6 @@ static const QMap<QString, float> TARIFF_TO_COMMISSION{ // clazy:exclude=non-pod
 User::User() :
     token(),
     qualified(),
-    qualifiedForWorkWith(),
     tariff(),
     commission()
 {
@@ -38,6 +37,6 @@ void User::setTariff(const QString& value)
 
 bool operator==(const User& lhs, const User& rhs)
 {
-    return lhs.token == rhs.token && lhs.qualified == rhs.qualified && lhs.qualifiedForWorkWith == rhs.qualifiedForWorkWith &&
-           lhs.tariff == rhs.tariff && qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON;
+    return lhs.token == rhs.token && lhs.qualified == rhs.qualified && lhs.tariff == rhs.tariff &&
+           qAbs(lhs.commission - rhs.commission) < FLOAT_EPSILON;
 }
