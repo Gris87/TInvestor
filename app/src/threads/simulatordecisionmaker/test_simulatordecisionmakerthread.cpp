@@ -10,6 +10,7 @@
 #include "src/storage/logos/ilogosstorage_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
 #include "src/storage/user/iuserstorage_mock.h"
+#include "src/utils/optimizer/ioptimizer_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -33,6 +34,7 @@ protected:
         userStorageMock        = new StrictMock<UserStorageMock>();
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         decisionMakerMock      = new StrictMock<DecisionMakerMock>();
+        optimizerMock          = new StrictMock<OptimizerMock>();
 
         thread = new SimulatorDecisionMakerThread(
             settingsEditorMock,
@@ -43,7 +45,8 @@ protected:
             logosStorageMock,
             userStorageMock,
             stocksStorageMock,
-            decisionMakerMock
+            decisionMakerMock,
+            optimizerMock
         );
     }
 
@@ -59,6 +62,7 @@ protected:
         delete userStorageMock;
         delete stocksStorageMock;
         delete decisionMakerMock;
+        delete optimizerMock;
     }
 
     SimulatorDecisionMakerThread*       thread;
@@ -71,6 +75,7 @@ protected:
     StrictMock<UserStorageMock>*        userStorageMock;
     StrictMock<StocksStorageMock>*      stocksStorageMock;
     StrictMock<DecisionMakerMock>*      decisionMakerMock;
+    StrictMock<OptimizerMock>*          optimizerMock;
 };
 
 

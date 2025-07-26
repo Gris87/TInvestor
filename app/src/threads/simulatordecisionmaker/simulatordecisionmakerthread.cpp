@@ -25,6 +25,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
     IDecisionMaker*      decisionMaker,
+    IOptimizer*          optimizer,
     QObject*             parent
 ) :
     ISimulatorDecisionMakerThread(parent),
@@ -37,6 +38,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mDecisionMaker(decisionMaker),
+    mOptimizer(optimizer),
     mPortfolio(),
     mStocksMap(),
     mInstruments(),

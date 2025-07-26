@@ -10,6 +10,7 @@
 #include "src/grpc/igrpcclient.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
+#include "src/utils/optimizer/ioptimizer.h"
 
 
 
@@ -23,6 +24,7 @@ public:
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
         IGrpcClient*         grpcClient,
+        IOptimizer*          optimizer,
         QObject*             parent = nullptr
     );
     ~OperationsThread() override;
@@ -58,7 +60,6 @@ private:
     Quotation handlePositionsResponse(const tinkoff::PositionsResponse& tinkoffPositions);
     Quotation handlePositionsResponse(const tinkoff::PositionData& tinkoffPositions);
     void      optimize();
-    void      addInstrumentsAfterOptimization(QList<Operation>& newOperations, const QList<Operation>& oldOperations);
 
     [[nodiscard]]
     bool isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const;
@@ -67,6 +68,7 @@ private:
     IInstrumentsStorage*             mInstrumentsStorage;
     ILogosStorage*                   mLogosStorage;
     IGrpcClient*                     mGrpcClient;
+    IOptimizer*                      mOptimizer;
     QString                          mAccountId;
     std::shared_ptr<PositionsStream> mPositionsStream;
     qint64                           mLastRequestTimestamp;
@@ -76,7 +78,7 @@ private:
     int                              mLimitOperations;
     int                              mOptimizeSize;
     QString                          mLastPositionUidForExtAccount;
-    QMap<QString, QuantityAndCost>   mInstruments; // Instrument Id => QuantityAndCost
+    QuantityAndCostInstruments       mInstruments;
     Quotation                        mInputMoney;
     Quotation                        mMaxInputMoney;
     Quotation                        mTotalYieldWithCommission;

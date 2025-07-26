@@ -23,6 +23,7 @@ OperationsThread::OperationsThread(
     IInstrumentsStorage* instrumentsStorage,
     ILogosStorage*       logosStorage,
     IGrpcClient*         grpcClient,
+    IOptimizer*          optimizer,
     QObject*             parent
 ) :
     IOperationsThread(parent),
@@ -30,6 +31,7 @@ OperationsThread::OperationsThread(
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
     mGrpcClient(grpcClient),
+    mOptimizer(optimizer),
     mAccountId(),
     mPositionsStream(),
     mLastRequestTimestamp(),
@@ -584,138 +586,14 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
     }
 }
 
-struct OptimizeOperationsInfo
-{
-    explicit OptimizeOperationsInfo(const QList<Operation>* _operations) :
-        operations(_operations)
-    {
-    }
-
-    const QList<Operation>* operations;
-};
-
-static void optimizeOperationsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
-)
-{
-    OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
-
-    const Operation* operationsArray = optimizeOperationsInfo->operations->data();
-
-    Operation* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = operationsArray[i];
-    }
-}
-
 void OperationsThread::optimize()
 {
-    const QList<Operation> operations = mOperationsDatabase->readOperations();
-
-    QList<Operation> newOperations;
-    newOperations.resizeForOverwrite(mOptimizeSize);
-
-    OptimizeOperationsInfo optimizeOperationsInfo(&operations);
-    processInParallel(newOperations, optimizeOperationsForParallel, &optimizeOperationsInfo);
-
-    addInstrumentsAfterOptimization(newOperations, operations);
+    QList<Operation> newOperations =
+        mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeSize, mInstruments);
     mAmountOfEntries = newOperations.size();
 
     emit operationsRead(newOperations);
     mOperationsDatabase->writeOperations(newOperations);
-}
-
-struct AddInstrumentsInfo
-{
-    explicit AddInstrumentsInfo(const QList<Operation>* _oldOperations) :
-        oldOperations(_oldOperations)
-    {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
-    }
-
-    const QList<Operation>* oldOperations;
-    QList<QList<Operation>> results;
-};
-
-static void addInstrumentsForParallel(
-    QThread* parentThread, int threadId, QList<QString>& instrumentsToAdd, int start, int end, void* additionalArgs
-)
-{
-    AddInstrumentsInfo* addInstrumentsInfo = reinterpret_cast<AddInstrumentsInfo*>(additionalArgs);
-
-    const Operation*  oldOperationsArray = addInstrumentsInfo->oldOperations->data();
-    const int         oldOperationsSize  = addInstrumentsInfo->oldOperations->size();
-    QList<Operation>* resultsArray       = addInstrumentsInfo->results.data();
-
-    QString* instrumentsArray = instrumentsToAdd.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        const QString& instrumentId = instrumentsArray[i];
-
-        for (int j = 0; j < oldOperationsSize; ++j)
-        {
-            if (oldOperationsArray[j].instrumentId == instrumentId)
-            {
-                resultsArray[threadId].append(oldOperationsArray[j]);
-
-                break;
-            }
-        }
-    }
-}
-
-void OperationsThread::addInstrumentsAfterOptimization(QList<Operation>& newOperations, const QList<Operation>& oldOperations)
-{
-    QSet<QString> newInstruments; // Instrument Id
-
-    for (int i = newOperations.size() - 1; i >= 0; --i)
-    {
-        const Operation& operation = newOperations.at(i);
-
-        if (operation.remainedQuantity > 0)
-        {
-            newInstruments.insert(operation.instrumentId);
-        }
-        else
-        {
-            newInstruments.remove(operation.instrumentId);
-        }
-    }
-
-    QList<QString> instrumentsToAdd;
-
-    for (auto it = mInstruments.constBegin(); it != mInstruments.constEnd(); ++it)
-    {
-        if (!newInstruments.contains(it.key()))
-        {
-            instrumentsToAdd.append(it.key());
-        }
-    }
-
-    AddInstrumentsInfo addInstrumentsInfo(&oldOperations);
-    processInParallel(instrumentsToAdd, addInstrumentsForParallel, &addInstrumentsInfo);
-
-    QList<Operation> operationsWithInstruments;
-
-    for (const QList<Operation>& operations : std::as_const(addInstrumentsInfo.results))
-    {
-        operationsWithInstruments.append(operations);
-    }
-
-    std::sort(operationsWithInstruments.begin(), operationsWithInstruments.end(), [](const Operation& l, const Operation& r) {
-        return l.timestamp > r.timestamp;
-    });
-
-    newOperations.append(operationsWithInstruments);
 }
 
 bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const

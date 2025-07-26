@@ -15,6 +15,7 @@
 #include "src/utils/fs/dir/idirfactory_mock.h"
 #include "src/utils/fs/file/ifile_mock.h"
 #include "src/utils/fs/file/ifilefactory_mock.h"
+#include "src/utils/optimizer/ioptimizer_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -41,6 +42,7 @@ protected:
         stocksStorageMock      = new StrictMock<StocksStorageMock>();
         configMock             = new StrictMock<ConfigMock>();
         decisionMakerMock      = new StrictMock<DecisionMakerMock>();
+        optimizerMock          = new StrictMock<OptimizerMock>();
 
         thread = new SimulatorDateRangeDecisionMakerThread(
             dirFactoryMock,
@@ -54,7 +56,8 @@ protected:
             userStorageMock,
             stocksStorageMock,
             configMock,
-            decisionMakerMock
+            decisionMakerMock,
+            optimizerMock
         );
     }
 
@@ -73,6 +76,7 @@ protected:
         delete stocksStorageMock;
         delete configMock;
         delete decisionMakerMock;
+        delete optimizerMock;
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
@@ -88,6 +92,7 @@ protected:
     StrictMock<StocksStorageMock>*         stocksStorageMock;
     StrictMock<ConfigMock>*                configMock;
     StrictMock<DecisionMakerMock>*         decisionMakerMock;
+    StrictMock<OptimizerMock>*             optimizerMock;
 };
 
 

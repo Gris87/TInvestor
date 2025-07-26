@@ -10,6 +10,7 @@
 #include "src/db/logs/ilogsdatabase.h"
 #include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/logos/ilogosstorage.h"
+#include "src/utils/optimizer/ioptimizer.h"
 
 
 
@@ -22,6 +23,7 @@ public:
         ILogsDatabase*       logsDatabase,
         IInstrumentsStorage* instrumentsStorage,
         ILogosStorage*       logosStorage,
+        IOptimizer*          optimizer,
         QObject*             parent = nullptr
     );
     ~LogsThread() override;
@@ -61,6 +63,7 @@ private:
     ILogsDatabase*       mLogsDatabase;
     IInstrumentsStorage* mInstrumentsStorage;
     ILogosStorage*       mLogosStorage;
+    IOptimizer*          mOptimizer;
     QString              mAccountId;
     qint64               mLastLogTimestamp;
     qint8                mAmountOfLogsWithSameTimestamp;

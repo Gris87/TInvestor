@@ -67,6 +67,7 @@
 #include "src/utils/http/httpclient.h"
 #include "src/utils/logger/logger.h"
 #include "src/utils/messagebox/messageboxutils.h"
+#include "src/utils/optimizer/optimizer.h"
 #include "src/utils/settingseditor/settingseditor.h"
 #include "src/utils/style/darkpalette.h"
 #include "src/utils/timeutils/timeutils.h"
@@ -324,6 +325,7 @@ static int runApplication(QApplication* app)
     HttpClient        httpClient;
     RawGrpcClient     rawGrpcClient;
     GrpcClient        grpcClient(&userStorage, &rawGrpcClient, &timeUtils);
+    Optimizer         optimizer;
 
     BuyDecision1  buyDecision1;
     SellDecision1 sellDecision1;
@@ -355,8 +357,8 @@ static int runApplication(QApplication* app)
     );
     LastPriceThread              lastPriceThread(&stocksStorage, &timeUtils, &grpcClient);
     PortfolioLastPriceThread     simulatorPortfolioLastPriceThread(&timeUtils, &grpcClient);
-    OperationsThread             operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient);
-    LogsThread                   logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage);
+    OperationsThread operationsThread(&autoPilotOperationsDatabase, &instrumentsStorage, &logosStorage, &grpcClient, &optimizer);
+    LogsThread       logsThread(&autoPilotLogsDatabase, &instrumentsStorage, &logosStorage, &optimizer);
     PortfolioThread              portfolioThread(&instrumentsStorage, &logosStorage, &grpcClient);
     PortfolioLastPriceThread     autoPilotPortfolioLastPriceThread(&timeUtils, &grpcClient);
     SimulatorDecisionMakerThread simulatorDecisionMakerThread(
@@ -368,7 +370,8 @@ static int runApplication(QApplication* app)
         &logosStorage,
         &userStorage,
         &stocksStorage,
-        &simulatorRealtimeDecisionMaker
+        &simulatorRealtimeDecisionMaker,
+        &optimizer
     );
     SimulatorDateRangeDecisionMakerThread simulatorDateRangeDecisionMakerThread(
         &dirFactory,
@@ -382,7 +385,8 @@ static int runApplication(QApplication* app)
         &userStorage,
         &stocksStorage,
         &configForSimulation,
-        &simulatorDateRangeDecisionMaker
+        &simulatorDateRangeDecisionMaker,
+        &optimizer
     );
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &autoPilotRealtimeDecisionMaker, &grpcClient);
     FollowThread                 followThread(&instrumentsStorage, &grpcClient);

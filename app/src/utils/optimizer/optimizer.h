@@ -15,6 +15,13 @@ public:
     Optimizer(const Optimizer& another)            = delete;
     Optimizer& operator=(const Optimizer& another) = delete;
 
-    void optimizeOperations() override;
-    void optimizeLogs() override;
+    QList<Operation> optimizeOperations(
+        const QList<Operation>& operations, int optimizeSize, const QuantityAndCostInstruments& instruments
+    ) override;
+    QList<LogEntry> optimizeLogs(const QList<LogEntry>& entries, int optimizeSize) override;
+
+private:
+    void addInstrumentsAfterOptimization(
+        QList<Operation>& newOperations, const QList<Operation>& oldOperations, const QuantityAndCostInstruments& instruments
+    );
 };

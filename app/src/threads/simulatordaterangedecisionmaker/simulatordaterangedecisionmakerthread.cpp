@@ -41,6 +41,7 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     IStocksStorage*      stocksStorage,
     IConfig*             config,
     IDecisionMaker*      decisionMaker,
+    IOptimizer*          optimizer,
     QObject*             parent
 ) :
     ISimulatorDateRangeDecisionMakerThread(parent),
@@ -56,6 +57,7 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mStocksStorage(stocksStorage),
     mConfig(config),
     mDecisionMaker(decisionMaker),
+    mOptimizer(optimizer),
     mInitOperations(),
     mInitEntries(),
     mInitPortfolio(),

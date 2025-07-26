@@ -13,6 +13,7 @@
 #include "src/storage/logos/ilogosstorage.h"
 #include "src/storage/stocks/istocksstorage.h"
 #include "src/storage/user/iuserstorage.h"
+#include "src/utils/optimizer/ioptimizer.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -32,6 +33,7 @@ public:
         IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
         IDecisionMaker*      decisionMaker,
+        IOptimizer*          optimizer,
         QObject*             parent = nullptr
     );
     ~SimulatorDecisionMakerThread() override;
@@ -137,6 +139,7 @@ private:
     IUserStorage*                        mUserStorage;
     IStocksStorage*                      mStocksStorage;
     IDecisionMaker*                      mDecisionMaker;
+    IOptimizer*                          mOptimizer;
     Portfolio                            mPortfolio;
     QMap<QString, Stock*>                mStocksMap;   // Instrument Id => Stock
     QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble

@@ -16,6 +16,7 @@
 #include "src/storage/user/iuserstorage.h"
 #include "src/utils/fs/dir/idirfactory.h"
 #include "src/utils/fs/file/ifilefactory.h"
+#include "src/utils/optimizer/ioptimizer.h"
 #include "src/utils/settingseditor/isettingseditor.h"
 
 
@@ -38,6 +39,7 @@ public:
         IStocksStorage*      stocksStorage,
         IConfig*             config,
         IDecisionMaker*      decisionMaker,
+        IOptimizer*          optimizer,
         QObject*             parent = nullptr
     );
     ~SimulatorDateRangeDecisionMakerThread() override;
@@ -134,6 +136,7 @@ private:
     IStocksStorage*                      mStocksStorage;
     IConfig*                             mConfig;
     IDecisionMaker*                      mDecisionMaker;
+    IOptimizer*                          mOptimizer;
     QList<Operation>                     mInitOperations;
     QList<LogEntry>                      mInitEntries;
     Portfolio                            mInitPortfolio;

@@ -12,7 +12,11 @@ constexpr int OPTIMIZE_SIZE = 100000;
 
 
 LogsThread::LogsThread(
-    ILogsDatabase* logsDatabase, IInstrumentsStorage* instrumentsStorage, ILogosStorage* logosStorage, QObject* parent
+    ILogsDatabase*       logsDatabase,
+    IInstrumentsStorage* instrumentsStorage,
+    ILogosStorage*       logosStorage,
+    IOptimizer*          optimizer,
+    QObject*             parent
 ) :
     ILogsThread(parent),
     mSemaphore(),
@@ -20,6 +24,7 @@ LogsThread::LogsThread(
     mLogsDatabase(logsDatabase),
     mInstrumentsStorage(instrumentsStorage),
     mLogosStorage(logosStorage),
+    mOptimizer(optimizer),
     mAccountId(),
     mLastLogTimestamp(),
     mAmountOfLogsWithSameTimestamp(),
@@ -169,41 +174,9 @@ LogEntry LogsThread::takeIncomingEntry()
     return mIncomingEntries.takeFirst();
 }
 
-struct OptimizeLogsInfo
-{
-    explicit OptimizeLogsInfo(const QList<LogEntry>* _entries) :
-        entries(_entries)
-    {
-    }
-
-    const QList<LogEntry>* entries;
-};
-
-static void
-optimizeLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
-{
-    OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
-
-    const LogEntry* entriesArray = optimizeLogsInfo->entries->data();
-
-    LogEntry* resArray = res.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        resArray[i] = entriesArray[i];
-    }
-}
-
 void LogsThread::optimize()
 {
-    const QList<LogEntry> entries = mLogsDatabase->readLogs();
-
-    QList<LogEntry> newEntries;
-    newEntries.resizeForOverwrite(mOptimizeSize);
-
-    OptimizeLogsInfo optimizeLogsInfo(&entries);
-    processInParallel(newEntries, optimizeLogsForParallel, &optimizeLogsInfo);
-
+    QList<LogEntry> newEntries = mOptimizer->optimizeLogs(mLogsDatabase->readLogs(), mOptimizeSize);
     mAmountOfEntries = newEntries.size();
 
     emit logsRead(newEntries);
