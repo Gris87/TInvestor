@@ -1,4 +1,3 @@
-Decision maker with timestamp
 Optimizations for simulator
 Improve coverage
 Create release

@@ -106,6 +106,7 @@ SOURCES += \
     src/utils/http/httpclient.cpp \
     src/utils/logger/logger.cpp \
     src/utils/messagebox/messageboxutils.cpp \
+    src/utils/optimizer/optimizer.cpp \
     src/utils/settingseditor/settingseditor.cpp \
     src/utils/style/darkpalette.cpp \
     src/utils/timeutils/timeutils.cpp \
@@ -325,6 +326,8 @@ HEADERS += \
     src/utils/logger/logger.h \
     src/utils/messagebox/imessageboxutils.h \
     src/utils/messagebox/messageboxutils.h \
+    src/utils/optimizer/ioptimizer.h \
+    src/utils/optimizer/optimizer.h \
     src/utils/settingseditor/isettingseditor.h \
     src/utils/settingseditor/settingseditor.h \
     src/utils/style/darkpalette.h \
