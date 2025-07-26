@@ -25,7 +25,7 @@ protected:
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME))).WillOnce(Return(QVariant(SIMULATOR_MODE_REALTIME)));
-        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/startMoney"), QVariant(100000))).WillOnce(Return(QVariant(100000)));
+        EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/startMoney"), QVariant(1000000))).WillOnce(Return(QVariant(1000000)));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01"))).WillOnce(Return(QVariant("2024-01-01")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01"))).WillOnce(Return(QVariant("2025-01-01")));
         EXPECT_CALL(*settingsEditorMock, value(QString("StartSimulationDialog/bestConfig"), QVariant(false))).WillOnce(Return(QVariant(false)));
@@ -52,7 +52,7 @@ TEST_F(Test_StartSimulationDialog, Test_constructor_and_destructor)
 
 TEST_F(Test_StartSimulationDialog, Test_startMoney)
 {
-    ASSERT_EQ(dialog->startMoney(), 100000);
+    ASSERT_EQ(dialog->startMoney(), 1000000);
 
     dialog->ui->startMoneySpinBox->setValue(5000);
 
@@ -137,7 +137,7 @@ TEST_F(Test_StartSimulationDialog, Test_on_startButton_clicked)
     const InSequence seq;
 
     // clang-format off
-    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(100000)));
+    EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/startMoney"), QVariant(1000000)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/mode"),       QVariant(SIMULATOR_MODE_REALTIME)));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/fromDate"),   QVariant("2024-01-01")));
     EXPECT_CALL(*settingsEditorMock, setValue(QString("StartSimulationDialog/toDate"),     QVariant("2025-01-01")));

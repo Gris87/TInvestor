@@ -331,9 +331,11 @@ static int runApplication(QApplication* app)
     const QList<IActionDecision*> buyDecisions  = {&buyDecision1};
     const QList<IActionDecision*> sellDecisions = {&sellDecision1};
 
-    DecisionMaker simulatorRealtimeDecisionMaker(&config, &userStorage, buyDecisions, sellDecisions);
-    DecisionMaker simulatorDateRangeDecisionMaker(&configForSimulation, &userStorage, buyDecisions, sellDecisions);
-    DecisionMaker autoPilotRealtimeDecisionMaker(&config, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorDateRangeDecisionMaker(
+        &configForSimulation, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions
+    );
+    DecisionMaker autoPilotRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);

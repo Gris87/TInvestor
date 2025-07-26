@@ -6,14 +6,22 @@
 
 
 
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+constexpr float HUNDRED_PERCENT = 100.0f;
+
+
+
 DecisionMaker::DecisionMaker(
     IConfig*                       config,
+    IInstrumentsStorage*           instrumentsStorage,
     IUserStorage*                  userStorage,
     const QList<IActionDecision*>& buyDecisions,
     const QList<IActionDecision*>& sellDecisions
 ) :
     IDecisionMaker(),
     mConfig(config),
+    mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
     mBuyDecisions(buyDecisions),
     mSellDecisions(sellDecisions),
@@ -51,7 +59,7 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     updateStocksMap(stocks);
     splitStocks(portfolio, stocks, stocksForBuy, stocksForSell);
 
-    makeBuyDecisions(timestamp, stocksForBuy, keepMoney, dateRange, res);
+    makeBuyDecisions(timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
     makeSellDecisions(timestamp, stocksForSell, dateRange, res);
 
     return res;
@@ -186,8 +194,9 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
             {
                 TradingInfo tradingInfo;
 
-                tradingInfo.price = price;
-                tradingInfo.cause = cause;
+                tradingInfo.price        = price;
+                tradingInfo.expectedCost = stock->meta.turnover;
+                tradingInfo.cause        = cause;
 
                 resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
 
@@ -200,24 +209,81 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 }
 
 void DecisionMaker::makeBuyDecisions(
-    qint64 timestamp, QList<Stock*>& stocksForBuy, int /*keepMoney*/, bool dateRange, InstrumentsForTrading& res
+    qint64                 timestamp,
+    const Portfolio&       portfolio,
+    QList<Stock*>&         stocksForBuy,
+    int                    keepMoney,
+    bool                   dateRange,
+    InstrumentsForTrading& res
 )
 {
-    // TODO: Calculate total cost and optimize if no money
+    double totalCost;
+    double money;
+
+    calculateTotalCostAndMoney(portfolio, totalCost, money);
+    money -= keepMoney;
+
+    if (money <= 0)
+    {
+        return;
+    }
 
     MakeBuyDecisionsInfo makeBuyDecisionsInfo(timestamp, dateRange, &mBuyDecisions);
     processInParallel(stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
+
+    mUserStorage->readLock();
+    const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
+    mUserStorage->readUnlock();
 
     for (const InstrumentsForTrading& result : std::as_const(makeBuyDecisionsInfo.results))
     {
         for (auto it = result.constBegin(); it != result.constEnd(); ++it)
         {
-            TradingInfo tradingInfo = it.value();
+            const QString& instrumentId = it.key();
+            TradingInfo    tradingInfo  = it.value();
 
-            // TODO: Make correct cost calculation
-            tradingInfo.expectedCost = 1000.0; // NOLINT(readability-magic-numbers)
+            mInstrumentsStorage->readLock();
+            Instrument instrument = mInstrumentsStorage->getInstruments().value(instrumentId);
+            mInstrumentsStorage->readUnlock();
 
-            res.insert(it.key(), tradingInfo);
+            instrument.resetIfNotFound(instrumentId);
+
+            const double lotPrice               = instrument.lot * tradingInfo.price;
+            const double lotPriceWithCommission = lotPrice * (1 + commission);
+
+            qint64 amountOfLots;
+
+            if (mConfig->isLimitStockPurchase())
+            {
+                double cost;
+
+                if (mConfig->isLimitByTurnover())
+                {
+                    cost = qMin(
+                        totalCost * mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT,
+                        tradingInfo.expectedCost * // tradingInfo.expectedCost == stock.meta.turnover
+                            mConfig->getLimitByTurnoverPercent() / HUNDRED_PERCENT
+                    );
+                }
+                else
+                {
+                    cost = totalCost * mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+                }
+
+                amountOfLots = qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
+            }
+            else
+            {
+                amountOfLots = money / lotPriceWithCommission;
+            }
+
+            if (amountOfLots > 0)
+            {
+                tradingInfo.expectedCost  = amountOfLots * lotPrice;
+                money                    -= amountOfLots * lotPriceWithCommission;
+
+                res.insert(instrumentId, tradingInfo);
+            }
         }
     }
 }
@@ -321,5 +387,24 @@ void DecisionMaker::makeSellDecisions(qint64 timestamp, QList<Stock*>& stocksFor
     for (const InstrumentsForTrading& result : std::as_const(makeSellDecisionsInfo.results))
     {
         res.insert(result);
+    }
+}
+
+void DecisionMaker::calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money)
+{
+    totalCost = 0.0;
+    money     = 0.0;
+
+    for (const PortfolioCategoryItem& category : portfolio.positions)
+    {
+        for (const PortfolioItem& item : category.items)
+        {
+            if (item.instrumentId == RUBLE_UID)
+            {
+                money = item.cost;
+            }
+
+            totalCost += item.cost;
+        }
     }
 }

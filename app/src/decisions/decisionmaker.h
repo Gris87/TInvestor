@@ -6,6 +6,7 @@
 
 #include "src/config/iconfig.h"
 #include "src/decisions/iactiondecision.h"
+#include "src/storage/instruments/iinstrumentsstorage.h"
 #include "src/storage/user/iuserstorage.h"
 
 
@@ -15,6 +16,7 @@ class DecisionMaker : public IDecisionMaker
 public:
     DecisionMaker(
         IConfig*                       config,
+        IInstrumentsStorage*           instrumentsStorage,
         IUserStorage*                  userStorage,
         const QList<IActionDecision*>& buyDecisions,
         const QList<IActionDecision*>& sellDecisions
@@ -33,11 +35,19 @@ private:
     void splitStocks(
         const Portfolio& portfolio, const QList<Stock*>& stocks, QList<Stock*>& stocksForBuy, QList<Stock*>& stocksForSell
     );
-    void
-    makeBuyDecisions(qint64 timestamp, QList<Stock*>& stocksForBuy, int keepMoney, bool dateRange, InstrumentsForTrading& res);
+    void makeBuyDecisions(
+        qint64                 timestamp,
+        const Portfolio&       portfolio,
+        QList<Stock*>&         stocksForBuy,
+        int                    keepMoney,
+        bool                   dateRange,
+        InstrumentsForTrading& res
+    );
     void makeSellDecisions(qint64 timestamp, QList<Stock*>& stocksForSell, bool dateRange, InstrumentsForTrading& res);
+    void calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money);
 
     IConfig*                mConfig;
+    IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
     QList<IActionDecision*> mBuyDecisions;
     QList<IActionDecision*> mSellDecisions;
