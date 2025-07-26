@@ -35,9 +35,9 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 
     if (mConfig->isUseSchedule())
     {
-        QTime time      = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
-        QTime startTime = QTime(mConfig->getScheduleStartHour(), mConfig->getScheduleStartMinute());
-        QTime endTime   = QTime(mConfig->getScheduleEndHour(), mConfig->getScheduleEndMinute());
+        const QTime time      = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
+        const QTime startTime = QTime(mConfig->getScheduleStartHour(), mConfig->getScheduleStartMinute());
+        const QTime endTime   = QTime(mConfig->getScheduleEndHour(), mConfig->getScheduleEndMinute());
 
         if (time < startTime || time > endTime)
         {
@@ -144,13 +144,13 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 
     Stock** stocksArray = stocks.data();
 
+    int   dataIndex = 0;
+    float price     = 0;
+
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock* stock = stocksArray[i];
         stock->readLock();
-
-        int   dataIndex;
-        float price;
 
         if (dateRange)
         {
@@ -203,10 +203,12 @@ void DecisionMaker::makeBuyDecisions(
     qint64 timestamp, QList<Stock*>& stocksForBuy, int /*keepMoney*/, bool dateRange, InstrumentsForTrading& res
 )
 {
+    // TODO: Calculate total cost and optimize if no money
+
     MakeBuyDecisionsInfo makeBuyDecisionsInfo(timestamp, dateRange, &mBuyDecisions);
     processInParallel(stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
 
-    for (const InstrumentsForTrading& result : makeBuyDecisionsInfo.results)
+    for (const InstrumentsForTrading& result : std::as_const(makeBuyDecisionsInfo.results))
     {
         for (auto it = result.constBegin(); it != result.constEnd(); ++it)
         {
@@ -255,13 +257,13 @@ makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>&
 
     Stock** stocksArray = stocks.data();
 
+    int   dataIndex = 0;
+    float price     = 0;
+
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock* stock = stocksArray[i];
         stock->readLock();
-
-        int   dataIndex;
-        float price;
 
         if (dateRange)
         {
@@ -316,7 +318,7 @@ void DecisionMaker::makeSellDecisions(qint64 timestamp, QList<Stock*>& stocksFor
     MakeSellDecisionsInfo makeSellDecisionsInfo(timestamp, dateRange, &mSellDecisions);
     processInParallel(stocksForSell, makeSellDecisionsForParallel, &makeSellDecisionsInfo);
 
-    for (const InstrumentsForTrading& result : makeSellDecisionsInfo.results)
+    for (const InstrumentsForTrading& result : std::as_const(makeSellDecisionsInfo.results))
     {
         res.insert(result);
     }
