@@ -58,6 +58,31 @@ TEST(Test_BuyDecision1ConfigWidget, Test_updateUiFromConfig)
     // clang-format on
 }
 
+TEST(Test_BuyDecision1ConfigWidget, Test_makeReadOnly)
+{
+    const InSequence seq;
+
+    StrictMock<BuyDecision1ConfigMock> buyDecision1ConfigMock;
+
+    const BuyDecision1ConfigWidget configWidget(&buyDecision1ConfigMock);
+
+    // clang-format off
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
+    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isReadOnly(),                             false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    false);
+    // clang-format on
+
+    configWidget.makeReadOnly();
+
+    // clang-format off
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
+    ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isReadOnly(),                             true);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    true);
+    // clang-format on
+}
+
 TEST(Test_BuyDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 {
     const InSequence seq;

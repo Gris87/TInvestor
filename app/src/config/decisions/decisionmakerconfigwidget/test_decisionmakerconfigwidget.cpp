@@ -162,4 +162,18 @@ TEST_F(Test_DecisionMakerConfigWidget, Test_updateUiFromConfig)
 
     configWidget->updateUiFromConfig();
 }
+
+TEST_F(Test_DecisionMakerConfigWidget, Test_makeReadOnly)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*buyDecision1ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*buyDecision2ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*buyDecision3ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*sellDecision1ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*sellDecision2ConfigWidgetMock, makeReadOnly());
+    EXPECT_CALL(*sellDecision3ConfigWidgetMock, makeReadOnly());
+
+    configWidget->makeReadOnly();
+}
 // NOLINTEND(cppcoreguidelines-pro-type-member-init)
