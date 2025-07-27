@@ -7,14 +7,15 @@
 
 
 
-const char* const RUBLE_UID        = "a92e2e25-a698-45cc-a781-167cf465257c";
-constexpr int     LIMIT_OPERATIONS = 100000;
-constexpr int     OPTIMIZE_SIZE    = 10000;
-constexpr float   HUNDRED_PERCENT  = 100.0f;
-constexpr qint64  MS_IN_SECOND     = 1000LL;
-constexpr qint64  ONE_MINUTE       = 60LL * MS_IN_SECOND;
-constexpr qint64  ONE_HOUR         = 60LL * ONE_MINUTE;
-constexpr qint64  ONE_DAY          = 24LL * ONE_HOUR;
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+constexpr int    LIMIT_OPERATIONS = 100000;
+constexpr int    OPTIMIZE_SIZE    = 10000;
+constexpr float  HUNDRED_PERCENT  = 100.0f;
+constexpr qint64 MS_IN_SECOND     = 1000LL;
+constexpr qint64 ONE_MINUTE       = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR         = 60LL * ONE_MINUTE;
+constexpr qint64 ONE_DAY          = 24LL * ONE_HOUR;
 
 
 
@@ -75,10 +76,7 @@ void OperationsThread::run()
 
         while (true)
         {
-            if (mAmountOfEntries > mLimitOperations)
-            {
-                optimize();
-            }
+            optimize();
 
             const std::shared_ptr<tinkoff::PositionsStreamResponse> positionsStreamResponse =
                 mGrpcClient->readPositionsStream(mPositionsStream);
@@ -588,12 +586,15 @@ void OperationsThread::alignRemainedAndTotalMoneyFromPortfolio(Operation* lastOp
 
 void OperationsThread::optimize()
 {
-    QList<Operation> newOperations =
-        mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeSize, mInstruments);
-    mAmountOfEntries = newOperations.size();
+    if (mAmountOfEntries > mLimitOperations)
+    {
+        QList<Operation> newOperations =
+            mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeSize, mInstruments.keys());
+        mAmountOfEntries = newOperations.size();
 
-    emit operationsRead(newOperations);
-    mOperationsDatabase->writeOperations(newOperations);
+        emit operationsRead(newOperations);
+        mOperationsDatabase->writeOperations(newOperations);
+    }
 }
 
 bool OperationsThread::isOperationTypeWithExtAccount(tinkoff::OperationType operationType, const QString& positionUid) const

@@ -46,6 +46,28 @@ public:
     void reset() override;
     void terminateThread() override;
 
+#ifdef TESTING_MODE
+    void testSetLimitOperations(int limitOperations)
+    {
+        mLimitOperations = limitOperations;
+    }
+
+    void testSetOptimizeOperationsSize(int optimizeSize)
+    {
+        mOptimizeOperationsSize = optimizeSize;
+    }
+
+    void testSetLimitLogs(int limitLogs)
+    {
+        mLimitLogs = limitLogs;
+    }
+
+    void testSetOptimizeLogsSize(int optimizeSize)
+    {
+        mOptimizeLogsSize = optimizeSize;
+    }
+#endif
+
 private:
     void init();
     void readSimulationConfig();
@@ -129,22 +151,30 @@ private:
     QList<Operation> reverseOperations(QList<Operation>& operations);
     void             updateCostAndPart();
     void             updatePrice();
+    void             optimizeOperations();
+    void             optimizeLogs();
 
-    ISettingsEditor*                     mSettingsEditor;
-    IOperationsDatabase*                 mOperationsDatabase;
-    ILogsDatabase*                       mLogsDatabase;
-    IPortfolioDatabase*                  mPortfolioDatabase;
-    IInstrumentsStorage*                 mInstrumentsStorage;
-    ILogosStorage*                       mLogosStorage;
-    IUserStorage*                        mUserStorage;
-    IStocksStorage*                      mStocksStorage;
-    IDecisionMaker*                      mDecisionMaker;
-    IOptimizer*                          mOptimizer;
-    Portfolio                            mPortfolio;
-    QMap<QString, Stock*>                mStocksMap;   // Instrument Id => Stock
-    QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
-    bool                                 mResetted;
-    bool                                 mLoaded;
-    int                                  mStartMoney;
-    double                               mTotalMoney;
+    ISettingsEditor*                 mSettingsEditor;
+    IOperationsDatabase*             mOperationsDatabase;
+    ILogsDatabase*                   mLogsDatabase;
+    IPortfolioDatabase*              mPortfolioDatabase;
+    IInstrumentsStorage*             mInstrumentsStorage;
+    ILogosStorage*                   mLogosStorage;
+    IUserStorage*                    mUserStorage;
+    IStocksStorage*                  mStocksStorage;
+    IDecisionMaker*                  mDecisionMaker;
+    IOptimizer*                      mOptimizer;
+    Portfolio                        mPortfolio;
+    int                              mAmountOfOperations;
+    int                              mAmountOfLogs;
+    int                              mLimitOperations;
+    int                              mOptimizeOperationsSize;
+    int                              mLimitLogs;
+    int                              mOptimizeLogsSize;
+    QMap<QString, Stock*>            mStocksMap; // Instrument Id => Stock
+    QuantityAndCostDoubleInstruments mInstruments;
+    bool                             mResetted;
+    bool                             mLoaded;
+    int                              mStartMoney;
+    double                           mTotalMoney;
 };

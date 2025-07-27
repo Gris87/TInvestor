@@ -44,7 +44,7 @@ static void optimizeOperationsForParallel(
 }
 
 QList<Operation>
-Optimizer::optimizeOperations(const QList<Operation>& operations, int optimizeSize, const QuantityAndCostInstruments& instruments)
+Optimizer::optimizeOperations(const QList<Operation>& operations, int optimizeSize, const QStringList& instruments)
 {
     QList<Operation> res;
     res.resizeForOverwrite(optimizeSize);
@@ -140,7 +140,7 @@ static void addInstrumentsForParallel(
 }
 
 void Optimizer::addInstrumentsAfterOptimization(
-    QList<Operation>& newOperations, const QList<Operation>& oldOperations, const QuantityAndCostInstruments& instruments
+    QList<Operation>& newOperations, const QList<Operation>& oldOperations, const QStringList& instruments
 )
 {
     QSet<QString> newInstruments; // Instrument Id
@@ -161,11 +161,11 @@ void Optimizer::addInstrumentsAfterOptimization(
 
     QList<QString> instrumentsToAdd;
 
-    for (auto it = instruments.constBegin(); it != instruments.constEnd(); ++it)
+    for (const QString& instrumentId : instruments)
     {
-        if (!newInstruments.contains(it.key()))
+        if (!newInstruments.contains(instrumentId))
         {
-            instrumentsToAdd.append(it.key());
+            instrumentsToAdd.append(instrumentId);
         }
     }
 

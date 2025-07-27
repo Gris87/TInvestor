@@ -14,14 +14,18 @@ const QColor      GREEN_COLOR  = QColor("#2BD793"); // clazy:exclude=non-pod-glo
 const QColor      RED_COLOR    = QColor("#ED6F7E"); // clazy:exclude=non-pod-global-static
 const QColor      NORMAL_COLOR = QColor("#97AEC4"); // clazy:exclude=non-pod-global-static
 
-constexpr float  ZERO_LIMIT           = 0.0001f;
-constexpr float  HUNDRED_PERCENT      = 100.0f;
-constexpr qint64 MS_IN_SECOND         = 1000LL;
-constexpr qint64 ONE_MINUTE           = 60LL * MS_IN_SECOND;
-constexpr qint64 ONE_HOUR             = 60LL * ONE_MINUTE;
-constexpr qint64 NOTIFY_PROGRESS_STEP = 1LL * ONE_HOUR;
-const int        SECONDS_IN_MINUTE    = 60;
-const int        MINUTES_IN_HOUR      = 60;
+constexpr int    LIMIT_OPERATIONS         = 100000;
+constexpr int    OPTIMIZE_OPERATIONS_SIZE = 10000;
+constexpr int    LIMIT_LOGS               = 1000000;
+constexpr int    OPTIMIZE_LOGS_SIZE       = 10000;
+constexpr float  ZERO_LIMIT               = 0.0001f;
+constexpr float  HUNDRED_PERCENT          = 100.0f;
+constexpr qint64 MS_IN_SECOND             = 1000LL;
+constexpr qint64 ONE_MINUTE               = 60LL * MS_IN_SECOND;
+constexpr qint64 ONE_HOUR                 = 60LL * ONE_MINUTE;
+constexpr qint64 NOTIFY_PROGRESS_STEP     = 1LL * ONE_HOUR;
+const int        SECONDS_IN_MINUTE        = 60;
+const int        MINUTES_IN_HOUR          = 60;
 
 constexpr int CURRENCY_ID = 0;
 constexpr int SHARE_ID    = 1;
@@ -67,6 +71,10 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mBestOperations(),
     mBestEntries(),
     mBestPortfolio(),
+    mLimitOperations(LIMIT_OPERATIONS),
+    mOptimizeOperationsSize(OPTIMIZE_OPERATIONS_SIZE),
+    mLimitLogs(LIMIT_LOGS),
+    mOptimizeLogsSize(OPTIMIZE_LOGS_SIZE),
     mInstruments(),
     mResetted(),
     mStartMoney(),
@@ -254,6 +262,9 @@ void SimulatorDateRangeDecisionMakerThread::run()
         {
             emit bestConfigFound();
         }
+
+        optimizeOperations();
+        optimizeLogs();
 
         emit operationsRead(mBestOperations);
         emit logsRead(mBestEntries);
@@ -1041,4 +1052,22 @@ void SimulatorDateRangeDecisionMakerThread::notifyBestResult()
     }
 
     emit bestResultChanged(bestResult, color);
+}
+
+void SimulatorDateRangeDecisionMakerThread::optimizeOperations()
+{
+    if (mBestOperations.size() > mLimitOperations)
+    {
+        mBestOperations = mOptimizer->optimizeOperations(mBestOperations, mOptimizeOperationsSize, mInstruments.keys());
+        mOperationsDatabase->writeOperations(mBestOperations);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::optimizeLogs()
+{
+    if (mBestEntries.size() > mLimitLogs)
+    {
+        mBestEntries = mOptimizer->optimizeLogs(mBestEntries, mOptimizeLogsSize);
+        mLogsDatabase->writeLogs(mBestEntries);
+    }
 }

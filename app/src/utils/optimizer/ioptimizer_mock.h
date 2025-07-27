@@ -23,7 +23,7 @@ public:
     MOCK_METHOD(
         QList<Operation>,
         optimizeOperations,
-        (const QList<Operation>& operations, int optimizeSize, const QuantityAndCostInstruments& instruments),
+        (const QList<Operation>& operations, int optimizeSize, const QStringList& instruments),
         (override)
     );
     MOCK_METHOD(QList<LogEntry>, optimizeLogs, (const QList<LogEntry>& entries, int optimizeSize), (override));

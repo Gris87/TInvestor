@@ -52,10 +52,7 @@ void LogsThread::run()
 
     while (true)
     {
-        if (mAmountOfEntries > mLimitLogs)
-        {
-            optimize();
-        }
+        optimize();
 
         mSemaphore.acquire();
 
@@ -176,9 +173,12 @@ LogEntry LogsThread::takeIncomingEntry()
 
 void LogsThread::optimize()
 {
-    QList<LogEntry> newEntries = mOptimizer->optimizeLogs(mLogsDatabase->readLogs(), mOptimizeSize);
-    mAmountOfEntries           = newEntries.size();
+    if (mAmountOfEntries > mLimitLogs)
+    {
+        QList<LogEntry> newEntries = mOptimizer->optimizeLogs(mLogsDatabase->readLogs(), mOptimizeSize);
+        mAmountOfEntries           = newEntries.size();
 
-    emit logsRead(newEntries);
-    mLogsDatabase->writeLogs(newEntries);
+        emit logsRead(newEntries);
+        mLogsDatabase->writeLogs(newEntries);
+    }
 }

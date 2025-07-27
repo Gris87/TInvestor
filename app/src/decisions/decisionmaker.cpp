@@ -217,8 +217,8 @@ void DecisionMaker::makeBuyDecisions(
     InstrumentsForTrading& res
 )
 {
-    double totalCost;
-    double money;
+    double totalCost = 0.0;
+    double money     = 0.0;
 
     calculateTotalCostAndMoney(portfolio, totalCost, money);
     money -= keepMoney;
@@ -251,11 +251,11 @@ void DecisionMaker::makeBuyDecisions(
             const double lotPrice               = instrument.lot * tradingInfo.price;
             const double lotPriceWithCommission = lotPrice * (1 + commission);
 
-            qint64 amountOfLots;
+            qint64 amountOfLots = 0;
 
             if (mConfig->isLimitStockPurchase())
             {
-                double cost;
+                double cost = 0.0;
 
                 if (mConfig->isLimitByTurnover())
                 {

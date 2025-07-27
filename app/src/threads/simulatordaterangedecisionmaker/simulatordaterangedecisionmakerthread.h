@@ -52,6 +52,28 @@ public:
     void reset() override;
     void terminateThread() override;
 
+#ifdef TESTING_MODE
+    void testSetLimitOperations(int limitOperations)
+    {
+        mLimitOperations = limitOperations;
+    }
+
+    void testSetOptimizeOperationsSize(int optimizeSize)
+    {
+        mOptimizeOperationsSize = optimizeSize;
+    }
+
+    void testSetLimitLogs(int limitLogs)
+    {
+        mLimitLogs = limitLogs;
+    }
+
+    void testSetOptimizeLogsSize(int optimizeSize)
+    {
+        mOptimizeLogsSize = optimizeSize;
+    }
+#endif
+
 private:
     void init();
     void readSimulationConfig();
@@ -123,36 +145,42 @@ private:
     void             updateCostAndPart();
     void             updatePrice();
     void             notifyBestResult();
+    void             optimizeOperations();
+    void             optimizeLogs();
 
-    IDirFactory*                         mDirFactory;
-    IFileFactory*                        mFileFactory;
-    ISettingsEditor*                     mSettingsEditor;
-    IOperationsDatabase*                 mOperationsDatabase;
-    ILogsDatabase*                       mLogsDatabase;
-    IPortfolioDatabase*                  mPortfolioDatabase;
-    IInstrumentsStorage*                 mInstrumentsStorage;
-    ILogosStorage*                       mLogosStorage;
-    IUserStorage*                        mUserStorage;
-    IStocksStorage*                      mStocksStorage;
-    IConfig*                             mConfig;
-    IDecisionMaker*                      mDecisionMaker;
-    IOptimizer*                          mOptimizer;
-    QList<Operation>                     mInitOperations;
-    QList<LogEntry>                      mInitEntries;
-    Portfolio                            mInitPortfolio;
-    QList<Operation>                     mOperations;
-    QList<LogEntry>                      mEntries;
-    Portfolio                            mPortfolio;
-    QList<Operation>                     mBestOperations;
-    QList<LogEntry>                      mBestEntries;
-    Portfolio                            mBestPortfolio;
-    QMap<QString, QuantityAndCostDouble> mInstruments; // Instrument Id => QuantityAndCostDouble
-    bool                                 mResetted;
-    int                                  mStartMoney;
-    qint64                               mStartTimestamp;
-    qint64                               mEndTimestamp;
-    bool                                 mBestConfig;
-    QString                              mConfigVariants;
-    double                               mTotalMoney;
-    double                               mBestTotalMoney;
+    IDirFactory*                     mDirFactory;
+    IFileFactory*                    mFileFactory;
+    ISettingsEditor*                 mSettingsEditor;
+    IOperationsDatabase*             mOperationsDatabase;
+    ILogsDatabase*                   mLogsDatabase;
+    IPortfolioDatabase*              mPortfolioDatabase;
+    IInstrumentsStorage*             mInstrumentsStorage;
+    ILogosStorage*                   mLogosStorage;
+    IUserStorage*                    mUserStorage;
+    IStocksStorage*                  mStocksStorage;
+    IConfig*                         mConfig;
+    IDecisionMaker*                  mDecisionMaker;
+    IOptimizer*                      mOptimizer;
+    QList<Operation>                 mInitOperations;
+    QList<LogEntry>                  mInitEntries;
+    Portfolio                        mInitPortfolio;
+    QList<Operation>                 mOperations;
+    QList<LogEntry>                  mEntries;
+    Portfolio                        mPortfolio;
+    QList<Operation>                 mBestOperations;
+    QList<LogEntry>                  mBestEntries;
+    Portfolio                        mBestPortfolio;
+    int                              mLimitOperations;
+    int                              mOptimizeOperationsSize;
+    int                              mLimitLogs;
+    int                              mOptimizeLogsSize;
+    QuantityAndCostDoubleInstruments mInstruments;
+    bool                             mResetted;
+    int                              mStartMoney;
+    qint64                           mStartTimestamp;
+    qint64                           mEndTimestamp;
+    bool                             mBestConfig;
+    QString                          mConfigVariants;
+    double                           mTotalMoney;
+    double                           mBestTotalMoney;
 };

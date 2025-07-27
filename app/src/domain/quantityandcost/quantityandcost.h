@@ -25,4 +25,5 @@ struct QuantityAndCostDouble
     double cost;
 };
 
-using QuantityAndCostInstruments = QMap<QString, QuantityAndCost>; // Instrument Id => QuantityAndCost
+using QuantityAndCostInstruments       = QMap<QString, QuantityAndCost>;       // Instrument Id => QuantityAndCost
+using QuantityAndCostDoubleInstruments = QMap<QString, QuantityAndCostDouble>; // Instrument Id => QuantityAndCostDouble

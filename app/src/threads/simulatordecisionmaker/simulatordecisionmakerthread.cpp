@@ -7,8 +7,13 @@
 
 
 
-const char* const RUBLE_UID       = "a92e2e25-a698-45cc-a781-167cf465257c";
-constexpr float   HUNDRED_PERCENT = 100.0f;
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+constexpr int   LIMIT_OPERATIONS         = 100000;
+constexpr int   OPTIMIZE_OPERATIONS_SIZE = 10000;
+constexpr int   LIMIT_LOGS               = 1000000;
+constexpr int   OPTIMIZE_LOGS_SIZE       = 10000;
+constexpr float HUNDRED_PERCENT          = 100.0f;
 
 constexpr int CURRENCY_ID = 0;
 constexpr int SHARE_ID    = 1;
@@ -40,6 +45,12 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mDecisionMaker(decisionMaker),
     mOptimizer(optimizer),
     mPortfolio(),
+    mAmountOfOperations(),
+    mAmountOfLogs(),
+    mLimitOperations(LIMIT_OPERATIONS),
+    mOptimizeOperationsSize(OPTIMIZE_OPERATIONS_SIZE),
+    mLimitLogs(LIMIT_LOGS),
+    mOptimizeLogsSize(OPTIMIZE_LOGS_SIZE),
     mStocksMap(),
     mInstruments(),
     mResetted(),
@@ -167,6 +178,7 @@ void SimulatorDecisionMakerThread::initOperations()
 
     emit operationsRead(operations);
     mOperationsDatabase->writeOperations(operations);
+    mAmountOfOperations = operations.size();
 
     mTotalMoney = mStartMoney;
 }
@@ -177,6 +189,7 @@ void SimulatorDecisionMakerThread::initLogs()
 
     emit logsRead(entries);
     mLogsDatabase->writeLogs(entries);
+    mAmountOfLogs = entries.size();
 }
 
 void SimulatorDecisionMakerThread::initPortfolio()
@@ -246,8 +259,9 @@ void SimulatorDecisionMakerThread::loadOperations()
 {
     const QList<Operation> operations = mOperationsDatabase->readOperations();
     emit operationsRead(operations);
+    mAmountOfOperations = operations.size();
 
-    if (!operations.isEmpty())
+    if (mAmountOfOperations > 0)
     {
         const Operation& lastOperation = operations.constFirst(); // Since it reversed
 
@@ -259,6 +273,7 @@ void SimulatorDecisionMakerThread::loadLogs()
 {
     const QList<LogEntry> entries = mLogsDatabase->readLogs();
     emit logsRead(entries);
+    mAmountOfLogs = entries.size();
 }
 
 void SimulatorDecisionMakerThread::loadPortfolio()
@@ -314,6 +329,9 @@ void SimulatorDecisionMakerThread::simulateTrading(qint64 timestamp, const Instr
         simulateBuy(timestamp, it.key(), it.value(), operations, entries);
     }
 
+    mAmountOfOperations += operations.size();
+    mAmountOfLogs       += entries.size();
+
     if (!operations.isEmpty())
     {
         operations = reverseOperations(operations);
@@ -333,6 +351,9 @@ void SimulatorDecisionMakerThread::simulateTrading(qint64 timestamp, const Instr
 
     emit portfolioChanged(mPortfolio);
     mPortfolioDatabase->writePortfolio(mPortfolio);
+
+    optimizeOperations();
+    optimizeLogs();
 }
 
 void SimulatorDecisionMakerThread::simulateSell(
@@ -808,5 +829,30 @@ void SimulatorDecisionMakerThread::updatePrice()
             item.dailyYield        = currentCost - item.costForDailyYield;
             item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
         }
+    }
+}
+
+void SimulatorDecisionMakerThread::optimizeOperations()
+{
+    if (mAmountOfOperations > mLimitOperations)
+    {
+        QList<Operation> newOperations =
+            mOptimizer->optimizeOperations(mOperationsDatabase->readOperations(), mOptimizeOperationsSize, mInstruments.keys());
+        mAmountOfOperations = newOperations.size();
+
+        emit operationsRead(newOperations);
+        mOperationsDatabase->writeOperations(newOperations);
+    }
+}
+
+void SimulatorDecisionMakerThread::optimizeLogs()
+{
+    if (mAmountOfLogs > mLimitLogs)
+    {
+        QList<LogEntry> newEntries = mOptimizer->optimizeLogs(mLogsDatabase->readLogs(), mOptimizeLogsSize);
+        mAmountOfLogs              = newEntries.size();
+
+        emit logsRead(newEntries);
+        mLogsDatabase->writeLogs(newEntries);
     }
 }

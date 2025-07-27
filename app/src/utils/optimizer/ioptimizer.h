@@ -18,6 +18,6 @@ public:
     IOptimizer& operator=(const IOptimizer& another) = delete;
 
     virtual QList<Operation>
-    optimizeOperations(const QList<Operation>& operations, int optimizeSize, const QuantityAndCostInstruments& instruments) = 0;
-    virtual QList<LogEntry> optimizeLogs(const QList<LogEntry>& entries, int optimizeSize)                                  = 0;
+    optimizeOperations(const QList<Operation>& operations, int optimizeSize, const QStringList& instruments) = 0;
+    virtual QList<LogEntry> optimizeLogs(const QList<LogEntry>& entries, int optimizeSize)                   = 0;
 };
