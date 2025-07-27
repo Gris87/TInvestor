@@ -814,6 +814,127 @@ TEST_F(Test_MainWindow, Test_stockFilterChanged)
     mainWindow->stockFilterChanged(filter);
 }
 
+TEST_F(Test_MainWindow, Test_simulatorTotalProgressChanged)
+{
+    mainWindow->simulatorTotalProgressChanged(0, 100);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorTotalProgressBar->value(),   0);
+    ASSERT_EQ(mainWindow->ui->simulatorTotalProgressBar->maximum(), 100);
+    // clang-format on
+
+    mainWindow->simulatorTotalProgressChanged(30, 128);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorTotalProgressBar->value(),   30);
+    ASSERT_EQ(mainWindow->ui->simulatorTotalProgressBar->maximum(), 128);
+    // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_simulatorProgressChanged)
+{
+    mainWindow->simulatorProgressChanged(0, 100, "00:05:00");
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorRemainingTimeLabel->text(), "00:05:00");
+    ASSERT_EQ(mainWindow->ui->simulatorProgressBar->value(),       0);
+    ASSERT_EQ(mainWindow->ui->simulatorProgressBar->maximum(),     100);
+    // clang-format on
+
+    mainWindow->simulatorProgressChanged(30, 128, "00:00:05");
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorRemainingTimeLabel->text(), "00:00:05");
+    ASSERT_EQ(mainWindow->ui->simulatorProgressBar->value(),       30);
+    ASSERT_EQ(mainWindow->ui->simulatorProgressBar->maximum(),     128);
+    // clang-format on
+}
+
+TEST_F(Test_MainWindow, Test_simulatorBestResultChanged)
+{
+    mainWindow->simulatorBestResultChanged("-100500%", Qt::red);
+
+    ASSERT_EQ(mainWindow->ui->simulatorBestResultLabel->text(), "-100500%");
+
+    mainWindow->simulatorBestResultChanged("+111.11%", Qt::green);
+
+    ASSERT_EQ(mainWindow->ui->simulatorBestResultLabel->text(), "+111.11%");
+}
+
+TEST_F(Test_MainWindow, Test_simulatorBestConfigFound)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, bestConfigFound());
+
+    mainWindow->simulatorBestConfigFound();
+}
+
+TEST_F(Test_MainWindow, Test_simulatorOperationsRead)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, operationsRead(operations));
+
+    mainWindow->simulatorOperationsRead(operations);
+}
+
+TEST_F(Test_MainWindow, Test_simulatorOperationsAdded)
+{
+    const InSequence seq;
+
+    const QList<Operation> operations;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, operationsAdded(operations));
+
+    mainWindow->simulatorOperationsAdded(operations);
+}
+
+TEST_F(Test_MainWindow, Test_simulatorLogsRead)
+{
+    const InSequence seq;
+
+    const QList<LogEntry> entries;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, logsRead(entries));
+
+    mainWindow->simulatorLogsRead(entries);
+}
+
+TEST_F(Test_MainWindow, Test_simulatorLogAdded)
+{
+    const InSequence seq;
+
+    const LogEntry entry;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, logAdded(entry));
+
+    mainWindow->simulatorLogAdded(entry);
+}
+
+TEST_F(Test_MainWindow, Test_simulatorPortfolioChanged)
+{
+    const InSequence seq;
+
+    const Portfolio portfolio;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, portfolioChanged(portfolio));
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, portfolioChanged(portfolio));
+
+    mainWindow->simulatorPortfolioChanged(portfolio);
+}
+
+TEST_F(Test_MainWindow, Test_simulatorPortfolioLastPriceChanged)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*simulatorDecisionMakerWidgetMock, lastPriceChanged(QString("aaaaa"), FloatEq(1.5f)));
+
+    mainWindow->simulatorPortfolioLastPriceChanged("aaaaa", 1.5f);
+}
+
 TEST_F(Test_MainWindow, Test_autoPilotOperationsRead)
 {
     const InSequence seq;
@@ -836,18 +957,6 @@ TEST_F(Test_MainWindow, Test_autoPilotOperationsAdded)
     mainWindow->autoPilotOperationsAdded(operations);
 }
 
-TEST_F(Test_MainWindow, Test_autoPilotPortfolioChanged)
-{
-    const InSequence seq;
-
-    const Portfolio portfolio;
-
-    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, portfolioChanged(portfolio));
-    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, portfolioChanged(portfolio));
-
-    mainWindow->autoPilotPortfolioChanged(portfolio);
-}
-
 TEST_F(Test_MainWindow, Test_autoPilotLogsRead)
 {
     const InSequence seq;
@@ -868,6 +977,18 @@ TEST_F(Test_MainWindow, Test_autoPilotLogAdded)
     EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, logAdded(entry));
 
     mainWindow->autoPilotLogAdded(entry);
+}
+
+TEST_F(Test_MainWindow, Test_autoPilotPortfolioChanged)
+{
+    const InSequence seq;
+
+    const Portfolio portfolio;
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, portfolioChanged(portfolio));
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, portfolioChanged(portfolio));
+
+    mainWindow->autoPilotPortfolioChanged(portfolio);
 }
 
 TEST_F(Test_MainWindow, Test_autoPilotPortfolioLastPriceChanged)
@@ -1162,8 +1283,8 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
     EXPECT_CALL(*startSimulationDialogFactoryMock, newInstance(settingsEditorMock, mainWindow))
         .WillOnce(Return(std::shared_ptr<IStartSimulationDialog>(startSimulationDialogMock)));
     EXPECT_CALL(*startSimulationDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
-    EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
+    EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
     EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_REALTIME));
     EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)));
@@ -1186,6 +1307,67 @@ TEST_F(Test_MainWindow, Test_on_startSimulationButton_clicked)
 
     simulatorPortfolioLastPriceThreadMock->wait();
     simulatorDecisionMakerThreadMock->wait();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         true);
+    ASSERT_EQ(mainWindow->ui->simulationActiveSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(mainWindow->ui->startSimulationButton->text(),               "Stop simulation");
+    // clang-format on
+
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            mainWindow,
+            QString("Stop simulation"),
+            QString("Do you really want to stop simulation?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, terminateThread());
+
+    mainWindow->ui->startSimulationButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->simulationActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startSimulationButton->text(),               "Start simulation");
+    // clang-format on
+
+    startSimulationDialogMock =
+        new StrictMock<StartSimulationDialogMock>(); // Will be deleted in on_startSimulationButton_clicked
+
+    EXPECT_CALL(*startSimulationDialogFactoryMock, newInstance(settingsEditorMock, mainWindow))
+        .WillOnce(Return(std::shared_ptr<IStartSimulationDialog>(startSimulationDialogMock)));
+    EXPECT_CALL(*startSimulationDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
+    EXPECT_CALL(*startSimulationDialogMock, startMoney()).WillOnce(Return(1000000));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/StartMoney"), QVariant(1000000)));
+    EXPECT_CALL(*startSimulationDialogMock, mode()).WillOnce(Return(SIMULATOR_MODE_DATERANGE));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(SIMULATOR_MODE_DATERANGE)));
+    EXPECT_CALL(*startSimulationDialogMock, fromDate()).WillOnce(Return(QDate(2024, 1, 1)));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/FromDate"), QVariant("2024-01-01")));
+    EXPECT_CALL(*startSimulationDialogMock, toDate()).WillOnce(Return(QDate(2025, 1, 1)));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/ToDate"), QVariant("2025-01-01")));
+    EXPECT_CALL(*startSimulationDialogMock, bestConfig()).WillOnce(Return(true));
+    EXPECT_CALL(*simulatorSettingsEditorMock, setValue(QString("Options/BestConfig"), QVariant(true)));
+    EXPECT_CALL(*simulatorDecisionMakerThreadMock, reset());
+    EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, reset());
+
+    EXPECT_CALL(*simulatorSettingsEditorMock, value(QString("Options/Mode"), QVariant(SIMULATOR_MODE_REALTIME)))
+        .WillOnce(Return(QVariant(SIMULATOR_MODE_DATERANGE)));
+    EXPECT_CALL(*simulatorPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*configForSimulationMock, assign(configMock));
+    EXPECT_CALL(*simulatorDateRangeDecisionMakerThreadMock, run());
+
+    mainWindow->ui->startSimulationButton->click();
+
+    simulatorPortfolioLastPriceThreadMock->wait();
+    simulatorDateRangeDecisionMakerThreadMock->wait();
 
     // clang-format off
     ASSERT_EQ(mainWindow->ui->simulationActiveWidget->isVisible(),         true);
@@ -1259,6 +1441,129 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
         .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
     EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
+    EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return(AUTO_PILOT_MODE_INTERNAL));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_INTERNAL)));
+    EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Account"), QVariant("AAAAAA")));
+    EXPECT_CALL(*startAutoPilotDialogMock, anotherAccount()).WillOnce(Return("BBBBBB"));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/AnotherAccount"), QVariant("BBBBBB")));
+
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_VIEW)))
+        .WillOnce(Return(QVariant(AUTO_PILOT_MODE_INTERNAL)));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, value(QString("Options/Account"), QVariant("")))
+        .WillOnce(Return(QVariant("AAAAAA")));
+
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getAccounts()).WillOnce(ReturnRef(accounts));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+
+    EXPECT_CALL(*operationsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*logsThreadMock, setAccountId(QString("AAAAAA"), QString("aaaaaa")));
+    EXPECT_CALL(*portfolioThreadMock, setAccountId(QString("aaaaaa")));
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, setAccountId(QString("aaaaaa")));
+
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, setAccountName(QString("Sergio")));
+    EXPECT_CALL(*autoPilotDecisionMakerWidgetMock, showSpinners());
+
+    EXPECT_CALL(*operationsThreadMock, run());
+    EXPECT_CALL(*logsThreadMock, run());
+    EXPECT_CALL(*portfolioThreadMock, run());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, run());
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, run());
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot started")));
+
+    mainWindow->ui->startAutoPilotButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),                          0);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         true);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), true);
+    ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Stop auto-pilot");
+    // clang-format on
+
+    operationsThreadMock->wait();
+    logsThreadMock->wait();
+    portfolioThreadMock->wait();
+    autoPilotPortfolioLastPriceThreadMock->wait();
+    autoPilotDecisionMakerThreadMock->wait();
+
+    InstrumentsForTrading instruments;
+    TradingInfo           tradingInfo;
+
+    tradingInfo.price        = 100.0f;
+    tradingInfo.expectedCost = 10000.0;
+    tradingInfo.cause        = "Need to buy";
+
+    instruments["aaa-aaa"] = tradingInfo;
+
+    EXPECT_CALL(
+        *tradingThreadFactoryMock,
+        newInstance(
+            instrumentsStorageMock,
+            grpcClientMock,
+            logsThreadMock,
+            timeUtilsMock,
+            QString("aaaaaa"),
+            QString("aaa-aaa"),
+            DoubleEq(10000.0),
+            QString("Need to buy"),
+            mainWindow
+        )
+    )
+        .WillOnce(Return(tradingThreadMock));
+    EXPECT_CALL(*tradingThreadMock, run());
+
+    mainWindow->autoPilotTradeInstruments(instruments);
+
+    tradingThreadMock->wait();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),     1);
+    ASSERT_EQ(mainWindow->tradingThreads["aaa-aaa"], tradingThreadMock);
+    // clang-format on
+
+    EXPECT_CALL(
+        *messageBoxUtilsMock,
+        question(
+            mainWindow,
+            QString("Stop auto-pilot"),
+            QString("Do you really want to stop auto-pilot?"),
+            QMessageBox::Yes | QMessageBox::No,
+            QMessageBox::NoButton
+        )
+    )
+        .WillOnce(Return(QMessageBox::Yes));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(false)));
+
+    EXPECT_CALL(*logsThreadMock, addLog(LOG_LEVEL_INFO, QString(""), QString("Auto-pilot stopped")));
+
+    EXPECT_CALL(*operationsThreadMock, terminateThread());
+    EXPECT_CALL(*logsThreadMock, terminateThread());
+    EXPECT_CALL(*portfolioThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotPortfolioLastPriceThreadMock, terminateThread());
+    EXPECT_CALL(*autoPilotDecisionMakerThreadMock, terminateThread());
+    EXPECT_CALL(*followThreadMock, terminateThread());
+    EXPECT_CALL(*tradingThreadMock, terminateThread());
+
+    mainWindow->ui->startAutoPilotButton->click();
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->tradingThreads.size(),                          0);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveWidget->isVisible(),         false);
+    ASSERT_EQ(mainWindow->ui->autoPilotActiveSpinnerWidget->isSpinning(), false);
+    ASSERT_EQ(mainWindow->ui->startAutoPilotButton->text(),               "Start auto-pilot");
+    // clang-format on
+
+    startAutoPilotDialogMock = new StrictMock<StartAutoPilotDialogMock>(); // Will be deleted in on_startAutoPilotButton_clicked
+    tradingThreadMock        = new StrictMock<TradingThreadMock>();        // Will be deleted in stopAutoPilot function
+
+    EXPECT_CALL(
+        *startAutoPilotDialogFactoryMock, newInstance(userStorageMock, messageBoxUtilsMock, settingsEditorMock, mainWindow)
+    )
+        .WillOnce(Return(std::shared_ptr<IStartAutoPilotDialog>(startAutoPilotDialogMock)));
+    EXPECT_CALL(*startAutoPilotDialogMock, exec()).WillOnce(Return(QDialog::Accepted));
+    EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("General/Enabled"), QVariant(true)));
     EXPECT_CALL(*startAutoPilotDialogMock, mode()).WillOnce(Return(AUTO_PILOT_MODE_FOLLOW));
     EXPECT_CALL(*autoPilotSettingsEditorMock, setValue(QString("Options/Mode"), QVariant(AUTO_PILOT_MODE_FOLLOW)));
     EXPECT_CALL(*startAutoPilotDialogMock, account()).WillOnce(Return("AAAAAA"));
@@ -1307,15 +1612,6 @@ TEST_F(Test_MainWindow, Test_on_startAutoPilotButton_clicked)
     portfolioThreadMock->wait();
     autoPilotPortfolioLastPriceThreadMock->wait();
     followThreadMock->wait();
-
-    InstrumentsForTrading instruments;
-    TradingInfo           tradingInfo;
-
-    tradingInfo.price        = 100.0f;
-    tradingInfo.expectedCost = 10000.0;
-    tradingInfo.cause        = "Need to buy";
-
-    instruments["aaa-aaa"] = tradingInfo;
 
     EXPECT_CALL(
         *tradingThreadFactoryMock,

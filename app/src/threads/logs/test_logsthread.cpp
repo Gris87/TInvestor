@@ -96,7 +96,6 @@ TEST_F(Test_LogsThread, Test_getTimestamp)
     ASSERT_EQ(thread->getTimestamp(1200), 1201);
 }
 
-/*
 TEST_F(Test_LogsThread, Test_optimize)
 {
     const InSequence seq;
@@ -138,9 +137,9 @@ TEST_F(Test_LogsThread, Test_optimize)
 
     EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
     EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*optimizerMock, optimizeLogs(entries, 5)).WillOnce(Return(optimizedEntries));
     EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
 
     thread->testTerminateWithoutTerminate();
     thread->run();
 }
-*/

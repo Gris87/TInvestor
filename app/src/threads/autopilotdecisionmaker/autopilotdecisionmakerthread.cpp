@@ -59,7 +59,7 @@ void AutoPilotDecisionMakerThread::run()
     qDebug() << "Finish AutoPilotDecisionMakerThread";
 }
 
-void AutoPilotDecisionMakerThread::setAccount(const QString& accountId)
+void AutoPilotDecisionMakerThread::setAccountId(const QString& accountId)
 {
     const QMutexLocker lock(mMutex);
 

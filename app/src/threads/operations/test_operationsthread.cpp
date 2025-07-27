@@ -1316,7 +1316,6 @@ TEST_F(Test_OperationsThread, Test_alignRemainedAndTotalMoneyFromPortfolio)
     // clang-format on
 }
 
-/*
 TEST_F(Test_OperationsThread, Test_optimize)
 {
     const InSequence seq;
@@ -1585,11 +1584,12 @@ TEST_F(Test_OperationsThread, Test_optimize)
     )
         .WillOnce(Return(nullptr));
     EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 3, QStringList() << "bbbbb" << "ccccc"))
+        .WillOnce(Return(optimizedOperations));
     EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations));
     EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, finishPositionsStream(positionsStream));
 
     thread->run();
 }
-*/
 // NOLINTEND(readability-magic-numbers)

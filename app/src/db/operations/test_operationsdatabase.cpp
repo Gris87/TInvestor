@@ -550,3 +550,28 @@ TEST_F(Test_OperationsDatabase, Test_appendOperations)
 
     database->appendOperations(operations);
 }
+
+TEST_F(Test_OperationsDatabase, Test_deleteOperations)
+{
+    const InSequence seq;
+
+    StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in deleteOperations function
+    StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in deleteOperations function
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/autopilot/ACCOUNT_ID/operations.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
+    EXPECT_CALL(*fileMock1, remove());
+
+    database->setAutoPilotMode(true);
+    database->setAccount("ACCOUNT_ID");
+
+    database->deleteOperations();
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/operations.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
+    EXPECT_CALL(*fileMock2, remove());
+
+    database->setAutoPilotMode(false);
+
+    database->deleteOperations();
+}

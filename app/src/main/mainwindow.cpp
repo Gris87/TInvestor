@@ -659,7 +659,7 @@ void MainWindow::startAutoPilot()
 
         if (mode == AUTO_PILOT_MODE_INTERNAL)
         {
-            mAutoPilotDecisionMakerThread->setAccount(mAutoPilotAccountId);
+            mAutoPilotDecisionMakerThread->setAccountId(mAutoPilotAccountId);
         }
         else if (mode == AUTO_PILOT_MODE_FOLLOW)
         {

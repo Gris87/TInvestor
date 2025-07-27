@@ -27,7 +27,7 @@ public:
 
     void run() override;
 
-    void setAccount(const QString& accountId) override;
+    void setAccountId(const QString& accountId) override;
     void setKeepMoney(int value) override;
 
     [[nodiscard]]

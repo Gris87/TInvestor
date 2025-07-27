@@ -305,3 +305,28 @@ TEST_F(Test_LogsDatabase, Test_appendLog)
 
     database->appendLog(entry);
 }
+
+TEST_F(Test_LogsDatabase, Test_deleteLogs)
+{
+    const InSequence seq;
+
+    StrictMock<FileMock>* fileMock1 = new StrictMock<FileMock>(); // Will be deleted in deleteLogs function
+    StrictMock<FileMock>* fileMock2 = new StrictMock<FileMock>(); // Will be deleted in deleteLogs function
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/autopilot/ACCOUNT_ID/logs.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock1)));
+    EXPECT_CALL(*fileMock1, remove());
+
+    database->setAutoPilotMode(true);
+    database->setAccount("ACCOUNT_ID");
+
+    database->deleteLogs();
+
+    EXPECT_CALL(*fileFactoryMock, newInstance(appDir + "/data/simulator/logs.json"))
+        .WillOnce(Return(std::shared_ptr<IFile>(fileMock2)));
+    EXPECT_CALL(*fileMock2, remove());
+
+    database->setAutoPilotMode(false);
+
+    database->deleteLogs();
+}
