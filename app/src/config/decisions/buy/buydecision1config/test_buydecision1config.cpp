@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -133,6 +134,72 @@ TEST(Test_BuyDecision1Config, Test_load)
     ASSERT_EQ(config.getPriceFall(), 1.7f);
     ASSERT_EQ(config.getDuration(),  321);
     // clang-format on
+}
+
+TEST(Test_BuyDecision1Config, Test_fromJsonObject)
+{
+    BuyDecision1Config config;
+
+    const QString content = R"({"enabled":true,"priceFall":"1.70","duration":321})";
+
+    const simdjson::padded_string jsonData(content.toStdString());
+
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    config.fromJsonObject(doc.get_object());
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),    true);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
+    ASSERT_EQ(config.getDuration(),  321);
+    // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    lastThrownException = "";
+    config.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
+}
+
+TEST(Test_BuyDecision1Config, Test_toJsonString)
+{
+    BuyDecision1Config config;
+
+    config.setEnabled(true);
+    config.setPriceFall(1.7f);
+    config.setDuration(321);
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),    true);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
+    ASSERT_EQ(config.getDuration(),  321);
+    // clang-format on
+
+    const QString content         = config.toJsonString();
+    const QString expectedContent = R"({"enabled":true,"priceFall":"1.70","duration":321})";
+
+    ASSERT_EQ(content, expectedContent);
+}
+
+TEST(Test_BuyDecision1Config, Test_variantsAsJson)
+{
+    BuyDecision1Config config;
+
+    QStringList variants = config.variantsAsJson();
+
+    ASSERT_EQ(variants.size(), 10);
+    ASSERT_EQ(variants.at(0), R"({"enabled":false})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceFall":"3.00","duration":5})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceFall":"3.00","duration":15})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceFall":"3.00","duration":30})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"4.00","duration":5})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"4.00","duration":15})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"4.00","duration":30})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"5.00","duration":5})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"5.00","duration":15})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"5.00","duration":30})");
 }
 
 TEST(Test_BuyDecision1Config, Test_setEnabled_and_isEnabled)

@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -117,6 +118,63 @@ TEST(Test_SellDecision1Config, Test_load)
     ASSERT_EQ(config.isEnabled(),      true);
     ASSERT_EQ(config.getIncomeAbove(), 1.7f);
     // clang-format on
+}
+
+TEST(Test_SellDecision1Config, Test_fromJsonObject)
+{
+    SellDecision1Config config;
+
+    const QString content = R"({"enabled":true,"incomeAbove":"1.70"})";
+
+    const simdjson::padded_string jsonData(content.toStdString());
+
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    config.fromJsonObject(doc.get_object());
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),      true);
+    ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    lastThrownException = "";
+    config.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
+}
+
+TEST(Test_SellDecision1Config, Test_toJsonString)
+{
+    SellDecision1Config config;
+
+    config.setEnabled(true);
+    config.setIncomeAbove(1.7f);
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),      true);
+    ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    // clang-format on
+
+    const QString content         = config.toJsonString();
+    const QString expectedContent = R"({"enabled":true,"incomeAbove":"1.70"})";
+
+    ASSERT_EQ(content, expectedContent);
+}
+
+TEST(Test_SellDecision1Config, Test_variantsAsJson)
+{
+    SellDecision1Config config;
+
+    QStringList variants = config.variantsAsJson();
+
+    ASSERT_EQ(variants.size(), 4);
+    ASSERT_EQ(variants.at(0), R"({"enabled":false})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"incomeAbove":"3.00"})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"incomeAbove":"4.00"})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"incomeAbove":"5.00"})");
 }
 
 TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)

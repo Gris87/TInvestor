@@ -73,7 +73,9 @@ protected:
         fileDialogFactoryMock                = new StrictMock<FileDialogFactoryMock>();
         configMock                           = new StrictMock<ConfigMock>();
         configForSimulationMock              = new StrictMock<ConfigMock>();
+        simulationSimulatorConfigMock        = new StrictMock<DecisionMakerConfigMock>();
         simulatorConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
+        autoPilotConfigMock                  = new StrictMock<DecisionMakerConfigMock>();
         settingsEditorMock                   = new StrictMock<SettingsEditorMock>();
 
         LogFilter filter;
@@ -91,11 +93,11 @@ protected:
             newInstance(logsTableModelFactoryMock, fileDialogFactoryMock, settingsEditorMock, NotNull())
         )
             .WillOnce(Return(logsTableWidgetMock));
-        EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+        EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulationSimulatorConfigMock));
         EXPECT_CALL(
             *decisionMakerConfigWidgetFactoryMock,
             newInstance(
-                simulatorConfigMock,
+                simulationSimulatorConfigMock,
                 buyDecision1ConfigWidgetFactoryMock,
                 buyDecision2ConfigWidgetFactoryMock,
                 buyDecision3ConfigWidgetFactoryMock,
@@ -169,7 +171,9 @@ protected:
         delete fileDialogFactoryMock;
         delete configMock;
         delete configForSimulationMock;
+        delete simulationSimulatorConfigMock;
         delete simulatorConfigMock;
+        delete autoPilotConfigMock;
         delete settingsEditorMock;
     }
 
@@ -198,7 +202,9 @@ protected:
     StrictMock<FileDialogFactoryMock>*                fileDialogFactoryMock;
     StrictMock<ConfigMock>*                           configMock;
     StrictMock<ConfigMock>*                           configForSimulationMock;
+    StrictMock<DecisionMakerConfigMock>*              simulationSimulatorConfigMock;
     StrictMock<DecisionMakerConfigMock>*              simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock>*              autoPilotConfigMock;
     StrictMock<SettingsEditorMock>*                   settingsEditorMock;
 };
 
@@ -238,6 +244,33 @@ TEST_F(Test_DecisionMakerWidget, Test_showSpinners)
     ASSERT_EQ(
         decisionMakerWidget->ui->portfolioWaitingStackedWidget->currentWidget(), decisionMakerWidget->ui->portfolioWaitingPage
     );
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_bestConfigFound)
+{
+    const InSequence seq;
+
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->count(), 3);
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(0), "Operations");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(1), "Chart");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(2), "Logs");
+
+    EXPECT_CALL(*bestConfigWidgetMock, updateUiFromConfig());
+
+    decisionMakerWidget->bestConfigFound();
+
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->count(), 4);
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(0), "Operations");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(1), "Chart");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(2), "Logs");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(3), "Best config");
+
+    decisionMakerWidget->showSpinners();
+
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->count(), 3);
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(0), "Operations");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(1), "Chart");
+    ASSERT_EQ(decisionMakerWidget->ui->tabWidget->tabText(2), "Logs");
 }
 
 TEST_F(Test_DecisionMakerWidget, Test_operationsRead)
@@ -349,6 +382,17 @@ TEST_F(Test_DecisionMakerWidget, Test_updateLastPrices)
     decisionMakerWidget->updateLastPrices();
 }
 
+TEST_F(Test_DecisionMakerWidget, Test_logFilterChanged)
+{
+    const InSequence seq;
+
+    const LogFilter filter;
+
+    EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
+
+    decisionMakerWidget->logFilterChanged(filter);
+}
+
 TEST_F(Test_DecisionMakerWidget, Test_on_yieldButton_clicked)
 {
     const InSequence seq;
@@ -413,15 +457,49 @@ TEST_F(Test_DecisionMakerWidget, Test_on_totalMoneyButton_clicked)
     // clang-format on
 }
 
-TEST_F(Test_DecisionMakerWidget, Test_logFilterChanged)
+TEST_F(Test_DecisionMakerWidget, Test_on_copyToSimulatorConfigButton_clicked)
 {
     const InSequence seq;
 
-    const LogFilter filter;
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(false));
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulationSimulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, assign(simulationSimulatorConfigMock));
+    EXPECT_CALL(*configMock, save(settingsEditorMock));
 
-    EXPECT_CALL(*logsTableWidgetMock, setFilter(filter));
+    decisionMakerWidget->ui->copyToSimulatorConfigButton->click();
+}
 
-    decisionMakerWidget->logFilterChanged(filter);
+TEST_F(Test_DecisionMakerWidget, Test_on_copyToAutoPilotConfigButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(false));
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
+    EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
+    EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulationSimulatorConfigMock));
+    EXPECT_CALL(*autoPilotConfigMock, assign(simulationSimulatorConfigMock));
+    EXPECT_CALL(*configMock, save(settingsEditorMock));
+
+    decisionMakerWidget->ui->copyToAutoPilotConfigButton->click();
+}
+
+TEST_F(Test_DecisionMakerWidget, Test_on_copyToBothConfigsButton_clicked)
+{
+    const InSequence seq;
+
+    EXPECT_CALL(*configMock, setSimulatorConfigCommon(true));
+    EXPECT_CALL(*configMock, setAutoPilotConfigCommon(false));
+    EXPECT_CALL(*configMock, getSimulatorConfig()).WillOnce(Return(simulatorConfigMock));
+    EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulationSimulatorConfigMock));
+    EXPECT_CALL(*simulatorConfigMock, assign(simulationSimulatorConfigMock));
+    EXPECT_CALL(*configMock, getAutoPilotConfig()).WillOnce(Return(autoPilotConfigMock));
+    EXPECT_CALL(*configForSimulationMock, getSimulatorConfig()).WillOnce(Return(simulationSimulatorConfigMock));
+    EXPECT_CALL(*autoPilotConfigMock, assign(simulationSimulatorConfigMock));
+    EXPECT_CALL(*configMock, save(settingsEditorMock));
+
+    decisionMakerWidget->ui->copyToBothConfigsButton->click();
 }
 
 TEST_F(Test_DecisionMakerWidget, Test_saveWindowState)

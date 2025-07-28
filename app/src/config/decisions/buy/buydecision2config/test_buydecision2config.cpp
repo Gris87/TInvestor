@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/utils/exception/exception.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
 
 
@@ -149,6 +150,95 @@ TEST(Test_BuyDecision2Config, Test_load)
     ASSERT_EQ(config.getAmountOfTimes(), 7);
     ASSERT_EQ(config.getDuration(),      321);
     // clang-format on
+}
+
+TEST(Test_BuyDecision2Config, Test_fromJsonObject)
+{
+    BuyDecision2Config config;
+
+    const QString content = R"({"enabled":true,"priceDiff":"1.70","amountOfTimes":7,"duration":321})";
+
+    const simdjson::padded_string jsonData(content.toStdString());
+
+    simdjson::ondemand::parser   parser;
+    simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+    config.fromJsonObject(doc.get_object());
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),        true);
+    ASSERT_EQ(config.getPriceDiff(),     1.7f);
+    ASSERT_EQ(config.getAmountOfTimes(), 7);
+    ASSERT_EQ(config.getDuration(),      321);
+    // clang-format on
+
+    const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
+    doc                                     = parser.iterate(jsonData2);
+
+    lastThrownException = "";
+    config.fromJsonObject(doc.get_object());
+    ASSERT_EQ(lastThrownException, "Unknown parameter");
+}
+
+TEST(Test_BuyDecision2Config, Test_toJsonString)
+{
+    BuyDecision2Config config;
+
+    config.setEnabled(true);
+    config.setPriceDiff(1.7f);
+    config.setAmountOfTimes(7);
+    config.setDuration(321);
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),        true);
+    ASSERT_EQ(config.getPriceDiff(),     1.7f);
+    ASSERT_EQ(config.getAmountOfTimes(), 7);
+    ASSERT_EQ(config.getDuration(),      321);
+    // clang-format on
+
+    const QString content         = config.toJsonString();
+    const QString expectedContent = R"({"enabled":true,"priceDiff":"1.70","amountOfTimes":7,"duration":321})";
+
+    qInfo() << content;
+
+    ASSERT_EQ(content, expectedContent);
+}
+
+TEST(Test_BuyDecision2Config, Test_variantsAsJson)
+{
+    BuyDecision2Config config;
+
+    QStringList variants = config.variantsAsJson();
+
+    ASSERT_EQ(variants.size(), 28);
+    ASSERT_EQ(variants.at(0), R"({"enabled":false})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":1,"duration":5})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":1,"duration":15})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":1,"duration":30})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":2,"duration":5})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":2,"duration":15})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":2,"duration":30})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":3,"duration":5})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":3,"duration":15})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceDiff":"3.00","amountOfTimes":3,"duration":30})");
+    ASSERT_EQ(variants.at(10), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":1,"duration":5})");
+    ASSERT_EQ(variants.at(11), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":1,"duration":15})");
+    ASSERT_EQ(variants.at(12), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":1,"duration":30})");
+    ASSERT_EQ(variants.at(13), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":2,"duration":5})");
+    ASSERT_EQ(variants.at(14), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":2,"duration":15})");
+    ASSERT_EQ(variants.at(15), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":2,"duration":30})");
+    ASSERT_EQ(variants.at(16), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":3,"duration":5})");
+    ASSERT_EQ(variants.at(17), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":3,"duration":15})");
+    ASSERT_EQ(variants.at(18), R"({"enabled":true,"priceDiff":"4.00","amountOfTimes":3,"duration":30})");
+    ASSERT_EQ(variants.at(19), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":1,"duration":5})");
+    ASSERT_EQ(variants.at(20), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":1,"duration":15})");
+    ASSERT_EQ(variants.at(21), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":1,"duration":30})");
+    ASSERT_EQ(variants.at(22), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":2,"duration":5})");
+    ASSERT_EQ(variants.at(23), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":2,"duration":15})");
+    ASSERT_EQ(variants.at(24), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":2,"duration":30})");
+    ASSERT_EQ(variants.at(25), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":3,"duration":5})");
+    ASSERT_EQ(variants.at(26), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":3,"duration":15})");
+    ASSERT_EQ(variants.at(27), R"({"enabled":true,"priceDiff":"5.00","amountOfTimes":3,"duration":30})");
 }
 
 TEST(Test_BuyDecision2Config, Test_setEnabled_and_isEnabled)

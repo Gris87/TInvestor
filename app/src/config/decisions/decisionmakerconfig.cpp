@@ -232,8 +232,6 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
 
 QString DecisionMakerConfig::variantsToJsonString() const
 {
-    QString res;
-
     QList<QStringList> variants;
     QList<int>         temp;
 
@@ -247,29 +245,14 @@ QString DecisionMakerConfig::variantsToJsonString() const
     CombineVariantsInfo combineVariantsInfo(variants);
     processInParallel(temp, combineVariantsForParallel, &combineVariantsInfo);
 
-    res        = "[\n";
-    bool first = true;
+    QStringList results;
 
-    for (const QStringList& results : std::as_const(combineVariantsInfo.results))
+    for (const QStringList& res : std::as_const(combineVariantsInfo.results))
     {
-        if (!results.isEmpty())
-        {
-            if (first)
-            {
-                first = false;
-            }
-            else
-            {
-                res += ",\n";
-            }
-
-            res += results.join(",\n");
-        }
+        results.append(res);
     }
 
-    res += "\n]";
-
-    return res;
+    return "[\n" + results.join(",\n") + "\n]";
 }
 
 IBuyDecision1Config* DecisionMakerConfig::getBuyDecision1Config()

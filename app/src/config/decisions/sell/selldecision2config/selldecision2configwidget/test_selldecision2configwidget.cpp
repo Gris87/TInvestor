@@ -60,8 +60,6 @@ TEST(Test_SellDecision2ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_SellDecision2ConfigWidget, Test_makeReadOnly)
 {
-    const InSequence seq;
-
     StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
 
     const SellDecision2ConfigWidget configWidget(&sellDecision2ConfigMock);

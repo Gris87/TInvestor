@@ -60,8 +60,6 @@ TEST(Test_BuyDecision3ConfigWidget, Test_updateUiFromConfig)
 
 TEST(Test_BuyDecision3ConfigWidget, Test_makeReadOnly)
 {
-    const InSequence seq;
-
     StrictMock<BuyDecision3ConfigMock> buyDecision3ConfigMock;
 
     const BuyDecision3ConfigWidget configWidget(&buyDecision3ConfigMock);
