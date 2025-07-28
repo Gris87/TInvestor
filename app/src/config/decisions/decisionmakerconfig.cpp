@@ -145,15 +145,15 @@ void DecisionMakerConfig::fromJsonObject(simdjson::ondemand::object jsonObject) 
 
 QString DecisionMakerConfig::toJsonString() const
 {
-    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6})")
-        .arg(
-            mBuyDecision1Config->toJsonString(),
-            mBuyDecision2Config->toJsonString(),
-            mBuyDecision3Config->toJsonString(),
-            mSellDecision1Config->toJsonString(),
-            mSellDecision2Config->toJsonString(),
-            mSellDecision3Config->toJsonString()
-        );
+    const QString b1 = mBuyDecision1Config->toJsonString();
+    const QString b2 = mBuyDecision2Config->toJsonString();
+    const QString b3 = mBuyDecision3Config->toJsonString();
+
+    const QString s1 = mSellDecision1Config->toJsonString();
+    const QString s2 = mSellDecision2Config->toJsonString();
+    const QString s3 = mSellDecision3Config->toJsonString();
+
+    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6})").arg(b1, b2, b3, s1, s2, s3);
 }
 
 struct CombineVariantsInfo

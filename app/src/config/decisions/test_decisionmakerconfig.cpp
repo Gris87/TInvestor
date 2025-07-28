@@ -185,6 +185,8 @@ TEST(Test_DecisionMakerConfig, Test_load)
 
 TEST(Test_DecisionMakerConfig, Test_fromJsonObject)
 {
+    const InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -230,6 +232,8 @@ TEST(Test_DecisionMakerConfig, Test_fromJsonObject)
 
 TEST(Test_DecisionMakerConfig, Test_toJsonString)
 {
+    const InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
@@ -264,6 +268,8 @@ TEST(Test_DecisionMakerConfig, Test_toJsonString)
 
 TEST(Test_DecisionMakerConfig, Test_variantsToJsonString)
 {
+    const InSequence seq;
+
     StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
     StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
     StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;

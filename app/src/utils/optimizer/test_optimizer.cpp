@@ -4,27 +4,35 @@
 
 
 
-TEST(Test_Optimizer, Test_constructor_and_destructor)
+class Test_Optimizer : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+        optimizer = new Optimizer();
+    }
+
+    void TearDown() override
+    {
+        delete optimizer;
+    }
+
+    Optimizer* optimizer;
+};
+
+
+
+TEST_F(Test_Optimizer, Test_constructor_and_destructor)
 {
 }
 
-/*
 TEST_F(Test_Optimizer, Test_optimizeOperations)
 {
-    const InSequence seq;
-
-    EXPECT_CALL(*operationsDatabaseMock, setAccount(QString("account-hash")));
-
-    thread->setAccountId("account-hash", "account-id");
-
     QList<Operation> operations;
     QList<Operation> optimizedOperations;
 
     operations.resizeForOverwrite(11);
     optimizedOperations.resizeForOverwrite(5);
-
-    thread->testSetLimitOperations(operations.size() - 1);
-    thread->testSetOptimizeSize(optimizedOperations.size() - 2);
 
     for (int i = 0; i < operations.size() - 1; i += 2)
     {
@@ -254,50 +262,18 @@ TEST_F(Test_Optimizer, Test_optimizeOperations)
     optimizedOperations[optimizedOperations.size() - 1] = lastOperation1;
     optimizedOperations[optimizedOperations.size() - 2] = lastOperation2;
 
-    const std::shared_ptr<tinkoff::PositionsResponse> positionsResponse(new tinkoff::PositionsResponse());
+    QList<Operation> result = optimizer->optimizeOperations(operations, 3, QStringList() << "bbbbb" << "ccccc");
 
-    tinkoff::MoneyValue* money1 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money1->set_currency("usd");
-    money1->set_units(0);
-    money1->set_nano(0);
-
-    tinkoff::MoneyValue* money2 = positionsResponse->add_money(); // positionsResponse will take ownership
-    money2->set_currency("rub");
-    money2->set_units(0);
-    money2->set_nano(0);
-
-    std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
-
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
-    EXPECT_CALL(*grpcClientMock, getPositions(QThread::currentThread(), QString("account-id")))
-        .WillOnce(Return(positionsResponse));
-    EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
-    EXPECT_CALL(
-        *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Gt(1704056400000), QString(""))
-    )
-        .WillOnce(Return(nullptr));
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations));
-    EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
-    EXPECT_CALL(*grpcClientMock, finishPositionsStream(positionsStream));
-
-    thread->run();
+    ASSERT_EQ(result, optimizedOperations);
 }
-*/
 
-/*
 TEST_F(Test_Optimizer, Test_optimizeLogs)
 {
-    const InSequence seq;
-
     QList<LogEntry> entries;
     QList<LogEntry> optimizedEntries;
 
     entries.resizeForOverwrite(11);
     optimizedEntries.resizeForOverwrite(5);
-
-    thread->testSetLimitLogs(entries.size() - 1);
-    thread->testSetOptimizeSize(optimizedEntries.size());
 
     for (int i = 0; i < entries.size(); ++i)
     {
@@ -325,11 +301,7 @@ TEST_F(Test_Optimizer, Test_optimizeLogs)
         entry.message          = "Buy without reason";
     }
 
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
-    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
+    QList<LogEntry> result = optimizer->optimizeLogs(entries, 5);
 
-    thread->testTerminateWithoutTerminate();
-    thread->run();
+    ASSERT_EQ(result, optimizedEntries);
 }
-*/
