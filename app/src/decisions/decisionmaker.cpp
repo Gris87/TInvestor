@@ -43,9 +43,13 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 
     if (mConfig->isUseSchedule())
     {
-        const QTime time      = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
-        const QTime startTime = QTime(mConfig->getScheduleStartHour(), mConfig->getScheduleStartMinute());
-        const QTime endTime   = QTime(mConfig->getScheduleEndHour(), mConfig->getScheduleEndMinute());
+        const QTime time        = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
+        const int   startHour   = mConfig->getScheduleStartHour();
+        const int   startMinute = mConfig->getScheduleStartMinute();
+        const int   endHour     = mConfig->getScheduleEndHour();
+        const int   endMinute   = mConfig->getScheduleEndMinute();
+        const QTime startTime   = QTime(startHour, startMinute);
+        const QTime endTime     = QTime(endHour, endMinute);
 
         if (time < startTime || time > endTime)
         {
@@ -186,22 +190,22 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
             price     = stock->lastPrice();
         }
 
-        for (int j = 0; j < buyDecisionsSize && !parentThread->isInterruptionRequested(); ++j)
+        QString cause;
+
+        for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            const QString cause = buyDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+            cause = buyDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+        }
 
-            if (cause != "")
-            {
-                TradingInfo tradingInfo;
+        if (cause != "")
+        {
+            TradingInfo tradingInfo;
 
-                tradingInfo.price        = price;
-                tradingInfo.expectedCost = stock->meta.turnover;
-                tradingInfo.cause        = cause;
+            tradingInfo.price        = price;
+            tradingInfo.expectedCost = stock->meta.turnover;
+            tradingInfo.cause        = cause;
 
-                resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
-
-                break;
-            }
+            resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
         }
 
         stock->readUnlock();
@@ -259,15 +263,19 @@ void DecisionMaker::makeBuyDecisions(
 
                 if (mConfig->isLimitByTurnover())
                 {
+                    const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+                    const double limitByTurnoverPercent = mConfig->getLimitByTurnoverPercent() / HUNDRED_PERCENT;
+
                     cost = qMin(
-                        totalCost * mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT,
-                        tradingInfo.expectedCost * // tradingInfo.expectedCost == stock.meta.turnover
-                            mConfig->getLimitByTurnoverPercent() / HUNDRED_PERCENT
+                        totalCost * limitStockPurchasePart,
+                        tradingInfo.expectedCost * limitByTurnoverPercent // tradingInfo.expectedCost == stock.meta.turnover
                     );
                 }
                 else
                 {
-                    cost = totalCost * mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+                    const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+
+                    cost = totalCost * limitStockPurchasePart;
                 }
 
                 amountOfLots = qMin(qRound64(cost / lotPrice), static_cast<qint64>(money / lotPriceWithCommission));
@@ -357,22 +365,22 @@ makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>&
             price     = stock->lastPrice();
         }
 
-        for (int j = 0; j < sellDecisionsSize && !parentThread->isInterruptionRequested(); ++j)
+        QString cause;
+
+        for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            const QString cause = sellDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+            cause = sellDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+        }
 
-            if (cause != "")
-            {
-                TradingInfo tradingInfo;
+        if (cause != "")
+        {
+            TradingInfo tradingInfo;
 
-                tradingInfo.price        = price;
-                tradingInfo.expectedCost = 0.0;
-                tradingInfo.cause        = cause;
+            tradingInfo.price        = price;
+            tradingInfo.expectedCost = 0.0;
+            tradingInfo.cause        = cause;
 
-                resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
-
-                break;
-            }
+            resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
         }
 
         stock->readUnlock();

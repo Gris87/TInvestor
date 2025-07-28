@@ -31,9 +31,6 @@ public:
     void setKeepMoney(int value) override;
 
     [[nodiscard]]
-    QString accountId() const;
-
-    [[nodiscard]]
     int keepMoney() const;
 
     void terminateThread() override;

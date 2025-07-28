@@ -8,6 +8,14 @@
 
 
 
+const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
+
+
+
+using ::testing::Ge;
+using ::testing::InSequence;
+using ::testing::Return;
+using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 
@@ -47,6 +55,131 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_constructor_and_destructor)
 
 TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
 {
+    const InSequence seq;
+
+    thread->setAccountId("aaaaa");
+    thread->setKeepMoney(10000);
+
+    const std::shared_ptr<tinkoff::PortfolioResponse> portfolioResponse(new tinkoff::PortfolioResponse());
+
+    tinkoff::PortfolioPosition* position1 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+    tinkoff::PortfolioPosition* position2 = portfolioResponse->add_positions(); // portfolioResponse will take ownership
+
+    tinkoff::Quotation*  tinkoffQuantity1     = new tinkoff::Quotation();  // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg1 = new tinkoff::MoneyValue(); // position1 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield1   = new tinkoff::MoneyValue(); // position1 will take ownership
+
+    tinkoffQuantity1->set_units(100000);
+    tinkoffQuantity1->set_nano(0);
+
+    tinkoffCurrentPrice1->set_currency("rub");
+    tinkoffCurrentPrice1->set_units(1);
+    tinkoffCurrentPrice1->set_nano(0);
+
+    tinkoffAvgPriceFifo1->set_currency("rub");
+    tinkoffAvgPriceFifo1->set_units(1);
+    tinkoffAvgPriceFifo1->set_nano(0);
+
+    tinkoffAvgPriceWavg1->set_currency("rub");
+    tinkoffAvgPriceWavg1->set_units(1);
+    tinkoffAvgPriceWavg1->set_nano(0);
+
+    tinkoffDailyYield1->set_currency("rub");
+    tinkoffDailyYield1->set_units(0);
+    tinkoffDailyYield1->set_nano(0);
+
+    position1->set_instrument_uid(RUBLE_UID);
+    position1->set_instrument_type("currency");
+    position1->set_allocated_quantity(tinkoffQuantity1);
+    position1->set_allocated_current_price(tinkoffCurrentPrice1);
+    position1->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo1);
+    position1->set_allocated_average_position_price(tinkoffAvgPriceWavg1);
+    position1->set_allocated_daily_yield(tinkoffDailyYield1);
+
+    tinkoff::Quotation*  tinkoffQuantity2     = new tinkoff::Quotation();  // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffCurrentPrice2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceFifo2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffAvgPriceWavg2 = new tinkoff::MoneyValue(); // position2 will take ownership
+    tinkoff::MoneyValue* tinkoffDailyYield2   = new tinkoff::MoneyValue(); // position2 will take ownership
+
+    tinkoffQuantity2->set_units(400);
+    tinkoffQuantity2->set_nano(0);
+
+    tinkoffCurrentPrice2->set_currency("rub");
+    tinkoffCurrentPrice2->set_units(1000);
+    tinkoffCurrentPrice2->set_nano(0);
+
+    tinkoffAvgPriceFifo2->set_currency("rub");
+    tinkoffAvgPriceFifo2->set_units(1000);
+    tinkoffAvgPriceFifo2->set_nano(0);
+
+    tinkoffAvgPriceWavg2->set_currency("rub");
+    tinkoffAvgPriceWavg2->set_units(1000);
+    tinkoffAvgPriceWavg2->set_nano(0);
+
+    tinkoffDailyYield2->set_currency("rub");
+    tinkoffDailyYield2->set_units(0);
+    tinkoffDailyYield2->set_nano(0);
+
+    position2->set_instrument_uid("aaa-aaa");
+    position2->set_instrument_type("share");
+    position2->set_allocated_quantity(tinkoffQuantity2);
+    position2->set_allocated_current_price(tinkoffCurrentPrice2);
+    position2->set_allocated_average_position_price_fifo(tinkoffAvgPriceFifo2);
+    position2->set_allocated_average_position_price(tinkoffAvgPriceWavg2);
+    position2->set_allocated_daily_yield(tinkoffDailyYield2);
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item1;
+    PortfolioItem         item2;
+
+    item1.instrumentId = RUBLE_UID;
+    item1.showPrices   = false;
+    item1.available    = 100000.0;
+    item1.price        = 1.0f;
+    item1.avgPriceFifo = 1.0f;
+    item1.avgPriceWavg = 1.0f;
+    item1.cost         = 100000.0;
+
+    item2.instrumentId = "aaa-aaa";
+    item2.showPrices   = true;
+    item2.available    = 400.0;
+    item2.price        = 1000.0f;
+    item2.avgPriceFifo = 1000.0f;
+    item2.avgPriceWavg = 1000.0f;
+    item2.cost         = 400000.0;
+
+    category1.name = "currency";
+    category1.items.append(item1);
+
+    category2.name = "share";
+    category2.items.append(item2);
+
+    portfolio.positions << category1 << category2;
+
+    QList<Stock*> stocks;
+
+    InstrumentsForTrading instrumentsForTrading;
+    TradingInfo           tradingInfo;
+
+    tradingInfo.price        = 2000.0f;
+    tradingInfo.expectedCost = 0.0;
+    tradingInfo.cause        = "I want to sell";
+
+    instrumentsForTrading["aaa-aaa"] = tradingInfo;
+
+    EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, 10000, false))
+        .WillOnce(Return(instrumentsForTrading));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+
+    thread->run();
 }
 
 TEST_F(Test_AutoPilotDecisionMakerThread, Test_terminateThread)

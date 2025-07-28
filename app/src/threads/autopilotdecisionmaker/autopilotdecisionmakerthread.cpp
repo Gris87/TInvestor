@@ -73,13 +73,6 @@ void AutoPilotDecisionMakerThread::setKeepMoney(int value)
     mKeepMoney = value;
 }
 
-QString AutoPilotDecisionMakerThread::accountId() const
-{
-    const QMutexLocker lock(mMutex);
-
-    return mAccountId;
-}
-
 int AutoPilotDecisionMakerThread::keepMoney() const
 {
     const QMutexLocker lock(mMutex);
