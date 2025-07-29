@@ -292,12 +292,15 @@ void SimulatorDecisionMakerThread::loadPortfolio()
     {
         for (const PortfolioItem& item : std::as_const(category.items))
         {
-            QuantityAndCostDouble quantityAndCost;
+            if (item.showPrices)
+            {
+                QuantityAndCostDouble quantityAndCost;
 
-            quantityAndCost.quantity = item.available;
-            quantityAndCost.cost     = item.cost;
+                quantityAndCost.quantity = item.available;
+                quantityAndCost.cost     = item.cost;
 
-            mInstruments[item.instrumentId] = quantityAndCost;
+                mInstruments[item.instrumentId] = quantityAndCost;
+            }
         }
     }
 }

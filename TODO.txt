@@ -1,6 +1,16 @@
 Improve coverage
 Create release
 
+Normal simplest sell decision
+Normal sell decision with price changes in time range
+Normal sell decision on extra fall
+Normal simplest buy decision
+Normal buy decision with price changes in time range
+Optimize config variants
+Config for limiting CPU usage during decision making
+Improve coverage
+Create release
+
 Buy if it was sold during 24h and price is less than 1%
 Buy if fall more than 2% and price change in range 0-1% during 30 minutes
 Sell if raise more than 2% and price change in range 0-1% during 30 minutes

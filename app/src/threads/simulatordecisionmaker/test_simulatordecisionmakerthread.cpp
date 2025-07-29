@@ -599,4 +599,291 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_terminateThread)
 {
     thread->terminateThread();
 }
+
+TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLogs)
+{
+    const InSequence seq;
+
+    Logo logo;
+
+    QList<Operation> operations;
+    QList<Operation> optimizedOperations;
+
+    operations.resizeForOverwrite(11);
+    optimizedOperations.resizeForOverwrite(5);
+
+    thread->testSetLimitOperations(operations.size() - 1);
+    thread->testSetOptimizeOperationsSize(optimizedOperations.size());
+
+    for (int i = 0; i < operations.size() - 1; i += 2)
+    {
+        Operation& operation1 = operations[i];
+        Operation& operation2 = operations[i + 1];
+
+        operation1.timestamp                       = operations.size() - i;
+        operation1.instrumentId                    = "aaaaa";
+        operation1.instrumentTicker                = "aaaaa";
+        operation1.instrumentName                  = "?????";
+        operation1.description                     = "Sell 10 ivashka durashka shares";
+        operation1.price                           = 280.0f;
+        operation1.avgPriceFifo                    = 253.3f;
+        operation1.avgPriceWavg                    = 253.3f;
+        operation1.quantity                        = 10;
+        operation1.remainedQuantity                = 0;
+        operation1.payment                         = 2800.0f;
+        operation1.avgCostFifo                     = 2533.0f;
+        operation1.costFifo.units                  = 0;
+        operation1.costFifo.nano                   = 0;
+        operation1.costWavg.units                  = 0;
+        operation1.costWavg.nano                   = 0;
+        operation1.commission                      = -1.4f;
+        operation1.yield                           = 267.0f;
+        operation1.yieldWithCommission             = 265.6f;
+        operation1.yieldWithCommissionPercent      = 10.4856f;
+        operation1.inputMoney.units                = 200000;
+        operation1.inputMoney.nano                 = 0;
+        operation1.maxInputMoney.units             = 200000;
+        operation1.maxInputMoney.nano              = 0;
+        operation1.totalYieldWithCommission.units  = 265;
+        operation1.totalYieldWithCommission.nano   = -666500000;
+        operation1.totalYieldWithCommissionPercent = 0.1321667f;
+        operation1.remainedMoney.units             = 200300;
+        operation1.remainedMoney.nano              = 0;
+        operation1.totalMoney.units                = 200300;
+        operation1.totalMoney.nano                 = 0;
+        operation1.pricePrecision                  = 2;
+        operation1.paymentPrecision                = 2;
+        operation1.commissionPrecision             = 2;
+
+        operation2.timestamp                       = operations.size() - i - 1;
+        operation2.instrumentId                    = "aaaaa";
+        operation2.instrumentTicker                = "aaaaa";
+        operation2.instrumentName                  = "?????";
+        operation2.description                     = "Buy 10 ivashka durashka shares";
+        operation2.price                           = 253.3f;
+        operation2.avgPriceFifo                    = 253.3f;
+        operation2.avgPriceWavg                    = 253.3f;
+        operation2.quantity                        = 10;
+        operation2.remainedQuantity                = 10;
+        operation2.payment                         = -2533.0f;
+        operation2.avgCostFifo                     = 2533.0f;
+        operation2.costFifo.units                  = 2533;
+        operation2.costFifo.nano                   = 0;
+        operation2.costWavg.units                  = 2533;
+        operation2.costWavg.nano                   = 0;
+        operation2.commission                      = -1.2665f;
+        operation2.yield                           = 0.0f;
+        operation2.yieldWithCommission             = -1.2665f;
+        operation2.yieldWithCommissionPercent      = -0.05f;
+        operation2.inputMoney.units                = 200000;
+        operation2.inputMoney.nano                 = 0;
+        operation2.maxInputMoney.units             = 200000;
+        operation2.maxInputMoney.nano              = 0;
+        operation2.totalYieldWithCommission.units  = -1;
+        operation2.totalYieldWithCommission.nano   = -266500000;
+        operation2.totalYieldWithCommissionPercent = -0.0006332f;
+        operation2.remainedMoney.units             = 197466;
+        operation2.remainedMoney.nano              = -266500000;
+        operation2.totalMoney.units                = 199999;
+        operation2.totalMoney.nano                 = -266500000;
+        operation2.pricePrecision                  = 2;
+        operation2.paymentPrecision                = 2;
+        operation2.commissionPrecision             = 4;
+    }
+
+    for (int i = 0; i < optimizedOperations.size() - 1; i += 2)
+    {
+        Operation& operation1 = optimizedOperations[i];
+        Operation& operation2 = optimizedOperations[i + 1];
+
+        operation1.timestamp                       = operations.size() - i;
+        operation1.instrumentId                    = "aaaaa";
+        operation1.instrumentTicker                = "aaaaa";
+        operation1.instrumentName                  = "?????";
+        operation1.description                     = "Sell 10 ivashka durashka shares";
+        operation1.price                           = 280.0f;
+        operation1.avgPriceFifo                    = 253.3f;
+        operation1.avgPriceWavg                    = 253.3f;
+        operation1.quantity                        = 10;
+        operation1.remainedQuantity                = 0;
+        operation1.payment                         = 2800.0f;
+        operation1.avgCostFifo                     = 2533.0f;
+        operation1.costFifo.units                  = 0;
+        operation1.costFifo.nano                   = 0;
+        operation1.costWavg.units                  = 0;
+        operation1.costWavg.nano                   = 0;
+        operation1.commission                      = -1.4f;
+        operation1.yield                           = 267.0f;
+        operation1.yieldWithCommission             = 265.6f;
+        operation1.yieldWithCommissionPercent      = 10.4856f;
+        operation1.inputMoney.units                = 200000;
+        operation1.inputMoney.nano                 = 0;
+        operation1.maxInputMoney.units             = 200000;
+        operation1.maxInputMoney.nano              = 0;
+        operation1.totalYieldWithCommission.units  = 265;
+        operation1.totalYieldWithCommission.nano   = -666500000;
+        operation1.totalYieldWithCommissionPercent = 0.1321667f;
+        operation1.remainedMoney.units             = 200300;
+        operation1.remainedMoney.nano              = 0;
+        operation1.totalMoney.units                = 200300;
+        operation1.totalMoney.nano                 = 0;
+        operation1.pricePrecision                  = 2;
+        operation1.paymentPrecision                = 2;
+        operation1.commissionPrecision             = 2;
+
+        operation2.timestamp                       = operations.size() - i - 1;
+        operation2.instrumentId                    = "aaaaa";
+        operation2.instrumentTicker                = "aaaaa";
+        operation2.instrumentName                  = "?????";
+        operation2.description                     = "Buy 10 ivashka durashka shares";
+        operation2.price                           = 253.3f;
+        operation2.avgPriceFifo                    = 253.3f;
+        operation2.avgPriceWavg                    = 253.3f;
+        operation2.quantity                        = 10;
+        operation2.remainedQuantity                = 10;
+        operation2.payment                         = -2533.0f;
+        operation2.avgCostFifo                     = 2533.0f;
+        operation2.costFifo.units                  = 2533;
+        operation2.costFifo.nano                   = 0;
+        operation2.costWavg.units                  = 2533;
+        operation2.costWavg.nano                   = 0;
+        operation2.commission                      = -1.2665f;
+        operation2.yield                           = 0.0f;
+        operation2.yieldWithCommission             = -1.2665f;
+        operation2.yieldWithCommissionPercent      = -0.05f;
+        operation2.inputMoney.units                = 200000;
+        operation2.inputMoney.nano                 = 0;
+        operation2.maxInputMoney.units             = 200000;
+        operation2.maxInputMoney.nano              = 0;
+        operation2.totalYieldWithCommission.units  = -1;
+        operation2.totalYieldWithCommission.nano   = -266500000;
+        operation2.totalYieldWithCommissionPercent = -0.0006332f;
+        operation2.remainedMoney.units             = 197466;
+        operation2.remainedMoney.nano              = -266500000;
+        operation2.totalMoney.units                = 199999;
+        operation2.totalMoney.nano                 = -266500000;
+        operation2.pricePrecision                  = 2;
+        operation2.paymentPrecision                = 2;
+        operation2.commissionPrecision             = 4;
+    }
+
+    QList<LogEntry> entries;
+    QList<LogEntry> optimizedEntries;
+
+    entries.resizeForOverwrite(11);
+    optimizedEntries.resizeForOverwrite(5);
+
+    thread->testSetLimitLogs(entries.size() - 1);
+    thread->testSetOptimizeLogsSize(optimizedEntries.size());
+
+    for (int i = 0; i < entries.size(); ++i)
+    {
+        LogEntry& entry = entries[i];
+
+        entry.timestamp        = entries.size() - i;
+        entry.level            = LOG_LEVEL_DEBUG;
+        entry.instrumentId     = "aaaaa";
+        entry.instrumentLogo   = nullptr;
+        entry.instrumentTicker = "MAFA";
+        entry.instrumentName   = "Mathafaka";
+        entry.message          = "Buy without reason";
+    }
+
+    for (int i = 0; i < optimizedEntries.size(); ++i)
+    {
+        LogEntry& entry = optimizedEntries[i];
+
+        entry.timestamp        = entries.size() - i;
+        entry.level            = LOG_LEVEL_DEBUG;
+        entry.instrumentId     = "aaaaa";
+        entry.instrumentLogo   = nullptr;
+        entry.instrumentTicker = "MAFA";
+        entry.instrumentName   = "Mathafaka";
+        entry.message          = "Buy without reason";
+    }
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+    PortfolioItem         item1;
+    PortfolioItem         item2;
+
+    item1.instrumentId       = RUBLE_UID;
+    item1.instrumentLogo     = &logo;
+    item1.instrumentTicker   = "RUBLE";
+    item1.instrumentName     = "Ruble";
+    item1.showPrices         = false;
+    item1.available          = 899960.0;
+    item1.price              = 1.0f;
+    item1.avgPriceFifo       = 1.0f;
+    item1.avgPriceWavg       = 1.0f;
+    item1.cost               = 899960.0;
+    item1.part               = 89.9996f;
+    item1.yield              = 0.0f;
+    item1.yieldPercent       = 0.0f;
+    item1.dailyYield         = 0.0f;
+    item1.priceForDailyYield = 0.0f;
+    item1.costForDailyYield  = 0.0;
+    item1.dailyYieldPercent  = 0.0f;
+    item1.pricePrecision     = 2;
+
+    item2.instrumentId       = "aaaaa";
+    item2.instrumentLogo     = &logo;
+    item2.instrumentTicker   = "ABBA";
+    item2.instrumentName     = "Abstract Basics";
+    item2.showPrices         = true;
+    item2.available          = 500;
+    item2.price              = 250.0f;
+    item2.avgPriceFifo       = 200.0f;
+    item2.avgPriceWavg       = 200.0f;
+    item2.cost               = 100000.0;
+    item2.part               = 10.0004f;
+    item2.yield              = 25000.0f;
+    item2.yieldPercent       = 25.0f;
+    item2.dailyYield         = 25000.0f;
+    item2.priceForDailyYield = 200.0f;
+    item2.costForDailyYield  = 100000.0;
+    item2.dailyYieldPercent  = 25.0f;
+    item2.pricePrecision     = 1;
+
+    category1.id   = 0;
+    category1.name = "Currency and metals";
+    category1.cost = 899960.0;
+    category1.part = 89.9996f;
+    category1.items.append(item1);
+
+    category2.id   = 1;
+    category2.name = "Share";
+    category2.cost = 100000.0;
+    category2.part = 10.0004f;
+    category2.items.append(item2);
+
+    portfolio.positions << category1 << category2;
+
+    QList<Stock*> stocks;
+
+    InstrumentsForTrading instrumentsForTrading;
+
+    EXPECT_CALL(*settingsEditorMock, value(QString("Options/StartMoney"), QVariant(0))).WillOnce(Return(QVariant(1000000)));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*portfolioDatabaseMock, readPortfolio()).WillOnce(Return(portfolio));
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*stocksStorageMock, readLock());
+    EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, 0, false))
+        .WillOnce(Return(instrumentsForTrading));
+    EXPECT_CALL(*stocksStorageMock, readUnlock());
+    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 5, QStringList() << "aaaaa"))
+        .WillOnce(Return(optimizedOperations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations));
+    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*optimizerMock, optimizeLogs(entries, 5)).WillOnce(Return(optimizedEntries));
+    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
+
+    thread->run();
+}
 // NOLINTEND(readability-magic-numbers)
