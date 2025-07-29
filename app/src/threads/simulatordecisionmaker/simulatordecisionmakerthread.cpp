@@ -94,6 +94,9 @@ void SimulatorDecisionMakerThread::run()
         simulateTrading(QDateTime::currentMSecsSinceEpoch(), instrumentsForTrading);
     }
 
+    optimizeOperations();
+    optimizeLogs();
+
     qDebug() << "Finish SimulatorDecisionMakerThread";
 }
 
@@ -351,9 +354,6 @@ void SimulatorDecisionMakerThread::simulateTrading(qint64 timestamp, const Instr
 
     emit portfolioChanged(mPortfolio);
     mPortfolioDatabase->writePortfolio(mPortfolio);
-
-    optimizeOperations();
-    optimizeLogs();
 }
 
 void SimulatorDecisionMakerThread::simulateSell(
