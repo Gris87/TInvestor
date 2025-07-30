@@ -175,7 +175,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, 10000, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, true, 10000, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
 

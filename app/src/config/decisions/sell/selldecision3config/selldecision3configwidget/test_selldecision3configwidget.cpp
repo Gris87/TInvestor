@@ -30,31 +30,31 @@ TEST(Test_SellDecision3ConfigWidget, Test_updateUiFromConfig)
     const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
+    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
     configWidget.ui->durationSpinBox->blockSignals(true);
 
     EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(true));
     EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(4));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(2.1f));
+    EXPECT_CALL(sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(2.1f));
 
     configWidget.updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       true);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 2.1f, 0.0001f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           4);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      true);
+    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(), 2.1f, 0.0001f);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          4);
     // clang-format on
 
     EXPECT_CALL(sellDecision3ConfigMock, isEnabled()).WillOnce(Return(false));
     EXPECT_CALL(sellDecision3ConfigMock, getDuration()).WillOnce(Return(7));
-    EXPECT_CALL(sellDecision3ConfigMock, getLoseIncome()).WillOnce(Return(5.3f));
+    EXPECT_CALL(sellDecision3ConfigMock, getLoseYield()).WillOnce(Return(5.3f));
 
     configWidget.updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       false);
-    ASSERT_NEAR(configWidget.ui->loseIncomeDoubleSpinBox->value(), 5.3f, 0.0001f);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),           7);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),      false);
+    ASSERT_NEAR(configWidget.ui->loseYieldDoubleSpinBox->value(), 5.3f, 0.0001f);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->value(),          7);
     // clang-format on
 }
 
@@ -68,7 +68,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
     ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
     ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
     ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    false);
-    ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isReadOnly(),                            false);
+    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             false);
     // clang-format on
 
     configWidget.makeReadOnly();
@@ -77,7 +77,7 @@ TEST(Test_SellDecision3ConfigWidget, Test_makeReadOnly)
     ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
     ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
     ASSERT_EQ(configWidget.ui->durationSpinBox->isReadOnly(),                                    true);
-    ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isReadOnly(),                            true);
+    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isReadOnly(),                             true);
     // clang-format on
 }
 
@@ -97,20 +97,20 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
     configWidget.ui->enabledCheckBox->setChecked(true);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),         true);
+    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        true);
     // clang-format on
 
     EXPECT_CALL(sellDecision3ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->loseIncomeDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),         false);
+    ASSERT_EQ(configWidget.ui->loseYieldDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
     // clang-format on
 }
 
-TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChanged)
+TEST(Test_SellDecision3ConfigWidget, Test_on_loseYieldDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
@@ -118,15 +118,15 @@ TEST(Test_SellDecision3ConfigWidget, Test_on_loseIncomeDoubleSpinBox_valueChange
 
     const SellDecision3ConfigWidget configWidget(&sellDecision3ConfigMock);
 
-    configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(true);
-    configWidget.ui->loseIncomeDoubleSpinBox->setValue(1.0f);
-    configWidget.ui->loseIncomeDoubleSpinBox->blockSignals(false);
+    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(true);
+    configWidget.ui->loseYieldDoubleSpinBox->setValue(1.0f);
+    configWidget.ui->loseYieldDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(sellDecision3ConfigMock, setLoseIncome(2.0f));
-    configWidget.ui->loseIncomeDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(sellDecision3ConfigMock, setLoseYield(2.0f));
+    configWidget.ui->loseYieldDoubleSpinBox->setValue(2.0f);
 
-    EXPECT_CALL(sellDecision3ConfigMock, setLoseIncome(3.0f));
-    configWidget.ui->loseIncomeDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(sellDecision3ConfigMock, setLoseYield(3.0f));
+    configWidget.ui->loseYieldDoubleSpinBox->setValue(3.0f);
 }
 
 TEST(Test_SellDecision3ConfigWidget, Test_on_durationSpinBox_valueChanged)

@@ -46,7 +46,7 @@ void AutoPilotDecisionMakerThread::run()
 
         mStocksStorage->readLock();
         const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-            QDateTime::currentMSecsSinceEpoch(), portfolio, mStocksStorage->getStocks(), keepMoney(), false
+            QDateTime::currentMSecsSinceEpoch(), portfolio, mStocksStorage->getStocks(), true, keepMoney(), false
         );
         mStocksStorage->readUnlock();
 

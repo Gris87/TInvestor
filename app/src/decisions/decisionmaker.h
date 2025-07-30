@@ -11,6 +11,20 @@
 
 
 
+struct StockWithAvgPrice
+{
+    explicit StockWithAvgPrice(Stock* _stock, float _avgPrice) :
+        stock(_stock),
+        avgPrice(_avgPrice)
+    {
+    }
+
+    Stock* stock;
+    float  avgPrice;
+};
+
+
+
 class DecisionMaker : public IDecisionMaker
 {
 public:
@@ -27,15 +41,20 @@ public:
     DecisionMaker& operator=(const DecisionMaker& another) = delete;
 
     InstrumentsForTrading makeDecision(
-        qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney, bool dateRange
+        qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, bool autoPilot, int keepMoney, bool dateRange
     ) override;
 
 private:
-    void updateStocksMap(const QList<Stock*>& stocks);
-    void splitStocks(
-        const Portfolio& portfolio, const QList<Stock*>& stocks, QList<Stock*>& stocksForBuy, QList<Stock*>& stocksForSell
-    );
+    IDecisionMakerConfig* chooseDecisionConfig(bool autoPilot);
+    void                  updateStocksMap(const QList<Stock*>& stocks);
+    void                  splitStocks(
+                         const Portfolio&          portfolio,
+                         const QList<Stock*>&      stocks,
+                         QList<Stock*>&            stocksForBuy,
+                         QList<StockWithAvgPrice>& stocksForSell
+                     );
     void makeBuyDecisions(
+        IDecisionMakerConfig*  decisionConfig,
         qint64                 timestamp,
         const Portfolio&       portfolio,
         QList<Stock*>&         stocksForBuy,
@@ -43,7 +62,13 @@ private:
         bool                   dateRange,
         InstrumentsForTrading& res
     );
-    void makeSellDecisions(qint64 timestamp, QList<Stock*>& stocksForSell, bool dateRange, InstrumentsForTrading& res);
+    void makeSellDecisions(
+        IDecisionMakerConfig*     decisionConfig,
+        qint64                    timestamp,
+        QList<StockWithAvgPrice>& stocksForSell,
+        bool                      dateRange,
+        InstrumentsForTrading&    res
+    );
     void calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money);
 
     IConfig*                mConfig;

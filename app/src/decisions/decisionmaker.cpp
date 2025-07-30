@@ -36,7 +36,7 @@ DecisionMaker::~DecisionMaker()
 }
 
 InstrumentsForTrading DecisionMaker::makeDecision(
-    qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney, bool dateRange
+    qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, bool autoPilot, int keepMoney, bool dateRange
 )
 {
     InstrumentsForTrading res;
@@ -57,16 +57,33 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         }
     }
 
-    QList<Stock*> stocksForBuy;
-    QList<Stock*> stocksForSell;
+    IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(autoPilot);
+
+    QList<Stock*>            stocksForBuy;
+    QList<StockWithAvgPrice> stocksForSell;
 
     updateStocksMap(stocks);
     splitStocks(portfolio, stocks, stocksForBuy, stocksForSell);
 
-    makeBuyDecisions(timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
-    makeSellDecisions(timestamp, stocksForSell, dateRange, res);
+    makeBuyDecisions(decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
+    makeSellDecisions(decisionConfig, timestamp, stocksForSell, dateRange, res);
 
     return res;
+}
+
+IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(bool autoPilot)
+{
+    if (mConfig->isSimulatorConfigCommon())
+    {
+        return mConfig->getSimulatorConfig();
+    }
+
+    if (mConfig->isAutoPilotConfigCommon() || autoPilot)
+    {
+        return mConfig->getAutoPilotConfig();
+    }
+
+    return mConfig->getSimulatorConfig();
 }
 
 void DecisionMaker::updateStocksMap(const QList<Stock*>& stocks)
@@ -81,14 +98,14 @@ void DecisionMaker::updateStocksMap(const QList<Stock*>& stocks)
 }
 
 void DecisionMaker::splitStocks(
-    const Portfolio& portfolio, const QList<Stock*>& stocks, QList<Stock*>& stocksForBuy, QList<Stock*>& stocksForSell
+    const Portfolio& portfolio, const QList<Stock*>& stocks, QList<Stock*>& stocksForBuy, QList<StockWithAvgPrice>& stocksForSell
 )
 {
     mUserStorage->readLock();
     const bool qualifiedUser = mUserStorage->isQualified();
     mUserStorage->readUnlock();
 
-    QSet<QString> existingStocks;
+    QMap<QString, float> existingStocks; // Instrument UID => Average price
 
     for (const PortfolioCategoryItem& category : portfolio.positions)
     {
@@ -96,7 +113,7 @@ void DecisionMaker::splitStocks(
         {
             if (mStocksMap.contains(item.instrumentId))
             {
-                existingStocks.insert(item.instrumentId);
+                existingStocks[item.instrumentId] = item.avgPriceWavg;
             }
         }
     }
@@ -105,7 +122,9 @@ void DecisionMaker::splitStocks(
     {
         stock->readLock();
 
-        if (!existingStocks.contains(stock->meta.instrumentId))
+        const float avgPrice = existingStocks.value(stock->meta.instrumentId, -1);
+
+        if (avgPrice < 0)
         {
             if (qualifiedUser || !stock->meta.forQualInvestorFlag)
             {
@@ -114,7 +133,7 @@ void DecisionMaker::splitStocks(
         }
         else
         {
-            stocksForSell.append(stock);
+            stocksForSell.append(StockWithAvgPrice(stock, avgPrice));
         }
 
         stock->readUnlock();
@@ -123,7 +142,10 @@ void DecisionMaker::splitStocks(
 
 struct MakeBuyDecisionsInfo
 {
-    explicit MakeBuyDecisionsInfo(qint64 _timestamp, bool _dateRange, QList<IActionDecision*>* _buyDecisions) :
+    explicit MakeBuyDecisionsInfo(
+        IDecisionMakerConfig* _decisionConfig, qint64 _timestamp, bool _dateRange, QList<IActionDecision*>* _buyDecisions
+    ) :
+        decisionConfig(_decisionConfig),
         timestamp(_timestamp),
         dateRange(_dateRange),
         buyDecisions(_buyDecisions)
@@ -137,6 +159,7 @@ struct MakeBuyDecisionsInfo
         results.resize(cpuCount);
     }
 
+    IDecisionMakerConfig*        decisionConfig;
     qint64                       timestamp;
     bool                         dateRange;
     QList<IActionDecision*>*     buyDecisions;
@@ -148,6 +171,7 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 {
     MakeBuyDecisionsInfo* makeBuyDecisionsInfo = reinterpret_cast<MakeBuyDecisionsInfo*>(additionalArgs);
 
+    IDecisionMakerConfig*  decisionConfig    = makeBuyDecisionsInfo->decisionConfig;
     const qint64           timestamp         = makeBuyDecisionsInfo->timestamp;
     const bool             dateRange         = makeBuyDecisionsInfo->dateRange;
     IActionDecision**      buyDecisionsArray = makeBuyDecisionsInfo->buyDecisions->data();
@@ -194,7 +218,7 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 
         for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            cause = buyDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+            cause = buyDecisionsArray[j]->makeDecision(decisionConfig, stock, dateRange, dataIndex, price, 0.0f);
         }
 
         if (cause != "")
@@ -213,6 +237,7 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 }
 
 void DecisionMaker::makeBuyDecisions(
+    IDecisionMakerConfig*  decisionConfig,
     qint64                 timestamp,
     const Portfolio&       portfolio,
     QList<Stock*>&         stocksForBuy,
@@ -232,7 +257,7 @@ void DecisionMaker::makeBuyDecisions(
         return;
     }
 
-    MakeBuyDecisionsInfo makeBuyDecisionsInfo(timestamp, dateRange, &mBuyDecisions);
+    MakeBuyDecisionsInfo makeBuyDecisionsInfo(decisionConfig, timestamp, dateRange, &mBuyDecisions);
     processInParallel(stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
 
     mUserStorage->readLock();
@@ -298,7 +323,10 @@ void DecisionMaker::makeBuyDecisions(
 
 struct MakeSellDecisionsInfo
 {
-    explicit MakeSellDecisionsInfo(qint64 _timestamp, bool _dateRange, QList<IActionDecision*>* _sellDecisions) :
+    explicit MakeSellDecisionsInfo(
+        IDecisionMakerConfig* _decisionConfig, qint64 _timestamp, bool _dateRange, QList<IActionDecision*>* _sellDecisions
+    ) :
+        decisionConfig(_decisionConfig),
         timestamp(_timestamp),
         dateRange(_dateRange),
         sellDecisions(_sellDecisions)
@@ -312,31 +340,36 @@ struct MakeSellDecisionsInfo
         results.resize(cpuCount);
     }
 
+    IDecisionMakerConfig*        decisionConfig;
     qint64                       timestamp;
     bool                         dateRange;
     QList<IActionDecision*>*     sellDecisions;
     QList<InstrumentsForTrading> results;
 };
 
-static void
-makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void makeSellDecisionsForParallel(
+    QThread* parentThread, int threadId, QList<StockWithAvgPrice>& stocks, int start, int end, void* additionalArgs
+)
 {
     MakeSellDecisionsInfo* makeSellDecisionsInfo = reinterpret_cast<MakeSellDecisionsInfo*>(additionalArgs);
 
+    IDecisionMakerConfig*  decisionConfig     = makeSellDecisionsInfo->decisionConfig;
     const qint64           timestamp          = makeSellDecisionsInfo->timestamp;
     const bool             dateRange          = makeSellDecisionsInfo->dateRange;
     IActionDecision**      sellDecisionsArray = makeSellDecisionsInfo->sellDecisions->data();
     const int              sellDecisionsSize  = makeSellDecisionsInfo->sellDecisions->size();
     InstrumentsForTrading* resultsArray       = makeSellDecisionsInfo->results.data();
 
-    Stock** stocksArray = stocks.data();
+    StockWithAvgPrice* stocksArray = stocks.data();
 
     int   dataIndex = 0;
     float price     = 0;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocksArray[i];
+        Stock* stock    = stocksArray[i].stock;
+        float  avgPrice = stocksArray[i].avgPrice;
+
         stock->readLock();
 
         if (dateRange)
@@ -369,7 +402,7 @@ makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>&
 
         for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            cause = sellDecisionsArray[j]->makeDecision(stock, dateRange, dataIndex, price);
+            cause = sellDecisionsArray[j]->makeDecision(decisionConfig, stock, dateRange, dataIndex, price, avgPrice);
         }
 
         if (cause != "")
@@ -387,9 +420,15 @@ makeSellDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>&
     }
 }
 
-void DecisionMaker::makeSellDecisions(qint64 timestamp, QList<Stock*>& stocksForSell, bool dateRange, InstrumentsForTrading& res)
+void DecisionMaker::makeSellDecisions(
+    IDecisionMakerConfig*     decisionConfig,
+    qint64                    timestamp,
+    QList<StockWithAvgPrice>& stocksForSell,
+    bool                      dateRange,
+    InstrumentsForTrading&    res
+)
 {
-    MakeSellDecisionsInfo makeSellDecisionsInfo(timestamp, dateRange, &mSellDecisions);
+    MakeSellDecisionsInfo makeSellDecisionsInfo(decisionConfig, timestamp, dateRange, &mSellDecisions);
     processInParallel(stocksForSell, makeSellDecisionsForParallel, &makeSellDecisionsInfo);
 
     for (const InstrumentsForTrading& result : std::as_const(makeSellDecisionsInfo.results))

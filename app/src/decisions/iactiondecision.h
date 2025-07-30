@@ -2,6 +2,7 @@
 
 
 
+#include "src/config/decisions/idecisionmakerconfig.h"
 #include "src/domain/stock/stock.h"
 
 
@@ -15,5 +16,6 @@ public:
     IActionDecision(const IActionDecision& another)            = delete;
     IActionDecision& operator=(const IActionDecision& another) = delete;
 
-    virtual QString makeDecision(Stock* stock, bool dateRange, int dataIndex, float price) = 0;
+    virtual QString
+    makeDecision(IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice) = 0;
 };

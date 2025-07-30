@@ -15,7 +15,9 @@ BuyDecision1::~BuyDecision1()
     qDebug() << "Destroy BuyDecision1";
 }
 
-QString BuyDecision1::makeDecision(Stock* stock, bool dateRange, int dataIndex, float /*price*/)
+QString BuyDecision1::makeDecision(
+    IDecisionMakerConfig* /*config*/, Stock* stock, bool dateRange, int dataIndex, float /*price*/, float /*avgPrice*/
+)
 {
     // TODO: Remove it [BEGIN]
     const int minute = dateRange ? QDateTime::fromMSecsSinceEpoch(stock->data.at(dataIndex).timestamp).time().minute()

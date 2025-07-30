@@ -35,8 +35,8 @@ public:
     virtual void setEnabled(bool value) = 0;
     virtual bool isEnabled()            = 0;
 
-    virtual void  setLoseIncome(float value) = 0;
-    virtual float getLoseIncome()            = 0;
+    virtual void  setLoseYield(float value) = 0;
+    virtual float getLoseYield()            = 0;
 
     virtual void setDuration(int value) = 0;
     virtual int  getDuration()          = 0;

@@ -34,11 +34,11 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setIncomeAbove(float value) override;
-    float getIncomeAbove() override;
+    void  setYieldAbove(float value) override;
+    float getYieldAbove() override;
 
 private:
     QMutex* mMutex;
     bool    mEnabled;
-    float   mIncomeAbove;
+    float   mYieldAbove;
 };

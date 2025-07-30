@@ -33,6 +33,6 @@ public:
     MOCK_METHOD(void, setEnabled, (bool value), (override));
     MOCK_METHOD(bool, isEnabled, (), (override));
 
-    MOCK_METHOD(void, setIncomeAbove, (float value), (override));
-    MOCK_METHOD(float, getIncomeAbove, (), (override));
+    MOCK_METHOD(void, setYieldAbove, (float value), (override));
+    MOCK_METHOD(float, getYieldAbove, (), (override));
 };

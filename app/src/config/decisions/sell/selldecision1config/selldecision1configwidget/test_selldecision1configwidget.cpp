@@ -30,26 +30,26 @@ TEST(Test_SellDecision1ConfigWidget, Test_updateUiFromConfig)
     const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
     configWidget.ui->enabledCheckBox->blockSignals(true);
-    configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
+    configWidget.ui->yieldAboveDoubleSpinBox->blockSignals(true);
 
     EXPECT_CALL(sellDecision1ConfigMock, isEnabled()).WillOnce(Return(true));
-    EXPECT_CALL(sellDecision1ConfigMock, getIncomeAbove()).WillOnce(Return(2.1f));
+    EXPECT_CALL(sellDecision1ConfigMock, getYieldAbove()).WillOnce(Return(2.1f));
 
     configWidget.updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        true);
-    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 2.1f, 0.0001f);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       true);
+    ASSERT_NEAR(configWidget.ui->yieldAboveDoubleSpinBox->value(), 2.1f, 0.0001f);
     // clang-format on
 
     EXPECT_CALL(sellDecision1ConfigMock, isEnabled()).WillOnce(Return(false));
-    EXPECT_CALL(sellDecision1ConfigMock, getIncomeAbove()).WillOnce(Return(5.3f));
+    EXPECT_CALL(sellDecision1ConfigMock, getYieldAbove()).WillOnce(Return(5.3f));
 
     configWidget.updateUiFromConfig();
 
     // clang-format off
-    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),        false);
-    ASSERT_NEAR(configWidget.ui->incomeAboveDoubleSpinBox->value(), 5.3f, 0.0001f);
+    ASSERT_EQ(configWidget.ui->enabledCheckBox->isChecked(),       false);
+    ASSERT_NEAR(configWidget.ui->yieldAboveDoubleSpinBox->value(), 5.3f, 0.0001f);
     // clang-format on
 }
 
@@ -62,7 +62,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), false);
     ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::StrongFocus);
-    ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isReadOnly(),                           false);
+    ASSERT_EQ(configWidget.ui->yieldAboveDoubleSpinBox->isReadOnly(),                            false);
     // clang-format on
 
     configWidget.makeReadOnly();
@@ -70,7 +70,7 @@ TEST(Test_SellDecision1ConfigWidget, Test_makeReadOnly)
     // clang-format off
     ASSERT_EQ(configWidget.ui->enabledCheckBox->testAttribute(Qt::WA_TransparentForMouseEvents), true);
     ASSERT_EQ(configWidget.ui->enabledCheckBox->focusPolicy(),                                   Qt::NoFocus);
-    ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isReadOnly(),                           true);
+    ASSERT_EQ(configWidget.ui->yieldAboveDoubleSpinBox->isReadOnly(),                            true);
     // clang-format on
 }
 
@@ -88,14 +88,14 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     EXPECT_CALL(sellDecision1ConfigMock, setEnabled(true));
     configWidget.ui->enabledCheckBox->setChecked(true);
-    ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget.ui->yieldAboveDoubleSpinBox->isEnabled(), true);
 
     EXPECT_CALL(sellDecision1ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
-    ASSERT_EQ(configWidget.ui->incomeAboveDoubleSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->yieldAboveDoubleSpinBox->isEnabled(), false);
 }
 
-TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChanged)
+TEST(Test_SellDecision1ConfigWidget, Test_on_yieldAboveDoubleSpinBox_valueChanged)
 {
     const InSequence seq;
 
@@ -103,14 +103,14 @@ TEST(Test_SellDecision1ConfigWidget, Test_on_incomeAboveDoubleSpinBox_valueChang
 
     const SellDecision1ConfigWidget configWidget(&sellDecision1ConfigMock);
 
-    configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(true);
-    configWidget.ui->incomeAboveDoubleSpinBox->setValue(1.0f);
-    configWidget.ui->incomeAboveDoubleSpinBox->blockSignals(false);
+    configWidget.ui->yieldAboveDoubleSpinBox->blockSignals(true);
+    configWidget.ui->yieldAboveDoubleSpinBox->setValue(1.0f);
+    configWidget.ui->yieldAboveDoubleSpinBox->blockSignals(false);
 
-    EXPECT_CALL(sellDecision1ConfigMock, setIncomeAbove(2.0f));
-    configWidget.ui->incomeAboveDoubleSpinBox->setValue(2.0f);
+    EXPECT_CALL(sellDecision1ConfigMock, setYieldAbove(2.0f));
+    configWidget.ui->yieldAboveDoubleSpinBox->setValue(2.0f);
 
-    EXPECT_CALL(sellDecision1ConfigMock, setIncomeAbove(3.0f));
-    configWidget.ui->incomeAboveDoubleSpinBox->setValue(3.0f);
+    EXPECT_CALL(sellDecision1ConfigMock, setYieldAbove(3.0f));
+    configWidget.ui->yieldAboveDoubleSpinBox->setValue(3.0f);
 }
 // NOLINTEND(readability-magic-numbers)

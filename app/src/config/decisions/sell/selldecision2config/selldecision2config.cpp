@@ -7,9 +7,9 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT      = true;
-constexpr float INCOME_ABOVE_DEFAULT = 1.0f;
-constexpr float LOSE_INCOME_DEFAULT  = 0.1f;
+constexpr bool  ENABLED_DEFAULT     = true;
+constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
+constexpr float LOSE_YIELD_DEFAULT  = 0.1f;
 
 
 
@@ -17,8 +17,8 @@ SellDecision2Config::SellDecision2Config() :
     ISellDecision2Config(),
     mMutex(new QMutex()),
     mEnabled(),
-    mIncomeAbove(),
-    mLoseIncome()
+    mYieldAbove(),
+    mLoseYield()
 {
     qDebug() << "Create SellDecision2Config";
 }
@@ -38,9 +38,9 @@ void SellDecision2Config::assign(ISellDecision2Config* another)
 
     const SellDecision2Config& config = *dynamic_cast<SellDecision2Config*>(another);
 
-    mEnabled     = config.mEnabled;
-    mIncomeAbove = config.mIncomeAbove;
-    mLoseIncome  = config.mLoseIncome;
+    mEnabled    = config.mEnabled;
+    mYieldAbove = config.mYieldAbove;
+    mLoseYield  = config.mLoseYield;
 }
 
 void SellDecision2Config::makeDefault()
@@ -49,9 +49,9 @@ void SellDecision2Config::makeDefault()
 
     qDebug() << "Set SellDecision2Config to default";
 
-    mEnabled     = ENABLED_DEFAULT;
-    mIncomeAbove = INCOME_ABOVE_DEFAULT;
-    mLoseIncome  = LOSE_INCOME_DEFAULT;
+    mEnabled    = ENABLED_DEFAULT;
+    mYieldAbove = YIELD_ABOVE_DEFAULT;
+    mLoseYield  = LOSE_YIELD_DEFAULT;
 }
 
 void SellDecision2Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -61,9 +61,9 @@ void SellDecision2Config::save(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Save SellDecision2Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",     mEnabled);
-    settingsEditor->setValue(type + "/IncomeAbove", mIncomeAbove);
-    settingsEditor->setValue(type + "/LoseIncome",  mLoseIncome);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/YieldAbove", mYieldAbove);
+    settingsEditor->setValue(type + "/LoseYield",  mLoseYield);
     // clang-format on
 }
 
@@ -74,9 +74,9 @@ void SellDecision2Config::load(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Load SellDecision2Config";
 
     // clang-format off
-    mEnabled     = settingsEditor->value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settingsEditor->value(type + "/IncomeAbove", mIncomeAbove).toFloat();
-    mLoseIncome  = settingsEditor->value(type + "/LoseIncome",  mLoseIncome).toFloat();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mYieldAbove = settingsEditor->value(type + "/YieldAbove", mYieldAbove).toFloat();
+    mLoseYield  = settingsEditor->value(type + "/LoseYield",  mLoseYield).toFloat();
     // clang-format on
 }
 
@@ -85,14 +85,14 @@ static void configEnabledParse(SellDecision2Config* config, simdjson::ondemand::
     config->setEnabled(value.get_bool());
 }
 
-static void configIncomeAboveParse(SellDecision2Config* config, simdjson::ondemand::value value)
+static void configYieldAboveParse(SellDecision2Config* config, simdjson::ondemand::value value)
 {
-    config->setIncomeAbove(value.get_double_in_string());
+    config->setYieldAbove(value.get_double_in_string());
 }
 
-static void configLoseIncomeParse(SellDecision2Config* config, simdjson::ondemand::value value)
+static void configLoseYieldParse(SellDecision2Config* config, simdjson::ondemand::value value)
 {
-    config->setLoseIncome(value.get_double_in_string());
+    config->setLoseYield(value.get_double_in_string());
 }
 
 static void configThrowParseException(
@@ -106,9 +106,9 @@ using ParseHandler = void (*)(SellDecision2Config* config, simdjson::ondemand::v
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",     configEnabledParse    },
-    {"incomeAbove", configIncomeAboveParse},
-    {"loseIncome",  configLoseIncomeParse }
+    {"enabled",    configEnabledParse    },
+    {"yieldAbove", configYieldAboveParse},
+    {"loseYield",  configLoseYieldParse }
 };
 // clang-format on
 
@@ -125,8 +125,8 @@ void SellDecision2Config::fromJsonObject(simdjson::ondemand::object jsonObject) 
 
 QString SellDecision2Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"incomeAbove":"%2","loseIncome":"%3"})")
-        .arg(mEnabled ? "true" : "false", QString::number(mIncomeAbove, 'f', 2), QString::number(mLoseIncome, 'f', 2));
+    return QString(R"({"enabled":%1,"yieldAbove":"%2","loseYield":"%3"})")
+        .arg(mEnabled ? "true" : "false", QString::number(mYieldAbove, 'f', 2), QString::number(mLoseYield, 'f', 2));
 }
 
 QStringList SellDecision2Config::variantsAsJson() const
@@ -135,14 +135,14 @@ QStringList SellDecision2Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList incomeAboveVariants = {"3.00", "4.00", "5.00"};
-    const QStringList loseIncomeVariants  = {"0.1", "0.3", "0.7"};
+    const QStringList yieldAboveVariants = {"3.00", "4.00", "5.00"};
+    const QStringList loseYieldVariants  = {"0.1", "0.3", "0.7"};
 
-    for (const QString& incomeAbove : incomeAboveVariants)
+    for (const QString& yieldAbove : yieldAboveVariants)
     {
-        for (const QString& loseIncome : loseIncomeVariants)
+        for (const QString& loseYield : loseYieldVariants)
         {
-            res.append(QString(R"({"enabled":true,"incomeAbove":"%1","loseIncome":"%2"})").arg(incomeAbove, loseIncome));
+            res.append(QString(R"({"enabled":true,"yieldAbove":"%1","loseYield":"%2"})").arg(yieldAbove, loseYield));
         }
     }
 
@@ -163,30 +163,30 @@ bool SellDecision2Config::isEnabled()
     return mEnabled;
 }
 
-void SellDecision2Config::setIncomeAbove(float value)
+void SellDecision2Config::setYieldAbove(float value)
 {
     const QMutexLocker lock(mMutex);
 
-    mIncomeAbove = value;
+    mYieldAbove = value;
 }
 
-float SellDecision2Config::getIncomeAbove()
+float SellDecision2Config::getYieldAbove()
 {
     const QMutexLocker lock(mMutex);
 
-    return mIncomeAbove;
+    return mYieldAbove;
 }
 
-void SellDecision2Config::setLoseIncome(float value)
+void SellDecision2Config::setLoseYield(float value)
 {
     const QMutexLocker lock(mMutex);
 
-    mLoseIncome = value;
+    mLoseYield = value;
 }
 
-float SellDecision2Config::getLoseIncome()
+float SellDecision2Config::getLoseYield()
 {
     const QMutexLocker lock(mMutex);
 
-    return mLoseIncome;
+    return mLoseYield;
 }

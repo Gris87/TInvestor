@@ -4,6 +4,10 @@
 
 
 
+constexpr float HUNDRED_PERCENT = 100.0f;
+
+
+
 SellDecision1::SellDecision1() :
     IActionDecision()
 {
@@ -15,21 +19,23 @@ SellDecision1::~SellDecision1()
     qDebug() << "Destroy SellDecision1";
 }
 
-QString SellDecision1::makeDecision(Stock* stock, bool dateRange, int dataIndex, float /*price*/)
+QString SellDecision1::makeDecision(
+    IDecisionMakerConfig* config, Stock* stock, bool /*dateRange*/, int /*dataIndex*/, float price, float avgPrice
+)
 {
-    // TODO: Remove it [BEGIN]
-    const int minute = dateRange ? QDateTime::fromMSecsSinceEpoch(stock->data.at(dataIndex).timestamp).time().minute()
-                                 : QTime::currentTime().minute();
+    ISellDecision1Config* sellConfig = config->getSellDecision1Config();
 
-    const bool    needToSell = minute % 4 >= 2;
-    const QString instrumentId =
-        minute % 2 == 0 ? "48bd9002-43be-4528-abf4-dc8135ad4550" : "15dc2120-29d2-48b8-87c0-da1d95255f68";
-
-    if (needToSell && stock->meta.instrumentId == instrumentId)
+    if (sellConfig->isEnabled())
     {
-        return "I want to sell";
+        const float yield      = (price / avgPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove();
+
+        if (yield > yieldAbove)
+        {
+            return QObject::tr("Decided to sell because the price reached %1 %2 with yield %3 %%")
+                .arg(QString::number(price, 'f', stock->meta.pricePrecision), "\u20BD", QString::number(yield, 'f', 2));
+        }
     }
-    // TODO: Remove it [END]
 
     return "";
 }

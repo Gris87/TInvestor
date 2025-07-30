@@ -25,14 +25,14 @@ SellDecision1ConfigWidget::~SellDecision1ConfigWidget()
 void SellDecision1ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->incomeAboveDoubleSpinBox->setValue(mConfig->getIncomeAbove());
+    ui->yieldAboveDoubleSpinBox->setValue(mConfig->getYieldAbove());
 }
 
 void SellDecision1ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->incomeAboveDoubleSpinBox->setReadOnly(true);
+    ui->yieldAboveDoubleSpinBox->setReadOnly(true);
 }
 
 void SellDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
@@ -41,10 +41,10 @@ void SellDecision1ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::C
 
     mConfig->setEnabled(checked);
 
-    ui->incomeAboveDoubleSpinBox->setEnabled(checked);
+    ui->yieldAboveDoubleSpinBox->setEnabled(checked);
 }
 
-void SellDecision1ConfigWidget::on_incomeAboveDoubleSpinBox_valueChanged(double value)
+void SellDecision1ConfigWidget::on_yieldAboveDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setIncomeAbove(value);
+    mConfig->setYieldAbove(value);
 }

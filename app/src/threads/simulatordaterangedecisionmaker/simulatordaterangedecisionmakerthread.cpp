@@ -190,7 +190,7 @@ void SimulatorDateRangeDecisionMakerThread::run()
                     }
 
                     const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, 0, true);
+                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
 
                     if (!instrumentsForTrading.isEmpty())
                     {

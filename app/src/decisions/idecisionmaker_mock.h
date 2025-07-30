@@ -23,7 +23,12 @@ public:
     MOCK_METHOD(
         InstrumentsForTrading,
         makeDecision,
-        (qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, int keepMoney, bool dateRange),
+        (qint64               timestamp,
+         const Portfolio&     portfolio,
+         const QList<Stock*>& stocks,
+         bool                 autoPilot,
+         int                  keepMoney,
+         bool                 dateRange),
         (override)
     );
 };

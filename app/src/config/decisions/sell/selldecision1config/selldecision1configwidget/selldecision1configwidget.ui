@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell stocks if income is above</string>
+        <string>Sell stocks if yield is above</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="incomeAboveDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="yieldAboveDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>

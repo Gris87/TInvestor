@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell stocks with income from</string>
+        <string>Sell stocks with yield from</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="incomeAboveDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="yieldAboveDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -89,7 +89,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="loseIncomeDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>

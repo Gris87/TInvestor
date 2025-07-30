@@ -7,9 +7,9 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT     = true;
-constexpr float LOSE_INCOME_DEFAULT = 5.0f;
-constexpr int   DURATION_DEFAULT    = 3;
+constexpr bool  ENABLED_DEFAULT    = true;
+constexpr float LOSE_YIELD_DEFAULT = 5.0f;
+constexpr int   DURATION_DEFAULT   = 3;
 
 
 
@@ -17,7 +17,7 @@ SellDecision3Config::SellDecision3Config() :
     ISellDecision3Config(),
     mMutex(new QMutex()),
     mEnabled(),
-    mLoseIncome(),
+    mLoseYield(),
     mDuration()
 {
     qDebug() << "Create SellDecision3Config";
@@ -38,9 +38,9 @@ void SellDecision3Config::assign(ISellDecision3Config* another)
 
     const SellDecision3Config& config = *dynamic_cast<SellDecision3Config*>(another);
 
-    mEnabled    = config.mEnabled;
-    mLoseIncome = config.mLoseIncome;
-    mDuration   = config.mDuration;
+    mEnabled   = config.mEnabled;
+    mLoseYield = config.mLoseYield;
+    mDuration  = config.mDuration;
 }
 
 void SellDecision3Config::makeDefault()
@@ -49,9 +49,9 @@ void SellDecision3Config::makeDefault()
 
     qDebug() << "Set SellDecision3Config to default";
 
-    mEnabled    = ENABLED_DEFAULT;
-    mLoseIncome = LOSE_INCOME_DEFAULT;
-    mDuration   = DURATION_DEFAULT;
+    mEnabled   = ENABLED_DEFAULT;
+    mLoseYield = LOSE_YIELD_DEFAULT;
+    mDuration  = DURATION_DEFAULT;
 }
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -61,9 +61,9 @@ void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Save SellDecision3Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",    mEnabled);
-    settingsEditor->setValue(type + "/LoseIncome", mLoseIncome);
-    settingsEditor->setValue(type + "/Duration",   mDuration);
+    settingsEditor->setValue(type + "/Enabled",   mEnabled);
+    settingsEditor->setValue(type + "/LoseYield", mLoseYield);
+    settingsEditor->setValue(type + "/Duration",  mDuration);
     // clang-format on
 }
 
@@ -74,9 +74,9 @@ void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Load SellDecision3Config";
 
     // clang-format off
-    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
-    mLoseIncome = settingsEditor->value(type + "/LoseIncome", mLoseIncome).toFloat();
-    mDuration   = settingsEditor->value(type + "/Duration",   mDuration).toInt();
+    mEnabled   = settingsEditor->value(type + "/Enabled",   mEnabled).toBool();
+    mLoseYield = settingsEditor->value(type + "/LoseYield", mLoseYield).toFloat();
+    mDuration  = settingsEditor->value(type + "/Duration",  mDuration).toInt();
     // clang-format on
 }
 
@@ -85,9 +85,9 @@ static void configEnabledParse(SellDecision3Config* config, simdjson::ondemand::
     config->setEnabled(value.get_bool());
 }
 
-static void configLoseIncomeParse(SellDecision3Config* config, simdjson::ondemand::value value)
+static void configLoseYieldParse(SellDecision3Config* config, simdjson::ondemand::value value)
 {
-    config->setLoseIncome(value.get_double_in_string());
+    config->setLoseYield(value.get_double_in_string());
 }
 
 static void configDurationParse(SellDecision3Config* config, simdjson::ondemand::value value)
@@ -106,9 +106,9 @@ using ParseHandler = void (*)(SellDecision3Config* config, simdjson::ondemand::v
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",    configEnabledParse   },
-    {"loseIncome", configLoseIncomeParse},
-    {"duration",   configDurationParse  }
+    {"enabled",   configEnabledParse  },
+    {"loseYield", configLoseYieldParse},
+    {"duration",  configDurationParse }
 };
 // clang-format on
 
@@ -125,8 +125,8 @@ void SellDecision3Config::fromJsonObject(simdjson::ondemand::object jsonObject) 
 
 QString SellDecision3Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"loseIncome":"%2","duration":%3})")
-        .arg(mEnabled ? "true" : "false", QString::number(mLoseIncome, 'f', 2), QString::number(mDuration));
+    return QString(R"({"enabled":%1,"loseYield":"%2","duration":%3})")
+        .arg(mEnabled ? "true" : "false", QString::number(mLoseYield, 'f', 2), QString::number(mDuration));
 }
 
 QStringList SellDecision3Config::variantsAsJson() const
@@ -135,14 +135,14 @@ QStringList SellDecision3Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList loseIncomeVariants = {"3.00", "4.00", "5.00"};
-    const QStringList durationVariants   = {"5", "15", "30"};
+    const QStringList loseYieldVariants = {"3.00", "4.00", "5.00"};
+    const QStringList durationVariants  = {"5", "15", "30"};
 
-    for (const QString& loseIncome : loseIncomeVariants)
+    for (const QString& loseYield : loseYieldVariants)
     {
         for (const QString& duration : durationVariants)
         {
-            res.append(QString(R"({"enabled":true,"loseIncome":"%1","duration":%2})").arg(loseIncome, duration));
+            res.append(QString(R"({"enabled":true,"loseYield":"%1","duration":%2})").arg(loseYield, duration));
         }
     }
 
@@ -163,18 +163,18 @@ bool SellDecision3Config::isEnabled()
     return mEnabled;
 }
 
-void SellDecision3Config::setLoseIncome(float value)
+void SellDecision3Config::setLoseYield(float value)
 {
     const QMutexLocker lock(mMutex);
 
-    mLoseIncome = value;
+    mLoseYield = value;
 }
 
-float SellDecision3Config::getLoseIncome()
+float SellDecision3Config::getLoseYield()
 {
     const QMutexLocker lock(mMutex);
 
-    return mLoseIncome;
+    return mLoseYield;
 }
 
 void SellDecision3Config::setDuration(int value)

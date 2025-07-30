@@ -34,8 +34,8 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setLoseIncome(float value) override;
-    float getLoseIncome() override;
+    void  setLoseYield(float value) override;
+    float getLoseYield() override;
 
     void setDuration(int value) override;
     int  getDuration() override;
@@ -43,6 +43,6 @@ public:
 private:
     QMutex* mMutex;
     bool    mEnabled;
-    float   mLoseIncome;
+    float   mLoseYield;
     int     mDuration;
 };

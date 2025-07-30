@@ -82,7 +82,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="loseIncomeDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>

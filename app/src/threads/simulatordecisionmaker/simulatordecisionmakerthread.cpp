@@ -85,8 +85,9 @@ void SimulatorDecisionMakerThread::run()
     }
 
     mStocksStorage->readLock();
-    const InstrumentsForTrading& instrumentsForTrading =
-        mDecisionMaker->makeDecision(QDateTime::currentMSecsSinceEpoch(), mPortfolio, mStocksStorage->getStocks(), 0, false);
+    const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
+        QDateTime::currentMSecsSinceEpoch(), mPortfolio, mStocksStorage->getStocks(), false, 0, false
+    );
     mStocksStorage->readUnlock();
 
     if (!instrumentsForTrading.isEmpty())

@@ -7,8 +7,8 @@
 
 
 
-constexpr bool  ENABLED_DEFAULT      = true;
-constexpr float INCOME_ABOVE_DEFAULT = 1.0f;
+constexpr bool  ENABLED_DEFAULT     = true;
+constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
 
 
 
@@ -16,7 +16,7 @@ SellDecision1Config::SellDecision1Config() :
     ISellDecision1Config(),
     mMutex(new QMutex()),
     mEnabled(),
-    mIncomeAbove()
+    mYieldAbove()
 {
     qDebug() << "Create SellDecision1Config";
 }
@@ -36,8 +36,8 @@ void SellDecision1Config::assign(ISellDecision1Config* another)
 
     const SellDecision1Config& config = *dynamic_cast<SellDecision1Config*>(another);
 
-    mEnabled     = config.mEnabled;
-    mIncomeAbove = config.mIncomeAbove;
+    mEnabled    = config.mEnabled;
+    mYieldAbove = config.mYieldAbove;
 }
 
 void SellDecision1Config::makeDefault()
@@ -46,8 +46,8 @@ void SellDecision1Config::makeDefault()
 
     qDebug() << "Set SellDecision1Config to default";
 
-    mEnabled     = ENABLED_DEFAULT;
-    mIncomeAbove = INCOME_ABOVE_DEFAULT;
+    mEnabled    = ENABLED_DEFAULT;
+    mYieldAbove = YIELD_ABOVE_DEFAULT;
 }
 
 void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)
@@ -57,8 +57,8 @@ void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Save SellDecision1Config";
 
     // clang-format off
-    settingsEditor->setValue(type + "/Enabled",     mEnabled);
-    settingsEditor->setValue(type + "/IncomeAbove", mIncomeAbove);
+    settingsEditor->setValue(type + "/Enabled",    mEnabled);
+    settingsEditor->setValue(type + "/YieldAbove", mYieldAbove);
     // clang-format on
 }
 
@@ -69,8 +69,8 @@ void SellDecision1Config::load(ISettingsEditor* settingsEditor, const QString& t
     qDebug() << "Load SellDecision1Config";
 
     // clang-format off
-    mEnabled     = settingsEditor->value(type + "/Enabled",     mEnabled).toBool();
-    mIncomeAbove = settingsEditor->value(type + "/IncomeAbove", mIncomeAbove).toFloat();
+    mEnabled    = settingsEditor->value(type + "/Enabled",    mEnabled).toBool();
+    mYieldAbove = settingsEditor->value(type + "/YieldAbove", mYieldAbove).toFloat();
     // clang-format on
 }
 
@@ -79,9 +79,9 @@ static void configEnabledParse(SellDecision1Config* config, simdjson::ondemand::
     config->setEnabled(value.get_bool());
 }
 
-static void configIncomeAboveParse(SellDecision1Config* config, simdjson::ondemand::value value)
+static void configYieldAboveParse(SellDecision1Config* config, simdjson::ondemand::value value)
 {
-    config->setIncomeAbove(value.get_double_in_string());
+    config->setYieldAbove(value.get_double_in_string());
 }
 
 static void configThrowParseException(
@@ -95,8 +95,8 @@ using ParseHandler = void (*)(SellDecision1Config* config, simdjson::ondemand::v
 
 // clang-format off
 static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclude=non-pod-global-static
-    {"enabled",     configEnabledParse    },
-    {"incomeAbove", configIncomeAboveParse}
+    {"enabled",    configEnabledParse   },
+    {"yieldAbove", configYieldAboveParse}
 };
 // clang-format on
 
@@ -113,8 +113,7 @@ void SellDecision1Config::fromJsonObject(simdjson::ondemand::object jsonObject) 
 
 QString SellDecision1Config::toJsonString() const
 {
-    return QString(R"({"enabled":%1,"incomeAbove":"%2"})")
-        .arg(mEnabled ? "true" : "false", QString::number(mIncomeAbove, 'f', 2));
+    return QString(R"({"enabled":%1,"yieldAbove":"%2"})").arg(mEnabled ? "true" : "false", QString::number(mYieldAbove, 'f', 2));
 }
 
 QStringList SellDecision1Config::variantsAsJson() const
@@ -123,11 +122,11 @@ QStringList SellDecision1Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList incomeAboveVariants = {"3.00", "4.00", "5.00"};
+    const QStringList yieldAboveVariants = {"3.00", "4.00", "5.00"};
 
-    for (const QString& incomeAbove : incomeAboveVariants)
+    for (const QString& yieldAbove : yieldAboveVariants)
     {
-        res.append(QString(R"({"enabled":true,"incomeAbove":"%1"})").arg(incomeAbove));
+        res.append(QString(R"({"enabled":true,"yieldAbove":"%1"})").arg(yieldAbove));
     }
 
     return res;
@@ -147,16 +146,16 @@ bool SellDecision1Config::isEnabled()
     return mEnabled;
 }
 
-void SellDecision1Config::setIncomeAbove(float value)
+void SellDecision1Config::setYieldAbove(float value)
 {
     const QMutexLocker lock(mMutex);
 
-    mIncomeAbove = value;
+    mYieldAbove = value;
 }
 
-float SellDecision1Config::getIncomeAbove()
+float SellDecision1Config::getYieldAbove()
 {
     const QMutexLocker lock(mMutex);
 
-    return mIncomeAbove;
+    return mYieldAbove;
 }

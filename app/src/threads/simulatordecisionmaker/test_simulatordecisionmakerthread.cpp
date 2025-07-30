@@ -441,7 +441,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(portfolio));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, 0, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -632,7 +632,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), buyPortfolio, stocks, 0, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), buyPortfolio, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -801,7 +801,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), buyPortfolio2, stocks, 0, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), buyPortfolio2, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -941,7 +941,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
 
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), sellPortfolio, stocks, 0, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), sellPortfolio, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -1241,7 +1241,7 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, 0, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
     EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));

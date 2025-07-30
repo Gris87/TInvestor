@@ -25,25 +25,25 @@ TEST(Test_SellDecision1Config, Test_assign)
     SellDecision1Config config2;
 
     config.setEnabled(false);
-    config.setIncomeAbove(2.5f);
+    config.setYieldAbove(2.5f);
 
     config2.setEnabled(true);
-    config2.setIncomeAbove(1.6f);
+    config2.setYieldAbove(1.6f);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),       false);
-    ASSERT_EQ(config.getIncomeAbove(),  2.5f);
-    ASSERT_EQ(config2.isEnabled(),      true);
-    ASSERT_EQ(config2.getIncomeAbove(), 1.6f);
+    ASSERT_EQ(config.isEnabled(),      false);
+    ASSERT_EQ(config.getYieldAbove(),  2.5f);
+    ASSERT_EQ(config2.isEnabled(),     true);
+    ASSERT_EQ(config2.getYieldAbove(), 1.6f);
     // clang-format on
 
     config.assign(&config2);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),       true);
-    ASSERT_EQ(config.getIncomeAbove(),  1.6f);
-    ASSERT_EQ(config2.isEnabled(),      true);
-    ASSERT_EQ(config2.getIncomeAbove(), 1.6f);
+    ASSERT_EQ(config.isEnabled(),      true);
+    ASSERT_EQ(config.getYieldAbove(),  1.6f);
+    ASSERT_EQ(config2.isEnabled(),     true);
+    ASSERT_EQ(config2.getYieldAbove(), 1.6f);
     // clang-format on
 }
 
@@ -52,18 +52,18 @@ TEST(Test_SellDecision1Config, Test_makeDefault)
     SellDecision1Config config;
 
     config.setEnabled(false);
-    config.setIncomeAbove(2.5f);
+    config.setYieldAbove(2.5f);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      false);
-    ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    ASSERT_EQ(config.isEnabled(),     false);
+    ASSERT_EQ(config.getYieldAbove(), 2.5f);
     // clang-format on
 
     config.makeDefault();
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      true);
-    ASSERT_EQ(config.getIncomeAbove(), 1.0f);
+    ASSERT_EQ(config.isEnabled(),     true);
+    ASSERT_EQ(config.getYieldAbove(), 1.0f);
     // clang-format on
 }
 
@@ -74,18 +74,18 @@ TEST(Test_SellDecision1Config, Test_save)
     SellDecision1Config config;
 
     config.setEnabled(false);
-    config.setIncomeAbove(2.5f);
+    config.setYieldAbove(2.5f);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      false);
-    ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    ASSERT_EQ(config.isEnabled(),     false);
+    ASSERT_EQ(config.getYieldAbove(), 2.5f);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),     QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/IncomeAbove"), QVariant(2.5f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),    QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/YieldAbove"), QVariant(2.5f)));
     // clang-format on
 
     config.save(&settingsEditorMock, "BLAH");
@@ -98,25 +98,25 @@ TEST(Test_SellDecision1Config, Test_load)
     SellDecision1Config config;
 
     config.setEnabled(false);
-    config.setIncomeAbove(2.5f);
+    config.setYieldAbove(2.5f);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      false);
-    ASSERT_EQ(config.getIncomeAbove(), 2.5f);
+    ASSERT_EQ(config.isEnabled(),     false);
+    ASSERT_EQ(config.getYieldAbove(), 2.5f);
     // clang-format on
 
     StrictMock<SettingsEditorMock> settingsEditorMock;
 
     // clang-format off
-    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),     QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/IncomeAbove"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),    QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/YieldAbove"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
     // clang-format on
 
     config.load(&settingsEditorMock, "BLAH");
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      true);
-    ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    ASSERT_EQ(config.isEnabled(),     true);
+    ASSERT_EQ(config.getYieldAbove(), 1.7f);
     // clang-format on
 }
 
@@ -124,7 +124,7 @@ TEST(Test_SellDecision1Config, Test_fromJsonObject)
 {
     SellDecision1Config config;
 
-    const QString content = R"({"enabled":true,"incomeAbove":"1.70"})";
+    const QString content = R"({"enabled":true,"yieldAbove":"1.70"})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -134,8 +134,8 @@ TEST(Test_SellDecision1Config, Test_fromJsonObject)
     config.fromJsonObject(doc.get_object());
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      true);
-    ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    ASSERT_EQ(config.isEnabled(),     true);
+    ASSERT_EQ(config.getYieldAbove(), 1.7f);
     // clang-format on
 
     const simdjson::padded_string jsonData2 = R"({"bad_key":1})"_padded;
@@ -151,15 +151,15 @@ TEST(Test_SellDecision1Config, Test_toJsonString)
     SellDecision1Config config;
 
     config.setEnabled(true);
-    config.setIncomeAbove(1.7f);
+    config.setYieldAbove(1.7f);
 
     // clang-format off
-    ASSERT_EQ(config.isEnabled(),      true);
-    ASSERT_EQ(config.getIncomeAbove(), 1.7f);
+    ASSERT_EQ(config.isEnabled(),     true);
+    ASSERT_EQ(config.getYieldAbove(), 1.7f);
     // clang-format on
 
     const QString content         = config.toJsonString();
-    const QString expectedContent = R"({"enabled":true,"incomeAbove":"1.70"})";
+    const QString expectedContent = R"({"enabled":true,"yieldAbove":"1.70"})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -172,9 +172,9 @@ TEST(Test_SellDecision1Config, Test_variantsAsJson)
 
     ASSERT_EQ(variants.size(), 4);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"incomeAbove":"3.00"})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"incomeAbove":"4.00"})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"incomeAbove":"5.00"})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"3.00"})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"4.00"})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"yieldAbove":"5.00"})");
 }
 
 TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)
@@ -188,14 +188,14 @@ TEST(Test_SellDecision1Config, Test_setEnabled_and_isEnabled)
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_SellDecision1Config, Test_setIncomeAbove_and_getIncomeAbove)
+TEST(Test_SellDecision1Config, Test_setYieldAbove_and_getYieldAbove)
 {
     SellDecision1Config config;
 
-    config.setIncomeAbove(0.1f);
-    ASSERT_EQ(config.getIncomeAbove(), 0.1f);
+    config.setYieldAbove(0.1f);
+    ASSERT_EQ(config.getYieldAbove(), 0.1f);
 
-    config.setIncomeAbove(0.5f);
-    ASSERT_EQ(config.getIncomeAbove(), 0.5f);
+    config.setYieldAbove(0.5f);
+    ASSERT_EQ(config.getYieldAbove(), 0.5f);
 }
 // NOLINTEND(readability-function-cognitive-complexity, readability-magic-numbers)
