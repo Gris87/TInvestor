@@ -30,8 +30,12 @@
 #include "src/db/stocks/stocksdatabase.h"
 #include "src/db/user/userdatabase.h"
 #include "src/decisions/buy/buydecision1/buydecision1.h"
+#include "src/decisions/buy/buydecision2/buydecision2.h"
+#include "src/decisions/buy/buydecision3/buydecision3.h"
 #include "src/decisions/decisionmaker.h"
 #include "src/decisions/sell/selldecision1/selldecision1.h"
+#include "src/decisions/sell/selldecision2/selldecision2.h"
+#include "src/decisions/sell/selldecision3/selldecision3.h"
 #include "src/dialogs/authdialog/authdialogfactory.h"
 #include "src/dialogs/orderwavesdialog/orderwavesdialogfactory.h"
 #include "src/dialogs/settingsdialog/settingsdialogfactory.h"
@@ -328,10 +332,14 @@ static int runApplication(QApplication* app)
     Optimizer         optimizer;
 
     BuyDecision1  buyDecision1;
+    BuyDecision2  buyDecision2;
+    BuyDecision3  buyDecision3;
     SellDecision1 sellDecision1;
+    SellDecision2 sellDecision2;
+    SellDecision3 sellDecision3;
 
-    const QList<IActionDecision*> buyDecisions  = {&buyDecision1};
-    const QList<IActionDecision*> sellDecisions = {&sellDecision1};
+    const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3};
+    const QList<IActionDecision*> sellDecisions = {&sellDecision1, &sellDecision2, &sellDecision3};
 
     DecisionMaker simulatorRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
     DecisionMaker simulatorDateRangeDecisionMaker(

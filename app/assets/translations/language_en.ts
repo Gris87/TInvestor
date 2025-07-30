@@ -847,7 +847,7 @@
     </message>
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="35"/>
-        <source>Decided to sell because the price reached %1 %2 with yield %3 %%</source>
+        <source>Decided to sell because the price reached %1 %2 with yield %3% from the price %4 %5</source>
         <translation></translation>
     </message>
 </context>

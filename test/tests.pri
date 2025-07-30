@@ -31,7 +31,11 @@ SOURCES += \
     src/db/stocks/test_stocksdatabase.cpp \
     src/db/user/test_userdatabase.cpp \
     src/decisions/buy/buydecision1/test_buydecision1.cpp \
+    src/decisions/buy/buydecision2/test_buydecision2.cpp \
+    src/decisions/buy/buydecision3/test_buydecision3.cpp \
     src/decisions/sell/selldecision1/test_selldecision1.cpp \
+    src/decisions/sell/selldecision2/test_selldecision2.cpp \
+    src/decisions/sell/selldecision3/test_selldecision3.cpp \
     src/decisions/test_decisionmaker.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \

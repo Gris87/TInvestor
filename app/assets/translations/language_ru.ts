@@ -847,8 +847,8 @@
     </message>
     <message>
         <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="35"/>
-        <source>Decided to sell because the price reached %1 %2 with yield %3 %%</source>
-        <translation>Решено продать потому что цена достигла %1 %2 с доходностью %3 %%</translation>
+        <source>Decided to sell because the price reached %1 %2 with yield %3% from the price %4 %5</source>
+        <translation>Решено продать, потому что цена достигла %1 %2 с доходностью %3% от цены %4 %5</translation>
     </message>
 </context>
 <context>
