@@ -36,7 +36,7 @@ QString SellDecision1::makeDecision(
         const float yield      = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
         const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
 
-        if (yield > yieldAbove)
+        if (yield >= yieldAbove)
         {
             return QObject::tr("Decided to sell because the price reached %1 %2 with yield %3% from the price %4 %5")
                 .arg(
