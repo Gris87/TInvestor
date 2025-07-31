@@ -11,6 +11,7 @@
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/utils/filedialog/ifiledialogfactory_mock.h"
 #include "src/utils/settingseditor/isettingseditor_mock.h"
@@ -60,6 +61,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision4ConfigWidgetFactoryMock> sellDecision4ConfigWidgetFactoryMock;
     StrictMock<PortfolioTreeWidgetFactoryMock>       portfolioTreeWidgetFactoryMock;
     StrictMock<OperationsTableModelFactoryMock>      operationsTableModelFactoryMock;
     StrictMock<LogsTableModelFactoryMock>            logsTableModelFactoryMock;
@@ -104,6 +106,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
+            &sellDecision4ConfigWidgetFactoryMock,
             NotNull()
         )
     )
@@ -131,6 +134,7 @@ TEST(Test_DecisionMakerWidgetFactory, Test_newInstance)
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
+            &sellDecision4ConfigWidgetFactoryMock,
             &portfolioTreeWidgetFactoryMock,
             &operationsTableModelFactoryMock,
             &logsTableModelFactoryMock,

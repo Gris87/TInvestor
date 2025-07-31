@@ -26,6 +26,7 @@ DecisionMakerWidget::DecisionMakerWidget(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory,
     IOperationsTableModelFactory*      operationsTableModelFactory,
     ILogsTableModelFactory*            logsTableModelFactory,
@@ -76,6 +77,7 @@ DecisionMakerWidget::DecisionMakerWidget(
         sellDecision1ConfigWidgetFactory,
         sellDecision2ConfigWidgetFactory,
         sellDecision3ConfigWidgetFactory,
+        sellDecision4ConfigWidgetFactory,
         ui->bestConfigTab
     );
     mPortfolioTreeWidget =

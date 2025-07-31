@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
+    <width>368</width>
     <height>58</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Sell stocks if it fails to sell within</string>
+        <string>Sell stocks if price fall more than</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,15 +42,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="durationSpinBox">
+      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
        <property name="suffix">
-        <string> days</string>
+        <string notr="true"> %</string>
        </property>
-       <property name="minimum">
-        <number>1</number>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
-        <number>3</number>
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>with commission</string>
        </property>
       </widget>
      </item>
@@ -77,27 +84,20 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>and the loss is no more than</string>
+        <string>within the last</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="loseYieldDoubleSpinBox">
+      <widget class="QSpinBox" name="durationSpinBox">
        <property name="suffix">
-        <string notr="true"> %</string>
+        <string> minutes</string>
        </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
+       <property name="minimum">
+        <number>1</number>
        </property>
        <property name="value">
-        <double>1.000000000000000</double>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>with commission</string>
+        <number>5</number>
        </property>
       </widget>
      </item>

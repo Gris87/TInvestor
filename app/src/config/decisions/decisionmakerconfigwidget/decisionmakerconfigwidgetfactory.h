@@ -23,6 +23,7 @@ public:
         ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+        ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
         QWidget*                           parent
     ) const override;
 };

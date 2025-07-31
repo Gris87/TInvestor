@@ -33,8 +33,8 @@ QString SellDecision1::makeDecision(
 
     if (sellConfig->isEnabled())
     {
-        const float yield      = (price / avgPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
-        const float yieldAbove = sellConfig->getYieldAbove() + 2 * commission;
+        const float yield      = ((price / avgPrice) * HUNDRED_PERCENT) - HUNDRED_PERCENT;
+        const float yieldAbove = sellConfig->getYieldAbove() + (2 * commission);
 
         if (yield > yieldAbove)
         {

@@ -28,6 +28,9 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3config.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.cpp \
+    src/config/decisions/sell/selldecision4config/selldecision4config.cpp \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.cpp \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.cpp \
     src/db/instruments/instrumentsdatabase.cpp \
     src/db/logos/logosdatabase.cpp \
     src/db/logs/logsdatabase.cpp \
@@ -42,6 +45,7 @@ SOURCES += \
     src/decisions/sell/selldecision1/selldecision1.cpp \
     src/decisions/sell/selldecision2/selldecision2.cpp \
     src/decisions/sell/selldecision3/selldecision3.cpp \
+    src/decisions/sell/selldecision4/selldecision4.cpp \
     src/dialogs/authdialog/authdialog.cpp \
     src/dialogs/authdialog/authdialogfactory.cpp \
     src/dialogs/orderwavesdialog/orderwavesdialog.cpp \
@@ -193,6 +197,12 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidgetfactory.h \
+    src/config/decisions/sell/selldecision4config/iselldecision4config.h \
+    src/config/decisions/sell/selldecision4config/selldecision4config.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidget.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidgetfactory.h \
     src/config/iconfig.h \
     src/db/instruments/iinstrumentsdatabase.h \
     src/db/instruments/instrumentsdatabase.h \
@@ -217,6 +227,7 @@ HEADERS += \
     src/decisions/sell/selldecision1/selldecision1.h \
     src/decisions/sell/selldecision2/selldecision2.h \
     src/decisions/sell/selldecision3/selldecision3.h \
+    src/decisions/sell/selldecision4/selldecision4.h \
     src/dialogs/authdialog/authdialog.h \
     src/dialogs/authdialog/authdialogfactory.h \
     src/dialogs/authdialog/iauthdialog.h \
@@ -419,6 +430,7 @@ FORMS += \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/selldecision1configwidget.ui \
     src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui \
     src/dialogs/authdialog/authdialog.ui \
     src/dialogs/orderwavesdialog/orderwavesdialog.ui \
     src/dialogs/settingsdialog/settingsdialog.ui \

@@ -50,6 +50,7 @@ MainWindow::MainWindow(
     ISellDecision1ConfigWidgetFactory*      sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory*      sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory*      sellDecision3ConfigWidgetFactory,
+    ISellDecision4ConfigWidgetFactory*      sellDecision4ConfigWidgetFactory,
     IActionsTableItemWidgetFactory*         actionsTableItemWidgetFactory,
     IOrderWavesWidgetFactory*               orderWavesWidgetFactory,
     IStocksControlsWidgetFactory*           stocksControlsWidgetFactory,
@@ -113,6 +114,7 @@ MainWindow::MainWindow(
     mSellDecision1ConfigWidgetFactory(sellDecision1ConfigWidgetFactory),
     mSellDecision2ConfigWidgetFactory(sellDecision2ConfigWidgetFactory),
     mSellDecision3ConfigWidgetFactory(sellDecision3ConfigWidgetFactory),
+    mSellDecision4ConfigWidgetFactory(sellDecision4ConfigWidgetFactory),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
     mInstrumentsStorage(instrumentsStorage),
@@ -191,6 +193,7 @@ MainWindow::MainWindow(
             sellDecision1ConfigWidgetFactory,
             sellDecision2ConfigWidgetFactory,
             sellDecision3ConfigWidgetFactory,
+            sellDecision4ConfigWidgetFactory,
             portfolioTreeWidgetFactory,
             operationsTableModelFactory,
             logsTableModelFactory,
@@ -215,6 +218,7 @@ MainWindow::MainWindow(
             sellDecision1ConfigWidgetFactory,
             sellDecision2ConfigWidgetFactory,
             sellDecision3ConfigWidgetFactory,
+            sellDecision4ConfigWidgetFactory,
             portfolioTreeWidgetFactory,
             operationsTableModelFactory,
             logsTableModelFactory,
@@ -935,6 +939,7 @@ void MainWindow::on_actionSettings_triggered()
         mSellDecision1ConfigWidgetFactory,
         mSellDecision2ConfigWidgetFactory,
         mSellDecision3ConfigWidgetFactory,
+        mSellDecision4ConfigWidgetFactory,
         this
     );
 

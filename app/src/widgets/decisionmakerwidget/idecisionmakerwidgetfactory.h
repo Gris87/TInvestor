@@ -29,6 +29,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         ISellDecision1ConfigWidgetFactory* _sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory* _sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory* _sellDecision3ConfigWidgetFactory,
+        ISellDecision4ConfigWidgetFactory* _sellDecision4ConfigWidgetFactory,
         IPortfolioTreeWidgetFactory*       _portfolioTreeWidgetFactory,
         IOperationsTableModelFactory*      _operationsTableModelFactory,
         ILogsTableModelFactory*            _logsTableModelFactory,
@@ -49,6 +50,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
         sellDecision1ConfigWidgetFactory(_sellDecision1ConfigWidgetFactory),
         sellDecision2ConfigWidgetFactory(_sellDecision2ConfigWidgetFactory),
         sellDecision3ConfigWidgetFactory(_sellDecision3ConfigWidgetFactory),
+        sellDecision4ConfigWidgetFactory(_sellDecision4ConfigWidgetFactory),
         portfolioTreeWidgetFactory(_portfolioTreeWidgetFactory),
         operationsTableModelFactory(_operationsTableModelFactory),
         logsTableModelFactory(_logsTableModelFactory),
@@ -73,6 +75,7 @@ struct DecisionMakerWidgetFactoryNewInstanceArgsMore15
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory;
+    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory;
     IPortfolioTreeWidgetFactory*       portfolioTreeWidgetFactory;
     IOperationsTableModelFactory*      operationsTableModelFactory;
     ILogsTableModelFactory*            logsTableModelFactory;

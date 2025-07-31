@@ -13,6 +13,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
     QWidget*                           parent
 ) :
     IDecisionMakerConfigWidget(parent),
@@ -29,6 +30,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     mSellDecision1ConfigWidget = sellDecision1ConfigWidgetFactory->newInstance(config->getSellDecision1Config(), ui->sellGroupBox);
     mSellDecision2ConfigWidget = sellDecision2ConfigWidgetFactory->newInstance(config->getSellDecision2Config(), ui->sellGroupBox);
     mSellDecision3ConfigWidget = sellDecision3ConfigWidgetFactory->newInstance(config->getSellDecision3Config(), ui->sellGroupBox);
+    mSellDecision4ConfigWidget = sellDecision4ConfigWidgetFactory->newInstance(config->getSellDecision4Config(), ui->sellGroupBox);
     // clang-format on
 
     ui->layoutForBuyDecisionWidgets->addWidget(mBuyDecision1ConfigWidget);
@@ -37,6 +39,7 @@ DecisionMakerConfigWidget::DecisionMakerConfigWidget(
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision1ConfigWidget);
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision2ConfigWidget);
     ui->layoutForSellDecisionWidgets->addWidget(mSellDecision3ConfigWidget);
+    ui->layoutForSellDecisionWidgets->addWidget(mSellDecision4ConfigWidget);
 }
 
 DecisionMakerConfigWidget::~DecisionMakerConfigWidget()
@@ -54,6 +57,7 @@ void DecisionMakerConfigWidget::updateUiFromConfig() const
     mSellDecision1ConfigWidget->updateUiFromConfig();
     mSellDecision2ConfigWidget->updateUiFromConfig();
     mSellDecision3ConfigWidget->updateUiFromConfig();
+    mSellDecision4ConfigWidget->updateUiFromConfig();
 }
 
 void DecisionMakerConfigWidget::makeReadOnly() const
@@ -64,4 +68,5 @@ void DecisionMakerConfigWidget::makeReadOnly() const
     mSellDecision1ConfigWidget->makeReadOnly();
     mSellDecision2ConfigWidget->makeReadOnly();
     mSellDecision3ConfigWidget->makeReadOnly();
+    mSellDecision4ConfigWidget->makeReadOnly();
 }

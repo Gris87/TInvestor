@@ -9,7 +9,7 @@
 
 constexpr bool  ENABLED_DEFAULT    = true;
 constexpr float LOSE_YIELD_DEFAULT = 5.0f;
-constexpr int   DURATION_DEFAULT   = 3;
+constexpr int   DURATION_DEFAULT   = 5;
 
 
 

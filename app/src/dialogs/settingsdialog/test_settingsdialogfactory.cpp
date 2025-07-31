@@ -11,6 +11,7 @@
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 
 
@@ -43,6 +44,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
     StrictMock<SellDecision1ConfigWidgetFactoryMock> sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock> sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock> sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision4ConfigWidgetFactoryMock> sellDecision4ConfigWidgetFactoryMock;
 
     // It will be deleted by `delete ui;`
     StrictMock<DecisionMakerConfigWidgetMock>* simulatorConfigWidgetMock = new StrictMock<DecisionMakerConfigWidgetMock>();
@@ -59,6 +61,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
+            &sellDecision4ConfigWidgetFactoryMock,
             NotNull()
         )
     )
@@ -75,6 +78,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
             &sellDecision1ConfigWidgetFactoryMock,
             &sellDecision2ConfigWidgetFactoryMock,
             &sellDecision3ConfigWidgetFactoryMock,
+            &sellDecision4ConfigWidgetFactoryMock,
             NotNull()
         )
     )
@@ -89,6 +93,7 @@ TEST(Test_SettingsDialogFactory, Test_newInstance)
         &sellDecision1ConfigWidgetFactoryMock,
         &sellDecision2ConfigWidgetFactoryMock,
         &sellDecision3ConfigWidgetFactoryMock,
+        &sellDecision4ConfigWidgetFactoryMock,
         nullptr
     );
     ASSERT_TRUE(dialog != nullptr);

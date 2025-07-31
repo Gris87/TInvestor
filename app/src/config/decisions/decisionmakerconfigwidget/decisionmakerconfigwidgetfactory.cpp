@@ -25,6 +25,7 @@ IDecisionMakerConfigWidget* DecisionMakerConfigWidgetFactory::newInstance(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
     QWidget*                           parent
 ) const
 {
@@ -36,6 +37,7 @@ IDecisionMakerConfigWidget* DecisionMakerConfigWidgetFactory::newInstance(
         sellDecision1ConfigWidgetFactory,
         sellDecision2ConfigWidgetFactory,
         sellDecision3ConfigWidgetFactory,
+        sellDecision4ConfigWidgetFactory,
         parent
     );
 }

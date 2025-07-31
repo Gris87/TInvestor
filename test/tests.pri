@@ -21,6 +21,9 @@ SOURCES += \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/test_selldecision3configwidget.cpp \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/test_selldecision3configwidgetfactory.cpp \
     src/config/decisions/sell/selldecision3config/test_selldecision3config.cpp \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/test_selldecision4configwidget.cpp \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/test_selldecision4configwidgetfactory.cpp \
+    src/config/decisions/sell/selldecision4config/test_selldecision4config.cpp \
     src/config/decisions/test_decisionmakerconfig.cpp \
     src/config/test_config.cpp \
     src/db/instruments/test_instrumentsdatabase.cpp \
@@ -36,6 +39,7 @@ SOURCES += \
     src/decisions/sell/selldecision1/test_selldecision1.cpp \
     src/decisions/sell/selldecision2/test_selldecision2.cpp \
     src/decisions/sell/selldecision3/test_selldecision3.cpp \
+    src/decisions/sell/selldecision4/test_selldecision4.cpp \
     src/decisions/test_decisionmaker.cpp \
     src/dialogs/authdialog/test_authdialog.cpp \
     src/dialogs/authdialog/test_authdialogfactory.cpp \
@@ -168,6 +172,9 @@ HEADERS += \
     src/config/decisions/sell/selldecision3config/iselldecision3config_mock.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidget_mock.h \
     src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h \
+    src/config/decisions/sell/selldecision4config/iselldecision4config_mock.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidget_mock.h \
+    src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h \
     src/config/iconfig_mock.h \
     src/db/instruments/iinstrumentsdatabase_mock.h \
     src/db/logos/ilogosdatabase_mock.h \

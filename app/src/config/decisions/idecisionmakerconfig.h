@@ -10,6 +10,7 @@
 #include "src/config/decisions/sell/selldecision1config/iselldecision1config.h"
 #include "src/config/decisions/sell/selldecision2config/iselldecision2config.h"
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
+#include "src/config/decisions/sell/selldecision4config/iselldecision4config.h"
 #include "src/simdjson/simdjson_wrapped.h"
 
 
@@ -44,4 +45,5 @@ public:
     virtual ISellDecision1Config* getSellDecision1Config() = 0;
     virtual ISellDecision2Config* getSellDecision2Config() = 0;
     virtual ISellDecision3Config* getSellDecision3Config() = 0;
+    virtual ISellDecision4Config* getSellDecision4Config() = 0;
 };

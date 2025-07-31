@@ -811,22 +811,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../src/main.cpp" line="152"/>
+        <location filename="../../src/main.cpp" line="156"/>
         <source>Localization</source>
         <translation>Локализация</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="152"/>
+        <location filename="../../src/main.cpp" line="156"/>
         <source>Failed to apply localization</source>
         <translation>Не удалось применить локализацию</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="164"/>
+        <location filename="../../src/main.cpp" line="168"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="164"/>
+        <location filename="../../src/main.cpp" line="168"/>
         <source>Failed to detect any system tray on this system</source>
         <translation>Не удалось обнаружить системный трей на этой системе</translation>
     </message>
@@ -846,7 +846,7 @@
         <translation>Средняя цена по WAVG: %1</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="35"/>
+        <location filename="../../src/decisions/sell/selldecision1/selldecision1.cpp" line="41"/>
         <source>Decided to sell because the price reached %1 %2 with yield %3% from the price %4 %5</source>
         <translation>Решено продать, потому что цена достигла %1 %2 с доходностью %3% от цены %4 %5</translation>
     </message>
@@ -873,13 +873,13 @@
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="60"/>
-        <source>(with commission) with</source>
-        <translation>(с учётом комиссии) с помощью</translation>
+        <source>(with commission) when</source>
+        <translation>(с учётом комиссии), когда</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="87"/>
-        <source>leading stop request that will lose</source>
-        <translation>лидинг стоп заявки, которая может потерять</translation>
+        <source>price fall more than</source>
+        <translation>цена упала более чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision2config/selldecision2configwidget/selldecision2configwidget.ui" line="107"/>
@@ -891,21 +891,34 @@
     <name>SellDecision3ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="37"/>
-        <source>Sell stocks if it fails to sell within</source>
-        <translation>Продавать акции, если не получилось их продать за</translation>
+        <source>Sell stocks if price fall more than</source>
+        <translation>Продавать акции, если цена упала более чем на</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="47"/>
-        <source> days</source>
-        <translation> дней</translation>
+        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="60"/>
+        <source>with commission</source>
+        <translation>с учётом комиссии</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="80"/>
-        <source>and the loss is no more than</source>
-        <translation>и убыток не более</translation>
+        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="87"/>
+        <source>within the last</source>
+        <translation>за последние</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="100"/>
+        <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="94"/>
+        <source> minutes</source>
+        <translation> минут</translation>
+    </message>
+</context>
+<context>
+    <name>SellDecision4ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui" line="37"/>
+        <source>Sell stocks if loss is more than</source>
+        <translation>Продавать акции, если убыток более чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/sell/selldecision4config/selldecision4configwidget/selldecision4configwidget.ui" line="60"/>
         <source>with commission</source>
         <translation>с учётом комиссии</translation>
     </message>
@@ -1066,53 +1079,53 @@
 <context>
     <name>SimulatorDecisionMakerThread</name>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="149"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="150"/>
         <source>Input money</source>
         <translation>Завод денежных средств</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="234"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="235"/>
         <source>Currency and metals</source>
         <translation>Валюта и металлы</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="240"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="241"/>
         <source>Share</source>
         <translation>Акции</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="440"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="441"/>
         <source>Sale of shares</source>
         <translation>Продажа ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="498"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="499"/>
         <source>Order to sell %1 created with a price %2 %3</source>
         <translation>Заявка создана на продажу %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="506"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="507"/>
         <source>Order completed. %1 sold with a price %2 %3</source>
         <translation>Заявка выполнена. %1 продано по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="616"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="617"/>
         <source>Purchase of shares</source>
         <translation>Покупка ЦБ</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="672"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="673"/>
         <source>Order to buy %1 created with a price %2 %3</source>
         <translation>Заявка создана на покупку %1 по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="680"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="681"/>
         <source>Order completed. %1 bought with a price %2 %3</source>
         <translation>Заявка выполнена. %1 куплено по цене %2 %3</translation>
     </message>
     <message>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="514"/>
-        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="688"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="515"/>
+        <location filename="../../src/threads/simulatordecisionmaker/simulatordecisionmakerthread.cpp" line="689"/>
         <source>Trade completed successfully</source>
         <translation>Торговля успешно завершена</translation>
     </message>

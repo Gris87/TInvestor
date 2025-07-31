@@ -11,6 +11,7 @@
 #include "src/config/decisions/sell/selldecision1config/selldecision1configwidget/iselldecision1configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision2config/selldecision2configwidget/iselldecision2configwidgetfactory_mock.h"
 #include "src/config/decisions/sell/selldecision3config/selldecision3configwidget/iselldecision3configwidgetfactory_mock.h"
+#include "src/config/decisions/sell/selldecision4config/selldecision4configwidget/iselldecision4configwidgetfactory_mock.h"
 #include "src/config/iconfig_mock.h"
 #include "src/dialogs/authdialog/iauthdialog_mock.h"
 #include "src/dialogs/authdialog/iauthdialogfactory_mock.h"
@@ -111,6 +112,7 @@ protected:
         sellDecision1ConfigWidgetFactoryMock      = new StrictMock<SellDecision1ConfigWidgetFactoryMock>();
         sellDecision2ConfigWidgetFactoryMock      = new StrictMock<SellDecision2ConfigWidgetFactoryMock>();
         sellDecision3ConfigWidgetFactoryMock      = new StrictMock<SellDecision3ConfigWidgetFactoryMock>();
+        sellDecision4ConfigWidgetFactoryMock      = new StrictMock<SellDecision4ConfigWidgetFactoryMock>();
         actionsTableItemWidgetFactoryMock         = new StrictMock<ActionsTableItemWidgetFactoryMock>();
         orderWavesWidgetFactoryMock               = new StrictMock<OrderWavesWidgetFactoryMock>();
         stocksControlsWidgetFactoryMock           = new StrictMock<StocksControlsWidgetFactoryMock>();
@@ -195,6 +197,7 @@ protected:
                     sellDecision1ConfigWidgetFactoryMock,
                     sellDecision2ConfigWidgetFactoryMock,
                     sellDecision3ConfigWidgetFactoryMock,
+                    sellDecision4ConfigWidgetFactoryMock,
                     portfolioTreeWidgetFactoryMock,
                     operationsTableModelFactoryMock,
                     logsTableModelFactoryMock,
@@ -223,6 +226,7 @@ protected:
                     sellDecision1ConfigWidgetFactoryMock,
                     sellDecision2ConfigWidgetFactoryMock,
                     sellDecision3ConfigWidgetFactoryMock,
+                    sellDecision4ConfigWidgetFactoryMock,
                     portfolioTreeWidgetFactoryMock,
                     operationsTableModelFactoryMock,
                     logsTableModelFactoryMock,
@@ -283,6 +287,7 @@ protected:
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
+            sellDecision4ConfigWidgetFactoryMock,
             actionsTableItemWidgetFactoryMock,
             orderWavesWidgetFactoryMock,
             stocksControlsWidgetFactoryMock,
@@ -374,6 +379,7 @@ protected:
         delete sellDecision1ConfigWidgetFactoryMock;
         delete sellDecision2ConfigWidgetFactoryMock;
         delete sellDecision3ConfigWidgetFactoryMock;
+        delete sellDecision4ConfigWidgetFactoryMock;
         delete actionsTableItemWidgetFactoryMock;
         delete orderWavesWidgetFactoryMock;
         delete stocksControlsWidgetFactoryMock;
@@ -443,6 +449,7 @@ protected:
     StrictMock<SellDecision1ConfigWidgetFactoryMock>*      sellDecision1ConfigWidgetFactoryMock;
     StrictMock<SellDecision2ConfigWidgetFactoryMock>*      sellDecision2ConfigWidgetFactoryMock;
     StrictMock<SellDecision3ConfigWidgetFactoryMock>*      sellDecision3ConfigWidgetFactoryMock;
+    StrictMock<SellDecision4ConfigWidgetFactoryMock>*      sellDecision4ConfigWidgetFactoryMock;
     StrictMock<ActionsTableItemWidgetFactoryMock>*         actionsTableItemWidgetFactoryMock;
     StrictMock<OrderWavesWidgetFactoryMock>*               orderWavesWidgetFactoryMock;
     StrictMock<StocksControlsWidgetFactoryMock>*           stocksControlsWidgetFactoryMock;
@@ -1244,6 +1251,7 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
             sellDecision1ConfigWidgetFactoryMock,
             sellDecision2ConfigWidgetFactoryMock,
             sellDecision3ConfigWidgetFactoryMock,
+            sellDecision4ConfigWidgetFactoryMock,
             mainWindow
         )
     )

@@ -19,6 +19,7 @@ SettingsDialog::SettingsDialog(
     ISellDecision1ConfigWidgetFactory* sellDecision1ConfigWidgetFactory,
     ISellDecision2ConfigWidgetFactory* sellDecision2ConfigWidgetFactory,
     ISellDecision3ConfigWidgetFactory* sellDecision3ConfigWidgetFactory,
+    ISellDecision4ConfigWidgetFactory* sellDecision4ConfigWidgetFactory,
     QWidget*                           parent
 ) :
     ISettingsDialog(parent),
@@ -37,6 +38,7 @@ SettingsDialog::SettingsDialog(
         sellDecision1ConfigWidgetFactory,
         sellDecision2ConfigWidgetFactory,
         sellDecision3ConfigWidgetFactory,
+        sellDecision4ConfigWidgetFactory,
         ui->simulationTab
     );
     mAutoPilotConfigWidget = decisionMakerConfigWidgetFactory->newInstance(
@@ -47,6 +49,7 @@ SettingsDialog::SettingsDialog(
         sellDecision1ConfigWidgetFactory,
         sellDecision2ConfigWidgetFactory,
         sellDecision3ConfigWidgetFactory,
+        sellDecision4ConfigWidgetFactory,
         ui->autoPilotTab
     );
 
