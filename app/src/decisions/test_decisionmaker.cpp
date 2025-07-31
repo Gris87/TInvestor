@@ -239,11 +239,13 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f)))
-        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+    )
+        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
@@ -251,9 +253,16 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
     EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(0.0005f));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f)))
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return(""));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f)))
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return("I want to sell"));
 
     InstrumentsForTrading result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
@@ -287,20 +296,29 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f)))
-        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+    )
+        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitByTurnover()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, getLimitStockPurchasePart()).WillOnce(Return(7.0f));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f)))
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return(""));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f)))
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return("I want to sell"));
 
     result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
@@ -324,18 +342,27 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f)))
-        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+    )
+        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f)))
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return(""));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f)))
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return("I want to sell"));
 
     result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
@@ -359,9 +386,16 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f)))
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return(""));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f)))
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return("I want to sell"));
 
     result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, true, 200000, false);
@@ -381,18 +415,27 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, readLock());
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
-    EXPECT_CALL(*buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, true, 0, FloatEq(0.3f), FloatEq(0.0f)))
-        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, true, 0, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+    )
+        .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, true, 0, FloatEq(0.1f), FloatEq(103.0f)))
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, true, 0, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return(""));
-    EXPECT_CALL(*sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, true, 0, FloatEq(0.2f), FloatEq(203.0f)))
+    EXPECT_CALL(
+        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, true, 0, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+    )
         .WillOnce(Return("I want to sell"));
 
     result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, true, 0, true);
@@ -417,7 +460,10 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, isQualified()).WillOnce(Return(false));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(*userStorageMock, readLock());
-    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04));
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
+    EXPECT_CALL(*userStorageMock, readUnlock());
+    EXPECT_CALL(*userStorageMock, readLock());
+    EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
 
     result = decisionMaker->makeDecision(1704110460000, portfolio, stocks, true, 0, true);

@@ -20,7 +20,13 @@ SellDecision1::~SellDecision1()
 }
 
 QString SellDecision1::makeDecision(
-    IDecisionMakerConfig* config, Stock* stock, bool /*dateRange*/, int /*dataIndex*/, float price, float avgPrice
+    IDecisionMakerConfig* config,
+    Stock*                stock,
+    bool /*dateRange*/,
+    int /*dataIndex*/,
+    float price,
+    float avgPrice,
+    float commission
 )
 {
     ISellDecision1Config* sellConfig = config->getSellDecision1Config();
@@ -28,7 +34,7 @@ QString SellDecision1::makeDecision(
     if (sellConfig->isEnabled())
     {
         const float yield      = (price / avgPrice) * HUNDRED_PERCENT - HUNDRED_PERCENT;
-        const float yieldAbove = sellConfig->getYieldAbove();
+        const float yieldAbove = sellConfig->getYieldAbove() + 2 * commission;
 
         if (yield > yieldAbove)
         {

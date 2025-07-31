@@ -16,6 +16,7 @@ public:
     IActionDecision(const IActionDecision& another)            = delete;
     IActionDecision& operator=(const IActionDecision& another) = delete;
 
-    virtual QString
-    makeDecision(IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice) = 0;
+    virtual QString makeDecision(
+        IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice, float commission
+    ) = 0;
 };
