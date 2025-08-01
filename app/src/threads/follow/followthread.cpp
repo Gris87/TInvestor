@@ -218,8 +218,8 @@ void FollowThread::buildInstrumentsForTrading(
             instrumentsForBuy[instrumentId] = TradingInfo(
                 it.value().price,
                 expectedCost,
-                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
-                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+                tr("Decided to buy up to cost %1 due to following account \"%2\"")
+                    .arg(QString::number(expectedCost, 'f', 2) + " \u20BD", mAnotherAccountName)
             );
 
             continue;
@@ -240,8 +240,8 @@ void FollowThread::buildInstrumentsForTrading(
             instrumentsForSale[instrumentId] = TradingInfo(
                 item.price,
                 expectedCost,
-                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"")
-                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+                tr("Decided to sell up to cost %1 due to following account \"%2\"")
+                    .arg(QString::number(expectedCost, 'f', 2) + " \u20BD", mAnotherAccountName)
             );
         }
         else if (delta > lotPrice)
@@ -249,8 +249,8 @@ void FollowThread::buildInstrumentsForTrading(
             instrumentsForBuy[instrumentId] = TradingInfo(
                 item.price,
                 expectedCost,
-                tr("Decided to buy up to cost %1 %2 due to following account \"%3\"")
-                    .arg(QString::number(expectedCost, 'f', 2), "\u20BD", mAnotherAccountName)
+                tr("Decided to buy up to cost %1 due to following account \"%2\"")
+                    .arg(QString::number(expectedCost, 'f', 2) + " \u20BD", mAnotherAccountName)
             );
         }
     }
@@ -264,7 +264,7 @@ void FollowThread::buildInstrumentsForTrading(
             instrumentsForSale[instrumentId] = TradingInfo(
                 it.value().price,
                 0, // Need to sell all
-                tr("Decided to sell up to cost %1 %2 due to following account \"%3\"").arg("0.00", "\u20BD", mAnotherAccountName)
+                tr("Decided to sell up to cost %1 due to following account \"%2\"").arg("0.00 \u20BD", mAnotherAccountName)
             );
         }
     }

@@ -255,11 +255,10 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                 mLogsThread->addLog(
                     LOG_LEVEL_WARNING,
                     mInstrumentId,
-                    tr("Failed to create order to sell %1 with a price %2 %3")
+                    tr("Failed to create order to sell %1 with a price %2")
                         .arg(
                             QString::number(amountToSell * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                            "\u20BD"
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                         )
                 );
 
@@ -271,11 +270,10 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
                 mLogsThread->addLog(
                     LOG_LEVEL_VERBOSE,
                     mInstrumentId,
-                    tr("Order to sell %1 created with a price %2 %3")
+                    tr("Order to sell %1 created with a price %2")
                         .arg(
                             QString::number(amountToSell * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                            "\u20BD"
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                         )
                 );
 
@@ -289,11 +287,10 @@ bool TradingThread::sellWithPriceOptimalAmount(double expected, double delta, co
             mLogsThread->addLog(
                 LOG_LEVEL_DEBUG,
                 mInstrumentId,
-                tr("Order to sell %1 rejected with a price %2 %3. Let's try again")
+                tr("Order to sell %1 rejected with a price %2. Let's try again")
                     .arg(
                         QString::number(amountToSell * mInstrumentLot),
-                        QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                        "\u20BD"
+                        QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                     )
             );
 
@@ -393,11 +390,10 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
                 mLogsThread->addLog(
                     LOG_LEVEL_WARNING,
                     mInstrumentId,
-                    tr("Failed to create order to buy %1 with a price %2 %3")
+                    tr("Failed to create order to buy %1 with a price %2")
                         .arg(
                             QString::number(amountToBuy * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                            "\u20BD"
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                         )
                 );
 
@@ -409,11 +405,10 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
                 mLogsThread->addLog(
                     LOG_LEVEL_VERBOSE,
                     mInstrumentId,
-                    tr("Order to buy %1 created with a price %2 %3")
+                    tr("Order to buy %1 created with a price %2")
                         .arg(
                             QString::number(amountToBuy * mInstrumentLot),
-                            QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                            "\u20BD"
+                            QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                         )
                 );
 
@@ -427,11 +422,10 @@ bool TradingThread::buyWithPriceOptimalAmount(double expected, double delta, con
             mLogsThread->addLog(
                 LOG_LEVEL_DEBUG,
                 mInstrumentId,
-                tr("Order to buy %1 rejected with a price %2 %3. Let's try again")
+                tr("Order to buy %1 rejected with a price %2. Let's try again")
                     .arg(
                         QString::number(amountToBuy * mInstrumentLot),
-                        QString::number(quotationToFloat(price), 'f', mPricePrecision),
-                        "\u20BD"
+                        QString::number(quotationToFloat(price), 'f', mPricePrecision) + " \u20BD"
                     )
             );
 
@@ -486,21 +480,21 @@ void TradingThread::informAboutOrderState(const tinkoff::OrderState& tinkoffOrde
 
     if (tinkoffOrder.direction() == tinkoff::ORDER_DIRECTION_BUY)
     {
-        details = tr("%1 bought with a price %2 %3")
-                      .arg(
-                          QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
-                          QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
-                          "\u20BD"
-                      );
+        details =
+            tr("%1 bought with a price %2")
+                .arg(
+                    QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
+                    QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision) + " \u20BD"
+                );
     }
     else
     {
-        details = tr("%1 sold with a price %2 %3")
-                      .arg(
-                          QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
-                          QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision),
-                          "\u20BD"
-                      );
+        details =
+            tr("%1 sold with a price %2")
+                .arg(
+                    QString::number(tinkoffOrder.lots_executed() * mInstrumentLot),
+                    QString::number(quotationToFloat(tinkoffOrder.initial_security_price()), 'f', mPricePrecision) + " \u20BD"
+                );
     }
 
     const tinkoff::OrderExecutionReportStatus status = tinkoffOrder.execution_report_status();

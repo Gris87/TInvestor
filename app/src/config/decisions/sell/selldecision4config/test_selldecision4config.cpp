@@ -63,7 +63,7 @@ TEST(Test_SellDecision4Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getLoseYield(), 0.1f);
+    ASSERT_EQ(config.getLoseYield(), 10.0f);
     // clang-format on
 }
 

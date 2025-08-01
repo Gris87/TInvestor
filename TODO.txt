@@ -1,6 +1,3 @@
-Normal sell decision with price changes in time range
-Normal sell decision on extra fall
-Normal simplest buy decision
 Normal buy decision with price changes in time range
 Optimize config variants
 Config for limiting CPU usage during decision making
