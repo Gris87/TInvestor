@@ -14,6 +14,8 @@
 #include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidgetfactory.h"
 #include "src/config/decisions/buy/buydecision3config/buydecision3config.h"
 #include "src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidgetfactory.h"
+#include "src/config/decisions/buy/buydecision4config/buydecision4config.h"
+#include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidgetfactory.h"
 #include "src/config/decisions/decisionmakerconfig.h"
 #include "src/config/decisions/decisionmakerconfigwidget/decisionmakerconfigwidgetfactory.h"
 #include "src/config/decisions/sell/selldecision1config/selldecision1config.h"
@@ -34,6 +36,7 @@
 #include "src/decisions/buy/buydecision1/buydecision1.h"
 #include "src/decisions/buy/buydecision2/buydecision2.h"
 #include "src/decisions/buy/buydecision3/buydecision3.h"
+#include "src/decisions/buy/buydecision4/buydecision4.h"
 #include "src/decisions/decisionmaker.h"
 #include "src/decisions/sell/selldecision1/selldecision1.h"
 #include "src/decisions/sell/selldecision2/selldecision2.h"
@@ -186,6 +189,7 @@ static int runApplication(QApplication* app)
     BuyDecision1ConfigWidgetFactory  buyDecision1ConfigWidgetFactory;
     BuyDecision2ConfigWidgetFactory  buyDecision2ConfigWidgetFactory;
     BuyDecision3ConfigWidgetFactory  buyDecision3ConfigWidgetFactory;
+    BuyDecision4ConfigWidgetFactory  buyDecision4ConfigWidgetFactory;
     SellDecision1ConfigWidgetFactory sellDecision1ConfigWidgetFactory;
     SellDecision2ConfigWidgetFactory sellDecision2ConfigWidgetFactory;
     SellDecision3ConfigWidgetFactory sellDecision3ConfigWidgetFactory;
@@ -221,6 +225,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  simulatorBuyDecision1Config;
     BuyDecision2Config  simulatorBuyDecision2Config;
     BuyDecision3Config  simulatorBuyDecision3Config;
+    BuyDecision4Config  simulatorBuyDecision4Config;
     SellDecision1Config simulatorSellDecision1Config;
     SellDecision2Config simulatorSellDecision2Config;
     SellDecision3Config simulatorSellDecision3Config;
@@ -229,6 +234,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  autoPilotBuyDecision1Config;
     BuyDecision2Config  autoPilotBuyDecision2Config;
     BuyDecision3Config  autoPilotBuyDecision3Config;
+    BuyDecision4Config  autoPilotBuyDecision4Config;
     SellDecision1Config autoPilotSellDecision1Config;
     SellDecision2Config autoPilotSellDecision2Config;
     SellDecision3Config autoPilotSellDecision3Config;
@@ -237,6 +243,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  simulatorBuyDecision1ConfigForSettingsDialog;
     BuyDecision2Config  simulatorBuyDecision2ConfigForSettingsDialog;
     BuyDecision3Config  simulatorBuyDecision3ConfigForSettingsDialog;
+    BuyDecision4Config  simulatorBuyDecision4ConfigForSettingsDialog;
     SellDecision1Config simulatorSellDecision1ConfigForSettingsDialog;
     SellDecision2Config simulatorSellDecision2ConfigForSettingsDialog;
     SellDecision3Config simulatorSellDecision3ConfigForSettingsDialog;
@@ -245,6 +252,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  autoPilotBuyDecision1ConfigForSettingsDialog;
     BuyDecision2Config  autoPilotBuyDecision2ConfigForSettingsDialog;
     BuyDecision3Config  autoPilotBuyDecision3ConfigForSettingsDialog;
+    BuyDecision4Config  autoPilotBuyDecision4ConfigForSettingsDialog;
     SellDecision1Config autoPilotSellDecision1ConfigForSettingsDialog;
     SellDecision2Config autoPilotSellDecision2ConfigForSettingsDialog;
     SellDecision3Config autoPilotSellDecision3ConfigForSettingsDialog;
@@ -253,6 +261,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  simulatorBuyDecision1ConfigForSimulation;
     BuyDecision2Config  simulatorBuyDecision2ConfigForSimulation;
     BuyDecision3Config  simulatorBuyDecision3ConfigForSimulation;
+    BuyDecision4Config  simulatorBuyDecision4ConfigForSimulation;
     SellDecision1Config simulatorSellDecision1ConfigForSimulation;
     SellDecision2Config simulatorSellDecision2ConfigForSimulation;
     SellDecision3Config simulatorSellDecision3ConfigForSimulation;
@@ -261,6 +270,7 @@ static int runApplication(QApplication* app)
     BuyDecision1Config  autoPilotBuyDecision1ConfigForSimulation;
     BuyDecision2Config  autoPilotBuyDecision2ConfigForSimulation;
     BuyDecision3Config  autoPilotBuyDecision3ConfigForSimulation;
+    BuyDecision4Config  autoPilotBuyDecision4ConfigForSimulation;
     SellDecision1Config autoPilotSellDecision1ConfigForSimulation;
     SellDecision2Config autoPilotSellDecision2ConfigForSimulation;
     SellDecision3Config autoPilotSellDecision3ConfigForSimulation;
@@ -270,6 +280,7 @@ static int runApplication(QApplication* app)
         &simulatorBuyDecision1Config,
         &simulatorBuyDecision2Config,
         &simulatorBuyDecision3Config,
+        &simulatorBuyDecision4Config,
         &simulatorSellDecision1Config,
         &simulatorSellDecision2Config,
         &simulatorSellDecision3Config,
@@ -279,6 +290,7 @@ static int runApplication(QApplication* app)
         &autoPilotBuyDecision1Config,
         &autoPilotBuyDecision2Config,
         &autoPilotBuyDecision3Config,
+        &autoPilotBuyDecision4Config,
         &autoPilotSellDecision1Config,
         &autoPilotSellDecision2Config,
         &autoPilotSellDecision3Config,
@@ -288,6 +300,7 @@ static int runApplication(QApplication* app)
         &simulatorBuyDecision1ConfigForSettingsDialog,
         &simulatorBuyDecision2ConfigForSettingsDialog,
         &simulatorBuyDecision3ConfigForSettingsDialog,
+        &simulatorBuyDecision4ConfigForSettingsDialog,
         &simulatorSellDecision1ConfigForSettingsDialog,
         &simulatorSellDecision2ConfigForSettingsDialog,
         &simulatorSellDecision3ConfigForSettingsDialog,
@@ -297,6 +310,7 @@ static int runApplication(QApplication* app)
         &autoPilotBuyDecision1ConfigForSettingsDialog,
         &autoPilotBuyDecision2ConfigForSettingsDialog,
         &autoPilotBuyDecision3ConfigForSettingsDialog,
+        &autoPilotBuyDecision4ConfigForSettingsDialog,
         &autoPilotSellDecision1ConfigForSettingsDialog,
         &autoPilotSellDecision2ConfigForSettingsDialog,
         &autoPilotSellDecision3ConfigForSettingsDialog,
@@ -306,6 +320,7 @@ static int runApplication(QApplication* app)
         &simulatorBuyDecision1ConfigForSimulation,
         &simulatorBuyDecision2ConfigForSimulation,
         &simulatorBuyDecision3ConfigForSimulation,
+        &simulatorBuyDecision4ConfigForSimulation,
         &simulatorSellDecision1ConfigForSimulation,
         &simulatorSellDecision2ConfigForSimulation,
         &simulatorSellDecision3ConfigForSimulation,
@@ -315,6 +330,7 @@ static int runApplication(QApplication* app)
         &autoPilotBuyDecision1ConfigForSimulation,
         &autoPilotBuyDecision2ConfigForSimulation,
         &autoPilotBuyDecision3ConfigForSimulation,
+        &autoPilotBuyDecision4ConfigForSimulation,
         &autoPilotSellDecision1ConfigForSimulation,
         &autoPilotSellDecision2ConfigForSimulation,
         &autoPilotSellDecision3ConfigForSimulation,
@@ -350,12 +366,13 @@ static int runApplication(QApplication* app)
     BuyDecision1  buyDecision1;
     BuyDecision2  buyDecision2;
     BuyDecision3  buyDecision3;
+    BuyDecision4  buyDecision4;
     SellDecision1 sellDecision1;
     SellDecision2 sellDecision2;
     SellDecision3 sellDecision3;
     SellDecision4 sellDecision4;
 
-    const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3};
+    const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3, &buyDecision4};
     const QList<IActionDecision*> sellDecisions = {&sellDecision1, &sellDecision2, &sellDecision3, &sellDecision4};
 
     DecisionMaker simulatorRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
@@ -431,6 +448,7 @@ static int runApplication(QApplication* app)
         &buyDecision1ConfigWidgetFactory,
         &buyDecision2ConfigWidgetFactory,
         &buyDecision3ConfigWidgetFactory,
+        &buyDecision4ConfigWidgetFactory,
         &sellDecision1ConfigWidgetFactory,
         &sellDecision2ConfigWidgetFactory,
         &sellDecision3ConfigWidgetFactory,

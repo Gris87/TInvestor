@@ -12,6 +12,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     IBuyDecision1Config*  buyDecision1Config,
     IBuyDecision2Config*  buyDecision2Config,
     IBuyDecision3Config*  buyDecision3Config,
+    IBuyDecision4Config*  buyDecision4Config,
     ISellDecision1Config* sellDecision1Config,
     ISellDecision2Config* sellDecision2Config,
     ISellDecision3Config* sellDecision3Config,
@@ -21,6 +22,7 @@ DecisionMakerConfig::DecisionMakerConfig(
     mBuyDecision1Config(buyDecision1Config),
     mBuyDecision2Config(buyDecision2Config),
     mBuyDecision3Config(buyDecision3Config),
+    mBuyDecision4Config(buyDecision4Config),
     mSellDecision1Config(sellDecision1Config),
     mSellDecision2Config(sellDecision2Config),
     mSellDecision3Config(sellDecision3Config),
@@ -43,6 +45,7 @@ void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
     mBuyDecision1Config->assign(config.mBuyDecision1Config);
     mBuyDecision2Config->assign(config.mBuyDecision2Config);
     mBuyDecision3Config->assign(config.mBuyDecision3Config);
+    mBuyDecision4Config->assign(config.mBuyDecision4Config);
     mSellDecision1Config->assign(config.mSellDecision1Config);
     mSellDecision2Config->assign(config.mSellDecision2Config);
     mSellDecision3Config->assign(config.mSellDecision3Config);
@@ -56,6 +59,7 @@ void DecisionMakerConfig::makeDefault()
     mBuyDecision1Config->makeDefault();
     mBuyDecision2Config->makeDefault();
     mBuyDecision3Config->makeDefault();
+    mBuyDecision4Config->makeDefault();
     mSellDecision1Config->makeDefault();
     mSellDecision2Config->makeDefault();
     mSellDecision3Config->makeDefault();
@@ -69,6 +73,7 @@ void DecisionMakerConfig::save(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision1Config->save(settingsEditor, type + "/BuyDecision1Config");
     mBuyDecision2Config->save(settingsEditor, type + "/BuyDecision2Config");
     mBuyDecision3Config->save(settingsEditor, type + "/BuyDecision3Config");
+    mBuyDecision4Config->save(settingsEditor, type + "/BuyDecision4Config");
     mSellDecision1Config->save(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->save(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->save(settingsEditor, type + "/SellDecision3Config");
@@ -82,6 +87,7 @@ void DecisionMakerConfig::load(ISettingsEditor* settingsEditor, const QString& t
     mBuyDecision1Config->load(settingsEditor, type + "/BuyDecision1Config");
     mBuyDecision2Config->load(settingsEditor, type + "/BuyDecision2Config");
     mBuyDecision3Config->load(settingsEditor, type + "/BuyDecision3Config");
+    mBuyDecision4Config->load(settingsEditor, type + "/BuyDecision4Config");
     mSellDecision1Config->load(settingsEditor, type + "/SellDecision1Config");
     mSellDecision2Config->load(settingsEditor, type + "/SellDecision2Config");
     mSellDecision3Config->load(settingsEditor, type + "/SellDecision3Config");
@@ -101,6 +107,11 @@ static void configBuy2Parse(DecisionMakerConfig* config, simdjson::ondemand::val
 static void configBuy3Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
 {
     config->getBuyDecision3Config()->fromJsonObject(value.get_object());
+}
+
+static void configBuy4Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
+{
+    config->getBuyDecision4Config()->fromJsonObject(value.get_object());
 }
 
 static void configSell1Parse(DecisionMakerConfig* config, simdjson::ondemand::value value)
@@ -137,6 +148,7 @@ static const QMap<std::string_view, ParseHandler> PARSE_HANDLER{ // clazy:exclud
     {"b1", configBuy1Parse },
     {"b2", configBuy2Parse },
     {"b3", configBuy3Parse },
+    {"b4", configBuy4Parse },
     {"s1", configSell1Parse},
     {"s2", configSell2Parse},
     {"s3", configSell3Parse},
@@ -160,13 +172,14 @@ QString DecisionMakerConfig::toJsonString() const
     const QString b1 = mBuyDecision1Config->toJsonString();
     const QString b2 = mBuyDecision2Config->toJsonString();
     const QString b3 = mBuyDecision3Config->toJsonString();
+    const QString b4 = mBuyDecision4Config->toJsonString();
 
     const QString s1 = mSellDecision1Config->toJsonString();
     const QString s2 = mSellDecision2Config->toJsonString();
     const QString s3 = mSellDecision3Config->toJsonString();
     const QString s4 = mSellDecision4Config->toJsonString();
 
-    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6,"s4":%7})").arg(b1, b2, b3, s1, s2, s3, s4);
+    return QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"s1":%5,"s2":%6,"s3":%7,"s4":%8})").arg(b1, b2, b3, b4, s1, s2, s3, s4);
 }
 
 struct CombineVariantsInfo
@@ -197,7 +210,7 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
     const int    variantsSize  = combineVariantsInfo->variants.size();
     QStringList* resultsArray  = combineVariantsInfo->results.data();
 
-    Q_ASSERT_X(variantsSize == 7, __FUNCTION__, "Unexpected behavior");
+    Q_ASSERT_X(variantsSize == 8, __FUNCTION__, "Unexpected behavior");
 
     int total = 1;
 
@@ -221,25 +234,29 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
         cur               /= variantsArray[1].size();
         const int b3Index  = cur % variantsArray[2].size();
         cur               /= variantsArray[2].size();
-        const int s1Index  = cur % variantsArray[3].size();
-        cur               /= variantsArray[3].size();
-        const int s2Index  = cur % variantsArray[4].size();
-        cur               /= variantsArray[4].size();
-        const int s3Index  = cur % variantsArray[5].size();
-        cur               /= variantsArray[5].size();
-        const int s4Index  = cur % variantsArray[6].size();
+        const int b4Index   = cur % variantsArray[3].size();
+        cur                /= variantsArray[3].size();
+        const int s1Index   = cur % variantsArray[4].size();
+        cur                /= variantsArray[4].size();
+        const int s2Index   = cur % variantsArray[5].size();
+        cur                /= variantsArray[5].size();
+        const int s3Index   = cur % variantsArray[6].size();
+        cur                /= variantsArray[6].size();
+        const int s4Index   = cur % variantsArray[7].size();
 
-        if ((b1Index != 0 || b2Index != 0 || b3Index != 0) && ((s1Index != 0 && s2Index == 0) || (s1Index == 0 && s2Index != 0)))
+        if ((b1Index != 0 || b2Index != 0 || b3Index != 0 || b4Index != 0) &&
+            ((s1Index != 0 && s2Index == 0) || (s1Index == 0 && s2Index != 0)))
         {
-            resultsArray[threadId].append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"s1":%4,"s2":%5,"s3":%6,"s4":%7})")
+            resultsArray[threadId].append(QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"s1":%5,"s2":%6,"s3":%7,"s4":%8})")
                                               .arg(
                                                   variantsArray[0][b1Index],
                                                   variantsArray[1][b2Index],
                                                   variantsArray[2][b3Index],
-                                                  variantsArray[3][s1Index],
-                                                  variantsArray[4][s2Index],
-                                                  variantsArray[5][s3Index],
-                                                  variantsArray[6][s4Index]
+                                                  variantsArray[3][b4Index],
+                                                  variantsArray[4][s1Index],
+                                                  variantsArray[5][s2Index],
+                                                  variantsArray[6][s3Index],
+                                                  variantsArray[7][s4Index]
                                               ));
         }
     }
@@ -254,6 +271,7 @@ QString DecisionMakerConfig::variantsToJsonString() const
     variants.append(mBuyDecision1Config->variantsAsJson());
     variants.append(mBuyDecision2Config->variantsAsJson());
     variants.append(mBuyDecision3Config->variantsAsJson());
+    variants.append(mBuyDecision4Config->variantsAsJson());
     variants.append(mSellDecision1Config->variantsAsJson());
     variants.append(mSellDecision2Config->variantsAsJson());
     variants.append(mSellDecision3Config->variantsAsJson());
@@ -285,6 +303,11 @@ IBuyDecision2Config* DecisionMakerConfig::getBuyDecision2Config()
 IBuyDecision3Config* DecisionMakerConfig::getBuyDecision3Config()
 {
     return mBuyDecision3Config;
+}
+
+IBuyDecision4Config* DecisionMakerConfig::getBuyDecision4Config()
+{
+    return mBuyDecision4Config;
 }
 
 ISellDecision1Config* DecisionMakerConfig::getSellDecision1Config()

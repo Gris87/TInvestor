@@ -69,6 +69,7 @@ public:
         IBuyDecision1ConfigWidgetFactory*       buyDecision1ConfigWidgetFactory,
         IBuyDecision2ConfigWidgetFactory*       buyDecision2ConfigWidgetFactory,
         IBuyDecision3ConfigWidgetFactory*       buyDecision3ConfigWidgetFactory,
+        IBuyDecision4ConfigWidgetFactory*       buyDecision4ConfigWidgetFactory,
         ISellDecision1ConfigWidgetFactory*      sellDecision1ConfigWidgetFactory,
         ISellDecision2ConfigWidgetFactory*      sellDecision2ConfigWidgetFactory,
         ISellDecision3ConfigWidgetFactory*      sellDecision3ConfigWidgetFactory,
@@ -159,6 +160,7 @@ private:
     IBuyDecision1ConfigWidgetFactory*       mBuyDecision1ConfigWidgetFactory;
     IBuyDecision2ConfigWidgetFactory*       mBuyDecision2ConfigWidgetFactory;
     IBuyDecision3ConfigWidgetFactory*       mBuyDecision3ConfigWidgetFactory;
+    IBuyDecision4ConfigWidgetFactory*       mBuyDecision4ConfigWidgetFactory;
     ISellDecision1ConfigWidgetFactory*      mSellDecision1ConfigWidgetFactory;
     ISellDecision2ConfigWidgetFactory*      mSellDecision2ConfigWidgetFactory;
     ISellDecision3ConfigWidgetFactory*      mSellDecision3ConfigWidgetFactory;
