@@ -243,7 +243,10 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+        *buyDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -257,11 +260,17 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return(""));
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to sell"));
 
@@ -300,7 +309,10 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+        *buyDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -313,11 +325,17 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return(""));
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to sell"));
 
@@ -346,7 +364,10 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *buyDecisionMock, makeDecision(simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+        *buyDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock3, false, -1, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -357,11 +378,17 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return(""));
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), simulatorConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to sell"));
 
@@ -390,11 +417,17 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock1, false, -1, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return(""));
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock2, false, -1, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to sell"));
 
@@ -419,7 +452,10 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *buyDecisionMock, makeDecision(autoPilotConfigMock, &stock3, true, 0, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f))
+        *buyDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock3, true, 0, FloatEq(0.3f), FloatEq(0.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to buy"));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
@@ -430,11 +466,17 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock1, true, 0, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock1, true, 0, FloatEq(0.1f), FloatEq(103.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return(""));
     EXPECT_CALL(
-        *sellDecisionMock, makeDecision(autoPilotConfigMock, &stock2, true, 0, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f))
+        *sellDecisionMock,
+        makeDecision(
+            QThread::currentThread(), autoPilotConfigMock, &stock2, true, 0, FloatEq(0.2f), FloatEq(203.0f), FloatEq(0.04f)
+        )
     )
         .WillOnce(Return("I want to sell"));
 

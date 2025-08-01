@@ -1,6 +1,5 @@
 Normal buy decision with price changes in time range
 Buy if price is less than average for last n days
-Skip weekends on a schedule
 Optimize config variants
 Config for limiting CPU usage during decision making
 Improve coverage

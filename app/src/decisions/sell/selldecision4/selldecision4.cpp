@@ -20,6 +20,7 @@ SellDecision4::~SellDecision4()
 }
 
 QString SellDecision4::makeDecision(
+    QThread* /*parentThread*/,
     IDecisionMakerConfig* config,
     Stock*                stock,
     bool /*dateRange*/,

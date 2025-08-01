@@ -16,6 +16,7 @@ BuyDecision2::~BuyDecision2()
 }
 
 QString BuyDecision2::makeDecision(
+    QThread* /*parentThread*/,
     IDecisionMakerConfig* /*config*/,
     Stock* /*stock*/,
     bool /*dateRange*/,

@@ -24,7 +24,14 @@ SellDecision3::~SellDecision3()
 }
 
 QString SellDecision3::makeDecision(
-    IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice, float commission
+    QThread*              parentThread,
+    IDecisionMakerConfig* config,
+    Stock*                stock,
+    bool                  dateRange,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 )
 {
     ISellDecision3Config* sellConfig = config->getSellDecision3Config();
@@ -39,7 +46,7 @@ QString SellDecision3::makeDecision(
         {
             const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_MINUTE);
 
-            for (int i = dataIndex - 1; i >= 0; --i)
+            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->data.at(i).timestamp;
                 const float  prevPrice = stock->data.at(i).price;
@@ -74,7 +81,7 @@ QString SellDecision3::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
 
-            for (int i = stock->operational.detailedData.size() - 2; i >= 0; --i)
+            for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->operational.detailedData.at(i).timestamp;
                 const float  prevPrice = stock->operational.detailedData.at(i).price;
@@ -105,7 +112,7 @@ QString SellDecision3::makeDecision(
                 }
             }
 
-            for (int i = stock->data.size() - 1; i >= 0; --i)
+            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->data.at(i).timestamp;
                 const float  prevPrice = stock->data.at(i).price;

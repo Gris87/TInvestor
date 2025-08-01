@@ -43,7 +43,15 @@ InstrumentsForTrading DecisionMaker::makeDecision(
 
     if (mConfig->isUseSchedule())
     {
-        const QTime time        = QDateTime::fromMSecsSinceEpoch(timestamp).time(); // TODO: Moscow time?
+        const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp); // TODO: Moscow time?
+        const int       dayOfWeek = dateTime.date().dayOfWeek();
+
+        if (dayOfWeek == Qt::Saturday || dayOfWeek == Qt::Sunday)
+        {
+            return res;
+        }
+
+        const QTime time        = dateTime.time();
         const int   startHour   = mConfig->getScheduleStartHour();
         const int   startMinute = mConfig->getScheduleStartMinute();
         const int   endHour     = mConfig->getScheduleEndHour();
@@ -225,7 +233,9 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 
         for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            cause = buyDecisionsArray[j]->makeDecision(decisionConfig, stock, dateRange, dataIndex, price, 0.0f, commission);
+            cause = buyDecisionsArray[j]->makeDecision(
+                parentThread, decisionConfig, stock, dateRange, dataIndex, price, 0.0f, commission
+            );
         }
 
         if (cause != "")
@@ -418,7 +428,9 @@ static void makeSellDecisionsForParallel(
 
         for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
         {
-            cause = sellDecisionsArray[j]->makeDecision(decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission);
+            cause = sellDecisionsArray[j]->makeDecision(
+                parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
+            );
         }
 
         if (cause != "")

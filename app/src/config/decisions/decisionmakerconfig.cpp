@@ -234,15 +234,15 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
         cur               /= variantsArray[1].size();
         const int b3Index  = cur % variantsArray[2].size();
         cur               /= variantsArray[2].size();
-        const int b4Index   = cur % variantsArray[3].size();
-        cur                /= variantsArray[3].size();
-        const int s1Index   = cur % variantsArray[4].size();
-        cur                /= variantsArray[4].size();
-        const int s2Index   = cur % variantsArray[5].size();
-        cur                /= variantsArray[5].size();
-        const int s3Index   = cur % variantsArray[6].size();
-        cur                /= variantsArray[6].size();
-        const int s4Index   = cur % variantsArray[7].size();
+        const int b4Index  = cur % variantsArray[3].size();
+        cur               /= variantsArray[3].size();
+        const int s1Index  = cur % variantsArray[4].size();
+        cur               /= variantsArray[4].size();
+        const int s2Index  = cur % variantsArray[5].size();
+        cur               /= variantsArray[5].size();
+        const int s3Index  = cur % variantsArray[6].size();
+        cur               /= variantsArray[6].size();
+        const int s4Index  = cur % variantsArray[7].size();
 
         if ((b1Index != 0 || b2Index != 0 || b3Index != 0 || b4Index != 0) &&
             ((s1Index != 0 && s2Index == 0) || (s1Index == 0 && s2Index != 0)))

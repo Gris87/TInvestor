@@ -27,6 +27,7 @@ BuyDecision3::~BuyDecision3()
 }
 
 QString BuyDecision3::makeDecision(
+    QThread*              parentThread,
     IDecisionMakerConfig* config,
     Stock*                stock,
     bool                  dateRange,
@@ -48,7 +49,7 @@ QString BuyDecision3::makeDecision(
         {
             const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_DAY);
 
-            for (int i = dataIndex - 1; i >= 0; --i)
+            for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->data.at(i).timestamp;
                 const float  prevPrice = stock->data.at(i).price;
@@ -65,7 +66,7 @@ QString BuyDecision3::makeDecision(
                     int j           = i - 1;
                     int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-                    while (j >= 0 && minutesLeft > 0)
+                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
                         if (stock->data.at(j).price < maximumPrice)
                         {
@@ -101,7 +102,7 @@ QString BuyDecision3::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY);
 
-            for (int i = stock->operational.detailedData.size() - 2; i >= 0; --i)
+            for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->operational.detailedData.at(i).timestamp;
                 const float  prevPrice = stock->operational.detailedData.at(i).price;
@@ -118,7 +119,7 @@ QString BuyDecision3::makeDecision(
                     int j           = i - 1;
                     int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-                    while (j >= 0 && minutesLeft > 0)
+                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
                         if (stock->operational.detailedData.at(j).price < maximumPrice)
                         {
@@ -150,7 +151,7 @@ QString BuyDecision3::makeDecision(
                 }
             }
 
-            for (int i = stock->data.size() - 1; i >= 0; --i)
+            for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
                 const qint64 timestamp = stock->data.at(i).timestamp;
                 const float  prevPrice = stock->data.at(i).price;
@@ -167,7 +168,7 @@ QString BuyDecision3::makeDecision(
                     int j           = i - 1;
                     int minutesLeft = MINUTES_TO_DOUBLE_CHECK;
 
-                    while (j >= 0 && minutesLeft > 0)
+                    while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
                         if (stock->data.at(j).price < maximumPrice)
                         {

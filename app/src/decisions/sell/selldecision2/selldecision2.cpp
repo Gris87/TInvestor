@@ -22,7 +22,14 @@ SellDecision2::~SellDecision2()
 }
 
 QString SellDecision2::makeDecision(
-    IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice, float commission
+    QThread*              parentThread,
+    IDecisionMakerConfig* config,
+    Stock*                stock,
+    bool                  dateRange,
+    int                   dataIndex,
+    float                 price,
+    float                 avgPrice,
+    float                 commission
 )
 {
     ISellDecision2Config* sellConfig = config->getSellDecision2Config();
@@ -40,7 +47,7 @@ QString SellDecision2::makeDecision(
 
             if (dateRange)
             {
-                for (int i = dataIndex - 1; i >= 0; --i)
+                for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
                     const float prevPrice = stock->data.at(i).price;
 
@@ -70,7 +77,7 @@ QString SellDecision2::makeDecision(
             }
             else
             {
-                for (int i = stock->operational.detailedData.size() - 2; i >= 0; --i)
+                for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
                     const float prevPrice = stock->operational.detailedData.at(i).price;
 
@@ -99,7 +106,7 @@ QString SellDecision2::makeDecision(
                     }
                 }
 
-                for (int i = stock->data.size() - 1; i >= 0; --i)
+                for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
                     const float prevPrice = stock->data.at(i).price;
 

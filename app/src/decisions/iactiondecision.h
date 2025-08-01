@@ -2,6 +2,8 @@
 
 
 
+#include <QThread>
+
 #include "src/config/decisions/idecisionmakerconfig.h"
 #include "src/domain/stock/stock.h"
 
@@ -17,6 +19,13 @@ public:
     IActionDecision& operator=(const IActionDecision& another) = delete;
 
     virtual QString makeDecision(
-        IDecisionMakerConfig* config, Stock* stock, bool dateRange, int dataIndex, float price, float avgPrice, float commission
+        QThread*              parentThread,
+        IDecisionMakerConfig* config,
+        Stock*                stock,
+        bool                  dateRange,
+        int                   dataIndex,
+        float                 price,
+        float                 avgPrice,
+        float                 commission
     ) = 0;
 };
