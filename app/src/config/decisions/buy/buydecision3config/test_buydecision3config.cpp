@@ -25,19 +25,19 @@ TEST(Test_BuyDecision3Config, Test_assign)
     BuyDecision3Config config2;
 
     config.setEnabled(false);
-    config.setPriceRise(2.5f);
+    config.setPriceFall(2.5f);
     config.setDuration(123);
 
     config2.setEnabled(true);
-    config2.setPriceRise(1.6f);
+    config2.setPriceFall(1.6f);
     config2.setDuration(321);
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),     false);
-    ASSERT_EQ(config.getPriceRise(),  2.5f);
+    ASSERT_EQ(config.getPriceFall(),  2.5f);
     ASSERT_EQ(config.getDuration(),   123);
     ASSERT_EQ(config2.isEnabled(),    true);
-    ASSERT_EQ(config2.getPriceRise(), 1.6f);
+    ASSERT_EQ(config2.getPriceFall(), 1.6f);
     ASSERT_EQ(config2.getDuration(),  321);
     // clang-format on
 
@@ -45,10 +45,10 @@ TEST(Test_BuyDecision3Config, Test_assign)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),     true);
-    ASSERT_EQ(config.getPriceRise(),  1.6f);
+    ASSERT_EQ(config.getPriceFall(),  1.6f);
     ASSERT_EQ(config.getDuration(),   321);
     ASSERT_EQ(config2.isEnabled(),    true);
-    ASSERT_EQ(config2.getPriceRise(), 1.6f);
+    ASSERT_EQ(config2.getPriceFall(), 1.6f);
     ASSERT_EQ(config2.getDuration(),  321);
     // clang-format on
 }
@@ -58,12 +58,12 @@ TEST(Test_BuyDecision3Config, Test_makeDefault)
     BuyDecision3Config config;
 
     config.setEnabled(false);
-    config.setPriceRise(2.5f);
+    config.setPriceFall(2.5f);
     config.setDuration(123);
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceRise(), 2.5f);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
     ASSERT_EQ(config.getDuration(),  123);
     // clang-format on
 
@@ -71,8 +71,8 @@ TEST(Test_BuyDecision3Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceRise(), 2.0f);
-    ASSERT_EQ(config.getDuration(),  1);
+    ASSERT_EQ(config.getPriceFall(), 1.0f);
+    ASSERT_EQ(config.getDuration(),  5);
     // clang-format on
 }
 
@@ -83,12 +83,12 @@ TEST(Test_BuyDecision3Config, Test_save)
     BuyDecision3Config config;
 
     config.setEnabled(false);
-    config.setPriceRise(2.5f);
+    config.setPriceFall(2.5f);
     config.setDuration(123);
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceRise(), 2.5f);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
     ASSERT_EQ(config.getDuration(),  123);
     // clang-format on
 
@@ -96,7 +96,7 @@ TEST(Test_BuyDecision3Config, Test_save)
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Enabled"),   QVariant(false)));
-    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/PriceRise"), QVariant(2.5f)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/PriceFall"), QVariant(2.5f)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("BLAH/Duration"),  QVariant(123)));
     // clang-format on
 
@@ -110,12 +110,12 @@ TEST(Test_BuyDecision3Config, Test_load)
     BuyDecision3Config config;
 
     config.setEnabled(false);
-    config.setPriceRise(2.5f);
+    config.setPriceFall(2.5f);
     config.setDuration(123);
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    false);
-    ASSERT_EQ(config.getPriceRise(), 2.5f);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
     ASSERT_EQ(config.getDuration(),  123);
     // clang-format on
 
@@ -123,7 +123,7 @@ TEST(Test_BuyDecision3Config, Test_load)
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Enabled"),   QVariant(false))).WillOnce(Return(QVariant(true)));
-    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/PriceRise"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
+    EXPECT_CALL(settingsEditorMock, value(QString("BLAH/PriceFall"), QVariant(2.5f))).WillOnce(Return(QVariant(1.7f)));
     EXPECT_CALL(settingsEditorMock, value(QString("BLAH/Duration"),  QVariant(123))).WillOnce(Return(QVariant(321)));
     // clang-format on
 
@@ -131,7 +131,7 @@ TEST(Test_BuyDecision3Config, Test_load)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceRise(), 1.7f);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
     ASSERT_EQ(config.getDuration(),  321);
     // clang-format on
 }
@@ -140,7 +140,7 @@ TEST(Test_BuyDecision3Config, Test_fromJsonObject)
 {
     BuyDecision3Config config;
 
-    const QString content = R"({"enabled":true,"priceRise":"1.70","duration":321})";
+    const QString content = R"({"enabled":true,"priceFall":"1.70","duration":321})";
 
     const simdjson::padded_string jsonData(content.toStdString());
 
@@ -151,7 +151,7 @@ TEST(Test_BuyDecision3Config, Test_fromJsonObject)
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceRise(), 1.7f);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
     ASSERT_EQ(config.getDuration(),  321);
     // clang-format on
 
@@ -168,17 +168,17 @@ TEST(Test_BuyDecision3Config, Test_toJsonString)
     BuyDecision3Config config;
 
     config.setEnabled(true);
-    config.setPriceRise(1.7f);
+    config.setPriceFall(1.7f);
     config.setDuration(321);
 
     // clang-format off
     ASSERT_EQ(config.isEnabled(),    true);
-    ASSERT_EQ(config.getPriceRise(), 1.7f);
+    ASSERT_EQ(config.getPriceFall(), 1.7f);
     ASSERT_EQ(config.getDuration(),  321);
     // clang-format on
 
     const QString content         = config.toJsonString();
-    const QString expectedContent = R"({"enabled":true,"priceRise":"1.70","duration":321})";
+    const QString expectedContent = R"({"enabled":true,"priceFall":"1.70","duration":321})";
 
     ASSERT_EQ(content, expectedContent);
 }
@@ -191,15 +191,15 @@ TEST(Test_BuyDecision3Config, Test_variantsAsJson)
 
     ASSERT_EQ(variants.size(), 10);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceRise":"3.00","duration":5})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceRise":"3.00","duration":15})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceRise":"3.00","duration":30})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceRise":"4.00","duration":5})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceRise":"4.00","duration":15})");
-    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceRise":"4.00","duration":30})");
-    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceRise":"5.00","duration":5})");
-    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceRise":"5.00","duration":15})");
-    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceRise":"5.00","duration":30})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"priceFall":"3.00","duration":5})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"priceFall":"3.00","duration":15})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"priceFall":"3.00","duration":30})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"priceFall":"4.00","duration":5})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"priceFall":"4.00","duration":15})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"priceFall":"4.00","duration":30})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"priceFall":"5.00","duration":5})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"priceFall":"5.00","duration":15})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"priceFall":"5.00","duration":30})");
 }
 
 TEST(Test_BuyDecision3Config, Test_setEnabled_and_isEnabled)
@@ -213,15 +213,15 @@ TEST(Test_BuyDecision3Config, Test_setEnabled_and_isEnabled)
     ASSERT_EQ(config.isEnabled(), true);
 }
 
-TEST(Test_BuyDecision3Config, Test_setPriceRise_and_getPriceRise)
+TEST(Test_BuyDecision3Config, Test_setPriceFall_and_getPriceFall)
 {
     BuyDecision3Config config;
 
-    config.setPriceRise(0.1f);
-    ASSERT_EQ(config.getPriceRise(), 0.1f);
+    config.setPriceFall(0.1f);
+    ASSERT_EQ(config.getPriceFall(), 0.1f);
 
-    config.setPriceRise(0.5f);
-    ASSERT_EQ(config.getPriceRise(), 0.5f);
+    config.setPriceFall(0.5f);
+    ASSERT_EQ(config.getPriceFall(), 0.5f);
 }
 
 TEST(Test_BuyDecision3Config, Test_setDuration_and_getDuration)

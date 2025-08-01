@@ -1,28 +1,28 @@
-#include "src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.h"
-#include "ui_buydecision2configwidget.h"
+#include "src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.h"
+#include "ui_buydecision4configwidget.h"
 
 #include <QDebug>
 
 
 
-BuyDecision2ConfigWidget::BuyDecision2ConfigWidget(IBuyDecision2Config* config, QWidget* parent) :
-    IBuyDecision2ConfigWidget(parent),
-    ui(new Ui::BuyDecision2ConfigWidget),
+BuyDecision4ConfigWidget::BuyDecision4ConfigWidget(IBuyDecision4Config* config, QWidget* parent) :
+    IBuyDecision4ConfigWidget(parent),
+    ui(new Ui::BuyDecision4ConfigWidget),
     mConfig(config)
 {
-    qDebug() << "Create BuyDecision2ConfigWidget";
+    qDebug() << "Create BuyDecision4ConfigWidget";
 
     ui->setupUi(this);
 }
 
-BuyDecision2ConfigWidget::~BuyDecision2ConfigWidget()
+BuyDecision4ConfigWidget::~BuyDecision4ConfigWidget()
 {
-    qDebug() << "Destroy BuyDecision2ConfigWidget";
+    qDebug() << "Destroy BuyDecision4ConfigWidget";
 
     delete ui;
 }
 
-void BuyDecision2ConfigWidget::updateUiFromConfig() const
+void BuyDecision4ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
     ui->priceFallDoubleSpinBox->setValue(mConfig->getPriceFall());
@@ -30,7 +30,7 @@ void BuyDecision2ConfigWidget::updateUiFromConfig() const
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
-void BuyDecision2ConfigWidget::makeReadOnly() const
+void BuyDecision4ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
@@ -39,7 +39,7 @@ void BuyDecision2ConfigWidget::makeReadOnly() const
     ui->durationSpinBox->setReadOnly(true);
 }
 
-void BuyDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
+void BuyDecision4ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value)
 {
     const bool checked = value == Qt::Checked;
 
@@ -50,17 +50,17 @@ void BuyDecision2ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
     ui->durationSpinBox->setEnabled(checked);
 }
 
-void BuyDecision2ConfigWidget::on_priceFallDoubleSpinBox_valueChanged(double value)
+void BuyDecision4ConfigWidget::on_priceFallDoubleSpinBox_valueChanged(double value)
 {
     mConfig->setPriceFall(value);
 }
 
-void BuyDecision2ConfigWidget::on_loseYieldDoubleSpinBox_valueChanged(double value)
+void BuyDecision4ConfigWidget::on_loseYieldDoubleSpinBox_valueChanged(double value)
 {
     mConfig->setLoseYield(value);
 }
 
-void BuyDecision2ConfigWidget::on_durationSpinBox_valueChanged(int value)
+void BuyDecision4ConfigWidget::on_durationSpinBox_valueChanged(int value)
 {
     mConfig->setDuration(value);
 }

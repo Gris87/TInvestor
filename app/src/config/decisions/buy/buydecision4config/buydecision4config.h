@@ -2,22 +2,22 @@
 
 
 
-#include "src/config/decisions/buy/buydecision2config/ibuydecision2config.h"
+#include "src/config/decisions/buy/buydecision4config/ibuydecision4config.h"
 
 #include <QMutex>
 
 
 
-class BuyDecision2Config : public IBuyDecision2Config
+class BuyDecision4Config : public IBuyDecision4Config
 {
 public:
-    BuyDecision2Config();
-    ~BuyDecision2Config() override;
+    BuyDecision4Config();
+    ~BuyDecision4Config() override;
 
-    BuyDecision2Config(const BuyDecision2Config& another)            = delete;
-    BuyDecision2Config& operator=(const BuyDecision2Config& another) = delete;
+    BuyDecision4Config(const BuyDecision4Config& another)            = delete;
+    BuyDecision4Config& operator=(const BuyDecision4Config& another) = delete;
 
-    void assign(IBuyDecision2Config* another) override;
+    void assign(IBuyDecision4Config* another) override;
     void makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;

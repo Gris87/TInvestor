@@ -25,7 +25,7 @@ BuyDecision3ConfigWidget::~BuyDecision3ConfigWidget()
 void BuyDecision3ConfigWidget::updateUiFromConfig() const
 {
     ui->enabledCheckBox->setChecked(mConfig->isEnabled());
-    ui->priceRiseDoubleSpinBox->setValue(mConfig->getPriceRise());
+    ui->priceFallDoubleSpinBox->setValue(mConfig->getPriceFall());
     ui->durationSpinBox->setValue(mConfig->getDuration());
 }
 
@@ -33,7 +33,7 @@ void BuyDecision3ConfigWidget::makeReadOnly() const
 {
     ui->enabledCheckBox->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->enabledCheckBox->setFocusPolicy(Qt::NoFocus);
-    ui->priceRiseDoubleSpinBox->setReadOnly(true);
+    ui->priceFallDoubleSpinBox->setReadOnly(true);
     ui->durationSpinBox->setReadOnly(true);
 }
 
@@ -43,13 +43,13 @@ void BuyDecision3ConfigWidget::on_enabledCheckBox_checkStateChanged(const Qt::Ch
 
     mConfig->setEnabled(checked);
 
-    ui->priceRiseDoubleSpinBox->setEnabled(checked);
+    ui->priceFallDoubleSpinBox->setEnabled(checked);
     ui->durationSpinBox->setEnabled(checked);
 }
 
-void BuyDecision3ConfigWidget::on_priceRiseDoubleSpinBox_valueChanged(double value)
+void BuyDecision3ConfigWidget::on_priceFallDoubleSpinBox_valueChanged(double value)
 {
-    mConfig->setPriceRise(value);
+    mConfig->setPriceFall(value);
 }
 
 void BuyDecision3ConfigWidget::on_durationSpinBox_valueChanged(int value)

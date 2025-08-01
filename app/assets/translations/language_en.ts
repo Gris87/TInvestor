@@ -168,21 +168,16 @@
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has dropped more</source>
+        <source>Buy stocks if the price fall more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="67"/>
-        <source>than</source>
+        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="80"/>
+        <source>within the last</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="87"/>
-        <source>in the last</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="94"/>
         <source> minutes</source>
         <translation></translation>
     </message>
@@ -191,22 +186,17 @@
     <name>BuyDecision2ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has fallen and risen by more than</source>
+        <source>Buy stocks if the price fall more than</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="80"/>
-        <source>and more than</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="87"/>
-        <source> times</source>
+        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="60"/>
+        <source>and price raise more than</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="100"/>
-        <source>in the last</source>
+        <source>from latest minimum within the last</source>
         <translation></translation>
     </message>
     <message>
@@ -219,16 +209,39 @@
     <name>BuyDecision3ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="37"/>
-        <source>Buy stocks before day end if the price has risen more than</source>
+        <source>Buy stocks if the price fall more than</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="80"/>
-        <source>during non-working hours over the last</source>
+        <source>within the last</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="87"/>
+        <source> days</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision4ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="37"/>
+        <source>Buy stocks if the price fall more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="60"/>
+        <source>and price raise more than</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="100"/>
+        <source>from latest minimum within the last</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="107"/>
         <source> days</source>
         <translation></translation>
     </message>
@@ -870,9 +883,12 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="63"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="93"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="119"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="83"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="136"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="185"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="83"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="136"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="185"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation></translation>
     </message>

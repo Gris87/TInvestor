@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
+    <width>295</width>
     <height>58</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
      <item>
       <widget class="QCheckBox" name="enabledCheckBox">
        <property name="text">
-        <string>Buy stocks before day end if the price has risen more than</string>
+        <string>Buy stocks if the price fall more than</string>
        </property>
        <property name="checked">
         <bool>true</bool>
@@ -42,7 +42,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDoubleSpinBox" name="priceRiseDoubleSpinBox">
+      <widget class="QDoubleSpinBox" name="priceFallDoubleSpinBox">
        <property name="suffix">
         <string notr="true"> %</string>
        </property>
@@ -75,9 +75,9 @@
       <number>4</number>
      </property>
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>during non-working hours over the last</string>
+        <string>within the last</string>
        </property>
       </widget>
      </item>
@@ -86,11 +86,8 @@
        <property name="suffix">
         <string> days</string>
        </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
        <property name="value">
-        <number>3</number>
+        <number>5</number>
        </property>
       </widget>
      </item>

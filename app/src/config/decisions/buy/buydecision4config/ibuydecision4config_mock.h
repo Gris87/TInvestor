@@ -2,25 +2,25 @@
 
 
 
-#include "src/config/decisions/buy/buydecision3config/ibuydecision3config.h"
+#include "src/config/decisions/buy/buydecision4config/ibuydecision4config.h"
 
 #include <gmock/gmock.h>
 
 
 
-class BuyDecision3ConfigMock : public IBuyDecision3Config
+class BuyDecision4ConfigMock : public IBuyDecision4Config
 {
 public:
-    BuyDecision3ConfigMock() :
-        IBuyDecision3Config()
+    BuyDecision4ConfigMock() :
+        IBuyDecision4Config()
     {
     }
-    ~BuyDecision3ConfigMock() override = default;
+    ~BuyDecision4ConfigMock() override = default;
 
-    BuyDecision3ConfigMock(const BuyDecision3ConfigMock& another)            = delete;
-    BuyDecision3ConfigMock& operator=(const BuyDecision3ConfigMock& another) = delete;
+    BuyDecision4ConfigMock(const BuyDecision4ConfigMock& another)            = delete;
+    BuyDecision4ConfigMock& operator=(const BuyDecision4ConfigMock& another) = delete;
 
-    MOCK_METHOD(void, assign, (IBuyDecision3Config * another), (override));
+    MOCK_METHOD(void, assign, (IBuyDecision4Config * another), (override));
     MOCK_METHOD(void, makeDefault, (), (override));
 
     MOCK_METHOD(void, save, (ISettingsEditor * settingsEditor, const QString& type), (override));
@@ -35,6 +35,9 @@ public:
 
     MOCK_METHOD(void, setPriceFall, (float value), (override));
     MOCK_METHOD(float, getPriceFall, (), (override));
+
+    MOCK_METHOD(void, setLoseYield, (float value), (override));
+    MOCK_METHOD(float, getLoseYield, (), (override));
 
     MOCK_METHOD(void, setDuration, (int value), (override));
     MOCK_METHOD(int, getDuration, (), (override));

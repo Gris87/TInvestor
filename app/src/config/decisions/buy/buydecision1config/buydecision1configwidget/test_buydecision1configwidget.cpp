@@ -95,13 +95,19 @@ TEST(Test_BuyDecision1ConfigWidget, Test_on_enabledCheckBox_checkStateChanged)
 
     EXPECT_CALL(buyDecision1ConfigMock, setEnabled(true));
     configWidget.ui->enabledCheckBox->setChecked(true);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isEnabled(), true);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), true);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        true);
+    // clang-format on
 
     EXPECT_CALL(buyDecision1ConfigMock, setEnabled(false));
     configWidget.ui->enabledCheckBox->setChecked(false);
+
+    // clang-format off
     ASSERT_EQ(configWidget.ui->priceFallDoubleSpinBox->isEnabled(), false);
-    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(), false);
+    ASSERT_EQ(configWidget.ui->durationSpinBox->isEnabled(),        false);
+    // clang-format on
 }
 
 TEST(Test_BuyDecision1ConfigWidget, Test_on_priceFallDoubleSpinBox_valueChanged)

@@ -9,16 +9,16 @@
 
 
 
-class IBuyDecision3Config
+class IBuyDecision4Config
 {
 public:
-    IBuyDecision3Config()          = default;
-    virtual ~IBuyDecision3Config() = default;
+    IBuyDecision4Config()          = default;
+    virtual ~IBuyDecision4Config() = default;
 
-    IBuyDecision3Config(const IBuyDecision3Config& another)            = delete;
-    IBuyDecision3Config& operator=(const IBuyDecision3Config& another) = delete;
+    IBuyDecision4Config(const IBuyDecision4Config& another)            = delete;
+    IBuyDecision4Config& operator=(const IBuyDecision4Config& another) = delete;
 
-    virtual void assign(IBuyDecision3Config* another) = 0;
+    virtual void assign(IBuyDecision4Config* another) = 0;
     virtual void makeDefault()                        = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
@@ -37,6 +37,9 @@ public:
 
     virtual void  setPriceFall(float value) = 0;
     virtual float getPriceFall()            = 0;
+
+    virtual void  setLoseYield(float value) = 0;
+    virtual float getLoseYield()            = 0;
 
     virtual void setDuration(int value) = 0;
     virtual int  getDuration()          = 0;

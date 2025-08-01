@@ -34,7 +34,7 @@ private:
 
 private slots:
     void on_enabledCheckBox_checkStateChanged(const Qt::CheckState& value);
-    void on_priceDiffDoubleSpinBox_valueChanged(double value);
-    void on_amountOfTimesSpinBox_valueChanged(int value);
+    void on_priceFallDoubleSpinBox_valueChanged(double value);
+    void on_loseYieldDoubleSpinBox_valueChanged(double value);
     void on_durationSpinBox_valueChanged(int value);
 };

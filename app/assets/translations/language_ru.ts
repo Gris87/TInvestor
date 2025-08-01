@@ -168,21 +168,16 @@
     <name>BuyDecision1ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has dropped more</source>
+        <source>Buy stocks if the price fall more than</source>
         <translation>Покупать акции, если цена упала больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="67"/>
-        <source>than</source>
-        <translation>на</translation>
+        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="80"/>
+        <source>within the last</source>
+        <translation>в течение</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="87"/>
-        <source>in the last</source>
-        <translation>за последние</translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="94"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
@@ -191,23 +186,18 @@
     <name>BuyDecision2ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="37"/>
-        <source>Buy stocks if the price has fallen and risen by more than</source>
-        <translation>Покупать акции, если цена упала и выросла больше, чем на</translation>
+        <source>Buy stocks if the price fall more than</source>
+        <translation>Покупать акции, если цена упала больше, чем на</translation>
     </message>
     <message>
-        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="80"/>
-        <source>and more than</source>
-        <translation>и больше, чем</translation>
-    </message>
-    <message>
-        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="87"/>
-        <source> times</source>
-        <translation> раза</translation>
+        <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="60"/>
+        <source>and price raise more than</source>
+        <translation>и цена выросла больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="100"/>
-        <source>in the last</source>
-        <translation>за последние</translation>
+        <source>from latest minimum within the last</source>
+        <translation>от последнего минимума в течение</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision2config/buydecision2configwidget/buydecision2configwidget.ui" line="107"/>
@@ -219,16 +209,39 @@
     <name>BuyDecision3ConfigWidget</name>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="37"/>
-        <source>Buy stocks before day end if the price has risen more than</source>
-        <translation>Покупать акции в конце дня, если цена возрастала на более чем</translation>
+        <source>Buy stocks if the price fall more than</source>
+        <translation>Покупать акции, если цена упала больше, чем</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="80"/>
-        <source>during non-working hours over the last</source>
-        <translation>в нерабочее время в течение</translation>
+        <source>within the last</source>
+        <translation>в течение</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="87"/>
+        <source> days</source>
+        <translation> дней</translation>
+    </message>
+</context>
+<context>
+    <name>BuyDecision4ConfigWidget</name>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="37"/>
+        <source>Buy stocks if the price fall more than</source>
+        <translation>Покупать акции, если цена упала больше, чем</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="60"/>
+        <source>and price raise more than</source>
+        <translation>и цена выросла больше, чем на</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="100"/>
+        <source>from latest minimum within the last</source>
+        <translation>от последнего минимума в течение</translation>
+    </message>
+    <message>
+        <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="107"/>
         <source> days</source>
         <translation> дней</translation>
     </message>
@@ -870,9 +883,12 @@
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3 и потеряла доход в %4 от цены %5 в %6 за последние %7 минут</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="63"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="93"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="119"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="83"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="136"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="185"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="83"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="136"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="185"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 за последние %4 минут и падение составило %5</translation>
     </message>
@@ -928,7 +944,7 @@
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="87"/>
         <source>within the last</source>
-        <translation>за последние</translation>
+        <translation>в течение</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/sell/selldecision3config/selldecision3configwidget/selldecision3configwidget.ui" line="94"/>

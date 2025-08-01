@@ -34,8 +34,8 @@ public:
     void setEnabled(bool value) override;
     bool isEnabled() override;
 
-    void  setPriceRise(float value) override;
-    float getPriceRise() override;
+    void  setPriceFall(float value) override;
+    float getPriceFall() override;
 
     void setDuration(int value) override;
     int  getDuration() override;
@@ -43,6 +43,6 @@ public:
 private:
     QMutex* mMutex;
     bool    mEnabled;
-    float   mPriceRise;
+    float   mPriceFall;
     int     mDuration;
 };

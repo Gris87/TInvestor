@@ -33,11 +33,11 @@ public:
     MOCK_METHOD(void, setEnabled, (bool value), (override));
     MOCK_METHOD(bool, isEnabled, (), (override));
 
-    MOCK_METHOD(void, setPriceDiff, (float value), (override));
-    MOCK_METHOD(float, getPriceDiff, (), (override));
+    MOCK_METHOD(void, setPriceFall, (float value), (override));
+    MOCK_METHOD(float, getPriceFall, (), (override));
 
-    MOCK_METHOD(void, setAmountOfTimes, (int value), (override));
-    MOCK_METHOD(int, getAmountOfTimes, (), (override));
+    MOCK_METHOD(void, setLoseYield, (float value), (override));
+    MOCK_METHOD(float, getLoseYield, (), (override));
 
     MOCK_METHOD(void, setDuration, (int value), (override));
     MOCK_METHOD(int, getDuration, (), (override));

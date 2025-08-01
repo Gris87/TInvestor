@@ -10,6 +10,9 @@ SOURCES += \
     src/config/decisions/buy/buydecision3config/buydecision3configwidget/test_buydecision3configwidget.cpp \
     src/config/decisions/buy/buydecision3config/buydecision3configwidget/test_buydecision3configwidgetfactory.cpp \
     src/config/decisions/buy/buydecision3config/test_buydecision3config.cpp \
+    src/config/decisions/buy/buydecision4config/buydecision4configwidget/test_buydecision4configwidget.cpp \
+    src/config/decisions/buy/buydecision4config/buydecision4configwidget/test_buydecision4configwidgetfactory.cpp \
+    src/config/decisions/buy/buydecision4config/test_buydecision4config.cpp \
     src/config/decisions/decisionmakerconfigwidget/test_decisionmakerconfigwidget.cpp \
     src/config/decisions/decisionmakerconfigwidget/test_decisionmakerconfigwidgetfactory.cpp \
     src/config/decisions/sell/selldecision1config/selldecision1configwidget/test_selldecision1configwidget.cpp \
@@ -36,6 +39,7 @@ SOURCES += \
     src/decisions/buy/buydecision1/test_buydecision1.cpp \
     src/decisions/buy/buydecision2/test_buydecision2.cpp \
     src/decisions/buy/buydecision3/test_buydecision3.cpp \
+    src/decisions/buy/buydecision4/test_buydecision4.cpp \
     src/decisions/sell/selldecision1/test_selldecision1.cpp \
     src/decisions/sell/selldecision2/test_selldecision2.cpp \
     src/decisions/sell/selldecision3/test_selldecision3.cpp \
@@ -160,6 +164,9 @@ HEADERS += \
     src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidget_mock.h \
     src/config/decisions/buy/buydecision3config/buydecision3configwidget/ibuydecision3configwidgetfactory_mock.h \
     src/config/decisions/buy/buydecision3config/ibuydecision3config_mock.h \
+    src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidget_mock.h \
+    src/config/decisions/buy/buydecision4config/buydecision4configwidget/ibuydecision4configwidgetfactory_mock.h \
+    src/config/decisions/buy/buydecision4config/ibuydecision4config_mock.h \
     src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidget_mock.h \
     src/config/decisions/decisionmakerconfigwidget/idecisionmakerconfigwidgetfactory_mock.h \
     src/config/decisions/idecisionmakerconfig_mock.h \
