@@ -169,7 +169,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="37"/>
         <source>Buy stocks if the price fall more than</source>
-        <translation>Покупать акции, если цена упала больше, чем</translation>
+        <translation>Покупать акции, если цена упала больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision1config/buydecision1configwidget/buydecision1configwidget.ui" line="80"/>
@@ -210,7 +210,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="37"/>
         <source>Buy stocks if the price fall more than</source>
-        <translation>Покупать акции, если цена упала больше, чем</translation>
+        <translation>Покупать акции, если цена упала больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision3config/buydecision3configwidget/buydecision3configwidget.ui" line="80"/>
@@ -228,7 +228,7 @@
     <message>
         <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="37"/>
         <source>Buy stocks if the price fall more than</source>
-        <translation>Покупать акции, если цена упала больше, чем</translation>
+        <translation>Покупать акции, если цена упала больше, чем на</translation>
     </message>
     <message>
         <location filename="../../src/config/decisions/buy/buydecision4config/buydecision4configwidget/buydecision4configwidget.ui" line="60"/>
