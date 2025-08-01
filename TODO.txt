@@ -1,7 +1,5 @@
-Normal buy decision with price changes in time range
-Buy if price is less than average for last n days
-Optimize config variants
 Config for limiting CPU usage during decision making
+Optimize config variants
 Improve coverage
 Create release
 
