@@ -393,8 +393,8 @@ static void makeSellDecisionsForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock    = stocksArray[i].stock;
-        float  avgPrice = stocksArray[i].avgPrice;
+        Stock*      stock    = stocksArray[i].stock;
+        const float avgPrice = stocksArray[i].avgPrice;
 
         stock->readLock();
 

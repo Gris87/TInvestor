@@ -21,6 +21,7 @@ SellDecision2::~SellDecision2()
     qDebug() << "Destroy SellDecision2";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision2::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -45,11 +46,13 @@ QString SellDecision2::makeDecision(
             const float minimumPrice = avgPrice * (1 + (yieldAbove / HUNDRED_PERCENT));
             const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
+            StockData* stockData = stock->data.data();
+
             if (dateRange)
             {
                 for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
-                    const float prevPrice = stock->data.at(i).price;
+                    const float prevPrice = stockData[i].price;
 
                     if (prevPrice < minimumPrice)
                     {
@@ -70,16 +73,18 @@ QString SellDecision2::makeDecision(
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(stock->data.at(i).timestamp).toString(DATETIME_FORMAT)
+                                QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
                             );
                     }
                 }
             }
             else
             {
+                StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+
                 for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
-                    const float prevPrice = stock->operational.detailedData.at(i).price;
+                    const float prevPrice = stockOperationalData[i].price;
 
                     if (prevPrice < minimumPrice)
                     {
@@ -100,15 +105,14 @@ QString SellDecision2::makeDecision(
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(stock->operational.detailedData.at(i).timestamp)
-                                    .toString(DATETIME_FORMAT)
+                                QDateTime::fromMSecsSinceEpoch(stockOperationalData[i].timestamp).toString(DATETIME_FORMAT)
                             );
                     }
                 }
 
                 for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
                 {
-                    const float prevPrice = stock->data.at(i).price;
+                    const float prevPrice = stockData[i].price;
 
                     if (prevPrice < minimumPrice)
                     {
@@ -129,7 +133,7 @@ QString SellDecision2::makeDecision(
                                 QString::number(avgPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
                                 QString::number(lostYield, 'f', 2) + "%",
                                 QString::number(prevPrice, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                QDateTime::fromMSecsSinceEpoch(stock->data.at(i).timestamp).toString(DATETIME_FORMAT)
+                                QDateTime::fromMSecsSinceEpoch(stockData[i].timestamp).toString(DATETIME_FORMAT)
                             );
                     }
                 }
@@ -139,3 +143,4 @@ QString SellDecision2::makeDecision(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)

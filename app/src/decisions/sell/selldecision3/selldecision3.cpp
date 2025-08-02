@@ -23,6 +23,7 @@ SellDecision3::~SellDecision3()
     qDebug() << "Destroy SellDecision3";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString SellDecision3::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -42,14 +43,16 @@ QString SellDecision3::makeDecision(
         const int   duration     = sellConfig->getDuration();
         const float maximumPrice = price / (1 + (loseYield / HUNDRED_PERCENT));
 
+        StockData* stockData = stock->data.data();
+
         if (dateRange)
         {
-            const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_MINUTE);
+            const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -81,10 +84,12 @@ QString SellDecision3::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
 
+            StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+
             for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->operational.detailedData.at(i).timestamp;
-                const float  prevPrice = stock->operational.detailedData.at(i).price;
+                const qint64 timestamp = stockOperationalData[i].timestamp;
+                const float  prevPrice = stockOperationalData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -114,8 +119,8 @@ QString SellDecision3::makeDecision(
 
             for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -147,3 +152,4 @@ QString SellDecision3::makeDecision(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)

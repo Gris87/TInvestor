@@ -26,6 +26,7 @@ BuyDecision4::~BuyDecision4()
     qDebug() << "Destroy BuyDecision4";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision4::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -46,14 +47,16 @@ QString BuyDecision4::makeDecision(
         const int   duration     = buyConfig->getDuration();
         const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
 
+        StockData* stockData = stock->data.data();
+
         if (dateRange)
         {
-            const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_DAY);
+            const qint64 limitTimestamp = stockData[dataIndex].timestamp - (duration * ONE_DAY);
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -69,7 +72,7 @@ QString BuyDecision4::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->data.at(j).price < maximumPrice)
+                        if (stockData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -86,7 +89,7 @@ QString BuyDecision4::makeDecision(
 
                         for (j = dataIndex - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
                         {
-                            const float prevPrice2 = stock->data.at(j).price;
+                            const float prevPrice2 = stockData[j].price;
 
                             if (prevPrice2 >= price)
                             {
@@ -108,7 +111,7 @@ QString BuyDecision4::makeDecision(
                                         QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
                                         QString::number(lostYield, 'f', 2) + "%",
                                         QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stock->data.at(j).timestamp).toString(DATETIME_FORMAT),
+                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
                                         QString::number(duration),
                                         QString::number(fall, 'f', 2) + "%"
                                     );
@@ -122,10 +125,12 @@ QString BuyDecision4::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_DAY);
 
+            StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+
             for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->operational.detailedData.at(i).timestamp;
-                const float  prevPrice = stock->operational.detailedData.at(i).price;
+                const qint64 timestamp = stockOperationalData[i].timestamp;
+                const float  prevPrice = stockOperationalData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -141,7 +146,7 @@ QString BuyDecision4::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->operational.detailedData.at(j).price < maximumPrice)
+                        if (stockOperationalData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -159,7 +164,7 @@ QString BuyDecision4::makeDecision(
                         for (j = stock->operational.detailedData.size() - 2; j >= 0 && !parentThread->isInterruptionRequested();
                              --j)
                         {
-                            const float prevPrice2 = stock->operational.detailedData.at(j).price;
+                            const float prevPrice2 = stockOperationalData[j].price;
 
                             if (prevPrice2 >= price)
                             {
@@ -181,7 +186,7 @@ QString BuyDecision4::makeDecision(
                                         QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
                                         QString::number(lostYield, 'f', 2) + "%",
                                         QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stock->operational.detailedData.at(j).timestamp)
+                                        QDateTime::fromMSecsSinceEpoch(stockOperationalData[j].timestamp)
                                             .toString(DATETIME_FORMAT),
                                         QString::number(duration),
                                         QString::number(fall, 'f', 2) + "%"
@@ -194,8 +199,8 @@ QString BuyDecision4::makeDecision(
 
             for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -211,7 +216,7 @@ QString BuyDecision4::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->data.at(j).price < maximumPrice)
+                        if (stockData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -228,7 +233,7 @@ QString BuyDecision4::makeDecision(
 
                         for (j = stock->data.size() - 1; j >= 0 && !parentThread->isInterruptionRequested(); --j)
                         {
-                            const float prevPrice2 = stock->data.at(j).price;
+                            const float prevPrice2 = stockData[j].price;
 
                             if (prevPrice2 >= price)
                             {
@@ -250,7 +255,7 @@ QString BuyDecision4::makeDecision(
                                         QDateTime::fromMSecsSinceEpoch(timestamp).toString(DATETIME_FORMAT),
                                         QString::number(lostYield, 'f', 2) + "%",
                                         QString::number(prevPrice2, 'f', stock->meta.pricePrecision) + " \u20BD",
-                                        QDateTime::fromMSecsSinceEpoch(stock->data.at(j).timestamp).toString(DATETIME_FORMAT),
+                                        QDateTime::fromMSecsSinceEpoch(stockData[j].timestamp).toString(DATETIME_FORMAT),
                                         QString::number(duration),
                                         QString::number(fall, 'f', 2) + "%"
                                     );
@@ -264,3 +269,4 @@ QString BuyDecision4::makeDecision(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)

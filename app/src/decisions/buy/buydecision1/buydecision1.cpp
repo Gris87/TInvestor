@@ -24,6 +24,7 @@ BuyDecision1::~BuyDecision1()
     qDebug() << "Destroy BuyDecision1";
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 QString BuyDecision1::makeDecision(
     QThread*              parentThread,
     IDecisionMakerConfig* config,
@@ -43,14 +44,16 @@ QString BuyDecision1::makeDecision(
         const int   duration     = buyConfig->getDuration();
         const float maximumPrice = price / (1 + (priceFall / HUNDRED_PERCENT));
 
+        StockData* stockData = stock->data.data();
+
         if (dateRange)
         {
             const qint64 limitTimestamp = stock->data.at(dataIndex).timestamp - (duration * ONE_MINUTE);
 
             for (int i = dataIndex - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -66,7 +69,7 @@ QString BuyDecision1::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->data.at(j).price < maximumPrice)
+                        if (stockData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -100,10 +103,12 @@ QString BuyDecision1::makeDecision(
         {
             const qint64 limitTimestamp = QDateTime::currentMSecsSinceEpoch() - (duration * ONE_MINUTE);
 
+            StockOperationalData* stockOperationalData = stock->operational.detailedData.data();
+
             for (int i = stock->operational.detailedData.size() - 2; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->operational.detailedData.at(i).timestamp;
-                const float  prevPrice = stock->operational.detailedData.at(i).price;
+                const qint64 timestamp = stockOperationalData[i].timestamp;
+                const float  prevPrice = stockOperationalData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -119,7 +124,7 @@ QString BuyDecision1::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->operational.detailedData.at(j).price < maximumPrice)
+                        if (stockOperationalData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -151,8 +156,8 @@ QString BuyDecision1::makeDecision(
 
             for (int i = stock->data.size() - 1; i >= 0 && !parentThread->isInterruptionRequested(); --i)
             {
-                const qint64 timestamp = stock->data.at(i).timestamp;
-                const float  prevPrice = stock->data.at(i).price;
+                const qint64 timestamp = stockData[i].timestamp;
+                const float  prevPrice = stockData[i].price;
 
                 if (timestamp < limitTimestamp)
                 {
@@ -168,7 +173,7 @@ QString BuyDecision1::makeDecision(
 
                     while (j >= 0 && minutesLeft > 0 && !parentThread->isInterruptionRequested())
                     {
-                        if (stock->data.at(j).price < maximumPrice)
+                        if (stockData[j].price < maximumPrice)
                         {
                             good = false;
 
@@ -202,3 +207,4 @@ QString BuyDecision1::makeDecision(
 
     return "";
 }
+// NOLINTEND(readability-function-cognitive-complexity)
