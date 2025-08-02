@@ -39,7 +39,7 @@ int getCpuCount()
     return _cpuCount;
 }
 #else
-void setCpuCount(int /*count*/)
+void setCpuCount(const QString& /*cpuUsage*/)
 {
 }
 

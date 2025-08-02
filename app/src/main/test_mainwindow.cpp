@@ -254,10 +254,10 @@ protected:
 
         EXPECT_CALL(*configMock, makeDefault());
         EXPECT_CALL(*configMock, load(settingsEditorMock));
-        EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
         EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
-
         EXPECT_CALL(*autorunEnablerMock, setEnabled(true));
+        EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
+        EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(1));
 
         // clang-format off
         EXPECT_CALL(*settingsEditorMock, value(QString("MainWindow/geometry"),    QVariant(QByteArray()))).WillOnce(Return(QVariant(QByteArray())));
@@ -1270,10 +1270,10 @@ TEST_F(Test_MainWindow, Test_on_actionSettings_triggered)
     EXPECT_CALL(*configMock, assign(configForSettingsDialogMock));
     EXPECT_CALL(*configMock, save(settingsEditorMock));
 
-    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
-
     EXPECT_CALL(*autorunEnablerMock, setEnabled(false));
+    EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
+    EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
 
     mainWindow->ui->actionSettings->trigger();
 

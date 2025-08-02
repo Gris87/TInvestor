@@ -148,6 +148,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     const InSequence seq;
 
     dialog->ui->autorunCheckBox->blockSignals(true);
+    dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
@@ -169,6 +170,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -183,6 +185,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            2);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               true);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
@@ -205,6 +208,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(false));
+    EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("MINIMUM"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(5));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(false));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(false));
@@ -219,6 +223,7 @@ TEST_F(Test_SettingsDialog, Test_updateUiFromConfig)
 
     // clang-format off
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   false);
+    ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               0);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            5);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               false);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(11, 15));
@@ -246,6 +251,21 @@ TEST_F(Test_SettingsDialog, Test_on_autorunCheckBox_checkStateChanged)
 
     EXPECT_CALL(*configMock, setAutorun(false));
     dialog->ui->autorunCheckBox->setChecked(false);
+}
+
+TEST_F(Test_SettingsDialog, Test_on_cpuUsageComboBox_currentIndexChanged)
+{
+    const InSequence seq;
+
+    dialog->ui->cpuUsageComboBox->blockSignals(true);
+    dialog->ui->cpuUsageComboBox->setCurrentIndex(0);
+    dialog->ui->cpuUsageComboBox->blockSignals(false);
+
+    EXPECT_CALL(*configMock, setCpuUsage(QString("NORMAL")));
+    dialog->ui->cpuUsageComboBox->setCurrentIndex(1);
+
+    EXPECT_CALL(*configMock, setCpuUsage(QString("OPTIMAL")));
+    dialog->ui->cpuUsageComboBox->setCurrentIndex(2);
 }
 
 TEST_F(Test_SettingsDialog, Test_on_makeDecisionTimeoutSpinBox_valueChanged)
@@ -556,6 +576,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     const InSequence seq;
 
     dialog->ui->autorunCheckBox->blockSignals(true);
+    dialog->ui->cpuUsageComboBox->blockSignals(true);
     dialog->ui->makeDecisionTimeoutSpinBox->blockSignals(true);
     dialog->ui->useScheduleCheckBox->blockSignals(true);
     dialog->ui->scheduleStartTimeEdit->blockSignals(true);
@@ -579,6 +600,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
     EXPECT_CALL(*autoPilotConfigWidgetMock, updateUiFromConfig());
 
     EXPECT_CALL(*configMock, isAutorun()).WillOnce(Return(true));
+    EXPECT_CALL(*configMock, getCpuUsage()).WillOnce(Return("OPTIMAL"));
     EXPECT_CALL(*configMock, getMakeDecisionTimeout()).WillOnce(Return(2));
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, isLimitStockPurchase()).WillOnce(Return(true));
@@ -593,6 +615,7 @@ TEST_F(Test_SettingsDialog, Test_on_defaultButton_clicked)
 
     // clang-format off
     ASSERT_EQ(dialog->ui->autorunCheckBox->isChecked(),                   true);
+    ASSERT_EQ(dialog->ui->cpuUsageComboBox->currentIndex(),               2);
     ASSERT_EQ(dialog->ui->makeDecisionTimeoutSpinBox->value(),            2);
     ASSERT_EQ(dialog->ui->useScheduleCheckBox->isChecked(),               true);
     ASSERT_EQ(dialog->ui->scheduleStartTimeEdit->time(),                  QTime(10, 30));
