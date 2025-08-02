@@ -163,13 +163,7 @@ struct MakeBuyDecisionsInfo
         commission(_commission),
         buyDecisions(_buyDecisions)
     {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
+        results.resize(getCpuCount());
     }
 
     IDecisionMakerConfig*        decisionConfig;
@@ -355,13 +349,7 @@ struct MakeSellDecisionsInfo
         commission(_commission),
         sellDecisions(_sellDecisions)
     {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
+        results.resize(getCpuCount());
     }
 
     IDecisionMakerConfig*        decisionConfig;

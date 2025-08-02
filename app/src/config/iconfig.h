@@ -28,6 +28,9 @@ public:
     virtual void setAutorun(bool value) = 0;
     virtual bool isAutorun()            = 0;
 
+    virtual void    setCpuUsage(QString value) = 0;
+    virtual QString getCpuUsage()              = 0;
+
     virtual void setMakeDecisionTimeout(int value) = 0;
     virtual int  getMakeDecisionTimeout()          = 0;
 

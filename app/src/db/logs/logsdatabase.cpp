@@ -41,13 +41,7 @@ struct FindLogsIndeciesInfo
     explicit FindLogsIndeciesInfo(const QByteArray& _content) :
         content(_content)
     {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
+        results.resize(getCpuCount());
     }
 
     QByteArray        content;
@@ -249,13 +243,7 @@ struct WriteLogsInfo
 {
     explicit WriteLogsInfo()
     {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
+        results.resize(getCpuCount());
     }
 
     QList<QByteArray> results;

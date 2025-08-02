@@ -864,9 +864,9 @@
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="63"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="93"/>
-        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="122"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="66"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="98"/>
+        <location filename="../../src/decisions/sell/selldecision2/selldecision2.cpp" line="126"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the maximum price %5 at %6</source>
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3 и потеряла доход в %4 от максимальной цены %5 в %6</translation>
     </message>
@@ -876,29 +876,29 @@
         <translation>Решено продать, потому что цена упала до %1 с доходностью %2 от цены %3</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="64"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="99"/>
-        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="130"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="67"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="104"/>
+        <location filename="../../src/decisions/sell/selldecision3/selldecision3.cpp" line="135"/>
         <source>Decided to sell because the price reached %1 with yield %2 from the price %3 and lost yield %4 from the price %5 at %6 within last %7 minutes</source>
         <translation>Решено продать, потому что цена достигла %1 с доходностью %2 от цены %3 и потеряла доход в %4 от цены %5 в %6 за последние %7 минут</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="84"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="137"/>
-        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="186"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="86"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="139"/>
-        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="188"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="87"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="142"/>
+        <location filename="../../src/decisions/buy/buydecision1/buydecision1.cpp" line="191"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="89"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="144"/>
+        <location filename="../../src/decisions/buy/buydecision3/buydecision3.cpp" line="193"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 within last %4 minutes and the fall is %5</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 за последние %4 минут и падение составило %5</translation>
     </message>
     <message>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="99"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="172"/>
-        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="241"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="101"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="174"/>
-        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="243"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="102"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="177"/>
+        <location filename="../../src/decisions/buy/buydecision2/buydecision2.cpp" line="246"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="104"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="179"/>
+        <location filename="../../src/decisions/buy/buydecision4/buydecision4.cpp" line="248"/>
         <source>Decided to buy because the price fall to %1 from %2 at %3 and lost yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8</source>
         <translation>Решено покупать, потому что цена упала до %1 от %2 в %3 и потеряла доход в %4 от минимальной цены %5 в %6 за последние %7 минут и падение составило %8</translation>
     </message>
@@ -993,77 +993,102 @@
         <translation>Автозапускать при запуске Windows</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="115"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="75"/>
+        <source>CPU usage</source>
+        <translation>Использование ядер процессора</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="86"/>
+        <source>Minimum</source>
+        <translation>Минимально</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="91"/>
+        <source>Normal</source>
+        <translation>Нормально</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="96"/>
+        <source>Optimal</source>
+        <translation>Оптимально</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="101"/>
+        <source>Maximum</source>
+        <translation>Максимально</translation>
+    </message>
+    <message>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="169"/>
         <source>Trade stocks on weekdays in the interval</source>
         <translation>Торговать акциями в будни в интервале</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="241"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="295"/>
         <source>of average daily turnover</source>
         <translation>от среднего дневного оборота</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="271"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="325"/>
         <source>Store stocks data for</source>
         <translation>Хранить данные об акциях</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="278"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="332"/>
         <source> months</source>
         <translation> месяцев</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="359"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="413"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="184"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="208"/>
         <source>Auto-pilot</source>
         <translation>Авто-пилот</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="459"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="513"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="344"/>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="380"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="398"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="434"/>
         <source>Use the same config for simulator and auto-pilot</source>
         <translation>Использовать одну конфигурацию для симулятора и авто-пилота</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="75"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="129"/>
         <source>Make decision each</source>
         <translation>Принимать решение каждые</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="82"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="136"/>
         <source> minutes</source>
         <translation> минут</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="174"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="228"/>
         <source>Limit stock purchase part less than</source>
         <translation>Не покупать акции с долей больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="218"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="272"/>
         <source>and less than</source>
         <translation>и больше, чем</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="323"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="377"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="185"/>
         <location filename="../../src/dialogs/settingsdialog/settingsdialog.cpp" line="207"/>
         <source>Simulation</source>
         <translation>Симуляция</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="416"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="470"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
     <message>
-        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="439"/>
+        <location filename="../../src/dialogs/settingsdialog/settingsdialog.ui" line="493"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>

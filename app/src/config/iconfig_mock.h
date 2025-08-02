@@ -32,6 +32,9 @@ public:
     MOCK_METHOD(void, setAutorun, (bool value), (override));
     MOCK_METHOD(bool, isAutorun, (), (override));
 
+    MOCK_METHOD(void, setCpuUsage, (QString value), (override));
+    MOCK_METHOD(QString, getCpuUsage, (), (override));
+
     MOCK_METHOD(void, setMakeDecisionTimeout, (int value), (override));
     MOCK_METHOD(int, getMakeDecisionTimeout, (), (override));
 

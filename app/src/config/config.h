@@ -29,6 +29,9 @@ public:
     void setAutorun(bool value) override;
     bool isAutorun() override;
 
+    void    setCpuUsage(QString value) override;
+    QString getCpuUsage() override;
+
     void setMakeDecisionTimeout(int value) override;
     int  getMakeDecisionTimeout() override;
 
@@ -74,18 +77,19 @@ private:
     IDecisionMakerConfig* mSimulatorConfig;
     IDecisionMakerConfig* mAutoPilotConfig;
 
-    bool  mAutorun;
-    int   mMakeDecisionTimeout;
-    bool  mUseSchedule;
-    int   mScheduleStartHour;
-    int   mScheduleStartMinute;
-    int   mScheduleEndHour;
-    int   mScheduleEndMinute;
-    bool  mLimitStockPurchase;
-    float mLimitStockPurchasePart;
-    bool  mLimitByTurnover;
-    float mLimitByTurnoverPercent;
-    int   mStorageMonthLimit;
-    bool  mSimulatorConfigCommon;
-    bool  mAutoPilotConfigCommon;
+    bool    mAutorun;
+    QString mCpuUsage;
+    int     mMakeDecisionTimeout;
+    bool    mUseSchedule;
+    int     mScheduleStartHour;
+    int     mScheduleStartMinute;
+    int     mScheduleEndHour;
+    int     mScheduleEndMinute;
+    bool    mLimitStockPurchase;
+    float   mLimitStockPurchasePart;
+    bool    mLimitByTurnover;
+    float   mLimitByTurnoverPercent;
+    int     mStorageMonthLimit;
+    bool    mSimulatorConfigCommon;
+    bool    mAutoPilotConfigCommon;
 };

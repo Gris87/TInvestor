@@ -10,6 +10,24 @@ constexpr int AUTO_PILOT_TAB_ID = 2;
 
 
 
+// clang-format off
+static const QMap<int, QString> CPU_USAGE_TO_STRING{ // clazy:exclude=non-pod-global-static
+    {0, "MINIMUM"},
+    {1, "NORMAL" },
+    {2, "OPTIMAL"},
+    {3, "MAXIMUM"}
+};
+
+static const QMap<QString, int> CPU_USAGE_INDEX{ // clazy:exclude=non-pod-global-static
+    {"MINIMUM", 0},
+    {"NORMAL",  1},
+    {"OPTIMAL", 2},
+    {"MAXIMUM", 3}
+};
+// clang-format on
+
+
+
 SettingsDialog::SettingsDialog(
     IConfig*                           config,
     IDecisionMakerConfigWidgetFactory* decisionMakerConfigWidgetFactory,
@@ -78,6 +96,7 @@ void SettingsDialog::updateUiFromConfig()
     mAutoPilotConfigWidget->updateUiFromConfig();
 
     ui->autorunCheckBox->setChecked(mConfig->isAutorun());
+    ui->cpuUsageComboBox->setCurrentIndex(CPU_USAGE_INDEX.value(mConfig->getCpuUsage(), CPU_USAGE_INDEX.value("MAXIMUM")));
     ui->makeDecisionTimeoutSpinBox->setValue(mConfig->getMakeDecisionTimeout());
     ui->useScheduleCheckBox->setChecked(mConfig->isUseSchedule());
     ui->scheduleStartTimeEdit->setTime(QTime(scheduleStartHour, scheduleStartMinute));
@@ -96,6 +115,11 @@ void SettingsDialog::on_autorunCheckBox_checkStateChanged(const Qt::CheckState& 
     const bool checked = value == Qt::Checked;
 
     mConfig->setAutorun(checked);
+}
+
+void SettingsDialog::on_cpuUsageComboBox_currentIndexChanged(int index)
+{
+    mConfig->setCpuUsage(CPU_USAGE_TO_STRING.value(index));
 }
 
 void SettingsDialog::on_makeDecisionTimeoutSpinBox_valueChanged(int value)

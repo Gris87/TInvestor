@@ -6,6 +6,11 @@
 
 
 
+void setCpuCount(const QString& cpuUsage);
+int  getCpuCount();
+
+
+
 template<typename T>
 class ParallelHelperThread : public QThread
 {
@@ -65,7 +70,7 @@ void processInParallel(
 #ifndef TESTING_MODE
     QThread* parentThread = QThread::currentThread();
 
-    const int cpuCount = QThread::idealThreadCount();
+    const int cpuCount = getCpuCount();
 
     const int partSize = array.size() / cpuCount;
     const int partTail = array.size() % cpuCount;

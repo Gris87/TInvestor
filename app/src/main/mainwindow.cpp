@@ -1165,8 +1165,9 @@ void MainWindow::updateStackWidgetToolbar() const
 
 void MainWindow::applyConfig()
 {
-    makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
     mAutorunEnabler->setEnabled(mConfig->isAutorun());
+    setCpuCount(mConfig->getCpuUsage());
+    makeDecisionTimer.setInterval(mConfig->getMakeDecisionTimeout() * ONE_MINUTE);
 }
 
 void MainWindow::saveWindowState()

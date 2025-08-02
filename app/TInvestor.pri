@@ -95,6 +95,7 @@ SOURCES += \
     src/threads/logs/logsthread.cpp \
     src/threads/operations/operationsthread.cpp \
     src/threads/orderbook/orderbookthread.cpp \
+    src/threads/parallelhelper/parallelhelperthread.cpp \
     src/threads/portfolio/portfoliothread.cpp \
     src/threads/portfoliolastprice/portfoliolastpricethread.cpp \
     src/threads/pricecollect/pricecollectthread.cpp \

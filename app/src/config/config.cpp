@@ -5,6 +5,8 @@
 
 
 
+const char* const CPU_USAGE_DEFAULT = "MAXIMUM";
+
 constexpr bool  AUTORUN_DEFAULT                   = true;
 constexpr int   MAKE_DECISION_TIMEOUT_DEFAULT     = 1;
 constexpr bool  USE_SCHEDULE_DEFAULT              = true;
@@ -28,6 +30,7 @@ Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* auto
     mSimulatorConfig(simulatorConfig),
     mAutoPilotConfig(autoPilotConfig),
     mAutorun(),
+    mCpuUsage(),
     mMakeDecisionTimeout(),
     mUseSchedule(),
     mScheduleStartHour(),
@@ -64,6 +67,7 @@ void Config::assign(IConfig* another)
     mAutoPilotConfig->assign(config.mAutoPilotConfig);
 
     mAutorun                = config.mAutorun;
+    mCpuUsage               = config.mCpuUsage;
     mMakeDecisionTimeout    = config.mMakeDecisionTimeout;
     mUseSchedule            = config.mUseSchedule;
     mScheduleStartHour      = config.mScheduleStartHour;
@@ -89,6 +93,7 @@ void Config::makeDefault()
     mAutoPilotConfig->makeDefault();
 
     mAutorun                = AUTORUN_DEFAULT;
+    mCpuUsage               = CPU_USAGE_DEFAULT;
     mMakeDecisionTimeout    = MAKE_DECISION_TIMEOUT_DEFAULT;
     mUseSchedule            = USE_SCHEDULE_DEFAULT;
     mScheduleStartHour      = SCHEDULE_START_HOUR_DEFAULT;
@@ -115,6 +120,7 @@ void Config::save(ISettingsEditor* settingsEditor)
 
     // clang-format off
     settingsEditor->setValue("Config/Autorun",                mAutorun);
+    settingsEditor->setValue("Config/CpuUsage",               mCpuUsage);
     settingsEditor->setValue("Config/MakeDecisionTimeout",    mMakeDecisionTimeout);
     settingsEditor->setValue("Config/UseSchedule",            mUseSchedule);
     settingsEditor->setValue("Config/ScheduleStartHour",      mScheduleStartHour);
@@ -142,6 +148,7 @@ void Config::load(ISettingsEditor* settingsEditor)
 
     // clang-format off
     mAutorun                   = settingsEditor->value("Config/Autorun",                mAutorun).toBool();
+    mCpuUsage                  = settingsEditor->value("Config/CpuUsage",               mCpuUsage).toString();
     mMakeDecisionTimeout       = settingsEditor->value("Config/MakeDecisionTimeout",    mMakeDecisionTimeout).toInt();
     mUseSchedule               = settingsEditor->value("Config/UseSchedule",            mUseSchedule).toBool();
     mScheduleStartHour         = settingsEditor->value("Config/ScheduleStartHour",      mScheduleStartHour).toInt();
@@ -180,6 +187,20 @@ bool Config::isAutorun()
     const QMutexLocker lock(mMutex);
 
     return mAutorun;
+}
+
+void Config::setCpuUsage(QString value)
+{
+    const QMutexLocker lock(mMutex);
+
+    mCpuUsage = value;
+}
+
+QString Config::getCpuUsage()
+{
+    const QMutexLocker lock(mMutex);
+
+    return mCpuUsage;
 }
 
 void Config::setMakeDecisionTimeout(int value)

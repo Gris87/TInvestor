@@ -35,6 +35,7 @@ TEST(Test_Config, Test_assign)
     Config config2(&simulatorConfigMock2, &autoPilotConfigMock2);
 
     config.setAutorun(false);
+    config.setCpuUsage("MINIMUM");
     config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
@@ -51,6 +52,7 @@ TEST(Test_Config, Test_assign)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
     ASSERT_EQ(config.isUseSchedule(),               false);
     ASSERT_EQ(config.getScheduleStartHour(),        8);
@@ -67,6 +69,7 @@ TEST(Test_Config, Test_assign)
     // clang-format on
 
     config2.setAutorun(true);
+    config2.setCpuUsage("OPTIMAL");
     config2.setMakeDecisionTimeout(30);
     config2.setUseSchedule(true);
     config2.setScheduleStartHour(7);
@@ -83,6 +86,7 @@ TEST(Test_Config, Test_assign)
 
     // clang-format off
     ASSERT_EQ(config2.isAutorun(),                   true);
+    ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
     ASSERT_EQ(config2.isUseSchedule(),               true);
     ASSERT_EQ(config2.getScheduleStartHour(),        7);
@@ -105,6 +109,7 @@ TEST(Test_Config, Test_assign)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      30);
     ASSERT_EQ(config.isUseSchedule(),               true);
     ASSERT_EQ(config.getScheduleStartHour(),        7);
@@ -122,6 +127,7 @@ TEST(Test_Config, Test_assign)
 
     // clang-format off
     ASSERT_EQ(config2.isAutorun(),                   true);
+    ASSERT_EQ(config2.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config2.getMakeDecisionTimeout(),      30);
     ASSERT_EQ(config2.isUseSchedule(),               true);
     ASSERT_EQ(config2.getScheduleStartHour(),        7);
@@ -148,6 +154,7 @@ TEST(Test_Config, Test_makeDefault)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
+    config.setCpuUsage("MINIMUM");
     config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
@@ -164,6 +171,7 @@ TEST(Test_Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
     ASSERT_EQ(config.isUseSchedule(),               false);
     ASSERT_EQ(config.getScheduleStartHour(),        8);
@@ -186,6 +194,7 @@ TEST(Test_Config, Test_makeDefault)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getCpuUsage(),                 "MAXIMUM");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      1);
     ASSERT_EQ(config.isUseSchedule(),               true);
     ASSERT_EQ(config.getScheduleStartHour(),        10);
@@ -212,6 +221,7 @@ TEST(Test_Config, Test_save)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
+    config.setCpuUsage("MINIMUM");
     config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
@@ -228,6 +238,7 @@ TEST(Test_Config, Test_save)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
     ASSERT_EQ(config.isUseSchedule(),               false);
     ASSERT_EQ(config.getScheduleStartHour(),        8);
@@ -250,6 +261,7 @@ TEST(Test_Config, Test_save)
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/Autorun"),                QVariant(false)));
+    EXPECT_CALL(settingsEditorMock, setValue(QString("Config/CpuUsage"),               QVariant("MINIMUM")));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/MakeDecisionTimeout"),    QVariant(5)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/UseSchedule"),            QVariant(false)));
     EXPECT_CALL(settingsEditorMock, setValue(QString("Config/ScheduleStartHour"),      QVariant(8)));
@@ -278,6 +290,7 @@ TEST(Test_Config, Test_load)
     Config config(&simulatorConfigMock, &autoPilotConfigMock);
 
     config.setAutorun(false);
+    config.setCpuUsage("MINIMUM");
     config.setMakeDecisionTimeout(5);
     config.setUseSchedule(false);
     config.setScheduleStartHour(8);
@@ -294,6 +307,7 @@ TEST(Test_Config, Test_load)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
     ASSERT_EQ(config.isUseSchedule(),               false);
     ASSERT_EQ(config.getScheduleStartHour(),        8);
@@ -316,6 +330,7 @@ TEST(Test_Config, Test_load)
 
     // clang-format off
     EXPECT_CALL(settingsEditorMock, value(QString("Config/Autorun"),                QVariant(false))).WillOnce(Return(QVariant(true)));
+    EXPECT_CALL(settingsEditorMock, value(QString("Config/CpuUsage"),               QVariant("MINIMUM"))).WillOnce(Return(QVariant("OPTIMAL")));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/MakeDecisionTimeout"),    QVariant(5))).WillOnce(Return(QVariant(30)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/UseSchedule"),            QVariant(false))).WillOnce(Return(QVariant(true)));
     EXPECT_CALL(settingsEditorMock, value(QString("Config/ScheduleStartHour"),      QVariant(8))).WillOnce(Return(QVariant(7)));
@@ -335,6 +350,7 @@ TEST(Test_Config, Test_load)
 
     // clang-format off
     ASSERT_EQ(config.isAutorun(),                   true);
+    ASSERT_EQ(config.getCpuUsage(),                 "OPTIMAL");
     ASSERT_EQ(config.getMakeDecisionTimeout(),      30);
     ASSERT_EQ(config.isUseSchedule(),               true);
     ASSERT_EQ(config.getScheduleStartHour(),        7);
@@ -383,6 +399,20 @@ TEST(Test_Config, Test_setAutorun_and_isAutorun)
 
     config.setAutorun(true);
     ASSERT_EQ(config.isAutorun(), true);
+}
+
+TEST(Test_Config, Test_setCpuUsage_and_getCpuUsage)
+{
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
+
+    Config config(&simulatorConfigMock, &autoPilotConfigMock);
+
+    config.setCpuUsage("MINIMUM");
+    ASSERT_EQ(config.getCpuUsage(), "MINIMUM");
+
+    config.setCpuUsage("OPTIMAL");
+    ASSERT_EQ(config.getCpuUsage(), "OPTIMAL");
 }
 
 TEST(Test_Config, Test_setMakeDecisionTimeout_and_getMakeDecisionTimeout)

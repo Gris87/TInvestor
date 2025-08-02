@@ -187,13 +187,7 @@ struct CombineVariantsInfo
     explicit CombineVariantsInfo(const QList<QStringList>& _variants) :
         variants(_variants)
     {
-#ifndef TESTING_MODE
-        const int cpuCount = QThread::idealThreadCount();
-#else
-        const int cpuCount = 1;
-#endif
-
-        results.resize(cpuCount);
+        results.resize(getCpuCount());
     }
 
     QList<QStringList> variants;
