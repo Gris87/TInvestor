@@ -1,5 +1,6 @@
 Find best config for separations and combine to ultra config
 Combine makeBuyDecisionsForParallel and makeSellDecisionsForParallel
+RW Mutex in config
 Improve coverage
 Create release
 

@@ -52,6 +52,8 @@ public:
     void reset() override;
     void terminateThread() override;
 
+    void simulationWithBestConfigForBuyDecision(qint64 startTime, int buyDecisionId);
+
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
     {
@@ -86,8 +88,8 @@ private:
     void loadBestLogs();
     void loadBestPortfolio();
     void loadConfigs();
-    void simulationWithBestConfig();
-    void simulationWithoutBestConfig();
+    void simulationWithBestConfig(qint64 startTime);
+    void simulationWithoutBestConfig(qint64 startTime);
     void simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading);
     void simulateSell(qint64& timestamp, const QString& instrumentId, const TradingInfo& tradingInfo);
     void simulateSellForOperations(
