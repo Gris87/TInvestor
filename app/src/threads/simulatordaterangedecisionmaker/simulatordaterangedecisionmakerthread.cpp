@@ -93,7 +93,6 @@ SimulatorDateRangeDecisionMakerThread::~SimulatorDateRangeDecisionMakerThread()
     qDebug() << "Destroy SimulatorDateRangeDecisionMakerThread";
 }
 
-// NOLINTBEGIN(readability-function-cognitive-complexity)
 void SimulatorDateRangeDecisionMakerThread::run()
 {
     qDebug() << "Running SimulatorDateRangeDecisionMakerThread";
@@ -110,156 +109,21 @@ void SimulatorDateRangeDecisionMakerThread::run()
         load();
     }
 
-    const int    configId     = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
-    const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
+    const qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
-    mStocksStorage->readLock();
-    const QList<Stock*> stocks = mStocksStorage->getStocks();
-    mStocksStorage->readUnlock();
-
-    const simdjson::padded_string jsonData(mConfigVariants.toStdString());
-
-    simdjson::ondemand::parser parser;
-
-    try
+    if (mBestConfig)
     {
-        simdjson::ondemand::document doc = parser.iterate(jsonData);
-
-        simdjson::ondemand::array jsonConfigs     = doc.get_array();
-        const int                 amountOfConfigs = static_cast<int>(jsonConfigs.count_elements());
-
-        qint64 startTime = QDateTime::currentMSecsSinceEpoch();
-        int    i         = 0;
-
-        for (const simdjson::ondemand::object jsonObject : jsonConfigs)
-        {
-            if (!QThread::currentThread()->isInterruptionRequested())
-            {
-                if (i < configId)
-                {
-                    startTime = QDateTime::currentMSecsSinceEpoch();
-                    ++i;
-
-                    continue;
-                }
-
-                emit totalProgressChanged(i, amountOfConfigs);
-
-                mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
-
-                mTotalMoney = mStartMoney;
-                mOperations = mInitOperations;
-                mEntries    = mInitEntries;
-                mPortfolio  = mInitPortfolio;
-                mInstruments.clear();
-
-                qint64 timestamp = mStartTimestamp;
-
-                while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
-                {
-                    if (timestamp % NOTIFY_PROGRESS_STEP == 0)
-                    {
-                        const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
-
-                        if (i != configId || currentMinute > 0)
-                        {
-                            const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
-
-                            const double processedMinutes = ((i - configId) * totalMinutes) + currentMinute;
-                            const double remainingMinutes = ((amountOfConfigs - i) * totalMinutes) - currentMinute;
-
-                            qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
-                            remainingMilliseconds        /= MS_IN_SECOND;
-                            const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
-                            remainingMilliseconds        /= SECONDS_IN_MINUTE;
-                            const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
-                            remainingMilliseconds        /= MINUTES_IN_HOUR;
-                            const int hours               = remainingMilliseconds;
-
-                            emit progressChanged(
-                                currentMinute,
-                                totalMinutes,
-                                QString("%1:%2:%3")
-                                    .arg(
-                                        QString::number(hours).rightJustified(2, '0'),
-                                        QString::number(minutes).rightJustified(2, '0'),
-                                        QString::number(seconds).rightJustified(2, '0')
-                                    )
-                            );
-                        }
-                    }
-
-                    const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
-
-                    if (!instrumentsForTrading.isEmpty())
-                    {
-                        simulateTrading(timestamp, instrumentsForTrading);
-                    }
-
-                    timestamp += ONE_MINUTE;
-                }
-
-                if (!QThread::currentThread()->isInterruptionRequested())
-                {
-                    if (mTotalMoney > mBestTotalMoney)
-                    {
-                        mBestTotalMoney = mTotalMoney;
-
-                        mSettingsEditor->setValue("Options/BestConfigId", i);
-
-                        mBestOperations = reverseOperations();
-                        mBestEntries    = reverseEntries();
-                        mBestPortfolio  = mPortfolio;
-
-                        mOperationsDatabase->writeOperations(mBestOperations);
-                        mLogsDatabase->writeLogs(mBestEntries);
-                        mPortfolioDatabase->writePortfolio(mBestPortfolio);
-
-                        notifyBestResult();
-                    }
-
-                    ++i;
-                    mSettingsEditor->setValue("Options/LastConfigId", i);
-                }
-            }
-        }
-
-        if (mBestConfig)
-        {
-            const int bestConfigId = mSettingsEditor->value("Options/BestConfigId", 0).toInt();
-            i                      = 0;
-
-            jsonConfigs.reset();
-
-            for (const simdjson::ondemand::object jsonObject : jsonConfigs)
-            {
-                if (!QThread::currentThread()->isInterruptionRequested())
-                {
-                    if (i == bestConfigId)
-                    {
-                        mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
-
-                        break;
-                    }
-
-                    ++i;
-                }
-            }
-        }
-
-        qInfo() << "Simulation completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
+        simulationWithBestConfig();
     }
-    catch (...)
+    else
     {
-        qWarning() << "Failed to parse configs";
+        simulationWithoutBestConfig();
     }
+
+    qInfo() << "Simulation completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
 
     if (!mBestPortfolio.positions.isEmpty())
     {
-        updateCostAndPart();
-        updatePrice();
-
         if (mBestConfig)
         {
             emit bestConfigFound();
@@ -267,6 +131,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
         optimizeOperations();
         optimizeLogs();
+        updateCostAndPart();
+        updatePrice();
 
         emit operationsRead(mBestOperations);
         emit logsRead(mBestEntries);
@@ -275,7 +141,6 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
     qDebug() << "Finish SimulatorDateRangeDecisionMakerThread";
 }
-// NOLINTEND(readability-function-cognitive-complexity)
 
 void SimulatorDateRangeDecisionMakerThread::reset()
 {
@@ -436,28 +301,35 @@ void SimulatorDateRangeDecisionMakerThread::initConfigs()
 {
     if (mBestConfig)
     {
-        mConfigVariants = mConfig->getSimulatorConfig()->variantsToJsonString();
+        mConfigVariants = mConfig->getSimulatorConfig()->variantsToJsonStringList();
     }
     else
     {
-        mConfigVariants = "[\n" + mConfig->getSimulatorConfig()->toJsonString() + "\n]";
+        mConfigVariants.clear();
+        mConfigVariants.append("[\n" + mConfig->getSimulatorConfig()->toJsonString() + "\n]");
     }
+
+    mSettingsEditor->setValue("Options/AmountOfBuyDecisions", mConfigVariants.size());
 
     const std::shared_ptr<IDir> dir = mDirFactory->newInstance();
 
     bool ok = dir->mkpath(qApp->applicationDirPath() + "/data/simulator");
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 
-    const std::shared_ptr<IFile> configsFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/configs.json");
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        const std::shared_ptr<IFile> configsFile = mFileFactory->newInstance(
+            QString("%1/data/simulator/configs%2.json").arg(qApp->applicationDirPath(), QString::number(i))
+        );
 
-    ok = configsFile->open(QIODevice::WriteOnly);
-    Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+        ok = configsFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
-    configsFile->write(mConfigVariants.toUtf8());
-    configsFile->close();
+        configsFile->write(mConfigVariants.at(i).toUtf8());
+        configsFile->close();
 
-    mSettingsEditor->setValue("Options/LastConfigId", 0);
+        mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(i), 0);
+    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::load()
@@ -497,13 +369,148 @@ void SimulatorDateRangeDecisionMakerThread::loadBestPortfolio()
 
 void SimulatorDateRangeDecisionMakerThread::loadConfigs()
 {
-    const std::shared_ptr<IFile> configsFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/configs.json");
+    const int amountOfBuyDecisions = mSettingsEditor->value("Options/AmountOfBuyDecisions", 0).toInt();
 
-    if (configsFile->open(QIODevice::ReadOnly))
+    mConfigVariants.clear();
+
+    for (int i = 0; i < amountOfBuyDecisions; ++i)
     {
-        mConfigVariants = QString::fromUtf8(configsFile->readAll());
-        configsFile->close();
+        const std::shared_ptr<IFile> configsFile = mFileFactory->newInstance(
+            QString("%1/data/simulator/configs%2.json").arg(qApp->applicationDirPath(), QString::number(i))
+        );
+
+        if (configsFile->open(QIODevice::ReadOnly))
+        {
+            mConfigVariants.append(QString::fromUtf8(configsFile->readAll()));
+            configsFile->close();
+        }
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig()
+{
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
+{
+    const int    configId     = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+    const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
+
+    mStocksStorage->readLock();
+    const QList<Stock*> stocks = mStocksStorage->getStocks();
+    mStocksStorage->readUnlock();
+
+    const simdjson::padded_string jsonData(mConfigVariants.constFirst().toStdString());
+
+    simdjson::ondemand::parser parser;
+
+    try
+    {
+        simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+        simdjson::ondemand::array jsonConfigs     = doc.get_array();
+        const int                 amountOfConfigs = static_cast<int>(jsonConfigs.count_elements());
+
+        qint64 startTime = QDateTime::currentMSecsSinceEpoch();
+        int    i         = 0;
+
+        for (const simdjson::ondemand::object jsonObject : jsonConfigs)
+        {
+            if (!QThread::currentThread()->isInterruptionRequested())
+            {
+                if (i < configId)
+                {
+                    startTime = QDateTime::currentMSecsSinceEpoch();
+                    ++i;
+
+                    continue;
+                }
+
+                emit totalProgressChanged(i, amountOfConfigs);
+
+                mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
+
+                mTotalMoney = mStartMoney;
+                mOperations = mInitOperations;
+                mEntries    = mInitEntries;
+                mPortfolio  = mInitPortfolio;
+                mInstruments.clear();
+
+                qint64 timestamp = mStartTimestamp;
+
+                while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
+                {
+                    if (timestamp % NOTIFY_PROGRESS_STEP == 0)
+                    {
+                        const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
+
+                        if (i != configId || currentMinute > 0)
+                        {
+                            const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+
+                            const double processedMinutes = ((i - configId) * totalMinutes) + currentMinute;
+                            const double remainingMinutes = ((amountOfConfigs - i) * totalMinutes) - currentMinute;
+
+                            qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
+                            remainingMilliseconds        /= MS_IN_SECOND;
+                            const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
+                            remainingMilliseconds        /= SECONDS_IN_MINUTE;
+                            const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
+                            remainingMilliseconds        /= MINUTES_IN_HOUR;
+                            const int hours               = remainingMilliseconds;
+
+                            emit progressChanged(
+                                currentMinute,
+                                totalMinutes,
+                                QString("%1:%2:%3")
+                                    .arg(
+                                        QString::number(hours).rightJustified(2, '0'),
+                                        QString::number(minutes).rightJustified(2, '0'),
+                                        QString::number(seconds).rightJustified(2, '0')
+                                    )
+                            );
+                        }
+                    }
+
+                    const InstrumentsForTrading& instrumentsForTrading =
+                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
+
+                    if (!instrumentsForTrading.isEmpty())
+                    {
+                        simulateTrading(timestamp, instrumentsForTrading);
+                    }
+
+                    timestamp += ONE_MINUTE;
+                }
+
+                if (!QThread::currentThread()->isInterruptionRequested())
+                {
+                    if (mTotalMoney > mBestTotalMoney)
+                    {
+                        mBestTotalMoney = mTotalMoney;
+
+                        mSettingsEditor->setValue("Options/BestConfigId", i);
+
+                        mBestOperations = reverseOperations();
+                        mBestEntries    = reverseEntries();
+                        mBestPortfolio  = mPortfolio;
+
+                        mOperationsDatabase->writeOperations(mBestOperations);
+                        mLogsDatabase->writeLogs(mBestEntries);
+                        mPortfolioDatabase->writePortfolio(mBestPortfolio);
+
+                        notifyBestResult();
+                    }
+
+                    ++i;
+                    mSettingsEditor->setValue("Options/LastConfigId", i);
+                }
+            }
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "Failed to parse configs";
     }
 }
 

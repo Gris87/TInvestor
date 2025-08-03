@@ -1,4 +1,5 @@
 Find best config for separations and combine to ultra config
+Combine makeBuyDecisionsForParallel and makeSellDecisionsForParallel
 Improve coverage
 Create release
 

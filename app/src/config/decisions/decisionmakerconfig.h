@@ -38,7 +38,7 @@ public:
     QString toJsonString() const override;
 
     [[nodiscard]]
-    QString variantsToJsonString() const override;
+    QStringList variantsToJsonStringList() const override;
 
     IBuyDecision1Config*  getBuyDecision1Config() override;
     IBuyDecision2Config*  getBuyDecision2Config() override;

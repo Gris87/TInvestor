@@ -28,7 +28,7 @@ public:
 
     MOCK_METHOD(void, fromJsonObject, (simdjson::ondemand::object jsonObject), (override));
     MOCK_METHOD(QString, toJsonString, (), (const, override));
-    MOCK_METHOD(QString, variantsToJsonString, (), (const, override));
+    MOCK_METHOD(QStringList, variantsToJsonStringList, (), (const, override));
 
     MOCK_METHOD(IBuyDecision1Config*, getBuyDecision1Config, (), (override));
     MOCK_METHOD(IBuyDecision2Config*, getBuyDecision2Config, (), (override));

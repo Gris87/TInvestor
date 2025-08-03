@@ -312,7 +312,7 @@ TEST(Test_DecisionMakerConfig, Test_toJsonString)
     ASSERT_EQ(content, expectedContent);
 }
 
-TEST(Test_DecisionMakerConfig, Test_variantsToJsonString)
+TEST(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
 {
     const InSequence seq;
 
@@ -347,24 +347,25 @@ TEST(Test_DecisionMakerConfig, Test_variantsToJsonString)
     //EXPECT_CALL(sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     // clang-format on
 
-    const QString variants = config.variantsToJsonString();
-    const QString expectedVariants =
+    const QStringList variants = config.variantsToJsonStringList();
+    const QStringList expectedVariants = {
         "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{"
         "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
         "\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
-        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},"
-        "\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{"
-        "\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{"
-        "\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":"
-        "true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},"
-        "\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{"
-        "\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{"
-        "\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":"
-        "false},\"s4\":{\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},"
-        "\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{"
-        "\"enabled\":false}},\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{"
-        "\"enabled\":true},\"s1\":{\"enabled\":false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":"
-        "false}}\n]";
+        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{"
+        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
+        "\"enabled\":false},\"b2\":{\"enabled\":true},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
+        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{"
+        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
+        "\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":true},\"b4\":{\"enabled\":false},\"s1\":{\"enabled\":"
+        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]",
+        "[\n{\"b1\":{\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"s1\":{"
+        "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"
+        "\"enabled\":false},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":true},\"s1\":{\"enabled\":"
+        "false},\"s2\":{\"enabled\":true},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}}\n]"
+    };
 
     ASSERT_EQ(variants, expectedVariants);
 }

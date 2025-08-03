@@ -86,6 +86,8 @@ private:
     void loadBestLogs();
     void loadBestPortfolio();
     void loadConfigs();
+    void simulationWithBestConfig();
+    void simulationWithoutBestConfig();
     void simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading);
     void simulateSell(qint64& timestamp, const QString& instrumentId, const TradingInfo& tradingInfo);
     void simulateSellForOperations(
@@ -180,7 +182,7 @@ private:
     qint64                           mStartTimestamp;
     qint64                           mEndTimestamp;
     bool                             mBestConfig;
-    QString                          mConfigVariants;
+    QStringList                      mConfigVariants;
     double                           mTotalMoney;
     double                           mBestTotalMoney;
 };

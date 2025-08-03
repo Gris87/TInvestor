@@ -182,8 +182,10 @@ QString DecisionMakerConfig::toJsonString() const
     return QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"s1":%5,"s2":%6,"s3":%7,"s4":%8})").arg(b1, b2, b3, b4, s1, s2, s3, s4);
 }
 
-QString DecisionMakerConfig::variantsToJsonString() const
+QStringList DecisionMakerConfig::variantsToJsonStringList() const
 {
+    QStringList res;
+
     QList<QStringList> buyVariants;
     QList<QStringList> sellVariants;
 
@@ -200,12 +202,12 @@ QString DecisionMakerConfig::variantsToJsonString() const
     const QString s3 = R"({"enabled":false})";
     const QString s4 = R"({"enabled":false})";
 
-    QStringList results;
-
     for (int i = 0; i < buyVariants.size(); ++i)
     {
         const QStringList& buyVariant = buyVariants.at(i);
         QStringList        buyConfigs(buyVariants.size(), R"({"enabled":false})");
+
+        QStringList results;
 
         for (int j = 1; j < buyVariant.size(); ++j)
         {
@@ -229,9 +231,11 @@ QString DecisionMakerConfig::variantsToJsonString() const
                 }
             }
         }
+
+        res.append("[\n" + results.join(",\n") + "\n]");
     }
 
-    return "[\n" + results.join(",\n") + "\n]";
+    return res;
 }
 
 IBuyDecision1Config* DecisionMakerConfig::getBuyDecision1Config()

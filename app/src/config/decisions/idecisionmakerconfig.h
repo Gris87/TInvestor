@@ -37,7 +37,7 @@ public:
     virtual QString toJsonString() const = 0;
 
     [[nodiscard]]
-    virtual QString variantsToJsonString() const = 0;
+    virtual QStringList variantsToJsonStringList() const = 0;
 
     virtual IBuyDecision1Config* getBuyDecision1Config() = 0;
     virtual IBuyDecision2Config* getBuyDecision2Config() = 0;
