@@ -247,6 +247,8 @@ void SimulatorDateRangeDecisionMakerThread::run()
                 }
             }
         }
+
+        qInfo() << "Simulation completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
     }
     catch (...)
     {

@@ -191,15 +191,15 @@ TEST(Test_SellDecision2Config, Test_variantsAsJson)
 
     ASSERT_EQ(variants.size(), 10);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.1"})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.3"})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.7"})");
-    ASSERT_EQ(variants.at(4), R"({"enabled":true,"yieldAbove":"4.00","loseYield":"0.1"})");
-    ASSERT_EQ(variants.at(5), R"({"enabled":true,"yieldAbove":"4.00","loseYield":"0.3"})");
-    ASSERT_EQ(variants.at(6), R"({"enabled":true,"yieldAbove":"4.00","loseYield":"0.7"})");
-    ASSERT_EQ(variants.at(7), R"({"enabled":true,"yieldAbove":"5.00","loseYield":"0.1"})");
-    ASSERT_EQ(variants.at(8), R"({"enabled":true,"yieldAbove":"5.00","loseYield":"0.3"})");
-    ASSERT_EQ(variants.at(9), R"({"enabled":true,"yieldAbove":"5.00","loseYield":"0.7"})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"yieldAbove":"1.00","loseYield":"0.3"})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"yieldAbove":"1.00","loseYield":"0.5"})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"yieldAbove":"1.00","loseYield":"0.7"})");
+    ASSERT_EQ(variants.at(4), R"({"enabled":true,"yieldAbove":"2.00","loseYield":"0.3"})");
+    ASSERT_EQ(variants.at(5), R"({"enabled":true,"yieldAbove":"2.00","loseYield":"0.5"})");
+    ASSERT_EQ(variants.at(6), R"({"enabled":true,"yieldAbove":"2.00","loseYield":"0.7"})");
+    ASSERT_EQ(variants.at(7), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.3"})");
+    ASSERT_EQ(variants.at(8), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.5"})");
+    ASSERT_EQ(variants.at(9), R"({"enabled":true,"yieldAbove":"3.00","loseYield":"0.7"})");
 }
 
 TEST(Test_SellDecision2Config, Test_setEnabled_and_isEnabled)

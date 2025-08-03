@@ -172,9 +172,9 @@ TEST(Test_SellDecision4Config, Test_variantsAsJson)
 
     ASSERT_EQ(variants.size(), 4);
     ASSERT_EQ(variants.at(0), R"({"enabled":false})");
-    ASSERT_EQ(variants.at(1), R"({"enabled":true,"loseYield":"5.0"})");
-    ASSERT_EQ(variants.at(2), R"({"enabled":true,"loseYield":"7.0"})");
-    ASSERT_EQ(variants.at(3), R"({"enabled":true,"loseYield":"10.0"})");
+    ASSERT_EQ(variants.at(1), R"({"enabled":true,"loseYield":"10.0"})");
+    ASSERT_EQ(variants.at(2), R"({"enabled":true,"loseYield":"12.0"})");
+    ASSERT_EQ(variants.at(3), R"({"enabled":true,"loseYield":"15.0"})");
 }
 
 TEST(Test_SellDecision4Config, Test_setEnabled_and_isEnabled)
