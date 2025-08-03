@@ -259,26 +259,51 @@ combineVariantsForParallel(QThread* parentThread, int threadId, QList<int>& /*te
 
 QString DecisionMakerConfig::variantsToJsonString() const
 {
-    QList<QStringList> variants;
-    QList<int>         temp;
+    QList<QStringList> buyVariants;
+    QList<QStringList> sellVariants;
 
-    variants.append(mBuyDecision1Config->variantsAsJson());
-    variants.append(mBuyDecision2Config->variantsAsJson());
-    variants.append(mBuyDecision3Config->variantsAsJson());
-    variants.append(mBuyDecision4Config->variantsAsJson());
-    variants.append(mSellDecision1Config->variantsAsJson());
-    variants.append(mSellDecision2Config->variantsAsJson());
-    variants.append(mSellDecision3Config->variantsAsJson());
-    variants.append(mSellDecision4Config->variantsAsJson());
+    buyVariants.append(mBuyDecision1Config->variantsAsJson());
+    buyVariants.append(mBuyDecision2Config->variantsAsJson());
+    buyVariants.append(mBuyDecision3Config->variantsAsJson());
+    buyVariants.append(mBuyDecision4Config->variantsAsJson());
+    sellVariants.append(mSellDecision1Config->variantsAsJson());
+    sellVariants.append(mSellDecision2Config->variantsAsJson());
+    // Do not add sell decisions 3 and 4
+    // sellVariants.append(mSellDecision3Config->variantsAsJson());
+    // sellVariants.append(mSellDecision4Config->variantsAsJson());
 
-    CombineVariantsInfo combineVariantsInfo(variants);
-    processInParallel(temp, combineVariantsForParallel, &combineVariantsInfo);
+    const QString s3 = R"({"enabled":false})";
+    const QString s4 = R"({"enabled":false})";
 
     QStringList results;
 
-    for (const QStringList& res : std::as_const(combineVariantsInfo.results))
+    for (int i = 0; i < buyVariants.size(); ++i)
     {
-        results.append(res);
+        const QStringList& buyVariant = buyVariants.at(i);
+        QStringList        buyConfigs(buyVariants.size(), R"({"enabled":false})");
+
+        for (int j = 1; j < buyVariant.size(); ++j)
+        {
+            buyConfigs[i] = buyVariant.at(j);
+
+            for (int k = 0; k < sellVariants.size(); ++k)
+            {
+                const QStringList& sellVariant = sellVariants.at(k);
+                QStringList        sellConfigs(sellVariants.size(), R"({"enabled":false})");
+
+                for (int g = 1; g < sellVariant.size(); ++g)
+                {
+                    sellConfigs[k] = sellVariant.at(g);
+
+                    results.append(
+                        QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,"s1":%5,"s2":%6,"s3":%7,"s4":%8})")
+                            .arg(
+                                buyConfigs[0], buyConfigs[1], buyConfigs[2], buyConfigs[3], sellConfigs[0], sellConfigs[1], s3, s4
+                            )
+                    );
+                }
+            }
+        }
     }
 
     return "[\n" + results.join(",\n") + "\n]";

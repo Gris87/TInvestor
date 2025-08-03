@@ -1,4 +1,5 @@
 Optimize config variants
+Fix portfolio total time delta
 Improve coverage
 Create release
 

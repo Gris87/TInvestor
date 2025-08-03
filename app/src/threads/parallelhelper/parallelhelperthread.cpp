@@ -5,8 +5,8 @@
 
 
 #ifndef TESTING_MODE
-int            _cpuCount;
-QReadWriteLock _cpuCountRwMutex;
+static int            _cpuCount;
+static QReadWriteLock _cpuCountRwMutex;
 
 
 
