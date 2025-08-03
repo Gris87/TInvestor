@@ -135,7 +135,7 @@ QStringList SellDecision3Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList loseYieldVariants = {"3.00", "4.00", "5.00"};
+    const QStringList loseYieldVariants = {"5.00", "7.00", "10.00"};
     const QStringList durationVariants  = {"5", "15", "30"};
 
     for (const QString& loseYield : loseYieldVariants)

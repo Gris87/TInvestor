@@ -55,7 +55,7 @@ private:
     IFileDialogFactory*  mFileDialogFactory;
     ISettingsEditor*     mSettingsEditor;
     IPortfolioTreeModel* mPortfolioTreeModel;
-    double               mTotalCost;
+    double               mTotalCostWithoutMoney;
     double               mTotalDailyCost;
 
 public slots:

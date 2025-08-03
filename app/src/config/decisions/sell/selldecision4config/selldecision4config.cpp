@@ -122,7 +122,7 @@ QStringList SellDecision4Config::variantsAsJson() const
 
     res.append(R"({"enabled":false})");
 
-    const QStringList loseYieldVariants = {"5.0", "7.0", "10.0"};
+    const QStringList loseYieldVariants = {"10.0", "12.0", "15.0"};
 
     for (const QString& loseYield : loseYieldVariants)
     {

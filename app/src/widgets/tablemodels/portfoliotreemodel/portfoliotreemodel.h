@@ -48,6 +48,9 @@ public:
     double totalCost() const override;
 
     [[nodiscard]]
+    double totalCostWithoutMoney() const override;
+
+    [[nodiscard]]
     double totalYield() const override;
 
     [[nodiscard]]

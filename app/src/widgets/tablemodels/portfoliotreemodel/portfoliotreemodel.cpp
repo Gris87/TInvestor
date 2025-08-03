@@ -917,6 +917,18 @@ double PortfolioTreeModel::totalCost() const
     return res;
 }
 
+double PortfolioTreeModel::totalCostWithoutMoney() const
+{
+    double res = 0.0;
+
+    for (int i = 1; i < mPortfolio.positions.size(); ++i)
+    {
+        res += mPortfolio.positions.at(i).cost;
+    }
+
+    return res;
+}
+
 double PortfolioTreeModel::totalYield() const
 {
     double res = 0.0;

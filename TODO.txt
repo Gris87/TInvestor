@@ -1,5 +1,4 @@
-Optimize config variants
-Fix portfolio total time delta
+Find best config for separations and combine to ultra config
 Improve coverage
 Create release
 

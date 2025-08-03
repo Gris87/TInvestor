@@ -37,7 +37,7 @@ PortfolioTreeWidget::PortfolioTreeWidget(
     ui(new Ui::PortfolioTreeWidget),
     mFileDialogFactory(fileDialogFactory),
     mSettingsEditor(settingsEditor),
-    mTotalCost(),
+    mTotalCostWithoutMoney(),
     mTotalDailyCost()
 {
     qDebug() << "Create PortfolioTreeWidget";
@@ -68,10 +68,10 @@ void PortfolioTreeWidget::portfolioChanged(const Portfolio& portfolio)
     mPortfolioTreeModel->portfolioChanged(portfolio);
     ui->treeView->expandAll();
 
-    mTotalCost      = mPortfolioTreeModel->totalCost();
-    mTotalDailyCost = mPortfolioTreeModel->totalDailyCost();
+    mTotalCostWithoutMoney = mPortfolioTreeModel->totalCostWithoutMoney();
+    mTotalDailyCost        = mPortfolioTreeModel->totalDailyCost();
 
-    ui->costLabel->setText(QString::number(mTotalCost, 'f', 2) + " \u20BD");
+    ui->costLabel->setText(QString::number(mPortfolioTreeModel->totalCost(), 'f', 2) + " \u20BD");
     updateAllTimeLabel();
     updateForTodayLabel();
 }
@@ -92,7 +92,7 @@ void PortfolioTreeWidget::updateLastPrices()
 
 void PortfolioTreeWidget::updateAllTimeLabel()
 {
-    updateYieldLabel(ui->allTimeLabel, mPortfolioTreeModel->totalYield(), mTotalCost);
+    updateYieldLabel(ui->allTimeLabel, mPortfolioTreeModel->totalYield(), mTotalCostWithoutMoney);
 }
 
 void PortfolioTreeWidget::updateForTodayLabel()
