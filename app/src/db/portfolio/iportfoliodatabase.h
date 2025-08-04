@@ -15,7 +15,7 @@ public:
     IPortfolioDatabase(const IPortfolioDatabase& another)            = delete;
     IPortfolioDatabase& operator=(const IPortfolioDatabase& another) = delete;
 
-    virtual Portfolio readPortfolio()                            = 0;
-    virtual void      writePortfolio(const Portfolio& portfolio) = 0;
-    virtual void      deletePortfolio()                          = 0;
+    virtual Portfolio readPortfolio(int partId = -1)                              = 0;
+    virtual void      writePortfolio(const Portfolio& portfolio, int partId = -1) = 0;
+    virtual void      deletePortfolio(int partId = -1)                            = 0;
 };

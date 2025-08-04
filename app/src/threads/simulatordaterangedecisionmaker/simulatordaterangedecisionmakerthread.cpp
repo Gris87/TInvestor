@@ -159,6 +159,13 @@ void SimulatorDateRangeDecisionMakerThread::init()
     mOperationsDatabase->deleteOperations();
     mLogsDatabase->deleteLogs();
     mPortfolioDatabase->deletePortfolio();
+
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        mOperationsDatabase->deleteOperations(i);
+        mLogsDatabase->deleteLogs(i);
+        mPortfolioDatabase->deletePortfolio(i);
+    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::readSimulationConfig()
@@ -410,9 +417,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
     const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
     const qint64     totalMinutes   = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
     double           bestTotalMoney = 0.0;
-    QList<Operation> bestOperations;
-    QList<LogEntry>  bestEntries;
-    Portfolio        bestPortfolio;
+    QList<Operation> bestOperations = mOperationsDatabase->readOperations(buyDecisionId);
+    QList<LogEntry>  bestEntries    = mLogsDatabase->readLogs(buyDecisionId);
+    Portfolio        bestPortfolio  = mPortfolioDatabase->readPortfolio(buyDecisionId);
 
     mStocksStorage->readLock();
     const QList<Stock*> stocks = mStocksStorage->getStocks();
@@ -514,9 +521,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                         bestEntries    = reverseEntries(entries);
                         bestPortfolio  = portfolio;
 
-                        mOperationsDatabase->writeOperations(bestOperations);
-                        mLogsDatabase->writeLogs(bestEntries);
-                        mPortfolioDatabase->writePortfolio(bestPortfolio);
+                        mOperationsDatabase->writeOperations(bestOperations, buyDecisionId);
+                        mLogsDatabase->writeLogs(bestEntries, buyDecisionId);
+                        mPortfolioDatabase->writePortfolio(bestPortfolio, buyDecisionId);
 
                         notifyBestResult();
                     }
@@ -1147,7 +1154,7 @@ void SimulatorDateRangeDecisionMakerThread::updateCostAndPart()
     {
         category.cost = 0.0;
 
-        for (PortfolioItem& item : category.items)
+        for (const PortfolioItem& item : category.items)
         {
             category.cost += item.cost;
         }

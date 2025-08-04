@@ -60,7 +60,7 @@ TEST_F(Test_LogsThread, Test_run_and_addLog_and_terminateThread)
     Instruments     instruments;
     Logo            logo;
 
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(entries));
 
     thread->start();
 
@@ -70,7 +70,7 @@ TEST_F(Test_LogsThread, Test_run_and_addLog_and_terminateThread)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*logsDatabaseMock, appendLog(_));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(_, -1));
 
     thread->addLog(LOG_LEVEL_WARNING, "aaaaa", "Sell just a million items");
 
@@ -135,10 +135,10 @@ TEST_F(Test_LogsThread, Test_optimize)
         entry.message          = "Buy without reason";
     }
 
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(entries));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(entries));
     EXPECT_CALL(*optimizerMock, optimizeLogs(entries, 5)).WillOnce(Return(optimizedEntries));
-    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
+    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries, -1));
 
     thread->testTerminateWithoutTerminate();
     thread->run();

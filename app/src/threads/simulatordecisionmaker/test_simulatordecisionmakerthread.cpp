@@ -435,15 +435,15 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString(RUBLE_UID))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(IsOperationsEqWithoutTimeout(operations)));
-    EXPECT_CALL(*logsDatabaseMock, writeLogs(entries));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(IsOperationsEqWithoutTimeout(operations), -1));
+    EXPECT_CALL(*logsDatabaseMock, writeLogs(entries, -1));
     EXPECT_CALL(*instrumentsStorageMock, readLock());
     EXPECT_CALL(*instrumentsStorageMock, getInstruments()).WillOnce(ReturnRef(instruments));
     EXPECT_CALL(*instrumentsStorageMock, readUnlock());
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString(RUBLE_UID))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(portfolio));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(portfolio, -1));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), configMock, portfolio, stocks, false, 0, false))
@@ -458,15 +458,15 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4)));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4), -1));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(buyPortfolio));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(buyPortfolio, -1));
 
     thread->run();
 
@@ -649,15 +649,15 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4)));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(buyOperations2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(buyEntry4), -1));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(buyPortfolio2));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(buyPortfolio2, -1));
 
     thread->run();
 
@@ -818,12 +818,12 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("bbbbb"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4)));
-    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4), -1));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio, -1));
 
     thread->run();
 
@@ -958,12 +958,12 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_run)
     EXPECT_CALL(*logosStorageMock, readLock());
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3)));
-    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4)));
-    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio2));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(IsOperationsEqWithoutTimeout(sellOperations2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry1), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry2), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry3), -1));
+    EXPECT_CALL(*logsDatabaseMock, appendLog(IsLogEntryEqWithoutTimeout(sellEntry4), -1));
+    EXPECT_CALL(*portfolioDatabaseMock, writePortfolio(sellPortfolio2, -1));
 
     thread->run();
 }
@@ -1238,9 +1238,9 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     InstrumentsForTrading instrumentsForTrading;
 
     EXPECT_CALL(*settingsEditorMock, value(QString("Options/StartMoney"), QVariant(0))).WillOnce(Return(QVariant(1000000)));
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
-    EXPECT_CALL(*portfolioDatabaseMock, readPortfolio()).WillOnce(Return(portfolio));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(entries));
+    EXPECT_CALL(*portfolioDatabaseMock, readPortfolio(-1)).WillOnce(Return(portfolio));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
@@ -1249,13 +1249,13 @@ TEST_F(Test_SimulatorDecisionMakerThread, Test_optimizeOperations_and_optimizeLo
     EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), configMock, portfolio, stocks, false, 0, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 5, QStringList() << "aaaaa"))
         .WillOnce(Return(optimizedOperations));
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations));
-    EXPECT_CALL(*logsDatabaseMock, readLogs()).WillOnce(Return(entries));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations, -1));
+    EXPECT_CALL(*logsDatabaseMock, readLogs(-1)).WillOnce(Return(entries));
     EXPECT_CALL(*optimizerMock, optimizeLogs(entries, 5)).WillOnce(Return(optimizedEntries));
-    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries));
+    EXPECT_CALL(*logsDatabaseMock, writeLogs(optimizedEntries, -1));
 
     thread->run();
 }

@@ -106,7 +106,7 @@ TEST_F(Test_OperationsThread, Test_run)
 
     positionsStreamResponse->set_allocated_position(positionData);
 
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, getPositions(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(positionsResponse));
     EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
@@ -338,7 +338,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*logosStorageMock, getLogo(QString("aaaaa"))).WillOnce(Return(&logo));
     EXPECT_CALL(*logosStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id"))).WillOnce(Return(nullptr));
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(operations, -1));
 
     thread->requestOperations();
 
@@ -452,7 +452,7 @@ TEST_F(Test_OperationsThread, Test_requestOperations)
     EXPECT_CALL(*logosStorageMock, readUnlock());
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(portfolioResponse));
-    EXPECT_CALL(*operationsDatabaseMock, appendOperations(operations));
+    EXPECT_CALL(*operationsDatabaseMock, appendOperations(operations, -1));
 
     thread->requestOperations();
 }
@@ -1575,7 +1575,7 @@ TEST_F(Test_OperationsThread, Test_optimize)
 
     std::shared_ptr<PositionsStream> positionsStream(new PositionsStream());
 
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*grpcClientMock, getPositions(QThread::currentThread(), QString("account-id")))
         .WillOnce(Return(positionsResponse));
     EXPECT_CALL(*grpcClientMock, createPositionsStream(QString("account-id"))).WillOnce(Return(positionsStream));
@@ -1583,10 +1583,10 @@ TEST_F(Test_OperationsThread, Test_optimize)
         *grpcClientMock, getOperations(QThread::currentThread(), QString("account-id"), 1011, Gt(1704056400000), QString(""))
     )
         .WillOnce(Return(nullptr));
-    EXPECT_CALL(*operationsDatabaseMock, readOperations()).WillOnce(Return(operations));
+    EXPECT_CALL(*operationsDatabaseMock, readOperations(-1)).WillOnce(Return(operations));
     EXPECT_CALL(*optimizerMock, optimizeOperations(operations, 3, QStringList() << "bbbbb" << "ccccc"))
         .WillOnce(Return(optimizedOperations));
-    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations));
+    EXPECT_CALL(*operationsDatabaseMock, writeOperations(optimizedOperations, -1));
     EXPECT_CALL(*grpcClientMock, readPositionsStream(positionsStream)).WillOnce(Return(nullptr));
     EXPECT_CALL(*grpcClientMock, finishPositionsStream(positionsStream));
 

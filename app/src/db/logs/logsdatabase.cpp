@@ -164,13 +164,13 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
     }
 }
 
-QList<LogEntry> LogsDatabase::readLogs()
+QList<LogEntry> LogsDatabase::readLogs(int partId)
 {
     qDebug() << "Reading logs from database";
 
     QList<LogEntry> res;
 
-    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(logsDirPath() + "/logs.json");
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(QString("%1/%2").arg(logsDirPath(), fileName(partId)));
 
     if (logsFile->open(QIODevice::ReadOnly))
     {
@@ -271,7 +271,7 @@ writeLogsForParallel(QThread* parentThread, int threadId, QList<LogEntry>& entri
     }
 }
 
-void LogsDatabase::writeLogs(QList<LogEntry>& entries)
+void LogsDatabase::writeLogs(QList<LogEntry>& entries, int partId)
 {
     qDebug() << "Writing logs to database";
 
@@ -282,7 +282,7 @@ void LogsDatabase::writeLogs(QList<LogEntry>& entries)
     bool ok = dir->mkpath(dirPath);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 
-    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(dirPath + "/logs.json");
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(QString("%1/%2").arg(dirPath, fileName(partId)));
 
     ok = logsFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
@@ -298,7 +298,7 @@ void LogsDatabase::writeLogs(QList<LogEntry>& entries)
     logsFile->close();
 }
 
-void LogsDatabase::appendLog(const LogEntry& entry)
+void LogsDatabase::appendLog(const LogEntry& entry, int partId)
 {
     const QString dirPath = logsDirPath();
 
@@ -307,7 +307,7 @@ void LogsDatabase::appendLog(const LogEntry& entry)
     bool ok = dir->mkpath(dirPath);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 
-    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(dirPath + "/logs.json");
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(QString("%1/%2").arg(dirPath, fileName(partId)));
 
     ok = logsFile->open(QIODevice::WriteOnly | QIODevice::Append);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
@@ -323,11 +323,11 @@ void LogsDatabase::appendLog(const LogEntry& entry)
     logsFile->close();
 }
 
-void LogsDatabase::deleteLogs()
+void LogsDatabase::deleteLogs(int partId)
 {
     qDebug() << "Deleting logs";
 
-    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(logsDirPath() + "/logs.json");
+    const std::shared_ptr<IFile> logsFile = mFileFactory->newInstance(QString("%1/%2").arg(logsDirPath(), fileName(partId)));
 
     logsFile->remove();
 }
@@ -351,4 +351,9 @@ QString LogsDatabase::logsDirPath() const
     }
 
     return res;
+}
+
+QString LogsDatabase::fileName(int partId) const
+{
+    return partId < 0 ? "logs.json" : QString("logs%1.json").arg(partId);
 }

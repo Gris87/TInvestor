@@ -20,7 +20,7 @@ public:
     PortfolioDatabaseMock(const PortfolioDatabaseMock& another)            = delete;
     PortfolioDatabaseMock& operator=(const PortfolioDatabaseMock& another) = delete;
 
-    MOCK_METHOD(Portfolio, readPortfolio, (), (override));
-    MOCK_METHOD(void, writePortfolio, (const Portfolio& portfolio), (override));
-    MOCK_METHOD(void, deletePortfolio, (), (override));
+    MOCK_METHOD(Portfolio, readPortfolio, (int partId), (override));
+    MOCK_METHOD(void, writePortfolio, (const Portfolio& portfolio, int partId), (override));
+    MOCK_METHOD(void, deletePortfolio, (int partId), (override));
 };

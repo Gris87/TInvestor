@@ -16,8 +16,8 @@ public:
     ILogsDatabase& operator=(const ILogsDatabase& another) = delete;
 
     virtual void            setAccount(const QString& account)  = 0;
-    virtual QList<LogEntry> readLogs()                          = 0;
-    virtual void            writeLogs(QList<LogEntry>& entries) = 0;
-    virtual void            appendLog(const LogEntry& entry)    = 0;
-    virtual void            deleteLogs()                        = 0;
+    virtual QList<LogEntry> readLogs(int partId = -1)                            = 0;
+    virtual void            writeLogs(QList<LogEntry>& entries, int partId = -1) = 0;
+    virtual void            appendLog(const LogEntry& entry, int partId = -1)    = 0;
+    virtual void            deleteLogs(int partId = -1)                          = 0;
 };

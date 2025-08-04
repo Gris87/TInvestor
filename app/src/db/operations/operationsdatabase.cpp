@@ -168,13 +168,14 @@ static void readOperationsForParallel(
     }
 }
 
-QList<Operation> OperationsDatabase::readOperations()
+QList<Operation> OperationsDatabase::readOperations(int partId)
 {
     qDebug() << "Reading operations from database";
 
     QList<Operation> res;
 
-    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(operationsDirPath() + "/operations.json");
+    const std::shared_ptr<IFile> operationsFile =
+        mFileFactory->newInstance(QString("%1/%2").arg(operationsDirPath(), fileName(partId)));
 
     if (operationsFile->open(QIODevice::ReadOnly))
     {
@@ -276,7 +277,7 @@ static void writeOperationsForParallel(
     }
 }
 
-void OperationsDatabase::writeOperations(QList<Operation>& operations)
+void OperationsDatabase::writeOperations(QList<Operation>& operations, int partId)
 {
     qDebug() << "Writing operations to database";
 
@@ -287,7 +288,7 @@ void OperationsDatabase::writeOperations(QList<Operation>& operations)
     bool ok = dir->mkpath(dirPath);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to create dir");
 
-    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(dirPath + "/operations.json");
+    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(QString("%1/%2").arg(dirPath, fileName(partId)));
 
     ok = operationsFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
@@ -303,11 +304,12 @@ void OperationsDatabase::writeOperations(QList<Operation>& operations)
     operationsFile->close();
 }
 
-void OperationsDatabase::appendOperations(const QList<Operation>& operations)
+void OperationsDatabase::appendOperations(const QList<Operation>& operations, int partId)
 {
     qDebug() << "Appending operations to database";
 
-    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(operationsDirPath() + "/operations.json");
+    const std::shared_ptr<IFile> operationsFile =
+        mFileFactory->newInstance(QString("%1/%2").arg(operationsDirPath(), fileName(partId)));
 
     const bool ok = operationsFile->open(QIODevice::Append);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
@@ -323,11 +325,12 @@ void OperationsDatabase::appendOperations(const QList<Operation>& operations)
     operationsFile->close();
 }
 
-void OperationsDatabase::deleteOperations()
+void OperationsDatabase::deleteOperations(int partId)
 {
     qDebug() << "Deleting operations";
 
-    const std::shared_ptr<IFile> operationsFile = mFileFactory->newInstance(operationsDirPath() + "/operations.json");
+    const std::shared_ptr<IFile> operationsFile =
+        mFileFactory->newInstance(QString("%1/%2").arg(operationsDirPath(), fileName(partId)));
 
     operationsFile->remove();
 }
@@ -351,4 +354,9 @@ QString OperationsDatabase::operationsDirPath() const
     }
 
     return res;
+}
+
+QString OperationsDatabase::fileName(int partId) const
+{
+    return partId < 0 ? "operations.json" : QString("operations%1.json").arg(partId);
 }

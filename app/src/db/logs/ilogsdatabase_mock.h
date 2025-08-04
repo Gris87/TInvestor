@@ -21,8 +21,8 @@ public:
     LogsDatabaseMock& operator=(const LogsDatabaseMock& another) = delete;
 
     MOCK_METHOD(void, setAccount, (const QString& account), (override));
-    MOCK_METHOD(QList<LogEntry>, readLogs, (), (override));
-    MOCK_METHOD(void, writeLogs, (QList<LogEntry> & entries), (override));
-    MOCK_METHOD(void, appendLog, (const LogEntry& entry), (override));
-    MOCK_METHOD(void, deleteLogs, (), (override));
+    MOCK_METHOD(QList<LogEntry>, readLogs, (int partId), (override));
+    MOCK_METHOD(void, writeLogs, (QList<LogEntry> & entries, int partId), (override));
+    MOCK_METHOD(void, appendLog, (const LogEntry& entry, int partId), (override));
+    MOCK_METHOD(void, deleteLogs, (int partId), (override));
 };

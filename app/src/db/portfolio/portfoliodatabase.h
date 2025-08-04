@@ -19,9 +19,12 @@ public:
     PortfolioDatabase(const PortfolioDatabase& another)            = delete;
     PortfolioDatabase& operator=(const PortfolioDatabase& another) = delete;
 
-    Portfolio readPortfolio() override;
-    void      writePortfolio(const Portfolio& portfolio) override;
-    void      deletePortfolio() override;
+    Portfolio readPortfolio(int partId = -1) override;
+    void      writePortfolio(const Portfolio& portfolio, int partId = -1) override;
+    void      deletePortfolio(int partId = -1) override;
+
+    [[nodiscard]]
+    QString fileName(int partId) const;
 
 private:
     IFileFactory*  mFileFactory;

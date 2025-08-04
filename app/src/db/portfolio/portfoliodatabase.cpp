@@ -25,14 +25,14 @@ PortfolioDatabase::~PortfolioDatabase()
     qDebug() << "Destroy PortfolioDatabase";
 }
 
-Portfolio PortfolioDatabase::readPortfolio()
+Portfolio PortfolioDatabase::readPortfolio(int partId)
 {
     qDebug() << "Reading portfolio from database";
 
     Portfolio res;
 
     const std::shared_ptr<IFile> portfolioFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/portfolio.json");
+        mFileFactory->newInstance(QString("%1/data/simulator/%2").arg(qApp->applicationDirPath(), fileName(partId)));
 
     if (portfolioFile->open(QIODevice::ReadOnly))
     {
@@ -69,14 +69,14 @@ Portfolio PortfolioDatabase::readPortfolio()
     return res;
 }
 
-void PortfolioDatabase::writePortfolio(const Portfolio& portfolio)
+void PortfolioDatabase::writePortfolio(const Portfolio& portfolio, int partId)
 {
     qDebug() << "Writing portfolio to database";
 
     const QJsonDocument jsonDoc(portfolio.toJsonArray());
 
     const std::shared_ptr<IFile> portfolioFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/portfolio.json");
+        mFileFactory->newInstance(QString("%1/data/simulator/%2").arg(qApp->applicationDirPath(), fileName(partId)));
 
     const bool ok = portfolioFile->open(QIODevice::WriteOnly);
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
@@ -85,12 +85,17 @@ void PortfolioDatabase::writePortfolio(const Portfolio& portfolio)
     portfolioFile->close();
 }
 
-void PortfolioDatabase::deletePortfolio()
+void PortfolioDatabase::deletePortfolio(int partId)
 {
     qDebug() << "Deleting portfolio";
 
     const std::shared_ptr<IFile> portfolioFile =
-        mFileFactory->newInstance(qApp->applicationDirPath() + "/data/simulator/portfolio.json");
+        mFileFactory->newInstance(QString("%1/data/simulator/%2").arg(qApp->applicationDirPath(), fileName(partId)));
 
     portfolioFile->remove();
+}
+
+QString PortfolioDatabase::fileName(int partId) const
+{
+    return partId < 0 ? "portfolio.json" : QString("portfolio%1.json").arg(partId);
 }

@@ -22,15 +22,18 @@ public:
     OperationsDatabase& operator=(const OperationsDatabase& another) = delete;
 
     void             setAccount(const QString& account) override;
-    QList<Operation> readOperations() override;
-    void             writeOperations(QList<Operation>& operations) override;
-    void             appendOperations(const QList<Operation>& operations) override;
-    void             deleteOperations() override;
+    QList<Operation> readOperations(int partId = -1) override;
+    void             writeOperations(QList<Operation>& operations, int partId = -1) override;
+    void             appendOperations(const QList<Operation>& operations, int partId = -1) override;
+    void             deleteOperations(int partId = -1) override;
 
     void setAutoPilotMode(bool autoPilotMode);
 
     [[nodiscard]]
     QString operationsDirPath() const;
+
+    [[nodiscard]]
+    QString fileName(int partId) const;
 
 private:
     IDirFactory*   mDirFactory;
