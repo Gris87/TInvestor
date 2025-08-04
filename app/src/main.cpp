@@ -375,11 +375,9 @@ static int runApplication(QApplication* app)
     const QList<IActionDecision*> buyDecisions  = {&buyDecision1, &buyDecision2, &buyDecision3, &buyDecision4};
     const QList<IActionDecision*> sellDecisions = {&sellDecision1, &sellDecision2, &sellDecision3, &sellDecision4};
 
-    DecisionMaker simulatorRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
-    DecisionMaker simulatorDateRangeDecisionMaker(
-        &configForSimulation, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions
-    );
-    DecisionMaker autoPilotRealtimeDecisionMaker(&config, &instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorRealtimeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker simulatorDateRangeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
+    DecisionMaker autoPilotRealtimeDecisionMaker(&instrumentsStorage, &userStorage, buyDecisions, sellDecisions);
 
     CleanupThread      cleanupThread(&config, &stocksStorage);
     UserUpdateThread   userUpdateThread(&userStorage, &grpcClient);
@@ -412,6 +410,7 @@ static int runApplication(QApplication* app)
         &logosStorage,
         &userStorage,
         &stocksStorage,
+        &config,
         &simulatorRealtimeDecisionMaker,
         &optimizer
     );
@@ -430,7 +429,9 @@ static int runApplication(QApplication* app)
         &simulatorDateRangeDecisionMaker,
         &optimizer
     );
-    AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(&stocksStorage, &autoPilotRealtimeDecisionMaker, &grpcClient);
+    AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
+        &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &grpcClient
+    );
     FollowThread                 followThread(&instrumentsStorage, &grpcClient);
     OrderBookThread              orderBookThread(&grpcClient);
     TradingThreadFactory         tradingThreadFactory;

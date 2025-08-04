@@ -32,6 +32,7 @@ public:
         ILogosStorage*       logosStorage,
         IUserStorage*        userStorage,
         IStocksStorage*      stocksStorage,
+        IConfig*             config,
         IDecisionMaker*      decisionMaker,
         IOptimizer*          optimizer,
         QObject*             parent = nullptr
@@ -162,6 +163,7 @@ private:
     ILogosStorage*                   mLogosStorage;
     IUserStorage*                    mUserStorage;
     IStocksStorage*                  mStocksStorage;
+    IConfig*                         mConfig;
     IDecisionMaker*                  mDecisionMaker;
     IOptimizer*                      mOptimizer;
     Portfolio                        mPortfolio;

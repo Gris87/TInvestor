@@ -29,7 +29,6 @@ class DecisionMaker : public IDecisionMaker
 {
 public:
     DecisionMaker(
-        IConfig*                       config,
         IInstrumentsStorage*           instrumentsStorage,
         IUserStorage*                  userStorage,
         const QList<IActionDecision*>& buyDecisions,
@@ -41,11 +40,17 @@ public:
     DecisionMaker& operator=(const DecisionMaker& another) = delete;
 
     InstrumentsForTrading makeDecision(
-        qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, bool autoPilot, int keepMoney, bool dateRange
+        qint64               timestamp,
+        IConfig*             config,
+        const Portfolio&     portfolio,
+        const QList<Stock*>& stocks,
+        bool                 autoPilot,
+        int                  keepMoney,
+        bool                 dateRange
     ) override;
 
 private:
-    IDecisionMakerConfig* chooseDecisionConfig(bool autoPilot);
+    IDecisionMakerConfig* chooseDecisionConfig(IConfig* config, bool autoPilot);
     void                  updateStocksMap(const QList<Stock*>& stocks);
     void                  splitStocks(
                          const Portfolio&          portfolio,
@@ -54,6 +59,7 @@ private:
                          QList<StockWithAvgPrice>& stocksForSell
                      );
     void makeBuyDecisions(
+        IConfig*               config,
         IDecisionMakerConfig*  decisionConfig,
         qint64                 timestamp,
         const Portfolio&       portfolio,

@@ -37,7 +37,6 @@ protected:
         autoPilotConfigMock    = new StrictMock<DecisionMakerConfigMock>();
 
         decisionMaker = new DecisionMaker(
-            configMock,
             instrumentsStorageMock,
             userStorageMock,
             QList<IActionDecision*>() << buyDecisionMock,
@@ -274,7 +273,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
 
-    InstrumentsForTrading result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
+    InstrumentsForTrading result = decisionMaker->makeDecision(1704110400000, configMock, portfolio, stocks, false, 0, false);
 
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
@@ -294,7 +293,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*configMock, getScheduleEndHour()).WillOnce(Return(18));
     EXPECT_CALL(*configMock, getScheduleEndMinute()).WillOnce(Return(40));
 
-    result = decisionMaker->makeDecision(1704056400000, portfolio, stocks, false, 0, false);
+    result = decisionMaker->makeDecision(1704056400000, configMock, portfolio, stocks, false, 0, false);
 
     ASSERT_EQ(result.size(), 0);
 
@@ -339,7 +338,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
 
-    result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
+    result = decisionMaker->makeDecision(1704110400000, configMock, portfolio, stocks, false, 0, false);
 
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
@@ -392,7 +391,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
 
-    result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, false, 0, false);
+    result = decisionMaker->makeDecision(1704110400000, configMock, portfolio, stocks, false, 0, false);
 
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
@@ -431,7 +430,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
 
-    result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, true, 200000, false);
+    result = decisionMaker->makeDecision(1704110400000, configMock, portfolio, stocks, true, 200000, false);
 
     // clang-format off
     ASSERT_EQ(result.size(),                  1);
@@ -480,7 +479,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     )
         .WillOnce(Return("I want to sell"));
 
-    result = decisionMaker->makeDecision(1704110400000, portfolio, stocks, true, 0, true);
+    result = decisionMaker->makeDecision(1704110400000, configMock, portfolio, stocks, true, 0, true);
 
     // clang-format off
     ASSERT_EQ(result.size(),                  2);
@@ -508,7 +507,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*userStorageMock, getCommission()).WillOnce(Return(0.04f));
     EXPECT_CALL(*userStorageMock, readUnlock());
 
-    result = decisionMaker->makeDecision(1704110460000, portfolio, stocks, true, 0, true);
+    result = decisionMaker->makeDecision(1704110460000, configMock, portfolio, stocks, true, 0, true);
 
     ASSERT_EQ(result.size(), 0);
 }

@@ -29,6 +29,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     ILogosStorage*       logosStorage,
     IUserStorage*        userStorage,
     IStocksStorage*      stocksStorage,
+    IConfig*             config,
     IDecisionMaker*      decisionMaker,
     IOptimizer*          optimizer,
     QObject*             parent
@@ -42,6 +43,7 @@ SimulatorDecisionMakerThread::SimulatorDecisionMakerThread(
     mLogosStorage(logosStorage),
     mUserStorage(userStorage),
     mStocksStorage(stocksStorage),
+    mConfig(config),
     mDecisionMaker(decisionMaker),
     mOptimizer(optimizer),
     mPortfolio(),
@@ -86,7 +88,7 @@ void SimulatorDecisionMakerThread::run()
 
     mStocksStorage->readLock();
     const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-        QDateTime::currentMSecsSinceEpoch(), mPortfolio, mStocksStorage->getStocks(), false, 0, false
+        QDateTime::currentMSecsSinceEpoch(), mConfig, mPortfolio, mStocksStorage->getStocks(), false, 0, false
     );
     mStocksStorage->readUnlock();
 

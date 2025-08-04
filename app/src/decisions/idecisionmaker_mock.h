@@ -24,6 +24,7 @@ public:
         InstrumentsForTrading,
         makeDecision,
         (qint64               timestamp,
+         IConfig*             config,
          const Portfolio&     portfolio,
          const QList<Stock*>& stocks,
          bool                 autoPilot,

@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "src/config/iconfig_mock.h"
 #include "src/decisions/idecisionmaker_mock.h"
 #include "src/grpc/igrpcclient_mock.h"
 #include "src/storage/stocks/istocksstorage_mock.h"
@@ -27,22 +28,25 @@ protected:
     void SetUp() override
     {
         stocksStorageMock = new StrictMock<StocksStorageMock>();
+        configMock        = new StrictMock<ConfigMock>();
         decisionMakerMock = new StrictMock<DecisionMakerMock>();
         grpcClientMock    = new StrictMock<GrpcClientMock>();
 
-        thread = new AutoPilotDecisionMakerThread(stocksStorageMock, decisionMakerMock, grpcClientMock);
+        thread = new AutoPilotDecisionMakerThread(stocksStorageMock, configMock, decisionMakerMock, grpcClientMock);
     }
 
     void TearDown() override
     {
         delete thread;
         delete stocksStorageMock;
+        delete configMock;
         delete decisionMakerMock;
         delete grpcClientMock;
     }
 
     AutoPilotDecisionMakerThread*  thread;
     StrictMock<StocksStorageMock>* stocksStorageMock;
+    StrictMock<ConfigMock>*        configMock;
     StrictMock<DecisionMakerMock>* decisionMakerMock;
     StrictMock<GrpcClientMock>*    grpcClientMock;
 };
@@ -175,7 +179,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(*grpcClientMock, getPortfolio(QThread::currentThread(), QString("aaaaa"))).WillOnce(Return(portfolioResponse));
     EXPECT_CALL(*stocksStorageMock, readLock());
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
-    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), portfolio, stocks, true, 10000, false))
+    EXPECT_CALL(*decisionMakerMock, makeDecision(Ge(1704056400000), configMock, portfolio, stocks, true, 10000, false))
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
 

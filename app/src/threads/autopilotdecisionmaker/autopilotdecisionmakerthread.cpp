@@ -11,11 +11,12 @@ const char* const RUBLE_UID = "a92e2e25-a698-45cc-a781-167cf465257c";
 
 
 AutoPilotDecisionMakerThread::AutoPilotDecisionMakerThread(
-    IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent
+    IStocksStorage* stocksStorage, IConfig* config, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent
 ) :
     IAutoPilotDecisionMakerThread(parent),
     mMutex(new QMutex()),
     mStocksStorage(stocksStorage),
+    mConfig(config),
     mDecisionMaker(decisionMaker),
     mGrpcClient(grpcClient),
     mAccountId(),
@@ -46,7 +47,7 @@ void AutoPilotDecisionMakerThread::run()
 
         mStocksStorage->readLock();
         const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-            QDateTime::currentMSecsSinceEpoch(), portfolio, mStocksStorage->getStocks(), true, keepMoney(), false
+            QDateTime::currentMSecsSinceEpoch(), mConfig, portfolio, mStocksStorage->getStocks(), true, keepMoney(), false
         );
         mStocksStorage->readUnlock();
 

@@ -13,14 +13,12 @@ constexpr float HUNDRED_PERCENT = 100.0f;
 
 
 DecisionMaker::DecisionMaker(
-    IConfig*                       config,
     IInstrumentsStorage*           instrumentsStorage,
     IUserStorage*                  userStorage,
     const QList<IActionDecision*>& buyDecisions,
     const QList<IActionDecision*>& sellDecisions
 ) :
     IDecisionMaker(),
-    mConfig(config),
     mInstrumentsStorage(instrumentsStorage),
     mUserStorage(userStorage),
     mBuyDecisions(buyDecisions),
@@ -36,12 +34,18 @@ DecisionMaker::~DecisionMaker()
 }
 
 InstrumentsForTrading DecisionMaker::makeDecision(
-    qint64 timestamp, const Portfolio& portfolio, const QList<Stock*>& stocks, bool autoPilot, int keepMoney, bool dateRange
+    qint64               timestamp,
+    IConfig*             config,
+    const Portfolio&     portfolio,
+    const QList<Stock*>& stocks,
+    bool                 autoPilot,
+    int                  keepMoney,
+    bool                 dateRange
 )
 {
     InstrumentsForTrading res;
 
-    if (mConfig->isUseSchedule())
+    if (config->isUseSchedule())
     {
         const QDateTime dateTime  = QDateTime::fromMSecsSinceEpoch(timestamp); // TODO: Moscow time?
         const int       dayOfWeek = dateTime.date().dayOfWeek();
@@ -52,10 +56,10 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         }
 
         const QTime time        = dateTime.time();
-        const int   startHour   = mConfig->getScheduleStartHour();
-        const int   startMinute = mConfig->getScheduleStartMinute();
-        const int   endHour     = mConfig->getScheduleEndHour();
-        const int   endMinute   = mConfig->getScheduleEndMinute();
+        const int   startHour   = config->getScheduleStartHour();
+        const int   startMinute = config->getScheduleStartMinute();
+        const int   endHour     = config->getScheduleEndHour();
+        const int   endMinute   = config->getScheduleEndMinute();
         const QTime startTime   = QTime(startHour, startMinute);
         const QTime endTime     = QTime(endHour, endMinute);
 
@@ -65,7 +69,7 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         }
     }
 
-    IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(autoPilot);
+    IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(config, autoPilot);
 
     QList<Stock*>            stocksForBuy;
     QList<StockWithAvgPrice> stocksForSell;
@@ -73,25 +77,25 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     updateStocksMap(stocks);
     splitStocks(portfolio, stocks, stocksForBuy, stocksForSell);
 
-    makeBuyDecisions(decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
+    makeBuyDecisions(config, decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
     makeSellDecisions(decisionConfig, timestamp, stocksForSell, dateRange, res);
 
     return res;
 }
 
-IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(bool autoPilot)
+IDecisionMakerConfig* DecisionMaker::chooseDecisionConfig(IConfig* config, bool autoPilot)
 {
-    if (mConfig->isSimulatorConfigCommon())
+    if (config->isSimulatorConfigCommon())
     {
-        return mConfig->getSimulatorConfig();
+        return config->getSimulatorConfig();
     }
 
-    if (mConfig->isAutoPilotConfigCommon() || autoPilot)
+    if (config->isAutoPilotConfigCommon() || autoPilot)
     {
-        return mConfig->getAutoPilotConfig();
+        return config->getAutoPilotConfig();
     }
 
-    return mConfig->getSimulatorConfig();
+    return config->getSimulatorConfig();
 }
 
 void DecisionMaker::updateStocksMap(const QList<Stock*>& stocks)
@@ -248,6 +252,7 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 }
 
 void DecisionMaker::makeBuyDecisions(
+    IConfig*               config,
     IDecisionMakerConfig*  decisionConfig,
     qint64                 timestamp,
     const Portfolio&       portfolio,
@@ -295,14 +300,14 @@ void DecisionMaker::makeBuyDecisions(
 
             qint64 amountOfLots = 0;
 
-            if (mConfig->isLimitStockPurchase())
+            if (config->isLimitStockPurchase())
             {
                 double cost = 0.0;
 
-                if (mConfig->isLimitByTurnover())
+                if (config->isLimitByTurnover())
                 {
-                    const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
-                    const double limitByTurnoverPercent = mConfig->getLimitByTurnoverPercent() / HUNDRED_PERCENT;
+                    const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+                    const double limitByTurnoverPercent = config->getLimitByTurnoverPercent() / HUNDRED_PERCENT;
 
                     cost = qMin(
                         totalCost * limitStockPurchasePart,
@@ -311,7 +316,7 @@ void DecisionMaker::makeBuyDecisions(
                 }
                 else
                 {
-                    const double limitStockPurchasePart = mConfig->getLimitStockPurchasePart() / HUNDRED_PERCENT;
+                    const double limitStockPurchasePart = config->getLimitStockPurchasePart() / HUNDRED_PERCENT;
 
                     cost = totalCost * limitStockPurchasePart;
                 }

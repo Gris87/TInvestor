@@ -18,7 +18,11 @@ class AutoPilotDecisionMakerThread : public IAutoPilotDecisionMakerThread
 
 public:
     explicit AutoPilotDecisionMakerThread(
-        IStocksStorage* stocksStorage, IDecisionMaker* decisionMaker, IGrpcClient* grpcClient, QObject* parent = nullptr
+        IStocksStorage* stocksStorage,
+        IConfig*        config,
+        IDecisionMaker* decisionMaker,
+        IGrpcClient*    grpcClient,
+        QObject*        parent = nullptr
     );
     ~AutoPilotDecisionMakerThread() override;
 
@@ -40,6 +44,7 @@ private:
 
     QMutex*         mMutex;
     IStocksStorage* mStocksStorage;
+    IConfig*        mConfig;
     IDecisionMaker* mDecisionMaker;
     IGrpcClient*    mGrpcClient;
     QString         mAccountId;

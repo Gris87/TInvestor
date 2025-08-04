@@ -502,7 +502,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                     // TODO: Provide config
                     const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
+                        mDecisionMaker->makeDecision(timestamp, config, mPortfolio, stocks, false, 0, true);
 
                     if (!instrumentsForTrading.isEmpty())
                     {
@@ -607,7 +607,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
         }
 
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
+            mDecisionMaker->makeDecision(timestamp, mConfig, mPortfolio, stocks, false, 0, true);
 
         if (!instrumentsForTrading.isEmpty())
         {
