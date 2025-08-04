@@ -432,9 +432,9 @@ static int runApplication(QApplication* app)
     AutoPilotDecisionMakerThread autoPilotDecisionMakerThread(
         &stocksStorage, &config, &autoPilotRealtimeDecisionMaker, &grpcClient
     );
-    FollowThread                 followThread(&instrumentsStorage, &grpcClient);
-    OrderBookThread              orderBookThread(&grpcClient);
-    TradingThreadFactory         tradingThreadFactory;
+    FollowThread         followThread(&instrumentsStorage, &grpcClient);
+    OrderBookThread      orderBookThread(&grpcClient);
+    TradingThreadFactory tradingThreadFactory;
 
     MainWindow mainWindow(
         &config,

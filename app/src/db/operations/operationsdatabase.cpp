@@ -191,7 +191,9 @@ QList<Operation> OperationsDatabase::readOperations(int partId)
 
             MergeOperationsIndeciesInfo mergeOperationsIndeciesInfo(findOperationsIndeciesInfo.results);
             indecies.resizeForOverwrite(mergeOperationsIndeciesInfo.indecies.constLast() + 1);
-            processInParallel(QThread::currentThread(), indecies, mergeOperationsIndeciesForParallel, &mergeOperationsIndeciesInfo);
+            processInParallel(
+                QThread::currentThread(), indecies, mergeOperationsIndeciesForParallel, &mergeOperationsIndeciesInfo
+            );
 
             indecies[indecies.size() - 1] = content.size() - 1;
 
