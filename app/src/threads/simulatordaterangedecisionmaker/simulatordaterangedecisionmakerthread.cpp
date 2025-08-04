@@ -65,9 +65,6 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mInitOperations(),
     mInitEntries(),
     mInitPortfolio(),
-    mOperations(),
-    mEntries(),
-    mPortfolio(),
     mBestOperations(),
     mBestEntries(),
     mBestPortfolio(),
@@ -75,15 +72,12 @@ SimulatorDateRangeDecisionMakerThread::SimulatorDateRangeDecisionMakerThread(
     mOptimizeOperationsSize(OPTIMIZE_OPERATIONS_SIZE),
     mLimitLogs(LIMIT_LOGS),
     mOptimizeLogsSize(OPTIMIZE_LOGS_SIZE),
-    mInstruments(),
     mResetted(),
     mStartMoney(),
     mStartTimestamp(),
     mEndTimestamp(),
     mBestConfig(),
-    mConfigVariants(),
-    mTotalMoney(),
-    mBestTotalMoney()
+    mConfigVariants()
 {
     qDebug() << "Create SimulatorDateRangeDecisionMakerThread";
 }
@@ -238,8 +232,6 @@ void SimulatorDateRangeDecisionMakerThread::initOperations()
     operation.commissionPrecision             = instrument.pricePrecision;
 
     mInitOperations.append(operation);
-
-    mBestTotalMoney = 0;
 }
 
 void SimulatorDateRangeDecisionMakerThread::initLogs()
@@ -347,14 +339,6 @@ void SimulatorDateRangeDecisionMakerThread::load()
 void SimulatorDateRangeDecisionMakerThread::loadBestOperations()
 {
     mBestOperations = mOperationsDatabase->readOperations();
-
-    if (!mBestOperations.isEmpty())
-    {
-        const Operation& lastOperation = mBestOperations.constFirst(); // Since it reversed
-
-        mBestTotalMoney = quotationToDouble(lastOperation.totalMoney);
-        notifyBestResult();
-    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::loadBestLogs()
@@ -423,8 +407,12 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
     qint64 startTime, int buyDecisionId, IConfig* config
 )
 {
-    const int    configId     = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
-    const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
+    const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
+    const qint64     totalMinutes   = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
+    double           bestTotalMoney = 0.0;
+    QList<Operation> bestOperations;
+    QList<LogEntry>  bestEntries;
+    Portfolio        bestPortfolio;
 
     mStocksStorage->readLock();
     const QList<Stock*> stocks = mStocksStorage->getStocks();
@@ -458,11 +446,11 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                 config->getSimulatorConfig()->fromJsonObject(jsonObject);
 
-                mTotalMoney = mStartMoney;
-                mOperations = mInitOperations;
-                mEntries    = mInitEntries;
-                mPortfolio  = mInitPortfolio;
-                mInstruments.clear();
+                double                           totalMoney = mStartMoney;
+                QList<Operation>                 operations = mInitOperations;
+                QList<LogEntry>                  entries    = mInitEntries;
+                Portfolio                        portfolio  = mInitPortfolio;
+                QuantityAndCostDoubleInstruments instruments;
 
                 qint64 timestamp = mStartTimestamp;
 
@@ -502,11 +490,13 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                     // TODO: Provide config
                     const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(timestamp, config, mPortfolio, stocks, false, 0, true);
+                        mDecisionMaker->makeDecision(timestamp, config, portfolio, stocks, false, 0, true);
 
                     if (!instrumentsForTrading.isEmpty())
                     {
-                        simulateTrading(timestamp, instrumentsForTrading);
+                        simulateTrading(
+                            timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments
+                        );
                     }
 
                     timestamp += ONE_MINUTE;
@@ -514,19 +504,19 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                 if (!QThread::currentThread()->isInterruptionRequested())
                 {
-                    if (mTotalMoney > mBestTotalMoney)
+                    if (totalMoney > bestTotalMoney)
                     {
-                        mBestTotalMoney = mTotalMoney;
+                        bestTotalMoney = totalMoney;
 
                         mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(buyDecisionId), i);
 
-                        mBestOperations = reverseOperations();
-                        mBestEntries    = reverseEntries();
-                        mBestPortfolio  = mPortfolio;
+                        bestOperations = reverseOperations(operations);
+                        bestEntries    = reverseEntries(entries);
+                        bestPortfolio  = portfolio;
 
-                        mOperationsDatabase->writeOperations(mBestOperations);
-                        mLogsDatabase->writeLogs(mBestEntries);
-                        mPortfolioDatabase->writePortfolio(mBestPortfolio);
+                        mOperationsDatabase->writeOperations(bestOperations);
+                        mLogsDatabase->writeLogs(bestEntries);
+                        mPortfolioDatabase->writePortfolio(bestPortfolio);
 
                         notifyBestResult();
                     }
@@ -564,11 +554,11 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
     const QList<Stock*> stocks = mStocksStorage->getStocks();
     mStocksStorage->readUnlock();
 
-    mTotalMoney = mStartMoney;
-    mOperations = mInitOperations;
-    mEntries    = mInitEntries;
-    mPortfolio  = mInitPortfolio;
-    mInstruments.clear();
+    double                           totalMoney = mStartMoney;
+    QList<Operation>                 operations = mInitOperations;
+    QList<LogEntry>                  entries    = mInitEntries;
+    Portfolio                        portfolio  = mInitPortfolio;
+    QuantityAndCostDoubleInstruments instruments;
 
     qint64 timestamp = mStartTimestamp;
 
@@ -607,11 +597,11 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
         }
 
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(timestamp, mConfig, mPortfolio, stocks, false, 0, true);
+            mDecisionMaker->makeDecision(timestamp, mConfig, portfolio, stocks, false, 0, true);
 
         if (!instrumentsForTrading.isEmpty())
         {
-            simulateTrading(timestamp, instrumentsForTrading);
+            simulateTrading(timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
         }
 
         timestamp += ONE_MINUTE;
@@ -619,9 +609,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
 
     if (!QThread::currentThread()->isInterruptionRequested())
     {
-        mBestOperations = reverseOperations();
-        mBestEntries    = reverseEntries();
-        mBestPortfolio  = mPortfolio;
+        mBestOperations = reverseOperations(operations);
+        mBestEntries    = reverseEntries(entries);
+        mBestPortfolio  = portfolio;
 
         mOperationsDatabase->writeOperations(mBestOperations);
         mLogsDatabase->writeLogs(mBestEntries);
@@ -631,7 +621,15 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulateTrading(qint64 timestamp, const InstrumentsForTrading& instrumentsForTrading)
+void SimulatorDateRangeDecisionMakerThread::simulateTrading(
+    qint64                            timestamp,
+    const InstrumentsForTrading&      instrumentsForTrading,
+    double&                           totalMoney,
+    QList<Operation>&                 operations,
+    QList<LogEntry>&                  entries,
+    Portfolio&                        portfolio,
+    QuantityAndCostDoubleInstruments& instruments
+)
 {
     InstrumentsForTrading instrumentsForSell;
     InstrumentsForTrading instrumentsForBuy;
@@ -650,20 +648,27 @@ void SimulatorDateRangeDecisionMakerThread::simulateTrading(qint64 timestamp, co
 
     for (auto it = instrumentsForSell.constBegin(); it != instrumentsForSell.constEnd(); ++it)
     {
-        simulateSell(timestamp, it.key(), it.value());
+        simulateSell(timestamp, it.key(), it.value(), totalMoney, operations, entries, portfolio, instruments);
     }
 
     for (auto it = instrumentsForBuy.constBegin(); it != instrumentsForBuy.constEnd(); ++it)
     {
-        simulateBuy(timestamp, it.key(), it.value());
+        simulateBuy(timestamp, it.key(), it.value(), totalMoney, operations, entries, portfolio, instruments);
     }
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulateSell(
-    qint64& timestamp, const QString& instrumentId, const TradingInfo& tradingInfo
+    qint64&                           timestamp,
+    const QString&                    instrumentId,
+    const TradingInfo&                tradingInfo,
+    double&                           totalMoney,
+    QList<Operation>&                 operations,
+    QList<LogEntry>&                  entries,
+    Portfolio&                        portfolio,
+    QuantityAndCostDoubleInstruments& instruments
 )
 {
-    if (!mInstruments.contains(instrumentId))
+    if (!instruments.contains(instrumentId))
     {
         return;
     }
@@ -674,7 +679,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSell(
 
     instrument.resetIfNotFound(instrumentId);
 
-    const QuantityAndCostDouble quantityAndCost = mInstruments.value(instrumentId);
+    const QuantityAndCostDouble quantityAndCost = instruments.value(instrumentId);
 
     mUserStorage->readLock();
     const float commission = mUserStorage->getCommission() / HUNDRED_PERCENT;
@@ -696,13 +701,16 @@ void SimulatorDateRangeDecisionMakerThread::simulateSell(
         quantityAndCost.cost,
         tradingInfo.price,
         cost,
-        totalCommission
+        totalCommission,
+        totalMoney,
+        operations,
+        portfolio
     );
     simulateSellForLogs(
-        timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price
+        timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantityAndCost.quantity, tradingInfo.price, entries
     );
-    simulateSellForPortfolio(instrumentId, cost, totalCommission);
-    simulateSellForInstruments(instrumentId);
+    simulateSellForPortfolio(instrumentId, cost, totalCommission, portfolio);
+    simulateSellForInstruments(instrumentId, instruments);
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
@@ -714,15 +722,18 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
     double            costFifo,
     float             price,
     double            cost,
-    double            totalCommission
+    double            totalCommission,
+    double&           totalMoney,
+    QList<Operation>& operations,
+    Portfolio&        portfolio
 )
 {
     const double avgPrice            = costFifo / quantity;
     const double yield               = cost - costFifo;
     const double yieldWithCommission = yield - totalCommission;
 
-    mTotalMoney                           += yieldWithCommission;
-    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
+    totalMoney                            += yieldWithCommission;
+    const double totalYieldWithCommission  = totalMoney - mStartMoney;
 
     Operation operation;
 
@@ -753,13 +764,13 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
     operation.maxInputMoney.nano              = 0;
     operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
     operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
-    operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
-    operation.totalMoney     = quotationFromDouble(mTotalMoney);
+    operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost + cost - totalCommission);
+    operation.totalMoney     = quotationFromDouble(totalMoney);
     operation.pricePrecision = instrument.pricePrecision;
     operation.paymentPrecision    = instrument.pricePrecision;
     operation.commissionPrecision = instrument.pricePrecision;
 
-    mOperations.append(operation);
+    operations.append(operation);
     ++timestamp;
 }
 
@@ -770,7 +781,8 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
     const Instrument& instrument,
     const QString&    cause,
     qint64            quantity,
-    float             price
+    float             price,
+    QList<LogEntry>&  entries
 )
 {
     LogEntry entry;
@@ -783,7 +795,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
     entry.instrumentName   = instrument.name;
     entry.message          = cause;
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
@@ -791,7 +803,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
     entry.message   = tr("Order to sell %1 created with a price %2")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
@@ -799,21 +811,22 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
     entry.message   = tr("Order completed. %1 sold with a price %2")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = tr("Trade completed successfully");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 }
 
-void
-SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission)
+void SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(
+    const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio
+)
 {
-    PortfolioCategoryItem& category = mPortfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
+    PortfolioCategoryItem& category = portfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
 
     for (int i = 0; i < category.items.size(); ++i)
     {
@@ -821,8 +834,8 @@ SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(const QString& i
         {
             const double costWithCommission = cost - totalCommission;
 
-            mPortfolio.positions[CURRENCY_ID].items.first().available += costWithCommission;
-            mPortfolio.positions[CURRENCY_ID].items.first().cost      += costWithCommission;
+            portfolio.positions[CURRENCY_ID].items.first().available += costWithCommission;
+            portfolio.positions[CURRENCY_ID].items.first().cost      += costWithCommission;
             category.items.removeAt(i);
 
             break;
@@ -830,15 +843,25 @@ SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(const QString& i
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulateSellForInstruments(const QString& instrumentId)
+void SimulatorDateRangeDecisionMakerThread::simulateSellForInstruments(
+    const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments
+)
 {
-    mInstruments.remove(instrumentId);
+    instruments.remove(instrumentId);
 }
 
-void
-SimulatorDateRangeDecisionMakerThread::simulateBuy(qint64& timestamp, const QString& instrumentId, const TradingInfo& tradingInfo)
+void SimulatorDateRangeDecisionMakerThread::simulateBuy(
+    qint64&                           timestamp,
+    const QString&                    instrumentId,
+    const TradingInfo&                tradingInfo,
+    double&                           totalMoney,
+    QList<Operation>&                 operations,
+    QList<LogEntry>&                  entries,
+    Portfolio&                        portfolio,
+    QuantityAndCostDoubleInstruments& instruments
+)
 {
-    if (mInstruments.contains(instrumentId))
+    if (instruments.contains(instrumentId))
     {
         return;
     }
@@ -858,7 +881,7 @@ SimulatorDateRangeDecisionMakerThread::simulateBuy(qint64& timestamp, const QStr
 
     const qint64 amountOfLots = qMin(
         qRound64(tradingInfo.expectedCost / lotPrice),
-        static_cast<qint64>(mPortfolio.positions.at(CURRENCY_ID).items.constFirst().cost / lotPriceWithCommission)
+        static_cast<qint64>(portfolio.positions.at(CURRENCY_ID).items.constFirst().cost / lotPriceWithCommission)
     );
 
     if (amountOfLots > 0)
@@ -871,10 +894,22 @@ SimulatorDateRangeDecisionMakerThread::simulateBuy(qint64& timestamp, const QStr
         Logo* logo = mLogosStorage->getLogo(instrumentId);
         mLogosStorage->readUnlock();
 
-        simulateBuyForOperations(timestamp, instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
-        simulateBuyForLogs(timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price);
-        simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission);
-        simulateBuyForInstruments(instrumentId, quantity, cost);
+        simulateBuyForOperations(
+            timestamp,
+            instrumentId,
+            logo,
+            instrument,
+            quantity,
+            tradingInfo.price,
+            cost,
+            totalCommission,
+            totalMoney,
+            operations,
+            portfolio
+        );
+        simulateBuyForLogs(timestamp, instrumentId, logo, instrument, tradingInfo.cause, quantity, tradingInfo.price, entries);
+        simulateBuyForPortfolio(instrumentId, logo, instrument, quantity, tradingInfo.price, cost, totalCommission, portfolio);
+        simulateBuyForInstruments(instrumentId, quantity, cost, instruments);
     }
 }
 
@@ -886,11 +921,14 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForOperations(
     qint64            quantity,
     float             price,
     double            cost,
-    double            totalCommission
+    double            totalCommission,
+    double&           totalMoney,
+    QList<Operation>& operations,
+    Portfolio&        portfolio
 )
 {
-    mTotalMoney                           -= totalCommission;
-    const double totalYieldWithCommission  = mTotalMoney - mStartMoney;
+    totalMoney                            -= totalCommission;
+    const double totalYieldWithCommission  = totalMoney - mStartMoney;
 
     Operation operation;
 
@@ -919,13 +957,13 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForOperations(
     operation.maxInputMoney.nano              = 0;
     operation.totalYieldWithCommission        = quotationFromDouble(totalYieldWithCommission);
     operation.totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
-    operation.remainedMoney  = quotationFromDouble(mPortfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
-    operation.totalMoney     = quotationFromDouble(mTotalMoney);
+    operation.remainedMoney  = quotationFromDouble(portfolio.positions[CURRENCY_ID].items.first().cost - cost - totalCommission);
+    operation.totalMoney     = quotationFromDouble(totalMoney);
     operation.pricePrecision = instrument.pricePrecision;
     operation.paymentPrecision    = instrument.pricePrecision;
     operation.commissionPrecision = instrument.pricePrecision;
 
-    mOperations.append(operation);
+    operations.append(operation);
     ++timestamp;
 }
 
@@ -936,7 +974,8 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
     const Instrument& instrument,
     const QString&    cause,
     qint64            quantity,
-    float             price
+    float             price,
+    QList<LogEntry>&  entries
 )
 {
     LogEntry entry;
@@ -949,7 +988,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
     entry.instrumentName   = instrument.name;
     entry.message          = cause;
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
@@ -957,7 +996,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
     entry.message   = tr("Order to buy %1 created with a price %2")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
@@ -965,14 +1004,14 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
     entry.message   = tr("Order completed. %1 bought with a price %2")
                         .arg(QString::number(quantity), QString::number(price, 'f', instrument.pricePrecision) + " \u20BD");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 
     entry.timestamp = timestamp;
     entry.level     = LOG_LEVEL_VERBOSE;
     entry.message   = tr("Trade completed successfully");
 
-    mEntries.append(entry);
+    entries.append(entry);
     ++timestamp;
 }
 
@@ -983,7 +1022,8 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
     qint64            quantity,
     float             price,
     double            cost,
-    double            totalCommission
+    double            totalCommission,
+    Portfolio&        portfolio
 )
 {
     PortfolioItem item;
@@ -1009,19 +1049,21 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
 
     const double costWithCommission = cost + totalCommission;
 
-    mPortfolio.positions[CURRENCY_ID].items.first().available -= costWithCommission;
-    mPortfolio.positions[CURRENCY_ID].items.first().cost      -= costWithCommission;
-    mPortfolio.positions[SHARE_ID].items.append(item);
+    portfolio.positions[CURRENCY_ID].items.first().available -= costWithCommission;
+    portfolio.positions[CURRENCY_ID].items.first().cost      -= costWithCommission;
+    portfolio.positions[SHARE_ID].items.append(item);
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost)
+void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(
+    const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
+)
 {
     QuantityAndCostDouble quantityAndCost;
 
     quantityAndCost.quantity = quantity;
     quantityAndCost.cost     = cost;
 
-    mInstruments[instrumentId] = quantityAndCost;
+    instruments[instrumentId] = quantityAndCost;
 }
 
 struct ReverseOperationsInfo
@@ -1050,12 +1092,12 @@ static void reverseOperationsForParallel(
     }
 }
 
-QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations()
+QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<Operation>& operations)
 {
     QList<Operation> res;
-    res.resizeForOverwrite(mOperations.size());
+    res.resizeForOverwrite(operations.size());
 
-    ReverseOperationsInfo reverseOperationsInfo(&mOperations);
+    ReverseOperationsInfo reverseOperationsInfo(&operations);
     processInParallel(res, reverseOperationsForParallel, &reverseOperationsInfo);
 
     return res;
@@ -1086,12 +1128,12 @@ reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntr
     }
 }
 
-QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries()
+QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogEntry>& entries)
 {
     QList<LogEntry> res;
-    res.resizeForOverwrite(mEntries.size());
+    res.resizeForOverwrite(entries.size());
 
-    ReverseEntriesInfo reverseEntriesInfo(&mEntries);
+    ReverseEntriesInfo reverseEntriesInfo(&entries);
     processInParallel(res, reverseEntriesForParallel, &reverseEntriesInfo);
 
     return res;
@@ -1099,18 +1141,28 @@ QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries()
 
 void SimulatorDateRangeDecisionMakerThread::updateCostAndPart()
 {
+    double totalCost = 0.0;
+
     for (PortfolioCategoryItem& category : mBestPortfolio.positions)
     {
-        category.cost = 0;
+        category.cost = 0.0;
 
         for (PortfolioItem& item : category.items)
         {
-            item.part = (item.cost / mBestTotalMoney) * HUNDRED_PERCENT;
-
             category.cost += item.cost;
         }
 
-        category.part = (category.cost / mBestTotalMoney) * HUNDRED_PERCENT;
+        totalCost += category.cost;
+    }
+
+    for (PortfolioCategoryItem& category : mBestPortfolio.positions)
+    {
+        for (PortfolioItem& item : category.items)
+        {
+            item.part = (item.cost / totalCost) * HUNDRED_PERCENT;
+        }
+
+        category.part = (category.cost / totalCost) * HUNDRED_PERCENT;
     }
 }
 
@@ -1184,7 +1236,7 @@ void SimulatorDateRangeDecisionMakerThread::optimizeOperations()
 {
     if (mBestOperations.size() > mLimitOperations)
     {
-        mBestOperations = mOptimizer->optimizeOperations(mBestOperations, mOptimizeOperationsSize, mInstruments.keys());
+        mBestOperations = mOptimizer->optimizeOperations(mBestOperations, mOptimizeOperationsSize, QStringList());
         mOperationsDatabase->writeOperations(mBestOperations);
     }
 }
