@@ -210,10 +210,10 @@ private:
         qint64  currentMinute,
         qint64  totalMinutes
     );
-    void             notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney);
-    void             notifyBestResult(double totalYieldWithCommissionPercent);
-    void             optimizeOperations();
-    void             optimizeLogs();
+    void notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney);
+    void notifyBestResult(double totalYieldWithCommissionPercent);
+    void optimizeOperations();
+    void optimizeLogs();
 
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;
