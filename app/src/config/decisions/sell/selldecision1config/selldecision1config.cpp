@@ -28,6 +28,19 @@ SellDecision1Config::~SellDecision1Config()
     delete mMutex;
 }
 
+ISellDecision1Config* SellDecision1Config::clone()
+{
+    SellDecision1Config* res = new SellDecision1Config();
+    res->assign(this);
+
+    return res;
+}
+
+void SellDecision1Config::deleteRecursively()
+{
+    delete this;
+}
+
 void SellDecision1Config::assign(ISellDecision1Config* another)
 {
     const QMutexLocker lock(mMutex);

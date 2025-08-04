@@ -36,6 +36,37 @@ DecisionMakerConfig::~DecisionMakerConfig()
     qDebug() << "Destroy DecisionMakerConfig";
 }
 
+IDecisionMakerConfig* DecisionMakerConfig::clone()
+{
+    DecisionMakerConfig* res = new DecisionMakerConfig(
+        mBuyDecision1Config->clone(),
+        mBuyDecision2Config->clone(),
+        mBuyDecision3Config->clone(),
+        mBuyDecision4Config->clone(),
+        mSellDecision1Config->clone(),
+        mSellDecision2Config->clone(),
+        mSellDecision3Config->clone(),
+        mSellDecision4Config->clone()
+    );
+    res->assign(this);
+
+    return res;
+}
+
+void DecisionMakerConfig::deleteRecursively()
+{
+    mBuyDecision1Config->deleteRecursively();
+    mBuyDecision2Config->deleteRecursively();
+    mBuyDecision3Config->deleteRecursively();
+    mBuyDecision4Config->deleteRecursively();
+    mSellDecision1Config->deleteRecursively();
+    mSellDecision2Config->deleteRecursively();
+    mSellDecision3Config->deleteRecursively();
+    mSellDecision4Config->deleteRecursively();
+
+    delete this;
+}
+
 void DecisionMakerConfig::assign(IDecisionMakerConfig* another)
 {
     qDebug() << "Assigning DecisionMakerConfig to DecisionMakerConfig";

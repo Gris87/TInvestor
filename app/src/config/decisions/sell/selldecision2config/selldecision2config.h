@@ -17,8 +17,10 @@ public:
     SellDecision2Config(const SellDecision2Config& another)            = delete;
     SellDecision2Config& operator=(const SellDecision2Config& another) = delete;
 
-    void assign(ISellDecision2Config* another) override;
-    void makeDefault() override;
+    ISellDecision2Config* clone() override;
+    void                  deleteRecursively() override;
+    void                  assign(ISellDecision2Config* another) override;
+    void                  makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;

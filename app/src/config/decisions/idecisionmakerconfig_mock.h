@@ -20,6 +20,8 @@ public:
     DecisionMakerConfigMock(const DecisionMakerConfigMock& another)            = delete;
     DecisionMakerConfigMock& operator=(const DecisionMakerConfigMock& another) = delete;
 
+    MOCK_METHOD(IDecisionMakerConfig*, clone, (), (override));
+    MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (IDecisionMakerConfig * another), (override));
     MOCK_METHOD(void, makeDefault, (), (override));
 

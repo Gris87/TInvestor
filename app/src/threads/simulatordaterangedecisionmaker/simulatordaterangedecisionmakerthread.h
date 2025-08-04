@@ -52,7 +52,7 @@ public:
     void reset() override;
     void terminateThread() override;
 
-    void simulationWithBestConfigForBuyDecision(qint64 startTime, int buyDecisionId);
+    void simulationWithBestConfigForBuyDecision(qint64 startTime, int buyDecisionId, IConfig* config);
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)

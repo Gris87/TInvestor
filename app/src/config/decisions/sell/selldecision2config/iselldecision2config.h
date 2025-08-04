@@ -18,8 +18,10 @@ public:
     ISellDecision2Config(const ISellDecision2Config& another)            = delete;
     ISellDecision2Config& operator=(const ISellDecision2Config& another) = delete;
 
-    virtual void assign(ISellDecision2Config* another) = 0;
-    virtual void makeDefault()                         = 0;
+    virtual ISellDecision2Config* clone()                               = 0;
+    virtual void                  deleteRecursively()                   = 0;
+    virtual void                  assign(ISellDecision2Config* another) = 0;
+    virtual void                  makeDefault()                         = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;

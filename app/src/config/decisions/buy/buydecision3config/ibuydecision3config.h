@@ -18,8 +18,10 @@ public:
     IBuyDecision3Config(const IBuyDecision3Config& another)            = delete;
     IBuyDecision3Config& operator=(const IBuyDecision3Config& another) = delete;
 
-    virtual void assign(IBuyDecision3Config* another) = 0;
-    virtual void makeDefault()                        = 0;
+    virtual IBuyDecision3Config* clone()                              = 0;
+    virtual void                 deleteRecursively()                  = 0;
+    virtual void                 assign(IBuyDecision3Config* another) = 0;
+    virtual void                 makeDefault()                        = 0;
 
     virtual void save(ISettingsEditor* settingsEditor, const QString& type) = 0;
     virtual void load(ISettingsEditor* settingsEditor, const QString& type) = 0;

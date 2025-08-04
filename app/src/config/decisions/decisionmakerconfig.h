@@ -26,8 +26,10 @@ public:
     DecisionMakerConfig(const DecisionMakerConfig& another)            = delete;
     DecisionMakerConfig& operator=(const DecisionMakerConfig& another) = delete;
 
-    void assign(IDecisionMakerConfig* another) override;
-    void makeDefault() override;
+    IDecisionMakerConfig* clone() override;
+    void                  deleteRecursively() override;
+    void                  assign(IDecisionMakerConfig* another) override;
+    void                  makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;

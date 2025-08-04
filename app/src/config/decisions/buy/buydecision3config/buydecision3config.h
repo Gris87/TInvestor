@@ -17,8 +17,10 @@ public:
     BuyDecision3Config(const BuyDecision3Config& another)            = delete;
     BuyDecision3Config& operator=(const BuyDecision3Config& another) = delete;
 
-    void assign(IBuyDecision3Config* another) override;
-    void makeDefault() override;
+    IBuyDecision3Config* clone() override;
+    void                 deleteRecursively() override;
+    void                 assign(IBuyDecision3Config* another) override;
+    void                 makeDefault() override;
 
     void save(ISettingsEditor* settingsEditor, const QString& type) override;
     void load(ISettingsEditor* settingsEditor, const QString& type) override;

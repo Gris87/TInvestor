@@ -20,6 +20,8 @@ public:
     SellDecision4ConfigMock(const SellDecision4ConfigMock& another)            = delete;
     SellDecision4ConfigMock& operator=(const SellDecision4ConfigMock& another) = delete;
 
+    MOCK_METHOD(ISellDecision4Config*, clone, (), (override));
+    MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (ISellDecision4Config * another), (override));
     MOCK_METHOD(void, makeDefault, (), (override));
 

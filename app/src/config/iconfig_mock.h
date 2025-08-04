@@ -20,6 +20,8 @@ public:
     ConfigMock(const ConfigMock& another)            = delete;
     ConfigMock& operator=(const ConfigMock& another) = delete;
 
+    MOCK_METHOD(IConfig*, clone, (), (override));
+    MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (IConfig * another), (override));
     MOCK_METHOD(void, makeDefault, (), (override));
 

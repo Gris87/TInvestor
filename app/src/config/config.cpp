@@ -55,6 +55,22 @@ Config::~Config()
     delete mMutex;
 }
 
+IConfig* Config::clone()
+{
+    Config* res = new Config(mSimulatorConfig->clone(), mAutoPilotConfig->clone());
+    res->assign(this);
+
+    return res;
+}
+
+void Config::deleteRecursively()
+{
+    mSimulatorConfig->deleteRecursively();
+    mAutoPilotConfig->deleteRecursively();
+
+    delete this;
+}
+
 void Config::assign(IConfig* another)
 {
     const QMutexLocker lock(mMutex);

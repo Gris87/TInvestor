@@ -30,6 +30,19 @@ BuyDecision1Config::~BuyDecision1Config()
     delete mMutex;
 }
 
+IBuyDecision1Config* BuyDecision1Config::clone()
+{
+    BuyDecision1Config* res = new BuyDecision1Config();
+    res->assign(this);
+
+    return res;
+}
+
+void BuyDecision1Config::deleteRecursively()
+{
+    delete this;
+}
+
 void BuyDecision1Config::assign(IBuyDecision1Config* another)
 {
     const QMutexLocker lock(mMutex);

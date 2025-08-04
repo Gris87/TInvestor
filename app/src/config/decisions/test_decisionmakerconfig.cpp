@@ -347,7 +347,7 @@ TEST(Test_DecisionMakerConfig, Test_variantsToJsonStringList)
     //EXPECT_CALL(sellDecision4ConfigMock, variantsAsJson()).WillOnce(Return(QStringList() << R"({"enabled":false})" << R"({"enabled":true})"));
     // clang-format on
 
-    const QStringList variants = config.variantsToJsonStringList();
+    const QStringList variants         = config.variantsToJsonStringList();
     const QStringList expectedVariants = {
         "[\n{\"b1\":{\"enabled\":true},\"b2\":{\"enabled\":false},\"b3\":{\"enabled\":false},\"b4\":{\"enabled\":false},\"s1\":{"
         "\"enabled\":true},\"s2\":{\"enabled\":false},\"s3\":{\"enabled\":false},\"s4\":{\"enabled\":false}},\n{\"b1\":{"

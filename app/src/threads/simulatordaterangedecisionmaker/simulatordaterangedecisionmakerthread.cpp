@@ -389,14 +389,16 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
 
 struct SimulationInfo
 {
-    explicit SimulationInfo(SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime) :
+    explicit SimulationInfo(SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config) :
         thread(_thread),
-        startTime(_startTime)
+        startTime(_startTime),
+        config(_config)
     {
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
     qint64                                 startTime;
+    IConfig*                               config;
 };
 
 static void simulationForParallel(
@@ -406,15 +408,20 @@ static void simulationForParallel(
     SimulationInfo* simulationInfo = reinterpret_cast<SimulationInfo*>(additionalArgs);
 
     SimulatorDateRangeDecisionMakerThread* thread    = simulationInfo->thread;
-    qint64                                 startTime = simulationInfo->startTime;
+    const qint64                           startTime = simulationInfo->startTime;
+    IConfig*                               config    = simulationInfo->config->clone();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        thread->simulationWithBestConfigForBuyDecision(startTime, i);
+        thread->simulationWithBestConfigForBuyDecision(startTime, i, config);
     }
+
+    config->deleteRecursively();
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(qint64 startTime, int buyDecisionId)
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
+    qint64 startTime, int buyDecisionId, IConfig* config
+)
 {
     const int    configId     = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
     const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
@@ -449,7 +456,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                 emit totalProgressChanged(i, amountOfConfigs);
 
-                mConfig->getSimulatorConfig()->fromJsonObject(jsonObject);
+                config->getSimulatorConfig()->fromJsonObject(jsonObject);
 
                 mTotalMoney = mStartMoney;
                 mOperations = mInitOperations;
@@ -493,6 +500,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                         }
                     }
 
+                    // TODO: Provide config
                     const InstrumentsForTrading& instrumentsForTrading =
                         mDecisionMaker->makeDecision(timestamp, mPortfolio, stocks, false, 0, true);
 
@@ -537,7 +545,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
-    SimulationInfo simulationInfo(this, startTime);
+    SimulationInfo simulationInfo(this, startTime, mConfig);
     processInParallel(mConfigVariants, simulationForParallel, &simulationInfo);
 }
 

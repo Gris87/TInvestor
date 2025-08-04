@@ -20,6 +20,8 @@ public:
     BuyDecision2ConfigMock(const BuyDecision2ConfigMock& another)            = delete;
     BuyDecision2ConfigMock& operator=(const BuyDecision2ConfigMock& another) = delete;
 
+    MOCK_METHOD(IBuyDecision2Config*, clone, (), (override));
+    MOCK_METHOD(void, deleteRecursively, (), (override));
     MOCK_METHOD(void, assign, (IBuyDecision2Config * another), (override));
     MOCK_METHOD(void, makeDefault, (), (override));
 
