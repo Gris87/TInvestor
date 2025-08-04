@@ -300,7 +300,7 @@ void LogsTableModel::sortEntries()
 {
     QList<int> entriesIndecies;
     entriesIndecies.resizeForOverwrite(mEntriesUnfiltered->size());
-    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+    processInParallel(QThread::currentThread(), entriesIndecies, fillEntriesIndeciesForParallel);
 
     if (mSortOrder == Qt::AscendingOrder)
     {
@@ -361,7 +361,7 @@ void LogsTableModel::sortEntries()
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
     MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
-    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntriesUnfiltered = entries;
 }
@@ -397,7 +397,7 @@ void LogsTableModel::reverseEntries()
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
     ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
-    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntriesUnfiltered = entries;
 }
@@ -531,11 +531,11 @@ void LogsTableModel::filterAll()
         mEntries = std::make_shared<QList<LogEntry>>();
 
         FilterEntriesInfo filterEntriesInfo(&mFilter);
-        processInParallel(*mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
+        processInParallel(QThread::currentThread(), *mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
 
         MergeFilteredEntriesInfo mergeFilteredEntriesInfo(mEntriesUnfiltered.get(), filterEntriesInfo.results);
         mEntries->resizeForOverwrite(mergeFilteredEntriesInfo.indecies.constLast());
-        processInParallel(*mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
+        processInParallel(QThread::currentThread(), *mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
     }
     else
     {

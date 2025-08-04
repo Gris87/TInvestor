@@ -62,14 +62,13 @@ private:
 
 template<typename T>
 void processInParallel(
+    QThread*  parentThread,
     QList<T>& array,
     void      action(QThread* parentThread, int threadId, QList<T>& array, int start, int end, void* additionalArgs),
     void*     additionalArgs = nullptr
 )
 {
 #ifndef TESTING_MODE
-    QThread* parentThread = QThread::currentThread();
-
     const int cpuCount = getCpuCount();
 
     const int partSize = array.size() / cpuCount;
@@ -105,6 +104,6 @@ void processInParallel(
         delete thread;
     }
 #else
-    action(QThread::currentThread(), 0, array, 0, array.size(), additionalArgs);
+    action(parentThread, 0, array, 0, array.size(), additionalArgs);
 #endif
 }

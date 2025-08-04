@@ -440,7 +440,7 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     };
 
     ObtainInstrumentsInfo obtainInstrumentsInfo(mGrpcClient, instrumentTypes);
-    processInParallel(instrumentTypes, obtainInstrumentsForParallel, &obtainInstrumentsInfo);
+    processInParallel(QThread::currentThread(), instrumentTypes, obtainInstrumentsForParallel, &obtainInstrumentsInfo);
 
     Instruments                instruments; // UID => Instrument
     QList<InstrumentIdAndLogo> logos;
@@ -462,7 +462,7 @@ void PriceCollectThread::storeNewInstrumentsInfo()
     }
 
     DownloadLogosInfo downloadLogosInfo(this, mFileFactory, lastDownloadHour == currentHour);
-    processInParallel(logos, downloadLogosForParallel, &downloadLogosInfo);
+    processInParallel(QThread::currentThread(), logos, downloadLogosForParallel, &downloadLogosInfo);
 
     mInstrumentsStorage->writeLock();
     mInstrumentsStorage->mergeInstruments(instruments);
@@ -800,7 +800,7 @@ void PriceCollectThread::obtainStocksData()
     );
 
     QList<Stock*> stocks = mStocksStorage->getStocks();
-    processInParallel(stocks, getCandlesForParallel, &getCandlesInfo);
+    processInParallel(QThread::currentThread(), stocks, getCandlesForParallel, &getCandlesInfo);
 
     const std::shared_ptr<IDir> deleteDir = mDirFactory->newInstance(qApp->applicationDirPath() + "/cache/stocks");
 

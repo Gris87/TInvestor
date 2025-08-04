@@ -19,6 +19,7 @@ public:
     IDecisionMaker& operator=(const IDecisionMaker& another) = delete;
 
     virtual InstrumentsForTrading makeDecision(
+        QThread*             parentThread,
         qint64               timestamp,
         IConfig*             config,
         const Portfolio&     portfolio,

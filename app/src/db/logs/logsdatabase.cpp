@@ -182,11 +182,11 @@ QList<LogEntry> LogsDatabase::readLogs(int partId)
             QList<int> indecies;
 
             FindLogsIndeciesInfo findLogsIndeciesInfo(content);
-            processInParallel(indecies, findLogsIndeciesForParallel, &findLogsIndeciesInfo);
+            processInParallel(QThread::currentThread(), indecies, findLogsIndeciesForParallel, &findLogsIndeciesInfo);
 
             MergeLogsIndeciesInfo mergeLogsIndeciesInfo(findLogsIndeciesInfo.results);
             indecies.resizeForOverwrite(mergeLogsIndeciesInfo.indecies.constLast() + 1);
-            processInParallel(indecies, mergeLogsIndeciesForParallel, &mergeLogsIndeciesInfo);
+            processInParallel(QThread::currentThread(), indecies, mergeLogsIndeciesForParallel, &mergeLogsIndeciesInfo);
 
             indecies[indecies.size() - 1] = content.size() - 1;
 
@@ -195,7 +195,7 @@ QList<LogEntry> LogsDatabase::readLogs(int partId)
             mLogosStorage->readLock();
 
             ReadLogsInfo readLogsInfo(mLogosStorage, content, &indecies);
-            processInParallel(res, readLogsForParallel, &readLogsInfo);
+            processInParallel(QThread::currentThread(), res, readLogsForParallel, &readLogsInfo);
 
             mLogosStorage->readUnlock();
         }
@@ -288,7 +288,7 @@ void LogsDatabase::writeLogs(QList<LogEntry>& entries, int partId)
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     WriteLogsInfo writeLogsInfo;
-    processInParallel(entries, writeLogsForParallel, &writeLogsInfo);
+    processInParallel(QThread::currentThread(), entries, writeLogsForParallel, &writeLogsInfo);
 
     for (int i = writeLogsInfo.results.size() - 1; i >= 0; --i)
     {

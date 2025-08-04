@@ -50,7 +50,7 @@ Optimizer::optimizeOperations(const QList<Operation>& operations, int optimizeSi
     res.resizeForOverwrite(optimizeSize);
 
     OptimizeOperationsInfo optimizeOperationsInfo(&operations);
-    processInParallel(res, optimizeOperationsForParallel, &optimizeOperationsInfo);
+    processInParallel(QThread::currentThread(), res, optimizeOperationsForParallel, &optimizeOperationsInfo);
 
     addInstrumentsAfterOptimization(res, operations, instruments);
 
@@ -88,7 +88,7 @@ QList<LogEntry> Optimizer::optimizeLogs(const QList<LogEntry>& entries, int opti
     res.resizeForOverwrite(optimizeSize);
 
     OptimizeLogsInfo optimizeLogsInfo(&entries);
-    processInParallel(res, optimizeLogsForParallel, &optimizeLogsInfo);
+    processInParallel(QThread::currentThread(), res, optimizeLogsForParallel, &optimizeLogsInfo);
 
     return res;
 }
@@ -164,7 +164,7 @@ void Optimizer::addInstrumentsAfterOptimization(
     }
 
     AddInstrumentsInfo addInstrumentsInfo(&oldOperations);
-    processInParallel(instrumentsToAdd, addInstrumentsForParallel, &addInstrumentsInfo);
+    processInParallel(QThread::currentThread(), instrumentsToAdd, addInstrumentsForParallel, &addInstrumentsInfo);
 
     QList<Operation> operationsWithInstruments;
 

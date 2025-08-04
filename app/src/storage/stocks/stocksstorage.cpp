@@ -191,7 +191,7 @@ void StocksStorage::deleteObsoleteData(qint64 timestamp)
     qDebug() << "Deleting obsolete stocks data";
 
     DeleteObsoleteDataInfo deleteObsoleteDataInfo(mStocksDatabase, timestamp);
-    processInParallel(mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
+    processInParallel(QThread::currentThread(), mStocks, deleteObsoleteDataForParallel, &deleteObsoleteDataInfo);
 }
 
 struct CleanupOperationalDataInfo
@@ -253,7 +253,7 @@ void StocksStorage::cleanupOperationalData(qint64 timestamp)
     qDebug() << "Cleanup operational data";
 
     CleanupOperationalDataInfo cleanupOperationalDataInfo(timestamp);
-    processInParallel(mStocks, cleanupOperationalDataForParallel, &cleanupOperationalDataInfo);
+    processInParallel(QThread::currentThread(), mStocks, cleanupOperationalDataForParallel, &cleanupOperationalDataInfo);
 }
 
 struct GetDatePriceInfo
@@ -326,13 +326,13 @@ getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& 
 void StocksStorage::obtainStocksDayStartPrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo(timestamp, true);
-    processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
+    processInParallel(QThread::currentThread(), mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
 
 void StocksStorage::obtainStocksDatePrice(qint64 timestamp)
 {
     GetDatePriceInfo getDatePriceInfo(timestamp, false);
-    processInParallel(mStocks, getDatePriceForParallel, &getDatePriceInfo);
+    processInParallel(QThread::currentThread(), mStocks, getDatePriceForParallel, &getDatePriceInfo);
 }
 
 struct GetTurnoverInfo
@@ -404,7 +404,7 @@ getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& s
 void StocksStorage::obtainTurnover(qint64 timestamp)
 {
     GetTurnoverInfo getTurnoverInfo(timestamp);
-    processInParallel(mStocks, getTurnoverForParallel, &getTurnoverInfo);
+    processInParallel(QThread::currentThread(), mStocks, getTurnoverForParallel, &getTurnoverInfo);
 
     mStocksDatabase->writeStocksMeta(mStocks);
 }
@@ -494,5 +494,5 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 void StocksStorage::obtainPayback(qint64 timestamp)
 {
     GetPaybackInfo getPaybackInfo(mUserStorage, timestamp);
-    processInParallel(mStocks, getPaybackForParallel, &getPaybackInfo);
+    processInParallel(QThread::currentThread(), mStocks, getPaybackForParallel, &getPaybackInfo);
 }

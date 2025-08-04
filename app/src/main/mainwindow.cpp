@@ -1098,7 +1098,7 @@ void MainWindow::init()
     databases << DATABASE_TYPE_USER << DATABASE_TYPE_STOCKS << DATABASE_TYPE_INSTRUMENT << DATABASE_TYPE_LOGOS;
 
     ReadDatabasesInfo readDatabasesInfo(mUserStorage, mStocksStorage, mInstrumentsStorage, mLogosStorage);
-    processInParallel(databases, readDatabasesForParallel, &readDatabasesInfo);
+    processInParallel(QThread::currentThread(), databases, readDatabasesForParallel, &readDatabasesInfo);
 
     mStocksStorage->assignLogos();
     updateStocksTableWidget();

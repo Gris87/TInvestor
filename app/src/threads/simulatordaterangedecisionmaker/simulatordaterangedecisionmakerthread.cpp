@@ -346,6 +346,11 @@ void SimulatorDateRangeDecisionMakerThread::load()
 void SimulatorDateRangeDecisionMakerThread::loadBestOperations()
 {
     mBestOperations = mOperationsDatabase->readOperations();
+
+    if (!mBestOperations.isEmpty())
+    {
+        notifyBestResult(mBestOperations.constFirst().totalYieldWithCommissionPercent);
+    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::loadBestLogs()
@@ -404,14 +409,14 @@ static void simulationForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        thread->simulationWithBestConfigForBuyDecision(startTime, i, config);
+        thread->simulationWithBestConfigForBuyDecision(parentThread, startTime, i, config);
     }
 
     config->deleteRecursively();
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
-    qint64 startTime, int buyDecisionId, IConfig* config
+    QThread* parentThread, qint64 startTime, int buyDecisionId, IConfig* config
 )
 {
     const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
@@ -420,6 +425,13 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
     QList<Operation> bestOperations = mOperationsDatabase->readOperations(buyDecisionId);
     QList<LogEntry>  bestEntries    = mLogsDatabase->readLogs(buyDecisionId);
     Portfolio        bestPortfolio  = mPortfolioDatabase->readPortfolio(buyDecisionId);
+
+    if (!bestOperations.isEmpty())
+    {
+        const Operation& lastOperation = bestOperations.constFirst(); // Since it reversed
+
+        bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
+    }
 
     mStocksStorage->readLock();
     const QList<Stock*> stocks = mStocksStorage->getStocks();
@@ -440,7 +452,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
         for (const simdjson::ondemand::object jsonObject : jsonConfigs)
         {
-            if (!QThread::currentThread()->isInterruptionRequested())
+            if (!parentThread->isInterruptionRequested())
             {
                 if (i < configId)
                 {
@@ -461,7 +473,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                 qint64 timestamp = mStartTimestamp;
 
-                while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
+                while (timestamp < mEndTimestamp && !parentThread->isInterruptionRequested())
                 {
                     if (timestamp % NOTIFY_PROGRESS_STEP == 0)
                     {
@@ -495,9 +507,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                         }
                     }
 
-                    // TODO: Provide config
                     const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(timestamp, config, portfolio, stocks, false, 0, true);
+                        mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, stocks, false, 0, true);
 
                     if (!instrumentsForTrading.isEmpty())
                     {
@@ -509,7 +520,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                     timestamp += ONE_MINUTE;
                 }
 
-                if (!QThread::currentThread()->isInterruptionRequested())
+                if (!parentThread->isInterruptionRequested())
                 {
                     if (totalMoney > bestTotalMoney)
                     {
@@ -525,7 +536,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                         mLogsDatabase->writeLogs(bestEntries, buyDecisionId);
                         mPortfolioDatabase->writePortfolio(bestPortfolio, buyDecisionId);
 
-                        notifyBestResult();
+                        //notifyBestResult();
                     }
 
                     ++i;
@@ -543,7 +554,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
     SimulationInfo simulationInfo(this, startTime, mConfig);
-    processInParallel(mConfigVariants, simulationForParallel, &simulationInfo);
+    processInParallel(QThread::currentThread(), mConfigVariants, simulationForParallel, &simulationInfo);
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 startTime)
@@ -604,7 +615,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
         }
 
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(timestamp, mConfig, portfolio, stocks, false, 0, true);
+            mDecisionMaker->makeDecision(QThread::currentThread(), timestamp, mConfig, portfolio, stocks, false, 0, true);
 
         if (!instrumentsForTrading.isEmpty())
         {
@@ -1105,7 +1116,7 @@ QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<
     res.resizeForOverwrite(operations.size());
 
     ReverseOperationsInfo reverseOperationsInfo(&operations);
-    processInParallel(res, reverseOperationsForParallel, &reverseOperationsInfo);
+    processInParallel(QThread::currentThread(), res, reverseOperationsForParallel, &reverseOperationsInfo);
 
     return res;
 }
@@ -1141,35 +1152,28 @@ QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogE
     res.resizeForOverwrite(entries.size());
 
     ReverseEntriesInfo reverseEntriesInfo(&entries);
-    processInParallel(res, reverseEntriesForParallel, &reverseEntriesInfo);
+    processInParallel(QThread::currentThread(), res, reverseEntriesForParallel, &reverseEntriesInfo);
 
     return res;
 }
 
 void SimulatorDateRangeDecisionMakerThread::updateCostAndPart()
 {
-    double totalCost = 0.0;
+    const Operation& lastOperation  = mBestOperations.constFirst(); // Since it reversed
+    double           bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
 
     for (PortfolioCategoryItem& category : mBestPortfolio.positions)
     {
         category.cost = 0.0;
 
-        for (const PortfolioItem& item : category.items)
+        for (PortfolioItem& item : category.items)
         {
+            item.part = (item.cost / bestTotalMoney) * HUNDRED_PERCENT;
+
             category.cost += item.cost;
         }
 
-        totalCost += category.cost;
-    }
-
-    for (PortfolioCategoryItem& category : mBestPortfolio.positions)
-    {
-        for (PortfolioItem& item : category.items)
-        {
-            item.part = (item.cost / totalCost) * HUNDRED_PERCENT;
-        }
-
-        category.part = (category.cost / totalCost) * HUNDRED_PERCENT;
+        category.part = (category.cost / bestTotalMoney) * HUNDRED_PERCENT;
     }
 }
 
@@ -1211,10 +1215,8 @@ void SimulatorDateRangeDecisionMakerThread::updatePrice()
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::notifyBestResult()
+void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double totalYieldWithCommissionPercent)
 {
-    const double totalYieldWithCommissionPercent = mBestOperations.constFirst().totalYieldWithCommissionPercent;
-
     const QString prefix     = totalYieldWithCommissionPercent > 0 ? "+" : "";
     const QString bestResult = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
 

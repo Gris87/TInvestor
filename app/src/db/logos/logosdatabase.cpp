@@ -64,7 +64,7 @@ Logos LogosDatabase::prepareLogos()
     QStringList                 files = dir->entryList(QStringList() << "*.png");
 
     PrepareLogosInfo prepareLogosInfo(files);
-    processInParallel(files, prepareLogosForParallel, &prepareLogosInfo);
+    processInParallel(QThread::currentThread(), files, prepareLogosForParallel, &prepareLogosInfo);
 
     for (int i = 0; i < files.size(); ++i)
     {

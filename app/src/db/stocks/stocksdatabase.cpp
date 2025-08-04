@@ -145,7 +145,7 @@ void StocksDatabase::readStocksData(QList<Stock*>& stocks)
     qDebug() << "Reading stocks data from database";
 
     ReadStocksDataInfo readStocksDataInfo(mFileFactory);
-    processInParallel(stocks, readStocksDataForParallel, &readStocksDataInfo);
+    processInParallel(QThread::currentThread(), stocks, readStocksDataForParallel, &readStocksDataInfo);
 }
 
 struct AssignLogosInfo
@@ -179,7 +179,7 @@ void StocksDatabase::assignLogos(QList<Stock*>& stocks)
     mLogosStorage->readLock();
 
     AssignLogosInfo assignLogosInfo(mLogosStorage);
-    processInParallel(stocks, assignLogosForParallel, &assignLogosInfo);
+    processInParallel(QThread::currentThread(), stocks, assignLogosForParallel, &assignLogosInfo);
 
     mLogosStorage->readUnlock();
 }

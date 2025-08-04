@@ -712,7 +712,7 @@ void PortfolioTreeModel::sortCategory(QList<PortfolioItem>* items)
 {
     QList<int> itemsIndecies;
     itemsIndecies.resizeForOverwrite(items->size());
-    processInParallel(itemsIndecies, fillItemsIndeciesForParallel);
+    processInParallel(QThread::currentThread(), itemsIndecies, fillItemsIndeciesForParallel);
 
     if (mSortOrder == Qt::AscendingOrder)
     {
@@ -833,7 +833,7 @@ void PortfolioTreeModel::sortCategory(QList<PortfolioItem>* items)
     newItems.resizeForOverwrite(items->size());
 
     MergeSortedItemsInfo mergeSortedItemsInfo(items, &itemsIndecies);
-    processInParallel(newItems, mergeSortedItemsForParallel, &mergeSortedItemsInfo);
+    processInParallel(QThread::currentThread(), newItems, mergeSortedItemsForParallel, &mergeSortedItemsInfo);
 
     *items = newItems;
 }
@@ -870,7 +870,7 @@ void PortfolioTreeModel::reverseCategory(QList<PortfolioItem>* items)
     newItems.resizeForOverwrite(items->size());
 
     ReverseItemsInfo reverseItemsInfo(items);
-    processInParallel(newItems, reverseItemsForParallel, &reverseItemsInfo);
+    processInParallel(QThread::currentThread(), newItems, reverseItemsForParallel, &reverseItemsInfo);
 
     *items = newItems;
 }

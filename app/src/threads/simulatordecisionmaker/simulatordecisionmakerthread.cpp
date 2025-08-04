@@ -88,7 +88,14 @@ void SimulatorDecisionMakerThread::run()
 
     mStocksStorage->readLock();
     const InstrumentsForTrading& instrumentsForTrading = mDecisionMaker->makeDecision(
-        QDateTime::currentMSecsSinceEpoch(), mConfig, mPortfolio, mStocksStorage->getStocks(), false, 0, false
+        QThread::currentThread(),
+        QDateTime::currentMSecsSinceEpoch(),
+        mConfig,
+        mPortfolio,
+        mStocksStorage->getStocks(),
+        false,
+        0,
+        false
     );
     mStocksStorage->readUnlock();
 
@@ -774,7 +781,7 @@ QList<Operation> SimulatorDecisionMakerThread::reverseOperations(QList<Operation
     res.resizeForOverwrite(operations.size());
 
     ReverseOperationsInfo reverseOperationsInfo(&operations);
-    processInParallel(res, reverseOperationsForParallel, &reverseOperationsInfo);
+    processInParallel(QThread::currentThread(), res, reverseOperationsForParallel, &reverseOperationsInfo);
 
     return res;
 }

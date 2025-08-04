@@ -460,7 +460,7 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     mEntriesUnfiltered->resizeForOverwrite(stocks.size());
 
     FillEntriesInfo fillEntriesInfo(&stocks, mUserStorage->isQualified());
-    processInParallel(*mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
+    processInParallel(QThread::currentThread(), *mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
 
     mStocks.clear();
 
@@ -556,7 +556,7 @@ void StocksTableModel::updateAll()
     }
 
     UpdateAllInfo updateAllInfo(this, &mStocks, !mFilter.isActive() && !needToSort, mUserStorage->isQualified());
-    processInParallel(*mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
+    processInParallel(QThread::currentThread(), *mEntriesUnfiltered, updateAllForParallel, &updateAllInfo);
 
     if (mFilter.isActive())
     {
@@ -656,7 +656,7 @@ void StocksTableModel::updateLastPrices()
         }
 
         UpdateLastPricesInfo updateLastPricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
-        processInParallel(*mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
+        processInParallel(QThread::currentThread(), *mEntriesUnfiltered, updateLastPricesForParallel, &updateLastPricesInfo);
 
         lastPricesUpdates.clear();
 
@@ -747,7 +747,7 @@ void StocksTableModel::updatePrices()
     }
 
     UpdatePricesInfo updatePricesInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
-    processInParallel(*mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
+    processInParallel(QThread::currentThread(), *mEntriesUnfiltered, updatePricesForParallel, &updatePricesInfo);
 
     if (mFilter.isActive())
     {
@@ -826,7 +826,7 @@ void StocksTableModel::updatePeriodicData()
     }
 
     UpdatePeriodicDataInfo updatePeriodicDataInfo(this, &mStocks, !mFilter.isActive() && !needToSort);
-    processInParallel(*mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
+    processInParallel(QThread::currentThread(), *mEntriesUnfiltered, updatePeriodicDataForParallel, &updatePeriodicDataInfo);
 
     if (mFilter.isActive())
     {
@@ -961,7 +961,7 @@ void StocksTableModel::sortEntries()
 {
     QList<int> entriesIndecies;
     entriesIndecies.resizeForOverwrite(mEntriesUnfiltered->size());
-    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+    processInParallel(QThread::currentThread(), entriesIndecies, fillEntriesIndeciesForParallel);
 
     if (mSortOrder == Qt::AscendingOrder)
     {
@@ -1046,7 +1046,7 @@ void StocksTableModel::sortEntries()
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
     MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
-    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntriesUnfiltered = entries;
 }
@@ -1083,7 +1083,7 @@ void StocksTableModel::reverseEntries()
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
     ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
-    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntriesUnfiltered = entries;
 }
@@ -1170,11 +1170,11 @@ void StocksTableModel::filterAll()
         mEntries = std::make_shared<QList<StockTableEntry>>();
 
         FilterEntriesInfo filterEntriesInfo(&mFilter);
-        processInParallel(*mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
+        processInParallel(QThread::currentThread(), *mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
 
         MergeFilteredEntriesInfo mergeFilteredEntriesInfo(mEntriesUnfiltered.get(), filterEntriesInfo.results);
         mEntries->resizeForOverwrite(mergeFilteredEntriesInfo.indecies.constLast());
-        processInParallel(*mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
+        processInParallel(QThread::currentThread(), *mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
     }
     else
     {

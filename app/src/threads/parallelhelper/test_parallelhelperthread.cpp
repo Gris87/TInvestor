@@ -46,7 +46,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     array << 1 << 2 << 3;
 
     SumResult sumResult;
-    processInParallel(array, action, &sumResult);
+    processInParallel(QThread::currentThread(), array, action, &sumResult);
 
     ASSERT_EQ(sumResult.result, 6);
 
@@ -61,7 +61,7 @@ TEST(Test_ParallelHelperThread, Test_processInParallel)
     }
 
     sumResult.result = 0;
-    processInParallel(array, action, &sumResult);
+    processInParallel(QThread::currentThread(), array, action, &sumResult);
 
     ASSERT_EQ(sumResult.result, 499500);
 }

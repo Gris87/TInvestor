@@ -23,7 +23,8 @@ public:
     MOCK_METHOD(
         InstrumentsForTrading,
         makeDecision,
-        (qint64               timestamp,
+        (QThread * parentThread,
+         qint64               timestamp,
          IConfig*             config,
          const Portfolio&     portfolio,
          const QList<Stock*>& stocks,

@@ -40,6 +40,7 @@ public:
     DecisionMaker& operator=(const DecisionMaker& another) = delete;
 
     InstrumentsForTrading makeDecision(
+        QThread*             parentThread,
         qint64               timestamp,
         IConfig*             config,
         const Portfolio&     portfolio,
@@ -59,6 +60,7 @@ private:
                          QList<StockWithAvgPrice>& stocksForSell
                      );
     void makeBuyDecisions(
+        QThread*               parentThread,
         IConfig*               config,
         IDecisionMakerConfig*  decisionConfig,
         qint64                 timestamp,
@@ -69,6 +71,7 @@ private:
         InstrumentsForTrading& res
     );
     void makeSellDecisions(
+        QThread*                  parentThread,
         IDecisionMakerConfig*     decisionConfig,
         qint64                    timestamp,
         QList<StockWithAvgPrice>& stocksForSell,

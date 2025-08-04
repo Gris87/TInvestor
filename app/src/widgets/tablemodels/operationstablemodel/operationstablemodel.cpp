@@ -570,7 +570,7 @@ void OperationsTableModel::sortEntries()
 {
     QList<int> entriesIndecies;
     entriesIndecies.resizeForOverwrite(mEntries->size());
-    processInParallel(entriesIndecies, fillEntriesIndeciesForParallel);
+    processInParallel(QThread::currentThread(), entriesIndecies, fillEntriesIndeciesForParallel);
 
     if (mSortOrder == Qt::AscendingOrder)
     {
@@ -787,7 +787,7 @@ void OperationsTableModel::sortEntries()
     entries->resizeForOverwrite(mEntries->size());
 
     MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntries.get(), &entriesIndecies);
-    processInParallel(*entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntries = entries;
 }
@@ -825,7 +825,7 @@ void OperationsTableModel::reverseEntries()
     entries->resizeForOverwrite(mEntries->size());
 
     ReverseEntriesInfo reverseEntriesInfo(mEntries.get());
-    processInParallel(*entries, reverseEntriesForParallel, &reverseEntriesInfo);
+    processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntries = entries;
 }

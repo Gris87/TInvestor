@@ -34,6 +34,7 @@ DecisionMaker::~DecisionMaker()
 }
 
 InstrumentsForTrading DecisionMaker::makeDecision(
+    QThread*             parentThread,
     qint64               timestamp,
     IConfig*             config,
     const Portfolio&     portfolio,
@@ -77,8 +78,8 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     updateStocksMap(stocks);
     splitStocks(portfolio, stocks, stocksForBuy, stocksForSell);
 
-    makeBuyDecisions(config, decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
-    makeSellDecisions(decisionConfig, timestamp, stocksForSell, dateRange, res);
+    makeBuyDecisions(parentThread, config, decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
+    makeSellDecisions(parentThread, decisionConfig, timestamp, stocksForSell, dateRange, res);
 
     return res;
 }
@@ -252,6 +253,7 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 }
 
 void DecisionMaker::makeBuyDecisions(
+    QThread*               parentThread,
     IConfig*               config,
     IDecisionMakerConfig*  decisionConfig,
     qint64                 timestamp,
@@ -278,7 +280,7 @@ void DecisionMaker::makeBuyDecisions(
     mUserStorage->readUnlock();
 
     MakeBuyDecisionsInfo makeBuyDecisionsInfo(decisionConfig, timestamp, dateRange, commission, &mBuyDecisions);
-    processInParallel(stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
+    processInParallel(parentThread, stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
 
     commission /= HUNDRED_PERCENT;
 
@@ -442,6 +444,7 @@ static void makeSellDecisionsForParallel(
 }
 
 void DecisionMaker::makeSellDecisions(
+    QThread*                  parentThread,
     IDecisionMakerConfig*     decisionConfig,
     qint64                    timestamp,
     QList<StockWithAvgPrice>& stocksForSell,
@@ -454,7 +457,7 @@ void DecisionMaker::makeSellDecisions(
     mUserStorage->readUnlock();
 
     MakeSellDecisionsInfo makeSellDecisionsInfo(decisionConfig, timestamp, dateRange, commission, &mSellDecisions);
-    processInParallel(stocksForSell, makeSellDecisionsForParallel, &makeSellDecisionsInfo);
+    processInParallel(parentThread, stocksForSell, makeSellDecisionsForParallel, &makeSellDecisionsInfo);
 
     for (const InstrumentsForTrading& result : std::as_const(makeSellDecisionsInfo.results))
     {

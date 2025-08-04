@@ -187,11 +187,11 @@ QList<Operation> OperationsDatabase::readOperations(int partId)
             QList<int> indecies;
 
             FindOperationsIndeciesInfo findOperationsIndeciesInfo(content);
-            processInParallel(indecies, findOperationsIndeciesForParallel, &findOperationsIndeciesInfo);
+            processInParallel(QThread::currentThread(), indecies, findOperationsIndeciesForParallel, &findOperationsIndeciesInfo);
 
             MergeOperationsIndeciesInfo mergeOperationsIndeciesInfo(findOperationsIndeciesInfo.results);
             indecies.resizeForOverwrite(mergeOperationsIndeciesInfo.indecies.constLast() + 1);
-            processInParallel(indecies, mergeOperationsIndeciesForParallel, &mergeOperationsIndeciesInfo);
+            processInParallel(QThread::currentThread(), indecies, mergeOperationsIndeciesForParallel, &mergeOperationsIndeciesInfo);
 
             indecies[indecies.size() - 1] = content.size() - 1;
 
@@ -200,7 +200,7 @@ QList<Operation> OperationsDatabase::readOperations(int partId)
             mLogosStorage->readLock();
 
             ReadOperationsInfo readOperationsInfo(mLogosStorage, content, &indecies);
-            processInParallel(res, readOperationsForParallel, &readOperationsInfo);
+            processInParallel(QThread::currentThread(), res, readOperationsForParallel, &readOperationsInfo);
 
             mLogosStorage->readUnlock();
         }
@@ -294,7 +294,7 @@ void OperationsDatabase::writeOperations(QList<Operation>& operations, int partI
     Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
     WriteOperationsInfo writeOperationsInfo;
-    processInParallel(operations, writeOperationsForParallel, &writeOperationsInfo);
+    processInParallel(QThread::currentThread(), operations, writeOperationsForParallel, &writeOperationsInfo);
 
     for (int i = writeOperationsInfo.results.size() - 1; i >= 0; --i)
     {
