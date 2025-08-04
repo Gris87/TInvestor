@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QMutex>
 
 #include "src/grpc/utils.h"
 #include "src/threads/parallelhelper/parallelhelperthread.h"
@@ -385,16 +386,30 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
 
 struct SimulationInfo
 {
-    explicit SimulationInfo(SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config) :
+    explicit SimulationInfo(
+        SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config, QStringList _configVariants
+    ) :
         thread(_thread),
         startTime(_startTime),
         config(_config)
     {
+        configId.fill(0, _configVariants.size());
+        amountOfConfigs.fill(0, _configVariants.size());
+        processedMinutes.fill(0.0, _configVariants.size());
+        remainingMinutes.fill(0.0, _configVariants.size());
+        currentMinute.fill(0, _configVariants.size());
+        bestTotalMoney.fill(0.0, _configVariants.size());
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
     qint64                                 startTime;
     IConfig*                               config;
+    QList<int>                             configId;
+    QList<int>                             amountOfConfigs;
+    QList<double>                          processedMinutes;
+    QList<double>                          remainingMinutes;
+    QList<qint64>                          currentMinute;
+    QList<double>                          bestTotalMoney;
 };
 
 static void simulationForParallel(
@@ -403,20 +418,46 @@ static void simulationForParallel(
 {
     SimulationInfo* simulationInfo = reinterpret_cast<SimulationInfo*>(additionalArgs);
 
-    SimulatorDateRangeDecisionMakerThread* thread    = simulationInfo->thread;
-    const qint64                           startTime = simulationInfo->startTime;
-    IConfig*                               config    = simulationInfo->config->clone();
+    SimulatorDateRangeDecisionMakerThread* thread                = simulationInfo->thread;
+    const qint64                           startTime             = simulationInfo->startTime;
+    IConfig*                               config                = simulationInfo->config->clone();
+    int*                                   configIdArray         = simulationInfo->configId.data();
+    int*                                   amountOfConfigsArray  = simulationInfo->amountOfConfigs.data();
+    double*                                processedMinutesArray = simulationInfo->processedMinutes.data();
+    double*                                remainingMinutesArray = simulationInfo->remainingMinutes.data();
+    qint64*                                currentMinuteArray    = simulationInfo->currentMinute.data();
+    double*                                bestTotalMoneyArray   = simulationInfo->bestTotalMoney.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        thread->simulationWithBestConfigForBuyDecision(parentThread, startTime, i, config);
+        thread->simulationWithBestConfigForBuyDecision(
+            parentThread,
+            startTime,
+            i,
+            config,
+            configIdArray,
+            amountOfConfigsArray,
+            processedMinutesArray,
+            remainingMinutesArray,
+            currentMinuteArray,
+            bestTotalMoneyArray
+        );
     }
 
     config->deleteRecursively();
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
-    QThread* parentThread, qint64 startTime, int buyDecisionId, IConfig* config
+    QThread* parentThread,
+    qint64   startTime,
+    int      buyDecisionId,
+    IConfig* config,
+    int*     configIdArray,
+    int*     amountOfConfigsArray,
+    double*  processedMinutesArray,
+    double*  remainingMinutesArray,
+    qint64*  currentMinuteArray,
+    double*  bestTotalMoneyArray
 )
 {
     const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
@@ -431,6 +472,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
         const Operation& lastOperation = bestOperations.constFirst(); // Since it reversed
 
         bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
+        notifyBestResult(bestTotalMoneyArray, buyDecisionId, bestTotalMoney);
     }
 
     mStocksStorage->readLock();
@@ -461,7 +503,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                     continue;
                 }
 
-                emit totalProgressChanged(i, amountOfConfigs);
+                notifyTotalProgressChanged(configIdArray, amountOfConfigsArray, buyDecisionId, i, amountOfConfigs);
 
                 config->getSimulatorConfig()->fromJsonObject(jsonObject);
 
@@ -486,23 +528,16 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                             const double processedMinutes = ((i - configId) * totalMinutes) + currentMinute;
                             const double remainingMinutes = ((amountOfConfigs - i) * totalMinutes) - currentMinute;
 
-                            qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
-                            remainingMilliseconds        /= MS_IN_SECOND;
-                            const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
-                            remainingMilliseconds        /= SECONDS_IN_MINUTE;
-                            const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
-                            remainingMilliseconds        /= MINUTES_IN_HOUR;
-                            const int hours               = remainingMilliseconds;
-
-                            emit progressChanged(
+                            notifyProgressChanged(
+                                deltaTime,
+                                processedMinutesArray,
+                                remainingMinutesArray,
+                                currentMinuteArray,
+                                buyDecisionId,
+                                processedMinutes,
+                                remainingMinutes,
                                 currentMinute,
-                                totalMinutes,
-                                QString("%1:%2:%3")
-                                    .arg(
-                                        QString::number(hours).rightJustified(2, '0'),
-                                        QString::number(minutes).rightJustified(2, '0'),
-                                        QString::number(seconds).rightJustified(2, '0')
-                                    )
+                                totalMinutes
                             );
                         }
                     }
@@ -536,7 +571,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                         mLogsDatabase->writeLogs(bestEntries, buyDecisionId);
                         mPortfolioDatabase->writePortfolio(bestPortfolio, buyDecisionId);
 
-                        //notifyBestResult();
+                        notifyBestResult(bestTotalMoneyArray, buyDecisionId, bestTotalMoney);
                     }
 
                     ++i;
@@ -553,7 +588,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
-    SimulationInfo simulationInfo(this, startTime, mConfig);
+    SimulationInfo simulationInfo(this, startTime, mConfig, mConfigVariants);
     processInParallel(QThread::currentThread(), mConfigVariants, simulationForParallel, &simulationInfo);
 }
 
@@ -1213,6 +1248,96 @@ void SimulatorDateRangeDecisionMakerThread::updatePrice()
             item.dailyYieldPercent = (item.dailyYield / item.costForDailyYield) * HUNDRED_PERCENT;
         }
     }
+}
+
+void SimulatorDateRangeDecisionMakerThread::notifyTotalProgressChanged(
+    int* configIdArray, int* amountOfConfigsArray, int buyDecisionId, int configId, int amountOfConfigs
+)
+{
+    static QMutex      mutex;
+    const QMutexLocker lock(&mutex);
+
+    configIdArray[buyDecisionId]        = configId;
+    amountOfConfigsArray[buyDecisionId] = amountOfConfigs;
+
+    configId        = 0;
+    amountOfConfigs = 0;
+
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        configId        += configIdArray[buyDecisionId];
+        amountOfConfigs += amountOfConfigsArray[buyDecisionId];
+    }
+
+    emit totalProgressChanged(configId, amountOfConfigs);
+}
+
+void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
+    qint64  deltaTime,
+    double* processedMinutesArray,
+    double* remainingMinutesArray,
+    qint64* currentMinuteArray,
+    int     buyDecisionId,
+    double  processedMinutes,
+    double  remainingMinutes,
+    qint64  currentMinute,
+    qint64  totalMinutes
+)
+{
+    static QMutex      mutex;
+    const QMutexLocker lock(&mutex);
+
+    processedMinutesArray[buyDecisionId] = processedMinutes;
+    remainingMinutesArray[buyDecisionId] = remainingMinutes;
+    currentMinuteArray[buyDecisionId]    = currentMinute;
+
+    processedMinutes = 0.0;
+    remainingMinutes = 0.0;
+
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        processedMinutes += processedMinutesArray[buyDecisionId];
+        remainingMinutes += remainingMinutesArray[buyDecisionId];
+        currentMinute     = qMax(currentMinute, currentMinuteArray[buyDecisionId]);
+    }
+
+    qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
+    remainingMilliseconds        /= MS_IN_SECOND;
+    const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
+    remainingMilliseconds        /= SECONDS_IN_MINUTE;
+    const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
+    remainingMilliseconds        /= MINUTES_IN_HOUR;
+    const int hours               = remainingMilliseconds;
+
+    emit progressChanged(
+        currentMinute,
+        totalMinutes,
+        QString("%1:%2:%3")
+            .arg(
+                QString::number(hours).rightJustified(2, '0'),
+                QString::number(minutes).rightJustified(2, '0'),
+                QString::number(seconds).rightJustified(2, '0')
+            )
+    );
+}
+
+void
+SimulatorDateRangeDecisionMakerThread::notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney)
+{
+    static QMutex      mutex;
+    const QMutexLocker lock(&mutex);
+
+    bestTotalMoneyArray[buyDecisionId] = bestTotalMoney;
+
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        bestTotalMoney = qMax(bestTotalMoney, bestTotalMoneyArray[buyDecisionId]);
+    }
+
+    const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;
+    const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
+
+    notifyBestResult(totalYieldWithCommissionPercent);
 }
 
 void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double totalYieldWithCommissionPercent)

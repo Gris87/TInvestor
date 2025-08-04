@@ -52,7 +52,18 @@ public:
     void reset() override;
     void terminateThread() override;
 
-    void simulationWithBestConfigForBuyDecision(QThread* parentThread, qint64 startTime, int buyDecisionId, IConfig* config);
+    void simulationWithBestConfigForBuyDecision(
+        QThread* parentThread,
+        qint64   startTime,
+        int      buyDecisionId,
+        IConfig* config,
+        int*     configIdArray,
+        int*     amountOfConfigsArray,
+        double*  processedMinutesArray,
+        double*  remainingMinutesArray,
+        qint64*  currentMinuteArray,
+        double*  bestTotalMoneyArray
+    );
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
@@ -185,6 +196,21 @@ private:
     QList<LogEntry>  reverseEntries(QList<LogEntry>& entries);
     void             updateCostAndPart();
     void             updatePrice();
+    void             notifyTotalProgressChanged(
+                    int* configIdArray, int* amountOfConfigsArray, int buyDecisionId, int configId, int amountOfConfigs
+                );
+    void notifyProgressChanged(
+        qint64  deltaTime,
+        double* processedMinutesArray,
+        double* remainingMinutesArray,
+        qint64* currentMinuteArray,
+        int     buyDecisionId,
+        double  processedMinutes,
+        double  remainingMinutes,
+        qint64  currentMinute,
+        qint64  totalMinutes
+    );
+    void             notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney);
     void             notifyBestResult(double totalYieldWithCommissionPercent);
     void             optimizeOperations();
     void             optimizeLogs();
