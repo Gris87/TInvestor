@@ -5,8 +5,10 @@
 
 
 #ifndef TESTING_MODE
+// NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables)
 static int            _cpuCount;
-static QReadWriteLock _cpuCountRwMutex;
+static QReadWriteLock _cpuCountRwMutex; // clazy:exclude=non-pod-global-static
+// NOLINTEND(cppcoreguidelines-avoid-non-const-global-variables)
 
 
 

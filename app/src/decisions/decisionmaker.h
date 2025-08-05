@@ -80,7 +80,6 @@ private:
     );
     void calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money);
 
-    IConfig*                mConfig;
     IInstrumentsStorage*    mInstrumentsStorage;
     IUserStorage*           mUserStorage;
     QList<IActionDecision*> mBuyDecisions;

@@ -1,7 +1,6 @@
 #include "src/config/decisions/buy/buydecision2config/buydecision2config.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 #include "src/utils/exception/exception.h"
 
@@ -16,7 +15,7 @@ constexpr int   DURATION_DEFAULT   = 5;
 
 BuyDecision2Config::BuyDecision2Config() :
     IBuyDecision2Config(),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mEnabled(),
     mPriceFall(),
     mLoseYield(),
@@ -29,7 +28,7 @@ BuyDecision2Config::~BuyDecision2Config()
 {
     qDebug() << "Destroy BuyDecision2Config";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 IBuyDecision2Config* BuyDecision2Config::clone()
@@ -47,11 +46,12 @@ void BuyDecision2Config::deleteRecursively()
 
 void BuyDecision2Config::assign(IBuyDecision2Config* another)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Assigning BuyDecision2Config to BuyDecision2Config";
 
     const BuyDecision2Config& config = *dynamic_cast<BuyDecision2Config*>(another);
+    const QReadLocker         lock2(config.mRwMutex);
 
     mEnabled   = config.mEnabled;
     mPriceFall = config.mPriceFall;
@@ -61,7 +61,7 @@ void BuyDecision2Config::assign(IBuyDecision2Config* another)
 
 void BuyDecision2Config::makeDefault()
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set BuyDecision2Config to default";
 
@@ -73,7 +73,7 @@ void BuyDecision2Config::makeDefault()
 
 void BuyDecision2Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     qDebug() << "Save BuyDecision2Config";
 
@@ -87,7 +87,7 @@ void BuyDecision2Config::save(ISettingsEditor* settingsEditor, const QString& ty
 
 void BuyDecision2Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Load BuyDecision2Config";
 
@@ -186,56 +186,56 @@ QStringList BuyDecision2Config::variantsAsJson() const
 
 void BuyDecision2Config::setEnabled(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mEnabled = value;
 }
 
 bool BuyDecision2Config::isEnabled()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mEnabled;
 }
 
 void BuyDecision2Config::setPriceFall(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mPriceFall = value;
 }
 
 float BuyDecision2Config::getPriceFall()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mPriceFall;
 }
 
 void BuyDecision2Config::setLoseYield(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLoseYield = value;
 }
 
 float BuyDecision2Config::getLoseYield()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLoseYield;
 }
 
 void BuyDecision2Config::setDuration(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mDuration = value;
 }
 
 int BuyDecision2Config::getDuration()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mDuration;
 }

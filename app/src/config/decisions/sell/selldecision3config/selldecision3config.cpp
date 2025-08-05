@@ -1,7 +1,6 @@
 #include "src/config/decisions/sell/selldecision3config/selldecision3config.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 #include "src/utils/exception/exception.h"
 
@@ -15,7 +14,7 @@ constexpr int   DURATION_DEFAULT   = 5;
 
 SellDecision3Config::SellDecision3Config() :
     ISellDecision3Config(),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mEnabled(),
     mLoseYield(),
     mDuration()
@@ -27,7 +26,7 @@ SellDecision3Config::~SellDecision3Config()
 {
     qDebug() << "Destroy SellDecision3Config";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 ISellDecision3Config* SellDecision3Config::clone()
@@ -45,11 +44,12 @@ void SellDecision3Config::deleteRecursively()
 
 void SellDecision3Config::assign(ISellDecision3Config* another)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Assigning SellDecision3Config to SellDecision3Config";
 
     const SellDecision3Config& config = *dynamic_cast<SellDecision3Config*>(another);
+    const QReadLocker          lock2(config.mRwMutex);
 
     mEnabled   = config.mEnabled;
     mLoseYield = config.mLoseYield;
@@ -58,7 +58,7 @@ void SellDecision3Config::assign(ISellDecision3Config* another)
 
 void SellDecision3Config::makeDefault()
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set SellDecision3Config to default";
 
@@ -69,7 +69,7 @@ void SellDecision3Config::makeDefault()
 
 void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     qDebug() << "Save SellDecision3Config";
 
@@ -82,7 +82,7 @@ void SellDecision3Config::save(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision3Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Load SellDecision3Config";
 
@@ -164,42 +164,42 @@ QStringList SellDecision3Config::variantsAsJson() const
 
 void SellDecision3Config::setEnabled(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision3Config::isEnabled()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mEnabled;
 }
 
 void SellDecision3Config::setLoseYield(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLoseYield = value;
 }
 
 float SellDecision3Config::getLoseYield()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLoseYield;
 }
 
 void SellDecision3Config::setDuration(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mDuration = value;
 }
 
 int SellDecision3Config::getDuration()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mDuration;
 }

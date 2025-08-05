@@ -103,7 +103,7 @@ QString BuyDecision4::makeDecision(
 
                                 return QObject::tr(
                                            "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
+                                           "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
                                 )
                                     .arg(
                                         QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
@@ -178,7 +178,7 @@ QString BuyDecision4::makeDecision(
 
                                 return QObject::tr(
                                            "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
+                                           "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
                                 )
                                     .arg(
                                         QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",
@@ -247,7 +247,7 @@ QString BuyDecision4::makeDecision(
 
                                 return QObject::tr(
                                            "Decided to buy because the price fall to %1 from %2 at %3 and lost "
-                                           "yield %4 from the minimum price %5 at %6 within last %7 minutes and the fall is %8"
+                                           "yield %4 from the minimum price %5 at %6 within last %7 days and the fall is %8"
                                 )
                                     .arg(
                                         QString::number(price, 'f', stock->meta.pricePrecision) + " \u20BD",

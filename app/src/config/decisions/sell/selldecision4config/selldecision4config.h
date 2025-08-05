@@ -4,7 +4,7 @@
 
 #include "src/config/decisions/sell/selldecision4config/iselldecision4config.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 
 
@@ -40,7 +40,7 @@ public:
     float getLoseYield() override;
 
 private:
-    QMutex* mMutex;
-    bool    mEnabled;
-    float   mLoseYield;
+    QReadWriteLock* mRwMutex;
+    bool            mEnabled;
+    float           mLoseYield;
 };

@@ -4,7 +4,7 @@
 
 #include "src/config/decisions/buy/buydecision2config/ibuydecision2config.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 
 
@@ -46,9 +46,9 @@ public:
     int  getDuration() override;
 
 private:
-    QMutex* mMutex;
-    bool    mEnabled;
-    float   mPriceFall;
-    float   mLoseYield;
-    int     mDuration;
+    QReadWriteLock* mRwMutex;
+    bool            mEnabled;
+    float           mPriceFall;
+    float           mLoseYield;
+    int             mDuration;
 };

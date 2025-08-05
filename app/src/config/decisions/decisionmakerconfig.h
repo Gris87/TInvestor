@@ -4,8 +4,6 @@
 
 #include "src/config/decisions/idecisionmakerconfig.h"
 
-#include <QMutex>
-
 
 
 class DecisionMakerConfig : public IDecisionMakerConfig

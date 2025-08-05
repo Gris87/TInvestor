@@ -4,7 +4,7 @@
 
 #include "src/config/iconfig.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 
 
@@ -31,7 +31,7 @@ public:
     void setAutorun(bool value) override;
     bool isAutorun() override;
 
-    void    setCpuUsage(QString value) override;
+    void    setCpuUsage(const QString& value) override;
     QString getCpuUsage() override;
 
     void setMakeDecisionTimeout(int value) override;
@@ -74,7 +74,7 @@ public:
     bool isAutoPilotConfigCommon() override;
 
 private:
-    QMutex* mMutex;
+    QReadWriteLock* mRwMutex;
 
     IDecisionMakerConfig* mSimulatorConfig;
     IDecisionMakerConfig* mAutoPilotConfig;

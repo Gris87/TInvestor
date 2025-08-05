@@ -1,7 +1,6 @@
 #include "src/config/decisions/sell/selldecision1config/selldecision1config.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 #include "src/utils/exception/exception.h"
 
@@ -14,7 +13,7 @@ constexpr float YIELD_ABOVE_DEFAULT = 1.0f;
 
 SellDecision1Config::SellDecision1Config() :
     ISellDecision1Config(),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mEnabled(),
     mYieldAbove()
 {
@@ -25,7 +24,7 @@ SellDecision1Config::~SellDecision1Config()
 {
     qDebug() << "Destroy SellDecision1Config";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 ISellDecision1Config* SellDecision1Config::clone()
@@ -43,11 +42,12 @@ void SellDecision1Config::deleteRecursively()
 
 void SellDecision1Config::assign(ISellDecision1Config* another)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Assigning SellDecision1Config to SellDecision1Config";
 
     const SellDecision1Config& config = *dynamic_cast<SellDecision1Config*>(another);
+    const QReadLocker          lock2(config.mRwMutex);
 
     mEnabled    = config.mEnabled;
     mYieldAbove = config.mYieldAbove;
@@ -55,7 +55,7 @@ void SellDecision1Config::assign(ISellDecision1Config* another)
 
 void SellDecision1Config::makeDefault()
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Set SellDecision1Config to default";
 
@@ -65,7 +65,7 @@ void SellDecision1Config::makeDefault()
 
 void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     qDebug() << "Save SellDecision1Config";
 
@@ -77,7 +77,7 @@ void SellDecision1Config::save(ISettingsEditor* settingsEditor, const QString& t
 
 void SellDecision1Config::load(ISettingsEditor* settingsEditor, const QString& type)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Load SellDecision1Config";
 
@@ -147,28 +147,28 @@ QStringList SellDecision1Config::variantsAsJson() const
 
 void SellDecision1Config::setEnabled(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mEnabled = value;
 }
 
 bool SellDecision1Config::isEnabled()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mEnabled;
 }
 
 void SellDecision1Config::setYieldAbove(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mYieldAbove = value;
 }
 
 float SellDecision1Config::getYieldAbove()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mYieldAbove;
 }

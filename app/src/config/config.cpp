@@ -1,7 +1,6 @@
 #include "src/config/config.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
 
 
@@ -26,7 +25,7 @@ constexpr bool  AUTOPILOT_CONFIG_COMMON_DEFAULT   = false;
 
 Config::Config(IDecisionMakerConfig* simulatorConfig, IDecisionMakerConfig* autoPilotConfig) :
     IConfig(),
-    mMutex(new QMutex()),
+    mRwMutex(new QReadWriteLock()),
     mSimulatorConfig(simulatorConfig),
     mAutoPilotConfig(autoPilotConfig),
     mAutorun(),
@@ -52,7 +51,7 @@ Config::~Config()
 {
     qDebug() << "Destroy Config";
 
-    delete mMutex;
+    delete mRwMutex;
 }
 
 IConfig* Config::clone()
@@ -73,11 +72,12 @@ void Config::deleteRecursively()
 
 void Config::assign(IConfig* another)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qDebug() << "Assigning Config to Config";
 
-    const Config& config = *dynamic_cast<Config*>(another);
+    const Config&     config = *dynamic_cast<Config*>(another);
+    const QReadLocker lock2(config.mRwMutex);
 
     mSimulatorConfig->assign(config.mSimulatorConfig);
     mAutoPilotConfig->assign(config.mAutoPilotConfig);
@@ -101,7 +101,7 @@ void Config::assign(IConfig* another)
 
 void Config::makeDefault()
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qInfo() << "Set Config to default";
 
@@ -127,7 +127,7 @@ void Config::makeDefault()
 
 void Config::save(ISettingsEditor* settingsEditor)
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     qInfo() << "Save Config";
 
@@ -155,7 +155,7 @@ void Config::save(ISettingsEditor* settingsEditor)
 
 void Config::load(ISettingsEditor* settingsEditor)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     qInfo() << "Load Config";
 
@@ -193,210 +193,210 @@ IDecisionMakerConfig* Config::getAutoPilotConfig()
 
 void Config::setAutorun(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mAutorun = value;
 }
 
 bool Config::isAutorun()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mAutorun;
 }
 
-void Config::setCpuUsage(QString value)
+void Config::setCpuUsage(const QString& value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mCpuUsage = value;
 }
 
 QString Config::getCpuUsage()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mCpuUsage;
 }
 
 void Config::setMakeDecisionTimeout(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mMakeDecisionTimeout = value;
 }
 
 int Config::getMakeDecisionTimeout()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mMakeDecisionTimeout;
 }
 
 void Config::setUseSchedule(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mUseSchedule = value;
 }
 
 bool Config::isUseSchedule()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mUseSchedule;
 }
 
 void Config::setScheduleStartHour(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mScheduleStartHour = value;
 }
 
 int Config::getScheduleStartHour()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mScheduleStartHour;
 }
 
 void Config::setScheduleStartMinute(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mScheduleStartMinute = value;
 }
 
 int Config::getScheduleStartMinute()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mScheduleStartMinute;
 }
 
 void Config::setScheduleEndHour(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mScheduleEndHour = value;
 }
 
 int Config::getScheduleEndHour()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mScheduleEndHour;
 }
 
 void Config::setScheduleEndMinute(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mScheduleEndMinute = value;
 }
 
 int Config::getScheduleEndMinute()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mScheduleEndMinute;
 }
 
 void Config::setLimitStockPurchase(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLimitStockPurchase = value;
 }
 
 bool Config::isLimitStockPurchase()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLimitStockPurchase;
 }
 
 void Config::setLimitStockPurchasePart(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLimitStockPurchasePart = value;
 }
 
 float Config::getLimitStockPurchasePart()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLimitStockPurchasePart;
 }
 
 void Config::setLimitByTurnover(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLimitByTurnover = value;
 }
 
 bool Config::isLimitByTurnover()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLimitByTurnover;
 }
 
 void Config::setLimitByTurnoverPercent(float value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mLimitByTurnoverPercent = value;
 }
 
 float Config::getLimitByTurnoverPercent()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mLimitByTurnoverPercent;
 }
 
 void Config::setStorageMonthLimit(int value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mStorageMonthLimit = value;
 }
 
 int Config::getStorageMonthLimit()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mStorageMonthLimit;
 }
 
 void Config::setSimulatorConfigCommon(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mSimulatorConfigCommon = value;
 }
 
 bool Config::isSimulatorConfigCommon()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mSimulatorConfigCommon;
 }
 
 void Config::setAutoPilotConfigCommon(bool value)
 {
-    const QMutexLocker lock(mMutex);
+    const QWriteLocker lock(mRwMutex);
 
     mAutoPilotConfigCommon = value;
 }
 
 bool Config::isAutoPilotConfigCommon()
 {
-    const QMutexLocker lock(mMutex);
+    const QReadLocker lock(mRwMutex);
 
     return mAutoPilotConfigCommon;
 }

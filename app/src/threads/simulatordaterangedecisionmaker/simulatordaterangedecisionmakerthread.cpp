@@ -387,7 +387,7 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
 struct SimulationInfo
 {
     explicit SimulationInfo(
-        SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config, QStringList _configVariants
+        SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config, const QStringList& _configVariants
     ) :
         thread(_thread),
         startTime(_startTime),
@@ -447,6 +447,7 @@ static void simulationForParallel(
     config->deleteRecursively();
 }
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
     QThread* parentThread,
     qint64   startTime,
@@ -585,6 +586,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
         qWarning() << "Failed to parse configs";
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
@@ -1195,7 +1197,7 @@ QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogE
 void SimulatorDateRangeDecisionMakerThread::updateCostAndPart()
 {
     const Operation& lastOperation  = mBestOperations.constFirst(); // Since it reversed
-    double           bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
+    const double     bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
 
     for (PortfolioCategoryItem& category : mBestPortfolio.positions)
     {
@@ -1265,8 +1267,8 @@ void SimulatorDateRangeDecisionMakerThread::notifyTotalProgressChanged(
 
     for (int i = 0; i < mConfigVariants.size(); ++i)
     {
-        configId        += configIdArray[buyDecisionId];
-        amountOfConfigs += amountOfConfigsArray[buyDecisionId];
+        configId        += configIdArray[i];
+        amountOfConfigs += amountOfConfigsArray[i];
     }
 
     emit totalProgressChanged(configId, amountOfConfigs);
@@ -1296,9 +1298,9 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
 
     for (int i = 0; i < mConfigVariants.size(); ++i)
     {
-        processedMinutes += processedMinutesArray[buyDecisionId];
-        remainingMinutes += remainingMinutesArray[buyDecisionId];
-        currentMinute     = qMax(currentMinute, currentMinuteArray[buyDecisionId]);
+        processedMinutes += processedMinutesArray[i];
+        remainingMinutes += remainingMinutesArray[i];
+        currentMinute     = qMax(currentMinute, currentMinuteArray[i]);
     }
 
     qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
@@ -1331,7 +1333,7 @@ SimulatorDateRangeDecisionMakerThread::notifyBestResult(double* bestTotalMoneyAr
 
     for (int i = 0; i < mConfigVariants.size(); ++i)
     {
-        bestTotalMoney = qMax(bestTotalMoney, bestTotalMoneyArray[buyDecisionId]);
+        bestTotalMoney = qMax(bestTotalMoney, bestTotalMoneyArray[i]);
     }
 
     const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;

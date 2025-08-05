@@ -1,9 +1,7 @@
 #include "src/config/decisions/decisionmakerconfig.h"
 
 #include <QDebug>
-#include <QMutexLocker>
 
-#include "src/threads/parallelhelper/parallelhelperthread.h"
 #include "src/utils/exception/exception.h"
 
 

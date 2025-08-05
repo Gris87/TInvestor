@@ -4,7 +4,7 @@
 
 #include "src/config/decisions/sell/selldecision3config/iselldecision3config.h"
 
-#include <QMutex>
+#include <QReadWriteLock>
 
 
 
@@ -43,8 +43,8 @@ public:
     int  getDuration() override;
 
 private:
-    QMutex* mMutex;
-    bool    mEnabled;
-    float   mLoseYield;
-    int     mDuration;
+    QReadWriteLock* mRwMutex;
+    bool            mEnabled;
+    float           mLoseYield;
+    int             mDuration;
 };
