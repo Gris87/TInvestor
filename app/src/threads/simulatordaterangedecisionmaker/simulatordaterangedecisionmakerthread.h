@@ -52,7 +52,7 @@ public:
     void reset() override;
     void terminateThread() override;
 
-    void simulationWithBestConfigForBuyDecision(
+    QString simulationWithBestConfigForBuyDecision(
         QThread* parentThread,
         qint64   startTime,
         int      buyDecisionId,

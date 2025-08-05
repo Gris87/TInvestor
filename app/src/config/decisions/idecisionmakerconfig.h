@@ -41,6 +41,9 @@ public:
     [[nodiscard]]
     virtual QStringList variantsToJsonStringList() const = 0;
 
+    [[nodiscard]]
+    virtual QString variantsToJsonStringListExtendedBySellDecisions(const QStringList& bestConfigs) const = 0;
+
     virtual IBuyDecision1Config* getBuyDecision1Config() = 0;
     virtual IBuyDecision2Config* getBuyDecision2Config() = 0;
     virtual IBuyDecision3Config* getBuyDecision3Config() = 0;

@@ -330,6 +330,9 @@ void SimulatorDateRangeDecisionMakerThread::initConfigs()
 
         mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(i), 0);
     }
+
+    mSettingsEditor->setValue("Options/Step", 0);
+    mSettingsEditor->setValue("Options/LastConfigId", 0);
 }
 
 void SimulatorDateRangeDecisionMakerThread::load()
@@ -399,6 +402,7 @@ struct SimulationInfo
         remainingMinutes.fill(0.0, _configVariants.size());
         currentMinute.fill(0, _configVariants.size());
         bestTotalMoney.fill(0.0, _configVariants.size());
+        bestConfigs.resizeForOverwrite(_configVariants.size());
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
@@ -410,6 +414,7 @@ struct SimulationInfo
     QList<double>                          remainingMinutes;
     QList<qint64>                          currentMinute;
     QList<double>                          bestTotalMoney;
+    QStringList                            bestConfigs;
 };
 
 static void simulationForParallel(
@@ -427,10 +432,11 @@ static void simulationForParallel(
     double*                                remainingMinutesArray = simulationInfo->remainingMinutes.data();
     qint64*                                currentMinuteArray    = simulationInfo->currentMinute.data();
     double*                                bestTotalMoneyArray   = simulationInfo->bestTotalMoney.data();
+    QString*                               bestConfigsArray      = simulationInfo->bestConfigs.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        thread->simulationWithBestConfigForBuyDecision(
+        bestConfigsArray[i] = thread->simulationWithBestConfigForBuyDecision(
             parentThread,
             startTime,
             i,
@@ -448,7 +454,7 @@ static void simulationForParallel(
 }
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
-void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
+QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
     QThread* parentThread,
     qint64   startTime,
     int      buyDecisionId,
@@ -461,6 +467,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
     double*  bestTotalMoneyArray
 )
 {
+    QString res;
+
     const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
     const qint64     totalMinutes   = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
     double           bestTotalMoney = 0.0;
@@ -577,6 +585,27 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
             }
         }
 
+        const int bestConfigId = mSettingsEditor->value(QString("Options/BestConfigId%1").arg(buyDecisionId), 0).toInt();
+        i                      = 0;
+
+        jsonConfigs.reset();
+
+        for (simdjson::ondemand::object jsonObject : jsonConfigs)
+        {
+            if (!parentThread->isInterruptionRequested())
+            {
+                if (i == bestConfigId)
+                {
+                    const std::string_view configStr = jsonObject.raw_json().value();
+                    res                              = QString::fromUtf8(configStr.data(), configStr.size());
+
+                    break;
+                }
+
+                ++i;
+            }
+        }
+
         notifyTotalProgressChanged(configIdArray, amountOfConfigsArray, buyDecisionId, amountOfConfigs, amountOfConfigs);
         notifyProgressChanged(
             startTime,
@@ -595,18 +624,44 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
     {
         qWarning() << "Failed to parse configs";
     }
+
+    return res;
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
-    SimulationInfo simulationInfo(this, startTime, mConfig, mConfigVariants);
-    processInParallel(QThread::currentThread(), mConfigVariants, simulationForParallel, &simulationInfo);
+    const int step = mSettingsEditor->value("Options/Step", 0).toInt();
+
+    if (step <= 0)
+    {
+        SimulationInfo simulationInfo(this, startTime, mConfig, mConfigVariants);
+        processInParallel(QThread::currentThread(), mConfigVariants, simulationForParallel, &simulationInfo);
+
+        QString configVariants =
+            mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationInfo.bestConfigs);
+
+        const std::shared_ptr<IFile> configsFile =
+            mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+
+        const bool ok = configsFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+        configsFile->write(configVariants.toUtf8());
+        configsFile->close();
+
+        mSettingsEditor->setValue("Options/Step", 1);
+    }
+
+    if (step <= 1)
+    {
+        // TODO: Update step progress bar
+    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 startTime)
 {
-    const int configId = mSettingsEditor->value("Options/LastConfigId0", 0).toInt();
+    const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
 
     if (configId > 0)
     {
@@ -682,7 +737,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
         mLogsDatabase->writeLogs(mBestEntries);
         mPortfolioDatabase->writePortfolio(mBestPortfolio);
 
-        mSettingsEditor->setValue("Options/LastConfigId0", 1);
+        mSettingsEditor->setValue("Options/LastConfigId", 1);
     }
 }
 

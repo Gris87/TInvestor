@@ -40,6 +40,9 @@ public:
     [[nodiscard]]
     QStringList variantsToJsonStringList() const override;
 
+    [[nodiscard]]
+    QString variantsToJsonStringListExtendedBySellDecisions(const QStringList& bestConfigs) const override;
+
     IBuyDecision1Config*  getBuyDecision1Config() override;
     IBuyDecision2Config*  getBuyDecision2Config() override;
     IBuyDecision3Config*  getBuyDecision3Config() override;

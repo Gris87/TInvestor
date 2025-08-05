@@ -231,12 +231,14 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
     const QString s3 = R"({"enabled":false})";
     const QString s4 = R"({"enabled":false})";
 
+    QStringList results;
+
     for (int i = 0; i < buyVariants.size(); ++i)
     {
         const QStringList& buyVariant = buyVariants.at(i);
         QStringList        buyConfigs(buyVariants.size(), R"({"enabled":false})");
 
-        QStringList results;
+        results.clear();
 
         for (int j = 1; j < buyVariant.size(); ++j)
         {
@@ -265,6 +267,56 @@ QStringList DecisionMakerConfig::variantsToJsonStringList() const
     }
 
     return res;
+}
+
+QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(const QStringList& bestConfigs) const
+{
+    QStringList res;
+
+    QStringList unitedBestConfigs;
+
+    Q_ASSERT_X(bestConfigs.size() == 4, __FUNCTION__, "Unexpected behavior");
+    const QString& config0 = bestConfigs.at(0);
+    const QString& config1 = bestConfigs.at(1);
+    const QString& config2 = bestConfigs.at(2);
+    const QString& config3 = bestConfigs.at(3);
+
+    const QString b1 =
+        config0.mid(config0.indexOf(R"("b1":)") + 5, config0.indexOf(R"("b2":)") - config0.indexOf(R"("b1":)") - 6);
+    const QString b2 =
+        config1.mid(config1.indexOf(R"("b2":)") + 5, config1.indexOf(R"("b3":)") - config1.indexOf(R"("b2":)") - 6);
+    const QString b3 =
+        config2.mid(config2.indexOf(R"("b3":)") + 5, config2.indexOf(R"("b4":)") - config2.indexOf(R"("b3":)") - 6);
+    const QString b4 =
+        config3.mid(config3.indexOf(R"("b4":)") + 5, config3.indexOf(R"("s1":)") - config3.indexOf(R"("b4":)") - 6);
+
+    for (const QString& bestConfig : bestConfigs)
+    {
+        unitedBestConfigs.append(
+            QString(R"({"b1":%1,"b2":%2,"b3":%3,"b4":%4,%5)").arg(b1, b2, b3, b4, bestConfig.mid(bestConfig.indexOf(R"("s1":)")))
+        );
+    }
+
+    unitedBestConfigs.removeDuplicates();
+
+    QStringList sellVariants3 = mSellDecision3Config->variantsAsJson();
+    QStringList sellVariants4 = mSellDecision4Config->variantsAsJson();
+
+    for (const QString& bestConfig : unitedBestConfigs)
+    {
+        for (int i = 1; i < sellVariants3.size(); ++i)
+        {
+            for (int j = 1; j < sellVariants4.size(); ++j)
+            {
+                QString temp = bestConfig;
+
+                res.append(temp.replace(R"("s3":{"enabled":false})", QString(R"("s3":%1)").arg(sellVariants3.at(i)))
+                               .replace(R"("s4":{"enabled":false})", QString(R"("s4":%1)").arg(sellVariants4.at(j))));
+            }
+        }
+    }
+
+    return "[\n" + res.join(",\n") + "\n]";
 }
 
 IBuyDecision1Config* DecisionMakerConfig::getBuyDecision1Config()
