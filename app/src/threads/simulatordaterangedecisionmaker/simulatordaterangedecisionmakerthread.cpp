@@ -387,9 +387,9 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
     }
 }
 
-struct SimulationInfo
+struct SimulationStep1Info
 {
-    explicit SimulationInfo(
+    explicit SimulationStep1Info(
         SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config, const QStringList& _configVariants
     ) :
         thread(_thread),
@@ -417,22 +417,22 @@ struct SimulationInfo
     QStringList                            bestConfigs;
 };
 
-static void simulationForParallel(
+static void simulationStep1ForParallel(
     QThread* parentThread, int /*threadId*/, QList<QString>& /*configVariants*/, int start, int end, void* additionalArgs
 )
 {
-    SimulationInfo* simulationInfo = reinterpret_cast<SimulationInfo*>(additionalArgs);
+    SimulationStep1Info* simulationStep1Info = reinterpret_cast<SimulationStep1Info*>(additionalArgs);
 
-    SimulatorDateRangeDecisionMakerThread* thread                = simulationInfo->thread;
-    const qint64                           startTime             = simulationInfo->startTime;
-    IConfig*                               config                = simulationInfo->config->clone();
-    int*                                   configIdArray         = simulationInfo->configId.data();
-    int*                                   amountOfConfigsArray  = simulationInfo->amountOfConfigs.data();
-    double*                                processedMinutesArray = simulationInfo->processedMinutes.data();
-    double*                                remainingMinutesArray = simulationInfo->remainingMinutes.data();
-    qint64*                                currentMinuteArray    = simulationInfo->currentMinute.data();
-    double*                                bestTotalMoneyArray   = simulationInfo->bestTotalMoney.data();
-    QString*                               bestConfigsArray      = simulationInfo->bestConfigs.data();
+    SimulatorDateRangeDecisionMakerThread* thread                = simulationStep1Info->thread;
+    const qint64                           startTime             = simulationStep1Info->startTime;
+    IConfig*                               config                = simulationStep1Info->config->clone();
+    int*                                   configIdArray         = simulationStep1Info->configId.data();
+    int*                                   amountOfConfigsArray  = simulationStep1Info->amountOfConfigs.data();
+    double*                                processedMinutesArray = simulationStep1Info->processedMinutes.data();
+    double*                                remainingMinutesArray = simulationStep1Info->remainingMinutes.data();
+    qint64*                                currentMinuteArray    = simulationStep1Info->currentMinute.data();
+    double*                                bestTotalMoneyArray   = simulationStep1Info->bestTotalMoney.data();
+    QString*                               bestConfigsArray      = simulationStep1Info->bestConfigs.data();
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -629,33 +629,107 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDec
 }
 // NOLINTEND(readability-function-cognitive-complexity)
 
+struct SimulationStep2Info
+{
+    explicit SimulationStep2Info(SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config) :
+        thread(_thread),
+        startTime(_startTime),
+        config(_config)
+    {
+    }
+
+    SimulatorDateRangeDecisionMakerThread* thread;
+    qint64                                 startTime;
+    IConfig*                               config;
+};
+
+static void simulationStep2ForParallel(
+    QThread* parentThread, int /*threadId*/, QList<QString>& /*configVariants*/, int start, int end, void* additionalArgs
+)
+{
+    SimulationStep2Info* simulationStep2Info = reinterpret_cast<SimulationStep2Info*>(additionalArgs);
+
+    //SimulatorDateRangeDecisionMakerThread* thread    = simulationStep2Info->thread;
+    //const qint64                           startTime = simulationStep2Info->startTime;
+    IConfig* config = simulationStep2Info->config->clone();
+
+    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    {
+        // TODO: Implement
+    }
+
+    config->deleteRecursively();
+}
+
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
 {
     const int step = mSettingsEditor->value("Options/Step", 0).toInt();
 
-    if (step <= 0)
+    if (step <= 0 && !QThread::currentThread()->isInterruptionRequested())
     {
-        SimulationInfo simulationInfo(this, startTime, mConfig, mConfigVariants);
-        processInParallel(QThread::currentThread(), mConfigVariants, simulationForParallel, &simulationInfo);
+        // TODO: Parallel for configs not buy decisions
+        SimulationStep1Info simulationStep1Info(this, startTime, mConfig, mConfigVariants);
+        processInParallel(QThread::currentThread(), mConfigVariants, simulationStep1ForParallel, &simulationStep1Info);
 
-        QString configVariants =
-            mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationInfo.bestConfigs);
+        if (!QThread::currentThread()->isInterruptionRequested())
+        {
+            const QString configVariants =
+                mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationStep1Info.bestConfigs);
+
+            const std::shared_ptr<IFile> configsFile =
+                mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+
+            const bool ok = configsFile->open(QIODevice::WriteOnly);
+            Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+            configsFile->write(configVariants.toUtf8());
+            configsFile->close();
+
+            mSettingsEditor->setValue("Options/Step", 1);
+        }
+    }
+
+    if (step <= 1 && !QThread::currentThread()->isInterruptionRequested())
+    {
+        emit stepProgressChanged(1, 2);
 
         const std::shared_ptr<IFile> configsFile =
             mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
 
-        const bool ok = configsFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+        if (configsFile->open(QIODevice::ReadOnly))
+        {
+            const QString configVariants = QString::fromUtf8(configsFile->readAll());
+            configsFile->close();
 
-        configsFile->write(configVariants.toUtf8());
-        configsFile->close();
+            mConfigVariants.clear();
 
-        mSettingsEditor->setValue("Options/Step", 1);
-    }
+            const simdjson::padded_string jsonData(configVariants.toStdString());
 
-    if (step <= 1)
-    {
-        // TODO: Update step progress bar
+            simdjson::ondemand::parser parser;
+
+            try
+            {
+                simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+                simdjson::ondemand::array jsonConfigs = doc.get_array();
+
+                for (simdjson::ondemand::object jsonObject : jsonConfigs)
+                {
+                    if (!QThread::currentThread()->isInterruptionRequested())
+                    {
+                        const std::string_view configStr = jsonObject.raw_json().value();
+                        mConfigVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
+                    }
+                }
+            }
+            catch (...)
+            {
+                qWarning() << "Failed to parse configs";
+            }
+
+            SimulationStep2Info simulationStep2Info(this, QDateTime::currentMSecsSinceEpoch(), mConfig);
+            processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
+        }
     }
 }
 
@@ -1374,7 +1448,7 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
         currentMinute     = qMax(currentMinute, currentMinuteArray[i]);
     }
 
-    qint64 remainingMilliseconds  = (deltaTime / processedMinutes) * remainingMinutes;
+    qint64 remainingMilliseconds  = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
     remainingMilliseconds        /= MS_IN_SECOND;
     const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
     remainingMilliseconds        /= SECONDS_IN_MINUTE;

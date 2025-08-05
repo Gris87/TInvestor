@@ -231,6 +231,7 @@ public slots:
     void stopSimulator();
     void startAutoPilot();
     void stopAutoPilot();
+    void simulatorStepProgressChanged(int current, int maximum) const;
     void simulatorTotalProgressChanged(int current, int maximum) const;
     void simulatorProgressChanged(int current, int maximum, const QString& remainingTime) const;
     void simulatorBestResultChanged(const QString& bestResult, const QColor& color) const;

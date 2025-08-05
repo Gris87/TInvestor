@@ -324,6 +324,13 @@
                    </layout>
                   </item>
                   <item>
+                   <widget class="QProgressBar" name="simulatorStepProgressBar">
+                    <property name="value">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QProgressBar" name="simulatorTotalProgressBar">
                     <property name="value">
                      <number>0</number>

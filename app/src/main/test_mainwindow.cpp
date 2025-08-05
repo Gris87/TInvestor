@@ -828,6 +828,23 @@ TEST_F(Test_MainWindow, Test_stockFilterChanged)
     mainWindow->stockFilterChanged(filter);
 }
 
+TEST_F(Test_MainWindow, Test_simulatorStepProgressChanged)
+{
+    mainWindow->simulatorStepProgressChanged(0, 100);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorStepProgressBar->value(),   0);
+    ASSERT_EQ(mainWindow->ui->simulatorStepProgressBar->maximum(), 100);
+    // clang-format on
+
+    mainWindow->simulatorStepProgressChanged(30, 128);
+
+    // clang-format off
+    ASSERT_EQ(mainWindow->ui->simulatorStepProgressBar->value(),   30);
+    ASSERT_EQ(mainWindow->ui->simulatorStepProgressBar->maximum(), 128);
+    // clang-format on
+}
+
 TEST_F(Test_MainWindow, Test_simulatorTotalProgressChanged)
 {
     mainWindow->simulatorTotalProgressChanged(0, 100);

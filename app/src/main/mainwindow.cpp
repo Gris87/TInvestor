@@ -278,6 +278,7 @@ MainWindow::MainWindow(
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logsRead(const QList<LogEntry>&)),                                                     this, SLOT(simulatorLogsRead(const QList<LogEntry>&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(logAdded(const LogEntry&)),                                                            this, SLOT(simulatorLogAdded(const LogEntry&)));
     connect(mSimulatorDecisionMakerThread,            SIGNAL(portfolioChanged(const Portfolio&)),                                                   this, SLOT(simulatorPortfolioChanged(const Portfolio&)));
+    connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(stepProgressChanged(int, int)),                                                        this, SLOT(simulatorStepProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(totalProgressChanged(int, int)),                                                       this, SLOT(simulatorTotalProgressChanged(int, int)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(progressChanged(int, int, const QString&)),                                            this, SLOT(simulatorProgressChanged(int, int, const QString&)));
     connect(mSimulatorDateRangeDecisionMakerThread,   SIGNAL(bestResultChanged(const QString&, const QColor&)),                                     this, SLOT(simulatorBestResultChanged(const QString&, const QColor&)));
@@ -598,6 +599,7 @@ void MainWindow::startSimulator()
     {
         ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWaitingPage);
         ui->simulatorRemainingTimeLabel->setText("00:00:00");
+        ui->simulatorStepProgressBar->setValue(0);
         ui->simulatorTotalProgressBar->setValue(0);
         ui->simulatorProgressBar->setValue(0);
         simulatorBestResultChanged("0.00%", NORMAL_COLOR);
@@ -738,6 +740,12 @@ void MainWindow::stopAutoPilot()
     }
 
     tradingThreads.clear();
+}
+
+void MainWindow::simulatorStepProgressChanged(int current, int maximum) const
+{
+    ui->simulatorStepProgressBar->setMaximum(maximum);
+    ui->simulatorStepProgressBar->setValue(current);
 }
 
 void MainWindow::simulatorTotalProgressChanged(int current, int maximum) const

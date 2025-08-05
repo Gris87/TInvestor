@@ -29,6 +29,7 @@ public:
     virtual void terminateThread() = 0;
 
 signals:
+    void stepProgressChanged(int current, int maximum);
     void totalProgressChanged(int current, int maximum);
     void progressChanged(int current, int maximum, const QString& remainingTime);
     void bestResultChanged(const QString& bestResult, const QColor& color);
