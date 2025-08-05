@@ -524,19 +524,15 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
 
                         if (i != configId || currentMinute > 0)
                         {
-                            const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
-
-                            const double processedMinutes = ((i - configId) * totalMinutes) + currentMinute;
-                            const double remainingMinutes = ((amountOfConfigs - i) * totalMinutes) - currentMinute;
-
                             notifyProgressChanged(
-                                deltaTime,
+                                startTime,
+                                configId,
+                                i,
+                                amountOfConfigs,
                                 processedMinutesArray,
                                 remainingMinutesArray,
                                 currentMinuteArray,
                                 buyDecisionId,
-                                processedMinutes,
-                                remainingMinutes,
                                 currentMinute,
                                 totalMinutes
                             );
@@ -580,6 +576,20 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                 }
             }
         }
+
+        notifyTotalProgressChanged(configIdArray, amountOfConfigsArray, buyDecisionId, amountOfConfigs, amountOfConfigs);
+        notifyProgressChanged(
+            startTime,
+            configId,
+            amountOfConfigs,
+            amountOfConfigs,
+            processedMinutesArray,
+            remainingMinutesArray,
+            currentMinuteArray,
+            buyDecisionId,
+            0,
+            totalMinutes
+        );
     }
     catch (...)
     {
@@ -1275,17 +1285,23 @@ void SimulatorDateRangeDecisionMakerThread::notifyTotalProgressChanged(
 }
 
 void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
-    qint64  deltaTime,
+    qint64  startTime,
+    int     configId,
+    int     currentConfig,
+    int     amountOfConfigs,
     double* processedMinutesArray,
     double* remainingMinutesArray,
     qint64* currentMinuteArray,
     int     buyDecisionId,
-    double  processedMinutes,
-    double  remainingMinutes,
     qint64  currentMinute,
     qint64  totalMinutes
 )
 {
+    const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+
+    double processedMinutes = ((currentConfig - configId) * totalMinutes) + currentMinute;
+    double remainingMinutes = ((amountOfConfigs - currentConfig) * totalMinutes) - currentMinute;
+
     static QMutex      mutex;
     const QMutexLocker lock(&mutex);
 

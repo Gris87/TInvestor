@@ -200,13 +200,14 @@ private:
                     int* configIdArray, int* amountOfConfigsArray, int buyDecisionId, int configId, int amountOfConfigs
                 );
     void notifyProgressChanged(
-        qint64  deltaTime,
+        qint64  startTime,
+        int     configId,
+        int     currentConfig,
+        int     amountOfConfigs,
         double* processedMinutesArray,
         double* remainingMinutesArray,
         qint64* currentMinuteArray,
         int     buyDecisionId,
-        double  processedMinutes,
-        double  remainingMinutes,
         qint64  currentMinute,
         qint64  totalMinutes
     );
