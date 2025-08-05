@@ -47,35 +47,25 @@ public:
         const QList<Stock*>& stocks,
         bool                 autoPilot,
         int                  keepMoney,
-        bool                 dateRange
+        bool                 dateRange,
+        bool                 useParallel
     ) override;
 
 private:
     IDecisionMakerConfig* chooseDecisionConfig(IConfig* config, bool autoPilot);
     void                  updateStocksMap(const QList<Stock*>& stocks);
-    void                  splitStocks(
-                         const Portfolio&          portfolio,
-                         const QList<Stock*>&      stocks,
-                         QList<Stock*>&            stocksForBuy,
-                         QList<StockWithAvgPrice>& stocksForSell
-                     );
-    void makeBuyDecisions(
-        QThread*               parentThread,
-        IConfig*               config,
-        IDecisionMakerConfig*  decisionConfig,
-        qint64                 timestamp,
-        const Portfolio&       portfolio,
-        QList<Stock*>&         stocksForBuy,
-        int                    keepMoney,
-        bool                   dateRange,
-        InstrumentsForTrading& res
-    );
-    void makeSellDecisions(
+    void
+    getStocksWithAvgPrice(const Portfolio& portfolio, const QList<Stock*>& stocks, QList<StockWithAvgPrice>& stocksWithAvgPrice);
+    void makeDecisions(
         QThread*                  parentThread,
+        IConfig*                  config,
         IDecisionMakerConfig*     decisionConfig,
         qint64                    timestamp,
-        QList<StockWithAvgPrice>& stocksForSell,
+        const Portfolio&          portfolio,
+        QList<StockWithAvgPrice>& stocksWithAvgPrice,
+        int                       keepMoney,
         bool                      dateRange,
+        bool                      useParallel,
         InstrumentsForTrading&    res
     );
     void calculateTotalCostAndMoney(const Portfolio& portfolio, double& totalCost, double& money);

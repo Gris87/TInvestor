@@ -41,7 +41,8 @@ InstrumentsForTrading DecisionMaker::makeDecision(
     const QList<Stock*>& stocks,
     bool                 autoPilot,
     int                  keepMoney,
-    bool                 dateRange
+    bool                 dateRange,
+    bool                 useParallel
 )
 {
     InstrumentsForTrading res;
@@ -70,16 +71,15 @@ InstrumentsForTrading DecisionMaker::makeDecision(
         }
     }
 
-    IDecisionMakerConfig* decisionConfig = chooseDecisionConfig(config, autoPilot);
-
-    QList<Stock*>            stocksForBuy;
-    QList<StockWithAvgPrice> stocksForSell;
+    IDecisionMakerConfig*    decisionConfig = chooseDecisionConfig(config, autoPilot);
+    QList<StockWithAvgPrice> stocksWithAvgPrice;
 
     updateStocksMap(stocks);
-    splitStocks(portfolio, stocks, stocksForBuy, stocksForSell);
+    getStocksWithAvgPrice(portfolio, stocks, stocksWithAvgPrice);
 
-    makeBuyDecisions(parentThread, config, decisionConfig, timestamp, portfolio, stocksForBuy, keepMoney, dateRange, res);
-    makeSellDecisions(parentThread, decisionConfig, timestamp, stocksForSell, dateRange, res);
+    makeDecisions(
+        parentThread, config, decisionConfig, timestamp, portfolio, stocksWithAvgPrice, keepMoney, dateRange, useParallel, res
+    );
 
     return res;
 }
@@ -110,8 +110,8 @@ void DecisionMaker::updateStocksMap(const QList<Stock*>& stocks)
     }
 }
 
-void DecisionMaker::splitStocks(
-    const Portfolio& portfolio, const QList<Stock*>& stocks, QList<Stock*>& stocksForBuy, QList<StockWithAvgPrice>& stocksForSell
+void DecisionMaker::getStocksWithAvgPrice(
+    const Portfolio& portfolio, const QList<Stock*>& stocks, QList<StockWithAvgPrice>& stocksWithAvgPrice
 )
 {
     mUserStorage->readLock();
@@ -141,65 +141,81 @@ void DecisionMaker::splitStocks(
         {
             if (qualifiedUser || !stock->meta.forQualInvestorFlag)
             {
-                stocksForBuy.append(stock);
+                stocksWithAvgPrice.append(StockWithAvgPrice(stock, avgPrice));
             }
         }
         else
         {
-            stocksForSell.append(StockWithAvgPrice(stock, avgPrice));
+            stocksWithAvgPrice.append(StockWithAvgPrice(stock, avgPrice));
         }
 
         stock->readUnlock();
     }
 }
 
-struct MakeBuyDecisionsInfo
+struct MakeDecisionsInfo
 {
-    explicit MakeBuyDecisionsInfo(
+    explicit MakeDecisionsInfo(
         IDecisionMakerConfig*    _decisionConfig,
         qint64                   _timestamp,
         bool                     _dateRange,
+        float                    _money,
         float                    _commission,
-        QList<IActionDecision*>* _buyDecisions
+        QList<IActionDecision*>* _buyDecisions,
+        QList<IActionDecision*>* _sellDecisions,
+        int                      _threadCount
     ) :
         decisionConfig(_decisionConfig),
         timestamp(_timestamp),
         dateRange(_dateRange),
+        money(_money),
         commission(_commission),
-        buyDecisions(_buyDecisions)
+        buyDecisions(_buyDecisions),
+        sellDecisions(_sellDecisions)
     {
-        results.resize(getCpuCount());
+        buyResults.resize(_threadCount);
+        sellResults.resize(_threadCount);
     }
 
     IDecisionMakerConfig*        decisionConfig;
     qint64                       timestamp;
     bool                         dateRange;
+    float                        money;
     float                        commission;
     QList<IActionDecision*>*     buyDecisions;
-    QList<InstrumentsForTrading> results;
+    QList<IActionDecision*>*     sellDecisions;
+    QList<InstrumentsForTrading> buyResults;
+    QList<InstrumentsForTrading> sellResults;
 };
 
-static void
-makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void makeDecisionsForParallel(
+    QThread* parentThread, int threadId, QList<StockWithAvgPrice>& stocks, int start, int end, void* additionalArgs
+)
 {
-    MakeBuyDecisionsInfo* makeBuyDecisionsInfo = reinterpret_cast<MakeBuyDecisionsInfo*>(additionalArgs);
+    MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
 
-    IDecisionMakerConfig*  decisionConfig    = makeBuyDecisionsInfo->decisionConfig;
-    const qint64           timestamp         = makeBuyDecisionsInfo->timestamp;
-    const bool             dateRange         = makeBuyDecisionsInfo->dateRange;
-    const float            commission        = makeBuyDecisionsInfo->commission;
-    IActionDecision**      buyDecisionsArray = makeBuyDecisionsInfo->buyDecisions->data();
-    const int              buyDecisionsSize  = makeBuyDecisionsInfo->buyDecisions->size();
-    InstrumentsForTrading* resultsArray      = makeBuyDecisionsInfo->results.data();
+    IDecisionMakerConfig*  decisionConfig     = makeDecisionsInfo->decisionConfig;
+    const qint64           timestamp          = makeDecisionsInfo->timestamp;
+    const bool             dateRange          = makeDecisionsInfo->dateRange;
+    const float            money              = makeDecisionsInfo->money;
+    const float            commission         = makeDecisionsInfo->commission;
+    IActionDecision**      buyDecisionsArray  = makeDecisionsInfo->buyDecisions->data();
+    const int              buyDecisionsSize   = makeDecisionsInfo->buyDecisions->size();
+    IActionDecision**      sellDecisionsArray = makeDecisionsInfo->sellDecisions->data();
+    const int              sellDecisionsSize  = makeDecisionsInfo->sellDecisions->size();
+    InstrumentsForTrading* buyResultsArray    = makeDecisionsInfo->buyResults.data();
+    InstrumentsForTrading* sellResultsArray   = makeDecisionsInfo->sellResults.data();
 
-    Stock** stocksArray = stocks.data();
+    StockWithAvgPrice* stocksArray = stocks.data();
 
     int   dataIndex = 0;
     float price     = 0;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stocksArray[i];
+        Stock*      stock    = stocksArray[i].stock;
+        const float avgPrice = stocksArray[i].avgPrice;
+
         stock->readLock();
 
         if (dateRange)
@@ -230,38 +246,65 @@ makeBuyDecisionsForParallel(QThread* parentThread, int threadId, QList<Stock*>& 
 
         QString cause;
 
-        for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+        if (avgPrice < 0)
         {
-            cause = buyDecisionsArray[j]->makeDecision(
-                parentThread, decisionConfig, stock, dateRange, dataIndex, price, 0.0f, commission
-            );
+            if (money >= price)
+            {
+                for (int j = 0; j < buyDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+                {
+                    cause = buyDecisionsArray[j]->makeDecision(
+                        parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
+                    );
+                }
+
+                if (cause != "")
+                {
+                    TradingInfo tradingInfo;
+
+                    tradingInfo.price        = price;
+                    tradingInfo.expectedCost = stock->meta.turnover;
+                    tradingInfo.cause        = cause;
+
+                    buyResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                }
+            }
         }
-
-        if (cause != "")
+        else
         {
-            TradingInfo tradingInfo;
+            for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
+            {
+                cause = sellDecisionsArray[j]->makeDecision(
+                    parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
+                );
+            }
 
-            tradingInfo.price        = price;
-            tradingInfo.expectedCost = stock->meta.turnover;
-            tradingInfo.cause        = cause;
+            if (cause != "")
+            {
+                TradingInfo tradingInfo;
 
-            resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+                tradingInfo.price        = price;
+                tradingInfo.expectedCost = 0.0;
+                tradingInfo.cause        = cause;
+
+                sellResultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
+            }
         }
 
         stock->readUnlock();
     }
 }
 
-void DecisionMaker::makeBuyDecisions(
-    QThread*               parentThread,
-    IConfig*               config,
-    IDecisionMakerConfig*  decisionConfig,
-    qint64                 timestamp,
-    const Portfolio&       portfolio,
-    QList<Stock*>&         stocksForBuy,
-    int                    keepMoney,
-    bool                   dateRange,
-    InstrumentsForTrading& res
+void DecisionMaker::makeDecisions(
+    QThread*                  parentThread,
+    IConfig*                  config,
+    IDecisionMakerConfig*     decisionConfig,
+    qint64                    timestamp,
+    const Portfolio&          portfolio,
+    QList<StockWithAvgPrice>& stocksWithAvgPrice,
+    int                       keepMoney,
+    bool                      dateRange,
+    bool                      useParallel,
+    InstrumentsForTrading&    res
 )
 {
     double totalCost = 0.0;
@@ -270,21 +313,31 @@ void DecisionMaker::makeBuyDecisions(
     calculateTotalCostAndMoney(portfolio, totalCost, money);
     money -= keepMoney;
 
-    if (money <= 0)
-    {
-        return;
-    }
-
     mUserStorage->readLock();
     float commission = mUserStorage->getCommission();
     mUserStorage->readUnlock();
 
-    MakeBuyDecisionsInfo makeBuyDecisionsInfo(decisionConfig, timestamp, dateRange, commission, &mBuyDecisions);
-    processInParallel(parentThread, stocksForBuy, makeBuyDecisionsForParallel, &makeBuyDecisionsInfo);
+    MakeDecisionsInfo makeDecisionsInfo(
+        decisionConfig, timestamp, dateRange, money, commission, &mBuyDecisions, &mSellDecisions, useParallel ? getCpuCount() : 1
+    );
+
+    if (useParallel)
+    {
+        processInParallel(parentThread, stocksWithAvgPrice, makeDecisionsForParallel, &makeDecisionsInfo);
+    }
+    else
+    {
+        makeDecisionsForParallel(parentThread, 0, stocksWithAvgPrice, 0, stocksWithAvgPrice.size(), &makeDecisionsInfo);
+    }
 
     commission /= HUNDRED_PERCENT;
 
-    for (const InstrumentsForTrading& result : std::as_const(makeBuyDecisionsInfo.results))
+    for (const InstrumentsForTrading& result : std::as_const(makeDecisionsInfo.sellResults))
+    {
+        res.insert(result);
+    }
+
+    for (const InstrumentsForTrading& result : std::as_const(makeDecisionsInfo.buyResults))
     {
         for (auto it = result.constBegin(); it != result.constEnd(); ++it)
         {
@@ -338,130 +391,6 @@ void DecisionMaker::makeBuyDecisions(
                 res.insert(instrumentId, tradingInfo);
             }
         }
-    }
-}
-
-struct MakeSellDecisionsInfo
-{
-    explicit MakeSellDecisionsInfo(
-        IDecisionMakerConfig*    _decisionConfig,
-        qint64                   _timestamp,
-        bool                     _dateRange,
-        float                    _commission,
-        QList<IActionDecision*>* _sellDecisions
-    ) :
-        decisionConfig(_decisionConfig),
-        timestamp(_timestamp),
-        dateRange(_dateRange),
-        commission(_commission),
-        sellDecisions(_sellDecisions)
-    {
-        results.resize(getCpuCount());
-    }
-
-    IDecisionMakerConfig*        decisionConfig;
-    qint64                       timestamp;
-    bool                         dateRange;
-    float                        commission;
-    QList<IActionDecision*>*     sellDecisions;
-    QList<InstrumentsForTrading> results;
-};
-
-static void makeSellDecisionsForParallel(
-    QThread* parentThread, int threadId, QList<StockWithAvgPrice>& stocks, int start, int end, void* additionalArgs
-)
-{
-    MakeSellDecisionsInfo* makeSellDecisionsInfo = reinterpret_cast<MakeSellDecisionsInfo*>(additionalArgs);
-
-    IDecisionMakerConfig*  decisionConfig     = makeSellDecisionsInfo->decisionConfig;
-    const qint64           timestamp          = makeSellDecisionsInfo->timestamp;
-    const bool             dateRange          = makeSellDecisionsInfo->dateRange;
-    const float            commission         = makeSellDecisionsInfo->commission;
-    IActionDecision**      sellDecisionsArray = makeSellDecisionsInfo->sellDecisions->data();
-    const int              sellDecisionsSize  = makeSellDecisionsInfo->sellDecisions->size();
-    InstrumentsForTrading* resultsArray       = makeSellDecisionsInfo->results.data();
-
-    StockWithAvgPrice* stocksArray = stocks.data();
-
-    int   dataIndex = 0;
-    float price     = 0;
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        Stock*      stock    = stocksArray[i].stock;
-        const float avgPrice = stocksArray[i].avgPrice;
-
-        stock->readLock();
-
-        if (dateRange)
-        {
-            dataIndex = std::distance(
-                stock->data.constBegin(),
-                std::lower_bound(
-                    stock->data.constBegin(), stock->data.constEnd(), timestamp, [](const StockData& stockData, qint64 value) {
-                        return stockData.timestamp < value;
-                    }
-                )
-            );
-
-            if (dataIndex >= stock->data.size() || stock->data.at(dataIndex).timestamp != timestamp)
-            {
-                stock->readUnlock();
-
-                continue;
-            }
-
-            price = stock->data.at(dataIndex).price;
-        }
-        else
-        {
-            dataIndex = -1;
-            price     = stock->lastPrice();
-        }
-
-        QString cause;
-
-        for (int j = 0; j < sellDecisionsSize && cause == "" && !parentThread->isInterruptionRequested(); ++j)
-        {
-            cause = sellDecisionsArray[j]->makeDecision(
-                parentThread, decisionConfig, stock, dateRange, dataIndex, price, avgPrice, commission
-            );
-        }
-
-        if (cause != "")
-        {
-            TradingInfo tradingInfo;
-
-            tradingInfo.price        = price;
-            tradingInfo.expectedCost = 0.0;
-            tradingInfo.cause        = cause;
-
-            resultsArray[threadId][stock->meta.instrumentId] = tradingInfo;
-        }
-
-        stock->readUnlock();
-    }
-}
-
-void DecisionMaker::makeSellDecisions(
-    QThread*                  parentThread,
-    IDecisionMakerConfig*     decisionConfig,
-    qint64                    timestamp,
-    QList<StockWithAvgPrice>& stocksForSell,
-    bool                      dateRange,
-    InstrumentsForTrading&    res
-)
-{
-    mUserStorage->readLock();
-    const float commission = mUserStorage->getCommission();
-    mUserStorage->readUnlock();
-
-    MakeSellDecisionsInfo makeSellDecisionsInfo(decisionConfig, timestamp, dateRange, commission, &mSellDecisions);
-    processInParallel(parentThread, stocksForSell, makeSellDecisionsForParallel, &makeSellDecisionsInfo);
-
-    for (const InstrumentsForTrading& result : std::as_const(makeSellDecisionsInfo.results))
-    {
-        res.insert(result);
     }
 }
 

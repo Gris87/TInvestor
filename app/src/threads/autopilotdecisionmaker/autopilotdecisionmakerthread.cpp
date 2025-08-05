@@ -54,7 +54,8 @@ void AutoPilotDecisionMakerThread::run()
             mStocksStorage->getStocks(),
             true,
             keepMoney(),
-            false
+            false,
+            true
         );
         mStocksStorage->readUnlock();
 

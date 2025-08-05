@@ -95,7 +95,8 @@ void SimulatorDecisionMakerThread::run()
         mStocksStorage->getStocks(),
         false,
         0,
-        false
+        false,
+        true
     );
     mStocksStorage->readUnlock();
 

@@ -544,7 +544,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecisi
                     }
 
                     const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, stocks, false, 0, true);
+                        mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, stocks, false, 0, true, false);
 
                     if (!instrumentsForTrading.isEmpty())
                     {
@@ -652,7 +652,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
         }
 
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(QThread::currentThread(), timestamp, mConfig, portfolio, stocks, false, 0, true);
+            mDecisionMaker->makeDecision(QThread::currentThread(), timestamp, mConfig, portfolio, stocks, false, 0, true, true);
 
         if (!instrumentsForTrading.isEmpty())
         {

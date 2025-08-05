@@ -31,7 +31,7 @@ public:
     virtual bool isAutorun()            = 0;
 
     virtual void    setCpuUsage(const QString& value) = 0;
-    virtual QString getCpuUsage()              = 0;
+    virtual QString getCpuUsage()                     = 0;
 
     virtual void setMakeDecisionTimeout(int value) = 0;
     virtual int  getMakeDecisionTimeout()          = 0;

@@ -26,6 +26,7 @@ public:
         const QList<Stock*>& stocks,
         bool                 autoPilot,
         int                  keepMoney,
-        bool                 dateRange
+        bool                 dateRange,
+        bool                 useParallel
     ) = 0;
 };

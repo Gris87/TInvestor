@@ -181,7 +181,7 @@ TEST_F(Test_AutoPilotDecisionMakerThread, Test_run)
     EXPECT_CALL(*stocksStorageMock, getStocks()).WillOnce(ReturnRef(stocks));
     EXPECT_CALL(
         *decisionMakerMock,
-        makeDecision(QThread::currentThread(), Ge(1704056400000), configMock, portfolio, stocks, true, 10000, false)
+        makeDecision(QThread::currentThread(), Ge(1704056400000), configMock, portfolio, stocks, true, 10000, false, true)
     )
         .WillOnce(Return(instrumentsForTrading));
     EXPECT_CALL(*stocksStorageMock, readUnlock());
