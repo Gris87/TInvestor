@@ -108,11 +108,11 @@ void SimulatorDateRangeDecisionMakerThread::run()
 
     if (mBestConfig)
     {
-        simulationWithBestConfig(startTime);
+        simulationWithBestConfig();
     }
     else
     {
-        simulationWithoutBestConfig(startTime);
+        simulationWithoutBestConfig();
     }
 
     qInfo() << "Simulation completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
@@ -631,109 +631,183 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDec
 
 struct SimulationStep2Info
 {
-    explicit SimulationStep2Info(SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config) :
+    explicit SimulationStep2Info(
+        SimulatorDateRangeDecisionMakerThread* _thread,
+        qint64                                 _startTime,
+        IConfig*                               _config,
+        int                                    _configId,
+        qint64                                 _totalMinutes,
+        const QList<Stock*>*                   _stocks
+    ) :
         thread(_thread),
         startTime(_startTime),
-        config(_config)
+        config(_config),
+        configId(_configId),
+        currentConfig(_configId),
+        totalMinutes(_totalMinutes),
+        stocks(_stocks)
     {
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
     qint64                                 startTime;
     IConfig*                               config;
+    int                                    configId;
+    QAtomicInt                             currentConfig;
+    qint64                                 totalMinutes;
+    const QList<Stock*>*                   stocks;
 };
 
 static void simulationStep2ForParallel(
-    QThread* parentThread, int /*threadId*/, QList<QString>& /*configVariants*/, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, QList<QString>& configVariants, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     SimulationStep2Info* simulationStep2Info = reinterpret_cast<SimulationStep2Info*>(additionalArgs);
 
-    //SimulatorDateRangeDecisionMakerThread* thread    = simulationStep2Info->thread;
-    //const qint64                           startTime = simulationStep2Info->startTime;
-    IConfig* config = simulationStep2Info->config->clone();
+    SimulatorDateRangeDecisionMakerThread* thread       = simulationStep2Info->thread;
+    const qint64                           startTime    = simulationStep2Info->startTime;
+    IConfig*                               config       = simulationStep2Info->config->clone();
+    const int                              configId     = simulationStep2Info->configId;
+    const qint64                           totalMinutes = simulationStep2Info->totalMinutes;
+    const QList<Stock*>*                   stocks       = simulationStep2Info->stocks;
 
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
+    QString* configVariantsArray = configVariants.data();
+
+    while (!parentThread->isInterruptionRequested())
     {
-        // TODO: Implement
+        const int currentConfig = simulationStep2Info->currentConfig++;
+
+        if (currentConfig >= configVariants.size())
+        {
+            break;
+        }
+
+        const QString& configVariant = configVariantsArray[currentConfig];
+
+        const simdjson::padded_string jsonData(configVariant.toStdString());
+
+        simdjson::ondemand::parser parser;
+
+        try
+        {
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
+            config->getSimulatorConfig()->fromJsonObject(doc.get_object());
+        }
+        catch (...)
+        {
+            qWarning() << "Failed to parse config";
+        }
+
+        thread->simulationWithBestConfigForParallel(parentThread, startTime, config, configId, totalMinutes, stocks);
     }
 
     config->deleteRecursively();
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 startTime)
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
+    QThread* /*parentThread*/,
+    qint64 /*startTime*/,
+    IConfig* /*config*/,
+    int /*configId*/,
+    qint64 /*totalMinutes*/,
+    const QList<Stock*>* /*stocks*/
+)
 {
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig()
+{
+    const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
+
+    mStocksStorage->readLock();
+    const QList<Stock*> stocks = mStocksStorage->getStocks();
+    mStocksStorage->readUnlock();
+
     const int step = mSettingsEditor->value("Options/Step", 0).toInt();
 
-    if (step <= 0 && !QThread::currentThread()->isInterruptionRequested())
+    if (step < mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        // TODO: Parallel for configs not buy decisions
-        SimulationStep1Info simulationStep1Info(this, startTime, mConfig, mConfigVariants);
-        processInParallel(QThread::currentThread(), mConfigVariants, simulationStep1ForParallel, &simulationStep1Info);
-
-        if (!QThread::currentThread()->isInterruptionRequested())
-        {
-            const QString configVariants =
-                mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationStep1Info.bestConfigs);
-
-            const std::shared_ptr<IFile> configsFile =
-                mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
-
-            const bool ok = configsFile->open(QIODevice::WriteOnly);
-            Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
-
-            configsFile->write(configVariants.toUtf8());
-            configsFile->close();
-
-            mSettingsEditor->setValue("Options/Step", 1);
-        }
+        simulationWithBestConfigStep1();
     }
 
-    if (step <= 1 && !QThread::currentThread()->isInterruptionRequested())
+    if (step <= mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
+        simulationWithBestConfigStep2(totalMinutes, &stocks);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1()
+{
+    // TODO: Parallel for configs not buy decisions
+    SimulationStep1Info simulationStep1Info(this, QDateTime::currentMSecsSinceEpoch(), mConfig, mConfigVariants);
+    processInParallel(QThread::currentThread(), mConfigVariants, simulationStep1ForParallel, &simulationStep1Info);
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        const QString configVariants =
+            mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationStep1Info.bestConfigs);
 
         const std::shared_ptr<IFile> configsFile =
             mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
 
-        if (configsFile->open(QIODevice::ReadOnly))
-        {
-            const QString configVariants = QString::fromUtf8(configsFile->readAll());
-            configsFile->close();
+        const bool ok = configsFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
 
-            mConfigVariants.clear();
+        configsFile->write(configVariants.toUtf8());
+        configsFile->close();
 
-            const simdjson::padded_string jsonData(configVariants.toStdString());
-
-            simdjson::ondemand::parser parser;
-
-            try
-            {
-                simdjson::ondemand::document doc = parser.iterate(jsonData);
-
-                simdjson::ondemand::array jsonConfigs = doc.get_array();
-
-                for (simdjson::ondemand::object jsonObject : jsonConfigs)
-                {
-                    if (!QThread::currentThread()->isInterruptionRequested())
-                    {
-                        const std::string_view configStr = jsonObject.raw_json().value();
-                        mConfigVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
-                    }
-                }
-            }
-            catch (...)
-            {
-                qWarning() << "Failed to parse configs";
-            }
-
-            SimulationStep2Info simulationStep2Info(this, QDateTime::currentMSecsSinceEpoch(), mConfig);
-            processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
-        }
+        mSettingsEditor->setValue("Options/Step", mConfigVariants.size());
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 startTime)
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64 totalMinutes, const QList<Stock*>* stocks)
+{
+    emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
+
+    const std::shared_ptr<IFile> configsFile =
+        mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+
+    if (configsFile->open(QIODevice::ReadOnly))
+    {
+        const QString configVariants = QString::fromUtf8(configsFile->readAll());
+        configsFile->close();
+
+        mConfigVariants.clear();
+
+        const simdjson::padded_string jsonData(configVariants.toStdString());
+
+        simdjson::ondemand::parser parser;
+
+        try
+        {
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+            simdjson::ondemand::array jsonConfigs = doc.get_array();
+
+            for (simdjson::ondemand::object jsonObject : jsonConfigs)
+            {
+                if (!QThread::currentThread()->isInterruptionRequested())
+                {
+                    const std::string_view configStr = jsonObject.raw_json().value();
+                    mConfigVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
+                }
+            }
+        }
+        catch (...)
+        {
+            qWarning() << "Failed to parse configs";
+        }
+
+        const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+
+        SimulationStep2Info simulationStep2Info(
+            this, QDateTime::currentMSecsSinceEpoch(), mConfig, configId, totalMinutes, stocks
+        );
+        processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
 {
     const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
 
@@ -741,6 +815,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig(qint64 s
     {
         return;
     }
+
+    const qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
     const qint64 totalMinutes = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
 

@@ -64,6 +64,9 @@ public:
         qint64*  currentMinuteArray,
         double*  bestTotalMoneyArray
     );
+    void simulationWithBestConfigForParallel(
+        QThread* parentThread, qint64 startTime, IConfig* config, int configId, qint64 totalMinutes, const QList<Stock*>* stocks
+    );
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
@@ -99,8 +102,10 @@ private:
     void loadBestLogs();
     void loadBestPortfolio();
     void loadConfigs();
-    void simulationWithBestConfig(qint64 startTime);
-    void simulationWithoutBestConfig(qint64 startTime);
+    void simulationWithBestConfig();
+    void simulationWithBestConfigStep1();
+    void simulationWithBestConfigStep2(qint64 totalMinutes, const QList<Stock*>* stocks);
+    void simulationWithoutBestConfig();
     void simulateTrading(
         qint64                            timestamp,
         const InstrumentsForTrading&      instrumentsForTrading,
