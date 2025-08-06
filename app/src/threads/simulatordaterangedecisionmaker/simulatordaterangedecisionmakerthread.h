@@ -255,6 +255,8 @@ private:
     void notifyBestResult(double bestTotalMoney);
     void optimizeOperations();
     void optimizeLogs();
+    QStringList splitConfigVariants(const QString& configVariants);
+    void        applyToConfig(IConfig* config, const QString& configVariant);
 
     IDirFactory*         mDirFactory;
     IFileFactory*        mFileFactory;

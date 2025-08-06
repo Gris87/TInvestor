@@ -331,8 +331,8 @@ void SimulatorDateRangeDecisionMakerThread::initConfigs()
         mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(i), 0);
     }
 
-    mSettingsEditor->setValue("Options/Step", 0);
     mSettingsEditor->setValue("Options/LastConfigId", 0);
+    mSettingsEditor->setValue("Options/Step", 0);
 }
 
 void SimulatorDateRangeDecisionMakerThread::load()
@@ -545,21 +545,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
             break;
         }
 
-        const QString& configVariant = configVariantsArray[currentConfig];
-
-        const simdjson::padded_string jsonData(configVariant.toStdString());
-
-        simdjson::ondemand::parser parser;
-
-        try
-        {
-            simdjson::ondemand::document doc = parser.iterate(jsonData);
-            config->getSimulatorConfig()->fromJsonObject(doc.get_object());
-        }
-        catch (...)
-        {
-            qWarning() << "Failed to parse config";
-        }
+        applyToConfig(config, configVariantsArray[currentConfig]);
 
         simulationWithBestConfigForParallel(
             parentThread,
@@ -720,6 +706,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
 
     for (int i = 0; i < mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
+        emit stepProgressChanged(i, mConfigVariants.size() + 1);
+
         double bestLocalTotalMoney = 0.0;
 
         QList<Operation> bestOperations = mOperationsDatabase->readOperations(i);
@@ -738,35 +726,13 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
             }
         }
 
-        QStringList configVariants;
+        QStringList configVariants = splitConfigVariants(mConfigVariants.at(i));
 
-        const simdjson::padded_string jsonData(mConfigVariants.at(i).toStdString());
-
-        simdjson::ondemand::parser parser;
-
-        try
-        {
-            simdjson::ondemand::document doc = parser.iterate(jsonData);
-
-            simdjson::ondemand::array jsonConfigs = doc.get_array();
-
-            for (simdjson::ondemand::object jsonObject : jsonConfigs)
-            {
-                if (!QThread::currentThread()->isInterruptionRequested())
-                {
-                    const std::string_view configStr = jsonObject.raw_json().value();
-                    configVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
-                }
-            }
-        }
-        catch (...)
-        {
-            qWarning() << "Failed to parse configs";
-        }
+        const qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
         SimulationInfo simulationInfo(
             this,
-            QDateTime::currentMSecsSinceEpoch(),
+            startTime,
             mConfig,
             mSettingsEditor,
             i,
@@ -779,6 +745,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
             &bestPortfolio
         );
         processInParallel(QThread::currentThread(), configVariants, simulationForParallel, &simulationInfo);
+
+        qInfo() << "Simulation of step" << i << "completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
 
         bestConfigs.append(simulationInfo.bestConfig);
     }
@@ -844,35 +812,13 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
         const QString content = QString::fromUtf8(configsFile->readAll());
         configsFile->close();
 
-        QStringList configVariants;
+        QStringList configVariants = splitConfigVariants(content);
 
-        const simdjson::padded_string jsonData(content.toStdString());
-
-        simdjson::ondemand::parser parser;
-
-        try
-        {
-            simdjson::ondemand::document doc = parser.iterate(jsonData);
-
-            simdjson::ondemand::array jsonConfigs = doc.get_array();
-
-            for (simdjson::ondemand::object jsonObject : jsonConfigs)
-            {
-                if (!QThread::currentThread()->isInterruptionRequested())
-                {
-                    const std::string_view configStr = jsonObject.raw_json().value();
-                    configVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
-                }
-            }
-        }
-        catch (...)
-        {
-            qWarning() << "Failed to parse configs";
-        }
+        const qint64 startTime = QDateTime::currentMSecsSinceEpoch();
 
         SimulationInfo simulationInfo(
             this,
-            QDateTime::currentMSecsSinceEpoch(),
+            startTime,
             mConfig,
             mSettingsEditor,
             -1,
@@ -885,6 +831,10 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
             &mBestPortfolio
         );
         processInParallel(QThread::currentThread(), configVariants, simulationForParallel, &simulationInfo);
+
+        qInfo() << "Simulation of last step completed in" << QDateTime::currentMSecsSinceEpoch() - startTime << "ms";
+
+        applyToConfig(mConfig, simulationInfo.bestConfig);
     }
 }
 
@@ -1642,5 +1592,53 @@ void SimulatorDateRangeDecisionMakerThread::optimizeLogs()
     {
         mBestEntries = mOptimizer->optimizeLogs(mBestEntries, mOptimizeLogsSize);
         mLogsDatabase->writeLogs(mBestEntries);
+    }
+}
+
+QStringList SimulatorDateRangeDecisionMakerThread::splitConfigVariants(const QString& configVariants)
+{
+    QStringList res;
+
+    const simdjson::padded_string jsonData(configVariants.toStdString());
+
+    simdjson::ondemand::parser parser;
+
+    try
+    {
+        simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+        simdjson::ondemand::array jsonConfigs = doc.get_array();
+
+        for (simdjson::ondemand::object jsonObject : jsonConfigs)
+        {
+            if (!QThread::currentThread()->isInterruptionRequested())
+            {
+                const std::string_view configStr = jsonObject.raw_json().value();
+                res.append(QString::fromUtf8(configStr.data(), configStr.size()));
+            }
+        }
+    }
+    catch (...)
+    {
+        qWarning() << "Failed to parse configs";
+    }
+
+    return res;
+}
+
+void SimulatorDateRangeDecisionMakerThread::applyToConfig(IConfig* config, const QString& configVariant)
+{
+    const simdjson::padded_string jsonData(configVariant.toStdString());
+
+    simdjson::ondemand::parser parser;
+
+    try
+    {
+        simdjson::ondemand::document doc = parser.iterate(jsonData);
+        config->getSimulatorConfig()->fromJsonObject(doc.get_object());
+    }
+    catch (...)
+    {
+        qWarning() << "Failed to parse config";
     }
 }
