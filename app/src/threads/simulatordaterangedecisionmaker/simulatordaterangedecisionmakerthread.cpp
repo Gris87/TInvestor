@@ -644,9 +644,11 @@ struct SimulationStep2Info
         config(_config),
         configId(_configId),
         currentConfig(_configId),
+        processedConfig(_configId),
         totalMinutes(_totalMinutes),
         stocks(_stocks)
     {
+        currentMinute.fill(0, getCpuCount());
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
@@ -654,30 +656,43 @@ struct SimulationStep2Info
     IConfig*                               config;
     int                                    configId;
     QAtomicInt                             currentConfig;
+    QAtomicInt                             processedConfig;
     qint64                                 totalMinutes;
     const QList<Stock*>*                   stocks;
+    QList<qint64>                          currentMinute;
 };
 
 static void simulationStep2ForParallel(
-    QThread* parentThread, int /*threadId*/, QList<QString>& configVariants, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, QList<QString>& configVariants, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     SimulationStep2Info* simulationStep2Info = reinterpret_cast<SimulationStep2Info*>(additionalArgs);
 
-    SimulatorDateRangeDecisionMakerThread* thread       = simulationStep2Info->thread;
-    const qint64                           startTime    = simulationStep2Info->startTime;
-    IConfig*                               config       = simulationStep2Info->config->clone();
-    const int                              configId     = simulationStep2Info->configId;
-    const qint64                           totalMinutes = simulationStep2Info->totalMinutes;
-    const QList<Stock*>*                   stocks       = simulationStep2Info->stocks;
+    SimulatorDateRangeDecisionMakerThread* thread             = simulationStep2Info->thread;
+    const qint64                           startTime          = simulationStep2Info->startTime;
+    IConfig*                               config             = simulationStep2Info->config->clone();
+    const int                              configId           = simulationStep2Info->configId;
+    const qint64                           totalMinutes       = simulationStep2Info->totalMinutes;
+    const QList<Stock*>*                   stocks             = simulationStep2Info->stocks;
+    qint64*                                currentMinuteArray = simulationStep2Info->currentMinute.data();
+    const int                              threadsCount       = simulationStep2Info->currentMinute.size();
 
     QString* configVariantsArray = configVariants.data();
 
+    double           totalMoney = 0.0;
+    QList<Operation> operations;
+    QList<LogEntry>  entries;
+    Portfolio        portfolio;
+
+    int amountOfConfigs = configVariants.size();
+
     while (!parentThread->isInterruptionRequested())
     {
+        emit thread->totalProgressChanged(simulationStep2Info->processedConfig, amountOfConfigs);
+
         const int currentConfig = simulationStep2Info->currentConfig++;
 
-        if (currentConfig >= configVariants.size())
+        if (currentConfig >= amountOfConfigs)
         {
             break;
         }
@@ -698,21 +713,89 @@ static void simulationStep2ForParallel(
             qWarning() << "Failed to parse config";
         }
 
-        thread->simulationWithBestConfigForParallel(parentThread, startTime, config, configId, totalMinutes, stocks);
+        thread->simulationWithBestConfigForParallel(
+            parentThread,
+            threadId,
+            threadsCount,
+            startTime,
+            config,
+            configId,
+            simulationStep2Info->processedConfig,
+            amountOfConfigs,
+            totalMinutes,
+            stocks,
+            totalMoney,
+            operations,
+            entries,
+            portfolio,
+            currentMinuteArray
+        );
     }
 
     config->deleteRecursively();
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
-    QThread* /*parentThread*/,
-    qint64 /*startTime*/,
-    IConfig* /*config*/,
-    int /*configId*/,
-    qint64 /*totalMinutes*/,
-    const QList<Stock*>* /*stocks*/
+    QThread*             parentThread,
+    int                  threadId,
+    int                  threadsCount,
+    qint64               startTime,
+    IConfig*             config,
+    int                  configId,
+    QAtomicInt&          processedConfig,
+    int                  amountOfConfigs,
+    qint64               totalMinutes,
+    const QList<Stock*>* stocks,
+    double&              totalMoney,
+    QList<Operation>&    operations,
+    QList<LogEntry>&     entries,
+    Portfolio&           portfolio,
+    qint64*              currentMinuteArray
 )
 {
+    totalMoney = mStartMoney;
+    operations = mInitOperations;
+    entries    = mInitEntries;
+    portfolio  = mInitPortfolio;
+    QuantityAndCostDoubleInstruments instruments;
+
+    qint64 timestamp = mStartTimestamp;
+
+    while (timestamp < mEndTimestamp && !QThread::currentThread()->isInterruptionRequested())
+    {
+        if (timestamp % NOTIFY_PROGRESS_STEP == 0)
+        {
+            const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
+
+            notifyProgressChanged2(
+                startTime,
+                configId,
+                processedConfig,
+                amountOfConfigs,
+                currentMinuteArray,
+                threadId,
+                threadsCount,
+                currentMinute,
+                totalMinutes
+            );
+        }
+
+        const InstrumentsForTrading& instrumentsForTrading =
+            mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, *stocks, false, 0, true, false);
+
+        if (!instrumentsForTrading.isEmpty())
+        {
+            simulateTrading(timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments);
+        }
+
+        timestamp += ONE_MINUTE;
+    }
+
+    processedConfig++;
+
+    notifyProgressChanged2(
+        startTime, configId, processedConfig, amountOfConfigs, currentMinuteArray, threadId, threadsCount, 0, totalMinutes
+    );
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig()
@@ -1522,6 +1605,56 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
         processedMinutes += processedMinutesArray[i];
         remainingMinutes += remainingMinutesArray[i];
         currentMinute     = qMax(currentMinute, currentMinuteArray[i]);
+    }
+
+    qint64 remainingMilliseconds  = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
+    remainingMilliseconds        /= MS_IN_SECOND;
+    const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
+    remainingMilliseconds        /= SECONDS_IN_MINUTE;
+    const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
+    remainingMilliseconds        /= MINUTES_IN_HOUR;
+    const int hours               = remainingMilliseconds;
+
+    emit progressChanged(
+        currentMinute,
+        totalMinutes,
+        QString("%1:%2:%3")
+            .arg(
+                QString::number(hours).rightJustified(2, '0'),
+                QString::number(minutes).rightJustified(2, '0'),
+                QString::number(seconds).rightJustified(2, '0')
+            )
+    );
+}
+
+void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged2(
+    qint64  startTime,
+    int     configId,
+    int     processedConfig,
+    int     amountOfConfigs,
+    qint64* currentMinuteArray,
+    int     threadId,
+    int     threadsCount,
+    qint64  currentMinute,
+    qint64  totalMinutes
+)
+{
+    const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+
+    double processedMinutes = (processedConfig - configId) * totalMinutes;
+    double remainingMinutes = (amountOfConfigs - processedConfig) * totalMinutes;
+
+    static QMutex      mutex;
+    const QMutexLocker lock(&mutex);
+
+    currentMinuteArray[threadId] = currentMinute;
+
+    for (int i = 0; i < threadsCount; ++i)
+    {
+        processedMinutes += currentMinuteArray[i];
+        remainingMinutes -= currentMinuteArray[i];
+
+        currentMinute = qMax(currentMinute, currentMinuteArray[i]);
     }
 
     qint64 remainingMilliseconds  = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;

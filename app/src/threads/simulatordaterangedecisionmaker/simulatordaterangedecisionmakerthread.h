@@ -65,7 +65,21 @@ public:
         double*  bestTotalMoneyArray
     );
     void simulationWithBestConfigForParallel(
-        QThread* parentThread, qint64 startTime, IConfig* config, int configId, qint64 totalMinutes, const QList<Stock*>* stocks
+        QThread*             parentThread,
+        int                  threadId,
+        int                  threadsCount,
+        qint64               startTime,
+        IConfig*             config,
+        int                  configId,
+        QAtomicInt&          processedConfig,
+        int                  amountOfConfigs,
+        qint64               totalMinutes,
+        const QList<Stock*>* stocks,
+        double&              totalMoney,
+        QList<Operation>&    operations,
+        QList<LogEntry>&     entries,
+        Portfolio&           portfolio,
+        qint64*              currentMinuteArray
     );
 
 #ifdef TESTING_MODE
@@ -213,6 +227,17 @@ private:
         double* remainingMinutesArray,
         qint64* currentMinuteArray,
         int     buyDecisionId,
+        qint64  currentMinute,
+        qint64  totalMinutes
+    );
+    void notifyProgressChanged2(
+        qint64  startTime,
+        int     configId,
+        int     processedConfig,
+        int     amountOfConfigs,
+        qint64* currentMinuteArray,
+        int     threadId,
+        int     threadsCount,
         qint64  currentMinute,
         qint64  totalMinutes
     );
