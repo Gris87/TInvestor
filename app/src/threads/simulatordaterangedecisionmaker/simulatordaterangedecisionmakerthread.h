@@ -109,7 +109,7 @@ private:
         QList<LogEntry>&                  entries,
         Portfolio&                        portfolio,
         QuantityAndCostDoubleInstruments& instruments
-    );
+    ) const;
     void simulateSell(
         qint64&                           timestamp,
         const QString&                    instrumentId,
@@ -119,7 +119,7 @@ private:
         QList<LogEntry>&                  entries,
         Portfolio&                        portfolio,
         QuantityAndCostDoubleInstruments& instruments
-    );
+    ) const;
     void simulateSellForOperations(
         qint64&           timestamp,
         const QString&    instrumentId,
@@ -133,7 +133,7 @@ private:
         double&           totalMoney,
         QList<Operation>& operations,
         Portfolio&        portfolio
-    );
+    ) const;
     void simulateSellForLogs(
         qint64&           timestamp,
         const QString&    instrumentId,
@@ -143,9 +143,9 @@ private:
         qint64            quantity,
         float             price,
         QList<LogEntry>&  entries
-    );
-    void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio);
-    void simulateSellForInstruments(const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments);
+    ) const;
+    void simulateSellForPortfolio(const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio) const;
+    void simulateSellForInstruments(const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments) const;
     void simulateBuy(
         qint64&                           timestamp,
         const QString&                    instrumentId,
@@ -155,7 +155,7 @@ private:
         QList<LogEntry>&                  entries,
         Portfolio&                        portfolio,
         QuantityAndCostDoubleInstruments& instruments
-    );
+    ) const;
     void simulateBuyForOperations(
         qint64&           timestamp,
         const QString&    instrumentId,
@@ -168,7 +168,7 @@ private:
         double&           totalMoney,
         QList<Operation>& operations,
         Portfolio&        portfolio
-    );
+    ) const;
     void simulateBuyForLogs(
         qint64&           timestamp,
         const QString&    instrumentId,
@@ -178,7 +178,7 @@ private:
         qint64            quantity,
         float             price,
         QList<LogEntry>&  entries
-    );
+    ) const;
     void simulateBuyForPortfolio(
         const QString&    instrumentId,
         Logo*             logo,
@@ -188,12 +188,12 @@ private:
         double            cost,
         double            totalCommission,
         Portfolio&        portfolio
-    );
+    ) const;
     void simulateBuyForInstruments(
         const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
-    );
-    QList<Operation> reverseOperations(QList<Operation>& operations);
-    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries);
+    ) const;
+    QList<Operation> reverseOperations(QList<Operation>& operations) const;
+    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
     void             updateCostAndPart();
     void             updatePrice();
     void             notifyTotalProgressChanged(

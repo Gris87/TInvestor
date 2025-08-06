@@ -691,7 +691,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig(qint64 star
 
     if (step <= 1 && !QThread::currentThread()->isInterruptionRequested())
     {
-        emit stepProgressChanged(1, 2);
+        emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
 
         const std::shared_ptr<IFile> configsFile =
             mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
@@ -823,7 +823,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateTrading(
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
     QuantityAndCostDoubleInstruments& instruments
-)
+) const
 {
     InstrumentsForTrading instrumentsForSell;
     InstrumentsForTrading instrumentsForBuy;
@@ -860,7 +860,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSell(
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
     QuantityAndCostDoubleInstruments& instruments
-)
+) const
 {
     if (!instruments.contains(instrumentId))
     {
@@ -920,7 +920,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForOperations(
     double&           totalMoney,
     QList<Operation>& operations,
     Portfolio&        portfolio
-)
+) const
 {
     const double avgPrice            = costFifo / quantity;
     const double yield               = cost - costFifo;
@@ -977,7 +977,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
     qint64            quantity,
     float             price,
     QList<LogEntry>&  entries
-)
+) const
 {
     LogEntry entry;
 
@@ -1018,7 +1018,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForLogs(
 
 void SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(
     const QString& instrumentId, double cost, double totalCommission, Portfolio& portfolio
-)
+) const
 {
     PortfolioCategoryItem& category = portfolio.positions[SHARE_ID]; // clazy:exclude=detaching-member
 
@@ -1039,7 +1039,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateSellForPortfolio(
 
 void SimulatorDateRangeDecisionMakerThread::simulateSellForInstruments(
     const QString& instrumentId, QuantityAndCostDoubleInstruments& instruments
-)
+) const
 {
     instruments.remove(instrumentId);
 }
@@ -1053,7 +1053,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuy(
     QList<LogEntry>&                  entries,
     Portfolio&                        portfolio,
     QuantityAndCostDoubleInstruments& instruments
-)
+) const
 {
     if (instruments.contains(instrumentId))
     {
@@ -1119,7 +1119,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForOperations(
     double&           totalMoney,
     QList<Operation>& operations,
     Portfolio&        portfolio
-)
+) const
 {
     totalMoney                            -= totalCommission;
     const double totalYieldWithCommission  = totalMoney - mStartMoney;
@@ -1170,7 +1170,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForLogs(
     qint64            quantity,
     float             price,
     QList<LogEntry>&  entries
-)
+) const
 {
     LogEntry entry;
 
@@ -1218,7 +1218,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
     double            cost,
     double            totalCommission,
     Portfolio&        portfolio
-)
+) const
 {
     PortfolioItem item;
 
@@ -1250,7 +1250,7 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForPortfolio(
 
 void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(
     const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
-)
+) const
 {
     QuantityAndCostDouble quantityAndCost;
 
@@ -1286,7 +1286,7 @@ static void reverseOperationsForParallel(
     }
 }
 
-QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<Operation>& operations)
+QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<Operation>& operations) const
 {
     QList<Operation> res;
     res.resizeForOverwrite(operations.size());
@@ -1322,7 +1322,7 @@ reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntr
     }
 }
 
-QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogEntry>& entries)
+QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogEntry>& entries) const
 {
     QList<LogEntry> res;
     res.resizeForOverwrite(entries.size());

@@ -299,8 +299,8 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
 
     unitedBestConfigs.removeDuplicates();
 
-    QStringList sellVariants3 = mSellDecision3Config->variantsAsJson();
-    QStringList sellVariants4 = mSellDecision4Config->variantsAsJson();
+    const QStringList sellVariants3 = mSellDecision3Config->variantsAsJson();
+    const QStringList sellVariants4 = mSellDecision4Config->variantsAsJson();
 
     for (const QString& bestConfig : unitedBestConfigs)
     {

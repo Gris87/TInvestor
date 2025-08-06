@@ -188,6 +188,7 @@ struct MakeDecisionsInfo
     QList<InstrumentsForTrading> sellResults;
 };
 
+// NOLINTBEGIN(readability-function-cognitive-complexity)
 static void makeDecisionsForParallel(
     QThread* parentThread, int threadId, QList<StockWithAvgPrice>& stocks, int start, int end, void* additionalArgs
 )
@@ -293,6 +294,7 @@ static void makeDecisionsForParallel(
         stock->readUnlock();
     }
 }
+// NOLINTEND(readability-function-cognitive-complexity)
 
 void DecisionMaker::makeDecisions(
     QThread*                  parentThread,
