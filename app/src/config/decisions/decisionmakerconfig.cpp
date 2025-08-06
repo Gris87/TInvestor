@@ -304,14 +304,14 @@ QString DecisionMakerConfig::variantsToJsonStringListExtendedBySellDecisions(con
 
     for (const QString& bestConfig : unitedBestConfigs)
     {
-        for (int i = 1; i < sellVariants3.size(); ++i)
+        for (const QString& s3 : sellVariants3)
         {
-            for (int j = 1; j < sellVariants4.size(); ++j)
+            for (const QString& s4 : sellVariants4)
             {
                 QString temp = bestConfig;
 
-                res.append(temp.replace(R"("s3":{"enabled":false})", QString(R"("s3":%1)").arg(sellVariants3.at(i)))
-                               .replace(R"("s4":{"enabled":false})", QString(R"("s4":%1)").arg(sellVariants4.at(j))));
+                res.append(temp.replace(R"("s3":{"enabled":false})", QString(R"("s3":%1)").arg(s3))
+                               .replace(R"("s4":{"enabled":false})", QString(R"("s4":%1)").arg(s4)));
             }
         }
     }

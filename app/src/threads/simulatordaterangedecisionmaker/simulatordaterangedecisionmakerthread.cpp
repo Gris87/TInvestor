@@ -635,31 +635,43 @@ struct SimulationStep2Info
         SimulatorDateRangeDecisionMakerThread* _thread,
         qint64                                 _startTime,
         IConfig*                               _config,
-        int                                    _configId,
+        ISettingsEditor*                       _settingsEditor,
+        const QString&                         _settingsSuffix,
         qint64                                 _totalMinutes,
         const QList<Stock*>*                   _stocks
     ) :
         thread(_thread),
         startTime(_startTime),
         config(_config),
-        configId(_configId),
-        currentConfig(_configId),
-        processedConfig(_configId),
+        settingsEditor(_settingsEditor),
+        settingsSuffix(_settingsSuffix),
         totalMinutes(_totalMinutes),
         stocks(_stocks)
     {
+        const int _configId = settingsEditor->value(QString("Options/LastConfigId%1").arg(settingsSuffix), 0).toInt();
+
+        configId        = _configId;
+        lastConfigId    = _configId;
+        currentConfig   = _configId;
+        processedConfig = _configId;
+
         currentMinute.fill(0, getCpuCount());
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
     qint64                                 startTime;
     IConfig*                               config;
+    ISettingsEditor*                       settingsEditor;
+    QString                                settingsSuffix;
     int                                    configId;
+    int                                    lastConfigId;
     QAtomicInt                             currentConfig;
     QAtomicInt                             processedConfig;
     qint64                                 totalMinutes;
     const QList<Stock*>*                   stocks;
     QList<qint64>                          currentMinute;
+    QMutex                                 mutex;
+    QList<int>                             processedIds;
 };
 
 static void simulationStep2ForParallel(
@@ -671,6 +683,8 @@ static void simulationStep2ForParallel(
     SimulatorDateRangeDecisionMakerThread* thread             = simulationStep2Info->thread;
     const qint64                           startTime          = simulationStep2Info->startTime;
     IConfig*                               config             = simulationStep2Info->config->clone();
+    ISettingsEditor*                       settingsEditor     = simulationStep2Info->settingsEditor;
+    const QString                          settingsSuffix     = simulationStep2Info->settingsSuffix;
     const int                              configId           = simulationStep2Info->configId;
     const qint64                           totalMinutes       = simulationStep2Info->totalMinutes;
     const QList<Stock*>*                   stocks             = simulationStep2Info->stocks;
@@ -684,7 +698,7 @@ static void simulationStep2ForParallel(
     QList<LogEntry>  entries;
     Portfolio        portfolio;
 
-    int amountOfConfigs = configVariants.size();
+    const int amountOfConfigs = configVariants.size();
 
     while (!parentThread->isInterruptionRequested())
     {
@@ -730,6 +744,29 @@ static void simulationStep2ForParallel(
             portfolio,
             currentMinuteArray
         );
+
+        simulationStep2Info->mutex.lock();
+
+        simulationStep2Info->processedIds.insert(
+            std::distance(
+                simulationStep2Info->processedIds.constBegin(),
+                std::lower_bound(
+                    simulationStep2Info->processedIds.constBegin(), simulationStep2Info->processedIds.constEnd(), currentConfig
+                )
+            ),
+            currentConfig
+        );
+
+        while (!simulationStep2Info->processedIds.isEmpty() &&
+               simulationStep2Info->processedIds.constFirst() == simulationStep2Info->lastConfigId)
+        {
+            simulationStep2Info->processedIds.removeFirst();
+            ++simulationStep2Info->lastConfigId;
+        }
+
+        settingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), simulationStep2Info->lastConfigId);
+
+        simulationStep2Info->mutex.unlock();
     }
 
     config->deleteRecursively();
@@ -881,10 +918,8 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
             qWarning() << "Failed to parse configs";
         }
 
-        const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
-
         SimulationStep2Info simulationStep2Info(
-            this, QDateTime::currentMSecsSinceEpoch(), mConfig, configId, totalMinutes, stocks
+            this, QDateTime::currentMSecsSinceEpoch(), mConfig, mSettingsEditor, "", totalMinutes, stocks
         );
         processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
     }
