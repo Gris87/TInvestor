@@ -636,24 +636,40 @@ struct SimulationStep2Info
         qint64                                 _startTime,
         IConfig*                               _config,
         ISettingsEditor*                       _settingsEditor,
-        const QString&                         _settingsSuffix,
+        IOperationsDatabase*                   _operationsDatabase,
+        ILogsDatabase*                         _logsDatabase,
+        IPortfolioDatabase*                    _portfolioDatabase,
+        int                                    _buyDecisionId,
         qint64                                 _totalMinutes,
-        const QList<Stock*>*                   _stocks
+        const QList<Stock*>*                   _stocks,
+        double*                                _bestGlobalTotalMoney,
+        double*                                _bestLocalTotalMoney,
+        QList<Operation>*                      _bestOperations,
+        QList<LogEntry>*                       _bestEntries,
+        Portfolio*                             _bestPortfolio
     ) :
         thread(_thread),
         startTime(_startTime),
         config(_config),
         settingsEditor(_settingsEditor),
-        settingsSuffix(_settingsSuffix),
+        operationsDatabase(_operationsDatabase),
+        logsDatabase(_logsDatabase),
+        portfolioDatabase(_portfolioDatabase),
+        buyDecisionId(_buyDecisionId),
         totalMinutes(_totalMinutes),
-        stocks(_stocks)
+        stocks(_stocks),
+        bestGlobalTotalMoney(_bestGlobalTotalMoney),
+        bestLocalTotalMoney(_bestLocalTotalMoney),
+        bestOperations(_bestOperations),
+        bestEntries(_bestEntries),
+        bestPortfolio(_bestPortfolio)
     {
-        const int _configId = settingsEditor->value(QString("Options/LastConfigId%1").arg(settingsSuffix), 0).toInt();
+        settingsSuffix = buyDecisionId >= 0 ? QString::number(buyDecisionId) : "";
+        startConfigId  = settingsEditor->value(QString("Options/LastConfigId%1").arg(settingsSuffix), 0).toInt();
 
-        configId        = _configId;
-        lastConfigId    = _configId;
-        currentConfig   = _configId;
-        processedConfig = _configId;
+        lastConfigId      = startConfigId;
+        currentConfigId   = startConfigId;
+        processedConfigId = startConfigId;
 
         currentMinute.fill(0, getCpuCount());
     }
@@ -662,16 +678,25 @@ struct SimulationStep2Info
     qint64                                 startTime;
     IConfig*                               config;
     ISettingsEditor*                       settingsEditor;
+    IOperationsDatabase*                   operationsDatabase;
+    ILogsDatabase*                         logsDatabase;
+    IPortfolioDatabase*                    portfolioDatabase;
+    int                                    buyDecisionId;
     QString                                settingsSuffix;
-    int                                    configId;
+    int                                    startConfigId;
     int                                    lastConfigId;
-    QAtomicInt                             currentConfig;
-    QAtomicInt                             processedConfig;
+    QAtomicInt                             currentConfigId;
+    QAtomicInt                             processedConfigId;
     qint64                                 totalMinutes;
     const QList<Stock*>*                   stocks;
     QList<qint64>                          currentMinute;
     QMutex                                 mutex;
     QList<int>                             processedIds;
+    double*                                bestGlobalTotalMoney;
+    double*                                bestLocalTotalMoney;
+    QList<Operation>*                      bestOperations;
+    QList<LogEntry>*                       bestEntries;
+    Portfolio*                             bestPortfolio;
 };
 
 static void simulationStep2ForParallel(
@@ -680,16 +705,30 @@ static void simulationStep2ForParallel(
 {
     SimulationStep2Info* simulationStep2Info = reinterpret_cast<SimulationStep2Info*>(additionalArgs);
 
-    SimulatorDateRangeDecisionMakerThread* thread             = simulationStep2Info->thread;
-    const qint64                           startTime          = simulationStep2Info->startTime;
-    IConfig*                               config             = simulationStep2Info->config->clone();
-    ISettingsEditor*                       settingsEditor     = simulationStep2Info->settingsEditor;
-    const QString                          settingsSuffix     = simulationStep2Info->settingsSuffix;
-    const int                              configId           = simulationStep2Info->configId;
-    const qint64                           totalMinutes       = simulationStep2Info->totalMinutes;
-    const QList<Stock*>*                   stocks             = simulationStep2Info->stocks;
-    qint64*                                currentMinuteArray = simulationStep2Info->currentMinute.data();
-    const int                              threadsCount       = simulationStep2Info->currentMinute.size();
+    SimulatorDateRangeDecisionMakerThread* thread               = simulationStep2Info->thread;
+    const qint64                           startTime            = simulationStep2Info->startTime;
+    IConfig*                               config               = simulationStep2Info->config->clone();
+    ISettingsEditor*                       settingsEditor       = simulationStep2Info->settingsEditor;
+    IOperationsDatabase*                   operationsDatabase   = simulationStep2Info->operationsDatabase;
+    ILogsDatabase*                         logsDatabase         = simulationStep2Info->logsDatabase;
+    IPortfolioDatabase*                    portfolioDatabase    = simulationStep2Info->portfolioDatabase;
+    const int                              buyDecisionId        = simulationStep2Info->buyDecisionId;
+    const QString                          settingsSuffix       = simulationStep2Info->settingsSuffix;
+    const int                              startConfigId        = simulationStep2Info->startConfigId;
+    int&                                   lastConfigId         = simulationStep2Info->lastConfigId;
+    QAtomicInt&                            currentConfigId      = simulationStep2Info->currentConfigId;
+    QAtomicInt&                            processedConfigId    = simulationStep2Info->processedConfigId;
+    const qint64                           totalMinutes         = simulationStep2Info->totalMinutes;
+    const QList<Stock*>*                   stocks               = simulationStep2Info->stocks;
+    qint64*                                currentMinuteArray   = simulationStep2Info->currentMinute.data();
+    const int                              threadsCount         = simulationStep2Info->currentMinute.size();
+    QMutex*                                mutex                = &simulationStep2Info->mutex;
+    QList<int>*                            processedIds         = &simulationStep2Info->processedIds;
+    double*                                bestGlobalTotalMoney = simulationStep2Info->bestGlobalTotalMoney;
+    double*                                bestLocalTotalMoney  = simulationStep2Info->bestLocalTotalMoney;
+    QList<Operation>*                      bestOperations       = simulationStep2Info->bestOperations;
+    QList<LogEntry>*                       bestEntries          = simulationStep2Info->bestEntries;
+    Portfolio*                             bestPortfolio        = simulationStep2Info->bestPortfolio;
 
     QString* configVariantsArray = configVariants.data();
 
@@ -702,9 +741,9 @@ static void simulationStep2ForParallel(
 
     while (!parentThread->isInterruptionRequested())
     {
-        emit thread->totalProgressChanged(simulationStep2Info->processedConfig, amountOfConfigs);
+        emit thread->totalProgressChanged(processedConfigId, amountOfConfigs);
 
-        const int currentConfig = simulationStep2Info->currentConfig++;
+        const int currentConfig = currentConfigId++;
 
         if (currentConfig >= amountOfConfigs)
         {
@@ -733,8 +772,8 @@ static void simulationStep2ForParallel(
             threadsCount,
             startTime,
             config,
-            configId,
-            simulationStep2Info->processedConfig,
+            startConfigId,
+            processedConfigId,
             amountOfConfigs,
             totalMinutes,
             stocks,
@@ -745,28 +784,42 @@ static void simulationStep2ForParallel(
             currentMinuteArray
         );
 
-        simulationStep2Info->mutex.lock();
+        mutex->lock();
 
-        simulationStep2Info->processedIds.insert(
+        if (totalMoney > *bestLocalTotalMoney)
+        {
+            *bestLocalTotalMoney = totalMoney;
+
+            *bestOperations = thread->reverseOperations(operations);
+            *bestEntries    = thread->reverseEntries(entries);
+            *bestPortfolio  = portfolio;
+
+            operationsDatabase->writeOperations(*bestOperations, buyDecisionId);
+            logsDatabase->writeLogs(*bestEntries, buyDecisionId);
+            portfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+
+            if (totalMoney > *bestGlobalTotalMoney)
+            {
+                *bestGlobalTotalMoney = totalMoney;
+            }
+        }
+
+        processedIds->insert(
             std::distance(
-                simulationStep2Info->processedIds.constBegin(),
-                std::lower_bound(
-                    simulationStep2Info->processedIds.constBegin(), simulationStep2Info->processedIds.constEnd(), currentConfig
-                )
+                processedIds->constBegin(), std::lower_bound(processedIds->constBegin(), processedIds->constEnd(), currentConfig)
             ),
             currentConfig
         );
 
-        while (!simulationStep2Info->processedIds.isEmpty() &&
-               simulationStep2Info->processedIds.constFirst() == simulationStep2Info->lastConfigId)
+        while (!processedIds->isEmpty() && processedIds->constFirst() == lastConfigId)
         {
-            simulationStep2Info->processedIds.removeFirst();
-            ++simulationStep2Info->lastConfigId;
+            processedIds->removeFirst();
+            ++lastConfigId;
         }
 
-        settingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), simulationStep2Info->lastConfigId);
+        settingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), lastConfigId);
 
-        simulationStep2Info->mutex.unlock();
+        mutex->unlock();
     }
 
     config->deleteRecursively();
@@ -884,6 +937,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
 {
     emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
 
+    double bestGlobalTotalMoney = 0.0;
+    double bestLocalTotalMoney  = 0.0;
+
     const std::shared_ptr<IFile> configsFile =
         mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
 
@@ -919,7 +975,21 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
         }
 
         SimulationStep2Info simulationStep2Info(
-            this, QDateTime::currentMSecsSinceEpoch(), mConfig, mSettingsEditor, "", totalMinutes, stocks
+            this,
+            QDateTime::currentMSecsSinceEpoch(),
+            mConfig,
+            mSettingsEditor,
+            mOperationsDatabase,
+            mLogsDatabase,
+            mPortfolioDatabase,
+            -1,
+            totalMinutes,
+            stocks,
+            &bestGlobalTotalMoney,
+            &bestLocalTotalMoney,
+            &mBestOperations,
+            &mBestEntries,
+            &mBestPortfolio
         );
         processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
     }

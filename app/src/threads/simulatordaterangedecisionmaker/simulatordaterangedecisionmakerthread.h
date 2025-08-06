@@ -82,6 +82,9 @@ public:
         qint64*              currentMinuteArray
     );
 
+    QList<Operation> reverseOperations(QList<Operation>& operations) const;
+    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
+
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
     {
@@ -211,8 +214,6 @@ private:
     void simulateBuyForInstruments(
         const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
     ) const;
-    QList<Operation> reverseOperations(QList<Operation>& operations) const;
-    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
     void             updateCostAndPart();
     void             updatePrice();
     void             notifyTotalProgressChanged(
