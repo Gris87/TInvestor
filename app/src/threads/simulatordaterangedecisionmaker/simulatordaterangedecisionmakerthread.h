@@ -4,6 +4,8 @@
 
 #include "src/threads/simulatordaterangedecisionmaker/isimulatordaterangedecisionmakerthread.h"
 
+#include <QMutex>
+
 #include "src/config/iconfig.h"
 #include "src/db/logs/ilogsdatabase.h"
 #include "src/db/operations/ioperationsdatabase.h"
@@ -64,6 +66,30 @@ public:
         qint64*  currentMinuteArray,
         double*  bestTotalMoneyArray
     );
+    QString simulationWithBestConfigParallelEnter(
+        QThread*              parentThread,
+        int                   threadId,
+        int                   threadsCount,
+        const QList<QString>& configVariants,
+        qint64                startTime,
+        IConfig*              config,
+        int                   buyDecisionId,
+        const QString&        settingsSuffix,
+        int                   startConfigId,
+        int&                  lastConfigId,
+        QAtomicInt&           currentConfigId,
+        QAtomicInt&           processedConfigId,
+        qint64                totalMinutes,
+        const QList<Stock*>*  stocks,
+        qint64*               currentMinuteArray,
+        QMutex*               mutex,
+        QList<int>*           processedIds,
+        double*               bestGlobalTotalMoney,
+        double*               bestLocalTotalMoney,
+        QList<Operation>*     bestOperations,
+        QList<LogEntry>*      bestEntries,
+        Portfolio*            bestPortfolio
+    );
     void simulationWithBestConfigForParallel(
         QThread*             parentThread,
         int                  threadId,
@@ -81,9 +107,6 @@ public:
         Portfolio&           portfolio,
         qint64*              currentMinuteArray
     );
-
-    QList<Operation> reverseOperations(QList<Operation>& operations) const;
-    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
 
 #ifdef TESTING_MODE
     void testSetLimitOperations(int limitOperations)
@@ -120,8 +143,8 @@ private:
     void loadBestPortfolio();
     void loadConfigs();
     void simulationWithBestConfig();
-    void simulationWithBestConfigStep1();
-    void simulationWithBestConfigStep2(qint64 totalMinutes, const QList<Stock*>* stocks);
+    void simulationWithBestConfigStep1(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks);
+    void simulationWithBestConfigStep2(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks);
     void simulationWithoutBestConfig();
     void simulateTrading(
         qint64                            timestamp,
@@ -214,36 +237,22 @@ private:
     void simulateBuyForInstruments(
         const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
     ) const;
+    QList<Operation> reverseOperations(QList<Operation>& operations) const;
+    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
     void             updateCostAndPart();
     void             updatePrice();
-    void             notifyTotalProgressChanged(
-                    int* configIdArray, int* amountOfConfigsArray, int buyDecisionId, int configId, int amountOfConfigs
+    void             notifyProgressChanged(
+                    qint64  startTime,
+                    int     configId,
+                    int     processedConfig,
+                    int     amountOfConfigs,
+                    qint64* currentMinuteArray,
+                    int     threadId,
+                    int     threadsCount,
+                    qint64  currentMinute,
+                    qint64  totalMinutes
                 );
-    void notifyProgressChanged(
-        qint64  startTime,
-        int     configId,
-        int     currentConfig,
-        int     amountOfConfigs,
-        double* processedMinutesArray,
-        double* remainingMinutesArray,
-        qint64* currentMinuteArray,
-        int     buyDecisionId,
-        qint64  currentMinute,
-        qint64  totalMinutes
-    );
-    void notifyProgressChanged2(
-        qint64  startTime,
-        int     configId,
-        int     processedConfig,
-        int     amountOfConfigs,
-        qint64* currentMinuteArray,
-        int     threadId,
-        int     threadsCount,
-        qint64  currentMinute,
-        qint64  totalMinutes
-    );
-    void notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney);
-    void notifyBestResult(double totalYieldWithCommissionPercent);
+    void notifyBestResult(double bestTotalMoney);
     void optimizeOperations();
     void optimizeLogs();
 

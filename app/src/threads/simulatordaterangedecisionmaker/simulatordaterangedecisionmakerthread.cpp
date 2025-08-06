@@ -350,11 +350,6 @@ void SimulatorDateRangeDecisionMakerThread::load()
 void SimulatorDateRangeDecisionMakerThread::loadBestOperations()
 {
     mBestOperations = mOperationsDatabase->readOperations();
-
-    if (!mBestOperations.isEmpty())
-    {
-        notifyBestResult(mBestOperations.constFirst().totalYieldWithCommissionPercent);
-    }
 }
 
 void SimulatorDateRangeDecisionMakerThread::loadBestLogs()
@@ -387,258 +382,13 @@ void SimulatorDateRangeDecisionMakerThread::loadConfigs()
     }
 }
 
-struct SimulationStep1Info
+struct SimulationInfo
 {
-    explicit SimulationStep1Info(
-        SimulatorDateRangeDecisionMakerThread* _thread, qint64 _startTime, IConfig* _config, const QStringList& _configVariants
-    ) :
-        thread(_thread),
-        startTime(_startTime),
-        config(_config)
-    {
-        configId.fill(0, _configVariants.size());
-        amountOfConfigs.fill(0, _configVariants.size());
-        processedMinutes.fill(0.0, _configVariants.size());
-        remainingMinutes.fill(0.0, _configVariants.size());
-        currentMinute.fill(0, _configVariants.size());
-        bestTotalMoney.fill(0.0, _configVariants.size());
-        bestConfigs.resizeForOverwrite(_configVariants.size());
-    }
-
-    SimulatorDateRangeDecisionMakerThread* thread;
-    qint64                                 startTime;
-    IConfig*                               config;
-    QList<int>                             configId;
-    QList<int>                             amountOfConfigs;
-    QList<double>                          processedMinutes;
-    QList<double>                          remainingMinutes;
-    QList<qint64>                          currentMinute;
-    QList<double>                          bestTotalMoney;
-    QStringList                            bestConfigs;
-};
-
-static void simulationStep1ForParallel(
-    QThread* parentThread, int /*threadId*/, QList<QString>& /*configVariants*/, int start, int end, void* additionalArgs
-)
-{
-    SimulationStep1Info* simulationStep1Info = reinterpret_cast<SimulationStep1Info*>(additionalArgs);
-
-    SimulatorDateRangeDecisionMakerThread* thread                = simulationStep1Info->thread;
-    const qint64                           startTime             = simulationStep1Info->startTime;
-    IConfig*                               config                = simulationStep1Info->config->clone();
-    int*                                   configIdArray         = simulationStep1Info->configId.data();
-    int*                                   amountOfConfigsArray  = simulationStep1Info->amountOfConfigs.data();
-    double*                                processedMinutesArray = simulationStep1Info->processedMinutes.data();
-    double*                                remainingMinutesArray = simulationStep1Info->remainingMinutes.data();
-    qint64*                                currentMinuteArray    = simulationStep1Info->currentMinute.data();
-    double*                                bestTotalMoneyArray   = simulationStep1Info->bestTotalMoney.data();
-    QString*                               bestConfigsArray      = simulationStep1Info->bestConfigs.data();
-
-    for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
-    {
-        bestConfigsArray[i] = thread->simulationWithBestConfigForBuyDecision(
-            parentThread,
-            startTime,
-            i,
-            config,
-            configIdArray,
-            amountOfConfigsArray,
-            processedMinutesArray,
-            remainingMinutesArray,
-            currentMinuteArray,
-            bestTotalMoneyArray
-        );
-    }
-
-    config->deleteRecursively();
-}
-
-// NOLINTBEGIN(readability-function-cognitive-complexity)
-QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForBuyDecision(
-    QThread* parentThread,
-    qint64   startTime,
-    int      buyDecisionId,
-    IConfig* config,
-    int*     configIdArray,
-    int*     amountOfConfigsArray,
-    double*  processedMinutesArray,
-    double*  remainingMinutesArray,
-    qint64*  currentMinuteArray,
-    double*  bestTotalMoneyArray
-)
-{
-    QString res;
-
-    const int        configId       = mSettingsEditor->value(QString("Options/LastConfigId%1").arg(buyDecisionId), 0).toInt();
-    const qint64     totalMinutes   = (mEndTimestamp - mStartTimestamp) / ONE_MINUTE;
-    double           bestTotalMoney = 0.0;
-    QList<Operation> bestOperations = mOperationsDatabase->readOperations(buyDecisionId);
-    QList<LogEntry>  bestEntries    = mLogsDatabase->readLogs(buyDecisionId);
-    Portfolio        bestPortfolio  = mPortfolioDatabase->readPortfolio(buyDecisionId);
-
-    if (!bestOperations.isEmpty())
-    {
-        const Operation& lastOperation = bestOperations.constFirst(); // Since it reversed
-
-        bestTotalMoney = quotationToDouble(lastOperation.totalMoney);
-        notifyBestResult(bestTotalMoneyArray, buyDecisionId, bestTotalMoney);
-    }
-
-    mStocksStorage->readLock();
-    const QList<Stock*> stocks = mStocksStorage->getStocks();
-    mStocksStorage->readUnlock();
-
-    const simdjson::padded_string jsonData(mConfigVariants.at(buyDecisionId).toStdString());
-
-    simdjson::ondemand::parser parser;
-
-    try
-    {
-        simdjson::ondemand::document doc = parser.iterate(jsonData);
-
-        simdjson::ondemand::array jsonConfigs     = doc.get_array();
-        const int                 amountOfConfigs = static_cast<int>(jsonConfigs.count_elements());
-
-        int i = 0;
-
-        for (const simdjson::ondemand::object jsonObject : jsonConfigs)
-        {
-            if (!parentThread->isInterruptionRequested())
-            {
-                if (i < configId)
-                {
-                    ++i;
-
-                    continue;
-                }
-
-                notifyTotalProgressChanged(configIdArray, amountOfConfigsArray, buyDecisionId, i, amountOfConfigs);
-
-                config->getSimulatorConfig()->fromJsonObject(jsonObject);
-
-                double                           totalMoney = mStartMoney;
-                QList<Operation>                 operations = mInitOperations;
-                QList<LogEntry>                  entries    = mInitEntries;
-                Portfolio                        portfolio  = mInitPortfolio;
-                QuantityAndCostDoubleInstruments instruments;
-
-                qint64 timestamp = mStartTimestamp;
-
-                while (timestamp < mEndTimestamp && !parentThread->isInterruptionRequested())
-                {
-                    if (timestamp % NOTIFY_PROGRESS_STEP == 0)
-                    {
-                        const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
-
-                        if (i != configId || currentMinute > 0)
-                        {
-                            notifyProgressChanged(
-                                startTime,
-                                configId,
-                                i,
-                                amountOfConfigs,
-                                processedMinutesArray,
-                                remainingMinutesArray,
-                                currentMinuteArray,
-                                buyDecisionId,
-                                currentMinute,
-                                totalMinutes
-                            );
-                        }
-                    }
-
-                    const InstrumentsForTrading& instrumentsForTrading =
-                        mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, stocks, false, 0, true, false);
-
-                    if (!instrumentsForTrading.isEmpty())
-                    {
-                        simulateTrading(
-                            timestamp, instrumentsForTrading, totalMoney, operations, entries, portfolio, instruments
-                        );
-                    }
-
-                    timestamp += ONE_MINUTE;
-                }
-
-                if (!parentThread->isInterruptionRequested())
-                {
-                    if (totalMoney > bestTotalMoney)
-                    {
-                        bestTotalMoney = totalMoney;
-
-                        mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(buyDecisionId), i);
-
-                        bestOperations = reverseOperations(operations);
-                        bestEntries    = reverseEntries(entries);
-                        bestPortfolio  = portfolio;
-
-                        mOperationsDatabase->writeOperations(bestOperations, buyDecisionId);
-                        mLogsDatabase->writeLogs(bestEntries, buyDecisionId);
-                        mPortfolioDatabase->writePortfolio(bestPortfolio, buyDecisionId);
-
-                        notifyBestResult(bestTotalMoneyArray, buyDecisionId, bestTotalMoney);
-                    }
-
-                    ++i;
-                    mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(buyDecisionId), i);
-                }
-            }
-        }
-
-        const int bestConfigId = mSettingsEditor->value(QString("Options/BestConfigId%1").arg(buyDecisionId), 0).toInt();
-        i                      = 0;
-
-        jsonConfigs.reset();
-
-        for (simdjson::ondemand::object jsonObject : jsonConfigs)
-        {
-            if (!parentThread->isInterruptionRequested())
-            {
-                if (i == bestConfigId)
-                {
-                    const std::string_view configStr = jsonObject.raw_json().value();
-                    res                              = QString::fromUtf8(configStr.data(), configStr.size());
-
-                    break;
-                }
-
-                ++i;
-            }
-        }
-
-        notifyTotalProgressChanged(configIdArray, amountOfConfigsArray, buyDecisionId, amountOfConfigs, amountOfConfigs);
-        notifyProgressChanged(
-            startTime,
-            configId,
-            amountOfConfigs,
-            amountOfConfigs,
-            processedMinutesArray,
-            remainingMinutesArray,
-            currentMinuteArray,
-            buyDecisionId,
-            0,
-            totalMinutes
-        );
-    }
-    catch (...)
-    {
-        qWarning() << "Failed to parse configs";
-    }
-
-    return res;
-}
-// NOLINTEND(readability-function-cognitive-complexity)
-
-struct SimulationStep2Info
-{
-    explicit SimulationStep2Info(
+    explicit SimulationInfo(
         SimulatorDateRangeDecisionMakerThread* _thread,
         qint64                                 _startTime,
         IConfig*                               _config,
         ISettingsEditor*                       _settingsEditor,
-        IOperationsDatabase*                   _operationsDatabase,
-        ILogsDatabase*                         _logsDatabase,
-        IPortfolioDatabase*                    _portfolioDatabase,
         int                                    _buyDecisionId,
         qint64                                 _totalMinutes,
         const QList<Stock*>*                   _stocks,
@@ -651,10 +401,6 @@ struct SimulationStep2Info
         thread(_thread),
         startTime(_startTime),
         config(_config),
-        settingsEditor(_settingsEditor),
-        operationsDatabase(_operationsDatabase),
-        logsDatabase(_logsDatabase),
-        portfolioDatabase(_portfolioDatabase),
         buyDecisionId(_buyDecisionId),
         totalMinutes(_totalMinutes),
         stocks(_stocks),
@@ -665,7 +411,7 @@ struct SimulationStep2Info
         bestPortfolio(_bestPortfolio)
     {
         settingsSuffix = buyDecisionId >= 0 ? QString::number(buyDecisionId) : "";
-        startConfigId  = settingsEditor->value(QString("Options/LastConfigId%1").arg(settingsSuffix), 0).toInt();
+        startConfigId  = _settingsEditor->value(QString("Options/LastConfigId%1").arg(settingsSuffix), 0).toInt();
 
         lastConfigId      = startConfigId;
         currentConfigId   = startConfigId;
@@ -677,10 +423,6 @@ struct SimulationStep2Info
     SimulatorDateRangeDecisionMakerThread* thread;
     qint64                                 startTime;
     IConfig*                               config;
-    ISettingsEditor*                       settingsEditor;
-    IOperationsDatabase*                   operationsDatabase;
-    ILogsDatabase*                         logsDatabase;
-    IPortfolioDatabase*                    portfolioDatabase;
     int                                    buyDecisionId;
     QString                                settingsSuffix;
     int                                    startConfigId;
@@ -697,51 +439,104 @@ struct SimulationStep2Info
     QList<Operation>*                      bestOperations;
     QList<LogEntry>*                       bestEntries;
     Portfolio*                             bestPortfolio;
+    QString                                bestConfig;
 };
 
-static void simulationStep2ForParallel(
+static void simulationForParallel(
     QThread* parentThread, int threadId, QList<QString>& configVariants, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
-    SimulationStep2Info* simulationStep2Info = reinterpret_cast<SimulationStep2Info*>(additionalArgs);
+    SimulationInfo* simulationInfo = reinterpret_cast<SimulationInfo*>(additionalArgs);
 
-    SimulatorDateRangeDecisionMakerThread* thread               = simulationStep2Info->thread;
-    const qint64                           startTime            = simulationStep2Info->startTime;
-    IConfig*                               config               = simulationStep2Info->config->clone();
-    ISettingsEditor*                       settingsEditor       = simulationStep2Info->settingsEditor;
-    IOperationsDatabase*                   operationsDatabase   = simulationStep2Info->operationsDatabase;
-    ILogsDatabase*                         logsDatabase         = simulationStep2Info->logsDatabase;
-    IPortfolioDatabase*                    portfolioDatabase    = simulationStep2Info->portfolioDatabase;
-    const int                              buyDecisionId        = simulationStep2Info->buyDecisionId;
-    const QString                          settingsSuffix       = simulationStep2Info->settingsSuffix;
-    const int                              startConfigId        = simulationStep2Info->startConfigId;
-    int&                                   lastConfigId         = simulationStep2Info->lastConfigId;
-    QAtomicInt&                            currentConfigId      = simulationStep2Info->currentConfigId;
-    QAtomicInt&                            processedConfigId    = simulationStep2Info->processedConfigId;
-    const qint64                           totalMinutes         = simulationStep2Info->totalMinutes;
-    const QList<Stock*>*                   stocks               = simulationStep2Info->stocks;
-    qint64*                                currentMinuteArray   = simulationStep2Info->currentMinute.data();
-    const int                              threadsCount         = simulationStep2Info->currentMinute.size();
-    QMutex*                                mutex                = &simulationStep2Info->mutex;
-    QList<int>*                            processedIds         = &simulationStep2Info->processedIds;
-    double*                                bestGlobalTotalMoney = simulationStep2Info->bestGlobalTotalMoney;
-    double*                                bestLocalTotalMoney  = simulationStep2Info->bestLocalTotalMoney;
-    QList<Operation>*                      bestOperations       = simulationStep2Info->bestOperations;
-    QList<LogEntry>*                       bestEntries          = simulationStep2Info->bestEntries;
-    Portfolio*                             bestPortfolio        = simulationStep2Info->bestPortfolio;
+    SimulatorDateRangeDecisionMakerThread* thread               = simulationInfo->thread;
+    const qint64                           startTime            = simulationInfo->startTime;
+    IConfig*                               config               = simulationInfo->config->clone();
+    const int                              buyDecisionId        = simulationInfo->buyDecisionId;
+    const QString                          settingsSuffix       = simulationInfo->settingsSuffix;
+    const int                              startConfigId        = simulationInfo->startConfigId;
+    int&                                   lastConfigId         = simulationInfo->lastConfigId;
+    QAtomicInt&                            currentConfigId      = simulationInfo->currentConfigId;
+    QAtomicInt&                            processedConfigId    = simulationInfo->processedConfigId;
+    const qint64                           totalMinutes         = simulationInfo->totalMinutes;
+    const QList<Stock*>*                   stocks               = simulationInfo->stocks;
+    qint64*                                currentMinuteArray   = simulationInfo->currentMinute.data();
+    const int                              threadsCount         = simulationInfo->currentMinute.size();
+    QMutex*                                mutex                = &simulationInfo->mutex;
+    QList<int>*                            processedIds         = &simulationInfo->processedIds;
+    double*                                bestGlobalTotalMoney = simulationInfo->bestGlobalTotalMoney;
+    double*                                bestLocalTotalMoney  = simulationInfo->bestLocalTotalMoney;
+    QList<Operation>*                      bestOperations       = simulationInfo->bestOperations;
+    QList<LogEntry>*                       bestEntries          = simulationInfo->bestEntries;
+    Portfolio*                             bestPortfolio        = simulationInfo->bestPortfolio;
 
-    QString* configVariantsArray = configVariants.data();
+    const QString bestConfig = thread->simulationWithBestConfigParallelEnter(
+        parentThread,
+        threadId,
+        threadsCount,
+        configVariants,
+        startTime,
+        config,
+        buyDecisionId,
+        settingsSuffix,
+        startConfigId,
+        lastConfigId,
+        currentConfigId,
+        processedConfigId,
+        totalMinutes,
+        stocks,
+        currentMinuteArray,
+        mutex,
+        processedIds,
+        bestGlobalTotalMoney,
+        bestLocalTotalMoney,
+        bestOperations,
+        bestEntries,
+        bestPortfolio
+    );
 
+    mutex->lock();
+    simulationInfo->bestConfig = bestConfig;
+    mutex->unlock();
+
+    config->deleteRecursively();
+}
+
+QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelEnter(
+    QThread*              parentThread,
+    int                   threadId,
+    int                   threadsCount,
+    const QList<QString>& configVariants,
+    qint64                startTime,
+    IConfig*              config,
+    int                   buyDecisionId,
+    const QString&        settingsSuffix,
+    int                   startConfigId,
+    int&                  lastConfigId,
+    QAtomicInt&           currentConfigId,
+    QAtomicInt&           processedConfigId,
+    qint64                totalMinutes,
+    const QList<Stock*>*  stocks,
+    qint64*               currentMinuteArray,
+    QMutex*               mutex,
+    QList<int>*           processedIds,
+    double*               bestGlobalTotalMoney,
+    double*               bestLocalTotalMoney,
+    QList<Operation>*     bestOperations,
+    QList<LogEntry>*      bestEntries,
+    Portfolio*            bestPortfolio
+)
+{
     double           totalMoney = 0.0;
     QList<Operation> operations;
     QList<LogEntry>  entries;
     Portfolio        portfolio;
 
-    const int amountOfConfigs = configVariants.size();
+    const QString* configVariantsArray = configVariants.data();
+    const int      amountOfConfigs     = configVariants.size();
 
     while (!parentThread->isInterruptionRequested())
     {
-        emit thread->totalProgressChanged(processedConfigId, amountOfConfigs);
+        emit totalProgressChanged(processedConfigId, amountOfConfigs);
 
         const int currentConfig = currentConfigId++;
 
@@ -766,7 +561,7 @@ static void simulationStep2ForParallel(
             qWarning() << "Failed to parse config";
         }
 
-        thread->simulationWithBestConfigForParallel(
+        simulationWithBestConfigForParallel(
             parentThread,
             threadId,
             threadsCount,
@@ -790,17 +585,21 @@ static void simulationStep2ForParallel(
         {
             *bestLocalTotalMoney = totalMoney;
 
-            *bestOperations = thread->reverseOperations(operations);
-            *bestEntries    = thread->reverseEntries(entries);
+            *bestOperations = reverseOperations(operations);
+            *bestEntries    = reverseEntries(entries);
             *bestPortfolio  = portfolio;
 
-            operationsDatabase->writeOperations(*bestOperations, buyDecisionId);
-            logsDatabase->writeLogs(*bestEntries, buyDecisionId);
-            portfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+            mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
+            mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
+            mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+
+            mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
 
             if (totalMoney > *bestGlobalTotalMoney)
             {
                 *bestGlobalTotalMoney = totalMoney;
+
+                notifyBestResult(totalMoney);
             }
         }
 
@@ -817,12 +616,14 @@ static void simulationStep2ForParallel(
             ++lastConfigId;
         }
 
-        settingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), lastConfigId);
+        mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), lastConfigId);
 
         mutex->unlock();
     }
 
-    config->deleteRecursively();
+    const int bestConfigId = mSettingsEditor->value(QString("Options/BestConfigId%1").arg(settingsSuffix), 0).toInt();
+
+    return configVariantsArray[bestConfigId];
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
@@ -857,7 +658,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
         {
             const qint64 currentMinute = (timestamp - mStartTimestamp) / ONE_MINUTE;
 
-            notifyProgressChanged2(
+            notifyProgressChanged(
                 startTime,
                 configId,
                 processedConfig,
@@ -883,7 +684,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
 
     processedConfig++;
 
-    notifyProgressChanged2(
+    notifyProgressChanged(
         startTime, configId, processedConfig, amountOfConfigs, currentMinuteArray, threadId, threadsCount, 0, totalMinutes
     );
 }
@@ -896,61 +697,50 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig()
     const QList<Stock*> stocks = mStocksStorage->getStocks();
     mStocksStorage->readUnlock();
 
+    double bestGlobalTotalMoney = 0.0;
+
     const int step = mSettingsEditor->value("Options/Step", 0).toInt();
 
     if (step < mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        simulationWithBestConfigStep1();
+        simulationWithBestConfigStep1(bestGlobalTotalMoney, totalMinutes, &stocks);
     }
 
     if (step <= mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        simulationWithBestConfigStep2(totalMinutes, &stocks);
+        simulationWithBestConfigStep2(bestGlobalTotalMoney, totalMinutes, &stocks);
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1()
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
+    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks
+)
 {
-    // TODO: Parallel for configs not buy decisions
-    SimulationStep1Info simulationStep1Info(this, QDateTime::currentMSecsSinceEpoch(), mConfig, mConfigVariants);
-    processInParallel(QThread::currentThread(), mConfigVariants, simulationStep1ForParallel, &simulationStep1Info);
+    QStringList bestConfigs;
 
-    if (!QThread::currentThread()->isInterruptionRequested())
+    for (int i = 0; i < mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested(); ++i)
     {
-        const QString configVariants =
-            mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(simulationStep1Info.bestConfigs);
+        double bestLocalTotalMoney = 0.0;
 
-        const std::shared_ptr<IFile> configsFile =
-            mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+        QList<Operation> bestOperations = mOperationsDatabase->readOperations(i);
+        QList<LogEntry>  bestEntries    = mLogsDatabase->readLogs(i);
+        Portfolio        bestPortfolio  = mPortfolioDatabase->readPortfolio(i);
 
-        const bool ok = configsFile->open(QIODevice::WriteOnly);
-        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+        if (!bestOperations.isEmpty())
+        {
+            bestLocalTotalMoney = quotationToDouble(bestOperations.constFirst().totalMoney);
 
-        configsFile->write(configVariants.toUtf8());
-        configsFile->close();
+            if (bestLocalTotalMoney > bestGlobalTotalMoney)
+            {
+                bestGlobalTotalMoney = bestLocalTotalMoney;
 
-        mSettingsEditor->setValue("Options/Step", mConfigVariants.size());
-    }
-}
+                notifyBestResult(bestGlobalTotalMoney);
+            }
+        }
 
-void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64 totalMinutes, const QList<Stock*>* stocks)
-{
-    emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
+        QStringList configVariants;
 
-    double bestGlobalTotalMoney = 0.0;
-    double bestLocalTotalMoney  = 0.0;
-
-    const std::shared_ptr<IFile> configsFile =
-        mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
-
-    if (configsFile->open(QIODevice::ReadOnly))
-    {
-        const QString configVariants = QString::fromUtf8(configsFile->readAll());
-        configsFile->close();
-
-        mConfigVariants.clear();
-
-        const simdjson::padded_string jsonData(configVariants.toStdString());
+        const simdjson::padded_string jsonData(mConfigVariants.at(i).toStdString());
 
         simdjson::ondemand::parser parser;
 
@@ -965,7 +755,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
                 if (!QThread::currentThread()->isInterruptionRequested())
                 {
                     const std::string_view configStr = jsonObject.raw_json().value();
-                    mConfigVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
+                    configVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
                 }
             }
         }
@@ -974,14 +764,117 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
             qWarning() << "Failed to parse configs";
         }
 
-        SimulationStep2Info simulationStep2Info(
+        SimulationInfo simulationInfo(
             this,
             QDateTime::currentMSecsSinceEpoch(),
             mConfig,
             mSettingsEditor,
-            mOperationsDatabase,
-            mLogsDatabase,
-            mPortfolioDatabase,
+            i,
+            totalMinutes,
+            stocks,
+            &bestGlobalTotalMoney,
+            &bestLocalTotalMoney,
+            &bestOperations,
+            &bestEntries,
+            &bestPortfolio
+        );
+        processInParallel(QThread::currentThread(), configVariants, simulationForParallel, &simulationInfo);
+
+        bestConfigs.append(simulationInfo.bestConfig);
+    }
+
+    if (!QThread::currentThread()->isInterruptionRequested())
+    {
+        const QString configVariants =
+            mConfig->getSimulatorConfig()->variantsToJsonStringListExtendedBySellDecisions(bestConfigs);
+
+        const std::shared_ptr<IFile> configsFile =
+            mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+
+        const bool ok = configsFile->open(QIODevice::WriteOnly);
+        Q_ASSERT_X(ok, __FUNCTION__, "Failed to open file");
+
+        configsFile->write(configVariants.toUtf8());
+        configsFile->close();
+
+        mSettingsEditor->setValue("Options/Step", mConfigVariants.size());
+    }
+}
+
+void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
+    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks
+)
+{
+    emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
+
+    double bestLocalTotalMoney = 0.0;
+
+    if (!mBestOperations.isEmpty())
+    {
+        bestLocalTotalMoney = quotationToDouble(mBestOperations.constFirst().totalMoney);
+
+        if (bestLocalTotalMoney > bestGlobalTotalMoney)
+        {
+            bestGlobalTotalMoney = bestLocalTotalMoney;
+        }
+    }
+
+    for (int i = 0; i < mConfigVariants.size(); ++i)
+    {
+        QList<Operation> bestOperations = mOperationsDatabase->readOperations(i);
+
+        if (!bestOperations.isEmpty())
+        {
+            const double totalMoney = quotationToDouble(bestOperations.constFirst().totalMoney);
+
+            if (totalMoney > bestGlobalTotalMoney)
+            {
+                bestGlobalTotalMoney = totalMoney;
+            }
+        }
+    }
+
+    notifyBestResult(bestGlobalTotalMoney);
+
+    const std::shared_ptr<IFile> configsFile =
+        mFileFactory->newInstance(QString("%1/data/simulator/configs.json").arg(qApp->applicationDirPath()));
+
+    if (configsFile->open(QIODevice::ReadOnly))
+    {
+        const QString content = QString::fromUtf8(configsFile->readAll());
+        configsFile->close();
+
+        QStringList configVariants;
+
+        const simdjson::padded_string jsonData(content.toStdString());
+
+        simdjson::ondemand::parser parser;
+
+        try
+        {
+            simdjson::ondemand::document doc = parser.iterate(jsonData);
+
+            simdjson::ondemand::array jsonConfigs = doc.get_array();
+
+            for (simdjson::ondemand::object jsonObject : jsonConfigs)
+            {
+                if (!QThread::currentThread()->isInterruptionRequested())
+                {
+                    const std::string_view configStr = jsonObject.raw_json().value();
+                    configVariants.append(QString::fromUtf8(configStr.data(), configStr.size()));
+                }
+            }
+        }
+        catch (...)
+        {
+            qWarning() << "Failed to parse configs";
+        }
+
+        SimulationInfo simulationInfo(
+            this,
+            QDateTime::currentMSecsSinceEpoch(),
+            mConfig,
+            mSettingsEditor,
             -1,
             totalMinutes,
             stocks,
@@ -991,7 +884,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(qint64
             &mBestEntries,
             &mBestPortfolio
         );
-        processInParallel(QThread::currentThread(), mConfigVariants, simulationStep2ForParallel, &simulationStep2Info);
+        processInParallel(QThread::currentThread(), configVariants, simulationForParallel, &simulationInfo);
     }
 }
 
@@ -1655,84 +1548,7 @@ void SimulatorDateRangeDecisionMakerThread::updatePrice()
     }
 }
 
-void SimulatorDateRangeDecisionMakerThread::notifyTotalProgressChanged(
-    int* configIdArray, int* amountOfConfigsArray, int buyDecisionId, int configId, int amountOfConfigs
-)
-{
-    static QMutex      mutex;
-    const QMutexLocker lock(&mutex);
-
-    configIdArray[buyDecisionId]        = configId;
-    amountOfConfigsArray[buyDecisionId] = amountOfConfigs;
-
-    configId        = 0;
-    amountOfConfigs = 0;
-
-    for (int i = 0; i < mConfigVariants.size(); ++i)
-    {
-        configId        += configIdArray[i];
-        amountOfConfigs += amountOfConfigsArray[i];
-    }
-
-    emit totalProgressChanged(configId, amountOfConfigs);
-}
-
 void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
-    qint64  startTime,
-    int     configId,
-    int     currentConfig,
-    int     amountOfConfigs,
-    double* processedMinutesArray,
-    double* remainingMinutesArray,
-    qint64* currentMinuteArray,
-    int     buyDecisionId,
-    qint64  currentMinute,
-    qint64  totalMinutes
-)
-{
-    const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
-
-    double processedMinutes = ((currentConfig - configId) * totalMinutes) + currentMinute;
-    double remainingMinutes = ((amountOfConfigs - currentConfig) * totalMinutes) - currentMinute;
-
-    static QMutex      mutex;
-    const QMutexLocker lock(&mutex);
-
-    processedMinutesArray[buyDecisionId] = processedMinutes;
-    remainingMinutesArray[buyDecisionId] = remainingMinutes;
-    currentMinuteArray[buyDecisionId]    = currentMinute;
-
-    processedMinutes = 0.0;
-    remainingMinutes = 0.0;
-
-    for (int i = 0; i < mConfigVariants.size(); ++i)
-    {
-        processedMinutes += processedMinutesArray[i];
-        remainingMinutes += remainingMinutesArray[i];
-        currentMinute     = qMax(currentMinute, currentMinuteArray[i]);
-    }
-
-    qint64 remainingMilliseconds  = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
-    remainingMilliseconds        /= MS_IN_SECOND;
-    const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
-    remainingMilliseconds        /= SECONDS_IN_MINUTE;
-    const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
-    remainingMilliseconds        /= MINUTES_IN_HOUR;
-    const int hours               = remainingMilliseconds;
-
-    emit progressChanged(
-        currentMinute,
-        totalMinutes,
-        QString("%1:%2:%3")
-            .arg(
-                QString::number(hours).rightJustified(2, '0'),
-                QString::number(minutes).rightJustified(2, '0'),
-                QString::number(seconds).rightJustified(2, '0')
-            )
-    );
-}
-
-void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged2(
     qint64  startTime,
     int     configId,
     int     processedConfig,
@@ -1782,27 +1598,11 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged2(
     );
 }
 
-void
-SimulatorDateRangeDecisionMakerThread::notifyBestResult(double* bestTotalMoneyArray, int buyDecisionId, double bestTotalMoney)
+void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double bestTotalMoney)
 {
-    static QMutex      mutex;
-    const QMutexLocker lock(&mutex);
-
-    bestTotalMoneyArray[buyDecisionId] = bestTotalMoney;
-
-    for (int i = 0; i < mConfigVariants.size(); ++i)
-    {
-        bestTotalMoney = qMax(bestTotalMoney, bestTotalMoneyArray[i]);
-    }
-
     const double totalYieldWithCommission        = bestTotalMoney - mStartMoney;
     const double totalYieldWithCommissionPercent = (totalYieldWithCommission / mStartMoney) * HUNDRED_PERCENT;
 
-    notifyBestResult(totalYieldWithCommissionPercent);
-}
-
-void SimulatorDateRangeDecisionMakerThread::notifyBestResult(double totalYieldWithCommissionPercent)
-{
     const QString prefix     = totalYieldWithCommissionPercent > 0 ? "+" : "";
     const QString bestResult = prefix + QString::number(totalYieldWithCommissionPercent, 'f', 2) + "%";
 
