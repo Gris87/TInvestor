@@ -93,7 +93,6 @@ void LastPriceThread::run()
 
                 stock->writeLock();
                 stock->operational.detailedData.append(stockData);
-                stock->writeUnlock();
 
                 Q_ASSERT_X(
                     std::is_sorted(
@@ -104,6 +103,7 @@ void LastPriceThread::run()
                     __FUNCTION__,
                     "Stock data is unsorted"
                 );
+                stock->writeUnlock();
 
                 emit lastPriceChanged(instrumentId);
             }

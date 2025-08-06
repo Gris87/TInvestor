@@ -565,46 +565,50 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
             currentMinuteArray
         );
 
-        mutex->lock();
-
-        if (totalMoney > *bestLocalTotalMoney)
+        if (!parentThread->isInterruptionRequested())
         {
-            *bestLocalTotalMoney = totalMoney;
+            mutex->lock();
 
-            *bestOperations = reverseOperations(operations);
-            *bestEntries    = reverseEntries(entries);
-            *bestPortfolio  = portfolio;
-
-            mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
-            mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
-            mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
-
-            mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
-
-            if (totalMoney > *bestGlobalTotalMoney)
+            if (totalMoney > *bestLocalTotalMoney)
             {
-                *bestGlobalTotalMoney = totalMoney;
+                *bestLocalTotalMoney = totalMoney;
 
-                notifyBestResult(totalMoney);
+                *bestOperations = reverseOperations(operations);
+                *bestEntries    = reverseEntries(entries);
+                *bestPortfolio  = portfolio;
+
+                mOperationsDatabase->writeOperations(*bestOperations, buyDecisionId);
+                mLogsDatabase->writeLogs(*bestEntries, buyDecisionId);
+                mPortfolioDatabase->writePortfolio(*bestPortfolio, buyDecisionId);
+
+                mSettingsEditor->setValue(QString("Options/BestConfigId%1").arg(settingsSuffix), currentConfig);
+
+                if (totalMoney > *bestGlobalTotalMoney)
+                {
+                    *bestGlobalTotalMoney = totalMoney;
+
+                    notifyBestResult(totalMoney);
+                }
             }
+
+            processedIds->insert(
+                std::distance(
+                    processedIds->constBegin(),
+                    std::lower_bound(processedIds->constBegin(), processedIds->constEnd(), currentConfig)
+                ),
+                currentConfig
+            );
+
+            while (!processedIds->isEmpty() && processedIds->constFirst() == lastConfigId)
+            {
+                processedIds->removeFirst();
+                ++lastConfigId;
+            }
+
+            mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), lastConfigId);
+
+            mutex->unlock();
         }
-
-        processedIds->insert(
-            std::distance(
-                processedIds->constBegin(), std::lower_bound(processedIds->constBegin(), processedIds->constEnd(), currentConfig)
-            ),
-            currentConfig
-        );
-
-        while (!processedIds->isEmpty() && processedIds->constFirst() == lastConfigId)
-        {
-            processedIds->removeFirst();
-            ++lastConfigId;
-        }
-
-        mSettingsEditor->setValue(QString("Options/LastConfigId%1").arg(settingsSuffix), lastConfigId);
-
-        mutex->unlock();
     }
 
     const int bestConfigId = mSettingsEditor->value(QString("Options/BestConfigId%1").arg(settingsSuffix), 0).toInt();

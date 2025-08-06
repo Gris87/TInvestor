@@ -1,5 +1,3 @@
-Find best config for separations and combine to ultra config
-Multiple steps on simulation
 Time multiply coefficients
 Improve coverage
 Create release
