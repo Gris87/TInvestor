@@ -254,9 +254,9 @@ private:
                     qint64  currentMinute,
                     qint64  totalMinutes
                 );
-    void notifyBestResult(double bestTotalMoney);
-    void optimizeOperations();
-    void optimizeLogs();
+    void        notifyBestResult(double bestTotalMoney);
+    void        optimizeOperations();
+    void        optimizeLogs();
     QStringList splitConfigVariants(const QString& configVariants);
     void        applyToConfig(IConfig* config, const QString& configVariant);
 

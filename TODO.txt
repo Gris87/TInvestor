@@ -1,4 +1,3 @@
-Extend config variants
 Improve coverage
 Create release
 

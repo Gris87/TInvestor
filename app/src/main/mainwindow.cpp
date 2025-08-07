@@ -597,7 +597,12 @@ void MainWindow::startSimulator()
     }
     else if (mode == SIMULATOR_MODE_DATERANGE)
     {
+        const bool bestConfig = mSimulatorSettingsEditor->value("Options/BestConfig", false).toBool();
+
         ui->simulatorWaitingStackedWidget->setCurrentWidget(ui->simulatorWaitingPage);
+        ui->simulatorStepProgressBar->setVisible(bestConfig);
+        ui->simulatorTotalProgressBar->setVisible(bestConfig);
+        ui->simulatorBestResultWidget->setVisible(bestConfig);
         ui->simulatorRemainingTimeLabel->setText("00:00:00");
         ui->simulatorStepProgressBar->setValue(0);
         ui->simulatorTotalProgressBar->setValue(0);
