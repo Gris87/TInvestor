@@ -28,6 +28,25 @@ constexpr qint64 NOTIFY_PROGRESS_STEP     = 1LL * ONE_HOUR;
 const int        SECONDS_IN_MINUTE        = 60;
 const int        MINUTES_IN_HOUR          = 60;
 
+constexpr double DURATION_ONE_DAY_STEP_0 = 50816.0;
+constexpr double DURATION_ONE_DAY_STEP_1 = 141035.0;
+constexpr double DURATION_ONE_DAY_STEP_2 = 316892.0;
+constexpr double DURATION_ONE_DAY_STEP_3 = 968902.0;
+constexpr double DURATION_ONE_DAY_STEP_4 = 915531.0;
+
+constexpr int    AMOUNT_OF_BUY_DECISIONS                        = 4;
+constexpr double DURATION_COEFFICIENTS[AMOUNT_OF_BUY_DECISIONS] = {
+    DURATION_ONE_DAY_STEP_1 / DURATION_ONE_DAY_STEP_0 + DURATION_ONE_DAY_STEP_2 / DURATION_ONE_DAY_STEP_0 +
+        DURATION_ONE_DAY_STEP_3 / DURATION_ONE_DAY_STEP_0 + DURATION_ONE_DAY_STEP_4 / DURATION_ONE_DAY_STEP_0,
+
+    DURATION_ONE_DAY_STEP_2 / DURATION_ONE_DAY_STEP_1 + DURATION_ONE_DAY_STEP_3 / DURATION_ONE_DAY_STEP_1 +
+        DURATION_ONE_DAY_STEP_4 / DURATION_ONE_DAY_STEP_1,
+
+    DURATION_ONE_DAY_STEP_3 / DURATION_ONE_DAY_STEP_2 + DURATION_ONE_DAY_STEP_4 / DURATION_ONE_DAY_STEP_2,
+
+    DURATION_ONE_DAY_STEP_4 / DURATION_ONE_DAY_STEP_3
+};
+
 constexpr int CURRENCY_ID = 0;
 constexpr int SHARE_ID    = 1;
 
@@ -553,6 +572,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
             threadsCount,
             startTime,
             config,
+            buyDecisionId,
             startConfigId,
             processedConfigId,
             amountOfConfigs,
@@ -622,8 +642,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
     int                  threadsCount,
     qint64               startTime,
     IConfig*             config,
-    int                  configId,
-    QAtomicInt&          processedConfig,
+    int                  buyDecisionId,
+    int                  startConfigId,
+    QAtomicInt&          processedConfigId,
     int                  amountOfConfigs,
     qint64               totalMinutes,
     const QList<Stock*>* stocks,
@@ -650,8 +671,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
 
             notifyProgressChanged(
                 startTime,
-                configId,
-                processedConfig,
+                buyDecisionId,
+                startConfigId,
+                processedConfigId,
                 amountOfConfigs,
                 currentMinuteArray,
                 threadId,
@@ -672,10 +694,19 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
         timestamp += ONE_MINUTE;
     }
 
-    processedConfig++;
+    processedConfigId++;
 
     notifyProgressChanged(
-        startTime, configId, processedConfig, amountOfConfigs, currentMinuteArray, threadId, threadsCount, 0, totalMinutes
+        startTime,
+        buyDecisionId,
+        startConfigId,
+        processedConfigId,
+        amountOfConfigs,
+        currentMinuteArray,
+        threadId,
+        threadsCount,
+        0,
+        totalMinutes
     );
 }
 
@@ -844,9 +875,9 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithoutBestConfig()
 {
-    const int configId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
+    const int startConfigId = mSettingsEditor->value("Options/LastConfigId", 0).toInt();
 
-    if (configId > 0)
+    if (startConfigId > 0)
     {
         return;
     }
@@ -1504,8 +1535,9 @@ void SimulatorDateRangeDecisionMakerThread::updatePrice()
 
 void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
     qint64  startTime,
-    int     configId,
-    int     processedConfig,
+    int     buyDecisionId,
+    int     startConfigId,
+    int     processedConfigId,
     int     amountOfConfigs,
     qint64* currentMinuteArray,
     int     threadId,
@@ -1516,8 +1548,8 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
 {
     const qint64 deltaTime = QDateTime::currentMSecsSinceEpoch() - startTime;
 
-    double processedMinutes = (processedConfig - configId) * totalMinutes;
-    double remainingMinutes = (amountOfConfigs - processedConfig) * totalMinutes;
+    double processedMinutes = (processedConfigId - startConfigId) * totalMinutes;
+    double remainingMinutes = (amountOfConfigs - processedConfigId) * totalMinutes;
 
     static QMutex      mutex;
     const QMutexLocker lock(&mutex);
@@ -1532,13 +1564,21 @@ void SimulatorDateRangeDecisionMakerThread::notifyProgressChanged(
         currentMinute = qMax(currentMinute, currentMinuteArray[i]);
     }
 
-    qint64 remainingMilliseconds  = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
-    remainingMilliseconds        /= MS_IN_SECOND;
-    const int seconds             = remainingMilliseconds % SECONDS_IN_MINUTE;
-    remainingMilliseconds        /= SECONDS_IN_MINUTE;
-    const int minutes             = remainingMilliseconds % MINUTES_IN_HOUR;
-    remainingMilliseconds        /= MINUTES_IN_HOUR;
-    const int hours               = remainingMilliseconds;
+    qint64 remainingMilliseconds = remainingMinutes > 0 ? (deltaTime / processedMinutes) * remainingMinutes : 0;
+
+    if (buyDecisionId >= 0)
+    {
+        Q_ASSERT_X(mConfigVariants.size() == AMOUNT_OF_BUY_DECISIONS, __FUNCTION__, "Unexpected behavior");
+
+        remainingMilliseconds += (deltaTime + remainingMilliseconds) * DURATION_COEFFICIENTS[buyDecisionId];
+    }
+
+    remainingMilliseconds /= MS_IN_SECOND;
+    const int seconds      = remainingMilliseconds % SECONDS_IN_MINUTE;
+    remainingMilliseconds /= SECONDS_IN_MINUTE;
+    const int minutes      = remainingMilliseconds % MINUTES_IN_HOUR;
+    remainingMilliseconds /= MINUTES_IN_HOUR;
+    const int hours        = remainingMilliseconds;
 
     emit progressChanged(
         currentMinute,

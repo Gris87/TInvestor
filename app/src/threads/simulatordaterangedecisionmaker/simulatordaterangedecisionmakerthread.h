@@ -96,8 +96,9 @@ public:
         int                  threadsCount,
         qint64               startTime,
         IConfig*             config,
-        int                  configId,
-        QAtomicInt&          processedConfig,
+        int                  buyDecisionId,
+        int                  startConfigId,
+        QAtomicInt&          processedConfigId,
         int                  amountOfConfigs,
         qint64               totalMinutes,
         const QList<Stock*>* stocks,
@@ -243,8 +244,9 @@ private:
     void             updatePrice();
     void             notifyProgressChanged(
                     qint64  startTime,
-                    int     configId,
-                    int     processedConfig,
+                    int     buyDecisionId,
+                    int     startConfigId,
+                    int     processedConfigId,
                     int     amountOfConfigs,
                     qint64* currentMinuteArray,
                     int     threadId,

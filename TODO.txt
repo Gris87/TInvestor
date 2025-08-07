@@ -1,4 +1,4 @@
-Time multiply coefficients
+Extend config variants
 Improve coverage
 Create release
 
