@@ -814,26 +814,18 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
 
     if (!mBestOperations.isEmpty())
     {
-        bestLocalTotalMoney = quotationToDouble(mBestOperations.constFirst().totalMoney);
-
-        if (bestLocalTotalMoney > bestGlobalTotalMoney)
-        {
-            bestGlobalTotalMoney = bestLocalTotalMoney;
-        }
+        bestLocalTotalMoney  = quotationToDouble(mBestOperations.constFirst().totalMoney);
+        bestGlobalTotalMoney = qMax(bestGlobalTotalMoney, bestLocalTotalMoney);
     }
 
     for (int i = 0; i < mConfigVariants.size(); ++i)
     {
-        QList<Operation> bestOperations = mOperationsDatabase->readOperations(i);
+        const QList<Operation> bestOperations = mOperationsDatabase->readOperations(i);
 
         if (!bestOperations.isEmpty())
         {
             const double totalMoney = quotationToDouble(bestOperations.constFirst().totalMoney);
-
-            if (totalMoney > bestGlobalTotalMoney)
-            {
-                bestGlobalTotalMoney = totalMoney;
-            }
+            bestGlobalTotalMoney    = qMax(bestGlobalTotalMoney, totalMoney);
         }
     }
 
