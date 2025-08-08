@@ -679,14 +679,14 @@ static void fillItemsIndeciesForParallel(
 
 struct MergeSortedItemsInfo
 {
-    explicit MergeSortedItemsInfo(QList<PortfolioItem>* _items, QList<int>* _sortedIndecies) :
-        items(_items),
-        sortedIndecies(_sortedIndecies)
+    explicit MergeSortedItemsInfo(const QList<PortfolioItem>& _items, const QList<int>& _sortedIndecies)
     {
+        itemsArray    = _items.constData();
+        indeciesArray = _sortedIndecies.constData();
     }
 
-    QList<PortfolioItem>* items;
-    QList<int>*           sortedIndecies;
+    const PortfolioItem* itemsArray;
+    const int*           indeciesArray;
 };
 
 static void mergeSortedItemsForParallel(
@@ -695,8 +695,8 @@ static void mergeSortedItemsForParallel(
 {
     MergeSortedItemsInfo* mergeSortedItemsInfo = reinterpret_cast<MergeSortedItemsInfo*>(additionalArgs);
 
-    PortfolioItem* itemsArray    = mergeSortedItemsInfo->items->data();
-    int*           indeciesArray = mergeSortedItemsInfo->sortedIndecies->data();
+    const PortfolioItem* itemsArray    = mergeSortedItemsInfo->itemsArray;
+    const int*           indeciesArray = mergeSortedItemsInfo->indeciesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -828,7 +828,7 @@ void PortfolioTreeModel::sortCategory(QList<PortfolioItem>* items)
     QList<PortfolioItem> newItems;
     newItems.resizeForOverwrite(items->size());
 
-    MergeSortedItemsInfo mergeSortedItemsInfo(items, &itemsIndecies);
+    MergeSortedItemsInfo mergeSortedItemsInfo(*items, itemsIndecies);
     processInParallel(QThread::currentThread(), newItems, mergeSortedItemsForParallel, &mergeSortedItemsInfo);
 
     *items = newItems;
@@ -836,12 +836,12 @@ void PortfolioTreeModel::sortCategory(QList<PortfolioItem>* items)
 
 struct ReverseItemsInfo
 {
-    explicit ReverseItemsInfo(QList<PortfolioItem>* _items) :
-        items(_items)
+    explicit ReverseItemsInfo(const QList<PortfolioItem>& _items)
     {
+        itemsArray = _items.constData();
     }
 
-    QList<PortfolioItem>* items;
+    const PortfolioItem* itemsArray;
 };
 
 static void reverseItemsForParallel(
@@ -850,7 +850,7 @@ static void reverseItemsForParallel(
 {
     ReverseItemsInfo* reverseItemsInfo = reinterpret_cast<ReverseItemsInfo*>(additionalArgs);
 
-    PortfolioItem* itemsArray = reverseItemsInfo->items->data();
+    const PortfolioItem* itemsArray = reverseItemsInfo->itemsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -863,7 +863,7 @@ void PortfolioTreeModel::reverseCategory(QList<PortfolioItem>* items)
     QList<PortfolioItem> newItems;
     newItems.resizeForOverwrite(items->size());
 
-    ReverseItemsInfo reverseItemsInfo(items);
+    ReverseItemsInfo reverseItemsInfo(*items);
     processInParallel(QThread::currentThread(), newItems, reverseItemsForParallel, &reverseItemsInfo);
 
     *items = newItems;

@@ -149,7 +149,7 @@ private:
         double            totalCommission
     );
     void             simulateBuyForInstruments(const QString& instrumentId, qint64 quantity, double cost);
-    QList<Operation> reverseOperations(QList<Operation>& operations);
+    QList<Operation> reverseOperations(const QList<Operation>& operations);
     void             updateCostAndPart();
     void             updatePrice();
     void             optimizeOperations();

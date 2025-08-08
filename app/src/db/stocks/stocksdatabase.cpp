@@ -100,6 +100,7 @@ static void readStocksDataForParallel(
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock* stock = stocks[i];
+        stock->writeLock();
 
         const std::shared_ptr<IFile> stockDataFile =
             fileFactory->newInstance(QString("%1/data/stocks/%2.dat").arg(appDir, stock->meta.instrumentId));
@@ -135,6 +136,7 @@ static void readStocksDataForParallel(
         }
 
         stock->operational.lastStoredTimestamp = !stock->data.isEmpty() ? stock->data.constLast().timestamp : 0;
+        stock->writeUnlock();
     }
 }
 
@@ -167,7 +169,9 @@ static void assignLogosForParallel(
     {
         Stock* stock = stocks[i];
 
+        stock->writeLock();
         stock->meta.instrumentLogo = logosStorage->getLogo(stock->meta.instrumentId);
+        stock->writeUnlock();
     }
 }
 

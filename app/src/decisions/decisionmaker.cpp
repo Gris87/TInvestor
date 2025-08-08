@@ -156,25 +156,31 @@ void DecisionMaker::getStocksWithAvgPrice(
 struct MakeDecisionsInfo
 {
     explicit MakeDecisionsInfo(
-        IDecisionMakerConfig*    _decisionConfig,
-        qint64                   _timestamp,
-        bool                     _dateRange,
-        float                    _money,
-        float                    _commission,
-        QList<IActionDecision*>* _buyDecisions,
-        QList<IActionDecision*>* _sellDecisions,
-        int                      _threadCount
+        IDecisionMakerConfig*          _decisionConfig,
+        qint64                         _timestamp,
+        bool                           _dateRange,
+        float                          _money,
+        float                          _commission,
+        const QList<IActionDecision*>& _buyDecisions,
+        const QList<IActionDecision*>& _sellDecisions,
+        int                            _threadCount
     ) :
         decisionConfig(_decisionConfig),
         timestamp(_timestamp),
         dateRange(_dateRange),
         money(_money),
-        commission(_commission),
-        buyDecisions(_buyDecisions),
-        sellDecisions(_sellDecisions)
+        commission(_commission)
     {
+        buyDecisionsArray  = _buyDecisions.constData();
+        buyDecisionsSize   = _buyDecisions.size();
+        sellDecisionsArray = _sellDecisions.constData();
+        sellDecisionsSize  = _sellDecisions.size();
+
         buyResults.resize(_threadCount);
         sellResults.resize(_threadCount);
+
+        buyResultsArray  = buyResults.data();
+        sellResultsArray = sellResults.data();
     }
 
     IDecisionMakerConfig*        decisionConfig;
@@ -182,10 +188,14 @@ struct MakeDecisionsInfo
     bool                         dateRange;
     float                        money;
     float                        commission;
-    QList<IActionDecision*>*     buyDecisions;
-    QList<IActionDecision*>*     sellDecisions;
+    IActionDecision* const*      buyDecisionsArray;
+    int                          buyDecisionsSize;
+    IActionDecision* const*      sellDecisionsArray;
+    int                          sellDecisionsSize;
     QList<InstrumentsForTrading> buyResults;
     QList<InstrumentsForTrading> sellResults;
+    InstrumentsForTrading*       buyResultsArray;
+    InstrumentsForTrading*       sellResultsArray;
 };
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
@@ -195,17 +205,17 @@ static void makeDecisionsForParallel(
 {
     MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
 
-    IDecisionMakerConfig*  decisionConfig     = makeDecisionsInfo->decisionConfig;
-    const qint64           timestamp          = makeDecisionsInfo->timestamp;
-    const bool             dateRange          = makeDecisionsInfo->dateRange;
-    const float            money              = makeDecisionsInfo->money;
-    const float            commission         = makeDecisionsInfo->commission;
-    IActionDecision**      buyDecisionsArray  = makeDecisionsInfo->buyDecisions->data();
-    const int              buyDecisionsSize   = makeDecisionsInfo->buyDecisions->size();
-    IActionDecision**      sellDecisionsArray = makeDecisionsInfo->sellDecisions->data();
-    const int              sellDecisionsSize  = makeDecisionsInfo->sellDecisions->size();
-    InstrumentsForTrading* buyResultsArray    = makeDecisionsInfo->buyResults.data();
-    InstrumentsForTrading* sellResultsArray   = makeDecisionsInfo->sellResults.data();
+    IDecisionMakerConfig*   decisionConfig     = makeDecisionsInfo->decisionConfig;
+    const qint64            timestamp          = makeDecisionsInfo->timestamp;
+    const bool              dateRange          = makeDecisionsInfo->dateRange;
+    const float             money              = makeDecisionsInfo->money;
+    const float             commission         = makeDecisionsInfo->commission;
+    IActionDecision* const* buyDecisionsArray  = makeDecisionsInfo->buyDecisionsArray;
+    const int               buyDecisionsSize   = makeDecisionsInfo->buyDecisionsSize;
+    IActionDecision* const* sellDecisionsArray = makeDecisionsInfo->sellDecisionsArray;
+    const int               sellDecisionsSize  = makeDecisionsInfo->sellDecisionsSize;
+    InstrumentsForTrading*  buyResultsArray    = makeDecisionsInfo->buyResultsArray;
+    InstrumentsForTrading*  sellResultsArray   = makeDecisionsInfo->sellResultsArray;
 
     int   dataIndex = 0;
     float price     = 0;
@@ -318,7 +328,7 @@ void DecisionMaker::makeDecisions(
     mUserStorage->readUnlock();
 
     MakeDecisionsInfo makeDecisionsInfo(
-        decisionConfig, timestamp, dateRange, money, commission, &mBuyDecisions, &mSellDecisions, useParallel ? getCpuCount() : 1
+        decisionConfig, timestamp, dateRange, money, commission, mBuyDecisions, mSellDecisions, useParallel ? getCpuCount() : 1
     );
 
     if (useParallel)

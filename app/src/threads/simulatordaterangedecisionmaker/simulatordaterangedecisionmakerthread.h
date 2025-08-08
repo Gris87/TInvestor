@@ -81,7 +81,7 @@ public:
         QAtomicInt&          currentConfigId,
         QAtomicInt&          processedConfigId,
         qint64               totalMinutes,
-        const QList<Stock*>* stocks,
+        const QList<Stock*>& stocks,
         qint64*              currentMinuteArray,
         QMutex*              mutex,
         QList<int>*          processedIds,
@@ -102,7 +102,7 @@ public:
         QAtomicInt&          processedConfigId,
         int                  amountOfConfigs,
         qint64               totalMinutes,
-        const QList<Stock*>* stocks,
+        const QList<Stock*>& stocks,
         double&              totalMoney,
         QList<Operation>&    operations,
         QList<LogEntry>&     entries,
@@ -145,8 +145,8 @@ private:
     void loadBestPortfolio();
     void loadConfigs();
     void simulationWithBestConfig();
-    void simulationWithBestConfigStep1(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks);
-    void simulationWithBestConfigStep2(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks);
+    void simulationWithBestConfigStep1(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>& stocks);
+    void simulationWithBestConfigStep2(double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>& stocks);
     void simulationWithoutBestConfig();
     void simulateTrading(
         qint64                            timestamp,
@@ -239,8 +239,8 @@ private:
     void simulateBuyForInstruments(
         const QString& instrumentId, qint64 quantity, double cost, QuantityAndCostDoubleInstruments& instruments
     ) const;
-    QList<Operation> reverseOperations(QList<Operation>& operations) const;
-    QList<LogEntry>  reverseEntries(QList<LogEntry>& entries) const;
+    QList<Operation> reverseOperations(const QList<Operation>& operations) const;
+    QList<LogEntry>  reverseEntries(const QList<LogEntry>& entries) const;
     void             updateCostAndPart();
     void             updatePrice();
     void             notifyProgressChanged(

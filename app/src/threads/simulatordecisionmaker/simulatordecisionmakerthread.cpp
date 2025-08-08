@@ -752,12 +752,12 @@ void SimulatorDecisionMakerThread::simulateBuyForInstruments(const QString& inst
 
 struct ReverseOperationsInfo
 {
-    explicit ReverseOperationsInfo(QList<Operation>* _operations) :
-        operations(_operations)
+    explicit ReverseOperationsInfo(const QList<Operation>& _operations)
     {
+        operationsArray = _operations.constData();
     }
 
-    QList<Operation>* operations;
+    const Operation* operationsArray;
 };
 
 static void reverseOperationsForParallel(
@@ -766,7 +766,7 @@ static void reverseOperationsForParallel(
 {
     ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
 
-    Operation* operationsArray = reverseOperationsInfo->operations->data();
+    const Operation* operationsArray = reverseOperationsInfo->operationsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -774,12 +774,12 @@ static void reverseOperationsForParallel(
     }
 }
 
-QList<Operation> SimulatorDecisionMakerThread::reverseOperations(QList<Operation>& operations)
+QList<Operation> SimulatorDecisionMakerThread::reverseOperations(const QList<Operation>& operations)
 {
     QList<Operation> res;
     res.resizeForOverwrite(operations.size());
 
-    ReverseOperationsInfo reverseOperationsInfo(&operations);
+    ReverseOperationsInfo reverseOperationsInfo(operations);
     processInParallel(QThread::currentThread(), res, reverseOperationsForParallel, &reverseOperationsInfo);
 
     return res;

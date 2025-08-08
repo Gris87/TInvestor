@@ -401,14 +401,14 @@ void StocksTableModel::setFilter(const StockFilter& filter)
 
 struct FillEntriesInfo
 {
-    explicit FillEntriesInfo(const QList<Stock*>* _stocks, bool _isQualified) :
-        stocks(_stocks),
+    explicit FillEntriesInfo(const QList<Stock*>& _stocks, bool _isQualified) :
         isQualified(_isQualified)
     {
+        stocksArray = _stocks.constData();
     }
 
-    const QList<Stock*>* stocks;
-    bool                 isQualified;
+    Stock* const* stocksArray;
+    bool          isQualified;
 };
 
 static void fillEntriesForParallel(
@@ -417,7 +417,7 @@ static void fillEntriesForParallel(
 {
     FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
 
-    Stock* const* stocksArray = fillEntriesInfo->stocks->data();
+    Stock* const* stocksArray = fillEntriesInfo->stocksArray;
     const bool    isQualified = fillEntriesInfo->isQualified;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
@@ -457,7 +457,7 @@ void StocksTableModel::updateTable(const QList<Stock*>& stocks)
     mEntriesUnfiltered = std::make_shared<QList<StockTableEntry>>();
     mEntriesUnfiltered->resizeForOverwrite(stocks.size());
 
-    FillEntriesInfo fillEntriesInfo(&stocks, mUserStorage->isQualified());
+    FillEntriesInfo fillEntriesInfo(stocks, mUserStorage->isQualified());
     processInParallel(QThread::currentThread(), *mEntriesUnfiltered, fillEntriesForParallel, &fillEntriesInfo);
 
     mStocks.clear();
@@ -918,14 +918,14 @@ static void fillEntriesIndeciesForParallel(
 
 struct MergeSortedEntriesInfo
 {
-    explicit MergeSortedEntriesInfo(QList<StockTableEntry>* _entriesUnfiltered, QList<int>* _sortedIndecies) :
-        entriesUnfiltered(_entriesUnfiltered),
-        sortedIndecies(_sortedIndecies)
+    explicit MergeSortedEntriesInfo(const QList<StockTableEntry>& _entriesUnfiltered, const QList<int>& _sortedIndecies)
     {
+        entriesArray  = _entriesUnfiltered.constData();
+        indeciesArray = _sortedIndecies.constData();
     }
 
-    QList<StockTableEntry>* entriesUnfiltered;
-    QList<int>*             sortedIndecies;
+    const StockTableEntry* entriesArray;
+    const int*             indeciesArray;
 };
 
 static void mergeSortedEntriesForParallel(
@@ -934,8 +934,8 @@ static void mergeSortedEntriesForParallel(
 {
     MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
-    StockTableEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
-    int*             indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+    const StockTableEntry* entriesArray  = mergeSortedEntriesInfo->entriesArray;
+    const int*             indeciesArray = mergeSortedEntriesInfo->indeciesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -1031,7 +1031,7 @@ void StocksTableModel::sortEntries()
     const std::shared_ptr<QList<StockTableEntry>> entries = std::make_shared<QList<StockTableEntry>>();
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
-    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(*mEntriesUnfiltered, entriesIndecies);
     processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntriesUnfiltered = entries;
@@ -1039,12 +1039,12 @@ void StocksTableModel::sortEntries()
 
 struct ReverseEntriesInfo
 {
-    explicit ReverseEntriesInfo(QList<StockTableEntry>* _entriesUnfiltered) :
-        entriesUnfiltered(_entriesUnfiltered)
+    explicit ReverseEntriesInfo(const QList<StockTableEntry>& _entriesUnfiltered)
     {
+        entriesArray = _entriesUnfiltered.constData();
     }
 
-    QList<StockTableEntry>* entriesUnfiltered;
+    const StockTableEntry* entriesArray;
 };
 
 static void reverseEntriesForParallel(
@@ -1053,7 +1053,7 @@ static void reverseEntriesForParallel(
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
-    StockTableEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
+    const StockTableEntry* entriesArray = reverseEntriesInfo->entriesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -1066,7 +1066,7 @@ void StocksTableModel::reverseEntries()
     const std::shared_ptr<QList<StockTableEntry>> entries = std::make_shared<QList<StockTableEntry>>();
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
-    ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
+    ReverseEntriesInfo reverseEntriesInfo(*mEntriesUnfiltered);
     processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntriesUnfiltered = entries;
@@ -1078,10 +1078,12 @@ struct FilterEntriesInfo
         filter(_filter)
     {
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
     StockFilter*      filter;
     QList<QList<int>> results;
+    QList<int>*       resultsArray;
 };
 
 static void filterEntriesForParallel(
@@ -1097,7 +1099,7 @@ static void filterEntriesForParallel(
     FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
 
     StockFilter* filter       = filterEntriesInfo->filter;
-    QList<int>*  resultsArray = filterEntriesInfo->results.data();
+    QList<int>*  resultsArray = filterEntriesInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {

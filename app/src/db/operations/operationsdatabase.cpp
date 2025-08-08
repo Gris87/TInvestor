@@ -40,14 +40,19 @@ void OperationsDatabase::setAccount(const QString& account)
 
 struct FindOperationsIndeciesInfo
 {
-    explicit FindOperationsIndeciesInfo(const QByteArray& _content) :
-        content(_content)
+    explicit FindOperationsIndeciesInfo(const QByteArray& _content)
     {
+        contentArray = _content.constData();
+        contentSize  = _content.size();
+
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
-    QByteArray        content;
+    const char*       contentArray;
+    qint64            contentSize;
     QList<QList<int>> results;
+    QList<int>*       resultsArray;
 };
 
 static void findOperationsIndeciesForParallel(
@@ -56,13 +61,15 @@ static void findOperationsIndeciesForParallel(
 {
     FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
 
-    const char* contentArray = findOperationsIndeciesInfo->content.constData();
-    QList<int>* resultsArray = findOperationsIndeciesInfo->results.data();
+    const char*  contentArray = findOperationsIndeciesInfo->contentArray;
+    const qint64 contentSize  = findOperationsIndeciesInfo->contentSize;
+    QList<int>*  resultsArray = findOperationsIndeciesInfo->resultsArray;
+    const int    resultsSize  = findOperationsIndeciesInfo->results.size();
 
-    const int part = findOperationsIndeciesInfo->content.size() / findOperationsIndeciesInfo->results.size();
+    const int part = contentSize / resultsSize;
 
     start = part * threadId;
-    end   = qMin(part * (threadId + 1), findOperationsIndeciesInfo->content.size() - 3);
+    end   = qMin(part * (threadId + 1), contentSize - 3);
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -78,25 +85,27 @@ static void findOperationsIndeciesForParallel(
 
 struct MergeOperationsIndeciesInfo
 {
-    explicit MergeOperationsIndeciesInfo(const QList<QList<int>>& _results) :
-        results(_results)
+    explicit MergeOperationsIndeciesInfo(const QList<QList<int>>& _results)
     {
-        indecies.resizeForOverwrite(results.size() + 1);
+        indecies.resizeForOverwrite(_results.size() + 1);
+        indeciesArray = indecies.data();
+        resultsArray  = _results.constData();
 
         int index = 0;
 
-        for (int i = 0; i < results.size(); ++i)
+        for (int i = 0; i < _results.size(); ++i)
         {
-            indecies[i] = index;
+            indeciesArray[i] = index;
 
-            index += results.at(i).size();
+            index += resultsArray[i].size();
         }
 
-        indecies[results.size()] = index;
+        indeciesArray[_results.size()] = index;
     }
 
     QList<int>        indecies;
-    QList<QList<int>> results;
+    int*              indeciesArray;
+    const QList<int>* resultsArray;
 };
 
 static void mergeOperationsIndeciesForParallel(
@@ -105,27 +114,30 @@ static void mergeOperationsIndeciesForParallel(
 {
     MergeOperationsIndeciesInfo* mergeOperationsIndeciesInfo = reinterpret_cast<MergeOperationsIndeciesInfo*>(additionalArgs);
 
-    const int         index   = mergeOperationsIndeciesInfo->indecies.at(threadId);
-    const QList<int>& results = mergeOperationsIndeciesInfo->results.at(threadId);
+    const int         index   = mergeOperationsIndeciesInfo->indeciesArray[threadId];
+    const QList<int>& results = mergeOperationsIndeciesInfo->resultsArray[threadId];
 
-    for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
+    const int* resultsArray = results.constData();
+    const int  resultsSize  = results.size();
+
+    for (int i = 0; i < resultsSize && !parentThread->isInterruptionRequested(); ++i)
     {
-        res[index + i] = results.at(i);
+        res[index + i] = resultsArray[i];
     }
 }
 
 struct ReadOperationsInfo
 {
-    explicit ReadOperationsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, QList<int>* _indecies) :
+    explicit ReadOperationsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, const QList<int>& _indecies) :
         logosStorage(_logosStorage),
-        content(_content),
-        indecies(_indecies)
+        content(_content)
     {
+        indeciesArray = _indecies.constData();
     }
 
-    ILogosStorage* logosStorage;
-    QByteArray     content;
-    QList<int>*    indecies;
+    ILogosStorage*    logosStorage;
+    const QByteArray& content;
+    const int*        indeciesArray;
 };
 
 static void readOperationsForParallel(
@@ -134,9 +146,9 @@ static void readOperationsForParallel(
 {
     ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
 
-    ILogosStorage*   logosStorage  = readOperationsInfo->logosStorage;
-    const QByteArray content       = readOperationsInfo->content;
-    int*             indeciesArray = readOperationsInfo->indecies->data();
+    ILogosStorage*    logosStorage  = readOperationsInfo->logosStorage;
+    const QByteArray& content       = readOperationsInfo->content;
+    const int*        indeciesArray = readOperationsInfo->indeciesArray;
 
     simdjson::ondemand::parser parser;
 
@@ -197,7 +209,7 @@ QList<Operation> OperationsDatabase::readOperations(int partId)
 
             mLogosStorage->readLock();
 
-            ReadOperationsInfo readOperationsInfo(mLogosStorage, content, &indecies);
+            ReadOperationsInfo readOperationsInfo(mLogosStorage, content, indecies);
             processInParallel(QThread::currentThread(), res, readOperationsForParallel, &readOperationsInfo);
 
             mLogosStorage->readUnlock();
@@ -247,9 +259,11 @@ struct WriteOperationsInfo
     explicit WriteOperationsInfo()
     {
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
     QList<QByteArray> results;
+    QByteArray*       resultsArray;
 };
 
 static void writeOperationsForParallel(
@@ -258,7 +272,7 @@ static void writeOperationsForParallel(
 {
     WriteOperationsInfo* writeOperationsInfo = reinterpret_cast<WriteOperationsInfo*>(additionalArgs);
 
-    QByteArray* resultsArray = writeOperationsInfo->results.data();
+    QByteArray* resultsArray = writeOperationsInfo->resultsArray;
 
     for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
     {
@@ -294,7 +308,7 @@ void OperationsDatabase::writeOperations(QList<Operation>& operations, int partI
 
     for (int i = writeOperationsInfo.results.size() - 1; i >= 0; --i)
     {
-        operationsFile->write(writeOperationsInfo.results.at(i));
+        operationsFile->write(writeOperationsInfo.resultsArray[i]);
     }
 
     operationsFile->close();

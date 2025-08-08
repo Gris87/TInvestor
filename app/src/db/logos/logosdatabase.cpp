@@ -31,10 +31,15 @@ struct PrepareLogosInfo
     {
         instrumentIds.resizeForOverwrite(files.size());
         logos.resizeForOverwrite(files.size());
+
+        instrumentsArray = instrumentIds.data();
+        logosArray       = logos.data();
     }
 
     QStringList  instrumentIds;
     QList<Logo*> logos;
+    QString*     instrumentsArray;
+    Logo**       logosArray;
 };
 
 static void prepareLogosForParallel(
@@ -43,8 +48,8 @@ static void prepareLogosForParallel(
 {
     PrepareLogosInfo* prepareLogosInfo = reinterpret_cast<PrepareLogosInfo*>(additionalArgs);
 
-    QString* instrumentsArray = prepareLogosInfo->instrumentIds.data();
-    Logo**   logosArray       = prepareLogosInfo->logos.data();
+    QString* instrumentsArray = prepareLogosInfo->instrumentsArray;
+    Logo**   logosArray       = prepareLogosInfo->logosArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -67,7 +72,7 @@ Logos LogosDatabase::prepareLogos()
 
     for (int i = 0; i < files.size(); ++i)
     {
-        res[prepareLogosInfo.instrumentIds.at(i)] = prepareLogosInfo.logos.at(i);
+        res[prepareLogosInfo.instrumentsArray[i]] = prepareLogosInfo.logosArray[i];
     }
 
     return res;

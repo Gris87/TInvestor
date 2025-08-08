@@ -312,11 +312,16 @@ struct ObtainInstrumentsInfo
     {
         results.resize(instrumentTypes.size());
         logos.resize(instrumentTypes.size());
+
+        resultsArray = results.data();
+        logosArray   = logos.data();
     }
 
     IGrpcClient*                      grpcClient;
     QList<Instruments>                results; // UID => Instrument
     QList<QList<InstrumentIdAndLogo>> logos;   // UID => Logo
+    Instruments*                      resultsArray;
+    QList<InstrumentIdAndLogo>*       logosArray;
 };
 
 static void obtainInstrumentsForParallel(
@@ -332,8 +337,8 @@ static void obtainInstrumentsForParallel(
     ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
 
     IGrpcClient*                grpcClient   = obtainInstrumentsInfo->grpcClient;
-    Instruments*                resultsArray = obtainInstrumentsInfo->results.data();
-    QList<InstrumentIdAndLogo>* logosArray   = obtainInstrumentsInfo->logos.data();
+    Instruments*                resultsArray = obtainInstrumentsInfo->resultsArray;
+    QList<InstrumentIdAndLogo>* logosArray   = obtainInstrumentsInfo->logosArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -446,8 +451,8 @@ void PriceCollectThread::storeNewInstrumentsInfo()
 
     for (int i = 0; i < instrumentTypes.size(); ++i)
     {
-        instruments.insert(obtainInstrumentsInfo.results.at(i));
-        logos.append(obtainInstrumentsInfo.logos.at(i));
+        instruments.insert(obtainInstrumentsInfo.resultsArray[i]);
+        logos.append(obtainInstrumentsInfo.logosArray[i]);
     }
 
     emit notifyInstrumentsProgress(tr("Downloading logos"));

@@ -19,12 +19,12 @@ Optimizer::~Optimizer()
 
 struct OptimizeOperationsInfo
 {
-    explicit OptimizeOperationsInfo(const QList<Operation>* _operations) :
-        operations(_operations)
+    explicit OptimizeOperationsInfo(const QList<Operation>& _operations)
     {
+        operationsArray = _operations.constData();
     }
 
-    const QList<Operation>* operations;
+    const Operation* operationsArray;
 };
 
 static void optimizeOperationsForParallel(
@@ -33,7 +33,7 @@ static void optimizeOperationsForParallel(
 {
     OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
 
-    const Operation* operationsArray = optimizeOperationsInfo->operations->data();
+    const Operation* operationsArray = optimizeOperationsInfo->operationsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -47,7 +47,7 @@ Optimizer::optimizeOperations(const QList<Operation>& operations, int optimizeSi
     QList<Operation> res;
     res.resizeForOverwrite(optimizeSize);
 
-    OptimizeOperationsInfo optimizeOperationsInfo(&operations);
+    OptimizeOperationsInfo optimizeOperationsInfo(operations);
     processInParallel(QThread::currentThread(), res, optimizeOperationsForParallel, &optimizeOperationsInfo);
 
     addInstrumentsAfterOptimization(res, operations, instruments);
@@ -57,12 +57,12 @@ Optimizer::optimizeOperations(const QList<Operation>& operations, int optimizeSi
 
 struct OptimizeLogsInfo
 {
-    explicit OptimizeLogsInfo(const QList<LogEntry>* _entries) :
-        entries(_entries)
+    explicit OptimizeLogsInfo(const QList<LogEntry>& _entries)
     {
+        entriesArray = _entries.constData();
     }
 
-    const QList<LogEntry>* entries;
+    const LogEntry* entriesArray;
 };
 
 static void optimizeLogsForParallel(
@@ -71,7 +71,7 @@ static void optimizeLogsForParallel(
 {
     OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
 
-    const LogEntry* entriesArray = optimizeLogsInfo->entries->data();
+    const LogEntry* entriesArray = optimizeLogsInfo->entriesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -84,7 +84,7 @@ QList<LogEntry> Optimizer::optimizeLogs(const QList<LogEntry>& entries, int opti
     QList<LogEntry> res;
     res.resizeForOverwrite(optimizeSize);
 
-    OptimizeLogsInfo optimizeLogsInfo(&entries);
+    OptimizeLogsInfo optimizeLogsInfo(entries);
     processInParallel(QThread::currentThread(), res, optimizeLogsForParallel, &optimizeLogsInfo);
 
     return res;
@@ -92,14 +92,19 @@ QList<LogEntry> Optimizer::optimizeLogs(const QList<LogEntry>& entries, int opti
 
 struct AddInstrumentsInfo
 {
-    explicit AddInstrumentsInfo(const QList<Operation>* _oldOperations) :
-        oldOperations(_oldOperations)
+    explicit AddInstrumentsInfo(const QList<Operation>* _oldOperations)
     {
+        oldOperationsArray = _oldOperations->constData();
+        oldOperationsSize  = _oldOperations->size();
+
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
-    const QList<Operation>* oldOperations;
+    const Operation*        oldOperationsArray;
+    int                     oldOperationsSize;
     QList<QList<Operation>> results;
+    QList<Operation>*       resultsArray;
 };
 
 static void addInstrumentsForParallel(
@@ -108,9 +113,9 @@ static void addInstrumentsForParallel(
 {
     AddInstrumentsInfo* addInstrumentsInfo = reinterpret_cast<AddInstrumentsInfo*>(additionalArgs);
 
-    const Operation*  oldOperationsArray = addInstrumentsInfo->oldOperations->data();
-    const int         oldOperationsSize  = addInstrumentsInfo->oldOperations->size();
-    QList<Operation>* resultsArray       = addInstrumentsInfo->results.data();
+    const Operation*  oldOperationsArray = addInstrumentsInfo->oldOperationsArray;
+    const int         oldOperationsSize  = addInstrumentsInfo->oldOperationsSize;
+    QList<Operation>* resultsArray       = addInstrumentsInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {

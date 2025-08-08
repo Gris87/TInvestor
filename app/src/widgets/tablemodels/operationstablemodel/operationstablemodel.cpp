@@ -536,14 +536,14 @@ static void fillEntriesIndeciesForParallel(
 
 struct MergeSortedEntriesInfo
 {
-    explicit MergeSortedEntriesInfo(QList<Operation>* _entries, QList<int>* _sortedIndecies) :
-        entries(_entries),
-        sortedIndecies(_sortedIndecies)
+    explicit MergeSortedEntriesInfo(const QList<Operation>& _entries, const QList<int>& _sortedIndecies)
     {
+        entriesArray  = _entries.constData();
+        indeciesArray = _sortedIndecies.constData();
     }
 
-    QList<Operation>* entries;
-    QList<int>*       sortedIndecies;
+    const Operation* entriesArray;
+    const int*       indeciesArray;
 };
 
 static void mergeSortedEntriesForParallel(
@@ -552,8 +552,8 @@ static void mergeSortedEntriesForParallel(
 {
     MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
-    Operation* entriesArray  = mergeSortedEntriesInfo->entries->data();
-    int*       indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+    const Operation* entriesArray  = mergeSortedEntriesInfo->entriesArray;
+    const int*       indeciesArray = mergeSortedEntriesInfo->indeciesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -782,7 +782,7 @@ void OperationsTableModel::sortEntries()
     const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
     entries->resizeForOverwrite(mEntries->size());
 
-    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntries.get(), &entriesIndecies);
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(*mEntries.get(), entriesIndecies);
     processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntries = entries;
@@ -791,12 +791,12 @@ void OperationsTableModel::sortEntries()
 
 struct ReverseEntriesInfo
 {
-    explicit ReverseEntriesInfo(QList<Operation>* _entries) :
-        entries(_entries)
+    explicit ReverseEntriesInfo(const QList<Operation>& _entries)
     {
+        entriesArray = _entries.constData();
     }
 
-    QList<Operation>* entries;
+    const Operation* entriesArray;
 };
 
 static void reverseEntriesForParallel(
@@ -805,7 +805,7 @@ static void reverseEntriesForParallel(
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
-    Operation* entriesArray = reverseEntriesInfo->entries->data();
+    const Operation* entriesArray = reverseEntriesInfo->entriesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -818,7 +818,7 @@ void OperationsTableModel::reverseEntries()
     const std::shared_ptr<QList<Operation>> entries = std::make_shared<QList<Operation>>();
     entries->resizeForOverwrite(mEntries->size());
 
-    ReverseEntriesInfo reverseEntriesInfo(mEntries.get());
+    ReverseEntriesInfo reverseEntriesInfo(*mEntries);
     processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntries = entries;

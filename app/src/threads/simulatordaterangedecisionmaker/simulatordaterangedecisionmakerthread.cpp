@@ -410,7 +410,7 @@ struct SimulationInfo
         ISettingsEditor*                       _settingsEditor,
         int                                    _buyDecisionId,
         qint64                                 _totalMinutes,
-        const QList<Stock*>*                   _stocks,
+        const QList<Stock*>&                   _stocks,
         double*                                _bestGlobalTotalMoney,
         double*                                _bestLocalTotalMoney,
         QList<Operation>*                      _bestOperations,
@@ -437,6 +437,7 @@ struct SimulationInfo
         processedConfigId = startConfigId;
 
         currentMinute.fill(0, getCpuCount());
+        currentMinuteArray = currentMinute.data();
     }
 
     SimulatorDateRangeDecisionMakerThread* thread;
@@ -449,8 +450,9 @@ struct SimulationInfo
     QAtomicInt                             currentConfigId;
     QAtomicInt                             processedConfigId;
     qint64                                 totalMinutes;
-    const QList<Stock*>*                   stocks;
+    const QList<Stock*>&                   stocks;
     QList<qint64>                          currentMinute;
+    qint64*                                currentMinuteArray;
     QMutex                                 mutex;
     QList<int>                             processedIds;
     double*                                bestGlobalTotalMoney;
@@ -477,8 +479,8 @@ static void simulationForParallel(
     QAtomicInt&                            currentConfigId      = simulationInfo->currentConfigId;
     QAtomicInt&                            processedConfigId    = simulationInfo->processedConfigId;
     const qint64                           totalMinutes         = simulationInfo->totalMinutes;
-    const QList<Stock*>*                   stocks               = simulationInfo->stocks;
-    qint64*                                currentMinuteArray   = simulationInfo->currentMinute.data();
+    const QList<Stock*>&                   stocks               = simulationInfo->stocks;
+    qint64*                                currentMinuteArray   = simulationInfo->currentMinuteArray;
     const int                              threadsCount         = simulationInfo->currentMinute.size();
     QMutex*                                mutex                = &simulationInfo->mutex;
     QList<int>*                            processedIds         = &simulationInfo->processedIds;
@@ -536,7 +538,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
     QAtomicInt&          currentConfigId,
     QAtomicInt&          processedConfigId,
     qint64               totalMinutes,
-    const QList<Stock*>* stocks,
+    const QList<Stock*>& stocks,
     qint64*              currentMinuteArray,
     QMutex*              mutex,
     QList<int>*          processedIds,
@@ -646,7 +648,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
     QAtomicInt&          processedConfigId,
     int                  amountOfConfigs,
     qint64               totalMinutes,
-    const QList<Stock*>* stocks,
+    const QList<Stock*>& stocks,
     double&              totalMoney,
     QList<Operation>&    operations,
     QList<LogEntry>&     entries,
@@ -683,7 +685,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
         }
 
         const InstrumentsForTrading& instrumentsForTrading =
-            mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, *stocks, false, 0, true, false);
+            mDecisionMaker->makeDecision(parentThread, timestamp, config, portfolio, stocks, false, 0, true, false);
 
         if (!instrumentsForTrading.isEmpty())
         {
@@ -723,17 +725,17 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfig()
 
     if (step < mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        simulationWithBestConfigStep1(bestGlobalTotalMoney, totalMinutes, &stocks);
+        simulationWithBestConfigStep1(bestGlobalTotalMoney, totalMinutes, stocks);
     }
 
     if (step <= mConfigVariants.size() && !QThread::currentThread()->isInterruptionRequested())
     {
-        simulationWithBestConfigStep2(bestGlobalTotalMoney, totalMinutes, &stocks);
+        simulationWithBestConfigStep2(bestGlobalTotalMoney, totalMinutes, stocks);
     }
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
-    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks
+    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>& stocks
 )
 {
     QStringList bestConfigs;
@@ -804,7 +806,7 @@ void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep1(
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigStep2(
-    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>* stocks
+    double& bestGlobalTotalMoney, qint64 totalMinutes, const QList<Stock*>& stocks
 )
 {
     emit stepProgressChanged(mConfigVariants.size(), mConfigVariants.size() + 1);
@@ -1395,12 +1397,12 @@ void SimulatorDateRangeDecisionMakerThread::simulateBuyForInstruments(
 
 struct ReverseOperationsInfo
 {
-    explicit ReverseOperationsInfo(QList<Operation>* _operations) :
-        operations(_operations)
+    explicit ReverseOperationsInfo(const QList<Operation>& _operations)
     {
+        operationsArray = _operations.constData();
     }
 
-    QList<Operation>* operations;
+    const Operation* operationsArray;
 };
 
 static void reverseOperationsForParallel(
@@ -1409,7 +1411,7 @@ static void reverseOperationsForParallel(
 {
     ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
 
-    Operation* operationsArray = reverseOperationsInfo->operations->data();
+    const Operation* operationsArray = reverseOperationsInfo->operationsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -1417,12 +1419,12 @@ static void reverseOperationsForParallel(
     }
 }
 
-QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<Operation>& operations) const
+QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(const QList<Operation>& operations) const
 {
     QList<Operation> res;
     res.resizeForOverwrite(operations.size());
 
-    ReverseOperationsInfo reverseOperationsInfo(&operations);
+    ReverseOperationsInfo reverseOperationsInfo(operations);
     processInParallel(QThread::currentThread(), res, reverseOperationsForParallel, &reverseOperationsInfo);
 
     return res;
@@ -1430,12 +1432,12 @@ QList<Operation> SimulatorDateRangeDecisionMakerThread::reverseOperations(QList<
 
 struct ReverseEntriesInfo
 {
-    explicit ReverseEntriesInfo(QList<LogEntry>* _entries) :
-        entries(_entries)
+    explicit ReverseEntriesInfo(const QList<LogEntry>& _entries)
     {
+        entriesArray = _entries.constData();
     }
 
-    QList<LogEntry>* entries;
+    const LogEntry* entriesArray;
 };
 
 static void reverseEntriesForParallel(
@@ -1444,7 +1446,7 @@ static void reverseEntriesForParallel(
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
-    LogEntry* entriesArray = reverseEntriesInfo->entries->data();
+    const LogEntry* entriesArray = reverseEntriesInfo->entriesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -1452,12 +1454,12 @@ static void reverseEntriesForParallel(
     }
 }
 
-QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(QList<LogEntry>& entries) const
+QList<LogEntry> SimulatorDateRangeDecisionMakerThread::reverseEntries(const QList<LogEntry>& entries) const
 {
     QList<LogEntry> res;
     res.resizeForOverwrite(entries.size());
 
-    ReverseEntriesInfo reverseEntriesInfo(&entries);
+    ReverseEntriesInfo reverseEntriesInfo(entries);
     processInParallel(QThread::currentThread(), res, reverseEntriesForParallel, &reverseEntriesInfo);
 
     return res;

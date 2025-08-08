@@ -38,29 +38,36 @@ void LogsDatabase::setAccount(const QString& account)
 
 struct FindLogsIndeciesInfo
 {
-    explicit FindLogsIndeciesInfo(const QByteArray& _content) :
-        content(_content)
+    explicit FindLogsIndeciesInfo(const QByteArray& _content)
     {
+        contentArray = _content.constData();
+        contentSize  = _content.size();
+
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
-    QByteArray        content;
+    const char*       contentArray;
+    qint64            contentSize;
     QList<QList<int>> results;
+    QList<int>*       resultsArray;
 };
 
 static void findLogsIndeciesForParallel(
-QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, int* /*temp*/, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     FindLogsIndeciesInfo* findLogsIndeciesInfo = reinterpret_cast<FindLogsIndeciesInfo*>(additionalArgs);
 
-    const char* contentArray = findLogsIndeciesInfo->content.constData();
-    QList<int>* resultsArray = findLogsIndeciesInfo->results.data();
+    const char*  contentArray = findLogsIndeciesInfo->contentArray;
+    const qint64 contentSize  = findLogsIndeciesInfo->contentSize;
+    QList<int>*  resultsArray = findLogsIndeciesInfo->resultsArray;
+    const int    resultsSize  = findLogsIndeciesInfo->results.size();
 
-    const int part = findLogsIndeciesInfo->content.size() / findLogsIndeciesInfo->results.size();
+    const int part = contentSize / resultsSize;
 
     start = part * threadId;
-    end   = qMin(part * (threadId + 1), findLogsIndeciesInfo->content.size() - 3);
+    end   = qMin(part * (threadId + 1), contentSize - 3);
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -76,25 +83,27 @@ QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, v
 
 struct MergeLogsIndeciesInfo
 {
-    explicit MergeLogsIndeciesInfo(const QList<QList<int>>& _results) :
-        results(_results)
+    explicit MergeLogsIndeciesInfo(const QList<QList<int>>& _results)
     {
-        indecies.resizeForOverwrite(results.size() + 1);
+        indecies.resizeForOverwrite(_results.size() + 1);
+        indeciesArray = indecies.data();
+        resultsArray  = _results.constData();
 
         int index = 0;
 
-        for (int i = 0; i < results.size(); ++i)
+        for (int i = 0; i < _results.size(); ++i)
         {
-            indecies[i] = index;
+            indeciesArray[i] = index;
 
-            index += results.at(i).size();
+            index += resultsArray[i].size();
         }
 
-        indecies[results.size()] = index;
+        indeciesArray[_results.size()] = index;
     }
 
     QList<int>        indecies;
-    QList<QList<int>> results;
+    int*              indeciesArray;
+    const QList<int>* resultsArray;
 };
 
 static void mergeLogsIndeciesForParallel(
@@ -103,27 +112,30 @@ static void mergeLogsIndeciesForParallel(
 {
     MergeLogsIndeciesInfo* mergeLogsIndeciesInfo = reinterpret_cast<MergeLogsIndeciesInfo*>(additionalArgs);
 
-    const int         index   = mergeLogsIndeciesInfo->indecies.at(threadId);
-    const QList<int>& results = mergeLogsIndeciesInfo->results.at(threadId);
+    const int         index   = mergeLogsIndeciesInfo->indeciesArray[threadId];
+    const QList<int>& results = mergeLogsIndeciesInfo->resultsArray[threadId];
 
-    for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
+    const int* resultsArray = results.constData();
+    const int  resultsSize  = results.size();
+
+    for (int i = 0; i < resultsSize && !parentThread->isInterruptionRequested(); ++i)
     {
-        res[index + i] = results.at(i);
+        res[index + i] = resultsArray[i];
     }
 }
 
 struct ReadLogsInfo
 {
-    explicit ReadLogsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, QList<int>* _indecies) :
+    explicit ReadLogsInfo(ILogosStorage* _logosStorage, const QByteArray& _content, const QList<int>& _indecies) :
         logosStorage(_logosStorage),
-        content(_content),
-        indecies(_indecies)
+        content(_content)
     {
+        indeciesArray = _indecies.constData();
     }
 
-    ILogosStorage* logosStorage;
-    QByteArray     content;
-    QList<int>*    indecies;
+    ILogosStorage*    logosStorage;
+    const QByteArray& content;
+    const int*        indeciesArray;
 };
 
 static void
@@ -131,9 +143,9 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, LogEntry* res, int 
 {
     ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
 
-    ILogosStorage*   logosStorage  = readLogsInfo->logosStorage;
-    const QByteArray content       = readLogsInfo->content;
-    int*             indeciesArray = readLogsInfo->indecies->data();
+    ILogosStorage*    logosStorage  = readLogsInfo->logosStorage;
+    const QByteArray& content       = readLogsInfo->content;
+    const int*        indeciesArray = readLogsInfo->indeciesArray;
 
     simdjson::ondemand::parser parser;
 
@@ -191,7 +203,7 @@ QList<LogEntry> LogsDatabase::readLogs(int partId)
 
             mLogosStorage->readLock();
 
-            ReadLogsInfo readLogsInfo(mLogosStorage, content, &indecies);
+            ReadLogsInfo readLogsInfo(mLogosStorage, content, indecies);
             processInParallel(QThread::currentThread(), res, readLogsForParallel, &readLogsInfo);
 
             mLogosStorage->readUnlock();
@@ -241,9 +253,11 @@ struct WriteLogsInfo
     explicit WriteLogsInfo()
     {
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
     QList<QByteArray> results;
+    QByteArray*       resultsArray;
 };
 
 static void writeLogsForParallel(
@@ -252,7 +266,7 @@ static void writeLogsForParallel(
 {
     WriteLogsInfo* writeLogsInfo = reinterpret_cast<WriteLogsInfo*>(additionalArgs);
 
-    QByteArray* resultsArray = writeLogsInfo->results.data();
+    QByteArray* resultsArray = writeLogsInfo->resultsArray;
 
     for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
     {
@@ -288,7 +302,7 @@ void LogsDatabase::writeLogs(QList<LogEntry>& entries, int partId)
 
     for (int i = writeLogsInfo.results.size() - 1; i >= 0; --i)
     {
-        logsFile->write(writeLogsInfo.results.at(i));
+        logsFile->write(writeLogsInfo.resultsArray[i]);
     }
 
     logsFile->close();

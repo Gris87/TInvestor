@@ -267,14 +267,14 @@ static void fillEntriesIndeciesForParallel(
 
 struct MergeSortedEntriesInfo
 {
-    explicit MergeSortedEntriesInfo(QList<LogEntry>* _entriesUnfiltered, QList<int>* _sortedIndecies) :
-        entriesUnfiltered(_entriesUnfiltered),
-        sortedIndecies(_sortedIndecies)
+    explicit MergeSortedEntriesInfo(const QList<LogEntry>& _entriesUnfiltered, const QList<int>& _sortedIndecies)
     {
+        entriesArray  = _entriesUnfiltered.constData();
+        indeciesArray = _sortedIndecies.constData();
     }
 
-    QList<LogEntry>* entriesUnfiltered;
-    QList<int>*      sortedIndecies;
+    const LogEntry* entriesArray;
+    const int*      indeciesArray;
 };
 
 static void mergeSortedEntriesForParallel(
@@ -283,8 +283,8 @@ static void mergeSortedEntriesForParallel(
 {
     MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
 
-    LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
-    int*      indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
+    const LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesArray;
+    const int*      indeciesArray = mergeSortedEntriesInfo->indeciesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -356,7 +356,7 @@ void LogsTableModel::sortEntries()
     const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
-    MergeSortedEntriesInfo mergeSortedEntriesInfo(mEntriesUnfiltered.get(), &entriesIndecies);
+    MergeSortedEntriesInfo mergeSortedEntriesInfo(*mEntriesUnfiltered, entriesIndecies);
     processInParallel(QThread::currentThread(), *entries, mergeSortedEntriesForParallel, &mergeSortedEntriesInfo);
 
     mEntriesUnfiltered = entries;
@@ -364,12 +364,12 @@ void LogsTableModel::sortEntries()
 
 struct ReverseEntriesInfo
 {
-    explicit ReverseEntriesInfo(QList<LogEntry>* _entriesUnfiltered) :
-        entriesUnfiltered(_entriesUnfiltered)
+    explicit ReverseEntriesInfo(const QList<LogEntry>& _entriesUnfiltered)
     {
+        entriesArray = _entriesUnfiltered.constData();
     }
 
-    QList<LogEntry>* entriesUnfiltered;
+    const LogEntry* entriesArray;
 };
 
 static void reverseEntriesForParallel(
@@ -378,7 +378,7 @@ static void reverseEntriesForParallel(
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
-    LogEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
+    const LogEntry* entriesArray = reverseEntriesInfo->entriesArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -391,7 +391,7 @@ void LogsTableModel::reverseEntries()
     const std::shared_ptr<QList<LogEntry>> entries = std::make_shared<QList<LogEntry>>();
     entries->resizeForOverwrite(mEntriesUnfiltered->size());
 
-    ReverseEntriesInfo reverseEntriesInfo(mEntriesUnfiltered.get());
+    ReverseEntriesInfo reverseEntriesInfo(*mEntriesUnfiltered);
     processInParallel(QThread::currentThread(), *entries, reverseEntriesForParallel, &reverseEntriesInfo);
 
     mEntriesUnfiltered = entries;
@@ -450,10 +450,12 @@ struct FilterEntriesInfo
         filter(_filter)
     {
         results.resize(getCpuCount());
+        resultsArray = results.data();
     }
 
     LogFilter*        filter;
     QList<QList<int>> results;
+    QList<int>*       resultsArray;
 };
 
 static void filterEntriesForParallel(
@@ -463,7 +465,7 @@ static void filterEntriesForParallel(
     FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
 
     LogFilter*  filter       = filterEntriesInfo->filter;
-    QList<int>* resultsArray = filterEntriesInfo->results.data();
+    QList<int>* resultsArray = filterEntriesInfo->resultsArray;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
@@ -476,27 +478,29 @@ static void filterEntriesForParallel(
 
 struct MergeFilteredEntriesInfo
 {
-    explicit MergeFilteredEntriesInfo(QList<LogEntry>* _entriesUnfiltered, const QList<QList<int>>& _results) :
-        entriesUnfiltered(_entriesUnfiltered),
-        results(_results)
+    explicit MergeFilteredEntriesInfo(const QList<LogEntry>& _entriesUnfiltered, const QList<QList<int>>& _results)
     {
-        indecies.resizeForOverwrite(results.size() + 1);
+        entriesUnfilteredArray = _entriesUnfiltered.constData();
+        indecies.resizeForOverwrite(_results.size() + 1);
+        indeciesArray = indecies.data();
+        resultsArray  = _results.constData();
 
         int index = 0;
 
-        for (int i = 0; i < results.size(); ++i)
+        for (int i = 0; i < _results.size(); ++i)
         {
-            indecies[i] = index;
+            indeciesArray[i] = index;
 
-            index += results.at(i).size();
+            index += resultsArray[i].size();
         }
 
-        indecies[results.size()] = index;
+        indeciesArray[_results.size()] = index;
     }
 
-    QList<LogEntry>*  entriesUnfiltered;
+    const LogEntry*   entriesUnfilteredArray;
     QList<int>        indecies;
-    QList<QList<int>> results;
+    int*              indeciesArray;
+    const QList<int>* resultsArray;
 };
 
 static void mergeFilteredEntriesForParallel(
@@ -505,13 +509,16 @@ static void mergeFilteredEntriesForParallel(
 {
     MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
 
-    QList<LogEntry>*  entriesUnfiltered = mergeFilteredEntriesInfo->entriesUnfiltered;
-    const int         index             = mergeFilteredEntriesInfo->indecies.at(threadId);
-    const QList<int>& results           = mergeFilteredEntriesInfo->results.at(threadId);
+    const LogEntry*   entriesUnfilteredArray = mergeFilteredEntriesInfo->entriesUnfilteredArray;
+    const int         index                  = mergeFilteredEntriesInfo->indeciesArray[threadId];
+    const QList<int>& results                = mergeFilteredEntriesInfo->resultsArray[threadId];
 
-    for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
+    const int* resultsArray = results.constData();
+    const int  resultsSize  = results.size();
+
+    for (int i = 0; i < resultsSize && !parentThread->isInterruptionRequested(); ++i)
     {
-        res[index + i] = entriesUnfiltered->at(results.at(i));
+        res[index + i] = entriesUnfilteredArray[resultsArray[i]];
     }
 }
 
@@ -524,7 +531,7 @@ void LogsTableModel::filterAll()
         FilterEntriesInfo filterEntriesInfo(&mFilter);
         processInParallel(QThread::currentThread(), *mEntriesUnfiltered, filterEntriesForParallel, &filterEntriesInfo);
 
-        MergeFilteredEntriesInfo mergeFilteredEntriesInfo(mEntriesUnfiltered.get(), filterEntriesInfo.results);
+        MergeFilteredEntriesInfo mergeFilteredEntriesInfo(*mEntriesUnfiltered, filterEntriesInfo.results);
         mEntries->resizeForOverwrite(mergeFilteredEntriesInfo.indecies.constLast());
         processInParallel(QThread::currentThread(), *mEntries, mergeFilteredEntriesForParallel, &mergeFilteredEntriesInfo);
     }
