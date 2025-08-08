@@ -89,7 +89,7 @@ struct ReadStocksDataInfo
 };
 
 static void readStocksDataForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     ReadStocksDataInfo* readStocksDataInfo = reinterpret_cast<ReadStocksDataInfo*>(additionalArgs);
@@ -97,11 +97,9 @@ static void readStocksDataForParallel(
 
     const QString appDir = qApp->applicationDirPath();
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         const std::shared_ptr<IFile> stockDataFile =
             fileFactory->newInstance(QString("%1/data/stocks/%2.dat").arg(appDir, stock->meta.instrumentId));
@@ -158,17 +156,16 @@ struct AssignLogosInfo
     ILogosStorage* logosStorage;
 };
 
-static void
-assignLogosForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void assignLogosForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     AssignLogosInfo* assignLogosInfo = reinterpret_cast<AssignLogosInfo*>(additionalArgs);
     ILogosStorage*   logosStorage    = assignLogosInfo->logosStorage;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->meta.instrumentLogo = logosStorage->getLogo(stock->meta.instrumentId);
     }

@@ -462,7 +462,7 @@ struct SimulationInfo
 };
 
 static void simulationForParallel(
-    QThread* parentThread, int threadId, QList<QString>& configVariants, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, QString* configVariants, int size, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     SimulationInfo* simulationInfo = reinterpret_cast<SimulationInfo*>(additionalArgs);
@@ -493,6 +493,7 @@ static void simulationForParallel(
         threadId,
         threadsCount,
         configVariants,
+        size,
         startTime,
         config,
         buyDecisionId,
@@ -521,37 +522,35 @@ static void simulationForParallel(
 }
 
 QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelEnter(
-    QThread*              parentThread,
-    int                   threadId,
-    int                   threadsCount,
-    const QList<QString>& configVariants,
-    qint64                startTime,
-    IConfig*              config,
-    int                   buyDecisionId,
-    const QString&        settingsSuffix,
-    int                   startConfigId,
-    int&                  lastConfigId,
-    QAtomicInt&           currentConfigId,
-    QAtomicInt&           processedConfigId,
-    qint64                totalMinutes,
-    const QList<Stock*>*  stocks,
-    qint64*               currentMinuteArray,
-    QMutex*               mutex,
-    QList<int>*           processedIds,
-    double*               bestGlobalTotalMoney,
-    double*               bestLocalTotalMoney,
-    QList<Operation>*     bestOperations,
-    QList<LogEntry>*      bestEntries,
-    Portfolio*            bestPortfolio
+    QThread*             parentThread,
+    int                  threadId,
+    int                  threadsCount,
+    QString*             configVariants,
+    int                  amountOfConfigs,
+    qint64               startTime,
+    IConfig*             config,
+    int                  buyDecisionId,
+    const QString&       settingsSuffix,
+    int                  startConfigId,
+    int&                 lastConfigId,
+    QAtomicInt&          currentConfigId,
+    QAtomicInt&          processedConfigId,
+    qint64               totalMinutes,
+    const QList<Stock*>* stocks,
+    qint64*              currentMinuteArray,
+    QMutex*              mutex,
+    QList<int>*          processedIds,
+    double*              bestGlobalTotalMoney,
+    double*              bestLocalTotalMoney,
+    QList<Operation>*    bestOperations,
+    QList<LogEntry>*     bestEntries,
+    Portfolio*           bestPortfolio
 )
 {
     double           totalMoney = 0.0;
     QList<Operation> operations;
     QList<LogEntry>  entries;
     Portfolio        portfolio;
-
-    const QString* configVariantsArray = configVariants.data();
-    const int      amountOfConfigs     = configVariants.size();
 
     while (!parentThread->isInterruptionRequested())
     {
@@ -564,7 +563,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
             break;
         }
 
-        applyToConfig(config, configVariantsArray[currentConfig]);
+        applyToConfig(config, configVariants[currentConfig]);
 
         simulationWithBestConfigForParallel(
             parentThread,
@@ -633,7 +632,7 @@ QString SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigParallelE
 
     const int bestConfigId = mSettingsEditor->value(QString("Options/BestConfigId%1").arg(settingsSuffix), 0).toInt();
 
-    return configVariantsArray[bestConfigId];
+    return configVariants[bestConfigId];
 }
 
 void SimulatorDateRangeDecisionMakerThread::simulationWithBestConfigForParallel(
@@ -1405,18 +1404,16 @@ struct ReverseOperationsInfo
 };
 
 static void reverseOperationsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
     ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
 
     Operation* operationsArray = reverseOperationsInfo->operations->data();
 
-    Operation* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = operationsArray[res.size() - i - 1];
+        res[i] = operationsArray[size - i - 1];
     }
 }
 
@@ -1441,18 +1438,17 @@ struct ReverseEntriesInfo
     QList<LogEntry>* entries;
 };
 
-static void
-reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+static void reverseEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, LogEntry* res, int size, int start, int end, void* additionalArgs
+)
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     LogEntry* entriesArray = reverseEntriesInfo->entries->data();
 
-    LogEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[res.size() - i - 1];
+        res[i] = entriesArray[size - i - 1];
     }
 }
 

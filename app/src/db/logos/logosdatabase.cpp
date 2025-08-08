@@ -37,19 +37,18 @@ struct PrepareLogosInfo
     QList<Logo*> logos;
 };
 
-static void
-prepareLogosForParallel(QThread* parentThread, int /*threadId*/, QList<QString>& files, int start, int end, void* additionalArgs)
+static void prepareLogosForParallel(
+    QThread* parentThread, int /*threadId*/, QString* files, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     PrepareLogosInfo* prepareLogosInfo = reinterpret_cast<PrepareLogosInfo*>(additionalArgs);
 
     QString* instrumentsArray = prepareLogosInfo->instrumentIds.data();
     Logo**   logosArray       = prepareLogosInfo->logos.data();
 
-    QString* filesArray = files.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        instrumentsArray[i] = filesArray[i].remove(".png");
+        instrumentsArray[i] = files[i].remove(".png");
         logosArray[i]       = new Logo();
     }
 }

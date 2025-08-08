@@ -412,7 +412,7 @@ struct FillEntriesInfo
 };
 
 static void fillEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     FillEntriesInfo* fillEntriesInfo = reinterpret_cast<FillEntriesInfo*>(additionalArgs);
@@ -420,12 +420,10 @@ static void fillEntriesForParallel(
     Stock* const* stocksArray = fillEntriesInfo->stocks->data();
     const bool    isQualified = fillEntriesInfo->isQualified;
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         Stock*           stock = stocksArray[i];
-        StockTableEntry& entry = resArray[i];
+        StockTableEntry& entry = res[i];
 
         stock->readLock();
 
@@ -494,7 +492,7 @@ struct UpdateAllInfo
 };
 
 static void updateAllForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     UpdateAllInfo* updateAllInfo = reinterpret_cast<UpdateAllInfo*>(additionalArgs);
@@ -504,11 +502,9 @@ static void updateAllForParallel(
     const bool                   updateAllowed = updateAllInfo->updateAllowed;
     const bool                   isQualified   = updateAllInfo->isQualified;
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        StockTableEntry& entry = resArray[i];
+        StockTableEntry& entry = res[i];
 
         Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
@@ -594,7 +590,7 @@ struct UpdateLastPricesInfo
 };
 
 static void updateLastPricesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     UpdateLastPricesInfo* updateLastPricesInfo = reinterpret_cast<UpdateLastPricesInfo*>(additionalArgs);
@@ -603,11 +599,9 @@ static void updateLastPricesForParallel(
     const QMap<QString, Stock*>* stocks        = updateLastPricesInfo->stocks;
     const bool                   updateAllowed = updateLastPricesInfo->updateAllowed;
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        StockTableEntry& entry = resArray[i];
+        StockTableEntry& entry = res[i];
 
         if (!model->lastPricesUpdates.contains(entry.instrumentId))
         {
@@ -692,7 +686,7 @@ struct UpdatePricesInfo
 };
 
 static void updatePricesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     UpdatePricesInfo* updatePricesInfo = reinterpret_cast<UpdatePricesInfo*>(additionalArgs);
@@ -701,11 +695,9 @@ static void updatePricesForParallel(
     const QMap<QString, Stock*>* stocks        = updatePricesInfo->stocks;
     const bool                   updateAllowed = updatePricesInfo->updateAllowed;
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        StockTableEntry& entry = resArray[i];
+        StockTableEntry& entry = res[i];
 
         Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
@@ -780,7 +772,7 @@ struct UpdatePeriodicDataInfo
 };
 
 static void updatePeriodicDataForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     UpdatePeriodicDataInfo* updatePeriodicDataInfo = reinterpret_cast<UpdatePeriodicDataInfo*>(additionalArgs);
@@ -789,11 +781,9 @@ static void updatePeriodicDataForParallel(
     const QMap<QString, Stock*>* stocks        = updatePeriodicDataInfo->stocks;
     const bool                   updateAllowed = updatePeriodicDataInfo->updateAllowed;
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        StockTableEntry& entry = resArray[i];
+        StockTableEntry& entry = res[i];
 
         Stock* stock = stocks->value(entry.instrumentId);
         Q_ASSERT_X(stock != nullptr, __FUNCTION__, "Unexpected behavior");
@@ -917,14 +907,12 @@ void StocksTableModel::setDateChangeTooltip(const QString& tooltip)
 }
 
 static void fillEntriesIndeciesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+    QThread* parentThread, int /*threadId*/, int* res, int /*size*/, int start, int end, void* /*additionalArgs*/
 )
 {
-    int* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = i;
+        res[i] = i;
     }
 }
 
@@ -941,7 +929,7 @@ struct MergeSortedEntriesInfo
 };
 
 static void mergeSortedEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
@@ -949,11 +937,9 @@ static void mergeSortedEntriesForParallel(
     StockTableEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
     int*             indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[indeciesArray[i]];
+        res[i] = entriesArray[indeciesArray[i]];
     }
 }
 
@@ -1062,18 +1048,16 @@ struct ReverseEntriesInfo
 };
 
 static void reverseEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<StockTableEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, StockTableEntry* res, int size, int start, int end, void* additionalArgs
 )
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     StockTableEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[res.size() - i - 1];
+        res[i] = entriesArray[size - i - 1];
     }
 }
 
@@ -1101,7 +1085,13 @@ struct FilterEntriesInfo
 };
 
 static void filterEntriesForParallel(
-    QThread* parentThread, int threadId, QList<StockTableEntry>& entriesUnfiltered, int start, int end, void* additionalArgs
+    QThread*         parentThread,
+    int              threadId,
+    StockTableEntry* entriesUnfiltered,
+    int /*size*/,
+    int   start,
+    int   end,
+    void* additionalArgs
 )
 {
     FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
@@ -1109,11 +1099,9 @@ static void filterEntriesForParallel(
     StockFilter* filter       = filterEntriesInfo->filter;
     QList<int>*  resultsArray = filterEntriesInfo->results.data();
 
-    StockTableEntry* entriesArray = entriesUnfiltered.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        if (filter->isFiltered(entriesArray[i]))
+        if (filter->isFiltered(entriesUnfiltered[i]))
         {
             resultsArray[threadId].append(i);
         }
@@ -1146,7 +1134,7 @@ struct MergeFilteredEntriesInfo
 };
 
 static void mergeFilteredEntriesForParallel(
-    QThread* parentThread, int threadId, QList<StockTableEntry>& res, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, StockTableEntry* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
@@ -1155,11 +1143,9 @@ static void mergeFilteredEntriesForParallel(
     const int               index             = mergeFilteredEntriesInfo->indecies.at(threadId);
     const QList<int>&       results           = mergeFilteredEntriesInfo->results.at(threadId);
 
-    StockTableEntry* resArray = res.data();
-
     for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[index + i] = entriesUnfiltered->at(results.at(i));
+        res[index + i] = entriesUnfiltered->at(results.at(i));
     }
 }
 

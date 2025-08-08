@@ -761,18 +761,16 @@ struct ReverseOperationsInfo
 };
 
 static void reverseOperationsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
     ReverseOperationsInfo* reverseOperationsInfo = reinterpret_cast<ReverseOperationsInfo*>(additionalArgs);
 
     Operation* operationsArray = reverseOperationsInfo->operations->data();
 
-    Operation* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = operationsArray[res.size() - i - 1];
+        res[i] = operationsArray[size - i - 1];
     }
 }
 

@@ -322,10 +322,11 @@ struct ObtainInstrumentsInfo
 static void obtainInstrumentsForParallel(
     QThread* parentThread,
     int /*threadId*/,
-    QList<tinkoff::InstrumentType>& instrumentTypes,
-    int                             start,
-    int                             end,
-    void*                           additionalArgs
+    tinkoff::InstrumentType* instrumentTypes,
+    int /*size*/,
+    int   start,
+    int   end,
+    void* additionalArgs
 )
 {
     ObtainInstrumentsInfo* obtainInstrumentsInfo = reinterpret_cast<ObtainInstrumentsInfo*>(additionalArgs);
@@ -336,7 +337,7 @@ static void obtainInstrumentsForParallel(
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        InstrumentHandler instrumentHandler = INSTRUMENT_TYPE_TO_HANDLER.value(instrumentTypes.at(i));
+        InstrumentHandler instrumentHandler = INSTRUMENT_TYPE_TO_HANDLER.value(instrumentTypes[i]);
         instrumentHandler(parentThread, grpcClient, resultsArray[i], logosArray[i]);
     }
 }
@@ -395,7 +396,7 @@ struct DownloadLogosInfo
 };
 
 static void downloadLogosForParallel(
-    QThread* parentThread, int /*threadId*/, QList<InstrumentIdAndLogo>& logos, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, InstrumentIdAndLogo* logos, int size, int start, int end, void* additionalArgs
 )
 {
     DownloadLogosInfo*  downloadLogosInfo = reinterpret_cast<DownloadLogosInfo*>(additionalArgs);
@@ -405,26 +406,24 @@ static void downloadLogosForParallel(
 
     const QString appDir = qApp->applicationDirPath();
 
-    InstrumentIdAndLogo* logosArray = logos.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
         const std::shared_ptr<IFile> logoFile =
-            fileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(appDir, logosArray[i].instrumentId));
+            fileFactory->newInstance(QString("%1/data/instruments/logos/%2.png").arg(appDir, logos[i].instrumentId));
 
         if (forceToDownload || !logoFile->exists())
         {
-            const QString logoName = logosArray[i].logo.replace(".png", "x160.png"); // 160 pixels
+            const QString logoName = logos[i].logo.replace(".png", "x160.png"); // 160 pixels
             const QUrl    url      = QUrl(QString("https://invest-brands.cdn-tinkoff.ru/%1").arg(logoName));
 
-            thread->downloadLogo(logosArray[i].instrumentId, url);
+            thread->downloadLogo(logos[i].instrumentId, url);
         }
 
         downloadLogosInfo->finished++;
 
         emit thread->notifyInstrumentsProgress(
             PriceCollectThread::tr("Downloading logos") +
-            QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(logos.size()))
+            QString(" (%1 / %2)").arg(QString::number(downloadLogosInfo->finished), QString::number(size))
         );
     }
 }
@@ -716,7 +715,7 @@ struct GetCandlesInfo
 };
 
 static void
-getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+getCandlesForParallel(QThread* parentThread, int /*threadId*/, Stock** stocks, int size, int start, int end, void* additionalArgs)
 {
     GetCandlesInfo*     getCandlesInfo   = reinterpret_cast<GetCandlesInfo*>(additionalArgs);
     PriceCollectThread* thread           = getCandlesInfo->thread;
@@ -733,11 +732,9 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
     const qint64 storageMonthLimit = static_cast<qint64>(config->getStorageMonthLimit()) * ONE_MONTH;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 
@@ -771,7 +768,7 @@ getCandlesForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
 
         emit thread->notifyInstrumentsProgress(
             PriceCollectThread::tr("Obtain stocks data") +
-            QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(stocks.size()))
+            QString(" (%1 / %2)").arg(QString::number(getCandlesInfo->finished), QString::number(size))
         );
     }
 }

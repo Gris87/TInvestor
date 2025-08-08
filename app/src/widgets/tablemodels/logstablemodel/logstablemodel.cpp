@@ -256,14 +256,12 @@ void LogsTableModel::exportToExcel(QXlsx::Document& doc) const
 }
 
 static void fillEntriesIndeciesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+    QThread* parentThread, int /*threadId*/, int* res, int /*size*/, int start, int end, void* /*additionalArgs*/
 )
 {
-    int* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = i;
+        res[i] = i;
     }
 }
 
@@ -280,7 +278,7 @@ struct MergeSortedEntriesInfo
 };
 
 static void mergeSortedEntriesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, LogEntry* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     MergeSortedEntriesInfo* mergeSortedEntriesInfo = reinterpret_cast<MergeSortedEntriesInfo*>(additionalArgs);
@@ -288,11 +286,9 @@ static void mergeSortedEntriesForParallel(
     LogEntry* entriesArray  = mergeSortedEntriesInfo->entriesUnfiltered->data();
     int*      indeciesArray = mergeSortedEntriesInfo->sortedIndecies->data();
 
-    LogEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[indeciesArray[i]];
+        res[i] = entriesArray[indeciesArray[i]];
     }
 }
 
@@ -376,18 +372,17 @@ struct ReverseEntriesInfo
     QList<LogEntry>* entriesUnfiltered;
 };
 
-static void
-reverseEntriesForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+static void reverseEntriesForParallel(
+    QThread* parentThread, int /*threadId*/, LogEntry* res, int size, int start, int end, void* additionalArgs
+)
 {
     ReverseEntriesInfo* reverseEntriesInfo = reinterpret_cast<ReverseEntriesInfo*>(additionalArgs);
 
     LogEntry* entriesArray = reverseEntriesInfo->entriesUnfiltered->data();
 
-    LogEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[res.size() - i - 1];
+        res[i] = entriesArray[size - i - 1];
     }
 }
 
@@ -462,7 +457,7 @@ struct FilterEntriesInfo
 };
 
 static void filterEntriesForParallel(
-    QThread* parentThread, int threadId, QList<LogEntry>& entriesUnfiltered, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, LogEntry* entriesUnfiltered, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     FilterEntriesInfo* filterEntriesInfo = reinterpret_cast<FilterEntriesInfo*>(additionalArgs);
@@ -470,11 +465,9 @@ static void filterEntriesForParallel(
     LogFilter*  filter       = filterEntriesInfo->filter;
     QList<int>* resultsArray = filterEntriesInfo->results.data();
 
-    LogEntry* entriesArray = entriesUnfiltered.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        if (filter->isFiltered(entriesArray[i]))
+        if (filter->isFiltered(entriesUnfiltered[i]))
         {
             resultsArray[threadId].append(i);
         }
@@ -507,7 +500,7 @@ struct MergeFilteredEntriesInfo
 };
 
 static void mergeFilteredEntriesForParallel(
-    QThread* parentThread, int threadId, QList<LogEntry>& res, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, LogEntry* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     MergeFilteredEntriesInfo* mergeFilteredEntriesInfo = reinterpret_cast<MergeFilteredEntriesInfo*>(additionalArgs);
@@ -516,11 +509,9 @@ static void mergeFilteredEntriesForParallel(
     const int         index             = mergeFilteredEntriesInfo->indecies.at(threadId);
     const QList<int>& results           = mergeFilteredEntriesInfo->results.at(threadId);
 
-    LogEntry* resArray = res.data();
-
     for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[index + i] = entriesUnfiltered->at(results.at(i));
+        res[index + i] = entriesUnfiltered->at(results.at(i));
     }
 }
 

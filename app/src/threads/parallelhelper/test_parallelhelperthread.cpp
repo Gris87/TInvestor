@@ -20,17 +20,16 @@ struct SumResult
 
 
 
-static void action(QThread* /*parentThread*/, int /*threadId*/, QList<int>& array, int start, int end, void* additionalArgs)
+static void
+action(QThread* /*parentThread*/, int /*threadId*/, int* array, int /*size*/, int start, int end, void* additionalArgs)
 {
     SumResult* sumResult = reinterpret_cast<SumResult*>(additionalArgs);
 
     int res = 0;
 
-    const int* arrayData = array.constData();
-
     for (int i = start; i < end; ++i)
     {
-        res += arrayData[i];
+        res += array[i];
     }
 
     sumResult->mutex.lock();

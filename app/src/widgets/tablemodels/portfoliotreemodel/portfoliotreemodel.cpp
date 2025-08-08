@@ -668,14 +668,12 @@ QXlsx::Format PortfolioTreeModel::createPercentFormat(const QColor& color, bool 
 }
 
 static void fillItemsIndeciesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<int>& res, int start, int end, void* /*additionalArgs*/
+    QThread* parentThread, int /*threadId*/, int* res, int /*size*/, int start, int end, void* /*additionalArgs*/
 )
 {
-    int* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = i;
+        res[i] = i;
     }
 }
 
@@ -692,7 +690,7 @@ struct MergeSortedItemsInfo
 };
 
 static void mergeSortedItemsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<PortfolioItem>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, PortfolioItem* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     MergeSortedItemsInfo* mergeSortedItemsInfo = reinterpret_cast<MergeSortedItemsInfo*>(additionalArgs);
@@ -700,11 +698,9 @@ static void mergeSortedItemsForParallel(
     PortfolioItem* itemsArray    = mergeSortedItemsInfo->items->data();
     int*           indeciesArray = mergeSortedItemsInfo->sortedIndecies->data();
 
-    PortfolioItem* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = itemsArray[indeciesArray[i]];
+        res[i] = itemsArray[indeciesArray[i]];
     }
 }
 
@@ -849,18 +845,16 @@ struct ReverseItemsInfo
 };
 
 static void reverseItemsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<PortfolioItem>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, PortfolioItem* res, int size, int start, int end, void* additionalArgs
 )
 {
     ReverseItemsInfo* reverseItemsInfo = reinterpret_cast<ReverseItemsInfo*>(additionalArgs);
 
     PortfolioItem* itemsArray = reverseItemsInfo->items->data();
 
-    PortfolioItem* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = itemsArray[res.size() - i - 1];
+        res[i] = itemsArray[size - i - 1];
     }
 }
 

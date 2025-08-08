@@ -48,8 +48,9 @@ struct FindLogsIndeciesInfo
     QList<QList<int>> results;
 };
 
-static void
-findLogsIndeciesForParallel(QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs)
+static void findLogsIndeciesForParallel(
+QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs
+)
 {
     FindLogsIndeciesInfo* findLogsIndeciesInfo = reinterpret_cast<FindLogsIndeciesInfo*>(additionalArgs);
 
@@ -97,7 +98,7 @@ struct MergeLogsIndeciesInfo
 };
 
 static void mergeLogsIndeciesForParallel(
-    QThread* parentThread, int threadId, QList<int>& res, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, int* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     MergeLogsIndeciesInfo* mergeLogsIndeciesInfo = reinterpret_cast<MergeLogsIndeciesInfo*>(additionalArgs);
@@ -105,11 +106,9 @@ static void mergeLogsIndeciesForParallel(
     const int         index   = mergeLogsIndeciesInfo->indecies.at(threadId);
     const QList<int>& results = mergeLogsIndeciesInfo->results.at(threadId);
 
-    int* resArray = res.data();
-
     for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[index + i] = results.at(i);
+        res[index + i] = results.at(i);
     }
 }
 
@@ -128,7 +127,7 @@ struct ReadLogsInfo
 };
 
 static void
-readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+readLogsForParallel(QThread* parentThread, int /*threadId*/, LogEntry* res, int size, int start, int end, void* additionalArgs)
 {
     ReadLogsInfo* readLogsInfo = reinterpret_cast<ReadLogsInfo*>(additionalArgs);
 
@@ -138,11 +137,9 @@ readLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& re
 
     simdjson::ondemand::parser parser;
 
-    LogEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        LogEntry& entry = resArray[res.size() - i - 1];
+        LogEntry& entry = res[size - i - 1];
 
         const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
         const int endBlock   = indeciesArray[i];
@@ -249,18 +246,17 @@ struct WriteLogsInfo
     QList<QByteArray> results;
 };
 
-static void
-writeLogsForParallel(QThread* parentThread, int threadId, QList<LogEntry>& entries, int start, int end, void* additionalArgs)
+static void writeLogsForParallel(
+    QThread* parentThread, int threadId, LogEntry* entries, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     WriteLogsInfo* writeLogsInfo = reinterpret_cast<WriteLogsInfo*>(additionalArgs);
 
     QByteArray* resultsArray = writeLogsInfo->results.data();
 
-    LogEntry* entriesArray = entries.data();
-
     for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
     {
-        const QJsonDocument jsonDoc(entriesArray[i].toJsonObject());
+        const QJsonDocument jsonDoc(entries[i].toJsonObject());
 
         resultsArray[threadId].append(jsonDoc.toJson(QJsonDocument::Compact));
 

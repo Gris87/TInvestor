@@ -1075,14 +1075,14 @@ struct ReadDatabasesInfo
 };
 
 static void readDatabasesForParallel(
-    QThread* parentThread, int /*threadId*/, QList<DatabaseType>& databases, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, DatabaseType* databases, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     ReadDatabasesInfo* readDatabasesInfo = reinterpret_cast<ReadDatabasesInfo*>(additionalArgs);
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        const DatabaseType dbType = databases.at(i);
+        const DatabaseType dbType = databases[i];
 
         if (dbType == DATABASE_TYPE_USER)
         {

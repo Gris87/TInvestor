@@ -140,18 +140,16 @@ struct DeleteObsoleteDataInfo
 };
 
 static void deleteObsoleteDataForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     DeleteObsoleteDataInfo* deleteObsoleteDataInfo = reinterpret_cast<DeleteObsoleteDataInfo*>(additionalArgs);
     IStocksDatabase*        stocksDatabase         = deleteObsoleteDataInfo->stocksDatabase;
     const qint64            obsoleteTimestamp      = deleteObsoleteDataInfo->obsoleteTimestamp;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 
@@ -205,17 +203,15 @@ struct CleanupOperationalDataInfo
 };
 
 static void cleanupOperationalDataForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     CleanupOperationalDataInfo* cleanupOperationalDataInfo = reinterpret_cast<CleanupOperationalDataInfo*>(additionalArgs);
     const qint64                obsoleteTimestamp          = cleanupOperationalDataInfo->obsoleteTimestamp;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 
@@ -268,18 +264,17 @@ struct GetDatePriceInfo
     bool   isDayStartNeeded;
 };
 
-static void
-getDatePriceForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getDatePriceForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     GetDatePriceInfo* getDatePriceInfo = reinterpret_cast<GetDatePriceInfo*>(additionalArgs);
     const qint64      startTimestamp   = getDatePriceInfo->startTimestamp;
     const bool        isDayStartNeeded = getDatePriceInfo->isDayStartNeeded;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 
@@ -345,17 +340,16 @@ struct GetTurnoverInfo
     qint64 startTimestamp;
 };
 
-static void
-getTurnoverForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getTurnoverForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     GetTurnoverInfo* getTurnoverInfo = reinterpret_cast<GetTurnoverInfo*>(additionalArgs);
     const qint64     startTimestamp  = getTurnoverInfo->startTimestamp;
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 
@@ -421,8 +415,9 @@ struct GetPaybackInfo
     qint64        startTimestamp;
 };
 
-static void
-getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& stocks, int start, int end, void* additionalArgs)
+static void getPaybackForParallel(
+    QThread* parentThread, int /*threadId*/, Stock** stocks, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     GetPaybackInfo* getPaybackInfo = reinterpret_cast<GetPaybackInfo*>(additionalArgs);
     IUserStorage*   userStorage    = getPaybackInfo->userStorage;
@@ -432,11 +427,9 @@ getPaybackForParallel(QThread* parentThread, int /*threadId*/, QList<Stock*>& st
     const float commission = userStorage->getCommission();
     userStorage->readUnlock();
 
-    Stock** stockArray = stocks.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock* stock = stockArray[i];
+        Stock* stock = stocks[i];
 
         stock->writeLock();
 

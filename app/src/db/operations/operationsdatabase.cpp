@@ -51,7 +51,7 @@ struct FindOperationsIndeciesInfo
 };
 
 static void findOperationsIndeciesForParallel(
-    QThread* parentThread, int threadId, QList<int>& /*temp*/, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, int* /*temp*/, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     FindOperationsIndeciesInfo* findOperationsIndeciesInfo = reinterpret_cast<FindOperationsIndeciesInfo*>(additionalArgs);
@@ -100,7 +100,7 @@ struct MergeOperationsIndeciesInfo
 };
 
 static void mergeOperationsIndeciesForParallel(
-    QThread* parentThread, int threadId, QList<int>& res, int /*start*/, int /*end*/, void* additionalArgs
+    QThread* parentThread, int threadId, int* res, int /*size*/, int /*start*/, int /*end*/, void* additionalArgs
 )
 {
     MergeOperationsIndeciesInfo* mergeOperationsIndeciesInfo = reinterpret_cast<MergeOperationsIndeciesInfo*>(additionalArgs);
@@ -108,11 +108,9 @@ static void mergeOperationsIndeciesForParallel(
     const int         index   = mergeOperationsIndeciesInfo->indecies.at(threadId);
     const QList<int>& results = mergeOperationsIndeciesInfo->results.at(threadId);
 
-    int* resArray = res.data();
-
     for (int i = 0; i < results.size() && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[index + i] = results.at(i);
+        res[index + i] = results.at(i);
     }
 }
 
@@ -131,7 +129,7 @@ struct ReadOperationsInfo
 };
 
 static void readOperationsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Operation* res, int size, int start, int end, void* additionalArgs
 )
 {
     ReadOperationsInfo* readOperationsInfo = reinterpret_cast<ReadOperationsInfo*>(additionalArgs);
@@ -142,11 +140,9 @@ static void readOperationsForParallel(
 
     simdjson::ondemand::parser parser;
 
-    Operation* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Operation& operation = resArray[res.size() - i - 1];
+        Operation& operation = res[size - i - 1];
 
         const int startBlock = i > 0 ? indeciesArray[i - 1] + 3 : 0;
         const int endBlock   = indeciesArray[i];
@@ -257,18 +253,16 @@ struct WriteOperationsInfo
 };
 
 static void writeOperationsForParallel(
-    QThread* parentThread, int threadId, QList<Operation>& operations, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, Operation* operations, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     WriteOperationsInfo* writeOperationsInfo = reinterpret_cast<WriteOperationsInfo*>(additionalArgs);
 
     QByteArray* resultsArray = writeOperationsInfo->results.data();
 
-    Operation* operationsArray = operations.data();
-
     for (int i = end - 1; i >= start && !parentThread->isInterruptionRequested(); --i)
     {
-        const QJsonDocument jsonDoc(operationsArray[i].toJsonObject());
+        const QJsonDocument jsonDoc(operations[i].toJsonObject());
 
         resultsArray[threadId].append(jsonDoc.toJson(QJsonDocument::Compact));
 

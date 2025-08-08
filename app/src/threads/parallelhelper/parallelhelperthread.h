@@ -15,13 +15,15 @@ template<typename T>
 class ParallelHelperThread : public QThread
 {
 public:
-    using ActionType = void (*)(QThread* parentThread, int threadId, QList<T>& array, int start, int end, void* additionalArgs);
+    using ActionType =
+        void (*)(QThread* parentThread, int threadId, T* array, int size, int start, int end, void* additionalArgs);
 
     explicit ParallelHelperThread(
         ActionType action,
         QThread*   parentThread,
         int        threadId,
-        QList<T>&  array,
+        T*         array,
+        int        size,
         int        start,
         int        end,
         void*      additionalArgs,
@@ -32,6 +34,7 @@ public:
         mParentThread(parentThread),
         mThreadId(threadId),
         mArray(array),
+        mSize(size),
         mStart(start),
         mEnd(end),
         mAdditionalArgs(additionalArgs)
@@ -45,14 +48,15 @@ public:
 
     void run() override
     {
-        mAction(mParentThread, mThreadId, mArray, mStart, mEnd, mAdditionalArgs);
+        mAction(mParentThread, mThreadId, mArray, mSize, mStart, mEnd, mAdditionalArgs);
     }
 
 private:
     ActionType mAction;
     QThread*   mParentThread;
     int        mThreadId;
-    QList<T>&  mArray;
+    T*         mArray;
+    int        mSize;
     int        mStart;
     int        mEnd;
     void*      mAdditionalArgs;
@@ -64,18 +68,20 @@ template<typename T>
 void processInParallel(
     QThread*  parentThread,
     QList<T>& array,
-    void      action(QThread* parentThread, int threadId, QList<T>& array, int start, int end, void* additionalArgs),
+    void      action(QThread* parentThread, int threadId, T* array, int size, int start, int end, void* additionalArgs),
     void*     additionalArgs = nullptr
 )
 {
 #ifndef TESTING_MODE
     const int cpuCount = getCpuCount();
 
-    const int partSize = array.size() / cpuCount;
-    const int partTail = array.size() % cpuCount;
+    T*  arrayData = array.data();
+    int size      = array.size();
+    int start     = 0;
+    int end       = 0;
 
-    int start = 0;
-    int end   = 0;
+    const int partSize = size / cpuCount;
+    const int partTail = size % cpuCount;
 
     QList<ParallelHelperThread<T>*> threads(cpuCount);
 
@@ -88,7 +94,8 @@ void processInParallel(
             ++end;
         }
 
-        ParallelHelperThread<T>* thread = new ParallelHelperThread<T>(action, parentThread, i, array, start, end, additionalArgs);
+        ParallelHelperThread<T>* thread =
+            new ParallelHelperThread<T>(action, parentThread, i, arrayData, size, start, end, additionalArgs);
         thread->start();
 
         threads[i] = thread;
@@ -104,6 +111,6 @@ void processInParallel(
         delete thread;
     }
 #else
-    action(parentThread, 0, array, 0, array.size(), additionalArgs);
+    action(parentThread, 0, array.data(), array.size(), 0, array.size(), additionalArgs);
 #endif
 }

@@ -190,7 +190,7 @@ struct MakeDecisionsInfo
 
 // NOLINTBEGIN(readability-function-cognitive-complexity)
 static void makeDecisionsForParallel(
-    QThread* parentThread, int threadId, QList<StockWithAvgPrice>& stocks, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, StockWithAvgPrice* stocks, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     MakeDecisionsInfo* makeDecisionsInfo = reinterpret_cast<MakeDecisionsInfo*>(additionalArgs);
@@ -207,15 +207,13 @@ static void makeDecisionsForParallel(
     InstrumentsForTrading* buyResultsArray    = makeDecisionsInfo->buyResults.data();
     InstrumentsForTrading* sellResultsArray   = makeDecisionsInfo->sellResults.data();
 
-    StockWithAvgPrice* stocksArray = stocks.data();
-
     int   dataIndex = 0;
     float price     = 0;
 
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        Stock*      stock    = stocksArray[i].stock;
-        const float avgPrice = stocksArray[i].avgPrice;
+        Stock*      stock    = stocks[i].stock;
+        const float avgPrice = stocks[i].avgPrice;
 
         stock->readLock();
 
@@ -329,7 +327,15 @@ void DecisionMaker::makeDecisions(
     }
     else
     {
-        makeDecisionsForParallel(parentThread, 0, stocksWithAvgPrice, 0, stocksWithAvgPrice.size(), &makeDecisionsInfo);
+        makeDecisionsForParallel(
+            parentThread,
+            0,
+            stocksWithAvgPrice.data(),
+            stocksWithAvgPrice.size(),
+            0,
+            stocksWithAvgPrice.size(),
+            &makeDecisionsInfo
+        );
     }
 
     commission /= HUNDRED_PERCENT;

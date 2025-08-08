@@ -28,18 +28,16 @@ struct OptimizeOperationsInfo
 };
 
 static void optimizeOperationsForParallel(
-    QThread* parentThread, int /*threadId*/, QList<Operation>& res, int start, int end, void* additionalArgs
+    QThread* parentThread, int /*threadId*/, Operation* res, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     OptimizeOperationsInfo* optimizeOperationsInfo = reinterpret_cast<OptimizeOperationsInfo*>(additionalArgs);
 
     const Operation* operationsArray = optimizeOperationsInfo->operations->data();
 
-    Operation* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = operationsArray[i];
+        res[i] = operationsArray[i];
     }
 }
 
@@ -67,18 +65,17 @@ struct OptimizeLogsInfo
     const QList<LogEntry>* entries;
 };
 
-static void
-optimizeLogsForParallel(QThread* parentThread, int /*threadId*/, QList<LogEntry>& res, int start, int end, void* additionalArgs)
+static void optimizeLogsForParallel(
+    QThread* parentThread, int /*threadId*/, LogEntry* res, int /*size*/, int start, int end, void* additionalArgs
+)
 {
     OptimizeLogsInfo* optimizeLogsInfo = reinterpret_cast<OptimizeLogsInfo*>(additionalArgs);
 
     const LogEntry* entriesArray = optimizeLogsInfo->entries->data();
 
-    LogEntry* resArray = res.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        resArray[i] = entriesArray[i];
+        res[i] = entriesArray[i];
     }
 }
 
@@ -106,7 +103,7 @@ struct AddInstrumentsInfo
 };
 
 static void addInstrumentsForParallel(
-    QThread* parentThread, int threadId, QList<QString>& instrumentsToAdd, int start, int end, void* additionalArgs
+    QThread* parentThread, int threadId, QString* instrumentsToAdd, int /*size*/, int start, int end, void* additionalArgs
 )
 {
     AddInstrumentsInfo* addInstrumentsInfo = reinterpret_cast<AddInstrumentsInfo*>(additionalArgs);
@@ -115,11 +112,9 @@ static void addInstrumentsForParallel(
     const int         oldOperationsSize  = addInstrumentsInfo->oldOperations->size();
     QList<Operation>* resultsArray       = addInstrumentsInfo->results.data();
 
-    QString* instrumentsArray = instrumentsToAdd.data();
-
     for (int i = start; i < end && !parentThread->isInterruptionRequested(); ++i)
     {
-        const QString& instrumentId = instrumentsArray[i];
+        const QString& instrumentId = instrumentsToAdd[i];
 
         for (int j = 0; j < oldOperationsSize; ++j)
         {
