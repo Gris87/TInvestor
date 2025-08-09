@@ -19,6 +19,34 @@ TEST(Test_SellDecision2Config, Test_constructor_and_destructor)
     const SellDecision2Config config;
 }
 
+TEST(Test_SellDecision2Config, Test_clone_and_deleteRecursively)
+{
+    SellDecision2Config config;
+
+    config.setEnabled(false);
+    config.setYieldAbove(2.5f);
+    config.setLoseYield(3.7f);
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),     false);
+    ASSERT_EQ(config.getYieldAbove(), 2.5f);
+    ASSERT_EQ(config.getLoseYield(),  3.7f);
+    // clang-format on
+
+    ISellDecision2Config* config2 = config.clone();
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),       false);
+    ASSERT_EQ(config.getYieldAbove(),   2.5f);
+    ASSERT_EQ(config.getLoseYield(),    3.7f);
+    ASSERT_EQ(config2->isEnabled(),     false);
+    ASSERT_EQ(config2->getYieldAbove(), 2.5f);
+    ASSERT_EQ(config2->getLoseYield(),  3.7f);
+    // clang-format on
+
+    config2->deleteRecursively();
+}
+
 TEST(Test_SellDecision2Config, Test_assign)
 {
     SellDecision2Config config;

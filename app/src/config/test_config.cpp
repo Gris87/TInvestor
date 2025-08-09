@@ -22,6 +22,100 @@ TEST(Test_Config, Test_constructor_and_destructor)
     const Config config(&simulatorConfigMock, &autoPilotConfigMock);
 }
 
+TEST(Test_Config, Test_clone_and_deleteRecursively)
+{
+    const InSequence seq;
+
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock;
+    StrictMock<DecisionMakerConfigMock> autoPilotConfigMock;
+    StrictMock<DecisionMakerConfigMock> simulatorConfigMock2;
+    StrictMock<DecisionMakerConfigMock> autoPilotConfigMock2;
+
+    Config config(&simulatorConfigMock, &autoPilotConfigMock);
+
+    config.setAutorun(false);
+    config.setCpuUsage("MINIMUM");
+    config.setMakeDecisionTimeout(5);
+    config.setUseSchedule(false);
+    config.setScheduleStartHour(8);
+    config.setScheduleStartMinute(15);
+    config.setScheduleEndHour(20);
+    config.setScheduleEndMinute(50);
+    config.setLimitStockPurchase(false);
+    config.setLimitStockPurchasePart(25.0f);
+    config.setLimitByTurnover(false);
+    config.setLimitByTurnoverPercent(5.0f);
+    config.setStorageMonthLimit(36);
+    config.setSimulatorConfigCommon(false);
+    config.setAutoPilotConfigCommon(true);
+
+    // clang-format off
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 25.0f, 0.0001f);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
+    // clang-format on
+
+    EXPECT_CALL(simulatorConfigMock, clone()).WillOnce(Return(&simulatorConfigMock2));
+    EXPECT_CALL(autoPilotConfigMock, clone()).WillOnce(Return(&autoPilotConfigMock2));
+    EXPECT_CALL(simulatorConfigMock2, assign(&simulatorConfigMock));
+    EXPECT_CALL(autoPilotConfigMock2, assign(&autoPilotConfigMock));
+
+    IConfig* config2 = config.clone();
+
+    // clang-format off
+    ASSERT_EQ(config.isAutorun(),                   false);
+    ASSERT_EQ(config.getCpuUsage(),                 "MINIMUM");
+    ASSERT_EQ(config.getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config.isUseSchedule(),               false);
+    ASSERT_EQ(config.getScheduleStartHour(),        8);
+    ASSERT_EQ(config.getScheduleStartMinute(),      15);
+    ASSERT_EQ(config.getScheduleEndHour(),          20);
+    ASSERT_EQ(config.getScheduleEndMinute(),        50);
+    ASSERT_EQ(config.isLimitStockPurchase(),        false);
+    ASSERT_NEAR(config.getLimitStockPurchasePart(), 25.0f, 0.0001f);
+    ASSERT_EQ(config.isLimitByTurnover(),           false);
+    ASSERT_NEAR(config.getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config.getStorageMonthLimit(),        36);
+    ASSERT_EQ(config.isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config.isAutoPilotConfigCommon(),     true);
+    // clang-format on
+
+    // clang-format off
+    ASSERT_EQ(config2->isAutorun(),                   false);
+    ASSERT_EQ(config2->getCpuUsage(),                 "MINIMUM");
+    ASSERT_EQ(config2->getMakeDecisionTimeout(),      5);
+    ASSERT_EQ(config2->isUseSchedule(),               false);
+    ASSERT_EQ(config2->getScheduleStartHour(),        8);
+    ASSERT_EQ(config2->getScheduleStartMinute(),      15);
+    ASSERT_EQ(config2->getScheduleEndHour(),          20);
+    ASSERT_EQ(config2->getScheduleEndMinute(),        50);
+    ASSERT_EQ(config2->isLimitStockPurchase(),        false);
+    ASSERT_NEAR(config2->getLimitStockPurchasePart(), 25.0f, 0.0001f);
+    ASSERT_EQ(config2->isLimitByTurnover(),           false);
+    ASSERT_NEAR(config2->getLimitByTurnoverPercent(), 5.0f, 0.0001f);
+    ASSERT_EQ(config2->getStorageMonthLimit(),        36);
+    ASSERT_EQ(config2->isSimulatorConfigCommon(),     false);
+    ASSERT_EQ(config2->isAutoPilotConfigCommon(),     true);
+    // clang-format on
+
+    EXPECT_CALL(simulatorConfigMock2, deleteRecursively());
+    EXPECT_CALL(autoPilotConfigMock2, deleteRecursively());
+
+    config2->deleteRecursively();
+}
+
 TEST(Test_Config, Test_assign)
 {
     const InSequence seq;

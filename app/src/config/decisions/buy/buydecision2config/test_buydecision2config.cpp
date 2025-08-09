@@ -19,6 +19,38 @@ TEST(Test_BuyDecision2Config, Test_constructor_and_destructor)
     const BuyDecision2Config config;
 }
 
+TEST(Test_BuyDecision2Config, Test_clone_and_deleteRecursively)
+{
+    BuyDecision2Config config;
+
+    config.setEnabled(false);
+    config.setPriceFall(2.5f);
+    config.setLoseYield(3.7f);
+    config.setDuration(123);
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),    false);
+    ASSERT_EQ(config.getPriceFall(), 2.5f);
+    ASSERT_EQ(config.getLoseYield(), 3.7f);
+    ASSERT_EQ(config.getDuration(),  123);
+    // clang-format on
+
+    IBuyDecision2Config* config2 = config.clone();
+
+    // clang-format off
+    ASSERT_EQ(config.isEnabled(),      false);
+    ASSERT_EQ(config.getPriceFall(),   2.5f);
+    ASSERT_EQ(config.getLoseYield(),   3.7f);
+    ASSERT_EQ(config.getDuration(),    123);
+    ASSERT_EQ(config2->isEnabled(),    false);
+    ASSERT_EQ(config2->getPriceFall(), 2.5f);
+    ASSERT_EQ(config2->getLoseYield(), 3.7f);
+    ASSERT_EQ(config2->getDuration(),  123);
+    // clang-format on
+
+    config2->deleteRecursively();
+}
+
 TEST(Test_BuyDecision2Config, Test_assign)
 {
     BuyDecision2Config config;

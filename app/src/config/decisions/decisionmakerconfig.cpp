@@ -36,15 +36,24 @@ DecisionMakerConfig::~DecisionMakerConfig()
 
 IDecisionMakerConfig* DecisionMakerConfig::clone()
 {
+    IBuyDecision1Config*  buyDecision1Config  = mBuyDecision1Config->clone();
+    IBuyDecision2Config*  buyDecision2Config  = mBuyDecision2Config->clone();
+    IBuyDecision3Config*  buyDecision3Config  = mBuyDecision3Config->clone();
+    IBuyDecision4Config*  buyDecision4Config  = mBuyDecision4Config->clone();
+    ISellDecision1Config* sellDecision1Config = mSellDecision1Config->clone();
+    ISellDecision2Config* sellDecision2Config = mSellDecision2Config->clone();
+    ISellDecision3Config* sellDecision3Config = mSellDecision3Config->clone();
+    ISellDecision4Config* sellDecision4Config = mSellDecision4Config->clone();
+
     DecisionMakerConfig* res = new DecisionMakerConfig(
-        mBuyDecision1Config->clone(),
-        mBuyDecision2Config->clone(),
-        mBuyDecision3Config->clone(),
-        mBuyDecision4Config->clone(),
-        mSellDecision1Config->clone(),
-        mSellDecision2Config->clone(),
-        mSellDecision3Config->clone(),
-        mSellDecision4Config->clone()
+        buyDecision1Config,
+        buyDecision2Config,
+        buyDecision3Config,
+        buyDecision4Config,
+        sellDecision1Config,
+        sellDecision2Config,
+        sellDecision3Config,
+        sellDecision4Config
     );
     res->assign(this);
 

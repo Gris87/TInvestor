@@ -45,6 +45,69 @@ TEST(Test_DecisionMakerConfig, Test_constructor_and_destructor)
     );
 }
 
+TEST(Test_DecisionMakerConfig, Test_clone_and_deleteRecursively)
+{
+    const InSequence seq;
+
+    StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock;
+    StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock;
+    StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock;
+    StrictMock<BuyDecision4ConfigMock>  buyDecision4ConfigMock;
+    StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock;
+    StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock;
+    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock;
+    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock;
+    StrictMock<BuyDecision1ConfigMock>  buyDecision1ConfigMock2;
+    StrictMock<BuyDecision2ConfigMock>  buyDecision2ConfigMock2;
+    StrictMock<BuyDecision3ConfigMock>  buyDecision3ConfigMock2;
+    StrictMock<BuyDecision4ConfigMock>  buyDecision4ConfigMock2;
+    StrictMock<SellDecision1ConfigMock> sellDecision1ConfigMock2;
+    StrictMock<SellDecision2ConfigMock> sellDecision2ConfigMock2;
+    StrictMock<SellDecision3ConfigMock> sellDecision3ConfigMock2;
+    StrictMock<SellDecision4ConfigMock> sellDecision4ConfigMock2;
+
+    DecisionMakerConfig config(
+        &buyDecision1ConfigMock,
+        &buyDecision2ConfigMock,
+        &buyDecision3ConfigMock,
+        &buyDecision4ConfigMock,
+        &sellDecision1ConfigMock,
+        &sellDecision2ConfigMock,
+        &sellDecision3ConfigMock,
+        &sellDecision4ConfigMock
+    );
+
+    EXPECT_CALL(buyDecision1ConfigMock, clone()).WillOnce(Return(&buyDecision1ConfigMock2));
+    EXPECT_CALL(buyDecision2ConfigMock, clone()).WillOnce(Return(&buyDecision2ConfigMock2));
+    EXPECT_CALL(buyDecision3ConfigMock, clone()).WillOnce(Return(&buyDecision3ConfigMock2));
+    EXPECT_CALL(buyDecision4ConfigMock, clone()).WillOnce(Return(&buyDecision4ConfigMock2));
+    EXPECT_CALL(sellDecision1ConfigMock, clone()).WillOnce(Return(&sellDecision1ConfigMock2));
+    EXPECT_CALL(sellDecision2ConfigMock, clone()).WillOnce(Return(&sellDecision2ConfigMock2));
+    EXPECT_CALL(sellDecision3ConfigMock, clone()).WillOnce(Return(&sellDecision3ConfigMock2));
+    EXPECT_CALL(sellDecision4ConfigMock, clone()).WillOnce(Return(&sellDecision4ConfigMock2));
+    EXPECT_CALL(buyDecision1ConfigMock2, assign(&buyDecision1ConfigMock));
+    EXPECT_CALL(buyDecision2ConfigMock2, assign(&buyDecision2ConfigMock));
+    EXPECT_CALL(buyDecision3ConfigMock2, assign(&buyDecision3ConfigMock));
+    EXPECT_CALL(buyDecision4ConfigMock2, assign(&buyDecision4ConfigMock));
+    EXPECT_CALL(sellDecision1ConfigMock2, assign(&sellDecision1ConfigMock));
+    EXPECT_CALL(sellDecision2ConfigMock2, assign(&sellDecision2ConfigMock));
+    EXPECT_CALL(sellDecision3ConfigMock2, assign(&sellDecision3ConfigMock));
+    EXPECT_CALL(sellDecision4ConfigMock2, assign(&sellDecision4ConfigMock));
+
+    IDecisionMakerConfig* config2 = config.clone();
+
+    EXPECT_CALL(buyDecision1ConfigMock2, deleteRecursively());
+    EXPECT_CALL(buyDecision2ConfigMock2, deleteRecursively());
+    EXPECT_CALL(buyDecision3ConfigMock2, deleteRecursively());
+    EXPECT_CALL(buyDecision4ConfigMock2, deleteRecursively());
+    EXPECT_CALL(sellDecision1ConfigMock2, deleteRecursively());
+    EXPECT_CALL(sellDecision2ConfigMock2, deleteRecursively());
+    EXPECT_CALL(sellDecision3ConfigMock2, deleteRecursively());
+    EXPECT_CALL(sellDecision4ConfigMock2, deleteRecursively());
+
+    config2->deleteRecursively();
+}
+
 TEST(Test_DecisionMakerConfig, Test_assign)
 {
     const InSequence seq;

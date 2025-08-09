@@ -1315,6 +1315,37 @@ TEST_F(Test_PortfolioTreeModel, Test_totalCost)
     ASSERT_NEAR(model->totalCost(), 150000.0, 0.0001);
 }
 
+TEST_F(Test_PortfolioTreeModel, Test_totalCostWithoutMoney)
+{
+    ASSERT_NEAR(model->totalCostWithoutMoney(), 0, 0.0001);
+
+    Portfolio             portfolio;
+    PortfolioCategoryItem category1;
+    PortfolioCategoryItem category2;
+
+    category1.id   = 0;
+    category1.name = "Currency and metals";
+    category1.cost = 100000.0;
+    category1.part = 10.0;
+
+    category2.id   = 1;
+    category2.name = "Share";
+    category2.cost = 900000.0;
+    category2.part = 90.0;
+
+    portfolio.positions << category1 << category2;
+
+    model->portfolioChanged(portfolio);
+
+    ASSERT_NEAR(model->totalCostWithoutMoney(), 900000.0, 0.0001);
+
+    portfolio.positions[1].cost = 50000.0;
+
+    model->portfolioChanged(portfolio);
+
+    ASSERT_NEAR(model->totalCostWithoutMoney(), 50000.0, 0.0001);
+}
+
 TEST_F(Test_PortfolioTreeModel, Test_totalYield)
 {
     ASSERT_NEAR(model->totalYield(), 0, 0.0001);

@@ -56,7 +56,10 @@ Config::~Config()
 
 IConfig* Config::clone()
 {
-    Config* res = new Config(mSimulatorConfig->clone(), mAutoPilotConfig->clone());
+    IDecisionMakerConfig* simulatorConfig = mSimulatorConfig->clone();
+    IDecisionMakerConfig* autoPilotConfig = mAutoPilotConfig->clone();
+
+    Config* res = new Config(simulatorConfig, autoPilotConfig);
     res->assign(this);
 
     return res;

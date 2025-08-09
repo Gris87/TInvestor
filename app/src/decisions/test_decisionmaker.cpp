@@ -271,7 +271,7 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     EXPECT_CALL(*configMock, getLimitByTurnoverPercent()).WillOnce(Return(0.0005f));
 
     InstrumentsForTrading result = decisionMaker->makeDecision(
-        QThread::currentThread(), 1704110400000, configMock, portfolio, stocks, false, 0, false, true
+        QThread::currentThread(), 1704110400000, configMock, portfolio, stocks, false, 0, false, false
     );
 
     // clang-format off
@@ -285,6 +285,14 @@ TEST_F(Test_DecisionMaker, Test_makeDecision)
     ASSERT_NEAR(result["bbbbb"].expectedCost, 0.0f, 0.0001f);
     ASSERT_EQ(result["bbbbb"].cause,          "I want to sell");
     // clang-format on
+
+    EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
+
+    result = decisionMaker->makeDecision(
+        QThread::currentThread(), 1704542400000, configMock, portfolio, stocks, false, 0, false, true
+    );
+
+    ASSERT_EQ(result.size(), 0);
 
     EXPECT_CALL(*configMock, isUseSchedule()).WillOnce(Return(true));
     EXPECT_CALL(*configMock, getScheduleStartHour()).WillOnce(Return(10));
